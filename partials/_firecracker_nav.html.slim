@@ -1,0 +1,77 @@
+dl
+  dt class="flex sm:jc:center text:smallcaps text:2s text:dark-silver mb:2p" 
+    = nav_link "/docs/", class: "flex ai:center text:inherit" do
+      | Overview
+      = partial "shared/icons/info", locals: { width: "12px", height: "12px", classname: "opacity:50 ml:8p" }
+  dd
+    = nav_link "Introduction", href="/docs/introduction/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Speedrun: Deploying an App", href="/docs/speedrun/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Hands-on with Fly", href="/docs/hands-on/start/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p arrow:before"
+
+  dt class="flex sm:jc:center text:smallcaps text:2s text:dark-silver mb:2p pt:3" 
+    = nav_link "/docs/getting-started/", class: "flex ai:center text:inherit" do
+      | Quickstart Guides
+      = partial "shared/icons/info", locals: { width: "12px", height: "12px", classname: "opacity:50 ml:8p" }
+  dd
+    = nav_link "Installing Flyctl", href="/docs/getting-started/installing-flyctl/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Login to Fly", href="/docs/getting-started/login-to-fly/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Multi-region PostgreSQL", href="/docs/getting-started/multi-region-databases/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Run a Go App", href="/docs/getting-started/golang/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Run a Node App", href="/docs/getting-started/node/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Run a Ruby App", href="/docs/getting-started/ruby/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Run a Deno App", href="/docs/getting-started/deno/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Run a Python App", href="/docs/getting-started/python/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Run an Elixir App", href="/docs/getting-started/elixir/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Deploy a Static Website", href="/docs/getting-started/static/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Working with Fly Apps", href="/docs/getting-started/working-with-fly-apps/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Troubleshooting Deployments", href="/docs/getting-started/troubleshooting/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+
+  dt class="flex sm:jc:center text:smallcaps text:2s text:dark-silver mb:2p pt:3" 
+    = nav_link "/docs/guides/", class: "flex ai:center text:inherit" do
+      | Guides and Examples
+      = partial "shared/icons/info", locals: { width: "12px", height: "12px", classname: "opacity:50 ml:8p" }
+  dd
+    = nav_link "Application Performance", href="/docs/guides/#performance", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p"
+    = nav_link "Custom Domains for SaaS", href="/docs/app-guides/custom-domains-with-fly/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p"
+    = nav_link "Proxies", href="/docs/guides/#proxy", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p"
+    = nav_link "Example Apps", href="/docs/guides/#app", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p"
+    = nav_link "Continuous Integration", href="/docs/guides/#ci", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p"
+
+  dt class="flex sm:jc:center text:smallcaps text:2s text:dark-silver mb:2p pt:3" 
+    = nav_link "/docs/reference/", class: "flex ai:center text:inherit" do
+      | Fly Reference
+      = partial "shared/icons/info", locals: { width: "12px", height: "12px", classname: "opacity:50 ml:8p" }
+  dd
+    = nav_link "/docs/flyctl/", class: "flex ai:center sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p tracking:lg" do
+      = partial "shared/icons/source", locals: { width: "20px", classname: "opacity:50 mr:6p" }
+      | flyctl
+    = nav_link "App Configuration (fly.toml)", href="/docs/reference/configuration/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Architecture", href="/docs/reference/architecture/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Builders", href="/docs/reference/builders/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Load Balancing", href="/docs/reference/services/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Metrics", href="/docs/reference/metrics/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Private Networking", href="/docs/reference/privatenetwork/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Regions", href="/docs/reference/regions/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Runtime Environment", href="/docs/reference/runtime-environment/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Scaling", href="/docs/reference/scaling/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Secrets", href="/docs/reference/secrets/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Volumes", href="/docs/reference/volumes/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+
+  dt class="flex sm:jc:center text:smallcaps text:2s text:dark-silver mb:2p pt:3" 
+    = nav_link "/docs/about/", class: "flex ai:center text:inherit" do
+      | About
+      = partial "shared/icons/info", locals: { width: "12px", height: "12px", classname: "opacity:50 ml:8p" }
+  dd
+    = nav_link "Pricing", href="/docs/about/pricing/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Support", href="/docs/about/support/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Security", href="/docs/about/security/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Privacy Policy", href="/legal/privacy-policy/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+    = nav_link "Terms of Service", href="/legal/terms-of-service/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+/  dt class="flex sm:jc:center text:smallcaps text:2s text:dark-silver mb:2p pt:3" 
+/    = nav_link "/docs/launchonfly/", class: "flex ai:center text:inherit" do
+/      | Launch On Fly
+/      = partial "shared/icons/info", locals: { width: "12px", height: "12px", classname: "opacity:50 ml:8p" }
+/  dd
+/    = nav_link "KeyDB", href="/docs/launchonfly/keydb/", class: "flex sm:jc:center text:inherit sm:text:persist sm:m:8p pt:7p pt:7p"
+ 
+

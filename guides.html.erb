@@ -1,0 +1,97 @@
+---
+title: Flight Plans - Guides and Examples
+layout: docs
+toc: true
+nav: firecracker
+---
+<% categories = HashWithIndifferentAccess.new(
+    guide: {
+      title: "Guides"
+    },
+    performance: {
+      title: "Application Performance",
+    },
+   
+    "custom domains": {
+      title: "Custom Domains for SaaS",
+    },
+    graphql: {
+      title: "GraphQL"
+    },
+    app: {
+      title: "Example Applications",
+    },
+    proxy: {
+      title: "Proxies",
+    },
+    ci: {
+      title: "Deployment Tools",
+    },
+    msg: {
+      title: "Messaging"
+    },
+    apigw: {
+      title: "API Gateways"
+    },
+    cdn: {
+      title: "CDNs"
+    },
+    "6pn": {
+      title: "6PN Private Networking"
+    },
+    volumes: {
+      title: "Volumes"
+    },
+    certs: {
+      title: "Certificates"
+    }
+  ).map { |k, v| [k, OpenStruct.new(v)] }
+  guides = sitemap.resources.select { |r| r.path =~ %r{^docs/app-guides/} }.map do |page|
+    OpenStruct.new(
+      { url: page.url }.merge(page.data)
+    )
+  end
+  
+  new_guides = guides
+
+  guides.select { |g| g[:author].present? }.each do |g|
+    g[:author] = data.authors[g[:author]]
+  end
+
+  new_guides = new_guides.sort_by(&:date).reverse.first(5)
+  
+  idx = HashWithIndifferentAccess.new
+  guides.each do |p|
+    p&.categories&.each do |c|
+      idx[c] ||= []
+      idx[c].push(p)
+    end
+  end
+%>
+
+<section class="grid min-lg:col:1 gap:1 text:md">
+  <dl id="new-guides" class="p:2 bg:lightest-blue r:lg mb:0 text:darkest-blue">
+    <dt class="text:smallcaps text:xs mb:12p child">
+      Latest Plans
+    </dt>
+    <% new_guides.each do |k|%>
+      <dd><a class="" href="<%= k.url %>"><%= k.title %></a> (<%= k.date.strftime("%b %y") %>)</dd>
+    <% end %>
+  </dl>
+  <% categories.each do |k, v| %>
+    <dl id="<%= k %>" class="p:2 bg:lightest-silver target:shadow:highlight r:lg mb:0<%= k == "app" ? " colspan:all" : "" %>">
+      <dt
+        id="h-<%= k %>" 
+        class="text:smallcaps text:xs mb:12p child"
+      >
+        <%= v.title %>
+      </dt>
+      <dd class="<%= k == "app" ? "grid min-lg:col:1 gap-x:1 mx:-2" : "flex flex:col" %>">
+        <% idx[k].sort_by(&:title).each do |p| %>
+          <% author = p.author %>
+          <a class="<%= k == "app" ? "px:2" : "" %>" href="<%= p.url %>"><%= p.title %></a>
+        <% end %>
+      </dd>
+    </dl>
+  <% end %>
+</section>

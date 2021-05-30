@@ -1,0 +1,198 @@
+---
+title: Speed up a Heroku App with Fly
+layout: docs
+sitemap: false
+nav: firecracker
+author: dj
+categories:
+  - app
+  - heroku
+  - performance
+image: https://fly.io/ui/images/turbo.jpg
+date: 2020-03-10
+---
+
+<figure class="flex ai:center jc:center w:full r:lg overflow:off mb:4">
+  <img class="m:0" src="/public/images/turbo.jpg" alt="A smartphone flying through the air with an app on its screen" class="w:full h:full fit:cover">
+</figure>
+
+Heroku is a pioneering platform for applications as a service and has enabled many to bring their applications to market. There are, though, some things that Heroku doesn't do well.
+
+There's no support for a single dedicated IP address for your application. With Heroku, your application's CPU resources are mostly located in one datacenter. Heroku doesn't support HTTP2 or Brotli compression and it doesn't do Edge TLS termination. And it doesn't run your applications on dedicated MicroVMs. These are all things that Fly's Global Application Platform does.
+
+In testing we've seen massive boosts in the responsiveness of applications, simply by moving the user-facing parts of the applications onto Fly. So we created what we call Turboku, Heroku plus Fly.io, and are now offering a simple way to move your application over.
+
+## _Getting Started with Turboku_
+
+Your three step journey starts at [https://fly.io/heroku](https://fly.io/heroku).
+
+1. Connect to Heroku: You'll need to sign in to Heroku to authorize the Turboku process to access your applications. Once you are logged in to Heroku, you can move to step 2.
+
+2. Select an application to bring to Fly. You'll be offered a list of Heroku applications associated with your account. Pick the one you want to move.
+
+3. Launch the app on Fly by clicking the **Turboku** button. A status display will now appear with the status of the Fly deployment. This page will include the name of your Fly application: it's likely to be the name of your Heroku application but where there's a name clash, Fly will automatically generate a new name. This name is used with the Flyctl command line, which we install next.
+
+## _Install Flyctl_
+
+You'll need flyctl to interact with Fly. It's a command-line application which is quick to install.
+
+If you are on a Mac and have Homebrew installed, run:
+
+```cmd
+brew install flyctl
+```
+
+If you are on Linux or on a Mac without Homebrew, run
+
+```cmd
+curl -L https://fly.io/install.sh | sh
+```
+
+For other platforms, check out our guide: [Installing Flyctl](/docs/getting-started/installing-flyctl/).
+
+## _Checking on your Application_
+
+The first thing you can do with `flyctl` is check on your application's info. The command `flyctl info` will provide this, you just need to add `-a <yourappname>`
+
+```cmd
+flyctl info -a dawn-fire-977
+```
+```output
+App
+  Name     = dawn-fire-977
+  Owner    = dj
+  Version  = 0
+  Status   = running
+  Hostname = dawn-fire-977.fly.dev
+
+Services
+  TASK   PROTOCOL   PORTS
+  app    tcp        80 => 8080 [HTTP]
+                    443 => 8080 [TLS, HTTP]
+
+IP Addresses
+  TYPE   ADDRESS                              CREATED AT
+  v4     77.83.140.213                        19m57s ago
+  v6     2a09:8280:1:ab3c:22:e4e4:8dd3:bfd9   19m57s ago
+```
+
+This shows us the app details, who created it, what version it's at, the current status and the hostname where the application appears. There are also details on how the app is accessible by users; how port 80 and 443 are mapped to port 8080 and how they are handled. Finally, there are the IPv4 and IPv6 addresses for the hostname.
+
+If you want to know more about the current status of the application, there's `flyctl status`. Just append `-a` and the app name to see something like this:
+
+```cmd
+flyctl status -a dawn-fire-977
+```
+```output
+App
+  Name     = dawn-fire-977
+  Owner    = dj
+  Version  = 0
+  Status   = running
+  Hostname = dawn-fire-977.fly.dev
+
+Deployment Status
+  ID          = 734a7bdb-ab20-d2c4-96fd-eeb4ced36aa9
+  Version     = v0
+  Status      = successful
+  Description = Deployment completed successfully
+  Allocations = 1 desired, 1 placed, 1 healthy, 0 unhealthy
+
+Allocations
+  ID         VERSION   REGION   DESIRED   STATUS    HEALTH CHECKS   CREATED
+  80c9e8d4   0         atl      run       running   1 passing       16m34s ago
+```
+
+## _Connecting to your new Fly Application_
+
+Your new Fly-boosted application will be available at https://appname.fly.dev. You should be able to browse to that URL and confirm your application is running. Once you are happy that all is well, we can move on to the next step.
+
+## _Attaching your Hostnames_
+
+First, assuming you have a custom domain to attach to your application, you'll need to set your DNS settings so that users are directed to the IP address of the Fly-powered version of the site. The `flyctl info` command we showed earlier provides this in the IP Address section of its output. Take the IP address and, wherever you manage your DNS from, add an A record which points to it.
+
+Once this information has propagated through the DNS system, you'll be able to access your application on http://yourcustomdomainname. If you try and connect to https://... then you will see your browser will report the site as insecure as the correct TLS certificate is not in place. Let's add that certificate now.
+
+## _Certifying your Hosts_
+
+The `flyctl certs` command takes care of creating and checking certificates for Fly applications. We need to create a certificate, so let's do that with the `flyctl certs create` command:
+
+```cmd
+flyctl certs create yourcustomdomainname -a yourappname
+```
+```output
+  Hostname                    = yourcustomdomainname
+  Configured                  = false
+  Issued                      =
+  Certificate Authority       = lets_encrypt
+  DNS Provider                = enom
+  DNS Validation Instructions =
+  DNS Validation Hostname     =
+  DNS Validation Target       = yourcustomdomainname.92lg.flydns.net
+  Source                      = fly
+  Created At                  = 0001-01-01T00:00:00Z
+  Status                      =
+```
+
+The process has begun, and in a minute or so, running `flyctl certs check` will give us an update:
+
+```cmd
+flyctl certs check yourcustomdomainname -a yourappname
+```
+```output
+  Hostname                    = yourcustomdomainname
+  Configured                  = false
+  Issued                      =
+  Certificate Authority       = lets_encrypt
+  DNS Provider                = enom
+  DNS Validation Instructions = CNAME _acme-challenge.yourcustomdomainname => yourcustomdomainname.92lg.flydns.net.
+  DNS Validation Hostname     = _acme-challenge.yourcustomdomainname
+  DNS Validation Target       = yourcustomdomainname.92lg.flydns.net
+  Source                      = fly
+  Created At                  = 16m1s ago
+  Status                      = Awaiting configuration
+```
+
+The status shows that the process is now waiting on another configuration change, this time to the DNS information for 'yourcustomdomainname'. We need to create an "_acme-challenge" sub-domain (The DNS Validation Hostname) and point that at a particular flydns address (the DNS Validation Target).
+
+Once this is done, the certificate authority can see the owner of the domain has control of it. Ok, explanation over. What this all comes down to is you need to add a CNAME record to your domain's DNS information that points to your Fly IP address. The text file version of this is included in the DNS Validation Instructions. The process for adding this is dependant on your DNS provider's dashboard/admin, but adding a CNAME record should be obvious/well-documented with them.
+
+Once the new record has been added, give it some time to propagate through DNS. You can occasionally run `flyctl certs check` to get updates on the certificate being issued and when it is ready, you should see this:
+
+```cmd
+ flyctl certs check yourcustomdomainname -a dawn-fire-977
+ ```
+ ```output
+  Hostname                    = yourcustomdomainname
+  Configured                  = true
+  Issued                      = rsa
+  Certificate Authority       = lets_encrypt
+  DNS Provider                = enom
+  DNS Validation Instructions = CNAME _acme-challenge.yourcustomdomainname => yourcustomdomainname.92lg.flydns.net.
+  DNS Validation Hostname     = _acme-challenge.yourcustomdomainname
+  DNS Validation Target       = yourcustomdomainname.92lg.flydns.net
+  Source                      = fly
+  Created At                  = 16m42s ago
+  Status                      = Ready
+```
+
+With configured showing as "true" and status showing as "Ready". You are now ready to connect to https://yourcustomdomainname and you should see the certificate as verified.
+
+## Running with Fly
+
+After completing this process, your application:
+
+* will have speedy DNS lookups with only one IP address to get and one trip to DNS to get it
+* will benefit from the edge termination of TLS for speedier connection negotiation
+* will use HTTP/2 and modern compression
+* will run on dedicated microVMs
+* will work through the global Fly edge servers so all your users will be closer than ever to your applications
+
+All that, without modifying your code. Fly offers more for those ready to optimize for it. For example, there's even faster, global caching using an embedded Redis instance available to all Fly applications. And that's how we make Heroku apps really Fly.
+
+## Developing with Fly
+
+When Turboku migrates your Heroku application, it also creates a link between it and your new Fly app. When you update the Heroku application, this link will automatically trigger an update of the Fly app. There's nothing else that you need to do.
+
+
+

@@ -1,0 +1,180 @@
+---
+title: "Build, Deploy and Run a Node Application"
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+Getting an application running on Fly is essentially working out how to package it as a deployable image. Once packaged it can be deployed to the Fly infrastructure to run on the global application platform. For this _Getting Started_ article, we'll look at building a Node application from scratch.
+
+## _The Hellonode Application_
+
+Our example will be a basic "hello world" example using Node and Express.
+
+You can get the code for the example from [the hellonode Github repository](https://github.com/fly-apps/hellonode-builtin). Just `git clone https://github.com/fly-apps/hellonode-builtin` to get a local copy. Here's all the code:
+
+```javascript
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.get(["/", "/:name"], (req, res) => {
+  greeting = "<h1>Hello From Node on Fly!</h1>";
+  name = req.params["name"];
+  if (name) {
+    res.send(greeting + "</br>and hello to " + name);
+  } else {
+    res.send(greeting);
+  }
+});
+
+app.listen(port, () => console.log(`HelloNode app listening on port ${port}!`));
+```
+
+We'll call this file `server.js` and run `npm init` and `npm install express --save` so we've got the basic node setup. 
+
+## _Running The Application_
+
+Run `node server.js` to start the application
+
+```cmd
+node hellonode.js          
+```
+```output
+HelloNode app listening on port 3000!
+```
+
+And connect to localhost:3000 to confirm that you have a working Node application. Now to package it up for Fly.
+
+
+## _Install Flyctl and Login_
+
+We are ready to start working with Fly and that means we need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once thats installed you'll want to [login to Fly](/docs/getting-started/login-to-fly/).
+
+
+## _Launch the app on Fly_
+
+To launch an app on fly, run `flyctl launch` in the directory with your source code. This will create and configure a fly app for you by inspecting your source code, then prompt you to deploy.
+
+```cmd
+flyctl launch
+```
+```output
+Scanning source code
+Detected NodeJS app
+Using the following build configuration
+        Builder: paketobuildpacks/builder:base
+        Buildpacks: gcr.io/paketo-buildpacks/nodejs
+? Select organization: Demo (demo)
+? Select region: ord (Chicago, Illinois (US))
+? Would you like to deploy now? Yes
+
+Deplying hellonode
+...
+```
+
+First, this command scans your source code to determine how to build a deployment image as well as identify any other configuration your app needs, such as secrets and exposed ports.
+
+After your source code is scanned and the results are printed, you'll be prompted for an organization. Organizations are a way of sharing applications and resources between Fly users. Every fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
+
+Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region. 
+
+At this point, `flyctl` creates an app for you and writes your configuration to a `fly.toml` file. You'll then be prompted to build and deploy your app. Once complete, your app will be running on fly. 
+
+## _Inside `fly.toml`_
+
+The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also created a Fly-side application slot of the same name, "hellonode". If we look at the `fly.toml` file we can see the name in there:
+
+```toml
+app = "hellonode"
+
+[build]
+  builder = "paketobuildpacks/builder:base"
+  buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = "80"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "443"
+
+  [[services.tcp_checks]]
+    interval = 10000
+    timeout = 2000
+```
+
+The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly platform. The rest of the file contains settings to be applied to the application when it deploys. 
+
+We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
+
+## _Deploying to Fly_
+
+To deploy changes to your app, just run just run:
+
+```cmd
+flyctl deploy
+```
+
+This will lookup our `fly.toml` file, and get the app name `hellonode` from there. Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl will return you to the command line when it's done.
+
+## _Viewing the Deployed App_
+
+Now the application has been deployed, let's find out more about its deployment. The command `flyctl info` will give you all the essential details.
+
+```cmd
+flyctl status
+```
+```output
+App
+  Name     = hellonode
+  Owner    = dj
+  Version  = 0
+  Status   = running
+  Hostname = hellonode.fly.dev
+
+Allocations
+ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
+ada41989 0       fra    run     running 1 total, 1 passing 0        33s ago
+```
+
+## _Connecting to the App_
+
+The quickest way to browse your newly deployed application is with the `flyctl open` command.
+
+```cmd
+flyctl open
+```
+```output
+Opening http://hellonode.fly.dev/
+```
+
+Your browser will be sent to the displayed URL. Fly will auto-upgrade this URL to an HTTPS secured URL.
+
+## _Bonus Points_
+
+* When our Dockerfile is run, it copies everything from the directory over to the Docker image. For Node applications, some directories like `node_modules` are going to be rebuilt anyway so there's no need to copy them. Create a `.dockerignore` file and add `node_modules` to it to do this.
+* You can also use the `.dockerignore` to skip unused project assets and any other files which aren't needed at runtime.
+* If you want to know what IP addresses the app is using, try `flyctl ips list`:
+
+```cmd
+flyctl ips list
+```
+```out
+TYPE ADDRESS                              CREATED AT
+v4   50.31.246.73                         23m42s ago
+v6   2a09:8280:1:3949:7ac8:fe55:d8ad:6b6f 23m42s ago
+```
+
+## _Arrived at Destination_
+
+You have successfully built, deployed, and connected to your first Node application on Fly.

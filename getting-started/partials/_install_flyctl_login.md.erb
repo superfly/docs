@@ -1,0 +1,22 @@
+
+## _Install `flyctl` and login_
+
+We have a [CLI](/docs/flyctl/) tool for deploying and managing Fly applications.  If you're on a Mac, you can install the CLI with Homebrew:
+
+```cmd
+brew install superfly/tap/flyctl
+```
+
+On macOS without Homebrew or Linux you can run the install script
+
+```cmd
+curl -L https://fly.io/install.sh | sh
+```
+
+Windows has its own Powershell install script that you can run
+
+```cmd
+iwr https://fly.io/install.ps1 -useb | iex
+```
+
+<%= partial "../partials/flyctl/auth_login" %>

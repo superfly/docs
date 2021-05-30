@@ -1,0 +1,52 @@
+---
+title: Secrets and Fly Apps
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+Secrets allow sensitive values, such as credentials, to be passed securely to your Fly applications. A secret has a name and a value and can be set for a specific application. The secret is then encrypted and stored in a value. When the application is run, these secrets are made available as environment variables to the running application. 
+
+You can specify secrets for your application using the `flyctl secrets` command.
+
+## Architecture
+
+Secrets are stored in an encrypted vault. When you set a secret through `flyctl`, it sends the secret value through our API which writes to the vault for your specific application. The API servers can only encrypt, they cannot decrypt secret values. Secret values are never logged.
+
+When we launch a VM for your application, we issue the host it runs on a temporary auth token it can use to decrypt your app secrets. The Fly.io agent on the host uses this token to decrypt your app secrets and inject them into your VM as environment variables at boot time. When you de-provision your VM, the host environment no longer has access to your app secrets.
+
+`flyctl` and our API servers are designed to prevent user secrets from being extracted. However, secrets are available to your application code as environment variables. People with deploy access _can_ deploy code that reads secret values and prints them to logs, or writes them to unencrypted data stores.
+
+## Setting Secrets
+
+The `flyctl secrets set` command will set one or more application secrets then perform a release.
+
+```cmd
+flyctl secrets set MY_SECRET=romance DATABASE_URL=postgres://example.com/mydb
+```
+
+These will be set as `$MY_SECRET` and `$DATABASE_URL` environment variables within your application processes.
+
+**Note:** if a secret you set causes your app to crash within 30s, the release will fail and your app will continue to run with previous secrets.
+
+## Removing Secrets
+
+The `flyctl secrets unset` command will clear one or more secret values.
+
+```cmd
+flyctl secrets unset MY_SECRET DATABASE_URL
+```
+
+## Listing Secrets
+
+```cmd
+flyctl secrets list
+```
+```output
+      NAME     |              DIGEST              |  DATE
++--------------+----------------------------------+---------+
+  MY_SECRET    | b9e37b7b239ee4aefc75352fe3fa6dc6 | 17s ago
+  DATABASE_URL | cdbe3268a82bfe993921b9cae2a526af | 17s ago
+```
+
+For security reasons, we do not allow read access to the plain-text values of secrets.

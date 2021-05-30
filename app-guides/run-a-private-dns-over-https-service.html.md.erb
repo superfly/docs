@@ -1,0 +1,289 @@
+---
+title: Run A Private DNS Over HTTPS Service
+layout: docs
+sitemap: false
+nav: firecracker
+author: kurt
+tag:
+  - guide
+  - dns
+date: 2020-04-10
+---
+
+## _Why DNS over HTTPS?_
+
+DNS over HTTPS (or DoH or 🍩) is a protocol that makes browsing more private. Browsers typically resolve domain names with an unencrypted protocol, allowing nosy neighbors and internet providers to snoop on some internet activity. DoH creates an encrypted connection between browsers and the DNS resolver to make it difficult to even see what domains a user is loading.
+
+Firefox now [uses DNS over HTTPS by default](https://blog.mozilla.org/blog/2020/02/25/firefox-continues-push-to-bring-dns-over-https-by-default-for-us-users/) in the US and [DNS over HTTPS can easily be enabled](https://support.mozilla.org/en-US/kb/firefox-dns-over-https) elsewhere in the world. With the release of version 83, Chrome has gained official support for DNS over HTTPS (see this [Chrome Blog post](https://blog.chromium.org/2020/05/a-safer-and-more-private-browsing-DoH.html) for details). And Microsoft is planning to enable [DNS over HTTPS in Windows 10](https://techcommunity.microsoft.com/t5/networking-blog/windows-will-improve-user-privacy-with-dns-over-https/ba-p/1014229).
+
+It's useful to be able to run private services for protocols like DoH. If you pipe all your encrypted DNS requests to one shared provider, you're essentially just swapping one nosy ISP for an even bigger internet provider. Fly is an especially good place to run DNS services because we deploy apps globally and the internet is faster when DNS is close by. And if you want to, you can even [manage your own TLS](#handle-your-own-tls).
+
+## _Prerequisites_
+
+### Install Fly CLI
+
+If you're on a Mac, you can install the CLI with Homebrew:
+
+```cmd
+brew install superfly/tap/flyctl
+```
+
+For other systems, download and run the install script:
+
+```cmd
+curl -L https://fly.io/install.sh | sh
+```
+
+### Sign In (or Up) for Fly
+
+If you have a Fly account, all you need to do is [sign-in with `flyctl`](#returning-user).
+
+#### New User?
+
+Welcome to Fly. To get your Fly account run:
+
+```cmd
+flyctl auth signup
+```
+
+This will take you to the sign-up page where you can either:
+
+* **Sign up With Email**: Enter your name, email and password.
+
+* **Sign up With Github**: If you have a Github account, you can use that to sign up. Look out for the confirmatory email we will send you which will give you a link to set a password; you'll need a password set so we can actively verify that it is you for some Fly operations.
+
+
+#### Returning User
+
+Run:
+
+```cmd
+flyctl auth login
+```
+
+Your browser will open up with the Fly sign-in screen. Enter your user name and password to sign in. If you signed up with Github, use the `Sign in with Github` button to sign in.
+
+
+Whichever route you take you will be signed-up, signed-in and returned to your command line, ready to Fly.
+
+
+### Create a Fly App
+
+Pick a name for your new DNS over HTTPS service. Then create a Fly app:
+
+```cmd
+flyctl apps create
+```
+```output
+? App Name (leave blank to use an auto-generated name)
+> [your-app-name]
+
+✔ New app created
+  Name    = [your-app-name]
+  Owner   = fly
+  Version = v0
+  Status  =
+
+Created fly.toml
+```
+
+## _Two-minute easy mode_
+
+We've published a [Docker image](https://hub.docker.com/r/flyio/doh-proxy) you can use to get started.
+
+### 1. Deploy `flyio/doh-proxy` from Docker Hub
+
+```cmd
+flyctl deploy -i flyio/doh-proxy:0.1.19
+```
+```output
+==> Validating app configuration
+--> done
+   Services
+      TCP 80/443 ⇢ 8080
+==> Creating Release
+Release v0 created
+==> Monitoring Deployment
+You can detach the terminal anytime without stopping the deployment
+v0 is being deployed
+1 desired, 1 placed, 1 healthy, 0 unhealthy [health checks: 1 total, 1 passing]
+v0 deployed successfully
+```
+
+### 2. Use `https://[your-app-name].fly.dev/dns-query`
+
+Your new Fly app includes dedicated IP addresses and a `[your-app-name].fly.dev` hostname with a valid certificate. You can see these by running `flyctl info`:
+
+```cmd
+flyctl info
+```
+```output
+App
+  Name     = doh-proxy
+  Owner    = fly
+  Version  = 10
+  Status   = pending
+  Hostname = https://[your-app-name].fly.dev
+
+Services
+  TASK   PROTOCOL   PORT   INTERNAL PORT   HANDLERS
+  app    tcp        80     8080            http
+  app    tcp        443    8080            tls http
+
+IP Addresses
+  ADDRESS                                TYPE
+  77.83.140.25                           v4
+  2a09:8280:1:68a1:90f6:e320:d275:70f7   v6
+```
+
+The URL for DNS queries is: `https://[your-app-name].fly.dev/dns-query`, you can use it in any app that supports DNS over HTTPS.
+
+You can also try it out with `curl`:
+
+```cmd
+curl -D - -sS "https://doh-proxy.fly.dev/dns-query?ct&dns=q80BAAABAAAAAAAAB2V4YW1wbGUDY29tAAABAAE" | strings
+```
+```output
+HTTP/2 200
+content-length: 56
+content-type: application/dns-message
+x-padding: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+cache-control: max-age=43200
+date: Wed, 11 Sep 2019 15:08:54 GMT
+server: Fly/a04ef97 (Wed, 11 Sep 2019 11:18:30 +0000)
+example
+```
+
+## _Hard mode (maybe 10 minutes)_
+
+### 1. Write a Custom `Dockerfile`
+
+We use Docker to build and package applications. For custom builds, you'll need a `Dockerfile` in your working directory — here's a good one for `doh-proxy`:
+
+```dockerfile
+# ------------------------------------------------------------------------------
+# Cargo Build Stage
+# ------------------------------------------------------------------------------
+
+FROM rust:latest as cargo-build
+
+ARG VERSION=0.1.19
+
+RUN apt-get update
+
+RUN apt-get install musl-tools -y
+
+RUN rustup target add x86_64-unknown-linux-musl
+
+RUN RUSTFLAGS=-Clinker=musl-gcc cargo install doh-proxy --version $VERSION --root /usr/local/ --target=x86_64-unknown-linux-musl
+
+# ------------------------------------------------------------------------------
+# Final Stage
+# ------------------------------------------------------------------------------
+
+FROM alpine:3.10
+
+RUN apk add --no-cache libgcc runit shadow curl
+
+COPY --from=cargo-build /usr/local/bin /usr/local/bin
+
+RUN useradd doh-proxy
+
+USER doh-proxy
+
+ENV LISTEN=0.0.0.0:8080
+ENV RESOLVER=9.9.9.9:53
+
+RUN /usr/local/bin/doh-proxy --version
+
+CMD ["sh", "-c", "/usr/local/bin/doh-proxy --listen-address $LISTEN --server-address $RESOLVER"]
+```
+
+### 2. Deploy working directory with `flyctl`
+
+The Fly CLI will build + deploy a Docker image in one step. Just run `flyctl deploy` in your working directory. If Docker is running locally, we'll do a local build. If you don't have docker installed, we copy the contents of your working directory and perform a build on our servers.
+
+```cmd
+flyctl deploy
+```
+```output
+==> Validating app configuration
+--> done
+   Services
+      TCP 80/443 ⇢ 8080
+Deploy source directory '.'
+Docker daemon available, performing local build...
+Using Dockerfile from working directory: Dockerfile
+Step 1/15 : FROM rust:latest as cargo-build
+...
+Step 6/15 : RUN RUSTFLAGS=-Clinker=musl-gcc cargo install doh-proxy --version $VERSION --root /usr/local/ --target=x86_64-unknown-linux-musl
+...
+Step 7/15 : FROM alpine:3.10
+...
+Step 9/15 : COPY --from=cargo-build /usr/local/bin /usr/local/bin
+...
+Step 15/15 : CMD ["sh", "-c", "/usr/local/bin/doh-proxy --listen-address $LISTEN --server-address $RESOLVER"]
+ ---> Running in 427a770ed8a5
+ ---> ee696da27723
+Successfully built ee696da27723
+Successfully tagged registry.fly.io/srcproxy:deployment-1580379849
+Image size: 18 MB
+==> Pushing image
+The push refers to repository [registry.fly.io/srcproxy]
+75b521405184: Pushed
+ec42405b9867: Pushed
+fecdd1368b2a: Pushed
+531743b7098c: Pushed
+deployment-1580379849: digest: sha256:220099d5aae94190a206bfdda219480ffbf8da988690361ae6d1d280732d8a68 size: 1158
+--> done
+==> Creating Release
+Release v0 created
+==> Monitoring Deployment
+You can detach the terminal anytime without stopping the deployment
+v0 is being deployed
+1 desired, 1 placed, 1 healthy, 0 unhealthy [health checks: 1 total, 1 passing]
+v0 deployed successfully
+```
+
+This could take a while on the first one. Subsequent runs will reuse image layers and finish quite a bit faster.
+
+## _Optional configuration_
+
+### Use a Different Resolver
+
+The `doh-proxy` project defaults to using the [Quad9* DNS resolver](https://www.quad9.net) at `9.9.9.9:53`. To change this, you can add an environment variable:
+
+```cmd
+flyctl secrets set RESOLVER=8.8.8.8:53
+```
+```output
+  VERSION   REASON            DESCRIPTION   USER               DATE
+  v10       Secrets updated                 flydev@fly.local   0s ago
+```
+
+### Change Hostnames
+
+Fly apps support an unlimited number of hostnames and SSL certificates. To set one up:
+
+1. Add a certificate to your fly app:
+  ```cmd
+  flyctl certs create example.com -a doh-proxy
+  ```
+  ```output
+  Hostname              = example.com
+  Configured            = false
+  Certificate Authority = lets_encrypt
+  DNS Provider          = nsamesystem
+  DNS Validation Target = example.com.q8o1.flydns.net
+  Source                = fly
+  ```
+
+2. Create a validation CNAME entry:
+  * Name: `_acme-challenge.example.com.`
+  * Target: `example.com.q8o1.flydns.net`
+3. Make a DNS entry pointing example.com to your Fly app IP
+
+### Handle your own TLS
+
+Fly can take care of TLS + HTTPS for you, but it doesn't have to. If you'd prefer to terminate your own TLS, you can generate your own certificates, store them as encrypted Fly secrets, and tweak [the Dockerfile](#write-a-custom-dockerfile) to pull them from your app environment. We'll happily forwarded encrypted TCP to your app and let you worry about the rest.
+

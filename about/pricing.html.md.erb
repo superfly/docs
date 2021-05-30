@@ -1,0 +1,77 @@
+---
+title: Fly App Pricing
+layout: docs
+sitemap: true
+nav: firecracker
+---
+
+Fly application services are billed individually based on usage. Most services include a free tier – enough for you to run smaller applications at no cost (and when they grow, very little cost). Billing is per user or organization, if you want to run more free apps, just make another organization and invite your friends.
+
+## _Free tier_
+<div class="max-w:full overflow-x:auto bg:white shadow:lg r mb:4">
+<table class="table:stripe table:stretch table:pad text:sm m:0">
+  <tbody>
+    <tr>
+      <th>VM: shared-cpu</th>
+      <td>2,340 hours per month</td>
+      <td>Run 3 <a href="#compute">shared-cpu-1x</a> VMs with 256MB RAM full time.</td>
+    </tr>
+    <tr>
+      <th>Bandwidth</th>
+      <td>160GB per month</td>
+      <td>See <a href="#outbound-data-transfer">outbound data transfer</a> for regional breakdown</td>
+    </tr>
+    <tr>
+      <th>Anycast IPs</th>
+      <td>Unlimited IPv6, 1 IPv4 per active app</td>
+      <td>Additional IPv4 addresses are $2 per month</td>
+    </tr>
+    <tr>
+      <th>Certificates</th>
+      <td>10 active certificates</td>
+      <td>Add 10 <a href="#outbound-data-transfer">certificates</a> to your apps</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+## _Compute_
+
+##### Virtual Machines
+
+<%= partial("shared/cpu_mem_pricing") %>
+
+##### Persistent Volumes
+
+You can add one or more persistent volumes to your apps with `flyctl volumes create ...`:
+
+* $0.15/GB per month of provisioned capacity
+
+Volume billing is pro-rated to the hour.
+
+## _Network prices_
+
+##### Anycast IP addresses
+
+Each application includes one Anycast IPv4 and unlimited Anycast IPv6 Anycast addresses for global load balancing. Additional IPv4 addresses are $2/mo.
+
+##### Managed SSL certificates
+
+We use Lets Encrypt to issue certificates, and donate half of our SSL fees to them at the end of each calendar year.
+
+* Single hostname certificates
+  * Free for the first 10
+  * $0.10/mo for additional certificates
+* Wildcard certificates: $2/mo
+
+##### Outbound data transfer
+We bill for outbound data transfer, inbound transfer is free.
+
+<%= partial("shared/network_pricing") %>
+
+## _Support_
+
+[Community support](https://community.fly.io) is included for all customers, regardless of usage level.
+
+We offer volume discounts and paid support plans with SLA guarantees as well.
+

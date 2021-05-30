@@ -1,0 +1,65 @@
+---
+title: Nginx at the edge
+layout: docs
+sitemap: false
+nav: firecracker
+date: 2020-01-10
+---
+
+Nginx is a lightweight and powerful proxy server. It runs exceptionally well close to end users, and devs can do a lot with it: everything from manage global redirect rules to full blown apps with OpenResty.
+
+## _Build an Nginx app_
+
+Fly runs apps bundled as Docker images. Go ahead and create a working directory for this guide, we'll use `nginx-example`.
+
+```cmd
+mkdir nginx-example
+```
+```cmd
+cd nginx-example
+```
+
+#### `./nginx.conf`
+
+Nginx needs a configuration file, here's a basic configuration for proxying requests to a Heroku application. Save this to your working directory as `nginx.conf`:
+
+```cmd
+cat nginx.conf
+```
+```output
+user nginx;
+worker_processes auto;
+
+error_log /dev/stdout info; # log errors stdout for Fly
+pid /var/run/nginx.pid;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  default_type  application/octet-stream;
+
+  log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+    '$status $body_bytes_sent "$http_referer" '
+    '"$http_user_agent" "$http_x_forwarded_for"';
+
+  access_log /dev/stdout main; # log requests to stdout
+  sendfile on;
+  keepalive_timeout 65;
+  gzip on;
+
+  server {
+    listen 80;
+    server_name _;
+    keepalive_timeout 5;
+    location / {
+      proxy_set_header X-Forwarded-Host $http_host; # set x-forwarded-host from the original host header
+      proxy_redirect on; #rewrite redirects
+      proxy_pass https://example.herokuapp.com/; #proxy to heroku ap
+    }
+  }
+}
+```
+#### `./Dockerfile`
+

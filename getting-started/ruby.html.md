@@ -1,0 +1,188 @@
+---
+title: "Build, Deploy and Run a Ruby Application"
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+Getting an application running on Fly is essentially working out how to package it as a deployable image. Once packaged it can be deployed to the Fly infrastructure to run on the global application platform. For this _Getting Started_ article, we'll look at building a Ruby application from scratch.
+
+## _The Helloruby Application_
+
+Our example will be a basic "hello world" example using Sinatra. We'll assume that you already have Ruby and Bundler installed.
+
+You can get the code for the example from [the helloruby Github repository](https://github.com/fly-apps/helloruby-builtin). Just `git clone https://github.com/fly-apps/helloruby-builtin` to get a local copy. Here's all the code for our `app.rb`:
+
+```ruby
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'bundler/setup'
+require 'sinatra'
+
+get '/' do
+  "<h1>Hello From Ruby on Fly!</h1>"
+end
+
+get '/:name' do
+  "<h1>Hello From Ruby on Fly!</h1></br>and hello to #{params[:name]}"
+end
+```
+
+We'll call this file `app.rb`. We also need to install Sinatra - `bundle add sinatra` and create a config.ru file for Rack to start up the server:
+
+```ruby
+# config.ru
+
+require './app.rb'
+
+run Sinatra::Application
+```
+
+We're now ready to run the app locally.
+
+## _Running The Application_
+
+Run `rackup` to start the application
+
+```cmd
+rackup
+```
+```output
+[2020-08-18 14:46:21] INFO  WEBrick 1.4.2
+[2020-08-18 14:46:21] INFO  ruby 2.6.5 (2019-10-01) [x86_64-darwin19]
+[2020-08-18 14:46:21] INFO  WEBrick::HTTPServer#start: pid=39638 port=9292
+```
+
+And connect to localhost:9292 to confirm that you have a working Ruby application. Now to package it up for Fly.
+
+
+## _Install Flyctl and Login_
+
+We are ready to start working with Fly and that means we need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once thats installed you'll want to [login to Fly](/docs/getting-started/login-to-fly/).
+
+
+## _Launch the app on Fly_
+
+To launch an app on fly, run `flyctl launch` in the directory with your source code. This will create and configure a fly app for you by inspecting your source code, then prompt you to deploy.
+
+```cmd
+flyctl launch
+```
+```output
+Scanning source code
+Detected Ruby app
+Using the following build configuration
+        Builder: paketobuildpacks/builder:base
+        Buildpacks: gcr.io/paketo-buildpacks/ruby
+? Select organization: Demo (demo)
+? Select region: ord (Chicago, Illinois (US))
+? Would you like to deploy now? Yes
+
+Deplying helloruby
+...
+```
+
+First, this command scans your source code to determine how to build a deployment image as well as identify any other configuration your app needs, such as secrets and exposed ports.
+
+After your source code is scanned and the results are printed, you'll be prompted for an organization. Organizations are a way of sharing application and resources between Fly users. Every fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
+
+Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region. 
+
+At this point, `flyctl` creates an app for you and writes your configuration to a `fly.toml` file. You'll then be prompted to build and deploy your app. Once complete, your app will be running on fly. 
+
+## _Inside `fly.toml`_
+
+The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also created a Fly-side application slot of the same name, "helloruby". If we look at the `fly.toml` file we can see the name in there:
+
+```toml
+app = "helloruby"
+
+[build]
+  builder = "paketobuildpacks/builder:base"
+  buildpacks = ["gcr.io/paketo-buildpacks/ruby]
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = "80"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "443"
+
+  [[services.tcp_checks]]
+    interval = 10000
+    timeout = 2000
+```
+
+The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly platform. The rest of the file contains settings to be applied to the application when it deploys. 
+
+We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
+
+## _Deploying to Fly_
+
+To deploy changes to your app, just run just run:
+
+```cmd
+flyctl deploy
+```
+
+This will lookup our `fly.toml` file, and get the app name `helloruby` from there. Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl will return you to the command line when it's done.
+
+## _Viewing the Deployed App_
+
+Now the application has been deployed, let's find out more about its deployment. The command `flyctl info` will give you all the essential details.
+
+```cmd
+flyctl status
+```
+```output
+App
+  Name     = helloruby
+  Owner    = demo
+  Version  = 1
+  Status   = running
+  Hostname = helloruby.fly.dev
+
+Allocations
+ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
+d61b5d88 1       fra    run     running 1 total, 1 passing 0        2m21s ago
+```
+
+## _Connecting to the App_
+
+The quickest way to browse your newly deployed application is with the `flyctl open` command.
+
+```cmd
+flyctl open
+```
+```output
+Opening http://helloruby.fly.dev/
+```
+
+Your browser will be sent to the displayed URL. Fly will auto-upgrade this URL to a HTTPS secured URL.
+
+## _Bonus Points_
+
+* If you want to know what IP addresses the app is using, try `flyctl ips list`:
+
+```cmd
+flyctl ips list
+```
+```out
+TYPE ADDRESS                             CREATED AT
+v4   50.31.246.176                       31m16s ago
+v6   2a09:8280:1:ec33:28d:5d1c:e0e9:2839 31m16s ago
+```
+
+## _Arrived at Destination_
+
+You have successfully built, deployed, and connected to your first Ruby application on Fly.

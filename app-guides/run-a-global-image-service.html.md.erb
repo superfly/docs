@@ -1,0 +1,274 @@
+---
+title: Run a Global Image Service
+layout: docs
+sitemap: false
+nav: firecracker
+author: dj
+categories:
+  - guide
+  - images
+  - performance
+  - proxy
+  - cdn
+image: https://fly.io/ui/images/image-service.jpg
+date: 2020-05-10
+---
+
+<figure class="flex ai:center jc:center w:full r:lg overflow:off mb:4">
+  <img class="m:0" src="/public/images/image-service.jpg" alt="A hand holding scissors and cutting out paper for a scrapbook" class="w:full h:full fit:cover">
+</figure>
+
+For many web applications, the ability to scale, crop and otherwise manipulate images is essential. One way of providing this capability is with a URL-request-driven image service which can retrieve images, process them and deliver them wherever needed. 
+
+But that also means provisioning the service globally to keep latency times low which can be its own administrative headache. 
+
+With Fly you can eliminate all that administrative load by letting Fly deploy a service on demand close to your users so they get a rapidly rendered experience. In this guide, we'll show you how to deploy a popular image processing application, Imaginary, into the Fly Global Application Platform to make your own Global Image Service.
+
+## _What’s Imaginary_
+
+Let's start with [h2non/Imaginary](https://github.com/h2non/imaginary), a fantastically useful image processing application written in Go. Once configured, it lets you process images. The images can be posted to it or you can ask it to get an image from a remote server and all of this is controlled through a URL request to the Imaginary server. 
+
+You can find all the source in the Github repository, but for this guide, we don't need to worry about that. We're going to use the developer-supplied Docker image to deploy it. 
+
+## _Deploying Docker Images to Fly_
+
+How do you turn a Docker image into a globally available edge application? With Fly it's remarkably concise process.
+
+One thing we know at Fly is that our users want to deploy more than JavaScript at the edge. Powerful though that is, they also want fully fledged application stacks and backend components to live at the edge too. Now they can, and in this series of guides we'll show you how to use them.
+
+In this first guide, we're going to take an existing application and make it go global with Fly.
+
+## _Creating the Dockerfile_
+
+To use a Docker image, we'll need a Dockerfile. Create a new directory and create a `Dockerfile` in it with these contents.
+
+```dockerfile
+FROM h2non/imaginary:1.1.1
+ENV PORT "8080"
+CMD ["-enable-url-source","-http-read-timeout" ,"3"]
+```
+
+If you aren't familiar with Docker, the first `FROM` line selects the image of the application and version we want to use. The Imaginary image is configured to run the `imaginary` command.
+
+Imaginary, running in a Docker container, normally opens a port on port 9000, but for this exercise, we want to to open its port on 8080, Fly's default port for external communications. The simplest way to do that is to set the PORT environment value to 8080.
+
+The third  `CMD` line contains the parameters we pass to the `imaginary` command that are going to configure how Imaginary runs. The `-enable-url-source` tells Imaginary it is allowed to retrieve images from around the internet and, just so it's well-behaved, we set the `-http-read-timeout` to 3 seconds (the default is 60 which is a long time to wait for an image). 
+
+
+## _Testing Locally_
+
+You'll need to have Docker installed locally to test this locally. We won't go into the details of installing Docker - check out the [Docker site and guides](https://docs.docker.com/install/) for how to install. Assuming you've done this we can move on to testing.
+
+#### Build a Docker Instance 
+
+To create a container instance using the Dockerfile, run:
+
+```cmd
+docker build -t localimaginary .
+```
+
+#### Run the Docker Instance
+
+To start up the Docker container, run:
+
+```cmd
+docker run -p 8080:8080 localimaginary
+```
+
+Where does that -p 8080:8080 value come from? Well, it's exposing port 8080, the one we set in the `ENV` line in our docker file.
+
+#### Processing an Image
+
+To test our local image, let's process a file. In this case, we're going to crop an existing image from Imaginary's github repository. 
+
+In another terminal session, run:
+
+```cmd
+curl -O "http://localhost:8080/crop?width=500&height=400&url=https://raw.githubusercontent.com/h2non/imaginary/master/testdata/large.jpg"
+```
+
+This will ask Imaginary to crop, to 100x100, an image stored in the Imaginary Github repository. This should result in a file, `large.jpg` being written to disc which you can display using your preferred image viewer. MacOS users can simply `open large.jpg` at the command line.
+
+Open the cropped image. Take a moment to play with the width and height values in the URL we're querying and you will get different sized cropped images. Once you are happy the local build is working, you can return to the session where you started the docker image and ctrl-C to stop it.
+
+We now have a working docker image. Now to globally deploy it with Fly.
+
+## _Going Global_
+
+For this you'll need flyctl, it's your CLI-powered remote control for your Fly applications. 
+
+### Installing `flyctl` 
+
+If you've already installed `flyctl`, move on to the next step. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl.html). 
+
+### Sign In (or Up) for Fly
+
+If you have a Fly account, all you need to do is [sign-in with `flyctl`](#returning-user).
+
+##### New User?
+
+Welcome to Fly. To get your Fly account run:
+
+```cmd
+flyctl auth signup
+```
+
+This will take you to the sign-up page where you can either:
+
+* **Sign up with Email**: Enter your name, email and password. 
+
+* **Sign up with Github**: If you have a Github account, you can use that to sign up. Look out for the confirmatory email we will send you which will give you a link to set a password; you'll need a password set so we can actively verify that it is you for some Fly operations.
+
+
+##### Returning User
+
+Run:
+
+```cmd
+flyctl auth login
+```
+
+Your browser will open up with the Fly sign-in screen. Enter your user name and password to sign in. If you signed up with Github, use the `Sign in with Github` button to sign in.
+
+
+Whichever route you take you will be signed-up, signed-in and returned to your command line, ready to Fly.
+
+## Preparing to fly
+
+### Creating a `fly.toml` File
+
+The flyctl app helps you handle the entire lifecycle of your Fly Global application. That all starts with creating the `fly.toml` file which will control how your application is configured when deployed. To do so, run:
+
+```cmd
+flyctl apps create
+```
+
+This will kick off a short dialogue with you about your new application. First up, it'll ask for an application name:
+
+```output
+? App Name (leave blank to use an auto-generated name) flyimaginary
+```
+
+Your name has to be unique across all Fly users, so unless there's a good reason, go with an auto-generated name.
+
+Next you'll be asked to select an organization. If this is your first time on Fly, there'll only be one organization - your own personal organization, just for your applications. Organizations are all about sharing apps and collaborating. For this guide, we don't need to worry about that, so we can use our personal organization.
+
+```output
+? Select organization: Demo (demo)
+```
+
+Once the organization has been selected, `flyctl` gets to generating the app.
+
+```output
+New app created
+  Name     = flyimaginary
+  Owner    = demo
+  Version  = 0
+  Status   =
+  Hostname = <empty>
+
+Wrote config file fly.toml
+```
+
+So, what's in `fly.toml`? If you look in it, you'll find various configuration parameters. You can skip to Deploying if you want to.
+
+```toml
+app = "flyimaginary"
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = "80"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "443"
+
+  [[services.tcp_checks]]
+    interval = 10000
+    timeout = 2000
+```
+
+As well as the app name in the file, there's a services section which sets what the internal port number exposed by the app is and how it should be handled. It also says this port should be handled as TCP.
+
+That's followed by `services.concurrency` which sets soft and hard limits to the number of connections the application should take before being transparently scaled horizontally.
+
+There are also two `services.ports` sections. The first says incoming connections on port 80 will be routed to port 8080 and handled as HTTP. The second, more interesting entry, says that incoming connections on port 443 will be handled as TLS terminated HTTP connections and then routed on as HTTP to port 8080.
+
+There's also a `services.tcp_checks` section which is used to define how we do health checks on the application. 
+
+We can leave all of this completely untouched for this guide. We're ready to Fly globally.
+
+### Deploying 
+
+For deployment, we go back to flyctl. 
+
+```cmd
+flyctl deploy
+```
+
+Flyctl will find the application name from the `fly.toml` file automatically and start the deployment process. There'll be a fair amount of output as flyctl gets Docker to assemble the image, create a release of the image and then deploy and check it's running. When it is complete you'll see something like:
+
+```output
+...
+==> Creating Release
+Release v0 created
+==> Monitoring Deployment
+You can detach the terminal anytime without stopping the deployment
+v0 is being deployed
+1 desired, 1 placed, 1 healthy, 0 unhealthy [health checks: 1 total, 1 passing]
+v0 deployed successfully
+```
+
+The application is now deployed. 
+
+### Viewing Fly Apps
+
+You'll need the URL for the deployed application to connect to it. Flyctl helps out here with the `flyctl info` command:
+
+```cmd
+flyctl info
+```
+```output
+App
+  Name     = flyimaginary
+  Owner    = demo
+  Version  = 0
+  Status   = running
+  Hostname = flyimaginary.fly.dev
+
+Services
+  TASK   PROTOCOL   PORTS
+  app    tcp        443 => 8080 [TLS, HTTP]
+                    80 => 8080 [HTTP]
+
+IP Addresses
+  TYPE   ADDRESS                                CREATED AT
+  v4     77.83.140.214                          5m36s ago
+  v6     2a09:8280:1:a93f:aeee:f28f:2c4e:2fb1   5m35s ago
+```
+
+### Testing Imaginary on Fly
+
+This tells you all you need to know about your currently deployed application. If you take the `Hostname` you can use that in a URL request to the Fly deployment:
+
+```cmd
+curl -O "http://flyimaginary.fly.dev/crop?width=500&height=400&url=https://raw.githubusercontent.com/h2non/imaginary/master/testdata/large.jpg"
+```
+
+Notice that we didn't need to specifiy port 8080 as we did with the local docker build. That's because port 80 on the host routes to port 8080. As an added bonus, we also got HTTPS support as port 443 also routes to port 8080, with Fly managing the TLS termination and the Let's Encrypt certificates. We can do the same query, over a secured connection, with:
+
+```cmd
+curl -O "https://flyimaginary.fly.dev/crop?width=500&height=400&url=https://raw.githubusercontent.com/h2non/imaginary/master/testdata/large.jpg"
+```
+
+## _Summary_
+
+In this guide we created a Docker image, based on a third-party image, tested it locally then deployed it to the Fly platform using `flyctl`. You now have a Global Image Service. Whenever you request it processes an image, Fly will create an instance of the service closest to you to fulfill your request.
