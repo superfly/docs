@@ -25,7 +25,7 @@ This guide is all about PostgreSQL, but the deployment topology will work with M
 If you don't already have a PostgreSQL cluster running, you can create one with the `fly` CLI:
 
 ```
-fly pg create --name chaos-postgre --region scl
+fly pg create --name chaos-postgres --region scl
 ```
 
 This creates a two node PostgreSQL cluster in Santiago Chile, one leader for writes, one replica for redundancy.
