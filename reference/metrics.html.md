@@ -11,7 +11,7 @@ nav: firecracker
 
 ## Sending custom metrics to Prometheus
 
-Apps can expose a metrics endpoint we'll periodically (a few times per minute).
+Apps can expose a metrics endpoint we'll periodically poll (a few times per minute).
 
 ### Configuration
 
@@ -23,28 +23,6 @@ app = "your-app-name"
 [metrics]
 port = 9091 # default for most prometheus clients
 path = "/metrics" # default for most prometheus clients
-```
-
-### Instrumentation
-
-Instrument your app and expose your metrics on `0.0.0.0`.
-
-There are many supported [client libraries](https://prometheus.io/docs/instrumenting/clientlibs/) as well as 3rd party libraries able to return Prometheus-formatted metrics.
-
-## Sending custom metrics to Prometheus
-
-Apps can expose a metrics endpoint we'll periodically (a few times per minute).
-
-### Configuration
-
-Add this to your application's `fly.toml`
-
-```toml
-app = "your-app-name"
-
-[experimental]
-metrics_port = 9091 # default for most prometheus clients
-metrics_path = "/metrics" # default for most prometheus clients
 ```
 
 ### Instrumentation
