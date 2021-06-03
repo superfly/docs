@@ -222,13 +222,16 @@ Here is a working Dockerfile that builds the application. The base image used fo
 ###
 ### Fist Stage - Building the Release
 ###
-FROM hexpm/elixir:1.11.2-erlang-23.3.2-alpine-3.13.3 AS build
+FROM hexpm/elixir:1.12.1-erlang-24.0.1-alpine-3.13.3 AS build
 
 # install build dependencies
 RUN apk add --no-cache build-base npm
 
 # prepare build dir
 WORKDIR /app
+
+# extend hex timeout
+ENV HEX_HTTP_TIMEOUT=20
 
 # install hex + rebar
 RUN mix local.hex --force && \
@@ -275,7 +278,7 @@ RUN mix do compile, release
 
 # prepare release docker image
 FROM alpine:3.13.3 AS app
-RUN apk add --no-cache openssl ncurses-libs
+RUN apk add --no-cache libstdc++ openssl ncurses-libs
 
 WORKDIR /app
 
