@@ -7,25 +7,62 @@ nav: firecracker
 
 ## Private Networking
 
-Fly apps are connected by a mesh of Wireguard tunnels using IPV6. Applications within the same organization can connect over that mesh if they have the IPV6 address of another application host. This connectivity is always available to applications. 
+Fly apps are connected by a mesh of Wireguard tunnels using IPV6.
 
-### Discovering Apps through DNS
+Applications within the same organization are assigned special addresses ("6PN addresses") tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly platform won't forward between different 6PN networks.
 
-There is a DNS server available on `fdaa:0:33::3` that can answer all queries. Queries to `.internal` addresses are resolved dynamically using application names, regions, and keywords to return particular sets of addresses. If the query is not resolvable locally, the query will recursively resolved using the DNS service at 8.8.8.8 (Google's DNS service).
+This connectivity is always available to applications; you don't have to do anything special to get it.
 
-### Using Fly DNS
+You can connect applications running outside of Fly to your 6PN network using WireGuard; for that matter, you can connect your dev laptop to your 6PN network. To do that, you'll use `flyctl` to generate a WireGuard configuration that is addressed with a 6PN address.
 
-By default, applications on Fly go to the 8.8.8.8 DNS service and do not use the internal DNS server. Applications may make use of it by directing queries to `fdaa:0:33::3`.
+### Discovering Apps through DNS on an instance
 
-To activate the internal DNS server for all address resolution, add:
+Instances are configured with their DNS server pointing to `fdaa::3`. The DNS server on this address can resolve arbitrary DNS queries, so you can look up "google.com" with it. But it's also aware of 6PN addresses, and, when queried from an instance, will let you look up the addresses of other applications in your organization. Those addresses live under the synthetic top-level domain `.internal`.
 
- ```
-[experimental]
-  private_network=true
+Since this is the default configuration we set up for instances on Fly, you probably don't need to do anything special to make this work; if your instance shares an organization with an application called `random-potato-45`, then you should be able to `ping6 random-potato-45.internal`.
+
+If you want to get fancy, you can install `dig` and query the DNS directly.
+
+```bash
+$ root@f066b83b:/# dig +short aaaa paulgra-ham.internal @fdaa::3
+```
+```output
+fdaa:0:18:a7b:7d:f066:b83b:2
 ```
 
-to the application's `fly.toml` file.
+### Discovering Apps through DNS on a WireGuard connection
 
+**The DNS server address is different on WireGuard connections than on instances**. That's because you can run multiple WireGuard connections; your dev laptop could be WireGuard-connected to multiple organizations, but an instance can't be. So DNS is just a little more complicated over WireGuard.
+
+Your DNS server address for a WireGuard connection is a part of the WireGuard connection `flyctl` generates. Your platform WireGuard tools might read and automatically configure DNS from that configuration, or it might not. Here's how to find it:
+
+```
+[Interface]
+PrivateKey = [redacted]
+Address = fdaa:0:18:a7b:d6b:0:a:2/120
+DNS = fdaa:0:18::3
+```
+
+You guessed it; it's the `DNS` line.
+
+If you look carefully, you'll notice something about the DNS address: it shares the first couple parts with the WireGuard IP address. That's because 6PN addresses are prefixed by the organization's network ID; that's the part of the address that locks it to your organization. All our WireGuard DNS addresses follow this pattern: take the organization prefix, and tack `::3` onto the end:
+
+```
+fdaa:0:18:a7b:d6b:0:a:2
+^^^^ ^ ^^
+6PN prefix; the first 3 :-separated parts
+
+fdaa:0:18::3
+```
+
+To use `dig` to probe DNS on a WireGuard connection, supply the DNS server address to it. Note that `dig`'s syntax is silly, and that you have to put a `@` at the beginning of the address; this trips us up all the time.
+
+```bash
+$ root@f066b83b:/# dig +short aaaa paulgra-ham.internal @fdaa:0:18::3
+```
+```output
+fdaa:0:18:a7b:7d:f066:b83b:2
+```
 
 ## Fly `.internal` addresses
 
