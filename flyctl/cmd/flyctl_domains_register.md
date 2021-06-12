@@ -28,4 +28,5 @@ flyctl domains register [org] [name] [flags]
 ### See Also
 
 * [flyctl domains](/docs/flyctl/domains/)	 - Manage domains
+* [Custom Domains for SaaS](/docs/app-guides/custom-domains-with-fly)   - Guide about custom domains on Fly
 

@@ -1,26 +1,23 @@
-# _flyctl builds_
+# _flyctl config env_
 
-Work with Fly Builds
+Display an app's runtime environment variables
 
 ### About
 
-Fly Builds are templates to make developing Fly applications easier.
+Display an app's runtime environment variables. It displays a section for
+secrets and another for config file defined environment variables.
 
 ### Usage
 ```
-flyctl builds [command] [flags]
+flyctl config env [flags]
 ```
-
-### Available Commands
-* [list](/docs/flyctl/builds-list/)	 - List builds
-* [logs](/docs/flyctl/builds-logs/)	 - Show logs associated with builds
 
 ### Options
 
 ```
   -a, --app string      App name to operate on
   -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
-  -h, --help            help for builds
+  -h, --help            help for display
 ```
 
 ### Global Options
@@ -33,5 +30,5 @@ flyctl builds [command] [flags]
 
 ### See Also
 
-* [flyctl](/docs/flyctl/help/)	 - The Fly CLI
+* [flyctl config](/docs/flyctl/config/)	 - Manage an Apps configuration
 
