@@ -130,11 +130,11 @@ postgres   true      postgres,testdb
 repluser   false     postgres,testdb 
 ```
 
-### Creating Users
+<!-- ### Creating Users
 
 ### Dropping Users
 
-### Granting / Revoking Access
+### Granting / Revoking Access -->
 
 ## Databases
 
@@ -147,11 +147,11 @@ You can view a list of databases with from `flyctl`:
 ```bash
 flyctl postgres databases list 
 ```
-
+<!-- 
 ### Creating Databases
 
 ### Dropping Databases
-
+ -->
 ## Connection Examples
 
 ### Connecting with Ruby ([docs](https://github.com/ged/ruby-pg))
