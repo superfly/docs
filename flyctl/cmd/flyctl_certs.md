@@ -40,5 +40,5 @@ flyctl certs [command] [flags]
 ### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
-* [flyctl](/docs/flyctl/domains/)	 - Domains on Fly
+* [flyctl domains](/docs/flyctl/domains/)	 - Domains on Fly
 

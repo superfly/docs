@@ -4,7 +4,7 @@ List regions
 
 ### About
 
-View a list of regions where Fly has edges and/or datacenters
+View a list of regions where Fly has edges, WireGuard gateways, and/or datacenters
 
 ### Usage
 ```

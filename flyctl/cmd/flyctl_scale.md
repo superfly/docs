@@ -36,4 +36,6 @@ flyctl scale [command] [flags]
 ### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
+* [flyctl autoscale](/docs/flyctl/autoscale/)	 - Autoscaling App resources
+* [Scaling and Autoscaling](/docs/reference/scaling/)	 - Guide to Scaling and Autoscaling
 

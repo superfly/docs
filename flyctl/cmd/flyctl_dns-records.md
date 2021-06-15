@@ -33,4 +33,5 @@ flyctl dns-records [command] [flags]
 ### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
+* [flyctl domains](/docs/flyctl/domains/)	 - Domains on Fly
 

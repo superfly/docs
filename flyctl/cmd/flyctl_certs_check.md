@@ -31,4 +31,4 @@ flyctl certs check <hostname> [flags]
 ### See Also
 
 * [flyctl certs](/docs/flyctl/certs/)	 - Manage certificates
-* [flyctl](/docs/flyctl/domains/)	 - Domains on Fly
+* [flyctl domains](/docs/flyctl/domains/)	 - Domains on Fly

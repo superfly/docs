@@ -4,7 +4,7 @@ Autoscaling App resources
 
 ### About
 
-Autoscaling application resources
+Autoscaling amount of application instances.
 
 ### Usage
 ```
@@ -37,4 +37,6 @@ flyctl autoscale [command] [flags]
 ### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
+* [flyctl scale](/docs/flyctl/scale/)	 - Scale resources (memory/cpu)
+* [Scaling and Autoscaling](/docs/reference/scaling/)	 - Guide to Scaling and Autoscaling
 
