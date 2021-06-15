@@ -11,7 +11,7 @@ nav: firecracker
     performance: {
       title: "Application Performance",
     },
-   
+
     "custom domains": {
       title: "Custom Domains for SaaS",
     },
@@ -20,6 +20,9 @@ nav: firecracker
     },
     app: {
       title: "Example Applications",
+    },
+    elixir: {
+      title: "Elixir Guides",
     },
     proxy: {
       title: "Proxies",
@@ -51,7 +54,7 @@ nav: firecracker
       { url: page.url }.merge(page.data)
     )
   end
-  
+
   new_guides = guides
 
   guides.select { |g| g[:author].present? }.each do |g|
@@ -59,7 +62,7 @@ nav: firecracker
   end
 
   new_guides = new_guides.sort_by(&:date).reverse.first(5)
-  
+
   idx = HashWithIndifferentAccess.new
   guides.each do |p|
     p&.categories&.each do |c|
@@ -81,7 +84,7 @@ nav: firecracker
   <% categories.each do |k, v| %>
     <dl id="<%= k %>" class="p:2 bg:lightest-silver target:shadow:highlight r:lg mb:0<%= k == "app" ? " colspan:all" : "" %>">
       <dt
-        id="h-<%= k %>" 
+        id="h-<%= k %>"
         class="text:smallcaps text:xs mb:12p child"
       >
         <%= v.title %>
