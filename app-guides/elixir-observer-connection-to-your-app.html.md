@@ -175,7 +175,7 @@ echo Attempting to connect to $FULL_NODE_NAME
 # Export the BEAM settings for running the "iex" command.
 # This creates a local node named "my_remote". The name used isn't important.
 # The cookie must match the cookie used in your project so the two nodes can connect.
-(export ELIXIR_ERL_OPTIONS="-proto_dist inet6_tcp"; iex --sname my_remote --cookie ${COOKIE} -e "IO.inspect(Node.connect(:'${FULL_NODE_NAME}'), label: \"Node Connected?\"); IO.inspect(Node.list(), label: \"Connected Nodes\"); :observer.start")
+(export ELIXIR_ERL_OPTIONS="-proto_dist inet6_tcp"; iex --sname my_remote --hidden --cookie ${COOKIE} -e "IO.inspect(Node.connect(:'${FULL_NODE_NAME}'), label: \"Node Connected?\"); IO.inspect(Node.list(), label: \"Connected Nodes\"); :observer.start")
 ```
 
 This should work fine on Linux and MacOS. On Windows, if you are using [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10) then it will work because it's Linux. Otherwise refer to the manual steps outlined below.
@@ -261,7 +261,7 @@ If you encounter issues, this can help you diagnose what's going on. The script 
 To do it manually, once you get the IP address, you can customize the following command to launch Observer.
 
 ```
-ELIXIR_ERL_OPTIONS="-proto_dist inet6_tcp" iex --sname my_remote --cookie YOUR-COOKIE-VALUE -e "Node.connect(:'APP_NAME@IP_ADDRESS'); :observer.start"
+ELIXIR_ERL_OPTIONS="-proto_dist inet6_tcp" iex --sname my_remote --hidden --cookie YOUR-COOKIE-VALUE -e "Node.connect(:'APP_NAME@IP_ADDRESS'); :observer.start"
 ```
 
 You need to substitute in your `YOUR-COOKIE-VALUE` value, the `APP_NAME` and the `IP_ADDRESS`.
