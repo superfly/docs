@@ -62,13 +62,13 @@ d8e8a317 2       scl    run     running (replica)
 ## Configure connection strings
 
 ### Attach database to application
-To hook your app up to your cluster, run the attach command from your application directory:
+To hook your app up to your cluster, run the `attach` command from your application directory:
 
 ```
 fly pg attach --postgres-app chaos-postgres
 ```
 
-This installs a `DATABASE_URL` secret in your application, which is available to your app processes an environment variable. The command also prints the connection string to the console.
+This installs a `DATABASE_URL` secret in your application, which is available to your app processes as an environment variable. The command also prints the connection string to the console.
 
 ### Connect to regional replicas
 
@@ -106,7 +106,7 @@ class Fly
 end
 ```
 
-Running this in `scl` will use the built in `DATABASE_URL` and connect to port `5432`:
+Running this in `scl` will use the built-in `DATABASE_URL` and connect to port `5432`:
 
 ```
 postgres://<user>:<password>@chaos-postgres.internal:5432/rails_on_fly?sslmode=disable
@@ -123,7 +123,7 @@ postgres://<user>:<password>@syd.chaos-postgres.internal:5433/rails_on_fly?sslmo
 ## Detect write requests
 
 ### Catch read-only errors
-PostgreSQL conveniently sends a "read only transaction" error when you attempt to write to a read replica. All you need to to do detect write requests is catch this error.
+PostgreSQL conveniently sends a "read only transaction" error when you attempt to write to a read replica. All you need to do to detect write requests is catch this error.
 
 ### Replay the request
 
@@ -180,9 +180,9 @@ We built this set of features for read heavy apps that are primary HTTP request 
 
 If you write to the database on every request, this will not work for you. You will need to make some architectural changes to run a write heavy app in multiple regions.
 
-Some apps write background info like metrics or audit logs on every request, but are otherwise ready heavy. If you're running an application like this, you should consider using something like [nats.io](https://nats.io) to send information to your primary region asynchronously.
+Some apps write background info like metrics or audit logs on every request, but are otherwise read heavy. If you're running an application like this, you should consider using something like [nats.io](https://nats.io) to send information to your primary region asynchronously.
 
-Truly write heavy apps require latency aware data partitioning, either at the app level in or a database engine. There are lots of interesting new databases that have features for this, try them out!
+Truly write heavy apps require latency aware data partitioning, either at the app level or in a database engine. There are lots of interesting new databases that have features for this, try them out!
 
 #### Long lived connections
 
