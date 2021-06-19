@@ -38,7 +38,7 @@ We'll call this file `server.js` and run `npm init` and `npm install express --s
 Run `node server.js` to start the application
 
 ```cmd
-node hellonode.js          
+node server.js          
 ```
 ```output
 HelloNode app listening on port 3000!
