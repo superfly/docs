@@ -1,5 +1,5 @@
 ---
-title: Sharing an Elixir Cookie with Remote Servers
+title: Setting a Static Cookie for Elixir
 layout: docs
 sitemap: false
 nav: firecracker
