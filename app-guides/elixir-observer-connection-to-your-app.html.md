@@ -1,5 +1,5 @@
 ---
-title: Connecting Observer to your app in production
+title: Connecting Observer to Your App in Production
 layout: docs
 sitemap: false
 nav: firecracker
@@ -37,7 +37,7 @@ Let's do it. This will be fun!
 
 The deployed servers running on Fly need a predictable, stable, known cookie value used for allowing nodes to join each other to create a cluster. This is required for your local node to be able to connect to the remote nodes. Your local node needs the cookie value too!
 
-See [this guide on creating a shared cookie value](/docs/elixir-shared-cookie) in your Elixir project.
+See [this guide on creating a static cookie value](/docs/app-guides/elixir-static-cookie/) in your Elixir project.
 
 ## WireGuard Tunnel
 
