@@ -6,7 +6,7 @@ nav: firecracker
 author: mark
 categories:
   - elixir
-date: 2021-06-18
+date: 2021-06-22
 ---
 
 [Livebook](https://github.com/elixir-nx/livebook) is an exciting advancement in the Elixir community. It was created for the Elixir machine learning library [nx](https://github.com/elixir-nx/nx). You can think of it as Elixir's version of [Jupyter Notebooks](https://jupyter.org/).
