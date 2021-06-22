@@ -47,6 +47,12 @@ The HTTP handler adds a number of standard HTTP headers to requests, and a few F
 | `Fly-Forwarded-Port` | Original connection port, always set by Fly |
 | `Fly-Region` | Original incoming connection region |
 
+You can set a preference on HTTP requests for which region you would like to connect to:
+
+```
+Fly-Prefer-Region: region-code
+```
+
 #### TCP pass through
 
 If you don't specify handlers, we just forward TCP to your application as is. This is useful if you want to handle TLS termination yourself, for example.

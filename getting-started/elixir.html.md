@@ -684,6 +684,8 @@ Our next step is to add the `topologies` configuration to the file `config/runti
     ]
 ```
 
+**REMEMBER:** Deploy your updated app so the clustering code is available. Ex: `fly deploy`
+
 This configures `libcluster` to use the `DNSPoll` strategy and look for other deployed apps using the `$FLY_APP_NAME` on the `.internal` private networks.
 
 This assumes that your `rel/env.sh.eex` file is configured to name your Elixir node using the `$FLY_APP_NAME`.

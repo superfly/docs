@@ -5,43 +5,52 @@ sitemap: false
 nav: firecracker
 ---
 
-In our Hands-On section, we show how to deploy a deployable image file using Flyctl. The question we are going to answer here is how do we do that from the original source. In this _Getting Started_ article, we look at how to deploy a Go application on Fly. 
+In this _Getting Started_ article, we look at how to deploy a Go application on Fly. 
 
-## _The Hellofly Application_
+## _The Example Application_
 
-You can get the code for the example from [the hellofly Github repository](https://github.com/fly-apps/hellofly). Just `git clone https://github.com/fly-apps/hellofly` to get a local copy.
+You can get the code for the example from [the Github repository](https://github.com/fly-apps/go-example). Just `git clone https://github.com/fly-apps/go-example` to get a local copy.
 
-The hellofly application is, as you'd expect for an example, small. It's a Go application that uses the gin web framework. Here's all the code form `main.go`:
+The `go-example` application is, as you'd expect for an example, small. It's a Go application that uses the http server and templates from the standard library. Here's all the code form `main.go`:
 
 ```golang
 package main
 
 import (
-        "net/http"
-        "strings"
-
-        "github.com/gin-gonic/gin"
+	"embed"
+	"html/template"
+	"log"
+	"net/http"
+	"os"
 )
 
+//go:embed templates/*
+var resources embed.FS
+
+var t = template.Must(template.ParseFS(resources, "templates/*"))
+
 func main() {
-        r := gin.Default()
-        r.LoadHTMLGlob("./resources/templates/*")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
-        r.GET("/", handleIndex)
-        r.GET("/:name", handleIndex)
-        r.Run(":8080")
-}
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		data := map[string]string{
+			"Region": os.Getenv("FLY_REGION"),
+		}
 
-func handleIndex(c *gin.Context) {
-        name := c.Param("name")
-        if name != "" {
-                name = strings.TrimPrefix(c.Param("name"), "/")
-        }
-        c.HTML(http.StatusOK, "hellofly.tmpl", gin.H{"Name": name})
+		t.ExecuteTemplate(w, "index.html.tmpl", data)
+	})
+
+	log.Println("listening on", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 ```
 
-The `main` function sets up the server after loading in templates for pages to be output. Those templates live in `./resources/templates/`. When a request comes in, the `handleIndex` function looks for a name and feeds that name to a template. The template itself, `hellofly.tmpl`, is very simple too:
+The `main` function starts a server that responds with an html page showing the fly region that served the request. The template lives in `./templates/` and is embedded into the binary using the [`embed`](https://golang.org/pkg/embed/) package in go 1.16+. 
+
+The template itself, `index.html.tmpl`, is very simple too:
 
 ```html
 <!DOCTYPE html>
@@ -50,14 +59,12 @@ The `main` function sets up the server after loading in templates for pages to b
 </head>
 <body>
 <h1>Hello from Fly</h1>
-{{ if .Name }}
-<h2>and hello to {{.Name}}</h2>
+{{ if .Region }}
+<h2>I'm running in the {{.Region}} region</h2>
 {{end}}
 </body>
 </html>
 ```
-
-We're using a template as it makes it easier to show what you should do with assets that aren't the actual application.
 
 ## _Building the Application_
 
@@ -67,41 +74,37 @@ As with most Go applications a simple `go build` will create a hellofly binary w
 
 We are ready to start working with Fly and that means we need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once thats installed you'll want to [login to Fly](/docs/getting-started/login-to-fly/).
 
-## _Configure the App for Fly_
+## _Launch the app on Fly_
 
-Each Fly application needs a `fly.toml` file to tell the system how we'd like to deploy it. That file can be automatically generated with the command `flyctl init` command.
+To launch an app on fly, run `flyctl launch` in the directory with your source code. This will create and configure a fly app for you by inspecting your source code, then prompt you to deploy.
 
 ```cmd
-flyctl init
+flyctl launch
 ```
 ```output
-? App Name (leave blank to use an auto-generated name) hellofly
-
-? Select organization: Dj (dj)
-
-? Select builder: go
-    Go Builtin
-? Select Internal Port: 8080
-
-New app created
-  Name     = hellofly
-  Owner    = demo
-  Version  = 0
-  Status   =
-  Hostname = <empty>
-
+Scanning source code
+ Detected Go app
+ Using the following build configuration
+         Builder: paketobuildpacks/builder:base
+         Buildpacks: gcr.io/paketo-buildpacks/go
+ ? Select organization: Demo (demo)
+ ? Select region: ord (Chicago, Illinois (US))
+Created app hellofly in organization personal
 Wrote config file fly.toml
+Your app is ready. Deploy with `flyctl deploy`
+? Would you like to deploy now? Yes
+
+Deplying hellofly
+...
 ```
 
-You'll be asked for an application name first. We recommend that you go with the autogenerated names for apps to avoid namespace collisions. We're using `hellofly` here so you can easily spot it in configuration files.
+First, this command scans your source code to determine how to build a deployment image as well as identify any other configuration your app needs, such as secrets and exposed ports.
 
-Next you'll be prompted for an organization. Organizations are a way of sharing applications between Fly users. When you are asked to select an organization, there should be one with your account name; this is your personal organization. Select that.
+After your source code is scanned and the results are printed, you'll be prompted for an organization. Organizations are a way of sharing application and resources between Fly users. Every fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
 
-Flyctl also asks you to select a builder. Builders are responsible for constructing the Docker image of your application which is then deployed to Fly's Firecracker VMs. The simplest to use are the builtin builders, which we recommend you use here. Select Go (Go Builtin). If you want to know more about the various builders, see [_Builders and Fly_](/docs/reference/builders/).
+Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region.
 
-The last thing you will be asked for an internal port value. This is the port your application communicates over. If set incorrectly, Fly will be unable to connect to the application and it will fail health checks and be terminated. The default shown, 8080, is correct for the builtin builders which, by design, get applications to talk on port 8080. So, hit return and carry on.
-
-One thing to know about the builtin Go builder is that it will automatically copy over the contents of the resources directory to the deployable image. This is how you can move static assets such as templates and other files to your application. 
+At this point, `flyctl` creates an app for you and writes your configuration to a `fly.toml` file. You'll then be prompted to build and deploy your app. Once complete, your app will be running on fly.
 
 ## _Inside `fly.toml`_
 
@@ -111,7 +114,8 @@ The `fly.toml` file now contains a default configuration for deploying your app.
 app = "hellofly"
 
 [build]
-  builtin = "go"
+  builder = "paketobuildpacks/builder:base"
+  buildpacks = ["gcr.io/paketo-buildpacks/go"]
 
 [[services]]
   internal_port = 8080
@@ -136,11 +140,20 @@ app = "hellofly"
 
 The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name value at the start. That name will be used to identify the application to the Fly service. The rest of the file contains settings to be applied to the application when it deploys. 
 
-We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
+You can see in the `[build]` section the builder image and the list of buildpacks that will be used to build the app for deployment. You can also add build arguments to configure the build process using the `[build.args]` section.
+
+For example, the following will instruct the Go buildpack to include files in the `resources` directory in the final image:
+
+```toml
+[build.args]
+  BP_KEEP_FILES = "assets/*:resources/*"
+```
+
+See the [Paketo Go Buildpack documentation](https://paketo.io/docs/buildpacks/language-family-buildpacks/go/) for more options.
 
 ## _Deploying to Fly_
 
-We are now ready to deploy our containerized app to the Fly platform. At the command line, just run:
+To deploy your app, just run:
 
 ```cmd
 flyctl deploy

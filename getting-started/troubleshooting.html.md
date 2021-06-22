@@ -105,3 +105,41 @@ const start = async () => {
 ```
 
 And redeploy that, it will work.
+
+## _Inspecting with SSH_
+
+You can use `flyctl ssh console` to connect to a running instance of your application. If this is your first time using `flyctl ssh` then you need to run `flyctl ssh establish` first.
+
+## _Health checks failing_
+
+This problem mainly affects Elixir apps, but if your health checks keep failing during deployment...
+```
+[error] Health check status changed 'warning' => 'critical'
+```
+
+You may have to increase the grace period for health checks. For example if it takes about 30 seconds for your application to boot:
+```
+  # If you are using tcp_checks
+  [[services.tcp_checks]]
+    grace_period = "30s"
+    ...
+
+  # If you are using http_checks
+  [[services.http_checks]]
+    grace_period = "30s"
+    ...
+```
+
+## _HTTPS in fly.toml_
+
+If you specify in your `fly.toml` that `protocol = "https"`, this means your application must be serving TLS directly. If you have enabled this, try disabling for debugging.
+
+## _Are your variables set?_
+
+For example if you notice in your logs that the database if failing to connect to `DATABASE_URL`, make sure that variable is set.
+
+Use these two commands to see environment variables.
+```
+flyctl secrets list
+flyctl config env
+```
