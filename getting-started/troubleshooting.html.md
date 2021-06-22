@@ -143,3 +143,28 @@ Use these two commands to see environment variables.
 flyctl secrets list
 flyctl config env
 ```
+
+## _Troubles with WireGuard_
+
+To check if you are connected to the private network you can use the command to get a list of your private networking apps in the same organization.
+```
+dig +short _apps.internal
+```
+
+If this does not return anything and you have existing apps, then you may not be connected to the private network. Check your WireGuard configuration or recreate it.
+
+### IPV6 applications
+
+Fly's [private network](/docs/reference/privatenetwork/) is connected together using WireGuard tunnels and IPV6. If you are having trouble resolving one of your applications, make sure you are connecting to it with a method that is compaitable with IPV6. For example, to ping you may have to use:
+
+```
+ping6 example-app.internal
+```
+
+### Server refusing connection
+
+If you are running a server and are unable to connect to it, be sure you are binding to IPV6. If you specify to bind a server to `0.0.0.0` then it may not also bind to the IPV6 equivalent `::`. Depending on the server software you may also need to specify to enable or use IPV6.
+
+### Organizations
+
+Your WireGuard peer connection can only access apps in the organization you specified when first creating the connection. Check that the application you are connecting to is in the same organization as your connection. You can create new connections with [flyctl wireguard create](/docs/flyctl/wireguard-create/).
