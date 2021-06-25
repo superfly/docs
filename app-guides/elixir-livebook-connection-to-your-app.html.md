@@ -25,19 +25,43 @@ There are a few requirements for this to work.
 - **Known cookie value on your server**. Livebook needs to know the cookie value used on the server. Follow [this guide to give your app a static cookie value](/docs/app-guides/elixir-static-cookie/).
 - **WireGuard setup on your local machine**. Follow the Fly.io [Private Network VPN](/docs/reference/privatenetwork/#private-network-vpn) guide to walk through that.
 
-## Local Livebook
+## Installing Livebook
 
-There are several ways to run [Livebook](https://github.com/elixir-nx/livebook). In this guide, we will clone the Livebook project locally and run it as a local project. This lets us override certain settings at startup. We are not modifying or forking the code, just running it.
+There are several ways to install and run [Livebook](https://github.com/elixir-nx/livebook). Personally, I prefer [installing Livebook as an escript](https://github.com/elixir-nx/livebook#escript). It is the most versatile and convenient. In this guide we'll cover two different approaches for running Livebook locally.
+
+### Install as an Escript
+
+This is the easiest way to use Livebook locally. This assumes you are doing Elixir development locally and are setup for Elixir development.
+
+Following the Livebook [Escript README section](https://github.com/elixir-nx/livebook#escript), this is how you install Livebook.
+
+```
+mix escript.install hex livebook
+```
+
+Then locally launching Livebook is:
+
+```
+livebook server
+```
+
+When connecting to a Fly.io app, you need to launch it like this:
+
+```cmd
+ERL_AFLAGS="-proto_dist inet6_tcp" livebook server --name livebook@127.0.0.1
+```
+
+The special customization we need is the `ERL_AFLAGS` settings passed to the beam on startup. The `--name` setting gives our local node a fully qualified name, which the UI detects and changes how it attaches to the server.
 
 ### Clone Livebook Locally
+
+This step covers how to clone the Livebook project locally and run it as a local project. We are not modifying or forking the code, just running it. If you want to do development on the Livebook project itself, this is the approach to use.
 
 ```cmd
 git clone git@github.com:elixir-nx/livebook.git
 ```
 
-### Starting Livebook
-
-Working with a local clone of the source code, here's how we start Livebook.
+When working with a local clone of the source code, here's how we start Livebook:
 
 ```cmd
 MIX_ENV=prod elixir --erl "-proto_dist inet6_tcp" --name livebook@127.0.0.1 -S mix phx.server
@@ -45,11 +69,16 @@ MIX_ENV=prod elixir --erl "-proto_dist inet6_tcp" --name livebook@127.0.0.1 -S m
 
 The special customization we need is the `--erl` settings passed to the beam on startup. The `--name` setting gives our local node a fully qualified name, which the UI detects and changes how it attaches to the server.
 
-Once started, use the link it generates in the console to connect to it. The livebook link in the console looks something like this:
+
+## Running Livebook
+
+Regardless of the approach you choose, once started, Livebook generates a link in the console you use to connect to it. The Livebook link in the console looks something like this:
 
 ```
 [Livebook] Application running at http://localhost:8080/?token=uzbwvvpexj7mdftwjilezi4qaygt2bfc
 ```
+
+With Livebook running locally, let's get started!
 
 ### Create or Load a Notebook
 
@@ -57,7 +86,7 @@ Let's create a new notebook to test the remote connection.
 
 Create a new notebook titled, "Remote Connect Test" and add a Section.
 
-On the left side, click the "Runtime settings" graphic pictured below:
+On the left side, click the "Runtime settings" as pictured below:
 
 ![Runtime settings](/docs/images/livebook-runtime-selection.png?centered&card)
 
@@ -105,19 +134,19 @@ icy-leaf-7381@fdaa:0:1da8:a7b:ad1:4404:812:2
 
 You also need the cookie used by the server. Follow [this guide](/docs/app-guides/elixir-static-cookie/) for setting that up for your app.
 
-## Attaching to a Fly Server
+### Attaching to a Fly Server
 
-At this point, make sure your WireGuard connection to Fly is up.
+**REMEMBER:** At this point, make sure your WireGuard connection to Fly is up!
 
 When you have the name and cookie, enter those and "Connect" to the server.
 
 ![Attached to remote](/docs/images/livebook-runtime-attached.png?centered&card)
 
-**REMEMBER**: Each time you deploy your app, the private IP will change. You will need to get the new IP before you can connect again.
+**REMEMBER:** Each time you deploy your app, the private IP will change. You will need to get the new IP before you can connect again.
 
-Once connected, you have code completion available in the Elixir cells for the app you are connected to. The HelloElixir app doesn't have anything useful to run so we can just prove to ourselves that our code is being executed remotely.
+Once connected, you have code completion available in the Elixir cells for the app you are connected to. The [HelloElixir app](https://github.com/fly-apps/hello_elixir-dockerfile) doesn't have anything useful to run so we can just prove to ourselves that our code is being executed remotely.
 
-Add the following code to an Elixir cell and execute it.
+Add the following code to a Livebook Elixir cell and execute it.
 
 ```elixir
 require Logger
@@ -135,9 +164,9 @@ fly logs
 2021-06-21T22:47:21.415426797Z app[44040812] sjc [info] 22:47:21.414 [info] Testing logger
 ```
 
-## Success!
+### Success!
 
-You successfully executed Elixir code through Livebook connected to a remote server running on Fly.io!
+You successfully executed Elixir code through Livebook connected to a remote server running on Fly.io! The code was actually executed on the server!
 
 ## Do Interesting Things
 
@@ -150,7 +179,7 @@ Here are a few ideas of things you can do when Livebook is connected to your ser
 - Analyze customer orders in a table.
 - Create scripts in the form of notebooks to run common administrative commands.
 
-## Troubleshooting
+## Troubleshooting Checklist
 
 If you have problems connecting, here are a few things to check:
 
