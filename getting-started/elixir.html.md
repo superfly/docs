@@ -834,3 +834,14 @@ iex(icy-leaf-7381@fdaa:0:1da8:a7b:ac2:cdf6:c422:2)1> Node.list
 We have two instances of our application deployed to the West and East coasts of the North American continent and they are clustered together! Our users will automatically be directed to the server nearest them. That is so cool!
 
 Elixir has the built-in super power of Distributed Computing and with very little effort, you can deploy clustered and globally distributed applications yourself!
+
+## Troubleshooting
+
+Some problems are harder to diagnose because the deal with [Elixir releases](https://hexdocs.pm/mix/master/Mix.Tasks.Release.html) or Docker build problems. Typically, you don't run the application that way locally, so you only encounter those problems when it's time to deploy.
+
+Here are a few tips to help diagnose and identify problems.
+
+- Run `mix release` locally on your project.
+- Build the Dockerfile locally to verify it builds correctly. `docker build .`
+- `config/runtime.exs` for the `:prod` config isn't normally run during local use. Carefully review it.
+- `fly logs` to check server logs.
