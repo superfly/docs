@@ -837,7 +837,7 @@ Elixir has the built-in super power of Distributed Computing and with very littl
 
 ## Troubleshooting
 
-Some problems are harder to diagnose because the deal with [Elixir releases](https://hexdocs.pm/mix/master/Mix.Tasks.Release.html) or Docker build problems. Typically, you don't run the application that way locally, so you only encounter those problems when it's time to deploy.
+Some problems are harder to diagnose because they deal with [Elixir releases](https://hexdocs.pm/mix/master/Mix.Tasks.Release.html) or Docker build problems. Typically, you don't run the application that way locally, so you only encounter those problems when it's time to deploy.
 
 Here are a few tips to help diagnose and identify problems.
 
