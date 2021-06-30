@@ -67,6 +67,49 @@ We use Lets Encrypt to issue certificates, and donate half of our SSL fees to th
 ##### Outbound data transfer
 We bill for outbound data transfer, inbound transfer is free.
 
+##### PostgreSQL Clusters
+
+The `fly pg create` command will install a PostgreSQL cluster in your organization. PostgreSQL clusters are just "apps" made up of VMs, persistent volumes, and (possibly) extra memory. We bill only for the resources PostgreSQL clusters use.
+
+<div class="max-w:full overflow-x:auto bg:white shadow:lg r mb:4">
+  <table class="table:stripe table:stretch table:pad text:sm m:0">
+    <thead>
+      <tr>
+        <th colspan="3">Size</th>
+        <th>VM Price</th>
+        <th>Volume Price</th>
+        <th>Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>shared-cpu-1x</td><td>10GB volumes</td><td>256MB RAM</td>
+        <td class="text:right">~$1.94/mo x 2</td>
+        <td class="text:right">~$1.50/mo x 2</td>
+        <td class="text:right">~$6.88/mo</td>
+      </tr>
+      <tr>
+        <td>shared-cpu-1x</td><td>40GB volumes</td><td>2GB RAM</td>
+        <td class="text:right">~$10.70/mo x 2</td>
+        <td class="text:right">~$6/mo x 2</td>
+        <td class="text:right">~$27.40/mo</td>
+      </tr>
+      <tr>
+        <td>dedicated-cpu-2x</td><td>100GB volumes</td><td>4GB RAM</td>
+        <td class="text:right">~$62/mo x 2</td>
+        <td class="text:right">~$15/mo x 2</td>
+        <td class="text:right">~$154/mo</td>
+      </tr>
+      <tr>
+      <td>dedicated-cpu-8x</td><td>500GB volumes</td><td>64GB RAM</td>
+        <td class="text:right">~$558/mo x 2</td>
+        <td class="text:right">~$75/mo x 2</td>
+        <td class="text:right">~$1,266/mo</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 <%= partial("shared/network_pricing") %>
 
 ## _Support_
