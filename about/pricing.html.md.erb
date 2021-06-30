@@ -64,9 +64,6 @@ We use Lets Encrypt to issue certificates, and donate half of our SSL fees to th
   * $0.10/mo for additional certificates
 * Wildcard certificates: $2/mo
 
-##### Outbound data transfer
-We bill for outbound data transfer, inbound transfer is free.
-
 ##### PostgreSQL Clusters
 
 The `fly pg create` command will install a PostgreSQL cluster in your organization. PostgreSQL clusters are just "apps" made up of VMs, persistent volumes, and (possibly) extra memory. We bill only for the resources PostgreSQL clusters use.
@@ -109,6 +106,11 @@ The `fly pg create` command will install a PostgreSQL cluster in your organizati
     </tbody>
   </table>
 </div>
+
+
+##### Outbound data transfer
+We bill for outbound data transfer, inbound transfer is free.
+
 
 <%= partial("shared/network_pricing") %>
 
