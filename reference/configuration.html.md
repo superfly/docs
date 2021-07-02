@@ -125,6 +125,11 @@ When Fly's Anycast network handles requests for your application, it'll look for
 You can have up to 10 mappings in an application. The "guest path" --- the path 
 inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not). 
 
+**Important**: our static cache service doesn't currently honor symlinks. So,
+if `/app/public` in your container is actually a symlink to something like
+`/app-39403/public`, you'll want to use the absolute original path in your 
+statics configuration.
+
 ### The `services` sections
 
 The `services` sections configure the mapping of ports on the application to ports and services on the Fly platform. These mappings determine how connections to the application will be handled on their journey from the Fly edge network to running Fly applications. 
