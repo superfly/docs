@@ -28,16 +28,13 @@ Request headers carry information that is specific to the incoming request and i
 ### `FLY_PUBLIC_IP`
 **IPv6 Address for Future Access**: In the future, it will be possible to address instances directly using this IP address. Currently, the address will reject all attempts to open a connection to it. Contact [support@fly.io](mailto:support@fly.io) if this feature is of interest.
 
-### `FLY_REDIS_CACHE_URL`	
-**URL for the Redis Cache**: Each application has access to a region local Redis cache. This is the URL, complete with key, that can be used to access it with any standard Redis driver. For more on Redis see the [Redis](/docs/redis/) page. An example of a typical Redis URL would be `redis://:InAzNmR5cW0wcjc5Z3dtZoi82aa23c663ac794ba6550f9d41d656b75579d7e1@172.18.0.1:6379`. 
-
 ### `FLY_REGION`
 **Region name**: The three-letter name of the region the application instance is running in. Details of current regions are listed in the [Regions](/docs/regions/) page. As an example, "ams" is the region name for Amsterdam.
 
 ## Request Headers
 
 ### `Fly-Client-IP`
-**Client IP Address**: The IP address Fly accepted a connection from. This will be the client making the initial request and as such, will also appear at the start of the `X_FORWARDED_FOR` addresses. 
+**Client IP Address**: The IP address Fly accepted a connection from. This will be the client making the initial request and as such, will also appear at the start of the `X-Forwarded-For` addresses. 
 
 ### `Fly-Forwarded-Port`
 **Original connection port**: This header is always set by Fly and denotes the actual port that the client connected to the Fly edge node which is then forwarded to the application instance.
