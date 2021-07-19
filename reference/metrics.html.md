@@ -75,9 +75,9 @@ curl https://api.fly.io/prometheus/$ORG_SLUG/api/v1/query_range?step=30 \
 	-H "Authorization: Bearer $TOKEN"
 ```
 
-## Automatic metrics
+## Built-in metrics
 
-Fly also provides a few automatic metrics for your apps.
+Fly also provides a few built-in metrics for your apps.
 
 ### Proxy series
 
@@ -173,6 +173,18 @@ pg_stat_replication_reply_time
 pg_replication_lag
 pg_database_size_bytes
 ```
+
+### Pre-built Grafana Dashboard
+
+We published a basic [Grafana Dashboard](https://grafana.com/grafana/dashboards/14741) to help our users get started with our built-in metrics.
+
+To install:
+
+1. Add a Prometheus data source for your Fly organization (instructions outlined in the "Grafana" section of the present document)
+2. Copy the dashboard ID: `14741`
+3. [Follow the instruction from the Grafana documentation](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard)
+
+If you'd like to contribute changes to the dashboard, we have created a [repository](https://github.com/superfly/dashboards) for it.
 
 ## Standard Labels
 
