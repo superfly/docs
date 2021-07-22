@@ -35,13 +35,13 @@ This is the easiest way to use Livebook locally. This assumes you are doing Elix
 
 Following the Livebook [Escript README section](https://github.com/elixir-nx/livebook#escript), this is how you install Livebook.
 
-```
+```cmd
 mix escript.install hex livebook
 ```
 
 Then locally launching Livebook is:
 
-```
+```cmd
 livebook server
 ```
 
