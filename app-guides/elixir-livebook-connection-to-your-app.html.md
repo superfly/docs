@@ -53,6 +53,15 @@ ERL_AFLAGS="-proto_dist inet6_tcp" livebook server --name livebook@127.0.0.1
 
 The special customization we need is the `ERL_AFLAGS` settings passed to the beam on startup. The `--name` setting gives our local node a fully qualified name, which the UI detects and changes how it attaches to the server.
 
+#### Upgrading when using an Escript
+
+When upgrading your Livebook version while using [`asdf`](https://asdf-vm.com/) for managing your Elixir and Erlang installs, then here's a helpful tip:
+
+* Remove the existing `livebook` shim: `rm ~/.asdf/shims/livebook`
+* Install the new version: `mix escript.install hex livebook`
+* Re-shim to get the command: `asdf reshim elixir`
+* Verify you have the upgrade: `livebook --version`
+
 ### Clone Livebook Locally
 
 This step covers how to clone the Livebook project locally and run it as a local project. We are not modifying or forking the code, just running it. If you want to do development on the Livebook project itself, this is the approach to use.
@@ -189,6 +198,5 @@ If you have problems connecting, here are a few things to check:
 - If you re-deployed, you need to get the new IP address for the deployed app
 - Check the server logs. Failed connections may still log errors at the server.
 
-
-
+If using the escript
 
