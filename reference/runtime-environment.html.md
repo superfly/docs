@@ -25,9 +25,6 @@ Request headers carry information that is specific to the incoming request and i
 ### `FLY_ALLOC_ID`
 **Allocation ID**: Each instance of an application running on Fly has a unique Allocation ID. This can be used, for example, to distinguish between instances running in the same region. `b996131a-5bae-215b-d0f1-2d75d1a8812b` is an example of the Allocation ID's format.
 
-### `FLY_PUBLIC_IP`
-**IPv6 Address for Future Access**: In the future, it will be possible to address instances directly using this IP address. Currently, the address will reject all attempts to open a connection to it. Contact [support@fly.io](mailto:support@fly.io) if this feature is of interest.
-
 ### `FLY_REGION`
 **Region name**: The three-letter name of the region the application instance is running in. Details of current regions are listed in the [Regions](/docs/regions/) page. As an example, "ams" is the region name for Amsterdam.
 
