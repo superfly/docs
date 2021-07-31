@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-Getting an something running on Fly is basically working out how to package it as a deployable executable image. Once that is done it can be deployed to the Fly infrastructure and run on the global application platform. 
+Getting something running on Fly is basically working out how to package it as a deployable executable image. Once that is done it can be deployed to the Fly infrastructure and run on the global application platform. 
 
 For this _Getting Started_ article, we'll look at creating a static web site from scratch, including the web server, and deploying it on Fly.
 
