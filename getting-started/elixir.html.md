@@ -244,7 +244,6 @@ ENV SECRET_KEY_BASE=nokey
 # Copy over the mix.exs and mix.lock files to load the dependencies. If those
 # files don't change, then we don't keep re-fetching and rebuilding the deps.
 COPY mix.exs mix.lock ./
-COPY config config
 
 RUN mix deps.get --only prod && \
     mix deps.compile
@@ -269,6 +268,7 @@ RUN mix phx.digest
 COPY lib lib
 
 # compile and build release
+COPY config config
 COPY rel rel
 RUN mix do compile, release
 
