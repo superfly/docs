@@ -11,7 +11,7 @@ In this _Getting Started_ article, we look at how to deploy a Go application on 
 
 You can get the code for the example from [the Github repository](https://github.com/fly-apps/go-example). Just `git clone https://github.com/fly-apps/go-example` to get a local copy.
 
-The `go-example` application is, as you'd expect for an example, small. It's a Go application that uses the http server and templates from the standard library. Here's all the code form `main.go`:
+The `go-example` application is, as you'd expect for an example, small. It's a Go application that uses the http server and templates from the standard library. Here's all the code from `main.go`:
 
 ```golang
 package main
@@ -48,7 +48,7 @@ func main() {
 }
 ```
 
-The `main` function starts a server that responds with an html page showing the fly region that served the request. The template lives in `./templates/` and is embedded into the binary using the [`embed`](https://golang.org/pkg/embed/) package in go 1.16+. 
+The `main` function starts a server that responds with a html page showing the fly region that served the request. The template lives in `./templates/` and is embedded into the binary using the [`embed`](https://golang.org/pkg/embed/) package in go 1.16+. 
 
 The template itself, `index.html.tmpl`, is very simple too:
 
@@ -68,7 +68,7 @@ The template itself, `index.html.tmpl`, is very simple too:
 
 ## _Building the Application_
 
-As with most Go applications a simple `go build` will create a hellofly binary which we can run. It'll default to using port 8080 and you can view it on localhost:8080 with your browser. So, the raw application works. Now to package it up for Fly.
+As with most Go applications, a simple `go build` will create a hellofly binary which we can run. It'll default to using port 8080 and you can view it on localhost:8080 with your browser. So, the raw application works. Now to package it up for Fly.
 
 ## _Install Flyctl and Login_
 
