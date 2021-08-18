@@ -101,7 +101,7 @@ class Fly
     u.hostname = "#{current}.#{u.hostname}"
     u.port = 5433
     
-    return url.to_s
+    return u.to_s
   end
 end
 ```
