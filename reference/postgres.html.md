@@ -104,7 +104,7 @@ This will revoke access to the attachment's role, remove the role, and remove th
 
 ## High Availability
 
-Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ postgres servers. It provides a number of things, including a “keeper” that controls the postgres process, a "sentinal" that builds the cluster view, and a “proxy” that always routes connections to the current leader.
+Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ postgres servers. It provides a number of things, including a “keeper” that controls the postgres process, a "sentinel" that builds the cluster view, and a “proxy” that always routes connections to the current leader.
 
 5433 is the port the keeper tells postgres to listen on. Connecting there goes straight to postgres, though it might be the leader or the replica. Since clients need writes, the proxy is listening on the default 5432 port so clients are connected to the current leader.
 
