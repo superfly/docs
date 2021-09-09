@@ -120,6 +120,90 @@ postgres://<user>:<password>@ams.chaos-postgres.internal:5433/rails_on_fly?sslmo
 postgres://<user>:<password>@syd.chaos-postgres.internal:5433/rails_on_fly?sslmode=disable
 ```
 
+
+## Connecting external services
+
+Sometimes we need to be able to allow external services to connect to our Postgres instance.  While we don't open up any external ports by default, we can achieve this through some simple configuration changes.
+
+### Allocating an IP address
+
+If you haven't already, you will need to allocate an IP address to your application.  You can view your list of IP's by running the following command from your application directory:
+```cmd
+fly ips list
+```
+
+You can allocate an IPv4 address by running the following:
+```cmd
+fly ips allocate-v4
+```
+If your network supports IPv6:
+```
+fly ips allocate-v6
+```
+
+If you're not sure which one to use, just provision one of each and you should be good to go.
+
+
+### External port configuration
+
+Now that we have an IP address, let's configure our app to expose an external port and direct incoming requests to our Postgres instance.
+
+If you haven't already pulled down your `fly.toml` configuration file, you can do so by running:
+```cmd
+fly config save --app <app-name>
+```
+
+Now, let's open up our `fly.toml` file and configure our port mappings by defining a new `Service`.
+
+```toml
+[[services]]
+  internal_port = 5432 # Postgres instance
+  protocol = "tcp"
+
+# Example of opening port 443 for secure connections
+[[services.ports]]
+  handlers = ["tls"]
+  port = 443
+
+# Example of opening port 10000 for insecure connections.
+[[services.ports]]
+  handlers = []
+  port = 10000
+```
+
+For additional information on services and service ports:
+[The services sections](https://fly.io/docs/reference/configuration/#the-services-sections)
+
+### Deploying configuration changes
+Once your `Service` has been specified, it's time to deploy our new configuration.
+
+**Before running the command below, be sure to verify the version of Postgres you are running.  As an example, if you are running Postgres 12.x you would specify `flyio/postgres:12` as your target image.**
+```cmd
+fly deploy . --app <app-name> --image flyio/postgres:<major-version>
+```
+
+
+After the deploy completes, you can verify your `Service` configuration by running the `info` command:
+
+```cmd
+fly info
+```
+```output
+...
+Services
+PROTOCOL PORTS
+TCP      10000 => 5432 []
+...
+```
+### Establishing external connection
+
+Now that you have your `Service` and port mappings in place, you should now be able to establish new connections to your Postgres using the `<app-name>.fly.dev` hostname along with your external facing port.
+
+```cmd
+psql postgres://postgres:<password>@<app-name>.fly.dev:10000
+```
+
+
 ## Restoring a PostgresSQL cluster
 
 Fly.io performs daily storage-based snapshots of each of your provisioned volumes. These snapshots can
