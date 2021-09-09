@@ -146,7 +146,7 @@ If you're not sure which one to use, just provision one of each and you should b
 
 ### External port configuration
 
-Now that we have an IP address, we can reconfigure our app to expose an external port and direct incoming connections to our Postgres instance.
+Now that we have an IP address, let's configure our app to expose an external port and direct incoming requests to our Postgres instance.
 
 If you haven't already pulled down your `fly.toml` configuration file, you can do so by running:
 ```cmd
