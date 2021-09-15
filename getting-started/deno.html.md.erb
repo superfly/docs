@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-Getting an application running on Fly essentially involves working out how to package it as a deployable image. Once packaged it can be deployed to the Fly infrastructure to run on the global application platform. For this _Getting Started_ article, we'll look at building a [Deno](https://deno.land) application from scratch.
+<%= partial "partials/intro", locals: { runtime: "[Deno](https://deno.land)" } %>
 
 ## _The Hellodeno Application_
 
@@ -49,13 +49,13 @@ There's nothing else to run. Deno will manage getting packages for itself.
 Run `deno run --allow-net main.ts` to start the application:
 
 ```cmd
-deno run --allow-net main.ts      
+deno run --allow-net main.ts
 ```
 ```output
 listening on http://0.0.0.0:8080/
 ```
 
-And connect to localhost:8080 to confirm that you have a working Deno application by receiving a greeting. Now to package it up for Fly. There are a number of ways to do this. You can use flyctl's own simple builder, 
+And connect to localhost:8080 to confirm that you have a working Deno application by receiving a greeting. Now to package it up for Fly. There are a number of ways to do this. You can use flyctl's own simple builder,
 
 ## _Install Flyctl and Login_
 
@@ -66,7 +66,7 @@ We are ready to start working with Fly and that means we need `flyctl`, our CLI 
 Each Fly application needs a `fly.toml` file to tell the system how we'd like to deploy it. That file can be automatically generated with the command `flyctl init` command. To build this simmple deno app, we'll use the builtin deno builder.
 
 ```cmd
-flyctl init 
+flyctl init
 ```
 ```output
 
@@ -131,7 +131,7 @@ The `flyctl` command will always refer to this file in the current directory if 
 
 Next is then the `build` section which records which builder we would like to use to build and deploy this app. Here we are using the builtin builder for deno.
 
-The rest of the file contains settings to be applied to the application when it deploys. 
+The rest of the file contains settings to be applied to the application when it deploys.
 
 We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on. The assumption the builder makes is that your application is talking on port 8080.
 
@@ -143,7 +143,7 @@ We are now ready to deploy our containerized app to the Fly platform. At the com
 flyctl deploy
 ```
 
-This will lookup our `fly.toml` file and get the app name `hellodeno` from there. Flyctl will then call on the builtin builder to build the application image, complete with the deno runtime. 
+This will lookup our `fly.toml` file and get the app name `hellodeno` from there. Flyctl will then call on the builtin builder to build the application image, complete with the deno runtime.
 
 Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl will return you to the command line when it's done.
 

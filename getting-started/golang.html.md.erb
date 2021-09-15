@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-In this _Getting Started_ article, we look at how to deploy a Go application on Fly. 
+<%= partial "partials/intro", locals: { runtime: "Go" } %>
 
 ## _The Example Application_
 
@@ -48,7 +48,7 @@ func main() {
 }
 ```
 
-The `main` function starts a server that responds with a html page showing the fly region that served the request. The template lives in `./templates/` and is embedded into the binary using the [`embed`](https://golang.org/pkg/embed/) package in go 1.16+. 
+The `main` function starts a server that responds with a html page showing the fly region that served the request. The template lives in `./templates/` and is embedded into the binary using the [`embed`](https://golang.org/pkg/embed/) package in go 1.16+.
 
 The template itself, `index.html.tmpl`, is very simple too:
 
@@ -138,7 +138,7 @@ app = "hellofly"
     timeout = 2000
 ```
 
-The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name value at the start. That name will be used to identify the application to the Fly service. The rest of the file contains settings to be applied to the application when it deploys. 
+The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name value at the start. That name will be used to identify the application to the Fly service. The rest of the file contains settings to be applied to the application when it deploys.
 
 You can see in the `[build]` section the builder image and the list of buildpacks that will be used to build the app for deployment. You can also add build arguments to configure the build process using the `[build.args]` section.
 
@@ -182,11 +182,11 @@ ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
 $
 ```
 
-As you can see, the application has been with a DNS hostname of hellofly.fly.dev, and an instance is running in Frankfurt. Your deployment's name will, of course, be different. 
+As you can see, the application has been with a DNS hostname of hellofly.fly.dev, and an instance is running in Frankfurt. Your deployment's name will, of course, be different.
 
 ## _Connecting to the App_
 
-The quickest way to connect to your deployed app is with the `flyctl open` command. This will open a browser on the HTTP version of the site. That will automatically be upgraded to an HTTPS secured connection (for the fly.dev domain). 
+The quickest way to connect to your deployed app is with the `flyctl open` command. This will open a browser on the HTTP version of the site. That will automatically be upgraded to an HTTPS secured connection (for the fly.dev domain).
 
 
  to connect to it securely. Add `/name` to `flyctl open` and it'll be appended to the URL as the path and you'll get an extra greeting from the hellofly application.

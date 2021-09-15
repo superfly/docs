@@ -4,9 +4,8 @@ layout: docs
 sitemap: false
 nav: firecracker
 ---
-# Python-hellofly-flask
 
-In our Hands-On section, we show how to deploy a deployable image file using Flyctl. Now we are going to deploy an application from source. In this _Getting Started_ article, we look at how to deploy a Python application on Fly. 
+<%= partial "partials/intro", locals: { runtime: "Python" } %>
 
 ## _The Hellofly-python Application_
 
@@ -154,7 +153,7 @@ kill_timeout = 5
     timeout = 2000
 ```
 
-The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly service. The rest of the file contains settings to be applied to the application when it deploys. 
+The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly service. The rest of the file contains settings to be applied to the application when it deploys.
 
 We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
 
@@ -195,11 +194,11 @@ ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
 0530d622 0       lhr    run     running 1 total, 1 passing 0        40s ago
 ```
 
-As you can see, the application has been with a DNS hostname of `hellofly-python.fly.dev`, and an instance is running in London. Your deployment's name will, of course, be different. 
+As you can see, the application has been with a DNS hostname of `hellofly-python.fly.dev`, and an instance is running in London. Your deployment's name will, of course, be different.
 
 ## _Connecting to the App_
 
-The quickest way to connect to your deployed app is with the `flyctl open` command. This will open a browser on the HTTP version of the site. That will automatically be upgraded to an HTTPS secured connection (for the fly.dev domain). 
+The quickest way to connect to your deployed app is with the `flyctl open` command. This will open a browser on the HTTP version of the site. That will automatically be upgraded to an HTTPS secured connection (for the fly.dev domain).
 
 
  to connect to it securely. Add `/name` to `flyctl open` and it'll be appended to the URL as the path and you'll get an extra greeting from the hellofly-python application.
