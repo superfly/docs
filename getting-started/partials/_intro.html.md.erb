@@ -1,0 +1,6 @@
+Getting an application running on Fly is essentially working out how to package it as a deployable image<%- if defined?(database) %> and attach it to a database<%- end %>.
+Once packaged it can be deployed to the Fly infrastructure to run on the global application platform.
+
+For this _Getting Started_ article, we'll look at deploying <%= "#{runtime.downcase.start_with?(/[aeiou]/) ? "an" : "a"} #{runtime}" %>
+<%= defined?(type) ? type : "application" %>
+on Fly<%- if defined?(database) %> and connecting it to a PostgreSQL database<%- end %>.

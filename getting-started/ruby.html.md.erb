@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-Getting an application running on Fly is essentially working out how to package it as a deployable image. Once packaged it can be deployed to the Fly infrastructure to run on the global application platform. For this _Getting Started_ article, we'll look at building a Ruby application from scratch.
+<%= partial "partials/intro", locals: { runtime: "Ruby" } %>
 
 ## _The Helloruby Application_
 
@@ -87,9 +87,9 @@ First, this command scans your source code to determine how to build a deploymen
 
 After your source code is scanned and the results are printed, you'll be prompted for an organization. Organizations are a way of sharing application and resources between Fly users. Every fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
 
-Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region. 
+Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region.
 
-At this point, `flyctl` creates an app for you and writes your configuration to a `fly.toml` file. You'll then be prompted to build and deploy your app. Once complete, your app will be running on fly. 
+At this point, `flyctl` creates an app for you and writes your configuration to a `fly.toml` file. You'll then be prompted to build and deploy your app. Once complete, your app will be running on fly.
 
 ## _Inside `fly.toml`_
 
@@ -123,7 +123,7 @@ app = "helloruby"
     timeout = 2000
 ```
 
-The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly platform. The rest of the file contains settings to be applied to the application when it deploys. 
+The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly platform. The rest of the file contains settings to be applied to the application when it deploys.
 
 We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
 
