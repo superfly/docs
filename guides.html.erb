@@ -1,5 +1,5 @@
 ---
-title: Flight Plans - Guides and Examples
+title: Guides and Examples
 layout: docs
 toc: true
 nav: firecracker
@@ -8,46 +8,46 @@ nav: firecracker
     guide: {
       title: "Guides"
     },
-    performance: {
-      title: "Application Performance",
-    },
+    # performance: {
+    #   title: "Application Performance",
+    # },
 
-    "custom domains": {
-      title: "Custom Domains for SaaS",
-    },
-    graphql: {
-      title: "GraphQL"
-    },
-    app: {
-      title: "Example Applications",
-    },
+    # "custom domains": {
+    #   title: "Custom Domains for SaaS",
+    # },
+    # graphql: {
+    #   title: "GraphQL"
+    # },
+    # app: {
+    #   title: "Example Applications",
+    # },
     elixir: {
       title: "Elixir Guides",
     },
-    proxy: {
-      title: "Proxies",
-    },
-    ci: {
-      title: "Deployment Tools",
-    },
-    msg: {
-      title: "Messaging"
-    },
-    apigw: {
-      title: "API Gateways"
-    },
-    cdn: {
-      title: "CDNs"
-    },
-    "6pn": {
-      title: "6PN Private Networking"
-    },
-    volumes: {
-      title: "Volumes"
-    },
-    certs: {
-      title: "Certificates"
-    }
+    # proxy: {
+    #   title: "Proxies",
+    # },
+    # ci: {
+    #   title: "Deployment Tools",
+    # },
+    # msg: {
+    #   title: "Messaging"
+    # },
+    # apigw: {
+    #   title: "API Gateways"
+    # },
+    # cdn: {
+    #   title: "CDNs"
+    # },
+    # "6pn": {
+    #   title: "6PN Private Networking"
+    # },
+    # volumes: {
+    #   title: "Volumes"
+    # },
+    # certs: {
+    #   title: "Certificates"
+    # }
   ).map { |k, v| [k, OpenStruct.new(v)] }
   guides = sitemap.resources.select { |r| r.path =~ %r{^docs/app-guides/} }.map do |page|
     OpenStruct.new(
@@ -61,7 +61,7 @@ nav: firecracker
     g[:author] = data.authors[g[:author]]
   end
 
-  new_guides = new_guides.sort_by(&:date).reverse.first(5)
+  new_guides = new_guides.sort_by(&:date).reverse.first(3)
 
   idx = HashWithIndifferentAccess.new
   guides.each do |p|
@@ -73,14 +73,6 @@ nav: firecracker
 %>
 
 <section class="grid min-lg:col:1 gap:1 text:md">
-  <dl id="new-guides" class="p:2 bg:lightest-blue r:lg mb:0 text:darkest-blue">
-    <dt class="text:smallcaps text:xs mb:12p child">
-      Latest Plans
-    </dt>
-    <% new_guides.each do |k|%>
-      <dd><a class="" href="<%= k.url %>"><%= k.title %></a> (<%= k.date.strftime("%b %y") %>)</dd>
-    <% end %>
-  </dl>
   <% categories.each do |k, v| %>
     <dl id="<%= k %>" class="p:2 bg:lightest-silver target:shadow:highlight r:lg mb:0<%= k == "app" ? " colspan:all" : "" %>">
       <dt
