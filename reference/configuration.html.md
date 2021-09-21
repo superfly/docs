@@ -255,10 +255,6 @@ The `destination` is directory where the `source` volume should be mounted on th
 
 This section is for flags and feature settings which have yet to be promoted into the main configuration.
 
-### `private_network`
-
-Set this value to true if you want the app to be default to using [private networking DNS ](/docs/reference/privatenetwork/). This then allows the app to look up `.internal` addresses to discover other applications by name and region.
-
 ### `cmd`
 
 This directive allows you to override what command the entrypoint to the container should be.
