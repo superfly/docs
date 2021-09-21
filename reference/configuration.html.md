@@ -255,11 +255,16 @@ The `destination` is directory where the `source` volume should be mounted on th
 
 This section is for flags and feature settings which have yet to be promoted into the main configuration.
 
-### `cmd`
-
-This directive allows you to override what command the entrypoint to the container should be.
-
 ```toml
 [experimental]
 cmd = ["path/to/command", "arg1", "arg2"]
+entrypoint = ["path/to/command", "arg1", "arg2"]
 ```
+
+### `cmd`
+
+This overrides the `CMD` set by the Dockerfile. It should be specified as an array of strings, as seen in the example above.
+
+### `entrypoint`
+
+This overrides the `ENTRYPOINT` set by the Dockerfile. It should be specified as an array of strings, as seen in the example above.
