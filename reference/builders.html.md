@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-## _What Is a Builder._
+## _What Is a Builder?_
 
 When you deploy an app on Fly, the app has to be assembled into a deployable image. That's the job that builders take on.
 
