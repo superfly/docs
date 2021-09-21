@@ -63,8 +63,7 @@ flyctl launch
 Scanning source code
 Detected NodeJS app
 Using the following build configuration
-        Builder: paketobuildpacks/builder:base
-        Buildpacks: gcr.io/paketo-buildpacks/nodejs
+        Builder: heroku/buildpacks:20
 ? Select organization: Demo (demo)
 ? Select region: ord (Chicago, Illinois (US))
 ? Would you like to deploy now? Yes
@@ -89,28 +88,13 @@ The `fly.toml` file now contains a default configuration for deploying your app.
 app = "hellonode"
 
 [build]
-  builder = "paketobuildpacks/builder:base"
-  buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
+  builder = "heroku/buildpacks:20"
 
 [[services]]
   internal_port = 8080
   protocol = "tcp"
 
-  [services.concurrency]
-    hard_limit = 25
-    soft_limit = 20
-
-  [[services.ports]]
-    handlers = ["http"]
-    port = "80"
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = "443"
-
-  [[services.tcp_checks]]
-    interval = 10000
-    timeout = 2000
+...
 ```
 
 The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly platform. The rest of the file contains settings to be applied to the application when it deploys.
