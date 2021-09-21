@@ -5,9 +5,9 @@ sitemap: false
 nav: firecracker
 author: dj
 categories:
-  - guide
   - ssl
   - custom domains
+  - guide
 date: 2020-07-20
 ---
 

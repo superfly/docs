@@ -2,10 +2,9 @@
 title: Run a Global Image Service
 layout: docs
 sitemap: false
-nav: firecracker
+nav:
 author: dj
 categories:
-  - guide
   - images
   - performance
   - proxy
@@ -18,17 +17,17 @@ date: 2020-05-10
   <img class="m:0" src="/public/images/image-service.jpg" alt="A hand holding scissors and cutting out paper for a scrapbook" class="w:full h:full fit:cover">
 </figure>
 
-For many web applications, the ability to scale, crop and otherwise manipulate images is essential. One way of providing this capability is with a URL-request-driven image service which can retrieve images, process them and deliver them wherever needed. 
+For many web applications, the ability to scale, crop and otherwise manipulate images is essential. One way of providing this capability is with a URL-request-driven image service which can retrieve images, process them and deliver them wherever needed.
 
-But that also means provisioning the service globally to keep latency times low which can be its own administrative headache. 
+But that also means provisioning the service globally to keep latency times low which can be its own administrative headache.
 
 With Fly you can eliminate all that administrative load by letting Fly deploy a service on demand close to your users so they get a rapidly rendered experience. In this guide, we'll show you how to deploy a popular image processing application, Imaginary, into the Fly Global Application Platform to make your own Global Image Service.
 
 ## _What’s Imaginary_
 
-Let's start with [h2non/Imaginary](https://github.com/h2non/imaginary), a fantastically useful image processing application written in Go. Once configured, it lets you process images. The images can be posted to it or you can ask it to get an image from a remote server and all of this is controlled through a URL request to the Imaginary server. 
+Let's start with [h2non/Imaginary](https://github.com/h2non/imaginary), a fantastically useful image processing application written in Go. Once configured, it lets you process images. The images can be posted to it or you can ask it to get an image from a remote server and all of this is controlled through a URL request to the Imaginary server.
 
-You can find all the source in the Github repository, but for this guide, we don't need to worry about that. We're going to use the developer-supplied Docker image to deploy it. 
+You can find all the source in the Github repository, but for this guide, we don't need to worry about that. We're going to use the developer-supplied Docker image to deploy it.
 
 ## _Deploying Docker Images to Fly_
 
@@ -52,14 +51,14 @@ If you aren't familiar with Docker, the first `FROM` line selects the image of t
 
 Imaginary, running in a Docker container, normally opens a port on port 9000, but for this exercise, we want to to open its port on 8080, Fly's default port for external communications. The simplest way to do that is to set the PORT environment value to 8080.
 
-The third  `CMD` line contains the parameters we pass to the `imaginary` command that are going to configure how Imaginary runs. The `-enable-url-source` tells Imaginary it is allowed to retrieve images from around the internet and, just so it's well-behaved, we set the `-http-read-timeout` to 3 seconds (the default is 60 which is a long time to wait for an image). 
+The third  `CMD` line contains the parameters we pass to the `imaginary` command that are going to configure how Imaginary runs. The `-enable-url-source` tells Imaginary it is allowed to retrieve images from around the internet and, just so it's well-behaved, we set the `-http-read-timeout` to 3 seconds (the default is 60 which is a long time to wait for an image).
 
 
 ## _Testing Locally_
 
 You'll need to have Docker installed locally to test this locally. We won't go into the details of installing Docker - check out the [Docker site and guides](https://docs.docker.com/install/) for how to install. Assuming you've done this we can move on to testing.
 
-#### Build a Docker Instance 
+#### Build a Docker Instance
 
 To create a container instance using the Dockerfile, run:
 
@@ -79,7 +78,7 @@ Where does that -p 8080:8080 value come from? Well, it's exposing port 8080, the
 
 #### Processing an Image
 
-To test our local image, let's process a file. In this case, we're going to crop an existing image from Imaginary's github repository. 
+To test our local image, let's process a file. In this case, we're going to crop an existing image from Imaginary's github repository.
 
 In another terminal session, run:
 
@@ -95,11 +94,11 @@ We now have a working docker image. Now to globally deploy it with Fly.
 
 ## _Going Global_
 
-For this you'll need flyctl, it's your CLI-powered remote control for your Fly applications. 
+For this you'll need flyctl, it's your CLI-powered remote control for your Fly applications.
 
-### Installing `flyctl` 
+### Installing `flyctl`
 
-If you've already installed `flyctl`, move on to the next step. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl.html). 
+If you've already installed `flyctl`, move on to the next step. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl.html).
 
 ### Sign In (or Up) for Fly
 
@@ -115,7 +114,7 @@ flyctl auth signup
 
 This will take you to the sign-up page where you can either:
 
-* **Sign up with Email**: Enter your name, email and password. 
+* **Sign up with Email**: Enter your name, email and password.
 
 * **Sign up with Github**: If you have a Github account, you can use that to sign up. Look out for the confirmatory email we will send you which will give you a link to set a password; you'll need a password set so we can actively verify that it is you for some Fly operations.
 
@@ -202,13 +201,13 @@ That's followed by `services.concurrency` which sets soft and hard limits to the
 
 There are also two `services.ports` sections. The first says incoming connections on port 80 will be routed to port 8080 and handled as HTTP. The second, more interesting entry, says that incoming connections on port 443 will be handled as TLS terminated HTTP connections and then routed on as HTTP to port 8080.
 
-There's also a `services.tcp_checks` section which is used to define how we do health checks on the application. 
+There's also a `services.tcp_checks` section which is used to define how we do health checks on the application.
 
 We can leave all of this completely untouched for this guide. We're ready to Fly globally.
 
-### Deploying 
+### Deploying
 
-For deployment, we go back to flyctl. 
+For deployment, we go back to flyctl.
 
 ```cmd
 flyctl deploy
@@ -227,7 +226,7 @@ v0 is being deployed
 v0 deployed successfully
 ```
 
-The application is now deployed. 
+The application is now deployed.
 
 ### Viewing Fly Apps
 
