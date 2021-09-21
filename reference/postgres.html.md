@@ -130,12 +130,6 @@ postgres   true      postgres,testdb
 repluser   false     postgres,testdb 
 ```
 
-<!-- ### Creating Users
-
-### Dropping Users
-
-### Granting / Revoking Access -->
-
 ## Databases
 
 One Postgres cluster can host multiple databases
@@ -147,11 +141,7 @@ You can view a list of databases with from `flyctl`:
 ```bash
 flyctl postgres databases list 
 ```
-<!-- 
-### Creating Databases
 
-### Dropping Databases
- -->
 ## Connection Examples
 
 ### Connecting with Ruby ([docs](https://github.com/ged/ruby-pg))

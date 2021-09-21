@@ -6,8 +6,7 @@ Resume an application
 
 The APPS RESUME command will restart a previously suspended application. 
 The application will resume with its original region pool and a min count of one
-meaning there will be one running instance once restarted. Use SCALE SET MIN= to raise
-the number of configured instances.
+meaning there will be one running instance once restarted.
 
 ### Usage
 ```

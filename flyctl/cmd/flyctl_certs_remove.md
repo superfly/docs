@@ -32,4 +32,4 @@ flyctl certs remove <hostname> [flags]
 ### See Also
 
 * [flyctl certs](/docs/flyctl/certs/)	 - Manage certificates
-
+* [flyctl domains](/docs/flyctl/domains/)	 - Domains on Fly

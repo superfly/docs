@@ -30,4 +30,6 @@ flyctl scale memory <memoryMB> [flags]
 ### See Also
 
 * [flyctl scale](/docs/flyctl/scale/)	 - Scale App resources
+* [flyctl autoscale](/docs/flyctl/autoscale/)	 - Autoscaling App resources
+* [Scaling and Autoscaling](/docs/reference/scaling/)	 - Guide to Scaling and Autoscaling
 

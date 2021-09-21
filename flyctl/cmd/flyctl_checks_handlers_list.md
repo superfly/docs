@@ -8,7 +8,7 @@ List health check handlers
 
 ### Usage
 ```
-flyctl checks handlers list [flags]
+flyctl checks handlers list <organization> [flags]
 ```
 
 ### Options

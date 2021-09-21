@@ -4,7 +4,7 @@ Add a domain
 
 ### About
 
-Add a domain to an organization
+Add an existing domain to an organization. From here you can use the [show](/docs/flyctl/domains-show) command to add Fly name servers.
 
 ### Usage
 ```
@@ -28,4 +28,4 @@ flyctl domains add [org] [name] [flags]
 ### See Also
 
 * [flyctl domains](/docs/flyctl/domains/)	 - Manage domains
-
+* [Custom Domains for SaaS](/docs/app-guides/custom-domains-with-fly)   - Guide about custom domains on Fly

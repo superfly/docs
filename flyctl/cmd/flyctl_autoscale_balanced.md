@@ -33,4 +33,6 @@ flyctl autoscale balanced [flags]
 ### See Also
 
 * [flyctl autoscale](/docs/flyctl/autoscale/)	 - Autoscaling App resources
+* [flyctl scale](/docs/flyctl/scale/)	 - Scale resources (memory/cpu)
+* [Scaling and Autoscaling](/docs/reference/scaling/)	 - Guide to Scaling and Autoscaling
 

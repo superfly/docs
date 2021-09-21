@@ -29,4 +29,5 @@ flyctl dns-records import <domain> [<filename>] [flags]
 ### See Also
 
 * [flyctl dns-records](/docs/flyctl/dns-records/)	 - Manage DNS records
+* [flyctl domains](/docs/flyctl/domains/)	 - Domains on Fly
 
