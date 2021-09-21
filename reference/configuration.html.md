@@ -46,7 +46,7 @@ kill_timeout = 120
 
 ### The `build` section
 
-The optional build section contains key/values concerned with how the application should be built. You can read more about builders in [Builders and Fly](/docs/reference/builders/) 
+The optional build section contains key/values concerned with how the application should be built. You can read more about builders in [Builders and Fly](/docs/reference/builders/)
 
 There are then four possible settings for builders in the `build` section of `fly.toml`:
 
@@ -77,7 +77,7 @@ The image builder is used when you want to immediately deploy an existing public
 
 #### dockerfile
 
-Not really a particular setting, more the default. If there is no build section, flyctl will look for a `Dockerfile` to use to build the app image. 
+Not really a particular setting, more the default. If there is no build section, flyctl will look for a `Dockerfile` to use to build the app image.
 
 #### Build Args
 
@@ -93,7 +93,7 @@ This will always pass the USER and MODE build arguments to the Dockerfile build 
 
 ### The `env` variables section
 
-The env variables section is an optional section that allows for the setting of non-sensitive information as environment variables in the application's [runtime environment](/docs/reference/runtime-environment/). 
+The env variables section is an optional section that allows for the setting of non-sensitive information as environment variables in the application's [runtime environment](/docs/reference/runtime-environment/).
 
 For sensitive information, such as credentials or passwords, we recommend using the [secrets command](/docs/reference/secrets). For anything else though, the `env` section provides a simple way to set environment variables. Here's an example:
 
@@ -104,7 +104,7 @@ For sensitive information, such as credentials or passwords, we recommend using 
   S3_BUCKET = "my-app-production"
 ```
 
-Env variable names are strictly case-sensitive and cannot begin with `FLY_` (as this could clash with the [runtime enviroment](/docs/reference/runtime-environment)). Env values can only be strings. 
+Env variable names are strictly case-sensitive and cannot begin with `FLY_` (as this could clash with the [runtime enviroment](/docs/reference/runtime-environment)). Env values can only be strings.
 
 Where there is a secret and an env variable set with the same name, the secret will take precedence.
 
@@ -122,19 +122,19 @@ Each `[[statics]]` block maps a URL prefix to a path inside your container:
 
 When Fly's Anycast network handles requests for your application, it'll look for static mappings like these. When it finds them, it'll satisfy the request directly from our proxy, without passing the actual HTTP request on through to your app. That's faster than making your app do that work, and easier for you.
 
-You can have up to 10 mappings in an application. The "guest path" --- the path 
-inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not). 
+You can have up to 10 mappings in an application. The "guest path" --- the path
+inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
 
 **Important**: our static cache service doesn't currently honor symlinks. So,
 if `/app/public` in your container is actually a symlink to something like
-`/app-39403/public`, you'll want to use the absolute original path in your 
+`/app-39403/public`, you'll want to use the absolute original path in your
 statics configuration.
 
 ### The `services` sections
 
-The `services` sections configure the mapping of ports on the application to ports and services on the Fly platform. These mappings determine how connections to the application will be handled on their journey from the Fly edge network to running Fly applications. 
+The `services` sections configure the mapping of ports on the application to ports and services on the Fly platform. These mappings determine how connections to the application will be handled on their journey from the Fly edge network to running Fly applications.
 
-You can have: 
+You can have:
 
 * No `services` section: The application has no mappings to the external internet - typically apps like databases that talk over [6PN private networking](/docs/reference/services/#private-network-services) to other apps.
 * One `services` section: One internal port mapped to the one or more external ports on the internet.
@@ -176,7 +176,7 @@ For each external port you want to accept connections on, you will need a `servi
 
 This example defines an HTTP handler on port 80.
 
-* `handlers` : An array of strings, each string selecting a handler process to terminate the connection with at the edge. Here, the ["HTTP" handler](/docs/services/#http) will accept HTTP traffic and pass it on to the internal port of the application which we defined earlier. 
+* `handlers` : An array of strings, each string selecting a handler process to terminate the connection with at the edge. Here, the ["HTTP" handler](/docs/services/#http) will accept HTTP traffic and pass it on to the internal port of the application which we defined earlier.
 * `port` : A string which selects which external ports you want Fly to accept traffic on. You can configure an application to listen for global traffic on ports 25, 53, 80, 443, 5000, 8443, 25565, and ports 10000 - 10100.
 
 You can have more than one `services.ports` sections. The default configuration, for example, contains two. We've already seen one above. The second one defines an external port 443 for secure connections, using the ["tls" handler](/docs/services/#tls).
@@ -249,7 +249,7 @@ The `source` is a volume name that this app should mount. Any volume with this n
 
 ### `destination`
 
-The `destination` is directory where the `source` volume should be mounted on the running app. 
+The `destination` is directory where the `source` volume should be mounted on the running app.
 
 ## The `experimental` section
 
@@ -259,3 +259,11 @@ This section is for flags and feature settings which have yet to be promoted int
 
 Set this value to true if you want the app to be default to using [private networking DNS ](/docs/reference/privatenetwork/). This then allows the app to look up `.internal` addresses to discover other applications by name and region.
 
+### `cmd`
+
+This directive allows you to override what command the entrypoint to the container should be.
+
+```toml
+[experimental]
+cmd = ["path/to/command", "arg1", "arg2"]
+```
