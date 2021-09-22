@@ -32,6 +32,7 @@ hkg|Hong Kong
 iad|Ashburn, Virginia (US)
 lax|Los Angeles, California (US)
 lhr|London, United Kingdom
+maa|Chennai (Madras), India
 nrt|Tokyo, Japan
 ord|Chicago, Illinois (US)
 scl|Santiago, Chile
@@ -39,7 +40,6 @@ sea|Seattle, Washington (US)
 sin|Singapore
 sjc|Sunnyvale, California (US)
 syd|Sydney, Australia
-vin|Vint Hill, Virginia
 yyz|Toronto, Canada
 
 `FLY_REGION` is just one of the range of [Runtime Enviroment](/docs/runtime-environment/) information available to applications.
