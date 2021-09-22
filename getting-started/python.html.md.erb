@@ -78,10 +78,10 @@ We are ready to start working with Fly and that means we need `flyctl`, our CLI 
 
 ## _Configure the App for Fly_
 
-Each Fly application needs a `fly.toml` file to tell the system how we'd like to deploy it. That file can be automatically generated with the command `flyctl init` command. We are going to use one of Fly's builtin deployment configurations for python
+Each Fly application needs a `fly.toml` file to tell the system how we'd like to deploy it. That file can be automatically generated with the `flyctl launch` command. We are going to use one of Fly's builtin deployment configurations for Python.
 
 ```cmd
-flyctl init
+flyctl launch
 ```
 ```output
 ? App Name (leave blank to use an auto-generated name) hellofly-python
