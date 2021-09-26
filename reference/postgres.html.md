@@ -139,7 +139,7 @@ One Postgres cluster can host multiple databases
 You can view a list of databases with from `flyctl`:
 
 ```bash
-flyctl postgres databases list 
+flyctl postgres list 
 ```
 
 ## Connection Examples
