@@ -11,29 +11,27 @@ buildpack to be specified which will be used instead of a Dockerfile to
 create the application image when it is deployed.
 
 ### Usage
-```
+~~~
 flyctl apps create [APPNAME] [flags]
-```
+~~~
 
 ### Options
 
-```
-      --builder string   The Cloud Native Buildpacks builder to use when deploying the app
-  -h, --help             help for create
-      --name string      The app name to use
-      --org string       The organization that will own the app
-  -p, --port string      Internal port on application to connect to external services
-```
+~~~
+  -h, --help          help for create
+      --name string   The app name to use
+      --org string    The organization that will own the app
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 
-* [flyctl apps](/docs/flyctl/apps/)	 - Manage Apps
+* [flyctl apps](/docs/flyctl/apps/)	 - Manage apps
 

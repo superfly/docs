@@ -7,9 +7,9 @@ Commands that managed WireGuard delegated access tokens
 Commands that managed WireGuard delegated access tokens
 
 ### Usage
-```
+~~~
 flyctl wireguard token [command] [flags]
-```
+~~~
 
 ### Available Commands
 * [create](/docs/flyctl/wireguard-token-create/)	 - Create a new WireGuard token
@@ -20,17 +20,17 @@ flyctl wireguard token [command] [flags]
 
 ### Options
 
-```
+~~~
   -h, --help   help for token
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 

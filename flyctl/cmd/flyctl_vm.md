@@ -7,9 +7,9 @@ Commands that manage VM instances
 Commands that manage VM instances
 
 ### Usage
-```
+~~~
 flyctl vm [command] [flags]
-```
+~~~
 
 ### Available Commands
 * [restart](/docs/flyctl/vm-restart/)	 - Restart a VM
@@ -18,17 +18,17 @@ flyctl vm [command] [flags]
 
 ### Options
 
-```
+~~~
   -h, --help   help for vm
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 

@@ -7,9 +7,9 @@ Manage DNS records
 Manage DNS records within a domain
 
 ### Usage
-```
+~~~
 flyctl dns-records [command] [flags]
-```
+~~~
 
 ### Available Commands
 * [export](/docs/flyctl/dns-records-export/)	 - Export DNS records
@@ -18,20 +18,19 @@ flyctl dns-records [command] [flags]
 
 ### Options
 
-```
+~~~
   -h, --help   help for dns-records
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
-* [flyctl domains](/docs/flyctl/domains/)	 - Domains on Fly
 

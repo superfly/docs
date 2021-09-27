@@ -7,23 +7,23 @@ List all WireGuard peer connections
 List all WireGuard peer connections
 
 ### Usage
-```
+~~~
 flyctl wireguard list [<org>] [flags]
-```
+~~~
 
 ### Options
 
-```
+~~~
   -h, --help   help for list
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 
