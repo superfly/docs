@@ -49,6 +49,7 @@ flyctl [command] [flags]
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
 * [postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
+* [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a fly app
 * [regions](/docs/flyctl/regions/)	 - Manage regions
 * [releases](/docs/flyctl/releases/)	 - List app releases
 * [restart](/docs/flyctl/restart/)	 - Restart an application

@@ -26,6 +26,7 @@ flyctl deploy [<workingdirectory>] [flags]
 ~~~
   -a, --app string            App name to operate on
       --build-arg strings     Set of build time variables in the form of NAME=VALUE pairs. Can be specified multiple times.
+      --build-only            
       --build-target string   Set the target build stage to build if the Dockerfile has more than one stage
   -c, --config string         Path to an app config file or directory containing one (default "./fly.toml")
       --detach                Return immediately instead of monitoring deployment progress
@@ -35,8 +36,9 @@ flyctl deploy [<workingdirectory>] [flags]
   -i, --image string          Image tag or id to deploy
       --image-label string    Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
       --local-only            Only perform builds locally using the local docker daemon
+      --no-cache              Do not use the cache when building the image
       --remote-only           Perform builds remotely without using the local docker daemon
-      --strategy string       The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. Default is canary
+      --strategy string       The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. Default is canary, or rolling when max-per-region is set.
 ~~~
 
 ### Global Options

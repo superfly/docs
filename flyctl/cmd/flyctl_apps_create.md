@@ -18,9 +18,10 @@ flyctl apps create [APPNAME] [flags]
 ### Options
 
 ~~~
-  -h, --help          help for create
-      --name string   The app name to use
-      --org string    The organization that will own the app
+      --generate-name   Always generate a name for the app
+  -h, --help            help for create
+      --name string     The app name to use
+      --org string      The organization that will own the app
 ~~~
 
 ### Global Options

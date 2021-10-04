@@ -17,6 +17,7 @@ flyctl machine run <image> [command] [flags]
   -a, --app string                       App name to operate on
       --build-arg strings                Set of build time variables in the form of NAME=VALUE pairs. Can be specified multiple times.
       --build-local-only                 Only perform builds locally using the local docker daemon
+      --build-only                       
       --build-remote-only                Perform builds remotely without using the local docker daemon
       --build-target string              Set the target build stage to build if the Dockerfile has more than one stage
   -c, --config string                    Path to an app config file or directory containing one (default "./fly.toml")
@@ -28,6 +29,7 @@ flyctl machine run <image> [command] [flags]
       --id string                        Machine ID, is previously known
       --image-label string               Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
   -n, --name string                      Machine name, will be generated if missing
+      --no-build-cache                   Do not use the cache when building the image
       --org string                       The organization that will own the app
   -p, --port strings                     Exposed port mappings (format: edgePort[:machinePort]/[protocol[:handler]])
   -r, --region flyctl platform regions   Region to deploy the machine to (see flyctl platform regions)
