@@ -38,7 +38,17 @@ If Fly can't find a file specified in a request, it falls through to your applic
 
 At this time, the proxy does not cache responses handled by the application itself — only files present in the configured `guest_path` at the time of deployment at served by the proxy. 
 
-## Caveats
-* Fly does not add any **cache control headers** at this point in time, so each request is re-served from the Fly edge cache. This has both pros and cons: the good news is that if you change the file and re-deploy with the same name your users will see the new file immediately. But this does need users to retry download the file each time. This isn't often a problem, though — most browsers will send a `If-None-Match` with the hash of the file they already have in the local cache, and Fly will return a `304 Not Modified` status code if the file hasn't changed. 
+## Monitoring & Billing
+All static responses served by Fly have the `fly-cache-status: HIT/MISS` header specified on them. You can monitor these requests on the Fly dashboard, and they will not pollute your application logs. 
 
-fly-cache-status: HIT (or MISS) 
+Static file responses are billed on the normal outgoing bandwidth rates, and there is no extra charge for the CPU/RAM resources required to serve these files.
+
+## Performance Impact
+The Fly proxy can serve static files in sub-millisecond times, so there's usually a positive impact on your application's performance, especially when compared to serving them from the application layer. 
+
+Static files are served only from the Fly regions that your application is enabled, deployed and currently running in. While this will make these requests much faster serving them from a single-region deployment, this is not a replacement for a CDN that might copy your files to tens or hundreds of edge locations around the world for the fastest possible service to end users. 
+
+## Caveats
+* Fly does not add any **cache control headers** at this point in time. This has both pros and cons: the good news is that if you change the file and re-deploy with the same name your users will see the new file immediately from the next request. But this does mean that users' browsers will re-request the file each time. This isn't often a problem, though — most browsers will send a `If-None-Match` request header with the hash of the file they already have in the local cache, and Fly will return a `304 Not Modified` status code if the file hasn't changed, which means the whole file is not sent or billed again. 
+* Fly can only parse requests and serve static files when the `http` handler is active. Running with the `tcp` handler or only the `tls` handler means that the static server is completely bypassed. 
+
