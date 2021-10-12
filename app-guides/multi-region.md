@@ -100,7 +100,7 @@ config.cache_store = :redis_cache_store, { url: ENV['FLY_REDIS_CACHE_URL' }
 
 You can also do global cache invalidation on Fly's Redis system — by issuing the `SELECT 1` Redis command, you can switch to a virtual Redis database that broadcasts the command to all your Redis instances in all regions. Some Redis commands are not supported, though, so see the [guide](https://fly.io/docs/reference/redis/#getting-redis-for-an-application) for more details. 
 
-If you'd like more control over your Redis instance, including persistence, you can always start Redis as a separate internal Fly application — templates to do this are available for [simple local](https://github.com/fly-apps/redis) instances and a [global replicated cache](https://github.com/fly-apps/redis-geo-cache).
+If you'd like more control over your Redis instance, including persistence, you can always start Redis as a separate internal Fly application — templates to do this are available for [simple local](https://github.com/fly-apps/redis) instances and a [global replicated cache](https://github.com/fly-apps/redis-geo-cache) — the [Last Mile Redis](https://fly.io/blog/last-mile-redis/) talks about how this works.
 
 ### Setting up the application
 The first step to setting up an application on Fly is to register it, tell Fly which builder and container to use, and set up the ports and domains it will run on — help with this can be found at the [Getting Started](https://fly.io/docs/getting-started/) section. Let's say we've created an app called `global-app`, we can now configure it to run globally, in the regions that we want:
