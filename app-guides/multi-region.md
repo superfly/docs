@@ -36,8 +36,8 @@ Let's say we have an [existing Rails 6+ app](https://fly.io/docs/getting-started
 We need to:
 * set up the Postgres database and replicas
 * set up Redis
-* add an optional replay/forwarding strategy for requests that write to the database
-* discuss alternative globe-native datastores
+* look at optional request replay/forwarding
+* discuss alternative global datastores
 
 ### Setting up the database
 Getting the Fly managed Postgres database ready is covered in detail in the [reference](https://fly.io/docs/getting-started/multi-region-databases/), but these are the main steps: 
@@ -86,9 +86,23 @@ production:
 
 We're doing two things to the `DATABASE_URL` to make it a replica URL — we're prepending the `FLY_REGION` to the hostname, and changing the port to 5433: so if the `DATABASE_URL` is `postgres://abc:xyz@global-postgress.fly.dev:5432/db1`, we're generating the replica URL as `postgres://abc:xyz@sjc.global-postgress.fly.dev:5433/db1` - which is the local read replica for the `sjc` region.
 
-This isn't specific to Rails of course — we can do this during the initialisation of any application to generate a local read replica URL from the primary `DATABASE_URL`. The primary `DATABASE_URL` will accept both reads and writes, while the read replicas can only handle reads. 
+This isn't specific to Rails of course — we can do this during the initialisation of any application to generate a local read replica URL from the primary `DATABASE_URL`. The primary `DATABASE_URL` will accept both reads and writes, while the read replicas can only handle reads. Switching between the primary and replica is described in the Rails guide, and for other technology stacks its usually as simple as maintaining two separate connections / pools and choosing between them as required. 
 
+### Setting up Redis
+Fly automatically provisions region-level Redis instances for all applications, which you can access with `FLY_REDIS_CACHE_URL`. So the simplest set up would be to just configure this Redis instance as your application cache using the Rails cache store or your stack's equivalent:
 
+```
+config.cache_store = :redis_cache_store, { url: ENV['FLY_REDIS_CACHE_URL' }
+```
 
+You can also do global cache invalidation on Fly's Redis system — by issuing the `SELECT 1` Redis command, you can switch to a virtual Redis database that broadcasts the command to all your Redis instances in all regions. Some Redis commands are not supported, though, so see the [guide](https://fly.io/docs/reference/redis/#getting-redis-for-an-application) for more details. 
 
+If you'd like more control over your Redis instance, including persistence, you can always start Redis as a separate internal Fly application — templates to do this are available for [simple local](https://github.com/fly-apps/redis) instances and a [global replicated cache](https://github.com/fly-apps/redis-geo-cache).
 
+### Using Request Replay
+One thing to remember with a replicated database is that writes can still only happen on a single region, the one where the primary instance resides. This means that if your application tries to write from an instance running on the other side of the world into the primary, query latency can be a problem — especially if there are many queries in sequence. 
+
+In cases like this Fly has a special feature that allows you to replay a request on a different region, so if we receive a request on a region far away from the primary, and we know we want to do a lot of writes, we can ask the Fly proxy layer to replay the request on the primary region instead. In our case, we may want to response with the `fly-replay: region=fra` header any time we receive a request on a non-primary region. Fly makes it easy to distinguish this as well — if the `PRIMARY_REGION` environment variable isn't the same as the `FLY_REGION` variable (which is where we're currently running), we can replay the request on the primary region. There's more information at the ["Running Ordinary Rails Apps Globally"](https://fly.io/blog/run-ordinary-rails-apps-globally/) post as well.
+
+### Alternate Globe-Native Datastores
+With a growing number of apps that have worldwide audiences, more and more databases are also being released with global replication built-in, often with the ability to write in any region as well. [AWS DynamoDB Global Tables](https://aws.amazon.com/dynamodb/global-tables/), [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction) and [Google Cloud Spanner](https://cloud.google.com/spanner) are specially built for global service, while other services like [AWS Aurora Global Database](https://aws.amazon.com/rds/aurora/global-database/) adapt MySQL and Postgres to work better across regions. All of these will work great with a Fly app running in multiple regions.
