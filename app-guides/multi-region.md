@@ -29,3 +29,18 @@ Fly runs servers in over 20 regions across the world, with all these regions lis
 Fly also has a managed Postgres offering, helping you set up a highly available PostgreSQL database at any region, with automatically managed read replicas in the other regions that you want to run your application in. 
 
 And on top of all this, Fly offers ephemeral Redis instances to all applications that can be used a fast shared local cache. 
+
+## The Plan
+Let's say we have an existing Rails 6+ app, to keep things simple, and we want to set up a global deployment [across](https://fly.io/docs/reference/regions/) the US West Coast (`sjc`), US East Coast (`iad`), EU (`fra`), and South East Asia (`sin`). We'll put our database primary in the middle at `fra`, with read replicas at all the other regions. 
+
+We need to:
+* set up the database and replicas
+* set up the app deployment 
+* configure the app to understand the primary and replica databases
+* configure the app to use the local Redis instance for caching
+* add an optional replay/forwarding strategy for requests that write to the database
+* discuss following the sun by changing the region primary region based on time of day
+* discuss alternative globe-native datastores
+
+
+
