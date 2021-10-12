@@ -73,7 +73,8 @@ production:
   url: <%= ENV['DATABASE_URL'] %>
 ```
 
-This works for both writes and reads, but it would be useful for application instances to also be able to access the read replica databases running in their local regions. Rails allows (multiple databases)[https://guides.rubyonrails.org/active_record_multiple_databases.html], which can be configured like this:
+This works for both writes and reads, but it would be useful for application instances to also be able to access the read replica databases running in their local regions. Rails allows [multiple databases](https://guides.rubyonrails.org/active_record_multiple_databases.html), which can be configured like this:
+
 ```
 production:
   primary:
@@ -89,7 +90,7 @@ We're doing two things to the `DATABASE_URL` to make it a replica URL — we're
 
 This isn't specific to Rails of course — we can do this during the initialisation of any application to generate a local read replica URL from the primary `DATABASE_URL`. The primary `DATABASE_URL` will accept both reads and writes, while the read replicas can only handle reads. Switching between the primary and replica is described in the Rails guide, and for other technology stacks it's usually as simple as maintaining two separate connections / pools and choosing between them as required. 
 
-This operation also sets up a `PRIMARY_REGION` environment variable, which is set to the region that has the primary running in it. We'll use this laster when we talk about replaying requests. 
+The attachment operation also sets up a `PRIMARY_REGION` environment variable, which is set to the region that has the primary running in it. We'll use this laster when we talk about replaying requests. 
 
 ### Setting up Redis
 Fly automatically provisions region-level Redis instances for all applications, which you can access with `FLY_REDIS_CACHE_URL`. So the simplest set up would be to just configure this Redis instance as your application cache using the Rails cache store or your stack's equivalent:
@@ -100,7 +101,7 @@ config.cache_store = :redis_cache_store, { url: ENV['FLY_REDIS_CACHE_URL' }
 
 You can also do global cache invalidation on Fly's Redis system — by issuing the `SELECT 1` Redis command, you can switch to a virtual Redis database that broadcasts the command to all your Redis instances in all regions. Some Redis commands are not supported, though, so see the [guide](https://fly.io/docs/reference/redis/#getting-redis-for-an-application) for more details. 
 
-If you'd like more control over your Redis instance, including persistence, you can always start Redis as a separate internal Fly application — templates to do this are available for [simple local](https://github.com/fly-apps/redis) instances and a [global replicated cache](https://github.com/fly-apps/redis-geo-cache) — the [Last Mile Redis](https://fly.io/blog/last-mile-redis/) talks about how this works.
+If you'd like more control over your Redis instance, including persistence configurations, you can always start Redis as a separate internal Fly application — templates to do this are available for [simple local](https://github.com/fly-apps/redis) instances and a [global replicated cache](https://github.com/fly-apps/redis-geo-cache) — the [Last Mile Redis](https://fly.io/blog/last-mile-redis/) talks about how this works.
 
 ### Setting up the application
 The first step to setting up an application on Fly is to register it, tell Fly which builder and container to use, and set up the ports and domains it will run on — help with this can be found at the [Getting Started](https://fly.io/docs/getting-started/) section. Let's say we've created an app called `global-app`, we can now configure it to run globally, in the regions that we want:
@@ -111,14 +112,16 @@ flyctl scale count 4
 flyctl autoscale standard min=4 max=10
 ```
 
-This sets up the regions we want as the region list, and tells Fly to start 4 instances. We also tell Fly we want the [standard autoscaling strategy](https://fly.io/docs/reference/scaling/#autoscaling), which combined with the `min=4` will ensure that at least one instance is always running at every one of our regions. The `max=10` tells Fly to add more instances based on demand in whichever region needs it, up to a max of 10 instances. 
+This sets up the regions we want as the region list, and tells Fly to start 4 instances. We also tell Fly we want the [*standard* autoscaling strategy](https://fly.io/docs/reference/scaling/#autoscaling), which combined with the `min=4` will ensure that at least one instance is always running at every one of our regions. The `max=10` tells Fly to add more instances based on demand in whichever region needs it, up to a global max of 10 instances. 
 
 This setup makes sure we always have a baseline of instances available in our regions, while being prepared for higher traffic. Fly will automatically scale up and back down in regions where we have increased load. 
 
 ### Using Request Replay
 One thing to remember with a replicated database is that writes can still only happen on a single region, the one where the primary instance resides. This means that if your application tries to write from an instance running on the other side of the world into the primary, query latency can be a problem — especially if there are many queries in sequence. 
 
-In cases like this Fly has a special feature that allows you to replay a request on a different region, so if we receive a request on a region far away from the primary, and we know we want to do a lot of writes, we can ask the Fly proxy layer to replay the request on the primary region instead. In our case, we may want to response with the `fly-replay: region=fra` header any time we receive a request on a non-primary region. Fly makes it easy to distinguish this as well — if the `PRIMARY_REGION` environment variable isn't the same as the `FLY_REGION` variable (which is where we're currently running), we can replay the request on the primary region. There's more information at the ["Running Ordinary Rails Apps Globally"](https://fly.io/blog/run-ordinary-rails-apps-globally/) post as well.
+For cases like this Fly has a special feature that allows you to replay a request on a different region — so if we receive a request on a region far away from the primary, and we know we want to do a lot of writes, we can ask the Fly proxy layer to replay the request on the primary region instead. In our case, we may want to respond with the `fly-replay: region=fra` header any time we receive a request on a non-primary region. 
+
+We have the information necessary to send this header in the `PRIMARY_REGION` environment variable — if isn't the same as the `FLY_REGION` variable (which is where we're currently running), we can send the header to replay the request on the primary region. There's more information at the ["Running Ordinary Rails Apps Globally"](https://fly.io/blog/run-ordinary-rails-apps-globally/) post as well.
 
 There are libraries available to make this easier on [Ruby](https://github.com/superfly/fly-ruby) and [Elixir](https://hex.pm/packages/fly_postgres), more middleware libraries can be requested on the [Fly Community Forum](https://community.fly.io/).
 
