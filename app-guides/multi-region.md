@@ -36,6 +36,7 @@ Let's say we have an [existing Rails 6+ app](https://fly.io/docs/getting-started
 We need to:
 * set up the Postgres database and replicas
 * set up Redis
+* configure our application to run globally
 * look at optional request replay/forwarding
 * discuss alternative global datastores
 
@@ -58,10 +59,10 @@ fly scale count 5 -a global-postgres
 
 This adds another 3 data volumes in the replica regions, and bumps up the total number of instances to 5. Fly will make sure that each instance is attached to one volume.
 
-This Fly Postgres app called `global-postgres` is a separate Fly app in our account, so let's link it into our application (say it's called `awesome-app`).
+This Fly Postgres app called `global-postgres` is a separate Fly app in our account, so let's link it into our application (let's say it's called `global-app`).
 
 ```
-fly pg attach --postgres-app global-postgres -a awesome-app
+fly pg attach --postgres-app global-postgres -a global-app
 ```
 
 What this does is configure an environment variable on our application called `DATABASE_URL` with the Postgres URL of the primary database. This primary URL will always point to port `5432`. If we just wanted to use the primary database from our application, we would set our `config/database.yml` to look like this:
@@ -100,6 +101,19 @@ config.cache_store = :redis_cache_store, { url: ENV['FLY_REDIS_CACHE_URL' }
 You can also do global cache invalidation on Fly's Redis system — by issuing the `SELECT 1` Redis command, you can switch to a virtual Redis database that broadcasts the command to all your Redis instances in all regions. Some Redis commands are not supported, though, so see the [guide](https://fly.io/docs/reference/redis/#getting-redis-for-an-application) for more details. 
 
 If you'd like more control over your Redis instance, including persistence, you can always start Redis as a separate internal Fly application — templates to do this are available for [simple local](https://github.com/fly-apps/redis) instances and a [global replicated cache](https://github.com/fly-apps/redis-geo-cache).
+
+### Setting up the application
+The first step to setting up an application on Fly is to register it, tell Fly which builder and container to use, and set up the ports and domains it will run on — help with this can be found at the [Getting Started](https://fly.io/docs/getting-started/) section. Let's say we've created an app called `global-app`, we can now configure it to run globally, in the regions that we want:
+
+```
+flyctl regions set fra sin sjc iad
+flyctl scale count 4
+flyctl autoscale standard min=4 max=10
+```
+
+This sets up the regions we want as the region list, and tells Fly to start 4 instances. We also tell Fly we want the [standard autoscaling strategy](https://fly.io/docs/reference/scaling/#autoscaling), which combined with the `min=4` will ensure that at least one instance is always running at every one of our regions. The `max=10` tells Fly to add more instances based on demand in whichever region needs it, up to a max of 10 instances. 
+
+This setup makes sure we always have a baseline of instances available in our regions, while being prepared for higher traffic. Fly will automatically scale up and back down in regions where we have increased load. 
 
 ### Using Request Replay
 One thing to remember with a replicated database is that writes can still only happen on a single region, the one where the primary instance resides. This means that if your application tries to write from an instance running on the other side of the world into the primary, query latency can be a problem — especially if there are many queries in sequence. 
