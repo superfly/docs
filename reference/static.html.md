@@ -33,8 +33,10 @@ Other applications will run with different configurations based which stack is u
 ```
 This is because the `yarn build` command compiles all the files into the `build` folder, and expects that folder to be served at the root path. 
 
+Fly will look for and serve `index.html` if the root or a folder path is requested, so static sites should work out of the box. 
+
 ## Application Fall-Through
-If Fly can't find a file specified in a request, it falls through to your application. This allows you to add custom handlers for special cases like serving `index.html` on the root path, creating missing files dynamically, or any other logic you might want. 
+If Fly can't find a file specified in a request, it falls through to your application. This allows you to add custom handlers for special cases like serving custom `index.html` on the root path, creating missing files dynamically, or any other logic you might want. 
 
 At this time, the Fly does not cache responses handled by the application itself — it only serves files present in the configured directories at the time of deployment.  
 
