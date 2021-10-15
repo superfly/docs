@@ -10,7 +10,6 @@ It allows users to manage authentication, application initialization,
 deployment, network configuration, logging and more with just the 
 one command.
 
-Initialize an app with the init command
 Deploy an app with the deploy command
 View a deployed web application with the open command
 Check the status of an application with the status command
