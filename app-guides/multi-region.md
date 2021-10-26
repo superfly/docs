@@ -78,7 +78,7 @@ This works for both writes and reads, but it would be useful for application ins
 ```
 production:
   primary:
-    url: <%= ENV['DATABASE_URL'] %>
+    url: <%= URI.parse(ENV['DATABASE_URL']).tap{|u| u.host = ENV['PRIMARY_REGION'] + '.' + u.host}.tap{|u| u.port = 5432}.to_s %>
     adapter: postgresql
   primary_replica:
 	  url: <%= URI.parse(ENV['DATABASE_URL']).tap{|u| u.host = ENV['FLY_REGION'] + '.' + u.host}.tap{|u| u.port = 5433}.to_s %>
