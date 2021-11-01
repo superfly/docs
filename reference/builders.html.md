@@ -29,3 +29,9 @@ The deploy process works the same way with buildpacks.
 ### Image
 
 Finally, if you already have a Docker image in a repository and just want to deploy that, you can skip the building process and go straight to the deploy with the image build option.
+
+## _No Docker? No Problem!_
+
+If you can't or don't want to install a Docker daemon to perform local builds, Fly has you covered. A remote builder will be automatically provisioned for you, on-demand and free of charge. The builder will also maintain a cache of your commonly used layers for fast re-builds.
+
+You'll see the buidler as an applicaiton on your dashboard and app list, and you can safely delete it at any time — a new builder will be provisioned for you again when necessary. 
