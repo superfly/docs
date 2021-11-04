@@ -125,7 +125,7 @@ Even if you don't care to cluster your nodes together, you still want to do this
 To make clustering your Elixir applications easier on Fly, in the `env.sh.eex` file, the `RELEASE_NODE` is named using the `$FLY_APP_NAME` and the IPv6 address. It will look something like this in practice.
 
 ```
-icy-leaf-7381@fdaa:0:1da8:a7b:ac2:216b:da3f:2
+fly-elixir@fdaa:0:1da8:a7b:ac2:216b:da3f:2
 ```
 
 While our `hello_elixir` app isn't clustered, it could easily be clustered using `libcluster` and a DNS strategy. So to keep things smooth and easy in case you want to go that route, then using the Fly app name as the node name works best.
@@ -225,7 +225,7 @@ $ fly launch
 Scanning source code
 Detected Dockerfile app
 ? Select region: sea (Seattle, Washington (US))
-Created app icy-leaf-7381 in organization personal
+Created app fly-elixir in organization personal
 Wrote config file fly.toml
 ? Would you like to deploy now? No
 ```
@@ -242,10 +242,10 @@ At this point, `flyctl` created an app for you and wrote your configuration to a
 
 ## _Inside `fly.toml`_
 
-The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also generated a Fly-side application slot with a new name. In this case, it is `icy-leaf-7381`. If we look at the `fly.toml` file we can see the name in there:
+The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also generated a Fly-side application slot with a new name. In this case, it is `fly-elixir`. If we look at the `fly.toml` file we can see the name in there:
 
 ```toml
-app = "icy-leaf-7381"
+app = "fly-elixir"
 
 kill_signal = "SIGINT"
 kill_timeout = 5
@@ -293,7 +293,7 @@ We'll have more details about these properties as we progress, but for now, it's
 Elixir applications need a little customization to the generated `fly.toml` file.
 
 ```toml
-app = "icy-leaf-7381"
+app = "fly-elixir"
 
 kill_signal = "SIGTERM"
 kill_timeout = 5
@@ -403,9 +403,9 @@ We use `flyctl` to attach our app to the database which also sets our needed `DA
 fly postgres attach --postgres-app hello-elixir-db
 ```
 ```output
-Postgres cluster hello-elixir-db is now attached to icy-leaf-7381
-The following secret was added to icy-leaf-7381:
-  DATABASE_URL=postgres://<NEW_USER>:<NEW_PASSWORD>@hello-elixir-db.internal:5432/icy_leaf_7381?sslmode=disable
+Postgres cluster hello-elixir-db is now attached to fly-elixir
+The following secret was added to fly-elixir:
+  DATABASE_URL=postgres://<NEW_USER>:<NEW_PASSWORD>@hello-elixir-db.internal:5432/fly_elixir?sslmode=disable
 ```
 
 We can see the secrets that Fly is using for our app like this.
@@ -431,7 +431,7 @@ fly deploy
 
 First, `flyctl` builds our Dockerfile and pushes it to a Fly container registry.
 
-This will lookup our `fly.toml` file, and get the app name `icy-leaf-7381` from there. Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl returns you to the command line when it's done.
+This will lookup our `fly.toml` file, and get the app name `fly-elixir` from there. Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl returns you to the command line when it's done.
 
 ## _Viewing the Deployed App_
 
@@ -442,11 +442,11 @@ fly status
 ```
 ```output
 App
-  Name     = icy-leaf-7381
+  Name     = fly-elixir
   Owner    = personal
   Version  = 3
   Status   = running
-  Hostname = icy-leaf-7381.fly.dev
+  Hostname = fly-elixir.fly.dev
 
 Deployment Status
   ID          = 9762642f-baa4-e4df-c683-13f2ce26a6bc
@@ -468,7 +468,7 @@ The quickest way to browse your newly deployed application is with the `fly open
 fly open
 ```
 ```output
-Opening https://icy-leaf-7381.fly.dev/
+Opening https://fly-elixir.fly.dev/
 ```
 
 Your browser will be sent to the displayed URL. Fly will auto-upgrade this URL to a HTTPS secured URL.
@@ -519,7 +519,7 @@ With SSH configured, let's open a console.
 fly ssh console
 ```
 ```output
-Connecting to icy-leaf-7381.internal... complete
+Connecting to fly-elixir.internal... complete
 / #
 ```
 
@@ -658,7 +658,7 @@ fly logs
 ```
 ```output
 ...
-app[eb4119d3] sea [info] 21:50:21.924 [info] [libcluster:fly6pn] connected to :"icy-leaf-7381@fdaa:0:1da8:a7b:ac2:f901:4bf7:2"
+app[eb4119d3] sea [info] 21:50:21.924 [info] [libcluster:fly6pn] connected to :"fly-elixir@fdaa:0:1da8:a7b:ac2:f901:4bf7:2"
 ...
 ```
 
@@ -670,8 +670,8 @@ fly ssh console
 ```
 
 ```elixir
-iex(icy-leaf-7381@fdaa:0:1da8:a7b:ac2:f901:4bf7:2)1> Node.list
-[:"icy-leaf-7381@fdaa:0:1da8:a7b:ac4:eb41:19d3:2"]
+iex(fly-elixir@fdaa:0:1da8:a7b:ac2:f901:4bf7:2)1> Node.list
+[:"fly-elixir@fdaa:0:1da8:a7b:ac4:eb41:19d3:2"]
 ```
 
 I included the IEx prompt because it shows the IP address of the node I'm connected to. Then getting the `Node.list` returns the other node. Our two instances are connected and clustered!
@@ -738,8 +738,8 @@ fly ssh console
 ```
 
 ```elixir
-iex(icy-leaf-7381@fdaa:0:1da8:a7b:ac2:cdf6:c422:2)1> Node.list
-[:"icy-leaf-7381@fdaa:0:1da8:a7b:ab2:a8e:6666:2"]
+iex(fly-elixir@fdaa:0:1da8:a7b:ac2:cdf6:c422:2)1> Node.list
+[:"fly-elixir@fdaa:0:1da8:a7b:ab2:a8e:6666:2"]
 ```
 
 We have two instances of our application deployed to the West and East coasts of the North American continent and they are clustered together! Our users will automatically be directed to the server nearest them. That is so cool!
