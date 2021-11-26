@@ -4,7 +4,7 @@ Deploy an app to the Fly platform
 
 ### About
 
-Deploy an application to the Fly platform. The application can be a local 
+Deploy an application to the Fly platform. The application can be a local
 image, remote image, defined in a Dockerfile or use a CNB buildpack.
 
 Use the --config/-c flag to select a specific toml configuration file.

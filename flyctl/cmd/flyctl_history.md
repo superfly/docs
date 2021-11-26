@@ -4,7 +4,7 @@ List an app's change history
 
 ### About
 
-List the history of changes in the application. Includes autoscaling 
+List the history of changes in the application. Includes autoscaling
 events and their results.
 
 ### Usage

@@ -4,7 +4,7 @@ Show the currently authenticated user
 
 ### About
 
-Displays the users email address/service identity currently 
+Displays the users email address/service identity currently
 authenticated and in use.
 
 ### Usage

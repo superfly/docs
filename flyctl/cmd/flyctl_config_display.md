@@ -4,7 +4,7 @@ Display an app's configuration
 
 ### About
 
-Display an application's configuration. The configuration is presented 
+Display an application's configuration. The configuration is presented
 in JSON format. The configuration data is retrieved from the Fly service.
 
 ### Usage

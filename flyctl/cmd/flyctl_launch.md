@@ -14,13 +14,16 @@ flyctl launch [flags]
 ### Options
 
 ~~~
-  -h, --help            help for launch
-      --image string    the image to launch
-      --name string     the name of the new app
-      --now             deploy now without confirmation
-      --org string      the organization that will own the app
-      --path string     path to app code and where a fly.toml file will be saved. (default ".")
-      --region string   the region to launch the new app in
+      --dockerfile string   Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
+      --generate-name       Always generate a name for the app
+  -h, --help                help for launch
+      --image string        the image to launch
+      --name string         the name of the new app
+      --no-deploy           Do not prompt for deployment
+      --now                 deploy now without confirmation
+      --org string          the organization that will own the app
+      --path string         path to app code and where a fly.toml file will be saved. (default ".")
+      --region string       the region to launch the new app in
 ~~~
 
 ### Global Options

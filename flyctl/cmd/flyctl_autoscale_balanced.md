@@ -6,7 +6,7 @@ Configure a traffic balanced app with params (min=int max=int)
 
 Configure the app to balance regions based on traffic with given parameters:
 
-min=int - minimum number of instances to be allocated from region pool. 
+min=int - minimum number of instances to be allocated from region pool.
 max=int - maximum number of instances to be allocated from region pool.
 
 ### Usage

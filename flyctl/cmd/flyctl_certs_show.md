@@ -4,7 +4,7 @@ Shows certificate information
 
 ### About
 
-Shows certificate information for an application. 
+Shows certificate information for an application.
 Takes hostname as a parameter to locate the certificate.
 
 ### Usage

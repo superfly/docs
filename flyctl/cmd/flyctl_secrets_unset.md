@@ -4,7 +4,7 @@ Remove encrypted secrets from an app
 
 ### About
 
-Remove encrypted secrets from the application. Unsetting a 
+Remove encrypted secrets from the application. Unsetting a
 secret removes its availability to the application.
 
 ### Usage

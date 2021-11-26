@@ -6,7 +6,7 @@ Set current models autoscaling parameters
 
 Allows the setting of the current models autoscaling parameters:
 
-min=int - minimum number of instances to be allocated from region pool. 
+min=int - minimum number of instances to be allocated from region pool.
 max=int - maximum number of instances to be allocated from region pool.
 
 ### Usage

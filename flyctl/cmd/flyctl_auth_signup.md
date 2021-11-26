@@ -4,7 +4,7 @@ Create a new fly account
 
 ### About
 
-Creates a new fly account. The command opens the browser 
+Creates a new fly account. The command opens the browser
 and sends the user to a form to provide appropriate credentials.
 
 ### Usage

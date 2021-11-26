@@ -4,7 +4,7 @@ Removes a certificate from an app
 
 ### About
 
-Removes a certificate from an application. Takes hostname 
+Removes a certificate from an application. Takes hostname
 as a parameter to locate the certificate.
 
 ### Usage

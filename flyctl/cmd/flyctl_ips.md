@@ -4,9 +4,9 @@ Manage IP addresses for apps
 
 ### About
 
-The IPS commands manage IP addresses for applications. An application 
-can have a number of IP addresses associated with it and this family of commands 
-allows you to list, allocate and release those addresses. It supports both IPv4 
+The IPS commands manage IP addresses for applications. An application
+can have a number of IP addresses associated with it and this family of commands
+allows you to list, allocate and release those addresses. It supports both IPv4
 and IPv6 addresses.
 
 ### Usage

@@ -4,7 +4,7 @@ Revoke a pending invitation to an organization
 
 ### About
 
-Revokes an invitation to join an organization that has been sent to a 
+Revokes an invitation to join an organization that has been sent to a
 user by email.
 
 ### Usage

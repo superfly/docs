@@ -4,7 +4,7 @@ Add a certificate for an app.
 
 ### About
 
-Add a certificate for an application. Takes a hostname 
+Add a certificate for an application. Takes a hostname
 as a parameter for the certificate.
 
 ### Usage

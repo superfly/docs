@@ -4,8 +4,8 @@ Show app status
 
 ### About
 
-Show the application's current status including application 
-details, tasks, most recent deployment details and in which regions it is 
+Show the application's current status including application
+details, tasks, most recent deployment details and in which regions it is
 currently allocated.
 
 ### Usage

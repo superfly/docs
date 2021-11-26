@@ -4,7 +4,7 @@ List app releases
 
 ### About
 
-List all the releases of the application onto the Fly platform, 
+List all the releases of the application onto the Fly platform,
 including type, when, success/fail and which user triggered the release.
 
 ### Usage

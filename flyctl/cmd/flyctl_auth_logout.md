@@ -4,7 +4,7 @@ Logs out the currently logged in user
 
 ### About
 
-Log the currently logged-in user out of the Fly platform. 
+Log the currently logged-in user out of the Fly platform.
 To continue interacting with Fly, the user will need to log in again.
 
 ### Usage

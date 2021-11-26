@@ -4,7 +4,7 @@ Lists all your apps
 
 ### About
 
-The list apps command lists all your applications. As this may be a 
+The list apps command lists all your applications. As this may be a
 long list, there are options to filter the results.
 
 Specifying a text string as a parameter will only return applications where the

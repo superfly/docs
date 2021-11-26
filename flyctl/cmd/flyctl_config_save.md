@@ -4,7 +4,7 @@ Save an app's config file
 
 ### About
 
-Save an application's configuration locally. The configuration data is 
+Save an application's configuration locally. The configuration data is
 retrieved from the Fly service and saved in TOML format.
 
 ### Usage

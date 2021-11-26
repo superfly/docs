@@ -4,7 +4,7 @@ Change an app's VM count to the given value
 
 ### About
 
-Change an app's VM count to the given value. 
+Change an app's VM count to the given value.
 
 For pricing, see https://fly.io/docs/about/pricing/
 

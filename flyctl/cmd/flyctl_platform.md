@@ -4,7 +4,7 @@ Fly platform information
 
 ### About
 
-The PLATFORM commands are for users looking for information 
+The PLATFORM commands are for users looking for information
 about the Fly platform.
 
 ### Usage

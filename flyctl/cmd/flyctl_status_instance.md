@@ -4,7 +4,7 @@ Show instance status
 
 ### About
 
-Show the instance's current status including logs, checks, 
+Show the instance's current status including logs, checks,
 and events.
 
 ### Usage

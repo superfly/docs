@@ -4,8 +4,8 @@ Commands for managing Fly organizations
 
 ### About
 
-Commands for managing Fly organizations. list, create, show and 
-destroy organizations. 
+Commands for managing Fly organizations. list, create, show and
+destroy organizations.
 Organization admins can also invite or remove users from Organizations.
 
 ### Usage
