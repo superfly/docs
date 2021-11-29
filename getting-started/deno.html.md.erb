@@ -117,10 +117,10 @@ Then `flyctl` will start the process of deploying our application to the Fly pla
 
 ## _Viewing the Deployed App_
 
-If you want to find out more about the deployment. The command `flyctl info` will give you all the essential details.
+If you want to find out more about the deployment. The command `flyctl status` will give you all the essential details.
 
 ```cmd
-flyctl info
+flyctl status
 ```
 ```output
 App
@@ -130,16 +130,23 @@ App
   Status   = running
   Hostname = empty-sea-2541.fly.dev
 
-Allocations
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-73f825ad 0       fra    run     running 1 total, 1 passing 0        6m34s ago
+Deployment Status
+  ID          = 9762642f-baa4-e4df-c683-13f2ce26a6bc
+  Version     = v0
+  Status      = successful
+  Description = Deployment completed successfully
+  Instances   = 1 desired, 1 placed, 1 healthy, 0 unhealthy
+
+Instances
+ID       PROCESS VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
+73f825ad app     0       fra    run     running 1 total, 1 passing 0        6m34s ago
 ```
 
 ## _Connecting to the App_
 
 The quickest way to view your application is to run `flyctl open` which will open your browser on the URL for your application. Run `flyctl open /name` to get an extra greeting from the app.
 
-If you want to manually enter a URL to check, remember to replace `empty-sea-2541.fly.dev` with the hostname you got from `flyctl info` and connect to `http://hellodeno.fly.dev/` where you should find a greeting - it will normally be upgraded to a secure connection. Use `https://hellodeno.fly.dev` to start with a secure connection. Add `/name` and you'll get an extra greeting from the hellodeno application.
+If you want to manually enter a URL to check, remember to replace `empty-sea-2541.fly.dev` with the hostname you got from `flyctl status` and connect to `http://hellodeno.fly.dev/` where you should find a greeting - it will normally be upgraded to a secure connection. Use `https://hellodeno.fly.dev` to start with a secure connection. Add `/name` and you'll get an extra greeting from the hellodeno application.
 
 ## _Bonus Points_
 

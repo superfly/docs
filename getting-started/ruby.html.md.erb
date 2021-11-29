@@ -139,7 +139,7 @@ This will lookup our `fly.toml` file, and get the app name `helloruby` from ther
 
 ## _Viewing the Deployed App_
 
-Now the application has been deployed, let's find out more about its deployment. The command `flyctl info` will give you all the essential details.
+Now the application has been deployed, let's find out more about its deployment. The command `flyctl status` will give you all the essential details.
 
 ```cmd
 flyctl status
@@ -148,13 +148,20 @@ flyctl status
 App
   Name     = helloruby
   Owner    = demo
-  Version  = 1
+  Version  = 0
   Status   = running
   Hostname = helloruby.fly.dev
 
-Allocations
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-d61b5d88 1       fra    run     running 1 total, 1 passing 0        2m21s ago
+Deployment Status
+  ID          = 9762642f-baa4-e4df-c683-13f2ce26a6bc
+  Version     = v0
+  Status      = successful
+  Description = Deployment completed successfully
+  Instances   = 1 desired, 1 placed, 1 healthy, 0 unhealthy
+
+Instances
+ID       PROCESS VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
+d61b5d88 app     0       fra    run     running 1 total, 1 passing 0        2m21s ago
 ```
 
 ## _Connecting to the App_

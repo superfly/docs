@@ -176,9 +176,16 @@ App
   Status   = running
   Hostname = hellofly.fly.dev
 
-Allocations
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-0ac9ed79 0       fra    run     running 1 total, 1 passing 0        44s ago
+Deployment Status
+  ID          = 9762642f-baa4-e4df-c683-13f2ce26a6bc
+  Version     = v0
+  Status      = successful
+  Description = Deployment completed successfully
+  Instances   = 1 desired, 1 placed, 1 healthy, 0 unhealthy
+
+Instances
+ID       PROCESS VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
+0ac9ed79 app     0       fra    run     running 1 total, 1 passing 0        44s ago
 $
 ```
 
