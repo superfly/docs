@@ -55,13 +55,13 @@ If you want to watch the process take place, head to the Repository and select t
 
 ## A longer look at the deployment process
 
-**Step 1**, is a a simple GitHub Fork; there's not a lot to say about that except that you need to do it because you want control of the repository that you are deploying from.
+**Step 1**, is a simple GitHub Fork; there's not a lot to say about that except that you need to do it because you want control of the repository that you are deploying from.
 
 ### API Tokens and deployment
 
 **Step 2** is all about getting an API token. Once you are logged in with `flyctl` you can request its API token to use to authorize applications. That's what `flyctl auth token` gives you.
 
-**Step 3 and 4**: Now you have a token you need to make it available to GitHub Actions that run against your repository. For that, there's secrets in the repository's settings. Pop our secret under the `FLY_API_TOKEN` name and we can move on.
+**Step 3 and 4**: Now that you have a token, you need to make it available to GitHub Actions that run against your repository. For that, there are secrets in the repository's settings. Put the secret under the `FLY_API_TOKEN` name and we can move on.
 
 ### fly.toml and the Repository
 
@@ -69,9 +69,9 @@ If you want to watch the process take place, head to the Repository and select t
 
 **Step 6** is an interesting step - when we ship examples, we avoid putting the `fly.toml` file in the repository by including `fly.toml` in the `.gitignore` file. Users should be creating their own with `fly apps create`. When using GitHub Actions though, we want `fly.toml` in the repository so the action can use it in the deployment process. 
 
-So, we pull `fly.toml` out of  the `.gitignore`. Which then allows us to perform Step 7.
+So, we pull `fly.toml` out of `.gitignore`. Which then allows us to perform Step 7.
 
-**Step 7**: Creating a fly.toml file to go into the repository.
+**Step 7**: Run `flyctl apps create` to create a fly.toml file to go into the repository.
 
 ### Building the workflow
 
