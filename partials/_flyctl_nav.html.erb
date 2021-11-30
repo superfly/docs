@@ -1,0 +1,170 @@
+<a class="button:sm button:outline text:xs" href="/docs/">
+  <span class="arrow:before:left">Back</span>
+</a>
+<dl>
+  <dt class="flex sm:justify-center text:smallcaps text:2s text:dark-silver pt:3">
+    Reference
+  </dt>
+  <dd>
+    <%= nav_link "Introducing Flyctl", "/docs/flyctl", class: "flex sm:justify-center sm:m-2 pt-2 leading-5" %>
+    <%= nav_link "Installing Flyctl", "/docs/flyctl/installing/", class: "flex sm:justify-center sm:m-2 pt-2 leading-5" %>
+    <%= nav_link "Integrating Flyctl ", "/docs/flyctl/integrating/", class: "flex sm:justify-center sm:m-2 pt-2 leading-5" %>
+  </dd>
+  <dt class="flex sm:justify-center text:smallcaps text:2s text:dark-silver pt:3">
+    Commands
+  </dt>
+  <dd>
+    <% nav_link "/docs/flyctl/launch/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5" do %>
+      Launch an App
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">launch</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/apps/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Manage Apps
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">apps</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/autoscale/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Autoscaling App resources
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">autoscale</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/auth/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Login and Authentication
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">auth</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/certs/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Certificates for Apps
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">certs</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/checks/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Manage health checks
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">checks</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/config/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Configuring Apps
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">config</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/dashboard/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Open web dashboard
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">dashboard</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/deploy/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Deploy an App
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">deploy</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/destroy/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Delete an App
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">destroy</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/docs/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      View Fly docs
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">docs</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/dns-records/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Manage DNS Records*
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50" dns>records</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/domains/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Manage Domains*
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">domains      </span>
+    <% end %>
+    <% nav_link "/docs/flyctl/history/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      View App history
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">history</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/info/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      View App information
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">info</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/init/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Initialize a new App
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">init      </span>
+    <% end %>
+    <% nav_link "/docs/flyctl/ips/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Managing IP addresses
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">ips</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/list/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      List Apps and Orgs
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">list</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/logs/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      View App logs
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">logs</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/monitor/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Monitor deployments
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">monitor</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/move/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Move an App
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">move</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/open/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      View App with browser
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">open</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/orgs/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Manage Organizations
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">orgs</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/platform/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Platform information
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">platform</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/postgres/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Manage Postgres clusters
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">postgres</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/regions/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Selecting Regions
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">regions</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/releases/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Managing App releases
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">releases</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/restart/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Restart an App
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">restart</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/resume/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Resume an App
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">resume</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/scale/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Scaling Apps
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">scale</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/secrets/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Managing App secrets
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">secrets</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/ssh/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Manage SSH
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">ssh</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/status/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      View an App's status
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">status</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/suspend/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Suspend an App
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">suspend</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/version/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      About Flyctl versions
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">version</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/vm/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Manage VM instances
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">vm</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/volumes/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      Manage Disks*
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">volumes</span>
+    <% end %>
+    <% nav_link "/docs/flyctl/wireguard/", class: "flex items-baseline justify-between sm:m-2 pt-2 leading-5 text-navy hover:text-violet-600 transition-colors" do %>
+      WireGuard VPN*
+      <span class="font-mono text-violet-600 text-[93%] pb-0.5 ml-1 bg-violet-50">wireguard </span>
+    <% end %>
+    aside class="text:2s text:medium pt:1 mt:1 bt"
+      | * preview or beta feature
