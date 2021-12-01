@@ -7,9 +7,9 @@ Manage regions
 Configure the region placement rules for an application.
 
 ### Usage
-```
+~~~
 flyctl regions [command] [flags]
-```
+~~~
 
 ### Available Commands
 * [add](/docs/flyctl/regions-add/)	 - Allow the app to run in the provided regions
@@ -20,19 +20,19 @@ flyctl regions [command] [flags]
 
 ### Options
 
-```
+~~~
   -a, --app string      App name to operate on
   -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
   -h, --help            help for regions
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 

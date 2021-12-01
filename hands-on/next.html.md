@@ -24,7 +24,7 @@ Make your app, apps or sites your own with a Custom Domain. This guide will show
 
 * [Set up Custom Domains for your App](/docs/app-guides/custom-domains-with-fly/)
 
-When you are getting ready to let the world see your App or moving traffice to it, check out the ways you can increase availability, capacity and performance with Fly in:
+When you are getting ready to let the world see your App or moving traffic to it, check out the ways you can increase availability, capacity and performance with Fly in:
 
 * [Scale your App on Fly](/docs/scaling/)
 

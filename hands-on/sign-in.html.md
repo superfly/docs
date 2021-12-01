@@ -16,4 +16,4 @@ Your browser will open up with the Fly sign-in screen, enter your user name and 
 
 Whichever route you take you will be returned to your command line, ready to use Fly.
 
-{Next: Creating a Fly App}(/docs/hands-on/create-app/)
+[Next: Creating a Fly App](/docs/hands-on/create-app/)

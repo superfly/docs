@@ -5,8 +5,8 @@ sitemap: false
 nav: firecracker
 ---
 
-<figure class="w:full mb:4">
-  <img class="m:0" src="/public/images/docs-intro.jpg" srcset="/public/images/docs-intro@2x.jpg 2x" alt="">
+<figure>
+  <img src="/public/images/docs-intro.jpg" srcset="/public/images/docs-intro@2x.jpg 2x" alt="">
 </figure>
 
 Fly is a platform for applications that need to run globally. It runs your code close to users and scales compute in cities where your app is busiest. Write your code, package it into a Docker image, deploy it to Fly's platform and let that do all the work to keep your app snappy.

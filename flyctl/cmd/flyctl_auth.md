@@ -9,9 +9,9 @@ If you do not have an account, start with the AUTH SIGNUP command.
 If you do have and account, begin with the AUTH LOGIN subcommand.
 
 ### Usage
-```
+~~~
 flyctl auth [command] [flags]
-```
+~~~
 
 ### Available Commands
 * [docker](/docs/flyctl/auth-docker/)	 - Authenticate docker
@@ -23,17 +23,17 @@ flyctl auth [command] [flags]
 
 ### Options
 
-```
+~~~
   -h, --help   help for auth
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 

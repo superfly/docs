@@ -13,18 +13,18 @@ date: 2020-06-20
 ---
 
 <figure class="flex ai:center jc:center w:full r:lg overflow:off mb:4">
-  <img class="m:0" src="/public/images/continuous-deployment.jpg" alt="A man writing code on a vintage desktop computer" class="w:full h:full fit:cover">
+  <img src="/public/images/continuous-deployment.jpg" alt="A man writing code on a vintage desktop computer" class="w:full h:full fit:cover">
 </figure>
 
 So you want to have your Fly application being continuously deployed from its GitHub repository. Let's work through setting up an application for just that.
 
-We'll start with an application from one of our other examples, [hellofly](https://github.com/fly-apps/hellofly). It's a simple lightweight app, built with a Dockerfile.
+We'll start with an application from one of our other examples, [go-example](https://github.com/fly-apps/go-example). It's a simple lightweight app, built with a Dockerfile.
 
 We'll speed-run through the steps needed to make this automatically deploy to Fly from GitHub and then we'll loop back for a longer look at some of the steps. 
 
 ## Speed-run your way to continuous deployment
 
-1.  Fork [`hellofly`](https://github.com/fly-apps/hellofly) to your own GitHub repository.
+1.  Fork [`go-example`](https://github.com/fly-apps/go-example) to your own GitHub repository.
 2.  Get a Fly API token with `flyctl auth token`.
 3.  Go to your newly created repository on GitHub and select Settings.
 4.  Go to Secrets and create a secret called `FLY_API_TOKEN` with the value of the token from step 2

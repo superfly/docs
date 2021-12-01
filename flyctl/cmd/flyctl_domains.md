@@ -7,9 +7,9 @@ Manage domains
 Manage domains
 
 ### Usage
-```
+~~~
 flyctl domains [command] [flags]
-```
+~~~
 
 ### Available Commands
 * [add](/docs/flyctl/domains-add/)	 - Add a domain
@@ -19,19 +19,19 @@ flyctl domains [command] [flags]
 
 ### Options
 
-```
+~~~
   -h, --help   help for domains
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
-* [Custom Domains for SaaS](/docs/app-guides/custom-domains-with-fly)   - Guide about custom domains on Fly
+

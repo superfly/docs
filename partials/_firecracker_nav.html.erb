@@ -1,5 +1,5 @@
 <dl class="leading-5">
-  <dt class="flex sm:justify-center text:smallcaps text:2s text:dark-silver mb:2p">
+  <dt class="flex sm:justify-center">
     <% nav_link "/docs/", class: "flex items-center uppercase font-bold text-xs tracking-wider text-gray-400 hover:text-violet-600 transition-colors mb-1" do %>
       Overview
       <%= partial "shared/icons/info", locals: { width: "14px", height: "14px", classname: "opacity-50 ml-1" } %>
@@ -18,7 +18,7 @@
   </dt>
   <dd class="mb-8">
     <%= nav_link "Installing Flyctl", href="/docs/getting-started/installing-flyctl/", class: "flex text-navy hover:text-violet-600 transition-colors pt-2 leading-5" %>
-    <%= nav_link "Log in to Fly", href="/docs/getting-started/login-to-fly/", class: "flex text-navy hover:text-violet-600 transition-colors pt-2 leading-5" %>
+    <%= nav_link "Log in to Fly", href="/docs/getting-started/log-in-to-fly/", class: "flex text-navy hover:text-violet-600 transition-colors pt-2 leading-5" %>
     <%= nav_link "Multi-region PostgreSQL", href="/docs/getting-started/multi-region-databases/", class: "flex text-navy hover:text-violet-600 transition-colors pt-2 leading-5" %>
     <%= nav_link "Run a Go App", href="/docs/getting-started/golang/", class: "flex text-navy hover:text-violet-600 transition-colors pt-2 leading-5" %>
     <%= nav_link "Run a Node App", href="/docs/getting-started/node/", class: "flex text-navy hover:text-violet-600 transition-colors pt-2 leading-5" %>

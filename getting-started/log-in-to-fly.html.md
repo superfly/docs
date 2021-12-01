@@ -1,5 +1,5 @@
 ---
-title: Login To Fly
+title: Log in to Fly
 layout: docs
 sitemap: false
 nav: firecracker
@@ -8,11 +8,9 @@ toc: false
 
 If you haven't installed flyctl yet, you'll need it to work with Fly. Details on how to do that in [Installing Flyctl](/docs/getting-started/installing-flyctl.html)
 
-## Already got a Fly account? Login to Fly
+## Already got a Fly account? Log in to Fly
 
-
-
-If you already have a Fly account, you can login with Flyctl by running:
+If you already have a Fly account, you can log in with Flyctl by running:
 
 ```cmd
 flyctl auth login
@@ -22,7 +20,7 @@ Your browser will open up with the Fly sign-in screen, enter your user name and 
 
 Now proceed to globally deploying Docker Images, Go Applications, Node Applications and more.
 
-## First-Time or No Fly account? Signup for Fly.
+## First-Time or No Fly account? Sign up for Fly.
 
 If you haven't got a Fly account or it's your first time on Fly, you'll need to get an account by running:
 

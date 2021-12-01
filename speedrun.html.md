@@ -24,5 +24,5 @@ If not, head to our [hands-on for Docker images](/docs/hands-on/start/) or guide
 Point your browser or other app at that hostname. **That's your app running globally.**
 
 <figure class="w:full mt:6">
-  <img class="m:0" src="/public/images/speedrun.jpg" srcset="/public/images/speedrun@2x.jpg 2x" alt="">
+  <img src="/public/images/speedrun.jpg" srcset="/public/images/speedrun@2x.jpg 2x" alt="">
 </figure>

@@ -7,23 +7,23 @@ List health check handlers
 List health check handlers
 
 ### Usage
-```
-flyctl checks handlers list <organization> [flags]
-```
+~~~
+flyctl checks handlers list [flags]
+~~~
 
 ### Options
 
-```
+~~~
   -h, --help   help for list
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 

@@ -9,23 +9,23 @@ Includes name, slug and type. Summarizes user permissions, DNS zones and
 associated member. Details full list of members and roles.
 
 ### Usage
-```
+~~~
 flyctl orgs show <org> [flags]
-```
+~~~
 
 ### Options
 
-```
+~~~
   -h, --help   help for show
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 

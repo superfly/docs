@@ -25,7 +25,7 @@ ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
 $
 ```
 
-Ask you can see, the application has been deployed with a DNS hostname of hellofly.fly.dev. Your deployment's name will, of course be different. We can also see that one instace of the app is now running in the fra (Frankfurt) region. Next, we connect to it.
+As you can see, the application has been deployed with a DNS hostname of hellofly.fly.dev. Your deployment's name will, of course be different. We can also see that one instace of the app is now running in the fra (Frankfurt) region. Next, we connect to it.
 
-{Next: Connecting to your app}(/docs/hands-on/connecting-to-an-app/)
+[Next: Connecting to Your App](/docs/hands-on/connecting-to-an-app/)
 

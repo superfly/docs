@@ -7,9 +7,9 @@ Manage health check handlers
 Manage health check handlers
 
 ### Usage
-```
+~~~
 flyctl checks handlers [command] [flags]
-```
+~~~
 
 ### Available Commands
 * [create](/docs/flyctl/checks-handlers-create/)	 - Create a health check handler
@@ -18,17 +18,17 @@ flyctl checks handlers [command] [flags]
 
 ### Options
 
-```
+~~~
   -h, --help   help for handlers
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 

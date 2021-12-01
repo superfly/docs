@@ -4,7 +4,7 @@ Lists all your apps
 
 ### About
 
-The list apps command lists all your applications. As this may be a 
+The list apps command lists all your applications. As this may be a
 long list, there are options to filter the results.
 
 Specifying a text string as a parameter will only return applications where the
@@ -17,27 +17,27 @@ The --status/-s flag allows you to specify status applications should be at to b
 returned in the results. e.g. -s running would only return running applications.
 
 ### Usage
-```
+~~~
 flyctl list apps [text] [-o org] [-s status] [flags]
-```
+~~~
 
 ### Options
 
-```
+~~~
   -e, --exact           Show exact times
   -h, --help            help for apps
   -o, --org string      Show only apps in this organisation
       --sort string     Sort by name, created (default "name")
   -s, --status string   Show only apps with this status
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 

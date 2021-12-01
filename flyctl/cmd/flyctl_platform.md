@@ -4,13 +4,13 @@ Fly platform information
 
 ### About
 
-The PLATFORM commands are for users looking for information 
+The PLATFORM commands are for users looking for information
 about the Fly platform.
 
 ### Usage
-```
+~~~
 flyctl platform [command] [flags]
-```
+~~~
 
 ### Available Commands
 * [regions](/docs/flyctl/platform-regions/)	 - List regions
@@ -19,19 +19,19 @@ flyctl platform [command] [flags]
 
 ### Options
 
-```
+~~~
   -a, --app string      App name to operate on
   -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
   -h, --help            help for platform
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 

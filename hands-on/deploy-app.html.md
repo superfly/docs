@@ -14,4 +14,4 @@ flyctl deploy
 
 This will lookup our `fly.toml` file, and get the app name `hellofly` from there. Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl will return you to the command line when it's done.
 
-{Next: Viewing Your App On Fly}(/docs/hands-on/view-app/)
+[Next: Viewing Your App on Fly](/docs/hands-on/view-app/)

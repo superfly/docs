@@ -5,8 +5,8 @@ sitemap: false
 nav: firecracker
 ---
 
-<figure class="w:full mb:4">
-  <img class="m:0" src="/public/images/docs-guide.jpg" srcset="/public/images/docs-guide@2x.jpg 2x" alt="">
+<figure>
+  <img src="/public/images/docs-guide.jpg" srcset="/public/images/docs-guide@2x.jpg 2x" alt="">
 </figure>
 
 Welcome to the Fly Documentation. There's a lot here so we have guides to speed you to the information you need.

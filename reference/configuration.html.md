@@ -47,13 +47,6 @@ kill_timeout = 120
 ### The `build` section
 
 The optional build section contains key/values concerned with how the application should be built. You can read more about builders in [Builders and Fly](/docs/reference/builders/)
-
-There are then four possible settings for builders in the `build` section of `fly.toml`:
-
-* builder
-* image
-* dockerfile
-
 #### builder
 
 ```toml
@@ -74,10 +67,13 @@ In our example above, the builder is being set to use [Paketo's all-purpose buil
 ```
 
 The image builder is used when you want to immediately deploy an existing public image. When deployed, there will be no build process; the image will be prepared and uploaded to the Fly infrastructure as it. This option is useful if you already have a working Docker image you want to deploy on Fly or you want a well known Docker image from a repository to be run.
-
 #### dockerfile
 
-Not really a particular setting, more the default. If there is no build section, flyctl will look for a `Dockerfile` to use to build the app image.
+Specify the path to Dockerfile to be used for builds. If this is not specified, or there is no build section, flyctl will look for `Dockerfile` in the application root.
+
+#### build-target
+
+For Docker-based builds, specify an optional Docker multistage build target.
 
 #### Build Args
 

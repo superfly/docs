@@ -56,4 +56,4 @@ Run the Powershell install script:
 iwr https://fly.io/install.ps1 -useb | iex
 ```
 
-Your next step should be to [Log in to Fly](/docs/getting-started/login-to-fly/).
+Your next step should be to [Log in to Fly](/docs/getting-started/log-in-to-fly/).

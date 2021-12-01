@@ -7,23 +7,23 @@ Delete a health check handler
 Delete a health check handler
 
 ### Usage
-```
+~~~
 flyctl checks handlers delete <organization> <handler-name> [flags]
-```
+~~~
 
 ### Options
 
-```
+~~~
   -h, --help   help for delete
-```
+~~~
 
 ### Global Options
 
-```
+~~~
   -t, --access-token string   Fly API Access Token
   -j, --json                  json output
-  -v, --verbose               verbose output
-```
+      --verbose               verbose output
+~~~
 
 ### See Also
 

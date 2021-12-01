@@ -7,7 +7,7 @@ nav: firecracker
 
 This section of the Fly docs is all about getting you up and running quickly.
 
-The essential part of this is [Installing Flyctl](/docs/getting-started/installing-flyctl) will take you through the, few, steps you need to perform to get the Fly command line available. Don't forget to [create an account and login](/docs/getting-started/login-to-fly/) too.
+The essential part of this is [Installing Flyctl](/docs/getting-started/installing-flyctl) will take you through the, few, steps you need to perform to get the Fly command line available. Don't forget to [create an account and login](/docs/getting-started/log-in-to-fly/) too.
 
 Once that is done, you're ready to take on the Getting Started language and application guides.
 
