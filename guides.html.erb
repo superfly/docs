@@ -4,6 +4,7 @@ layout: docs
 toc: true
 nav: firecracker
 ---
+
 <% categories = HashWithIndifferentAccess.new(
     guide: {
       title: "Guides"
@@ -72,20 +73,24 @@ nav: firecracker
   end
 %>
 
-<section class="grid min-lg:col:1 gap:1 text:md">
+<section class="grid grid-cols-1 gap-3 font-medium">
   <% categories.each do |k, v| %>
-    <dl id="<%= k %>" class="p:2 bg:lightest-silver target:shadow:highlight r:lg mb:0<%= k == "app" ? " colspan:all" : "" %>">
+    <dl id="<%= k %>" class="bg-gray-100 rounded-xl p-8 text-base text-navy target:bg-violet-100">
       <dt
         id="h-<%= k %>"
-        class="text:smallcaps text:xs mb:12p child"
+        class="font-heading text-xl mb-5"
       >
         <%= v.title %>
       </dt>
-      <dd class="<%= k == "app" ? "grid min-lg:col:1 gap-x:1 mx:-2" : "flex flex:col" %>">
-        <% idx[k].sort_by(&:title).each do |p| %>
-          <% author = p.author %>
-          <a class="<%= k == "app" ? "px:2" : "" %>" href="<%= p.url %>"><%= p.title %></a>
-        <% end %>
+      <dd>
+        <ul>
+          <% idx[k].sort_by(&:title).each do |p| %>
+            <% author = p.author %>
+            <li>
+              <a href="<%= p.url %>"><%= p.title %></a>
+            </li>
+          <% end %>
+        </ul>
       </dd>
     </dl>
   <% end %>

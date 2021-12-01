@@ -12,9 +12,7 @@ priority: 10
 date: 2020-06-20
 ---
 
-<figure class="flex ai:center jc:center w:full r:lg overflow:off mb:4">
-  <img src="/public/images/continuous-deployment.jpg" alt="A man writing code on a vintage desktop computer" class="w:full h:full fit:cover">
-</figure>
+<img src="/public/images/continuous-deployment.jpg" alt="A man writing code on a vintage desktop computer" class="rounded-xl">
 
 So you want to have your Fly application being continuously deployed from its GitHub repository. Let's work through setting up an application for just that.
 
@@ -32,6 +30,8 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
 6.  Edit .gitignore and remove fly.toml - fly.toml will need to be pushed into the repository to allow deployment to happen.
 7.  Run `flyctl apps create` to create a fly.toml file.
 8.  Create `.github/workflows/main.yml` with these contents
+    <br>
+    <br>
     ```yaml
     name: Fly Deploy
     on: [push]
