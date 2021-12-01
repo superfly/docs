@@ -6,7 +6,7 @@ nav: firecracker
 toc: false
 ---
 
-If you haven't installed flyctl yet, you'll need it to work with Fly. Details on how to do that in [Installing Flyctl](/docs/getting-started/installing-flyctl.html)
+If you haven't installed flyctl yet, you'll need it to work with Fly. Details on how to do that are available in [Installing Flyctl](/docs/getting-started/installing-flyctl.html).
 
 ## Already got a Fly account? Log in to Fly
 

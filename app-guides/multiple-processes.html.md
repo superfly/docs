@@ -138,7 +138,7 @@ foo: /app/server
 bar: /app/server -bar
 ```
 
-A Procfile manager I like a lot is [`overmind`](https://github.com/DarthSim/overmind). `overmind` is a Go program, so it’s got a small runtime, and you could, if you were fussy, build a container that just takes the `overmind` binary and none of its build deps. We won’t bother, though, since we’re already bringing those deps in. So:
+A Procfile manager I like a lot is [overmind](https://github.com/DarthSim/overmind). `overmind` is a Go program, so it’s got a small runtime, and you could, if you were fussy, build a container that just takes the `overmind` binary and none of its build deps. We won’t bother, though, since we’re already bringing those deps in. So:
 
 ```Dockerfile
 FROM golang

@@ -17,7 +17,7 @@ This is the Overview section. Here you will find:
 
 * **Introduction**: The [Introduction](/docs/introduction/) explains what Fly is, why we built it and what it can do for you.
 * **Speedrun**: The [Speedrun](/docs/speedrun/) is the bare essentials of deploying an App on Fly in the fewest possible steps.
-* **Hands-On**: The [Hands-On Section](/docs/hands-on/start/) is a more leisurely step-by-step introduction to the same process: deploying an App on Fly.
+* **Hands-on**: The [Hands-on Section](/docs/hands-on/start/) is a more leisurely step-by-step introduction to the same process: deploying an App on Fly.
 
 Beyond the Overview section, there are four major sections of the documentation.
 

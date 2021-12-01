@@ -48,7 +48,7 @@ func main() {
 }
 ```
 
-The `main` function starts a server that responds with a html page showing the fly region that served the request. The template lives in `./templates/` and is embedded into the binary using the [`embed`](https://golang.org/pkg/embed/) package in go 1.16+.
+The `main` function starts a server that responds with a html page showing the fly region that served the request. The template lives in `./templates/` and is embedded into the binary using the [embed](https://golang.org/pkg/embed/) package in go 1.16+.
 
 The template itself, `index.html.tmpl`, is very simple too:
 
@@ -72,7 +72,7 @@ As with most Go applications, a simple `go build` will create a hellofly binary 
 
 ## _Install Flyctl and Login_
 
-We are ready to start working with Fly and that means we need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once thats installed you'll want to [login to Fly](/docs/getting-started/log-in-to-fly/).
+We are ready to start working with Fly and that means we need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once thats installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
 
 ## _Launch the app on Fly_
 

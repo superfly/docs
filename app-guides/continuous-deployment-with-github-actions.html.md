@@ -24,7 +24,7 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
 
 ## Speed-run your way to continuous deployment
 
-1.  Fork [`go-example`](https://github.com/fly-apps/go-example) to your own GitHub repository.
+1.  Fork [go-example](https://github.com/fly-apps/go-example) to your own GitHub repository.
 2.  Get a Fly API token with `flyctl auth token`.
 3.  Go to your newly created repository on GitHub and select Settings.
 4.  Go to Secrets and create a secret called `FLY_API_TOKEN` with the value of the token from step 2

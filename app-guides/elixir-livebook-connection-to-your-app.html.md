@@ -55,7 +55,7 @@ The special customization we need is the `ERL_AFLAGS` settings passed to the bea
 
 #### Upgrading when using an Escript
 
-When upgrading your Livebook version while using [`asdf`](https://asdf-vm.com/) for managing your Elixir and Erlang installs, then here's a helpful tip:
+When upgrading your Livebook version while using [asdf](https://asdf-vm.com/) for managing your Elixir and Erlang installs, then here's a helpful tip:
 
 * Remove the existing `livebook` shim: `rm ~/.asdf/shims/livebook`
 * Install the new version: `mix escript.install hex livebook`

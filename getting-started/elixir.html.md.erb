@@ -193,7 +193,7 @@ Also, you don't need to turn on TLS for connecting to the Postgres instance. Fly
 
 ### _Dockerfile_
 
-You can find a good Dockerfile ready to build your application in the [`hello_elixir` GitHub repo](https://github.com/fly-apps/hello_elixir/blob/main/Dockerfile). It is important to note that it uses a Debian-slim base image to build. This avoids DNS issues in Alpine images. The [base elixir image is maintained by the hexpm](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated) org and is kept up to date. [Hex.pm](https://hex.pm/) is the official package repository for Elixir. There are other options instead of Debian there as well if you prefer.
+You can find a good Dockerfile ready to build your application in the [hello_elixir GitHub repo](https://github.com/fly-apps/hello_elixir/blob/main/Dockerfile). It is important to note that it uses a Debian-slim base image to build. This avoids DNS issues in Alpine images. The [base elixir image is maintained by the hexpm](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated) org and is kept up to date. [Hex.pm](https://hex.pm/) is the official package repository for Elixir. There are other options instead of Debian there as well if you prefer.
 
 The Dockerfile uses a two-stage approach. There are two `FROM` commands. The first stage pulls in the source and builds the release. The second stage takes the prepared release and sets it up in a minimal Docker image. The final deployed image contains only our release.
 
@@ -210,7 +210,7 @@ This ensures we keep any natively compiled Elixir or Node packages from our deve
 
 ## _Install Flyctl and Login_
 
-We are ready to start working with Fly and that means we need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once that's installed you'll want to [login to Fly](/docs/getting-started/log-in-to-fly/).
+We are ready to start working with Fly and that means we need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once that's installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
 
 
 ## _Launch the App on Fly_
