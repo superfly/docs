@@ -8,40 +8,41 @@ nav: firecracker
 Fly application services are billed individually based on usage. Most services include a free tier – enough for you to run smaller applications at no cost (and when they grow, very little cost). Billing is per user or organization, if you want to run more free apps, just make another organization and invite your friends.
 
 ## _Free tier_
-<div class="max-w:full overflow-x:auto bg:white shadow:lg r mb:4">
-<table class="table:stripe table:stretch table:pad text:sm m:0">
-  <tbody>
-    <tr>
-      <th>VM: shared-cpu</th>
-      <td>2,340 hours per month</td>
-      <td>Run 3 <a href="#compute">shared-cpu-1x</a> VMs with 256MB RAM full time.</td>
-    </tr>
-    <tr>
-      <th>Bandwidth</th>
-      <td>160GB per month</td>
-      <td>See <a href="#outbound-data-transfer">outbound data transfer</a> for regional breakdown</td>
-    </tr>
-    <tr>
-      <th>Anycast IPs</th>
-      <td>Unlimited IPv6, 1 IPv4 per active app</td>
-      <td>Additional IPv4 addresses are $2 per month</td>
-    </tr>
-    <tr>
-      <th>Certificates</th>
-      <td>10 active certificates</td>
-      <td>Add 10 <a href="#managed-ssl-certificates">certificates</a> to your apps</td>
-    </tr>
-  </tbody>
-</table>
+
+<div class="overflow-x-auto bg-white shadow-md rounded-xl lg:-mx-8 my-12 ring-1 ring-gray-700 ring-opacity-10">
+  <table class="table-stripe table-stretch table-pad text-sm whitespace-nowrap m-0">
+    <tbody>
+      <tr>
+        <th class="text-navy text-right">VM: shared-cpu</th>
+        <td>2,340 hours per month</td>
+        <td>Run 3 <a href="#compute">shared-cpu-1x</a> VMs with 256MB RAM full time.</td>
+      </tr>
+      <tr>
+        <th class="text-navy text-right">Bandwidth</th>
+        <td>160GB per month</td>
+        <td>See <a href="#outbound-data-transfer">outbound data transfer</a> for regional breakdown</td>
+      </tr>
+      <tr>
+        <th class="text-navy text-right">Anycast IPs</th>
+        <td>Unlimited IPv6, 1 IPv4 per active app</td>
+        <td>Additional IPv4 addresses are $2 per month</td>
+      </tr>
+      <tr>
+        <th class="text-navy text-right">Certificates</th>
+        <td>10 active certificates</td>
+        <td>Add 10 <a href="#managed-ssl-certificates">certificates</a> to your apps</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 ## _Compute_
 
-##### Virtual Machines
+### Virtual Machines
 
 <%= partial("shared/cpu_mem_pricing") %>
 
-##### Persistent Volumes
+### Persistent Volumes
 
 You can add one or more persistent volumes to your apps with `flyctl volumes create ...`:
 
@@ -51,11 +52,11 @@ Volume billing is pro-rated to the hour.
 
 ## _Network prices_
 
-##### Anycast IP addresses
+### Anycast IP addresses
 
 Each application includes one Anycast IPv4 and unlimited Anycast IPv6 Anycast addresses for global load balancing. Additional IPv4 addresses are $2/mo.
 
-##### Managed SSL certificates
+### Managed SSL certificates
 
 We use Lets Encrypt to issue certificates, and donate half of our SSL fees to them at the end of each calendar year.
 
@@ -64,52 +65,56 @@ We use Lets Encrypt to issue certificates, and donate half of our SSL fees to th
   * $0.10/mo for additional certificates
 * Wildcard certificates: $2/mo
 
-##### PostgreSQL Clusters
+### PostgreSQL Clusters
 
 The `fly pg create` command will install a PostgreSQL cluster in your organization. PostgreSQL clusters are just "apps" made up of VMs, persistent volumes, and (possibly) extra memory. We bill only for the resources PostgreSQL clusters use.
 
-<div class="max-w:full overflow-x:auto bg:white shadow:lg r mb:4">
-  <table class="table:stripe table:stretch table:pad text:sm m:0">
+<div class="overflow-x-auto bg-white shadow-md rounded-xl lg:-mx-8 my-12 ring-1 ring-gray-700 ring-opacity-10">
+  <table class="table-stripe table-stretch table-pad text-sm whitespace-nowrap m-0">
     <thead>
       <tr>
-        <th colspan="3">Size</th>
-        <th>VM Price</th>
-        <th>Volume Price</th>
-        <th>Total Price</th>
+        <th colspan="3" class="text-navy text-right">Size</th>
+        <th class="text-navy">VM Price</th>
+        <th class="text-navy">Volume Price</th>
+        <th class="text-navy">Total Price</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>shared-cpu-1x</td><td>10GB volumes</td><td>256MB RAM</td>
-        <td class="text:right">2&nbsp;x&nbsp;~$1.94/mo</td>
-        <td class="text:right">2&nbsp;x&nbsp;~$1.50/mo</td>
-        <td class="text:right">~$6.88/mo</td>
+        <td>shared-cpu-1x</td><td>10GB volumes</td>
+        <td class="text-right">256MB RAM</td>
+        <td class="text-right">2&nbsp;x&nbsp;~$1.94/mo</td>
+        <td class="text-right">2&nbsp;x&nbsp;~$1.50/mo</td>
+        <td class="text-right">~$6.88/mo</td>
       </tr>
       <tr>
-        <td>shared-cpu-1x</td><td>40GB volumes</td><td>2GB RAM</td>
-        <td class="text:right">2&nbsp;x&nbsp;~$10.70/mo</td>
-        <td class="text:right">2&nbsp;x&nbsp;~$6/mo</td>
-        <td class="text:right">~$27.40/mo</td>
+        <td>shared-cpu-1x</td><td>40GB volumes</td>
+        <td class="text-right">2GB RAM</td>
+        <td class="text-right">2&nbsp;x&nbsp;~$10.70/mo</td>
+        <td class="text-right">2&nbsp;x&nbsp;~$6/mo</td>
+        <td class="text-right">~$27.40/mo</td>
       </tr>
       <tr>
-        <td>dedicated-cpu-2x</td><td>100GB volumes</td><td>4GB RAM</td>
-        <td class="text:right">2&nbsp;x&nbsp;~$62/mo</td>
-        <td class="text:right">2&nbsp;x&nbsp;~$15/mo</td>
-        <td class="text:right">~$154/mo</td>
+        <td>dedicated-cpu-2x</td><td>100GB volumes</td>
+        <td class="text-right">4GB RAM</td>
+        <td class="text-right">2&nbsp;x&nbsp;~$62/mo</td>
+        <td class="text-right">2&nbsp;x&nbsp;~$15/mo</td>
+        <td class="text-right">~$154/mo</td>
       </tr>
       <tr>
-      <td>dedicated-cpu-8x</td><td>500GB volumes</td><td>64GB RAM</td>
-        <td class="text:right">2&nbsp;x&nbsp;~$558/mo</td>
-        <td class="text:right">2&nbsp;x&nbsp;~$75/mo</td>
-        <td class="text:right">~$1,266/mo</td>
+        <td>dedicated-cpu-8x</td><td>500GB volumes</td>
+        <td class="text-right">64GB RAM</td>
+        <td class="text-right">2&nbsp;x&nbsp;~$558/mo</td>
+        <td class="text-right">2&nbsp;x&nbsp;~$75/mo</td>
+        <td class="text-right">~$1,266/mo</td>
       </tr>
     </tbody>
   </table>
 </div>
 
-##### Outbound data transfer
-We bill for outbound data transfer, inbound transfer is free.
+### Outbound data transfer
 
+We bill for outbound data transfer, inbound transfer is free.
 
 <%= partial("shared/network_pricing") %>
 
