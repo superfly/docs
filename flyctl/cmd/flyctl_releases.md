@@ -1,18 +1,19 @@
-# _flyctl releases_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  List app releases
+</p>
 
-List app releases
-
-### About
+## About
 
 List all the releases of the application onto the Fly platform,
 including type, when, success/fail and which user triggered the release.
 
-### Usage
+## Usage
+
 ~~~
 flyctl releases [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +21,7 @@ flyctl releases [flags]
   -h, --help            help for releases
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +29,7 @@ flyctl releases [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

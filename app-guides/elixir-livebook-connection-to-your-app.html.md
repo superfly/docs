@@ -23,7 +23,7 @@ There are a few requirements for this to work.
 
 - **Livebook requires Elixir version 1.12 or higher**. Livebook runs locally on your machine, so that part is easy to control. However, the **server** side needs to have the same version of Elixir as well. When Livebook connects to the server, it loads code into the server environment as well. So your server version of Elixir also needs to be 1.12 or higher. I recommend making your local version be the same as the production version to reduce potential problems.
 - **Known cookie value on your server**. Livebook needs to know the cookie value used on the server. Follow [this guide to give your app a static cookie value](/docs/app-guides/elixir-static-cookie/).
-- **WireGuard setup on your local machine**. Follow the Fly.io [Private Network VPN](/docs/reference/privatenetwork/#private-network-vpn) guide to walk through that.
+- **WireGuard setup on your local machine**. Follow the Fly.io [Private Network VPN](/docs/reference/private-networking/#private-network-vpn) guide to walk through that.
 
 ## Installing Livebook
 

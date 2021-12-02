@@ -1,18 +1,19 @@
-# _flyctl config display_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Display an app's configuration
+</p>
 
-Display an app's configuration
-
-### About
+## About
 
 Display an application's configuration. The configuration is presented
 in JSON format. The configuration data is retrieved from the Fly service.
 
-### Usage
+## Usage
+
 ~~~
 flyctl config display [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +21,7 @@ flyctl config display [flags]
   -h, --help            help for display
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +29,7 @@ flyctl config display [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl config](/docs/flyctl/config/)	 - Manage an app's configuration
 

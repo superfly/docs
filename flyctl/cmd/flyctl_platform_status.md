@@ -1,17 +1,18 @@
-# _flyctl platform status_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Show current platform status
+</p>
 
-Show current platform status
-
-### About
+## About
 
 Show current Fly platform status in a browser
 
-### Usage
+## Usage
+
 ~~~
 flyctl platform status [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -19,7 +20,7 @@ flyctl platform status [flags]
   -h, --help            help for status
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +28,7 @@ flyctl platform status [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl platform](/docs/flyctl/platform/)	 - Fly platform information
 

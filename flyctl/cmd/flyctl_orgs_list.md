@@ -1,23 +1,24 @@
-# _flyctl orgs list_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Lists organizations for current user
+</p>
 
-Lists organizations for current user
-
-### About
+## About
 
 Lists organizations available to current user.
 
-### Usage
+## Usage
+
 ~~~
 flyctl orgs list [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -25,7 +26,7 @@ flyctl orgs list [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 

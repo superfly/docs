@@ -1,24 +1,25 @@
-# _flyctl autoscale_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Autoscaling app resources
+</p>
 
-Autoscaling app resources
-
-### About
+## About
 
 Autoscaling application resources
 
-### Usage
+## Usage
+
 ~~~
 flyctl autoscale [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [balanced](/docs/flyctl/autoscale-balanced/)	 - Configure a traffic balanced app with params (min=int max=int)
 * [disable](/docs/flyctl/autoscale-disable/)	 - Disable autoscaling
 * [set](/docs/flyctl/autoscale-set/)	 - Set current models autoscaling parameters
 * [show](/docs/flyctl/autoscale-show/)	 - Show current autoscaling configuration
 * [standard](/docs/flyctl/autoscale-standard/)	 - Configure a standard balanced app with params (min=int max=int)
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -26,7 +27,7 @@ flyctl autoscale [command] [flags]
   -h, --help            help for autoscale
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -34,7 +35,7 @@ flyctl autoscale [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

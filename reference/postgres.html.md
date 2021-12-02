@@ -62,11 +62,11 @@ The output from `flyctl postgres create` contains all the values you need to mak
 
 ### Connecting to Postgres from within Fly
 
-As a Fly application, your Postgres app is accessible through Fly's [private networking](/docs/reference/privatenetwork/). This means applications within the same organization can look up the app at `appname.internal`. This name, when looked up, can return one or more IPv6 addresses.
+As a Fly application, your Postgres app is accessible through Fly's [private networking](/docs/reference/private-networking/). This means applications within the same organization can look up the app at `appname.internal`. This name, when looked up, can return one or more IPv6 addresses.
 
 ### Connecting to Postgres from outside Fly
 
-To access Fly's private networking for an organization from outside the Fly platform, you must configure a WireGuard tunnel from whichever system you are using to Fly. See [Private Network VPN](https://fly.io/docs/reference/privatenetwork/#private-network-vpn) for more details.
+To access Fly's private networking for an organization from outside the Fly platform, you must configure a WireGuard tunnel from whichever system you are using to Fly. See [Private Network VPN](https://fly.io/docs/reference/private-networking/#private-network-vpn) for more details.
 
 With an active Wireguard tunnel, you can connect to your postgres cluster the same way you would from a fly app within the same organization. For example, the following command would start an interactive terminal session on the cluster leader with `psql`:
 
@@ -89,7 +89,7 @@ When you attach an app to Postgres, a number of things happen:
 
 When the Attached app starts it will find an environment variable `DATABASE_URL` set to a Postgres connection URI with the username, password, host, port and dbname filled in.
 
-Note that for the app to be able to attach to the database it must have private_network enabled in `fly.toml`. This enables it to look up `.internal` addresses like the database URL. See [Using Fly DNS](/docs/reference/privatenetwork/#using-fly-dns) for further details. 
+Note that for the app to be able to attach to the database it must have private_network enabled in `fly.toml`. This enables it to look up `.internal` addresses like the database URL. See [Using Fly DNS](/docs/reference/private-networking/#using-fly-dns) for further details. 
 
 
 ### Detaching an App from Postgres

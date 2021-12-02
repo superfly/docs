@@ -1,17 +1,18 @@
-# _flyctl checks list_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  List app health checks
+</p>
+
+## About
 
 List app health checks
 
-### About
+## Usage
 
-List app health checks
-
-### Usage
 ~~~
 flyctl checks list [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string          App name to operate on
@@ -20,7 +21,7 @@ flyctl checks list [flags]
   -h, --help                help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +29,7 @@ flyctl checks list [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl checks](/docs/flyctl/checks/)	 - Manage health checks
 

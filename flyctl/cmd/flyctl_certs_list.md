@@ -1,17 +1,18 @@
-# _flyctl certs list_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  List certificates for an app.
+</p>
 
-List certificates for an app.
-
-### About
+## About
 
 List the certificates associated with a deployed application.
 
-### Usage
+## Usage
+
 ~~~
 flyctl certs list [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -19,7 +20,7 @@ flyctl certs list [flags]
   -h, --help            help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +28,7 @@ flyctl certs list [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl certs](/docs/flyctl/certs/)	 - Manage certificates
 

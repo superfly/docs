@@ -1,17 +1,18 @@
-# _flyctl launch_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Launch a new app
+</p>
 
-Launch a new app
-
-### About
+## About
 
 Create and configure a new app from source code or an image reference.
 
-### Usage
+## Usage
+
 ~~~
 flyctl launch [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
       --dockerfile string   Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
@@ -26,7 +27,7 @@ flyctl launch [flags]
       --region string       the region to launch the new app in
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -34,7 +35,7 @@ flyctl launch [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

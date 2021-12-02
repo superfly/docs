@@ -1,24 +1,25 @@
-# _flyctl orgs revoke_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Revoke a pending invitation to an organization
+</p>
 
-Revoke a pending invitation to an organization
-
-### About
+## About
 
 Revokes an invitation to join an organization that has been sent to a
 user by email.
 
-### Usage
+## Usage
+
 ~~~
 flyctl orgs revoke <org> <email> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for revoke
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -26,7 +27,7 @@ flyctl orgs revoke <org> <email> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 

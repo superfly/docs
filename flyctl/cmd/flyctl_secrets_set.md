@@ -1,8 +1,8 @@
-# _flyctl secrets set_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Set one or more encrypted secrets for an app
+</p>
 
-Set one or more encrypted secrets for an app
-
-### About
+## About
 
 Set one or more encrypted secrets for an application.
 
@@ -12,7 +12,8 @@ the application and vm environment.
 
 Any value that equals "-" will be assigned from STDIN instead of args.
 
-### Usage
+## Usage
+
 ~~~
 flyctl secrets set [flags] NAME=VALUE NAME=VALUE ...
 ~~~
@@ -26,7 +27,7 @@ flyctl secrets set FLY_ENV=production LOG_LEVEL=info
 	
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -35,7 +36,7 @@ flyctl secrets set FLY_ENV=production LOG_LEVEL=info
   -h, --help            help for set
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -43,7 +44,7 @@ flyctl secrets set FLY_ENV=production LOG_LEVEL=info
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl secrets](/docs/flyctl/secrets/)	 - Manage app secrets
 

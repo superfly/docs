@@ -1,23 +1,24 @@
-# _flyctl dns-records list_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  List DNS records
+</p>
 
-List DNS records
-
-### About
+## About
 
 List DNS records within a domain
 
-### Usage
+## Usage
+
 ~~~
 flyctl dns-records list <domain> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -25,7 +26,7 @@ flyctl dns-records list <domain> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl dns-records](/docs/flyctl/dns-records/)	 - Manage DNS records
 

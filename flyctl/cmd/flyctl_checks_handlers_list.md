@@ -1,23 +1,24 @@
-# _flyctl checks handlers list_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  List health check handlers
+</p>
+
+## About
 
 List health check handlers
 
-### About
+## Usage
 
-List health check handlers
-
-### Usage
 ~~~
 flyctl checks handlers list [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -25,7 +26,7 @@ flyctl checks handlers list [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl checks handlers](/docs/flyctl/checks-handlers/)	 - Manage health check handlers
 

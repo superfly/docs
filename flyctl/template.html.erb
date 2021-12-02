@@ -1,0 +1,11 @@
+---
+layout: docs
+sitemap: false
+nav: flyctl
+---
+
+<% content_for :title do %>
+  flyctl <%= locals[:file] %>
+<% end %>
+  
+<%= partial locals[:path] rescue locals.inspect %>

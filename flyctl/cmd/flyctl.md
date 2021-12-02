@@ -1,8 +1,8 @@
-# _flyctl_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  The Fly CLI
+</p>
 
-The Fly CLI
-
-### About
+## About
 
 flyctl is a command line interface to the Fly.io platform.
 
@@ -17,7 +17,8 @@ Check the status of an application with the status command
 
 To read more, use the docs command to view Fly's help on the web.
 
-### Usage
+## Usage
+
 ~~~
 flyctl [command] [flags]
 ~~~
@@ -60,7 +61,7 @@ flyctl [command] [flags]
 * [volumes](/docs/flyctl/volumes/)	 - Volume management commands
 * [wireguard](/docs/flyctl/wireguard/)	 - Commands that manage WireGuard peer connections
 
-### Options
+## Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -69,6 +70,6 @@ flyctl [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 

@@ -1,17 +1,18 @@
-# _flyctl postgres db list_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  list databases in a cluster
+</p>
+
+## About
 
 list databases in a cluster
 
-### About
+## Usage
 
-list databases in a cluster
-
-### Usage
 ~~~
 flyctl postgres db list <postgres-cluster-name> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -19,7 +20,7 @@ flyctl postgres db list <postgres-cluster-name> [flags]
   -h, --help            help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +28,7 @@ flyctl postgres db list <postgres-cluster-name> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl postgres db](/docs/flyctl/postgres-db/)	 - manage databases in a cluster
 

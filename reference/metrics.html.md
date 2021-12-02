@@ -5,9 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-[Prometheus](https://prometheus.io) is a popular open source monitoring solution used to store metrics and query them efficiently.
-
-**Prometheus on Fly** is a managed, hosted, solution: we host the infrastructure, we reserve resources for your organization's apps to use it.
+[Prometheus](https://prometheus.io) is a popular open source monitoring solution used to store metrics and query them efficiently. **Prometheus on Fly** is a managed, hosted, solution: we host the infrastructure, we reserve resources for your organization's apps to use it.
 
 ## Sending custom metrics to Prometheus
 

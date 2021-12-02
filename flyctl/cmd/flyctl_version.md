@@ -1,13 +1,14 @@
-# _flyctl version_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Show version information for the flyctl command
+</p>
 
-Show version information for the flyctl command
-
-### About
+## About
 
 Shows version information for the flyctl command itself, 
 including version number and build date.
 
-### Usage
+## Usage
+
 ~~~
 flyctl version [flags]
 ~~~
@@ -15,13 +16,13 @@ flyctl version [flags]
 ### Available Commands
 * [update](/docs/flyctl/version-update/)	 - Checks for available updates and automatically updates
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for version
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +30,7 @@ flyctl version [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

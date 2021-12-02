@@ -1,34 +1,32 @@
 ---
-title: "Fly's Network Services"
+title: "Public Network Services"
 layout: docs
 sitemap: false
 nav: firecracker
 ---
 
-Fly has public and private network services available. The public network services connect applications to the wider public internet, while the [private network services](/docs/reference/privatenetwork) allow application instances to communicate with other application instances within the Fly private network.
+Fly has public and private network services available. The public network services connect applications to the wider public internet, while the [private network services](/docs/reference/private-networking) allow application instances to communicate with other application instances within the Fly private network.
 
-## Public Network Services
-
-### _IP addresses_
+## _IP addresses_
 
 Fly applications have dedicated IP addresses. Each application starts with two addresses &mdash; one IPv6 and one IPv4. IPv6 addresses are free, global IPv4 addresses are billed monthly.
 
-#### Anycast
+### Anycast
 
 We announce global IP blocks from all of our datacenters over BGP, otherwise known as anycast. Anycast is a core internet routing mechanism that connects clients to the "nearest" server advertising a block of IPs. [You can read all about it on Wikipedia](https://en.wikipedia.org/wiki/Anycast).
 
-### _Connection handlers_
+## _Connection handlers_
 
 The `handlers` config setting specifies which middleware applies to incoming TCP connections. Use these to convert TCP connections into something your application can handle.
 
-#### TLS
+### TLS
 The `TLS` middleware terminates TLS using Fly managed application certificates, then forwards a plaintext connection to the application process. This is useful for running TCP services and offloading `TLS` to the Fly proxy.
 
 For performance purposes, the Fly proxy will terminate TLS on the host a client connects to, and then forward the connection to the nearest available application instance.
 
 _Note:_ the `TLS` handler includes ALPN negotiation for HTTP/2. When possible, applications will connect to these kinds of Fly services using HTTP/2, and we will forward an unencrypted HTTP/2 connection (`h2c`) to the application process.
 
-#### HTTP
+### HTTP
 Many applications have limited HTTP support, the `HTTP` middleware normalizes HTTP connections and sends HTTP 1.1 requests to the application process. This is roughly how `nginx` and other reverse proxies work, and allows your application to globally accept modern HTTP protocols (like HTTP/2) without extra complexity.
 
 If your application stack has good HTTP/2 support (like Go), you will get better performance accepting TCP connections directly, and using the TLS handler to terminate SSL. Your application _does_ need to understand `h2c` for this to work, however.
@@ -51,11 +49,11 @@ You can set a preference on HTTP requests for which region you would like to con
 Fly-Prefer-Region: region-code
 ```
 
-#### TCP pass through
+### TCP pass through
 
 If you don't specify handlers, we just forward TCP to your application as is. This is useful if you want to handle TLS termination yourself, for example.
 
-#### Proxy protocol
+### Proxy protocol
 
 The `proxy_proto` handler adds information about the original connection, including client IP + port and server IP + port (from the client's perspective).  Most applications need additional logic to accept the proxy protocol, either using a prebuilt library or implementing the [proxy protocol](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt) directly.
 

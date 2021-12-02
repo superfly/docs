@@ -1,18 +1,19 @@
-# _flyctl secrets unset_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Remove encrypted secrets from an app
+</p>
 
-Remove encrypted secrets from an app
-
-### About
+## About
 
 Remove encrypted secrets from the application. Unsetting a
 secret removes its availability to the application.
 
-### Usage
+## Usage
+
 ~~~
 flyctl secrets unset [flags] NAME NAME ...
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -21,7 +22,7 @@ flyctl secrets unset [flags] NAME NAME ...
   -h, --help            help for unset
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +30,7 @@ flyctl secrets unset [flags] NAME NAME ...
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl secrets](/docs/flyctl/secrets/)	 - Manage app secrets
 

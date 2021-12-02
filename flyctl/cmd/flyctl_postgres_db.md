@@ -1,12 +1,13 @@
-# _flyctl postgres db_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  manage databases in a cluster
+</p>
+
+## About
 
 manage databases in a cluster
 
-### About
+## Usage
 
-manage databases in a cluster
-
-### Usage
 ~~~
 flyctl postgres db [command] [flags]
 ~~~
@@ -14,13 +15,13 @@ flyctl postgres db [command] [flags]
 ### Available Commands
 * [list](/docs/flyctl/postgres-db-list/)	 - list databases in a cluster
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for db
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +29,7 @@ flyctl postgres db [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
 

@@ -1,20 +1,21 @@
-# _flyctl autoscale set_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Set current models autoscaling parameters
+</p>
 
-Set current models autoscaling parameters
-
-### About
+## About
 
 Allows the setting of the current models autoscaling parameters:
 
 min=int - minimum number of instances to be allocated from region pool.
 max=int - maximum number of instances to be allocated from region pool.
 
-### Usage
+## Usage
+
 ~~~
 flyctl autoscale set [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -22,7 +23,7 @@ flyctl autoscale set [flags]
   -h, --help            help for set
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -30,7 +31,7 @@ flyctl autoscale set [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl autoscale](/docs/flyctl/autoscale/)	 - Autoscaling app resources
 

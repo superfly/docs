@@ -41,7 +41,7 @@ See [this guide on creating a static cookie value](/docs/app-guides/elixir-stati
 
 ## WireGuard Tunnel
 
-Setup WireGuard on your local machine. Follow the Fly.io [Private Network VPN](/docs/reference/privatenetwork/#private-network-vpn) guide to walk through that.
+Setup WireGuard on your local machine. Follow the Fly.io [Private Network VPN](/docs/reference/private-networking/#private-network-vpn) guide to walk through that.
 
 
 ## Connecting to Production
