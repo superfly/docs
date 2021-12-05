@@ -1,0 +1,52 @@
+---
+title: "The Dreaded Port Filter"
+layout: docs
+sitemap: false
+nav: firecracker
+author: thomas
+categories:
+  - firecracker
+date: 2020-11-03
+
+---
+
+<div class="callout">**Watch this space**. This documentation describes an
+anti-feature of Fly.io that we're working on eliminating. We'll update this
+page when we have slain the dragon guarding the good feature, which will
+allow you to run apps that accept connections on any port you can think of.</div>
+  
+Apps running on Fly.io have their own VMs, and full control of the network. But to accept incoming connections from the Internet, those apps need to register with Fly.io's Anycast CDN. Our Anycast CDN currently honors TCP connections on these ports:
+
+| Port | Application |
+|------|-------------|
+  25   | SMTP email 
+  53   | TCP DNS
+  80   | HTTP
+  443  | HTTPS
+  853  | DNS-over-TLS
+  5000 | We forget
+  8080 | HTTP
+  8443 | HTTPS
+  100xx| Random stuff
+  25565| Minecraft
+
+You light any of these ports up for your app by editing
+[the [[services]] section](/docs/reference/configuration/#the-services-sections) of
+its `fly.toml` configuration.
+
+You are doubtlessly wondering, "why *these* ports?". And the answer is: there is no good reason for this system, and we are actively at work attempting to destroy this monstrosity that we, in our own hubris, wrought upon ourselves. In the meantime:
+
+### If you want to use a port not on this list...
+
+Just ask us, on [community.fly.io](https://community.fly.io/). We'll can usually add ports to the list within a couple days. If you want to use a TCP port for your application, we should support it; you're doing us a favor by asking. 
+
+### If you want to use UDP ports not on this list...
+
+Go right ahead. UDP doesn't have a port filter.
+
+### If you're concerned about ports your apps use to talk between themselves on...
+
+Don't be! The port filter only applies to Fly.io's Anycast network, for incoming connections from the Internet. VMs in your organization can talk to each other on any random ports they'd like, so go ahead and book up a TimescaleDB database and point your applications to it on port 5432.
+
+  
+  
