@@ -5,54 +5,122 @@ sitemap: false
 nav: firecracker
 ---
 
-## _What Is Redis On Fly._
 
-[Redis](https://redis.io) is a popular in-memory key/value store. On Fly, it can provide a region-local cache to Fly applications and a cross-region mechanism for communication. 
+<div class="callout">
 
-## _Getting Redis For An Application_
+The limited, "built-in" Redis caching that was previously known as Fly Redis is deprecated; we now recommend running Redis as a Fly.io app.
 
-There is no configuration to be done to enable Redis. The environment variable `FLY_REDIS_CACHE_URL` contains a URL for Redis and should be retrieved by your application so they can use a standard Redis driver to connect.
-
-## _How it works_
-
-We run Redis clusters in each region for your app processes. Your app can access these clusters with minimal latency so you can cache application data, views, or partials.
-
-Writes to the regional Redis clusters are only visible within their region. If you cache information in Chicago, for example, it’s not visible to application processes that run in Amsterdam. This helps reduce duplication of data, applications have surprisingly little cache overlap across regions.
-
-The clusters are volatile and in memory only. Cache data can vanish at any time. These Redis instances should not be used for data you don’t want to lose, they’re intended only for use as caches.
-
-## _The Redis `select` command_
-
-When you connect to the Fly Redis service, you can only read from database 0. Most Redis drivers select database 0 by default. 
-
-## _Managing Redis data globally_
-
-Database 1 is a “virtual” Redis. You can access it by running the `select 1` command. This database returns an `ok` response for any well-formed command immediately, and then replays the command + parameters in every region your application is running in.
-
-This is useful for purging cache data, and can also be used to “push” cache data to each region. 
-
-**Note:** command propagation is eventually consistent. Under most circumstances, small commands should be applied to every region in less than 1 second. Large commands can take a bit longer to propagate (if you `set` a very large value, for example). Commands might also be slow to propagate in the event of network issues.
-
-## Unsupported Redis Commands
-
-<div class="max-w:full overflow-x:auto bg:white shadow:lg r mb:4">
-<table class="table:stretch table:pad text:sm text:no-wrap m:0">
-<thead><tr><td colspan="5"><strong>PubSub commands not supported</strong></td></tr></thead>
-<tr><td>PSUBSCRIBE</td><td>PUBLISH</td><td>PUBSUB</td><td>PUNSUBSCRIBE</td><td>SUBSCRIBE</td></tr> 
-<tr><td>UNSUBSCRIBE</td><td>DISCARD</td><td>EXEC</td><td>MULTI</td></tr>
-</table>
 </div>
 
-<div class="max-w:full overflow-x:auto bg:white shadow:lg r mb:4">
-<table class="table:stretch table:pad text:sm text:no-wrap m:0">
-<thead><tr><td colspan="5"><strong>Other commands not supported</strong></td></tr></thead>
-<tr><td>MOVE</td><td>RANDOMKEY</td><td>SORT</td><td>DBSIZE</td><td>TIME</td></tr> 
-<tr><td>CLIENT</td><td>CONFIG</td><td>MONITOR</td><td>SLOWLOG</td><td>SWAPDB</td></tr> 
-<tr><td>MEMORY</td><td>LOLWUT</td><td>EVAL</td><td>EVALSHA</td><td>SCRIPT</td></tr> 
-<tr><td>GEOADD</td><td>GEOHASH</td><td>GEOPOS</td><td>GEORADIUS</td><td>GEORADIUS<br/>BYMEMBER</td></tr> 
-<tr><td>FLUSHDB</td></tr>
-</table>
+You can run a key/value store like [Redis](https://redis.io) or [KeyDB](https://keydb.dev/) on Fly.io.
+
+Here's a quick procedure to  create a standalone Redis server as a Fly.io app in a single region, with persistent storage, and accessible only from apps within your organization.
+
+## Create the Fly.io app
+
+We have a sweet Redis image you can use to create your own Redis instances on Fly.io. Use `fly launch` to create the new Redis app, but don't deploy yet:
+
+`fly launch --image flyio/redis:6.2.6 --no-deploy`
+
+When prompted,  give the app a name (in this case `my-fly-redis`), and select a region. Let's use Chicago (`ord`) for this example.
+
+The newly-generated `fly.toml` will specify the `flyio/redis:6.2.6` image:
+
+```output
+[build] 
+ image = "flyio/redis:6.2.6"
+```
+
+## Add persistent storage
+
+We recommend adding a [volume](https://fly.io/docs/reference/volumes/) for persistent storage of Redis data. If you skip this step, data will be lost across deploys or restarts. The volume needs to be in the same region as the `my-fly-redis` app instance.
+
+Here the volume is called `redis_server` and we use `fly volumes create` to put it in `ord` where the app is configured to deploy.
+
+```cmd
+fly volumes create redis_server --region ord
+```
+```output
+       ID: vol_6d7xkrk7do64w2q9 
+     Name: redis_server 
+   Region: ord
+      Zone: 2c30 
+  Size GB: 10 
+ Encrypted: true 
+Created at: 03 Dec 21 21:47 UTC
+```
+
+## Tweak `fly.toml`
+
+When we ran `fly launch`, it generated a `fly.toml` configuration file. We need to make some adjustments to it.
+
+### Attach the storage volume
+
+The following `[[mounts]]` section tells the new Redis app to mount the `redis_server` volume at `/data` when it starts.
+
+```output
+[[mounts]]
+  destination = "/data"
+  source = "redis_server"
+```
+
+### Hook up metrics
+
+Add [metrics](https://fly.io/docs/reference/metrics/):
+
+```output
+[metrics]
+  port = 9091
+  path = "/metrics"
+```
+
+### Services
+
+A default [[[services]] section](https://fly.io/docs/reference/configuration/#the-services-sections) was generated on `fly launch` for internal port 8080. Redis doesn't use port 8080; additionally, it's unlikely that you want your public Redis exposed on the public internet.
+
+So delete the `[[services]]` section.
+
+Other apps within the same organization can still access the Redis server over the Fly.io [private network](https://fly.io/docs/reference/private-networking/), at `my-fly-redis.internal:6379`, but will not be mapped to the external internet.
+
+## Add a password for Redis
+
+This installation requires setting a password on Redis **before** deploying.
+
+`fly secrets set REDIS_PASSWORD=MY_REDIS_PW`
+
+<div class="callout">
+
+Keep track of this password - it won't be visible again after deployment! More on `fly secrets`  [here](https://fly.io/docs/flyctl/secrets/).
+
 </div>
 
-**Note:** Many of these commands are excluded because they are used for server or client management.
+## Deploy
+
+`fly deploy`
+
+If all goes well (check with `fly status`), the new Redis server app `my-fly-redis` will now accept connections from your organization's other apps on the private IPv6 network, on the standard port `6379`.
+
+## Test the Redis server
+
+You can test the app with `fly ssh console`. Your Fly.io organization must have a root SSH certificate [established](https://fly.io/docs/flyctl/ssh-establish/) in order to do this; check using `fly ssh log`.
+
+Connect to `my-fly-redis`:
+
+```cmd
+fly ssh console -a my-fly-redis
+```
+
+```output
+Connecting to top1.nearest.of.my-fly-redis.internal... complete
+/ # redis-cli
+```
+
+Once in the `redis-cli`, authenticate. At that point you can run Redis commands interactively on the server.
+
+```output
+127.0.0.1:6379> auth MY_REDIS_PW
+OK
+127.0.0.1:6379> ping
+PONG
+```
 
