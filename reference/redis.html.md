@@ -26,7 +26,7 @@ When prompted,  give the app a name (in this case `my-fly-redis`), and select a 
 
 The newly-generated `fly.toml` will specify the `flyio/redis:6.2.6` image:
 
-```output
+```toml
 [build] 
  image = "flyio/redis:6.2.6"
 ```
@@ -58,7 +58,7 @@ When we ran `fly launch`, it generated a `fly.toml` configuration file. We need 
 
 The following `[[mounts]]` section tells the new Redis app to mount the `redis_server` volume at `/data` when it starts.
 
-```output
+```toml
 [[mounts]]
   destination = "/data"
   source = "redis_server"
@@ -68,7 +68,7 @@ The following `[[mounts]]` section tells the new Redis app to mount the `redis_s
 
 Add [metrics](https://fly.io/docs/reference/metrics/):
 
-```output
+```toml
 [metrics]
   port = 9091
   path = "/metrics"
