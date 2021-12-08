@@ -156,7 +156,7 @@ For the most part, UDP "just works" on Fly.io, the way you'd expect it to.
 
 The thing about forwarding UDP that makes it different from HTTP is that UDP messages don't have HTTP headers. When a standard proxy receives an HTTP message and sends it to its target, it stashes the original source address in the headers, so the target knows who it's talking to. You can't generally do that with UDP messages. But you need to know who you're talking to in order to respond to a UDP message!
 
-We use ⚡️`eBPF magic`⚡️ to shuttle UDP packets across our forward fabric (I wrote that because it sounds cool) while transparently mapping source addresses. What that means for you is that you can generally just write a standard socket program that reads UDP messages and replies to them based on the source address of the packet.
+We use ⚡️`eBPF magic`⚡️ to shuttle UDP packets across our forwarding fabric (I wrote that because it sounds cool) while transparently mapping source addresses. What that means for you is that you can generally just write a standard socket program that reads UDP messages and replies to them based on the source address of the packet.
 
 Here comes the first catch: the magic we're using to make this transparently work requires us to discriminate UDP traffic from TCP traffic. To receive UDP packets, your app needs to bind to the special `fly-global-services` address (that's it; that's the address). Just as importantly: **it needs to reply to messages using that address**.
 
