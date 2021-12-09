@@ -1,38 +1,45 @@
 ---
-title: "Fly Documentation Guide"
+title: The Fly Global Application Platform
 layout: docs
 sitemap: false
 nav: firecracker
 ---
 
 <figure>
-  <img src="/public/images/docs-guide.jpg" srcset="/public/images/docs-guide@2x.jpg 2x" alt="">
+  <img src="/public/images/docs-intro.jpg" srcset="/public/images/docs-intro@2x.jpg 2x" alt="">
 </figure>
 
-Welcome to the Fly Documentation. There's a lot here so we have guides to speed you to the information you need.
+Fly.io is a global application distribution platform. We run your code in [Firecracker](https://firecracker-microvm.github.io/) microVMs around the world.
 
-## _In the Overview_
 
-This is the Overview section. Here you will find:
+<div class="callout">
+Our *raison d'&ecirc;tre* is to deliver your applications to your users globally, with the highest possible availability and the lowest possible latency, with a great developer UX.
+</div>
 
-* **Introduction**: The [Introduction](/docs/introduction/) explains what Fly is, why we built it and what it can do for you.
-* **Speedrun**: The [Speedrun](/docs/speedrun/) is the bare essentials of deploying an App on Fly in the fewest possible steps.
-* **Hands-on**: The [Hands-on Section](/docs/hands-on/start/) is a more leisurely step-by-step introduction to the same process: deploying an App on Fly.
+We want you to run your full stack close to users, whether it’s a simple web service or your database-backed opus with multiple supporting services. Check out our [persistent storage volumes](/docs/reference/volumes/) and [ready-to-run Postgres](/docs/reference/postgres/). Your organization's Fly.io apps can [talk to each other privately](/docs/reference/private-networking/) through our fast internal [WireGuard](https://www.wireguard.com/) network.
 
-Beyond the Overview section, there are four major sections of the documentation.
+## Docker without Docker, with or without Docker
 
-## _Quickstart Guides_
+One thing to know: Docker images ([OCI container images](/blog/docker-without-docker/)) are how we give Firecracker your app to make into a microVM. That means you *can* use Docker to build the container image with your app and its environment. You can also point to a pre-built image.
 
-The [Quickstart guides](/docs/getting-started/) go deeper into building and deploying apps on Fly, including specific guides for Go, Node, Ruby and Deno, and creating a static website. There's also a quick guide on how to work with your deployed Apps.
+In many cases, you won't have to touch Docker; we can scan your source code and detect which [pre-existing buildpack](https://fly.io/docs/reference/builders/#buildpacks) matches the configuration you need, and our remote builder will build your app container image on deploy.
 
-## _Guides and Examples_
+If you have an app running on [Heroku](https://www.heroku.com/) already, we've built a quick-and-easy [tool](https://fly.io/heroku) to deploy it on Fly.io.
 
-Our [Guides and Examples Section](/docs/guides/) is a library of both full examples and detailed guides on how to configure and run particular apps or use Fly for specific applications.
+More on [builders](/docs/reference/builders).
 
-## _Fly Reference_
+## Happiness on the CLI
 
-The [Reference section](/docs/reference/) is the heart of the documentation with both essential reference content for Fly's command-line tool [Flyctl](/docs/flyctl/) and reference material for everything from Fly's architecture and scaling to Redis on Fly and managing secrets.
+`flyctl` is our command-line tool to facilitate app configuration, building, deployment and management. [It's the command center for your Fly.io apps.](/docs/flyctl/)
 
-## _About Fly_
+Creating and deploying an app on Fly.io is simple. You don't even have to type `flyctl` in full! 
 
-The [About section](/docs/about/) has all the essential things you need to know about Fly as a service: pricing, security, support, privacy, and terms.
+Run `fly launch` to initialize an app. (Maybe) customize the generated [config file](https://fly.io/docs/reference/configuration/) that generates (perhaps to hook up some [metrics](/docs/reference/metrics/)). Run `fly deploy` to build and deploy.
+
+That's the short version. And you do have to write your app, in the language of your choice, first. Although to try it out, you can use one of ours. [Here's one in Go.](/docs/getting-started/golang/)
+
+`flyctl` can then help you manage your app's [deployment regions](/docs/reference/regions/), [scaling](/docs/reference/scaling/), and [secrets](/docs/reference/secrets/).
+
+If you want to experience `flyctl` for yourself, you can go hands-on for free and [launch a container on Fly](/docs/hands-on/start/).
+
+If you just want to read about all the talents of `flyctl`, here's another link to its [documentation](/docs/flyctl/).
