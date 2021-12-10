@@ -1,19 +1,18 @@
-# _flyctl apps_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Manage apps
+</p>
 
-Manage apps
+## About
 
-### About
+The APPS commands focus on managing your Fly applications. Start with the CREATE command to register your application. The LIST command will list all currently registered applications.
 
-The APPS commands focus on managing your Fly applications.
-Start with the CREATE command to register your application.
-The LIST command will list all currently registered applications.
+## Usage
 
-### Usage
 ~~~
 flyctl apps [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [create](/docs/flyctl/apps-create/)	 - Create a new application
 * [destroy](/docs/flyctl/apps-destroy/)	 - Permanently destroys an app
 * [list](/docs/flyctl/apps-list/)	 - List applications
@@ -22,13 +21,13 @@ flyctl apps [command] [flags]
 * [resume](/docs/flyctl/apps-resume/)	 - Resume an application
 * [suspend](/docs/flyctl/apps-suspend/)	 - Suspend an application
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for apps
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -36,7 +35,7 @@ flyctl apps [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

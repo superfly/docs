@@ -96,7 +96,7 @@ The log lines consist of an ISO format date and time, the allocation id - the id
 
 `{"message":"\r","app":3366,"region":"ams","alloc":"70fda853"}` 
 
-is recording an unhandled, and in this case incomplete, log line. It is also possible to filter by region or instance id. Consult the [`flyctl` documentation for logs](/docs/flyctl/logs/).
+is recording an unhandled, and in this case incomplete, log line. It is also possible to filter by region or instance id. Consult the [flyctl documentation for logs](/docs/flyctl/logs/).
 
 
 ## _Working with Secrets_

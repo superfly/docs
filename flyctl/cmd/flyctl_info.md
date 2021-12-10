@@ -1,8 +1,8 @@
-# _flyctl info_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Show detailed app information
+</p>
 
-Show detailed app information
-
-### About
+## About
 
 Shows information about the application on the Fly platform
 
@@ -11,12 +11,13 @@ Information includes the application's
 * services
 * IP addresses
 
-### Usage
+## Usage
+
 ~~~
 flyctl info [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -26,7 +27,7 @@ flyctl info [flags]
   -n, --name            Returns just the appname
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -34,7 +35,7 @@ flyctl info [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

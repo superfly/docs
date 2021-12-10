@@ -1,17 +1,18 @@
-# _flyctl autoscale show_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Show current autoscaling configuration
+</p>
+
+## About
 
 Show current autoscaling configuration
 
-### About
+## Usage
 
-Show current autoscaling configuration
-
-### Usage
 ~~~
 flyctl autoscale show [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -19,7 +20,7 @@ flyctl autoscale show [flags]
   -h, --help            help for show
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +28,7 @@ flyctl autoscale show [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl autoscale](/docs/flyctl/autoscale/)	 - Autoscaling app resources
 

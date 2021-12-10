@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-## _So your deployment has failed. What now?_
+**So your deployment has failed. What now?** 
 
 The first thing to remember is that your application may well be running but be unable to give proof of life to the Fly health-checks. These happen as soon as your app is deployed and not passing them causes Fly to kill the latest version of your app that you just deployed and roll back to deploying an older version.
 

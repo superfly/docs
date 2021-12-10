@@ -1,12 +1,13 @@
-# _flyctl scale_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Scale app resources
+</p>
 
-Scale app resources
-
-### About
+## About
 
 Scale application resources
 
-### Usage
+## Usage
+
 ~~~
 flyctl scale [command] [flags]
 ~~~
@@ -17,7 +18,7 @@ flyctl scale [command] [flags]
 * [show](/docs/flyctl/scale-show/)	 - Show current resources
 * [vm](/docs/flyctl/scale-vm/)	 - Change an app's VM to a named size (eg. shared-cpu-1x, dedicated-cpu-1x, dedicated-cpu-2x...)
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -25,7 +26,7 @@ flyctl scale [command] [flags]
   -h, --help            help for scale
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -33,7 +34,7 @@ flyctl scale [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

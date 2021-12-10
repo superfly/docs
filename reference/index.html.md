@@ -38,7 +38,7 @@ Every App has a store for secrets. The secrets are exported to the running App t
 * [**Public Networking**](/docs/reference/services/):
 This section looks at Fly's networking and its support for IPv4 and IPv6 addresses via Anycast, automated TLS and HTTP middleware, proxies, and TCP passthrough.
 
-* [**Private Networking**](/docs/reference/privatenetwork/):
+* [**Private Networking**](/docs/reference/private-networking/):
 Fly's Private Networking provides secure connections between your applications and a VPN option that allows you to connect into your Fly organization and do the same from your desktop or mobile device. It uses WireGuard and DNS to provide connectivity and discoverability. Find out how to use it in your applications, and how to install and configure the VPN in this section.
 
 * [**Redis**](/docs/reference/redis/):

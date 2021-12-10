@@ -5,8 +5,6 @@ sitemap: false
 nav: firecracker
 ---
 
-## Private Networking
-
 Fly apps are connected by a mesh of Wireguard tunnels using IPV6.
 
 Applications within the same organization are assigned special addresses ("6PN addresses") tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly platform won't forward between different 6PN networks.
@@ -15,7 +13,7 @@ This connectivity is always available to applications; you don't have to do anyt
 
 You can connect applications running outside of Fly to your 6PN network using WireGuard; for that matter, you can connect your dev laptop to your 6PN network. To do that, you'll use `flyctl` to generate a WireGuard configuration that is addressed with a 6PN address.
 
-### Discovering Apps through DNS on an instance
+## Discovering Apps through DNS on an instance
 
 Instances are configured with their DNS server pointing to `fdaa::3`. The DNS server on this address can resolve arbitrary DNS queries, so you can look up "google.com" with it. But it's also aware of 6PN addresses, and, when queried from an instance, will let you look up the addresses of other applications in your organization. Those addresses live under the synthetic top-level domain `.internal`.
 
@@ -30,7 +28,7 @@ $ root@f066b83b:/# dig +short aaaa paulgra-ham.internal @fdaa::3
 fdaa:0:18:a7b:7d:f066:b83b:2
 ```
 
-### Discovering Apps through DNS on a WireGuard connection
+## Discovering Apps through DNS on a WireGuard connection
 
 **The DNS server address is different on WireGuard connections than on instances**. That's because you can run multiple WireGuard connections; your dev laptop could be WireGuard-connected to multiple organizations, but an instance can't be. So DNS is just a little more complicated over WireGuard.
 
@@ -91,7 +89,7 @@ Examples of retrieving this information are in the [fly-examples/privatenet](htt
 
 ## Private Network VPN
 
-Along with our [6PN private networking](/docs/reference/privatenetwork/),  [WireGuard](https://wireguard.com/) networking software. This is a flexible and secure way to plug into each one of your Fly organizations and connect to any and all apps within that organization.
+Along with our [6PN private networking](/docs/reference/private-networking/),  [WireGuard](https://wireguard.com/) networking software. This is a flexible and secure way to plug into each one of your Fly organizations and connect to any and all apps within that organization.
 
 ### TL:DR; 
 

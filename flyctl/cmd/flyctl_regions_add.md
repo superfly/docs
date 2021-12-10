@@ -1,17 +1,18 @@
-# _flyctl regions add_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Allow the app to run in the provided regions
+</p>
 
-Allow the app to run in the provided regions
-
-### About
+## About
 
 Allow the app to run in one or more regions
 
-### Usage
+## Usage
+
 ~~~
 flyctl regions add REGION ... [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +21,7 @@ flyctl regions add REGION ... [flags]
   -h, --help            help for add
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +29,7 @@ flyctl regions add REGION ... [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl regions](/docs/flyctl/regions/)	 - Manage regions
 

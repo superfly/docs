@@ -1,25 +1,24 @@
-# _flyctl auth docker_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Authenticate docker
+</p>
 
-Authenticate docker
+## About
 
-### About
+Adds registry.fly.io to the docker daemon's authenticated registries. This allows you to push images directly to fly from the docker cli.
 
-Adds registry.fly.io to the docker daemon's authenticated
-registries. This allows you to push images directly to fly from
-the docker cli.
+## Usage
 
-### Usage
 ~~~
 flyctl auth docker [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for docker
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +26,7 @@ flyctl auth docker [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl auth](/docs/flyctl/auth/)	 - Manage authentication
 

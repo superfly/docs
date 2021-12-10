@@ -5,8 +5,6 @@ sitemap: false
 nav: firecracker
 ---
 
-### Scaling Dimensions
-
 There are multiple dimensions of scaling on Fly.
 
 * [Ensuring the application has instances running in one or more regions](#count-scaling)
@@ -14,7 +12,7 @@ There are multiple dimensions of scaling on Fly.
 * [Increasing the CPU cores and memory size of application instances](#scaling-virtual-machines)
 * [Alternate scaling models with autoscaling](#autoscaling)
 
-### Regions and Scaling
+## Regions and Scaling
 
 Your Fly application runs on servers in a pool of regions, selected from our [available regions](/docs/reference/regions).  That pool, which [you can configure](/docs/flyctl/regions/), represents the regions your app _can_ be deployed in. 
 
@@ -38,11 +36,11 @@ fra
 
 The create command, in this case, was issued in the UK, so London (LHR-London Heathrow) is the closest region. 
 
-#### Backup Regions
+### Backup Regions
 
 Continuing our previous example: if for any reason your application can't be deployed in LHR, Fly will attempt to bring it up in either `ams` (Amsterdam) or `fra` (Frankfurt). Users won't notice this! They’re directed to the nearest running instance automatically. Backup Regions are selected based on the geographical closeness of the regions selected for your region pool.
 
-#### Modifying The Region Pool
+### Modifying The Region Pool
 
 You can build your own region pool easily.
 
@@ -51,7 +49,7 @@ You can build your own region pool easily.
 
 Both commands simply take a space-separated list of regions to add or remove. 
 
-### Count Scaling
+## Count Scaling
 
 Now that we have control over where our application runs, we can talk about how many instances of your app are running. 
 
@@ -74,7 +72,7 @@ flyctl scale show
 
 This application uses the shared-cpu-1x (one shared CPU) VM size, with 512MB of RAM for each instance and there should be four instances created of it created.
 
-### Anchor Scaling
+## Anchor Scaling
 
 Fly optimizes the placement of your app based on conditions on our network. But if you want finer-grained control over where your apps run, you can achieve that with [Fly volumes](/docs/reference/volumes/).
 
@@ -86,11 +84,11 @@ If your app is associated with Fly volume persistent storage, you can use them t
 
 When an app which has storage starts up, it looks for a volume with a particular name. We’ll place your app to fit your available volumes. In that way, volumes act as anchors that attach your app to specific regions in specific numbers.
 
-### Scaling Virtual Machines
+## Scaling Virtual Machines
 
 Each application instance on Fly runs in a virtual machine. The number of cores and amount of memory available in the virtual machine can be set for all application instances using the `flyctl scale vm` command.
 
-#### Viewing The Current VM Size
+### Viewing The Current VM Size
 
 Using `flyctl scale vm` on its own will display the details of the application's current VM sizing.
 
@@ -105,7 +103,7 @@ flyctl scale vm
 
 It shows the size name (`shared-cpu-1x`), number of CPUs, memory (in GB or MB).
 
-#### Viewing Available VM Sizes
+### Viewing Available VM Sizes
 
 The `flyctl platform vm-sizes` command will display the various sizes with cores and memory and current pricing:
 
@@ -125,7 +123,7 @@ The CPU Cores column shows how many vCPU cores will be allocated to the virtual 
 
 CPU Types are either shared or dedicated. In a nutshell: shared CPU instances run lighter-weight tasks, and can have up to 2GB of memory. Dedicated CPU instances handle more demanding applications and can scale to 64GB.
 
-#### Upgrading a VM
+### Upgrading a VM
 
 You can easily change the type of your VMs.  Just add the required size name to `fly scale vm` and we’ll take care of the rest. For example to go from `shared-cpu-1x` to `dedicated-cpu-1x` is:
 
@@ -138,7 +136,7 @@ Scaled VM size to dedicated-cpu-1x
          Memory: 2 GB
 ```
 
-#### Adjusting a VM's memory
+### Adjusting a VM's memory
 
 The `fly scale memory` command lets you directly set the VM memory allocation, in MB. For example, if we wanted our app to use 1GB of memory we'd run:
 
@@ -162,7 +160,7 @@ Scaled VM size to dedicated-cpu-1x
          Memory: 4 GB
 ```
 
-#### Viewing The Application's Scaled Status
+### Viewing The Application's Scaled Status
 
 To view where the instances of a Fly application are currently running, use `flyctl status`:
 
@@ -191,7 +189,7 @@ a592ecf4 318     iad    run     running 1 total, 1 passing 0        1m7s ago
 075c8c53 318     sjc    run     running 1 total, 1 passing 0        3m1s ago
 ```
 
-### Autoscaling
+## Autoscaling
 
 Autoscaling is based on a pool of regions where the application can be run. Using a selected model, the system will then create at least the minimum number of application instances across those regions. The model will then be able to create instances up to the maximum count. The min and max are global parameters for the scaling. There are two scaling modes, Standard and Balanced.
 
@@ -214,7 +212,7 @@ flyctl autoscale show
 
 This scaling plan sees a standard, even distribution on instances, with a minimum of 1 instance and up to 10 instances that can be created on-demand.
 
-#### Modifying The Autoscaling Plan
+### Modifying The Autoscaling Plan
 
 You can switch the plan by calling flyctl autoscale and then selecting disabled, balanced or standard.
 
@@ -279,7 +277,3 @@ flyctl autoscale disable
 ```out
      Scale Mode: Disabled
 ```
-
-
-
-

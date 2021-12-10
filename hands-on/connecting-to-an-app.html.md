@@ -15,8 +15,8 @@ flyctl open /fred
 Opening http://hellofly.fly.dev/fred
 ```
 
-<img src="/docs/hands-on/images/helloflyandfred.png" alt="Hello from Fly Screenshot" class="r shadow:lg">
+<img src="/docs/hands-on/images/helloflyandfred.png" alt="Hello from Fly Screenshot" class="rounded-xl shadow-lg">
 
 You have successfully deployed and connected to your first Fly application.
 
-{Next: Further Reading}(/docs/hands-on/next/)
+[Next: Further Reading](/docs/hands-on/next/)

@@ -49,4 +49,4 @@ The `flyctl` command will always refer to this file in the current directory if 
 
 We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
 
-{Next: Deploying Your App}(/docs/hands-on/deploy-app/)
+[Next: Deploying Your App](/docs/hands-on/deploy-app/)

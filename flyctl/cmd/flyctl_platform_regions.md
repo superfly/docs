@@ -1,23 +1,24 @@
-# _flyctl platform regions_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  List regions
+</p>
 
-List regions
-
-### About
+## About
 
 View a list of regions where Fly has edges and/or datacenters
 
-### Usage
+## Usage
+
 ~~~
 flyctl platform regions [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for regions
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -25,7 +26,7 @@ flyctl platform regions [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl platform](/docs/flyctl/platform/)	 - Fly platform information
 

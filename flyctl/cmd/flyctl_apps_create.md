@@ -1,21 +1,18 @@
-# _flyctl apps create_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Create a new application
+</p>
 
-Create a new application
+## About
 
-### About
+The APPS CREATE command will both register a new application with the Fly platform and create the fly.toml file which controls how the application will be deployed. The --builder flag allows a cloud native buildpack to be specified which will be used instead of a Dockerfile to create the application image when it is deployed.
 
-The APPS CREATE command will both register a new application 
-with the Fly platform and create the fly.toml file which controls how 
-the application will be deployed. The --builder flag allows a cloud native 
-buildpack to be specified which will be used instead of a Dockerfile to 
-create the application image when it is deployed.
+## Usage
 
-### Usage
 ~~~
 flyctl apps create [APPNAME] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
       --generate-name   Always generate a name for the app
@@ -24,7 +21,7 @@ flyctl apps create [APPNAME] [flags]
       --org string      The organization that will own the app
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -32,7 +29,7 @@ flyctl apps create [APPNAME] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl apps](/docs/flyctl/apps/)	 - Manage apps
 

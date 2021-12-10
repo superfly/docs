@@ -138,7 +138,7 @@ foo: /app/server
 bar: /app/server -bar
 ```
 
-A Procfile manager I like a lot is [`overmind`](https://github.com/DarthSim/overmind). `overmind` is a Go program, so it’s got a small runtime, and you could, if you were fussy, build a container that just takes the `overmind` binary and none of its build deps. We won’t bother, though, since we’re already bringing those deps in. So:
+A Procfile manager I like a lot is [overmind](https://github.com/DarthSim/overmind). `overmind` is a Go program, so it’s got a small runtime, and you could, if you were fussy, build a container that just takes the `overmind` binary and none of its build deps. We won’t bother, though, since we’re already bringing those deps in. So:
 
 ```Dockerfile
 FROM golang
@@ -176,7 +176,7 @@ There are good reasons to run multiple programs in a single container, but somet
 
 If you’re running multiple heavy-weight things in a single container, you might explore just running them as separate Fly.io apps. The advantage to doing this, apart from the apps not fighting over the same CPUs and memory, is that you can scale separate apps independently, and put them in different sets of regions.
 
-Fly.io apps can talk to each other over a [private network](https://fly.io/docs/reference/privatenetwork/) that’s always available. They can find each other under the `.internal` top-level domain (if your apps are `foo` and `bar`, they’ll be in the DNS as `foo.internal` and `bar.internal`). Because the network connection is private and encrypted, you can generally just talk back and forth without extra authentication until you know you need it; in other words, you can keep things simple.
+Fly.io apps can talk to each other over a [private network](https://fly.io/docs/reference/private-networking/) that’s always available. They can find each other under the `.internal` top-level domain (if your apps are `foo` and `bar`, they’ll be in the DNS as `foo.internal` and `bar.internal`). Because the network connection is private and encrypted, you can generally just talk back and forth without extra authentication until you know you need it; in other words, you can keep things simple.
 
 ### Maybe You Don’t Need Multiple Processes
 

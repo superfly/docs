@@ -5,8 +5,6 @@ sitemap: false
 nav: firecracker
 ---
 
-## _What Are Regions?_
-
 The Fly Platform gets close to users by running applications in datacenters close to users. These datacenters are identified by region. 
 
 The platform works out which region an application should be running in based on the incoming connection from a client. It then starts the application in that region and completes the connection.

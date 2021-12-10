@@ -1,18 +1,18 @@
-# _flyctl apps move_
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Move an app to another organization
+</p>
 
-Move an app to another organization
+## About
 
-### About
+The APPS MOVE command will move an application to another organization the current user belongs to.
 
-The APPS MOVE command will move an application to another 
-organization the current user belongs to.
+## Usage
 
-### Usage
 ~~~
 flyctl apps move [APPNAME] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help         help for move
@@ -20,7 +20,7 @@ flyctl apps move [APPNAME] [flags]
   -y, --yes          Accept all confirmations
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +28,7 @@ flyctl apps move [APPNAME] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl apps](/docs/flyctl/apps/)	 - Manage apps
 
