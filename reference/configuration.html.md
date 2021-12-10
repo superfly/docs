@@ -158,7 +158,7 @@ The services concurrency sub-section configures the application's behavior with 
 ```
 
 * `hard_limit` : When an application instance is at or over this number of concurrent connections, the system will bring up another instance.
-* `soft_limit` : When an application instance is at or over this number of concurrent connections, the system is likely bring up another instance.
+* `soft_limit` : When an application instance is at or over this number of concurrent connections, the system is likely to bring up another instance.
 
 #### `services.ports`
 
