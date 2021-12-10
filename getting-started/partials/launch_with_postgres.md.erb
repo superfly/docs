@@ -1,12 +1,17 @@
-Now let's run `fly launch`.
 <% app_name = app_name.gsub("_", "\\_") %>
-The launcher will:
+
+Now let's run `fly launch`. The launcher will:
+
 * Ask you to select a deployment region
-* Set secrets required by the detected framework (`SECRET_KEY_BASE`, for example)
+* Set secrets required by <%= detected %> (`SECRET\_KEY\_BASE`, for example)
+* Run the <%= detected %> deployment setup task
 * Optionally setup a Postgres instance in your selected region
 * Deploy the application in your selected region
-* Run the deployment code generator
 
+```cmd
+cd hello_elixir
+fly launch
+```
 ```
 Creating app in /Users/me/<%= app_name %>
 Scanning source code
@@ -35,7 +40,7 @@ Monitoring Deployment
 
 Connect to postgres
 Any app within the flyio organization can connect to postgres using the above credentials and the hostname "<%= app_name %>-db.internal."
-For example: postgres\://postgres\:password\@<%= app_name %>-db.internal\:5432
+For example: postgres\://postgres\:password@<%= app_name %>-db.internal\:5432
 
 See the postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
 Postgres cluster <%= app_name %>-db is now attached to <%= app_name %>
@@ -52,3 +57,13 @@ Remote builder fly-builder-little-glitter-8329 ready
 
 ...
 ```
+
+That's it! Run `fly open` to see your deployed app in action.
+
+Try a few other commands:
+
+* `fly logs` - Tail your application logs
+* `fly status` - App deployment details
+* `fly status -a <%= app_name %>-db` - Database deployment details
+* `fly deploy` - Deploy the application after making changes
+* `fly ssh console` - Poke around in your application VM
