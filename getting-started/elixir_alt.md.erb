@@ -1,0 +1,435 @@
+## _Running the Application Locally_
+
+Let's walk through working with Phoenix locally and preparing it for deployment. We can start with a brand new Phoenix application.
+
+```bash
+mix phx.new hello_elixir
+```
+
+**Tip:** Make sure you have a local [PostgreSQL server installed](https://wiki.postgresql.org/wiki/Detailed_installation_guides) and running.
+
+Now, we setup the database and start the application.
+
+```cmd
+mix ecto.setup
+```
+
+```output
+The database for HelloElixir.Repo has been created
+```
+
+```cmd
+mix phx.server
+```
+
+```output
+[info] Running HelloElixirWeb.Endpoint with cowboy 2.8.0 at 0.0.0.0:4000 (http)
+[info] Access HelloElixirWeb.Endpoint at http://localhost:4000
+```
+
+Connect to localhost:4000 to confirm that you have a working Elixir application.
+
+## For Phoenix versions earlier than 1.6.3
+
+We highly recommend upgrading to Phoenix 1.6.3 or higher. If you can't, follow these instructions to setup your app for deployment.
+
+### _Generate Release Config Files_
+
+We use the `mix release.init` command to create some sample files in the `./rel` directory.
+
+```cmd
+mix release.init
+```
+```output
+* creating rel/vm.args.eex
+* creating rel/remote.vm.args.eex
+* creating rel/env.sh.eex
+* creating rel/env.bat.eex
+```
+
+## _Special Note on Fly Networking_
+
+Internally Fly uses IPv6 networking. This enables some cool features, but legacy Elixir applications need to be configured to work smoothly with it.
+These config changes tell Elixir, Phoenix, and the BEAM that we are using IPv6 addresses. The options look like `inet6` and `inet6_tcp`.
+The next steps are how we configure that in our application.
+
+We only need to configure `rel/env.sh.eex`. This file gets turned into a shell script that the release uses to set ENV values used when we run
+any release commands. Here's the important parts.
+
+```
+#!/bin/sh
+
+ip=$(grep fly-local-6pn /etc/hosts | cut -f 1)
+export RELEASE_DISTRIBUTION=name
+export ELIXIR_ERL_OPTIONS="-proto_dist inet6_tcp"
+```
+
+We configure the node to use a full node name when it runs. We get the Fly assigned IPv6 address and use that to name our node. Finally, we configure `inet6_tcp` for the BEAM as well.
+
+Even if you don't care to cluster your nodes together, you still want to do this because it enables running an IEx shell in a running node.
+
+
+## _Docker Setup_
+
+### _Dockerfile_
+
+You can find a good Dockerfile ready to build your application in the [hello_elixir GitHub repo](https://github.com/fly-apps/hello_elixir/blob/main/Dockerfile). It is important to note that it uses a Debian-slim base image to build. This avoids DNS issues in Alpine images. The [base elixir image is maintained by the hexpm](https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated) org and is kept up to date. [Hex.pm](https://hex.pm/) is the official package repository for Elixir. There are other options instead of Debian there as well if you prefer.
+
+The Dockerfile uses a two-stage approach. There are two `FROM` commands. The first stage pulls in the source and builds the release. The second stage takes the prepared release and sets it up in a minimal Docker image. The final deployed image contains only our release.
+
+### _Docker Ignore File_
+
+We add the file `.dockerignore` to the project with the following contents. Depending on how you `COPY` things into the Dockerfile, you may or may not need to configure this.
+
+```
+assets/node_modules/
+deps/
+```
+
+This ensures we keep any natively compiled Elixir or Node packages from our development environments from causing a problem in the Linux container.
+
+## _Launch the App on Fly_
+
+To launch an app on fly, run `fly launch` in the directory with your source code. This creates and configures a fly app for you by inspecting your source code, then prompts you to deploy.
+
+```cmd
+fly launch
+```
+```output
+$ fly launch
+Scanning source code
+Detected Dockerfile app
+? Select region: sea (Seattle, Washington (US))
+Created app fly-elixir in organization personal
+Wrote config file fly.toml
+? Would you like to deploy now? No
+```
+
+Don't deploy it just yet. We're going to adjust the generated `fly.toml` file first.
+
+The `fly launch` command scans your source code to determine how to build a deployment image as well as identify any other configuration your app needs, such as secrets and exposed ports.
+
+After your source code is scanned and the results are printed, you'll be prompted for an organization. Organizations are a way of sharing applications and resources between Fly users. Every Fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
+
+Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region. You can find the [list of supported regions here](/docs/reference/regions/).
+
+At this point, `flyctl` created an app for you and wrote your configuration to a `fly.toml` file. You'll then be prompted to build and deploy your app. Once complete, your app will be running on fly.
+
+## _Inside `fly.toml`_
+
+The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also generated a Fly-side application slot with a new name. In this case, it is `fly-elixir`. If we look at the `fly.toml` file we can see the name in there:
+
+```toml
+app = "fly-elixir"
+
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
+```
+
+The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name is used to identify the application to the Fly platform. The rest of the file contains settings to be applied to the application when it deploys.
+
+We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
+
+## _Customizing `fly.toml`_
+
+Elixir applications need a little customization to the generated `fly.toml` file.
+
+```toml
+app = "fly-elixir"
+
+kill_signal = "SIGTERM"
+kill_timeout = 5
+processes = []
+
+[deploy]
+  release_command = "/app/entry eval HelloElixir.Release.migrate"
+
+[env]
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 4000
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "30s"  # allow some time for startup
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
+```
+
+There are two important changes here:
+
+- We added the `[deploy]` setting. This tells Fly that on a new deploy, **run our database migrations**. The Dockerfile we're using creates a symlink to your app name called `entry`. This uses that symlink run the migrate command.
+- The `kill_signal` is set to `SIGTERM`. An Elixir node does a clean shutdown when it receives a `SIGTERM` from the OS.
+- The `internal_port` is set to 4000 for our Elixir application. The port value should match your application.
+
+Some other values were tweaked as well.
+
+## _Preparing to Deploy_
+
+We're almost there! Before we can deploy our new app, we need to setup a few things in our Fly account first. Namely, we want to provide the needed secrets and we need a database!
+
+### _Setting our Secrets on Fly_
+
+Elixir has a mix task that can generate a new Phoenix key base secret. Let's use that.
+
+```bash
+mix phx.gen.secret
+```
+
+It generates a long string of random text. Let's store that as a secret for our app. When we run this command in our project folder, `flyctl` uses the `fly.toml` file to know which app we are setting the value on.
+
+```
+fly secrets set SECRET_KEY_BASE=<GENERATED>
+```
+
+### _Creating our Fly Postgres Database_
+
+```cmd
+fly postgres create
+```
+```output
+? App name: hello-elixir-db
+Automatically selected personal organization: Mark Ericksen
+? Select region: sea (Seattle, Washington (US))
+? Select VM size: shared-cpu-1x - 256
+? Volume size (GB): 10
+Creating postgres cluster hello-elixir-db in organization personal
+Postgres cluster hello-elixir-db created
+  Username:    <USER>
+  Password:    <PASSWORD>
+  Hostname:    hello-elixir-db.internal
+  Proxy Port:  5432
+  PG Port: 5433
+Save your credentials in a secure place, you won't be able to see them again!
+
+Monitoring Deployment
+
+2 desired, 2 placed, 2 healthy, 0 unhealthy [health checks: 6 total, 6 passing]
+--> v0 deployed successfully
+
+Connect to postgres
+Any app within the personal organization can connect to postgres using the above credentials and the hostname "hello-elixir-db.internal."
+For example: postgres://<USER>:<PASSWORD>@hello-elixir-db.internal:5432
+
+See the postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
+```
+
+We can take the defaults which select the lowest values for CPU, size, etc. This is perfect for getting started.
+
+### _Attach our App to the Database_
+
+We use `flyctl` to attach our app to the database which also sets our needed `DATABASE_URL` ENV value.
+
+```cmd
+fly postgres attach --postgres-app hello-elixir-db
+```
+```output
+Postgres cluster hello-elixir-db is now attached to fly-elixir
+The following secret was added to fly-elixir:
+  DATABASE_URL=postgres://<NEW_USER>:<NEW_PASSWORD>@hello-elixir-db.internal:5432/fly_elixir?sslmode=disable
+```
+
+We can see the secrets that Fly is using for our app like this.
+
+```cmd
+fly secrets list
+```
+```output
+NAME            DIGEST                           DATE
+DATABASE_URL    830d8769ff33cba6c8b29d1cd6a6fbac 1m10s ago
+SECRET_KEY_BASE 84c992ac7ef334c21f2aaecd41c43666 9m20s ago
+```
+
+Looks like we're ready to deploy!
+
+## _Deploying to Fly_
+
+To deploy your app, just run just run:
+
+```cmd
+fly deploy
+```
+
+First, `flyctl` builds our Dockerfile and pushes it to a Fly container registry.
+
+This will lookup our `fly.toml` file, and get the app name `fly-elixir` from there. Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl returns you to the command line when it's done.
+
+## _Viewing the Deployed App_
+
+Now that the application has been deployed, let's find out more about its deployment. The command `fly status` will give you all the essential details.
+
+```cmd
+fly status
+```
+```output
+App
+  Name     = fly-elixir
+  Owner    = personal
+  Version  = 3
+  Status   = running
+  Hostname = fly-elixir.fly.dev
+
+Deployment Status
+  ID          = 9762642f-baa4-e4df-c683-13f2ce26a6bc
+  Version     = v3
+  Status      = successful
+  Description = Deployment completed successfully
+  Instances   = 1 desired, 1 placed, 1 healthy, 0 unhealthy
+
+Instances
+ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
+f617e72a 3       sea    run     running 1 total, 1 passing 0        1m34s ago
+```
+
+
+## _Connecting to the App_
+
+The quickest way to browse your newly deployed application is with the `fly open` command.
+
+```cmd
+fly open
+```
+```output
+Opening https://fly-elixir.fly.dev/
+```
+
+Your browser will be sent to the displayed URL. Fly will auto-upgrade this URL to a HTTPS secured URL.
+
+### _Special Note on Clustering_
+
+To make clustering your Elixir applications easier on Fly, in the `env.sh.eex` file, the `RELEASE_NODE` is named using the `$FLY_APP_NAME` and
+the IPv6 address. It will look something like this in practice.
+
+```
+fly-elixir@fdaa:0:1da8:a7b:ac2:216b:da3f:2
+```
+
+### _Runtime Config_
+
+When we created the app, the file `config/runtime.exs` was created for us. Now we need to update it.
+
+```elixir
+import Config
+
+if config_env() == :prod do
+  database_url =
+    System.get_env("DATABASE_URL") ||
+      raise """
+      environment variable DATABASE_URL is missing.
+      For example: ecto://USER:PASS@HOST/DATABASE
+      """
+
+  config :hello_elixir, HelloElixir.Repo,
+    # IMPORTANT: Or it won't find the DB server
+    socket_options: [:inet6],
+    url: database_url,
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+
+  secret_key_base =
+    System.get_env("SECRET_KEY_BASE") ||
+      raise """
+      environment variable SECRET_KEY_BASE is missing.
+      You can generate one by calling: mix phx.gen.secret
+      """
+
+  # IMPORTANT: Get the app_name we're using
+  app_name =
+    System.get_env("FLY_APP_NAME") ||
+      raise "FLY_APP_NAME not available"
+
+  config :hello_elixir, HelloElixirWeb.Endpoint,
+    # IMPORTANT: tell our app about the host name to use when generating URLs
+    url: [host: "#{app_name}.fly.dev", port: 80],
+    http: [
+      ip: {0, 0, 0, 0, 0, 0, 0, 0},
+      port: String.to_integer(System.get_env("PORT") || "4000")
+    ],
+    secret_key_base: secret_key_base
+
+  # IMPORTANT: Enable the endpoint for releases
+  config :hello_elixir, HelloElixirWeb.Endpoint, server: true
+end
+```
+
+This code expects to receive some ENV values at runtime. We're expecting `SECRET_KEY_BASE` with our Phoenix secret, our `FLY_APP_NAME` from Fly, and the `DATABASE_URL` for connecting to a Fly hosted Postgres database.
+
+Also, you don't need to turn on TLS for connecting to the Postgres instance. Fly private networks operate over an encrypted WireGuard mesh, so traffic between application servers and PostgreSQL is already encrypted and there's no need to TLS.
+
+
+
+## _Bonus Sections_
+
+With your application up and running, there are some additional things you can do to go further. Using some `flyctl` commands, we can easily do some powerful things with our application.
+
+These bonus tips cover:
+
+- Getting an IEx shell into your running node. This helps you manage and work with your running system.
+- Clustering multiple Elixir nodes together. Say "Hello!" to the power of Distributed Computing!
+- Scaling your application out to more machines and even distant regions (with or without clustering).
+
+### _What is the IP Address?_
+
+If you want to know what IP addresses the app is using, try `fly ips list`:
+
+```cmd
+fly ips list
+```
+```output
+TYPE ADDRESS                              CREATED AT
+v4   213.188.199.124                      24m5s ago
+v6   2a09:8280:1:ce56:c80f:5071:6e94:6688 24m5s ago
+```
