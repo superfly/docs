@@ -1,13 +1,12 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Volume management commands
-</p>
+# _flyctl volumes_
 
-## About
+Volume management commands
+
+### About
 
 Commands for managing Fly Volumes associated with an application.
 
-## Usage
-
+### Usage
 ~~~
 flyctl volumes [command] [flags]
 ~~~
@@ -19,7 +18,7 @@ flyctl volumes [command] [flags]
 * [show](/docs/flyctl/volumes-show/)	 - Show details of an app's volume
 * [snapshots](/docs/flyctl/volumes-snapshots/)	 - Manage volume snapshots
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -27,7 +26,7 @@ flyctl volumes [command] [flags]
   -h, --help            help for volumes
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -35,7 +34,7 @@ flyctl volumes [command] [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

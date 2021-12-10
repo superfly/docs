@@ -1,18 +1,17 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Launch a Fly machine
-</p>
+# _flyctl machine run_
 
-## About
+Launch a Fly machine
+
+### About
 
 Launch Fly machine with the provided image and command
 
-## Usage
-
+### Usage
 ~~~
 flyctl machine run <image> [command] [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string                       App name to operate on
@@ -38,7 +37,7 @@ flyctl machine run <image> [command] [flags]
   -v, --volume strings                   Volumes to mount in the form of <volume_id_or_name>:/path/inside/machine[:<options>]
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -46,7 +45,7 @@ flyctl machine run <image> [command] [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl machine](/docs/flyctl/machine/)	 - Commands that manage machines
 

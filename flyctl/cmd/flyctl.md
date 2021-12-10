@@ -1,8 +1,8 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  The Fly CLI
-</p>
+# _flyctl_
 
-## About
+The Fly CLI
+
+### About
 
 flyctl is a command line interface to the Fly.io platform.
 
@@ -17,21 +17,23 @@ Check the status of an application with the status command
 
 To read more, use the docs command to view Fly's help on the web.
 
-## Usage
-
+### Usage
 ~~~
 flyctl [command] [flags]
 ~~~
 
 ### Available Commands
+* [apps](/docs/flyctl/apps/)	 - Manage apps
 * [auth](/docs/flyctl/auth/)	 - Manage authentication
 * [autoscale](/docs/flyctl/autoscale/)	 - Autoscaling app resources
 * [builds](/docs/flyctl/builds/)	 - Work with Fly builds
 * [certs](/docs/flyctl/certs/)	 - Manage certificates
 * [checks](/docs/flyctl/checks/)	 - Manage health checks
 * [config](/docs/flyctl/config/)	 - Manage an app's configuration
+* [create](/docs/flyctl/create/)	 - Create a new application
 * [dashboard](/docs/flyctl/dashboard/)	 - Open web browser on Fly Web UI for this app
 * [deploy](/docs/flyctl/deploy/)	 - Deploy an app to the Fly platform
+* [destroy](/docs/flyctl/destroy/)	 - Permanently destroys an app
 * [dig](/docs/flyctl/dig/)	 - DNS lookups
 * [dns-records](/docs/flyctl/dns-records/)	 - Manage DNS records
 * [docs](/docs/flyctl/docs/)	 - View Fly documentation
@@ -45,6 +47,7 @@ flyctl [command] [flags]
 * [logs](/docs/flyctl/logs/)	 - View app logs
 * [machine](/docs/flyctl/machine/)	 - Commands that manage machines
 * [monitor](/docs/flyctl/monitor/)	 - Monitor deployments
+* [move](/docs/flyctl/move/)	 - Move an app to another organization
 * [open](/docs/flyctl/open/)	 - Open browser to current deployed application
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
@@ -52,16 +55,20 @@ flyctl [command] [flags]
 * [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a fly app
 * [regions](/docs/flyctl/regions/)	 - Manage regions
 * [releases](/docs/flyctl/releases/)	 - List app releases
+* [restart](/docs/flyctl/restart/)	 - Restart an application
+* [resume](/docs/flyctl/resume/)	 - Resume an application
 * [scale](/docs/flyctl/scale/)	 - Scale app resources
 * [secrets](/docs/flyctl/secrets/)	 - Manage app secrets
 * [ssh](/docs/flyctl/ssh/)	 - Commands that manage SSH credentials
 * [status](/docs/flyctl/status/)	 - Show app status
-* [turbo](/docs/flyctl/turbo/)	 - Launches heroku apps
+* [suspend](/docs/flyctl/suspend/)	 - Suspend an application
+* [turboku](/docs/flyctl/turboku/)	 - Launches heroku apps
+* [version](/docs/flyctl/version/)	 - Show version information for the flyctl command
 * [vm](/docs/flyctl/vm/)	 - Commands that manage VM instances
 * [volumes](/docs/flyctl/volumes/)	 - Volume management commands
 * [wireguard](/docs/flyctl/wireguard/)	 - Commands that manage WireGuard peer connections
 
-## Options
+### Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -70,6 +77,6 @@ flyctl [command] [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 

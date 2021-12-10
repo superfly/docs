@@ -1,18 +1,17 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Disable autoscaling
-</p>
+# _flyctl autoscale disable_
 
-## About
+Disable autoscaling
+
+### About
 
 Disable autoscaling to manually controlling app resources
 
-## Usage
-
+### Usage
 ~~~
 flyctl autoscale disable [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +19,7 @@ flyctl autoscale disable [flags]
   -h, --help            help for disable
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +27,7 @@ flyctl autoscale disable [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl autoscale](/docs/flyctl/autoscale/)	 - Autoscaling app resources
 

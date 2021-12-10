@@ -1,25 +1,24 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  View Fly documentation
-</p>
+# _flyctl docs_
 
-## About
+View Fly documentation
+
+### About
 
 View Fly documentation on the Fly.io website. This command will open a
 browser to view the content.
 
-## Usage
-
+### Usage
 ~~~
 flyctl docs [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -h, --help   help for docs
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +26,7 @@ flyctl docs [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

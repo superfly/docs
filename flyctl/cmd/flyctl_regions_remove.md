@@ -1,18 +1,17 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Prevent the app from running in the provided regions
-</p>
-
-## About
+# _flyctl regions remove_
 
 Prevent the app from running in the provided regions
 
-## Usage
+### About
 
+Prevent the app from running in the provided regions
+
+### Usage
 ~~~
 flyctl regions remove REGION ... [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -21,7 +20,7 @@ flyctl regions remove REGION ... [flags]
   -h, --help            help for remove
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +28,7 @@ flyctl regions remove REGION ... [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl regions](/docs/flyctl/regions/)	 - Manage regions
 

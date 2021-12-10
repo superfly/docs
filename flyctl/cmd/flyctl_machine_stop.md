@@ -1,18 +1,17 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Stop a Fly machine
-</p>
-
-## About
+# _flyctl machine stop_
 
 Stop a Fly machine
 
-## Usage
+### About
 
+Stop a Fly machine
+
+### Usage
 ~~~
 flyctl machine stop <id> [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -22,7 +21,7 @@ flyctl machine stop <id> [flags]
       --time int        Seconds to wait before killing the machine
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -30,7 +29,7 @@ flyctl machine stop <id> [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl machine](/docs/flyctl/machine/)	 - Commands that manage machines
 

@@ -1,24 +1,25 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Delete an organization
-</p>
+# _flyctl orgs delete_
 
-## About
+Delete an organization
+
+### About
 
 Delete an existing organization.
 
-## Usage
 
+### Usage
 ~~~
-flyctl orgs delete <org> [flags]
+flyctl orgs delete [-yes] [slug] [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -h, --help   help for delete
+  -y, --yes    Accept all confirmations
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -26,7 +27,7 @@ flyctl orgs delete <org> [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 

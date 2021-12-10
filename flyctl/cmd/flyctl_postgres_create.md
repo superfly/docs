@@ -1,18 +1,17 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Create a postgres cluster
-</p>
-
-## About
+# _flyctl postgres create_
 
 Create a postgres cluster
 
-## Usage
+### About
 
+Create a postgres cluster
+
+### Usage
 ~~~
 flyctl postgres create [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -h, --help                  help for create
@@ -25,7 +24,7 @@ flyctl postgres create [flags]
       --volume-size string    the size in GB for volumes
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -33,7 +32,7 @@ flyctl postgres create [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
 

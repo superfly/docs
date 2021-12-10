@@ -1,18 +1,17 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Allocate an IPv4 address
-</p>
+# _flyctl ips allocate-v4_
 
-## About
+Allocate an IPv4 address
+
+### About
 
 Allocates an IPv4 address to the application.
 
-## Usage
-
+### Usage
 ~~~
 flyctl ips allocate-v4 [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -21,7 +20,7 @@ flyctl ips allocate-v4 [flags]
       --region string   The region where the address should be allocated
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +28,7 @@ flyctl ips allocate-v4 [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
 

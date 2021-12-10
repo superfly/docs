@@ -1,13 +1,12 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Commands that manage machines
-</p>
-
-## About
+# _flyctl machine_
 
 Commands that manage machines
 
-## Usage
+### About
 
+Commands that manage machines
+
+### Usage
 ~~~
 flyctl machine [command] [flags]
 ~~~
@@ -20,13 +19,13 @@ flyctl machine [command] [flags]
 * [start](/docs/flyctl/machine-start/)	 - Start a Fly machine
 * [stop](/docs/flyctl/machine-stop/)	 - Stop a Fly machine
 
-## Options
+### Options
 
 ~~~
   -h, --help   help for machine
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -34,7 +33,7 @@ flyctl machine [command] [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

@@ -1,18 +1,17 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Set VM memory
-</p>
+# _flyctl scale memory_
 
-## About
+Set VM memory
+
+### About
 
 Set VM memory to a number of megabytes
 
-## Usage
-
+### Usage
 ~~~
 flyctl scale memory <memoryMB> [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -21,7 +20,7 @@ flyctl scale memory <memoryMB> [flags]
   -h, --help            help for memory
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +28,7 @@ flyctl scale memory <memoryMB> [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl scale](/docs/flyctl/scale/)	 - Scale app resources
 

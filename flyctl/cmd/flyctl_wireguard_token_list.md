@@ -1,24 +1,23 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  List all WireGuard tokens
-</p>
-
-## About
+# _flyctl wireguard token list_
 
 List all WireGuard tokens
 
-## Usage
+### About
 
+List all WireGuard tokens
+
+### Usage
 ~~~
 flyctl wireguard token list [<org>] [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -h, --help   help for list
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -26,7 +25,7 @@ flyctl wireguard token list [<org>] [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl wireguard token](/docs/flyctl/wireguard-token/)	 - Commands that managed WireGuard delegated access tokens
 

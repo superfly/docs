@@ -1,27 +1,27 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Move an app to another organization
-</p>
+# _flyctl move_
 
-## About
+Move an app to another organization
+
+### About
 
 The MOVE command will move an application to another 
 organization the current user belongs to.
 
-## Usage
 
+### Usage
 ~~~
 flyctl move [APPNAME] [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -h, --help         help for move
-      --org string   The organization to move the app to
+      --org string   The organization to operate on
   -y, --yes          Accept all confirmations
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +29,7 @@ flyctl move [APPNAME] [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

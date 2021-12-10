@@ -1,19 +1,18 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  List instances private IP addresses
-</p>
+# _flyctl ips private_
 
-## About
+List instances private IP addresses
+
+### About
 
 List instances private IP addresses, accessible from within the
 Fly network
 
-## Usage
-
+### Usage
 ~~~
 flyctl ips private [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -21,7 +20,7 @@ flyctl ips private [flags]
   -h, --help            help for private
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +28,7 @@ flyctl ips private [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
 

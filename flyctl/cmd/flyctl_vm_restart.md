@@ -1,18 +1,17 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Restart a VM
-</p>
+# _flyctl vm restart_
 
-## About
+Restart a VM
+
+### About
 
 Request for a VM to be asynchronously restarted.
 
-## Usage
-
+### Usage
 ~~~
 flyctl vm restart <vm-id> [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +19,7 @@ flyctl vm restart <vm-id> [flags]
   -h, --help            help for restart
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +27,7 @@ flyctl vm restart <vm-id> [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl vm](/docs/flyctl/vm/)	 - Commands that manage VM instances
 

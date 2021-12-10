@@ -1,20 +1,19 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Change an app's VM count to the given value
-</p>
+# _flyctl scale count_
 
-## About
+Change an app's VM count to the given value
+
+### About
 
 Change an app's VM count to the given value.
 
 For pricing, see https://fly.io/docs/about/pricing/
 
-## Usage
-
+### Usage
 ~~~
 flyctl scale count <count> [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string           App name to operate on
@@ -23,7 +22,7 @@ flyctl scale count <count> [flags]
       --max-per-region int   Max number of VMs per region (default -1)
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -31,7 +30,7 @@ flyctl scale count <count> [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl scale](/docs/flyctl/scale/)	 - Scale app resources
 

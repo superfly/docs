@@ -1,18 +1,17 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Show current resources
-</p>
+# _flyctl scale show_
 
-## About
+Show current resources
+
+### About
 
 Show current VM size and counts
 
-## Usage
-
+### Usage
 ~~~
 flyctl scale show [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +19,7 @@ flyctl scale show [flags]
   -h, --help            help for show
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +27,7 @@ flyctl scale show [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl scale](/docs/flyctl/scale/)	 - Scale app resources
 

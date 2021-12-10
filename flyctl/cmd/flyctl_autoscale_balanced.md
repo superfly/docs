@@ -1,21 +1,20 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Configure a traffic balanced app with params (min=int max=int)
-</p>
+# _flyctl autoscale balanced_
 
-## About
+Configure a traffic balanced app with params (min=int max=int)
+
+### About
 
 Configure the app to balance regions based on traffic with given parameters:
 
 min=int - minimum number of instances to be allocated from region pool.
 max=int - maximum number of instances to be allocated from region pool.
 
-## Usage
-
+### Usage
 ~~~
 flyctl autoscale balanced [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -23,7 +22,7 @@ flyctl autoscale balanced [flags]
   -h, --help            help for balanced
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -31,7 +30,7 @@ flyctl autoscale balanced [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl autoscale](/docs/flyctl/autoscale/)	 - Autoscaling app resources
 

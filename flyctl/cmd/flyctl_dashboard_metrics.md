@@ -1,18 +1,17 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Open web browser on Fly Web UI for this app's metrics
-</p>
+# _flyctl dashboard metrics_
 
-## About
+Open web browser on Fly Web UI for this app's metrics
+
+### About
 
 Open web browser on Fly Web UI for this application's metrics
 
-## Usage
-
+### Usage
 ~~~
 flyctl dashboard metrics [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +19,7 @@ flyctl dashboard metrics [flags]
   -h, --help            help for metrics
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +27,7 @@ flyctl dashboard metrics [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl dashboard](/docs/flyctl/dashboard/)	 - Open web browser on Fly Web UI for this app
 

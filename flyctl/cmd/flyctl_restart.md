@@ -1,26 +1,24 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Restart an application
-</p>
+# _flyctl restart_
 
-## About
+Restart an application
 
-The RESTART command will restart all running vms.
+### About
 
-## Usage
+The RESTART command will restart all running vms. 
 
+
+### Usage
 ~~~
 flyctl restart [APPNAME] [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
-  -h, --help            help for restart
+  -h, --help   help for restart
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +26,7 @@ flyctl restart [APPNAME] [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

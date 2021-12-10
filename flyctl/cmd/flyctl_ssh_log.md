@@ -1,24 +1,23 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Log of all issued certs
-</p>
+# _flyctl ssh log_
 
-## About
+Log of all issued certs
+
+### About
 
 log of all issued certs
 
-## Usage
-
+### Usage
 ~~~
 flyctl ssh log [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -h, --help   help for log
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -26,7 +25,7 @@ flyctl ssh log [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl ssh](/docs/flyctl/ssh/)	 - Commands that manage SSH credentials
 

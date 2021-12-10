@@ -1,19 +1,18 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  List an app's change history
-</p>
+# _flyctl history_
 
-## About
+List an app's change history
+
+### About
 
 List the history of changes in the application. Includes autoscaling
 events and their results.
 
-## Usage
-
+### Usage
 ~~~
 flyctl history [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -21,7 +20,7 @@ flyctl history [flags]
   -h, --help            help for history
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +28,7 @@ flyctl history [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

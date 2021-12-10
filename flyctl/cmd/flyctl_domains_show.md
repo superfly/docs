@@ -1,24 +1,23 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Show domain
-</p>
+# _flyctl domains show_
 
-## About
+Show domain
+
+### About
 
 Show information about a domain
 
-## Usage
-
+### Usage
 ~~~
 flyctl domains show <domain> [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -h, --help   help for show
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -26,7 +25,7 @@ flyctl domains show <domain> [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl domains](/docs/flyctl/domains/)	 - Manage domains
 

@@ -1,15 +1,14 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Show app status
-</p>
+# _flyctl status_
 
-## About
+Show app status
+
+### About
 
 Show the application's current status including application
 details, tasks, most recent deployment details and in which regions it is
 currently allocated.
 
-## Usage
-
+### Usage
 ~~~
 flyctl status [flags]
 ~~~
@@ -17,7 +16,7 @@ flyctl status [flags]
 ### Available Commands
 * [instance](/docs/flyctl/status-instance/)	 - Show instance status
 
-## Options
+### Options
 
 ~~~
       --all             Show completed instances
@@ -30,7 +29,7 @@ flyctl status [flags]
       --wtf string      wtf usage (default "defaultwtf")
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -38,7 +37,7 @@ flyctl status [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

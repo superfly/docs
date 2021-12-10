@@ -1,19 +1,18 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Validate an app's config file
-</p>
+# _flyctl config validate_
 
-## About
+Validate an app's config file
+
+### About
 
 Validates an application's config file against the Fly platform to
 ensure it is correct and meaningful to the platform.
 
-## Usage
-
+### Usage
 ~~~
 flyctl config validate [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -21,7 +20,7 @@ flyctl config validate [flags]
   -h, --help            help for validate
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +28,7 @@ flyctl config validate [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl config](/docs/flyctl/config/)	 - Manage an app's configuration
 

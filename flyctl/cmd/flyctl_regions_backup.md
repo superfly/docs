@@ -1,18 +1,17 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Sets the backup region pool with provided regions
-</p>
-
-## About
+# _flyctl regions backup_
 
 Sets the backup region pool with provided regions
 
-## Usage
+### About
 
+Sets the backup region pool with provided regions
+
+### Usage
 ~~~
 flyctl regions backup REGION ... [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +19,7 @@ flyctl regions backup REGION ... [flags]
   -h, --help            help for backup
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +27,7 @@ flyctl regions backup REGION ... [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl regions](/docs/flyctl/regions/)	 - Manage regions
 

@@ -1,20 +1,19 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Lists the secrets available to the app
-</p>
+# _flyctl secrets list_
 
-## About
+Lists the secrets available to the app
+
+### About
 
 List the secrets available to the application. It shows each
 secret's name, a digest of the its value and the time the secret was last set.
 The actual value of the secret is only available to the application.
 
-## Usage
-
+### Usage
 ~~~
 flyctl secrets list [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -22,7 +21,7 @@ flyctl secrets list [flags]
   -h, --help            help for list
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -30,7 +29,7 @@ flyctl secrets list [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl secrets](/docs/flyctl/secrets/)	 - Manage app secrets
 

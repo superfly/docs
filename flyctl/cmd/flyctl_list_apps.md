@@ -1,8 +1,8 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Lists all your apps
-</p>
+# _flyctl list apps_
 
-## About
+Lists all your apps
+
+### About
 
 The list apps command lists all your applications. As this may be a
 long list, there are options to filter the results.
@@ -16,13 +16,12 @@ application must be owned by. (see list orgs for organization names).
 The --status/-s flag allows you to specify status applications should be at to be
 returned in the results. e.g. -s running would only return running applications.
 
-## Usage
-
+### Usage
 ~~~
 flyctl list apps [text] [-o org] [-s status] [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -e, --exact           Show exact times
@@ -32,7 +31,7 @@ flyctl list apps [text] [-o org] [-s status] [flags]
   -s, --status string   Show only apps with this status
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -40,7 +39,7 @@ flyctl list apps [text] [-o org] [-s status] [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl list](/docs/flyctl/list/)	 - Lists your Fly resources
 

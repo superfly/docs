@@ -1,8 +1,8 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Change an app's VM to a named size (eg. shared-cpu-1x, dedicated-cpu-1x, dedicated-cpu-2x...)
-</p>
+# _flyctl scale vm_
 
-## About
+Change an app's VM to a named size (eg. shared-cpu-1x, dedicated-cpu-1x, dedicated-cpu-2x...)
+
+### About
 
 Change an application's VM size to one of the named VM sizes.
 
@@ -20,13 +20,12 @@ For shared vms, this can be 256MB or a a multiple of 1024MB.
 
 For pricing, see https://fly.io/docs/about/pricing/
 
-## Usage
-
+### Usage
 ~~~
 flyctl scale vm [SIZENAME] [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -36,7 +35,7 @@ flyctl scale vm [SIZENAME] [flags]
       --memory int      Memory in MB for the VM
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -44,7 +43,7 @@ flyctl scale vm [SIZENAME] [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl scale](/docs/flyctl/scale/)	 - Scale app resources
 

@@ -1,24 +1,23 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  List VM Sizes
-</p>
+# _flyctl platform vm-sizes_
 
-## About
+List VM Sizes
+
+### About
 
 View a list of VM sizes which can be used with the FLYCTL SCALE VM command
 
-## Usage
-
+### Usage
 ~~~
 flyctl platform vm-sizes [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -h, --help   help for vm-sizes
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -26,7 +25,7 @@ flyctl platform vm-sizes [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl platform](/docs/flyctl/platform/)	 - Fly platform information
 

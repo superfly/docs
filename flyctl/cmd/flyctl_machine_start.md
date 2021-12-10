@@ -1,18 +1,17 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Start a Fly machine
-</p>
-
-## About
+# _flyctl machine start_
 
 Start a Fly machine
 
-## Usage
+### About
 
+Start a Fly machine
+
+### Usage
 ~~~
 flyctl machine start <id> [flags]
 ~~~
 
-## Options
+### Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +19,7 @@ flyctl machine start <id> [flags]
   -h, --help            help for start
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +27,7 @@ flyctl machine start <id> [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl machine](/docs/flyctl/machine/)	 - Commands that manage machines
 

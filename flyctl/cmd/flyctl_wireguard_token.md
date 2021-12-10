@@ -1,13 +1,12 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Commands that managed WireGuard delegated access tokens
-</p>
-
-## About
+# _flyctl wireguard token_
 
 Commands that managed WireGuard delegated access tokens
 
-## Usage
+### About
 
+Commands that managed WireGuard delegated access tokens
+
+### Usage
 ~~~
 flyctl wireguard token [command] [flags]
 ~~~
@@ -19,13 +18,13 @@ flyctl wireguard token [command] [flags]
 * [start](/docs/flyctl/wireguard-token-start/)	 - Start a new WireGuard peer connection associated with a token (set FLY_WIREGUARD_TOKEN)
 * [update](/docs/flyctl/wireguard-token-update/)	 - Rekey a WireGuard peer connection associated with a token (set FLY_WIREGUARD_TOKEN)
 
-## Options
+### Options
 
 ~~~
   -h, --help   help for token
 ~~~
 
-## Global Options
+### Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -33,7 +32,7 @@ flyctl wireguard token [command] [flags]
       --verbose               verbose output
 ~~~
 
-## See Also
+### See Also
 
 * [flyctl wireguard](/docs/flyctl/wireguard/)	 - Commands that manage WireGuard peer connections
 
