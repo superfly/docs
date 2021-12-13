@@ -1,0 +1,32 @@
+<% app_name ||= app_name&.gsub("_", "\\_") %>
+
+```cmd
+cd <%= app_name %>
+fly launch
+```
+```output
+Creating app in /Users/me/<%= app_name %>
+Scanning source code
+Detected a <%= detected %> app
+? App Name (leave blank to use an auto-generated name): <%= app_name %>
+? Select organization: flyio (flyio)
+? Select region: mad (Madrid, Spain)
+Created app <%= app_name %> in organization soupedup
+? Would you like to deploy now? Yes
+==> Validating app configuration
+--> Validating app configuration done
+Services
+TCP 80/443 ⇢ 8080
+Remote builder fly-builder-little-glitter-8329 ready
+...
+1 desired, 1 placed, 1 healthy, 0 unhealthy [health checks: 2 total, 2 passing]
+--> v0 deployed successfully
+```
+
+That's it! Run `fly open` to see your deployed app in action.
+
+Try a few other commands:
+
+* `fly logs` - Tail your application logs
+* `fly status` - App deployment details
+* `fly deploy` - Deploy the application after making changes
