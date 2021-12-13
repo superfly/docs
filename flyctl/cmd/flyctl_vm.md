@@ -1,10 +1,6 @@
-# _flyctl vm_
-
-Commands that manage VM instances
-
-### About
-
-Commands that manage VM instances
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Commands that manage VM instances
+</p>
 
 ### Usage
 ~~~

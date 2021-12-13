@@ -1,10 +1,6 @@
-# _flyctl launch_
-
-Launch a new app
-
-### About
-
-Create and configure a new app from source code or an image reference.
+<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
+  Create and configure a new app from source code or an image reference.
+</p>
 
 ### Usage
 ~~~
@@ -38,5 +34,5 @@ flyctl launch [flags]
 
 ### See Also
 
-* [flyctl](/docs/flyctl/help/)	 - The Fly CLI
+* [flyctl](/docs/flyctl/help/) - The Fly CLI
 

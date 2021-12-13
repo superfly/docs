@@ -1,13 +1,4 @@
-# _flyctl apps_
-
-Manage apps
-
-### About
-
-The APPS commands focus on managing your Fly applications.
-Start with the CREATE command to register your application.
-The LIST command will list all currently registered applications.
-
+The `apps` commands focus on managing your Fly applications. Start with the `create` command to register your application. The `list` command will list all currently registered applications.
 
 ### Usage
 ~~~
