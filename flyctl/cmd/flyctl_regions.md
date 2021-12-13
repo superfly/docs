@@ -1,24 +1,19 @@
-# _flyctl regions_
-
-Manage regions
-
-### About
-
 Configure the region placement rules for an application.
 
-### Usage
+## Usage
+
 ~~~
 flyctl regions [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [add](/docs/flyctl/regions-add/)	 - Allow the app to run in the provided regions
 * [backup](/docs/flyctl/regions-backup/)	 - Sets the backup region pool with provided regions
 * [list](/docs/flyctl/regions-list/)	 - Shows the list of regions the app is allowed to run in
 * [remove](/docs/flyctl/regions-remove/)	 - Prevent the app from running in the provided regions
 * [set](/docs/flyctl/regions-set/)	 - Sets the region pool with provided regions
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -26,7 +21,7 @@ flyctl regions [command] [flags]
   -h, --help            help for regions
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -34,7 +29,7 @@ flyctl regions [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

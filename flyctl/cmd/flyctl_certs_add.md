@@ -1,18 +1,12 @@
-# _flyctl certs add_
+Add a certificate for an application. Takes a hostname as a parameter for the certificate.
 
-Add a certificate for an app.
+## Usage
 
-### About
-
-Add a certificate for an application. Takes a hostname
-as a parameter for the certificate.
-
-### Usage
 ~~~
 flyctl certs add <hostname> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +14,7 @@ flyctl certs add <hostname> [flags]
   -h, --help            help for add
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +22,7 @@ flyctl certs add <hostname> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl certs](/docs/flyctl/certs/)	 - Manage certificates
 

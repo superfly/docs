@@ -1,19 +1,13 @@
-# _flyctl ssh issue_
-
-Issue a new SSH credential.
-
-### About
-
-Issue a new SSH credential. With -agent, populate credential
-into SSH agent. With -hour, set the number of hours (1-72) for credential
+Issue a new SSH credential. With `--agent`, populate credential into SSH agent. With `--hour`, set the number of hours (1-72) for credential
 validity.
 
-### Usage
+## Usage
+
 ~~~
 flyctl ssh issue [org] [email] [path] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
       --agent             Add key to SSH agent
@@ -24,7 +18,7 @@ flyctl ssh issue [org] [email] [path] [flags]
   -u, --username string   Unix username for SSH cert
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -32,7 +26,7 @@ flyctl ssh issue [org] [email] [path] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl ssh](/docs/flyctl/ssh/)	 - Commands that manage SSH credentials
 

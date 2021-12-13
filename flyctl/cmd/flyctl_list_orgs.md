@@ -1,24 +1,18 @@
-# _flyctl list orgs_
+Lists all organizations which your are a member of. It will show the short name of the organization and the long name.
 
-List all your organizations
+## Usage
 
-### About
-
-Lists all organizations which your are a member of. It will show the
-short name of the organization and the long name.
-
-### Usage
 ~~~
 flyctl list orgs [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for orgs
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -26,7 +20,7 @@ flyctl list orgs [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl list](/docs/flyctl/list/)	 - Lists your Fly resources
 

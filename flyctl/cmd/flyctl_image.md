@@ -1,27 +1,22 @@
-# _flyctl image_
+Manage app image.
 
-Manage app image
+## Usage
 
-### About
-
-Manage app image
-
-### Usage
 ~~~
 flyctl image [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [show](/docs/flyctl/image-show/)	 - Show image details.
 * [update](/docs/flyctl/image-update/)	 - Updates the app's image to the latest available version. (Fly Postgres only)
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for image
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +24,7 @@ flyctl image [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

@@ -1,17 +1,12 @@
-# _flyctl vm status_
-
-Show a VM's status
-
-### About
-
 Show a VM's current status including logs, checks, and events.
 
-### Usage
+## Usage
+
 ~~~
 flyctl vm status <vm-id> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -19,7 +14,7 @@ flyctl vm status <vm-id> [flags]
   -h, --help            help for status
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +22,7 @@ flyctl vm status <vm-id> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl vm](/docs/flyctl/vm/)	 - Commands that manage VM instances
 

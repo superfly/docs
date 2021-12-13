@@ -1,29 +1,24 @@
-# _flyctl ssh_
+Commands that manage SSH credentials.
 
-Commands that manage SSH credentials
+## Usage
 
-### About
-
-Commands that manage SSH credentials
-
-### Usage
 ~~~
 flyctl ssh [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [console](/docs/flyctl/ssh-console/)	 - Connect to a running instance of the current app.
 * [establish](/docs/flyctl/ssh-establish/)	 - Create a root SSH certificate for your organization
 * [issue](/docs/flyctl/ssh-issue/)	 - Issue a new SSH credential.
 * [log](/docs/flyctl/ssh-log/)	 - Log of all issued certs
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for ssh
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -31,7 +26,7 @@ flyctl ssh [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

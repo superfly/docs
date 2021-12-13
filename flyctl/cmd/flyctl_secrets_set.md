@@ -1,18 +1,10 @@
-# _flyctl secrets set_
-
-Set one or more encrypted secrets for an app
-
-### About
-
 Set one or more encrypted secrets for an application.
 
-Secrets are provided to application at runtime as ENV variables. Names are
-case sensitive and stored as-is, so ensure names are appropriate for
-the application and vm environment.
+Secrets are provided to application at runtime as ENV variables. Names are case sensitive and stored as-is, so ensure names are appropriate for
+the application and VM environment. Any value that equals "-" will be assigned from STDIN instead of args.
 
-Any value that equals "-" will be assigned from STDIN instead of args.
+## Usage
 
-### Usage
 ~~~
 flyctl secrets set [flags] NAME=VALUE NAME=VALUE ...
 ~~~
@@ -26,7 +18,7 @@ flyctl secrets set FLY_ENV=production LOG_LEVEL=info
 	
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -35,7 +27,7 @@ flyctl secrets set FLY_ENV=production LOG_LEVEL=info
   -h, --help            help for set
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -43,7 +35,7 @@ flyctl secrets set FLY_ENV=production LOG_LEVEL=info
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl secrets](/docs/flyctl/secrets/)	 - Manage app secrets
 

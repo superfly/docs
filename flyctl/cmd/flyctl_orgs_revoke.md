@@ -1,6 +1,4 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Revoke a pending invitation to an organization
-</p>
+Revoke a pending invitation to an organization.
 
 ## About
 

@@ -1,25 +1,18 @@
-# _flyctl orgs create_
+Create a new organization. Other users can be invited to join the organization later.
 
-Create an organization
+## Usage
 
-### About
-
-Create a new organization. Other users can be invited to join the 
-organization later.
-
-
-### Usage
 ~~~
 flyctl orgs create [name] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for create
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +20,7 @@ flyctl orgs create [name] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 

@@ -1,23 +1,18 @@
-# _flyctl domains list_
-
-List domains
-
-### About
-
 List domains for an organization
 
-### Usage
+## Usage
+
 ~~~
 flyctl domains list [<org>] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -25,7 +20,7 @@ flyctl domains list [<org>] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl domains](/docs/flyctl/domains/)	 - Manage domains
 

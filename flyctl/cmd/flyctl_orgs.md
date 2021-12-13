@@ -1,20 +1,12 @@
-# _flyctl orgs_
+Commands for managing Fly organizations. list, create, show and destroy organizations. Organization admins can also invite or remove users from Organizations.
 
-Commands for managing Fly organizations
+## Usage
 
-### About
-
-Commands for managing Fly organizations. list, create, show and 
-destroy organizations. 
-Organization admins can also invite or remove users from Organizations.
-
-
-### Usage
 ~~~
 flyctl orgs [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [create](/docs/flyctl/orgs-create/)	 - Create an organization
 * [delete](/docs/flyctl/orgs-delete/)	 - Delete an organization
 * [invite](/docs/flyctl/orgs-invite/)	 - Invite user (by email) to organization
@@ -22,13 +14,13 @@ flyctl orgs [command] [flags]
 * [remove](/docs/flyctl/orgs-remove/)	 - Remove a user from an organization
 * [show](/docs/flyctl/orgs-show/)	 - Show information about an organization
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for orgs
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -36,7 +28,7 @@ flyctl orgs [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

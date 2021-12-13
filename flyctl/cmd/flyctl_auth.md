@@ -1,20 +1,14 @@
-# _flyctl auth_
+Authenticate with Fly (and log out if you need to).
+If you do not have an account, start with the `auth signup` command.
+If you do have and account, begin with the `auth login` subcommand.
 
-Manage authentication
+## Usage
 
-### About
-
-Authenticate with Fly (and logout if you need to).
-If you do not have an account, start with the AUTH SIGNUP command.
-If you do have and account, begin with the AUTH LOGIN subcommand.
-
-
-### Usage
 ~~~
 flyctl auth [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [docker](/docs/flyctl/auth-docker/)	 - Authenticate docker
 * [login](/docs/flyctl/auth-login/)	 - Log in a user
 * [logout](/docs/flyctl/auth-logout/)	 - Logs out the currently logged in user
@@ -24,13 +18,13 @@ flyctl auth [command] [flags]
 authenticated and in use.
 
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for auth
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -38,7 +32,7 @@ authenticated and in use.
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

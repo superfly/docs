@@ -1,27 +1,20 @@
-# _flyctl secrets_
-
-Manage app secrets
-
-### About
-
 Manage application secrets with the set and unset commands.
 
-Secrets are provided to applications at runtime as ENV variables. Names are
-case sensitive and stored as-is, so ensure names are appropriate for
-the application and vm environment.
+Secrets are provided to applications at runtime as ENV variables. Names are case sensitive and stored as-is, so ensure names are appropriate for the application and VM environment.
 
-### Usage
+## Usage
+
 ~~~
 flyctl secrets [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [import](/docs/flyctl/secrets-import/)	 - Read secrets in name=value from stdin
 * [list](/docs/flyctl/secrets-list/)	 - Lists the secrets available to the app
 * [set](/docs/flyctl/secrets-set/)	 - Set one or more encrypted secrets for an app
 * [unset](/docs/flyctl/secrets-unset/)	 - Remove encrypted secrets from an app
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -29,7 +22,7 @@ flyctl secrets [command] [flags]
   -h, --help            help for secrets
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -37,7 +30,7 @@ flyctl secrets [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

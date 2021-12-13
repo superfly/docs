@@ -1,26 +1,21 @@
-# _flyctl postgres users_
+Manage users in a cluster.
 
-manage users in a cluster
+## Usage
 
-### About
-
-manage users in a cluster
-
-### Usage
 ~~~
 flyctl postgres users [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [list](/docs/flyctl/postgres-users-list/)	 - list users in a cluster
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for users
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +23,7 @@ flyctl postgres users [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
 

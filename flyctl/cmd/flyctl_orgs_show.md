@@ -1,26 +1,18 @@
-# _flyctl orgs show_
+Shows information about an organization. Includes name, slug and type. Summarizes user permissions, DNS zones and associated member. Details full list of members and roles.
 
-Show information about an organization
+## Usage
 
-### About
-
-Shows information about an organization.
-Includes name, slug and type. Summarizes user permissions, DNS zones and
-associated member. Details full list of members and roles.
-
-
-### Usage
 ~~~
 flyctl orgs show [slug] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for show
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +20,7 @@ flyctl orgs show [slug] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 

@@ -1,17 +1,12 @@
-# _flyctl machine_
+Commands that manage machines.
 
-Commands that manage machines
+## Usage
 
-### About
-
-Commands that manage machines
-
-### Usage
 ~~~
 flyctl machine [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [kill](/docs/flyctl/machine-kill/)	 - Kill (SIGKILL) a Fly machine
 * [list](/docs/flyctl/machine-list/)	 - List Fly machines
 * [remove](/docs/flyctl/machine-remove/)	 - Remove a Fly machine
@@ -19,13 +14,13 @@ flyctl machine [command] [flags]
 * [start](/docs/flyctl/machine-start/)	 - Start a Fly machine
 * [stop](/docs/flyctl/machine-stop/)	 - Stop a Fly machine
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for machine
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -33,7 +28,7 @@ flyctl machine [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

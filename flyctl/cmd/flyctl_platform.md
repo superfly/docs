@@ -1,23 +1,17 @@
-# _flyctl platform_
+The `platform` commands are for users looking for information about the Fly platform.
 
-Fly platform information
+## Usage
 
-### About
-
-The PLATFORM commands are for users looking for information
-about the Fly platform.
-
-### Usage
 ~~~
 flyctl platform [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [regions](/docs/flyctl/platform-regions/)	 - List regions
 * [status](/docs/flyctl/platform-status/)	 - Show current platform status
 * [vm-sizes](/docs/flyctl/platform-vm-sizes/)	 - List VM Sizes
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -25,7 +19,7 @@ flyctl platform [command] [flags]
   -h, --help            help for platform
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -33,7 +27,7 @@ flyctl platform [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

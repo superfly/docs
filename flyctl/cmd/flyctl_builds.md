@@ -1,21 +1,16 @@
-# _flyctl builds_
-
-Work with Fly builds
-
-### About
-
 Fly builds are templates to make developing Fly applications easier.
 
-### Usage
+## Usage
+
 ~~~
 flyctl builds [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [list](/docs/flyctl/builds-list/)	 - List builds
 * [logs](/docs/flyctl/builds-logs/)	 - Show logs associated with builds
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -23,7 +18,7 @@ flyctl builds [command] [flags]
   -h, --help            help for builds
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -31,7 +26,7 @@ flyctl builds [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

@@ -1,17 +1,12 @@
-# _flyctl machine list_
+List Fly machines.
 
-List Fly machines
+## Usage
 
-### About
-
-List Fly machines
-
-### Usage
 ~~~
 flyctl machine list [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
       --all             Show machines in all states
@@ -22,7 +17,7 @@ flyctl machine list [flags]
       --state string    List machines in a specific state (default "started")
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -30,7 +25,7 @@ flyctl machine list [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl machine](/docs/flyctl/machine/)	 - Commands that manage machines
 

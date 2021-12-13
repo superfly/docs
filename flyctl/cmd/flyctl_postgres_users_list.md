@@ -1,17 +1,12 @@
-# _flyctl postgres users list_
+List users in a cluster.
 
-list users in a cluster
+## Usage
 
-### About
-
-list users in a cluster
-
-### Usage
 ~~~
 flyctl postgres users list <postgres-cluster-name> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -19,7 +14,7 @@ flyctl postgres users list <postgres-cluster-name> [flags]
   -h, --help            help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +22,7 @@ flyctl postgres users list <postgres-cluster-name> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl postgres users](/docs/flyctl/postgres-users/)	 - manage users in a cluster
 

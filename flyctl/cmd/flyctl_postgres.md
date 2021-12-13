@@ -1,17 +1,12 @@
-# _flyctl postgres_
+Manage postgres clusters.
 
-Manage postgres clusters
+## Usage
 
-### About
-
-Manage postgres clusters
-
-### Usage
 ~~~
 flyctl postgres [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [attach](/docs/flyctl/postgres-attach/)	 - Attach a postgres cluster to an app
 * [connect](/docs/flyctl/postgres-connect/)	 - Connect to postgres cluster
 * [create](/docs/flyctl/postgres-create/)	 - Create a postgres cluster
@@ -20,13 +15,13 @@ flyctl postgres [command] [flags]
 * [list](/docs/flyctl/postgres-list/)	 - list postgres clusters
 * [users](/docs/flyctl/postgres-users/)	 - manage users in a cluster
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for postgres
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -34,7 +29,7 @@ flyctl postgres [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

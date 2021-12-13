@@ -1,18 +1,12 @@
-# _flyctl secrets import_
+Set one or more encrypted secrets for an application. Values are read from stdin as name=value.
 
-Read secrets in name=value from stdin
+## Usage
 
-### About
-
-Set one or more encrypted secrets for an application. Values
-are read from stdin as name=value
-
-### Usage
 ~~~
 flyctl secrets import [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -21,7 +15,7 @@ flyctl secrets import [flags]
   -h, --help            help for import
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +23,7 @@ flyctl secrets import [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl secrets](/docs/flyctl/secrets/)	 - Manage app secrets
 

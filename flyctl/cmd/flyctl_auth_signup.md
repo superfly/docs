@@ -1,25 +1,18 @@
-# _flyctl auth signup_
+Creates a new fly account. The command opens the browser and sends the user to a form to provide appropriate credentials.
 
-Create a new fly account
+## Usage
 
-### About
-
-Creates a new fly account. The command opens the browser 
-and sends the user to a form to provide appropriate credentials.
-
-
-### Usage
 ~~~
 flyctl auth signup [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for signup
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +20,7 @@ flyctl auth signup [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl auth](/docs/flyctl/auth/)	 - Manage authentication
 

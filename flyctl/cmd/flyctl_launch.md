@@ -1,13 +1,12 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Create and configure a new app from source code or an image reference.
-</p>
+Create and configure a new app from source code or an image reference.
 
-### Usage
+## Usage
+
 ~~~
 flyctl launch [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
       --copy-config         Use the configuration file if present without prompting.
@@ -24,7 +23,7 @@ flyctl launch [flags]
       --remote-only         Perform builds remotely without using the local docker daemon (default true)
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -32,7 +31,7 @@ flyctl launch [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/) - The Fly CLI
 

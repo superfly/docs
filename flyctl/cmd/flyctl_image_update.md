@@ -1,18 +1,12 @@
-# _flyctl image update_
+This will update the application's image to the latest available version. The update will perform a rolling restart against each VM, which may result in a brief service disruption.
 
-Updates the app's image to the latest available version. (Fly Postgres only)
+## Usage
 
-### About
-
-This will update the application's image to the latest available version.
-The update will perform a rolling restart against each VM, which may result in a brief service disruption.
-
-### Usage
 ~~~
 flyctl image update [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -21,7 +15,7 @@ flyctl image update [flags]
   -h, --help            help for update
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +23,7 @@ flyctl image update [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl image](/docs/flyctl/image/)	 - Manage app image
 

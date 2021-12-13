@@ -1,24 +1,18 @@
-# _flyctl version update_
+Checks for update and if one is available, runs the appropriate command to update the application.
 
-Checks for available updates and automatically updates
+## Usage
 
-### About
-
-Checks for update and if one is available, runs the appropriate
-command to update the application.
-
-### Usage
 ~~~
 flyctl version update [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for update
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -26,7 +20,7 @@ flyctl version update [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl version](/docs/flyctl/version/)	 - Show version information for the flyctl command
 

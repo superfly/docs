@@ -1,18 +1,12 @@
-# _flyctl certs show_
+Shows certificate information for an application. Takes hostname as a parameter to locate the certificate.
 
-Shows certificate information
+## Usage
 
-### About
-
-Shows certificate information for an application.
-Takes hostname as a parameter to locate the certificate.
-
-### Usage
 ~~~
 flyctl certs show <hostname> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +14,7 @@ flyctl certs show <hostname> [flags]
   -h, --help            help for show
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +22,7 @@ flyctl certs show <hostname> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl certs](/docs/flyctl/certs/)	 - Manage certificates
 

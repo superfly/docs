@@ -1,6 +1,4 @@
-<p class="font-medium tracking-tight text-gray-400 text-lg -mt-4 mb-9 pb-5 border-b">
-  Connect directly to an instance.
-</p>
+Connect directly to an instance.
 
 ## About
 

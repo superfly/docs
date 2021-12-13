@@ -1,25 +1,18 @@
-# _flyctl orgs remove_
+Remove a user from an organization. User must have accepted a previous invitation to join (if not, see `orgs revoke`).
 
-Remove a user from an organization
+## Usage
 
-### About
-
-Remove a user from an organization. User must have accepted a previous
-invitation to join (if not, see orgs revoke).
-
-
-### Usage
 ~~~
 flyctl orgs remove [slug] [email] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for remove
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +20,7 @@ flyctl orgs remove [slug] [email] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 

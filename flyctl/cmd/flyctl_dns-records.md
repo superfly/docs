@@ -1,28 +1,23 @@
-# _flyctl dns-records_
-
-Manage DNS records
-
-### About
-
 Manage DNS records within a domain
 
-### Usage
+## Usage
+
 ~~~
 flyctl dns-records [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [export](/docs/flyctl/dns-records-export/)	 - Export DNS records
 * [import](/docs/flyctl/dns-records-import/)	 - Import DNS records
 * [list](/docs/flyctl/dns-records-list/)	 - List DNS records
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for dns-records
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -30,7 +25,7 @@ flyctl dns-records [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

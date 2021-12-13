@@ -1,17 +1,12 @@
-# _flyctl builds list_
-
 List builds
 
-### About
+## Usage
 
-List builds
-
-### Usage
 ~~~
 flyctl builds list [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -19,7 +14,7 @@ flyctl builds list [flags]
   -h, --help            help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +22,7 @@ flyctl builds list [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl builds](/docs/flyctl/builds/)	 - Work with Fly builds
 

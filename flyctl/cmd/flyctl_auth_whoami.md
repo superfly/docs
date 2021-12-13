@@ -1,25 +1,22 @@
-# _flyctl auth whoami_
-
-Displays the users email address/service identity currently 
-authenticated and in use.
-
+Displays the users email address/service identity currently authenticated and in use.
 
 ### About
 
 Show the currently authenticated user
 
-### Usage
+## Usage
+
 ~~~
 flyctl auth whoami [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for whoami
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +24,7 @@ flyctl auth whoami [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl auth](/docs/flyctl/auth/)	 - Manage authentication
 

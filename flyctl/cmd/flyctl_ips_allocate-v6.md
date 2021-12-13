@@ -1,17 +1,12 @@
-# _flyctl ips allocate-v6_
-
-Allocate an IPv6 address
-
-### About
-
 Allocates an IPv6 address to the application.
 
-### Usage
+## Usage
+
 ~~~
 flyctl ips allocate-v6 [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +15,7 @@ flyctl ips allocate-v6 [flags]
       --region string   The region where the address should be allocated.
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +23,7 @@ flyctl ips allocate-v6 [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
 

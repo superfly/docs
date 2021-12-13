@@ -1,20 +1,15 @@
-# _flyctl autoscale standard_
-
-Configure a standard balanced app with params (min=int max=int)
-
-### About
-
 Configure the app without traffic balancing with the given parameters:
 
-min=int - minimum number of instances to be allocated from region pool.
-max=int - maximum number of instances to be allocated from region pool.
+* `min=int` - minimum number of instances to be allocated from region pool.  
+* `max=int` - maximum number of instances to be allocated from region pool.
 
-### Usage
+## Usage
+
 ~~~
 flyctl autoscale standard [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -22,7 +17,7 @@ flyctl autoscale standard [flags]
   -h, --help            help for standard
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -30,7 +25,7 @@ flyctl autoscale standard [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl autoscale](/docs/flyctl/autoscale/)	 - Autoscaling app resources
 

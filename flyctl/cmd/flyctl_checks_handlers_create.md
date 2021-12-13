@@ -1,17 +1,12 @@
-# _flyctl checks handlers create_
-
 Create a health check handler
 
-### About
+## Usage
 
-Create a health check handler
-
-### Usage
 ~~~
 flyctl checks handlers create [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help                  help for create
@@ -19,7 +14,7 @@ flyctl checks handlers create [flags]
       --type string           The type of handler to create, can be slack or pagerduty
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +22,7 @@ flyctl checks handlers create [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl checks handlers](/docs/flyctl/checks-handlers/)	 - Manage health check handlers
 

@@ -1,19 +1,12 @@
-# _flyctl volumes create_
+Create new volume for app. The `--region` flag must be included to specify the region the volume exists in. The `--size` flag is optional, defaults to 10, and sets the size as the number of gigabytes the volume will consume.
 
-Create new volume for app
+## Usage
 
-### About
-
-Create new volume for app. --region flag must be included to specify
-region the volume exists in. --size flag is optional, defaults to 10,
-sets the size as the number of gigabytes the volume will consume.
-
-### Usage
 ~~~
 flyctl volumes create <volumename> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string            App name to operate on
@@ -25,7 +18,7 @@ flyctl volumes create <volumename> [flags]
       --size int              Size of volume in gigabytes (default 10)
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -33,7 +26,7 @@ flyctl volumes create <volumename> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl volumes](/docs/flyctl/volumes/)	 - Volume management commands
 

@@ -1,17 +1,12 @@
-# _flyctl ips list_
-
-List allocated IP addresses
-
-### About
-
 Lists the IP addresses allocated to the application.
 
-### Usage
+## Usage
+
 ~~~
 flyctl ips list [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -19,7 +14,7 @@ flyctl ips list [flags]
   -h, --help            help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +22,7 @@ flyctl ips list [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
 

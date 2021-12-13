@@ -1,17 +1,12 @@
-# _flyctl ips release_
-
-Release an IP address
-
-### About
-
 Releases an IP address from the application.
 
-### Usage
+## Usage
+
 ~~~
 flyctl ips release [ADDRESS] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -19,7 +14,7 @@ flyctl ips release [ADDRESS] [flags]
   -h, --help            help for release
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +22,7 @@ flyctl ips release [ADDRESS] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
 

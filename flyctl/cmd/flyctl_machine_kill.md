@@ -1,17 +1,12 @@
-# _flyctl machine kill_
+Kill (SIGKILL) a Fly machine.
 
-Kill (SIGKILL) a Fly machine
+## Usage
 
-### About
-
-Kill (SIGKILL) a Fly machine
-
-### Usage
 ~~~
 flyctl machine kill <id> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -19,7 +14,7 @@ flyctl machine kill <id> [flags]
   -h, --help            help for kill
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +22,7 @@ flyctl machine kill <id> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl machine](/docs/flyctl/machine/)	 - Commands that manage machines
 

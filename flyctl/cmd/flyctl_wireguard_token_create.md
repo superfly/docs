@@ -1,23 +1,18 @@
-# _flyctl wireguard token create_
+Create a new WireGuard token.
 
-Create a new WireGuard token
+## Usage
 
-### About
-
-Create a new WireGuard token
-
-### Usage
 ~~~
 flyctl wireguard token create [org] [name] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for create
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -25,7 +20,7 @@ flyctl wireguard token create [org] [name] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl wireguard token](/docs/flyctl/wireguard-token/)	 - Commands that managed WireGuard delegated access tokens
 

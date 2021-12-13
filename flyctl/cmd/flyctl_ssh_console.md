@@ -1,17 +1,12 @@
-# _flyctl ssh console_
+Connect to a running instance of the current app; with `--select/-s`, choose instance from list.
 
-Connect to a running instance of the current app.
+## Usage
 
-### About
-
-Connect to a running instance of the current app; with -select, choose instance from list.
-
-### Usage
 ~~~
 flyctl ssh console [<host>] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string       App name to operate on
@@ -23,7 +18,7 @@ flyctl ssh console [<host>] [flags]
   -s, --select           select available instances
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -31,7 +26,7 @@ flyctl ssh console [<host>] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl ssh](/docs/flyctl/ssh/)	 - Commands that manage SSH credentials
 

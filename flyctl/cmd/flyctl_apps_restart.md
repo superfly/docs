@@ -1,24 +1,18 @@
-# _flyctl apps restart_
+The `apps restart` command will restart all running vms. 
 
-Restart an application
+## Usage
 
-### About
-
-The APPS RESTART command will restart all running vms. 
-
-
-### Usage
 ~~~
 flyctl apps restart [APPNAME] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for restart
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -26,7 +20,7 @@ flyctl apps restart [APPNAME] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl apps](/docs/flyctl/apps/)	 - Manage apps
 

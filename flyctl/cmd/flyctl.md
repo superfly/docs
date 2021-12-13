@@ -1,28 +1,20 @@
-# _flyctl_
+`flyctl` is a command line interface to the Fly.io platform.
 
-The Fly CLI
+It allows users to manage authentication, application launch, deployment, network configuration, logging and more with just the one command.
 
-### About
+* Launch an app with the `launch` command
+* Deploy an app with the `deploy` command
+* View a deployed web application with the `open` command
+* Check the status of an application with the `status` command
+* To read more, use the `docs` command to view Fly's help on the web.
 
-flyctl is a command line interface to the Fly.io platform.
+## Usage
 
-It allows users to manage authentication, application launch,
-deployment, network configuration, logging and more with just the
-one command.
-
-Launch an app with the launch command
-Deploy an app with the deploy command
-View a deployed web application with the open command
-Check the status of an application with the status command
-
-To read more, use the docs command to view Fly's help on the web.
-
-### Usage
 ~~~
 flyctl [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [apps](/docs/flyctl/apps/)	 - Manage apps
 * [auth](/docs/flyctl/auth/)	 - Manage authentication
 * [autoscale](/docs/flyctl/autoscale/)	 - Autoscaling app resources
@@ -68,7 +60,7 @@ flyctl [command] [flags]
 * [volumes](/docs/flyctl/volumes/)	 - Volume management commands
 * [wireguard](/docs/flyctl/wireguard/)	 - Commands that manage WireGuard peer connections
 
-### Options
+## Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -77,6 +69,6 @@ flyctl [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 

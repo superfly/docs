@@ -1,18 +1,12 @@
-# _flyctl monitor_
+Monitor application deployments and other activities. Use `--verbose/-v` to get details of every instance . Control-C to stop output.
 
-Monitor deployments
+## Usage
 
-### About
-
-Monitor application deployments and other activities. Use --verbose/-v
-to get details of every instance . Control-C to stop output.
-
-### Usage
 ~~~
 flyctl monitor [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +14,7 @@ flyctl monitor [flags]
   -h, --help            help for monitor
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +22,7 @@ flyctl monitor [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

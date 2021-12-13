@@ -1,17 +1,12 @@
-# _flyctl image show_
-
 Show image details.
 
-### About
+## Usage
 
-Show image details.
-
-### Usage
 ~~~
 flyctl image show [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -19,7 +14,7 @@ flyctl image show [flags]
   -h, --help            help for show
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +22,7 @@ flyctl image show [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl image](/docs/flyctl/image/)	 - Manage app image
 

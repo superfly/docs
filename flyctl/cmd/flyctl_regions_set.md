@@ -1,17 +1,12 @@
-# _flyctl regions set_
+Sets the region pool with provided regions.
 
-Sets the region pool with provided regions
+## Usage
 
-### About
-
-Sets the region pool with provided regions
-
-### Usage
 ~~~
 flyctl regions set REGION ... [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +15,7 @@ flyctl regions set REGION ... [flags]
   -h, --help            help for set
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +23,7 @@ flyctl regions set REGION ... [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl regions](/docs/flyctl/regions/)	 - Manage regions
 

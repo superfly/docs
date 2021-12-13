@@ -1,25 +1,18 @@
-# _flyctl orgs invite_
+Invite a user, by email, to join an organization. The invitation will be sent and the user will be pending until they respond. See also `orgs revoke`.
 
-Invite user (by email) to organization
+## Usage
 
-### About
-
-Invite a user, by email, to join organization. The invitation will be
-sent, and the user will be pending until they respond. See also orgs revoke.
-
-
-### Usage
 ~~~
 flyctl orgs invite [slug] [email] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for invite
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -27,7 +20,7 @@ flyctl orgs invite [slug] [email] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 

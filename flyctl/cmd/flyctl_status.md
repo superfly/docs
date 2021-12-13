@@ -1,22 +1,16 @@
-# _flyctl status_
-
-Show app status
-
-### About
-
-Show the application's current status including application
-details, tasks, most recent deployment details and in which regions it is
+Show the application's current status including application details, tasks, most recent deployment details and in which regions it is
 currently allocated.
 
-### Usage
+## Usage
+
 ~~~
 flyctl status [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [instance](/docs/flyctl/status-instance/)	 - Show instance status
 
-### Options
+## Options
 
 ~~~
       --all             Show completed instances
@@ -29,7 +23,7 @@ flyctl status [flags]
       --wtf string      wtf usage (default "defaultwtf")
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -37,7 +31,7 @@ flyctl status [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

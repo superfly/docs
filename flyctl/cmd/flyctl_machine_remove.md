@@ -1,17 +1,12 @@
-# _flyctl machine remove_
+Remove a Fly machine.
 
-Remove a Fly machine
+## Usage
 
-### About
-
-Remove a Fly machine
-
-### Usage
 ~~~
 flyctl machine remove <id> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +15,7 @@ flyctl machine remove <id> [flags]
   -h, --help            help for remove
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +23,7 @@ flyctl machine remove <id> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl machine](/docs/flyctl/machine/)	 - Commands that manage machines
 

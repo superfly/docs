@@ -1,17 +1,12 @@
-# _flyctl proxy_
+Proxies connections to a fly app through the wireguard tunnel.
 
-Proxies connections to a fly app
+## Usage
 
-### About
-
-Proxies connections to a fly app through the wireguard tunnel
-
-### Usage
 ~~~
 flyctl proxy <local:remote> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +15,7 @@ flyctl proxy <local:remote> [flags]
   -s, --select          select available instances
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +23,7 @@ flyctl proxy <local:remote> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

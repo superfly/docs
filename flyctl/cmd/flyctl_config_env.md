@@ -1,18 +1,12 @@
-# _flyctl config env_
+Display an app's runtime environment variables. It displays a section for secrets and another for config file defined environment variables.
 
-Display an app's runtime environment variables
+## Usage
 
-### About
-
-Display an app's runtime environment variables. It displays a section for
-secrets and another for config file defined environment variables.
-
-### Usage
 ~~~
 flyctl config env [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +14,7 @@ flyctl config env [flags]
   -h, --help            help for env
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +22,7 @@ flyctl config env [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl config](/docs/flyctl/config/)	 - Manage an app's configuration
 

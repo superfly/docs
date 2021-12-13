@@ -1,18 +1,12 @@
-# _flyctl certs check_
+Checks the DNS configuration for the specified hostname. Displays results in the same format as the `show` command.
 
-Checks DNS configuration
+## Usage
 
-### About
-
-Checks the DNS configuration for the specified hostname.
-Displays results in the same format as the SHOW command.
-
-### Usage
 ~~~
 flyctl certs check <hostname> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +14,7 @@ flyctl certs check <hostname> [flags]
   -h, --help            help for check
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +22,7 @@ flyctl certs check <hostname> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl certs](/docs/flyctl/certs/)	 - Manage certificates
 

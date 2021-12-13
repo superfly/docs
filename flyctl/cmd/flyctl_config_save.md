@@ -1,18 +1,12 @@
-# _flyctl config save_
+Save an application's configuration locally. The configuration data is retrieved from the Fly service and saved in TOML format.
 
-Save an app's config file
+## Usage
 
-### About
-
-Save an application's configuration locally. The configuration data is
-retrieved from the Fly service and saved in TOML format.
-
-### Usage
 ~~~
 flyctl config save [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +14,7 @@ flyctl config save [flags]
   -h, --help            help for save
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +22,7 @@ flyctl config save [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl config](/docs/flyctl/config/)	 - Manage an app's configuration
 

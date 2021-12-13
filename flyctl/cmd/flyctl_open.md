@@ -1,18 +1,12 @@
-# _flyctl open_
+Open browser to current deployed application. If an optional path is specified, this is appended to the URL for deployed application.
 
-Open browser to current deployed application
+## Usage
 
-### About
-
-Open browser to current deployed application. If an optional path is specified, this is appended to the
-URL for deployed application.
-
-### Usage
 ~~~
 flyctl open [PATH] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +14,7 @@ flyctl open [PATH] [flags]
   -h, --help            help for open
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +22,7 @@ flyctl open [PATH] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

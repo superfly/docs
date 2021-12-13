@@ -1,23 +1,18 @@
-# _flyctl wireguard token start_
+Start a new WireGuard peer connection associated with a token (set `fly_wireguard_token`).
 
-Start a new WireGuard peer connection associated with a token (set FLY_WIREGUARD_TOKEN)
+## Usage
 
-### About
-
-Start a new WireGuard peer connection associated with a token (set FLY_WIREGUARD_TOKEN)
-
-### Usage
 ~~~
 flyctl wireguard token start [name] [group] [region] [file] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for start
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -25,7 +20,7 @@ flyctl wireguard token start [name] [group] [region] [file] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl wireguard token](/docs/flyctl/wireguard-token/)	 - Commands that managed WireGuard delegated access tokens
 

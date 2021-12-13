@@ -1,20 +1,12 @@
-# _flyctl auth login_
+Logs a user into the Fly platform. Supports browser-based, email/password and one-time-password authentication. Defaults to using browser-based authentication.
 
-Log in a user
+## Usage
 
-### About
-
-Logs a user into the Fly platform. Supports browser-based, 
-email/password and one-time-password authentication. Defaults to using 
-browser-based authentication.
-
-
-### Usage
 ~~~
 flyctl auth login [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
       --email string      Login email
@@ -24,7 +16,7 @@ flyctl auth login [flags]
       --password string   Login password
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -32,7 +24,7 @@ flyctl auth login [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl auth](/docs/flyctl/auth/)	 - Manage authentication
 

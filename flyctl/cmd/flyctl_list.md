@@ -1,31 +1,24 @@
-# _flyctl list_
+* The `list` command is for listing your resources on has two subcommands, apps and orgs.  
+* The `apps` command lists your applications. There are filtering options available.  
+* The `orgs` command lists all the organizations you are a member of.
 
-Lists your Fly resources
+## Usage
 
-### About
-
-The list command is for listing your resources on has two subcommands, apps and orgs.
-
-The apps command lists your applications. There are filtering options available.
-
-The orgs command lists all the organizations you are a member of.
-
-### Usage
 ~~~
 flyctl list [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [apps](/docs/flyctl/list-apps/)	 - Lists all your apps
 * [orgs](/docs/flyctl/list-orgs/)	 - List all your organizations
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -33,7 +26,7 @@ flyctl list [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

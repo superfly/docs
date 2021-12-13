@@ -1,27 +1,18 @@
-# _flyctl apps suspend_
+The `apps suspend` command will suspend an application. All instances will be halted leaving the application running nowhere. It will continue to consume networking resources (IP address). See `apps resume` for details on restarting it.
 
-Suspend an application
+## Usage
 
-### About
-
-The APPS SUSPEND command will suspend an application. 
-All instances will be halted leaving the application running nowhere.
-It will continue to consume networking resources (IP address). See APPS RESUME
-for details on restarting it.
-
-
-### Usage
 ~~~
 flyctl apps suspend [APPNAME] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for suspend
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -29,7 +20,7 @@ flyctl apps suspend [APPNAME] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl apps](/docs/flyctl/apps/)	 - Manage apps
 

@@ -1,23 +1,18 @@
-# _flyctl wireguard list_
+List all WireGuard peer connections.
 
-List all WireGuard peer connections
+## Usage
 
-### About
-
-List all WireGuard peer connections
-
-### Usage
 ~~~
 flyctl wireguard list [<org>] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -25,7 +20,7 @@ flyctl wireguard list [<org>] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl wireguard](/docs/flyctl/wireguard/)	 - Commands that manage WireGuard peer connections
 

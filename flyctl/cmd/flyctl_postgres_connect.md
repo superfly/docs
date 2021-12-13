@@ -1,17 +1,12 @@
-# _flyctl postgres connect_
+Connect to postgres cluster.
 
-Connect to postgres cluster
+## Usage
 
-### About
-
-Connect to postgres cluster
-
-### Usage
 ~~~
 flyctl postgres connect [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string        App name to operate on
@@ -22,7 +17,7 @@ flyctl postgres connect [flags]
       --user string       The postgres user to connect with
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -30,7 +25,7 @@ flyctl postgres connect [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
 

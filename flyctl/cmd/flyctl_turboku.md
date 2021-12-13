@@ -1,17 +1,12 @@
-# _flyctl turboku_
+Launches heroku apps.
 
-Launches heroku apps
+## Usage
 
-### About
-
-Launches heroku apps
-
-### Usage
 ~~~
 flyctl turboku <heroku-app> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help                  help for turboku
@@ -22,7 +17,7 @@ flyctl turboku <heroku-app> [flags]
       --org string            the organization that will own the app
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -30,7 +25,7 @@ flyctl turboku <heroku-app> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

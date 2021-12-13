@@ -1,24 +1,18 @@
-# _flyctl docs_
+View Fly documentation on the Fly.io website. This command will open a browser to view the content.
 
-View Fly documentation
+## Usage
 
-### About
-
-View Fly documentation on the Fly.io website. This command will open a
-browser to view the content.
-
-### Usage
 ~~~
 flyctl docs [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for docs
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -26,7 +20,7 @@ flyctl docs [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

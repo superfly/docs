@@ -1,18 +1,12 @@
-# _flyctl status instance_
+Show the instance's current status including logs, checks, and events.
 
-Show instance status
+## Usage
 
-### About
-
-Show the instance's current status including logs, checks,
-and events.
-
-### Usage
 ~~~
 flyctl status instance [instance-id] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -a, --app string      App name to operate on
@@ -20,7 +14,7 @@ flyctl status instance [instance-id] [flags]
   -h, --help            help for instance
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +22,7 @@ flyctl status instance [instance-id] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl status](/docs/flyctl/status/)	 - Show app status
 

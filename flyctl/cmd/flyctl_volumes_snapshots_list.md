@@ -1,23 +1,18 @@
-# _flyctl volumes snapshots list_
+List snapshots associated with the specified volume.
 
-list snapshots associated with the specified volume
+## Usage
 
-### About
-
-list snapshots associated with the specified volume
-
-### Usage
 ~~~
 flyctl volumes snapshots list <volume-id> [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for list
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -25,7 +20,7 @@ flyctl volumes snapshots list <volume-id> [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl volumes snapshots](/docs/flyctl/volumes-snapshots/)	 - Manage volume snapshots
 

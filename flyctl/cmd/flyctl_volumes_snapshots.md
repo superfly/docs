@@ -1,26 +1,21 @@
-# _flyctl volumes snapshots_
+Commands for managing volume snapshots.
 
-Manage volume snapshots
+## Usage
 
-### About
-
-Commands for managing volume snapshots
-
-### Usage
 ~~~
 flyctl volumes snapshots [command] [flags]
 ~~~
 
-### Available Commands
+## Available Commands
 * [list](/docs/flyctl/volumes-snapshots-list/)	 - list snapshots associated with the specified volume
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for snapshots
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -28,7 +23,7 @@ flyctl volumes snapshots [command] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl volumes](/docs/flyctl/volumes/)	 - Volume management commands
 

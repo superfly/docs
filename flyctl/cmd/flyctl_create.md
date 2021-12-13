@@ -1,22 +1,12 @@
-# _flyctl create_
+The `create` command will both register a new application with the Fly platform and create the fly.toml file which controls how the application will be deployed. The `--builder` flag allows a cloud native buildpack to be specified which will be used instead of a Dockerfile to create the application image when it is deployed.
 
-Create a new application
+## Usage
 
-### About
-
-The CREATE command will both register a new application 
-with the Fly platform and create the fly.toml file which controls how 
-the application will be deployed. The --builder flag allows a cloud native 
-buildpack to be specified which will be used instead of a Dockerfile to 
-create the application image when it is deployed.
-
-
-### Usage
 ~~~
 flyctl create [APPNAME] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
       --generate-name    Generate a name for the app
@@ -26,7 +16,7 @@ flyctl create [APPNAME] [flags]
       --org string       The organization to operate on
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -34,7 +24,7 @@ flyctl create [APPNAME] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

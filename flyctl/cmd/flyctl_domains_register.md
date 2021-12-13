@@ -1,23 +1,18 @@
-# _flyctl domains register_
-
-Register a domain
-
-### About
-
 Register a new domain in an organization
 
-### Usage
+## Usage
+
 ~~~
 flyctl domains register [org] [name] [flags]
 ~~~
 
-### Options
+## Options
 
 ~~~
   -h, --help   help for register
 ~~~
 
-### Global Options
+## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
@@ -25,7 +20,7 @@ flyctl domains register [org] [name] [flags]
       --verbose               verbose output
 ~~~
 
-### See Also
+## See Also
 
 * [flyctl domains](/docs/flyctl/domains/)	 - Manage domains
 
