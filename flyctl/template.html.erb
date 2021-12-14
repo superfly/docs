@@ -5,7 +5,7 @@ nav: flyctl
 ---
 
 <% content_for :title do %>
-  flyctl <%= locals[:file].strip.gsub(/-/, " ") %>
+  flyctl <%= locals[:file].strip.gsub(/-/, " ") rescue locals.inspect %>
 <% end %>
   
 <%= partial locals[:path] rescue locals.inspect %>
