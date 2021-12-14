@@ -78,7 +78,10 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 
 | name | aaaa | txt |
 | -- | --- | -- |
+|`top<number>.nearest.of.<appname>.internal`| top _number_ closest app instances|none
+|`<alloc_id>.vm.<appname>.internal`|specific app instance<br/>|none
 |`<region>.<appname>.internal`|app instances<br/> in region|none
+|`global.<appname>.internal`|app instances<br/> in all regions|none
 |`regions.<appname>.internal`|none|region names<br/> where app is deployed|
 |`<appname>.internal`|app instances<br/> in any region|none
 |`_apps.internal`|none|names of all 6PN<br/> private networking apps<br/> in the same organization|
