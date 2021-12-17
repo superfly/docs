@@ -1,3 +1,17 @@
+---
+title: "Deploy an Elixir Phoenix Application (pre v1.6.3)"
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+<%= partial "partials/intro", locals: { runtime: "Elixir Phoenix", link: "https://www.phoenixframework.org/", database: true } %>
+
+**This guide is for applications running on Phoenix versions older than v1.6.3.**
+
+If you're on 1.6.3 or higher, deployment setup is baked into the framework! Check out our [guide for
+launching newer Elixir apps](/getting-started/elixir/).
+
 ## _Running the Application Locally_
 
 Let's walk through working with Phoenix locally and preparing it for deployment. We can start with a brand new Phoenix application.
@@ -28,10 +42,6 @@ mix phx.server
 ```
 
 Connect to localhost:4000 to confirm that you have a working Elixir application.
-
-## For Phoenix versions earlier than 1.6.3
-
-We highly recommend upgrading to Phoenix 1.6.3 or higher. If you can't, follow these instructions to setup your app for deployment.
 
 ### _Generate Release Config Files_
 
