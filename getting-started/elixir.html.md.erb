@@ -109,7 +109,7 @@ There are 2 parts to getting clustering quickly setup on Fly.
 - Installing and using `libcluster`
 - Scaling our application to multiple VMs
 
-#### _Adding `libcluster`_
+### _Adding `libcluster`_
 
 The widely adopted library [libcluster](https://github.com/bitwalker/libcluster) helps here.
 
@@ -166,7 +166,7 @@ This assumes that your `rel/env.sh.eex` file is configured to name your Elixir n
 
 Before this app can be clustered, we need more than one VM. We'll do that next!
 
-#### _Running Multiple VMs_
+### _Running Multiple VMs_
 
 There are two ways to run multiple VMs.
 
@@ -187,7 +187,7 @@ ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
 f9014bf7 26      sea    run     running 1 total, 1 passing 0        1h8m ago
 ```
 
-#### _Scaling in a Single Region_
+### _Scaling in a Single Region_
 
 Let's scale up to 2 VMs in our current region.
 
@@ -238,7 +238,7 @@ iex(fly-elixir@fdaa:0:1da8:a7b:ac2:f901:4bf7:2)1> Node.list
 
 I included the IEx prompt because it shows the IP address of the node I'm connected to. Then getting the `Node.list` returns the other node. Our two VMs are connected and clustered!
 
-#### _Scaling to Multiple Regions_
+### _Scaling to Multiple Regions_
 
 Fly makes it super easy to run VMs of your applications physically closer to your users. Through the magic of DNS, they will be directed to their nearest region of your application. You can read about [regions](/docs/reference/regions/#welcome-message) here and see the list of regions to choose from.
 
