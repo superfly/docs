@@ -73,9 +73,9 @@ Specify the path to Dockerfile to be used for builds. If this is not specified, 
 
 #### build-target
 
-For Docker-based builds, specify an optional Docker multistage build target.
+Specify an optional Docker multistage build target for `Dockerfile` builds.
 
-#### Build Args
+#### build.args
 
 You can pass build-time arguments to both Dockerfile and Buildpack builds using the `[build.args]` sub-section:
 
@@ -86,6 +86,36 @@ You can pass build-time arguments to both Dockerfile and Buildpack builds using 
 ```
 
 This will always pass the USER and MODE build arguments to the Dockerfile build process. You can also pass build arguments to `flyctl deploy` using `--build-arg`. These args take priority over args of the same name in `fly.toml`.
+
+### The `deploy` section
+
+This section configures deployment-related settings such as the release command or deployment strategy.
+
+#### release_command
+
+Run a command in a one-off VM - using the successfully built release - *before* that release is deployed . This VM won't mount volumes, but has full access to the network, environment variables and secrets.
+
+This is useful for running database migrations:
+
+```
+[deploy]
+  release_command = "bundle exec rails db:migrate"
+```
+
+A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
+#### strategy
+
+Set the deployment strategy which informs how a new release should be placed on new VMs. This may be set here in with `--strategy`. The available strategies are:
+
+**canary**: This default strategy - for apps without volumes - will boot a single, new VM with the new release, verify its health, then proceed with a `rolling` restart strategy.
+
+**rolling**: One by one, each running VM is taken down and replaced by a new release VM. This is the default strategy for apps with volumes.
+
+**bluegreen**: For every running VM, a new one is booted alongside it. All new VMs must pass health checks to complete deployment, when traffic gets migrated to new VMs. If your app has multiple VMs, this strategy may reduce deploy time and downtime, assuming your app is scaled to 2 or more VMs.
+
+**immediate**: Replace all VMs with new releases immediately without waiting for health checks to pass. This is useful in emergency situations where you're confident a release will be healthy.
+
+Note: If `max-per-region` is set to 1, the default strategy is set to `rolling`, since more than one VM must be running in a region, temporarily, for a canary deployment to function. This setting is equally incompatible with the `bluegreen` strategy.
 
 ### The `env` variables section
 
