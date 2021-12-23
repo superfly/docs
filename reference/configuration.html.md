@@ -97,7 +97,7 @@ Run a command in a one-off VM - using the successfully built release - *before* 
 
 This is useful for running database migrations:
 
-```
+```toml
 [deploy]
   release_command = "bundle exec rails db:migrate"
 ```
@@ -116,6 +116,11 @@ Set the deployment strategy which informs how a new release should be placed on 
 **immediate**: Replace all VMs with new releases immediately without waiting for health checks to pass. This is useful in emergency situations where you're confident a release will be healthy.
 
 Note: If `max-per-region` is set to 1, the default strategy is set to `rolling`, since more than one VM must be running in a region, temporarily, for a canary deployment to function. This setting is equally incompatible with the `bluegreen` strategy.
+
+```toml
+[deploy]
+  strategy = "bluegreen"
+```
 
 ### The `env` variables section
 
