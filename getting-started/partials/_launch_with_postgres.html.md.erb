@@ -1,6 +1,6 @@
 <% app_name = app_name&.gsub("_", "\\_") %>
 
-Now let's run `fly launch`. The launcher will:
+When we run `fly launch` from the newly-created project directory, the launcher will:
 
 * Ask you to select a deployment region
 * Set secrets required by <%= detected %> (`SECRET\_KEY\_BASE`, for example)
@@ -8,11 +8,11 @@ Now let's run `fly launch`. The launcher will:
 * Optionally setup a Postgres instance in your selected region
 * Deploy the application in your selected region
 
-```cmd
+```
 cd hello_elixir
 fly launch
 ```
-```
+```output
 Creating app in /Users/me/<%= app_name %>
 Scanning source code
 Detected a <%= detected %> app
