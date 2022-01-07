@@ -332,3 +332,4 @@ Here are a few tips to help diagnose and identify problems.
 - Build the Dockerfile locally to verify it builds correctly. `docker build .`
 - Check the `:prod` config in `config/runtime.exs`, which is not used locally. Carefully review it.
 - Run `fly logs` to check server logs.
+- Make sure when running ElixirLS to add `.elixir_ls` to your `.dockerignore` file.
