@@ -12,7 +12,7 @@ date: 2021-12-07
 
 Fly.io tries to make it easy to run any containerized app on our platform, regardless of what protocols it talks over. That includes apps that rely on UDP in addition to TCP.
 
-Our UDP support can be a little tricky, and can catch you out, especially if your app uses both UDP and TCP --- as is the case with the most popular UDP protocols, most notably DNS. It should be easier to run things like DNS servers on Fly.io than it is! But it's not hard; there's just four gotchas, and this article walks you through them.
+Our UDP support can be a little tricky, and can catch you out, especially if your app uses both UDP and TCP --- as is the case with the most popular UDP protocols, most notably DNS. It should be easier to run things like DNS servers on Fly.io than it is! But it's not hard; there's just three gotchas, and this article walks you through them.
 
 ## The Basic Idea
 
@@ -36,11 +36,9 @@ Use `flyctl launch` to create a `fly.toml` file. Use it to wire up the ports.
     port = "5000"
 ```
 
-We're going to build this silly app in Go (don't worry, it's trivial, you'll be able to follow it even if you aren't a gopher). It's going to be vanilla socket code. But before we get started, there are four gotchas you need to know about.
+We're going to build this silly app in Go (don't worry, it's trivial, you'll be able to follow it even if you aren't a gopher). It's going to be vanilla socket code. But before we get started, there are three gotchas you need to know about.
 
 * The UDP side of your application needs to bind to the special `fly-global-services` address. But the TCP side of your application can't; it should bind to `0.0.0.0`.
-
-* There's a [port filter](https://fly.io/docs/app-guides/the-dreaded-port-filter/) that restricts which TCP ports you can use (there's no UDP filter).
 
 * We support IPv6 for TCP, but not currently for UDP.
 
@@ -148,7 +146,7 @@ echo hello world | nc udp-echo-sample.fly.dev 5000
 hello world
 ```
      
-## More On Those Four Gotchas
+## More On Those Three Gotchas
   
 ### The `fly-global-services` Address
 
@@ -170,12 +168,6 @@ You can't bind your TCP service to `fly-global-services`; the TCP side of your a
 
 This is super annoying. You probably want to use the same configuration value for both UDP and TCP ports, but you have to be fussy about it on Fly.io. We're working on it!
      
-### The Evil Port Filter
-
-The TCP side of your app has another Fly.io idiosyncrasy to contend with: we only allow a limited set of listening TCP ports (no such restriction exists with UDP, which has a totally different forwarding path). Chances are, the port you want to use is already supported, but regardless, you can [read more about this gotcha here](https://fly.io/docs/app-guides/the-dreaded-port-filter/).
-
-The good news is that this won't impact your code. It's just something you should know about.
-
 ### UDP Won't Work Over IPv6
 
 Another thing that won't impact your code that you'll need to know about is that we don't currently support UDP over IPv6. The kernel forwarding code we run to make UDP work isn't IPv6 aware. This is not OK, and we're working on it, but it's a limitation you'll run into today.
