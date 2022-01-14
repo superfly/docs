@@ -8,83 +8,144 @@ description: Fly.io brand assets and usage guidelines.
 
 **The following guidelines will help you correctly make use of our brand.** By using our brand assets, you accept the terms of our <a href="#trademark-usage-agreement">Trademark Usage Agreement</a> and understand that, if violated, your permission to use these materials will be revoked.
 
-### Primary Logo
+## _Primary Logo_
 
 Our primary logo combines our landscape brandmark and serif wordmark. This is our preferred logo, and encourage you to use it in full color whenever possible.
 
-<ul class="list:reset grid col:fit-sm gap:2 text:sm text:semibold mb:4 text:center">
-  <li>
-    <figure class="flex flex:col ai:center jc:center h:11 p:4 mb:2 r:lg bg:lightest-silver">
-      <%= img_tag "brand/logo.svg", class: "max-w:12" %>
-    </figure>
-    <a href="/public/images/brand/logo.svg" class="text:wrap:off" download>Download Primary Logo</a>
-  </li>
-  <li>
-    <figure class="flex flex:col ai:center jc:center h:11 p:4 mb:2 r:lg" style="background: #24175b;">
-      <%= img_tag "brand/logo-inverted.svg", class: "max-w:12" %>
-    </figure>
-    <a href="/public/images/brand/logo-inverted.svg" class="text:wrap:off" download>Download Inverted Primary Logo</a>
-  </li>
-</ul>
+<figure class="text-center">
+  <div class="max-w-lg mx-auto mb-3 border px-20 py-14 rounded-3xl h-56 flex flex-col items-center justify-center">
+    <%= 
+      img_tag "brand/logo.svg", 
+      alt: "The primary navy and purple Fly.io logo on a white background" 
+    %>
+  </div>
+  <figcaption class="font-medium text-sm">
+    <a href="/public/images/brand/logo.svg" download>
+      Download Primary Logo
+    </a>
+  </figcaption>
+</figure>
 
-### Monotone Logo
+<figure class="text-center">
+  <div class="max-w-lg mx-auto mb-3 bg-navy px-20 py-14 rounded-3xl h-56 flex flex-col items-center justify-center">
+    <%= 
+      img_tag "brand/logo-inverted.svg", 
+      alt: "The inverted white and purple Fly.io logo on a navy background" 
+    %>
+  </div>
+  <figcaption class="font-medium text-sm">
+    <a href="/public/images/brand/logo-inverted.svg" download>
+      Download Inverted Primary Logo
+    </a>
+  </figcaption>
+</figure>
 
-The monotone logo is used to maximize clarity and contrast. Use it when our primary logo isn’t a good option, such as on a busy or low-contrast background.
+## _Monochrome Logo_
 
-<ul class="list:reset grid col:fit-sm gap:2 text:sm text:semibold mb:4 text:center">
-  <li>
-    <figure class="flex flex:col ai:center jc:center h:11 p:4 mb:2 r:lg bg:lightest-silver">
-      <%= img_tag "brand/logo-dark.svg", class: "max-w:12" %>
-    </figure>
-    <a href="/public/images/brand/logo-dark.svg" class="text:wrap:off" download>Download Dark Logo</a>
-  </li>
-  <li>
-    <figure class="flex flex:col ai:center jc:center h:11 p:4 mb:2 r:lg" style="background: #24175b;">
-      <%= img_tag "brand/logo-light.svg", class: "max-w:12" %>
-    </figure>
-    <a href="/public/images/brand/logo-light.svg" class="text:wrap:off" download>Download Light Logo</a>
-  </li>
-</ul>
+The monochrome logo is used to maximize clarity and contrast. Use it when our primary logo isn’t a good option, such as on a busy or low-contrast background.
 
-### Primary Brandmark
+<figure class="text-center">
+  <div class="max-w-lg mx-auto mb-3 border px-20 py-14 rounded-3xl h-56 flex flex-col items-center justify-center">
+    <%= 
+      img_tag "brand/logo-dark.svg", 
+      alt: "The monochrome navy Fly.io logo on a white background"
+    %>
+  </div>
+  <figcaption class="font-medium text-sm">
+    <a href="/public/images/brand/logo-dark.svg" download>
+      Download Dark Logo
+    </a>
+  </figcaption>
+</figure>
+
+<figure class="text-center">
+  <div class="max-w-lg mx-auto mb-3 bg-navy px-20 py-14 rounded-3xl h-56 flex flex-col items-center justify-center">
+    <%= 
+      img_tag "brand/logo-light.svg", 
+      alt: "The monochrome white Fly.io logo on a navy background"
+    %>
+  </div>
+  <figcaption class="font-medium text-sm">
+    <a href="/public/images/brand/logo-light.svg" download>
+      Download Light Logo
+    </a>
+  </figcaption>
+</figure>
+
+## _Primary Brandmark_
 
 Some circumstances call for our brandmark to stand on its own. This is typically reserved for extremely small dimensions, when space is limited, or where the brand is already established.
 
-<ul class="list:reset grid col:fit-sm gap:2 text:sm text:semibold mb:4 text:center">
-  <li>
-    <figure class="flex flex:col ai:center jc:center h:11 p:4 mb:2 r:lg bg:lightest-silver">
-      <%= img_tag "brand/brandmark.svg", class: "max-w:8" %>
-    </figure>
-    <a href="/public/images/brand/brandmark.svg" class="text:wrap:off" download>Download Primary Brandmark</a>
-  </li>
-  <li>
-    <figure class="flex flex:col ai:center jc:center h:11 p:4 mb:2 r:lg" style="background: #24175b;">
-      <%= img_tag "brand/brandmark-inverted.svg", class: "max-w:8" %>
-    </figure>
-    <a href="/public/images/brand/brandmark-inverted.svg" class="text:wrap:off" download>Download Inverted Brandmark</a>
-  </li>
-</ul>
+<figure class="text-center">
+  <div class="max-w-lg mx-auto mb-3 border px-20 py-14 rounded-3xl h-56 flex flex-col items-center justify-center">
+    <%= 
+      img_tag "brand/brandmark.svg", 
+      class: "max-h-full",
+      style: "margin-top: -15px;",
+      alt: "The navy and white Fly.io brandmark on a purple and white background" 
+    %>
+  </div>
+  <figcaption class="font-medium text-sm">
+    <a href="/public/images/brand/brandmark.svg" download>
+      Download Primary Brandmark
+    </a>
+  </figcaption>
+</figure>
 
-### Monotone Brandmark
+<figure class="text-center">
+  <div class="max-w-lg mx-auto mb-3 bg-navy px-20 py-14 rounded-3xl h-56 flex flex-col items-center justify-center">
+    <%= 
+      img_tag "brand/brandmark-inverted.svg", 
+      class: "max-h-full",
+      style: "margin-top: -15px;",
+      alt: "The navy and white Fly.io brandmark on a purple and navy background" 
+    %>
+  </div>
+  <figcaption class="font-medium text-sm">
+    <a href="/public/images/brand/brandmark-inverted.svg" download>
+      Download Inverted Brandmark
+    </a>
+  </figcaption>
+</figure>
 
-The monotone brandmark is used to maximize clarity and contrast. Use it when our primary brandmark isn’t a good option, such as on a busy or low-contrast background.
+## _Monochrome Brandmark_
 
-<ul class="list:reset grid col:fit-sm gap:2 text:sm text:semibold mb:4 text:center">
- <li>
-    <figure class="flex flex:col ai:center jc:center h:11 p:4 mb:2 r:lg bg:lightest-silver">
-      <%= img_tag "brand/brandmark-dark.svg", class: "max-w:8" %>
-    </figure>
-    <a href="/public/images/brand/brandmark-dark.svg" class="text:wrap:off" download>Download Dark Brandmark</a>
-  </li>
-  <li>
-    <figure class="flex flex:col ai:center jc:center h:11 p:4 mb:2 r:lg" style="background: #24175b;">
-      <%= img_tag "brand/brandmark-light.svg", class: "max-w:8" %>
-    </figure>
-    <a href="/public/images/brand/brandmark-light.svg" class="text:wrap:off" download>Download Light Brandmark</a>
-  </li>
-</ul>
+The monochrome brandmark is used to maximize clarity and contrast. Use it when our primary brandmark isn’t a good option, such as on a busy or low-contrast background.
 
-## Trademark Usage Agreement
+
+<figure class="text-center">
+  <div class="max-w-lg mx-auto mb-3 border px-20 py-14 rounded-3xl h-56 flex flex-col items-center justify-center">
+    <%= 
+      img_tag "brand/brandmark-dark.svg", 
+      class: "max-h-full", 
+      style: "margin-top: -15px", 
+      alt: "The monochrome navy Fly.io brandmark on a white background"
+    %>
+  </div>
+  <figcaption class="font-medium text-sm">
+    <a href="/public/images/brand/brandmark-dark.svg" download>
+      Download Dark Brandmark
+    </a>
+  </figcaption>
+</figure>
+
+<figure class="text-center">
+  <div class="max-w-lg mx-auto mb-3 bg-navy px-20 py-14 rounded-3xl h-56 flex flex-col items-center justify-center">
+    <%= 
+      img_tag "brand/brandmark-light.svg", 
+      class: "max-h-full", 
+      style: "margin-top: -15px", 
+      alt: "The monochrome white Fly.io brandmark on a navy background"
+    %>
+  </div>
+  <figcaption class="font-medium text-sm">
+    <a href="/public/images/brand/brandmark-light.svg" download>
+      Download Light Brandmark
+    </a>
+  </figcaption>
+</figure>
+
+## _Trademark Usage Agreement_
 
 This agreement explains how you must use and present our brand assets at all times. Your use of our brand assets indicates your acceptance of this agreement, as well as your understanding that, if violated, your permission to use these materials will be revoked.
 
