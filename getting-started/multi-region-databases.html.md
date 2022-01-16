@@ -5,12 +5,12 @@ sitemap: false
 nav: firecracker
 ---
 
-Most read heavy, PostgreSQL backed applications work natively across regions on Fly.io, no architectural changes required. Deploying an app and database in multiple regions takes advantage of two Fly features:
+Most read-heavy, PostgreSQL-backed applications work natively across regions on Fly.io, no architectural changes required. Deploying an app and database in multiple regions takes advantage of two Fly features:
 
 1. Regional read replicas
 1. The `fly-replay` header
 
-With regional read replicas configured, the `fly-replay` headers lets you specify exactly which requests need to be serviced by the primary, writable database. When we detect this header, we will replay the entire request to the region you specify. It looks something like this:
+With regional read replicas configured, the `fly-replay` header lets you specify exactly which requests need to be serviced by the primary, writable database. When we detect this header, we will replay the entire request to the region you specify. It looks something like this:
 
 <img src="/public/images/fly-global-postgres.svg"  alt="Diagram of app + global postgres on Fly.io">
 
@@ -20,17 +20,17 @@ This guide is all about PostgreSQL, but the deployment topology will work with M
 
 ## Create a PostgreSQL cluster
 
-If you don't already have a PostgreSQL cluster running, you can create one with the `fly` CLI:
+If you don't already have a PostgreSQL cluster running, you can create an instance with the `fly` CLI:
 
 ```
 fly pg create --name chaos-postgres --region scl
 ```
 
-This creates a two node PostgreSQL cluster in Santiago Chile, one leader for writes, one replica for redundancy.
+This creates a Postgres instance in Santiago Chile, with a volume named `pg_data`.
 
 ## Add read replicas
 
-Adding read replicas is simple, just create more disks:
+Adding read replicas is simple. Just create more disks to match the existing one(s):
 
 ```
 fly volumes create pg_data -a chaos-postgres --size 10 --region atl
@@ -39,22 +39,23 @@ fly volumes create pg_data -a chaos-postgres --size 10 --region ams
 fly volumes create pg_data -a chaos-postgres --size 10 --region syd
 ```
 
-Then, add more VMs:
+If you already have a Postgres instance called `chaos-postgres` running, you can check the volume name and size using `fly volumes list -a chaos-postgres`.
+
+Then, add one new VM for each new volume:
 
 ```
-fly scale count 6 -a chaos-postgres
+fly scale count 5 -a chaos-postgres
 ```
 
-The `chaos-postgres` cluster will now have read replicas in Atlanta, Chicago, Amsterdam, and Sydney. When you run `fly status -a chaos-postgres` you should see output like this:
+The `chaos-postgres` cluster will now have read replicas in Atlanta, Chicago, Amsterdam, and Sydney. When you run `fly status -a chaos-postgres` you should see output including the following information:
 
 ```text
-ID       VERSION REGION DESIRED STATUS
-240eb1cd 2       ams    run     running (replica)
-83b849fa 2       ord    run     running (replica)
-e759c2ed 2       atl    run     running (replica)
-d8e8a317 2       syd    run     running (replica)
-d8e8a317 2       scl    run     running (replica)
-987f4b41 2       scl    run     running (leader)
+ID             PROCESS VERSION REGION DESIRED STATUS                  HEALTH CHECKS
+240eb1cd       app     2       ams    run     running (replica)       3 total, 3 passing
+83b849fa       app     2       ord    run     running (replica)       3 total, 3 passing
+e759c2ed       app     2       atl    run     running (replica)       3 total, 3 passing
+d8e8a317       app     2       syd    run     running (replica)       3 total, 3 passing
+987f4b41       app     2       scl    run     running (leader)        3 total, 3 passing
 ```
 
 ## Configure connection strings
@@ -208,9 +209,10 @@ Fly.io performs daily storage-based snapshots of each of your provisioned volume
 be used to restore your dataset into a new Postgres application.
 ### Listing snapshots
 
-Snapshots are volume specific, so you will need to first identify a volume to target. You can list your volumes by running the `volumes list` command from your application directory.
+Snapshots are volume specific, so you will need to first identify a volume to target. You can list your volumes by running the `volumes list` command with your Postgres app name.
+
 ```cmd
-fly volumes list
+fly volumes list chaos-postgres
 ```
 ```output
 ID                   NAME    SIZE REGION ATTACHED VM CREATED AT
@@ -291,13 +293,13 @@ In theory, you _could_ run PostgreSQL with synchronous replication and block unt
 
 We built this set of features for read heavy apps that are primary HTTP request based. That is, most requests only perform reads and only some requests include writes.
 
-#### Write heavy workloads
+#### Write-heavy workloads
 
-If you write to the database on every request, this will not work for you. You will need to make some architectural changes to run a write heavy app in multiple regions.
+If you write to the database on every request, this will not work for you. You will need to make some architectural changes to run a write-heavy app in multiple regions.
 
 Some apps write background info like metrics or audit logs on every request, but are otherwise read heavy. If you're running an application like this, you should consider using something like [nats.io](https://nats.io) to send information to your primary region asynchronously.
 
-Truly write heavy apps require latency aware data partitioning, either at the app level or in a database engine. There are lots of interesting new databases that have features for this, try them out!
+Truly write-heavy apps require latency aware data partitioning, either at the app level or in a database engine. There are lots of interesting new databases that have features for this, try them out!
 
 #### Long lived connections
 

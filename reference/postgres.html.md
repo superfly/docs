@@ -13,40 +13,65 @@ Postgres on Fly is a regular fly app, just with extensions to simplify managemen
 
 ## Creating a Postgres **app**
 
-To create a Postgres cluster, use the `flyctl postgres create` command. The command will walk you through the creation with prompts for name, organization, region, and VM resources. 
+To create a Postgres database with its own storage volume, use the `flyctl postgres create` command. The command will walk you through the creation with prompts for name, region, and VM resources. 
 
-After answering all the prompts, you'll see a message saying that the cluster is being created, followed by a deployment monitor watching as the app is launched. The new cluster is ready to use once the deployment is complete.
+```cmd
+flyctl postgres create
+```
+
+```output
+? App Name: c-pg-test
+Automatically selected personal organization: Chris Nicoll
+? Select region:  [Use arrows to move, type to filter]
+> ams (Amsterdam, Netherlands)
+  cdg (Paris, France)
+  dfw (Dallas, Texas (US))
+  ewr (Secaucus, NJ (US))
+  fra (Frankfurt, Germany)
+  gru (São Paulo)
+? Select region: mia (Miami, Florida (US))
+For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clusters
+```
+
+During this process, you get to choose from several preset resource configurations for the app:
 
 ```
-$ flyctl postgres create
-? App name: md-postgres-500
-? Select organization: Michael Dwan (personal)
-? Select region: dfw (Dallas 2, Texas (US))
-? Select VM size: shared-cpu-1x - 256
-? Volume size (GB): **10**
+? Select configuration:  [Use arrows to move, type to filter]
+> Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
+  Development - Single node, 1x shared CPU, 512MB RAM, 10GB disk
+  Production - Highly available, 1x shared CPU, 256MB RAM, 10GB disk
+  Production - Highly available, 1x Dedicated CPU, 2GB RAM, 50GB disk
+  Production - Highly available, 2x Dedicated CPU's, 4GB RAM, 100GB disk
+  Specify custom configuration
+```
 
-Creating postgres cluster md-postgres-500 in organization personal
-Launching...
+Select the minimal option that seems reasonable for your project; you can scale upward and outward later as needed. Carrying on:
 
-Postgres cluster md-postgres-500 created
+```
+Creating postgres cluster c-pg-test in organization personal
+Postgres cluster c-pg-test created
   Username:    postgres
-  Password:    5f2496c9161f9aa9d59bc771edab4d1f66ff97fa5236587e
-  Hostname:    md-postgres-500.internal
+  Password:    8a93cbc09798f3805056333072bd2b35be7eb634b13a05c3
+  Hostname:    c-pg-test.internal
   Proxy Port:  5432
   PG Port: 5433
 Save your credentials in a secure place, you won't be able to see them again!
 
-
 Monitoring Deployment
-You can detach the terminal anytime without stopping the deployment
 
-2 desired, 2 placed, 2 healthy, 0 unhealthy [health checks: 6 total, 6 passing]
+1 desired, 1 placed, 1 healthy, 0 unhealthy [health checks: 3 total, 3 passing]
 --> v0 deployed successfully
 
 Connect to postgres
-Any app within the personal organization can connect to postgres using the above credentials and the hostname "md-postgres-500.internal."
-For example: postgres://postgres:5f2496c9161f9aa9d59bc771edab4d1f66ff97fa5236587e@md-postgres-500.internal:5432
+Any app within the personal organization can connect to postgres using the above credentials and the hostname "c-pg-test.internal."
+For example: postgres://postgres:8a93cbc09798f3805056333072bd2b35be7eb634b13a05c3@c-pg-test.internal:5432
+
+See the postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
 ```
+
+After answering all the prompts, you'll see a message saying that the cluster is being created, followed by a deployment monitor watching as the app is launched. Take heed of the reminder to save your password in a safe place! 
+
+The new cluster (of a single instance) is ready to use once the deployment is complete.
 
 ## Connecting to Postgres
 
@@ -122,12 +147,16 @@ A Postgres cluster is configured with three users when created:
 
 You can view a list of users using `flyctl`
 
+```cmd
+$ flyctl postgres users list c-pg-test
 ```
-$ flyctl postgres users list
-USERNAME   SUPERUSER DATABASES        
-flypgadmin true      postgres,testdb 
-postgres   true      postgres,testdb 
-repluser   false     postgres,testdb 
+
+```output
+Running flyadmin user-list
+USERNAME   SUPERUSER DATABASES 
+flypgadmin true      postgres  
+postgres   true      postgres  
+repluser   false     postgres  
 ```
 
 ## Databases
@@ -136,10 +165,16 @@ One Postgres cluster can host multiple databases
 
 ### Listing Databases
 
-You can view a list of databases with from `flyctl`:
+You can view a list of databases with `flyctl`:
 
-```bash
-flyctl postgres databases list 
+```cmd
+flyctl postgres db list c-pg-test
+```
+
+```output
+Running flyadmin database-list
+NAME     USERS                        
+postgres flypgadmin,postgres,repluser
 ```
 
 ## Connection Examples
@@ -174,7 +209,7 @@ flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.intern
 or by attaching the postgres database to your fly app.
 
 
-### Conneting with Go ([docs](https://github.com/jackc/pgx/wiki/Getting-started-with-pgx-through-database-sql))
+### Connecting with Go ([docs](https://github.com/jackc/pgx/wiki/Getting-started-with-pgx-through-database-sql))
 
 `pgx` is the recommended driver for connecting to postgres. It supports the standard `database/sql` interface as well as directly exposing low level / high performance APIs.
 
@@ -214,7 +249,7 @@ func main() {
 }
 ```
 
-### Conneting with Node.js ([docs](https://node-postgres.com))
+### Connecting with Node.js ([docs](https://node-postgres.com))
 
 You'll use the `pg` npm module to connect to postgres from a node.js app. 
 
