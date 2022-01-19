@@ -13,7 +13,7 @@ Postgres on Fly is a regular fly app, just with extensions to simplify managemen
 
 ## Creating a Postgres **app**
 
-To create a Postgres database with its own storage volume, use the `flyctl postgres create` command. The command will walk you through the creation with prompts for name, region, and VM resources. 
+To create a Postgres cluster, use the `flyctl postgres create` command. The command will walk you through the creation with prompts for name, region, and VM resources. 
 
 ```cmd
 flyctl postgres create
@@ -45,7 +45,7 @@ During this process, you get to choose from several preset resource configuratio
   Specify custom configuration
 ```
 
-Select the minimal option that seems reasonable for your project; you can scale upward and outward later as needed. Carrying on:
+The "Production" options give you a two-node cluster in a leader-replica configuration. A single-node "Development" instance can readily be scaled and [expanded to more regions](https://fly.io/docs/getting-started/multi-region-databases/).
 
 ```
 Creating postgres cluster c-pg-test in organization personal
@@ -71,7 +71,7 @@ See the postgres docs for more information on next steps, managing postgres, con
 
 After answering all the prompts, you'll see a message saying that the cluster is being created, followed by a deployment monitor watching as the app is launched. Take heed of the reminder to save your password in a safe place! 
 
-The new cluster (of a single instance) is ready to use once the deployment is complete.
+Your new Postgres cluster is ready to use once the deployment is complete.
 
 ## Connecting to Postgres
 

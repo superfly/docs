@@ -20,13 +20,13 @@ This guide is all about PostgreSQL, but the deployment topology will work with M
 
 ## Create a PostgreSQL cluster
 
-If you don't already have a PostgreSQL cluster running, you can create an instance with the `fly` CLI:
+If you don't already have a PostgreSQL cluster running, you can create one with the `fly` CLI:
 
 ```
 fly pg create --name chaos-postgres --region scl
 ```
 
-This creates a Postgres instance in Santiago Chile, with a volume named `pg_data`.
+Choose a high-availability configuration to create a two-node PostgreSQL cluster in Santiago Chile, one leader for writes, one replica for redundancy. 
 
 ## Add read replicas
 
@@ -39,15 +39,15 @@ fly volumes create pg_data -a chaos-postgres --size 10 --region ams
 fly volumes create pg_data -a chaos-postgres --size 10 --region syd
 ```
 
-If you already have a Postgres instance called `chaos-postgres` running, you can check the volume name and size using `fly volumes list -a chaos-postgres`.
+If you already have a Postgres cluster called `chaos-postgres` running, you can check the volume name and size using `fly volumes list -a chaos-postgres`.
 
 Then, add one new VM for each new volume:
 
 ```
-fly scale count 5 -a chaos-postgres
+fly scale count 6 -a chaos-postgres
 ```
 
-The `chaos-postgres` cluster will now have read replicas in Atlanta, Chicago, Amsterdam, and Sydney. When you run `fly status -a chaos-postgres` you should see output including the following information:
+The `chaos-postgres` cluster will now have read replicas in Atlanta, Chicago, Amsterdam, and Sydney. When you run `fly status -a chaos-postgres` you should see output like this:
 
 ```text
 ID             PROCESS VERSION REGION DESIRED STATUS                  HEALTH CHECKS
@@ -55,6 +55,7 @@ ID             PROCESS VERSION REGION DESIRED STATUS                  HEALTH CHE
 83b849fa       app     2       ord    run     running (replica)       3 total, 3 passing
 e759c2ed       app     2       atl    run     running (replica)       3 total, 3 passing
 d8e8a317       app     2       syd    run     running (replica)       3 total, 3 passing
+4c27cd52       app     2       scl    run     running (replica)       3 total, 3 passing
 987f4b41       app     2       scl    run     running (leader)        3 total, 3 passing
 ```
 
