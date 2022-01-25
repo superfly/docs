@@ -9,8 +9,11 @@ Our pricing is designed to let you run small applications for free, and scale co
 
 Billing is per user or organization. If you want to run more free apps, just make another organization and invite your friends.
 
+## _Pricing Calculator_
 
-## _Free allowances_
+<%= partial("shared/pricing-calculator") %>
+
+## _Free Allowances_
 
 <div class="min-w-0 overflow-x-auto bg-white shadow-md rounded-xl lg:-mx-8 mb-7 ring-1 ring-gray-700 ring-opacity-10">
   <table class="table-stripe table-stretch table-pad text-sm whitespace-nowrap m-0">
@@ -61,13 +64,13 @@ You can add one or more persistent volumes to your apps with `flyctl volumes cre
 
 Volume billing is pro-rated to the hour.
 
-## _Network prices_
+## _Network Prices_
 
-### Anycast IP addresses
+### Anycast IP Addresses
 
 Each application includes one Anycast IPv4 and unlimited Anycast IPv6 Anycast addresses for global load balancing. Additional IPv4 addresses are $2/mo.
 
-### Managed SSL certificates
+### Managed SSL Certificates
 
 We use Lets Encrypt to issue certificates, and donate half of our SSL fees to them at the end of each calendar year.
 
@@ -125,7 +128,7 @@ The price of a postgres cluster is `(vm_price + persistent_volume_price + additi
   <%# </table> %>
 </div>
 
-### Outbound data transfer
+### Outbound Data Transfer
 
 We bill for outbound data transfer, inbound transfer is free.
 

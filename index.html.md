@@ -11,7 +11,6 @@ nav: firecracker
 
 Fly.io is a global application distribution platform. We run your code in [Firecracker](https://firecracker-microvm.github.io/) microVMs around the world.
 
-
 <div class="callout">
 Our *raison d'&ecirc;tre* is to deliver your applications to your users globally, with the highest possible availability and the lowest possible latency, with a great developer UX.
 </div>
