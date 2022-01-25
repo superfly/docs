@@ -21,6 +21,11 @@ Billing is per user or organization. If you want to run more free apps, just mak
         <td>Run 3 <a href="#compute">shared-cpu-1x</a> VMs with 256MB RAM full time.</td>
       </tr>
       <tr>
+        <th class="text-navy text-right">Volumes</th>
+        <td>3GB</td>
+        <td>Provision 3GB of <a href="#persistent volumes">persistent volumes</a> for permanent storage</td>
+      </tr>
+      <tr>
         <th class="text-navy text-right">Bandwidth</th>
         <td>160GB per month</td>
         <td>See <a href="#outbound-data-transfer">outbound data transfer</a> for regional breakdown</td>
@@ -51,6 +56,7 @@ If your organization uses more than the free allowance of any service, additiona
 
 You can add one or more persistent volumes to your apps with `flyctl volumes create ...`:
 
+* Free: 3GB of provisioned capacity per organization
 * $0.15/GB per month of provisioned capacity
 
 Volume billing is pro-rated to the hour.
@@ -73,6 +79,8 @@ We use Lets Encrypt to issue certificates, and donate half of our SSL fees to th
 ### PostgreSQL Clusters
 
 The `fly pg create` command will install a PostgreSQL cluster in your organization. PostgreSQL clusters are just "apps" made up of VMs, persistent volumes, and (possibly) extra memory. We bill only for the resources PostgreSQL clusters use.
+
+The price of a postgres cluster is `(vm_price + persistent_volume_price + additional_memory_price) * vm_count`. Here are some examples:
 
 <div class="min-w-0 overflow-x-auto bg-white shadow-md rounded-xl lg:-mx-8 mb-7 ring-1 ring-gray-700 ring-opacity-10">
   <table class="table-stripe table-stretch table-pad text-sm whitespace-nowrap m-0">
@@ -114,7 +122,7 @@ The `fly pg create` command will install a PostgreSQL cluster in your organizati
         <td class="text-right">~$1,266/mo</td>
       </tr>
     </tbody>
-  </table>
+  <%# </table> %>
 </div>
 
 ### Outbound data transfer
