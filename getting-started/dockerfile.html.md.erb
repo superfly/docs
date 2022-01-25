@@ -1,0 +1,95 @@
+---
+title: "Deploy Your Application via Dockerfile"
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+You already have a project wrapped up in a [docker container](https://docs.docker.com/engine/reference/builder/)? Great! Just deploy that!
+
+The `fly launch` command detects your Dockerfile and builds it. If you have Docker running locally, it builds it on your machine. If not, it builds it on a Fly build machine. Once your container is built, it's deployed! Need some extra config? No sweat, we've got you covered. Let's take a look.
+
+```cmd
+fly launch
+```
+```output
+? App Name (leave blank to use an auto-generated name):
+? Select organization: Mark Ericksen (personal)
+? Select region: lax (Los Angeles, California (US))
+Created app weathered-wave-1020 in organization personal
+Wrote config file fly.toml
+? Would you like to deploy now? (y/N)
+```
+
+Let `fly launch` generate an app name for you or pick your own.
+
+Select the Fly.io [region](https://fly.io/docs/reference/regions/) to deploy to. It defaults to the one closest to you.
+
+The launch command generates a `fly.toml` file for your project with the settings. You can deploy right away, or add some config first.
+
+## _Config First!_
+
+Most Dockerfiles expect some configuration settings through `ENV`. The generated `fly.toml` file has a place for you to add your custom `ENV` settings. It's the `[env]` block.
+
+```toml
+[env]
+  MY_SPECIAL_ENV=some_value
+  MAX_PLAYER_COUNT=15
+```
+
+Add whatever values your Dockerfile or container requires.
+
+Sometimes you have secrets that shouldn't be checked in to `git` or shared publicly. For those settings, you can set them using [`fly secrets`](https://fly.io/docs/reference/secrets/#setting-secrets).
+
+```cmd
+flyctl secrets set MY_SECRET=romance
+```
+```output
+Secrets are staged for the first deployment
+```
+
+You can list the secrets you've already set using `fly secrets list`
+
+```cmd
+fly secrets list
+```
+```
+NAME      DIGEST                           DATE
+MY_SECRET b9e37b7b239ee4aefc75352fe3fa6dc6 1m20s ago
+```
+
+The values aren't display since they are secret!
+
+## _Deploy Your App_
+
+If you didn't previously deploy the app, you can do that now.
+
+```cmd
+fly deploy
+```
+```output
+==> Verifying app config
+--> Verified app config
+==> Building image
+==> Creating build context
+--> Creating build context done
+==> Building image with Docker
+--> docker host: 20.10.12 linux x86_64
+Sending build context to Docker daemon  13.98MB
+...
+```
+
+If you have Docker running locally, it builds it on your machine. If you don't have Docker running locally, it builds it on a Fly build machine. Once your container is built, it's deployed!
+
+## _See Your App_
+
+Run `fly open` to open your deployed app in a browser.
+
+You're off and running!
+
+## _Taking it Further_
+
+Lots of applications deployed in a container have some state that they want to keep. Here are a couple resources to check out for ways to do that.
+
+- **[Persistent Volumes:](https://fly.io/docs/reference/volumes/)** You can create [persistent volumes](https://fly.io/docs/reference/volumes/) that you can mount into your container for reading and writing data that changes but isn't blown away when you deploy again.
+- **[Postgres Database:](https://fly.io/docs/reference/postgres/#about-postgres-on-fly)** Deploy a [Fly Postgres Database](https://fly.io/docs/reference/postgres/#about-postgres-on-fly). It automatically creates a `DATABASE_URL` ENV` when you attach it to your app.
