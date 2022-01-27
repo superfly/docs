@@ -13,6 +13,12 @@ The dockerfile builder is the default builder, invoked when there is a `Dockerfi
 
 This is the most flexible of the options, but with that flexibility comes the need to write Dockerfiles and the associated quirks of the Docker build system. Which is why we have further build options on Fly that simplify the process.
 
+### Local and remote builders
+
+In case you do not have access to a local Docker daemon, we will still be able to build your image on deployment using a remote builder. This is one of our servers acting as a build server for your image. This is a service we offer free of charge, so you don't need to worry about anything!
+
+In case you want to avoid having your image built locally, you can pass the `--local-only` build flag to `flyctl`. Building locally might not always work with alternative runtimes.
+
 ## Buildpacks
 
 Platforms like Heroku use the idea of a buildpack, a building process that's run entirely in its own container, to construct their deployable images. These buildpacks are then bundled into a "builder" stack with an operating system and can be called upon to build an app. The buildpack idea has been standardized with [Cloud Native Buildpacks](https://buildpacks.io/). Buildpacks use several tests to detect if they can build the application and if they can, then proceed to run the scripts needed to create an image.
