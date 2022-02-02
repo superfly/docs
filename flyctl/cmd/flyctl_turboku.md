@@ -15,6 +15,7 @@ flyctl turboku <heroku-app> [flags]
       --name string           the name of the new app
       --now                   deploy now without confirmation
       --org string            the organization that will own the app
+      --region string         the region to launch the new app in
 ~~~
 
 ## Global Options
