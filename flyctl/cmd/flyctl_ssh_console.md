@@ -1,7 +1,6 @@
-Connect to a running instance of the current app; with `--select/-s`, choose instance from list.
+Connect to a running instance of the current app; with -select, choose instance from list.
 
 ## Usage
-
 ~~~
 flyctl ssh console [<host>] [flags]
 ~~~

@@ -1,7 +1,6 @@
 Allocates an IPv6 address to the application.
 
 ## Usage
-
 ~~~
 flyctl ips allocate-v6 [flags]
 ~~~

@@ -1,7 +1,9 @@
-Commands for managing Fly organizations. list, create, show and destroy organizations. Organization admins can also invite or remove users from Organizations.
+Commands for managing Fly organizations. list, create, show and 
+destroy organizations. 
+Organization admins can also invite or remove users from Organizations.
+
 
 ## Usage
-
 ~~~
 flyctl orgs [command] [flags]
 ~~~

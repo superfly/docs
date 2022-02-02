@@ -1,7 +1,7 @@
-Remove encrypted secrets from the application. Unsetting a secret removes its availability to the application.
+Remove encrypted secrets from the application. Unsetting a
+secret removes its availability to the application.
 
 ## Usage
-
 ~~~
 flyctl secrets unset [flags] NAME NAME ...
 ~~~

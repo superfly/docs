@@ -1,34 +1,39 @@
-`flyctl` is a command line interface to the Fly.io platform.
+flyctl is a command line interface to the Fly.io platform.
 
-It allows users to manage authentication, application launch, deployment, network configuration, logging and more with just the one command.
+It allows users to manage authentication, application launch,
+deployment, network configuration, logging and more with just the
+one command.
 
-* Launch an app with the `launch` command
-* Deploy an app with the `deploy` command
-* View a deployed web application with the `open` command
-* Check the status of an application with the `status` command
-* To read more, use the `docs` command to view Fly's help on the web.
+* Launch an app with the launch command
+* Deploy an app with the deploy command
+* View a deployed web application with the open command
+* Check the status of an application with the status command
+
+To read more, use the docs command to view Fly's help on the web.
 
 ## Usage
-
 ~~~
 flyctl [command] [flags]
 ~~~
 
 ## Available Commands
+* [agent](/docs/flyctl/agent/)	 - Commands that manage the Fly agent, a background process that manages flyctl wireguard connections
 * [apps](/docs/flyctl/apps/)	 - Manage apps
 * [auth](/docs/flyctl/auth/)	 - Manage authentication
 * [autoscale](/docs/flyctl/autoscale/)	 - Autoscaling app resources
-* [builds](/docs/flyctl/builds/)	 - Work with Fly builds
+* [builds](/docs/flyctl/builds/)	 - Manage application builds
 * [certs](/docs/flyctl/certs/)	 - Manage certificates
 * [checks](/docs/flyctl/checks/)	 - Manage health checks
 * [config](/docs/flyctl/config/)	 - Manage an app's configuration
 * [create](/docs/flyctl/create/)	 - Create a new application
+* [curl](/docs/flyctl/curl/)	 - Run a performance test against a URL
 * [dashboard](/docs/flyctl/dashboard/)	 - Open web browser on Fly Web UI for this app
-* [deploy](/docs/flyctl/deploy/)	 - Deploy an app to the Fly platform
+* [deploy](/docs/flyctl/deploy/)	 - Deploy Fly applications
 * [destroy](/docs/flyctl/destroy/)	 - Permanently destroys an app
-* [dig](/docs/flyctl/dig/)	 - DNS lookups
+* [dig](/docs/flyctl/dig/)	 - Make DNS requests against Fly.io's internal DNS server
 * [dns-records](/docs/flyctl/dns-records/)	 - Manage DNS records
 * [docs](/docs/flyctl/docs/)	 - View Fly documentation
+* [doctor](/docs/flyctl/doctor/)	 - The DOCTOR command allows you to debug your Fly environment
 * [domains](/docs/flyctl/domains/)	 - Manage domains
 * [history](/docs/flyctl/history/)	 - List an app's change history
 * [image](/docs/flyctl/image/)	 - Manage app image

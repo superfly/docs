@@ -1,7 +1,6 @@
 Shows the list of regions the app is allowed to run in.
 
 ## Usage
-
 ~~~
 flyctl regions list [flags]
 ~~~

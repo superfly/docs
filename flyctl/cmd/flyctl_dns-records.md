@@ -1,7 +1,6 @@
 Manage DNS records within a domain
 
 ## Usage
-
 ~~~
 flyctl dns-records [command] [flags]
 ~~~

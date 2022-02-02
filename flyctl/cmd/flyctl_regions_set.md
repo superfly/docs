@@ -1,7 +1,6 @@
-Sets the region pool with provided regions.
+Sets the region pool with provided regions
 
 ## Usage
-
 ~~~
 flyctl regions set REGION ... [flags]
 ~~~

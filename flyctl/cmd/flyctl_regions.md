@@ -1,7 +1,6 @@
 Configure the region placement rules for an application.
 
 ## Usage
-
 ~~~
 flyctl regions [command] [flags]
 ~~~

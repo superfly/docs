@@ -1,8 +1,9 @@
-Show the application's current status including application details, tasks, most recent deployment details and in which regions it is
+Show the application's current status including application
+details, tasks, most recent deployment details and in which regions it is
 currently allocated.
 
-## Usage
 
+## Usage
 ~~~
 flyctl status [flags]
 ~~~
@@ -14,13 +15,12 @@ flyctl status [flags]
 
 ~~~
       --all             Show completed instances
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
       --deployment      Always show deployment status
   -h, --help            help for status
       --rate int        Refresh Rate for --watch (default 5)
       --watch           Refresh details
-      --wtf string      wtf usage (default "defaultwtf")
 ~~~
 
 ## Global Options

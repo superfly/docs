@@ -1,7 +1,7 @@
 Delete an existing organization.
 
-## Usage
 
+## Usage
 ~~~
 flyctl orgs delete [-yes] [slug] [flags]
 ~~~

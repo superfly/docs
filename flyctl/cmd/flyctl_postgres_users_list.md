@@ -1,7 +1,6 @@
-List users in a cluster.
+list users in a cluster
 
 ## Usage
-
 ~~~
 flyctl postgres users list <postgres-cluster-name> [flags]
 ~~~

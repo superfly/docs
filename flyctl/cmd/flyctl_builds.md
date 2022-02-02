@@ -1,21 +1,19 @@
-Fly builds are templates to make developing Fly applications easier.
+Build commands expose your local and remote builds.
+The LIST command will list all builds along with their status.
+
 
 ## Usage
-
 ~~~
 flyctl builds [command] [flags]
 ~~~
 
 ## Available Commands
 * [list](/docs/flyctl/builds-list/)	 - List builds
-* [logs](/docs/flyctl/builds-logs/)	 - Show logs associated with builds
 
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
-  -h, --help            help for builds
+  -h, --help   help for builds
 ~~~
 
 ## Global Options

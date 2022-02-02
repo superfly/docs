@@ -1,7 +1,6 @@
-Commands for managing Fly Volumes associated with an application.
+Commands for managing Fly Volumes associated with an application
 
 ## Usage
-
 ~~~
 flyctl volumes [command] [flags]
 ~~~
@@ -16,9 +15,7 @@ flyctl volumes [command] [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
-  -h, --help            help for volumes
+  -h, --help   help for volumes
 ~~~
 
 ## Global Options

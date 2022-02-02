@@ -1,8 +1,8 @@
-Create a root SSH certificate for your organization. If `<override>` is provided, will re-key an organization; all previously issued creds will be
+Create a root SSH certificate for your organization. If <override>
+is provided, will re-key an organization; all previously issued creds will be
 invalidated.
 
 ## Usage
-
 ~~~
 flyctl ssh establish [<org>] [<override>] [flags]
 ~~~

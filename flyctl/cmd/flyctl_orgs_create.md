@@ -1,7 +1,8 @@
-Create a new organization. Other users can be invited to join the organization later.
+Create a new organization. Other users can be invited to join the 
+organization later.
+
 
 ## Usage
-
 ~~~
 flyctl orgs create [name] [flags]
 ~~~

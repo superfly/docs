@@ -1,7 +1,9 @@
-Manages the certificates associated with a deployed application. Certificates are created by associating a hostname/domain with the application. When Fly is then able to validate that hostname/domain, the platform gets certificates issued for the hostname/domain by [Let's Encrypt](https://letsencrypt.org/).
+Manages the certificates associated with a deployed application.
+Certificates are created by associating a hostname/domain with the application.
+When Fly is then able to validate that hostname/domain, the platform gets
+certificates issued for the hostname/domain by Let's Encrypt.
 
 ## Usage
-
 ~~~
 flyctl certs [command] [flags]
 ~~~

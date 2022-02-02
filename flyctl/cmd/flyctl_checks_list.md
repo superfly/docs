@@ -1,7 +1,6 @@
 List app health checks
 
 ## Usage
-
 ~~~
 flyctl checks list [flags]
 ~~~

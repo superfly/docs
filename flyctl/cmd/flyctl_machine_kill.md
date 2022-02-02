@@ -1,7 +1,6 @@
-Kill (SIGKILL) a Fly machine.
+Kill (SIGKILL) a Fly machine
 
 ## Usage
-
 ~~~
 flyctl machine kill <id> [flags]
 ~~~

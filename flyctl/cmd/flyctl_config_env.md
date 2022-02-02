@@ -1,7 +1,7 @@
-Display an app's runtime environment variables. It displays a section for secrets and another for config file defined environment variables.
+Display an app's runtime environment variables. It displays a section for
+secrets and another for config file defined environment variables.
 
 ## Usage
-
 ~~~
 flyctl config env [flags]
 ~~~

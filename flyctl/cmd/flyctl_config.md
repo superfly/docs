@@ -1,7 +1,6 @@
-The `config` commands allow you to work with an application's configuration.
+The CONFIG commands allow you to work with an application's configuration.
 
 ## Usage
-
 ~~~
 flyctl config [command] [flags]
 ~~~

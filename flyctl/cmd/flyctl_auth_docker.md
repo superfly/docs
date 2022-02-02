@@ -1,7 +1,9 @@
-Adds registry.fly.io to the docker daemon's authenticated registries. This allows you to push images directly to fly from the docker cli.
+Adds registry.fly.io to the docker daemon's authenticated 
+registries. This allows you to push images directly to fly from 
+the docker cli.
+
 
 ## Usage
-
 ~~~
 flyctl auth docker [flags]
 ~~~

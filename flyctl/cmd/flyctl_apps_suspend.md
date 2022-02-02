@@ -1,7 +1,10 @@
-The `apps suspend` command will suspend an application. All instances will be halted leaving the application running nowhere. It will continue to consume networking resources (IP address). See `apps resume` for details on restarting it.
+The APPS SUSPEND command will suspend an application. 
+All instances will be halted leaving the application running nowhere.
+It will continue to consume networking resources (IP address). See APPS RESUME
+for details on restarting it.
+
 
 ## Usage
-
 ~~~
 flyctl apps suspend [APPNAME] [flags]
 ~~~

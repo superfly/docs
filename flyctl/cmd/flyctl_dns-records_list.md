@@ -1,7 +1,6 @@
 List DNS records within a domain
 
 ## Usage
-
 ~~~
 flyctl dns-records list <domain> [flags]
 ~~~

@@ -1,7 +1,6 @@
 Register a new domain in an organization
 
 ## Usage
-
 ~~~
 flyctl domains register [org] [name] [flags]
 ~~~

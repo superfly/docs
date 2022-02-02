@@ -1,7 +1,7 @@
-Checks for update and if one is available, runs the appropriate command to update the application.
+Checks for update and if one is available, runs the appropriate
+command to update the application.
 
 ## Usage
-
 ~~~
 flyctl version update [flags]
 ~~~

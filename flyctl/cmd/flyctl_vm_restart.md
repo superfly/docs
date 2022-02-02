@@ -1,7 +1,6 @@
 Request for a VM to be asynchronously restarted.
 
 ## Usage
-
 ~~~
 flyctl vm restart <vm-id> [flags]
 ~~~

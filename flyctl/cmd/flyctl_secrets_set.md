@@ -1,15 +1,17 @@
 Set one or more encrypted secrets for an application.
 
-Secrets are provided to application at runtime as ENV variables. Names are case sensitive and stored as-is, so ensure names are appropriate for
-the application and VM environment. Any value that equals "-" will be assigned from STDIN instead of args.
+Secrets are provided to application at runtime as ENV variables. Names are
+case sensitive and stored as-is, so ensure names are appropriate for
+the application and vm environment.
+
+Any value that equals "-" will be assigned from STDIN instead of args.
 
 ## Usage
-
 ~~~
 flyctl secrets set [flags] NAME=VALUE NAME=VALUE ...
 ~~~
 
-### Examples
+## Examples
 
 ~~~
 flyctl secrets set FLY_ENV=production LOG_LEVEL=info

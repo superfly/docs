@@ -1,7 +1,6 @@
-Show current VM size and counts.
+Show current VM size and counts
 
 ## Usage
-
 ~~~
 flyctl scale show [flags]
 ~~~

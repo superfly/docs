@@ -1,7 +1,8 @@
-Log the currently logged-in user out of the Fly platform. To continue interacting with Fly, the user will need to log in again.
+Log the currently logged-in user out of the Fly platform.
+To continue interacting with Fly, the user will need to log in again.
+
 
 ## Usage
-
 ~~~
 flyctl auth logout [flags]
 ~~~

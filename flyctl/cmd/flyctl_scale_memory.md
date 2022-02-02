@@ -1,7 +1,6 @@
-Set VM memory to a number of megabytes.
+Set VM memory to a number of megabytes
 
 ## Usage
-
 ~~~
 flyctl scale memory <memoryMB> [flags]
 ~~~

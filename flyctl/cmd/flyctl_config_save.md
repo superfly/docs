@@ -1,7 +1,7 @@
-Save an application's configuration locally. The configuration data is retrieved from the Fly service and saved in TOML format.
+Save an application's configuration locally. The configuration data is
+retrieved from the Fly service and saved in TOML format.
 
 ## Usage
-
 ~~~
 flyctl config save [flags]
 ~~~

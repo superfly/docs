@@ -1,7 +1,7 @@
-Export DNS records. Will write to a file if a filename is given, otherwise writers to StdOut.
+Export DNS records. Will write to a file if a filename is given, otherwise
+writers to StdOut.
 
 ## Usage
-
 ~~~
 flyctl dns-records export <domain> [<filename>] [flags]
 ~~~

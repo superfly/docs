@@ -1,7 +1,6 @@
-Create a new WireGuard token.
+Create a new WireGuard token
 
 ## Usage
-
 ~~~
 flyctl wireguard token create [org] [name] [flags]
 ~~~

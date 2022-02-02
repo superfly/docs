@@ -1,7 +1,6 @@
-Proxies connections to a fly app through the wireguard tunnel.
+Proxies connections to a fly app through the wireguard tunnel
 
 ## Usage
-
 ~~~
 flyctl proxy <local:remote> [flags]
 ~~~

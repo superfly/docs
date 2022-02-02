@@ -1,9 +1,10 @@
-* The `list` command is for listing your resources on has two subcommands, apps and orgs.  
-* The `apps` command lists your applications. There are filtering options available.  
-* The `orgs` command lists all the organizations you are a member of.
+The list command is for listing your resources on has two subcommands, apps and orgs.
+
+The apps command lists your applications. There are filtering options available.
+
+The orgs command lists all the organizations you are a member of.
 
 ## Usage
-
 ~~~
 flyctl list [command] [flags]
 ~~~

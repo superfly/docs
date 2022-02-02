@@ -1,7 +1,7 @@
-List instances private IP addresses, accessible from within the Fly network.
+List instances private IP addresses, accessible from within the
+Fly network
 
 ## Usage
-
 ~~~
 flyctl ips private [flags]
 ~~~

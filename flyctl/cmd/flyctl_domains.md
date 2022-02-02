@@ -1,7 +1,6 @@
 Manage domains
 
 ## Usage
-
 ~~~
 flyctl domains [command] [flags]
 ~~~

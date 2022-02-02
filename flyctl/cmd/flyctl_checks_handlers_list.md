@@ -1,7 +1,6 @@
 List health check handlers
 
 ## Usage
-
 ~~~
 flyctl checks handlers list [flags]
 ~~~

@@ -1,7 +1,8 @@
-List all the releases of the application onto the Fly platform, including type, when, success/fail and which user triggered the release.
+List all the releases of the application onto the Fly platform,
+including type, when, success/fail and which user triggered the release.
+
 
 ## Usage
-
 ~~~
 flyctl releases [flags]
 ~~~
@@ -9,8 +10,8 @@ flyctl releases [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for releases
 ~~~
 

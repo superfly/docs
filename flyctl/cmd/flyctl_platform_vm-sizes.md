@@ -1,7 +1,7 @@
-View a list of VM sizes which can be used with the `flyctl scale vm` command
+View a list of VM sizes which can be used with the FLYCTL SCALE VM command
+
 
 ## Usage
-
 ~~~
 flyctl platform vm-sizes [flags]
 ~~~

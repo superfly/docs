@@ -1,7 +1,6 @@
-Launch Fly machine with the provided image and command.
+Launch Fly machine with the provided image and command
 
 ## Usage
-
 ~~~
 flyctl machine run <image> [command] [flags]
 ~~~

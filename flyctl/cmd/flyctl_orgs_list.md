@@ -1,7 +1,7 @@
 Lists organizations available to current user.
 
-## Usage
 
+## Usage
 ~~~
 flyctl orgs list [flags]
 ~~~

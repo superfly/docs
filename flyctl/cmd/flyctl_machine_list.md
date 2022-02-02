@@ -1,7 +1,6 @@
-List Fly machines.
+List Fly machines
 
 ## Usage
-
 ~~~
 flyctl machine list [flags]
 ~~~

@@ -1,9 +1,9 @@
-Authenticate with Fly (and log out if you need to).
-If you do not have an account, start with the `auth signup` command.
-If you do have and account, begin with the `auth login` subcommand.
+Authenticate with Fly (and logout if you need to).
+If you do not have an account, start with the AUTH SIGNUP command.
+If you do have and account, begin with the AUTH LOGIN subcommand.
+
 
 ## Usage
-
 ~~~
 flyctl auth [command] [flags]
 ~~~

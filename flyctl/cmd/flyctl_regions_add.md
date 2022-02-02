@@ -1,7 +1,6 @@
-Allow the app to run in one or more regions.
+Allow the app to run in one or more regions
 
 ## Usage
-
 ~~~
 flyctl regions add REGION ... [flags]
 ~~~

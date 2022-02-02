@@ -1,7 +1,6 @@
-Manage postgres clusters.
+Manage postgres clusters
 
 ## Usage
-
 ~~~
 flyctl postgres [command] [flags]
 ~~~

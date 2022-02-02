@@ -1,7 +1,7 @@
-View a list of regions where Fly has edges and/or datacenters.
+View a list of regions where Fly has edges and/or datacenters
+
 
 ## Usage
-
 ~~~
 flyctl platform regions [flags]
 ~~~

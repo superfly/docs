@@ -1,7 +1,7 @@
-Delete a volume from the application. Requires the volume's ID number to operate. This can be found through the `volumes list` command.
+Delete a volume Requires the volume's ID
+number to operate. This can be found through the volumes list command
 
 ## Usage
-
 ~~~
 flyctl volumes delete <id> [flags]
 ~~~

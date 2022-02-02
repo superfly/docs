@@ -1,7 +1,9 @@
-The `apps` commands focus on managing your Fly applications. Start with the `create` command to register your application. The `list` command will list all currently registered applications.
+The APPS commands focus on managing your Fly applications.
+Start with the CREATE command to register your application.
+The LIST command will list all currently registered applications.
+
 
 ## Usage
-
 ~~~
 flyctl apps [command] [flags]
 ~~~
@@ -11,6 +13,8 @@ flyctl apps [command] [flags]
 * [destroy](/docs/flyctl/apps-destroy/)	 - Permanently destroys an app
 * [list](/docs/flyctl/apps-list/)	 - List applications
 * [move](/docs/flyctl/apps-move/)	 - Move an app to another organization
+* [open](/docs/flyctl/apps-open/)	 - Open browser to current deployed application
+* [releases](/docs/flyctl/apps-releases/)	 - List app releases
 * [restart](/docs/flyctl/apps-restart/)	 - Restart an application
 * [resume](/docs/flyctl/apps-resume/)	 - Resume an application
 * [suspend](/docs/flyctl/apps-suspend/)	 - Suspend an application

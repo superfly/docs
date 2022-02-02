@@ -1,7 +1,8 @@
-Create new volume for app. The `--region` flag must be included to specify the region the volume exists in. The `--size` flag is optional, defaults to 10, and sets the size as the number of gigabytes the volume will consume.
+Create new volume for app. --region flag must be included to specify
+region the volume exists in. --size flag is optional, defaults to 10,
+sets the size as the number of gigabytes the volume will consume.
 
 ## Usage
-
 ~~~
 flyctl volumes create <volumename> [flags]
 ~~~
@@ -9,13 +10,13 @@ flyctl volumes create <volumename> [flags]
 ## Options
 
 ~~~
-  -a, --app string            App name to operate on
-  -c, --config string         Path to an app config file or directory containing one (default "./fly.toml")
-      --encrypted             Encrypt the volume (default true)
+  -a, --app string            Application name
+  -c, --config string         Path to application configuration file
+      --encrypted             Encrypt volume (default true)
   -h, --help                  help for create
-      --region string         Set region for new volume
+  -r, --region string         The region to operate on
       --require-unique-zone   Require volume to be placed in separate hardware zone from existing volumes (default true)
-      --size int              Size of volume in gigabytes (default 10)
+  -s, --size int              Size of volume in gigabytes (default 10)
 ~~~
 
 ## Global Options

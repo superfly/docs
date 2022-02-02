@@ -1,7 +1,6 @@
-Stop a Fly machine.
+Stop a Fly machine
 
 ## Usage
-
 ~~~
 flyctl machine stop <id> [flags]
 ~~~

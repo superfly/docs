@@ -1,7 +1,6 @@
 Show a VM's current status including logs, checks, and events.
 
 ## Usage
-
 ~~~
 flyctl vm status <vm-id> [flags]
 ~~~

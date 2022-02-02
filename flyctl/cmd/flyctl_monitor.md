@@ -1,7 +1,7 @@
-Monitor application deployments and other activities. Use `--verbose/-v` to get details of every instance . Control-C to stop output.
+Monitor application deployments and other activities. Use --verbose/-v
+to get details of every instance . Control-C to stop output.
 
 ## Usage
-
 ~~~
 flyctl monitor [flags]
 ~~~

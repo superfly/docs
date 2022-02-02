@@ -1,7 +1,6 @@
 Create a health check handler
 
 ## Usage
-
 ~~~
 flyctl checks handlers create [flags]
 ~~~

@@ -1,7 +1,6 @@
-Remove a WireGuard peer connection from an organization.
+Remove a WireGuard peer connection from an organization
 
 ## Usage
-
 ~~~
 flyctl wireguard remove [org] [name] [flags]
 ~~~

@@ -1,7 +1,6 @@
-Connect to postgres cluster.
+Connect to postgres cluster
 
 ## Usage
-
 ~~~
 flyctl postgres connect [flags]
 ~~~

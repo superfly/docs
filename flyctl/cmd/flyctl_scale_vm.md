@@ -1,11 +1,20 @@
-Change an application's VM size to one of the named VM sizes. Size names include `shared-cpu-1x`, `dedicated-cpu-1x`, `dedicated-cpu-2x`. For a full list of supported sizes use the command `flyctl platform vm-sizes`. 
+Change an application's VM size to one of the named VM sizes.
 
-Memory size can be set with `--memory=number-of-mb`, e.g. `flyctl scale vm shared-cpu-1x --memory=2048`. For dedicated VMs, this should be a multiple of 1024MB. For shared VMs, this can be 256MB or a multiple of 1024MB.
+Size names include shared-cpu-1x, dedicated-cpu-1x, dedicated-cpu-2x.
 
-For pricing, see https://fly.io/docs/about/pricing/.
+For a full list of supported sizes use the command FLYCTL PLATFORM VM-SIZES
+
+Memory size can be set with --memory=number-of-MB
+
+e.g. flyctl scale vm shared-cpu-1x --memory=2048
+
+For dedicated vms, this should be a multiple of 1024MB.
+
+For shared vms, this can be 256MB or a a multiple of 1024MB.
+
+For pricing, see https://fly.io/docs/about/pricing/
 
 ## Usage
-
 ~~~
 flyctl scale vm [SIZENAME] [flags]
 ~~~

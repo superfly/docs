@@ -1,7 +1,8 @@
-Remove a user from an organization. User must have accepted a previous invitation to join (if not, see `orgs revoke`).
+Remove a user from an organization. User must have accepted a previous
+invitation to join (if not, see orgs revoke).
+
 
 ## Usage
-
 ~~~
 flyctl orgs remove [slug] [email] [flags]
 ~~~

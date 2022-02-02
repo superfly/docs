@@ -1,7 +1,8 @@
-The `apps destroy` command will remove an application from the Fly platform.
+The APPS DESTROY command will remove an application 
+from the Fly platform.
+
 
 ## Usage
-
 ~~~
 flyctl apps destroy [APPNAME] [flags]
 ~~~

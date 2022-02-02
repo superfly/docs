@@ -1,7 +1,6 @@
-Commands that manage VM instances.
+Commands that manage VM instances
 
 ## Usage
-
 ~~~
 flyctl vm [command] [flags]
 ~~~

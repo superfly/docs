@@ -1,7 +1,9 @@
-Shows the authentication token that is currently in use. This can be used as an authentication token with API services, independent of flyctl.
+Shows the authentication token that is currently in use. 
+This can be used as an authentication token with API services, 
+independent of flyctl.
+
 
 ## Usage
-
 ~~~
 flyctl auth token [flags]
 ~~~

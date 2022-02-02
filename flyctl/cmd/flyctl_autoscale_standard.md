@@ -1,10 +1,9 @@
 Configure the app without traffic balancing with the given parameters:
 
-* `min=int` - minimum number of instances to be allocated from region pool.  
-* `max=int` - maximum number of instances to be allocated from region pool.
+min=int - minimum number of instances to be allocated from region pool.
+max=int - maximum number of instances to be allocated from region pool.
 
 ## Usage
-
 ~~~
 flyctl autoscale standard [flags]
 ~~~

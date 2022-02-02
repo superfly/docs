@@ -1,7 +1,7 @@
-Lists all organizations which your are a member of. It will show the short name of the organization and the long name.
+Lists all organizations which your are a member of. It will show the
+short name of the organization and the long name.
 
 ## Usage
-
 ~~~
 flyctl list orgs [flags]
 ~~~

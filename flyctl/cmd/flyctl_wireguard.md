@@ -1,7 +1,6 @@
-Commands that manage WireGuard peer connections.
+Commands that manage WireGuard peer connections
 
 ## Usage
-
 ~~~
 flyctl wireguard [command] [flags]
 ~~~

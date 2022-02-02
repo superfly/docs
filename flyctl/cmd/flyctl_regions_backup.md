@@ -1,7 +1,6 @@
-Sets the backup region pool with provided regions.
+Sets the backup region pool with provided regions
 
 ## Usage
-
 ~~~
 flyctl regions backup REGION ... [flags]
 ~~~

@@ -1,7 +1,8 @@
-List the secrets available to the application. It shows each secret's name, a digest of the its value and the time the secret was last set. The actual value of the secret is only available to the application.
+List the secrets available to the application. It shows each
+secret's name, a digest of the its value and the time the secret was last set.
+The actual value of the secret is only available to the application.
 
 ## Usage
-
 ~~~
 flyctl secrets list [flags]
 ~~~

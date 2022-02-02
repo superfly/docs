@@ -1,7 +1,6 @@
-List postgres clusters.
+list postgres clusters
 
 ## Usage
-
 ~~~
 flyctl postgres list [flags]
 ~~~

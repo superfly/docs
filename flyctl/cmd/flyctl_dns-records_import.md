@@ -1,7 +1,7 @@
-Import DNS records. Will import from a file is a filename is given, otherwise imports from StdIn.
+Import DNS records. Will import from a file is a filename is given, otherwise
+imports from StdIn.
 
 ## Usage
-
 ~~~
 flyctl dns-records import <domain> [<filename>] [flags]
 ~~~

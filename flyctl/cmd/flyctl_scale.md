@@ -1,7 +1,6 @@
-Scale application resources.
+Scale application resources
 
 ## Usage
-
 ~~~
 flyctl scale [command] [flags]
 ~~~

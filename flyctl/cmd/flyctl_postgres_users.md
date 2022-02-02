@@ -1,7 +1,6 @@
-Manage users in a cluster.
+manage users in a cluster
 
 ## Usage
-
 ~~~
 flyctl postgres users [command] [flags]
 ~~~

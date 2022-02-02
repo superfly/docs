@@ -1,7 +1,6 @@
-Log of all issued certs.
+log of all issued certs
 
 ## Usage
-
 ~~~
 flyctl ssh log [flags]
 ~~~

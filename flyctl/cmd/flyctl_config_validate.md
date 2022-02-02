@@ -1,7 +1,7 @@
-Validates an application's config file against the Fly platform to ensure it is correct and meaningful to the platform.
+Validates an application's config file against the Fly platform to
+ensure it is correct and meaningful to the platform.
 
 ## Usage
-
 ~~~
 flyctl config validate [flags]
 ~~~

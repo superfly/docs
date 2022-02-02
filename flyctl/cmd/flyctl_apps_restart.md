@@ -1,7 +1,7 @@
-The `apps restart` command will restart all running vms. 
+The APPS RESTART command will restart all running vms. 
+
 
 ## Usage
-
 ~~~
 flyctl apps restart [APPNAME] [flags]
 ~~~

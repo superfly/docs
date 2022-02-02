@@ -1,7 +1,6 @@
-List snapshots associated with the specified volume.
+List snapshots associated with the specified volume
 
 ## Usage
-
 ~~~
 flyctl volumes snapshots list <volume-id> [flags]
 ~~~

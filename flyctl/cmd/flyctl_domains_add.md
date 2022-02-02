@@ -1,7 +1,6 @@
 Add a domain to an organization
 
 ## Usage
-
 ~~~
 flyctl domains add [org] [name] [flags]
 ~~~

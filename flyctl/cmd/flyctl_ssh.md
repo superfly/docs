@@ -1,7 +1,6 @@
-Commands that manage SSH credentials.
+Commands that manage SSH credentials
 
 ## Usage
-
 ~~~
 flyctl ssh [command] [flags]
 ~~~

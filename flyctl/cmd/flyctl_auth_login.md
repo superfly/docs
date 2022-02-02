@@ -1,7 +1,9 @@
-Logs a user into the Fly platform. Supports browser-based, email/password and one-time-password authentication. Defaults to using browser-based authentication.
+Logs a user into the Fly platform. Supports browser-based, 
+email/password and one-time-password authentication. Defaults to using 
+browser-based authentication.
+
 
 ## Usage
-
 ~~~
 flyctl auth login [flags]
 ~~~

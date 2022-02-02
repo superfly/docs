@@ -1,7 +1,6 @@
-Prevent the app from running in the provided regions.
+Prevent the app from running in the provided regions
 
 ## Usage
-
 ~~~
 flyctl regions remove REGION ... [flags]
 ~~~

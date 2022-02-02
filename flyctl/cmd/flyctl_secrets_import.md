@@ -1,7 +1,7 @@
-Set one or more encrypted secrets for an application. Values are read from stdin as name=value.
+Set one or more encrypted secrets for an application. Values
+are read from stdin as name=value
 
 ## Usage
-
 ~~~
 flyctl secrets import [flags]
 ~~~

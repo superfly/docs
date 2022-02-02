@@ -1,7 +1,6 @@
 Delete a health check handler
 
 ## Usage
-
 ~~~
 flyctl checks handlers delete <organization> <handler-name> [flags]
 ~~~

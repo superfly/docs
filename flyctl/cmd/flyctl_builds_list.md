@@ -1,7 +1,7 @@
-List builds
+The builds list will list builds.
+
 
 ## Usage
-
 ~~~
 flyctl builds list [flags]
 ~~~
@@ -9,8 +9,8 @@ flyctl builds list [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for list
 ~~~
 
@@ -24,5 +24,5 @@ flyctl builds list [flags]
 
 ## See Also
 
-* [flyctl builds](/docs/flyctl/builds/)	 - Work with Fly builds
+* [flyctl builds](/docs/flyctl/builds/)	 - Manage application builds
 

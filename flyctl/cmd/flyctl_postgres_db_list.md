@@ -1,7 +1,6 @@
-List databases in a cluster.
+list databases in a cluster
 
 ## Usage
-
 ~~~
 flyctl postgres db list <postgres-cluster-name> [flags]
 ~~~

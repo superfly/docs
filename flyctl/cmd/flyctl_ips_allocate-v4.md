@@ -1,7 +1,6 @@
 Allocates an IPv4 address to the application.
 
 ## Usage
-
 ~~~
 flyctl ips allocate-v4 [flags]
 ~~~

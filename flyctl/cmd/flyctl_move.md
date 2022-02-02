@@ -1,7 +1,8 @@
-The `move` command will move an application to another organization the current user belongs to.
+The MOVE command will move an application to another 
+organization the current user belongs to.
+
 
 ## Usage
-
 ~~~
 flyctl move [APPNAME] [flags]
 ~~~
@@ -10,7 +11,7 @@ flyctl move [APPNAME] [flags]
 
 ~~~
   -h, --help         help for move
-      --org string   The organization to operate on
+  -o, --org string   The organization to operate on
   -y, --yes          Accept all confirmations
 ~~~
 

@@ -1,7 +1,6 @@
 Open web browser on Fly Web UI for this application
 
 ## Usage
-
 ~~~
 flyctl dashboard [flags]
 ~~~

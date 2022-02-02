@@ -1,7 +1,6 @@
-List all WireGuard peer connections.
+List all WireGuard peer connections
 
 ## Usage
-
 ~~~
 flyctl wireguard list [<org>] [flags]
 ~~~

@@ -1,10 +1,11 @@
-Shows information about the application on the Fly platform, including its
+Shows information about the application on the Fly platform
+
+Information includes the application's
 * name, owner, version, status and hostname
 * services
 * IP addresses
 
 ## Usage
-
 ~~~
 flyctl info [flags]
 ~~~

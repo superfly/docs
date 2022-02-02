@@ -1,7 +1,6 @@
 Lists the IP addresses allocated to the application.
 
 ## Usage
-
 ~~~
 flyctl ips list [flags]
 ~~~

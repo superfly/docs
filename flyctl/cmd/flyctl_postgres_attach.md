@@ -1,7 +1,6 @@
-Attach a postgres cluster to an app.
+Attach a postgres cluster to an app
 
 ## Usage
-
 ~~~
 flyctl postgres attach [flags]
 ~~~

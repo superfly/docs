@@ -1,7 +1,6 @@
 Open web browser on Fly Web UI for this application's metrics
 
 ## Usage
-
 ~~~
 flyctl dashboard metrics [flags]
 ~~~

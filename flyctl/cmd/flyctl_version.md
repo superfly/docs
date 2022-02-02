@@ -1,7 +1,7 @@
-Shows version information for the flyctl command itself, including version number and build date.
+Shows version information for the flyctl command itself, including version
+number and build date.
 
 ## Usage
-
 ~~~
 flyctl version [flags]
 ~~~

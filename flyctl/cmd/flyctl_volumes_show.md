@@ -1,7 +1,7 @@
-Show details of an app's volume. Requires the volume's ID number to operate. This can be found through the `volumes list` command.
+Show details of an app's volume. Requires the volume's ID
+number to operate. This can be found through the volumes list command
 
 ## Usage
-
 ~~~
 flyctl volumes show <id> [flags]
 ~~~

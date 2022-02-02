@@ -1,7 +1,6 @@
 Releases an IP address from the application.
 
 ## Usage
-
 ~~~
 flyctl ips release [ADDRESS] [flags]
 ~~~

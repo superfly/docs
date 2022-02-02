@@ -1,7 +1,7 @@
-Checks the DNS configuration for the specified hostname. Displays results in the same format as the `show` command.
+Checks the DNS configuration for the specified hostname.
+Displays results in the same format as the SHOW command.
 
 ## Usage
-
 ~~~
 flyctl certs check <hostname> [flags]
 ~~~

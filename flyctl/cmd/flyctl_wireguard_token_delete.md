@@ -1,7 +1,6 @@
-Delete a WireGuard token. Token is `name:<name>` or `token:<token>`.
+Delete a WireGuard token; token is name:<name> or token:<token>
 
 ## Usage
-
 ~~~
 flyctl wireguard token delete [org] [token] [flags]
 ~~~

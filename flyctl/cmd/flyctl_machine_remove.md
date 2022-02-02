@@ -1,7 +1,6 @@
-Remove a Fly machine.
+Remove a Fly machine
 
 ## Usage
-
 ~~~
 flyctl machine remove <id> [flags]
 ~~~

@@ -1,7 +1,7 @@
-Display an application's configuration. The configuration is presented in JSON format. The configuration data is retrieved from the Fly service.
+Display an application's configuration. The configuration is presented
+in JSON format. The configuration data is retrieved from the Fly service.
 
 ## Usage
-
 ~~~
 flyctl config display [flags]
 ~~~

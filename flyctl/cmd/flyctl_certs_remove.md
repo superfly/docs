@@ -1,7 +1,7 @@
-Removes a certificate from an application. Takes hostname as a parameter to locate the certificate.
+Removes a certificate from an application. Takes hostname
+as a parameter to locate the certificate.
 
 ## Usage
-
 ~~~
 flyctl certs remove <hostname> [flags]
 ~~~

@@ -1,7 +1,7 @@
-The `restart` command will restart all running VMs. 
+The RESTART command will restart all running vms. 
+
 
 ## Usage
-
 ~~~
 flyctl restart [APPNAME] [flags]
 ~~~

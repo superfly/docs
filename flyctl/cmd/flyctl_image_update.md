@@ -1,7 +1,7 @@
-This will update the application's image to the latest available version. The update will perform a rolling restart against each VM, which may result in a brief service disruption.
+This will update the application's image to the latest available version.
+The update will perform a rolling restart against each VM, which may result in a brief service disruption.
 
 ## Usage
-
 ~~~
 flyctl image update [flags]
 ~~~
@@ -9,10 +9,11 @@ flyctl image update [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
       --detach          Return immediately instead of monitoring update progress
   -h, --help            help for update
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options

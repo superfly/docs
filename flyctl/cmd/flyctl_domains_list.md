@@ -1,7 +1,6 @@
 List domains for an organization
 
 ## Usage
-
 ~~~
 flyctl domains list [<org>] [flags]
 ~~~

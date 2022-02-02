@@ -1,7 +1,6 @@
 Create and configure a new app from source code or an image reference.
 
 ## Usage
-
 ~~~
 flyctl launch [flags]
 ~~~
@@ -33,5 +32,5 @@ flyctl launch [flags]
 
 ## See Also
 
-* [flyctl](/docs/flyctl/help/) - The Fly CLI
+* [flyctl](/docs/flyctl/help/)	 - The Fly CLI
 

@@ -1,16 +1,17 @@
-Open browser to current deployed application. If an optional path is specified, this is appended to the URL for deployed application.
+Open browser to current deployed application. If an optional relative URI is specified, it is appended 
+to the root URL of the deployed application.
+
 
 ## Usage
-
 ~~~
-flyctl open [PATH] [flags]
+flyctl open [RELATIVE_URI] [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for open
 ~~~
 

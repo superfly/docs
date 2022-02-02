@@ -1,7 +1,6 @@
-Commands that managed WireGuard delegated access tokens.
+Commands that managed WireGuard delegated access tokens
 
 ## Usage
-
 ~~~
 flyctl wireguard token [command] [flags]
 ~~~

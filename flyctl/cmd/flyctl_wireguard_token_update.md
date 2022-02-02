@@ -1,7 +1,6 @@
-Rekey a WireGuard peer connection associated with a token (set `fly_wireguard_token`).
+Rekey a WireGuard peer connection associated with a token (set FLY_WIREGUARD_TOKEN)
 
 ## Usage
-
 ~~~
 flyctl wireguard token update [name] [file] [flags]
 ~~~

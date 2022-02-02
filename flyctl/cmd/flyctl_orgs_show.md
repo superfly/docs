@@ -1,7 +1,9 @@
-Shows information about an organization. Includes name, slug and type. Summarizes user permissions, DNS zones and associated member. Details full list of members and roles.
+Shows information about an organization.
+Includes name, slug and type. Summarizes user permissions, DNS zones and
+associated member. Details full list of members and roles.
+
 
 ## Usage
-
 ~~~
 flyctl orgs show [slug] [flags]
 ~~~

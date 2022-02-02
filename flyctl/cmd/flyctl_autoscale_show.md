@@ -1,7 +1,6 @@
 Show current autoscaling configuration
 
 ## Usage
-
 ~~~
 flyctl autoscale show [flags]
 ~~~

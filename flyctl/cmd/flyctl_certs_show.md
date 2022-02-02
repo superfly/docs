@@ -1,7 +1,7 @@
-Shows certificate information for an application. Takes hostname as a parameter to locate the certificate.
+Shows certificate information for an application.
+Takes hostname as a parameter to locate the certificate.
 
 ## Usage
-
 ~~~
 flyctl certs show <hostname> [flags]
 ~~~

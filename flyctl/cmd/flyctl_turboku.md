@@ -1,7 +1,6 @@
-Launches heroku apps.
+Launches heroku apps
 
 ## Usage
-
 ~~~
 flyctl turboku <heroku-app> [flags]
 ~~~

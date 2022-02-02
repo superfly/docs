@@ -1,16 +1,16 @@
-Show the instance's current status including logs, checks, and events.
+Show the instance's current status including checks and events.
+
 
 ## Usage
-
 ~~~
-flyctl status instance [instance-id] [flags]
+flyctl status instance <INSTANCE_ID> [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for instance
 ~~~
 

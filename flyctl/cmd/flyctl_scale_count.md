@@ -1,7 +1,8 @@
-Change an app's VM count to the given value. For pricing, see https://fly.io/docs/about/pricing/.
+Change an app's VM count to the given value.
+
+For pricing, see https://fly.io/docs/about/pricing/
 
 ## Usage
-
 ~~~
 flyctl scale count <count> [flags]
 ~~~

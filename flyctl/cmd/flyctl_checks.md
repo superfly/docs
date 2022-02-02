@@ -1,7 +1,6 @@
 Manage health checks
 
 ## Usage
-
 ~~~
 flyctl checks [command] [flags]
 ~~~

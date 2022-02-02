@@ -1,7 +1,6 @@
-List all WireGuard tokens.
+List all WireGuard tokens
 
 ## Usage
-
 ~~~
 flyctl wireguard token list [<org>] [flags]
 ~~~

@@ -1,7 +1,6 @@
-Start a Fly machine.
+Start a Fly machine
 
 ## Usage
-
 ~~~
 flyctl machine start <id> [flags]
 ~~~

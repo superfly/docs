@@ -1,13 +1,13 @@
-Commands for managing volume snapshots.
+"Commands for managing volume snapshots"
+
 
 ## Usage
-
 ~~~
 flyctl volumes snapshots [command] [flags]
 ~~~
 
 ## Available Commands
-* [list](/docs/flyctl/volumes-snapshots-list/)	 - list snapshots associated with the specified volume
+* [list](/docs/flyctl/volumes-snapshots-list/)	 - List snapshots
 
 ## Options
 

@@ -1,7 +1,6 @@
 Disable autoscaling to manually controlling app resources
 
 ## Usage
-
 ~~~
 flyctl autoscale disable [flags]
 ~~~

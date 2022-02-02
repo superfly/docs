@@ -1,7 +1,6 @@
 Show information about a domain
 
 ## Usage
-
 ~~~
 flyctl domains show <domain> [flags]
 ~~~

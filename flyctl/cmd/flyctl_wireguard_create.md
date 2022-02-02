@@ -1,7 +1,6 @@
-Add a WireGuard peer connection to an organization.
+Add a WireGuard peer connection to an organization
 
 ## Usage
-
 ~~~
 flyctl wireguard create [org] [region] [name] [flags]
 ~~~

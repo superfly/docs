@@ -1,7 +1,7 @@
-Add a certificate for an application. Takes a hostname as a parameter for the certificate.
+Add a certificate for an application. Takes a hostname
+as a parameter for the certificate.
 
 ## Usage
-
 ~~~
 flyctl certs add <hostname> [flags]
 ~~~

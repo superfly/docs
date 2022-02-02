@@ -1,7 +1,6 @@
 Request for a VM to be asynchronously stopped.
 
 ## Usage
-
 ~~~
 flyctl vm stop <vm-id> [flags]
 ~~~

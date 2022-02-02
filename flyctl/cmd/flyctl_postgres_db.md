@@ -1,7 +1,6 @@
-Manage databases in a cluster.
+manage databases in a cluster
 
 ## Usage
-
 ~~~
 flyctl postgres db [command] [flags]
 ~~~

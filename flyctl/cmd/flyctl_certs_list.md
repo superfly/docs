@@ -1,7 +1,6 @@
 List the certificates associated with a deployed application.
 
 ## Usage
-
 ~~~
 flyctl certs list [flags]
 ~~~

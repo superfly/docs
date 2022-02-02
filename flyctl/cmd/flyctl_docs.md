@@ -1,7 +1,8 @@
-View Fly documentation on the Fly.io website. This command will open a browser to view the content.
+View Fly documentation on the Fly.io website. This command will open a
+browser to view the content.
+
 
 ## Usage
-
 ~~~
 flyctl docs [flags]
 ~~~

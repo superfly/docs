@@ -1,11 +1,6 @@
-Displays the users email address/service identity currently authenticated and in use.
-
-### About
-
 Show the currently authenticated user
 
 ## Usage
-
 ~~~
 flyctl auth whoami [flags]
 ~~~

@@ -1,11 +1,16 @@
-The list apps command lists all your applications. As this may be a long list, there are options to filter the results. Specifying a text string as a parameter will only return applications where the application name contains the text.
+The list apps command lists all your applications. As this may be a
+long list, there are options to filter the results.
 
-The `--orgs/-o` flag allows you to specify the name of an organization that the application must be owned by. (see list orgs for organization names).
+Specifying a text string as a parameter will only return applications where the
+application name contains the text.
 
-The `--status/-s` flag allows you to specify status applications should be at to be returned in the results. e.g. `-s running` would only return running applications.
+The --orgs/-o flag allows you to specify the name of an organization that the
+application must be owned by. (see list orgs for organization names).
+
+The --status/-s flag allows you to specify status applications should be at to be
+returned in the results. e.g. -s running would only return running applications.
 
 ## Usage
-
 ~~~
 flyctl list apps [text] [-o org] [-s status] [flags]
 ~~~
