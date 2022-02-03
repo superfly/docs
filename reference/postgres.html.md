@@ -141,7 +141,7 @@ In general, your clients should connect to port 5432.
 
 A Postgres cluster is configured with three users when created: 
 
-- `postgres` - a role with superuser and login privilages that was created for you along with the cluster. Since the `postgres` role has superuser rights, it's recommended that you only use it for admin tasks and create new users with access restricted to the minimum necessary for applications
+- `postgres` - a role with superuser and login privileges that was created for you along with the cluster. Since the `postgres` role has superuser rights, it's recommended that you only use it for admin tasks and create new users with access restricted to the minimum necessary for applications
 - `flypgadmin` - this role is used internally by fly to configure and query the postgres cluster
 - `repluser` - this is the user replica servers us for replication from the leader
 

@@ -70,7 +70,7 @@ flyctl scale show
           Count: 4
 ```
 
-This application uses the shared-cpu-1x (one shared CPU) VM size, with 512MB of RAM for each instance and there should be four instances created of it created.
+This application uses the shared-cpu-1x (one shared CPU) VM size, with 512MB of RAM for each instance and there should be four instances of it created.
 
 ## Anchor Scaling
 
