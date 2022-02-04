@@ -11,6 +11,18 @@ nav: firecracker
 
 Postgres on Fly is a regular fly app, just with extensions to simplify management. It relies on building blocks available to all fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
 
+### About **Free** Postgres on Fly
+
+You can use Fly's [free resource allowance](https://fly.io/docs/about/pricing/#free-allowances) in one place, or split it up. The following Postgres configurations fit within the free volume usage limit:
+
+* single node, 3gb volume (single database)
+* 2 x 1gb volumes (database in two regions, or add a replica with the primary)
+* 3 x 1gb volumes (database in three regions)
+
+If you want to keep your whole project free, save some compute allowance for your other apps.
+
+See also [How to convert your not-free Postgres to free Postgres](https://community.fly.io/t/how-to-convert-your-not-free-postgres-to-free-postgres/3888).
+
 ## Creating a Postgres **app**
 
 To create a Postgres cluster, use the `flyctl postgres create` command. The command will walk you through the creation with prompts for name, region, and VM resources. 
