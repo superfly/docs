@@ -52,7 +52,7 @@ If your organization uses more than the free allowance of any service, additiona
 
 <%= partial("shared/cpu_mem_pricing") %>
 
-### Persistent Volumes
+## _Persistent Storage Volumes_
 
 You can add one or more persistent volumes to your apps with `flyctl volumes create ...`:
 
@@ -76,7 +76,13 @@ We use Lets Encrypt to issue certificates, and donate half of our SSL fees to th
   * $0.10/mo for additional certificates
 * Wildcard certificates: $2/mo
 
-### PostgreSQL Clusters
+### Outbound data transfer
+
+We bill for outbound data transfer, inbound transfer is free.
+
+<%= partial("shared/network_pricing") %>
+
+## _PostgreSQL Clusters_
 
 The `fly pg create` command will install a PostgreSQL cluster in your organization. PostgreSQL clusters are just "apps" made up of VMs, persistent volumes, and (possibly) extra memory. We bill only for the resources PostgreSQL clusters use.
 
@@ -122,14 +128,8 @@ The price of a postgres cluster is `(vm_price + persistent_volume_price + additi
         <td class="text-right">~$1,266/mo</td>
       </tr>
     </tbody>
-  <%# </table> %>
+  </table> 
 </div>
-
-### Outbound data transfer
-
-We bill for outbound data transfer, inbound transfer is free.
-
-<%= partial("shared/network_pricing") %>
 
 ## _Support_
 
