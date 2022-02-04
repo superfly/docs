@@ -157,10 +157,11 @@ Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select you
 
 ##### Ubuntu Linux
 
-Ensure you have `wg-quick` installed, if not, run:
+Ensure you have `wg-quick` installed, if not, run the below command.
+From Ubuntu 18 onwards, `openresolv` is also required.
 
 ```
-sudo apt install wireguard-tools
+sudo apt install wireguard-tools openresolv
 ```
 
 Copy the configuration file to `/etc/wireguard`; you'll need root/sudo permissions:
