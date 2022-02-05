@@ -112,12 +112,18 @@ You can use `flyctl ssh console` to connect to a running instance of your applic
 
 ## _Health checks failing_
 
-This problem mainly affects Elixir apps, but if your health checks keep failing during deployment...
+If your health checks keep failing during deployment...
+
 ```
 [error] Health check status changed 'warning' => 'critical'
+
 ```
 
-You may have to increase the grace period for health checks. For example if it takes about 30 seconds for your application to boot:
+... the first step is to look at a failed VM and see what you can figure out. RAM increases are only useful if the VM had an out of memory error (which you might see in the logs). The health check grace period is only helpful if health checks took too long to pass.
+
+To see the specific VM status, run `fly status --all` to get a list of VMs. Find one with status `failed` , then run `fly vm status <id>` . This will give you a lot more information. Make sure you check the exit code, if it’s 0 it means health check failures, if it’s not zero it’s some issue crashing the process.
+
+To increase the grace period for your app (ex: if it takes about 30 seconds for your application to boot), you would do so:
 ```
   # If you are using tcp_checks
   [[services.tcp_checks]]
