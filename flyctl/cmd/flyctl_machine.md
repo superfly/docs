@@ -12,6 +12,7 @@ flyctl machine [command] [flags]
 * [remove](/docs/flyctl/machine-remove/)	 - Remove a Fly machine
 * [run](/docs/flyctl/machine-run/)	 - Launch a Fly machine
 * [start](/docs/flyctl/machine-start/)	 - Start a Fly machine
+* [status](/docs/flyctl/machine-status/)	 - Get status on a fly machine
 * [stop](/docs/flyctl/machine-stop/)	 - Stop a Fly machine
 
 ## Options

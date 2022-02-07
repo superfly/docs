@@ -47,6 +47,7 @@ flyctl [command] [flags]
 * [move](/docs/flyctl/move/)	 - Move an app to another organization
 * [open](/docs/flyctl/open/)	 - Open browser to current deployed application
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
+* [ping](/docs/flyctl/ping/)	 - Test connectivity with ICMP ping messages
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
 * [postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
 * [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a fly app
