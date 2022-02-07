@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-By default, `flyctl deploy` builds and deploys a `fly.toml` file, a `Dockerfile`, and sourcecode from the current working directory. This is sufficient for deploying a single app, but you can also configure `flyctl` to build and deploy multiple apps from a monorepo or deploy an app to multiple targets.
+By default, `flyctl deploy` builds and deploys a `fly.toml` file, a `Dockerfile`, and source code from the current working directory. This is sufficient for deploying a single app, but you can also configure `flyctl` to build and deploy multiple apps from a monorepo or deploy an app to multiple targets.
 
 ## _Paths_
 

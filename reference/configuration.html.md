@@ -9,7 +9,7 @@ All Fly applications have a `fly.toml` file which describes how the application 
 
 The file is in TOML format ([github reference](https://github.com/toml-lang/toml)). If you are unfamiliar with TOML, here's a [useful introduction](https://npf.io/2014/08/intro-to-toml/). It is made up of lines with either key/value settings or sections (noted by values surrounded by one or more pairs of square brackets).
 
-You don't need to create a `fly.toml` file by hand. Runnning [flyctl launch](/docs/flyctl/launch/) will create a `fly.toml` file for you. You can also save one from an existing app by running [flyctl config save](/docs/flyctl/config-save/)
+You don't need to create a `fly.toml` file by hand. Running [flyctl launch](/docs/flyctl/launch/) will create a `fly.toml` file for you. You can also save one from an existing app by running [flyctl config save](/docs/flyctl/config-save/)
 
 ## _Fly.toml - line by line_
 
