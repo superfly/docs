@@ -11,9 +11,11 @@ nav: firecracker
 
 This section of the Fly docs is all about getting you up and running quickly.
 
-The essential part of this is [Installing Flyctl](/docs/getting-started/installing-flyctl) will take you through the, few, steps you need to perform to get the Fly command line available. Don't forget to [create an account and login](/docs/getting-started/log-in-to-fly/) too.
+[Installing Flyctl](/docs/getting-started/installing-flyctl) will take you through the, few, steps you need to perform to get the Fly command line available. Don't forget to [create an account and login](/docs/getting-started/log-in-to-fly/) too.
 
 Once that is done, you're ready to take on the Getting Started language and application guides.
+
+If you have an app running on Heroku, you may prefer to dip your toes in by cloning it to Fly.io with our [Turboku](https://fly.io/launch/heroku) web launcher. Read about it in the [New Turboku launch post](https://fly.io/blog/new-turboku/).
 
 ## _Language Guides_
 

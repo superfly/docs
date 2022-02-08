@@ -24,7 +24,8 @@ One thing to know: Docker images ([OCI container images](/blog/docker-without-do
 
 In many cases, you won't have to touch Docker; we can scan your source code and detect which [pre-existing buildpack](https://fly.io/docs/reference/builders/#buildpacks) matches the configuration you need, and our remote builder will build your app container image on deploy.
 
-If you have an app running on [Heroku](https://www.heroku.com/) already, we've built a quick-and-easy [tool](https://fly.io/heroku) to deploy it on Fly.io.
+<div class="callout">
+If you have an app running on [Heroku](https://www.heroku.com/), you may be interested in our quick-and-easy [**Turboku web launcher**](https://fly.io/launch/heroku) to deploy it on Fly.io too. [**Read more here**](https://fly.io/blog/new-turboku/).</div>
 
 More on [builders](/docs/reference/builders).
 
