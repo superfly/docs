@@ -7,7 +7,7 @@ flyctl postgres [command] [flags]
 
 ## Available Commands
 * [attach](/docs/flyctl/postgres-attach/)	 - Attach a postgres cluster to an app
-* [connect](/docs/flyctl/postgres-connect/)	 - Connect to postgres cluster
+* [connect](/docs/flyctl/postgres-connect/)	 - Connect to the Postgres console
 * [create](/docs/flyctl/postgres-create/)	 - Create a postgres cluster
 * [db](/docs/flyctl/postgres-db/)	 - manage databases in a cluster
 * [detach](/docs/flyctl/postgres-detach/)	 - Detach a postgres cluster from an app
