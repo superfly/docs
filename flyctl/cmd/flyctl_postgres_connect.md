@@ -1,4 +1,4 @@
-Connect to postgres cluster
+Connect to the Postgres console
 
 ## Usage
 ~~~

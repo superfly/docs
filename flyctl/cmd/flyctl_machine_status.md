@@ -1,4 +1,4 @@
-Get status for a Fly machine
+Show current status of a running mchine
 
 ## Usage
 ~~~
