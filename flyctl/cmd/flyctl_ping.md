@@ -1,6 +1,6 @@
 Test connectivity with ICMP ping messages.
 
-This runs over WireGuard; tell us which WireGuard tunnel to use by 
+This runs over WireGuard; tell us which WireGuard tunnel to use by
 running from within an app directory (with a 'fly.toml'), passing the
 '-a' flag with an app name, or the '-o' flag with an org name.
 
