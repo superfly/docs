@@ -120,19 +120,6 @@ You'll be asked to select which organization you want the WireGuard tunnel to wo
   Demo Sandbox (demo-sandbox)
 ```
 
-You'll then be asked for a region where the gateway is. The available regions can be found by running `fly platform regions`. Select a region with a check mark in the Gateway column.
-
-```output
-? Region in which to add WireGuard peer:  lhr
-```
-
-Now it's time to name our WireGuard peer, effectively a name for the connection. We'll call this connection `basic` for this example:
-
-```output
-? Name of WireGuard peer to add:  basic
-Creating WireGuard peer "basic" in region "lhr" for organization personal
-```
-
 As well as configuring the Wireguard service, the create command also generates a tunnel configuration file, complete with private keys which cannot be recovered. This configuration file will be used in the next step. First it has to be saved:
 
 ```output
@@ -144,6 +131,33 @@ Wrote WireGuard configuration to 'basic.conf'; load in your WireGuard client
 ```
 
 We suggest you name your saved configuration with the same name as the peer you have created. Add the extension `.conf` to ensure it can will be recognized by the various WireGuard apps as a configuration file for a tunnel.
+
+##### Dealing with Defaults
+
+A default `region` and `name` will be used if they are not provided to the create command. In most cases, this is fine. However, the default generated name will start with `interactive-*` which are filtered out of DNS (because of the sheer volume of them) and subseqently can't be queried with `_peer.internal` or `<peername>._peer.internal`. If you wish to interact with your peer via it's name, be sure to specify it when creating.
+
+First, look up available regions by running `fly platform regions`. Select a region with a check mark in the Gateway column.
+
+Then run:
+```cmd
+fly wireguard create [your-org] [region] [peer-name]
+```
+
+After that you'll be able to `dig` to your heart's desire:
+
+```cmd
+dig +short txt _peer.internal @fdaa:0:18::3
+```
+```output
+"my-peer"
+```
+
+```cmd
+dig +short aaaa my-peer._peer.internal @fdaa:0:18::3
+```
+```output
+fdaa:0:18:a7b:7d:f066:b83b:102
+```
 
 #### Importing your tunnel
 
