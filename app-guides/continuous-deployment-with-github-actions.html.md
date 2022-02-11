@@ -43,7 +43,7 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
           runs-on: ubuntu-latest
           steps:
             - uses: actions/checkout@v2
-            - uses: superfly/flyctl-actions@1.1
+            - uses: superfly/flyctl-actions@1.3
               with:
                 args: "deploy"
     ```      
