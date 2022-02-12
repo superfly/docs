@@ -81,8 +81,7 @@ The basic logic to connect is:
 1. Set a `PRIMARY_REGION` environment variable on your app, `scl` for our `chaos-postgres` cluster.
 2. Check the `FLY_REGION` environment variable at connect time, use `DATABASE_URL` as is when `FLY_REGION=scl`
 3. Modify the `DATABASE_URL` when running in other regions:
-   1. Change the hostname to `<region>.chaos-postgres.internal`
-   2. Change the port to `5433`
+   1. Change the port to `5433`
 
 This is what it looks like in Ruby:
 
@@ -98,7 +97,6 @@ class Fly
     end
     
     u = URI.parse(db_url)
-    u.hostname = "#{current}.#{u.hostname}"
     u.port = 5433
     
     return u.to_s
@@ -109,15 +107,12 @@ end
 Running this in `scl` will use the built-in `DATABASE_URL` and connect to port `5432`:
 
 ```
-postgres://<user>:<password>@chaos-postgres.internal:5432/rails_on_fly?sslmode=disable
+postgres://<user>:<password>@top1.nearest.of.chaos-postgres.internal:5432/rails_on_fly?sslmode=disable
 ```
 
-In the other regions, the app will use regional URLs and connect to port `5433`:
+In the other regions, the app will connect to port `5433`:
 ```
-postgres://<user>:<password>@ord.chaos-postgres.internal:5433/rails_on_fly?sslmode=disable
-postgres://<user>:<password>@atl.chaos-postgres.internal:5433/rails_on_fly?sslmode=disable
-postgres://<user>:<password>@ams.chaos-postgres.internal:5433/rails_on_fly?sslmode=disable
-postgres://<user>:<password>@syd.chaos-postgres.internal:5433/rails_on_fly?sslmode=disable
+postgres://<user>:<password>@top1.nearest.of.chaos-postgres.internal:5433/rails_on_fly?sslmode=disable
 ```
 
 
