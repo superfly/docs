@@ -14,9 +14,17 @@ You have an application you want to deploy on Fly? You're in the right place.
 2. Create an account with `flyctl auth signup` or login with `flyctl auth login`.
 3. Run `flyctl launch` - create, configure, and deploy a new application
 
-That's all your need to do for most applications. The `launch` command detects a Dockerfile if you have one, builds the image and deploys. If you don't have a Dockerfile, we do our best to detect the application you're building and set some reasonable defaults.
+That's all your need to do for most applications. The `launch` command prepares your project, optionally attaches a Postgres database, and then deploys. `launch` knows about these kinds of apps:
 
-Did `launch` exit with errors? It happens. Post the command output in the [community forum](https://community.fly.io) and get help!
+* [Phoenix](https://phoenixframework.org/)
+* [Ruby on Rails](https://rubyonrails.org/)
+* [Remix](https://remix.run/)
+* [Django](https://www.djangoproject.com/)
+* [RedwoodJS](https://redwoodjs.com/)
+
+Launch also works with a Dockerfile. If you're running something else, just find a functional Dockerfile and you're good to go.
+
+If launch fails, don't stress. This is a complicated process. Post the command output in the [community forum](https://community.fly.io) and get help!
 
 ## _Next steps_
 
