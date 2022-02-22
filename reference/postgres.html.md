@@ -9,14 +9,14 @@ nav: firecracker
 
 ## About Postgres On Fly
 
-Postgres on Fly is a regular fly app, just with extensions to simplify management. It relies on building blocks available to all fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
+Postgres on Fly is a regular Fly.io app, with an automatic setup process and some extensions to simplify management. It relies on building blocks available to all Fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
 
 ### About **Free** Postgres on Fly
 
 You can use Fly's [free resource allowance](https://fly.io/docs/about/pricing/#free-allowances) in one place, or split it up. The following Postgres configurations fit within the free volume usage limit:
 
 * single node, 3gb volume (single database)
-* 2 x 1gb volumes (database in two regions, or add a replica with the primary)
+* 2 x 1gb volumes (database in two regions, or a primary and replica in the same region)
 * 3 x 1gb volumes (database in three regions)
 
 If you want to keep your whole project free, save some compute allowance for your other apps.
@@ -84,6 +84,12 @@ See the postgres docs for more information on next steps, managing postgres, con
 After answering all the prompts, you'll see a message saying that the cluster is being created, followed by a deployment monitor watching as the app is launched. Take heed of the reminder to save your password in a safe place! 
 
 Your new Postgres cluster is ready to use once the deployment is complete.
+
+Before we get any further, note that the automated Postgres creation process doesn't generate a `fly.toml` file in the working directory. This means that when you use `flyctl` commands with Fly Postgres apps, you'll have to specify the app, like so:
+
+```cmd
+flyctl <command> -a <postgres-app-name>
+```
 
 ## Connecting to Postgres
 
@@ -174,11 +180,11 @@ This will revoke access to the attachment's role, remove the role, and remove th
 
 Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ postgres servers. It provides a number of things, including a “keeper” that controls the postgres process, a "sentinel" that builds the cluster view, and a “proxy” that always routes connections to the current leader.
 
-5433 is the port the keeper tells postgres to listen on. Connecting there goes straight to postgres, though it might be the leader or the replica. Since clients need writes, the proxy is listening on the default 5432 port so clients are connected to the current leader.
+5433 is the port the keeper tells postgres to listen on. Connecting there goes straight to Postgres, though it might be the leader or the replica. Since clients need writes, the proxy is listening on the default 5432 port so clients are connected to the current leader.
 
 If the leader becomes unhealthy (eg network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previoius leader's VM will be replaced by another VM which will rejoin the cluster as a replica. 
 
-In general, your clients should connect to port 5432.
+**In general, your clients should connect to port 5432.**
 
 ## Users / Roles
 
@@ -486,21 +492,18 @@ flyctl volumes create pg_data --region syd --size 10
 flyctl scale count 3
 ```
 
-## Scenarios to walkthrough
-- upgrading
-- failovers
-- adding read replcas
-- global read replicas
+## Upgrading
 
-## Postgres Extensions
+You can update a Postgres cluster, installed with `flyctl postgres create`, to the latest [release](https://github.com/fly-apps/postgres-ha/releases) using [`flyctl image update`](/docs/flyctl/image-update/). 
 
-## FAQ
+Check your current image with [`flyctl image show`](/docs/flyctl/image-show/):
 
-- can I replicate data out of fly? Yes
-- is my data encrypted at rest? yes
+```cmd
+flyctl image show -a <postgres-app-name>
+```
 
-## TODO
+And upgrade with:
 
-- SSL disable + why
-- read-write and read-only mode
-  
+```cmd
+flyctl image update -a <postgres-app-name>
+```
