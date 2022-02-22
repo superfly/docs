@@ -42,7 +42,7 @@ The last part of this section widens your Fly knowledge. There is a tour through
   * Viewing app logs
   * Managing secrets for an app
   * Adding hostnames and creating certificates 
-* [Troubleshooting Deploments](/docs/getting-started/troubleshooting/) covers
+* [Troubleshooting Deployments](/docs/getting-started/troubleshooting/) covers
   * Port settings and checking them
   * Reviewing deployment logs
   * Checking your app's host binding

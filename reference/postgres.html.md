@@ -87,7 +87,7 @@ Your new Postgres cluster is ready to use once the deployment is complete.
 
 ## Connecting to Postgres
 
-How you connect to postgres depends on the tools you're using. Connection string URIs are a common way to describe a connection to a postgres server. 
+How you connect to Postgres depends on the tools you're using. Connection string URIs are a common way to describe a connection to a postgres server. 
 
 Connection strings have the following format:
 
@@ -99,16 +99,47 @@ The output from `flyctl postgres create` contains all the values you need to mak
 
 ### Connecting to Postgres from within Fly
 
-As a Fly application, your Postgres app is accessible through Fly's [private networking](/docs/reference/private-networking/). This means applications within the same organization can look up the app at `appname.internal`. This name, when looked up, can return one or more IPv6 addresses.
+As a Fly.io application, your Postgres app is accessible through Fly's [private networking](/docs/reference/private-networking/). This means applications within the same organization can look up the app at `appname.internal`. This name, when looked up, can return one or more IPv6 addresses.
 
 ### Connecting to Postgres from outside Fly
+#### On a machine with `flyctl` installed
 
-To access Fly's private networking for an organization from outside the Fly platform, you must configure a WireGuard tunnel from whichever system you are using to Fly. See [Private Network VPN](https://fly.io/docs/reference/private-networking/#private-network-vpn) for more details.
+To connect to your Postgres database from outside your Fly organization, you need a WireGuard connection. However, `flyctl` on your local machine can connect using [user-mode WireGuard](/blog/our-user-mode-wireguard-year/) magic, without you having to set up your own WireGuard tunnel.
 
-With an active Wireguard tunnel, you can connect to your postgres cluster the same way you would from a fly app within the same organization. For example, the following command would start an interactive terminal session on the cluster leader with `psql`:
+For a `psql` shell, you can just use the [`flyctl postgres connect`](/docs/flyctl/postgres-connect/) command:
+
+```cmd
+flyctl postgres connect -a <postgres-app-name>
+```
+
+You can also forward the server port to your local system with [`flyctl proxy`](/docs/flyctl/proxy/):
+
+```cmd
+flyctl proxy 5432 -a <postgres-app-name>
+```
+
+Then connect to your Postgres server at localhost:5432. Using `psql` again, as a trivial example, it would look like this:
+
+```cmd
+psql postgres://postgres:<password>@localhost:5432
+```
+
+If you already have something else listening on port 5432, you can run this instead:
+
+```cmd
+flyctl proxy 15432:5432 -a <postgres-app-name>
+```
+
+Then connect to localhost:15432.
+
+As with all your Fly.io apps, you can get a root console on your app's VM using [flyctl ssh](/docs/flyctl/ssh/).
+
+#### With your own WireGuard tunnel
+
+If you have an active [WireGuard tunnel](/docs/reference/private-networking/#private-network-vpn) to your organization on our private network, you can connect to your Postgres cluster the same way you would from a Fly app within the same organization. For example, the following command would start an interactive terminal session on the cluster leader with `psql`:
 
 ```
-psql postgres://postgres:secret123@appname.internal:**5432**
+psql postgres://postgres:secret123@appname.internal:5432
 ```
 
 ## Attaching an App to a Postgres app
@@ -116,7 +147,7 @@ psql postgres://postgres:secret123@appname.internal:**5432**
 Using the superuser credentials, you can create databases, users, and whatever else you need for your apps. But we also have the `flyctl postgres attach` shortcut:
 
 ```
-flyctl postgres attach --postgres-app mypostgres
+flyctl postgres attach --postgres-app <postgres-app-name>
 ```
 
 When you attach an app to Postgres, a number of things happen:
@@ -134,7 +165,7 @@ Note that for the app to be able to attach to the database it must have private_
 Use `flyctl postgres detach` to remove postgres from the app.
 
 ```
-flyctl postgres detach --app app-name --postgres-app postgres-app-name
+flyctl postgres detach --app <app-name> --postgres-app <postgres-app-name>
 ```
 
 This will revoke access to the attachment's role, remove the role, and remove the `DATABASE_URL` secret. The database will not be removed. 
@@ -160,7 +191,7 @@ A Postgres cluster is configured with three users when created:
 You can view a list of users using `flyctl`
 
 ```cmd
-$ flyctl postgres users list c-pg-test
+flyctl postgres users list c-pg-test
 ```
 
 ```output
