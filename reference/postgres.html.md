@@ -9,7 +9,7 @@ nav: firecracker
 
 ## About Postgres On Fly
 
-Postgres on Fly is a regular Fly.io app, with an automatic setup process and some extensions to simplify management. It relies on building blocks available to all Fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
+Postgres on Fly is a regular Fly.io app, with an automated creation process and some extensions to simplify management. It relies on building blocks available to all Fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
 
 ### About **Free** Postgres on Fly
 
