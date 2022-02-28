@@ -1,8 +1,8 @@
-Proxies connections to a fly VM through a Wireguard tunnel
+Proxies connections to a fly VM through a Wireguard tunnel The current application DNS is the default remote host
 
 ## Usage
 ~~~
-flyctl proxy <local:remote> [flags]
+flyctl proxy <local:remote> [remote_host] [flags]
 ~~~
 
 ## Options
