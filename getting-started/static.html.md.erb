@@ -1,5 +1,5 @@
 ---
-title: "Create a static website on Fly"
+title: "Deploy a static website on Fly"
 layout: docs
 sitemap: false
 nav: firecracker
@@ -7,14 +7,43 @@ nav: firecracker
 
 <%= partial "partials/intro", locals: { runtime: "static", type: "site" } %>
 
+To be fair, a static site isn't an app. So we're really talking about **deploying an app to serve some static content.**
 
-## _The HelloStatic Site_
+In this demonstration, we'll use [goStatic](https://github.com/PierreZ/goStatic), a tiny web server written in Go that lets us serve static files with very little configuration. We'll provide a Dockerfile and our content for Fly to transmogrify into a web server running in a VM.
 
-Our example will be a be hosting a HTML file. There's no need for any tools. Feel free to add in any HTML files you'd like to serve too.
+You can clone all the files needed for this example from [the hello-static Github repository](https://github.com/fly-apps/hello-static) to a local directory:
 
-Either use an existing directory with an `index.html`, or clone our example from [the hellostatic Github repository](https://github.com/fly-apps/hello-static). Just `git clone https://github.com/fly-apps/hello-static` to get a local copy. Here's all the code for our `index.html`:
+```cmd
+git clone https://github.com/fly-apps/hello-static
+```
 
-```html
+Alternatively, you can create all the files manually as you work through this guide.
+
+## _Install flyctl and login_
+
+To configure our application and deploy it on Fly.io, we need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once that's installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
+
+## _Putting the app together_
+
+At this point, if you have a local clone of the `hello-static` repository, you could go ahead and run `fly launch` from its root directory and get the static site deployed without further ado. But that wouldn't be very illuminating. Let's go through what's included in the example repository and why.
+
+If you cloned the repository, your new app already has its own directory. Otherwise, create one. This isn't just for tidiness, or for letting `flyctl` detect your app by the `fly.toml` in the working directory (although these are good reasons). It also ensures that no extra files get included in the [build context](https://docs.docker.com/engine/reference/commandline/build/) when the Docker image gets built.
+
+We'll do everything from within this directory:
+
+```cmd
+cd hello-static
+```
+
+### _The Site_
+
+Our example will be a simple static site. That can be as trivial as a single `index.html` file. Let's make it only slightly more complicated by writing two html files and having them link to each other. 
+
+Put these html files into a subdirectory of their own, called `public`. Files in this directory are the ones our goStatic server will serve. Create the `hello-static/public` directory if needed.
+
+Here's `index.html`, which is the landing page:
+
+```html 
 <html>
   <head>
     <title>
@@ -23,34 +52,93 @@ Either use an existing directory with an `index.html`, or clone our example from
   </head>
   <body>
     <h1>Hello from Fly with a static web site</h1>
+      <p>Or <a href="goodbye.html">goodbye.</a></p>
   </body>
 </html>
 ```
 
-## _Install Flyctl and Login_
+Here's `goodbye.html`.
 
-We are ready to start working with Fly and that means we need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once that's installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
+```html
+<html>
+  <head>
+    <title>
+      Still Hello from Fly
+    </title>
+  </head>
+  <body>
+    <h1>You say goodbye</h1>
+      <p>But I say <a href="index.html">hello.</a></p>
+  </body>
+</html>
+```
 
-## _Configuring the App for Fly_
+### _The Dockerfile_
 
-Each Fly application needs a `fly.toml` file to tell the system how we'd like to deploy it. The `fly.toml` can be automatically generated with `flyctl launch`.
+goStatic is designed to run in a container, and the [image](https://hub.docker.com/r/pierrezemb/gostatic) is available at Docker Hub. This is super convenient for us, because Fly apps need container images too! 
+
+We can use the goStatic image as a base image. We just have to copy our site's files to `/srv/http/` in the image.
+
+Here's our Dockerfile to do that: 
+
+```docker
+FROM pierrezemb/gostatic
+COPY ./public/ /srv/http/
+```
+
+The Dockerfile should be placed in the working directory (here, `hello-static`).
+
+### _Configuring the App for Fly.io_
+
+We set the initial configuration for the app by running `flyctl launch`. This takes care of setting the app name, the Fly.io organization it belongs to, and a region to deploy to. It also generates a `fly.toml` file
+with more configuration settings. 
+
+The `hello-static` repository contains a `fly.toml` that will be detected by `flyctl launch`; you can use it to configure your app. Otherwise, a new `fly.toml` will be generated with `flyctl launch`, and we can edit it.
 
 ```cmd
 flyctl launch
 ```
-```output
-Creating app in /apps/hello-static
+```output           
+Creating app in /Users/chris/trystatic/hello-static
 Scanning source code
-Detected a Static app
-? App Name (leave blank to use an auto-generated name):
-? Select organization: flyorg (flyorg)
-? Select region: lax (Los Angeles, California (US))
-Created app hellostatic in organization flyorg
+Detected a Dockerfile app
+? App Name (leave blank to use an auto-generated name): gostatic-example
+Automatically selected personal organization: Chris Nicoll
+? Select region: ewr (Secaucus, NJ (US))
+Created app gostatic-example in organization personal
 Wrote config file fly.toml
-? Would you like to deploy now? Yes
+? Would you like to setup a Postgresql database now? No
+? Would you like to deploy now? No
+Your app is ready. Deploy with `flyctl deploy`
 ```
 
-Next you'll be prompted for an organization. Organizations are a way of sharing applications between Fly users. When you are asked to select an organization, there should be one with your account name; this is your personal organization. Select that.
+This has configured the app with some default parameters, and generated a `fly.toml` configuration file for us.
+
+Before deploying, we need to do one more thing. goStatic listens on port 8043 by default, but the default `fly.toml` assumes port 8080. Edit `internal_port` in the [`services`](/docs/reference/configuration/#the-services-sections) section to reflect this:
+
+```toml
+[[services]]
+  http_checks = []
+  internal_port = 8043
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  ```
+
+Now we're ready to deploy: 
+
+```cmd
+flyctl deploy
+```
+
+The output should end something like this, if everything has gone well: 
+
+```
+==> Monitoring deployment
+
+ 1 desired, 1 placed, 1 healthy, 0 unhealthy [health checks: 1 total, 1 passing]
+--> v0 deployed successfully
+```
 
 ## _Viewing your static site_
 
@@ -60,7 +148,9 @@ The quickest way to browse your newly deployed application is with the `flyctl o
 flyctl open
 ```
 ```output
-Opening http://hellostatic.fly.dev/
+opening http://gostatic-example.fly.dev ...
 ```
 
 Your browser will be sent to the displayed URL. Fly will auto-upgrade this URL to an HTTPS secured URL.
+
+
