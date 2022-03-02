@@ -1,0 +1,197 @@
+---
+title: "Build, Deploy and Run a Crystal Application"
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+<%= partial "partials/intro", locals: { runtime: "Crystal" } %>
+
+## _Creating a Lucky App_
+
+Our example will be using a basic Lucky app with PostgreSQL. We'll assume you
+already have [lucky+crystal installed](https://luckyframework.org/guides/getting-started/installing).
+
+Once lucky is installed, we can create a new project by running the following command:
+
+```bash
+lucky init
+```
+
+This will walk you through project options and create a new project.
+
+```bash
+✗ lucky init
+Welcome to Lucky v0.29.0 🎉
+
+Project name?: hello-lucky
+
+Lucky can generate different types of projects
+
+Full (recommended for most apps)
+
+ ● Great for server rendered HTML or Single Page Applications
+ ● Webpack included
+ ● Setup to compile CSS and JavaScript
+ ● Support for rendering HTML
+
+API
+
+ ● Specialized for use with just APIs
+ ● No webpack
+ ● No static file serving or public folder
+ ● No HTML rendering folders
+
+API only or full support for HTML and Webpack? (api/full): full
+
+Lucky can be generated with email and password authentication
+
+  ● Sign in and sign up
+  ● Mixins for requiring sign in
+  ● Password reset
+  ● Token authentication for API endpoints
+  ● Generated files can easily be removed/customized later
+
+Generate authentication? (y/n): y
+
+-----------------------
+
+Done generating your Lucky project
+
+  ▸ cd into hello-lucky
+  ▸ check database settings in config/database.cr
+  ▸ run script/setup
+  ▸ run lucky dev to start the server
+```
+
+## _Running The Application_
+
+To run the application, first run `script/setup` to install dependencies and
+create the database. Then run `lucky dev` to start the application.
+
+Connect to the address displayed in the console.
+
+This should bring you to the "Hello Lucky" page.
+
+<%= partial "partials/install_flyctl_login" %>
+
+## _Launch the app on Fly_
+
+<%= partial "partials/launch_with_postgres", locals: { detected: "Lucky", app_name: "hello-lucky" } %>
+
+## _Inside `fly.toml`_
+
+The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also created a Fly-side application slot of the same name, "hello-lucky". If we look at the `fly.toml` file we can see the name in there:
+
+```toml
+app = "hello-lucky"
+
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
+```
+
+The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly platform. The rest of the file contains settings to be applied to the application when it deploys.
+
+We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
+
+## _Deploying to Fly_
+
+To deploy changes to your app, just run just run:
+
+```cmd
+flyctl deploy
+```
+
+This will lookup our `fly.toml` file, and get the app name `hello-lucky` from there. Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl will return you to the command line when it's done.
+
+Alternatively, you can use [Github Actions to deploy your app to Fly](/docs/app-guides/continuous-deployment-with-github-actions/)
+
+## _Viewing the Deployed App_
+
+Now the application has been deployed, let's find out more about its deployment. The command `flyctl info` will give you all the essential details.
+
+```cmd
+fly status
+```
+```output
+App
+  Name     = hello-lucky
+  Owner    = personal
+  Version  = 0
+  Status   = running
+  Hostname = hello-lucky.fly.dev
+
+Deployment Status
+  ID          = 8d35eade-8c68-499e-e0a9-c6829e3c1c9d
+  Version     = v0
+  Status      = successful
+  Description = Deployment completed successfully
+  Instances   = 1 desired, 1 placed, 1 healthy, 0 unhealthy
+
+Instances
+ID              PROCESS VERSION REGION  DESIRED STATUS  HEALTH CHECKS           RESTARTS        CREATED
+235f9667        app     0       ord     run     running 1 total, 1 passing      0               1m2s ago
+```
+
+## _Connecting to the App_
+
+The quickest way to browse your newly deployed application is with the `flyctl open` command.
+
+```cmd
+flyctl open
+```
+```output
+Opening http://hello-lucky.fly.dev/
+```
+
+Your browser will be sent to the displayed URL. Fly will auto-upgrade this URL to a HTTPS secured URL.
+
+## _Bonus Points_
+
+* If you want to know what IP addresses the app is using, try `flyctl ips list`:
+
+```cmd
+flyctl ips list
+```
+```out
+TYPE ADDRESS             REGION CREATED AT
+v4   66.51.123.94        global 3m20s ago
+v6   2a09:8280:1::3:23f4 global 3m20s ago
+```
+
+## _Arrived at Destination_
+
+You have successfully built, deployed, and connected to your first Crystal application on Fly.

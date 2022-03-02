@@ -9,7 +9,7 @@ When we run `fly launch` from the newly-created project directory, the launcher 
 * Deploy the application in your selected region
 
 ```
-cd hello_elixir
+cd <%= app_name %>
 fly launch
 ```
 ```output
@@ -20,7 +20,7 @@ Detected a <%= detected %> app
 ? Select organization: flyio (flyio)
 ? Select region: mad (Madrid, Spain)
 Created app <%= app_name %> in organization soupedup
-Set secrets on hello\_elixir: SECRET\_KEY\_BASE
+Set secrets on <%= app_name %>: SECRET\_KEY\_BASE
 Installing dependencies
 Running Docker release generator
 Wrote config file fly.toml
@@ -46,7 +46,7 @@ See the postgres docs for more information on next steps, managing postgres, con
 Postgres cluster <%= app_name %>-db is now attached to <%= app_name %>
 
 Would you like to deploy now? Yes
-Deploying hello_elixir
+Deploying <%= app_name %>
 
 ==> Validating app configuration
 --> Validating app configuration done
