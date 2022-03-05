@@ -31,6 +31,7 @@ iad|Ashburn, Virginia (US)
 lax|Los Angeles, California (US)
 lhr|London, United Kingdom
 maa|Chennai (Madras), India
+mia|Miami, Florida (US)
 nrt|Tokyo, Japan
 ord|Chicago, Illinois (US)
 scl|Santiago, Chile
