@@ -6,6 +6,9 @@ The DOCTOR command allows you to debug your Fly environment
 flyctl doctor [flags]
 ~~~
 
+## Available Commands
+* [diag](/docs/flyctl/doctor-diag/)	 - Send diagnostic information about your applications back to Fly.io.
+
 ## Options
 
 ~~~

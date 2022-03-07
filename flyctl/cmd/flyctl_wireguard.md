@@ -9,6 +9,7 @@ flyctl wireguard [command] [flags]
 * [create](/docs/flyctl/wireguard-create/)	 - Add a WireGuard peer connection
 * [list](/docs/flyctl/wireguard-list/)	 - List all WireGuard peer connections
 * [remove](/docs/flyctl/wireguard-remove/)	 - Remove a WireGuard peer connection
+* [reset](/docs/flyctl/wireguard-reset/)	 - Reset WireGuard peer connection for an organization
 * [status](/docs/flyctl/wireguard-status/)	 - Get status a WireGuard peer connection
 * [token](/docs/flyctl/wireguard-token/)	 - Commands that managed WireGuard delegated access tokens
 
