@@ -14,14 +14,14 @@ There are multiple dimensions of scaling on Fly.
 
 ## Regions and Scaling
 
-Your Fly application runs on servers in a pool of regions, selected from our [available regions](/docs/reference/regions).  That pool, which [you can configure](/docs/flyctl/regions/), represents the regions your app _can_ be deployed in. 
+Your Fly application runs on servers in a pool of regions, selected from our [available regions](/docs/reference/regions).  That pool, which [you can configure](/docs/flyctl/regions/), represents the regions your app _can_ be deployed in.
 
 When you deploy an application for the first time, we pick a first region to deploy in, and some backup regions. Our selections are simple:
 
 * If you’re [turbo-charging a Heroku application](https://fly.io/heroku), we pick regions close to the Heroku application (currently, this means `iad` for US Heroku applications (howdy!), and `ams` for European applications (hallo!).
 * Otherwise, we pick regions close to you, the human running the `flyctl` command.
 
-You can confirm this by running `flyctl regions list`. 
+You can confirm this by running `flyctl regions list`.
 
 ```cmd
 flyctl regions list
@@ -34,7 +34,7 @@ ams
 fra
 ```
 
-The create command, in this case, was issued in the UK, so London (LHR-London Heathrow) is the closest region. 
+The create command, in this case, was issued in the UK, so London (LHR-London Heathrow) is the closest region.
 
 ### Backup Regions
 
@@ -44,14 +44,14 @@ Continuing our previous example: if for any reason your application can't be dep
 
 You can build your own region pool easily.
 
-* `flyctl regions add ord iad` adds `ord` and `iad` to your region pool. 
+* `flyctl regions add ord iad` adds `ord` and `iad` to your region pool.
 * `flyctl regions remove ord` removes `ord` from your region pool.
 
-Both commands simply take a space-separated list of regions to add or remove. 
+Both commands simply take a space-separated list of regions to add or remove.
 
 ## Count Scaling
 
-Now that we have control over where our application runs, we can talk about how many instances of your app are running. 
+Now that we have control over where our application runs, we can talk about how many instances of your app are running.
 
 Your application has a “scale count”. The scale count defaults to 1, meaning 1 instance of your application runs on Fly, in one of the regions in your pool.
 
@@ -90,10 +90,10 @@ Each application instance on Fly runs in a virtual machine. The number of cores 
 
 ### Viewing The Current VM Size
 
-Using `flyctl scale vm` on its own will display the details of the application's current VM sizing.
+Using `flyctl scale vm show` on its own will display the details of the application's current VM sizing.
 
 ```cmd
-flyctl scale vm
+flyctl scale vm show
 ```
 ```output
            Size: shared-cpu-1x
@@ -101,7 +101,7 @@ flyctl scale vm
          Memory: 256 MB
 ```
 
-It shows the size name (`shared-cpu-1x`), number of CPUs, memory (in GB or MB).
+It shows the size (`shared-cpu-1x`), number of CPUs, and memory (in GB or MB).
 
 ### Viewing Available VM Sizes
 
@@ -111,17 +111,17 @@ The `flyctl platform vm-sizes` command will display the various sizes with cores
 flyctl platform vm-sizes
 ```
 ```output
-NAME             CPU CORES MEMORY 
-shared-cpu-1x    1         256 MB 
-dedicated-cpu-1x 1         2 GB   
-dedicated-cpu-2x 2         4 GB   
-dedicated-cpu-4x 4         8 GB   
-dedicated-cpu-8x 8         16 GB  
+NAME             CPU CORES MEMORY
+shared-cpu-1x    1         256 MB
+dedicated-cpu-1x 1         2 GB
+dedicated-cpu-2x 2         4 GB
+dedicated-cpu-4x 4         8 GB
+dedicated-cpu-8x 8         16 GB
 ```
 
-The CPU Cores column shows how many vCPU cores will be allocated to the virtual machine. 
+The CPU Cores column shows how many vCPU cores will be allocated to the virtual machine.
 
-CPU Types are either shared or dedicated. In a nutshell: shared CPU instances run lighter-weight tasks, and can have up to 2GB of memory. Dedicated CPU instances handle more demanding applications and can scale to 64GB.
+CPU Types are either shared or dedicated. In a nutshell: shared CPU instances run lighter-weight tasks but potentially share CPU with other tenants. Shared VMs can have up to 2GB of memory. Dedicated CPU instances handle more demanding applications and can scale to 64GB of memory.
 
 ### Upgrading a VM
 
@@ -197,7 +197,7 @@ Autoscaling is based on a pool of regions where the application can be run. Usin
 
 * *Balanced*: Instances of the application are, at first, evenly distributed among the regions in the pool up to the minimum count. Where traffic is high in a particular region, new instances will be created there and then, when the maximum count of instances has been used, instances will be moved from other regions to that region. This movement of instances is designed to balance the supply of compute power with demand for it.
 
-* *Disabled*: By default, autoscaling is in Disabled mode and count-based scaling is in operation. You can turn autoscaling on by setting the autoscale mode to `standard` or `balanced` 
+* *Disabled*: By default, autoscaling is in Disabled mode and count-based scaling is in operation. You can turn autoscaling on by setting the autoscale mode to `standard` or `balanced`
 
 To determine what the current autoscale settings of an application are, run `flyctl autoscale show`:
 
