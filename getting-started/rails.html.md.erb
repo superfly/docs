@@ -1,0 +1,71 @@
+---
+title: "Build, Deploy and Run a Rails Application"
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+<%= partial "partials/intro", locals: { runtime: "Rails" } %>
+
+We'll take a look at the short versions first, deploying with a preconfigured example Rails app.
+You can get the code for the example from [the Fly-Examples Github repository](https://github.com/fly-apps/hello-rails).
+Just `git clone https://github.com/fly-apps/hello-rails` to get a local copy.
+
+<%= partial "partials/install_flyctl_login" %>
+
+## _Launching the app_
+
+To configure and launch the app, you can use `flyctl launch` and follow the simple wizard:
+
+```cmd
+flyctl launch
+```
+```output
+An existing fly.toml file was found for app hello-rails
+? Would you like to copy its configuration to the new app? (y/N)
+```
+
+You can set a name for the app, choose a default region, and choose to launch and attach a Postgresql database.
+Finally `flyctl` will ask if you want to deploy. Say yes!
+
+Once it's done, you can use `flyctl status` to check the app's status and deployment, and you should see something like this:
+
+```cmd
+flyctl status
+```
+```output
+App
+  Name     = hello-rails
+  Owner    = personal
+  Version  = 0
+  Status   = running
+  Hostname = hello-rails.fly.dev
+
+Deployment Status
+  ID          = c3ca80bf-4034-837a-ce92-682e6528c5c7
+  Version     = v0
+  Status      = successful
+  Description = Deployment completed successfully
+  Instances   = 1 desired, 1 placed, 1 healthy, 0 unhealthy
+
+Instances
+ID      	PROCESS	VERSION	REGION	DESIRED	STATUS 	HEALTH CHECKS     	RESTARTS	CREATED
+748868bc	app    	0      	lhr   	run    	running	1 total, 1 passing	0       	20s ago
+```
+
+<%= partial "partials/launched" %>
+
+## _Configuring an existing Rails application_
+
+If you've got an existing Rails app and you want to set it up for Fly, the process is pretty similar;
+`flyctl launch` will take you through the setup steps, but there's a couple of things to look at first.
+
+If you're using Postgres, your database settings will be passed to your app via a `DATABASE_URL` environment
+variable (which Rails picks up automatically). That means you can drop a lot of the production configuration from `config/database.yml`.
+
+If you've got your app's secrets stored in `config/credentials.yml.enc`, you'll need to provide the master
+key to the app by setting it as an secret via the CLI, which you can do with:
+
+```cmd
+flyctl secrets set RAILS_MASTER_KEY=putyourkeyhere
+```
