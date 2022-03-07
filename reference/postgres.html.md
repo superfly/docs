@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-[Postgres](https://www.postgresql.org/), or PostgreSQL, is a powerful open-source object relational database system. 
+[Postgres](https://www.postgresql.org/), or PostgreSQL, is a powerful open-source object relational database system.
 
 ## About Postgres On Fly
 
@@ -25,7 +25,7 @@ See also [How to convert your not-free Postgres to free Postgres](https://commun
 
 ## Creating a Postgres **app**
 
-To create a Postgres cluster, use the `flyctl postgres create` command. The command will walk you through the creation with prompts for name, region, and VM resources. 
+To create a Postgres cluster, use the `flyctl postgres create` command. The command will walk you through the creation with prompts for name, region, and VM resources.
 
 ```cmd
 flyctl postgres create
@@ -81,7 +81,7 @@ For example: postgres://postgres:8a93cbc09798f3805056333072bd2b35be7eb634b13a05c
 See the postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
 ```
 
-After answering all the prompts, you'll see a message saying that the cluster is being created, followed by a deployment monitor watching as the app is launched. Take heed of the reminder to save your password in a safe place! 
+After answering all the prompts, you'll see a message saying that the cluster is being created, followed by a deployment monitor watching as the app is launched. Take heed of the reminder to save your password in a safe place!
 
 Your new Postgres cluster is ready to use once the deployment is complete.
 
@@ -93,7 +93,7 @@ flyctl <command> -a <postgres-app-name>
 
 ## Connecting to Postgres
 
-How you connect to Postgres depends on the tools you're using. Connection string URIs are a common way to describe a connection to a postgres server. 
+How you connect to Postgres depends on the tools you're using. Connection string URIs are a common way to describe a connection to a postgres server.
 
 Connection strings have the following format:
 
@@ -101,7 +101,7 @@ Connection strings have the following format:
 postgres://{username}:{password}@{hostname}:{port}/{database}?options
 ```
 
-The output from `flyctl postgres create` contains all the values you need to make a connection string to your database. 
+The output from `flyctl postgres create` contains all the values you need to make a connection string to your database.
 
 ### Connecting to Postgres from within Fly
 
@@ -159,12 +159,9 @@ flyctl postgres attach --postgres-app <postgres-app-name>
 When you attach an app to Postgres, a number of things happen:
 
 * A database and user are created in the Postgres App. If the attached app in named "myapp", both the database and the user are named "myapp" too.
-* The user is allocated a generated password. 
+* The user is allocated a generated password.
 
 When the Attached app starts it will find an environment variable `DATABASE_URL` set to a Postgres connection URI with the username, password, host, port and dbname filled in.
-
-Note that for the app to be able to attach to the database it must have private_network enabled in `fly.toml`. This enables it to look up `.internal` addresses like the database URL. See [Using Fly DNS](/docs/reference/private-networking/#using-fly-dns) for further details. 
-
 
 ### Detaching an App from Postgres
 
@@ -174,7 +171,7 @@ Use `flyctl postgres detach` to remove postgres from the app.
 flyctl postgres detach --app <app-name> --postgres-app <postgres-app-name>
 ```
 
-This will revoke access to the attachment's role, remove the role, and remove the `DATABASE_URL` secret. The database will not be removed. 
+This will revoke access to the attachment's role, remove the role, and remove the `DATABASE_URL` secret. The database will not be removed.
 
 ## High Availability
 
@@ -182,13 +179,13 @@ Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader elect
 
 5433 is the port the keeper tells postgres to listen on. Connecting there goes straight to Postgres, though it might be the leader or the replica. Since clients need writes, the proxy is listening on the default 5432 port so clients are connected to the current leader.
 
-If the leader becomes unhealthy (eg network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previoius leader's VM will be replaced by another VM which will rejoin the cluster as a replica. 
+If the leader becomes unhealthy (eg network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previoius leader's VM will be replaced by another VM which will rejoin the cluster as a replica.
 
 **In general, your clients should connect to port 5432.**
 
 ## Users / Roles
 
-A Postgres cluster is configured with three users when created: 
+A Postgres cluster is configured with three users when created:
 
 - `postgres` - a role with superuser and login privileges that was created for you along with the cluster. Since the `postgres` role has superuser rights, it's recommended that you only use it for admin tasks and create new users with access restricted to the minimum necessary for applications
 - `flypgadmin` - this role is used internally by fly to configure and query the postgres cluster
@@ -202,10 +199,10 @@ flyctl postgres users list c-pg-test
 
 ```output
 Running flyadmin user-list
-USERNAME   SUPERUSER DATABASES 
-flypgadmin true      postgres  
-postgres   true      postgres  
-repluser   false     postgres  
+USERNAME   SUPERUSER DATABASES
+flypgadmin true      postgres
+postgres   true      postgres
+repluser   false     postgres
 ```
 
 ## Databases
@@ -222,7 +219,7 @@ flyctl postgres db list c-pg-test
 
 ```output
 Running flyadmin database-list
-NAME     USERS                        
+NAME     USERS
 postgres flypgadmin,postgres,repluser
 ```
 
@@ -300,7 +297,7 @@ func main() {
 
 ### Connecting with Node.js ([docs](https://node-postgres.com))
 
-You'll use the `pg` npm module to connect to postgres from a node.js app. 
+You'll use the `pg` npm module to connect to postgres from a node.js app.
 
 ```javascript
 const { Client } = require('pg')
@@ -321,23 +318,23 @@ You can use `flyctl status` to see a list of VMs and their status. The output fo
 ```
 $ flyctl status
 App
-  Name     = test-postgres          
-  Owner    = superfly                             
-  Version  = 6                               
-  Status   = running                         
-  Hostname = test.fly.dev  
+  Name     = test-postgres
+  Owner    = superfly
+  Version  = 6
+  Status   = running
+  Hostname = test.fly.dev
 
 Deployment Status
-  ID          = 044e9269-fabb-27a6-9d53-b25cd2f2e4c2         
-  Version     = v6                                           
-  Status      = successful                                   
-  Description = Deployment completed successfully            
-  Instances   = 2 desired, 2 placed, 2 healthy, 0 unhealthy  
+  ID          = 044e9269-fabb-27a6-9d53-b25cd2f2e4c2
+  Version     = v6
+  Status      = successful
+  Description = Deployment completed successfully
+  Instances   = 2 desired, 2 placed, 2 healthy, 0 unhealthy
 
 Instances
-ID       VERSION REGION DESIRED STATUS            HEALTH CHECKS      RESTARTS CREATED              
-6b97fa06 6       iad    run     running (replica) 3 total, 3 passing 0        2021-02-10T23:31:49Z 
-da8141e7 6       iad    run     running (leader)  3 total, 3 passing 0        2021-02-10T23:21:21Z 
+ID       VERSION REGION DESIRED STATUS            HEALTH CHECKS      RESTARTS CREATED
+6b97fa06 6       iad    run     running (replica) 3 total, 3 passing 0        2021-02-10T23:31:49Z
+da8141e7 6       iad    run     running (leader)  3 total, 3 passing 0        2021-02-10T23:21:21Z
 
 ```
 
@@ -346,34 +343,34 @@ To view the status of an individual VM:
 ```
 $ flyctl vm status da8141e7
 Instance
-  ID            = da8141e7                        
-  Version       = 6                               
-  Region        = iad                             
-  Desired       = run                             
-  Status        = running (leader)                
-  Health Checks = 3 total, 2 passing, 1 critical  
-  Restarts      = 0                               
-  Created       = 2021-02-10T23:21:21Z            
+  ID            = da8141e7
+  Version       = 6
+  Region        = iad
+  Desired       = run
+  Status        = running (leader)
+  Health Checks = 3 total, 2 passing, 1 critical
+  Restarts      = 0
+  Created       = 2021-02-10T23:21:21Z
 
 Recent Events
-TIMESTAMP            TYPE       MESSAGE                 
-2021-02-10T23:21:18Z Received   Task received by client 
-2021-02-10T23:21:48Z Task Setup Building Task Directory 
-2021-02-10T23:21:49Z Started    Task started by client  
+TIMESTAMP            TYPE       MESSAGE
+2021-02-10T23:21:18Z Received   Task received by client
+2021-02-10T23:21:48Z Task Setup Building Task Directory
+2021-02-10T23:21:49Z Started    Task started by client
 
 Checks
-ID   SERVICE STATE    OUTPUT                                                       
-vm   app     critical [✗] system spent 31.9 of the last 10 seconds waiting for cpu 
-                      [✓] 20.53 GB (83.9%) free space on /data/                    
-                      [✓] load averages: 0.29 0.35 0.50                            
-                      [✓] memory: 0.9s waiting over the last 60s                   
-                      [✓] io: 0.0s waiting over the last 60s                       
-                                                                                   
-pg   app     passing  [✓] replication: currently leader                            
-                      [✓] connections: 37 used, 3 reserved, 100 max                
-                                                                                   
-role app     passing  leader                                                       
-                                                                                   
+ID   SERVICE STATE    OUTPUT
+vm   app     critical [✗] system spent 31.9 of the last 10 seconds waiting for cpu
+                      [✓] 20.53 GB (83.9%) free space on /data/
+                      [✓] load averages: 0.29 0.35 0.50
+                      [✓] memory: 0.9s waiting over the last 60s
+                      [✓] io: 0.0s waiting over the last 60s
+
+pg   app     passing  [✓] replication: currently leader
+                      [✓] connections: 37 used, 3 reserved, 100 max
+
+role app     passing  leader
+
 
 Recent Logs
   2021-02-19T22:53:35Z [info] [HEALTHCHECK] [vm: failing] [✗] system spent 6.3 of the last 10 seconds waiting for memory↩︎[✗] system spent 27.5 of the last 10 seconds waiting for cpu↩︎[✓] 20.53 GB (83.9%) free space on /data/↩︎[✓] load averages: 0.29 0.35 0.58↩︎[✓] io: 0.1s waiting over the last 60s↩︎
@@ -387,31 +384,31 @@ To view a list of health checks for a Fly Postgres app, run:
 ```
 flyctl checks list -a pg-app
 Health Checks for pg-app
-NAME STATUS  ALLOCATION REGION TYPE   LAST UPDATED         OUTPUT                           
-vm   passing 6b97fa06   iad    SCRIPT 1m12s ago            [✓] 20.68 GB (84.5%) free        
-                                                           space on /data/ [✓] load         
-                                                           averages: 0.00 0.00 0.00 [✓]     
-                                                           memory: 0.0s waiting over the    
-                                                           last 60s [✓] cpu: 0.4s waiting   
-                                                           over the last 60s [✓] io: 0.0s   
-                                                           waiting over the last 60s        
-pg   passing 6b97fa06   iad    SCRIPT 5m36s ago            [✓] leader check:                
-                                                           [fdaa:0:33:a7b:ab8:0:c24:2]:5433 
-                                                           connected [✓] replication lag:   
-                                                           246µs [✓] connections: 7 used, 3 
-                                                           reserved, 100 max                
-role passing 6b97fa06   iad    SCRIPT 2021-02-15T22:49:36Z replica                          
-vm   passing da8141e7   iad    SCRIPT 14s ago              [✓] 20.66 GB (84.4%) free        
-                                                           space on /data/ [✓] load         
-                                                           averages: 0.31 0.37 0.32 [✓]     
-                                                           memory: 1.1s waiting over the    
-                                                           last 60s [✓] cpu: 9.4s waiting   
-                                                           over the last 60s [✓] io: 0.1s   
-                                                           waiting over the last 60s        
-pg   passing da8141e7   iad    SCRIPT 2m53s ago            [✓] replication: currently       
-                                                           leader [✓] connections: 31       
-                                                           used, 3 reserved, 100 max        
-role passing da8141e7   iad    SCRIPT 2021-02-15T22:49:38Z leader        
+NAME STATUS  ALLOCATION REGION TYPE   LAST UPDATED         OUTPUT
+vm   passing 6b97fa06   iad    SCRIPT 1m12s ago            [✓] 20.68 GB (84.5%) free
+                                                           space on /data/ [✓] load
+                                                           averages: 0.00 0.00 0.00 [✓]
+                                                           memory: 0.0s waiting over the
+                                                           last 60s [✓] cpu: 0.4s waiting
+                                                           over the last 60s [✓] io: 0.0s
+                                                           waiting over the last 60s
+pg   passing 6b97fa06   iad    SCRIPT 5m36s ago            [✓] leader check:
+                                                           [fdaa:0:33:a7b:ab8:0:c24:2]:5433
+                                                           connected [✓] replication lag:
+                                                           246µs [✓] connections: 7 used, 3
+                                                           reserved, 100 max
+role passing 6b97fa06   iad    SCRIPT 2021-02-15T22:49:36Z replica
+vm   passing da8141e7   iad    SCRIPT 14s ago              [✓] 20.66 GB (84.4%) free
+                                                           space on /data/ [✓] load
+                                                           averages: 0.31 0.37 0.32 [✓]
+                                                           memory: 1.1s waiting over the
+                                                           last 60s [✓] cpu: 9.4s waiting
+                                                           over the last 60s [✓] io: 0.1s
+                                                           waiting over the last 60s
+pg   passing da8141e7   iad    SCRIPT 2m53s ago            [✓] replication: currently
+                                                           leader [✓] connections: 31
+                                                           used, 3 reserved, 100 max
+role passing da8141e7   iad    SCRIPT 2021-02-15T22:49:38Z leader
 
 ```
 
@@ -421,9 +418,9 @@ Fly Postgres apps run several processes inside each VM, including postgres, stol
 
 ### Metrics
 
-Fly Postgres apps export metrics to prometheus which can be seen in the Metrics UI or queried from grafana. 
+Fly Postgres apps export metrics to prometheus which can be seen in the Metrics UI or queried from grafana.
 
-The available metrics are 
+The available metrics are
 ```
 pg_stat_activity_count
 pg_stat_activity_max_tx_duration
@@ -494,7 +491,7 @@ flyctl scale count 3
 
 ## Upgrading
 
-You can update a Postgres cluster, installed with `flyctl postgres create`, to the latest [release](https://github.com/fly-apps/postgres-ha/releases) using [`flyctl image update`](/docs/flyctl/image-update/). 
+You can update a Postgres cluster, installed with `flyctl postgres create`, to the latest [release](https://github.com/fly-apps/postgres-ha/releases) using [`flyctl image update`](/docs/flyctl/image-update/).
 
 Check your current image with [`flyctl image show`](/docs/flyctl/image-show/):
 
