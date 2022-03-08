@@ -124,3 +124,24 @@ OK
 PONG
 ```
 
+## Configuration Options
+
+By default the Redis image will set a `maxmemory` of 90% of the VM's available memory and use the `allkeys-lru`
+eviction policy, which is a good choice for most use cases. You can set some alternative configurations
+via environment variables by assigning them as secrets on your Redis app.
+
+For example, to configure Redis not to evict any keys you can use:
+
+```cmd
+flyctl secrets set MAXMEMORY_POLICY="noeviction"
+```
+
+Or if you want to trade decreased performance for increased data loss protection by enabling the
+`Append Only File` option, you can do:
+
+```cmd
+flyctl secrets set APPENDONLY="yes"
+```
+
+Check out the Redis docs for more info on [cache eviction policies](https://redis.io/topics/lru-cache) and
+[persistence options](https://redis.io/topics/persistence).
