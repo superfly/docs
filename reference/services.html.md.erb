@@ -57,3 +57,111 @@ If you don't specify handlers, we just forward TCP to your application as is. Th
 
 The `proxy_proto` handler adds information about the original connection, including client IP + port and server IP + port (from the client's perspective).  Most applications need additional logic to accept the proxy protocol, either using a prebuilt library or implementing the [proxy protocol](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt) directly.
 
+
+## _HTTP Options_
+
+`http_options` is used to specify additional configuration for HTTP handlers. 
+
+```toml
+[[services.ports]]
+handlers = ["http"]
+port = "80"
+
+  [services.ports.http_options]
+  compress = true
+
+    [services.ports.http_options.response]
+    header = { myheader = "fly", via = false}
+
+    [services.ports.http_options.https_redirect]
+    enable = true
+    port = 777
+    status_code = 308
+```
+
+### Compress
+
+By default, Fly will compress response bodies. You can switch it off by setting the value to `false`.
+
+### Response
+
+This provides a method to add or remove HTTP response headers.
+
+#### Add a header
+
+This is as simple as setting a key-value pair.
+
+```toml
+[services.ports.http_options.response]
+header = { myheader = "fly" }
+```
+
+For multiple value headers
+
+```toml
+[services.ports.http_options.response]
+header = { myheader = ["fly", "io" ] }
+```
+
+#### Remove a header
+
+A header is removed by setting it to `false`
+
+```toml
+[services.ports.http_options.response]
+header = { via = false }
+```
+
+### HTTPS redirect
+
+> This option is only applicable to HTTP handlers. If you accidentally set it on an HTTPS handler, nothing will happen
+
+This is used to configure redirecting all HTTP traffic to HTTPS. It works by sending a 3xx HTTP response with the relevant `location` header. The simplest configuration
+
+```toml
+[services.ports.http_options.https_redirect]
+enable = true
+```
+
+This will redirect to the standard HTTPS port 443 with a 301 status code.
+
+```
+HTTP/1.1 301 Moved Permanently
+location: https://example.fly.dev:443/
+...
+...
+```
+
+To perform redirects to a non-standard port, specify the port in the configuration.
+
+```toml
+[services.ports.http_options.https_redirect]
+enable = true
+port = 737
+```
+
+In your response, the `location` header will contain this port
+
+```
+HTTP/1.1 301 Moved Permanently
+location: https://example.fly.dev:737/
+...
+...
+```
+
+It is also possible to change the status code
+
+```toml
+[services.ports.http_options.https_redirect]
+enable = true
+status_code = 308
+```
+
+which will return a response like so
+
+```
+HTTP/1.1 308 Permanent Redirect
+location: https://example.fly.dev:443/
+...
+...
+```
