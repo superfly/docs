@@ -16,8 +16,6 @@ flyctl apps [command] [flags]
 * [open](/docs/flyctl/apps-open/)	 - Open browser to current deployed application
 * [releases](/docs/flyctl/apps-releases/)	 - List app releases
 * [restart](/docs/flyctl/apps-restart/)	 - Restart an application
-* [resume](/docs/flyctl/apps-resume/)	 - Resume an application
-* [suspend](/docs/flyctl/apps-suspend/)	 - Suspend an application
 
 ## Options
 
