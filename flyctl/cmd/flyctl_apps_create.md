@@ -15,6 +15,7 @@ flyctl apps create [APPNAME] [flags]
       --name string      The app name to use
       --network string   Specify custom network id
   -o, --org string       The organization to operate on
+  -r, --region string    The region to operate on
 ~~~
 
 ## Global Options
