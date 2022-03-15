@@ -57,9 +57,9 @@ If you don't specify handlers, we just forward TCP to your application as is. Th
 
 The `proxy_proto` handler adds information about the original connection, including client IP + port and server IP + port (from the client's perspective).  Most applications need additional logic to accept the proxy protocol, either using a prebuilt library or implementing the [proxy protocol](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt) directly.
 
-## _Enforcing SSL_
+## _Redirecting to HTTP_
 
-The `force_ssl` configuration option enforces SSL by redirecting HTTP to HTTPS. When enabled, a redirect response is returned with a `301` status code. If a TLS handler is present and this option is set, it will be ignored.
+The `force_https` configuration option automatically redirects HTTP to HTTPS. When enabled, a redirect response is returned with a `301` status code. If a TLS handler is present and this option is set, it will be ignored.
 
 At present, there is no support for redirecting to a TLS handler on a port other than 443, using a different status code or redirecting specific requests.
 

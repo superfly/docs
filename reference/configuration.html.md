@@ -205,7 +205,7 @@ For each external port you want to accept connections on, you will need a `servi
     port = "80"
 
     # optional
-    force_ssl = true
+    force_https = true
     
     # optional
     http_options = { compress = false }
@@ -215,7 +215,7 @@ This example defines an HTTP handler on port 80.
 
 * `handlers` : An array of strings, each string selecting a handler process to terminate the connection with at the edge. Here, the ["HTTP" handler](/docs/services/#http) will accept HTTP traffic and pass it on to the internal port of the application which we defined earlier.
 * `port` : A string which selects which external ports you want Fly to accept traffic on. You can configure an application to listen for global traffic on ports 25, 53, 80, 443, 5000, 8443, 25565, and ports 10000 - 10100.
-* `force_ssl`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
+* `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
 * `http_options` : An optional table that specifies configuration options for HTTP handlers.
 
 You can have more than one `services.ports` sections. The default configuration, for example, contains two. We've already seen one above. The second one defines an external port 443 for secure connections, using the ["tls" handler](/docs/services/#tls).
