@@ -57,10 +57,15 @@ If you don't specify handlers, we just forward TCP to your application as is. Th
 
 The `proxy_proto` handler adds information about the original connection, including client IP + port and server IP + port (from the client's perspective).  Most applications need additional logic to accept the proxy protocol, either using a prebuilt library or implementing the [proxy protocol](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt) directly.
 
+## _Enforcing SSL_
 
-## _HTTP Options_
+The `force_ssl` configuration option enforces SSL by redirecting HTTP to HTTPS. When enabled, a redirect response is returned with a `301` status code. If a TLS handler is present and this option is set, it will be ignored.
 
-`http_options` is used to specify additional configuration for HTTP handlers. 
+At present, there is no support for redirecting to a TLS handler on a port other than 443, using a different status code or redirecting specific requests.
+
+## _HTTP options_
+
+Use `http_options` to specify additional configuration for HTTP handlers. 
 
 ```toml
 [[services.ports]]
@@ -69,21 +74,23 @@ port = "80"
 
   [services.ports.http_options]
   compress = true
-
-    [services.ports.http_options.response]
-    header = { myheader = "fly", via = false}
-
-    [services.ports.http_options.https_redirect]
-    enable = true
-    port = 777
-    status_code = 308
+  response = { headers = { myheader = "fly", via = false }}
 ```
 
-### Compress
+### Disable response compression
 
 By default, Fly will compress response bodies. You can switch it off by setting the value to `false`.
 
-### Response
+```toml
+[[services.ports]]
+...
+...
+
+  [services.ports.http_options]
+  compress = true
+```
+
+### Modifying response headers
 
 This provides a method to add or remove HTTP response headers.
 
@@ -92,76 +99,34 @@ This provides a method to add or remove HTTP response headers.
 This is as simple as setting a key-value pair.
 
 ```toml
-[services.ports.http_options.response]
-header = { myheader = "fly" }
+[[services.ports]]
+...
+...
+
+  [services.ports.http_options]
+  response = { headers = { myheader = "fly" }}
 ```
 
-For multiple value headers
+For multiple value headers:
 
 ```toml
-[services.ports.http_options.response]
-header = { myheader = ["fly", "io" ] }
+[[services.ports]]
+...
+...
+
+  [services.ports.http_options]
+  response = { headers = { myheader = ["fly", "io" ] }}
 ```
 
 #### Remove a header
 
-A header is removed by setting it to `false`
+Removed a header by setting it `false`
 
 ```toml
-[services.ports.http_options.response]
-header = { via = false }
-```
-
-### HTTPS redirect
-
-> This option is only applicable to HTTP handlers. If you accidentally set it on an HTTPS handler, nothing will happen
-
-This is used to configure redirecting all HTTP traffic to HTTPS. It works by sending a 3xx HTTP response with the relevant `location` header. The simplest configuration
-
-```toml
-[services.ports.http_options.https_redirect]
-enable = true
-```
-
-This will redirect to the standard HTTPS port 443 with a 301 status code.
-
-```
-HTTP/1.1 301 Moved Permanently
-location: https://example.fly.dev:443/
+[[services.ports]]
 ...
 ...
-```
 
-To perform redirects to a non-standard port, specify the port in the configuration.
-
-```toml
-[services.ports.http_options.https_redirect]
-enable = true
-port = 737
-```
-
-In your response, the `location` header will contain this port
-
-```
-HTTP/1.1 301 Moved Permanently
-location: https://example.fly.dev:737/
-...
-...
-```
-
-It is also possible to change the status code
-
-```toml
-[services.ports.http_options.https_redirect]
-enable = true
-status_code = 308
-```
-
-which will return a response like so
-
-```
-HTTP/1.1 308 Permanent Redirect
-location: https://example.fly.dev:443/
-...
-...
+  [services.ports.http_options]
+  response = { headers = { via = false }}
 ```
