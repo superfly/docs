@@ -167,7 +167,7 @@ The `services` sections configure the mapping of ports on the application to por
 
 You can have:
 
-* No `services` section: The application has no mappings to the external internet - typically apps like databases that talk over [6PN private networking](/docs/reference/services/#private-network-services) to other apps.
+* No `services` section: The application has no mappings to the external internet - typically apps like databases that talk over [6PN private networking](/docs/reference/private-networking/) to other apps.
 * One `services` section: One internal port mapped to the one or more external ports on the internet.
 * Multiple `services` sections: Mapping multiple internal ports to multiple external ports.
 
