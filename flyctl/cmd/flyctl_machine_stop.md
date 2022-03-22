@@ -1,5 +1,6 @@
 Stop a Fly machine
 
+
 ## Usage
 ~~~
 flyctl machine stop <id> [flags]
@@ -8,8 +9,8 @@ flyctl machine stop <id> [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for stop
   -s, --signal string   Signal to stop the machine with (default: SIGINT)
       --time int        Seconds to wait before killing the machine

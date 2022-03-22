@@ -1,5 +1,6 @@
 Kill (SIGKILL) a Fly machine
 
+
 ## Usage
 ~~~
 flyctl machine kill <id> [flags]
@@ -8,8 +9,8 @@ flyctl machine kill <id> [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for kill
 ~~~
 
