@@ -153,7 +153,7 @@ psql postgres://postgres:secret123@appname.internal:5432
 Using the superuser credentials, you can create databases, users, and whatever else you need for your apps. But we also have the `flyctl postgres attach` shortcut:
 
 ```
-flyctl postgres attach --postgres-app <postgres-app-name>
+flyctl postgres attach --app <app-name> --postgres-app <postgres-app-name>
 ```
 
 When you attach an app to Postgres, a number of things happen:
