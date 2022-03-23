@@ -69,3 +69,18 @@ key to the app by setting it as an secret via the CLI, which you can do with:
 ```cmd
 flyctl secrets set RAILS_MASTER_KEY=putyourkeyhere
 ```
+
+## _Beyond the Basics_
+
+Most Rails apps will probably want a few extra moving parts, with things like Redis and Sidekiq for
+caching and background jobs.
+
+### Adding Redis
+
+Setting up Redis requires launching it as a separate app. See the [Redis Guide](https://fly.io/docs/reference/redis/)
+for more details.
+
+### Multi-Process Apps
+
+If you need to run additional processes based on your Gem environment (like Sidekiq) there's a number of
+options outlined in the [Multi-Process apps documentation](https://fly.io/docs/app-guides/multiple-processes)
