@@ -1,5 +1,6 @@
 List Fly machines
 
+
 ## Usage
 ~~~
 flyctl machine list [flags]
@@ -9,11 +10,11 @@ flyctl machine list [flags]
 
 ~~~
       --all             Show machines in all states
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for list
   -q, --quiet           Only list machine ids
-      --state string    List machines in a specific state (default "started")
+      --state string    List machines in a specific state. (default "started")
 ~~~
 
 ## Global Options

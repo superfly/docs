@@ -1,5 +1,6 @@
 Commands that manage machines
 
+
 ## Usage
 ~~~
 flyctl machine [command] [flags]
@@ -10,9 +11,9 @@ flyctl machine [command] [flags]
 * [kill](/docs/flyctl/machine-kill/)	 - Kill (SIGKILL) a Fly machine
 * [list](/docs/flyctl/machine-list/)	 - List Fly machines
 * [remove](/docs/flyctl/machine-remove/)	 - Remove a Fly machine
-* [run](/docs/flyctl/machine-run/)	 - Launch a Fly machine
+* [run](/docs/flyctl/machine-run/)	 - Run a machine
 * [start](/docs/flyctl/machine-start/)	 - Start a Fly machine
-* [status](/docs/flyctl/machine-status/)	 - Show current status of a running machine
+* [status](/docs/flyctl/machine-status/)	 - Show current status of a running mchine
 * [stop](/docs/flyctl/machine-stop/)	 - Stop a Fly machine
 
 ## Options

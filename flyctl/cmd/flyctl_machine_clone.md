@@ -1,19 +1,21 @@
 Clones a Fly Machine
 
+
 ## Usage
 ~~~
-flyctl machine clone [flags]
+flyctl machine clone <id> [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -a, --app string            App name to operate on
-  -c, --config string         Path to an app config file or directory containing one (default "./fly.toml")
-  -h, --help                  help for clone
-  -n, --name string           The name of the machine
-  -o, --organization string   Target organization
-  -r, --region string         Target region
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+  -d, --detach          Detach from the machine's logs
+  -h, --help            help for clone
+  -n, --name string     The name of the new machine
+  -o, --org string      The organization to operate on
+  -r, --region string   The region to operate on
 ~~~
 
 ## Global Options
