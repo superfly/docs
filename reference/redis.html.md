@@ -27,7 +27,7 @@ When prompted,  give the app a name (in this case `my-fly-redis`), and select a 
 The newly-generated `fly.toml` will specify the `flyio/redis:6.2.6` image:
 
 ```toml
-[build] 
+[build]
  image = "flyio/redis:6.2.6"
 ```
 
@@ -41,12 +41,12 @@ Here the volume is called `redis_server` and we use `fly volumes create` to put 
 fly volumes create redis_server --region ord
 ```
 ```output
-       ID: vol_6d7xkrk7do64w2q9 
-     Name: redis_server 
+       ID: vol_6d7xkrk7do64w2q9
+     Name: redis_server
    Region: ord
-      Zone: 2c30 
-  Size GB: 10 
- Encrypted: true 
+      Zone: 2c30
+  Size GB: 10
+ Encrypted: true
 Created at: 03 Dec 21 21:47 UTC
 ```
 
@@ -62,16 +62,6 @@ The following `[[mounts]]` section tells the new Redis app to mount the `redis_s
 [[mounts]]
   destination = "/data"
   source = "redis_server"
-```
-
-### Hook up metrics
-
-Add [metrics](https://fly.io/docs/reference/metrics/):
-
-```toml
-[metrics]
-  port = 9091
-  path = "/metrics"
 ```
 
 ### Services
