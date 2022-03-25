@@ -1,4 +1,4 @@
-Create a new organization. Other users can be invited to join the 
+Create a new organization. Other users can be invited to join the
 organization later.
 
 

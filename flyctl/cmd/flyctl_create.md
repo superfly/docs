@@ -1,7 +1,7 @@
-The CREATE command will both register a new application 
-with the Fly platform and create the fly.toml file which controls how 
-the application will be deployed. The --builder flag allows a cloud native 
-buildpack to be specified which will be used instead of a Dockerfile to 
+The CREATE command will both register a new application
+with the Fly platform and create the fly.toml file which controls how
+the application will be deployed. The --builder flag allows a cloud native
+buildpack to be specified which will be used instead of a Dockerfile to
 create the application image when it is deployed.
 
 

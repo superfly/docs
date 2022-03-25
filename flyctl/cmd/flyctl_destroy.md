@@ -1,4 +1,4 @@
-The DESTROY command will remove an application 
+The DESTROY command will remove an application
 from the Fly platform.
 
 

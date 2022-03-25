@@ -1,5 +1,5 @@
-Logs a user into the Fly platform. Supports browser-based, 
-email/password and one-time-password authentication. Defaults to using 
+Logs a user into the Fly platform. Supports browser-based,
+email/password and one-time-password authentication. Defaults to using
 browser-based authentication.
 
 

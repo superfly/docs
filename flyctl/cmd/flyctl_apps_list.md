@@ -1,6 +1,6 @@
 The APPS LIST command will show the applications currently
-registered and available to this user. The list will include applications 
-from all the organizations the user is a member of. Each application will 
+registered and available to this user. The list will include applications
+from all the organizations the user is a member of. Each application will
 be shown with its name, owner and when it was last deployed.
 
 

@@ -1,4 +1,4 @@
-The APPS MOVE command will move an application to another 
+The APPS MOVE command will move an application to another
 organization the current user belongs to.
 
 
