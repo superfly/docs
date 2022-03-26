@@ -1,5 +1,5 @@
-Shows the authentication token that is currently in use. 
-This can be used as an authentication token with API services, 
+Shows the authentication token that is currently in use.
+This can be used as an authentication token with API services,
 independent of flyctl.
 
 

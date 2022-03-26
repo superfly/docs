@@ -1,4 +1,4 @@
-The APPS RESTART command will restart all running vms. 
+The APPS RESTART command will restart all running vms.
 
 
 ## Usage

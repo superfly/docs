@@ -1,4 +1,4 @@
-Open browser to current deployed application. If an optional relative URI is specified, it is appended 
+Open browser to current deployed application. If an optional relative URI is specified, it is appended
 to the root URL of the deployed application.
 
 

@@ -1,4 +1,4 @@
-The MOVE command will move an application to another 
+The MOVE command will move an application to another
 organization the current user belongs to.
 
 
