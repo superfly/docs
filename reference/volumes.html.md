@@ -29,7 +29,7 @@ Created at: 04 Jan 21 10:14 UTC
 
 This command creates a new volume named "myapp_data" with 40GB of storage in the lhr (London Heathrow) region for the current application. 
 
-The results from the command shows when the volume was created and its encryption status. Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--encrypted=false` to not encrypt the volume for improved performance at deployment and runtime.
+The results from the command shows when the volume was created and its encryption status. Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--no-encryption` to not encrypt the volume for improved performance at deployment and runtime.
 
 Volumes are bound to both apps and regions. A volume is directly associated with only one app and exists in only one region. No other app can see this volume and only an instance of the app running in the LHR region can access it.
 
