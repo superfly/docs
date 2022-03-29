@@ -12,7 +12,7 @@ You are now in the Fly.io documentation where we have the information to help yo
 If you are on a Mac with the [Homebrew](https://brew.sh) package manager installed, flyctl can be installed by running:
 
 ```cmd
-brew install superfly/tap/flyctl
+brew install flyctl
 ```
 
 If not, you can run the install script:
@@ -40,6 +40,6 @@ iwr https://fly.io/install.ps1 -useb | iex
 
 ## _Other options_
 
-All the executable versions of flyctl for all platforms are available from the [Github repository](https://github.com/superfly/flyctl). Browse to the [latest release view](https://github.com/superfly/flyctl/releases/latest) to view all available files. 
+All the executable versions of flyctl for all platforms are available from the [Github repository](https://github.com/superfly/flyctl). Browse to the [latest release view](https://github.com/superfly/flyctl/releases/latest) to view all available files.
 
 Standalone executable files and archive/compressed files are available. If in doubt as to which one to use, use the install scripts above.

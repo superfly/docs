@@ -19,7 +19,7 @@ Flyctl is a command-line utility that lets you work with Fly, from creating your
 If you have the [Homebrew](https://brew.sh) package manager installed, flyctl can be installed by running:
 
 ```cmd
-brew install superfly/tap/flyctl
+brew install flyctl
 ```
 
 If not, you can run the install script:

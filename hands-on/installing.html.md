@@ -19,7 +19,7 @@ Flyctl is a command-line utility that lets you work with Fly, from creating your
 If you have the [Homebrew](https://brew.sh) package manager installed, flyctl can be installed by running:
 
 ```cmd
-brew install superfly/tap/flyctl
+brew install flyctl
 ```
 
 If not, you can run the install script:
@@ -60,7 +60,7 @@ Your next step should be to [Log in to Fly](/docs/getting-started/log-in-to-fly/
 
 ## _Next..._
 
-To continue, you need a Fly account. 
+To continue, you need a Fly account.
 
 * If this is your first time with Fly, your next step will be to [Sign up for Fly](/docs/hands-on/sign-up/).
 * If you already have a Fly account, then your next step is to [Sign in to Fly](/docs/hands-on/sign-in/).
