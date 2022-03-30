@@ -208,7 +208,7 @@ be used to restore your dataset into a new Postgres application.
 Snapshots are volume specific, so you will need to first identify a volume to target. You can list your volumes by running the `volumes list` command with your Postgres app name.
 
 ```cmd
-fly volumes list chaos-postgres
+fly volumes list -a chaos-postgres
 ```
 ```output
 ID                   NAME    SIZE REGION ATTACHED VM CREATED AT
