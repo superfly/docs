@@ -18,7 +18,7 @@ So you want to have your Fly application being continuously deployed from its Gi
 
 We'll start with an application from one of our other examples, [go-example](https://github.com/fly-apps/go-example). It's a simple lightweight app, built with a Dockerfile.
 
-We'll speed-run through the steps needed to make this automatically deploy to Fly from GitHub and then we'll loop back for a longer look at some of the steps. 
+We'll speed-run through the steps needed to make this automatically deploy to Fly from GitHub and then we'll loop back for a longer look at some of the steps.
 
 ## Speed-run your way to continuous deployment
 
@@ -43,11 +43,10 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
           runs-on: ubuntu-latest
           steps:
             - uses: actions/checkout@v2
-            - uses: superfly/flyctl-actions@1.3
-              with:
-                args: "deploy"
-    ```      
-    
+            - uses: superfly/flyctl-actions/setup-flyctl@master
+            - run: flycl deploy --remote-only
+    ```
+
 9.  Commit your changes and push them up to GitHub.
 10. This is where the magic happens - The push will have triggered a deploy and from now on whenever you push a change, the app will automatically be redeployed.
 
@@ -67,7 +66,7 @@ If you want to watch the process take place, head to the Repository and select t
 
 **Step 5** is just cloning the repository to your local system so you can edit and push changes to it.
 
-**Step 6** is an interesting step - when we ship examples, we avoid putting the `fly.toml` file in the repository by including `fly.toml` in the `.gitignore` file. Users should be creating their own with `fly apps create`. When using GitHub Actions though, we want `fly.toml` in the repository so the action can use it in the deployment process. 
+**Step 6** is an interesting step - when we ship examples, we avoid putting the `fly.toml` file in the repository by including `fly.toml` in the `.gitignore` file. Users should be creating their own with `fly apps create`. When using GitHub Actions though, we want `fly.toml` in the repository so the action can use it in the deployment process.
 
 So, we pull `fly.toml` out of  the `.gitignore`. Which then allows us to perform Step 7.
 
@@ -113,9 +112,8 @@ So an action is made up of named jobs, in this case one to deploy the applicatio
 The first step is one of the built in Actions steps. The step `uses` the `checkout@v2` action which checks out the repository into a directory on the virtual machine. We are now ready to deploy.
 
 ```yaml
-        - uses: superfly/flyctl-actions@1.1
-          with:
-            args: "deploy"
+        - uses: superfly/flyctl-actions/setup-flyctl@master
+        - run: "deploy"
 ```
 
 This step `uses` the superfly/flyctl-actions action. This is a GitHub action created by Fly which wraps around the `flyctl` command. The wrapper is invoked with the `deploy` argument which will take over the process of building and moving the application to the Fly infrastructure. It uses the settings from the `fly.toml` file to guide it and uses the `FLY_API_TOKEN` to authorize its access to the Fly API.
