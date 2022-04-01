@@ -44,7 +44,7 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
           steps:
             - uses: actions/checkout@v2
             - uses: superfly/flyctl-actions/setup-flyctl@master
-            - run: flycl deploy --remote-only
+            - run: flyctl deploy --remote-only
     ```
 
 9.  Commit your changes and push them up to GitHub.
