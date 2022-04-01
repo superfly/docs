@@ -50,7 +50,7 @@ flyctl [command] [flags]
 * [ping](/docs/flyctl/ping/)	 - Test connectivity with ICMP ping messages
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
 * [postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
-* [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a fly VM"
+* [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a fly VM
 * [regions](/docs/flyctl/regions/)	 - Manage regions
 * [releases](/docs/flyctl/releases/)	 - List app releases
 * [restart](/docs/flyctl/restart/)	 - Restart an application
