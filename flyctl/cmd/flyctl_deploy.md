@@ -24,6 +24,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
       --nix                   Build with Nix on a remote builder
       --no-cache              Do not use the build cache when building the image
       --now                   Deploy now without confirmation
+      --push                  Push image to registry after build is complete
   -r, --region string         The region to operate on
       --remote-only           Perform builds on a remote builder instance instead of using the local docker daemon
       --strategy string       The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. Default is canary, or rolling when max-per-region is set.

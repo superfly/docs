@@ -1,4 +1,4 @@
-Show current status of a running mchine
+Show current status of a running machine
 
 
 ## Usage

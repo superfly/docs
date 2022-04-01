@@ -13,6 +13,7 @@ flyctl releases [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for releases
+      --image           Display the Docker image reference of the release
 ~~~
 
 ## Global Options
