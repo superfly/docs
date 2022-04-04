@@ -55,5 +55,9 @@ If you don't specify handlers, we just forward TCP to your application as is. Th
 
 ### Proxy protocol
 
-The `proxy_proto` handler adds information about the original connection, including client IP + port and server IP + port (from the client's perspective).  Most applications need additional logic to accept the proxy protocol, either using a prebuilt library or implementing the [proxy protocol](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt) directly.
+The `proxy_proto` handler adds information about the original connection, including client IP + port and server IP + port (from the client's perspective). Most applications need additional logic to accept the proxy protocol, either using a prebuilt library or implementing the [proxy protocol](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt) directly.
 
+
+## _HTTP to HTTPS redirects_
+
+The `force_https` configuration option automatically redirects HTTP to HTTPS. When enabled, all HTTP requests return a redirect response with a `301` status code. This option can only be set on HTTP handlers - deployments will fail if set on other handlers.
