@@ -8,7 +8,6 @@ nav: firecracker
 There are multiple dimensions of scaling on Fly.
 
 * [Ensuring the application has instances running in one or more regions](#count-scaling)
-* [Anchoring application instances using volumes in one or more regions](#anchor-scaling)
 * [Increasing the CPU cores and memory size of application instances](#scaling-virtual-machines)
 * [Alternate scaling models with autoscaling](#autoscaling)
 
@@ -72,17 +71,6 @@ flyctl scale show
 
 This application uses the shared-cpu-1x (one shared CPU) VM size, with 512MB of RAM for each instance and there should be four instances of it created.
 
-## Anchor Scaling
-
-Fly optimizes the placement of your app based on conditions on our network. But if you want finer-grained control over where your apps run, you can achieve that with [Fly volumes](/docs/reference/volumes/).
-
-If your app is associated with Fly volume persistent storage, you can use them to anchor your app to specific regions.  So if you want three instances of an app in one region (say LHR), and one instance in another (say FRA), and the app looked for a volume named `example` you can:
-
-* Create three volumes in LHR named `example`
-* Create one volume in FRA named `example`
-* Set the scale count to 4
-
-When an app which has storage starts up, it looks for a volume with a particular name. We’ll place your app to fit your available volumes. In that way, volumes act as anchors that attach your app to specific regions in specific numbers.
 
 ## Scaling Virtual Machines
 
