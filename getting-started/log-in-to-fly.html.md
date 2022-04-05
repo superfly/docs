@@ -16,7 +16,7 @@ If you already have a Fly account, you can log in with Flyctl by running:
 flyctl auth login
 ```
 
-Your browser will open up with the Fly sign-in screen, enter your user name and password to sign-in. If you signed up with Github, use the `Sign-in with Github` button to sign in.
+Your browser will open up with the Fly sign-in screen, enter your user name and password to sign-in. If you signed up with GitHub, use the `Sign-in with GitHub` button to sign in.
 
 Now proceed to globally deploying Docker Images, Go Applications, Node Applications and more.
 
@@ -31,7 +31,7 @@ flyctl auth signup
 This will open your browser on the sign-up page where you can either:
 
 * **Sign-up With Email**: Enter your name, email and password.
-* **Sign-up With Github**: If you have a Github account, you can use that to sign-up. Look out for the confirmatory email we'll send you which will give you a link to set a password; you'll need a password set so we can actively verify that it is you for some Fly operations.
+* **Sign-up With GitHub**: If you have a GitHub account, you can use that to sign-up. Look out for the confirmatory email we'll send you which will give you a link to set a password; you'll need a password set so we can actively verify that it is you for some Fly operations.
 
 You will also be prompted for credit card payment information, required for charges outside the free plan on Fly. See [Pricing](/docs/about/pricing) for more details on that. If you do not enter a details here, you will be unable to create a new application on Fly until you add a credit card to your account.
 

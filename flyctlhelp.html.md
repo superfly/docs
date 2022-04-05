@@ -40,6 +40,6 @@ iwr https://fly.io/install.ps1 -useb | iex
 
 ## _Other options_
 
-All the executable versions of flyctl for all platforms are available from the [Github repository](https://github.com/superfly/flyctl). Browse to the [latest release view](https://github.com/superfly/flyctl/releases/latest) to view all available files.
+All the executable versions of flyctl for all platforms are available from the [GitHub repository](https://github.com/superfly/flyctl). Browse to the [latest release view](https://github.com/superfly/flyctl/releases/latest) to view all available files.
 
 Standalone executable files and archive/compressed files are available. If in doubt as to which one to use, use the install scripts above.
