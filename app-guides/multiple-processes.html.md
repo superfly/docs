@@ -152,7 +152,7 @@ RUN apt-get update && \
 
 RUN GO111MODULE=on go get -u github.com/DarthSim/overmind/v2
 ADD Procfile /app/
-CMD overmind start
+CMD ["overmind", "start"]
 ```
 
 `overmind` has a bunch of interesting features, most notable among them that it wraps `tmux`, so you can get a terminal window on any of your running programs. Deploy, and then you can:
