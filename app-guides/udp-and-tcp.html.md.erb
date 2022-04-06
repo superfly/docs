@@ -16,10 +16,10 @@ Our UDP support can be a little tricky, and can catch you out, especially if you
 
 ## The Basic Idea
 
-Let's build a simple echo service. You can play the home version at [this Github repository](https://github.com/fly-apps/udp-echo-). We'll listen on port 5000, UDP and TCP, and just bat back whatever clients send us.
+Let's build a simple echo service. You can play the home version at [this GitHub repository](https://github.com/fly-apps/udp-echo-). We'll listen on port 5000, UDP and TCP, and just bat back whatever clients send us.
 
 Use `flyctl launch` to create a `fly.toml` file. Use it to wire up the ports.
-  
+
 ```toml
 [[services]]
   internal_port = 5000
@@ -47,7 +47,7 @@ We're going to build this silly app in Go (don't worry, it's trivial, you'll be 
 ## Let's See Some Code
 
 You light up UDP and TCP with standard socket code. Usually, the only fussy bit will be the `fly-global-services` bind for UDP. Here's what that looks like in Go:
-  
+
 ```golang
 func main() {
   // in other programming languages, this might look like:
@@ -63,7 +63,7 @@ func main() {
 	//    s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)
 	//    s.bind("0.0.0.0", port)
 	//    s.listen()
-  
+
 	tcp, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
 		log.Fatalf("can't listen on %d/tcp: %s", port, err)
@@ -145,9 +145,9 @@ echo hello world | nc udp-echo-sample.fly.dev 5000
 ```output
 hello world
 ```
-     
+
 ## More On Those Three Gotchas
-  
+
 ### The `fly-global-services` Address
 
 For the most part, UDP "just works" on Fly.io, the way you'd expect it to.
@@ -167,7 +167,7 @@ You usually need to **explicitly bind your UDP service to `fly-global-services`.
 You can't bind your TCP service to `fly-global-services`; the TCP side of your app should probably bind to `*`.
 
 This is super annoying. You probably want to use the same configuration value for both UDP and TCP ports, but you have to be fussy about it on Fly.io. We're working on it!
-     
+
 ### UDP Won't Work Over IPv6
 
 Another thing that won't impact your code that you'll need to know about is that we don't currently support UDP over IPv6. The kernel forwarding code we run to make UDP work isn't IPv6 aware. This is not OK, and we're working on it, but it's a limitation you'll run into today.

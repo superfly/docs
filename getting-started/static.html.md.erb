@@ -11,7 +11,7 @@ To be fair, a static site isn't an app. So we're really talking about **deployin
 
 In this demonstration, we'll use [goStatic](https://github.com/PierreZ/goStatic), a tiny web server written in Go that lets us serve static files with very little configuration. We'll provide a Dockerfile and our content for Fly to transmogrify into a web server running in a VM.
 
-You can clone all the files needed for this example from [the hello-static Github repository](https://github.com/fly-apps/hello-static) to a local directory:
+You can clone all the files needed for this example from [the hello-static GitHub repository](https://github.com/fly-apps/hello-static) to a local directory:
 
 ```cmd
 git clone https://github.com/fly-apps/hello-static
@@ -37,13 +37,13 @@ cd hello-static
 
 ### _The Site_
 
-Our example will be a simple static site. That can be as trivial as a single `index.html` file. Let's make it only slightly more complicated by writing two html files and having them link to each other. 
+Our example will be a simple static site. That can be as trivial as a single `index.html` file. Let's make it only slightly more complicated by writing two html files and having them link to each other.
 
 Put these html files into a subdirectory of their own, called `public`. Files in this directory are the ones our goStatic server will serve. Create the `hello-static/public` directory if needed.
 
 Here's `index.html`, which is the landing page:
 
-```html 
+```html
 <html>
   <head>
     <title>
@@ -75,11 +75,11 @@ Here's `goodbye.html`.
 
 ### _The Dockerfile_
 
-goStatic is designed to run in a container, and the [image](https://hub.docker.com/r/pierrezemb/gostatic) is available at Docker Hub. This is super convenient for us, because Fly apps need container images too! 
+goStatic is designed to run in a container, and the [image](https://hub.docker.com/r/pierrezemb/gostatic) is available at Docker Hub. This is super convenient for us, because Fly apps need container images too!
 
 We can use the goStatic image as a base image. We just have to copy our site's files to `/srv/http/` in the image.
 
-Here's our Dockerfile to do that: 
+Here's our Dockerfile to do that:
 
 ```docker
 FROM pierrezemb/gostatic
@@ -91,14 +91,14 @@ The Dockerfile should be placed in the working directory (here, `hello-static`).
 ### _Configuring the App for Fly.io_
 
 We set the initial configuration for the app by running `flyctl launch`. This takes care of setting the app name, the Fly.io organization it belongs to, and a region to deploy to. It also generates a `fly.toml` file
-with more configuration settings. 
+with more configuration settings.
 
 The `hello-static` repository contains a `fly.toml` that will be detected by `flyctl launch`; you can use it to configure your app. Otherwise, a new `fly.toml` will be generated with `flyctl launch`, and we can edit it.
 
 ```cmd
 flyctl launch
 ```
-```output           
+```output
 Creating app in /Users/chris/trystatic/hello-static
 Scanning source code
 Detected a Dockerfile app
@@ -125,13 +125,13 @@ Before deploying, we need to do one more thing. goStatic listens on port 8043 by
   script_checks = []
   ```
 
-Now we're ready to deploy: 
+Now we're ready to deploy:
 
 ```cmd
 flyctl deploy
 ```
 
-The output should end something like this, if everything has gone well: 
+The output should end something like this, if everything has gone well:
 
 ```
 ==> Monitoring deployment

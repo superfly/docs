@@ -27,7 +27,7 @@ With Fly you can eliminate all that administrative load by letting Fly deploy a 
 
 Let's start with [h2non/Imaginary](https://github.com/h2non/imaginary), a fantastically useful image processing application written in Go. Once configured, it lets you process images. The images can be posted to it or you can ask it to get an image from a remote server and all of this is controlled through a URL request to the Imaginary server.
 
-You can find all the source in the Github repository, but for this guide, we don't need to worry about that. We're going to use the developer-supplied Docker image to deploy it.
+You can find all the source in the GitHub repository, but for this guide, we don't need to worry about that. We're going to use the developer-supplied Docker image to deploy it.
 
 ## _Deploying Docker Images to Fly_
 
@@ -86,7 +86,7 @@ In another terminal session, run:
 curl -O "http://localhost:8080/crop?width=500&height=400&url=https://raw.githubusercontent.com/h2non/imaginary/master/testdata/large.jpg"
 ```
 
-This will ask Imaginary to crop, to 100x100, an image stored in the Imaginary Github repository. This should result in a file, `large.jpg` being written to disc which you can display using your preferred image viewer. MacOS users can simply `open large.jpg` at the command line.
+This will ask Imaginary to crop, to 100x100, an image stored in the Imaginary GitHub repository. This should result in a file, `large.jpg` being written to disc which you can display using your preferred image viewer. MacOS users can simply `open large.jpg` at the command line.
 
 Open the cropped image. Take a moment to play with the width and height values in the URL we're querying and you will get different sized cropped images. Once you are happy the local build is working, you can return to the session where you started the docker image and ctrl-C to stop it.
 
@@ -116,7 +116,7 @@ This will take you to the sign-up page where you can either:
 
 * **Sign up with Email**: Enter your name, email and password.
 
-* **Sign up with Github**: If you have a Github account, you can use that to sign up. Look out for the confirmatory email we will send you which will give you a link to set a password; you'll need a password set so we can actively verify that it is you for some Fly operations.
+* **Sign up with GitHub**: If you have a GitHub account, you can use that to sign up. Look out for the confirmatory email we will send you which will give you a link to set a password; you'll need a password set so we can actively verify that it is you for some Fly operations.
 
 
 ##### Returning User
@@ -127,7 +127,7 @@ Run:
 flyctl auth login
 ```
 
-Your browser will open up with the Fly sign-in screen. Enter your user name and password to sign in. If you signed up with Github, use the `Sign in with Github` button to sign in.
+Your browser will open up with the Fly sign-in screen. Enter your user name and password to sign in. If you signed up with GitHub, use the `Sign in with GitHub` button to sign in.
 
 
 Whichever route you take you will be signed-up, signed-in and returned to your command line, ready to Fly.
