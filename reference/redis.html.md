@@ -89,7 +89,7 @@ PONG
 ## Configuration Options
 
 By default the Redis image will set a `maxmemory` of 90% of the VM's available memory and use the `allkeys-lru`
-eviction policy, which is a good choice for most use cases, such a caching. You can change these settings by [assigning environment variables in `fly.toml`](/docs/reference/configuration/#the-env-variables-section) or by setting [secrets](/docs/reference/secrets/).
+eviction policy, which is a good choice for most use cases, such as caching. You can change these settings by [assigning environment variables in `fly.toml`](/docs/reference/configuration/#the-env-variables-section) or by setting [secrets](/docs/reference/secrets/).
 
 For example, to configure Redis *not to evict any keys* you can use:
 
