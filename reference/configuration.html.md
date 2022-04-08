@@ -236,7 +236,7 @@ When a service is running, the Fly platform checks up on it by connecting to a p
 
 * `grace_period`: The time to wait after a VM starts before checking its health.
 * `interval`: The time between connectivity checks.
-* `restart_limit`: The number of consecutive TCP check failures to allow before attempting to restart the VM.
+* `restart_limit`: The number of consecutive TCP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed TCP health checks.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
 
 Times are in milliseconds unless units are specified.
@@ -265,7 +265,7 @@ Roughly translated, this section says every ten seconds, perform a HTTP GET on t
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
 * `protocol`: The protocol to be used (`http` or `https`)
-* `restart_limit`: The number of consecutive HTTP check failures to allow before attempting to restart the VM.
+* `restart_limit`: The number of consecutive HTTP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed HTTP health checks.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
 * `tls_skip_verify`: When `true` (and using HTTPS protocol) skip verifying the certificates sent by the server.
 * `services.http_checks.headers`: This is a sub-section of `services.http_checks`. It uses the key/value pairs as a specification of header and header values that will get passed with the http_check call.
