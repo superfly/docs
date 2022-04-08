@@ -58,7 +58,14 @@ NAME      DIGEST                           DATE
 MY_SECRET b9e37b7b239ee4aefc75352fe3fa6dc6 1m20s ago
 ```
 
-The values aren't display since they are secret!
+The values aren't displayed since they are secret!
+
+Migrations are best run from the `fly.toml` file. Since Fly is not actually running Docker (it converts the Docker image into a Firecracker VM) if your app requires an `ENTRYPOINT` or a `CMD` for a successful boot these might not work correctly. It's recommended to:
+
+ - Replace the `ENTRYPOINT` with a [`release_command`](https://fly.io/docs/reference/configuration/#release_command) in your `fly.toml`.
+ - Replace the `CMD` with a [`cmd`](https://fly.io/docs/reference/configuration/#cmd) in your `fly.toml`.
+
+
 
 ## _Deploy Your App_
 
