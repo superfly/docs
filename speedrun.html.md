@@ -19,6 +19,7 @@ That's all your need to do for most applications. The `launch` command prepares 
 * [Phoenix](https://phoenixframework.org/)
 * [Ruby on Rails](https://rubyonrails.org/)
 * [Remix](https://remix.run/)
+* [NuxtJS](https://nuxtjs.org)
 * [Django](https://www.djangoproject.com/)
 * [RedwoodJS](https://redwoodjs.com/)
 
