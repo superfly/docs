@@ -20,7 +20,6 @@ When an application is started, a three-character value is set in the environmen
 |Region ID| Region Location |
 |---------|-----------------|
 ams|Amsterdam, Netherlands
-atl|Atlanta, Georgia (US)
 cdg|Paris, France
 dfw|Dallas, Texas (US)
 ewr|Parsippany, NJ (US)
