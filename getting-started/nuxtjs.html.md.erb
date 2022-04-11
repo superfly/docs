@@ -1,0 +1,23 @@
+---
+title: "Deploy a NuxtJS Application"
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+<% app_name = "hello-nuxt" %>
+<%= partial "partials/intro", locals: { runtime: "NuxtJS", link: "https://nuxtjs.org" } %>
+
+You can deploy your [NuxtJS](https://nuxtjs.org) app on Fly with minimal effort, our CLI will do the heavy lifting. You can use your existing NuxtJS app or you can [create one using the tutorial](https://nuxtjs.org/docs/get-started/installation#using-create-nuxt-app) then come back here to deploy your app.
+
+## _Generate the NuxtJS app_
+
+If you just want to see how Fly deployment works, follow these steps.
+
+<%= partial "partials/flyctl" %>
+
+Now let's launch your NuxtJS app.
+
+<%= partial "partials/launch", locals: { detected: "NuxtJS", app_name: app_name } %>
+
+<%= partial "partials/launched" %>
