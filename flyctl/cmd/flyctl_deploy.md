@@ -21,7 +21,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
   -i, --image string          The image tag or ID to deploy
       --image-label string    Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
       --local-only            Only perform builds locally using the local docker daemon
-      --nix                   Build with Nix on a remote builder
+      --nix                   Build with Nix
       --no-cache              Do not use the build cache when building the image
       --now                   Deploy now without confirmation
       --push                  Push image to registry after build is complete
