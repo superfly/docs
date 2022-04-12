@@ -21,7 +21,7 @@ Your application code needs to know how to accept custom domains and adjust the 
 
 When users make requests, their browser sends a `Host` header you can use to alter the behavior of your application. When you run your app server on Fly directly, just get the contents of the `Host` header to identify a request.
 
-If you're running your application on another provider, you will need to create a proxy application (like [NGINX](/docs/app-guides/global-nginx-proxy/) to route traffic through Fly. Your application can then use the `X-Forwarded-Host` header to determine how to handle requests.
+If you're running your application on another provider, you will need to create a proxy application (like [NGINX](/docs/app-guides/global-nginx-proxy/)) to route traffic through Fly. Your application can then use the `X-Forwarded-Host` header to determine how to handle requests.
 
 ## Creating a custom domain on Fly manually
 
