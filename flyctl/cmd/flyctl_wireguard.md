@@ -12,6 +12,7 @@ flyctl wireguard [command] [flags]
 * [reset](/docs/flyctl/wireguard-reset/)	 - Reset WireGuard peer connection for an organization
 * [status](/docs/flyctl/wireguard-status/)	 - Get status a WireGuard peer connection
 * [token](/docs/flyctl/wireguard-token/)	 - Commands that managed WireGuard delegated access tokens
+* [websockets](/docs/flyctl/wireguard-websockets/)	 - Enable or disable WireGuard tunneling over WebSockets
 
 ## Options
 
