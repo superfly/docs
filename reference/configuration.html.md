@@ -105,7 +105,7 @@ This is useful for running database migrations:
 A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
 #### strategy
 
-Set the deployment strategy which informs how a new release should be placed on new VMs. This may be set here in with `--strategy`. The available strategies are:
+Set the deployment strategy which informs how a new release should be placed on new VMs. This may be set here, in the `fly.toml` file, or in the terminal, after `flyctl deploy`, with the `--strategy` flag. The available strategies are:
 
 **canary**: This default strategy - for apps without volumes - will boot a single, new VM with the new release, verify its health, then proceed with a `rolling` restart strategy.
 
