@@ -14,7 +14,7 @@ flyctl machine list [flags]
   -c, --config string   Path to application configuration file
   -h, --help            help for list
   -q, --quiet           Only list machine ids
-      --state string    List machines in a specific state. (default "started")
+      --state string    List machines in a specific state.
 ~~~
 
 ## Global Options
