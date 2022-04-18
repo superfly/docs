@@ -66,7 +66,7 @@ In our example above, the builder is being set to use [Paketo's all-purpose buil
   image = "flyio/hellofly:latest"
 ```
 
-The image builder is used when you want to immediately deploy an existing public image. When deployed, there will be no build process; the image will be prepared and uploaded to the Fly infrastructure as it. This option is useful if you already have a working Docker image you want to deploy on Fly or you want a well known Docker image from a repository to be run.
+The image builder is used when you want to immediately deploy an existing public image. When deployed, there will be no build process; the image will be prepared and uploaded to the Fly infrastructure as is. This option is useful if you already have a working Docker image you want to deploy on Fly or you want a well known Docker image from a repository to be run.
 #### dockerfile
 
 Specify the path to Dockerfile to be used for builds. If this is not specified, or there is no build section, flyctl will look for `Dockerfile` in the application root.
