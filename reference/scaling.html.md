@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-There are multiple dimensions of scaling on Fly.
+There are multiple dimensions of scaling on Fly.io.
 
 * [Ensuring the application has instances running in one or more regions](#count-scaling)
 * [Increasing the CPU cores and memory size of application instances](#scaling-virtual-machines)
@@ -15,23 +15,23 @@ There are multiple dimensions of scaling on Fly.
 
 Your Fly application runs on servers in a pool of regions, selected from our [available regions](/docs/reference/regions).  That pool, which [you can configure](/docs/flyctl/regions/), represents the regions your app _can_ be deployed in.
 
-When you deploy an application for the first time, we pick a first region to deploy in, and some backup regions. Our selections are simple:
+When you deploy an application for the first time, we pick a first region to deploy in. Our selections are simple:
 
 * If you’re [turbo-charging a Heroku application](https://fly.io/heroku), we pick regions close to the Heroku application (currently, this means `iad` for US Heroku applications (howdy!), and `ams` for European applications (hallo!).
-* Otherwise, we pick regions close to you, the human running the `flyctl` command.
+* Otherwise, you're prompted to select an initial region when you run `fly launch`
 
-You can confirm this by running `flyctl regions list`.
+You can confirm this by running `fly regions list`.
 
 ```cmd
-flyctl regions list
+fly regions list
 ```
 ```output
 Region Pool:
 lhr
 Backup Region:
-ams
-fra
 ```
+
+Backup regions are disabled by default as they cause more problems than they solve.
 
 The create command, in this case, was issued in the UK, so London (LHR-London Heathrow) is the closest region.
 
@@ -43,8 +43,8 @@ Continuing our previous example: if for any reason your application can't be dep
 
 You can build your own region pool easily.
 
-* `flyctl regions add ord iad` adds `ord` and `iad` to your region pool.
-* `flyctl regions remove ord` removes `ord` from your region pool.
+* `fly regions add ord iad` adds `ord` and `iad` to your region pool.
+* `fly regions remove ord` removes `ord` from your region pool.
 
 Both commands simply take a space-separated list of regions to add or remove.
 
@@ -54,14 +54,14 @@ Now that we have control over where our application runs, we can talk about how 
 
 Your application has a “scale count”. The scale count defaults to 1, meaning 1 instance of your application runs on Fly, in one of the regions in your pool.
 
-If you want to run more than 1 instance, change your scale count with the `flyctl scale count` command. `flyctl scale count 3` tells us to run 3 instances of your application.
+If you want to run more than 1 instance, change your scale count with the `fly scale count` command. `fly scale count 3` tells us to run 3 instances of your application.
 
 When you bump up your scale count, we’ll place your app in different regions (based on your region pool). If there are three regions in the pool and the count is set to six, there will be two app instances in each region.
 
-You can see your current scaling parameters with `flyctl scale show`.
+You can see your current scaling parameters with `fly scale show`.
 
 ```cmd
-flyctl scale show
+fly scale show
 ```
 ```output
         VM Size: shared-cpu-1x
@@ -74,14 +74,14 @@ This application uses the shared-cpu-1x (one shared CPU) VM size, with 512MB of 
 
 ## Scaling Virtual Machines
 
-Each application instance on Fly runs in a virtual machine. The number of cores and amount of memory available in the virtual machine can be set for all application instances using the `flyctl scale vm` command.
+Each application instance on Fly runs in a virtual machine. The number of cores and amount of memory available in the virtual machine can be set for all application instances using the `fly scale vm` command.
 
 ### Viewing The Current VM Size
 
-Using `flyctl scale vm show` on its own will display the details of the application's current VM sizing.
+Using `fly scale vm show` on its own will display the details of the application's current VM sizing.
 
 ```cmd
-flyctl scale vm show
+fly scale vm show
 ```
 ```output
            Size: shared-cpu-1x
@@ -93,10 +93,10 @@ It shows the size (`shared-cpu-1x`), number of CPUs, and memory (in GB or MB).
 
 ### Viewing Available VM Sizes
 
-The `flyctl platform vm-sizes` command will display the various sizes with cores and memory and current pricing:
+The `fly platform vm-sizes` command will display the various sizes with cores and memory and current pricing:
 
 ```cmd
-flyctl platform vm-sizes
+fly platform vm-sizes
 ```
 ```output
 NAME             CPU CORES MEMORY
@@ -150,10 +150,10 @@ Scaled VM size to dedicated-cpu-1x
 
 ### Viewing The Application's Scaled Status
 
-To view where the instances of a Fly application are currently running, use `flyctl status`:
+To view where the instances of a Fly application are currently running, use `fly status`:
 
 ```cmd
-flyctl status
+fly status
 ```
 ```output
 App
@@ -187,10 +187,10 @@ Autoscaling is based on a pool of regions where the application can be run. Usin
 
 * *Disabled*: By default, autoscaling is in Disabled mode and count-based scaling is in operation. You can turn autoscaling on by setting the autoscale mode to `standard` or `balanced`
 
-To determine what the current autoscale settings of an application are, run `flyctl autoscale show`:
+To determine what the current autoscale settings of an application are, run `fly autoscale show`:
 
 ```cmd
-flyctl autoscale show
+fly autoscale show
 ```
 ```output
      Scale Mode: Standard
@@ -202,10 +202,10 @@ This scaling plan sees a standard, even distribution on instances, with a minimu
 
 ### Modifying The Autoscaling Plan
 
-You can switch the plan by calling flyctl autoscale and then selecting disabled, balanced or standard.
+You can switch the plan by calling fly autoscale and then selecting disabled, balanced or standard.
 
 ```cmd
-flyctl autoscale standard
+fly autoscale standard
 ```
 
 The `balanced` and `standard` commands can take parameters that control the model, specifically `max` and `min`.
@@ -213,7 +213,7 @@ The `balanced` and `standard` commands can take parameters that control the mode
 For example if you want to run at least three instances in a `balanced` model, but no more than ten, you would run:
 
 ```cmd
-flyctl autoscale balanced min=3 max=10
+fly autoscale balanced min=3 max=10
 ```
 ```out
      Scale Mode: Balanced
@@ -224,7 +224,7 @@ flyctl autoscale balanced min=3 max=10
 And if you wanted to change that to a standard model with a minimum number of 5 instances, you would run:
 
 ```cmd
-flyctl autoscale standard min=5
+fly autoscale standard min=5
 ```
 ```out
      Scale Mode: Standard
@@ -243,10 +243,10 @@ fly autoscale show
       Max Count: 10
 ```
 
-You can continue to see your current scaling parameters using `flyctl scale show`.
+You can continue to see your current scaling parameters using `fly scale show`.
 
 ```cmd
-flyctl scale show
+fly scale show
 ```
 ```out
 VM Resources for hellofly
@@ -260,7 +260,7 @@ The count field here now shows the number of instances currently running.
 You can also turn off autoscaling and return to the recommended count-scaling option by disabling autoscaling:
 
 ```cmd
-flyctl autoscale disable
+fly autoscale disable
 ```
 ```out
      Scale Mode: Disabled
