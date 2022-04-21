@@ -6,7 +6,7 @@ nav: firecracker
 
 The Fly proxy only supports TLSv1.2 and TLSv1.3 with strong ciphers.
 
-## Supported Chiper Suites
+## Supported Cipher Suites
 
 These suites give us broad, secure coverage. We do not support very old browsers.
 
