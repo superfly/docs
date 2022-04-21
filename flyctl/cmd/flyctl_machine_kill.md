@@ -11,7 +11,6 @@ flyctl machine kill <id> [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -f, --force           Force destroy a machine
   -h, --help            help for kill
 ~~~
 
