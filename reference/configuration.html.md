@@ -5,11 +5,13 @@ sitemap: false
 nav: firecracker
 ---
 
-All Fly applications have a `fly.toml` file which describes how the application should be configured when it is deployed onto the Fly platform. This configuration includes the application name, build configuration, ports, services, and handlers to set up and parameters for health checks.
+The Fly platform uses `fly.toml` to configure applications for deployment. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here.
 
-The file is in TOML format ([github reference](https://github.com/toml-lang/toml)). If you are unfamiliar with TOML, here's a [useful introduction](https://npf.io/2014/08/intro-to-toml/). It is made up of lines with either key/value settings or sections (noted by values surrounded by one or more pairs of square brackets).
+TOML is a [simple configuration file format](https://github.com/toml-lang/toml). Here's a [useful introduction](https://npf.io/2014/08/intro-to-toml/) on its syntax.
 
-You don't need to create a `fly.toml` file by hand. Running [flyctl launch](/docs/flyctl/launch/) will create a `fly.toml` file for you. You can also save one from an existing app by running [flyctl config save](/docs/flyctl/config-save/)
+You don't need to create a `fly.toml` file by hand. Running [flyctl launch](/docs/flyctl/launch/) will create a `fly.toml` file for you. You can also generate one from an existing app by running [flyctl config save](/docs/flyctl/config-save/).
+
+*VSCode users*: Install the [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml) extension for automatic `fly.toml` validation and hints drawn from this documentation.
 
 ## _Fly.toml - line by line_
 
