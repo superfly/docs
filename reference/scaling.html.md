@@ -78,15 +78,16 @@ Each application instance on Fly runs in a virtual machine. The number of cores 
 
 ### Viewing The Current VM Size
 
-Using `fly scale vm show` on its own will display the details of the application's current VM sizing.
+Using `fly scale show` on its own will display the details of the application's current VM sizing.
 
 ```cmd
-fly scale vm show
+fly scale show
 ```
 ```output
            Size: shared-cpu-1x
       CPU Cores: 1
          Memory: 256 MB
+ Max Per Region:
 ```
 
 It shows the size (`shared-cpu-1x`), number of CPUs, and memory (in GB or MB).
