@@ -5,15 +5,17 @@ sitemap: false
 nav: firecracker
 ---
 
-Volumes offer persistent storage for Fly apps. Volumes can be mounted in a Fly app and they appear as a directory. Applications can then write to files in that directory and those files will persist beyond the app being shutdown or restarted.
-
-This allows an app to save its state, preserving configuration, session or user data and be restarted with that information in place.
+Volumes are persistent storage for Fly apps. They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
 
 Volumes are managed using the [**`fly volumes`**](/docs/flyctl/volumes/) command.
 
 ## Creating Volumes
 
-Volumes can be created for an App using the sub-command `create`, such as:
+<div class="callout">
+See [`fly volumes create`](/docs/flyctl/volumes-create/) for usage and options.
+</div>
+
+Create a volume for an app using `fly volumes create`. The default volume size is 10GB.
 
 ```cmd
 fly volumes create myapp_data --region lhr --size 40
@@ -29,11 +31,13 @@ Created at: 04 Jan 21 10:14 UTC
 
 This command creates a new volume named "myapp_data" with 40GB of storage in the lhr (London Heathrow) region for the current application. 
 
-The results from the command shows when the volume was created and its encryption status. Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--no-encryption` to not encrypt the volume for improved performance at deployment and runtime.
+Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--no-encryption` to instead create an unencrypted volume for improved performance at deployment and runtime.
 
 Volumes are bound to both apps and regions. A volume is directly associated with only one app and exists in only one region. No other app can see this volume and only an instance of the app running in the LHR region can access it.
 
-When creating a volume, the region specified is added to the apps region pool to allow app instances to be started with it.
+Most people use volumes for databases, so for high availability, we default to putting each of your app's volumes on different hardware (equivalent to using `--require-unique-zone=true` with `fly volumes create`). This does limit the number of volumes your app can have in a region.
+
+When you create a volume, its region is added to the apps region pool to allow app instances to be started with it.
 
 ## Using Volumes
 

@@ -1,6 +1,4 @@
-Create new volume for app. --region flag must be included to specify
-region the volume exists in. --size flag is optional, defaults to 10,
-sets the size as the number of gigabytes the volume will consume.
+Create a new persistent storage volume for an app (default size 10GB).
 
 ## Usage
 ~~~
