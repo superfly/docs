@@ -23,7 +23,7 @@ flyctl machine run <image> [command] [flags]
       --entrypoint string     ENTRYPOINT replacement
   -e, --env strings           Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
   -h, --help                  help for run
-      --id string             Machine ID, is previously known
+      --id string             Machine ID, if previously known
       --image-label string    Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
       --memory int            Memory (in megabytes) to attribute to the machine
   -n, --name string           Machine name, will be generated if missing

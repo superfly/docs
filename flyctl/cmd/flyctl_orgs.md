@@ -9,6 +9,7 @@ flyctl orgs [command] [flags]
 ~~~
 
 ## Available Commands
+* [builder](/docs/flyctl/orgs-builder/)	 - Manage remote builder
 * [create](/docs/flyctl/orgs-create/)	 - Create an organization
 * [delete](/docs/flyctl/orgs-delete/)	 - Delete an organization
 * [invite](/docs/flyctl/orgs-invite/)	 - Invite user (by email) to organization

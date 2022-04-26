@@ -1,5 +1,4 @@
-Monitor application deployments and other activities. Use --verbose/-v
-to get details of every instance . Control-C to stop output.
+Monitor currently running application deployments. Use Control-C to stop output.
 
 ## Usage
 ~~~
@@ -9,8 +8,8 @@ flyctl monitor [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for monitor
 ~~~
 
