@@ -43,7 +43,7 @@ flyctl [command] [flags]
 * [list](/docs/flyctl/list/)	 - Lists your Fly resources
 * [logs](/docs/flyctl/logs/)	 - View app logs
 * [machine](/docs/flyctl/machine/)	 - Commands that manage machines
-* [monitor](/docs/flyctl/monitor/)	 - Monitor deployments
+* [monitor](/docs/flyctl/monitor/)	 - Monitor currently running application deployments
 * [move](/docs/flyctl/move/)	 - Move an app to another organization
 * [open](/docs/flyctl/open/)	 - Open browser to current deployed application
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
