@@ -14,5 +14,5 @@ The flyctl command has a number of features that enable it to be seamlessly inte
 
 ## JSON output
 
-Most flyctl commands can product JSON output using the `--json` or `-j` flag. The JSON may be streamed messsages in JSON-NL format or a single JSON object, depending on what is being requested.
+Most flyctl commands can produce JSON output using the `--json` or `-j` flag. The JSON may be streamed messsages in JSON-NL format or a single JSON object, depending on what is being requested.
 
