@@ -1,4 +1,4 @@
-The RESTART command will restart all running vms. 
+The RESTART command will restart all running vms.
 
 
 ## Usage
