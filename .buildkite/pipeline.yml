@@ -1,4 +1,5 @@
 steps:
   - trigger: "landing"
     label: "docs update: ${BUILDKITE_MESSAGE}"
-    branches: master
+    branches: main
+
