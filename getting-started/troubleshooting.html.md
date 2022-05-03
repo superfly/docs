@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-**So your deployment has failed. What now?** 
+**So your deployment has failed. What now?**
 
 The first thing to remember is that your application may well be running but be unable to give proof of life to the Fly health-checks. These happen as soon as your app is deployed and not passing them causes Fly to kill the latest version of your app that you just deployed and roll back to deploying an older version.
 
@@ -47,13 +47,13 @@ So, first stop, check what port you have open on your application. If you are us
 
 Still can't connect? Ok, the first thing to do is look at the logs of the app when it's running. `flyctl logs` will give you the most recent log entries.
 
-The next question is do the logs say why it is failing? 
+The next question is do the logs say why it is failing?
 
 If you can see messages about the app just exiting, then there's likely a specific app issue, and you'll need to address that and redeploy, BUT...
 
 ## _Host Checking_
 
-If there are messages about being unable to bind to a network port or listening to localhost, your problem is different. A lot of frameworks will, in development mode or similar, open a port on the localhost so that the developer can talk to the app. 
+If there are messages about being unable to bind to a network port or listening to localhost, your problem is different. A lot of frameworks will, in development mode or similar, open a port on the localhost so that the developer can talk to the app.
 
 The problem is that no one else can talk to the localhost so although the app may have the right port, it's on the wrong network interface. The Rule of thumb to fix this is to get the app to open up port 8080 on the IP address 0.0.0.0. That's anyone outside the system. Done that? Time to redeploy and hopefully this time you are working.
 
@@ -108,7 +108,7 @@ And redeploy that, it will work.
 
 ## _Inspecting with SSH_
 
-You can use `flyctl ssh console` to connect to a running instance of your application. If this is your first time using `flyctl ssh` then you need to run `flyctl ssh establish` first.
+You can use `flyctl ssh console` to connect to a running instance of your application. Use `flyctl ssh console -s` to select a specific instance.
 
 ## _Health checks failing_
 
