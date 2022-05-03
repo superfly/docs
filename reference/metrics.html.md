@@ -129,23 +129,28 @@ fly_instance_memory_vmalloc_chunk
 fly_instance_cpu - available variables: cpu_id (numeric index), mode (user, nice, system, idle, iowait, irq, softirq, steal, guest,guest_nice)
 fly_instance_load_average - available variables: minutes (1, 5, or 15)
 ```
-### Instance Root Disk
+### Instance Disks
+
+These values should be available for both the ephemeral VM root disk and any mounted volumes.
+Disk labels will be `vda` and `vdb`, respectively.
 
 ```
-fly_instance_disk_reads_completed
-fly_instance_disk_reads_merged
-fly_instance_disk_sectors_read
-fly_instance_disk_time_reading
-fly_instance_disk_writes_completed
-fly_instance_disk_writes_merged
-fly_instance_disk_sectors_written
-fly_instance_disk_time_writing
-fly_instance_disk_io_in_progress
-fly_instance_disk_time_io
-fly_instance_disk_time_io_weighted
+fly_instance_disk_reads_completed (count)
+fly_instance_disk_reads_merged (count)
+fly_instance_disk_sectors_read (count)
+fly_instance_disk_time_reading (time spent reading milliseconds)
+fly_instance_disk_writes_completed (count)
+fly_instance_disk_writes_merged (count)
+fly_instance_disk_sectors_written (count)
+fly_instance_disk_time_writing (time spent writing in milliseconds)
+fly_instance_disk_io_in_progress (count of i/o operations currently in progress)
+fly_instance_disk_time_io (time spent performing i/o in milliseconds)
+fly_instance_disk_time_io_weighted (weighted time spent performing i/o in milliseconds)
 ```
 
-### Instance Network
+### Instance Networking
+
+Values are counts taken directly from [/proc/net/dev](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/net/core/net-procfs.c#n75).
 
 ```
 fly_instance_net_recv_bytes
@@ -167,6 +172,8 @@ fly_instance_net_sent_compressed
 ```
 
 ### Instance File Descriptors
+
+Information about allocated, and maximum allowed allocated file descriptors.
 
 ```
 fly_instance_filefd_allocated
