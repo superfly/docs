@@ -96,27 +96,91 @@ fly_edge_data_out
 fly_edge_data_in
 ```
 
-### Instance series
+## Instance series
 
-These are pulled and exposed from inside your app instances:
+These are pulled and exposed from your app VMs.
+
+### Instance memory
+
+Units are in *bytes*.
 
 ```
-fly_instance_memory_buffers
-fly_instance_memory_cached
+fly_instance_memory_mem_total
 fly_instance_memory_mem_free
 fly_instance_memory_mem_available
-fly_instance_memory_mem_total
+fly_instance_memory_buffers
+fly_instance_memory_cached
 fly_instance_memory_swap_cached
-fly_instance_memory_vmalloc_used
 fly_instance_memory_active
 fly_instance_memory_inactive
-fly_instance_cpu
-fly_instance_load_average
-fly_instance_net_sent_bytes
-fly_instance_disk_time_io
+fly_instance_memory_swap_total
+fly_instance_memory_swap_free
+fly_instance_memory_dirty
+fly_instance_memory_writeback
+fly_instance_memory_slab
+fly_instance_memory_shmem
+fly_instance_memory_vmalloc_total
+fly_instance_memory_vmalloc_used
+fly_instance_memory_vmalloc_chunk
+```
+### Instance Load and CPU
+
+```
+fly_instance_cpu - available variables: cpu_id (numeric index), mode (user, nice, system, idle, iowait, irq, softirq, steal, guest,guest_nice)
+fly_instance_load_average - available variables: minutes (1, 5, or 15)
+```
+### Instance Disks
+
+These values should be available for both the ephemeral VM root disk and any mounted volumes.
+Disk labels will be `vda` and `vdb`, respectively.
+
+```
+fly_instance_disk_reads_completed (count)
+fly_instance_disk_reads_merged (count)
+fly_instance_disk_sectors_read (count)
+fly_instance_disk_time_reading (time spent reading milliseconds)
+fly_instance_disk_writes_completed (count)
+fly_instance_disk_writes_merged (count)
+fly_instance_disk_sectors_written (count)
+fly_instance_disk_time_writing (time spent writing in milliseconds)
+fly_instance_disk_io_in_progress (count of i/o operations currently in progress)
+fly_instance_disk_time_io (time spent performing i/o in milliseconds)
+fly_instance_disk_time_io_weighted (weighted time spent performing i/o in milliseconds)
 ```
 
-### Volumes
+### Instance Networking
+
+Values are counts taken directly from [/proc/net/dev](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/net/core/net-procfs.c#n75).
+
+```
+fly_instance_net_recv_bytes
+fly_instance_net_recv_packets
+fly_instance_net_recv_errs
+fly_instance_net_recv_drop
+fly_instance_net_recv_fifo
+fly_instance_net_recv_frame
+fly_instance_net_recv_compressed
+fly_instance_net_recv_multicast
+fly_instance_net_sent_bytes
+fly_instance_net_sent_packets
+fly_instance_net_sent_errs
+fly_instance_net_sent_drop
+fly_instance_net_sent_fifo
+fly_instance_net_sent_colls
+fly_instance_net_sent_carrier
+fly_instance_net_sent_compressed
+```
+
+### Instance File Descriptors
+
+Information about allocated, and maximum allowed allocated file descriptors.
+
+```
+fly_instance_filefd_allocated
+fly_instance_filefd_maximum
+```
+
+## Volumes
 
 If you're using volumes, for any of our organization's apps, you'll be able to query these series:
 
@@ -125,7 +189,7 @@ fly_volume_size_bytes
 fly_volume_used_pct
 ```
 
-### PostgresSQL
+## PostgresSQL
 
 If you have a [PostgreSQL](https://fly.io/docs/reference/postgres/) database hosted on Fly, you'll automatically get the following series:
 
@@ -172,7 +236,7 @@ pg_replication_lag
 pg_database_size_bytes
 ```
 
-### Pre-built Grafana Dashboard
+## Pre-built Grafana Dashboard
 
 We published a basic [Grafana Dashboard](https://grafana.com/grafana/dashboards/14741) to help our users get started with our built-in metrics.
 
