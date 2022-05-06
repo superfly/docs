@@ -13,7 +13,7 @@ Welcome to Fly! You've just successfully signed up and you're ready to get going
 
 ## _New to Fly?_
 
-* If you are new here, the [Introduction](/docs/introduction/) will give you some background. 
+* If you are new here, the [Overview](/docs/) will give you some background. 
 * If you know your way around Docker and similar tools, you can dive into the [Speedrun](/docs/speedrun/) - essential instructions to get you on Fly. 
 * If you want a more step-based approach to learning check out our [Hands-on](/docs/hands-on/start/).
 
