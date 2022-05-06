@@ -350,7 +350,7 @@ npx prisma db pull
 
 </details>
 
-Assuming you have the following model in your `schema.prisma file:
+Assuming you have the following model in your `schema.prisma` file:
 
 Add a model to your `schema.prisma` file:
 
