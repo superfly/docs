@@ -11,7 +11,7 @@ Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command.
 
 ## Creating Volumes
 
-Create a volume for an app using `fly volumes create`. The default volume size is 10GB. See [`fly volumes create`](/docs/flyctl/volumes-create/) in the [flyctl reference](/docs/flyctl) for usage and options.
+Create a volume for an app using `fly volumes create`. The default volume size is 3GB. See [`fly volumes create`](/docs/flyctl/volumes-create/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
 The following command creates a new volume named "myapp_data" with 40GB of storage in the lhr (London Heathrow) region, for the application whose `fly.toml` file is in the working directory. 
 
