@@ -7,13 +7,11 @@ nav: firecracker
 
 Machines are customizable [Firecracker VMs](https://firecracker-microvm.github.io/) - the building blocks of Fly applications. Machines give you efficient, low-level control over VM provisioning, supported by Fly.io infrastructure and networking features.
 
-This document covers usage of the Machines REST API to start, stop, update and interact with machines. For the impatient, flyctl also provides commands for experimenting with the API.
+This document covers usage of the Machines REST API to start, stop, update and interact with machines. For the impatient, [flyctl also provides commands](https://fly.io/docs/flyctl/machine/) for experimenting with the API.
 
-## The Machines REST API
+See all possible machine states [in the table below](#machine-states).
 
-The Machines API endpoint requires a connection to your Fly private network - either via a Wireguard VPN or with `flyctl proxy`. Let's set up of those first.
-
-### Connecting to the API
+## Connecting to the API
 
 The Machines API endpoint requires a connection to your Fly private network - either via a Wireguard VPN or using flyctl proxy.
 
@@ -25,12 +23,12 @@ First, follow the instructions to set up a permanent Wireguard connection to you
 
 Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
 
-### Connecting via flyctl proxy
+### Connecting via `flyctl proxy`
 
 If you just want to test quickly without Wireguard, `flyctl proxy` can proxy a local port to any remote address on your Fly network. Using any app in your target organization, run:
 
 ```cmd
-fly proxy 4280:4280 _api.internal -a <app_name>
+flyctl proxy 4280:4280 _api.internal -a <app_name>
 ```
 
 With the above command running, in a separate terminal, try:
@@ -135,3 +133,43 @@ Delete a machine, never to be seen again. This action cannot be undone!
 Machines should be stopped before attempting deletion. Pass `force=true` to stop and delete immediately.
 
 <%= partial "machines/delete_app" %>
+
+## Machine States
+
+This table explains the possible machine states. A machine may only be in one state at a time.
+
+<table class="table-stripe table-stretch table-pad text-lg whitespace-nowrap m-0">
+  <tbody>
+    <tr>
+      <td class="font-bold">created</td>
+      <td>Initial status</td>
+    </tr>
+    <tr>
+      <td class="font-bold">started</td>
+      <td>Running and network-accesible</td>
+    </tr>
+    <tr>
+      <td class="font-bold">stopping</td>
+      <td>Transitioning from `started` to `stopped`</td>
+    </tr>
+    <tr>
+      <td class="font-bold">stopped</td>
+      <td>Exited, either on its own or explicitly stopped</td>
+    </tr>
+    <tr>
+      <td class="font-bold">replacing</td>
+      <td>User-initiated configuration change (image, VM size, etc.) in progress</td>
+    </tr>
+    <tr>
+      <td class="font-bold">destroying</td>
+      <td>User asked for the machine to be completely removed</td>
+    </tr>
+    <tr>
+      <td class="font-bold">destroyed</td>
+      <td>No longer exists</td>
+    </tr>
+    </tbody>
+  </table>
+
+
+Internal note: the replaced state is only possible when requesting a specific instance_id.
