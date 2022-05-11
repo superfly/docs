@@ -4,7 +4,7 @@ require 'json'
 require 'faraday'
 
 HOSTNAME = "_flaps.internal:4280"
-APP_NAME = "js-machines-test-2"
+APP_NAME = "my-awesome-machine-app"
 FLY_ORG = "fly-ephemeral"
 
 def token
@@ -16,10 +16,12 @@ def curl(method, path, body = nil)
   cmd = <<-CMD
 curl -i -X#{method.to_s.upcase} \\
   -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
-  "http://#{HOSTNAME}#{full_path}" \\
--d '#{JSON.pretty_generate(body)}'
+  "http://#{HOSTNAME}#{full_path}"
   CMD
 
+  if body
+    cmd << "\n  -d '#{JSON.pretty_generate(body)}'"
+  end
   conn = Faraday.new(
     url: "http://#{HOSTNAME}",
     headers: {
@@ -30,8 +32,16 @@ curl -i -X#{method.to_s.upcase} \\
   response = conn.send(method, full_path) do |req|
     req.body = body.to_json
   end
-  puts cmd
-  puts JSON.pretty_generate(JSON.parse(response.body))
+
+  puts "#{cmd}"
+
+  puts "Status: #{response.status}"
+  if response.body.size > 0
+    puts JSON.pretty_generate(JSON.parse(response.body))
+  else
+    puts "No response body"
+  end
+  puts
 end
 
 def create_app
@@ -42,10 +52,17 @@ def create_app
   curl(:post, "apps", body)
 end
 
+def delete_app
+  body = {
+    app_name: APP_NAME
+  }
+  curl(:delete, "apps/#{APP_NAME}")
+end
+
 
 def launch_machine
   body = {
-    name: "machine-name2",
+    name: "quirky-machine",
     config: {
       "image": "nginx"
     }
@@ -53,5 +70,6 @@ def launch_machine
   curl(:post, "apps/#{APP_NAME}/machines", body)
 end
 
-# create_app
+delete_app
+create_app
 launch_machine
