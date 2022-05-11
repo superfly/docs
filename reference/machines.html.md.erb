@@ -1,0 +1,137 @@
+---
+title: Machines
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+Machines are customizable [Firecracker VMs](https://firecracker-microvm.github.io/) - the building blocks of Fly applications. Machines give you efficient, low-level control over VM provisioning, supported by Fly.io infrastructure and networking features.
+
+This document covers usage of the Machines REST API to start, stop, update and interact with machines. For the impatient, flyctl also provides commands for experimenting with the API.
+
+## The Machines REST API
+
+The Machines API endpoint requires a connection to your Fly private network - either via a Wireguard VPN or with `flyctl proxy`. Let's set up of those first.
+
+### Connecting to the API
+
+The Machines API endpoint requires a connection to your Fly private network - either via a Wireguard VPN or using flyctl proxy.
+
+This guide assumes that you have `flyctl` and `curl` installed, and have authenticated to the Fly.io platform.
+
+### Connecting via Wireguard
+
+First, follow the instructions to set up a permanent Wireguard connection to your Fly network. We recommend Wireguard because you can directly test your machines from your local machine.
+
+Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
+
+### Connecting via flyctl proxy
+
+If you just want to test quickly without Wireguard, `flyctl proxy` can proxy a local port to any remote address on your Fly network. Using any app in your target organization, run:
+
+```cmd
+fly proxy 4280:4280 _api.internal -a <app_name>
+```
+
+With the above command running, in a separate terminal, try:
+
+```
+curl http://127.0.0.1:4280
+```
+
+### Setting up the environment
+Set these environment variables to make the following commands work with copy/paste. App names must be unique, so choose one now.
+
+```
+export FLY_APP_NAME="my-awesome-machine-app"
+export FLY_API_HOSTNAME="_api.internal" # or set to `172.0.0.1` when using 'flyctl proxy'
+export FLY_API_TOKEN=$(fly auth token)
+export FLY_ORG=personal
+```
+
+### Authentication
+
+All requests must include the the fly API Token in the HTTP Headers as follows:
+
+```
+Authorization: Bearer <fly_api_token>
+```
+
+### Create a Fly application
+
+Machines must be associated with a Fly application. If you don't have one yet, create it with:
+
+<%= partial "machines/create_app" %>
+
+### Create and start a machine
+
+Create and start a machine immediately. Following this call, you can make a blocking API request to wait for a machine to start.
+
+Optional parameters:
+
+name: Unique name for this machine. If omitted, one is generated for you.
+`region`: The target region. Omitting this param will launch the machine in the same region as your Wireguard peer connection (somewhere near you).
+
+#### Required parameters:
+`config` should be an object with, at minimum a Docker image name in image
+
+`image`: The Docker image to run
+
+Other config options:
+
+`guest` An object with the following options:
+
+* `cpus`: Number of vCPUs (default 1)
+
+* `memory_mb`: Memory in megabytes as multiples of 256 (default 256)
+
+* `cpu_type`: `shared` is the only available option
+
+<%= partial "machines/launch" %>
+
+### Wait for a machine to start
+
+Wait for a created machine to start. This request will block for up to 60 seconds. Set a longer timeout with the `timeout` parameter.
+
+<%= partial "machines/wait" %>
+
+### Get a Machine
+
+Given a machine ID, fetch details about it.
+
+<%= partial "machines/get" %>
+
+### Update a Machine
+
+Neither `region` nor `name` may be updated. Updating the `config` requires
+specifying the complete config.
+
+<%= partial "machines/update" %>
+
+### Stop a Machine
+
+Stopping a machine will shut down the VM, but not destroy it. The VM may be started again with `machines/start`.
+
+<%= partial "machines/stop" %>
+
+### Start a Machine
+
+Start a previously stopped machine.
+
+<%= partial "machines/start" %>
+
+### Delete a Machine permanently
+
+Delete a machine, never to be seen again. This action cannot be undone!
+
+<%= partial "machines/delete" %>
+
+### List machines for an app
+
+<%= partial "machines/list" %>
+
+### Delete a Fly application
+
+Machines should be stopped before attempting deletion. Pass `force=true` to stop and delete immediately.
+
+<%= partial "machines/delete_app" %>
