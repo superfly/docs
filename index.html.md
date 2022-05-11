@@ -55,7 +55,7 @@ We place no limits on ports or protocol. We can [terminate TLS](https://fly.io/d
 
 ### Free remote builders
 
-Building apps can be a hefty process. Fly gives you free build VMs with persistent storage (for keeping warm caches) and 4GB of memory.
+Building apps can be a hefty process. We give you free build VMs with persistent storage (for keeping warm caches) and 4GB of memory.
 
 ### Free Hosted Metrics
 
