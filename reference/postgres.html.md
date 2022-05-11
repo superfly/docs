@@ -309,6 +309,94 @@ console.log(res.rows[0].message) // Hello world!
 await client.end()
 ```
 
+### Connecting with Prisma – Node.js ([docs](https://www.prisma.io/))
+
+Prisma is an open-source object-relational mapper (ORM) for Node.js and works with both JavaScript and TypeScript. It consists of 3 components:
+- Prisma Client - a type-safe query builder 
+- Prisma Migrate - a data modeling and migration tool
+- Prisma Studio - a modern intuitive GUI for interacting with your database
+
+
+<details>
+<summary>Set up Prisma in your project</summary>
+
+Install the Prisma CLI and Prisma Client dependencies in your project
+
+```
+npm i --save-dev prisma
+npm i @prisma/client
+```
+
+Initialize Prisma in your project:
+
+```
+npx prisma init
+```
+This command does the following:
+- Creates a folder called `prisma` at the root of your project
+- Creates a `.env` file at the root of your project if it doesn't exist
+- Creates a `schema.prisma` file inside the `prisma` folder. This is the file that you will use to model your data
+
+Update the `DATABASE_URL` in the `.env` to your PostgreSQL database
+```
+DATABASE_URL="postgres://postgres:secret123@postgresapp.internal:5432/yourdb"
+```
+
+If you are working in a brownfield project, you can introspect your database to generate the models in your `schema.prisma` file:
+
+```
+npx prisma db pull
+```
+
+</details>
+
+Assuming you have the following model in your `schema.prisma` file:
+
+Add a model to your `schema.prisma` file:
+
+```groovy
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider  = "prisma-client-js"
+}
+
+model Post {
+  id       Int     @id @default(autoincrement())
+  title    String
+  content  String?
+}
+```
+
+You can query your database using Prisma as follows: 
+```typescript
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const posts = await prisma.post.findMany()
+
+  const newPost = await prisma.post.create({
+    data: {
+      title: 'PostgreSQL on Fly',
+      content: 'https://fly.io/docs/reference/postgres'
+    }
+  })
+}
+
+main()
+  .catch((e) => {
+    throw e
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+  })
+```
+
 ## Monitoring
 
 ### Status
