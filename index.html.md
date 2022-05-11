@@ -9,38 +9,72 @@ nav: firecracker
   <img src="/public/images/docs-intro.jpg" srcset="/public/images/docs-intro@2x.jpg 2x" alt="">
 </figure>
 
-Fly.io is a global application distribution platform. We run your code in [Firecracker](https://firecracker-microvm.github.io/) microVMs around the world.
+You can call Fly.io a "global application distribution platform." 
+
+Delivering your applications with the lowest possible latency has been our stated thing. 
+Since [we can't do anything about the speed of light](/blog/all-in-on-sqlite-litestream/#the-light-is-too-damn-slow), we run your code in [Firecracker](https://firecracker-microvm.github.io/) microVMs, on servers close to your users.
+
+We also just want to be the _best place to run your full stack_&mdash;whether it's a simple web service or your database-backed opus with multiple supporting services. 
+
+But "best" depends on what's important to you. So here are some things you might want to know about the Fly.io platform.
 
 
-<div class="callout">
-Our *raison d'&ecirc;tre* is to deliver your applications to your users globally, with the highest possible availability and the lowest possible latency, with a great developer UX.
-</div>
+### Bespoke infrastructure
 
-We want you to run your full stack close to users, whether it’s a simple web service or your database-backed opus with multiple supporting services. Check out our [persistent storage volumes](/docs/reference/volumes/) and [ready-to-run Postgres](/docs/reference/postgres/). Your organization's Fly.io apps can [talk to each other privately](/docs/reference/private-networking/) through our fast internal [WireGuard](https://www.wireguard.com/) network.
+We run bare metal servers [around the world](https://fly.io/docs/reference/regions/). We're not limited by the region pool, feature set, or cost overhead of cloud providers like AWS or Google.
 
-## Docker without Docker, with or without Docker
+### VM isolation
 
-One thing to know: Docker images ([OCI container images](/blog/docker-without-docker/)) are how we give Firecracker your app to make into a microVM. That means you *can* use Docker to build the container image with your app and its environment. You can also point to a pre-built image.
+We don't run apps as containers. Every app runs in its own lightweight [Firecracker](https://firecracker-microvm.github.io/) VM for superior isolation and fewer constraints than container-based runtimes.
 
-In many cases, you won't have to touch Docker; we can scan your source code and detect which [pre-existing buildpack](https://fly.io/docs/reference/builders/#buildpacks) matches the configuration you need, and our remote builder will build your app container image on deploy.
+### A single, global internal network
 
-<div class="callout">
-If you have an app running on [Heroku](https://www.heroku.com/), you may be interested in our quick-and-easy [**Turboku web launcher**](https://fly.io/launch/heroku) to deploy it on Fly.io too. [**Read more here**](https://fly.io/blog/new-turboku/).</div>
+All your apps can talk to each other over a [shared, private, encrypted IPv6 network](https://fly.io/docs/reference/private-networking/), from anywhere in the world.
 
-More on [builders](/docs/reference/builders).
+### DNS-based service discovery
 
-## Happiness on the CLI
+Your web servers, background workers, and databases can [find each other](https://fly.io/docs/reference/private-networking/#discovering-apps-through-dns-on-an-instance) using standard DNS entries.
 
-`flyctl` is our command-line tool to facilitate app configuration, building, deployment and management. [It's the command center for your Fly.io apps.](/docs/flyctl/)
+### Persistent storage everywhere
 
-Creating and deploying an app on Fly.io is simple. You don't even have to type `flyctl` in full! 
+All Fly regions offer [persistent disks](https://fly.io/docs/reference/volumes/) at [affordable prices](https://fly.io/docs/about/pricing/#persistent-storage-volumes). Keep your caches warm and close to your users. Maybe you won't need a CDN?
 
-Run `fly launch` to initialize an app. (Maybe) customize the generated [config file](https://fly.io/docs/reference/configuration/) that generates (perhaps to hook up some [metrics](/docs/reference/metrics/)). Run `fly deploy` to build and deploy.
+### Open any port you need, TCP or UDP
 
-That's the short version. And you do have to write your app, in the language of your choice, first. Although to try it out, you can use one of ours. [Here's one in Go.](/docs/getting-started/golang/)
+We place no limits on ports or protocol. We can [terminate TLS](https://fly.io/docs/reference/services/#tls) for you, even if you're running a TCP-only service like a [gRPC server](https://github.com/fly-apps/grpc-service/).
 
-`flyctl` can then help you manage your app's [deployment regions](/docs/reference/regions/), [scaling](/docs/reference/scaling/), and [secrets](/docs/reference/secrets/).
+### Automatic TLS certificates
 
-If you want to experience `flyctl` for yourself, you can go hands-on for free and [launch a container on Fly](/docs/hands-on/start/).
+[Hook up your domain to your app](https://fly.io/docs/app-guides/custom-domains-with-fly/) with a few CLI commands. Certificates are renewed automatically.
 
-If you just want to read about all the talents of `flyctl`, here's another link to its [documentation](/docs/flyctl/).
+### Easy-to-manage Postgres as an app
+
+Create a HA Postgres cluster [with one command](/docs/reference/postgres/#creating-a-postgres-app). Manage it like any other app on Fly.io.
+
+### Request replays
+
+_Replay_ `GET` requests in another region using the magical `fly-replay` header. Run fast, global reads from database replicas while keeping writes on primaries. [Learn how this works with Postgresql](https://fly.io/docs/getting-started/multi-region-databases/).
+
+### Extensive global reach through a single IP address
+
+[See where your Fly.io apps can run](https://fly.io/docs/reference/regions/) on every continent (except Antarctica). Traffic is routed automatically to the closest region via [Anycast](https://fly.io/docs/reference/services/#anycast).
+
+### Free remote builders
+
+Building apps can be a hefty process. Fly gives you free build VMs with persistent storage (for keeping warm caches) and 4GB of memory.
+
+### Free Hosted Metrics
+
+Get a ton of useful metrics automatically via our [hosted Prometheus server](https://fly.io/docs/reference/metrics/). [Expose a Prometheus endpoint](https://fly.io/docs/reference/metrics/#sending-custom-metrics-to-prometheus) to export custom metrics. It's on us.
+
+### Multiprocess apps
+
+Run [multiple process types](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) as independent, logical groupings that may scale independently.
+
+### Generous Free Tier
+
+On our [free tier](https://fly.io/docs/about/pricing/#free-allowances) you can run an app, worker and a database, 24/7, with up to 1GB of persistent storage. We won't delete or switch off your apps.
+
+### Connect to your apps
+
+[SSH](https://fly.io/docs/flyctl/ssh/) to all your VMs, including Postgres, Redis - they're just regular apps. Proxy local ports to remote VMs, or set  up a [Wireguard VPN](https://fly.io/docs/reference/private-networking/#private-network-vpn) to get _full network access_ to your entire organization.
