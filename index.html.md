@@ -9,9 +9,9 @@ nav: firecracker
   <img src="/public/images/docs-intro.jpg" srcset="/public/images/docs-intro@2x.jpg 2x" alt="">
 </figure>
 
-Fly.io is a global application distribution platform. We run your code in [Firecracker](https://firecracker-microvm.github.io/) microVMs on servers we run around the world. Reducing latency between your app and your users is one of our *raisons d'&ecirc;tre*. Since [we can't do anything about the speed of light](/blog/all-in-on-sqlite-litestream/#the-light-is-too-damn-slow), we want you to run your full stack close to your users&mdash;whether it's a simple web service or your database-backed opus with multiple supporting services.
+Fly.io is a global application distribution platform: we run your code on servers around the world. Reducing latency between your app and your users is one of our *raisons d'&ecirc;tre*. Since [we can't do anything about the speed of light](/blog/all-in-on-sqlite-litestream/#the-light-is-too-damn-slow), we want you to run your full stack close to your users&mdash;whether it's a simple web service or your database-backed opus with multiple supporting services.
 
-We also just want Fly.io to be the _best place_ to run apps. But "best" depends on what's important to you. So here are some things you might want to know about the Fly.io platform.
+We want to be the best place on the Internet to run full-stack apps. But "best" depends on what's important to you. **So here are some things you might want to know about the Fly.io platform:**
 
 ### Bespoke infrastructure
 
