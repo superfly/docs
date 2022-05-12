@@ -1,7 +1,12 @@
 ```
 curl -i -X POST \\
     -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "http://${FLY\_API\_HOSTNAME}/v1/apps/my-awesome-machine-app/machines/73d8d463c49891/stop" 
+    "http://${FLY\_API\_HOSTNAME}/v1/apps/my-awesome-machine-app/machines/24d899e0b33879/stop" 
 
 ```
-**Status: 409**
+**Status: 200**
+```json
+{
+  "ok": true
+}
+```
