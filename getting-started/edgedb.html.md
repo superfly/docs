@@ -32,7 +32,7 @@ Save your credentials in a secure place, you won't be able to see them again! ``
 
 
 ```cmd
-flyctl scale memory 1024  --app my-postgres
+flyctl scale memory 1024  --app mypostgres
 ``` -->
 
 ## Create the EdgeDB app
