@@ -28,17 +28,12 @@ Postgres cluster mypostgres created
   Hostname:    mypostgres.internal
   Proxy Port:  5432
   PG Port: 5433
-Save your credentials in a secure place, you won't be able to see them again! ```
-
-
-```cmd
-flyctl scale memory 1024  --app mypostgres
-``` -->
+Save your credentials in a secure place, you won't be able to see them again! 
+```
 
 ## Create the EdgeDB app
 
 Create a directory and create a new app. Be sure to replace `myedgedb` with a custom name. When prompted, pick a region and a Fly organization.
-
 
 ```cmd
 flyctl apps create --name myedgedb --image edgedb/edgedb --no-deploy
@@ -70,7 +65,7 @@ Let's discuss what's going on with all these secrets.
 - `EDGEDB_SERVER_BACKEND_DSN_ENV` tells EdgeDB which environment variable holds the Postgres connection string.
 - `EDGEDB_SERVER_TLS_CERT_MODE` tells EdgeDB to auto-generate a self-signed TLS certificate.
   - You may instead choose to provision a custom TLS certificate. In this case, you should instead create two other secrets: assign your certificate to `EDGEDB_SERVER_TLS_CERT` and your private key to `EDGEDB_SERVER_TLS_KEY`.
-- `EDGEDB_SERVER_PORT` tells EdgeDB to listen on port 8080 instead of the default 5656, as Fly uses `8080` for its default health checks.
+- `EDGEDB_SERVER_PORT` tells EdgeDB to listen on port `8080` instead of the default 5656, as Fly uses `8080` for its default health checks.
 
 ## Attach and deploy
 
