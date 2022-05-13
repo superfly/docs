@@ -61,6 +61,11 @@ Machines must be associated with a Fly application. If you don't have one yet, c
 
 <%= partial "machines/create_app" %>
 
+### Get application details
+
+Get details about an application, like its organization slug and name. Also, to check if the app exists!
+<%= partial "machines/get_app" %>
+
 ### Create and start a machine
 
 Create and start a machine immediately. Following this call, you can make a blocking API request to wait for a machine to start.

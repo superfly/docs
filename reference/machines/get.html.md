@@ -1,18 +1,18 @@
 ```
 curl -i -X GET \\
     -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "http://${FLY\_API\_HOSTNAME}/v1/apps/my-awesome-machine-app/machines/d5683219b298e9" 
+    "http://${FLY\_API\_HOSTNAME}/v1/apps/my-awesome-machine-app/machines/0e286e4ef14867" 
 
 ```
 **Status: 200**
 ```json
 {
-  "id": "d5683219b298e9",
+  "id": "0e286e4ef14867",
   "name": "quirky-machine",
   "state": "started",
   "region": "cdg",
-  "instance\_id": "01G2WTWDJXKMQTSAKAGG3DGA0N",
-  "private\_ip": "fdaa:0:3ec2:a7b:5b66:4abb:590f:2",
+  "instance\_id": "01G2Z7AJQF6H7G1E0CXP2JJET7",
+  "private\_ip": "fdaa:0:3ec2:a7b:5bd4:c4ea:3415:2",
   "config": {
     "env": null,
     "init": {
@@ -41,19 +41,19 @@ curl -i -X GET \\
       "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
     }
   },
-  "created\_at": "2022-05-12T19:10:39Z",
+  "created\_at": "2022-05-13T17:26:35Z",
   "events": [
     {
       "type": "start",
       "status": "started",
       "source": "flyd",
-      "timestamp": 1652382647528
+      "timestamp": 1652462804072
     },
     {
       "type": "launch",
       "status": "created",
       "source": "user",
-      "timestamp": 1652382643805
+      "timestamp": 1652462799599
     }
   ]
 }
