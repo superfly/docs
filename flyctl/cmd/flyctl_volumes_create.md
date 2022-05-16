@@ -1,5 +1,5 @@
 Create new volume for app. --region flag must be included to specify
-region the volume exists in. --size flag is optional, defaults to 3,
+region the volume exists in. --size flag is optional, defaults to 10,
 sets the size as the number of gigabytes the volume will consume.
 
 ## Usage
