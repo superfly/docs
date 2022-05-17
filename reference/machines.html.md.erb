@@ -72,11 +72,12 @@ Create and start a machine immediately. Following this call, you can make a bloc
 
 Optional parameters:
 
-name: Unique name for this machine. If omitted, one is generated for you.
+`name`: Unique name for this machine. If omitted, one is generated for you.
+
 `region`: The target region. Omitting this param will launch the machine in the same region as your WireGuard peer connection (somewhere near you).
 
 #### Required parameters:
-`config` should be an object with, at minimum a Docker image name in image
+`config` should be an object with, at minimum, a Docker image name in image
 
 `image`: The Docker image to run
 
