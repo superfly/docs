@@ -61,7 +61,7 @@ The builder "builder" uses CNB Buildpacks and Builders to create the application
 
 In our example above, the builder is being set to use [Paketo's all-purpose builder](https://paketo.io) with the NodeJS buildpack. To learn more about buildpacks and Fly, refer to this blog posting [Simpler Fly deployments for NodeJS, Rails, Go, and Java](/blog/simpler-fly-deployments-nodejs-rails-golang-java/).
 
-#### image
+#### Specify a Docker image
 
 ```toml
 [build]
@@ -69,17 +69,29 @@ In our example above, the builder is being set to use [Paketo's all-purpose buil
 ```
 
 The image builder is used when you want to immediately deploy an existing public image. When deployed, there will be no build process; the image will be prepared and uploaded to the Fly infrastructure as is. This option is useful if you already have a working Docker image you want to deploy on Fly or you want a well known Docker image from a repository to be run.
-#### dockerfile
+#### Specify a Dockerfile
 
-Specify the path to Dockerfile to be used for builds. If this is not specified, or there is no build section, flyctl will look for `Dockerfile` in the application root.
+```toml
+[build]
+  dockerfile = "Dockerfile.test"
+```
 
-#### build-target
+`dockerfile` accepts a relative path to a Dockerfile. By default, `flyctl` looks for `Dockerfile` in the application root.
 
-Specify an optional Docker multistage build target for `Dockerfile` builds.
+This option will not change the Docker context path, which is set to the project root directory by default. If you want the `Dockerfile` to use its containing directory as the context root, use `fly deploy <directory>`.
 
-#### build.args
+#### Specify a multistage Docker build target
 
-You can pass build-time arguments to both Dockerfile and Buildpack builds using the `[build.args]` sub-section:
+```toml
+[build]
+  build-target = "test"
+```
+
+If your Dockerfile has [multiple stages](https://docs.docker.com/develop/develop-images/multistage-build/), you can specify one as the target for deployment. The target stage must have a `CMD` or `ENTRYPOINT` set.
+
+#### Specify Docker build arguments
+
+You can pass [build-time arguments](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg) to both Dockerfile and Buildpack builds using the `[build.args]` sub-section:
 
 ```toml
 [build.args]
@@ -87,48 +99,59 @@ You can pass build-time arguments to both Dockerfile and Buildpack builds using 
   MODE="production"
 ```
 
-This will always pass the USER and MODE build arguments to the Dockerfile build process. You can also pass build arguments to `flyctl deploy` using `--build-arg`. These args take priority over args of the same name in `fly.toml`.
+You can also pass build arguments to `flyctl deploy` using `--build-arg`. Command line args take priority over args with the same name in `fly.toml`.
+
+Note that build arguments are *not available* in the runtime container. If you need build information at runtime - like a Git revision - store it in a file at build time, like:
+
+```
+RUN echo $GIT_REVISION > REVISION
+```
+
+Likewise, application environment variables and secrets are not available to builds.
 
 ### The `deploy` section
 
 This section configures deployment-related settings such as the release command or deployment strategy.
 
-#### release_command
-
-Run a command in a one-off VM - using the successfully built release - *before* that release is deployed . This VM won't mount volumes, but has full access to the network, environment variables and secrets.
-
-This is useful for running database migrations:
+#### Run one-off commands before releasing a deployment
 
 ```toml
 [deploy]
   release_command = "bundle exec rails db:migrate"
 ```
 
+This command runs in a temporary VM - using the successfully built release - *before* that release is deployed. This is useful for running database migrations.
+
+The temporary VM has full access to the network, environment variables and secrets, but *not* to persistent volumes.
+
 A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
-#### strategy
 
-Set the deployment strategy which informs how a new release should be placed on new VMs. This may be set here, in the `fly.toml` file, or in the terminal, after `flyctl deploy`, with the `--strategy` flag. The available strategies are:
+To ensure the command runs in a specific region - say `dfw` - set `PRIMARY_REGION = 'dfw'` on in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if when running [database replicas in multiple regions](/docs/getting-started/multi-region-databases).
 
-**canary**: This default strategy - for apps without volumes - will boot a single, new VM with the new release, verify its health, then proceed with a `rolling` restart strategy.
-
-**rolling**: One by one, each running VM is taken down and replaced by a new release VM. This is the default strategy for apps with volumes.
-
-**bluegreen**: For every running VM, a new one is booted alongside it. All new VMs must pass health checks to complete deployment, when traffic gets migrated to new VMs. If your app has multiple VMs, this strategy may reduce deploy time and downtime, assuming your app is scaled to 2 or more VMs.
-
-**immediate**: Replace all VMs with new releases immediately without waiting for health checks to pass. This is useful in emergency situations where you're confident a release will be healthy.
-
-Note: If `max-per-region` is set to 1, the default strategy is set to `rolling`, since more than one VM must be running in a region, temporarily, for a canary deployment to function. This setting is equally incompatible with the `bluegreen` strategy.
+#### Picking a deployment strategy
 
 ```toml
 [deploy]
   strategy = "bluegreen"
 ```
 
+`strategy` controls the way a new release replaces the previous release. Different strategies offer trade-offs between downtime and reliability.
+
+`strategy` may also be specified at deploy time with `flyctl deploy --strategy`.
+
+The available strategies are:
+
+**canary**: The default for apps without persistent volumes. `canary` will boot a single, new VM with the new release, verify its health, then proceed with a `rolling` restart strategy.
+
+**rolling**: The default for apps with persistent volumes. One by one, each running VM is taken down and replaced by a new release VM. This is the default strategy for apps with volumes.
+
+**bluegreen**: For every running VM, a new one is booted alongside it in the same region. Once all of the new VMs pass health checks, traffic gets migrated to new VMs. If your app is scaled to 2 or more VMs, this strategy can reduce deploy time by running tasks in parallel.
+
+**immediate**: Replace all VMs with new releases immediately without waiting for health checks to pass. This is useful in emergency situations where you're confident about release health and can't wait for health checks.
+
+Note: If `max-per-region` is set to 1, the default strategy is set to `rolling`. This happens because `canary` needs to temporarily run more than one VM to work correctly. The `bluegreen` strategy will behave similarly with `max-per-region` set to 1.
+
 ### The `env` variables section
-
-The env variables section is an optional section that allows for the setting of non-sensitive information as environment variables in the application's [runtime environment](/docs/reference/runtime-environment/).
-
-For sensitive information, such as credentials or passwords, we recommend using the [secrets command](/docs/reference/secrets). For anything else though, the `env` section provides a simple way to set environment variables. Here's an example:
 
 ```toml
 [env]
@@ -137,31 +160,37 @@ For sensitive information, such as credentials or passwords, we recommend using 
   S3_BUCKET = "my-app-production"
 ```
 
+This optional section allows setting non-sensitive information as environment variables in the application's [runtime environment](/docs/reference/runtime-environment/).
+
+For sensitive information, such as credentials or passwords, use the [secrets CLI command](/docs/reference/secrets).
+
 Env variable names are strictly case-sensitive and cannot begin with `FLY_` (as this could clash with the [runtime enviroment](/docs/reference/runtime-environment)). Env values can only be strings.
 
-Where there is a secret and an env variable set with the same name, the secret will take precedence.
+Secrets take precendence over env variables with the same name.
 
 ### The `statics` sections
 
-The `statics` sections expose static assets built into your application's container to Fly's Anycast network. Using a `static` mapping, you can serve HTML files, Javascript, and images without needing to run a web server inside your container.
+When `statics` are set, Fly will deliver files from `guest_path` if they are requested from `url_prefix` without passing the actual HTTP request on through to your app. These assets are extracted from your Docker image and delivered directly from our proxy.
 
-Each `[[statics]]` block maps a URL prefix to a path inside your container:
+This means you don't even need to run a web server in your VM. If you do run one, this feature may still be useful if your application can't deliver static files or incurs performance hits from asset delivery.
 
 ```toml
 [[statics]]
   guest_path = "/app/public"
   url_prefix = "/public"
 ```
+Each `[[statics]]` block maps a URL prefix to a path inside your container. You can have up to 10 mappings in an application.
 
-When Fly's Anycast network handles requests for your application, it'll look for static mappings like these. When it finds them, it'll satisfy the request directly from our proxy, without passing the actual HTTP request on through to your app. That's faster than making your app do that work, and easier for you.
+The "guest path" --- the path inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
+#### Caveats
 
-You can have up to 10 mappings in an application. The "guest path" --- the path
-inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
+This feature should not be compared directly with a CDN, for the following reasons.
 
-**Important**: our static cache service doesn't currently honor symlinks. So,
-if `/app/public` in your container is actually a symlink to something like
-`/app-39403/public`, you'll want to use the absolute original path in your
-statics configuration.
+You can't set `Cache-Control` or any other headers on assets. If you need those, you'll need to deliver them from your application and set the relevant headers.
+
+Assets are not delivered, by default, from all Fly regions. Rather, assets are delivered from the regions the application is deployed in.
+
+`statics` does not honor symlinks. So, if `/app/public` in your container is actually a symlink to something like `/app-39403/public`, you'll want to use the absolute original path in your statics configuration.
 
 ### The `services` sections
 
