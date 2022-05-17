@@ -7,6 +7,7 @@ flyctl machine [command] [flags]
 ~~~
 
 ## Available Commands
+* [api-proxy](/docs/flyctl/machine-api-proxy/)	 - Establish a proxy to the Machine API through a Wireguard tunnel for local connections
 * [clone](/docs/flyctl/machine-clone/)	 - Clones a Fly Machine
 * [kill](/docs/flyctl/machine-kill/)	 - Kill (SIGKILL) a Fly machine
 * [list](/docs/flyctl/machine-list/)	 - List Fly machines
