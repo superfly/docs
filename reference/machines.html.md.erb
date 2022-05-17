@@ -13,19 +13,19 @@ See all possible machine states [in the table below](#machine-states).
 
 ## Connecting to the API
 
-The Machines API endpoint requires a connection to your Fly private network - either via a Wireguard VPN or using flyctl proxy.
+The Machines API endpoint requires a connection to your Fly private network - either via a WireGuard VPN or using flyctl proxy.
 
 This guide assumes that you have `flyctl` and `curl` installed, and have authenticated to the Fly.io platform.
 
-### Connecting via Wireguard
+### Connecting via WireGuard
 
-First, follow the instructions to set up a permanent Wireguard connection to your Fly network. We recommend Wireguard because you can directly test your machines from your local machine.
+First, follow the [instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly network. We recommend WireGuard because you can directly test your machines from your local machine.
 
 Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
 
 ### Connecting via `flyctl proxy`
 
-If you just want to test quickly without Wireguard, `flyctl proxy` can proxy a local port to any remote address on your Fly network. Using any app in your target organization, run:
+If you just want to test quickly without WireGuard, `flyctl proxy` can proxy a local port to any remote address on your Fly network. Using any app in your target organization, run:
 
 ```cmd
 flyctl proxy 4280:4280 _api.internal -a <app_name>
@@ -42,7 +42,7 @@ Set these environment variables to make the following commands work with copy/pa
 
 ```
 export FLY_APP_NAME="my-awesome-machine-app"
-export FLY_API_HOSTNAME="_api.internal" # or set to `172.0.0.1` when using 'flyctl proxy'
+export FLY_API_HOSTNAME="_api.internal:4280" # or set to `127.0.0.1:4280` when using 'flyctl proxy'
 export FLY_API_TOKEN=$(fly auth token)
 export FLY_ORG=personal
 ```
@@ -73,7 +73,7 @@ Create and start a machine immediately. Following this call, you can make a bloc
 Optional parameters:
 
 name: Unique name for this machine. If omitted, one is generated for you.
-`region`: The target region. Omitting this param will launch the machine in the same region as your Wireguard peer connection (somewhere near you).
+`region`: The target region. Omitting this param will launch the machine in the same region as your WireGuard peer connection (somewhere near you).
 
 #### Required parameters:
 `config` should be an object with, at minimum a Docker image name in image
