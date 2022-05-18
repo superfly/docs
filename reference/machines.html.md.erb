@@ -38,14 +38,14 @@ curl http://127.0.0.1:4280
 ```
 
 ### Setting up the environment
-Set these environment variables to make the following commands work with copy/paste. App names must be unique, so choose one now.
+Set these environment variables to make the following commands easier to use.
 
 ```
-export FLY_APP_NAME="my-awesome-machine-app"
 export FLY_API_HOSTNAME="_api.internal:4280" # or set to `127.0.0.1:4280` when using 'flyctl proxy'
 export FLY_API_TOKEN=$(fly auth token)
-export FLY_ORG=personal
 ```
+
+You'll still need to replace the application name and machine ID for commands to work.
 
 ### Authentication
 
@@ -57,9 +57,24 @@ Authorization: Bearer <fly_api_token>
 
 ### Create a Fly application
 
-Machines must be associated with a Fly application. If you don't have one yet, create it with:
+Machines must be associated with a Fly application. App names must be unique.
 
 <%= partial "machines/create_app" %>
+
+### Allocate an IP address
+
+If you intend for machines to be accessible to the internet, you'll need to allocate an IP address to the application. Currently
+this is done using `flyctl` or the [Fly GraphQL API](https://api.fly.io/graphql). Example:
+
+```cmd
+flyctl ips allocate-v4 -a my-awesome-machines-app
+```
+```out
+TYPE ADDRESS    REGION CREATED AT
+v4   37.16.9.52 global 7s ago
+```
+
+Shortly after allocating, the app will be available at `my-awesome-machines-app.fly.dev`.
 
 ### Get application details
 
@@ -68,28 +83,32 @@ Get details about an application, like its organization slug and name. Also, to 
 
 ### Create and start a machine
 
-Create and start a machine immediately. Following this call, you can make a blocking API request to wait for a machine to start.
+Create and start a machine immediately. This is where you configure the machine characteristics, like its CPU and memory. You
+can also allow connections from the internet through the Fly proxy. Learn more about this behavior in the [networking section](#networking).
 
-Optional parameters:
+Following this call, you can make a [blocking API request](#wait-for-a-machine-to-start) to wait for a machine to start.
+
+The only required parameter is `image` in the `config` object. Other parameters:
 
 `name`: Unique name for this machine. If omitted, one is generated for you.
 
-`region`: The target region. Omitting this param will launch the machine in the same region as your WireGuard peer connection (somewhere near you).
+`region`: The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you).
 
-#### Required parameters:
-`config` should be an object with, at minimum, a Docker image name in image
+`config`: An object defining the machine configuration. Options
 
-`image`: The Docker image to run
+* `image`: The Docker image to run
+* `guest`: An object with the following options:
+  - `cpus`: Number of vCPUs (default 1)
+  - `memory_mb`: Memory in megabytes as multiples of 256 (default 256)
 
-Other config options:
 
-`guest` An object with the following options:
+* `services`: An array of objects that define a single network service. Check the [machines networking section](#networking) for more information. Options:
 
-* `cpus`: Number of vCPUs (default 1)
-
-* `memory_mb`: Memory in megabytes as multiples of 256 (default 256)
-
-* `cpu_type`: `shared` is the only available option
+  - `protocol`: `tcp` or `udp`. [Learn more about running raw TCP/UDP services](https://fly.io/docs/app-guides/udp-and-tcp/).
+  - `internal_port`: Port the machine VM listens on
+  - `ports`: An array of objects defining the service's ports and associated handlers. Options:
+      + `port`: Public-facing port number
+      + `handlers`: Array of [connection handlers](https://fly.io/docs/reference/services/#connection-handlers) for TCP-based services.
 
 <%= partial "machines/launch" %>
 
@@ -139,6 +158,19 @@ Delete a machine, never to be seen again. This action cannot be undone!
 Machines should be stopped before attempting deletion. Pass `force=true` to stop and delete immediately.
 
 <%= partial "machines/delete_app" %>
+
+## Notes on Networking
+
+Machines are closed to the public internet by default. To make them accessible via the associated application, you need to:
+
+* Allocate an IP address to the application
+* Adding one or more `services` to the machine config with ports and handlers, as seen in the launch example here
+
+For an application with a single machine, all requests will be routed to that machine. A machine in the `stopped` state will be started up
+automatically when a request arrives.
+
+For an application with multiple machines with the same configuration, requests will be distributed across them. Warm-start behavior in this situation
+is not well-defined now, so should not be relied upon for apps with multiple machines.
 
 ## Machine States
 
