@@ -27,10 +27,10 @@ Once you're connected, Fly internal DNS should expose the Machines API endpoint 
 
 ### Connecting via `flyctl proxy`
 
-For quick testing of this API, proxy a local port to the internal API endpoint. Pick any organization when asked.
+For quick testing of this API, you can proxy a local port to the internal API endpoint. Pick any organization when asked.
 
 ```cmd
-flyctl proxy 4280 _api.internal
+flyctl machines api-proxy
 ```
 
 With the above command running, in a separate terminal, try this to confirm you can access the API:
