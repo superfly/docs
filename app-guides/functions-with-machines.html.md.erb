@@ -1,0 +1,64 @@
+---
+title: Run user functions with Fly Machines
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+[Fly Machines](/docs/reference/machines) are API-driven Firecracker micro VMs. They're useful for running user code to extend your projects. People sometimes call these Functions-as-a-Service (FaaS).
+
+User code is fraught with peril. Fly Machines run it safely - even the most awful, buggy, and downright hostile user code.
+Most FaaS work similarly. Package up users' code, define a runtime environment, launch the code in a VM, then turn the VM off when it idles.
+
+Packaging user code as a Docker image is mostly up to you. The rest, we can help with.
+
+## Working with the Machines API
+
+Machines are operated over a simple REST API. First, visit the [Machines documentation](/docs/reference/machines) to get ready for this guide.
+
+## Grab or create a runtime Docker image
+
+Your function-as-a-service needs a well-defined runtime environment that can boot user code and then shut it down when it's idle.
+
+Here we'll use this in-browser code server: https://github.com/superfly/code-server-elixir-prototype. This uses a small Go based HTTP proxy that detects usage and shuts down the service after a few minutes of inactivity.
+
+## Launch a new machine
+
+Launch a user machine by supplying a Docker image, and memory/CPU requirements like so:
+
+<%= partial "../reference/machines/launch" %>
+
+This creates and launches a new machine. Machines are permanent, so keep the ID around for later.
+
+If you elected to run the machine at launch time, your users' service will boot immediately after this API call. It will run until the process exits.
+
+Launch speed is a function of image size. Tiny images should boot in less than 2 seconds. Large, complex images are much slower to boot.
+
+## Start an existing machine
+
+Once created, a machine may be stopped and started until you delete it. The good news is, images stay cached after first launch. Starting an existing machine is very fast.
+
+Remember that ID you saved from the launch API call? Use it to start the existing machine:
+
+<%= partial "../reference/machines/start" %>
+
+The start API call only returns successfully if the machine is in a stopped state. It's safe to call start on a running machine, though. If you're unsure of the machine state, just call start and ignore the error response.
+
+Start operations clear filesystem changes. The user process comes up with a fresh runtime environment. It is safe to share machines between users, as long as you stop them before they get reassigned.
+
+## Stop a machine
+
+You may stop a machine with an API call as well:
+
+<%= partial "../reference/machines/stop" %>
+
+
+In a FaaS environment, you'll usually want to wait for a machine to exit. You can stop them with an API call, however, if needed.
+
+## Delete a machine
+
+When you're done, delete the machine:
+
+<%= partial "../reference/machines/delete" %>
+
+
