@@ -5,7 +5,28 @@ curl -i -X POST \\
   -d '{
       "name": "quirky-machine",
       "config": {
-        "image": "nginx"
+        "image": "nginx",
+        "services": [
+          {
+            "ports": [
+              {
+                "port": 443,
+                "handlers": [
+                  "tls",
+                  "http"
+                ]
+              },
+              {
+                "port": 80,
+                "handlers": [
+                  "http"
+                ]
+              }
+            ],
+            "protocol": "tcp",
+            "internal\_port": 80
+          }
+        ]
       }
     }'
 
@@ -13,12 +34,12 @@ curl -i -X POST \\
 **Status: 200**
 ```json
 {
-  "id": "0e286e4ef14867",
+  "id": "24d899e0b99879",
   "name": "quirky-machine",
   "state": "starting",
   "region": "cdg",
-  "instance\_id": "01G2Z7AEPRRRPMGWBWWW35KFVP",
-  "private\_ip": "fdaa:0:3ec2:a7b:5bd4:c4ea:3415:2",
+  "instance\_id": "01G3C47GRZQTA5RBF85R3WFJ60",
+  "private\_ip": "fdaa:0:3ec2:a7b:5adc:ad42:c773:2",
   "config": {
     "env": null,
     "init": {
@@ -32,6 +53,27 @@ curl -i -X POST \\
     "restart": {
       "policy": ""
     },
+    "services": [
+      {
+        "internal\_port": 80,
+        "ports": [
+          {
+            "handlers": [
+              "tls",
+              "http"
+            ],
+            "port": 443
+          },
+          {
+            "handlers": [
+              "http"
+            ],
+            "port": 80
+          }
+        ],
+        "protocol": "tcp"
+      }
+    ],
     "guest": {
       "cpu\_kind": "shared",
       "cpus": 1,
@@ -47,6 +89,6 @@ curl -i -X POST \\
       "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
     }
   },
-  "created\_at": "2022-05-13T17:26:35Z"
+  "created\_at": "2022-05-18T17:42:41Z"
 }
 ```

@@ -1,14 +1,13 @@
 ```
 curl -i -X POST \\
     -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "http://${FLY\_API\_HOSTNAME}/v1/apps/my-awesome-machine-app/machines/0e286e4ef14867" \\
+    "http://${FLY\_API\_HOSTNAME}/v1/apps/my-awesome-machine-app/machines/24d899e0b99879" \\
   -d '{
       "region": "ord",
       "config": {
         "image": "nginx",
         "guest": {
           "memory\_mb": 512,
-          "cpu\_kind": "shared",
           "cpus": 2
         }
       }
@@ -18,12 +17,12 @@ curl -i -X POST \\
 **Status: 200**
 ```json
 {
-  "id": "0e286e4ef14867",
+  "id": "24d899e0b99879",
   "name": "quirky-machine",
   "state": "starting",
   "region": "cdg",
-  "instance\_id": "01G2Z7AJQF6H7G1E0CXP2JJET7",
-  "private\_ip": "fdaa:0:3ec2:a7b:5bd4:c4ea:3415:2",
+  "instance\_id": "01G3C47N75YPCNKR22EK46ABV0",
+  "private\_ip": "fdaa:0:3ec2:a7b:5adc:ad42:c773:2",
   "config": {
     "env": null,
     "init": {
@@ -38,7 +37,7 @@ curl -i -X POST \\
       "policy": ""
     },
     "guest": {
-      "cpu\_kind": "shared",
+      "cpu\_kind": "",
       "cpus": 2,
       "memory\_mb": 512
     }
@@ -52,6 +51,6 @@ curl -i -X POST \\
       "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
     }
   },
-  "created\_at": "2022-05-13T17:26:35Z"
+  "created\_at": "2022-05-18T17:42:41Z"
 }
 ```
