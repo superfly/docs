@@ -1,7 +1,7 @@
 ```
 curl -i -X POST \\
     -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "http://${FLY\_API\_HOSTNAME}/v1/apps/${FLY\_APP\_NAME}/machines" \\
+    "http://${FLY\_API\_HOSTNAME}/v1/apps/my-awesome-machine-app/machines" \\
   -d '{
       "name": "quirky-machine",
       "config": {
@@ -34,12 +34,12 @@ curl -i -X POST \\
 **Status: 200**
 ```json
 {
-  "id": "24d899e6c93879",
+  "id": "24d899e0b99879",
   "name": "quirky-machine",
   "state": "starting",
   "region": "cdg",
-  "instance\_id": "01G3BZ7C89Z46HBAVKY1BJ55BR",
-  "private\_ip": "fdaa:0:3ec2:a7b:5b66:ce41:374:2",
+  "instance\_id": "01G3C47GRZQTA5RBF85R3WFJ60",
+  "private\_ip": "fdaa:0:3ec2:a7b:5adc:ad42:c773:2",
   "config": {
     "env": null,
     "init": {
@@ -89,6 +89,6 @@ curl -i -X POST \\
       "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
     }
   },
-  "created\_at": "2022-05-18T16:15:13Z"
+  "created\_at": "2022-05-18T17:42:41Z"
 }
 ```

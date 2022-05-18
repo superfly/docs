@@ -13,11 +13,13 @@ See all possible machine states [in the table below](#machine-states).
 
 ## Connecting to the API
 
-The Machines API endpoint requires a connection to your Fly private network - either via a WireGuard VPN or using flyctl proxy.
+The Machines API endpoint requires a connection to your Fly private network - either via a WireGuard VPN or using `flyctl proxy`.
 
 This guide assumes that you have `flyctl` and `curl` installed, and have authenticated to the Fly.io platform.
 
 ### Connecting via WireGuard
+
+This method requires more setup but gives you direct access to machines over the Wireguard VPN.
 
 First, follow the [instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly network. We recommend WireGuard because you can directly test your machines from your local machine.
 
@@ -25,13 +27,13 @@ Once you're connected, Fly internal DNS should expose the Machines API endpoint 
 
 ### Connecting via `flyctl proxy`
 
-If you just want to test quickly without WireGuard, `flyctl proxy` can proxy a local port to any remote address on your Fly network. Using any app in your target organization, run:
+For quick testing of this API, proxy a local port to the internal API endpoint. Pick any organization when asked.
 
 ```cmd
-flyctl proxy 4280:4280 _api.internal -a <app_name>
+flyctl proxy 4280 _api.internal
 ```
 
-With the above command running, in a separate terminal, try:
+With the above command running, in a separate terminal, try this to confirm you can access the API:
 
 ```
 curl http://127.0.0.1:4280
