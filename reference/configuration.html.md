@@ -170,9 +170,7 @@ Secrets take precendence over env variables with the same name.
 
 ### The `statics` sections
 
-When `statics` are set, Fly will deliver files from `guest_path` if they are requested from `url_prefix` without passing the actual HTTP request on through to your app. These assets are extracted from your Docker image and delivered directly from our proxy.
-
-This means you don't even need to run a web server in your VM. If you do run one, this feature may still be useful if your application can't deliver static files or incurs performance hits from asset delivery.
+When `statics` are set, requests under `url_prefix` that are present as files in `guest_path` will be delivered directly to clients, bypassing your web server. These assets are extracted from your Docker image and delivered directly from our proxy on worker hosts.
 
 ```toml
 [[statics]]
@@ -186,9 +184,13 @@ The "guest path" --- the path inside your container where the files to serve are
 
 This feature should not be compared directly with a CDN, for the following reasons.
 
+This feature does not exempt you from having to run a web service in your VM.
+
+Statics will not find `index.html` at the root. The full path must be requested.
+
 You can't set `Cache-Control` or any other headers on assets. If you need those, you'll need to deliver them from your application and set the relevant headers.
 
-Assets are not delivered, by default, from all Fly regions. Rather, assets are delivered from the regions the application is deployed in.
+Assets are not delivered, by default, from all edge Fly regions. Rather, assets are delivered from the regions the application is deployed in.
 
 `statics` does not honor symlinks. So, if `/app/public` in your container is actually a symlink to something like `/app-39403/public`, you'll want to use the absolute original path in your statics configuration.
 
