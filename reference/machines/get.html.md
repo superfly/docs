@@ -1,18 +1,18 @@
 ```
 curl -i -X GET \\
     -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "http://${FLY\_API\_HOSTNAME}/v1/apps/my-awesome-machine-app/machines/24d899e0b99879" 
+    "http://${FLY\_API\_HOSTNAME}/v1/apps/my-awesome-machine-app/machines/d5683212a7918e" 
 
 ```
 **Status: 200**
 ```json
 {
-  "id": "24d899e0b99879",
+  "id": "d5683212a7918e",
   "name": "quirky-machine",
-  "state": "replacing",
+  "state": "stopped",
   "region": "cdg",
-  "instance\_id": "01G3C47GRZQTA5RBF85R3WFJ60",
-  "private\_ip": "fdaa:0:3ec2:a7b:5adc:ad42:c773:2",
+  "instance\_id": "01G3F5JJX3F2NR83VAQXSEHHFT",
+  "private\_ip": "fdaa:0:3ec2:a7b:5bd4:9fa:e7b7:2",
   "config": {
     "env": null,
     "init": {
@@ -21,14 +21,14 @@ curl -i -X GET \\
       "cmd": null,
       "tty": false
     },
-    "image": "nginx",
+    "image": "flyio/fastify-functions",
     "metadata": null,
     "restart": {
       "policy": ""
     },
     "services": [
       {
-        "internal\_port": 80,
+        "internal\_port": 8080,
         "ports": [
           {
             "handlers": [
@@ -55,32 +55,50 @@ curl -i -X GET \\
   },
   "image\_ref": {
     "registry": "registry-1.docker.io",
-    "repository": "library/nginx",
+    "repository": "flyio/fastify-functions",
     "tag": "latest",
-    "digest": "sha256:61face6bf030edce7ef6d7dd66fe452298d6f5f7ce032afdd01683ef02b2b841",
+    "digest": "sha256:e15c11a07e1abbc50e252ac392a908140b199190ab08963b3b5dffc2e813d1e8",
     "labels": {
-      "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
     }
   },
-  "created\_at": "2022-05-18T17:42:41Z",
+  "created\_at": "2022-05-19T22:03:55Z",
   "events": [
+    {
+      "type": "exit",
+      "status": "stopped",
+      "request": {
+        "exit\_event": {
+          "exit\_code": 127,
+          "exited\_at": 1652997839639,
+          "guest\_exit\_code": 0,
+          "guest\_signal": -1,
+          "oom\_killed": false,
+          "requested\_stop": false,
+          "restarting": false,
+          "signal": -1
+        },
+        "restart\_count": 0
+      },
+      "source": "flyd",
+      "timestamp": 1652997841053
+    },
     {
       "type": "update",
       "status": "replacing",
       "source": "user",
-      "timestamp": 1652895765734
+      "timestamp": 1652997840090
     },
     {
       "type": "start",
       "status": "started",
       "source": "flyd",
-      "timestamp": 1652895763217
+      "timestamp": 1652997837587
     },
     {
       "type": "launch",
       "status": "created",
       "source": "user",
-      "timestamp": 1652895761203
+      "timestamp": 1652997835710
     }
   ]
 }

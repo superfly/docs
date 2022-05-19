@@ -8,12 +8,12 @@ curl -i -X GET \\
 ```json
 [
   {
-    "id": "24d899e0b99879",
+    "id": "d5683212a7918e",
     "name": "quirky-machine",
     "state": "started",
     "region": "cdg",
-    "instance\_id": "01G3C47GRZQTA5RBF85R3WFJ60",
-    "private\_ip": "fdaa:0:3ec2:a7b:5adc:ad42:c773:2",
+    "instance\_id": "01G3F5JJX3F2NR83VAQXSEHHFT",
+    "private\_ip": "fdaa:0:3ec2:a7b:5bd4:9fa:e7b7:2",
     "config": {
       "env": null,
       "init": {
@@ -22,7 +22,7 @@ curl -i -X GET \\
         "cmd": null,
         "tty": false
       },
-      "image": "library/nginx:latest",
+      "image": "flyio/fastify-functions:latest",
       "metadata": {
       },
       "restart": {
@@ -33,14 +33,13 @@ curl -i -X GET \\
     },
     "image\_ref": {
       "registry": "registry-1.docker.io",
-      "repository": "library/nginx",
+      "repository": "flyio/fastify-functions",
       "tag": "latest",
-      "digest": "sha256:61face6bf030edce7ef6d7dd66fe452298d6f5f7ce032afdd01683ef02b2b841",
+      "digest": "sha256:e15c11a07e1abbc50e252ac392a908140b199190ab08963b3b5dffc2e813d1e8",
       "labels": {
-        "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
       }
     },
-    "created\_at": "2022-05-18T17:42:41Z"
+    "created\_at": "2022-05-19T22:03:55Z"
   }
 ]
 ```

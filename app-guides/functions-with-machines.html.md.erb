@@ -1,14 +1,14 @@
 ---
-title: Run user functions with Fly Machines
+title: Running user code on Fly Machines
 layout: docs
 sitemap: false
 nav: firecracker
 ---
 
-[Fly Machines](/docs/reference/machines) are API-driven Firecracker micro VMs. They're useful for running user code to extend your projects. People sometimes call these Functions-as-a-Service (FaaS).
+[Fly Machines](/docs/reference/machines) are API-driven Firecracker micro VMs. One use for them is running user code to extend your service, or as a service in itself. People sometimes call this **Functions-as-a-Service (FaaS)**.
 
 User code is fraught with peril. Fly Machines run it safely - even the most awful, buggy, and downright hostile user code.
-Most FaaS work similarly. Package up users' code, define a runtime environment, launch the code in a VM, then turn the VM off when it idles.
+Most FaaS work similarly. The general idea: package up users' code, define a runtime environment, launch the code in a VM, then turn the VM off when it idles to save on compute bills. All while charging users per request!
 
 Packaging user code as a Docker image is mostly up to you. The rest, we can help with.
 
@@ -20,7 +20,14 @@ Machines are operated over a simple REST API. First, visit the [Machines documen
 
 Your function-as-a-service needs a well-defined runtime environment that can boot user code and then shut it down when it's idle.
 
-Here we'll use this in-browser code server: https://github.com/superfly/code-server-elixir-prototype. This uses a small Go based HTTP proxy that detects usage and shuts down the service after a few minutes of inactivity.
+Here we'll use a [simple Fastify server](https://github.com/fly-apps/fastify-functions) running behind a small Golang HTTP proxy that exits after a few minutes of inactivity.
+
+## Create an app
+
+Create an application to house these machines, and attach an IP address to it so we can access the service from the internet.
+
+<%= partial "../reference/machines/create_app" %>
+
 
 ## Launch a new machine
 
