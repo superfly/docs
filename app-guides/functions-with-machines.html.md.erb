@@ -24,24 +24,35 @@ Here we'll use a [simple Fastify server](https://github.com/fly-apps/fastify-fun
 
 ## Create an app
 
-Create an application to house these machines, and attach an IP address to it so we can access the service from the internet.
+Create the required application to group machines together. This application is also the gateway to accessing the machines from the internet.
 
 <%= partial "../reference/machines/create_app" %>
 
+Allocate an IP address to the app. This makes our app accessible at the IP and from `my-awesome-machines-app.fly.dev`.
+
+```cmd
+fly ips allocate-v4 -a my-awesome-machines-app
+````
 
 ## Launch a new machine
 
-Launch a user machine by supplying a Docker image, and memory/CPU requirements like so:
+Launch a user machine by supplying a Docker image, memory/CPU requirements, and a networking configuration:
 
 <%= partial "../reference/machines/launch" %>
 
-This creates and launches a new machine. Machines are permanent, so keep the ID around for later.
+Machines are permanent, so keep the ID around for later.
 
-If you elected to run the machine at launch time, your users' service will boot immediately after this API call. It will run until the process exits.
+Your users' service will boot immediately after this API call. Launch speed is a function of image size. Tiny images should boot in less than 2 seconds. Large, complex images are much slower to boot.
 
-Launch speed is a function of image size. Tiny images should boot in less than 2 seconds. Large, complex images are much slower to boot.
+Try accessing your new machine at `https://my-awesome-machines-app.fly.dev`. If no requests arrive within 4 seconds, it will exit, but a request will start it back up again automatically.
 
-## Start an existing machine
+## Stop a machine
+
+You may stop a machine with an API call:
+
+<%= partial "../reference/machines/stop" %>
+
+## Start an existing machine manually
 
 Once created, a machine may be stopped and started until you delete it. The good news is, images stay cached after first launch. Starting an existing machine is very fast.
 
@@ -52,13 +63,6 @@ Remember that ID you saved from the launch API call? Use it to start the existin
 The start API call only returns successfully if the machine is in a stopped state. It's safe to call start on a running machine, though. If you're unsure of the machine state, just call start and ignore the error response.
 
 Start operations clear filesystem changes. The user process comes up with a fresh runtime environment. It is safe to share machines between users, as long as you stop them before they get reassigned.
-
-## Stop a machine
-
-You may stop a machine with an API call as well:
-
-<%= partial "../reference/machines/stop" %>
-
 
 In a FaaS environment, you'll usually want to wait for a machine to exit. You can stop them with an API call, however, if needed.
 
