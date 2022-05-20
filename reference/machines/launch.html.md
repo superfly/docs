@@ -1,11 +1,11 @@
 ```
 curl -i -X POST \\
     -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "http://${FLY\_API\_HOSTNAME}/v1/apps/my-awesome-machine-app/machines" \\
+    "http://${FLY\_API\_HOSTNAME}/v1/apps/user-functions/machines" \\
   -d '{
       "name": "quirky-machine",
       "config": {
-        "image": "nginx",
+        "image": "flyio/fastify-functions",
         "services": [
           {
             "ports": [
@@ -24,7 +24,7 @@ curl -i -X POST \\
               }
             ],
             "protocol": "tcp",
-            "internal\_port": 80
+            "internal\_port": 8080
           }
         ]
       }
@@ -34,12 +34,12 @@ curl -i -X POST \\
 **Status: 200**
 ```json
 {
-  "id": "24d899e0b99879",
+  "id": "d5683210c7968e",
   "name": "quirky-machine",
   "state": "starting",
   "region": "cdg",
-  "instance\_id": "01G3C47GRZQTA5RBF85R3WFJ60",
-  "private\_ip": "fdaa:0:3ec2:a7b:5adc:ad42:c773:2",
+  "instance\_id": "01G3GNA72484XS5D9SCRW8X79Q",
+  "private\_ip": "fdaa:0:3ec2:a7b:5adc:c12d:84b0:2",
   "config": {
     "env": null,
     "init": {
@@ -48,14 +48,14 @@ curl -i -X POST \\
       "cmd": null,
       "tty": false
     },
-    "image": "nginx",
+    "image": "flyio/fastify-functions",
     "metadata": null,
     "restart": {
       "policy": ""
     },
     "services": [
       {
-        "internal\_port": 80,
+        "internal\_port": 8080,
         "ports": [
           {
             "handlers": [
@@ -82,13 +82,12 @@ curl -i -X POST \\
   },
   "image\_ref": {
     "registry": "registry-1.docker.io",
-    "repository": "library/nginx",
+    "repository": "flyio/fastify-functions",
     "tag": "latest",
-    "digest": "sha256:61face6bf030edce7ef6d7dd66fe452298d6f5f7ce032afdd01683ef02b2b841",
+    "digest": "sha256:e15c11a07e1abbc50e252ac392a908140b199190ab08963b3b5dffc2e813d1e8",
     "labels": {
-      "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
     }
   },
-  "created\_at": "2022-05-18T17:42:41Z"
+  "created\_at": "2022-05-20T11:58:13Z"
 }
 ```

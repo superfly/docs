@@ -61,7 +61,7 @@ Authorization: Bearer <fly_api_token>
 
 Machines must be associated with a Fly application. App names must be unique.
 
-<%= partial "machines/create_app" %>
+<%= partial "machines/create_app_req" %>
 
 ### Allocate an IP address
 
@@ -81,7 +81,8 @@ Shortly after allocating, the app will be available at `my-awesome-machines-app.
 ### Get application details
 
 Get details about an application, like its organization slug and name. Also, to check if the app exists!
-<%= partial "machines/get_app" %>
+<%= partial "machines/get_app_req" %>
+<%= partial "machines/get_app_resp" %>
 
 ### Create and start a machine
 
@@ -112,48 +113,55 @@ The only required parameter is `image` in the `config` object. Other parameters:
       + `port`: Public-facing port number
       + `handlers`: Array of [connection handlers](https://fly.io/docs/reference/services/#connection-handlers) for TCP-based services.
 
-<%= partial "machines/launch" %>
+<%= partial "machines/launch_req" %>
+<%= partial "machines/launch_resp" %>
 
 ### Wait for a machine to start
 
 Wait for a created machine to start. This request will block for up to 60 seconds. Set a longer timeout with the `timeout` parameter.
 
-<%= partial "machines/wait" %>
+<%= partial "machines/wait_req" %>
+<%= partial "machines/wait_resp" %>
 
 ### Get a Machine
 
 Given a machine ID, fetch details about it.
 
-<%= partial "machines/get" %>
+<%= partial "machines/get_req" %>
+<%= partial "machines/get_resp" %>
 
 ### Update a Machine
 
-Neither `region` nor `name` may be updated. Updating the `config` requires
-specifying the complete config.
+`region` and `name` are immutable and cannot be updated. Updating the `config` requires specifying the complete config.
 
-<%= partial "machines/update" %>
+<%= partial "machines/update_req" %>
+<%= partial "machines/update_resp" %>
 
 ### Stop a Machine
 
 Stopping a machine will shut down the VM, but not destroy it. The VM may be started again with `machines/start`.
 
-<%= partial "machines/stop" %>
+<%= partial "machines/stop_req" %>
+<%= partial "machines/stop_resp" %>
 
 ### Start a Machine
 
 Start a previously stopped machine.
 
-<%= partial "machines/start" %>
+<%= partial "machines/start_req" %>
+<%= partial "machines/start_resp" %>
 
 ### Delete a Machine permanently
 
 Delete a machine, never to be seen again. This action cannot be undone!
 
-<%= partial "machines/delete" %>
+<%= partial "machines/delete_req" %>
+<%= partial "machines/delete_resp" %>
 
 ### List machines for an app
 
-<%= partial "machines/list" %>
+<%= partial "machines/list_req" %>
+<%= partial "machines/list_resp" %>
 
 ### Delete a Fly application
 
