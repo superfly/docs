@@ -24,39 +24,47 @@ Here we'll use a [simple Fastify server](https://github.com/fly-apps/fastify-fun
 
 ## Create an app
 
-Create the required application to group machines together. This application is also the gateway to accessing the machines from the internet.
+Pick a unique name and create the required application to group machines together. This application is also the gateway to accessing the machines from the internet.
 
 <%= partial "../reference/machines/create_app" %>
 
-Allocate an IP address to the app. This makes our app accessible at the IP and from `my-awesome-machines-app.fly.dev`.
+Allocate an IP address to the app. This makes our app accessible at the IP, and via `user-functions.fly.dev`.
 
 ```cmd
-fly ips allocate-v4 -a my-awesome-machines-app
+fly ips allocate-v4 -a user-functions
 ````
 
 ## Launch a new machine
 
-Launch a user machine by supplying a Docker image, memory/CPU requirements, and a networking configuration:
+Launch a user machine by supplying a Docker image and a networking configuration. We can also [configure the machine's memory/CPU](https://fly.io/docs/reference/machines/#create-and-start-a-machine).
 
-<%= partial "../reference/machines/launch" %>
+<%= partial "../reference/machines/launch_req" %>
 
-Machines are permanent, so keep the ID around for later.
+Machines are permanent, so keep the ID from the response handy.
 
 Your users' service will boot immediately after this API call. Launch speed is a function of image size. Tiny images should boot in less than 2 seconds. Large, complex images are much slower to boot.
 
-Try accessing your new machine at `https://my-awesome-machines-app.fly.dev`. If no requests arrive within 4 seconds, it will exit, but a request will start it back up again automatically.
+Try accessing your new machine at `https://user-functions.fly.dev`. If no requests arrive within 4 seconds, the machine will exit, but a request will force it to start back up automatically.
 
-## Stop a machine
+## Launch a in another region
 
-You may stop a machine with an API call:
+That machine was launched in the region nearest to you. Say you want your user function to run fast for users in Australia. Let's launch another machine there.
+
+THe Anycast IP you allocated will route traffic to the nearest region with a deployed machine. If it's stopped, it will start up automatically.
+
+<%= partial "../reference/machines/launch_syd_req" %>
+
+## Stopping a machine
+
+In a FaaS environment, you'll usually want to wait for a machine to exit. You can stop them with an API call, however, if needed.
 
 <%= partial "../reference/machines/stop" %>
 
-## Start an existing machine manually
+## Start an existing machine
 
 Once created, a machine may be stopped and started until you delete it. The good news is, images stay cached after first launch. Starting an existing machine is very fast.
 
-Remember that ID you saved from the launch API call? Use it to start the existing machine:
+Use the existing machine ID again to start it:
 
 <%= partial "../reference/machines/start" %>
 
@@ -64,7 +72,29 @@ The start API call only returns successfully if the machine is in a stopped stat
 
 Start operations clear filesystem changes. The user process comes up with a fresh runtime environment. It is safe to share machines between users, as long as you stop them before they get reassigned.
 
-In a FaaS environment, you'll usually want to wait for a machine to exit. You can stop them with an API call, however, if needed.
+## Get details about the deployment
+
+Now we have a couple machines running, we can use `fly logs -a user-functions` to see what's going on. Also, for an overview:
+
+```cmd
+fly status -a user-functions
+```
+```out
+App
+  Name     = user-functions
+  Owner    = personal
+  Hostname = user-functions.fly.dev
+
+Machines
+ID            	NAME          	REGION	STATE    	CREATED
+10e286064b1867	machine-syd   	syd   	started	2022-05-20T17:07:36Z
+0e286e40cee686	quirky-machine	cdg   	stopped	2022-05-20T17:07:04Z
+```
+Here we see that one of the machine exited itself.
+
+The equivalent API call for such an overview:
+
+<%= partial "../reference/machines/list_req" %>
 
 ## Delete a machine
 
@@ -73,3 +103,12 @@ When you're done, delete the machine:
 <%= partial "../reference/machines/delete" %>
 
 
+## Additional notes
+
+The Machines is young and full of potential. We haven't worked everything out, so please [post on our forums](https://community.fly.io/) with questions! Here are a few things worth noting:
+
+The _wake-on-request_ behavior described above will be unpredictable when running more than one machine per region.
+
+Standard `flyctl` operations like `deploy`, `scale`, `autoscaling` aren't currently supported by Machines. `ssh` is supported.
+
+Attaching volumes to machines is coming, like, really soon!

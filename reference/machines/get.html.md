@@ -1,18 +1,18 @@
 ```
 curl -i -X GET \\
     -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "http://${FLY\_API\_HOSTNAME}/v1/apps/my-awesome-machine-app/machines/d5683212a7918e" 
+    "http://${FLY\_API\_HOSTNAME}/v1/apps/user-functions/machines/d5683210c7968e" 
 
 ```
 **Status: 200**
 ```json
 {
-  "id": "d5683212a7918e",
+  "id": "d5683210c7968e",
   "name": "quirky-machine",
   "state": "stopped",
   "region": "cdg",
-  "instance\_id": "01G3F5JJX3F2NR83VAQXSEHHFT",
-  "private\_ip": "fdaa:0:3ec2:a7b:5bd4:9fa:e7b7:2",
+  "instance\_id": "01G3GNA72484XS5D9SCRW8X79Q",
+  "private\_ip": "fdaa:0:3ec2:a7b:5adc:c12d:84b0:2",
   "config": {
     "env": null,
     "init": {
@@ -61,7 +61,7 @@ curl -i -X GET \\
     "labels": {
     }
   },
-  "created\_at": "2022-05-19T22:03:55Z",
+  "created\_at": "2022-05-20T11:58:13Z",
   "events": [
     {
       "type": "exit",
@@ -69,7 +69,7 @@ curl -i -X GET \\
       "request": {
         "exit\_event": {
           "exit\_code": 127,
-          "exited\_at": 1652997839639,
+          "exited\_at": 1653047897299,
           "guest\_exit\_code": 0,
           "guest\_signal": -1,
           "oom\_killed": false,
@@ -80,25 +80,25 @@ curl -i -X GET \\
         "restart\_count": 0
       },
       "source": "flyd",
-      "timestamp": 1652997841053
+      "timestamp": 1653047898717
     },
     {
       "type": "update",
       "status": "replacing",
       "source": "user",
-      "timestamp": 1652997840090
+      "timestamp": 1653047897200
     },
     {
       "type": "start",
       "status": "started",
       "source": "flyd",
-      "timestamp": 1652997837587
+      "timestamp": 1653047895247
     },
     {
       "type": "launch",
       "status": "created",
       "source": "user",
-      "timestamp": 1652997835710
+      "timestamp": 1653047893083
     }
   ]
 }

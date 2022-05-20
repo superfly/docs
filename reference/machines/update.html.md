@@ -1,7 +1,7 @@
 ```
 curl -i -X POST \\
     -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "http://${FLY\_API\_HOSTNAME}/v1/apps/my-awesome-machine-app/machines/d5683212a7918e" \\
+    "http://${FLY\_API\_HOSTNAME}/v1/apps/user-functions/machines/d5683210c7968e" \\
   -d '{
       "region": "ord",
       "config": {
@@ -17,12 +17,12 @@ curl -i -X POST \\
 **Status: 200**
 ```json
 {
-  "id": "d5683212a7918e",
+  "id": "d5683210c7968e",
   "name": "quirky-machine",
   "state": "starting",
   "region": "cdg",
-  "instance\_id": "01G3F5JQ6R0X5XPM8VFGW9ETVM",
-  "private\_ip": "fdaa:0:3ec2:a7b:5bd4:9fa:e7b7:2",
+  "instance\_id": "01G3GNAB3FY1FX7P5723XCHKT0",
+  "private\_ip": "fdaa:0:3ec2:a7b:5adc:c12d:84b0:2",
   "config": {
     "env": null,
     "init": {
@@ -50,6 +50,6 @@ curl -i -X POST \\
     "labels": {
     }
   },
-  "created\_at": "2022-05-19T22:03:55Z"
+  "created\_at": "2022-05-20T11:58:13Z"
 }
 ```
