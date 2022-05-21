@@ -202,6 +202,32 @@ wg-quick up basic
 
 If you have the `dig` tool installed, a TXT query to `_apps.internal` will show all the application names available in the organization you are connected to.
 
+```cmd
+dig txt _apps.internal
+```
+```output
+
+; <<>> DiG 9.10.6 <<>> txt _apps.internal
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 53196
+;; flags: qr rd ad; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;_apps.internal.			IN	TXT
+
+;; ANSWER SECTION:
+_apps.internal.		5	IN	TXT	"datasette-demo"
+
+;; Query time: 105 msec
+;; SERVER: fdaa:0:4ef::3#53(fdaa:0:4ef::3)
+;; WHEN: Sat May 21 12:30:34 PDT 2022
+;; MSG SIZE  rcvd: 162
+```
+
 ### Managing Wireguard on Fly
 
 #### Listing the tunnels
