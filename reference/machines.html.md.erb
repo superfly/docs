@@ -7,6 +7,9 @@ nav: firecracker
 
 Machines are customizable [Firecracker VMs](https://firecracker-microvm.github.io/) - the building blocks of Fly applications. Machines give you efficient, low-level control over VM provisioning, supported by Fly.io infrastructure and networking features.
 
+Machines are also the spawning ground for new platform features. An important one is *wake-on-request* support. This means a VM can
+be stopped - incurring no compute cost - and started up automatically when a request arrives.
+
 This document covers usage of the Machines REST API to start, stop, update and interact with machines. For the impatient, [flyctl also provides commands](https://fly.io/docs/flyctl/machine/) for experimenting with the API.
 
 See all possible machine states [in the table below](#machine-states).
@@ -63,10 +66,12 @@ Machines must be associated with a Fly application. App names must be unique.
 
 <%= partial "machines/create_app_req" %>
 
-### Allocate an IP address
+### Allocate an IP address for global request routing
 
 If you intend for machines to be accessible to the internet, you'll need to allocate an IP address to the application. Currently
-this is done using `flyctl` or the [Fly GraphQL API](https://api.fly.io/graphql). Example:
+this is done using `flyctl` or the [Fly GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](https://fly.io/docs/reference/services/#anycast). Read more about this in [the Networking section](https://fly.io/docs/reference/services/#notes-on-networking).
+
+Example:
 
 ```cmd
 flyctl ips allocate-v4 -a user-functions
@@ -76,7 +81,7 @@ TYPE ADDRESS    REGION CREATED AT
 v4   37.16.9.52 global 7s ago
 ```
 
-Shortly after allocating, the app will be available at `user-functions.fly.dev`.
+The app will answer on this IP address, and after a small delay, at `user-functions.fly.dev`.
 
 ### Get application details
 
