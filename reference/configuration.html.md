@@ -59,7 +59,7 @@ The optional build section contains key/values concerned with how the applicatio
 
 The builder "builder" uses CNB Buildpacks and Builders to create the application image. These are third party toolkits which can use Heroku compatible build processes or other tools. The tooling is all managed by the buildpacks and buildpacks are assembled into CNB Builders - images complete with the buildpacks and OS to run the tool chains.
 
-In our example above, the builder is being set to use [Paketo's all-purpose builder](https://paketo.io) with the NodeJS buildpack. To learn more about buildpacks and Fly, refer to this blog posting [Simpler Fly deployments for NodeJS, Rails, Go, and Java](/blog/simpler-fly-deployments-nodejs-rails-golang-java/).
+In our example above, the builder is being set to use [Paketo's all-purpose builder](https://paketo.io) with the NodeJS buildpack.
 
 #### Specify a Docker image
 
