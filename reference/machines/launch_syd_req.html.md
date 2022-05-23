@@ -6,6 +6,9 @@ curl -i -X POST \\
       "name": "machine-syd",
       "config": {
         "image": "flyio/fastify-functions",
+        "env": {
+          "APP\_ENV": "production"
+        },
         "services": [
           {
             "ports": [

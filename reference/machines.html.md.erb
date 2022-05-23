@@ -89,6 +89,14 @@ Get details about an application, like its organization slug and name. Also, to 
 <%= partial "machines/get_app_req" %>
 <%= partial "machines/get_app_resp" %>
 
+### Set application secrets
+
+Fon sensitive enviornment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly apps using `flyctl`:
+
+<%= partial "../partials/set_secrets", locals: { app_name: "user-functions" } %>
+
+For non-sensitive information, you can set different environment variables per machine at creation time.
+
 ### Create and start a machine
 
 Create and start a machine immediately. This is where you configure the machine characteristics, like its CPU and memory. You
@@ -109,7 +117,7 @@ The only required parameter is `image` in the `config` object. Other parameters:
   - `cpus`: Number of vCPUs (default 1)
   - `memory_mb`: Memory in megabytes as multiples of 256 (default 256)
 
-
+* `env`: An object filled with key/value pairs to be set as environment variables
 * `services`: An array of objects that define a single network service. Check the [machines networking section](#networking) for more information. Options:
 
   - `protocol`: `tcp` or `udp`. [Learn more about running raw TCP/UDP services](https://fly.io/docs/app-guides/udp-and-tcp/).

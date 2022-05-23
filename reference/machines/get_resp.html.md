@@ -1,14 +1,16 @@
 
 ```json
 {
-  "id": "0e286e40cee686",
+  "id": "73d8d46dbee589",
   "name": "quirky-machine",
   "state": "stopped",
   "region": "cdg",
-  "instance\_id": "01G3H6ZRCJVXNA0B2S87HYXDV8",
-  "private\_ip": "fdaa:0:3ec2:a7b:5b66:e6c:54e7:2",
+  "instance\_id": "01G3SHPT434MNW8TS4ENX11RQY",
+  "private\_ip": "fdaa:0:3ec2:a7b:5adc:6068:5b85:2",
   "config": {
-    "env": null,
+    "env": {
+      "APP\_ENV": "production"
+    },
     "init": {
       "exec": null,
       "entrypoint": null,
@@ -55,7 +57,7 @@
     "labels": {
     }
   },
-  "created\_at": "2022-05-20T17:07:04Z",
+  "created\_at": "2022-05-23T22:48:21Z",
   "events": [
     {
       "type": "exit",
@@ -63,7 +65,7 @@
       "request": {
         "exit\_event": {
           "exit\_code": 127,
-          "exited\_at": 1653066428869,
+          "exited\_at": 1653346105255,
           "guest\_exit\_code": 0,
           "guest\_signal": -1,
           "oom\_killed": false,
@@ -74,25 +76,25 @@
         "restart\_count": 0
       },
       "source": "flyd",
-      "timestamp": 1653066430241
+      "timestamp": 1653346106636
     },
     {
       "type": "update",
       "status": "replacing",
       "source": "user",
-      "timestamp": 1653066429039
+      "timestamp": 1653346105801
     },
     {
       "type": "start",
       "status": "started",
       "source": "flyd",
-      "timestamp": 1653066426806
+      "timestamp": 1653346103201
     },
     {
       "type": "launch",
       "status": "created",
       "source": "user",
-      "timestamp": 1653066424744
+      "timestamp": 1653346101403
     }
   ]
 }

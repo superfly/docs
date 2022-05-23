@@ -6,6 +6,9 @@ curl -i -X POST \\
       "name": "quirky-machine",
       "config": {
         "image": "flyio/fastify-functions",
+        "env": {
+          "APP\_ENV": "production"
+        },
         "services": [
           {
             "ports": [

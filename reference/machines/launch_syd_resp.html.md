@@ -1,14 +1,16 @@
 
 ```json
 {
-  "id": "10e286064b1867",
+  "id": "24d896dec64879",
   "name": "machine-syd",
   "state": "starting",
   "region": "syd",
-  "instance\_id": "01G3H70Q5C24GMEMCXHSBDGN9H",
-  "private\_ip": "fdaa:0:3ec2:a7b:8566:845e:9f47:2",
+  "instance\_id": "01G3SHQRYPVPZ8K8G0VQK42819",
+  "private\_ip": "fdaa:0:3ec2:a7b:8566:9b25:46d8:2",
   "config": {
-    "env": null,
+    "env": {
+      "APP\_ENV": "production"
+    },
     "init": {
       "exec": null,
       "entrypoint": null,
@@ -55,6 +57,6 @@
     "labels": {
     }
   },
-  "created\_at": "2022-05-20T17:07:36Z"
+  "created\_at": "2022-05-23T22:48:52Z"
 }
 ```
