@@ -202,6 +202,13 @@ wg-quick up basic
 
 If you have the `dig` tool installed, a TXT query to `_apps.internal` will show all the application names available in the organization you are connected to.
 
+```cmd
+dig +noall +answer _apps.internal txt
+```
+```output
+_apps.internal.		5	IN	TXT	"datasette-apache-proxy-demo,datasette-demo"
+```
+
 ### Managing Wireguard on Fly
 
 #### Listing the tunnels
