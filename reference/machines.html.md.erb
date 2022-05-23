@@ -95,7 +95,9 @@ Fon sensitive enviornment variables, such as credentials, you can set [secrets](
 
 <%= partial "../partials/set_secrets", locals: { app_name: "user-functions" } %>
 
-For non-sensitive information, you can set different environment variables per machine at creation time.
+Machines inherit secrets from the app. Existing machines must be [updated](#update-a-machine) to pick up secrets set after the machine was created.
+
+For non-sensitive information, you _can_ set different environment variables per machine at creation time.
 
 ### Create and start a machine
 
