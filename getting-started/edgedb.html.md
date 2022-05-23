@@ -36,7 +36,7 @@ Save your credentials in a secure place, you won't be able to see them again!
 Create a directory and create a new app. Be sure to replace `myedgedb` with a custom name. When prompted, pick a region and a Fly organization.
 
 ```cmd
-flyctl apps create --name myedgedb --image edgedb/edgedb --no-deploy
+flyctl launch --name myedgedb --image edgedb/edgedb --no-deploy
 ```
 
 EdgeDB needs more RAM that the default 256MB so let's scale the RAM to 1024MB.
