@@ -53,7 +53,7 @@ The optional build section contains key/values concerned with how the applicatio
 
 ```toml
 [build]
-  builder = "paketobuildpacks/builder:tiny"
+  builder = "paketobuildpacks/builder:base"
   buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
 ```
 
