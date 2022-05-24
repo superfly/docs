@@ -9,7 +9,9 @@ nav: firecracker
 date: 2022-05-20
 ---
 
-[Fly Machines](/docs/reference/machines) are API-driven Firecracker micro VMs. One use for them is running user code to extend your service, or as a service in itself. People sometimes call this **Functions-as-a-Service (FaaS)**.
+[Fly Machines](/docs/reference/machines) are [Firecracker VMs](https://firecracker-microvm.github.io/) with a fast REST API that can boot instances in about 300ms, in any region supported by [Fly.io](https://fly.io/docs/reference/regions/).
+
+One use for Machines is to run user code to extend your service, or as a service in itself. People sometimes call this **Functions-as-a-Service (FaaS)**.
 
 User code is fraught with peril. Fly Machines run it safely - even the most awful, buggy, and downright hostile user code.
 Most FaaS work similarly. The general idea: package up users' code, define a runtime environment, launch the code in a VM, then turn the VM off when it idles to save on compute bills. All while charging users per request!
@@ -114,5 +116,3 @@ The Machines is young and full of potential. We haven't worked everything out, s
 The _wake-on-request_ behavior described above will be unpredictable when running more than one machine per region.
 
 Standard `flyctl` operations like `deploy`, `scale`, `autoscaling` aren't currently supported by Machines. `ssh` is supported.
-
-Attaching volumes to machines is coming, like, really soon!
