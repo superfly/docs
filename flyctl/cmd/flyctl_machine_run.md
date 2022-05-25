@@ -10,7 +10,6 @@ flyctl machine run <image> [command] [flags]
 
 ~~~
   -a, --app string          Application name
-  -c, --config string       Path to application configuration file
       --dockerfile string   Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
   -e, --env strings         Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
   -h, --help                help for run
