@@ -115,4 +115,18 @@ The Machines is young and full of potential. We haven't worked everything out, s
 
 The _wake-on-request_ behavior described above will be unpredictable when running more than one machine per region.
 
-Standard `flyctl` operations like `deploy`, `scale`, `autoscaling` aren't currently supported by Machines. `ssh` is supported.
+Standard `flyctl` operations like `deploy`, `scale`, `autoscaling` aren't currently supported by Machines.
+
+`ssh` is supported. You can SSH to a machine using its IPv6 address (from `fly machines list`):
+
+    fly ssh console '[fdaa:0:6787:a7b:a15f:1a8c:2c01:2]'
+
+Or you can select a machine to connect to from a list using `fly ssh console -s`:
+
+```
+fly ssh console -a user-functions -s
+? Select instance:  [Use arrows to move, type to filter]
+> sjc (fdaa:0:6787:a7b:a15f:ee6a:3882:2)
+  sjc (fdaa:0:6787:a7b:a15f:c306:4566:2)
+  sjc (fdaa:0:6787:a7b:a15f:1a8c:2c01:2)
+```
