@@ -57,8 +57,8 @@ flyctl deploy --config ./fly.staging.toml
 **Use a different Dockerfile per environment**
 
 ```
-flyctl deploy --Dockerfile ./Dockerfile.production
-flyctl deploy --Dockerfile ./Dockerfile.staging
+flyctl deploy --dockerfile ./Dockerfile.production
+flyctl deploy --dockerfile ./Dockerfile.staging
 ```
 
 **Deploy a subdirectory**
