@@ -24,6 +24,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
       --nix                   Build with Nix
       --no-cache              Do not use the build cache when building the image
       --now                   Deploy now without confirmation
+      --plain                 Display full Docker build output
       --push                  Push image to registry after build is complete
   -r, --region string         The region to operate on
       --remote-only           Perform builds on a remote builder instance instead of using the local docker daemon
