@@ -31,15 +31,15 @@ There's a question to ask and answer. Do you want to start accepting traffic imm
 
 In this scenario, we want the custom domain to point to the `nginxproxy` server which will allow unencrypted IPv4 and IPv6 connections. Again, there are two ways to do this. Using DNS's CNAME capability or setting the A and AAAA records.
 
-#### Using DNS's CNAME capability
+#### Option I: CNAME records
 
 CNAME records in DNS act like a pointer. If we add a CNAME record to our custom domain that points to our proxy name `nginxproxy.fly.dev` then requests for the custom domain's IP address would return the proxy's address and clients would then lookup the IP addresses for the proxy. 
 
 It's the quickest way to get set up, but there are catches. First, it is ever so slightly slower with that second look up. Second, it limits what you can do with the domain, especially if it's an "Apex domain" - CNAMEs are, according to DNS standards, meant to be the only record in a host's DNS records and so you can't add MX and other essential records to the DNS entry. If you aren't setting up an Apex domain, the CNAME is the quickest way to get going.
 
-#### Setting the A and AAAA records
+#### Option II: A and AAAA records
 
-We can skip all of the CNAME concerns by setting the DNS A and AAAA records. These are the records for the IPv4 and IPv6 addresses and with Fly, it's simple, you just have one pair of addresses.  We'll need our application's IPv4 and IPv6 addresses to put into the DNS. Run `flyctl ips list` to get them:
+We can skip all CNAME concerns by setting A and AAAA records on your custom domain. Run `flyctl ips list` to see your app's addresses:
 
 ```cmd
 flyctl ips list
@@ -50,7 +50,7 @@ flyctl ips list
   v6     2a09:8280:1:659f:6cb7:4925:6bfd:90a3   2020-03-02T14:59:13Z
 ```
 
-Create A and AAAA records for your custom domain with these addresses. You are free to make this an Apex domain then.
+Create an A record pointing to your v4 address, and an AAAA record pointing to your v6 address. You're then free to make this an Apex domain as needed.
 
 #### Adding the certificate
 
