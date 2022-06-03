@@ -16,7 +16,7 @@ Request headers carry information that is specific to the incoming request and i
 ## _Environment Variables_
 
 ### `FLY_APP_NAME`
-**Application Name**: Each application running on Fly has a unique Allocation Name. This identifies the application for the user and can also identify instances of the application running on Fly's 6PN networking. For example, `syd.$FLY_APP_NAME.internal` can refer to an instance of the app running. Read more about [6PN Naming](/docs/reference/services/#private-network-services) in the [Network Services](/docs/reference/services/) section.
+**Application Name**: Each application running on Fly has a unique Application Name. This identifies the application for the user and can also identify instances of the application running on Fly's 6PN networking. For example, `syd.$FLY_APP_NAME.internal` can refer to an instance of the app running. Read more about [6PN Naming](/docs/reference/services/#private-network-services) in the [Network Services](/docs/reference/services/) section.
 
 ### `FLY_ALLOC_ID`
 **Allocation ID**: Each instance of an application running on Fly has a unique Allocation ID. This can be used, for example, to distinguish between instances running in the same region. `b996131a-5bae-215b-d0f1-2d75d1a8812b` is an example of the Allocation ID's format.
