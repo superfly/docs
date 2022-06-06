@@ -325,6 +325,43 @@ The `source` is a volume name that this app should mount. Any volume with this n
 
 The `destination` is directory where the `source` volume should be mounted on the running app.
 
+## The `checks` section
+
+This section lets you define checks for apps outside of their `[[services]]` (or for apps without any services).
+
+It's has a few differences with service checks:
+- You need to provide a port
+- You need to provide a name
+- You need to specify the type of th check
+
+```toml
+[checks]
+  [checks.name_of_your_http_check]
+    grace_period = "30s"
+    interval = "15s"
+    method = "get"
+    path = "/path/to/status"
+    port = 5500
+    timeout = "10s"
+    type = "http"
+  [checks.name_of_your_tcp_check]
+    grace_period = "30s"
+    interval = "15s"
+    port = 1234
+    timeout = "10s"
+    type = "tcp"
+```
+
+Fields are very similar to `[[services.checks]]`:
+
+* `port`: Internal port to connect to. Needs to be available on `0.0.0.0`.
+* `type`: Either `tcp` or `http`.
+* `grace_period`: The time to wait after a VM starts before checking its health.
+* `interval`: The time in milliseconds between connectivity checks.
+* `method`: The HTTP method to be used for the check.
+* `path`: The path of the URL to be requested.
+* `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
+
 ## The `experimental` section
 
 This section is for flags and feature settings which have yet to be promoted into the main configuration.
