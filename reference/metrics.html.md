@@ -69,7 +69,7 @@ You're all set.
 
 ```shell
 curl https://api.fly.io/prometheus/$ORG_SLUG/api/v1/query_range?step=30 \
-	--data-urlencode 'sum(rate(fly_edge_http_responses_count{app="$APP"}[5m])) by (status)' \
+	--data-urlencode 'query=sum(rate(fly_edge_http_responses_count{app="$APP"}[5m])) by (status)' \
 	-H "Authorization: Bearer $TOKEN"
 ```
 
