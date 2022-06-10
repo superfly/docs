@@ -12,7 +12,7 @@ nav: firecracker
 
 Bring your own Laravel app, or create a new one!
 
-If you want to start fresh, here's how to setup a new application. You'll need PHP 8+ and [composer](https://getcomposer.org/) installed locally. You can check your PHP version using `php --version`.
+If you want to start fresh, here's how to set up a new application. You'll need PHP 8+ and [composer](https://getcomposer.org/) installed locally. You can check your PHP version using `php --version`.
 
 ```cmd
 composer create-project laravel/laravel fly-laravel
@@ -31,7 +31,22 @@ You should be able to visit `http://localhost:8000` and see the home page.
 
 ### Launch
 
-Next, run `fly launch` to automagically configure your app for Fly.
+Next, we'll run `fly launch` to automagically configure your app for Fly.
+
+The `launch` command adds a few files to your code base. Don't worry, it will ask before overwriting anything.
+
+**Here is what gets added:**
+
+1. `Dockerfile` - Used to build a container image that is run in fly
+2. `.dockerignore` - Used to ensure certain files don't make its way into your repository
+3. `fly.toml` - Configuration specific to hosting on Fly
+4. `docker` - A directory containing configuration files for running Nginx/PHP in a container
+
+Running `fly launch` (and later `fly deploy`) uses the `Dockerfile` to build a container image, copying your application files into the resulting image.
+
+Fly doesn't care about the state of your git repository - it copies whatever files are present (except for files ignored by `.dockerignore`).
+
+**If you haven't already, go ahead and run `fly launch`!**
 
 1. You'll be asked to provide secret `APP_KEY`. You can generate one using `php artisan key:generate --show`.
 2. When asked if you want to deploy now, say **No**. 
@@ -60,21 +75,6 @@ Finally, run `fly deploy` to build and deploy your application!
 You should be able to visit `https://your-app-name.fly.dev` and see the Laravel demo home page.
 
 <%= partial "partials/launched" %>
-
-## _What Just Happened?_
-
-The `fly launch` command added a few files to your code base. Don't worry, it asks before over-writing anything.
-
-Here is what's added:
-
-1. `Dockerfile` - Used to build a container image that is run in fly
-2. `.dockerignore` - Used to ensure certain files don't make its way into your repository
-3. `fly.toml` - Configuration specific to hosting on Fly
-4. `docker` - A directory containing configuration files for running Nginx/PHP in a container
-
-Running `fly deploy` uses the `Dockerfile` to build a container image, copying your application files into the resulting image.
-
-Fly doesn't care about the state of your git repository - it copies whatever files are present (except for files ignored by `.dockerignore`).
 
 ## _CRON and Queues_
 
@@ -131,7 +131,7 @@ You'll want to edit the above to use the driver of your choice, or configure mul
 
 ## Extra Credit
 
-Your app is a special snowflake. Here's a few things you may want to customize further!
+Your app is a special snowflake. Here are a few things you may want to customize further!
 
 ### PHP Version
 

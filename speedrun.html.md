@@ -19,10 +19,10 @@ That's all your need to do for most applications. The `launch` command prepares 
 * [Django](https://www.djangoproject.com/)
 * [Laravel](https://laravel.com)
 * [NuxtJS](https://nuxtjs.org)
-* [RedwoodJS](https://redwoodjs.com/)
 * [Phoenix](https://phoenixframework.org/)
-* [Ruby on Rails](https://rubyonrails.org/)
+* [RedwoodJS](https://redwoodjs.com/)
 * [Remix](https://remix.run/)
+* [Ruby on Rails](https://rubyonrails.org/)
 
 Launch also works with a Dockerfile. If you're running something else, just find a functional Dockerfile and you're good to go.
 
