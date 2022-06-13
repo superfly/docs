@@ -143,6 +143,7 @@ Then edit the generated `rel/env.sh.eex` file and add the following lines:
 ip=$(grep fly-local-6pn /etc/hosts | cut -f 1)
 export RELEASE_DISTRIBUTION=name
 export RELEASE_NODE=$FLY_APP_NAME@$ip
+export ELIXIR_ERL_OPTIONS="-proto_dist inet6_tcp"
 ```
 
 This names our Elixir node using the Fly application name and the internal IPv6 address. Make sure to deploy after making this change!
