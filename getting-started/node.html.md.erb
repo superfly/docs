@@ -101,6 +101,10 @@ The `flyctl` command will always refer to this file in the current directory if 
 
 We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
 
+## _Configuring the buildpack_
+
+The Heroku Nodejs buildpack allows some customization via environment variables. These may be passed into the build using [Docker build arguments](https://devcenter.heroku.com/articles/nodejs-support#using-npm-install).
+
 ## _Deploying to Fly_
 
 To deploy changes to your app, just run:
