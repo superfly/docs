@@ -53,7 +53,7 @@ the deployment is currently running, it will also break that down. When the appl
 in the various global datacenters. The `status` command will also detail those, including their status, region and when they were created.
 
 ```cmd
-❯ flyctl status
+flyctl status
 ```
 ```output
 App
