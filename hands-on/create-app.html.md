@@ -13,24 +13,29 @@ Each Fly application needs a `fly.toml` file to tell the system how we'd like to
 ```cmd
 flyctl launch --image flyio/hellofly:latest
 ```
-```output 
-? Select organization: Personal (personal)
+```output
+? App Name (leave blank to use an auto-generated name):
 ```
-**Organizations**: Organizations are a way of sharing applications and resources between Fly users. Every fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
+**App Names**: Every Fly.io app must be given a name unique to your organization. By default, this name is also used as the application's hostname.
+
+**Organizations**: Organizations are a way of sharing applications and resources between Fly users. Every fly account has a personal organization, called `personal`, which is only visible to your account.
+
+Proceeding here will select your personal organization for the tutorial deployment, unless you have previously made other configurations.
 
 ```output
-? Select region: ord (Chicago, Illinois (US))
+? Select region:
 ```
-Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region. 
+**Regions**: Regions are cities around the world with physical Fly machines you can deploy apps to. For this tutorial, you can choose to deploy anywhere you'd like.
 
+```output
+? Would you like to set up a Postgresql database now?
+```
+Part of the magic of Fly is turn-key support for a database service. We provide Postgres as a regular Fly.io app, which can be automatically created during deployment of other applications.
 
-<div class="callout">
-
-You will also be prompted for credit card payment information, required for charges outside the free tier on Fly. See [Pricing](/docs/about/pricing) for more details on what is included in the free tier. If you do not enter a details here, you will be unable to create a new application on Fly until you add a credit card to your account.
-
-</div>
-
-At this point, `flyctl` creates an app for you and writes your configuration to a `fly.toml` file. The `fly.toml` file now contains a default configuration for deploying your app.
+```output
+? Would you like to deploy now?
+```
+If you're satisfied with your configuration settings and prepared to see Fly in action, say yes here. At this point, `flyctl` creates an app for you and writes your configuration to a `fly.toml` file. The `fly.toml` file now contains a default configuration for deploying your app.
 
 ```toml
 
@@ -45,7 +50,7 @@ app = "hellofly"
 ...
 ```
 
-The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name value at the start. That name will be used to identify the application on the Fly platform. You can also see how the app will be built and that internal port setting. The rest of the file contains settings to be applied to the application when it deploys. 
+The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name value at the start. That name will be used to identify the application on the Fly platform. You can also see how the app will be built and that internal port setting. The rest of the file contains settings to be applied to the application when it deploys.
 
 We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
 
