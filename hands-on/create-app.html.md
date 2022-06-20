@@ -25,7 +25,7 @@ Proceeding here will select your personal organization for the tutorial deployme
 ```output
 ? Select region:
 ```
-**Regions**: Regions are cities around the world with physical Fly machines you can deploy apps to. For this tutorial, you can choose to deploy anywhere you'd like.
+**Regions**: Regions are cities around the world with Fly servers you can deploy apps to. For this tutorial, you can choose to deploy anywhere you'd like.
 
 ```output
 ? Would you like to set up a Postgresql database now?
