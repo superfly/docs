@@ -247,6 +247,8 @@ This example defines an HTTP handler on port 80.
 
 You can have more than one `services.ports` sections. The default configuration, for example, contains two. We've already seen one above. The second one defines an external port 443 for secure connections, using the ["tls" handler](/docs/services/#tls).
 
+Note: For UDP, `port` must be the same value as `services.internal_port`.
+
 ```toml
   [[services.ports]]
     handlers = ["tls", "http"]
