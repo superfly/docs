@@ -48,4 +48,4 @@ View and manage your app's region pool with [`fly regions`](/docs/flyctl/regions
 
 Fly.io [storage volumes](/docs/reference/volumes/) are tied to the region they're created in. 
 
-When an application instance is started, the three-letter name for the region it's running in is stored in the VM's `FLY_REGION`  environment variable. This, along with other [Runtime Enviroment](/docs/reference/runtime-environment/) information, is visible to your app running on that instance.
+When an application instance is started, the three-letter name for the region it's running in is stored in the VM's `FLY_REGION`  environment variable. This, along with other [Runtime Environment](/docs/reference/runtime-environment/) information, is visible to your app running on that instance.
