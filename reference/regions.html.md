@@ -5,13 +5,13 @@ sitemap: false
 nav: firecracker
 ---
 
-The Fly.io platform runs applications physically close to users: in datacenters around the world, on servers we run ourselves. We currently have servers in 21 regions:
+The Fly.io platform runs applications physically close to users: in datacenters around the world, on servers we run ourselves. We currently have servers in 22 regions:
 
 ## _Fly.io Regions_ ##
 
 
 
-|Region ID| Region Location | Gateway |
+|Region ID| Region Location | Gateway&#42; |
 |---------|-----------------|---------|
 ams|Amsterdam, Netherlands      	| ✓
 cdg|Paris, France               	| ✓
@@ -33,6 +33,7 @@ sea|Seattle, Washington (US)    	| ✓
 sin|Singapore                   	| ✓
 sjc|Sunnyvale, California (US)  	| ✓
 syd|Sydney, Australia           	| ✓
+yul|Montreal, Canada
 yyz|Toronto, Canada             	| ✓
 
 ## _Discovering your Application's Region_
@@ -46,3 +47,6 @@ View and manage your app's region pool with [`fly regions`](/docs/flyctl/regions
 Fly.io [storage volumes](/docs/reference/volumes/) are tied to the region they're created in. 
 
 When an application instance is started, the three-letter name for the region it's running in is stored in the VM's `FLY_REGION`  environment variable. This, along with other [Runtime Enviroment](/docs/reference/runtime-environment/) information, is visible to your app running on that instance.
+
+---
+&#42; These regions are also locations of WireGuard gateways, through which you connect to your organization's private Fly.io network.
