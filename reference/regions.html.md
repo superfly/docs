@@ -36,6 +36,8 @@ syd|Sydney, Australia           	| ✓
 yul|Montreal, Canada
 yyz|Toronto, Canada             	| ✓
 
+&#42; You can host your apps in any region; "Gateway" regions also have WireGuard gateways, through which you connect to your organization's private network.
+
 ## _Discovering your Application's Region_
 
 You can see the list of Fly.io regions any time with [`fly platform regions`](https://fly.io/docs/flyctl/platform-regions).
@@ -47,6 +49,3 @@ View and manage your app's region pool with [`fly regions`](/docs/flyctl/regions
 Fly.io [storage volumes](/docs/reference/volumes/) are tied to the region they're created in. 
 
 When an application instance is started, the three-letter name for the region it's running in is stored in the VM's `FLY_REGION`  environment variable. This, along with other [Runtime Enviroment](/docs/reference/runtime-environment/) information, is visible to your app running on that instance.
-
----
-&#42; These regions are also locations of WireGuard gateways, through which you connect to your organization's private Fly.io network.
