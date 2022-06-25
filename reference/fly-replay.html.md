@@ -1,30 +1,64 @@
 ---
-title: The Fly-Replay Header
+title: fly-replay
 layout: docs
 sitemap: false
 nav: firecracker
 ---
 
-With the `fly-replay` response header, an instance of an app can respond to an HTTP request by asking the Fly proxy to deliver (replay) it somewhere else within the same Fly organization. The content of the `fly-replay` header fields tells our proxy which magic to perform.
+The `fly-replay` response header is a way for an instance of an app to respond to an HTTP request by asking the Fly proxy to redeliver (replay) it somewhere else within the same Fly organization. The content of the `fly-replay` header fields tells our proxy which magic to perform, and the proxy takes it from there.
 
-|Field |Purpose |
+|Field |Description |
 |---|---|
 |`region` | The 3-letter code for a region to which the request should be routed. |
 |`instance` | The ID of a specific instance to which the request should be routed. |
 |`app` | The name of an app within the same organization, to which the request should be routed.<br>fly-proxy will choose the nearest instance.|
-|`state` | Optional payload to include in a `fly-replay-src` header appended to the request being replayed. |
-|`elsewhere` | A boolean; if `true`, the responding instance will be excluded from the next round of load-balancing. |
+|`state` | Optional arbitrary string to include in the `fly-replay-src` header appended to the request being replayed. |
+|`elsewhere` | Boolean. If `true`, the responding instance will be excluded from the next round of load-balancing. |
+
+## `fly-replay-src`
+
+Our proxy appends a header, `fly-replay-src`, to the replayed HTTP request, with information about the instance that sent the `fly-replay`. 
+
+|Field |Description |
+|---|---|
+|`instance` | The ID of the instance emitting `fly-replay`. |
+|`region` | The region `fly-replay` was sent from. |
+|`t` | **??** A time threshold in microseconds, useful for avoiding race conditions (see note below)&#42;. **??**|
+|`state` | The contents of the `state` field of the `fly-replay` header, if any. |
+
+&#42;This is a time limit that gets set in a browser cookie, forcing all further requests to the **??** instance that sent the `fly-replay` header **??**  within that threshold to continue to be routed to the target instance of that `fly-replay`. **I haven't figured this one out yet**
+
+
 
 ## Example use cases
 
-Send a write request from a read-only replica to the region in which a HA Postgres leader lives: `fly-replay: region=sjc` The proxy will get the request to an instance in that region and let the instances in the cluster take care of getting it to the writeable leader.
+Send a write request from a read-only replica to the region in which a HA Postgres leader lives: 
+```
+fly-replay: region=sjc
+``` 
+The proxy will get the request to an instance in that region and let the instances in the cluster take care of getting it to the writeable leader.
 
-A router app that wants to send the request on to another app in the same org (perhaps to spin up a machine for a customer on demand): `fly-replay: app=another-app`. The proxy will send the request to an app instance in the nearest region that has one.
+Send the request to an instance of a different app in the same organization, in the nearest region that has one:
+```
+fly-replay: app=app-in-same-org
+```
+This can be used for cross-app replays; think a router app for a FAAS that wants to spin up a customer VM on demand.
 
-Replay the request to a specific instance, by its id as found ...  `fly-replay: instance=00bb33ff`
+Replay the request to a specific instance by ID:  
+```
+fly-replay: instance=00bb33ff`
+```
 
-Example for state? (check Joshua's ruby post)
+Tell the target instance why the request was routed to it (where the recipient app has logic to make use of that information):
+```
+fly-replay: region=sjc;state=captured_write
+```
 
-Fields can be stacked; for instance, to send the request on to an instance of the app "another-app" in the sjc region, use `fly-replay: region=sjc,app=another-app`. Some combinations of fields don't make sense (do we have a well-defined hierarchy of precedence, or error messages, for when fields conflict?). Don't specify an app name _and_ an instance ID where the instance doesn't belong to that app.
+Fields can be stacked; for instance, to send the request on to an instance of the app "app-in-same-org" in the sjc region:
+```
+fly-replay: region=sjc;app=app-in-same-org`. 
+```
 
-Related: [Multi-region PostgreSQL](/docs/getting-started/multi-region-databases/)
+Some combinations of fields don't make sense (**do we have a well-defined hierarchy of precedence, or error messages, for when fields conflict?**). Don't specify an app name _and_ an instance ID that doesn't belong to that app.
+
+Related: [Multi-region PostgreSQL](/docs/getting-started/multi-region-databases/); [Run Ordinary Rails Apps Globally](/blog/run-ordinary-rails-apps-globally/)
