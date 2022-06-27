@@ -7,6 +7,8 @@ nav: firecracker
 
 The `fly-replay` response header is a way for an instance of an app to respond to an HTTP request by asking the Fly proxy to redeliver (replay) it somewhere else within the same Fly organization. The content of the `fly-replay` header fields tells our proxy which magic to perform, and the proxy takes it from there.
 
+## `fly-replay`
+
 |Field |Description |
 |---|---|
 |`region` | The 3-letter code for a region to which the request should be routed. |
@@ -55,6 +57,6 @@ Fields can be stacked; for instance, to send the request on to an instance of th
 fly-replay: region=sjc;app=app-in-same-org 
 ```
 
-Some combinations of fields can conflict: e.g. don't specify an app name _and_ an instance ID that doesn't belong to that app.
+Some combinations of fields can conflict: e.g. don't specify an app name and an instance ID that doesn't belong to that app.
 
 Related: [Multi-region PostgreSQL](/docs/getting-started/multi-region-databases/); [Run Ordinary Rails Apps Globally](/blog/run-ordinary-rails-apps-globally/)
