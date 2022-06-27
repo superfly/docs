@@ -55,6 +55,6 @@ Fields can be stacked; for instance, to send the request on to an instance of th
 fly-replay: region=sjc;app=app-in-same-org 
 ```
 
-Some combinations of fields don't make sense (**do we have a well-defined hierarchy of precedence, or error messages, for when fields conflict?**). Don't specify an app name _and_ an instance ID that doesn't belong to that app.
+Some combinations of fields can conflict: e.g. don't specify an app name _and_ an instance ID that doesn't belong to that app.
 
 Related: [Multi-region PostgreSQL](/docs/getting-started/multi-region-databases/); [Run Ordinary Rails Apps Globally](/blog/run-ordinary-rails-apps-globally/)
