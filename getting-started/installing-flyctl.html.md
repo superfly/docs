@@ -22,6 +22,12 @@ If you have the [Homebrew](https://brew.sh) package manager installed, flyctl ca
 brew install flyctl
 ```
 
+If you have the [MacPorts](https://www.macports.org) package manager installed, flyctl can be installed by running:
+
+```cmd
+[sudo] port install flyctl
+```
+
 If not, you can run the install script:
 
 ```cmd
