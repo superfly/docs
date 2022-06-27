@@ -23,16 +23,12 @@ Our proxy appends a header, `fly-replay-src`, to the replayed HTTP request, with
 |---|---|
 |`instance` | The ID of the instance emitting `fly-replay`. |
 |`region` | The region `fly-replay` was sent from. |
-|`t` | **??** A time threshold in microseconds, useful for avoiding race conditions (see note below)&#42;. **??**|
+|`t` | A timestamp: microseconds since the Unix epoch. |
 |`state` | The contents of the `state` field of the `fly-replay` header, if any. |
-
-&#42;This is a time limit that gets set in a browser cookie, forcing all further requests to the **??** instance that sent the `fly-replay` header **??**  within that threshold to continue to be routed to the target instance of that `fly-replay`. **I haven't figured this one out yet**
-
-
 
 ## Example use cases
 
-Send a write request from a read-only replica to the region in which a HA Postgres leader lives: 
+[Send a write request from a read-only replica](/docs/getting-started/multi-region-databases/) to the region in which a HA database leader lives: 
 ```
 fly-replay: region=sjc
 ``` 
@@ -42,11 +38,11 @@ Send the request to an instance of a different app in the same organization, in 
 ```
 fly-replay: app=app-in-same-org
 ```
-This can be used for cross-app replays; think a router app for a FAAS that wants to spin up a customer VM on demand.
+This can be used for cross-app replays; think a router app for a FaaS that wants to spin up a customer [VM](/docs/reference/machines/) on demand.
 
 Replay the request to a specific instance by ID:  
 ```
-fly-replay: instance=00bb33ff`
+fly-replay: instance=00bb33ff
 ```
 
 Tell the target instance why the request was routed to it (where the recipient app has logic to make use of that information):
@@ -56,7 +52,7 @@ fly-replay: region=sjc;state=captured_write
 
 Fields can be stacked; for instance, to send the request on to an instance of the app "app-in-same-org" in the sjc region:
 ```
-fly-replay: region=sjc;app=app-in-same-org`. 
+fly-replay: region=sjc;app=app-in-same-org 
 ```
 
 Some combinations of fields don't make sense (**do we have a well-defined hierarchy of precedence, or error messages, for when fields conflict?**). Don't specify an app name _and_ an instance ID that doesn't belong to that app.
