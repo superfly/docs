@@ -137,11 +137,13 @@ Your app is a special snowflake. Here are a few things you may want to customize
 
 The `Dockerfile` installs PHP 8.0 by default. If you want PHP 8.1 or (bless your heart) PHP 7, you can find/replace instances of `php8` to your version of choice.
 
-For example, to update to PHP 8.1, you may need to edit:
+For example, to update to PHP 8.1, you'll need to edit:
 
-1. Package names (e.g. `php8-cli` to `php81-cli`)
-2. Directories references (e.g. `/etc/php8` to `/etc/php81`)
-3. Configuration references (e.g. `/var/run/php/php8-fpm.sock` to `/var/run/php/php81-fpm.sock`)
+1. `Dockerfile` - Change package names from php8 to php81 (e.g. `php8-cli` to `php81-cli`)
+2. `docker/app.conf` (if present) - Change `listen` to use `php81-fpm.sock`
+3. `docker/php-fpm.conf` (if present) - Change `include` to use file path `/etc/php81`
+4. `server.conf` - Change `fastcgi_pass` to pass to `php81-fpm.sock`
+5. `supervisord.conf` - Change `[program:php8-fpm]` (if present) to run command `php-fpm81`
 
 If you need PHP 7, you can find other PHP versions (and matching Alpine container versions) [here](https://github.com/codecasts/php-alpine). Note that you may not be able to use `alpine:edge` as the base container.
 
@@ -166,4 +168,25 @@ One last note: The `node_modules` directory ends up being excluded from your cod
 COPY --from=node_modules_go_brrr /app/public /var/www/html/public
 # Add this line:
 COPY --from=node_modules_go_brrr /app/node_modules /var/www/html/node_modules
+```
+
+### Logging Stack Traces
+
+By default, we set the Logging output to use a `JsonFormatter`. This makes the log output a bit cleaner, but has the trade-off of not showing you a full stack trace.
+
+If you need to get the full stack trace, update your `config/logging.php` file and adjust the `stderr` channel to include a `formatter_with` configuration:
+
+```php
+'stderr' => [
+    'driver' => 'monolog',
+    'level' => env('LOG_LEVEL', 'debug'),
+    'handler' => StreamHandler::class,
+    'formatter' => env('LOG_STDERR_FORMATTER'), // JsonFormatter
+    'formatter_with' => [
+        'includeStacktraces' => true,
+    ],
+    'with' => [
+        'stream' => 'php://stderr',
+    ],
+],
 ```
