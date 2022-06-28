@@ -131,6 +131,9 @@ The only required parameter is `image` in the `config` object. Other parameters:
   - `ports`: An array of objects defining the service's ports and associated handlers. Options:
       + `port`: Public-facing port number
       + `handlers`: Array of [connection handlers](https://fly.io/docs/reference/services/#connection-handlers) for TCP-based services.
+* `mounts`: An array of objects that reference previously created [persistent volumes](https://fly.io/docs/reference/volumes/). Currently, you may only mount *one volume* per VM.
+  - `volume`: The volume ID, visible in `fly volumes list`, i.e. `vol_2n0l3vl60qpv635d`
+  - `path`: Absolute path on the VM where the volume should be mounted. i.e. `/data`
 
 <%= partial "machines/launch_req" %>
 <%= partial "machines/launch_resp" %>
