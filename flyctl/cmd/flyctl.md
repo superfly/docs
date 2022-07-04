@@ -21,7 +21,6 @@ flyctl [command] [flags]
 * [apps](/docs/flyctl/apps/)	 - Manage apps
 * [auth](/docs/flyctl/auth/)	 - Manage authentication
 * [autoscale](/docs/flyctl/autoscale/)	 - Autoscaling app resources
-* [builds](/docs/flyctl/builds/)	 - Manage application builds
 * [certs](/docs/flyctl/certs/)	 - Manage certificates
 * [checks](/docs/flyctl/checks/)	 - Manage health checks
 * [config](/docs/flyctl/config/)	 - Manage an app's configuration
