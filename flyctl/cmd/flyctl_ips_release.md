@@ -1,4 +1,4 @@
-Releases an IP address from the application.
+Releases an IP address from the application
 
 ## Usage
 ~~~
@@ -8,8 +8,8 @@ flyctl ips release [ADDRESS] [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for release
 ~~~
 

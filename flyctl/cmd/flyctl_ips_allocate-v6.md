@@ -1,4 +1,4 @@
-Allocates an IPv6 address to the application.
+Allocates an IPv6 address to the application
 
 ## Usage
 ~~~
@@ -8,10 +8,11 @@ flyctl ips allocate-v6 [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for allocate-v6
-      --region string   The region where the address should be allocated.
+      --private         Allocate a private IPv6 address
+  -r, --region string   The region to operate on
 ~~~
 
 ## Global Options
