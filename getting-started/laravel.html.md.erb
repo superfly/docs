@@ -48,8 +48,7 @@ Fly doesn't care about the state of your git repository - it copies whatever fil
 
 **If you haven't already, go ahead and run `fly launch`!**
 
-1. You'll be asked to provide secret `APP_KEY`. You can generate one using `php artisan key:generate --show`.
-2. When asked if you want to deploy now, say **No**. 
+When asked if you want to deploy now, say **No**.
 
 If you have other environment variables to set, you can edit the `fly.toml` file and add them.
 
@@ -67,6 +66,10 @@ For sensitive data, you can set **secrets** with the [`fly secrets set`](https:/
 ```cmd
 fly secrets set SOME_SECRET_KEY=<the-value-from-your-env-file>
 ```
+
+<div class="callout">
+The `fly launch` command will generate a secret with a valid, random value for `APP_KEY`.
+</div>
 
 ### Deploy
 
