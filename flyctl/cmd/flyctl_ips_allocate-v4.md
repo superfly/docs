@@ -1,4 +1,4 @@
-Allocates an IPv4 address to the application.
+Allocates an IPv4 address to the application
 
 ## Usage
 ~~~
@@ -8,10 +8,10 @@ flyctl ips allocate-v4 [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for allocate-v4
-      --region string   The region where the address should be allocated
+  -r, --region string   The region to operate on
 ~~~
 
 ## Global Options
