@@ -19,6 +19,7 @@ That's all your need to do for most applications. The `launch` command prepares 
 * [Django](https://www.djangoproject.com/)
 * [Laravel](https://laravel.com)
 * [NuxtJS](https://nuxtjs.org)
+* [NextJS](https://nextjs.org)
 * [Phoenix](https://phoenixframework.org/)
 * [RedwoodJS](https://redwoodjs.com/)
 * [Remix](https://remix.run/)
