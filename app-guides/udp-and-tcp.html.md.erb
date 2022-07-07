@@ -26,6 +26,7 @@ Use `flyctl launch` to create a `fly.toml` file. Use it to wire up the ports.
   protocol = "udp"
 
   [[services.ports]]
+    # for udp, port must be the same value as internal_port
     port = "5000"
 
 [[services]]
@@ -38,7 +39,7 @@ Use `flyctl launch` to create a `fly.toml` file. Use it to wire up the ports.
 
 We're going to build this silly app in Go (don't worry, it's trivial, you'll be able to follow it even if you aren't a gopher). It's going to be vanilla socket code. But before we get started, there are three gotchas you need to know about.
 
-* The UDP side of your application needs to bind to the special `fly-global-services` address. But the TCP side of your application can't; it should bind to `0.0.0.0`.
+* The UDP side of your application needs to bind to the special `fly-global-services` address on `services.ports.port` (that is, `services.internal_port` must be equal to `services.ports.port`). Whereas, TCP side of your application should bind to `0.0.0.0` on `services.internal_port`.
 
 * We support IPv6 for TCP, but not currently for UDP.
 
