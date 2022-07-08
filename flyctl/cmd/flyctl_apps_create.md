@@ -10,8 +10,9 @@ flyctl apps create [APPNAME] [flags]
 ## Options
 
 ~~~
-      --generate-name    Generate a name for the app
+      --generate-name    Generate an app name
   -h, --help             help for create
+      --machines         Use the machines platform
       --name string      The app name to use
       --network string   Specify custom network id
   -o, --org string       The organization to operate on
