@@ -24,6 +24,8 @@ Request headers carry information that is specific to the incoming request and i
 ### `FLY_REGION`
 **Region name**: The three-letter name of the region the application instance is running in. Details of current regions are listed in the [Regions](/docs/regions/) page. As an example, "ams" is the region name for Amsterdam.
 
+Not to be confused with the [HTTP header](/docs/reference/runtime-environment/#fly-region) `Fly-Region`, which is where the connection was accepted from.
+
 ## _Request Headers_
 
 ### `Fly-Client-IP`
@@ -33,7 +35,9 @@ Request headers carry information that is specific to the incoming request and i
 **Original connection port**: This header is always set by Fly and denotes the actual port that the client connected to the Fly edge node which is then forwarded to the application instance.
 
 ### `Fly-Region`
-**Edge Node Region**: This header is a three letter region code which represents the region that the connection was accepted in and routed from. Not to be confused with the environment variable `FLY_REGION` which is where the application is running.
+**Edge Node Region**: This header is a three letter region code which represents the region that the connection was accepted in and routed from. 
+
+Not to be confused with the [environment variable](/docs/reference/runtime-environment/#fly_region) `FLY_REGION`, which is where the application is running.
 
 ### `X-Forwarded-For`
 **Client and Proxy List**: This is a comma separated list comprising of the client that originated the request and the proxy servers the request passed through. For example, "77.97.0.98, 77.83.142.33" contains the client and the one proxy it passed through.
