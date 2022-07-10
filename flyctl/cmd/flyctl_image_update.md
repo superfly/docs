@@ -9,11 +9,12 @@ flyctl image update [flags]
 ## Options
 
 ~~~
-  -a, --app string      Application name
-  -c, --config string   Path to application configuration file
-      --detach          Return immediately instead of monitoring update progress
-  -h, --help            help for update
-  -y, --yes             Accept all confirmations
+  -a, --app string        Application name
+  -c, --config string     Path to application configuration file
+      --detach            Return immediately instead of monitoring update progress
+  -h, --help              help for update
+      --strategy string   Deployment strategy
+  -y, --yes               Accept all confirmations
 ~~~
 
 ## Global Options
