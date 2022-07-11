@@ -92,7 +92,8 @@ Examples of retrieving this information are in the [fly-examples/privatenet](htt
 
 ## Private Network VPN
 
-You can use a VPN (we recommend [WireGuard](https://wireguard.com/)) to connect to our [6PN private network](/docs/reference/private-networking/). This is a flexible and secure way to plug into each one of your Fly organizations and connect to any and all apps within that organization.
+You can use the [WireGuard](https://wireguard.com/) VPN to connect to our [6PN private network](/docs/reference/private-networking/). This is a flexible and secure way to plug into each one of your Fly organizations and connect to any and all apps within that organization.
+
 
 ### TL:DR; 
 
