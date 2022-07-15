@@ -325,6 +325,41 @@ The `source` is a volume name that this app should mount. Any volume with this n
 
 The `destination` is directory where the `source` volume should be mounted on the running app.
 
+## The `processes` section
+
+The `processes` section allows you to run multiple processes. This way you can define one application, but run it multiple times.
+
+**Each application instance can be started with a different command**, allowing you to re-use your code base for different tasks (web server, queue worker, etc).
+
+To run multiple processes, you'll need a `[processes]` block containing a map of a name and command to start the application.
+
+```toml
+[processes]
+web = "bundle exec rails server -b [::] -p 8080"
+worker = "bundle exec sidekiqswarm"
+```
+
+Furthermore, you can "match" a specific process (or processes) to a `services`, `mount`, or `statics` configuration. For example:
+
+```toml
+[[services]]
+  processes = ["web"] # this service only applies to the web block
+  http_checks = []
+  internal_port = 8080
+  protocol = "tcp"
+  script_checks = []
+```
+
+### Per-process commands
+
+Some `fly` commands accept a process name as an argument. The following examples shows which:
+
+* Change VM counts: `fly scale count web=2 worker=1`
+* Change MV size: `fly scale vm shared-cpu-1x --group worker`
+* Change regions: `fly regions set iad --group worker`
+
+For a bit more context on the `processes` feature, you can read our [community announcement](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/9).
+
 ## The `experimental` section
 
 This section is for flags and feature settings which have yet to be promoted into the main configuration.
