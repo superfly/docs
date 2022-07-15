@@ -350,6 +350,11 @@ Furthermore, you can "match" a specific process (or processes) to a `services`, 
   script_checks = []
 ```
 
+<div class="callout">
+This feature is a <a href="https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/9" style="text-decoration: underline;">preview</a> - Let us know <a href="https://community.fly.io" style="text-decoration: underline;">here</a> if you run into issues when deloying!
+</div>
+
+
 ### Per-process commands
 
 Some `fly` commands accept a process name as an argument. The following examples shows which:
