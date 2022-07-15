@@ -343,7 +343,7 @@ Furthermore, you can "match" a specific process (or processes) to a `services`, 
 
 ```toml
 [[services]]
-  processes = ["web"] # this service only applies to the web block
+  processes = ["web"] # this service only applies to the web process
   http_checks = []
   internal_port = 8080
   protocol = "tcp"
