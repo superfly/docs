@@ -1,0 +1,46 @@
+---
+title: "Deploy a NextJS Application"
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+<% app_name = "hello-next" %>
+<%= partial "partials/intro", locals: { runtime: "NextJS", link: "https://NextJS.org" } %>
+
+You can deploy your [NextJS](https://nextjs.org/) app on Fly with minimal effort, our CLI will do the heavy lifting. You can use your existing NextJS app or you can [create one using the tutorial](https://nextjs.org/learn/basics/create-nextjs-app) then come back here to deploy your app.
+
+## _Generate the NextJS app_
+
+If you just want to see how Fly deployment works, follow these steps.
+
+<%= partial "partials/flyctl" %>
+
+Now let's launch your NextJS app.
+
+<%= partial "partials/launch", locals: { detected: "NextJS", app_name: app_name } %>
+
+<%= partial "partials/launched" %>
+
+## _What about built time environment variables?_
+
+If you're an NextJS user you might know that it supports [exposing environment variables to the browser](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser) using variables with name starting with `NEXT_PUBLIC_`.
+
+For our build system to understand that you need to tweak two sections we generate for you, `fly.toml` and our `Dockerfile`. 
+
+Search for `[build.args]` on your `fly.toml` and add the variables you need there.
+
+```toml
+[build.args]
+  NEXT_PUBLIC_EXAMPLE="This is the value"
+  NEXT_PUBLIC_OTHER="Other value"
+```
+
+Then go to your `Dockerfile` and add `ARG` instructions before your `yarn build` like this:
+
+```Dockerfile
+ARG NEXT_PUBLIC_EXAMPLE
+ARG NEXT_PUBLIC_OTHER
+
+# Your yarn build should come after those ARGs
+```
