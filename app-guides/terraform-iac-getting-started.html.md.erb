@@ -1,0 +1,124 @@
+---
+title: Getting started with machines and terraform
+layout: docs
+sitemap: false
+nav: firecracker
+author: dov
+categories:
+  - machines
+date: 2022-07-08
+---
+
+[Fly Machines](/docs/reference/machines) are [Firecracker VMs](https://firecracker-microvm.github.io/) with a fast REST API that can boot instances in about 300ms, in any region supported by [Fly.io](https://fly.io/docs/reference/regions/).
+
+[Terraform](https://terraform.io) is one of the most popular infrastructure as code tools used by many companies and organizations to manage their infrastructure.
+
+[terraform-provider-fly]() is a terraform provider that enables terraform to manage fly.io resources such as apps, volumes, certificates, ips, machines, etc.
+
+## Prerequisites
+
+Go ahead and [download](https://learn.hashicorp.com/tutorials/terraform/install-cli) terraform if you haven't yet.
+
+## Set API key
+
+`export FLY_API_TOKEN=$(fly auth token)`
+
+## Open wireguard tunnel
+
+In its own terminal run `flyctl machines api-proxy`. This will open a wireguard tunnel from your local machine to flys infrastructure allowing terraform to access the machines api.
+
+## Setting up project
+
+Let's make a directory for this project and set up a terraform file for us to work in.
+
+```shell
+mkdir fly-tf-example && cd fly-tf-example
+touch main.tf
+```
+
+In the main.tf we can specify that we want to use the fly.io provider:
+
+```terraform
+terraform {
+  required_providers {
+    fly = {
+      source = "fly-apps/fly"
+      version = "0.0.10"
+    }
+  }
+}
+```
+
+Now we can go ahead and kick off our terraform project by running `terraform init`. This will download the fly provider and get it ready for us to use.
+
+## Create Resources
+
+In your main.tf file we can use the `fly_app` resource to create a new app and the `fly_ip` resource to make it publicly accessible
+
+```terraform
+resource "fly_app" "exampleApp" {
+  name = "flyiac" #Replace this with your own app name
+  org  = "personal"
+}
+
+resource "fly_ip" "exampleIp" {
+  app        = "flyiac" #Replace this with your own app name
+  type       = "v4"
+  depends_on = [fly_app.exampleApp]
+}
+
+resource "fly_ip" "exampleIpv6" {
+  app        = "flyiac" #Replace this with your own app name
+  type       = "v6"
+  depends_on = [fly_app.exampleApp]
+}
+```
+
+To tell terraform to actually create these resources we can use `terraform apply`. Terraform will show us what it plans on doing, in this case creating one app and two ips, and prompt us to see if we want to continue. If everything looks write type in `yes` and hit enter. In just a few seconds we will see the successful output:
+
+```
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+```
+
+### Create machines
+
+For this example we will create machines running in `ewr` and `lax`.
+
+```terraform
+resource "fly_machine" "exampleMachine" {
+  for_each = toset(["ewr", "lax"])
+  app    = "flyiac" #Replace this with your own app name
+  region = each.value
+  name   = "flyiac-${each.value}"
+  image  = "flyio/iac-tutorial:latest"
+  services = [
+    {
+      ports = [
+        {
+          port     = 443
+          handlers = ["tls", "http"]
+        },
+        {
+          port     = 80
+          handlers = ["http"]
+        }
+      ]
+      "protocol" : "tcp",
+      "internal_port" : 80
+    },
+  ]
+  depends_on = [fly_app.exampleApp]
+}
+```
+
+Once again run `terraform apply` and confirm with `yes` and you will see confirmation that your machines were created!
+
+```
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+```
+
+To test it out go to `https://yourappname.fly.dev` in this example the appname is `flyiac` so it would be `https://flyiac.fly.dev`. Once the page has loaded play around with the buttons to try loading your machines in both regions!
+
+## Destroy resources
+
+When you are done run `terraform destroy` to delete all the resources you created for this tutorial.
