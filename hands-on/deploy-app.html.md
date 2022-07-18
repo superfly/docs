@@ -6,7 +6,7 @@ nav: hands_on
 toc: false
 ---
 
-We are now ready to deploy our containerized app to the Fly platform. At the command line, just run:
+We are now ready to deploy our containerized app to the Fly platform. If you didn't choose to deploy as part of the `flyctl launch` command in the previous section, run the following at the command line:
 
 ```cmd
 flyctl deploy
