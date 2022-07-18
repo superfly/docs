@@ -360,7 +360,7 @@ This feature is a <a href="https://community.fly.io/t/preview-multi-process-apps
 Some `fly` commands accept a process name as an argument. The following examples shows which:
 
 * Change VM counts: `fly scale count web=2 worker=1`
-* Change MV size: `fly scale vm shared-cpu-1x --group worker`
+* Change VM size: `fly scale vm shared-cpu-1x --group worker`
 * Change regions: `fly regions set iad --group worker`
 
 For a bit more context on the `processes` feature, you can read our [community announcement](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/9).
