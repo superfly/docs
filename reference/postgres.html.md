@@ -158,7 +158,7 @@ flyctl postgres attach --app <app-name> --postgres-app <postgres-app-name>
 
 When you attach an app to Postgres, a number of things happen:
 
-* A database and user are created in the Postgres App. If the attached app in named "myapp", both the database and the user are named "myapp" too.
+* A database and user are created in the Postgres App. If the attached app is named "myapp", both the database and the user are named "myapp" too.
 * The user is allocated a generated password.
 
 When the Attached app starts it will find an environment variable `DATABASE_URL` set to a Postgres connection URI with the username, password, host, port and dbname filled in.
