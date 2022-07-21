@@ -1,5 +1,4 @@
-Remove encrypted secrets from the application. Unsetting a
-secret removes its availability to the application.
+Unset one or more encrypted secrets for an application
 
 ## Usage
 ~~~
@@ -9,9 +8,8 @@ flyctl secrets unset [flags] NAME NAME ...
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
-      --detach          Return immediately instead of monitoring deployment progress
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for unset
 ~~~
 
@@ -25,5 +23,5 @@ flyctl secrets unset [flags] NAME NAME ...
 
 ## See Also
 
-* [flyctl secrets](/docs/flyctl/secrets/)	 - Manage app secrets
+* [flyctl secrets](/docs/flyctl/secrets/)	 - Manage application secrets with the set and unset commands.
 

@@ -54,7 +54,7 @@ flyctl [command] [flags]
 * [restart](/docs/flyctl/restart/)	 - Restart an application
 * [resume](/docs/flyctl/resume/)	 - Resume an application
 * [scale](/docs/flyctl/scale/)	 - Scale app resources
-* [secrets](/docs/flyctl/secrets/)	 - Manage app secrets
+* [secrets](/docs/flyctl/secrets/)	 - Manage application secrets with the set and unset commands.
 * [ssh](/docs/flyctl/ssh/)	 - Commands that manage SSH credentials
 * [status](/docs/flyctl/status/)	 - Show app status
 * [suspend](/docs/flyctl/suspend/)	 - Suspend an application
