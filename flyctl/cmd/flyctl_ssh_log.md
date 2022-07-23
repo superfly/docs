@@ -1,4 +1,4 @@
-log of all issued certs
+Log of all issued SSH certs
 
 ## Usage
 ~~~
@@ -8,7 +8,8 @@ flyctl ssh log [flags]
 ## Options
 
 ~~~
-  -h, --help   help for log
+  -h, --help         help for log
+  -o, --org string   The organization to operate on
 ~~~
 
 ## Global Options
@@ -21,5 +22,5 @@ flyctl ssh log [flags]
 
 ## See Also
 
-* [flyctl ssh](/docs/flyctl/ssh/)	 - Commands that manage SSH credentials
+* [flyctl ssh](/docs/flyctl/ssh/)	 - Use SSH to login to or run commands on VMs
 

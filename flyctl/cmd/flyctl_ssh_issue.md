@@ -14,7 +14,8 @@ flyctl ssh issue [org] [email] [path] [flags]
   -d, --dotssh            Store keys in ~/.ssh, like normal keys
   -h, --help              help for issue
       --hours int         Expiration, in hours (<72) (default 24)
-  -o, --overwrite         Overwrite existing SSH keys in same location, if we generated them
+  -o, --org string        The organization to operate on
+      --overwrite         Overwrite existing SSH keys in same location, if we generated them
   -u, --username string   Unix username for SSH cert
 ~~~
 
@@ -28,5 +29,5 @@ flyctl ssh issue [org] [email] [path] [flags]
 
 ## See Also
 
-* [flyctl ssh](/docs/flyctl/ssh/)	 - Commands that manage SSH credentials
+* [flyctl ssh](/docs/flyctl/ssh/)	 - Use SSH to login to or run commands on VMs
 

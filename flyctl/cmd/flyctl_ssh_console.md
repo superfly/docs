@@ -1,18 +1,17 @@
-Connect to a running instance of the current app; with -select, choose instance from list.
+Connect to a running instance of the current app.
 
 ## Usage
 ~~~
-flyctl ssh console [<host>] [flags]
+flyctl ssh console [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -a, --app string       App name to operate on
+  -a, --app string       Application name
   -C, --command string   command to run on SSH session
-  -c, --config string    Path to an app config file or directory containing one (default "./fly.toml")
   -h, --help             help for console
-  -p, --probe            test WireGuard connection after establishing
+  -o, --org string       The organization to operate on
   -r, --region string    Region to create WireGuard connection in
   -s, --select           select available instances
 ~~~
@@ -27,5 +26,5 @@ flyctl ssh console [<host>] [flags]
 
 ## See Also
 
-* [flyctl ssh](/docs/flyctl/ssh/)	 - Commands that manage SSH credentials
+* [flyctl ssh](/docs/flyctl/ssh/)	 - Use SSH to login to or run commands on VMs
 
