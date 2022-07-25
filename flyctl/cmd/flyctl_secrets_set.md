@@ -10,6 +10,7 @@ flyctl secrets set [flags] NAME=VALUE NAME=VALUE ...
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
+      --detach          Return immediately instead of monitoring deployment progress
   -h, --help            help for set
 ~~~
 
