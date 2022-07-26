@@ -327,6 +327,19 @@ The `destination` is directory where the `source` volume should be mounted on th
 
 ## The `processes` section
 
+<div class="callout">
+The `processes` feature is in <a href="https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316" style="text-decoration: underline;">preview</a> with known issues including:
+
+<div class="my-4">
+* Does not work across multiple regions
+* Does not work with autoscaling
+</div>
+
+**It is recommended that you only use the `processes` directive within one region.**
+
+Let us know in the <a href="https://community.fly.io" style="text-decoration: underline;">Fly community forum</a> if you run into issues when deloying.
+</div>
+
 The `processes` section allows you to run multiple processes. This way you can define one application, but run it multiple times.
 
 **Each application instance can be started with a different command**, allowing you to re-use your code base for different tasks (web server, queue worker, etc).
@@ -350,10 +363,11 @@ Furthermore, you can "match" a specific process (or processes) to a `services`, 
   script_checks = []
 ```
 
-<div class="callout">
-This feature is a <a href="https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/9" style="text-decoration: underline;">preview</a> - Let us know <a href="https://community.fly.io" style="text-decoration: underline;">here</a> if you run into issues when deloying!
-</div>
+After configuring the processes, you'll need to scale them up with per-process commands. For example:
 
+```
+$ fly scale count web=2 worker=2
+```
 
 ### Per-process commands
 
@@ -363,7 +377,7 @@ Some `fly` commands accept a process name as an argument. The following examples
 * Change VM size: `fly scale vm shared-cpu-1x --group worker`
 * Change regions: `fly regions set iad --group worker`
 
-For a bit more context on the `processes` feature, you can read our [community announcement](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/9).
+For a bit more context on the `processes` feature, you can read our [community announcement](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/).
 
 ## The `experimental` section
 
