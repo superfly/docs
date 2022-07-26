@@ -17,6 +17,7 @@ flyctl machine [command] [flags]
 * [start](/docs/flyctl/machine-start/)	 - Start a Fly machine
 * [status](/docs/flyctl/machine-status/)	 - Show current status of a running machine
 * [stop](/docs/flyctl/machine-stop/)	 - Stop a Fly machine
+* [update](/docs/flyctl/machine-update/)	 - Update a machine
 
 ## Options
 

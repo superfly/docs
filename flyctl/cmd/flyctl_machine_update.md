@@ -1,9 +1,9 @@
-Run a machine
+Update a machine
 
 
 ## Usage
 ~~~
-flyctl machine run <image> [command] [flags]
+flyctl machine update [machine_id] [flags]
 ~~~
 
 ## Options
@@ -15,15 +15,11 @@ flyctl machine run <image> [command] [flags]
       --dockerfile string    Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
       --entrypoint string    ENTRYPOINT replacement
   -e, --env strings          Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
-  -h, --help                 help for run
-      --id string            Machine ID, if previously known
+  -h, --help                 help for update
       --kernel-arg strings   List of kernel arguments to be provided to the init. Can be specified multiple times.
       --memory int           Memory (in megabytes) to attribute to the machine
   -m, --metadata strings     Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
-  -n, --name string          Machine name, will be generated if missing
-      --org string           The organization that will own the app
   -p, --port strings         Exposed port mappings (format: edgePort[:machinePort]/[protocol[:handler]])
-  -r, --region string        The region to operate on
   -s, --size string          Preset guest cpu and memory for a machine, defaults to shared-cpu-1x
   -v, --volume strings       Volumes to mount in the form of <volume_id_or_name>:/path/inside/machine[:<options>]
 ~~~
