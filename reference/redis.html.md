@@ -10,23 +10,27 @@ nav: firecracker
 The limited, "built-in" Redis caching that was previously known as *Fly Redis* is deprecated. We recommend running Redis as a standard Fly.io app.
 </div>
 
-[Redis](https://redis.io) is a versatile key/value database. This guide explains how to run it as a Fly.io app in a single region, with persistent storage. It will only be visible to apps in the same deployment organization.
+[Redis](https://redis.io) is a versatile key/value database. This guide explains how to run it as a Fly.io app in a single region, with persistent storage. It will only be visible to apps in the same deployment organization and accessible via `REDIS_URL`.
 
-## Quick setup
+## Create the Redis server
 
 Run these commands to get a Redis instance with persistent storage running in a single [region](/docs/reference/regions/).
 
+### Launch the Redis image
+
 Create a directory and create a new app. Be sure to replace `my-redis` with a custom name. When prompted, pick a region and a Fly organization.
 
-```
+```cmd
 mkdir redis
 cd redis
 fly launch --image flyio/redis:6.2.6 --no-deploy --name my-redis
 ```
 
-Add a 1GB storage volume (or larger) and attach it to your app in `fly.toml`. Pick the same region as before!
+### Create storage volume
 
-```
+To persist Redis data between restarts, add a 1GB storage volume (or larger) and attach it to your app in `fly.toml`. Pick the same region as before.
+
+```cmd
 fly volumes create redis_server --size 1
 cat >> fly.toml <<TOML
   [[mounts]]
@@ -35,18 +39,47 @@ cat >> fly.toml <<TOML
 TOML
 ```
 
+### Set a password
+
 Set a password on your Redis instance. A password must be set **before** deploying.
 
-```
+```cmd
 fly secrets set REDIS_PASSWORD=yoursecretpassword
 ```
 <div class="callout">
 
-Keep track of this password - it won't be visible again after deployment! More on `fly secrets`  [here](https://fly.io/docs/flyctl/secrets/).
+Keep track of this password - it won't be visible again after deployment! [Read more about `fly secrets`](https://fly.io/docs/flyctl/secrets/).
 
 </div>
 
-Now remove the contents of the default `[[services]]` block in `fly.toml` (leaving the `[[services]]` header). This ensures your Redis VM is not visible from the public internet.
+### Disable public IP address
+
+Remove the contents of the default `[[services]]` block in `fly.toml` (leaving the `[[services]]` header). This ensures your Redis VM is not visible from the public internet. The configuration file should then look something like this:
+
+```toml
+app = "rails-devs-demonstrator-redis"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[build]
+  image = "flyio/redis:6.2.6"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  # Make sure this section is blank
+
+[[mounts]]
+  # This section won't appear if you
+  # skipped creating a storage volume
+  destination = "/data"
+  source = "redis_server"
+```
+
+### Deploy
 
 Finally, deploy Redis!
 
@@ -59,10 +92,6 @@ Check that things are running correctly.
 ```cmd
 fly status
 ```
-
-Your Redis instance should be available from any other app in the same organization at this URL:
-
-`redis://default:yoursecretpassword@my-redis.internal:6379`
 
 ## Test the Redis server
 
@@ -86,22 +115,29 @@ OK
 PONG
 ```
 
-## Configuration Options
+## Access from other Fly applications via `REDIS_URL`
 
-By default the Redis image will set a `maxmemory` of 90% of the VM's available memory and use the `allkeys-lru`
-eviction policy, which is a good choice for most use cases, such as caching. You can change these settings by [assigning environment variables in `fly.toml`](/docs/reference/configuration/#the-env-variables-section) or by setting [secrets](/docs/reference/secrets/).
+Your Redis instance should be available from any other app in the same organization at this URL: `redis://default:yoursecretpassword@my-redis.internal:6379`.
 
-For example, to configure Redis *not to evict any keys* you can use:
+To access Redis from other applications, such as a Rails, setup the `REDIS_URL` via `fly secrets` either from the root of that directory or by setting the `-a` flag with the app name:
 
 ```cmd
-flyctl secrets set MAXMEMORY_POLICY="noeviction"
+$ fly secrets set REDIS_URL=redis://default:yoursecretpassword@my-redis.internal:6379 -a my-app
 ```
 
-Or, if you want to trade decreased performance for increased data loss protection by enabling the
-`Append Only File` option:
+Deploy the application and the `REDIS_URL` should now be available.
 
-```cmd
-flyctl secrets set APPENDONLY="yes"
+## Redis Configuration Options
+
+By default the Redis image will set a `maxmemory` of 90% of the VM's available memory and use the `allkeys-lru`
+eviction policy, which is a good choice for most use cases, such as caching. You can change these settings by [assigning environment variables in `fly.toml`](/docs/reference/configuration/#the-env-variables-section).
+
+For example, to configure Redis *not to evict any keys* and *trade decreased performance for increased data loss protection by enabling the `Append Only File` option*, add or create the following to the `[env]` section of your `fly.toml` file:
+
+```
+[env]
+  MAXMEMORY_POLICY="noeviction"
+  APPENDONLY="yes"
 ```
 
 Check out the Redis docs for more info on [cache eviction policies](https://redis.io/topics/lru-cache) and
@@ -117,7 +153,7 @@ Other apps within the same organization can still access the Redis server over t
 
 Volumes will pin your Redis instance to the volume region. Without volumes, apps can be deployed to [backup regions](/docs/reference/scaling/#backup-regions) in certain cases. If you have a client app that accesses Redis, ensure it stays in the same region as Redis by setting the primary and backup regions to the same values:
 
-```
+```cmd
 fly regions set lax -a myapp
 fly regions backup lax -a myapp
 ```
