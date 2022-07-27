@@ -1,5 +1,5 @@
-Deploy Fly applications from source or an image using a local or remote builder. 
-		
+Deploy Fly applications from source or an image using a local or remote builder.
+
 		To disable colorized output and show full Docker build output, set the environment variable NO_COLOR=1.
 	
 
@@ -24,7 +24,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
   -i, --image string           The image tag or ID to deploy
       --image-label string     Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
       --local-only             Only perform builds locally using the local docker daemon
-      --nixpacks               
+      --nixpacks               Deploy using nixpacks to generate the image
       --no-cache               Do not use the build cache when building the image
       --now                    Deploy now without confirmation
       --push                   Push image to registry after build is complete
