@@ -27,7 +27,7 @@ Whenever `flyctl` is run, it will look for a `fly.toml` file in the current dire
 
 ### Runtime options
 
-Various options are available to control the lifecycle of a running application. These are optional and can be placed at the top level of the `fly.toml` file:
+Various options are available to control the life-cycle of a running application. These are optional and can be placed at the top level of the `fly.toml` file:
 
 #### `kill_signal` option
 
@@ -164,9 +164,9 @@ This optional section allows setting non-sensitive information as environment va
 
 For sensitive information, such as credentials or passwords, use the [secrets CLI command](/docs/reference/secrets).
 
-Env variable names are strictly case-sensitive and cannot begin with `FLY_` (as this could clash with the [runtime enviroment](/docs/reference/runtime-environment)). Env values can only be strings.
+Env variable names are strictly case-sensitive and cannot begin with `FLY_` (as this could clash with the [runtime environment](/docs/reference/runtime-environment)). Env values can only be strings.
 
-Secrets take precendence over env variables with the same name.
+Secrets take precedence over env variables with the same name.
 
 ### The `statics` sections
 

@@ -5,12 +5,13 @@ sitemap: false
 nav: firecracker
 ---
 
+[Redis](https://redis.io) is a versatile key/value database. This guide explains how to run it as a Fly.io app in a single region, with persistent storage. It will only be visible to apps in the same deployment organization and accessible via `REDIS_URL`.
 
 <div class="callout">
-The limited, "built-in" Redis caching that was previously known as *Fly Redis* is deprecated. We recommend running Redis as a standard Fly.io app.
-</div>
 
-[Redis](https://redis.io) is a versatile key/value database. This guide explains how to run it as a Fly.io app in a single region, with persistent storage. It will only be visible to apps in the same deployment organization and accessible via `REDIS_URL`.
+The limited, "built-in" Redis caching that was previously known as *Fly Redis* is deprecated. We recommend running Redis as a standard Fly.io app.
+
+</div>
 
 ## Create the Redis server
 
@@ -134,7 +135,7 @@ eviction policy, which is a good choice for most use cases, such as caching. You
 
 For example, to configure Redis *not to evict any keys* and *trade decreased performance for increased data loss protection by enabling the `Append Only File` option*, add or create the following to the `[env]` section of your `fly.toml` file:
 
-```
+```toml
 [env]
   MAXMEMORY_POLICY="noeviction"
   APPENDONLY="yes"
