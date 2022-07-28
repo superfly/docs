@@ -28,7 +28,7 @@ Not to be confused with the [HTTP header](/docs/reference/runtime-environment/#f
 
 ## _Request Headers_
 
-### `Fly-Client-IP`
+### `Fly-Client-Ip`
 **Client IP Address**: The IP address Fly accepted a connection from. This will be the client making the initial request and as such, will also appear at the start of the `X-Forwarded-For` addresses. 
 
 ### `Fly-Forwarded-Port`
