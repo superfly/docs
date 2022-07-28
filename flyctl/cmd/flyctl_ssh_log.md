@@ -1,4 +1,4 @@
-Log of all issued SSH certs
+Log of all issued SSH certs. Each organization has its own root certificate.
 
 ## Usage
 ~~~
@@ -23,4 +23,4 @@ flyctl ssh log [flags]
 ## See Also
 
 * [flyctl ssh](/docs/flyctl/ssh/)	 - Use SSH to login to or run commands on VMs
-
+* [flyctl ssh issue](/docs/flyctl/ssh-issue/)	 - Issue new SSH credential
