@@ -1,4 +1,5 @@
-Delete an existing organization.
+Delete an existing organization. 
+Succeeds when all services and additional admins have been removed.
 
 
 ## Usage
