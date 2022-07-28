@@ -2,9 +2,6 @@ Issue a new SSH credential. With -agent, populate credential
 into SSH agent. With -hour, set the number of hours (1-72) for credential
 validity.
 
-Root certificates are issued to organizations either after `fly ssh issue` or `fly ssh console`. 
-
-
 
 ## Usage
 ~~~

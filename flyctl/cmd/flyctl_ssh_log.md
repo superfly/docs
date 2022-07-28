@@ -1,4 +1,5 @@
-Log of all issued SSH certs. Each organization has its own root certificate.
+Log of all issued SSH certs. Each organization has a different root certificate.
+This is used for members of the organization and its apps' instances. 
 
 ## Usage
 ~~~
