@@ -32,7 +32,13 @@ curl -L https://fly.io/install.sh | sh
 
 ## _Windows_
 
-Run the Powershell install script:
+If you are on a Windows with the [Scoop](https://scoop.sh/) package manager installed, flyctl can be installed by running:
+
+```cmd
+scoop install flyctl
+```
+
+If not, you can run the Powershell install script:
 
 ```cmd
 iwr https://fly.io/install.ps1 -useb | iex
