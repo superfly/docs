@@ -10,6 +10,7 @@ flyctl ssh console [flags]
 ~~~
   -a, --app string       Application name
   -C, --command string   command to run on SSH session
+  -c, --config string    Path to application configuration file
   -h, --help             help for console
   -o, --org string       The organization to operate on
   -r, --region string    Region to create WireGuard connection in

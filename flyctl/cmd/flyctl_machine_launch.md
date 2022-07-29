@@ -26,7 +26,7 @@ flyctl machine launch [flags]
       --path string            Path to the app source root, where fly.toml file will be saved (default ".")
       --push                   Push image to registry after build is complete
   -r, --region string          The region to operate on
-      --remote-only            Perform builds on a remote builder instance instead of using the local docker daemon (default true)
+      --remote-only            Perform builds on a remote builder instance instead of using the local docker daemon
       --strategy string        The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. Default is canary, or rolling when max-per-region is set.
 ~~~
 
