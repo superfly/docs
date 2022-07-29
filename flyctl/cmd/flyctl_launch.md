@@ -19,7 +19,7 @@ flyctl launch [flags]
       --org string          the organization that will own the app
       --path string         path to app code and where a fly.toml file will be saved. (default ".")
       --region string       the region to launch the new app in
-      --remote-only         Perform builds remotely without using the local docker daemon (default true)
+      --remote-only         Perform builds remotely without using the local docker daemon
 ~~~
 
 ## Global Options
