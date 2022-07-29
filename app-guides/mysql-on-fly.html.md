@@ -51,6 +51,8 @@ We also need to set some secrets required by the [MySQL container](https://hub.d
 fly secrets set MYSQL_PASSWORD=password MYSQL_ROOT_PASSWORD=password
 ```
 
+Save these secrets somewhere, because they're not accessible after you set them.
+
 Finally, edit the `fly.toml` file generated to look something like this:
 
 ```
@@ -81,7 +83,7 @@ kill_timeout = 5
 There's a few important things to note:
 
 1. We deleted the `[[services]]` block and everything under it. We don't need it!
-1. We added the `[build]` section to define a Docker image. We don't need to create a `Dockerfile` of our own.
+1. We added the `[build]` section to specify an existing Docker image. We don't need to create a `Dockerfile` of our own.
 1. The `[env]` section contains two not-so-secret environment variables that MySQL will need to initialize itself.
 1. We added the `[experimental]` section, which lets us pass a custom command (overriding Docker's `CMD`).
     1. For MySQL 8, you'll want to use the `mysql_native_password` password plugin
@@ -110,4 +112,23 @@ And _now_ we can finally deploy it:
 fly deploy
 ```
 
-You should now have an app running MySQL running! Your other apps can access the MySQL service by its name. In my case, I would use `my-mysql.internal` as the hostname.
+You should now have an app running MySQL! 
+
+Your other apps can access the MySQL service by its name. In my case, I would use `my-mysql.internal` as the hostname. Any app that needs to access the database should set the hostname and username as environment variables, and create a secret for the database password.
+
+## Backups
+
+We'll take a snapshot of the created volume every day. We retain 7 days of snapshots.
+
+To restore a snapshot, make sure you have the latest version of the `fly` command, and pass a `--snapshot-id` flag when creating a new volume.
+
+```bash
+# Get a volume ID
+fly volumes list -a my-mysql
+
+# List snapshots for a volume
+fly volumes snapshots list vol_xxx
+
+# Create a new volume from a snapshot
+fly volumes create --snapshot-id vs_xxx --size 10
+```
