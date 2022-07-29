@@ -31,7 +31,7 @@ fly launch
 
 You can name the app whatever you'd like. The name will become a hostname our application uses to connect to the database, such as `my-mysql.internal`.
 
-*Don't launch the application just yet* - we have some work to do first.
+*Don't deploy the application just yet* - we have some work to do first.
 
 ## Configure the App
 
@@ -83,7 +83,7 @@ There's a few important things to note:
 1. We deleted the `[[services]]` block and everything under it. We don't need it!
 1. We added the `[build]` section to define a Docker image. We don't need to create a `Dockerfile` of our own.
 1. The `[env]` section contains two not-so-secret environment variables that MySQL will need to initialize itself.
-1. We added the `[experimental]` section, which lets us set the command to run in the VM (just like Docker's `CMD`).
+1. We added the `[experimental]` section, which lets us pass a custom command (overriding Docker's `CMD`).
     1. For MySQL 8, you'll want to use the `mysql_native_password` password plugin
     1. **More importantly**, we set MySQL's data directory to a **subdirectory** of our mounted volume
 
