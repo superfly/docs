@@ -577,7 +577,10 @@ flyctl volumes create pg_data --region syd --size 10
 flyctl scale count 3
 ```
 
-## Upgrading
+Replicas can be added in any region, but an instance outside the leader's region will be read-only. See [Multi-region PostgreSQL](/docs/getting-started/multi-region-databases/) for more.
+
+
+## Upgrading the Postgres app
 
 You can update a Postgres cluster, installed with `flyctl postgres create`, to the latest [release](https://github.com/fly-apps/postgres-ha/releases) using [`flyctl image update`](/docs/flyctl/image-update/).
 
@@ -591,4 +594,39 @@ And upgrade with:
 
 ```cmd
 flyctl image update -a <postgres-app-name>
+```
+
+## Snapshots and restores
+
+Fly.io performs daily storage-based snapshots of each of your provisioned volumes. These snapshots can
+be used to restore your dataset into a new Postgres application.
+
+### Listing snapshots
+
+Snapshots are volume specific, so you will need to first identify a volume to target. You can list your volumes by running the `volumes list` command with your Postgres app name.
+
+```cmd
+fly volumes list -a <postgres-app-name>
+```
+```output
+ID                   NAME    SIZE REGION ATTACHED VM CREATED AT
+vol_x915grn008vn70qy pg_data 10GB atl    b780ce3d    2 weeks ago
+vol_ke628r677pvwmnpy pg_data 10GB atl    359d0e24    2 weeks ago
+```
+
+Once you have identified which volume to target, you can go ahead and list your snapshots by running the following command:
+```cmd
+fly volumes snapshots list <volume-id>
+```
+```output
+ID                  SIZE   CREATED AT
+vs_2AjJ4lGqQwDbRfxm 29 MiB 2 hours ago
+vs_BAARBQxZKl6JKU04 27 MiB 1 day ago
+vs_OPQXXna6kA2Qnhz8 26 MiB 2 days ago
+```
+### Restoring from a snapshot
+
+To restore a Postgres application from a snapshot, simply specify the `--snapshot-id` argument when running the `create` command as shown below:
+```cmd
+fly postgres create --snapshot-id <snapshot-id>
 ```
