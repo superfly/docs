@@ -1,5 +1,5 @@
 ---
-title: The Fly Global Application Platform
+title: Fly.io Docs
 layout: docs
 sitemap: false
 nav: firecracker
@@ -9,14 +9,26 @@ nav: firecracker
   <img src="/public/images/docs-intro.jpg" srcset="/public/images/docs-intro@2x.jpg 2x" alt="">
 </figure>
 
-Fly.io is a global application distribution platform. We run your code in [Firecracker](https://firecracker-microvm.github.io/) microVMs around the world.
+**Fly.io is a global application delivery network. We run fleets of servers that turn your code into virtual machines running close to your users around the world. We are here for two things: low latency and great DX.**
+
+We're in 23 regions around the world, and counting. Putting your apps right next to your users makes them respond faster, and we are going hard on bringing your apps to hardware in more parts of the world. 
+
+But whether you're deploying one instance near you or a whole network of them for a global user base, we also want to be the best place to run your full stack&mdash;be it a simple web service or your database-backed opus with multiple supporting services.
+
+
+a full-stack app, in any language. That's less easy to quantify.
+
+
+
+
+We run your code in [Firecracker](https://firecracker-microvm.github.io/) microVMs around the world.
 
 
 <div class="callout">
 Our *raison d'&ecirc;tre* is to deliver your applications to your users globally, with the highest possible availability and the lowest possible latency, with a great developer UX.
 </div>
 
-We want you to run your full stack close to users, whether it’s a simple web service or your database-backed opus with multiple supporting services. Check out our [persistent storage volumes](/docs/reference/volumes/) and [ready-to-run Postgres](/docs/reference/postgres/). Your organization's Fly.io apps can [talk to each other privately](/docs/reference/private-networking/) through our fast internal [WireGuard](https://www.wireguard.com/) network.
+ Check out our [persistent storage volumes](/docs/reference/volumes/) and [ready-to-run Postgres](/docs/reference/postgres/). Your organization's Fly.io apps can [talk to each other privately](/docs/reference/private-networking/) through our fast internal [WireGuard](https://www.wireguard.com/) network.
 
 ## Docker without Docker, with or without Docker
 
