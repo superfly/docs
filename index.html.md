@@ -13,46 +13,9 @@ nav: firecracker
 
 We're in 23 regions around the world, and counting. Putting your apps right next to your users makes them respond faster, and we are going hard on bringing your apps to hardware in more parts of the world. 
 
-But whether you're deploying one instance near you or a whole network of them for a global user base, we also want to be the best place to run your full stack&mdash;be it a simple web service or your database-backed opus with multiple supporting services.
+But we also want to be the best place to run your full stack, wherever you run it&mdash;be it a simple web service or your database-backed opus with multiple supporting services. 
 
-
-a full-stack app, in any language. That's less easy to quantify.
-
-
-
-
-We run your code in [Firecracker](https://firecracker-microvm.github.io/) microVMs around the world.
-
-
-<div class="callout">
-Our *raison d'&ecirc;tre* is to deliver your applications to your users globally, with the highest possible availability and the lowest possible latency, with a great developer UX.
-</div>
-
- Check out our [persistent storage volumes](/docs/reference/volumes/) and [ready-to-run Postgres](/docs/reference/postgres/). Your organization's Fly.io apps can [talk to each other privately](/docs/reference/private-networking/) through our fast internal [WireGuard](https://www.wireguard.com/) network.
-
-## Docker without Docker, with or without Docker
-
-One thing to know: Docker images ([OCI container images](/blog/docker-without-docker/)) are how we give Firecracker your app to make into a microVM. That means you *can* use Docker to build the container image with your app and its environment. You can also point to a pre-built image.
-
-In many cases, you won't have to touch Docker; we can scan your source code and detect which [pre-existing buildpack](https://fly.io/docs/reference/builders/#buildpacks) matches the configuration you need, and our remote builder will build your app container image on deploy.
-
-<div class="callout">
-If you have an app running on [Heroku](https://www.heroku.com/), you may be interested in our quick-and-easy [**Turboku web launcher**](https://fly.io/launch/heroku) to deploy it on Fly.io too. [**Read more here**](https://fly.io/blog/new-turboku/).</div>
-
-More on [builders](/docs/reference/builders).
-
-## Happiness on the CLI
-
-`flyctl` is our command-line tool to facilitate app configuration, building, deployment and management. [It's the command center for your Fly.io apps.](/docs/flyctl/)
-
-Creating and deploying an app on Fly.io is simple. You don't even have to type `flyctl` in full! 
-
-Run `fly launch` to initialize an app. (Maybe) customize the generated [config file](https://fly.io/docs/reference/configuration/) that generates (perhaps to hook up some [metrics](/docs/reference/metrics/)). Run `fly deploy` to build and deploy.
-
-That's the short version. And you do have to write your app, in the language of your choice, first. Although to try it out, you can use one of ours. [Here's one in Go.](/docs/getting-started/golang/)
-
-`flyctl` can then help you manage your app's [deployment regions](/docs/reference/regions/), [scaling](/docs/reference/scaling/), and [secrets](/docs/reference/secrets/).
-
-If you want to experience `flyctl` for yourself, you can go hands-on for free and [launch a container on Fly](/docs/hands-on/start/).
-
-If you just want to read about all the talents of `flyctl`, here's another link to its [documentation](/docs/flyctl/).
+* features
+* launchers
+* postgres
+* speedrun
