@@ -22,23 +22,23 @@ toc: false
 </div> 
 <br>
 
-<div class=" grid grid-cols-1 gap-3">
-  <a class="grid" href="/docs/getting-started/"><div class="px-4 py-4 bg-violet-500 text-white opacity-75">
-    <h2>Getting started</h2>
+This is not a proposed layout, just an exploration of how we might use the index pages for each heading to help people find what they want.
+
+    <h2>[Getting started](/docs/getting-started/)</h2>
     
     More to get you started.
 
     Should there be, like a submenu here? 
-  </div></a>
-  <a class="grid"  href="/docs/reference/"><div class="px-4 py-4 bg-violet-500 text-white opacity-75">
-    <h2>Fly Reference</h2>
+
+
+    <h2>[Fly Reference](/docs/reference/)</h2>
+
     Platform info, app config and more
-  </div></a>
- <a class="grid"  href="/docs/reference/guides/"><div class="px-4 py-4 bg-violet-500 text-white opacity-75">
-    <h2>Guides and Examples</h2>
+
+  <h2>[Guides and Examples](/docs/guides/)</h2>
+
     More specific or in-depth guides for doing stuff
-  </div></a> 
-</div>
+
 <br>
 
 <div class=" grid gap-3" style="grid-template-columns: repeat(auto-fit, 22em);">
