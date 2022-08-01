@@ -17,7 +17,7 @@ flyctl volumes create <volumename> [flags]
   -r, --region string         The region to operate on
       --require-unique-zone   Require volume to be placed in separate hardware zone from existing volumes (default true)
   -s, --size int              Size of volume in gigabytes (default 3)
-      --snapshot-id string    Provisons Volume from the specified snapshot
+      --snapshot-id string    Create volume from a specified snapshot
 ~~~
 
 ## Global Options
