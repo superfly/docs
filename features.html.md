@@ -1,5 +1,5 @@
 ---
-title: Introduction
+title: Features
 layout: docs
 sitemap: false
 nav: firecracker
@@ -8,19 +8,21 @@ toc: false
 
 **Fly.io is a global application delivery network. We run fleets of servers that turn your code into virtual machines running close to your users around the world. We are here for two things: fast apps and great DX.**
 
-<figure>
-  <img src="/public/images/docs-intro.jpg" srcset="/public/images/docs-intro.jpg" alt="Five violet hot-air balloons arrayed before a reddish sunset, with wispy clouds and a small crescent moon.">
-</figure>
+We want to be the best place on the Internet to run full-stack apps, in any language. Whether it's a simple web service or your database-backed opus with multiple supporting services. And whether you're deploying one instance near you, or a whole network of them for a global user base.
 
-We want to be the best place on the Internet to run full-stack apps, in any language. Whether it's a simple web service or your database-backed opus with multiple supporting services. And whether you're deploying one instance near you, or a whole network of them for a global user base. 
+### Global reach
 
-We run servers in 23 regions [around the world](/docs/reference/regions/), and counting.  Reducing latency between your apps and your users is one of our *raisons d'&ecirc;tre*. Since [we can't do anything about the speed of light](/blog/all-in-on-sqlite-litestream/#the-light-is-too-damn-slow), we want you to run your full stack close to your users. We're going big on bringing your apps to hardware in more corners of the world.
+<div style="display: flex;">
+<div style="width: 48%;">We run servers in <a href="/docs/reference/regions/">23 regions around the world</a>, and counting.  Reducing latency between your apps and your users is one of our *raisons d'&ecirc;tre*. Since [we can't do anything about the speed of light](/blog/all-in-on-sqlite-litestream/#the-light-is-too-damn-slow), we want you to run your full stack close to your users. We're going big on bringing your apps to hardware in more corners of the world.</div>
 
-**Here are some things you might want to know about the Fly.io platform:**
+<!-- <figure class="text-center"> -->
+<div style="width: 48%;"><a href="https://fly.io/docs/reference/regions/"><img style="border-radius: 0.75rem; margin: 0 0 0 2em;" src="/docs/images/fly-region-map.png" alt="Map showing the Fly.io balloon in 23 locations across a world map"/></a></div>
+<!-- </figure> -->
+</div>
 
 ### Metal-up infrastructure
 
-We run bare metal servers [around the world](https://fly.io/docs/reference/regions/). We're not limited by the region pool, feature set, or cost overhead of cloud providers like AWS or Google.
+We build our product on bare-metal servers. We're not limited by the region pool, feature set, or cost overhead of cloud providers like AWS or Google.
 
 ### VM isolation
 
