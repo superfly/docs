@@ -11,6 +11,7 @@ flyctl secrets unset [flags] NAME NAME ...
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for unset
+      --stage           Unset secrets but skip deployment (only for Machine apps)
 ~~~
 
 ## Global Options
