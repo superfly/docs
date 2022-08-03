@@ -7,13 +7,17 @@ nav: firecracker
 
 Volumes are persistent storage for Fly apps. They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
 
-Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command.
+A volume on Fly is a slice of an NVMe drive on the physical server your app runs on. One consequence of this: if your app uses persistent storage, every instance of that app can only run on a host that has a volume provisioned for it.
+
+Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command. 
+
+<div class="callout">`fly volumes` is aliased to `fly volume` and `fly vol` for convenience.</div>
 
 ## Creating Volumes
 
 Create a volume for an app using `fly volumes create`. The default volume size is 3GB. See [`fly volumes create`](/docs/flyctl/volumes-create/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
-The following command creates a new volume named "myapp_data" with 40GB of storage in the lhr (London Heathrow) region, for the application whose `fly.toml` file is in the working directory. 
+The following command creates a new volume named "myapp_data" with 40GB of storage in the lhr (London Heathrow) region, for the application whose `fly.toml` file is in the working directory. To specify a different app, use the `-a` or `--app` flag.
 
 ```cmd
 fly volumes create myapp_data --region lhr --size 40
@@ -49,11 +53,11 @@ This would make `myapp_data` appear under the `/data` directory of the applicati
 
 Also, if you have specified a mounts section in `fly.toml` and forgotten to create a volume, your deployment will fail. 
 
-There can be multiple volumes of the same volume name in a region. Each volume has a unique ID to distinguish itself from others to allow for this. This allows multiple instances of an app to run in one region; creating three volumes named `myapp_data` would let up to three instances of the app to start up and run. A fourth instance would find no volume to attach to and the system would look elsewhere to start it up.
+There can be multiple volumes of the same volume name in a region. Each volume has a unique ID to distinguish itself from others to allow for this. This allows multiple instances of an app to run in one region. Creating three volumes named `myapp_data` would let up to three instances of the app start up and run.
 
 ## Listing Volumes
 
-You can get a list of all volumes created for an app using the sub-command `list`. 
+You can [get a list of all volumes created for an app](https://fly.io/docs/flyctl/volumes-list/) using the sub-command `list`. 
 
 ```cmd
 fly volumes list
@@ -79,6 +83,62 @@ fly volumes show Qn1Ln6nBZOz0lHM268OZ
  Encrypted: true
 Created at: 04 Jan 21 10:14 UTC
 ```
+
+## Extending Volumes
+
+[Volumes can be extended](https://fly.io/docs/flyctl/volumes-extend/), but cannot be made smaller. To make a volume larger, find its ID with `fly volumes list`, then use:
+
+```cmd
+fly volumes extend <volume-id> -s <new-size>
+```
+
+where `<new-size>` is the desired size in GB. 
+
+The VM using the target volume will have to be restarted in order to allow the file system to be resized. For "normal" apps, this will happen automatically; [Machines VMs](/docs/reference/machines/) will have to be restarted explicitly.
+
+## Snapshots and Restores
+
+We take daily block-level snapshots of volumes. Snapshots are kept for five days. [Find the snapshots belonging to your target volume](https://fly.io/docs/flyctl/volumes-snapshots-list/) with `fly volumes snapshots list <volume-id>`:
+
+
+```cmd
+fly volumes snapshots list vol_wod56vjyd6pvny30
+```
+```out
+Snapshots
+ID                 	SIZE    	CREATED AT
+vs_MgLAggLZkYx89fLy	17638389	1 hour ago
+vs_1KRgwpDqZ2ll5tx 	17649006	1 day ago
+vs_nymJyYMwXpjxqTzJ	17677766	2 days ago
+vs_R3OPAz5jBqzogF16	17689473	3 days ago
+vs_pZlGZvq3gkAlAcaZ	17655830	4 days ago
+vs_A9k6age3bQov6twj	17631880	5 days ago
+```
+
+Restoring from the snapshot to a new volume is a matter of:
+
+```cmd
+fly volumes create <volume-name> --snapshot-id <snapshot-id> -s <volume-size> [-a <app-name>]
+```
+
+A volume snapshot can be restored into a volume that's the same size as, or larger than, the source volume, but not a smaller one. If you don't specify a size with the `-s` flag, `fly volumes create` will request a 3GB volume. 
+
+```cmd
+fly volumes create pg_data --snapshot-id vs_0Gvz2kBKJ28Mph4y -a cat-pg
+```
+```out
+? Select region: Chennai (Madras), India (maa)
+        ID: vol_mjn924o9l3q403lq
+      Name: pg_data
+       App: cat-pg
+    Region: maa
+      Zone: 180d
+   Size GB: 3
+ Encrypted: true
+Created at: 02 Aug 22 21:27 UTC
+```
+
+The `flyctl` output shows the details of the new volume, including its size.
 
 ## Deleting Volumes
 
