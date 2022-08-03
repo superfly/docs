@@ -7,9 +7,11 @@ nav: firecracker
 
 Volumes are persistent storage for Fly apps. They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place. 
 
-A volume on Fly is a slice of an NVMe drive on the physical server your app runs on. One consequence of this is: if your app uses persistent storage, an instance of that app can only run on a host that has a volume provisioned for it.
+A volume on Fly is a slice of an NVMe drive on the physical server your app runs on. One consequence of this: if your app uses persistent storage, every instance of that app can only run on a host that has a volume provisioned for it.
 
-Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command. (`fly volumes` is aliased to `fly volume` and `fly vol` for convenience.)
+Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command. 
+
+<div class="callout">`fly volumes` is aliased to `fly volume` and `fly vol` for convenience.</div>
 
 ## Creating Volumes
 
@@ -92,11 +94,11 @@ fly volumes extend <volume-id> -s <new-size>
 
 where `<new-size>` is the desired size in GB. 
 
-The VM using the target volume will have to be restarted in order to allow the file system to be resized.
+The VM using the target volume will have to be restarted in order to allow the file system to be resized. For "normal" apps, this will happen automatically; [Machines VMs](/docs/reference/machines/) will have to be restarted explicitly.
 
 ## Snapshots and Restores
 
-We take daily block-level snapshots of volumes. Snapshots are kept for seven days. [Find the snapshots belonging to your target volume](https://fly.io/docs/flyctl/volumes-snapshots-list/) with `fly volumes snapshots list <volume-id>`:
+We take daily block-level snapshots of volumes. Snapshots are kept for five days. [Find the snapshots belonging to your target volume](https://fly.io/docs/flyctl/volumes-snapshots-list/) with `fly volumes snapshots list <volume-id>`:
 
 
 ```cmd
@@ -119,10 +121,10 @@ Restoring from the snapshot to a new volume is a matter of:
 fly volumes create <volume-name> --snapshot-id <snapshot-id> -s <volume-size> [-a <app-name>]
 ```
 
-A volume snapshot can be restored to a volume that's larger than If you don't specify a size with the `-s` flag, `fly volumes create` will request a 3GB volume. If this is larger than the volume from which the snapshot was taken, this will work. If not, you'll get an error message.
+A volume snapshot can be restored into a volume that's the same size as, or larger than, the source volume, but not a smaller one. If you don't specify a size with the `-s` flag, `fly volumes create` will request a 3GB volume. 
 
 ```cmd
-[~]$ fly vol create pg_data --snapshot-id vs_0Gvz2kBKJ28Mph4y -a cat-pg
+fly volumes create pg_data --snapshot-id vs_0Gvz2kBKJ28Mph4y -a cat-pg
 ```
 ```out
 ? Select region: Chennai (Madras), India (maa)
@@ -136,9 +138,7 @@ A volume snapshot can be restored to a volume that's larger than If you don't sp
 Created at: 02 Aug 22 21:27 UTC
 ```
 
-
 The `flyctl` output shows the details of the new volume, including its size.
-
 
 ## Deleting Volumes
 
