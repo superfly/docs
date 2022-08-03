@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-Volumes are persistent storage for Fly apps. They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place. 
+Volumes are persistent storage for Fly apps. They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
 
 A volume on Fly is a slice of an NVMe drive on the physical server your app runs on. One consequence of this: if your app uses persistent storage, every instance of that app can only run on a host that has a volume provisioned for it.
 
@@ -53,7 +53,7 @@ This would make `myapp_data` appear under the `/data` directory of the applicati
 
 Also, if you have specified a mounts section in `fly.toml` and forgotten to create a volume, your deployment will fail. 
 
-There can be multiple volumes of the same volume name in a region. Each volume has a unique ID to distinguish itself from others to allow for this. This allows multiple instances of an app to run in one region. Creating three volumes named `myapp_data` would let up to three instances of the app to start up and run.
+There can be multiple volumes of the same volume name in a region. Each volume has a unique ID to distinguish itself from others to allow for this. This allows multiple instances of an app to run in one region. Creating three volumes named `myapp_data` would let up to three instances of the app start up and run.
 
 ## Listing Volumes
 
