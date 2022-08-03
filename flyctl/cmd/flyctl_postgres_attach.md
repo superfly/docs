@@ -12,6 +12,7 @@ flyctl postgres attach [flags]
   -c, --config string          Path to an app config file or directory containing one (default "./fly.toml")
       --database-name string   database to use, defaults to a new database with the same name as the app
       --database-user string   the database user to create, defaults to creating a user with the same name as the consuming app
+      --force                  Force attach (bypass confirmation)
   -h, --help                   help for attach
       --postgres-app string    the postgres cluster to attach to the app
       --variable-name string   the env variable name that will be added to the app. Defaults to DATABASE_URL
