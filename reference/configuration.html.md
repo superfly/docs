@@ -327,18 +327,11 @@ The `destination` is directory where the `source` volume should be mounted on th
 
 ## The `processes` section
 
-<div class="callout">
-The `processes` feature is in <a href="https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316" style="text-decoration: underline;">preview</a> with known issues including:
+<div class="callout">The `processes` feature is in [preview](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316). Let us know in the <a href="https://community.fly.io" style="text-decoration: underline;">Fly community forum</a> if you run into issues when deploying.
 
-<div class="my-4">
-* Does not work across multiple regions
-* Does not work with autoscaling
-</div>
-
-**It is recommended that you only use the `processes` directive within one region.**
-
-Let us know in the <a href="https://community.fly.io" style="text-decoration: underline;">Fly community forum</a> if you run into issues when deloying.
-</div>
+Known issues:
+* Running multiple processes in this way is not compatible with autoscaling.
+* Unexpected behavior with regions may arise if you use a `[processes]` block and then delete it.</div>
 
 The `processes` section allows you to run multiple processes. This way you can define one application, but run it multiple times.
 
