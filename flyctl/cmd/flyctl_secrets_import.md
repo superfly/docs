@@ -10,8 +10,9 @@ flyctl secrets import [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
+      --detach          Return immediately instead of monitoring deployment progress
   -h, --help            help for import
-      --stage           Import secrets but skip deployment (only for Machine apps)
+      --stage           Set secrets but skip deployment for machine apps
 ~~~
 
 ## Global Options
