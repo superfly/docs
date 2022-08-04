@@ -12,7 +12,7 @@ flyctl secrets set [flags] NAME=VALUE NAME=VALUE ...
   -c, --config string   Path to application configuration file
       --detach          Return immediately instead of monitoring deployment progress
   -h, --help            help for set
-      --stage           Set secrets but skip deployment (only for Machine apps)
+      --stage           Set secrets but skip deployment for machine apps
 ~~~
 
 ## Global Options
