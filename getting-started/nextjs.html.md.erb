@@ -6,7 +6,7 @@ nav: firecracker
 ---
 
 <% app_name = "hello-next" %>
-<%= partial "partials/intro", locals: { runtime: "NextJS", link: "https://NextJS.org" } %>
+<%= partial "/docs/getting-started/partials/quickstart/intro", locals: { runtime: "NextJS", link: "https://NextJS.org" } %>
 
 You can deploy your [NextJS](https://nextjs.org/) app on Fly with minimal effort, our CLI will do the heavy lifting. You can use your existing NextJS app or you can [create one using the tutorial](https://nextjs.org/learn/basics/create-nextjs-app) then come back here to deploy your app.
 
@@ -14,13 +14,13 @@ You can deploy your [NextJS](https://nextjs.org/) app on Fly with minimal effort
 
 If you just want to see how Fly deployment works, follow these steps.
 
-<%= partial "partials/flyctl" %>
+<%= partial "/docs/getting-started/partials/quickstart/flyctl" %>
 
 Now let's launch your NextJS app.
 
-<%= partial "partials/launch", locals: { detected: "NextJS", app_name: app_name } %>
+<%= partial "/docs/getting-started/partials/quickstart/launch", locals: { detected: "NextJS", app_name: app_name } %>
 
-<%= partial "partials/launched" %>
+<%= partial "/docs/getting-started/partials/quickstart/launched" %>
 
 ## _What about build time environment variables?_
 

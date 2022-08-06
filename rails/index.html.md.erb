@@ -5,13 +5,13 @@ order: 1
 redirect_from: /docs/getting-started/rails/
 ---
 
-<%= partial "docs/getting-started/partials/intro", locals: { runtime: "Rails" } %>
+<%= partial "docs/getting-started/partials/quickstart/intro", locals: { runtime: "Rails" } %>
 
 We'll take a look at the short versions first, deploying with a preconfigured example Rails app.
 You can get the code for the example from [the Fly-Examples GitHub repository](https://github.com/fly-apps/hello-rails).
 Just `git clone https://github.com/fly-apps/hello-rails` to get a local copy.
 
-<%= partial "docs/getting-started/partials/install_flyctl_login" %>
+<%= partial "docs/getting-started/partials/quickstart/install_flyctl_login" %>
 
 ## Provision Rails and Postgres Servers
 
@@ -73,7 +73,7 @@ ID        PROCESS VERSION REGION  DESIRED STATUS  HEALTH CHECKS       RESTARTS  
 
 If you elected to provision a Postgres database during setup, its deployed as a seperate Fly app to `hello-rails-db`.
 
-<%= partial "docs/getting-started/partials/launched" %>
+<%= partial "docs/getting-started/partials/quickstart/launched" %>
 
 ## Configuring an existing Rails application
 

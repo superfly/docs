@@ -5,13 +5,13 @@ sitemap: false
 nav: firecracker
 ---
 
-<%= partial "partials/intro", locals: { runtime: "Rails" } %>
+<%= partial "/docs/getting-started/partials/quickstart/intro", locals: { runtime: "Rails" } %>
 
 We'll take a look at the short versions first, deploying with a preconfigured example Rails app.
 You can get the code for the example from [the Fly-Examples GitHub repository](https://github.com/fly-apps/hello-rails).
 Just `git clone https://github.com/fly-apps/hello-rails` to get a local copy.
 
-<%= partial "partials/install_flyctl_login" %>
+<%= partial "/docs/getting-started/partials/quickstart/install_flyctl_login" %>
 
 ## _Launching the app_
 
@@ -53,7 +53,7 @@ ID      	PROCESS	VERSION	REGION	DESIRED	STATUS 	HEALTH CHECKS     	RESTARTS	CREA
 748868bc	app    	0      	lhr   	run    	running	1 total, 1 passing	0       	20s ago
 ```
 
-<%= partial "partials/launched" %>
+<%= partial "/docs/getting-started/partials/quickstart/launched" %>
 
 ## _Configuring an existing Rails application_
 

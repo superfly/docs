@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-<%= partial "partials/intro", locals: { runtime: "Elixir Phoenix", database: true, link: "https://www.phoenixframework.org/" } %>
+<%= partial "/docs/getting-started/partials/quickstart/intro", locals: { runtime: "Elixir Phoenix", database: true, link: "https://www.phoenixframework.org/" } %>
 
 **This guide is for apps generated on Phoenix 1.6.3 or later, where deployment is streamlined significantly.
 If you're on an earlier version and can't upgrade, check out our [previous deployment guide](/docs/getting-started/legacy_elixir).**
@@ -36,7 +36,7 @@ mix phx.new hello_elixir
 
 The output ends with instructions for configuring the database and starting the app manually. The Fly.io launcher is going to take care of this, so we can ignore them.
 
-<%= partial "partials/launch_with_postgres", locals: { detected: "Phoenix", app_name: "hello_elixir" } %>
+<%= partial "/docs/getting-started/partials/quickstart/launch_with_postgres", locals: { detected: "Phoenix", app_name: "hello_elixir" } %>
 
 ### Storing secrets on Fly.io
 

@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-<%= partial "partials/intro", locals: { runtime: "Crystal" } %>
+<%= partial "/docs/getting-started/partials/quickstart/intro", locals: { runtime: "Crystal" } %>
 
 ## _Creating a Lucky App_
 
@@ -73,11 +73,11 @@ Connect to the address displayed in the console.
 
 This should bring you to the "Hello Lucky" page.
 
-<%= partial "partials/install_flyctl_login" %>
+<%= partial "/docs/getting-started/partials/quickstart/install_flyctl_login" %>
 
 ## _Launch the app on Fly_
 
-<%= partial "partials/launch_with_postgres", locals: { detected: "Lucky", app_name: "hello-lucky" } %>
+<%= partial "/docs/getting-started/partials/quickstart/launch_with_postgres", locals: { detected: "Lucky", app_name: "hello-lucky" } %>
 
 ## _Inside `fly.toml`_
 
