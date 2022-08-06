@@ -39,7 +39,7 @@ fly ssh console -C "bin/rails help"
 To access an interactive Rails console, run:
 
 ```cmd
-fly ssh console -c "bin/rails console"
+fly ssh console -C "bin/rails console"
 ```
 ```output
 irb>
