@@ -141,7 +141,7 @@ It will ask if you want a PostgreSQL database. Type _N_ (no) as you are using Pl
 
 Finally you are asked if you want to deploy. Type _N_ (no). Why not deploy now? This sample application expects a `DATABASE_URL` connection string to be available as a secret environment variable. Now that your app is staged on Fly we can set that. So run this command (setting its value as a comma-separated list of _all_ of the connection strings you have from PlanetScale). The sample app expects the **first one** to be the connection string for your **primary database** (the region you created the PlanetScale database in). Any _subsequent_ ones are the connection strings for any read-only regions. The resulting command you need to run will look something like this. Note the comma _between_ the connection strings:
 
-```
+```cmd
 fly secrets set DATABASE_URL='mysql://your-primary-region-one,mysql://optional-for-read-region,mysql://optional-for-another-read-region'
 ```
 
@@ -149,7 +149,7 @@ You should see `Secrets are staged for the first deployment`.
 
 Now you can go ahead and deploy the app:
 
-```
+```cmd
 fly deploy
 ```
 
@@ -206,7 +206,7 @@ So far the app has _only_ used the primary database. Since there is only _one_ v
 
 Now we'll test the read-only regions. Start by permitting the app to run in more regions. You can see which regions the app can run in using:
 
-```
+```cmd
 fly regions list
 ```
 
@@ -220,13 +220,13 @@ Backup Region:
 
 Adjust that to permit more regions. For our test database, we made a primary in `eu-west-1` (Ireland), and two read-only regions in `us-west-2` (US) and `ap-southeast-2` (Australia). Suitably distributed to test the latency. And so we'll adjust the regions our sample Fly app can run in to use roughly matching Fly regions:
 
-```
+```cmd
 fly regions set lhr sea syd
 ```
 
 Now we need to scale the app to put a vm in each of those regions:
 
-```
+```cmd
 fly scale count 3 --max-per-region=1
 ```
 

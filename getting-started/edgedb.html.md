@@ -108,7 +108,7 @@ flyctl status
 
 Now we need to persist the auto-generated TLS certificate to make sure it survives EdgeDB app restarts. (If you’ve provided your own certificate, skip this step).
 
-```
+```cmd
 flyctl ssh console \
   -C "edgedb-show-secrets.sh --format=toml EDGEDB_SERVER_TLS_KEY EDGEDB_SERVER_TLS_CERT" \
   | tr -d '\r' | flyctl secrets import
@@ -122,7 +122,7 @@ Your EdgeDB instance should be available from any other app in the same organiza
 
 To connect to this database from another app, create a secret called `EDGEDB_DSN` containing this value. EdgeDB's client libraries read this environment variable and will connect to your instance automatically.
 
-```
+```cmd
 flyctl secrets set \
   EDGEDB_DSN=edgedb://edgedb:mysecretpassword@myedgedb.internal:8080 \
   --app my-other-app
