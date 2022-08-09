@@ -1,9 +1,9 @@
-list databases
+Restarts each member of the Postgres cluster one by one. Downtime should be minimal.
 
 
 ## Usage
 ~~~
-flyctl postgres db list [flags]
+flyctl postgres restart [flags]
 ~~~
 
 ## Options
@@ -11,7 +11,7 @@ flyctl postgres db list [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for list
+  -h, --help            help for restart
 ~~~
 
 ## Global Options
@@ -24,5 +24,5 @@ flyctl postgres db list [flags]
 
 ## See Also
 
-* [flyctl postgres db](/docs/flyctl/postgres-db/)	 - manage databases in a clutser
+* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage Postgre clusters.
 

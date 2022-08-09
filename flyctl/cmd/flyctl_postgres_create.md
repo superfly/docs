@@ -1,4 +1,5 @@
-Create a postgres cluster
+Create a new PostgreSQL cluster
+
 
 ## Usage
 ~~~
@@ -8,15 +9,18 @@ flyctl postgres create [flags]
 ## Options
 
 ~~~
-  -h, --help                          help for create
-      --initial-cluster-size string   the size of the initial postgres cluster
-      --name string                   the name of the new app
-      --organization string           the organization that will own the app
-      --password string               the superuser password. one will be generated for you if you leave this blank
-      --region string                 the region to launch the new app in
-      --snapshot-id string            Creates the volume with the contents of the snapshot
-      --vm-size string                the size of the VM
-      --volume-size string            the size in GB for volumes
+      --consul-url string          Opt into using an existing consul as the backend store by specifying the target consul url.
+      --detach                     Return immediately instead of monitoring deployment progress
+  -h, --help                       help for create
+      --initial-cluster-size int   Initial cluster size
+      --machines                   Create postgres cluster on fly machines
+  -n, --name string                The name of your Postgres app
+  -o, --org string                 The organization to operate on
+  -p, --password string            The superuser password. The password will be generated for you if you leave this blank
+  -r, --region string              The region to operate on
+      --snapshot-id string         Creates the volume with the contents of the snapshot
+      --vm-size string             the size of the VM
+      --volume-size int            The volume size in GB
 ~~~
 
 ## Global Options
@@ -29,5 +33,5 @@ flyctl postgres create [flags]
 
 ## See Also
 
-* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
+* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage Postgre clusters.
 

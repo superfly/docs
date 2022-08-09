@@ -1,4 +1,5 @@
-manage databases in a cluster
+manage databases in a clutser
+
 
 ## Usage
 ~~~
@@ -6,7 +7,7 @@ flyctl postgres db [command] [flags]
 ~~~
 
 ## Available Commands
-* [list](/docs/flyctl/postgres-db-list/)	 - list databases in a cluster
+* [list](/docs/flyctl/postgres-db-list/)	 - list databases
 
 ## Options
 
@@ -24,5 +25,5 @@ flyctl postgres db [command] [flags]
 
 ## See Also
 
-* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
+* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage Postgre clusters.
 

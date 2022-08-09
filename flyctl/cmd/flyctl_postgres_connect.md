@@ -1,5 +1,6 @@
 Connect to the Postgres console
 
+
 ## Usage
 ~~~
 flyctl postgres connect [flags]
@@ -8,12 +9,12 @@ flyctl postgres connect [flags]
 ## Options
 
 ~~~
-  -a, --app string        App name to operate on
-  -c, --config string     Path to an app config file or directory containing one (default "./fly.toml")
-      --database string   The postgres database to connect to
+  -a, --app string        Application name
+  -c, --config string     Path to application configuration file
+  -d, --database string   The name of the database you would like to connect to (default "postgres")
   -h, --help              help for connect
-      --password string   The postgres user password
-      --user string       The postgres user to connect with
+  -p, --password string   The postgres user password
+  -u, --user string       The postgres user to connect with (default "postgres")
 ~~~
 
 ## Global Options
@@ -26,5 +27,5 @@ flyctl postgres connect [flags]
 
 ## See Also
 
-* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
+* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage Postgre clusters.
 

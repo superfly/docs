@@ -47,7 +47,7 @@ flyctl [command] [flags]
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 * [ping](/docs/flyctl/ping/)	 - Test connectivity with ICMP ping messages
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
-* [postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
+* [postgres](/docs/flyctl/postgres/)	 - Manage Postgre clusters.
 * [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a fly VM
 * [regions](/docs/flyctl/regions/)	 - Manage regions
 * [releases](/docs/flyctl/releases/)	 - List app releases

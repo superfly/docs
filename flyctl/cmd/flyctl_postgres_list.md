@@ -1,4 +1,5 @@
-list postgres clusters
+List postgres clusters
+
 
 ## Usage
 ~~~
@@ -21,5 +22,5 @@ flyctl postgres list [flags]
 
 ## See Also
 
-* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
+* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage Postgre clusters.
 
