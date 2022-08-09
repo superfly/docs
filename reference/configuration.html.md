@@ -120,9 +120,9 @@ This section configures deployment-related settings such as the release command 
   release_command = "bundle exec rails db:migrate"
 ```
 
-This command runs in a temporary VM - using the successfully built release - *before* that release is deployed. This is useful for running database migrations.
+This command runs in a temporary VM - using the successfully built release - *before* that release is deployed. This is useful for running Postgres database migrations.
 
-The temporary VM has full access to the network, environment variables and secrets, but *not* to persistent volumes.
+The temporary VM has full access to the network, environment variables and secrets, but *not* to persistent volumes.  Changes made to the filesystem on the temporary VM will not be retained or deployed.  If you need to modify persistent volumes or configure your application, consider making use of `CMD` or `ENTRYPOINT` in your Dockerfile.
 
 A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
 
