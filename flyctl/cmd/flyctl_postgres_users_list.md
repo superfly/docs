@@ -1,15 +1,16 @@
-list users in a cluster
+List users
+
 
 ## Usage
 ~~~
-flyctl postgres users list <postgres-cluster-name> [flags]
+flyctl postgres users list [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for list
 ~~~
 
@@ -23,5 +24,5 @@ flyctl postgres users list <postgres-cluster-name> [flags]
 
 ## See Also
 
-* [flyctl postgres users](/docs/flyctl/postgres-users/)	 - manage users in a cluster
+* [flyctl postgres users](/docs/flyctl/postgres-users/)	 - Manage users in a postgres cluster
 

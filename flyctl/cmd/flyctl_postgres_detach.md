@@ -1,17 +1,18 @@
 Detach a postgres cluster from an app
 
+
 ## Usage
 ~~~
-flyctl postgres detach [flags]
+flyctl postgres detach [POSTGRES APP] [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -a, --app string            App name to operate on
-  -c, --config string         Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string            Application name
+  -c, --config string         Path to application configuration file
   -h, --help                  help for detach
-      --postgres-app string   the postgres cluster to detach from the app
+      --postgres-app string   Name of the postgres app to detach
 ~~~
 
 ## Global Options
@@ -24,5 +25,5 @@ flyctl postgres detach [flags]
 
 ## See Also
 
-* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage postgres clusters
+* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage Postgre clusters.
 

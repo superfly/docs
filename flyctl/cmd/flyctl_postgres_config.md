@@ -1,18 +1,19 @@
-Manage users in a postgres cluster
+View and manage Postgres configuration.
 
 
 ## Usage
 ~~~
-flyctl postgres users [command] [flags]
+flyctl postgres config [command] [flags]
 ~~~
 
 ## Available Commands
-* [list](/docs/flyctl/postgres-users-list/)	 - List users
+* [update](/docs/flyctl/postgres-config-update/)	 - Update Postgres configuration.
+* [view](/docs/flyctl/postgres-config-view/)	 - View your Postgres configuration
 
 ## Options
 
 ~~~
-  -h, --help   help for users
+  -h, --help   help for config
 ~~~
 
 ## Global Options

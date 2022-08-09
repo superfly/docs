@@ -1,9 +1,9 @@
-list databases
+View your Postgres configuration
 
 
 ## Usage
 ~~~
-flyctl postgres db list [flags]
+flyctl postgres config view [flags]
 ~~~
 
 ## Options
@@ -11,7 +11,7 @@ flyctl postgres db list [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for list
+  -h, --help            help for view
 ~~~
 
 ## Global Options
@@ -24,5 +24,5 @@ flyctl postgres db list [flags]
 
 ## See Also
 
-* [flyctl postgres db](/docs/flyctl/postgres-db/)	 - manage databases in a clutser
+* [flyctl postgres config](/docs/flyctl/postgres-config/)	 - View and manage Postgres configuration.
 
