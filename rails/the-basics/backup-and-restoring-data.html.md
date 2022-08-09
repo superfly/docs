@@ -1,6 +1,6 @@
 ---
 title: Backup and restore data
-layout: rails_docs
+layout: framework_docs
 order: 5
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Environment Configuration
-layout: rails_docs
+layout: framework_docs
 order: 4
 ---
 

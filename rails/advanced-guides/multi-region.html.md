@@ -1,6 +1,6 @@
 ---
 title: Multi-region deployments
-layout: rails_docs
+layout: framework_docs
 ---
 
 Rails applications that are successful often end-up with users from all parts of the world. Learn how to make them fast and responsive for everybody on the planet.

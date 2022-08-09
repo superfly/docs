@@ -1,6 +1,6 @@
 ---
 title: Sidekiq background workers
-layout: rails_docs
+layout: framework_docs
 order: 1
 ---
 

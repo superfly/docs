@@ -1,6 +1,6 @@
 ---
 title: The Basics
-layout: rails_docs
+layout: framework_docs
 order: 2
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Running tasks & consoles
-layout: rails_docs
+layout: framework_docs
 order: 3
 ---
 

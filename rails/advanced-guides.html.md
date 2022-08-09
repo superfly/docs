@@ -1,6 +1,6 @@
 ---
 title: Advanced guides
-layout: rails_docs
+layout: framework_docs
 order: 3
 ---
 
