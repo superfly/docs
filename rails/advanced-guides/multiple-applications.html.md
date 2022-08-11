@@ -3,7 +3,7 @@ title: Multiple Fly Applications
 layout: framework_docs
 ---
 
-This guide discusses how to manage multiple Fly applications within a Rails projects. This is useful Rails projects that need to run other services, like running a pool of Puppeteer servers that your Rails app calls to take screenshots of web pages.
+This guide discusses how to manage multiple Fly applications within a Rails projects. This is useful for Rails projects that need to run other services, like running a pool of Puppeteer servers that your Rails app calls to take screenshots of web pages.
 
 ## What is a Fly application?
 
@@ -32,9 +32,9 @@ From inside the `fly/applications/redis` folder, run:
 fly launch --image flyio/redis:6.2.6 --no-deploy --name my-project-name-redis
 ```
 
-This command will create a `Dockerfile` and `fly.toml` file that can be further configured for your applications needs.
+This command will create a `Dockerfile` and `fly.toml` file that can be further configured for your application's needs.
 
-Next deploy the application:
+Next, deploy the application:
 
 ```cmd
 fly deploy
@@ -42,11 +42,11 @@ fly deploy
 
 ## Accessing from the root application
 
-Fly creates DNS hosts for each or your applications that are not surprising.
+Fly creates DNS hosts for each of your applications that are not surprising.
 
 ## Deploying updates
 
-In the future when its time to deploy updates to your Fly application within a Fly application, run:
+In the future, when it's time to deploy updates to your Fly application within a Fly application, run:
 
 ```cmd
 cd fly/application/redis

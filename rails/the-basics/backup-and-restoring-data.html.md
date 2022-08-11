@@ -4,13 +4,13 @@ layout: framework_docs
 order: 5
 ---
 
-The most important part of running any Rails application is making sure your data is backed up and safe, and if the unspeakable happens, its straight forward to restore data and get back up and running.
+The most important part of running any Rails application is making sure your data is backed up and safe, and if the unspeakable happens, it's straightforward to restore data and get back up and running.
 
 Postgres databases on Fly are treated as reguarly Fly.io apps, which you can [read more about in the docs](/source/docs/reference/postgres). What that means is backing up data is an exercise in taking snapshots of the Postgres app's volumes, then restoring the snapshots to a new database server, verifying the restoration, and connecting the application to the restored database.
 
 ## Get the name of the database app instance
 
-If you setup your Rails application from `fly launch`, the name of your database is `<app-name>-db`. To figure that out for sure run the following from the root of the Rails project:
+If you set up your Rails application from `fly launch`, the name of your database is `<app-name>-db`. To figure that out for sure run the following from the root of the Rails project:
 
 ```cmd
 fly info
@@ -24,7 +24,7 @@ App
   Hostname = my-rails-app.fly.dev
 ```
 
-The `Name` key is the name of your rails app. In this case the database app would be `my-rails-app-db`. Let's see if that instance exists by appending the `-a` flag with the name of the database application:
+The `Name` key is the name of your Rails app. In this case, the database app would be `my-rails-app-db`. Let's see if that instance exists by appending the `-a` flag with the name of the database application:
 
 ```cmd
 fly info -a my-rails-app-db
@@ -65,7 +65,7 @@ vol_okgj5456mqxry2wz  created pg_data 10GB  ord     d6bf  015ff37c    1 week ago
 
 The number of volumes will vary depending on how many database replicas you elected while provisioning the database. One primary database and one replica will yield 2 volumes.
 
-Now let's see how many snapshots exist for a database volume:
+Now, let's see how many snapshots exist for a database volume:
 
 ```cmd
 fly volumes snapshots list vol_18l524ywo6pr7ztz
@@ -88,7 +88,7 @@ To restore a Postgres application from a snapshot, simply specify the `--snapsho
 ```cmd
 fly postgres create --snapshot-id <snapshot-id>
 ```
-```
+```output
 ? App Name: my-rails-app-db-restored
 Automatically selected personal organization: Brad Gessler
 ? Select region:  [Use arrows to move, type to filter]
@@ -109,7 +109,7 @@ This provisions and launches a new Fly database server with the snapshot you spe
 
 ## Connect the Restored Database
 
-Detatch the Rails application from the current Postgres cluster:
+Detach the Rails application from the current Postgres cluster:
 
 ```cmd
 fly postgres detach --postgres-app my-rails-app-db

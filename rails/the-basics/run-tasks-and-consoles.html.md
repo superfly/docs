@@ -4,11 +4,11 @@ layout: framework_docs
 order: 3
 ---
 
-Running one-off tasks on fly can be accomplished via `fly console`.
+Running one-off tasks on Fly can be accomplished via `fly console`.
 
 ## Rake tasks
 
-To execute rake on fly, run:
+To execute `rake` on Fly, run:
 
 ```cmd
 fly ssh console -C "bin/rake db:migrate"
@@ -22,7 +22,7 @@ fly ssh console -C "bin/rake -T"
 
 ## Rails tasks
 
-Similarly, to run the rails command on fly:
+Similarly, to run the `rails` command on Fly:
 
 ```cmd
 fly ssh console -C "bin/rails db:migrate"
