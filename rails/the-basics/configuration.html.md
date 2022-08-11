@@ -17,7 +17,7 @@ Environment variables that have sensitive data in them, like a `DATABASE_URL` th
 To set a secret in Fly, run:
 
 ```cmd
-fly secret set SUPER_SECRET_KEY=password1234
+fly secrets set SUPER_SECRET_KEY=password1234
 ```
 
 ### Non-sensitive variables
@@ -47,8 +47,8 @@ Another approach to managing credentials in Rails is to use an encrypted credent
 bin/rails credentials:help
 ```
 
-When deployed to production, the `RAILS_MASTER_KEY` that will decrypt the secrets can be set by running:
+When deploying to production, the `RAILS_MASTER_KEY` that will decrypt the credentials file can be set via `fly secrets set`. For example, if your master key is stored in `config/master.key`, you can run:
 
 ```cmd
-fly secret set RAILS_MASTER_KEY=only-a-fool-would-use-1234-for-their-rails-master-key
+fly secrets set RAILS_MASTER_KEY=$(cat config/master.key)
 ```
