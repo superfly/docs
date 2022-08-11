@@ -4,7 +4,7 @@ layout: framework_docs
 order: 4
 ---
 
-Rails applications usually configured via the encrypted `credentials.yml` file or via environmental variables.
+Rails applications are usually configured via the encrypted `credentials.yml` file or via environmental variables.
 
 ## Environmental variables
 
@@ -37,7 +37,7 @@ To view the environment variables of your Fly Rails app, run:
 fly ssh console -C "printenv"
 ```
 
-There you'll see all of the enviornment variables in your application that are set by `fly secrets`, the `[env]` directive in the `fly.toml` file, and the `environment` directive from your Dockerfile.
+There you'll see all of the environment variables in your application that have been set by `fly secrets`, the `[env]` directive in the `fly.toml` file, and the `environment` directive from your Dockerfile.
 
 ## `credentials.yml` file
 
