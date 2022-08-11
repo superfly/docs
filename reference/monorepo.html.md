@@ -15,15 +15,15 @@ The first argument to `flyctl deploy` is the path to the working directory for y
 
 You can override this by providing a path:
 
-```
-$ flyctl deploy ./path/to/app
+```cmd
+flyctl deploy ./path/to/app
 ```
 
 ### `fly.toml` path   
 
 By default, `flyctl deploy` will look for a `fly.toml` in the working directory. You can override this using the `--config` flag. 
 
-```
+```cmd
 flyctl deploy --config ./path/to/fly.toml
 ```
 
@@ -31,7 +31,7 @@ flyctl deploy --config ./path/to/fly.toml
 
 By default, `flyctl deploy` will look for a `Dockerfile` in the working directory. You can override this using the `--dockerfile` flag. 
 
-```
+```cmd
 flyctl deploy --dockerfile ./path/to/Dockerfile
 ```
 
@@ -63,12 +63,12 @@ flyctl deploy --dockerfile ./Dockerfile.staging
 
 **Deploy a subdirectory**
 
-```
+```cmd
 flyctl deploy ./apps/api
 ```
 
 **Share a multi-stage Dockerfile with several fly apps**
 
-```
+```cmd
 flyctl deploy --config fly.api.toml --build-target api
 ```

@@ -37,15 +37,15 @@ Querying works like any Prometheus server. The only gotcha is you'll need to aut
 
 **Find your Organization slug**
 
-```
+```cmd
 flyctl orgs list
 ```
 
- will show you all your organization memberships with their names and slugs.
+will show you all your organization memberships with their names and slugs.
 
 **Get an access token**
 
-```
+```cmd
 flyctl auth token
 ```
 
@@ -258,4 +258,3 @@ All series pulled into our Prometheus cluster will include the following labels:
 - `instance`: your app instance ID
 
 If your app exposes metric labels with the same names, they will be overwritten.
-

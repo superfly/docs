@@ -22,7 +22,7 @@ This guide is all about PostgreSQL, but the deployment topology will work with M
 
 If you don't already have a PostgreSQL cluster running, you can create one with the `fly` CLI:
 
-```
+```cmd
 fly pg create --name chaos-postgres --region scl
 ```
 
@@ -43,7 +43,7 @@ If you already have a Postgres cluster called `chaos-postgres` running, you can 
 
 Then, add one new VM for each new volume:
 
-```
+```cmd
 fly scale count 6 -a chaos-postgres
 ```
 
@@ -64,7 +64,7 @@ d8e8a317       app     2       syd    run     running (replica)       3 total, 3
 ### Attach database to application
 To hook your app up to your cluster, run the `attach` command from your application directory:
 
-```
+```cmd
 fly pg attach --postgres-app chaos-postgres
 ```
 
@@ -132,7 +132,7 @@ You can allocate an IPv4 address by running the following:
 fly ips allocate-v4
 ```
 If your network supports IPv6:
-```
+```cmd
 fly ips allocate-v6
 ```
 
