@@ -11,7 +11,7 @@ Running one-off tasks on fly can be accomplished via `fly console`.
 To execute rake on fly, run:
 
 ```cmd
-fly ssh console -C "bin/rake db:migrate"
+fly ssh console -C "bin/rake my_rake_task"
 ```
 
 To list all the available tasks, run:
