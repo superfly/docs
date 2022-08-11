@@ -39,9 +39,9 @@ fly ssh console -C "printenv"
 
 There you'll see all of the enviornment variables in your application that are set by `fly secrets`, the `[env]` directive in the `fly.toml` file, and the `environment` directive from your Dockerfile.
 
-## `credentials.yml` file
+## Encrypted credentials file
 
-Another approach to managing credentials in Rails is to use the encrypted `credentials.yml` and encrypted `credentials.yml.enc`, which you can learn more about by running the following from the root of your Rails application:
+Another approach to managing credentials in Rails is to use an encrypted credentials file, such as `config/credentials.yml.enc` or `config/credentials/production.yml.enc`, which you can learn more about by running the following from the root of your Rails application:
 
 ```cmd
 bin/rails credentials:help
