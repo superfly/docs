@@ -4,7 +4,7 @@ layout: framework_docs
 order: 1
 ---
 
-Rails applications commonly defer complex tasks that take a long to complete to a background worker to make web responses seem fast. This guide shows how to use [Sidekiq](https://github.com/mperham/sidekiq), a popular open-source Rails background job framework, to setup background workers, but it could be done with other great libraries like [Good Job](https://github.com/bensheldon/good_job), [Resque](https://github.com/resque/resque), [etc](https://www.ruby-toolbox.com/categories/Background_Jobs).
+Rails applications commonly defer complex tasks that take a long to complete to a background worker to make web responses seem fast. This guide shows how to use [Sidekiq](https://github.com/mperham/sidekiq), a popular open-source Rails background job framework, to set up background workers, but it could be done with other great libraries like [Good Job](https://github.com/bensheldon/good_job), [Resque](https://github.com/resque/resque), [etc](https://www.ruby-toolbox.com/categories/Background_Jobs).
 
 ## Provision a Redis server
 
@@ -39,7 +39,7 @@ web = "bundle exec puma -C config/puma.rb"
 worker = "bundle exec sidekiq"
 ```
 
-Then under the `[[services]]` directive, find the entry that maps to `internal_port = 8080` and add `processes = ["web"]`. The configuration file should look something like this:
+Then under the `[[services]]` directive, find the entry that maps to `internal_port = 8080`, and add `processes = ["web"]`. The configuration file should look something like this:
 
 ```toml
 [[services]]
@@ -93,4 +93,4 @@ d681c33d  worker  41      ord     run     running                     0         
 d8d8dc08  worker  41      ord     run     running                     0         2022-07-26T15:42:30Z
 ```
 
-In this case we can see that 3 worker processes and 3 web processes are running in the `ord` region.
+In this case, we can see that 3 worker processes and 3 web processes are running in the `ord` region.

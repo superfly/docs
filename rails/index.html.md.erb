@@ -7,7 +7,7 @@ redirect_from: /docs/getting-started/rails/
 
 <%= partial "docs/getting-started/partials/intro", locals: { runtime: "Rails" } %>
 
-We'll take a look at the short versions first, deploying with a preconfigured example Rails app.
+We'll take a look at the short versions first: deploying with a preconfigured example Rails app.
 You can get the code for the example from [the Fly-Examples GitHub repository](https://github.com/fly-apps/hello-rails).
 Just `git clone https://github.com/fly-apps/hello-rails` to get a local copy.
 
@@ -71,13 +71,13 @@ ID        PROCESS VERSION REGION  DESIRED STATUS  HEALTH CHECKS       RESTARTS  
 748868bc  app     0       lhr     run     running 1 total, 1 passing  0         20s ago
 ```
 
-If you elected to provision a Postgres database during setup, its deployed as a seperate Fly app to `hello-rails-db`.
+If you elected to provision a Postgres database during setup, it's deployed as a seperate Fly app to `hello-rails-db`.
 
 <%= partial "docs/getting-started/partials/launched" %>
 
 ## Configuring an existing Rails application
 
-If you've got an existing Rails app and you want to set it up for Fly, the process is pretty similar;
+If you've got an existing Rails app, and you want to set it up for Fly, the process is pretty similar;
 `fly launch` will take you through the setup steps, but there's a couple of things to look at first.
 
 If you're using Postgres, your database settings will be passed to your app via a `DATABASE_URL` environment
