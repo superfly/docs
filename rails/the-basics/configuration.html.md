@@ -22,11 +22,11 @@ fly secrets set SUPER_SECRET_KEY=password1234
 
 ### Non-sensitive variables
 
-Variables that don't have sensitive data, like credentials, can be set in the `fly.toml` file under the `[env]` directive. An example file might look like:
+Variables that don't have sensitive data can be set in the `fly.toml` file under the `[env]` directive. An example file might look like:
 
 ```toml
 [env]
-  LOCALE=en
+  RAILS_LOG_TO_STDOUT = x
 ```
 
 ### View the variables
