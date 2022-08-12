@@ -11,13 +11,13 @@ Running one-off tasks on Fly can be accomplished via `fly console`.
 To execute `rake` on Fly, run:
 
 ```cmd
-fly ssh console -C "bin/rake my_rake_task"
+fly ssh console -C "app/bin/rake my_rake_task"
 ```
 
 To list all the available tasks, run:
 
 ```cmd
-fly ssh console -C "bin/rake -T"
+fly ssh console -C "app/bin/rake -T"
 ```
 
 ## Rails tasks
@@ -25,13 +25,13 @@ fly ssh console -C "bin/rake -T"
 Similarly, to run the `rails` command on Fly:
 
 ```cmd
-fly ssh console -C "bin/rails db:migrate"
+fly ssh console -C "app/bin/rails db:migrate"
 ```
 
 To list all the available tasks, run:
 
 ```cmd
-fly ssh console -C "bin/rails help"
+fly ssh console -C "app/bin/rails help"
 ```
 
 ## Rails console
@@ -39,7 +39,7 @@ fly ssh console -C "bin/rails help"
 To access an interactive Rails console, run:
 
 ```cmd
-fly ssh console -C "bin/rails console"
+fly ssh console -C "app/bin/rails console"
 ```
 ```output
 irb>
