@@ -1,6 +1,7 @@
 ---
 title: Environment Configuration
 layout: framework_docs
+objective: Add environment variables to your Rails applications, configure secrets, and use the encrypted `credentials.yml` file to manage your application's configuratio on Fly.
 order: 4
 ---
 

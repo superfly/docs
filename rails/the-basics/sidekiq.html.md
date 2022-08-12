@@ -1,6 +1,7 @@
 ---
-title: Sidekiq background workers
+title: Sidekiq Background Workers
 layout: framework_docs
+objective: Deploy Rails applications that run in multiple processes to one Fly application, like Sidekiq background jobs.
 order: 1
 ---
 

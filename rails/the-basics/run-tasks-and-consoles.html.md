@@ -1,6 +1,7 @@
 ---
-title: Running tasks & consoles
+title: Running Tasks & Consoles
 layout: framework_docs
+objective: Access the Rails console, run rake tasks, and access the SSH shell of a running Rails application with these one-liners.
 order: 3
 ---
 

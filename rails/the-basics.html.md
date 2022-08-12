@@ -1,7 +1,8 @@
 ---
 title: The Basics
-layout: framework_docs
+layout: framework_docs_overview
+toc: false
 order: 2
 ---
 
-Most Rails applications are running on more than just a database. As an application gets more complex, long-running requests are broken apart and delegated to Active Job background workers, and image uploads are handled by Active Storage. More infrastructure gets rolled out.
+Most Rails applications require additional setup beyond provisioning a Postgres and Redis database. These guides will help you get through the basics of setting up your Rails application with pieces of infrastructure commonly found in medium-to-high complexity Rails applications.

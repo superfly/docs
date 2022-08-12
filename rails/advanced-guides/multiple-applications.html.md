@@ -1,6 +1,7 @@
 ---
 title: Multiple Fly Applications
 layout: framework_docs
+objective: At some point a Rails application will need to run additional services, like a Puppeteer server that takes screenshots of a webpage for your Rails application. Learn how to manage multiple applications from one Rails project to keep your monolith a monolith.
 ---
 
 This guide discusses how to manage multiple Fly applications within a Rails projects. This is useful for Rails projects that need to run other services, like running a pool of Puppeteer servers that your Rails app calls to take screenshots of web pages.
