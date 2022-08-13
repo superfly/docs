@@ -7,7 +7,7 @@ order: 5
 
 The most important part of running any Rails application is making sure your data is backed up and safe, and if the unspeakable happens, it's straightforward to restore data and get back up and running.
 
-Postgres databases on Fly are treated as reguarly Fly.io apps, which you can [read more about in the docs](/source/docs/reference/postgres). What that means is backing up data is an exercise in taking snapshots of the Postgres app's volumes, then restoring the snapshots to a new database server, verifying the restoration, and connecting the application to the restored database.
+Postgres databases on Fly are treated as Fly.io apps, which you can [read more about in the docs](/source/docs/reference/postgres). What that means is backing up data is an exercise in taking snapshots of the Postgres app's volumes, then restoring the snapshots to a new database server, verifying the restoration, and connecting the application to the restored database.
 
 ## Get the name of the database app instance
 
