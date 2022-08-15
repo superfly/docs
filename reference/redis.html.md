@@ -98,11 +98,12 @@ Note that items marked with an explicit TTL will expire accurately, regardless o
 
 This pricing is subject to change until Redis Upstash is officially released.
 
-|&nbsp;| Free | 200MB | 500MB |
+|&nbsp;| Free | 200MB | 3GB |
 |------|------|-------|-------|
-|Max Data size|100MB|200MB|500MB|
-|Max Connections|100|300|500|
-|Max Command/sec|300|300|500|
+|Max Data size|100MB|200MB|3GB|
+|Max Concurrent Connections|100|300|1000|
+|Max Commands/sec|300|300|1000|
 |Max Daily Commands|10000|Unlimited|Unlimited|
-|Max Daily Bandwidth|10GB|10GB|30GB|
-|Price per month, per region|$0|$10|$20|
+|Max Daily Bandwidth|10GB|10GB|50GB|
+|Max Request Size|1MB|1MB|10MB|
+|Price per month, per region|$0|$10|$90|
