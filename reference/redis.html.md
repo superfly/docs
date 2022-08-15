@@ -8,10 +8,13 @@ status: alpha
 
 [Upstash Redis](https://docs.upstash.com/redis) is a fully-managed, Redis-compatible database service. Upstash databases support global read replicas for reduced latency in distant regions. Upstash databases are provisioned inside your Fly organization, ensuring private, low-latency connections to your Fly applications.
 
+See the [What you Should Know](#what-you-should-know) section for more details about this service.
+
 **Upstash Redis is in public beta. Pricing will probably change.**
 ## Create and manage an Upstash Redis database
 
-Creating and managing databases happens exclusively via `flyctl` for now.
+Creating and managing databases happens exclusively via the [Fly CLI](/getting-started/installing-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/).
+
 ### Create and get status of an Upstash Redis database
 
 ```cmd
@@ -46,7 +49,7 @@ Redis
   Plan           = Free
   Primary Region = mad
   Read Regions   = ams
-  Public URL     = redis://password@fly-magical-javelin-30042.upstash.io
+  Private URL     = redis://password@fly-magical-javelin-30042.upstash.io
 ```
 ### Update an Upstash Redis database
 
@@ -69,13 +72,13 @@ fly redis delete aaV829vaMVQDbi5
 Your Redis cluster aaV829vaMVQDbi5 was deleted
 ```
 
-## Things you should know
+## What you should know
 
-Once provisioned, the primary region cannot be changed.
+Once provisioned, the database primary region cannot be changed.
 
 Upstash Redis is available in all Fly regions via a [private IPv6 address](/reference/private-networking#flycast) restricted to your Fly organization. Traffic is automatically routed to the nearest replica, or to the primary instance. If you plan to deploy in a single region, ensure that your database is deployed in the same region as your application.
 
-**Replicas do not accept writes**. Instead, writes are forwarded by Upstash Redis to the primary region. While write forwarding makes scaling to multile regions easier, writes across long geographical distances are synchronous and experience latency. Plan for this latency in your application design.
+**Replicas forward writes to the primary**. Replicas can't be used for fast, region-local writes. Writes are synchronous, and synchronous writes over geographical distance experience latency. Plan for this latency in your application design.
 
 By default, hitting the max memory limit will prevent writes. If you enable **eviction**, Upstash Redis will evict keys in two ways. First, it looks for keys marked with a TTL and evict them at random. In the absence of volatile keys, keys will be chosen randomly for eviction. This is roughly the combination of the `volatile-random` and `allkeys-random` [eviction policies available in standard Redis](https://redis.io/docs/manual/eviction/).
 
