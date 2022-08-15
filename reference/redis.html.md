@@ -76,11 +76,23 @@ Your Redis cluster aaV829vaMVQDbi5 was deleted
 
 Once provisioned, the database primary region cannot be changed.
 
+### Traffic routing
+
 Upstash Redis is available in all Fly regions via a [private IPv6 address](/reference/private-networking#flycast) restricted to your Fly organization. Traffic is automatically routed to the nearest replica, or to the primary instance. If you plan to deploy in a single region, ensure that your database is deployed in the same region as your application.
 
-**Replicas forward writes to the primary**. Replicas can't be used for fast, region-local writes. Writes are synchronous, and synchronous writes over geographical distance experience latency. Plan for this latency in your application design.
+### Writing to replica regions
 
-By default, hitting the max memory limit will prevent writes. If you enable **eviction**, Upstash Redis will evict keys in two ways. First, it looks for keys marked with a TTL and evict them at random. In the absence of volatile keys, keys will be chosen randomly for eviction. This is roughly the combination of the `volatile-random` and `allkeys-random` [eviction policies available in standard Redis](https://redis.io/docs/manual/eviction/).
+**Replicas forward writes to the primary**. Replicas can't be used for region-local writes. Writes are synchronous, and synchronous writes over geographical distance experience latency. Plan for this latency in your application design.
+
+If you're using Redis as a fast, region-local cache, setup separate databases per-region and enable object eviction.
+
+### Memory limits and object eviction policies
+
+By default, Upstash Redis will disallow writes when the memory limit has been reached. If you enable **eviction** during creation on on update, Upstash Redis will evict keys to free up space.
+
+First, keys marked with a TTL will be evicted at random. In the absence of volatile keys, keys will be chosen randomly for eviction. This is roughly the combination of the `volatile-random` and `allkeys-random` [eviction policies available in standard Redis](https://redis.io/docs/manual/eviction/).
+
+Note that items marked with an explicit TTL will expire accurately, regardless of whether eviction is enabled.
 
 ## Pricing
 
