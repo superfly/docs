@@ -64,17 +64,17 @@ fdaa:0:18:a7b:7d:f066:b83b:2
 
 ## Fly `.internal` addresses
 
-A typical .internal address is composed of a region qualifier, followed by the app name followed by `.internal`. 
+A typical .internal address is composed of a region qualifier, followed by the app name followed by `.internal`.
 
-The simplest regional qualifier is a region name. `iad.appname.internal`. This would return the IPv6 internal address (or addresses) of the instances of app `appname` in the `iad` region. 
+The simplest regional qualifier is a region name. `iad.appname.internal`. This would return the IPv6 internal address (or addresses) of the instances of app `appname` in the `iad` region.
 
 Applications can use this form of `.internal` address to look up address of a host. Rather than returning a list of addresses, it will return the first address.
 
-The regional qualifier `global` will return the IPv6 internal addresses for all instances of the app in every region. 
+The regional qualifier `global` will return the IPv6 internal addresses for all instances of the app in every region.
 
 As well, as being able to query and lookup addresses, there's a TXT record associated with `regions.appname.internal` which will list the regions that `appname` is deployed in.
 
-Finally, You can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will contain a comma-separated list of the application names. 
+Finally, You can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will contain a comma-separated list of the application names.
 
 | name | aaaa | txt |
 | -- | --- | -- |
@@ -90,12 +90,29 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
+## Private Load Balancing (aka Flycast)
+
+Fly apps may accept traffic on a special "Flycast" private IPv6 address. This traffic is routed through the Fly proxy - like [public traffic](/reference/services/#anycast) - arriving in the geographically closest region with active VMs. Traffic is also load-balanced across live app VMs.
+
+This feature might be useful in case your code can't use DNS, or you're using 3rd party software like a database that doesn't support round-robin DNS entries.
+
+To assign a Flycast IP to your app:
+
+```cmd
+ fly ips allocate-v6 --private
+ ```
+ ```output
+VERSION	IP                	TYPE   	REGION	CREATED AT
+v6     	fdaa:0:22b7:0:1::3	private	global	just now
+```
+
+This IP should now be visible to all apps deployed in the app's organization.
 ## Private Network VPN
 
 You can use the [WireGuard](https://wireguard.com/) VPN to connect to our [6PN private network](/docs/reference/private-networking/). This is a flexible and secure way to plug into each one of your Fly organizations and connect to any and all apps within that organization.
 
 
-### TL:DR; 
+### TL:DR;
 
 Fly's command line  can generate you a tunnel configuration file with private keys already embedded. You can load that file into your local WireGuard application to create a tunnel. Activate the tunnel and you'll be using the internal Fly DNS service which resolves `.internal` addresses - and passes on other requests to Google's DNS for resolution.
 
@@ -188,7 +205,7 @@ sudo cp basic.conf /etc/wireguard
 Run `wg-quick` to bring `up` the connection by name (i.e. less the `.conf` extension):
 
 ```cmd
-wg-quick up basic 
+wg-quick up basic
 ```
 ```output
 [#] ip link add basic type wireguard
@@ -218,7 +235,7 @@ To list all the tunnels set up for an organization, run `fly wireguard list`. Yo
 
 #### Removing a tunnel
 
-To remove a tunnel, run `fly wireguard remove`. You can specify the organization and tunnel name on the command line or be prompted for both. 
+To remove a tunnel, run `fly wireguard remove`. You can specify the organization and tunnel name on the command line or be prompted for both.
 
 
 
