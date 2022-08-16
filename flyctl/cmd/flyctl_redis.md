@@ -6,6 +6,7 @@ flyctl redis [command] [flags]
 ~~~
 
 ## Available Commands
+* [connect](/docs/flyctl/redis-connect/)	 - Connect to a Redis database using redis-cli
 * [create](/docs/flyctl/redis-create/)	 - Create a new Redis database
 * [delete](/docs/flyctl/redis-delete/)	 - Delete a Redis database
 * [list](/docs/flyctl/redis-list/)	 - List Redis databases for an organization
