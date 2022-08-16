@@ -39,7 +39,7 @@ Queries can be sent to the following endpoint:
 https://api.fly.io/prometheus/<org-slug>/
 ```
 
-You'll need to authenticat with a Fly Access Token sent in the [standard](https://www.rfc-editor.org/rfc/rfc6750.html) Bearer Token format (e.g., an HTTP request header `Authorization: Bearer <TOKEN>`), and you may only query series scoped to your organizations.
+You'll need to authenticate with a Fly Access Token sent in the [standard](https://www.rfc-editor.org/rfc/rfc6750.html) Bearer Token format (e.g., an HTTP request header `Authorization: Bearer <TOKEN>`), and you may only query series scoped to your organizations.
 
 #### Manually
 
