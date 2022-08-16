@@ -36,7 +36,7 @@ Add the following to the `fly.toml`:
 
 ```toml
 [processes]
-web = "bundle exec puma -C config/puma.rb"
+web = "bundle exec puma"
 worker = "bundle exec sidekiq"
 ```
 
