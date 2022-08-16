@@ -75,7 +75,7 @@ of your Fly apps using the built-in metrics stored in Prometheus.
 ### Managed Grafana [Preview]
 
 [Grafana](https://grafana.com/) is a popular open source data visualization web application, that allows you to
-compose queries against data sources into dynamic,reusable dashboards.
+compose queries against data sources into dynamic, reusable dashboards.
 
 We provide a managed Grafana instance at [fly-metrics.net](https://fly-metrics.net), preconfigured with your
 Prometheus data source and detailed dashboards covering the full set of built-in metrics.
