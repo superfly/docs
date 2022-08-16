@@ -3,6 +3,12 @@ title: Run a Rails App
 layout: framework_docs
 order: 1
 redirect_from: /docs/getting-started/rails/
+related_pages:
+  - /docs/rails/the-basics
+  - /docs/rails/the-basics/sidekiq
+  - /docs/rails/the-basics/configuration
+  - /docs/reference/redis
+  - /docs/reference/postgres
 ---
 
 <%= partial "docs/getting-started/partials/intro", locals: { runtime: "Rails" } %>
@@ -96,7 +102,4 @@ fly secrets set RAILS_MASTER_KEY=$(cat config/master.key)
 
 ## Next steps
 
-At this point you now have a basic Rails application running that points at a Postgres database, but most Rails applications need more then that like access to a Redis database for caching and background workers.
-
-* [Sidekiq background workers](/docs/rails/the-basics/sidekiq)
-* [Install Redis](/docs/reference/redis)
+At this point you now have a basic Rails application running that points at a Postgres database, but most Rails applications need more then that like access to a Redis database for caching and background workers. Read through [the basics](/docs/rails/the-basics) to setup the remainder of your Rails application.
