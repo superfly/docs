@@ -1,4 +1,4 @@
-Update an Upstash Redis cluster
+Update an Upstash Redis database
 
 ## Usage
 ~~~
@@ -23,5 +23,5 @@ flyctl redis update <id> [flags]
 
 ## See Also
 
-* [flyctl redis](/docs/flyctl/redis/)	 - Launch and manage Redis clusters managed by Upstash.com
+* [flyctl redis](/docs/flyctl/redis/)	 - Launch and manage Redis databases managed by Upstash.com
 

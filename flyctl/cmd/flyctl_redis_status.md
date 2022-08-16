@@ -22,5 +22,5 @@ flyctl redis status <id> [flags]
 
 ## See Also
 
-* [flyctl redis](/docs/flyctl/redis/)	 - Launch and manage Redis clusters managed by Upstash.com
+* [flyctl redis](/docs/flyctl/redis/)	 - Launch and manage Redis databases managed by Upstash.com
 
