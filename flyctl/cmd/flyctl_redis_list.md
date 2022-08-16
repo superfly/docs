@@ -1,4 +1,4 @@
-List Redis clusters for an organization
+List Redis databases for an organization
 
 ## Usage
 ~~~
@@ -22,5 +22,5 @@ flyctl redis list [flags]
 
 ## See Also
 
-* [flyctl redis](/docs/flyctl/redis/)	 - Launch and manage Redis clusters managed by Upstash.com
+* [flyctl redis](/docs/flyctl/redis/)	 - Launch and manage Redis databases managed by Upstash.com
 

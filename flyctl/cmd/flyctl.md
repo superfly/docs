@@ -49,7 +49,7 @@ flyctl [command] [flags]
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
 * [postgres](/docs/flyctl/postgres/)	 - Manage Postgre clusters.
 * [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a fly VM
-* [redis](/docs/flyctl/redis/)	 - Launch and manage Redis clusters managed by Upstash.com
+* [redis](/docs/flyctl/redis/)	 - Launch and manage Redis databases managed by Upstash.com
 * [regions](/docs/flyctl/regions/)	 - Manage regions
 * [releases](/docs/flyctl/releases/)	 - List app releases
 * [restart](/docs/flyctl/restart/)	 - Restart an application
