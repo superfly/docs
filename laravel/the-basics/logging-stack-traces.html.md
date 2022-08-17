@@ -5,7 +5,7 @@ objective: Adjust Laravel's logging configuration to get a full stack trace.
 order: 3
 ---
 
-By default, we set the Logging output to use a `JsonFormatter`. This makes the log output a bit cleaner, but has the trade-off of not showing you a full stack trace.
+By default, we set the Logging output to use a `JsonFormatter`. This makes the log output a bit cleaner, but has the trade-off of not showing you a full stack trace. You just get the exception messages.
 
 If you need to get the full stack trace, update your `config/logging.php` file and adjust the `stderr` channel to include a `formatter_with` configuration:
 
@@ -24,4 +24,4 @@ If you need to get the full stack trace, update your `config/logging.php` file a
 ],
 ```
 
-This will show you the full stack trace of logged errors.
+This will show you the full stack trace of logged errors when you next deploy.
