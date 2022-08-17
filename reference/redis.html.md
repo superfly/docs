@@ -10,7 +10,7 @@ status: alpha
 
 See the [What you Should Know](#what-you-should-know) section for more details about this service.
 
-**Upstash Redis is in public beta. Pricing will probably change.**
+**Upstash Redis on Fly is in public beta. Pricing will probably change.**
 ## Create and manage an Upstash Redis database
 
 Creating and managing databases happens exclusively via the [Fly CLI](/getting-started/installing-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/).
@@ -51,6 +51,21 @@ Redis
   Read Regions   = ams
   Private URL     = redis://password@fly-magical-javelin-30042.upstash.io
 ```
+
+### Connect to an Upstash Redis database
+```cmd
+fly redis connect
+? Select a database to connect to empty-water-3291 (sjc) 200M
+Proxying local port 16379 to remote [fdaa:0:6d6b:0:1::3]:6379
+127.0.0.1:16379> set foo bar
+OK
+127.0.0.1:16379> get foo
+"bar"
+127.0.0.1:16379>
+```
+
+By connecting a database, you can run Redis commands on redis-cli.
+
 ### Update an Upstash Redis database
 
 Upstash Redis instances can't change their primary region or name, but the following may change:
@@ -88,7 +103,7 @@ If you're using Redis as a fast, region-local cache, setup separate databases pe
 
 ### Memory limits and object eviction policies
 
-By default, Upstash Redis will disallow writes when the memory limit has been reached. If you enable **eviction** during creation on on update, Upstash Redis will evict keys to free up space.
+By default, Upstash Redis will disallow writes when the max data size limit has been reached. If you enable **eviction** during creation on update, Upstash Redis will evict keys to free up space.
 
 First, keys marked with a TTL will be evicted at random. In the absence of volatile keys, keys will be chosen randomly for eviction. This is roughly the combination of the `volatile-random` and `allkeys-random` [eviction policies available in standard Redis](https://redis.io/docs/manual/eviction/).
 
