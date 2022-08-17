@@ -31,22 +31,15 @@ You should be able to visit `http://localhost:8000` and see the home page.
 
 ### Launch
 
-Next, we'll run `fly launch` to automagically configure your app for Fly.
+Next, we'll use the `launch` command to automagically configure your app for Fly.
 
 The `launch` command adds a few files to your code base. Don't worry, it will ask before overwriting anything.
 
-**Here is what gets added:**
-
-1. `Dockerfile` - Used to build a container image that is run in fly
-2. `.dockerignore` - Used to ensure certain files don't make its way into your repository
-3. `fly.toml` - Configuration specific to hosting on Fly
-4. `docker` - A directory containing configuration files for running Nginx/PHP in a container
-
-Running `fly launch` (and later `fly deploy`) uses the `Dockerfile` to build a container image, copying your application files into the resulting image.
-
-Fly doesn't care about the state of your git repository - it copies whatever files are present (except for files ignored by `.dockerignore`).
-
 **If you haven't already, go ahead and run `fly launch`!**
+
+```cmd
+fly launch
+```
 
 When asked if you want to deploy now, say **No**.
 
@@ -78,3 +71,18 @@ Finally, run `fly deploy` to build and deploy your application!
 You should be able to visit `https://your-app-name.fly.dev` and see the Laravel demo home page.
 
 <%= partial "docs/getting-started/partials/launched" %>
+
+### Some Notes
+
+The `fly launch` adds some files to your code base.
+
+**Here is what gets added:**
+
+1. `Dockerfile` - Used to build a container image that is run in fly
+2. `.dockerignore` - Used to ensure certain files don't make its way into your repository
+3. `fly.toml` - Configuration specific to hosting on Fly
+4. `docker` - A directory containing configuration files for running Nginx/PHP in a container
+
+Running `fly launch` (and later `fly deploy`) uses the `Dockerfile` to build a container image, copying your application files into the resulting image.
+
+Fly doesn't care about the state of your git repository - it copies whatever files are present (except for files ignored by `.dockerignore`).
