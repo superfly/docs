@@ -2,7 +2,7 @@ Update an Upstash Redis database
 
 ## Usage
 ~~~
-flyctl redis update <id> [flags]
+flyctl redis update <name> [flags]
 ~~~
 
 ## Options
