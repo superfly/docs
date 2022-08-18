@@ -32,6 +32,25 @@ It [supports](https://docs.victoriametrics.com/#prometheus-querying-api-usage) m
 Note that [remote read](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_read) (`/api/v1/read`) [remote storage integration](https://prometheus.io/docs/prometheus/latest/storage/#remote-storage-integrations)
 is [not supported](https://docs.victoriametrics.com/FAQ.html#why-doesnt-victoriametrics-support-the-prometheus-remote-read-api).
 
+### MetricsQL
+
+Prometheus queries are typically based on the [PromQL](https://prometheus.io/docs/prometheus/latest/querying/basics/) query language.
+Prometheus on Fly queries use VictoriaMetrics [MetricsQL](https://docs.victoriametrics.com/MetricsQL.html),
+a backwards-compatible query language that fixes user experience issues and adds
+useful features and functions on top of PromQL.
+
+Key features:
+
+- [Better `rate()` and `increase()`](https://medium.com/@romanhavronenko/victoriametrics-promql-compliance-d4318203f51e#cade)
+functions that just work. No need for [`irate` workarounds](https://www.percona.com/blog/2020/02/28/better-prometheus-rate-function-with-victoriametrics/)
+or appending Grafana's [magical `$__rate_interval`](https://grafana.com/blog/2020/09/28/new-in-grafana-7.2-__rate_interval-for-prometheus-rate-queries-that-just-work/) selector to every query.
+In fact, you can even omit the square brackets entirely and MetricsQL will do the right thing.
+- Many more [label manipulation functions](https://docs.victoriametrics.com/MetricsQL.html#label-manipulation-functions)
+such as `drop_common_labels`, `label_set`, etc.
+- [`topk_avg`](https://docs.victoriametrics.com/MetricsQL.html#topk_avg), which returns the top `k` time series averaged
+across the entire series range (not just individual points), plus the sum of all remaining series in an "other" label.
+Useful for giving a small, filtered view across a potentially large number of series.
+
 ### Querying
 
 Queries can be sent to the following endpoint:
