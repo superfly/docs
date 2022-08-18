@@ -193,11 +193,12 @@ fly_instance_memory_vmalloc_chunk
 - `load_average` is derived from [`/proc/loadavg`](https://www.kernel.org/doc/html/latest/filesystems/proc.html#id11) ([`getloadavg`](https://man7.org/linux/man-pages/man3/getloadavg.3.html)). It's a ["system load average"](https://www.brendangregg.com/blog/2017-08-08/linux-load-averages.html) measuring the number of processes in the system run queue, with samples representing averages over 1, 5, and 15 `minutes`.
 
 - `cpu` is derived from [`/proc/stat`](https://www.kernel.org/doc/html/latest/filesystems/proc.html#miscellaneous-kernel-statistics-in-proc-stat),
-and counts the number of seconds spent each CPU (`cpu_id`) has spent performing different kinds of work (`mode`, which may be one of `user`, `nice`, `system`, `idle`, `iowait`, `irq`, `softirq`, `steal`, `guest`, `guest_nice`).
+and counts the amount of time each CPU (`cpu_id`) has spent performing different kinds of work (`mode`, which may be one of `user`, `nice`, `system`, `idle`, `iowait`, `irq`, `softirq`, `steal`, `guest`, `guest_nice`).  
+The time unit is 'clock ticks' of centiseconds (0.01 seconds).
 
 ```
 fly_instance_load_average{minutes}
-fly_instance_cpu{cpu_id, mode} (Counter)
+fly_instance_cpu{cpu_id, mode} (Counter, centiseconds)
 ```
 #### Instance Disks - `fly_instance_disk_`
 
