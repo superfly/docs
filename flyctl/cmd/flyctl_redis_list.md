@@ -1,4 +1,4 @@
-List Redis databases for an organization
+List Upstash Redis databases for an organization
 
 ## Usage
 ~~~

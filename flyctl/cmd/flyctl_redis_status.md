@@ -1,9 +1,9 @@
-Show status of a Redis service
+Show status of a Redis database
 
 
 ## Usage
 ~~~
-flyctl redis status <id> [flags]
+flyctl redis status <name> [flags]
 ~~~
 
 ## Options

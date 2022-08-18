@@ -1,4 +1,4 @@
-Create a new Redis database
+Create an Upstash Redis database
 
 ## Usage
 ~~~

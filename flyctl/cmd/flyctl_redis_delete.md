@@ -1,8 +1,8 @@
-Delete a Redis database
+Delete an Upstash Redis database
 
 ## Usage
 ~~~
-flyctl redis delete [ID] [flags]
+flyctl redis delete <name> [flags]
 ~~~
 
 ## Options
