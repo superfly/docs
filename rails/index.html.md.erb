@@ -24,6 +24,14 @@ git clone https://github.com/fly-apps/hello-rails
 
 ## Provision Rails and Postgres Servers
 
+If your Rails application wasn't created with `--database=postgresql` option
+and you didn't subsequently add the Postgres gem to your bundle, do so now
+via:
+
+```cmd
+bundle add pg --group production
+```
+
 To configure and launch the app, you can use `fly launch` and follow the wizard:
 
 ```cmd
