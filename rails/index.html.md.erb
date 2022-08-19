@@ -24,14 +24,6 @@ git clone https://github.com/fly-apps/hello-rails
 
 ## Provision Rails and Postgres Servers
 
-If your Rails application wasn't created with `--database=postgresql` option
-and you didn't subsequently add the Postgres gem to your bundle, do so now
-via:
-
-```cmd
-bundle add pg --group production
-```
-
 To configure and launch the app, you can use `fly launch` and follow the wizard:
 
 ```cmd
@@ -61,7 +53,12 @@ Save your credentials in a secure place, you won't be able to see them again!
 ```
 
 You can set a name for the app, choose a default region, and choose to launch and attach a Postgresql database.
-Finally `fly` will ask if you want to deploy. Say yes!
+
+Deploying your application is done with the following command:
+
+```
+fly deploy
+```
 
 Once it's done, you can use `fly status` to check the app's status and deployment, and you should see something like this:
 
@@ -97,7 +94,15 @@ If you elected to provision a Postgres database during setup, it's deployed as a
 If you've got an existing Rails app, and you want to set it up for Fly, the process is pretty similar;
 `fly launch` will take you through the setup steps, but there's a couple of things to look at first.
 
-If you're using Postgres, your database settings will be passed to your app via a `DATABASE_URL` environment
+If your Rails application wasn't created with the `--database=postgresql` option
+and you didn't subsequently add the Postgres gem to your bundle, do so now
+via:
+
+```cmd
+bundle add pg --group production
+```
+
+Your database settings will be passed to your app via a `DATABASE_URL` environment
 variable (which Rails picks up automatically). That means you can drop a lot of the production configuration from `config/database.yml`.
 
 If you've got your app's secrets stored in an encrypted credentials file such as `config/credentials.yml.enc`
