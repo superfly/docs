@@ -1,5 +1,5 @@
 ---
-title: Scaffold to success
+title: Scaffold to Success
 layout: framework_docs
 order: 1
 objective: Scaffold a database table, demonstrating use of a PostgreSQL database.

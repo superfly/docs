@@ -1,5 +1,5 @@
 ---
-title: Recap of what we have accomplished
+title: Recap of What We have Accomplished
 layout: framework_docs
 order: 4
 objective: A few observations and tips to wrap things up.
