@@ -1,0 +1,80 @@
+---
+title: Healthcare apps on Fly
+layout: docs
+sitemap: true
+nav: firecracker
+---
+
+Fly.io is a great place to develop and host healthcare applications! You can get started for free and be up and running with a fully secure solution in minutes. 
+
+We recognize that healthcare apps and data are different beasts and we're here to protect your patients' data (and keep your auditors happy). We're SOC2 (Type 1) audited, we'll sign BAAs, and we're available to answer questions you might have about how our platform meets your compliance needs [(just ask!)](mailto:healthcare@fly.io).
+
+Nailing the security for a HIPAA-compliant application can be a big task, and no hosting provider can do it all for you. But Fly.io has a security-first design and a number of features that make HIPAA simpler: 
+
+
+## Access Control
+##### Database Endpoint Security  
+Whether you’re running Fly.io Postgres or your own database, there’s no network ACLs required to ensure that only your application can talk to the database server; databases on Fly.io talk to app servers over 6PN and WireGuard, and never to the public Internet.
+##### Anti-Spoofing Controls
+Attackers that boot up evil Fly.io apps can’t spoof packets to other Fly.io instances; we use both Linux kernel controls, IP routing, and eBPF programs to make sure of that. It’s kind of a 1998 sort of attack to worry about, but in case your auditor cares, we took care of it.
+
+## Audit
+##### Centralizing Logging and Metrics
+Fly.io collects logs and metrics from your apps, and can send them wherever you need them to go; you can get a single feed of logs from all your instances into an ELK cluster or a Splunk instance, or aim Grafana at our metrics, so you have visibility and an audit trail of what’s going on with your app. 
+
+## Integrity
+##### Hardened Hosting
+Apps running on Fly.io run inside Firecracker, a Rust-based, memory-safe KVM hypervisor designed at Amazon as the engine for Fargate. At Fly.io, we take container images from our users and transmogrify them into VMs, for full, no-shared-kernel isolation between applications. Firecracker VMs run as userland processes on our hosts, and are further locked down with modern Linux security tools, including cgroups, file and network namespaces, resource limits, and privilege separation. 
+##### Kernel Vulnerability Response
+Fly.io is responsible for the security both of our host kernels (of course) and of the guest kernels our apps run in; one less thing for you worry about.
+
+## Authentication
+##### Multi-Factor Authentication
+Fly.io supports standard multifactor authentication apps, because of course we do. We feel a little miffed you had to ask.
+##### Secrets Management
+It’s easy to expose secrets to your running apps without leaking them in configurations: we provide a “write-only” secrets management scheme that keeps app secrets encrypted, exposing them only to running instances of your app, using a token-based system that ensures your plaintext secrets never hit machines not running your apps.
+
+## Confidentiality
+##### WireGuard Everywhere
+The Fly.io platform is knitted together out of hosts connected via a WireGuard mesh. Everything talks to everything else over WireGuard.
+WireGuard is a next-generation in-kernel (and userland) VPN designed by vulnerability researchers for simplicity, auditability, and modern cryptography. The Linux kernel implementation of WireGuard runs in steady state without requiring dynamic memory allocation! WireGuard is great, and is the gold standard for secure network transports.
+We run a full mesh of WireGuard. That means that once a request arrives at our edge from the Internet, when we proxy it to a host running your app, that communication occurs over a WireGuard virtual network.  
+We also use WireGuard in our API. Need to SSH to an instance of your app? That’ll happen over WireGuard. Need to open a Postgres shell? WireGuard. Deploy a new instance using a remote builder running in Fly.io? You guessed it: the Docker protocol stuff is running over WireGuard, from your machine to our hosts.
+##### Encryption In Transit
+See above! WireGuard runs 256-bit ChaCha20-Poly1305 with an authenticated Curve25519 key exchange. 
+##### TLS Everywhere
+Fly.io terminates TLS for our users at our edge. We run a fleet of memory-safe, Rust-based proxies that use the Hyper and Rustls libraries to implement HTTPS, in a tight configuration that scores an A grade from Qualys SSL Labs, without you needing to lift a finger. 
+You can terminate TLS in your application instead of at our edge, if you really want to. But you won’t want to.
+##### Automatic Certificate Management with LetsEncrypt
+Fly.io manages the ACME protocol to securely provision LetsEncrypt TLS certificates, so that’s another thing you’re just not going to have to think much about. 
+##### HTTP Strict Transport Security and HTTPS-Only
+It’s easy (a single configuration line) to lock your apps to HTTPS-only, using the HSTS protocol to direct browsers exclusively to the secure endpoint of your application and defeating SSL-stripping attacks. 
+##### Default-Deny Public Networking
+Apps running on Fly.io get routable IPv4 addresses. We’re just givin’ ‘em away! But when your users hit those addresses, they’re not bouncing directly off your app instances; instead, they’re routed to our edge, where we use our memory-safe Rust proxy to direct traffic. What that means for you is that nothing on your app is exposed unless you ask us to expose it. No security group rules or network ACLs required! You’re locked down by default.
+##### 6PN Private Networking
+Modern applications are often composed of ensembles of services. Some of those services are fit for talking to random users on the Internet. Others are best kept under wraps. Fly.io makes it easy to deploy complicated applications built out of multiple services: all Fly.io apps live in a private IPv6 network exclusive to your organization. We use eBPF in the Linux kernel to ensure that private networks can’t talk to each other; they’re completely private, without any extra configuration. We call this feature 6PN (for “IPv6 Private Network”), and it means there’s zero security lockdown work required to deploy a database, Redis cache, or background job scheduler. Your app server will be able to talk to them right away. Nobody outside your organization will be able to talk to them at all.
+##### Network Segregation
+“Network Segregation” is the term an enterprise IT administrator at a big bank would describe 6PN. Yup, your networks are segregated. 
+##### Secure Network Architecture
+Sure, you could call 6PN that, too. Did we mention there are no security group rules to review? There are no security group rules to review. 
+##### Encryption At Rest
+Databases like Fly.io Postgres are built on Fly.io Volumes, our persistent storage feature. It works like a drive plugged in and mounted in your app instance. And those drives are block-level encrypted with AES-XTS. We manage the keys for the drives for you, using a token-based orchestration system that ensures the keys are only accessible from privileged processes on hosts actually running your app. Check off another HITRUST CSF requirement from your list!
+
+## Availability
+##### High Availability
+Scaling apps across geographic regions is, like, the whole point of the service? I think it’s the whole point? At any rate: it’s definitely a thing we do. Try it right now: flyctl regions add scl. You know you want to see your app running in Chile. 
+##### DDoS Protection
+Fly.io isn’t a DDoS Protection provider. But our upstreams have sophisticated DDoS tools, including blackhole routing and traffic scrubbing, which get regular workouts. 
+##### Rolling Deployments
+Confidently deploy your Fly.io apps without worrying that you’re going to break everything: we’ll do rolling deploys, with canaries and health-checks, so a known-good version of your app is always running.
+##### Advanced App Instance Recovery Space Modulator
+If your app crashes or exits, we’ll relaunch the VM. We have the technology.
+##### Off-Site Backups
+Anything stored persistently in a Fly.io volume is backed up on a regular schedule.
+
+## More info
+
+You can heck our [community](https://community.fly.io) or [our documentation](https://fly.io/docs/) for answers to your questions. If you can't find what you're looking for want to know more, [get in touch](mailto:healthcare@fly.io)!
+
+
+
