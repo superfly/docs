@@ -37,7 +37,7 @@ Now add the following to the bottom of `app/assets/stylesheets/application.css`:
 }
  ```
 
-And finally, as the splash screen served it purpose, now lets edit `config/routes.rb` once again, and replace the welcome screen with the names index:
+And finally, as the splash screen served it purpose, edit `config/routes.rb` once again, and replace the welcome screen with the names index:
 
  ``` diff
  Rails.application.routes.draw do
@@ -45,7 +45,7 @@ And finally, as the splash screen served it purpose, now lets edit `config/route
  
    # Defines the root path route ("/")
 -  root "rails/welcome#index"
-+  # root "names#index"
++  root "names#index"
  end
  ```
 

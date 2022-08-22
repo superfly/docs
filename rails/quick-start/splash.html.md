@@ -10,19 +10,19 @@ A newly generated Rails application will display a flashy splash screen when
 run in development, but will do absolutely nothing in production until you
 add add code.
 
-In order to demonstrate deployment, we will create a new application, make
+In order to demonstrate deployment of a Rails app on fly, we will create a new application, make
 a one line change that shows the splash screen even when run in production mode,
-and deploy it.
+and deploy the application.
 
 ## Create an application
 
-We start by verifying that you have Rails version 7 installed, and then by
+Start by verifying that you have Rails version 7 installed, and then by
 creating a new application:
 
 ``` shell
 $ rails --version
-$ rails new list
-$ cd list
+$ rails new namelist
+$ cd namelist
 ```
 
 Now use your favorite editor to make a one line change to `config/routes.rb`:
@@ -43,7 +43,7 @@ Now use your favorite editor to make a one line change to `config/routes.rb`:
 ## Provision Rails and Postgres Servers
 
 To configure and launch the app, you can use `fly launch` and follow the wizard.
-We are not going to use it yet, but say *yes* to setting up a Postgresql database
+We are not going to use a database yet, but say *yes* to setting up a Postgresql database
 in order to prepare for the next step in this guide.
 
 ```cmd

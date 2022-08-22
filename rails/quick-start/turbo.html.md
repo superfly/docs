@@ -7,7 +7,7 @@ status: alpha
 ---
 
 We now have a basic [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) application where the index page shows a snapshot of
-the server state at the time they were displayed.  Lets make the index page
+the server state at the time it was displayed.  Lets make the index page
 come alive using [Turbo Streams](https://turbo.hotwired.dev/handbook/streams).
 
 This will involve provisioning a redis cluster and a surprisingly small number
@@ -20,7 +20,7 @@ Examine your `Gemfile` and look for the following lines:
 
 ``` ruby
 # Use Redis adapter to run Action Cable in production
-# gem "redis", "~> 4.0"
+gem "redis", "~> 4.0"
 ```
 
 If the second line is commented out, uncomment it and then run `bundle install`.  Rails will automatically have done this for you if it detected the `redis-server` executable on your machine at that time the application was created.
@@ -49,10 +49,10 @@ If you have redis-cli installed, use fly redis connect to connect to your databa
 Once again, you can set a name for the database, chose a primary region as well as
 a number of replica regions, enable eviction, and select a plan.
 
-The most important line in this output is the second to the last one, which will contain
+The most important line in this output is the second to the last one which will contain
 a URL starting with `redis:`.  The URL you see will be considerably longer than the one
 you see above.  You will need to provide this URL to Rails, and with fly this is done
-via secrets.  Run the following command replacing the url with the one from the output above:
+via [secrets](https://fly.io/docs/reference/secrets/).  Run the following command replacing the url with the one from the output above:
 
 ```cmd
 fly secrets set REDIS_URL=redis://default:<redacted>.upstash.io
@@ -158,6 +158,10 @@ window will instantly update.
 Of course, if this were a real application, inserting and removing names would
 cause those changes to be broadcast.  As they say, this is left as an exercise
 for the student.
+
+# Arrived at Destination
+
+You have successfully built, deployed, and connected to your first Rails application on Fly.
 
 We've accomplished a lot with only just over a handful of lines of code and
 just over a dozen commands.  When you are ready, proceed to a
