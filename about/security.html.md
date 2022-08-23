@@ -42,7 +42,10 @@ AppSec is the practice of ensuring software is secure by design, secured during 
 - We make decisions that minimize our attack surface. Most interactions with [Fly.io](http://Fly.io) are well-described in a GraphQL API, and occur through flyctl, our open-source command-line tool.
 - We perform internal code reviews with a modern, PR-based development workflow, and engage external testing firms to assess our software security.
 
-## Got A Security Questionnaire?
+## SOC2 and HIPAA
 
-We know the drill. We&#39;re happy to look it over and give you an ETA on getting it filled out for you.
+[We have our SOC2 Type I](/blog/soc2-the-screenshots-will-continue-until-security-improves/) where we've documented a bunch of these controls. Additionally, we've detailed a number of controls for folks exploring [running HIPAA-compliant applications on our platform](/docs/about/healthcare).
 
+## Questions?
+
+[Email us!](mailto:security@fly.io)
