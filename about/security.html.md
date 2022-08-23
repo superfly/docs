@@ -44,7 +44,7 @@ AppSec is the practice of ensuring software is secure by design, secured during 
 
 ## SOC2 and HIPAA
 
-[We have our SOC2 Type I](https://fly.io/blog/soc2-the-screenshots-will-continue-until-security-improves/) where we've documented a bunch of these controls. Additionally, we've detailed a number of controls for folks exploring [running HIPAA-compliant applications on our platform](https://fly.io/docs/about/healthcare).
+[We have our SOC2 Type I](/blog/soc2-the-screenshots-will-continue-until-security-improves/) where we've documented a bunch of these controls. Additionally, we've detailed a number of controls for folks exploring [running HIPAA-compliant applications on our platform](/docs/about/healthcare).
 
 ## Questions?
 
