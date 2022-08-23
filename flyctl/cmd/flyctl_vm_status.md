@@ -1,4 +1,5 @@
-Show a VM's current status including logs, checks, and events.
+Show a VM's status	including logs, checks, and events.
+
 
 ## Usage
 ~~~
@@ -8,8 +9,8 @@ flyctl vm status <vm-id> [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for status
 ~~~
 

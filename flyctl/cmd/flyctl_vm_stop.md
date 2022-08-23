@@ -1,4 +1,4 @@
-Request for a VM to be asynchronously stopped.
+Request for a VM to be asynchronously stopped
 
 ## Usage
 ~~~
@@ -8,8 +8,8 @@ flyctl vm stop <vm-id> [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
   -h, --help            help for stop
 ~~~
 
