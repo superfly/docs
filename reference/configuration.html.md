@@ -221,12 +221,19 @@ The services concurrency sub-section configures the application's behavior with 
 
 ```toml
   [services.concurrency]
+    type = "connections"
     hard_limit = 25
     soft_limit = 20
 ```
 
-* `hard_limit` : When an application instance is at or over this number of concurrent connections, the system will bring up another instance.
-* `soft_limit` : When an application instance is at or over this number of concurrent connections, the system is likely bring up another instance.
+`type` specifies what metric is used to determine when to scale up and down. The two supported values are `connections` and `requests`
+
+**connections**: Scale based on number of tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
+
+**requests**: Scale based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
+
+* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will bring up another instance.
+* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system is likely bring up another instance.
 
 #### `services.ports`
 
