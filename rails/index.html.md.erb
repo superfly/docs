@@ -13,12 +13,50 @@ related_pages:
 
 <%= partial "docs/getting-started/partials/intro", locals: { runtime: "Rails" } %>
 
-We'll take a look at the short versions first: deploying with a preconfigured example Rails app.
-You can get the code for the example from [the Fly-Examples GitHub repository](https://github.com/fly-apps/hello-rails). Clone the repo by running:
+## Create a Rails App
+
+Let's create a Rails blog for our first Fly app. This guide assumes you have Ruby, Rails, and PostgreSQL installed on your workstation.
 
 ```cmd
-git clone https://github.com/fly-apps/hello-rails
+rails new blog -d postgresql
 ```
+
+This generates a bunch of Rails files that will be used for your application. The `-d` flag tells Rails that we're going to use Postrges for the database, which is what Fly recommends for production Rails apps.
+
+When the command is finished, change into that directory:
+
+```cmd
+cd blog
+```
+
+Now lets create the database on your workstatation:
+
+```cmd
+bin/rails db:create
+```
+
+Then generate the blog scaffolding:
+
+```cmd
+bin/rails generate scaffold Post title:string body:text
+```
+
+The scaffolding creates a database migration. Run the following command to create the `posts` table in your local Postgres database:
+
+```cmd
+bin/rails db:create
+```
+
+Once that's complete, open the `config/routes.rb` file and add `root "posts#index"` so that it looks like this:
+
+```ruby
+Rails.application.routes.draw do
+  resources :posts
+  root "posts#index"
+end
+```
+
+Congrats! You now have a Blog. Let's deploy it to production.
 
 <%= partial "docs/getting-started/partials/install_flyctl_login" %>
 
@@ -30,23 +68,23 @@ To configure and launch the app, you can use `fly launch` and follow the wizard:
 fly launch
 ```
 ```output
-Creating app in ~/Projects/hello-rails
+Creating app in ~/Projects/blog
 Scanning source code
 Detected a Rails app
-? App Name (leave blank to use an auto-generated name): hello-rails
+? App Name (leave blank to use an auto-generated name): blog
 Automatically selected personal organization: John Smith
 ? Select region: sjc (San Jose, California (US))
-Created app hello-rails in organization personal
-Set secrets on hello-rails: RAILS_MASTER_KEY
+Created app blog in organization personal
+Set secrets on blog: RAILS_MASTER_KEY
 Wrote config file fly.toml
 ? Would you like to setup a Postgresql database now? Yes
 For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clusters
 ? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
-Creating postgres cluster hello-rails-db in organization personal
-Postgres cluster hello-rails-db created
+Creating postgres cluster blog-db in organization personal
+Postgres cluster blog-db created
   Username:    postgres
   Password:    <redacted>
-  Hostname:    hello-rails-db.internal
+  Hostname:    blog-db.internal
   Proxy Port:  5432
   PG Port: 5433
 Save your credentials in a secure place, you won't be able to see them again!
@@ -67,11 +105,11 @@ fly status
 ```
 ```output
 App
-  Name     = hello-rails
+  Name     = blog
   Owner    = personal
   Version  = 0
   Status   = running
-  Hostname = hello-rails.fly.dev
+  Hostname = blog.fly.dev
 
 Deployment Status
   ID          = c3ca80bf-4034-837a-ce92-682e6528c5c7
@@ -85,7 +123,7 @@ ID        PROCESS VERSION REGION  DESIRED STATUS  HEALTH CHECKS       RESTARTS  
 748868bc  app     0       lhr     run     running 1 total, 1 passing  0         20s ago
 ```
 
-If you elected to provision a Postgres database during setup, it's deployed as a seperate Fly app to `hello-rails-db`.
+If you elected to provision a Postgres database during setup, it's deployed as a seperate Fly app to `blog-db`.
 
 <%= partial "docs/getting-started/partials/launched" %>
 
