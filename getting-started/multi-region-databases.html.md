@@ -33,7 +33,6 @@ Choose a high-availability configuration to create a two-node PostgreSQL cluster
 Adding read replicas is simple. Just create more disks to match the existing one(s):
 
 ```
-fly volumes create pg_data -a chaos-postgres --size 10 --region atl
 fly volumes create pg_data -a chaos-postgres --size 10 --region ord
 fly volumes create pg_data -a chaos-postgres --size 10 --region ams
 fly volumes create pg_data -a chaos-postgres --size 10 --region syd
@@ -53,7 +52,6 @@ The `chaos-postgres` cluster will now have read replicas in Atlanta, Chicago, Am
 ID             PROCESS VERSION REGION DESIRED STATUS                  HEALTH CHECKS
 240eb1cd       app     2       ams    run     running (replica)       3 total, 3 passing
 83b849fa       app     2       ord    run     running (replica)       3 total, 3 passing
-e759c2ed       app     2       atl    run     running (replica)       3 total, 3 passing
 d8e8a317       app     2       syd    run     running (replica)       3 total, 3 passing
 4c27cd52       app     2       scl    run     running (replica)       3 total, 3 passing
 987f4b41       app     2       scl    run     running (leader)        3 total, 3 passing
@@ -212,8 +210,8 @@ fly volumes list -a chaos-postgres
 ```
 ```output
 ID                   NAME    SIZE REGION ATTACHED VM CREATED AT
-vol_x915grn008vn70qy pg_data 10GB atl    b780ce3d    2 weeks ago
-vol_ke628r677pvwmnpy pg_data 10GB atl    359d0e24    2 weeks ago
+vol_x915grn008vn70qy pg_data 10GB syd    b780ce3d    2 weeks ago
+vol_ke628r677pvwmnpy pg_data 10GB syd    359d0e24    2 weeks ago
 ```
 
 Once you have identified which volume to target, you can go ahead and list your snapshots by running the following command:
