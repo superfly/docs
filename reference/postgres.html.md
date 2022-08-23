@@ -153,7 +153,7 @@ psql postgres://postgres:secret123@appname.internal:5432
 Using the superuser credentials, you can create databases, users, and whatever else you need for your apps. But we also have the `flyctl postgres attach` shortcut:
 
 ```
-flyctl postgres attach --app <app-name> --postgres-app <postgres-app-name>
+flyctl postgres attach --app <app-name> <postgres-app-name>
 ```
 
 When you attach an app to Postgres, a number of things happen:
@@ -168,7 +168,7 @@ When the Attached app starts it will find an environment variable `DATABASE_URL`
 Use `flyctl postgres detach` to remove postgres from the app.
 
 ```
-flyctl postgres detach --app <app-name> --postgres-app <postgres-app-name>
+flyctl postgres detach --app <app-name> <postgres-app-name>
 ```
 
 This will revoke access to the attachment's role, remove the role, and remove the `DATABASE_URL` secret. The database will not be removed.

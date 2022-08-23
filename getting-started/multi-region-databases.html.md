@@ -65,7 +65,7 @@ d8e8a317       app     2       syd    run     running (replica)       3 total, 3
 To hook your app up to your cluster, run the `attach` command from your application directory:
 
 ```cmd
-fly pg attach --postgres-app chaos-postgres
+fly pg attach chaos-postgres
 ```
 
 This installs a `DATABASE_URL` secret in your application, which is available to your app processes as an environment variable. The command also prints the connection string to the console.

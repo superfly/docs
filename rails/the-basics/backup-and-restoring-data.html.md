@@ -113,13 +113,13 @@ This provisions and launches a new Fly database server with the snapshot you spe
 Detach the Rails application from the current Postgres cluster:
 
 ```cmd
-fly postgres detach --postgres-app my-rails-app-db
+fly postgres detach my-rails-app-db
 ```
 
 Then attach it to the new cluster:
 
 ```cmd
-fly postgres attach --postgres-app my-rails-app-db-restored
+fly postgres attach my-rails-app-db-restored
 ```
 
 Now your application is pointing at the restored database.
