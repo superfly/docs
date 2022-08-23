@@ -32,6 +32,25 @@ It [supports](https://docs.victoriametrics.com/#prometheus-querying-api-usage) m
 Note that [remote read](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_read) (`/api/v1/read`) [remote storage integration](https://prometheus.io/docs/prometheus/latest/storage/#remote-storage-integrations)
 is [not supported](https://docs.victoriametrics.com/FAQ.html#why-doesnt-victoriametrics-support-the-prometheus-remote-read-api).
 
+### MetricsQL
+
+Prometheus queries are typically based on the [PromQL](https://prometheus.io/docs/prometheus/latest/querying/basics/) query language.
+Prometheus on Fly queries use VictoriaMetrics [MetricsQL](https://docs.victoriametrics.com/MetricsQL.html),
+a backwards-compatible query language that fixes user experience issues and adds
+useful features and functions on top of PromQL.
+
+Key features:
+
+- [Better `rate()` and `increase()`](https://medium.com/@romanhavronenko/victoriametrics-promql-compliance-d4318203f51e#cade)
+functions that just work. No need for [`irate` workarounds](https://www.percona.com/blog/2020/02/28/better-prometheus-rate-function-with-victoriametrics/)
+or appending Grafana's [magical `$__rate_interval`](https://grafana.com/blog/2020/09/28/new-in-grafana-7.2-__rate_interval-for-prometheus-rate-queries-that-just-work/) selector to every query.
+In fact, you can even omit the square brackets entirely and MetricsQL will do the right thing.
+- Many more [label manipulation functions](https://docs.victoriametrics.com/MetricsQL.html#label-manipulation-functions)
+such as `drop_common_labels`, `label_set`, etc.
+- [`topk_avg`](https://docs.victoriametrics.com/MetricsQL.html#topk_avg), which returns the top `k` time series averaged
+across the entire series range (not just individual points), plus the sum of all remaining series in an "other" label.
+Useful for giving a small, filtered view across a potentially large number of series.
+
 ### Querying
 
 Queries can be sent to the following endpoint:
@@ -193,11 +212,12 @@ fly_instance_memory_vmalloc_chunk
 - `load_average` is derived from [`/proc/loadavg`](https://www.kernel.org/doc/html/latest/filesystems/proc.html#id11) ([`getloadavg`](https://man7.org/linux/man-pages/man3/getloadavg.3.html)). It's a ["system load average"](https://www.brendangregg.com/blog/2017-08-08/linux-load-averages.html) measuring the number of processes in the system run queue, with samples representing averages over 1, 5, and 15 `minutes`.
 
 - `cpu` is derived from [`/proc/stat`](https://www.kernel.org/doc/html/latest/filesystems/proc.html#miscellaneous-kernel-statistics-in-proc-stat),
-and counts the number of seconds spent each CPU (`cpu_id`) has spent performing different kinds of work (`mode`, which may be one of `user`, `nice`, `system`, `idle`, `iowait`, `irq`, `softirq`, `steal`, `guest`, `guest_nice`).
+and counts the amount of time each CPU (`cpu_id`) has spent performing different kinds of work (`mode`, which may be one of `user`, `nice`, `system`, `idle`, `iowait`, `irq`, `softirq`, `steal`, `guest`, `guest_nice`).  
+The time unit is 'clock ticks' of centiseconds (0.01 seconds).
 
 ```
 fly_instance_load_average{minutes}
-fly_instance_cpu{cpu_id, mode} (Counter)
+fly_instance_cpu{cpu_id, mode} (Counter, centiseconds)
 ```
 #### Instance Disks - `fly_instance_disk_`
 
