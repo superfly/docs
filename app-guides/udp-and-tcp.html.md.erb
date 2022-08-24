@@ -40,6 +40,8 @@ We're going to build this silly app in Go (don't worry, it's trivial, you'll be 
 
 * The UDP side of your application needs to bind to the special `fly-global-services` address. But the TCP side of your application can't; it should bind to `0.0.0.0`.
 
+* The UDP side of your application needs to bind to the same port that is used externally. Fly will not rewrite the port; Fly only rewrites the ip address for UDP packets.
+
 * We support IPv6 for TCP, but not currently for UDP.
 
 * We swipe a couple dozen bytes from your MTU for UDP, which usually doesn't matter, but in rare cases might.
@@ -187,3 +189,7 @@ Fly.io takes a bite out of all of your packets for two purposes:
 In most cases this won't matter to you at all. Modern UDP protocols are designed to assume they have far less than 1500 bytes to work with, because there are all sorts of weird links on the Internet with smaller MTUs.
 
 But if you're doing something super-custom, it's best to assume you've got something more like 1300 bytes to work with, not 1500.
+
+### UDP Must Listen On The Same Port Externally And Internally
+
+Fly will only rewrite the IP addresses for UDP packets. The destination port for inbound packets will not be rewritten. That means if your applications receives UDP traffic on port 5000 externally, the application needs to bind to `fly-global-services:5000` in order to recieve that UDP traffic.
