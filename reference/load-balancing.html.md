@@ -36,7 +36,7 @@ Closeness is determined by RTT (round-trip time) between the Fly.io edge node re
 
 ## Examples
 
-To help clarify how the Fly.io platform makes load balancing decision, we provide some example configuration and scenarios:
+To help clarify how the Fly.io platform makes load balancing decisions, we provide some example configuration and scenarios:
 
 ### Web service
 
