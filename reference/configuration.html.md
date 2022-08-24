@@ -217,16 +217,27 @@ The `services` section itself is a table of tables in TOML, so the section is de
 
 #### `services.concurrency`
 
-The services concurrency sub-section configures the application's behavior with regard to concurrent connections and [compute scaling](/docs/architecture/#compute-scaling). It is a simple list of key/values, so the section is denoted with single square brackets like so:
+The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and [scaling](/docs/reference/scaling).
+
+This section is a simple list of key/values, so the section is denoted with single square brackets like so:
 
 ```toml
   [services.concurrency]
+    type = "connections"
     hard_limit = 25
     soft_limit = 20
 ```
 
-* `hard_limit` : When an application instance is at or over this number of concurrent connections, the system will bring up another instance.
-* `soft_limit` : When an application instance is at or over this number of concurrent connections, the system is likely bring up another instance.
+`type` specifies what metric is used to determine when to scale up and down, or when a given instance should receieve more or less traffic (load balancing). The two supported values are `connections` and `requests`.
+
+**connections**: Load balance and scale based on number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
+
+**requests**: Load balance and scale based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
+
+* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
+* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application support doing so.
+
+
 
 #### `services.ports`
 
