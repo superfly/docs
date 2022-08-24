@@ -24,6 +24,9 @@ Each App on Fly.io has a configuration file called `fly.toml` which determines h
 * [**Builders**](/docs/reference/builders/): 
 Fly supports multiple ways of assembling applications into deployable images. These are the builders and this section covers the four builders that currently exist on Fly.
 
+* [**Load Balancing**](/docs/reference/load-balancing/):
+Fly distributes traffic to your application instances based on load and closeness. This section describes how Fly does that and the configuration that informs load balancing.
+
 * [**Runtime Environment**](/docs/reference/runtime-environment/):
 This section covers the environment variables set when an App runs on Fly and the request headers which provide Apps with information about incoming connections.
 
