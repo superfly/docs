@@ -266,6 +266,16 @@ You can have more than one `services.ports` sections. The default configuration,
 
 The details of how these handlers manage network traffic, and other handlers available, are detailed in the [Network Services](/docs/services/) documentation.
 
+For UDP applications make sure to bind the application to the same port as defined in the relevant `services.ports` section. For example, the configuration below will listen on port 5000 and the application will need to bind to `fly-global-services:5000` to receive traffic. Leave `handlers` unset for UDP services.
+
+```toml
+[[services]]
+  internal_port = 5000
+  protocol = "udp"
+  [[services.ports]]
+    port = 5000
+```
+
 #### `services.tcp_checks`
 
 When a service is running, the Fly platform checks up on it by connecting to a port. The `services.tcp_checks` section defines parameters for those checks. For example, the default tcp\_checks look like this:
