@@ -14,9 +14,9 @@ flyctl machine [command] [flags]
 * [list](/docs/flyctl/machine-list/)	 - List Fly machines
 * [remove](/docs/flyctl/machine-remove/)	 - Remove a Fly machine
 * [run](/docs/flyctl/machine-run/)	 - Run a machine
-* [start](/docs/flyctl/machine-start/)	 - Start a Fly machine
+* [start](/docs/flyctl/machine-start/)	 - Start one or more Fly machines
 * [status](/docs/flyctl/machine-status/)	 - Show current status of a running machine
-* [stop](/docs/flyctl/machine-stop/)	 - Stop a Fly machine
+* [stop](/docs/flyctl/machine-stop/)	 - Stop one or more Fly machines
 * [update](/docs/flyctl/machine-update/)	 - Update a machine
 
 ## Options

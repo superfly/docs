@@ -1,9 +1,9 @@
-Stop a Fly machine
+Stop one or more Fly machines
 
 
 ## Usage
 ~~~
-flyctl machine stop <id> [flags]
+flyctl machine stop <id> [<id>...] [flags]
 ~~~
 
 ## Options
