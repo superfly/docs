@@ -1,156 +1,19 @@
 ---
-title: Run a Rails App
+title: Rails on Fly
 layout: framework_docs
-order: 1
-redirect_from: /docs/getting-started/rails/
-related_pages:
-  - /docs/rails/the-basics
-  - /docs/rails/the-basics/sidekiq
-  - /docs/rails/the-basics/configuration
-  - /docs/reference/redis
-  - /docs/reference/postgres
+toc: false
 ---
 
-<%= partial "docs/getting-started/partials/intro", locals: { runtime: "Rails" } %>
+Fly is a great place to run Rails applications, especially if you plan on running them on multiple servers around the world so your users have a fast, snappy, low-latency experience. This becomes particularly important if you're deploying a Hotwire Rails app.
 
-## Create a Rails App
+## [Getting Started](./getting-started)
 
-Let's create a Rails blog for our first Fly app. This guide assumes you have Ruby, Rails, and PostgreSQL installed on your workstation.
+If you're short on time or impatient, run through the [Starter Rails App](./getting-started/new) guide to get a feel for what its like to deploy to Fly.
 
-```cmd
-rails new blog -d postgresql
-```
+## [The Basics](./the-basics)
 
-This generates a bunch of Rails files that will be used for your application. The `-d` flag tells Rails that we're going to use Postrges for the database, which is what Fly recommends for production Rails apps.
+Covers everything you need to setup, run, and manage production Rails apps on Fly. These documents should give you an idea of what's actually like day-to-day using Fly.
 
-When the command is finished, change into that directory:
+## [Advanced Guides](./advanced-guides)
 
-```cmd
-cd blog
-```
-
-Now lets create the database on your workstatation:
-
-```cmd
-bin/rails db:create
-```
-
-Then generate the blog scaffolding:
-
-```cmd
-bin/rails generate scaffold Post title:string body:text
-```
-
-The scaffolding creates a database migration. Run the following command to create the `posts` table in your local Postgres database:
-
-```cmd
-bin/rails db:create
-```
-
-Once that's complete, open the `config/routes.rb` file and add `root "posts#index"` so that it looks like this:
-
-```ruby
-Rails.application.routes.draw do
-  resources :posts
-  root "posts#index"
-end
-```
-
-Congrats! You now have a Blog. Let's deploy it to production.
-
-<%= partial "docs/getting-started/partials/install_flyctl_login" %>
-
-## Provision Rails and Postgres Servers
-
-To configure and launch the app, you can use `fly launch` and follow the wizard:
-
-```cmd
-fly launch
-```
-```output
-Creating app in ~/Projects/blog
-Scanning source code
-Detected a Rails app
-? App Name (leave blank to use an auto-generated name): blog
-Automatically selected personal organization: John Smith
-? Select region: sjc (San Jose, California (US))
-Created app blog in organization personal
-Set secrets on blog: RAILS_MASTER_KEY
-Wrote config file fly.toml
-? Would you like to setup a Postgresql database now? Yes
-For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clusters
-? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
-Creating postgres cluster blog-db in organization personal
-Postgres cluster blog-db created
-  Username:    postgres
-  Password:    <redacted>
-  Hostname:    blog-db.internal
-  Proxy Port:  5432
-  PG Port: 5433
-Save your credentials in a secure place, you won't be able to see them again!
-```
-
-You can set a name for the app, choose a default region, and choose to launch and attach a Postgresql database.
-
-Deploying your application is done with the following command:
-
-```cmd
-fly deploy
-```
-
-Once it's done, you can use `fly status` to check the app's status and deployment, and you should see something like this:
-
-```cmd
-fly status
-```
-```output
-App
-  Name     = blog
-  Owner    = personal
-  Version  = 0
-  Status   = running
-  Hostname = blog.fly.dev
-
-Deployment Status
-  ID          = c3ca80bf-4034-837a-ce92-682e6528c5c7
-  Version     = v0
-  Status      = successful
-  Description = Deployment completed successfully
-  Instances   = 1 desired, 1 placed, 1 healthy, 0 unhealthy
-
-Instances
-ID        PROCESS VERSION REGION  DESIRED STATUS  HEALTH CHECKS       RESTARTS  CREATED
-748868bc  app     0       lhr     run     running 1 total, 1 passing  0         20s ago
-```
-
-If you elected to provision a Postgres database during setup, it's deployed as a seperate Fly app to `blog-db`.
-
-<%= partial "docs/getting-started/partials/launched" %>
-
-## Configuring an existing Rails application
-
-If you've got an existing Rails app, and you want to set it up for Fly, the process is pretty similar;
-`fly launch` will take you through the setup steps, but there's a couple of things to look at first.
-
-If your Rails application wasn't created with the `--database=postgresql` option
-and you didn't subsequently add the Postgres gem to your bundle, do so now
-via:
-
-```cmd
-bundle add pg --group production
-```
-
-Your database settings will be passed to your app via a `DATABASE_URL` environment
-variable (which Rails picks up automatically). That means you can drop a lot of the production configuration from `config/database.yml`.
-
-If you've got your app's secrets stored in an encrypted credentials file such as `config/credentials.yml.enc`
-or `config/credentials/production.yml.enc`, you'll need to provide the master key to your app via
-`fly secrets set`. For example, if your master key is stored in `config/master.key`, you can run:
-
-```cmd
-fly secrets set RAILS_MASTER_KEY=$(cat config/master.key)
-```
-
-## Next steps
-
-At this point you now have a basic Rails application running that points at a Postgres database, but most Rails applications need more then that like access to a Redis database for caching and background workers. Read through [the basics](/docs/rails/the-basics) to setup the remainder of your Rails application.
+The topics in these documents either apply to a subset of Rails applications or are things you'd do if your application demands scale.
