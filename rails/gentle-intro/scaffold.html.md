@@ -3,7 +3,6 @@ title: Scaffold to Success
 layout: framework_docs
 order: 1
 objective: Scaffold a database table, demonstrating use of a PostgreSQL database.
-status: alpha
 ---
 
 Real Rails applications store data in databases, and Rails scaffolding makes it

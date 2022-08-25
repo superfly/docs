@@ -3,7 +3,6 @@ title: Add a Bit of Splash
 layout: framework_docs
 order: 0
 objective: Create a trivial application, provision and deploy it.
-status: alpha
 ---
 
 A newly generated Rails application will display a flashy splash screen when
@@ -21,8 +20,8 @@ creating a new application:
 
 ``` shell
 $ rails --version
-$ rails new namelist
-$ cd namelist
+$ rails new list
+$ cd list
 ```
 
 Now use your favorite editor to make a one line change to `config/routes.rb`:
@@ -53,20 +52,20 @@ fly launch
 Creating app in ~/list
 Scanning source code
 Detected a Rails app
-? App Name (leave blank to use an auto-generated name): namelist
+? App Name (leave blank to use an auto-generated name): list
 ? Select organization: John Smith (personal)
 ? Select region: iad (Ashburn, Virginia (US))
-Created app namelist in organization personal
-Set secrets on namelist: RAILS_MASTER_KEY
+Created app list in organization personal
+Set secrets on list: RAILS_MASTER_KEY
 Wrote config file fly.toml
 ? Would you like to set up a Postgresql database now? Yes
 For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clusters
 ? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
-Creating postgres cluster namelist-db in organization personal
-Postgres cluster namelist-db created
+Creating postgres cluster list-db in organization personal
+Postgres cluster list-db created
   Username:    postgres
   Password:    <redacted>
-  Hostname:    namelist-db.internal
+  Hostname:    list-db.internal
   Proxy Port:  5432
   PG Port: 5433
 Save your credentials in a secure place -- you won't be able to see them again!

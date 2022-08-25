@@ -3,7 +3,6 @@ title: Turbo Stream Changes
 layout: framework_docs
 order: 3
 objective: Provision a redis cluster, and turbo stream changes to all browsers as they occur.
-status: alpha
 ---
 
 We now have a basic [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) application where the index page shows a snapshot of
@@ -32,7 +31,7 @@ fly redis create
 ```
 ```output
 ? Select Organization: John Smith (personal)
-? Choose a Redis database name (leave blank to generate one): namelist-redis
+? Choose a Redis database name (leave blank to generate one): list-redis
 ? Choose a primary region (can't be changed later) Ashburn, Virginia (US) (iad)
 ? Optionally, choose one or more replica regions (can be changed later): 
 
@@ -41,7 +40,7 @@ Learn more at https://fly.io/docs/reference/redis/#memory-limits-and-object-evic
 ? Would you like to enable eviction? No
 ? Select an Upstash Redis plan Free: 100 MB Max Data Size
 
-Your Upstash Redis database namelist-redis is ready.
+Your Upstash Redis database list-redis is ready.
 Apps in the personal org can connect to at redis://default:<redacted>.upstash.io
 If you have redis-cli installed, use fly redis connect to connect to your database.
 ```
