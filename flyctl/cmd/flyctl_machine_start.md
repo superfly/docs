@@ -1,9 +1,9 @@
-Start a Fly machine
+Start one or more Fly machines
 
 
 ## Usage
 ~~~
-flyctl machine start <id> [flags]
+flyctl machine start <id> [<id>...] [flags]
 ~~~
 
 ## Options
