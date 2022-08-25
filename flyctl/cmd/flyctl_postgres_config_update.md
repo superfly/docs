@@ -12,10 +12,12 @@ flyctl postgres config update [flags]
   -a, --app string                          Application name
       --auto-confirm                        Will automatically confirm changes without an interactive prompt.
   -c, --config string                       Path to application configuration file
+      --force                               Skips pg-setting value verification.
   -h, --help                                help for update
       --log-min-duration-statement string   Sets the minimum execution time above which all statements will be logged. (ms)
       --log-statement string                Sets the type of statements logged. (none, ddl, mod, all)
       --max-connections string              Sets the maximum number of concurrent connections.
+      --shared-preload-libraries string     Sets the shared libraries to preload. (comma separated string)
       --wal-level string                    Sets the level of information written to the WAL. (minimal, replica, logical).
 ~~~
 
