@@ -1,9 +1,16 @@
 ---
-title: Hotwire Rails Apps
+title: Getting Started
 layout: framework_docs
-objective: Add environment variables to your Hotwire Rails applications, configure secrets, and use the encrypted `credentials.yml` file to manage your application's configuratio on Fly.
-status: beta
-order: 3
+order: 1
+redirect_from: /docs/getting-started/rails/
+subnav_glob: docs/rails/getting-started/*.html.*
+objective: Quickly get a very basic Rails blog up and running at Fly. This guide is the fastest way to try using Fly, so if you're short on time start here.
+related_pages:
+  - /docs/rails/the-basics
+  - /docs/rails/the-basics/sidekiq
+  - /docs/rails/the-basics/configuration
+  - /docs/reference/redis
+  - /docs/reference/postgres
 ---
 
 In this guide we'll develop and deploy a Rails application that first
@@ -14,7 +21,7 @@ update pages.
 In order to start working with Fly you will need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once thats installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
 
 <div class="callout">
-Before proceeding, something to be aware of.  While Rails is [Optimized for Programmer happiness](https://rubyonrails.org/doctrine#optimize-for-programmer-happiness), it isn't particularly optimized for minimum RAM consumption. If you wish to deploy an app of any appreciable size or even make extensive use of features like `rails console`, you likely will hit RAM limits on your machine.  And when applications run out of memory, they tend to behave unpredictably as error recovery actions will often also fail due to lack of memory.
+Before proceeding, something to be aware of. While Rails is [Optimized for Programmer happiness](https://rubyonrails.org/doctrine#optimize-for-programmer-happiness), it isn't particularly optimized for minimum RAM consumption. If you wish to deploy an app of any appreciable size or even make extensive use of features like `rails console`, you likely will hit RAM limits on your machine. And when applications run out of memory, they tend to behave unpredictably as error recovery actions will often also fail due to lack of memory.
 
 The command to be used to address this is:
 
@@ -114,7 +121,7 @@ fly deploy
 ```
 
 This will take a few seconds as it uploads your application, builds a machine image,
-deploys the images, and then monitors to ensure it starts successfully.  Once complete
+deploys the images, and then monitors to ensure it starts successfully. Once complete
 visit your app with the following command:
 
 ```cmd
@@ -129,7 +136,7 @@ your application a bit more interesting.
 ## Scaffold to Success
 
 Real Rails applications store data in databases, and Rails scaffolding makes it
-easy to get started.  We are going to start with the simplest table possible,
+easy to get started. We are going to start with the simplest table possible,
 add a small bit of CSS to make the display a bit less ugly, and finally adjust
 our routes so that the main page is the index page for our new table.
 
@@ -179,7 +186,7 @@ Let's deploy it.
 ### Deployment
 
 Normally at this point you have database migrations to worry about, code to push,
-and server processes to restart.  Fly takes care of all of this and more, so all
+and server processes to restart. Fly takes care of all of this and more, so all
 you need to do is the following:
 
 ``` shell
@@ -195,7 +202,7 @@ Try it out!  Add a few names and once you are done, proceed onto the next step: 
 ## Turbo
 
 We now have a basic [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) application where the index page shows a snapshot of
-the server state at the time it was displayed.  Lets make the index page
+the server state at the time it was displayed. Lets make the index page
 come alive using [Turbo Streams](https://turbo.hotwired.dev/handbook/streams).
 
 This will involve provisioning a redis cluster and a surprisingly small number
@@ -211,7 +218,7 @@ Examine your `Gemfile` and look for the following lines:
 gem "redis", "~> 4.0"
 ```
 
-If the second line is commented out, uncomment it and then run `bundle install`.  Rails will automatically have done this for you if it detected the `redis-server` executable on your machine at that time the application was created.
+If the second line is commented out, uncomment it and then run `bundle install`. Rails will automatically have done this for you if it detected the `redis-server` executable on your machine at that time the application was created.
 
 Now that Rails is ready to make use of Redis, lets deploy a redis cluster:
 
@@ -238,21 +245,21 @@ Once again, you can set a name for the database, chose a primary region as well 
 a number of replica regions, enable eviction, and select a plan.
 
 The most important line in this output is the second to the last one which will contain
-a URL starting with `redis:`.  The URL you see will be considerably longer than the one
-you see above.  You will need to provide this URL to Rails, and with fly this is done
-via [secrets](https://fly.io/docs/reference/secrets/).  Run the following command replacing the url with the one from the output above:
+a URL starting with `redis:`. The URL you see will be considerably longer than the one
+you see above. You will need to provide this URL to Rails, and with fly this is done
+via [secrets](https://fly.io/docs/reference/secrets/). Run the following command replacing the url with the one from the output above:
 
 ```cmd
 fly secrets set REDIS_URL=redis://default:<redacted>.upstash.io
 ```
 
-Now you are ready.  Rails is set up to use redis, knows where to find the redis instance,
-and the instance is deployed.  Now onto the implementation:
+Now you are ready. Rails is set up to use redis, knows where to find the redis instance,
+and the instance is deployed. Now onto the implementation:
 
 ### Adding turbo streams to your application.
 
-There actually are five separate steps needed to make this work.  Fortunately all but
-one require only a single line of code (or in one case, a single command).  The third
+There actually are five separate steps needed to make this work. Fortunately all but
+one require only a single line of code (or in one case, a single command). The third
 step actually requires two lines of code.
 
 Start by generating a channel:
@@ -335,16 +342,16 @@ There is only one step left, and that is to modify `app/controllers/names_contro
 ### Deployment and testing
 
 By now it should be no surprise that deployment is as easy as `fly deploy` and
-`fly open`.  Once that is done, copy the browser URL, open a second browser
+`fly open`. Once that is done, copy the browser URL, open a second browser
 window (it can even be a different browser or even on a different machine), and
 paste the URL into the new window.
 
 With one browser window open to the index page, use the other browser to change
-one of the names.  Once you click "Update name" the index list in the original
+one of the names. Once you click "Update name" the index list in the original
 window will instantly update.
 
 Of course, if this were a real application, inserting and removing names would
-cause those changes to be broadcast.  As they say, this is left as an exercise
+cause those changes to be broadcast. As they say, this is left as an exercise
 for the student.
 
 ## Arrived at Destination
@@ -352,13 +359,13 @@ for the student.
 You have successfully built, deployed, and connected to your first Rails application on Fly.
 
 We've accomplished a lot with only just over a handful of lines of code and
-just over a dozen commands.  When you are ready, proceed to a
+just over a dozen commands. When you are ready, proceed to a
 [recap](/docs/rails/quick-start/recap/).
 
 ## Recap
 
 We started with an empty directory and in a matter of minutes had a running
-Rails application deployed to the web.  A few things to note:
+Rails application deployed to the web. A few things to note:
 
   * From a Rails perspective, we demonstrated Action Cable, Action Pack,
     Action View, Active Job, Active Model, Active Record, and Turbo
@@ -370,16 +377,14 @@ Now that you have seen it up and running, a few things are worth noting:
 
   * No changes were required to your application to get it to work.
   * Your application is running on a VM, which starts out based on a
-    docker image.  To make things easy, `fly launch` generates a
+    docker image. To make things easy, `fly launch` generates a
     `Dockerfile` for you which you are free to modify.
-  * Other files of note: `.dockerignore` and [`fly.toml`](https://fly.io/docs/reference/configuration/), both of which you can also modify.  All three files
+  * Other files of note: `.dockerignore` and [`fly.toml`](https://fly.io/docs/reference/configuration/), both of which you can also modify. All three files
     should be checked into your git repository.
-  * `fly dashboard` can be used to monitor and adjust your application.  Pretty
+  * `fly dashboard` can be used to monitor and adjust your application. Pretty
     much anything you can do from the browser window you can also do from the
-    command line using `fly` commands.  Try `fly help` to see what you can do.
-  * `fly ssh console` can be used to ssh into your VM.  `fly ssh console -C "/app/bin/rails console"` can be used to open a rails console.
+    command line using `fly` commands. Try `fly help` to see what you can do.
+  * `fly ssh console` can be used to ssh into your VM. `fly ssh console -C "/app/bin/rails console"` can be used to open a rails console.
 
 Now that you have seen how to deploy a trivial application, it is time
 to move on to [The Basics](../../the-basics/).
-
-
