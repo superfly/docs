@@ -21,7 +21,7 @@ Go ahead and [download](https://learn.hashicorp.com/tutorials/terraform/install-
 
 ## Set API key
 
-`export FLY_API_TOKEN=$(fly auth token)`
+First make sure you're logged in by running `flyctl auth login`, after which you can run `export FLY_API_TOKEN=$(flyctl auth token)` to obtain a token.
 
 ## Open wireguard tunnel
 
