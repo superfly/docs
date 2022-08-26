@@ -5,25 +5,11 @@ objective: Access the Rails console, run rake tasks, and access the SSH shell of
 order: 3
 ---
 
-Running one-off tasks on Fly can be accomplished via `fly console`.
-
-## Rake tasks
-
-To execute `rake` on Fly, run:
-
-```cmd
-fly ssh console -C "app/bin/rake my_rake_task"
-```
-
-To list all the available tasks, run:
-
-```cmd
-fly ssh console -C "app/bin/rake -T"
-```
+Running one-off tasks on Fly can be accomplished via `fly ssh console`.
 
 ## Rails tasks
 
-Similarly, to run the `rails` command on Fly:
+To execture the `rails` command on Fly, run:
 
 ```cmd
 fly ssh console -C "app/bin/rails db:migrate"
@@ -58,3 +44,30 @@ fly ssh console
 ```output
 #
 ```
+
+## Custom Rake tasks
+
+You can create [Custom Rake Tasks](https://community.fly.io/) to
+automate frequently used commands.  As an example, drop the
+following into `lib/tasks/fly.rake` to reduce the number of
+keystrokes it takes to launch a console:
+
+```ruby
+namespace :fly do
+  task :ssh do
+    sh 'fly ssh console'
+  end
+
+  task :console do
+    sh 'fly ssh console -C "app/bin/rails console"'
+  end
+
+  task :dbconsole do
+    sh 'fly ssh console -C "app/bin/rails dbconsole"'
+  end
+end
+```
+
+You can run these tasks with `bin/rails fly:ssh`, `bin/rails fly:console`,
+and `bin/rails fly:dbconsole` respectively.
+
