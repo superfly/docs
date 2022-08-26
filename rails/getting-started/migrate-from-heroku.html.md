@@ -71,7 +71,7 @@ There's still work to be done to move more Heroku stuff over, so don't worry if 
 To see all of your Heroku env vars and secrets, run:
 
 ```cmd
-heroku config -s | grep -v "DATABASE_URL" | fly secrets import
+heroku config -s | grep -v -e "DATABASE_URL" -e "REDIS_URL" -e "REDIS_TLS_URL" | fly secrets import
 ```
 
 This command exports the Heroku secrets, excludes `DATABASE_URL` and `REDIS_URL`, and imports them into Fly.
