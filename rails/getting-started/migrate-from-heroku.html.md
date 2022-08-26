@@ -15,7 +15,7 @@ This guide runs you through how to migrate a basic Rails application off of Hero
 
 If your application is running with more services, additional work may be needed to migrate your application off Heroku.
 
-## Provision and deploy Raills app to Fly
+## Provision and deploy Rails app to Fly
 
 From the root of the Rails app you're running on Heroku, run `fly launch` and select the options to provision a new Postgres database.
 
