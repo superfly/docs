@@ -1,0 +1,42 @@
+---
+title: Speedrun! Deploying to Fly!
+layout: docs
+sitemap: false
+nav: firecracker
+toc: false
+---
+
+You have an application you want to deploy on Fly? You're in the right place. 
+
+For many languages and frameworks, you can deploy your app from zero, with the following three steps.
+
+1. [Install flyctl](/docs/getting-started/installing-flyctl/) - you'll need it.
+2. Create an account with `fly auth signup` or login with `fly auth login`.
+3. Run `fly launch` - create, configure, and deploy a new application.
+
+You pick an app name and an initial deployment region. The `fly launch` command scans your source code, prepares your project, (optionally) attaches a Postgres database, and deploys your app to Fly.io. For more about this, see [Launching a New App](/docs/getting-started/launch-app/).
+
+
+[flyctl](/docs/flyctl/) knows about the following kinds of apps:
+
+<%= partial "./getting-started/partials/scanner_guides" %>
+
+If you're running something else, `fly launch` also works [with a Dockerfile](/docs/getting-started/dockerfile/).
+
+## Next steps
+
+1. Run `flyctl status` - show the status of the application instances.
+2. Run `flyctl open` - open your browser and direct it to your app.
+
+
+If things don't go as smoothly as you'd like, visit our [community forum](https://community.fly.io) and get help!
+
+Would you like to know more? You should read up on [private networking](https://fly.io/docs/reference/private-networking/), [volumes](/docs/reference/volumes/), and [global Postgres](https://fly.io/docs/getting-started/multi-region-databases/).
+
+It's also easy to [bring your Heroku app to Fly.io](/launch/turboku) [Turboku](https://fly.io/launch/heroku) web launcher. Read about it in the [New Turboku launch post](https://fly.io/blog/new-turboku/).
+
+Check out our other [Web Launchers](/launch), too.
+
+<figure class="w:full mt:6">
+  <img src="/public/images/speedrun.jpg" srcset="/public/images/speedrun@2x.jpg 2x" alt="">
+</figure>
