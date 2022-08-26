@@ -15,7 +15,11 @@ This guide runs you through how to migrate a basic Rails application off of Hero
 
 If your application is running with more services, additional work may be needed to migrate your application off Heroku.
 
-## Provision and deploy Rails app to Fly
+## Migrating your app
+
+The steps below run you through the process of migrating your Rails app from Heroku to Fly.
+
+### Provision and deploy Rails app to Fly
 
 From the root of the Rails app you're running on Heroku, run `fly launch` and select the options to provision a new Postgres database.
 
@@ -66,7 +70,7 @@ There's still work to be done to move more Heroku stuff over, so don't worry if 
 * `fly logs` - Read error messages and stack traces emitted by your Rails application.
 * `fly ssh console -C "/app/bin/rails console"` - Launches a Rails shell, which is useful to interactively test components of your Rails application.
 
-## Transfer Heroku secrets
+### Transfer Heroku secrets
 
 To see all of your Heroku env vars and secrets, run:
 
@@ -106,7 +110,7 @@ STRIPE_SIGNING_SECRET         14c5efb2b758f8cea2a77c7963a971e4  1m21s ago
 STRIPE_SUBSCRIPTION_PRICE     edaad046c9c293079ffa14ff59049c2e  1m23s ago
 ```
 
-## Transfer the Database
+### Transfer the Database
 
 <aside class="callout">
   Consider taking your Heroku application offline during this migration so you don't lose data during the transfer.
@@ -138,7 +142,7 @@ fly open
 
 If you have a Redis server, there's a good chance you need to set that up.
 
-## Provision a Redis server
+### Provision a Redis server
 
 Create a redis server by running:
 
@@ -160,7 +164,7 @@ fly open
 
 At this point, most Rails apps should boot since they depend on Redis and PostgresSQL. If you're stilling having problems run `fly logs` to view error messages and post your issues in the [Fly Community Forum](https://community.fly.io).
 
-## Multiple processes & background workers
+### Multiple processes & background workers
 
 Heroku uses Procfiles to describe multi-process Rails applications. Fly describes multi-processes with the [`[processes]` directive](/docs/reference/configuration/#the-processes-section) in the `fly.toml` file.
 
@@ -198,6 +202,12 @@ fly deploy
 
 You should see a `web` and `worker` process deploy.
 
+### Custom Domain & SSL Certificates
+
+After you finish deploying your application to Fly and have tested it extensively, [read through the Custom Domain docs](/docs/app-guides/custom-domains-with-fly) and point your domain at Fly.
+
+In addition to supporting [`CNAME` DNS records](/docs/app-guides/custom-domains-with-fly#option-i-cname-records), Fly also supports [`A` and `AAAA` records](/docs/app-guides/custom-domains-with-fly#option-ii-a-and-aaaa-records) for those who want to point `example.com` (without the `www.example.com`) directly at Fly.
+
 ## Cheat Sheet
 
 Old habits die hard, especially good habits like deploying frequently to production. Below is a quick overview of the differences you'll notice initially between Fly and Heroku.
@@ -211,10 +221,39 @@ Fly commands are a bit different than Heroku, but you'll get use to them after a
 | Deployments | `git push heroku` | `fly deploy` |
 | Rails console | `heroku console` | `fly ssh console -C "/bin/app/rails console"` |
 | Database migration | `heroku rake db:migrate` | `fly ssh console -C "/bin/app/rake db:migrate"` |
+| Postgres console | `heroku psql` | `fly postgres connect -a <name-of-database-app-server>`
 | Tail log files | `heroku logs` | `fly logs` |
+| View releases | `heroku releases` | `fly releases` |
 | Help | `heroku help` | `fly help` |
 
 Check out the [Fly CLI docs](https://fly.io/docs/flyctl/) for a more extensive inventory of Fly commands.
+
+### Databases
+
+Fly and Heroku have different Postgres database offerings. The most important distinction to understand about using Fly is that it automates provisioning, maintenance, and snapshot tasks for your Postgres database, but it does not manage it. If you run out of disk space, RAM, or other resources on your Fly Postgres instances, you'll have to scale those virtual machines from the [Fly CLI](https://fly.io/docs/reference/postgres/).
+
+Contrast that with Heroku, which fully manages your database and includes an extensive suite of tools to provision, backup, snapshot, fork, patch, upgrade, and scale up/down your database resources.
+
+The good news for people who want a highly managed Postgres database is they can continue hosting it at Heroku and point their Fly instances to it!
+
+#### Heroku's managed database
+
+One command is all it takes to point Fly apps at your Heroku managed database.
+
+```cmd
+fly secrets set DATABASE_URL=$(heroku config:get DATABASE_URL)
+```
+
+This is a great way to get comfortable with Fly if you prefer a managed database provider. In the future if you decide you want to migrate your data to Fly, you can do so [pretty easily with a few commands](#transfer-the-database).
+
+
+#### Fly's databases
+
+The most important thing you'll want to be comfortable with using Fly's database offering is [backing up and restoring your database](/docs/rails/the-basics/backup-and-restoring-data/).
+
+As your application grows, you'll probably first [scale disk and RAM resources](/docs/reference/postgres/#scaling-vertically-adding-more-vm-resources), then [scale out with multiple replicas](/docs/reference/postgres/#scaling-horizontally-adding-more-replicas). Common maintaince tasks will include [upgrading Postgres](/docs/reference/postgres/#upgrading-the-postgres-app) as new versions are released with new features and security updates.
+
+[You Postgres, now what?](/docs/reference/postgres-whats-next/) is a more comprehensive guide for what's required when running your Postgres databases on Fly.
 
 ### Pricing
 

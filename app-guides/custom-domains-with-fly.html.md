@@ -1,5 +1,5 @@
 ---
-title: "SSL for Custom Domains"
+title: Custom Domains and SSL Certificates
 layout: docs
 sitemap: false
 nav: firecracker
