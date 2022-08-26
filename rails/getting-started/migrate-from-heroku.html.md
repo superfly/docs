@@ -197,3 +197,74 @@ fly deploy
 ```
 
 You should see a `web` and `worker` process deploy.
+
+## Cheat Sheet
+
+Old habits die hard, especially good habits like deploying frequently to production. Below is a quick overview of the differences you'll notice initially between Fly and Heroku.
+
+### Commands
+
+Fly commands are a bit different than Heroku, but you'll get use to them after a few days.
+
+| Task         | Heroku     | Fly |
+|--------------|-----------|------------|
+| Deployments | `git push heroku` | `fly deploy` |
+| Rails console | `heroku console` | `fly ssh console -C "/bin/app/rails console"` |
+| Database migration | `heroku rake db:migrate` | `fly ssh console -C "/bin/app/rake db:migrate"` |
+| Tail log files | `heroku logs` | `fly logs` |
+| Help | `heroku help` | `fly help` |
+
+Check out the [Fly CLI docs](https://fly.io/docs/flyctl/) for a more extensive inventory of Fly commands.
+
+### Pricing
+
+Heroku and Fly have very different pricing structures. You'll want to read through the details at on [Fly's pricing page](/docs/about/pricing/) before launching to production. The sections below serve as a rough comparison between Heroku and Fly's plans as of August 2022.
+
+<div class="callout">
+  Please do your own comparison of plans before switching from Heroku to Fly. The examples below are rough estimates between two very different offerings, so it focuses on the costs of app & database servers. It does not represent the final costs of each plan. Also not that plans are pricing are subject to change.
+</div>
+
+#### Free Plans
+
+Heroku will not offer free plans as of November 28, 2022.
+
+Fly offers a Trial plan that includes 2 - 256Mb virtual machine, which is enough to run a tiny Rails app and Postgres database to get a feel for how Fly works. If you add a payment method to your account, the Fly Hobby plan increases these limits to 3 - 256Mb virtual machines.
+
+#### Plans for Small Rails Apps
+
+Heroku's Hobby tier is limited to 10,000 rows of data, which gets exceeded pretty quickly requiring the purchase of additional rows of data.
+
+| Resource | Specs | Price |
+|----------|------|-------|
+| App Dyno | 512MB RAM | $7/mo |
+| Database Server | 10,000,000 rows | $9/mo |
+| **Estimated cost** | | $16/mo |
+
+Fly's pricing is [metered only for the resources](https://fly.io/docs/about/pricing/) you use. Database is billed by the amount of RAM and disk space used, not by rows. The closest equivalent to the Heroku Hobby tier on Fly looks like this:
+
+| Resource | Specs | Price |
+|----------|------|-------|
+| App Server | 1GB RAM | ~$5.70/mo |
+| Database Server | 256MB RAM / 10Gb disk | ~$3.44/mo |
+| **Estimated cost** | | ~$9.14/mo |
+
+#### Plans for Medium to Large Rails Apps
+
+There's too many variables to compare Fly and Heroku's pricing for larger Rails applications depending on your needs, so you'll definitely want to do your homework before migrating everything to Fly. This comparison focuses narrowly on the costs of app & database resources, and excludes other factors such as bandwidth costs, bundled support, etc.
+
+| Resource | Specs | Price | Quantity | Total  |
+|----------|-------|-------|----------|--------|
+| App Dyno | 2.5GB RAM | $250/mo | 8 | $2,000/mo |
+| Database Server | 61GB RAM / 1TB disk | $2,500/mo | 1 | $2,500/mo |
+| **Estimated cost** | | | | $4,500/mo |
+
+
+Here's roughly the equivalent resources on Fly:
+
+| Resource | Specs | Price | Quantity | Total  |
+|----------|-------|-------|----------|--------|
+| App Server | 4GB RAM / 2X CPU | ~$62.00/mo | 8 | ~$496/mo |
+| Database Server | 64GB RAM / 500GB disk | ~$1,266/mo | 1 | ~$1,266/mo |
+| **Estimated cost** | | | | ~$1,762/mo |
+
+The comparison isn't realistic because it focuses only on application and database servers, but it does give you an idea of how the different cost structures scale on each platform.
