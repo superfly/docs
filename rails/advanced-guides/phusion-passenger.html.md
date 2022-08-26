@@ -5,10 +5,11 @@ objective: This guide shows you how to replace the Puma web server with nginx an
 status: beta
 ---
 
-This guide shows you how to replace the Puma web server with
+This guide shows you how to replace the Puma web server which runs your
+Rails application with
 [nginx](https://www.nginx.com/) and [Phusion
 Passenger](https://www.phusionpassenger.com/).  This may be useful if you need
-functionality that only nginx and/or Passenger provide, such as reverse
+functionality that nginx and/or Passenger provide, such as reverse
 proxying or hosting multiple applicationss.
 
 ## Replacing the Dockerfile
@@ -59,13 +60,13 @@ CMD ["/sbin/my_init"]
 ```
 
 As promised, the passenger-full image that the Phusion team provides
-makes your Dockerfile considerably smaller, but this is a bit deceptive
-as you still need to configure nginx.  We do that next.
+makes your Dockerfile considerably smaller, but there remains more work to
+be done as you still need to configure nginx.  We do that next.
 
 ## Configuring nginx
 
 The Dockerfile above contains three `ADD` commands.  These copy configuration
-files to image.  The first two files configure ngix.  Place all three files
+files to the image.  The first two files configure ngix.  Place all three files
 in a `config/fly` directory.
 
 We start with `config/fly/rails.conf`:
@@ -122,13 +123,14 @@ The above are commonly used variables, feel free to adjust as you see fit.
 
 ## Making a swapfile
 
-The Dockerfile provides by Phusion will create a swapfile when your application
+The Dockerfile provided by Phusion will create a swapfile when your application
 is run in a container.  Fly uses your Dockerfile to build an image, but then
 deploys that image to a VM, so while the commands necessary to build a
-swapfile are there, they aren't executed.  We can execute them by placing
-the following into `config/fly/mkswap.sh`:
+swapfile are there, they aren't executed on your VM.  We can execute them by
+placing the following into `config/fly/mkswap.sh`:
 
 ```
+#!/bin/sh
 fallocate -l 512M /swapfile
 chmod 0600 /swapfile
 mkswap /swapfile
