@@ -399,6 +399,12 @@ The GraphQL mutation returns the app name and the hostname and certificate id th
 }
 ```
 
+## Troubleshooting
+
+**I use Cloudflare, and my fly.io SSL certificate doesn't seem to issue**
+
+If you're using Cloudflare, you might be using their Universal SSL feature which inserts a TXT record for `_acme_challenge.mydomain` that interferes with our cert validation. You should disable this feature, and verify by running `dig txt _acme-challenge.mydomain.com +short` to see if it returns with a fly address.
+
 ## Wrapping up
 
 You have everything you need to either hand assign a custom domain to your Fly application or to create your own automated multi-domain proxy. Let your ideas take flight with Fly.
