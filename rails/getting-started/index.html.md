@@ -130,8 +130,7 @@ fly open
 
 That's it!  You are up and running!  Wasn't that easy?
 
-Now proceed to [Scaffold to Success](/docs/rails/quick-start/scaffold/) to make
-your application a bit more interesting.
+Now lets make the application a bit more interesting.
 
 ## Scaffold to Success
 
@@ -197,7 +196,7 @@ $ fly open
 Subsequent deploys are quicker than the first one as substantial portions of you
 application will have already been built.
 
-Try it out!  Add a few names and once you are done, proceed onto the next step: [Turbo Stream Changes](/docs/rails/quick-start/turbo/).
+Try it out!  Add a few names and once you are done, proceed onto the final step.
 
 ## Turbo
 
@@ -338,6 +337,40 @@ There is only one step left, and that is to modify `app/controllers/names_contro
     end
   end
 ```
+
+### Patching Action Cable to handle Redis timeouts
+
+In order to conserve resources, redis connections time out periodically.
+There is a [pull request](https://github.com/rails/rails/pull/45478)
+open to restart Action Cable server on Redis connection failures, but
+until it lands you can achieve the same effect by placing the following
+into `config/initializers/action_cable.rb`:
+
+```ruby
+# Restart Action Cable server on Redis connection failures.
+# See: https://github.com/rails/rails/pull/45478
+require 'action_cable/subscription_adapter/redis'
+
+module ActionCableRedisListenerPatch
+  private
+
+  def ensure_listener_running
+    @thread ||= Thread.new do
+      Thread.current.abort_on_exception = true
+      conn = @adapter.redis_connection_for_subscriptions
+      listen conn
+    rescue ::Redis::BaseConnectionError
+      @thread = @raw_client = nil
+      ::ActionCable.server.restart
+    end
+  end
+end
+
+ActionCable::SubscriptionAdapter::Redis::Listener.prepend(ActionCableRedisListenerPatch)
+```
+
+Even with this patch, the connection will still drop periodically and you
+will see stack traceback information in your logs.
 
 ### Deployment and testing
 
