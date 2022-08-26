@@ -1,12 +1,12 @@
 ---
-title: Speedrun! Deploying to Fly!
+title: Speedrun! Deploying to Fly.io!
 layout: docs
 sitemap: false
 nav: firecracker
 toc: false
 ---
 
-You have an application you want to deploy on Fly? You're in the right place. 
+You have an application you want to deploy on Fly.io? You're in the right place. 
 
 For many languages and frameworks, you can deploy your app from zero, with the following three steps.
 
@@ -14,14 +14,13 @@ For many languages and frameworks, you can deploy your app from zero, with the f
 2. Create an account with `fly auth signup` or login with `fly auth login`.
 3. Run `fly launch` - create, configure, and deploy a new application.
 
-You pick an app name and an initial deployment region. The `fly launch` command scans your source code, prepares your project, (optionally) attaches a Postgres database, and deploys your app to Fly.io. For more about this, see [Launching a New App](/docs/getting-started/launch-app/).
-
-
-[flyctl](/docs/flyctl/) knows about the following kinds of apps:
+`fly launch` can configure and deploy the following kinds of apps automatically:
 
 <%= partial "./getting-started/partials/scanner_guides" %>
 
-If you're running something else, `fly launch` also works [with a Dockerfile](/docs/getting-started/dockerfile/).
+You're not limited to these kinds of projects, though! `fly launch` also knows what to do [with a Dockerfile](/docs/getting-started/dockerfile/), so you can use the tech _you_ love.
+
+See [Launching a New App](/docs/getting-started/launch-app/) for more on what `fly launch` does.
 
 ## Next steps
 
