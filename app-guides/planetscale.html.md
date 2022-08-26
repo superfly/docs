@@ -77,7 +77,7 @@ Choose the region you would like to create it in:
 
 ![Screenshot](docs/images/planetscale_add_region_dialog.png)
 
-After a few moments those additional read-only regions should be ready. They may take slghtly longer if there is a large amount of data to be replicated. Each region has its own, unique credentials. So click the "..." and then on _Connect_. It will show you a username, password and host. Make a connection string for each region that will look like this: "mysql://**username**:**password**@**host**/**database-name**?ssl={"rejectUnauthorized":true}":
+After a few moments those additional read-only regions should be ready. They may take slightly longer if there is a large amount of data to be replicated. Each region has its own, unique credentials. So click the "..." and then on _Connect_. It will show you a username, password and host. Make a connection string for each region that will look like this: "mysql://**username**:**password**@**host**/**database-name**?ssl={"rejectUnauthorized":true}":
 
 ![Screenshot](docs/images/planetscale_add_region_connect.png)
 
