@@ -138,7 +138,7 @@ swapon /swapfile
 exit 0
 ```
 
-### Deployment
+## Deployment
 
 That's it.  As always you deploy your application via `fly deploy` and
 can open it via `fly open`.  Everything else remains the same.  You
