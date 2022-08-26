@@ -228,7 +228,7 @@ Heroku and Fly have very different pricing structures. You'll want to read throu
 
 Heroku will not offer free plans as of November 28, 2022.
 
-Fly offers a Trial plan that includes 2 - 256Mb virtual machine, which is enough to run a tiny Rails app and Postgres database to get a feel for how Fly works. If you add a payment method to your account, the Fly Hobby plan increases these limits to 3 - 256Mb virtual machines.
+Fly offers free usage for up to 3 full time VMs with 256MB of RAM, which is enough to run a tiny Rails app and Postgres database to get a feel for how Fly works.
 
 #### Plans for Small Rails Apps
 
@@ -255,7 +255,7 @@ There's too many variables to compare Fly and Heroku's pricing for larger Rails 
 | Resource | Specs | Price | Quantity | Total  |
 |----------|-------|-------|----------|--------|
 | App Dyno | 2.5GB RAM | $250/mo | 8 | $2,000/mo |
-| Database Server | 61GB RAM / 1TB disk | $2,500/mo | 1 | $2,500/mo |
+| Database | 61GB RAM / 1TB disk | $2,500/mo | 1 | $2,500/mo |
 | **Estimated cost** | | | | $4,500/mo |
 
 Here's roughly the equivalent resources on Fly:
@@ -263,7 +263,7 @@ Here's roughly the equivalent resources on Fly:
 | Resource | Specs | Price | Quantity | Total  |
 |----------|-------|-------|----------|--------|
 | App Server | 4GB RAM / 2X CPU | ~$62.00/mo | 8 | ~$496/mo |
-| Database Server | 64GB RAM / 500GB disk | ~$1,266/mo | 1 | ~$1,266/mo |
+| Database Server | 64GB RAM / 500GB disk | ~$633/mo | 2 | ~$1,266/mo |
 | **Estimated cost** | | | | ~$1,762/mo |
 
-Again, the comparison isn't realistic because it focuses only on application and database servers, but it does give you an idea of how the different cost structures scale on each platform.
+Again, the comparison isn't realistic because it focuses only on application and database servers, but it does give you an idea of how the different cost structures scale on each platform. For example, Heroku's database offering at this level is redundant, whereas Fly offers 2 database instances to achieve similar levels of redundancy.
