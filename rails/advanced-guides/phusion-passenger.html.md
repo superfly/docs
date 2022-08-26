@@ -2,7 +2,7 @@
 title: Phusion Passenger
 layout: framework_docs
 objective: This guide shows you how to replace the Puma web server with nginx and Phusion Passenger.
-status: alpha
+status: beta
 ---
 
 This guide shows you how to replace the Puma web server with
