@@ -78,7 +78,7 @@ flyctl postgres attach mypostgres --app myedgedb
 This sets the value of `DATABASE_URL` in the `myedgedb` app and creates a new role called `myedgedb` in our Postgres database. By default, this role doesn't have the full set of permissions EdgeDB needs to run. To change that, open a connection to your Postgres instance.
 
 ```cmd
-flyctl postgres connect mypostgres
+flyctl postgres connect --app mypostgres
 ```
 ```output
 ? Continue using 'mypostgres' Yes
