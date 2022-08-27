@@ -86,7 +86,7 @@ This shows the past few log file entries and tails your production log files.
 It can be helpful to open a Rails console to run commands and diagnose production issues.
 
 ```cmd
-fly ssh console -c "/app/bin/rails console"
+fly ssh console -C "/app/bin/rails console"
 ```
 ```output
 irb>
