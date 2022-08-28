@@ -7,8 +7,8 @@ subnav_glob: docs/rails/getting-started/*.html.*
 objective: Quickly get a very basic Rails blog up and running at Fly. This guide is the fastest way to try using Fly, so if you're short on time start here.
 related_pages:
   - /docs/rails/the-basics
-  - /docs/rails/the-basics/sidekiq
-  - /docs/rails/the-basics/configuration
+  - /docs/flyctl/
+  - /docs/reference/configuration/
   - /docs/reference/redis
   - /docs/reference/postgres
 ---
@@ -22,10 +22,12 @@ In order to start working with Fly you will need `flyctl`, our CLI app for manag
 
 <div class="callout">
 Before proceeding, something to be aware of. While Rails is [Optimized for Programmer happiness](https://rubyonrails.org/doctrine#optimize-for-programmer-happiness), it isn't particularly optimized for minimum RAM consumption. If you wish to deploy an app of any appreciable size or even make extensive use of features like `rails console`, you likely will hit RAM limits on your machine. And when applications run out of memory, they tend to behave unpredictably as error recovery actions will often also fail due to lack of memory.
-
+<p></p>
 The command to be used to address this is:
 
+<div style="margin: 0 0 1em 2em">
 ```fly scale vm shared-cpu-1x --memory 512```
+</div>
 
 While this does take you beyond what is offered with the free offering, the current
 cost of adding this additional memory to what otherwise would be a free machine runs about five cents a day, or about a buck and a half a month, or less than twenty dollars a year.
@@ -130,7 +132,11 @@ fly open
 
 That's it!  You are up and running!  Wasn't that easy?
 
-Now lets make the application a bit more interesting.
+If you have seen enough and are eager to get started, feel free to
+skip ahead to the [Recap](#recap) where you will see some tips.
+
+For those that want to dig in deeper, let`s make the application a bit more
+interesting.
 
 ## Scaffold to Success
 
