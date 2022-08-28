@@ -29,12 +29,15 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
 5.  Clone the repository to your local machine to edit it
 6.  Edit .gitignore and remove fly.toml - fly.toml will need to be pushed into the repository to allow deployment to happen.
 7.  Run `flyctl apps create` to create a fly.toml file.
-8.  Create `.github/workflows/main.yml` with these contents
+8.  Create `.github/workflows/fly.yml` with these contents
     <br>
     <br>
     ```yaml
     name: Fly Deploy
-    on: [push]
+    on:
+      push:
+        branches:
+          - main
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
     jobs:
@@ -42,7 +45,7 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
           name: Deploy app
           runs-on: ubuntu-latest
           steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
             - uses: superfly/flyctl-actions/setup-flyctl@master
             - run: flyctl deploy --remote-only
     ```
@@ -74,7 +77,7 @@ So, we pull `fly.toml` out of  the `.gitignore`. Which then allows us to perform
 
 ### Building the workflow
 
-**Step 8** is the heart of the process, where we put in place a workflow. Now, GitHub has a UI which allows you to select and edit workflows, but you can also modify them as part of the repository. So we create `.github/workflows/main.yml` - you'll likely want to `mkdir -p .github/workflows` to quickly create the directories - and load up the file with a GitHub Action recipe. We'll go through it line by line now:
+**Step 8** is the heart of the process, where we put in place a workflow. Now, GitHub has a UI which allows you to select and edit workflows, but you can also modify them as part of the repository. So we create `.github/workflows/fly.yml` - you'll likely want to `mkdir -p .github/workflows` to quickly create the directories - and load up the file with a GitHub Action recipe. We'll go through it line by line now:
 
 ```yaml
 name: Fly Deploy
@@ -83,10 +86,13 @@ name: Fly Deploy
 This sets the displayed name for the action.
 
 ```yaml
-on: [push]
+on:
+  push:
+    branches:
+      - main
 ```
 
-When should this action be run. There's lots of options but in this case, in response to any `push` to the repository.
+When should this action be run. There's lots of options but in this case, in response to any `push` to the repository's `main` branch. If your repository uses a default branch other than `main`, you should change that here.
 
 ```yaml
 env:
@@ -106,10 +112,10 @@ So an action is made up of named jobs, in this case one to deploy the applicatio
 
 ```yaml
       steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
 ```
 
-The first step is one of the built in Actions steps. The step `uses` the `checkout@v2` action which checks out the repository into a directory on the virtual machine. We are now ready to deploy.
+The first step is one of the built in Actions steps. The step `uses` the `checkout@v3` action which checks out the repository into a directory on the virtual machine. We are now ready to deploy.
 
 ```yaml
         - uses: superfly/flyctl-actions/setup-flyctl@master
