@@ -96,6 +96,28 @@ irb>
 
 Now that you know the basics of troubleshooting production deployments, lets have a look at some common issues people have when migrating their existing Rails applications to Fly.
 
+### Language Runtime Versions
+
+Having different runtime versions of language runtimes on your development
+machine and on production VMs can lead to problems.  Run the following
+commands to see what versions you are using in development:
+
+```shell
+$ bundle -v
+$ node -v
+$ ruby -v
+```
+
+Compare and update these versions with what you see in your `fly.toml` file:
+
+```toml
+[build]  
+  [build.args]
+    BUNDLER_VERSION = "2.3.18"
+    NODE_VERSION = "14" 
+    RUBY_VERSION = "3.1.2"
+```
+
 ### Postgres database drivers
 
 If your Rails application wasn't created with the `--database=postgresql` option
@@ -118,4 +140,17 @@ or `config/credentials/production.yml.enc`, you'll need to provide the master ke
 ```cmd
 fly secrets set RAILS_MASTER_KEY=$(cat config/master.key)
 ```
+
+You can verify that your credentials are encoded using your current `config/master.key` using:
+
+```cmd
+bin/rails credentials:show
+```
+
+You can see what `RAILS_MASTER_KEY` is deployed using:
+
+```cmd
+fly ssh console -C env | grep RAILS_MASTER_KEY
+```
+
 
