@@ -142,7 +142,7 @@ If you specify in your `fly.toml` that `protocol = "https"`, this means your app
 
 ## _Are your variables set?_
 
-For example if you notice in your logs that the database if failing to connect to `DATABASE_URL`, make sure that variable is set.
+For example if you notice in your logs that the database is failing to connect to `DATABASE_URL`, make sure that variable is set.
 
 Use these two commands to see environment variables.
 ```

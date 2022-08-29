@@ -85,13 +85,7 @@ Verify your Heroku secrets are in Fly.
 ```cmd
 fly secrets list
 NAME                          DIGEST                            CREATED AT
-CANONICAL_HOST                9eda2d21fba2e77ac810c48eff63517e  1m25s ago
 DATABASE_URL                  24e455edbfcf1247a642cdae30e14872  14m29s ago
-GOOGLE_CLIENT_ID              245b1b58331c175049202a545d9d128e  1m22s ago
-HEROKU_POSTGRESQL_BLUE_URL    9ff615b83c883ec662c65b4ec81e21ad  1m26s ago
-HEROKU_POSTGRESQL_COBALT_URL  633968cb927c85eeda051935e82aa754  1m25s ago
-IMAGEOMATIC_PUBLIC_KEY        e0d4a3b64271c773af9b8469696ddc69  1m22s ago
-IMAGEOMATIC_SECRET_KEY        ee38a86b9dcb0dca08beeb71f0980156  1m22s ago
 LANG                          95a7bb7a8d0ee402edde95bb78ef95c7  1m24s ago
 RACK_ENV                      fd89784e59c72499525556f80289b2c7  1m26s ago
 RAILS_ENV                     fd89784e59c72499525556f80289b2c7  1m26s ago
@@ -99,21 +93,13 @@ RAILS_LOG_TO_STDOUT           a10311459433adf322f2590a4987c423  1m25s ago
 RAILS_SERVE_STATIC_FILES      a10311459433adf322f2590a4987c423  1m23s ago
 REDIS_TLS_URL                 b30fe87493e14d9b670dc0263dc935c9  1m25s ago
 REDIS_URL                     4583a46e747696319573e8bfbd0db04d  1m21s ago
-ROLLBAR_ACCESS_TOKEN          549d72056847fac5059ec564e99043fb  1m22s ago
 SECRET_KEY_BASE               5afb43c2ddbba6c02ffa7e2834689692  1m22s ago
-SMTP_HOST                     132bf9caf4da0a0a8a445bf79fb2ca0f  1m21s ago
-SMTP_PASSWORD                 14569e0c465d4af3744c257af8dacffb  1m28s ago
-SMTP_USERNAME                 b22192724f4de33c7763253c9f4741b8  1m27s ago
-STRIPE_PRIVATE_KEY            687117f5eed2e36f90dbcb9d30410732  1m23s ago
-STRIPE_PUBLIC_KEY             5e9fc2e11e4ad7e623d4125aa09de46f  1m21s ago
-STRIPE_SIGNING_SECRET         14c5efb2b758f8cea2a77c7963a971e4  1m21s ago
-STRIPE_SUBSCRIPTION_PRICE     edaad046c9c293079ffa14ff59049c2e  1m23s ago
 ```
 
 ### Transfer the Database
 
 <aside class="callout">
-  Consider taking your Heroku application offline during this migration so you don't lose data during the transfer.
+  Any new data created by your Heroku app during this database migration won't be moved over to Fly. Consider taking your Heroku application offline or place in read-only mode if you want to be confident that this migration will move over 100% of your Heroku data to Fly.
 </aside>
 
 Set the `HEROKU_DATABASE_URL` variable in your Fly environment.
@@ -162,7 +148,7 @@ Once that's done Fly will deploy the application with the new environment variab
 fly open
 ```
 
-At this point, most Rails apps should boot since they depend on Redis and PostgresSQL. If you're stilling having problems run `fly logs` to view error messages and post your issues in the [Fly Community Forum](https://community.fly.io).
+At this point, most Rails apps should boot since they depend on Redis and PostgresSQL. If you're still having problems run `fly logs` to view error messages and post your issues in the [Fly Community Forum](https://community.fly.io).
 
 ### Multiple processes & background workers
 
@@ -173,9 +159,10 @@ If your Heroku `Procfile` looks like this:
 ```Procfile
 web: bundle exec puma -C config/puma.rb
 worker: bundle exec sidekiq
+release: rails db:migrate
 ```
 
-Add the following to the `fly.toml`:
+Move everything except for the `release:` line to you `fly.toml` file:
 
 ```toml
 [processes]
@@ -183,7 +170,14 @@ web = "bundle exec puma -C config/puma.rb"
 worker = "bundle exec sidekiq"
 ```
 
-Then under the `[[services]]` directive, find the entry that maps to `internal_port = 8080`, and add `processes = ["web"]`. The configuration file should look something like this:
+If you have a `release:` line in your Heroku Procfile, you'll move that to the following line in the `fly.toml` file:
+
+```toml
+[deploy]
+  release_command = "bundle exec rails db:migrate"
+```
+
+Next, under the `[[services]]` directive, find the entry that maps to `internal_port = 8080`, and add `processes = ["web"]`. The configuration file should look something like this:
 
 ```toml
 [[services]]
@@ -227,6 +221,41 @@ Fly commands are a bit different than Heroku, but you'll get use to them after a
 | Help | `heroku help` | `fly help` |
 
 Check out the [Fly CLI docs](https://fly.io/docs/flyctl/) for a more extensive inventory of Fly commands.
+
+### Deployments
+
+By default Heroku deployments are kicked off via the `git push heroku` command. Fly works a bit differently by kicking of deployments via `fly deploy`—git isn't needed to deploy to Fly. The advantage to this approach is your git history will be clean and not full of commits like `git push heroku -am "make app work"` or `git push heroku -m "ok it will really work this time"`.
+
+To achieve the desired `git push` behavior, we recommend setting up `fly deploy` as the final command in your continious integration pipeline, as outlined for Github in the [Continuous Deployment with Fly and GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/) docs.
+
+#### Release phase tasks
+
+Heroku has a `release: rake db:migrate` command in their Procfiles to run tasks while the application is deployed. Fly accomplishes the same thing with the `release_command` directive in the `fly.toml` file in the root of your project.
+
+By default, `fly launch` includes the following release command:
+
+```toml
+[deploy]
+  release_command = "bundle exec rails db:migrate"
+```
+
+If you don't want to run migrates by default per release, delete the `release_command` directive. You'll be able to manually run migrations on Fly via `fly ssh console -C "/app/bin/rails db:migrate"`.
+
+#### Build commands
+
+Asset compilations and build activities that happen before an application deploys can be customized in the `Dockerfile` that's included in the root of your project.
+
+```Dockefile
+RUN bundle exec rails assets:precompile
+```
+
+Change this `RUN` command or add more depending on the build process required for your application.
+
+#### Deploy via git
+
+Heroku's default deployment technique is via `git push heroku`. Fly doesn't require a git commit, just run `fly deploy` and the files on your local workstation will be deployed.
+
+Fly can be configured to deploy on git commits with the following techniques with a [Github Action](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/).
 
 ### Databases
 
