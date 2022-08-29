@@ -5,93 +5,17 @@ sitemap: true
 nav: firecracker
 ---
 
-Our pricing is designed to let you run small applications for free, and scale costs affordably as your needs grow. With this in mind, Fly.io application services are billed individually, based on usage, with a free allowance of resources to get you started. 
+Our pricing is designed to let you run small applications for free, and scale costs affordably as your needs grow.
 
-Billing is per organization. If you want to run more free apps, just make another organization and invite your friends.
+Fly.io services are billed per organization. Billing is based on the resources provisioned for your app, prorated for the time they are up.
 
-## _Trial plan_
+Each organization includes enough usage to run small apps. Resources included for free:
 
-Here's our free allowances for users without a payment method set.
+* Up to 3 shared-cpu-1x 256mb VMs
+* 3GB storage volumes
+* 160GB outbound data transfer
 
-<div class="min-w-0 overflow-x-auto bg-white shadow-md rounded-xl lg:-mx-8 mb-7 ring-1 ring-gray-700 ring-opacity-10">
-  <table class="table-stripe table-stretch table-pad text-sm whitespace-nowrap m-0">
-    <tbody>
-      <tr>
-        <th class="text-navy text-right">Apps</th>
-        <td>2 apps</td>
-        <td>You can create up to 2 apps full time with one VM each.</td>
-      </tr>
-      <tr>
-        <th class="text-navy text-right">VM: shared-cpu</th>
-        <td>2,340 hours per month</td>
-        <td>Run 2 <a href="#compute">shared-cpu-1x</a> VMs with 256MB RAM full time with time to spare.</td>
-      </tr>
-      <tr>
-        <th class="text-navy text-right">Volumes</th>
-        <td>1GB</td>
-        <td>Provision 1GB of <a href="#persistent volumes">persistent volumes</a> for permanent storage</td>
-      </tr>
-      <tr>
-        <th class="text-navy text-right">Bandwidth</th>
-        <td>160GB per month</td>
-        <td>See <a href="#outbound-data-transfer">outbound data transfer</a> for regional breakdown</td>
-      </tr>
-      <tr>
-        <th class="text-navy text-right">Anycast IPs</th>
-        <td>Unlimited IPv6, 1 IPv4</td>
-        <td>Additional IPv4 addresses require a payment method</td>
-      </tr>
-      <tr>
-        <th class="text-navy text-right">Certificates</th>
-        <td>10 active certificates</td>
-        <td>Add 10 <a href="#managed-ssl-certificates">certificates</a> to your apps</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-## _Hobby Plan_
-
-Add a payment method to get even more free allowances.
-
-<div class="min-w-0 overflow-x-auto bg-white shadow-md rounded-xl lg:-mx-8 mb-7 ring-1 ring-gray-700 ring-opacity-10">
-  <table class="table-stripe table-stretch table-pad text-sm whitespace-nowrap m-0">
-    <tbody>
-      <tr>
-        <th class="text-navy text-right">Apps</th>
-        <td>Unlimited</td>
-        <td>You can create unlimited apps with many VMs.</td>
-      </tr>
-      <tr>
-        <th class="text-navy text-right">VM: shared-cpu</th>
-        <td>2,340 hours per month</td>
-        <td>Run 3 <a href="#compute">shared-cpu-1x</a> VMs with 256MB RAM full time.</td>
-      </tr>
-      <tr>
-        <th class="text-navy text-right">Volumes</th>
-        <td>3GB</td>
-        <td>Provision 3GB of <a href="#persistent volumes">persistent volumes</a> for permanent storage</td>
-      </tr>
-      <tr>
-        <th class="text-navy text-right">Bandwidth</th>
-        <td>160GB per month</td>
-        <td>See <a href="#outbound-data-transfer">outbound data transfer</a> for regional breakdown</td>
-      </tr>
-      <tr>
-        <th class="text-navy text-right">Anycast IPs</th>
-        <td>Unlimited IPv6, 1 IPv4 per active app</td>
-        <td>Additional IPv4 addresses are $2 per month</td>
-      </tr>
-      <tr>
-        <th class="text-navy text-right">Certificates</th>
-        <td>10 active certificates</td>
-        <td>Add 10 <a href="#managed-ssl-certificates">certificates</a> to your apps</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-If your organization uses more than the free allowance of any service, additional resources are charged as follows:
+Additional resources are billed at the usage-based pricing detailed below.
 
 ## _Compute_
 
@@ -129,58 +53,6 @@ We bill for outbound data transfer, inbound transfer is free.
 
 <%= partial("shared/network_pricing") %>
 
-## _PostgreSQL Clusters_
-
-The `fly pg create` command will install a PostgreSQL cluster in your organization. PostgreSQL clusters are just "apps" made up of VMs, persistent volumes, and (possibly) extra memory. We bill only for the resources PostgreSQL clusters use.
-
-The price of a postgres cluster is `(vm_price + persistent_volume_price + additional_memory_price) * vm_count`. Here are some examples:
-
-<div class="min-w-0 overflow-x-auto bg-white shadow-md rounded-xl lg:-mx-8 mb-7 ring-1 ring-gray-700 ring-opacity-10">
-  <table class="table-stripe table-stretch table-pad text-sm whitespace-nowrap m-0">
-    <thead>
-      <tr>
-        <th colspan="3" class="text-navy text-right">Size</th>
-        <th class="text-navy">VM Price</th>
-        <th class="text-navy">Volume Price</th>
-        <th class="text-navy">Total Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>shared-cpu-1x</td><td>10GB volumes</td>
-        <td class="text-right">256MB RAM</td>
-        <td class="text-right">2&nbsp;x&nbsp;~$1.94/mo</td>
-        <td class="text-right">2&nbsp;x&nbsp;~$1.50/mo</td>
-        <td class="text-right">~$6.88/mo</td>
-      </tr>
-      <tr>
-        <td>shared-cpu-1x</td><td>40GB volumes</td>
-        <td class="text-right">2GB RAM</td>
-        <td class="text-right">2&nbsp;x&nbsp;~$10.70/mo</td>
-        <td class="text-right">2&nbsp;x&nbsp;~$6/mo</td>
-        <td class="text-right">~$33.40/mo</td>
-      </tr>
-      <tr>
-        <td>dedicated-cpu-2x</td><td>100GB volumes</td>
-        <td class="text-right">4GB RAM</td>
-        <td class="text-right">2&nbsp;x&nbsp;~$62/mo</td>
-        <td class="text-right">2&nbsp;x&nbsp;~$15/mo</td>
-        <td class="text-right">~$154/mo</td>
-      </tr>
-      <tr>
-        <td>dedicated-cpu-8x</td><td>500GB volumes</td>
-        <td class="text-right">64GB RAM</td>
-        <td class="text-right">2&nbsp;x&nbsp;~$558/mo</td>
-        <td class="text-right">2&nbsp;x&nbsp;~$75/mo</td>
-        <td class="text-right">~$1,266/mo</td>
-      </tr>
-    </tbody>
-  </table> 
-</div>
-
-## _Support_
+## _Support content_
 
 [Community support](https://community.fly.io) is included for all customers, regardless of usage level.
-
-We offer volume discounts and paid support plans with SLA guarantees as well.
-
