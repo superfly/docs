@@ -9,10 +9,9 @@ flyctl postgres detach [POSTGRES APP] [flags]
 ## Options
 
 ~~~
-  -a, --app string            Application name
-  -c, --config string         Path to application configuration file
-  -h, --help                  help for detach
-      --postgres-app string   Name of the postgres app to detach
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+  -h, --help            help for detach
 ~~~
 
 ## Global Options
