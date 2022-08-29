@@ -40,7 +40,7 @@ web = "bundle exec puma"
 worker = "bundle exec sidekiq"
 ```
 
-Then under the `[[services]]` directive, find the entry that maps to `internal_port = 8080`, and add `processes = ["web"]`. The configuration file should look something like this:
+Then under the `[[services]]` directive, find the entry that maps to `internal_port = 8080`, and change `processes = ["app"]` to `processes = ["web"]`. The configuration file should look something like this:
 
 ```toml
 [[services]]
