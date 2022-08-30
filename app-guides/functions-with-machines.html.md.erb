@@ -34,6 +34,8 @@ Pick a unique name and create the required application to group machines togethe
 
 <%= partial "../reference/machines/create_app" %>
 
+Note the `network` field. This is necessary to isolate the app from other private networks on the organization.
+
 Allocate an IP address to the app. This makes our app accessible at the IP, and via `user-functions.fly.dev`.
 
 ```cmd

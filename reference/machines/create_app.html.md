@@ -4,7 +4,8 @@ curl -i -X POST \\
     "http://${FLY\_API\_HOSTNAME}/v1/apps" \\
   -d '{
       "app\_name": "user-functions",
-      "org\_slug": "personal"
+      "org\_slug": "personal",
+      "network": "user-functions-network",
     }'
 
 ```
