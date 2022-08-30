@@ -41,7 +41,7 @@ Edit `config/cable.yml` thus:
 
 Modify `Dockerfile` to install `foreman`, `anycable-go` and `nginx`:
 
-```
+```diff
  FROM base
  
 +RUN gem install foreman
@@ -67,7 +67,7 @@ Modify `Dockerfile` to install `foreman`, `anycable-go` and `nginx`:
 
 Edit `fly.toml` to run foreman::
 
-```
+```diff
  [env]
    PORT = "8080"
 -  SERVER_COMMAND = "bundle exec puma"
