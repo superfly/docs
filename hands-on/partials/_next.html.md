@@ -1,11 +1,3 @@
----
-title: Further Reading, Resources and References
-layout: docs
-sitemap: false
-nav: hands_on
-toc: false
----
-
 What's next? Well this is only the start of your travels with Fly.
 
 ## _Developers_

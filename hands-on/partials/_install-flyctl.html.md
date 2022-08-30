@@ -1,11 +1,3 @@
----
-title: Installing flyctl
-layout: docs
-sitemap: false
-nav: hands_on
-toc: true
----
-
 Flyctl is a command-line utility that lets you work with Fly, from creating your account to deploying your applications. It runs on your local device so you'll want to install the version that's appropriate for your operating system:
 
 <h2 id="macos" class="group flex items-center relative mt-14 sm:mt-16 mb-10 group text-navy font-heading pb-1 border-b">
@@ -55,12 +47,3 @@ Run the Powershell install script:
 ```cmd
 iwr https://fly.io/install.ps1 -useb | iex
 ```
-
-Your next step should be to [Log in to Fly](/docs/getting-started/log-in-to-fly/).
-
-## _Next..._
-
-To continue, you need a Fly account.
-
-* If this is your first time with Fly, your next step will be to [Sign up for Fly](/docs/hands-on/sign-up/).
-* If you already have a Fly account, then your next step is to [Sign in to Fly](/docs/hands-on/sign-in/).

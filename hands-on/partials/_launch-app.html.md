@@ -1,11 +1,3 @@
----
-title: Creating an App on Fly
-layout: docs
-sitemap: false
-nav: hands_on
-toc: false
----
-
 Fly allows you to deploy any kind of app as long as it is packaged in a **Docker image**. That also means you can just deploy a docker image and as it happens we have one ready to go in `flyio/hellofly:latest`. 
 
 Each Fly application needs a `fly.toml` file to tell the system how we'd like to deploy it. That file can be automatically generated with the `flyctl launch` command. 
@@ -50,3 +42,13 @@ The `flyctl` command will always refer to this file in the current directory if 
 We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
 
 [Next: Deploying Your App](/docs/hands-on/deploy-app/)
+
+
+We are now ready to deploy our containerized app to the Fly platform. At the command line, just run:
+
+```cmd
+flyctl deploy
+```
+
+This will lookup our `fly.toml` file, and get the app name `hellofly` from there. Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl will return you to the command line when it's done.
+
