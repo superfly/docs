@@ -118,7 +118,6 @@ This pricing is subject to change until Redis Upstash is officially released.
 |Max Data size|100MB|200MB|3GB|
 |Max Concurrent Connections|100|300|1000|
 |Max Commands/sec|300|300|1000|
-|Max Daily Commands|10000|Unlimited|Unlimited|
-|Max Daily Bandwidth|10GB|10GB|50GB|
+|Max Daily Bandwidth|100MB|10GB|50GB|
 |Max Request Size|1MB|1MB|10MB|
 |Price per month, per region|$0|$10|$90|
