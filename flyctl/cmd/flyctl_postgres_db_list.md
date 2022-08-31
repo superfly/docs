@@ -24,5 +24,5 @@ flyctl postgres db list [flags]
 
 ## See Also
 
-* [flyctl postgres db](/docs/flyctl/postgres-db/)	 - manage databases in a clutser
+* [flyctl postgres db](/docs/flyctl/postgres-db/)	 - Manage databases in a cluster
 
