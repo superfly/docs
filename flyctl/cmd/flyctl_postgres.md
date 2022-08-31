@@ -11,7 +11,7 @@ flyctl postgres [command] [flags]
 * [config](/docs/flyctl/postgres-config/)	 - View and manage Postgres configuration.
 * [connect](/docs/flyctl/postgres-connect/)	 - Connect to the Postgres console
 * [create](/docs/flyctl/postgres-create/)	 - Create a new PostgreSQL cluster
-* [db](/docs/flyctl/postgres-db/)	 - manage databases in a clutser
+* [db](/docs/flyctl/postgres-db/)	 - Manage databases in a cluster
 * [detach](/docs/flyctl/postgres-detach/)	 - Detach a postgres cluster from an app
 * [list](/docs/flyctl/postgres-list/)	 - List postgres clusters
 * [restart](/docs/flyctl/postgres-restart/)	 - Restarts each member of the Postgres cluster one by one.

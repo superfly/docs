@@ -1,4 +1,4 @@
-manage databases in a clutser
+Manage databases in a cluster
 
 
 ## Usage
