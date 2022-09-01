@@ -80,6 +80,7 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 | -- | --- | -- |
 |`top<number>.nearest.of.<appname>.internal`| top _number_ closest app instances|none
 |`<alloc_id>.vm.<appname>.internal`|specific app instance<br/>|none
+|`vms.<appname>.internal`|none|comma-separated alloc-ids<br/> of app instances|none
 |`<region>.<appname>.internal`|app instances<br/> in region|none
 |`global.<appname>.internal`|app instances<br/> in all regions|none
 |`regions.<appname>.internal`|none|region names<br/> where app is deployed|
