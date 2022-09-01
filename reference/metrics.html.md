@@ -275,7 +275,7 @@ fly_instance_filefd_allocated
 fly_instance_filefd_maximum
 ```
 
-#### Instance Filesystem - `fly_instance_filesystem`
+#### Instance Filesystem - `fly_instance_filesystem_`
 
 Filesystem metrics derived from [VFS File System Information](https://man7.org/linux/man-pages/man0/sys_statvfs.h.0p.html).
 
