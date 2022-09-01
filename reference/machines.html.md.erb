@@ -127,6 +127,10 @@ The only required parameter is `image` in the `config` object. Other parameters:
 * `services`: An array of objects that define a single network service. Check the [machines networking section](#networking) for more information. Options:
 
   - `protocol`: `tcp` or `udp`. [Learn more about running raw TCP/UDP services](https://fly.io/docs/app-guides/udp-and-tcp/).
+  - `concurrency`: load balancing concurrency settings
+      + `type`: `connections` (TCP) or `requests` (HTTP). Defaults to connections.
+      + `soft_limit`: "ideal" service concurrency. We will attempt to spread load to keep services at or below this limit
+      + `hard_limit`: maximum allowed concurrency. We will queue or reject when a service is at this limit
   - `internal_port`: Port the machine VM listens on
   - `ports`: An array of objects defining the service's ports and associated handlers. Options:
       + `port`: Public-facing port number
