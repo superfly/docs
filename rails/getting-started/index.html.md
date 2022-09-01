@@ -204,14 +204,14 @@ application will have already been built.
 
 Try it out!  Add a few names and once you are done, proceed onto the final step.
 
-## Turbo
+## Make Index come Alive
 
 We now have a basic [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) application where the index page shows a snapshot of
 the server state at the time it was displayed. Lets make the index page
 come alive using [Turbo Streams](https://turbo.hotwired.dev/handbook/streams).
 
-This will involve provisioning a redis cluster and a surprisingly small number
-of updates to your application.
+This will involve provisioning a [redis](https://redis.com/) cluster and a
+surprisingly small number of updates to your application.
 
 ### Provisioning Redis
 
@@ -376,7 +376,7 @@ ActionCable::SubscriptionAdapter::Redis::Listener.prepend(ActionCableRedisListen
 ```
 
 Even with this patch, the connection will still drop periodically and you
-will see stack traceback information in your logs.
+may see stack traceback information in your logs.
 
 ### Deployment and testing
 
