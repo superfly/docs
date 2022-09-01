@@ -217,6 +217,7 @@ Fly commands are a bit different than Heroku, but you'll get use to them after a
 | Database migration | `heroku rake db:migrate` | `fly ssh console -C "/bin/app/rake db:migrate"` |
 | Postgres console | `heroku psql` | `fly postgres connect -a <name-of-database-app-server>`
 | Tail log files | `heroku logs` | `fly logs` |
+| View configuration | `heroku config` | `fly ssh console -C "printenv"` |
 | View releases | `heroku releases` | `fly releases` |
 | Help | `heroku help` | `fly help` |
 
