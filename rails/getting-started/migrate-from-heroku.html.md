@@ -213,8 +213,8 @@ Fly commands are a bit different than Heroku, but you'll get use to them after a
 | Task         | Heroku     | Fly |
 |--------------|-----------|------------|
 | Deployments | `git push heroku` | `fly deploy` |
-| Rails console | `heroku console` | `fly ssh console -C "/bin/app/rails console"` |
-| Database migration | `heroku rake db:migrate` | `fly ssh console -C "/bin/app/rake db:migrate"` |
+| Rails console | `heroku console` | `fly ssh console -C "/app/bin/rails console"` |
+| Database migration | `heroku rake db:migrate` | `fly ssh console -C "/app/bin/rake db:migrate"` |
 | Postgres console | `heroku psql` | `fly postgres connect -a <name-of-database-app-server>`
 | Tail log files | `heroku logs` | `fly logs` |
 | View configuration | `heroku config` | `fly ssh console -C "printenv"` |
