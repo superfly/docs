@@ -170,11 +170,11 @@ web = "bundle exec puma -C config/puma.rb"
 worker = "bundle exec sidekiq"
 ```
 
-If you have a `release:` line in your Heroku Procfile, you'll move that to the following line in the `fly.toml` file:
+If you have a `release:` line in your Heroku Procfile, that will be handled by your
+`lib/tasks/fly.rake` file:
 
-```toml
-[deploy]
-  release_command = "bundle exec rails db:migrate"
+```ruby
+task :release => 'db:migrate'
 ```
 
 Next, under the `[[services]]` directive, find the entry that maps to `internal_port = 8080`, and add `processes = ["web"]`. The configuration file should look something like this:
@@ -231,26 +231,23 @@ To achieve the desired `git push` behavior, we recommend setting up `fly deploy`
 
 #### Release phase tasks
 
-Heroku has a `release: rake db:migrate` command in their Procfiles to run tasks while the application is deployed. Fly accomplishes the same thing with the `release_command` directive in the `fly.toml` file in the root of your project.
+Heroku has a `release: rake db:migrate` command in their Procfiles to run tasks while the application is deployed. Fly accomplishes the same thing by making `assets:precompile` a dependency of the `:release` task in your `lib/tasks/fly.toml` file:
 
-By default, `fly launch` includes the following release command:
-
-```toml
-[deploy]
-  release_command = "bundle exec rails db:migrate"
+```ruby
+task :release => 'db:migrate'
 ```
 
-If you don't want to run migrates by default per release, delete the `release_command` directive. You'll be able to manually run migrations on Fly via `fly ssh console -C "/app/bin/rails db:migrate"`.
+If you don't want to run migrates by default per release, delete the prequite but leave the `:release` task. You'll be able to manually run migrations on Fly via `fly ssh console -C "/app/bin/rails db:migrate"`.
 
 #### Build commands
 
-Asset compilations and build activities that happen before an application deploys can be customized in the `Dockerfile` that's included in the root of your project.
+Asset compilations and build activities that happen before an application deploys can also be customized in the `lib/tasks/fly.toml` that's included in your project.
 
-```Dockefile
-RUN bundle exec rails assets:precompile
+```ruby
+task :build => 'assets:precompile'
 ```
 
-Change this `RUN` command or add more depending on the build process required for your application.
+Remove this dependency or add more depending on the build process required for your application.
 
 #### Deploy via git
 
