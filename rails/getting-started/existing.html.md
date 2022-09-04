@@ -98,69 +98,19 @@ Now that you know the basics of troubleshooting production deployments, lets hav
 
 ### Access to Environment Variables at Build Time
 
-Before jumping right into a solution to this problem, it is important to
-set a bit of background.  From time to time we are all going to make
-mistakes, it happens.  And some of these mistakes will escape the tests you run
-on your machine and will therefore be found after you type `fly deploy`.  When
-those problems are found makes a big difference.  They can be found at the time
-your image is being built.  They can prevent your server from starting.  Or
-your server can start but doesn't do what it is supposed to.
+The most common reason Rails developers find that they need to access secrets
+during build time is that `assets:precompile` loads your application's
+environment, and this may fail without access to secrets.  If this applies
+to you, generally the fix is to move this step from being done at build
+time to being a prerequisite for deployment.
 
-Clearly the ideal is the first case.  You can check the build messages,
-fix the problem, and try again; all without impacting live VMs.
+This can be accomplished by modifying `lib/tasks/fly.rake`, and in there
+moving `assets:precompile` from being a prerequisite of the `:build`
+task to being a prerequisite of the  `:server` task.
 
-Surprisingly the next best is often times the last case, because at least
-then you can generally `ssh` into the machine or otherwise observe the
-behavior.
-
-The middle case generally results in an attempt to spin up a VM, see it
-crash, after which point the VM is rolled back and a prior successful
-deployment, presuming there is one.  For initial deployment problems, well, you
-have nothing.
-
-For that reason it may be worth investing a bit of time to see if
-your build process can be adapted to make use of
-[Build Secrets](../../reference/build-secrets/).
-
-But many of the people that landed on this page have done so because everything
-else has failed, and they need something that is done at build time that
-absolutely **must** have access to the full deployment context.  The steps
-below are for the most common case, namely `assets:precompile`, but
-realistically it could happen other places.
-
-To address such a need, First remove the following from `Dockerfile`:
-
-```
-RUN bundle exec rails assets:precompile
-```
-
-Then modify `fly.toml` to set:
-
-```
-SERVER_COMMAND = "bin/rails fly:init"
-```
-
-And finally, put the following into `lib/tasks/fly.rake`:
-
-```ruby
-namespace :fly do
-  task init: "assets:precompile" do
-    sh "bundle exec puma"
-  end
-end
-```
-
-What that means is that you won't be able to `ssh` into a VM that fails
-to deploy whenver `assets:precompile` fails.  In this particular case,
-that hopefully is rare enough to not be a problem, and any time this
-happens the error messages you get back are likely sufficient.  The
-one remaining issue of VMs being brought up, then down and then up again
-is hopefully only a minor nuisance.
-
-Hopefully the takeaway here is that while this potentially a general
-solution to build processes that require access to the environment, it
-should really only be used sparingly.
-
+Other situations can be handled similarly.  But should the need for
+secrets to be available at build time be unavoidable, take a look
+at [Build Secrets](../../reference/build-secrets/).
 
 ### Language Runtime Versions
 
@@ -216,7 +166,7 @@ bin/rails credentials:show
 You can see what `RAILS_MASTER_KEY` is deployed using:
 
 ```cmd
-fly ssh console -C env | grep RAILS_MASTER_KEY
+fly ssh console -C 'printenv RAILS_MASTER_KEY'
 ```
 
 

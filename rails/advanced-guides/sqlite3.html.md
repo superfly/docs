@@ -46,34 +46,34 @@ time in two places:
   destination="/mnt/name"
 ```
 
-Also in `fly.toml`, remove the following as volumes are not available at build time:
-
-```
-[deploy]
-  release_command = "bundle exec rails db:migrate"
-```
-
-And a final change to `fly.toml`, replace the `SERVER_COMMAND` as follows:
+Next move the depency on the `db:migrate` task from the `release` to `server` in `lib/tasks/fly.toml`:
 
 ```diff
- [env]
-   PORT = "8080"
--  SERVER_COMMAND = "bundle exec puma"
-+  SERVER_COMMAND = "bin/rails fly:init"
-```
-
-The problem here is that `SERVER_COMMAND` is normally seet up to run a single command.
-There are various ways to work around this, but the most flexible way to do so is to
-create either a shell script or a rake task.  Here we've opted for a rake task.
-
-The rake task can be created by placing the following in `lib/tasks/fly.rake`:
-
-```ruby
-namespace :fly do
-  task :init => 'db:migrate' do
-    sh 'bin/rails server'
-  end
-end
+ # commands used to deploy a Rails application
+ namespace :fly do
+   # BUILD step:
+   #  - changes to the filesystem made here DO get deployed
+   #  - NO access to secrets, volumes, databases
+   #  - Failures here prevent deployment
+   task :build => 'assets:precompile'
+ 
+   # RELEASE step:
+   #  - changes to the filesystem made here are DISCARDED
+   #  - full access to secrets, databases
+   #  - failures here prevent deployment
+-  task :release => 'db:migrate'
++  task :release
+ 
+   # SERVER step:
+   #  - changes to the filesystem made here are deployed
+   #  - full access to secrets, databases
+   #  - failures here result in VM being stated, shutdown, and rolled back
+   #    to last successful deploy (if any).
+-  task :server do
++  task :server => 'db:migrate' do
+     sh 'bin/rails server'
+   end
+ end
 ```
 
 You can also silence warnings about running sqlite3 in production by adding the following line to

@@ -48,7 +48,7 @@ fly ssh console
 ## Custom Rake tasks
 
 You can create [Custom Rake Tasks](https://community.fly.io/) to
-automate frequently used commands.  As an example, drop the
+automate frequently used commands.  As an example, add the
 following into `lib/tasks/fly.rake` to reduce the number of
 keystrokes it takes to launch a console:
 

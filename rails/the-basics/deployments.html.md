@@ -44,14 +44,13 @@ You may need to open another terminal window and deploy again while running `fly
 
 ## Running migrations
 
-Migrations are configured to automatically run after each deployment via the following entry in your application's `fly.toml` file:
+Migrations are configured to automatically run after each deployment via the following task in your application's `lib/tasks/fly.rake` file:
 
-```toml
-[deploy]
-  release_command = "bundle exec rails db:migrate"
+```ruby
+task :release => 'db:migrate'
 ```
 
-To disable automatic migrations for deploys, delete the `release_command` line in the `fly.toml` file. Then, to manually run migrations after a deployment, run:
+To disable automatic migrations for deploys, remove the dependency from the `:release` task. Then, to manually run migrations after a deployment, run:
 
 ```cmd
 fly ssh console -C "app/bin/rails db:migrate"
@@ -85,10 +84,10 @@ hello world
 
 ## Asset compilation and build commands
 
-The default Rails image is configured to run `bundle exec rails assets:precompile` in the [`Dockerfile`](https://github.com//superfly/flyctl/blob/709c542ce5cd2d3326ec1cbe347deeb8dd57cf9f/scanner/templates/rails/standard/Dockerfile#L84).
+The default Rails image is configured to run `ssets:precompile` in your application's `lib/tasks/fly.rake` file:
 
-```Dockerfile
-RUN bundle exec rails assets:precompile
+```ruby
+task :build => 'assets:precompile'
 ```
 
-If you have additional build steps beyond the Rails asset precompiler, you may need to modify your application's Dockerfile to build assets.
+If you have additional build steps beyond the Rails asset precompiler, you may need to modify your application's `lib/tasks/fly.rake` file.

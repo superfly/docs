@@ -14,7 +14,7 @@ Sidekiq depends on Redis to communicate between the Rails server process and the
 Verify the `REDIS_URL` is available to your Rails application before you continue by running:
 
 ```cmd
-fly ssh console -C "printenv | grep REDIS_URL"
+fly ssh console -C "printenv REDIS_URL"
 ```
 ```output
 REDIS_URL=redis://default:yoursecretpassword@my-apps-redis-host.internal:6379
@@ -36,7 +36,7 @@ Add the following to the `fly.toml`:
 
 ```toml
 [processes]
-web = "bundle exec puma"
+web = "bin/rails fly:server"
 worker = "bundle exec sidekiq"
 ```
 
