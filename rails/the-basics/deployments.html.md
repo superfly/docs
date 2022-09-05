@@ -84,7 +84,7 @@ hello world
 
 ## Asset compilation and build commands
 
-The default Rails image is configured to run `ssets:precompile` in your application's `lib/tasks/fly.rake` file:
+The default Rails image is configured to run `assets:precompile` in your application's `lib/tasks/fly.rake` file:
 
 ```ruby
 task :build => 'assets:precompile'
