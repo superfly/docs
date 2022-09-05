@@ -294,9 +294,9 @@ Then modify `app/views/names/index.html.erb` to stream from that channel:
   <p style="color: green"><%= notice %></p>
 
   <h1>Names</h1>
-
-+ <%= turbo_stream_from 'names' %>
 +
++ <%= turbo_stream_from 'names' %>
+
   <div id="names">
     <% @names.each do |name| %>
       <%= render name %>

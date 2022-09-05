@@ -58,9 +58,9 @@ Modify `Dockerfile` to install `foreman`, `anycable-go` and `nginx`:
      apt-get install --no-install-recommends -y \
      ${PROD_PACKAGES} \
      && rm -rf /var/lib/apt/lists /var/cache/apt/archives
- 
-+ADD config/nginx.conf /etc/nginx/sites-available/default
 +
++ADD config/nginx.conf /etc/nginx/sites-available/default
+ 
  COPY --from=gems /app /app
  COPY --from=node_modules /app/node_modules /app/node_modules
 ```
@@ -70,7 +70,7 @@ Edit `fly.toml` to run foreman::
 ```diff
  [env]
    PORT = "8080"
--  SERVER_COMMAND = "bundle exec puma"
+-  SERVER_COMMAND = "bin/rails fly:server"
 +  SERVER_COMMAND = "foreman start -f Procfile.fly"
 ```
 
