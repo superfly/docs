@@ -1,0 +1,93 @@
+---
+title: How LiteFS Works
+layout: docs
+sitemap: false
+nav: litefs
+toc: true
+---
+
+LiteFS is a distributed file system specifically built for replicating SQLite
+databases. This allows each application node to have a full, local copy of the
+database and respond to requests with minimal latency. LiteFS is built for high
+availability so that operations can continue even in the event of catastrophic
+failures.
+
+
+## Capturing SQLite Transactions
+
+SQLite works by updating a subset of pages in the database file on every
+transaction. It does this by using the file system API with the following
+steps:
+
+1. Create a journal file to start the transaction.
+2. Update page in the main database file while copying old pages to the journal.
+3. Delete the journal file to finish the transaction.
+
+LiteFS acts as a passthrough file system which intercepts these API calls and
+copies out the page sets for each transaction. These page sets are stored in an
+internal format called [LTX](https://github.com/superfly/ltx) that performs
+extensive consistency checking to ensure correctness.
+
+By applying these page sets in the LTX files in order, we can reconstruct the
+state of our SQLite database at any point in time. We can also copy them to
+another nodes in order to replicate the changes in real-time to our cluster.
+
+
+## Replication Position
+
+Each database within the LiteFS directory contains a replication position. This
+position is a combination of the transaction ID (TXID) and the rolling checksum
+of the database contents. The TXID is an integer that is incremented with every
+write transaction that occurs. 
+
+You can track the relative position between nodes by reading from the database's
+position file in the LiteFS mount directory. For example, if you have a
+database called `/mnt/db` then you can read the position from `/mnt/db-pos`:
+
+```sh
+$ cat /mnt/db-pos
+00000000000003e8/a3b2b72f1147c9bc
+```
+
+The output is a hex-encoded TXID followed by a slash and then the database
+rolling checksum.
+
+
+## Cluster management using leases
+
+SQLite operates as a single-writer database which means only one transaction can
+write at a time. Because of this, we utilize a lease system whereby a single
+node acts as the "primary" node at any given time. All writes should be directed
+to that node and it will propagate changes to the rest of the cluster.
+
+However, nodes can die or become disconnected from the cluster so the primary
+must be able to change dynamically. LiteFS is built to be run on ephemeral
+environments where cluster membership can change quickly and frequently so it
+utilizes leases via Consul to determine the current primary node.
+
+When a LiteFS node starts up, it checks a key within the Consul server for the
+current primary node. If no primary node exists, then the LiteFS node attempts
+to obtain a lease from Consul to become a primary node itself. If successful,
+it updates the Consul key to share its API URL so other LiteFS nodes can connect
+to it.
+
+
+### Handling split brain
+
+LiteFS uses _asynchronous replication_ which means that it does not confirm that
+writes are committed to other nodes before continuing to the next transaction.
+This tradeoff is made to increase write throughput at the cost of some
+durability.
+
+In the event of an unexpected primary node failure, the primary node may become
+out of sync with the rest of the cluster if it has unreplicated writes it has
+applied locally but have not been copied to the other nodes. If a new primary
+is elected then the old primary could corrupt its data if it tried to apply
+transactions from the new primary.
+
+Fortunately, LiteFS maintains a rolling checksum of the full contents of the
+database so it will detect this split and automatically snapshot from the new
+primary to the out-of-sync node.
+
+Synchronous replication & time-bound asynchronous replication are features that
+are planned for future development.
