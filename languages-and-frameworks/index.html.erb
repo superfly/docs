@@ -1,0 +1,39 @@
+---
+title: Language & Framework Guides
+layout: language-and-framework-docs
+toc: false
+---
+
+<figure>
+  <img src="/public/images/docs-guide.jpg" srcset="/public/images/docs-guide@2x.jpg 2x" alt="">
+</figure>
+
+<p>Fly.io can run pretty much any type of application. If you don't see it listed here, it's a matter of finding and configuring a Dockerfile that runs it.</p>
+
+<h2 id="featured" class="group flex items-center relative mt-14 sm:mt-16 mb-10 group text-navy font-heading pb-1 border-b">
+  Comprehensive Guides
+</h2>
+
+<p>Fly supports all languages and frameworks, but you'll notice some have much more extensive documentation and support. That's because we have people at Fly.io who work full time on documenting and nurturing these frameworks.</p>
+
+<ul>
+  <li><%=link_to_page find_page("/docs/languages-and-frameworks/elixir") %></li>
+  <li><%=link_to_page find_page("/docs/rails") %></li>
+  <li><%=link_to_page find_page("/docs/laravel") %></li>
+</ul>
+
+<h2 id="supported" class="group flex items-center relative mt-14 sm:mt-16 mb-10 group text-navy font-heading pb-1 border-b">
+  Starter Guides
+</h2>
+
+<p>The following frameworks & languages are fully supported by Fly.io.</p>
+
+<ul>
+  <% current_page.children.each do |page| %>
+    <li>
+      <%= link_to_page page %>
+    </li>
+  <% end %>
+</ul>
+
+<p>If you don't see a framework supported here that you'd like to run on Fly.io, <%=link_to "tell us in the Community", "https://community.fly.io/" %>.</p>

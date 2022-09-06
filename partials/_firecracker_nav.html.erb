@@ -1,15 +1,5 @@
 <dl class="leading-5">
   <dt class="flex sm:justify-center">
-  <% nav_link "/phoenix-files/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors pb-1 -ml-0.5 mb-1" do %>
-      Phoenix Files
-    <% end %>
-  </dt>
-  <dt class="flex sm:justify-center">
-  <% nav_link "/laravel-bytes/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors pb-1 -ml-0.5 mb-1" do %>
-      Laravel Bytes
-    <% end %>
-  </dt>
-  <dt class="flex sm:justify-center">
   <% nav_link "/docs/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors pb-1 -ml-0.5 mb-1" do %>
       Docs Home
     <% end %>
@@ -33,30 +23,20 @@
     <%= nav_link "Troubleshooting Deployments", href="/docs/getting-started/troubleshooting/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
   </dd>
   <dt>
-    <% nav_link "/docs/getting-started/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
-      Quickstart Guides
+    <% nav_link "/docs/languages-and-frameworks/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
+      Language & Framework Guides
     <% end %>
   </dt>
   <dd class="mb-8 border-l border-gray-100">
-    <%= nav_link "Run a Crystal App", href="/docs/getting-started/crystal/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run a Deno App", href="/docs/getting-started/deno/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run an Elixir App", href="/docs/getting-started/elixir/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run a Go App", href="/docs/getting-started/golang/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run a Node App", href="/docs/getting-started/node/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run a Laravel App", href="/docs/laravel/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run a Python App", href="/docs/getting-started/python/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+    <%= nav_link "Run an Elixir App", href="/docs/languages-and-frameworks/elixir", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Run a Rails App", href="/docs/rails/getting-started/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run a Redwood App", href="/docs/getting-started/redwood/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run a Remix App", href="/docs/getting-started/remix/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run a NuxtJS App", href="/docs/getting-started/nuxtjs/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run a NextJS App", href="/docs/getting-started/nextjs/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run a Ruby App", href="/docs/getting-started/ruby/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run from your Dockerfile", href="/docs/getting-started/dockerfile/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Deploy a Static Website", href="/docs/getting-started/static/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+    <%= nav_link "Run a Laravel App", href="/docs/laravel/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+
+    <%= nav_link "More...", href="/docs/languages-and-frameworks/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
   </dd>
   <dt>
     <% nav_link "/docs/guides/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
-      Guides and Examples
+      Application Guides
     <% end %>
   </dt>
   <dd class="mb-8 border-l border-gray-100">
