@@ -12,3 +12,4 @@ the nodes in your cluster. This lets you run your database right next to your
 application on the edge.
 
 * [Getting Started with LiteFS](/docs/litefs/getting-started)
+* [LiteFS Config Reference](/docs/litefs/config)
