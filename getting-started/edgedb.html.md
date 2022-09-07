@@ -39,7 +39,7 @@ Create a directory and create a new app. Be sure to replace `myedgedb` with a cu
 flyctl launch --name myedgedb --image edgedb/edgedb --no-deploy
 ```
 
-Since we're using `flyctl launch`, this will create a `fly.toml`. All `flyctl` command will now be applied against our `myedgedb` application unless otherwise specified with `--app`. 
+Since we're using `flyctl launch`, this will create a `fly.toml`. All `flyctl` commands will now be applied against our `myedgedb` application unless otherwise specified with `--app`. 
 
 EdgeDB needs more RAM than the default `256MB` so let's scale the RAM to `1024MB`.
 
@@ -83,7 +83,7 @@ This sets the value of `DATABASE_URL` in the `myedgedb` app and creates a new ro
 flyctl postgres connect --app mypostgres
 ```
 ```output
-Connecting to dodopg.internal... complete
+Connecting to mypostgres.internal... complete
 psql (14.4 (Debian 14.4-1.pgdg110+1))
 Type "help" for help.
 
