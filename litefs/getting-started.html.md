@@ -105,7 +105,7 @@ fly regions add lhr syd
 Now that we have the regions, we also need to scale the number of instances up:
 
 ```sh
-fly scale count 3
+fly scale count 3 --max-per-region=1
 ```
 
 You can use `fly status` or `fly logs` to monitor for the new nodes to startup
@@ -140,15 +140,15 @@ Replication in LiteFS is fast though so let's set up real-time updates using the
 [`watch`](https://linux.die.net/man/1/watch) command in our terminal. If you're
 using macOS, you may need to install it using `brew install watch`.
 
-The `watch` command will continuously run a subcommand that we give it and
-display its output until we stop it with `CTRL-C`.
+The `watch` command will continuously run a subcommand and display its output
+until we stop it with `CTRL-C`.
 
 We'll be running a cURL command to continuously fetch our app's data every 100ms
 so we can see updates as they happen. Open a new terminal window for each of
 your regions and run the following (except change the "region" at the end):
 
 ```sh
-watch -n 0.1 "curl -H 'Accept: text/plain' https://${APPNAME}.fly.dev?region=lhr"
+watch -n 0.1 "curl -s -H 'Accept: text/plain' https://${APPNAME}.fly.dev?region=lhr"
 ```
 
 Now, when you click on the _"Generate Record"_ in your browser, you should see
