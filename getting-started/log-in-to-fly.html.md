@@ -44,7 +44,7 @@ Now proceed to globally deploying Docker Images, Go Applications, Node Applicati
   * [Go](/docs/getting-started/golang/) - Go and the Gin/Gonic web framework
   * [Ruby](/docs/getting-started/ruby/) - Ruby and Sinatra
   * [Deno](/docs/getting-started/deno/) - Deno and Dinatra
-  * [Elixir](/docs/getting-started/elixir/) - Elixir, Phoenix, and Postgres
+  * [Elixir](/docs/elixir/getting-started/) - Elixir, Phoenix, and Postgres
   * [Static Web Server](/docs/getting-started/static/) - HTML and a compact web server.
 * And there's more information in [Working with Fly apps](/docs/getting-started/working-with-fly-apps/)
 * When it doesn't go right, checkout our [Troubleshooting Deloyments](/docs/getting-started/troubleshooting/) page.

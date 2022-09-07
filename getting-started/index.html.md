@@ -25,7 +25,7 @@ Each one of the language guides will take you through creating a simple applicat
 * [Go](/docs/getting-started/golang/) - Go and the Gin/Gonic web framework
 * [Ruby](/docs/getting-started/ruby/) - Ruby and Sinatra
 * [Deno](/docs/getting-started/deno/) - Deno and Dinatra
-* [Elixir](/docs/getting-started/elixir/) - Elixir, Phoenix, and Postgres
+* [Elixir](/docs/elixir/getting-started) - Elixir, Phoenix, and Postgres
 
 ## _Application Guides_
 

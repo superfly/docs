@@ -25,7 +25,7 @@ The easiest solution here is to **specify** the value to use for our cookie. One
 
 ## Making the Changes
 
-Let's walk through making the changes on the [hello_elixir project](https://github.com/fly-apps/hello_elixir-dockerfile) used in the [Elixir guide](/docs/getting-started/elixir/) to see what's involved.
+Let's walk through making the changes on the [hello_elixir project](https://github.com/fly-apps/hello_elixir-dockerfile) used in the [Elixir guide](/docs/elixir/getting-started) to see what's involved.
 
 ### Release Section
 
