@@ -3,4 +3,4 @@ Once packaged it can be deployed to the Fly.io global application platform.
 
 In this guide we'll learn how to deploy <%= "#{runtime.downcase.match(/^[aeiou]/) ? "an" : "a"} #{defined?(link) ? "[#{runtime}](#{link})" : "#{runtime}"}" %>
 <%= locals.key?(:type) ? type : "application" %>
-on Fly<%- if locals.key?(:database) %> and connect it to a PostgreSQL database<%- end %>.
+on Fly.io<%- if locals.key?(:database) %> and connect it to a PostgreSQL database<%- end %>.
