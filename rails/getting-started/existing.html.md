@@ -110,7 +110,7 @@ task to being a prerequisite of the  `:server` task.
 
 Other situations can be handled similarly.  But should the need for
 secrets to be available at build time be unavoidable, take a look
-at [Build Secrets](../../reference/build-secrets/).
+at [Build Secrets](../../../reference/build-secrets/).
 
 ### Language Runtime Versions
 
