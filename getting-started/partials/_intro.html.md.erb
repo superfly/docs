@@ -1,5 +1,5 @@
-Getting an application running on Fly is essentially working out how to package it as a deployable image<%- if defined?(database) %> and attach it to a database<%- end %>.
-Once packaged it can be deployed to the Fly infrastructure to run on the global application platform.
+Getting an application running on Fly.io is essentially working out how to package it as a deployable image<%- if defined?(database) %> and attach it to a database<%- end %>.
+Once packaged it can be deployed to the Fly.io global application platform.
 
 In this guide we'll learn how to deploy <%= "#{runtime.downcase.match(/^[aeiou]/) ? "an" : "a"} #{defined?(link) ? "[#{runtime}](#{link})" : "#{runtime}"}" %>
 <%= locals.key?(:type) ? type : "application" %>
