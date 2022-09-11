@@ -4,7 +4,7 @@ layout: framework_docs
 objective: At some point a Laravel application will need to run additional services, perhaps Redis for a cache or session storage. Learn how to manage multiple applications from one Laravel project to keep your monolith a monolith.
 ---
 
-This guide discusses how to manage multiple Fly applications within a Laravel projects. This is useful for Laravel projects that need to run other services, like running a Redis service for queues, cache, and session storage.
+This guide discusses how to manage multiple Fly applications within a Laravel project. This is useful for Laravel projects that need to run other services, like running a Redis service for queues, cache, and session storage.
 
 ## What is a Fly application?
 
@@ -36,7 +36,7 @@ fly launch --image flyio/redis:6.2.6 --no-deploy --name my-project-name-redis
 
 This command will create a `Dockerfile` and `fly.toml` file that can be further configured for your application's needs.
 
-Next, we cab do some light configuration and then deploy the application:
+Next, we can do some light configuration and then deploy the application:
 
 ```cmd
 # Add a required redis password
