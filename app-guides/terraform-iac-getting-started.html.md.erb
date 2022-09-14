@@ -1,11 +1,13 @@
 ---
-title: Getting started with Machines and Terraform
+title: Getting started with Terraform and Machines
 layout: docs
 sitemap: false
 nav: firecracker
 author: dov
 categories:
   - machines
+  - iac
+  - terraform
 date: 2022-07-08
 ---
 
@@ -13,47 +15,65 @@ date: 2022-07-08
 
 [Terraform](https://terraform.io) is one of the most popular infrastructure as code tools used by many companies and organizations to manage their infrastructure.
 
-[terraform-provider-fly](https://registry.terraform.io/providers/fly-apps/fly/latest) is a terraform provider that enables terraform to manage fly.io resources such as apps, volumes, certificates, ips, machines, etc.
+[terraform-provider-fly](https://registry.terraform.io/providers/fly-apps/fly/latest) is a Terraform provider that enables Terraform to manage Fly.io resources such as apps, volumes, certificates, ips, machines, and so on.
+
+In this guide we'll use Terraform to deploy a demo app from a [Docker image](https://hub.docker.com/r/flyio/iac-tutorial/) onto two Fly Machines VMs. 
 
 ## Prerequisites
 
-Go ahead and [download](https://learn.hashicorp.com/tutorials/terraform/install-cli) terraform if you haven't yet.
+Go ahead and [download](https://learn.hashicorp.com/tutorials/terraform/install-cli) Terraform if you haven't yet.
 
 ## Set API key
 
-`export FLY_API_TOKEN=$(fly auth token)`
-
-## Open wireguard tunnel
-
-In its own terminal run `flyctl machines api-proxy`. This will open a wireguard tunnel from your local machine to flys infrastructure allowing terraform to access the machines api.
-
-## Setting up project
-
-Let's make a directory for this project and set up a terraform file for us to work in.
-
-```shell
-mkdir fly-tf-example && cd fly-tf-example
-touch main.tf
+```cmd
+export FLY_API_TOKEN=$(fly auth token)
 ```
 
-In the main.tf we can specify that we want to use the fly.io provider:
+This gets your Fly.io token into an environment variable Terraform can use to authenticate us.
+
+## Open WireGuard tunnel
+
+In its own terminal (or in the background; the point is that we want to keep this running) run
+
+```cmd
+flyctl machines api-proxy
+ ```
+ 
+This will proxy a local port over [user-mode WireGuard](https://fly.io/blog/our-user-mode-wireguard-year/) to the internal Machines API endpoint, so Terraform on your machine can access it.
+
+## Set up the Terraform project
+
+Let's make a directory for this project and set up a Terraform file for us to work in.
+
+```cmd
+mkdir fly-tf-example && cd fly-tf-example
+```
+
+In this directory, create the Terraform file `main.tf`. In it, specify that you want to use the Fly.io provider:
 
 ```terraform
+# main.tf
 terraform {
   required_providers {
     fly = {
       source = "fly-apps/fly"
-      version = "0.0.10"
+      version = "0.0.16"
     }
   }
 }
 ```
 
-Now we can go ahead and kick off our terraform project by running `terraform init`. This will download the fly provider and get it ready for us to use.
+Now kick off your Terraform project: 
+
+```cmd
+ terraform init
+ ```
+ 
+ This will download the Fly.io provider and get it ready to use.
 
 ## Create Resources
 
-In your main.tf file we can use the `fly_app` resource to create a new app and the `fly_ip` resource to make it publicly accessible
+In your `main.tf`, use the `fly_app` resource to create a new app and the `fly_ip` resource to make it publicly accessible.
 
 ```terraform
 resource "fly_app" "exampleApp" {
@@ -74,15 +94,23 @@ resource "fly_ip" "exampleIpv6" {
 }
 ```
 
-To tell terraform to actually create these resources we can use `terraform apply`. Terraform will show us what it plans on doing, in this case creating one app and two ips, and prompt us to see if we want to continue. If everything looks write type in `yes` and hit enter. In just a few seconds we will see the successful output:
+To tell Terraform to actually create these resources, use
+
+```cmd
+terraform apply
+```
+
+Terraform will show you what it plans on doing: in this case, creating one app and two IPs, and prompt to see if you want to continue. If everything looks right, type in `yes` and hit enter. In just a few seconds you should see the successful output:
 
 ```
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 ```
 
+At this point you have an app configured on the Fly.io platform, but no VMs deployed.
+
 ### Create machines
 
-For this example we will create machines running in `ewr` and `lax`.
+This example creates machines running in `ewr` (Secaucus, NJ) and `lax` (Los Angeles, CA).
 
 ```terraform
 resource "fly_machine" "exampleMachine" {
@@ -111,14 +139,14 @@ resource "fly_machine" "exampleMachine" {
 }
 ```
 
-Once again run `terraform apply` and confirm with `yes` and you will see confirmation that your machines were created!
+Once again run `terraform apply` and confirm with `yes`. You'll get confirmation once your machines have been created!
 
 ```
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 ```
 
-To test it out go to `https://yourappname.fly.dev` in this example the appname is `flyiac` so it would be `https://flyiac.fly.dev`. Once the page has loaded play around with the buttons to try loading your machines in both regions!
+To test it out go to `https://<yourappname>.fly.dev`. In this example, the appname is `flyiac` so it would be `https://flyiac.fly.dev`. Once the page has loaded, play around with the buttons to try loading your machines in both regions!
 
 ## Destroy resources
 
-When you are done run `terraform destroy` to delete all the resources you created for this tutorial.
+When you are done, run `terraform destroy` to delete all the resources you created for this tutorial.
