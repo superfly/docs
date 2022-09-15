@@ -5,7 +5,7 @@ curl -i -X POST \\
   -d '{
       "app\_name": "user-functions",
       "org\_slug": "personal",
-      "network": "user-functions-network",
+      "network": "user-functions-network"
     }'
 
 ```
