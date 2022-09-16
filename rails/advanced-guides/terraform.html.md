@@ -102,7 +102,7 @@ step into the deploy process in order to run a `db:migrate`.  This will
 require a transient machine that has `DATABASE_URL` set in the environment.
 In order to support sqlite3, it will also need the ability to mount a volume.
 
-Problem 1: [Create and Start a Machine](https://fly.io/docs/reference/machines/#create-and-start-a-machine) doesn't describe how to set an ENTRYPOINT, but undoubtedly support such an option.
+Problem 1: [Create and Start a Machine](https://fly.io/docs/reference/machines/#create-and-start-a-machine) doesn't describe how to set an ENTRYPOINT, but undoubtedly supports such an option.
 
 Problem 2: 
 
@@ -163,3 +163,45 @@ Looking at the logs:
 ```
 
 Ideally there would be the ability to wait for the machine to complete, and for log messages to be shown to the developer in real time.
+
+Annotating flyctl with `fmt.printf` shows the following JSON (prettified) was
+posted, revealing an `init` parameter:
+
+```json
+{
+  "appId": "cool-wildflower-4055",                    
+  "config": {                                         
+    "env": null,                                      
+    "init": {                                         
+      "exec": null,                                   
+      "entrypoint": [                            
+        "/app/bin/rails",                        
+        "db:migrate"                             
+      ],                                         
+      "cmd": null,                               
+      "tty": false                               
+    },                                           
+    "image": "registry.fly.io/cool-wildflower-4055:deployment-01GD22MAGTMPTA5XY46R8GSTCB",                                       
+    "metadata": null,
+    "restart": {
+      "policy": ""
+    },
+    "guest": {
+      "cpu_kind": "shared",
+      "cpus": 1,
+      "memory_mb": 256
+    },
+    "metrics": null
+  }
+}
+```
+
+This is immediately followed by a GET:
+
+```
+/3287313b6d9485/wait?instance_id=01GD347WQXZMCJBWFEKMV9HGG4&timeout=30&state=started
+```
+
+Where the path starts with the Machine Id.
+
+
