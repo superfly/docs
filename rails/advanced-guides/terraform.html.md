@@ -204,4 +204,11 @@ This is immediately followed by a GET:
 
 Where the path starts with the Machine Id.
 
+### Update:
+
+Looks like this works, taking advantage of `SERVER_COMMAND` in the `Dockerfile`:
+
+```cmd
+fly machine run --env 'SERVER_COMMAND=/app/bin/rails db:migrate' registry.fly.io/cool-wildflower-4055:deployment-01GD22MAGTMPTA5XY46R8GSTCB
+```
 
