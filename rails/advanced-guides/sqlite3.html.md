@@ -5,7 +5,7 @@ objective: This guide shows you how to use SQLite3 as your database
 status: beta
 ---
 
-While Rails applications on [fly.io](https://fly.io) normally run on Posgres databases, you can
+While Rails applications on [fly.io](https://fly.io) normally run on Postgres databases, you can
 choose to run them on [sqlite3](https://www.sqlite.org/index.html).
 
 To make this work, you will need to place your databases on persistent [Volumes](https://www.sqlite.org/index.html)
