@@ -16,7 +16,7 @@ We work with security researchers to triage and investigate potential security i
 
 ### Acknowledge your submission
 
-We will reply to your report, usually within 24 hours and issue you a ticket ID number for future tracking.
+We will reply to your report, usually within 24 hours, and issue you a ticket ID number for future tracking.
 
 ### Investigate the report
 
@@ -24,4 +24,4 @@ We will attempt to reproduce the issue and determine its impact on our customers
 
 ### Resolve or mitigate the issue
 
-Once our investigation is complete, we will determine how best to resolve the security issue. This might include mitigation, reports to upstream software providers, or patches / configuration changes without our own infrastructure.
+Once our investigation is complete, we will determine how best to resolve the security issue. This might include mitigation, reports to upstream software providers, or patches/configuration changes without our infrastructure.
