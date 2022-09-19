@@ -116,3 +116,12 @@ Also, because a minimal `fly.toml` file was generated, you can use commands like
    should set the `SERVER_COMMAND` environment variable explicitly
    and the deploy command should scan for this in order to determine
    which image is to be updated and which machine is to be executed.
+ * If you deploy using `fly deploy` directly (perhaps with
+   [GitHub actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)?), the image name in `main.tf` won't be updated.  You
+   can obtain the current image name via the following command:
+
+     <p>
+     ```cmd
+     fly ssh console -C 'printenv FLY_IMAGE_REF'
+     ```
+     </p>
