@@ -17,7 +17,7 @@ date: 2022-07-08
 
 [terraform-provider-fly](https://registry.terraform.io/providers/fly-apps/fly/latest) is a Terraform provider that enables Terraform to manage Fly.io resources such as apps, volumes, certificates, ips, machines, and so on.
 
-In this guide we'll use Terraform to deploy a [very simple demo app](https://github.com/fly-apps/fly-iac-intro-tutorial) from a Docker image onto two Fly Machines VMs. 
+In this guide we'll use Terraform to deploy a [very simple demo app](https://github.com/fly-apps/fly-iac-intro-tutorial) from a Docker image onto two Fly Machines VMs.
 
 ## Prerequisites
 
@@ -38,7 +38,7 @@ In its own terminal (or in the background; the point is that we want to keep thi
 ```cmd
 flyctl machines api-proxy
  ```
- 
+
 This will proxy a local port over [user-mode WireGuard](https://fly.io/blog/our-user-mode-wireguard-year/) to the internal Machines API endpoint, so Terraform on your machine can access it.
 
 ## Set up the Terraform project
@@ -63,12 +63,12 @@ terraform {
 }
 ```
 
-Now kick off your Terraform project: 
+Now kick off your Terraform project:
 
 ```cmd
  terraform init
  ```
- 
+
  This will download the Fly.io provider and get it ready to use.
 
 ## Create Resources
@@ -135,6 +135,8 @@ resource "fly_machine" "exampleMachine" {
       "internal_port" : 80
     },
   ]
+  cpus = 1;
+  memorymb = 256;
   depends_on = [fly_app.exampleApp]
 }
 ```
