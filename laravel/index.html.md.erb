@@ -36,10 +36,10 @@ Next, we'll use the `launch` command to automagically configure your app for Fly
 
 The `launch` command adds a few files to your code base. Don't worry, it will ask before overwriting anything.
 
-**If you haven't already, go ahead and run `fly launch`!**
+**If you haven't already, go ahead and run `flyctl launch`!**
 
 ```cmd
-fly launch
+flyctl launch
 ```
 
 When asked if you want to deploy now, say **No**.
@@ -55,19 +55,19 @@ APP_URL = "https://fly-hello-laravel.fly.dev"
 
 Replace this with the URL your app will be served on (by default, `"https://<your-app-name>.fly.dev"`).   
  
-For sensitive data, you can set **secrets** with the [`fly secrets set`](https://fly.io/docs/flyctl/secrets-set/) command:
+For sensitive data, you can set **secrets** with the [`flyctl secrets set`](https://fly.io/docs/flyctl/secrets-set/) command:
 
 ```cmd
-fly secrets set SOME_SECRET_KEY=<the-value-from-your-env-file>
+flyctl secrets set SOME_SECRET_KEY=<the-value-from-your-env-file>
 ```
 
 <div class="callout">
-The `fly launch` command will generate a secret with a valid, random value for `APP_KEY`.
+The `flyctl launch` command will generate a secret with a valid, random value for `APP_KEY`.
 </div>
 
 ### Deploy
 
-Finally, run `fly deploy` to build and deploy your application!
+Finally, run `flyctl deploy` to build and deploy your application!
 
 You should be able to visit `https://your-app-name.fly.dev` and see the Laravel demo home page.
 
@@ -75,7 +75,7 @@ You should be able to visit `https://your-app-name.fly.dev` and see the Laravel 
 
 ### Some Notes
 
-The `fly launch` adds some files to your code base.
+The `flyctl launch` adds some files to your code base.
 
 **Here is what gets added:**
 
@@ -84,6 +84,6 @@ The `fly launch` adds some files to your code base.
 3. `fly.toml` - Configuration specific to hosting on Fly
 4. `docker` - A directory containing configuration files for running Nginx/PHP in a container
 
-Running `fly launch` (and later `fly deploy`) uses the `Dockerfile` to build a container image, copying your application files into the resulting image.
+Running `flyctl launch` (and later `flyctl deploy`) uses the `Dockerfile` to build a container image, copying your application files into the resulting image.
 
 Fly doesn't care about the state of your git repository - it copies whatever files are present (except for files ignored by `.dockerignore`).
