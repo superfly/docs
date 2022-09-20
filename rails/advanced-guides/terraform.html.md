@@ -5,7 +5,7 @@ objective: This guide shows you how to deploy your Rails app on Fly Machines usi
 status: beta
 ---
 
-This is a technology preview.  Do not run it in production.
+This is a technology preview.
 
 Looking for feedback on everything: technical correctness,
 developer experience, what feature should be focused on next...
