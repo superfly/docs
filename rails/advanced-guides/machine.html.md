@@ -3,6 +3,7 @@ title: Machine API
 layout: framework_docs
 objective: This guide shows use the Fly Machine API using Rails
 status: beta
+redirect_from: /docs/rails/advanced-guides/machine-api
 ---
 
 This is a technology preview.  It demonstrates how you can launch fly
