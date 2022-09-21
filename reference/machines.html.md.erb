@@ -20,7 +20,7 @@ See all possible machine states [in the table below](#machine-states).
 
 ## Connecting to the API
 
-The Machines API endpoint requires a connection to your Fly private network - either via a WireGuard VPN or using `flyctl proxy`.
+The Machines API endpoint requires a connection to your Fly private network - either by running on a VM inside the network, or via a WireGuard VPN, or using `flyctl proxy`.
 
 This guide assumes that you have `flyctl` and `curl` installed, and have authenticated to the Fly.io platform.
 
@@ -42,19 +42,34 @@ flyctl machines api-proxy
 
 With the above command running, in a separate terminal, try this to confirm you can access the API:
 
-```
+```cmd
 curl http://127.0.0.1:4280
 ```
 
 If you successfully reach the API, it should respond with a `404 page not found` error. That's because this was not a defined endpoint.
 
 ### Setting up the environment
-Set these environment variables to make the following commands easier to use.
+
+If you are using a Wireguard VPN or a `flyctl` proxy,
+set these environment variables to make the following commands easier to use.
+
+```bash
+$ export FLY_API_HOSTNAME="_api.internal:4280" # or set to `127.0.0.1:4280` when using 'flyctl proxy'
+$ export FLY_API_TOKEN=$(fly auth token)
+```
+
+In order to access this API on a fly VM, make the token available as a secret:
+
+```cmd
+flyctl secrets set FLY_API_TOKEN=$(fly auth token)
+```
+
+A convenient way to set the FLY_API_HOSTNAME is to add it to your `Dockerfile`:
 
 ```
-export FLY_API_HOSTNAME="_api.internal:4280" # or set to `127.0.0.1:4280` when using 'flyctl proxy'
-export FLY_API_TOKEN=$(fly auth token)
+ENV FLY_API_HOSTNAME="_api.internal:4280
 ```
+
 
 You'll still need to replace the application name and machine ID for commands to work.
 
@@ -144,9 +159,12 @@ The only required parameter is `image` in the `config` object. Other parameters:
 <%= partial "machines/launch_req" %>
 <%= partial "machines/launch_resp" %>
 
-### Wait for a machine to start
+### Wait for a machine to reach a Specified State
 
-Wait for a created machine to start. This request will block for up to 60 seconds. Set a longer timeout with the `timeout` parameter.
+Wait for a machine to reach a specific state. Specify the desired state with the `state` parameter.  See the [table below](#machine-states) for a list of possible states.  The default for this parameter is `started`.
+
+This request will block for up to 60 seconds. Set a longer timeout with the `timeout` parameter.
+
 
 <%= partial "machines/wait_req" %>
 <%= partial "machines/wait_resp" %>
@@ -174,7 +192,8 @@ Stopping a machine will shut down the VM, but not destroy it. The VM may be star
 
 ### Start a Machine
 
-Start a previously stopped machine.
+Start a previously stopped machine.  Machines that are restarted are completely
+reset to their original state so that they start clean on the next run.
 
 <%= partial "machines/start_req" %>
 <%= partial "machines/start_resp" %>
