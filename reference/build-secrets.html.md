@@ -46,5 +46,5 @@ If you want to test your Docker build locally (before deploying to Fly.io), the 
 ```bash
 echo -n "secret_value" > mysecret.txt
 
-docker build ---secret id=MY_SUPER_SECRET,src=mysecret.txt .
+docker build --secret id=MY_SUPER_SECRET,src=mysecret.txt .
 ```
