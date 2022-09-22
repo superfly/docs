@@ -7,8 +7,33 @@ curl -i -X POST \\
         "image": "flyio/fastify-functions",
         "guest": {
           "memory\_mb": 512,
-          "cpus": 2
-        }
+          "cpus": 2,
+          "cpu_kind": "shared"
+        },
+        "env": {
+          "APP\_ENV": "production"
+        },
+        "services": [
+          {
+            "ports": [
+              {
+                "port": 443,
+                "handlers": [
+                  "tls",
+                  "http"
+                ]
+              },
+              {
+                "port": 80,
+                "handlers": [
+                  "http"
+                ]
+              }
+            ],
+            "protocol": "tcp",
+            "internal\_port": 8080
+          }
+        ]
       }
     }'
 
