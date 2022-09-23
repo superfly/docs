@@ -20,6 +20,7 @@ flyctl machine update [machine_id] [flags]
       --memory int           Memory (in megabytes) to attribute to the machine
   -m, --metadata strings     Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
   -p, --port strings         Exposed port mappings (format: edgePort[:machinePort]/[protocol[:handler]])
+      --schedule string      Schedule a machine run at hourly, daily and monthly intervals
   -s, --size string          Preset guest cpu and memory for a machine, defaults to shared-cpu-1x
   -v, --volume strings       Volumes to mount in the form of <volume_id_or_name>:/path/inside/machine[:<options>]
 ~~~

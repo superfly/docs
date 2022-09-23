@@ -1,4 +1,4 @@
-List app health checks
+List health checks
 
 ## Usage
 ~~~
@@ -8,9 +8,9 @@ flyctl checks list [flags]
 ## Options
 
 ~~~
-  -a, --app string          App name to operate on
+  -a, --app string          Application name
       --check-name string   Filter checks by name
-  -c, --config string       Path to an app config file or directory containing one (default "./fly.toml")
+  -c, --config string       Path to application configuration file
   -h, --help                help for list
 ~~~
 
