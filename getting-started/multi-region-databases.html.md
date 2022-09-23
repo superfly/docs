@@ -153,12 +153,8 @@ Now, let's open up our `fly.toml` file and configure our port mappings by defini
   internal_port = 5432 # Postgres instance
   protocol = "tcp"
 
-# Example of opening port 443 for secure connections
-[[services.ports]]
-  handlers = ["tls"]
-  port = 443
 
-# Example of opening port 10000 for insecure connections.
+# Open port 10000 for plaintext connections.
 [[services.ports]]
   handlers = []
   port = 10000
