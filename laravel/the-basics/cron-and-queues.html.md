@@ -11,7 +11,7 @@ The best way is to use the [processes](https://fly.io/docs/reference/configurati
 
 This allows you to segment your application into "groups". Each "group" can run an instance of your code base with a specific use case (web server, cron tasks, queue worker).
 
-> If you used `fly launch` to create your Laravel application, all of this should work with further modification to the Docker setup.
+> If you used `fly launch` to create your Laravel application, all of this should work without further modification to the Docker setup.
 
 ## Scheduler (cron)
 
