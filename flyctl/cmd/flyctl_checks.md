@@ -7,12 +7,14 @@ flyctl checks [command] [flags]
 
 ## Available Commands
 * [handlers](/docs/flyctl/checks-handlers/)	 - Manage health check handlers
-* [list](/docs/flyctl/checks-list/)	 - List app health checks
+* [list](/docs/flyctl/checks-list/)	 - List health checks
 
 ## Options
 
 ~~~
-  -h, --help   help for checks
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+  -h, --help            help for checks
 ~~~
 
 ## Global Options

@@ -11,6 +11,7 @@ flyctl postgres restart [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
+      --hard            Forces cluster VMs restarts
   -h, --help            help for restart
 ~~~
 

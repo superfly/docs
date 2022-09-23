@@ -8,9 +8,14 @@ flyctl redis create [flags]
 ## Options
 
 ~~~
-  -h, --help            help for create
-  -o, --org string      The organization to operate on
-  -r, --region string   The region to operate on
+      --disable-eviction   Disallow writes when the max data size limit has been reached
+      --enable-eviction    Evict objects when memory is full
+  -h, --help               help for create
+  -n, --name string        The name of your Redis cluster
+      --no-replicas        No replica regions
+  -o, --org string         The organization to operate on
+      --plan string        Upstash Redis plan
+  -r, --region string      The region to operate on
 ~~~
 
 ## Global Options
