@@ -18,13 +18,46 @@ In a nutshell, the advantage of Nomad is that it performs high level orchestrati
 
 This guide focuses on Machines.
 
-## Deploying your application
+## Deploying a Rails project as a Fly.io Machine
 
-It is possible to deploy your Rails application using only the [Machines](https://fly.io/docs/reference/machines/) API.  Or perhaps using [flyctl machine](https://fly.io/docs/flyctl/machine/). But in order to do so you are going to need to set up ip addresses, build your image, etc.  For the purposes of this guide we are going presume that you have bootstrapped your application using [terraform](./terraform), which incidentally under the covers uses the same API.
+```cmd
+rails new welcome; cd welcome
+```
 
-Once you have mastered the API, you can chose to deploy future applications with or without terraform by writing your own deployment scripts in Ruby.
+Now use your favorite editor to make a one line change to `config/routes.rb`:
 
-Meanwhile, starting with an trivial app that has been deployed to the machines platform is exactly what we need as a base to build on.  Let's get started.
+``` diff
+ Rails.application.routes.draw do
+   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+   # Defines the root path route ("/")
+-  # root "articles#index"
++  root "rails/welcome#index"
+ end
+ ```
+
+ Install `fly.io-rails` gem:
+
+ ```cmd
+ bundle add fly.io-rails
+ ```
+
+Source to this gem is on [GitHub](https://github.com/rubys/fly.io-rails).  If
+adopted, it will move to the superfly organization.
+
+Deploy your project
+
+```cmd
+bin/rails deploy
+```
+
+You have now successfully deployed a trivial Rails app Fly.io machines platform.
+
+You can verify that this is running on the machines platform via `fly status`.
+You can also run commands like `fly open` to bring your application up in the
+browser.
+
+Now lets make that application launch more machines.
 
 ## Installing `fly` on the Rails Machine
 
@@ -38,7 +71,7 @@ ENV PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 A good place to put these lines is immediately before the `# Deploy your application` comment.
 
-Before proceeding, we need to make our Fly token available to our application:
+Next we need to make our Fly token available to our application:
 
 ```cmd
 fly secrets set FLY_API_TOKEN=$(fly auth token)
