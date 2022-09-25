@@ -17,13 +17,7 @@ See also the [RFC: Terraforming Rails on fly.io](https://community.fly.io/t/rfc-
 
 Go ahead and [download](https://learn.hashicorp.com/tutorials/terraform/install-cli) Terraform if you haven't yet.
 
-In its own terminal (or in the background; the point is that we want to keep this running) run
-
-```cmd
-flyctl machines api-proxy
- ```
- 
-This will proxy a local port over [user-mode WireGuard](https://fly.io/blog/our-user-mode-wireguard-year/) to the internal Machines API endpoint, so Terraform on your machine can access it.
+Optionally, either [configure wireguard](https://fly.io/docs/reference/machines/#connecting-via-wireguard) or [run a proxy](https://fly.io/docs/reference/machines/#connecting-via-flyctl-proxy).  If you do neither, a proxy will be dynamically started and stopped as needed.
 
 ## Create a Rails project
 
@@ -56,7 +50,7 @@ adopted, it will move to the superfly organization.
 ## Generate terraform configuration
 
 ```cmd
-bin/rails generate terraform
+bin/rails generate fly:terraform
 ```
 
 The terraform generator supports a number of options, for now it is worth letting them all default.  For completeness, the current list of options supported is:
@@ -67,16 +61,6 @@ The terraform generator supports a number of options, for now it is worth lettin
 
   More options can and should be added.  See
   [Fly terraform provider documentation](https://registry.terraform.io/providers/fly-apps/fly/latest/docs/resources/machine#optional) for ideas.
-
-## Configure your database
-
- * If you are using Postgres, run `fly secrets set DATABASE_URL=` with the
-   value provided when you created the database.
- * If you are using Redis, run `fly secrets set REDIS_URL=` with the value
-   provided when you created the Redis cluster.
- * If you are using Sqlite3, uncomment the volume and sqlite3 sections in
-   `main.tf`.  Additionally, move ` => 'db:migrate'` from the `:release` to
-   the `:server` task in `lib/tasks/fly.rake`.
 
 ## Deploy the application
 
