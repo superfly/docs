@@ -135,8 +135,8 @@ resource "fly_machine" "exampleMachine" {
       "internal_port" : 80
     },
   ]
-  cpus = 1;
-  memorymb = 256;
+  cpus = 1
+  memorymb = 256
   depends_on = [fly_app.exampleApp]
 }
 ```
