@@ -96,37 +96,12 @@ postgres://{username}:{password}@{hostname}:{port}/{database}?options
 
 The output from `flyctl postgres create` contains all the values you need to make a connection string to your database.
 
-### Attaching an App
 
-Using the superuser credentials, you can create databases, users, and whatever else you need for your apps. But we also have the `flyctl postgres attach` shortcut:
-
-```
-flyctl postgres attach --app <app-name> <postgres-app-name>
-```
-
-When you attach an app to Postgres, a number of things happen:
-
-* A database and user are created in the Postgres App. If the attached app is named "myapp", both the database and the user are named "myapp" too.
-* The user is allocated a generated password.
-
-When the Attached app starts it will find an environment variable `DATABASE_URL` set to a Postgres connection URI with the username, password, host, port and dbname filled in.
-
-### Detaching an App
-
-Use `flyctl postgres detach` to remove postgres from the app.
-
-```
-flyctl postgres detach --app <app-name> <postgres-app-name>
-```
-
-This will revoke access to the attachment's role, remove the role, and remove the `DATABASE_URL` secret. The database will not be removed.
-
-
-### Connecting from within Fly
+### Connecting to Postgres From Within Fly
 
 As a Fly.io application, your Postgres app is accessible through Fly's [private networking](/docs/reference/private-networking/). This means applications within the same organization can look up the app at `appname.internal`. This name, when looked up, can return one or more IPv6 addresses.
 
-### Connecting from outside Fly
+### Connecting to Postgres From Outside Fly
 #### On an instance with `flyctl` installed
 
 To connect to your Postgres database from outside your Fly organization, you need a WireGuard connection. However, `flyctl` on your local machine can connect using [user-mode WireGuard](/blog/our-user-mode-wireguard-year/) magic, without you having to set up your own WireGuard tunnel.
@@ -166,6 +141,32 @@ If you have an active [WireGuard tunnel](/docs/reference/private-networking/#pri
 ```
 psql postgres://postgres:secret123@appname.internal:5432
 ```
+
+### Attaching to a Fly App
+
+Using the superuser credentials, you can create databases, users, and whatever else you need for your apps. But we also have the `flyctl postgres attach` shortcut:
+
+```
+flyctl postgres attach --app <app-name> <postgres-app-name>
+```
+
+When you attach an app to Postgres, a number of things happen:
+
+* A database and user are created in the Postgres App. If the attached app is named "myapp", both the database and the user are named "myapp" too.
+* The user is allocated a generated password.
+
+When the Attached app starts it will find an environment variable `DATABASE_URL` set to a Postgres connection URI with the username, password, host, port and dbname filled in.
+
+### Detaching a Fly App
+
+Use `flyctl postgres detach` to remove postgres from the app.
+
+```
+flyctl postgres detach --app <app-name> <postgres-app-name>
+```
+
+This will revoke access to the attachment's role, remove the role, and remove the `DATABASE_URL` secret. The database will not be removed.
+
 
 ### Connecting external services
 
