@@ -7,14 +7,11 @@ nav: firecracker
 
 
 ## Fly Apps V2 ( Preview )
-A little bit of information about V2 Postgres here...
+Add something about V2 apps
 
 ### Guides
 <li>
-  <a href="/docs/reference/postgres-machines">Postgres Database</a>
-</li>
-<li>
-  <a href="#">Multi-region PostgreSQL</a>
+  <a href="/docs/reference/postgres-machines">Fly Postgres on Machines</a>
 </li>
 
 
