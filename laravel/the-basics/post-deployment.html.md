@@ -5,11 +5,10 @@ objective: Interact with a deployed Laravel application.
 order: 2
 ---
 
-Once you have your Laravel application up and running, it helps to know how to execute commands on it and review events happening in your application.
-
+Once you have your Laravel application up and running in Fly.io, it helps to know how to execute commands on it and review events happening in your application.
 
 ## _Console Access_
-To interact with your Laravel application, you can ssh into the vm machine through the [`Fly SSH Console`](/docs/flyctl/ssh-console/):
+To interact with your Laravel application in Fly.io, you can ssh into a running instance through the [`Fly SSH Console`](/docs/flyctl/ssh-console/):
 ```cmd
 fly ssh console
 ```
@@ -32,7 +31,7 @@ app         composer.json  database       package-lock.json  postcss.config.js  
 
 ## _Logs_
 
-Hopefully you have configured some neat, helpful logs to keep track of the events happening in your Laravel application. 
+Hopefully you have configured some neat, helpful [logs](https://laravel.com/docs/9.x/logging) to keep track of the events happening in your Laravel application. 
 So another way to inspect what your application's been up to, is to check its application logs. There are several options:
 
 ### Fly.io's logging service
@@ -46,12 +45,12 @@ By default, Fly.io updates Laravel's logging channel to `"stderr"` through the `
   LOG_LEVEL = "info"
   LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
 ```
-This `"stderr"` configuration prints your application logs into the console, where the fly service is able to listen and capture logs from. 
+This `"stderr"` configuration prints your application logs into the console, where the [Fly.io service](https://fly.io/docs/getting-started/working-with-fly-apps/#viewing-logs) is able to listen and capture logs from. 
 
 In order to **view your logs** captured by the Fly.io service, you can either:
 
 1. Visit your application's monitoring section from your Fly.io dashboard likeso: `"https://fly.io/apps/<app-name>/monitoring"`
-2. Or run the command:
+2. Or run the [flyctl log](https://fly.io/docs/flyctl/logs/) command:
 
 ```cmd
 fly logs
@@ -61,11 +60,12 @@ fly logs
 ```
 
 <div class="callout">
-Take note however that Fly logs are kept only for **2 days**, before they're all wiped out! 
+Take note however that Fly.io logs are kept only for **2 days**, before they're all wiped out! 
 </div>
 
 ### _Volumed Log File_
 
+<h4>Laravel Log File</h4>
 If you would like to persist your application logs for a longer duration, you can instead opt to save the logs in a log file by configuring `"single"`, `"daily"`, or `"stack"` as the **LOG_CHANNEL**. 
 
 So update your `fly.toml`:
@@ -91,9 +91,9 @@ Note: You can even add `"stderr"` in the stack's channels list to view your logs
   Then, through the Fly SSH Console, you can access the logs in your application!
 </aside>
 
-<h4>Volume</h4>
+<h4>Adding Volume</h4>
 
-Deployment wipes out all log files! In order to persist your Laravel log files, we need to add a [volume](https://fly.io/docs/reference/volumes/) to persist your log folder's state.
+Deployment wipes out all log files! In order to persist your Laravel log files, you'll need to add a [volume](https://fly.io/docs/reference/volumes/) to persist your log folder's state.
 
 
 1) First let's create a Volume:
@@ -124,18 +124,21 @@ fly deploy
 ```
 
 <aside class="callout">
-  Hopefully now, regardless of how many more deployments you make hereafter, your logs will persist!
+  Hopefully now, regardless of how many more deployments you make from here, your logs will persist!
 </aside>
 
-**_Possible Errors_**
+<h5>**_Possible Errors_**</h5>
 
 ```output
 Error not enough volumes named `<volume_name>` (1) to run `(<n>)` processes
 ```
 
-The above error can mean that there are `<n>` processes configured in your `fly.toml` trying to use the volume!
+The above error can come up after configuring your volume in `fly.toml` and executing `fly launch`. 
 
-A Volume can only be used by one at any given time, so please select the appropriate process to use the volume, and re-configure your mount:
+It can mean that there are `<n>` processes configured in your `fly.toml` trying to use the volume!
+Take note however, that a Volume can only be used by one at any given time. 
+
+To fix this issue, please select the appropriate process to use the volume, and re-configure your mount in `fly.toml`, likeso:
 
 ```toml
 [mounts]
