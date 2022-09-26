@@ -7,7 +7,7 @@ nav: firecracker
 
 
 ## Fly Apps V2 ( Preview )
-Add something about V2 apps
+Next-gen Apps built on top of Machines. 
 
 ### Guides
 <li>
@@ -16,7 +16,7 @@ Add something about V2 apps
 
 
 ## Fly Apps V1
-A little bit of information about V1 Postgres here...
+V1 Apps are the original Fly.io Firecracker app.
 
 ### Guides
 <li>
