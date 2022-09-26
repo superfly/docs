@@ -2,7 +2,7 @@
 title: Cron and Queues
 layout: framework_docs
 objective: Run queue workers and Laravel's scheduler via cron
-order: 2
+order: 3
 ---
 
 You may need to run Laravel's scheduler (via cron) or queue workers.
