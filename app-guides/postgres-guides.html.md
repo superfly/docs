@@ -12,7 +12,7 @@ V2 Apps represent our next-gen architecture built on top of Machines.
 <ul>
 <lh>Resources</th>
  <li>
-  <a href="/docs/reference/postgres-machines">Fly Postgres on Machines</a>
+  <a href="/docs/reference/postgres-on-machines">Fly Postgres on Machines</a>
  </li>
 </ul>
 
