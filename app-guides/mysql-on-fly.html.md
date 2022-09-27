@@ -92,10 +92,7 @@ There's a few important things to note:
 <div class="callout">⚠️ Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. Therefore, we use a subdirectory of the mounted location: `/data/mysql`.</div>
 
 
-
-## Deploy the App
-
-We are _almost_ ready to deploy the MySQL app!
+## Scale the App
 
 There's one more detail. MySQL 8+ has higher baseline resource demands than MySQL 5.7.
 
@@ -106,13 +103,31 @@ If you're using MySQL 8, it's best to add some additional RAM to the VM:
 fly scale memory 2048
 ```
 
-And _now_ we can finally deploy it:
+This isn't necessary with MySQL 5.7.
+
+If you need MySQL 8, but wish to stay in the free tier, you can also reduce MySQL 8's memory usage with additional start up flags. Edit `fly.toml` and adjust the following:
+
+```toml
+# Add the performance schema and buffer pool size flags
+# Note that --performance-schema=OFF is all one string
+[experimental]
+  cmd = [
+    "--default-authentication-plugin", "mysql_native_password",
+    "--datadir", "/data/mysql",
+    "--performance-schema=OFF",
+    "--innodb-buffer-pool-size", "64M"
+  ]
+```
+
+## Deploy the App
+
+We're now ready to deploy the MySQL app! Go ahead and run:
 
 ```bash
 fly deploy
 ```
 
-You should now have an app running MySQL! 
+After a minute of MySQL initializing itself (on its first run), you should now have an app running MySQL! 
 
 Your other apps can access the MySQL service by its name. In my case, I would use `my-mysql.internal` as the hostname. Any app that needs to access the database should set the hostname and username as environment variables, and create a secret for the database password.
 
