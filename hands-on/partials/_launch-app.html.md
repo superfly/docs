@@ -8,7 +8,7 @@ flyctl launch --image flyio/hellofly:latest
 ```output 
 ? App Name (leave blank to use an auto-generated name):
 ```
-Here you can enter the name of the app.
+Here you can enter the name of the app. Please note that you can only use numbers, lowercase letters and dashes.
 ```output 
 ? Select organization: Personal (personal)
 ```
