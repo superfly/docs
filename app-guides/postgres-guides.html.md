@@ -7,8 +7,8 @@ nav: firecracker
 
 
 ## Fly Apps V2 ( Preview )
-Next-gen Apps built on top of Machines.
- 
+V2 Apps are built on top of Machines.
+
 <ul>
 <lh>Resources</th>
  <li>
@@ -18,7 +18,7 @@ Next-gen Apps built on top of Machines.
 
 
 ## Fly Apps V1
-V1 Apps are the original Fly.io Firecracker app.
+V1 Apps are powered by Nomad. 
 
 <ul>
   <lh>Resources</lh>
