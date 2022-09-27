@@ -7,7 +7,7 @@ nav: firecracker
 
 
 ## Fly Apps V2 ( Preview )
-V2 Apps are built on top of Machines.
+V2 Apps represent our next-gen architecture built on top of Machines.
 
 <ul>
 <lh>Resources</th>
