@@ -7,6 +7,8 @@ If you're all about the code, then these guides will get you deploying from your
 * [Learn how to build and deploy the hellofly application from Go source](/docs/getting-started/golang/)
 * [Deploying a Node application with Fly.io](/docs/getting-started/node/)
 * [Deploying a Deno application with Fly.io](/docs/getting-started/deno/)
+* [Deploying a Laravel application with Fly.io](/docs/laravel/)
+* [Deploying a Rails application with Fly.io](/docs/rails/)
 
 And if you want to automate your deployments (who doesn't), check out:
 
