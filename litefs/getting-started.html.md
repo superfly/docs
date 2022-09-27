@@ -113,7 +113,7 @@ and join the cluster automatically.
 
 LiteFS uses [Consul](https://www.consul.io/) to track the current primary node
 in the cluster. Other nodes will automatically find the primary on startup and
-connect to it and replicate from it. In the even that the primary node fails,
+connect to it and replicate from it. In the event that the primary node fails,
 it will lose its `"primary"` status and another node can become primary.
 
 The directory that LiteFS mounts on the file system provides a file called
@@ -126,7 +126,7 @@ and the replica node can service any read-only requests.
 
 Fly.io will automatically connect you to the closest region in order to minimize
 latency. If you're in Europe, you'll connect to the `lhr` region. If you're in
-Austrailia, you'll connect to the `syd` region.
+Australia, you'll connect to the `syd` region.
 
 However, we want to see that our data replicates to each region. For that, we've
 added a `region` query parameter to our application's logic. If you want to view
