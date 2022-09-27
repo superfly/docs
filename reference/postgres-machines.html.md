@@ -745,19 +745,19 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-## Library support
+### Library support
 
 We would like to build libraries to make this seamless for most application frameworks and runtimes. If you have a particular app you'd like to distribute with PostgreSQL, [post in our community forums](https://community.fly.io/t/multi-region-database-guide/1600) and we'll write some code for you.
 
-## Consistency model
+### Consistency model
 
 This is a fairly typical read replica model. Read replicas are usually eventually consistent, and can fall behind the leader. Running read replicas across the world _can_ exacerbate this effect and make read replicas stale more frequently.
 
-### Request with writes
+#### Request with writes
 
 Requests to the primary region are strongly consistent. When you use the replay header to target a particular region, the entire request runs against the leader database. Your application will behave like you expect.
 
-### Read only requests
+#### Read only requests
 
 Most apps accept a `POST` or `PUT`, do a bunch of writes, and then redirect the user to a `GET` request. In most cases, the database will replicate the changes before the user makes the second request. But not always!
 
@@ -765,7 +765,7 @@ Most read heavy applications aren't especially sensitive to stale data on subseq
 
 If your app is sensitive to this (meaning, you never, under any circumstances want to show users stale data), you should be careful using read replicas.
 
-### Managing eventual consistency
+#### Managing eventual consistency
 
 For apps that are sensitive to consistency issues, you can add a counter or timestamp to user sessions that indicates what "version" of the database a particular user is expecting. When the user makes a request and the session's data version differs from the replica, you can use the same `fly-replay` header to redirect their request to the primary region – and then you'll know it's not stale.
 

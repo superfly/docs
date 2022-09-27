@@ -7,8 +7,8 @@ nav: firecracker
 
 
 ## Fly Apps V2 ( Preview )
-
-Next-gen Apps built on top of Machines. 
+Next-gen Apps built on top of Machines.
+ 
 <ul>
 <lh>Resources</th>
  <li>
