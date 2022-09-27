@@ -1,4 +1,4 @@
-What's next? Well this is only the start of your travels with Fly.
+What's next? Well, this is only the start of your travels with Fly.
 
 ## _Developers_
 
@@ -36,4 +36,3 @@ Quickly learn about how to deploy particular classes of application out of the b
 Your one stop reference for everything Fly.io is the [documentation](/docs).
 
 Don't forget we have all the announcements, updates, new features and more in [the Fly.io Blog](/blog).
-
