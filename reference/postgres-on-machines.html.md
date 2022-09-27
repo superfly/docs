@@ -658,7 +658,7 @@ fly postgres create --machines --snapshot-id <snapshot-id>
 
 ## High Availability
 
-Fly Postgres uses stolon for leader election and streaming replication between 2+ postgres servers. It provides a number of things, including a “keeper” that controls the postgres process, a "sentinel" that builds the cluster view, and a “proxy” that always routes connections to the current leader.
+Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ postgres servers. It provides a number of things, including a “keeper” that controls the postgres process, a "sentinel" that builds the cluster view, and a “proxy” that always routes connections to the current leader.
 
 If the leader becomes unhealthy (eg network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previoius leader's VM will be replaced by another VM which will rejoin the cluster as a replica.
 
