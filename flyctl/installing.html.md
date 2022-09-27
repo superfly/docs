@@ -27,7 +27,7 @@ If not, you can run the install script:
 ```cmd
 curl -L https://fly.io/install.sh | sh
 ```
-After that, you should add the flyctl directory to your shell rc file. Check the output of the install script for the exact command. Copy, paste and run it and the `flyctl` keyword will be available everywhere. Or for maximum efficiency, you can use the `fly` keyword! 
+After that, you should add the flyctl directory to your shell rc file. Check the output of the install script for the exact command. Copy, paste and run it and the `flyctl` command will be available everywhere. Or for maximum efficiency, you can use the `fly` command! 
 
 <h2 id="linux" class="group flex items-center relative mt-14 sm:mt-16 mb-10 group text-navy font-heading pb-1 border-b">
   <a href="#linux" class="absolute ml-[-1em] pr-[0.5em] after:hash opacity-0 group-hover:opacity-50 transition-all" aria-label="Anchor"></a>
