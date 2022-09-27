@@ -20,7 +20,7 @@ rails new list; cd list; bin/rails generate scaffold Name name
 
 At this point you have two choices.  You can run `fly launch` and follow the instructions in [Getting Started with LiteFS](https://fly.io/docs/litefs/getting-started/) which would require you to make the following modifications:
 
-  * In Dockerfile, add `FROM flyio/litefs:pr-109`, `fuse` package, `COPY --from=lite fs`, `COPY config/litefls.yml`, `mkdir /data`.  Change `SERVER_COMMAND` to `litefs
+  * In Dockerfile, add `FROM flyio/litefs:pr-109`, `fuse` package, `COPY --from=lite fs`, `COPY config/litefls.yml`, `mkdir /data`.  Change `SERVER_COMMAND` to `litefs`.
   * In `lit/tasks/fly.rake`, remove the `release` step.
   * In `fly.toml`, change `SERVER_COMMAND` to `litefs`, remove `[deploy]` section, set `DATABASE_URL` to `"sqlite3:///data/production.sqlite3"`, add `enable_consul` to the `[experimental]` section, and add a `[mount]` section.
   * Add `config/litefs.yml`, with `data-dir` set to `/mnt/volume` and `exec` set to `bin/rails fly:server`.
