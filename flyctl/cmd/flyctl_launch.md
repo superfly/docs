@@ -8,17 +8,17 @@ flyctl launch [flags]
 ## Options
 
 ~~~
-      --copy-config         Use the configuration file if present without prompting.
-      --dockerfile string   Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
+      --copy-config         Use the configuration file if present without prompting
+      --dockerfile string   Path to a Dockerfile. Defaults to the Dockerfile in the working directory
       --generate-name       Always generate a name for the app
   -h, --help                help for launch
-      --image string        the image to launch
-      --name string         the name of the new app
+      --image string        Image to launch
+      --name string         Name of the new app
       --no-deploy           Do not prompt for deployment
-      --now                 deploy now without confirmation
-      --org string          the organization that will own the app
-      --path string         path to app code and where a fly.toml file will be saved. (default ".")
-      --region string       the region to launch the new app in
+      --now                 Deploy now without confirmation
+      --org string          Organization that will own the app
+      --path string         Path to app code and where a fly.toml file will be saved (default ".")
+      --region string       Region to launch the new app in
       --remote-only         Perform builds remotely without using the local docker daemon
 ~~~
 
