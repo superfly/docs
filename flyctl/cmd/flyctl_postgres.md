@@ -13,6 +13,7 @@ flyctl postgres [command] [flags]
 * [create](/docs/flyctl/postgres-create/)	 - Create a new PostgreSQL cluster
 * [db](/docs/flyctl/postgres-db/)	 - Manage databases in a cluster
 * [detach](/docs/flyctl/postgres-detach/)	 - Detach a postgres cluster from an app
+* [failover](/docs/flyctl/postgres-failover/)	 - Failover to a new primary
 * [list](/docs/flyctl/postgres-list/)	 - List postgres clusters
 * [restart](/docs/flyctl/postgres-restart/)	 - Restarts each member of the Postgres cluster one by one.
 * [update](/docs/flyctl/postgres-update/)	 - Updates the Postgres cluster to the latest eligible version
