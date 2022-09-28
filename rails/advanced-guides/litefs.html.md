@@ -86,7 +86,7 @@ Return to the browser and change the value of this name, and then once again use
 # Current limitations
 
  * litefs currently only works with Nomad, not with machines.
- * VMs with Consol enabled never exit, making releases impossible.  Additionally litefs write forwarding needs work.
+ * VMs with Consul enabled never exit, making releases impossible.  Additionally litefs write forwarding needs work.
    Perhaps [fly-ruby](https://github.com/superfly/fly-ruby) would address this, or could readily be adapted.
    [What Litefs Can Do Today](https://fly.io/blog/introducing-litefs/#what-litefs-can-do-today) describes current
    capabilities and future plans.
