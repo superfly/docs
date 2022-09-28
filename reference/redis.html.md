@@ -81,10 +81,10 @@ Use `flyctl redis update` and follow the prompts. Changing region settings shoul
 Deleting a Redis database can't be undone. Be careful!
 
 ```cmd
-fly redis delete aaV829vaMVQDbi5
+fly redis delete my-redis-db
 ```
 ```output
-Your Redis cluster aaV829vaMVQDbi5 was deleted
+Your Redis database my-redis-db was deleted
 ```
 
 ## What you should know
