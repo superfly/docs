@@ -113,7 +113,7 @@ The first step is one of the built in Actions steps. The step `uses` the `checko
 
 ```yaml
         - uses: superfly/flyctl-actions/setup-flyctl@master
-        - run: "deploy"
+        - run: flyctl deploy --remote-only
 ```
 
 This step `uses` the superfly/flyctl-actions action. This is a GitHub action created by Fly which wraps around the `flyctl` command. The wrapper is invoked with the `deploy` argument which will take over the process of building and moving the application to the Fly infrastructure. It uses the settings from the `fly.toml` file to guide it and uses the `FLY_API_TOKEN` to authorize its access to the Fly API.
