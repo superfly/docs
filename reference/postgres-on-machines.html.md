@@ -1,17 +1,22 @@
 ---
-title: Fly Postgres on Machines
+title: Fly Postgres on Apps V2
 layout: docs
 sitemap: false
 nav: firecracker
 ---
 
+
+<div class="callout">Fly Postgres on Apps V2 (i.e. Fly Postgres running on Fly Machines), is a preview feature. For production Postgres clusters on Fly.io, refer to **[Fly Postgres](/docs/reference/postgres/)**</div>
+
+
 [Postgres](https://www.postgresql.org/), or PostgreSQL, is a powerful open-source object relational database system.
 
-## About Postgres On Fly
+## About Fly Postgres on Machines
 
-Postgres on Fly is a regular Fly.io app, with an automated creation process and some extensions to simplify management. It relies on building blocks available to all Fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
 
-### About **Free** Postgres on Fly
+Fly Postgres is a regular Fly.io app, with an automated creation process and some platform integration to simplify management. It relies on building blocks available to all Fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
+
+### About **Free** Postgres on Fly.io
 
 You can use Fly's [free resource allowance](https://fly.io/docs/about/pricing/#free-allowances) in one place, or split it up. The following Postgres configurations fit within the free volume usage limit:
 
@@ -86,7 +91,7 @@ flyctl <command> -a <postgres-app-name>
 
 ## Connecting to Postgres
 
-How you connect to Postgres depends on the tools you're using. Connection string URIs are a common way to describe a connection to a postgres server.
+How you connect to Postgres depends on the tools you're using. Connection string URIs are a common way to describe a connection to a Postgres server.
 
 Connection strings have the following format:
 
@@ -159,7 +164,7 @@ When the Attached app starts it will find an environment variable `DATABASE_URL`
 
 ### Detaching a Fly App
 
-Use `flyctl postgres detach` to remove postgres from the app.
+Use `flyctl postgres detach` to remove Postgres from the app.
 
 ```
 flyctl postgres detach --app <app-name> <postgres-app-name>
@@ -269,7 +274,7 @@ You can set this variable manually with `flyctl secrets set`
 flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.internal:5432/yourdb
 ```
 
-or by attaching the postgres database to your fly app.
+or by attaching the Postgres database to your Fly app.
 
 
 #### Connecting with Go ([docs](https://github.com/jackc/pgx/wiki/Getting-started-with-pgx-through-database-sql))
@@ -314,7 +319,7 @@ func main() {
 
 #### Connecting with Node.js ([docs](https://node-postgres.com))
 
-You'll use the `pg` npm module to connect to postgres from a node.js app.
+You'll use the `pg` npm module to connect to Postgres from a Node.js app.
 
 ```javascript
 const { Client } = require('pg')
@@ -419,7 +424,7 @@ main()
 A Postgres cluster is configured with three users when created:
 
 - `postgres` - a role with superuser and login privileges that was created for you along with the cluster. Since the `postgres` role has superuser rights, it's recommended that you only use it for admin tasks and create new users with access restricted to the minimum necessary for applications
-- `flypgadmin` - this role is used internally by fly to configure and query the postgres cluster
+- `flypgadmin` - this role is used internally by Fly.io to configure and query the Postgres cluster
 - `repluser` - this is the user replica servers use for replication from the leader
 
 You can view a list of users using `flyctl`
@@ -658,7 +663,7 @@ fly postgres create --machines --snapshot-id <snapshot-id>
 
 ## High Availability and Global Replication
 
-Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ postgres servers. It provides a number of things, including a “keeper” that controls the Postgres process, a "sentinel" that builds the cluster view, and a “proxy” that always routes connections to the current leader.
+Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ Postgres servers. It provides a number of things, including a “keeper” that controls the Postgres process, a "sentinel" that builds the cluster view, and a “proxy” that always routes connections to the current leader.
 
 If the leader becomes unhealthy (e.g. network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previous leader's VM will be replaced by another VM which will rejoin the cluster as a replica.
 

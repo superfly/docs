@@ -1,5 +1,5 @@
 ---
-title: Postgres on Fly
+title: Fly Postgres
 layout: docs
 sitemap: false
 nav: firecracker
@@ -7,13 +7,13 @@ nav: firecracker
 
 [Postgres](https://www.postgresql.org/), or PostgreSQL, is a powerful open-source object relational database system.
 
-## About Postgres On Fly
+## About Fly Postgres
 
-Postgres on Fly is a regular Fly.io app, with an automated creation process and some extensions to simplify management. It relies on building blocks available to all Fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
+Fly Postgres is a regular Fly.io app, with an automated creation process and some extensions to simplify management. It relies on building blocks available to all Fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
 
-### About **Free** Postgres on Fly
+### About **Free** Fly Postgres
 
-You can use Fly's [free resource allowance](https://fly.io/docs/about/pricing/#free-allowances) in one place, or split it up. The following Postgres configurations fit within the free volume usage limit:
+You can use Fly.io's [free resource allowance](https://fly.io/docs/about/pricing/#free-allowances) in one place, or split it up. The following Postgres configurations fit within the free volume usage limit:
 
 * single node, 3gb volume (single database)
 * 2 x 1gb volumes (database in two regions, or a primary and replica in the same region)
@@ -105,7 +105,7 @@ The output from `flyctl postgres create` contains all the values you need to mak
 
 ### Connecting to Postgres from within Fly
 
-As a Fly.io application, your Postgres app is accessible through Fly's [private networking](/docs/reference/private-networking/). This means applications within the same organization can look up the app at `appname.internal`. This name, when looked up, can return one or more IPv6 addresses.
+As a Fly.io application, your Postgres app is accessible through Fly [private networking](/docs/reference/private-networking/). This means applications within the same organization can look up the app at `appname.internal`. This name, when looked up, can return one or more IPv6 addresses.
 
 ### Connecting to Postgres from outside Fly
 #### On a machine with `flyctl` installed
@@ -188,7 +188,7 @@ If the leader becomes unhealthy (eg network or hardware issues), the proxy drops
 A Postgres cluster is configured with three users when created:
 
 - `postgres` - a role with superuser and login privileges that was created for you along with the cluster. Since the `postgres` role has superuser rights, it's recommended that you only use it for admin tasks and create new users with access restricted to the minimum necessary for applications
-- `flypgadmin` - this role is used internally by fly to configure and query the postgres cluster
+- `flypgadmin` - this role is used internally by Fly.io to configure and query the postgres cluster
 - `repluser` - this is the user replica servers use for replication from the leader
 
 You can view a list of users using `flyctl`
@@ -252,7 +252,7 @@ You can set this variable manually with `flyctl secrets set`
 flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.internal:5432/yourdb
 ```
 
-or by attaching the postgres database to your fly app.
+or by attaching the postgres database to your Fly app.
 
 
 ### Connecting with Go ([docs](https://github.com/jackc/pgx/wiki/Getting-started-with-pgx-through-database-sql))
@@ -382,7 +382,7 @@ async function main() {
 
   const newPost = await prisma.post.create({
     data: {
-      title: 'PostgreSQL on Fly',
+      title: 'PostgreSQL on Fly.io',
       content: 'https://fly.io/docs/reference/postgres'
     }
   })
