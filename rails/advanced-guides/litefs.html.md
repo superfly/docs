@@ -29,7 +29,7 @@ At this point you have two choices.  You can run `fly launch` and follow the ins
 Or you could install a gem which will do all of the above:
 
 ```
-bundle add fly-io.rails
+bundle add fly.io-rails
 bin/rails generate fly:app --nomad --litefs --region iad lhr
 ```
 
