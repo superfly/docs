@@ -28,7 +28,12 @@ How do you connect your Laravel application running in Fly.io with a database ap
 
 
 ## _MySQL in Fly.io_
-You can start with a relational-database classic: [MySQL](https://www.mysql.com/). You can even run it as a Fly App. 
+You can start with a relational-database classic: [MySQL](https://www.mysql.com/). You can even run it as a Fly App! 
+
+In this section, you'll:
+  1. Get a reference on how to spin a MySQL Fly App 
+  2. Connect to your MySQL Fly App from a Laravel Fly App
+  3. Connect to your MySQL Fly App from a local environment
 
 ### _Setup a MySQL application in Fly.io_
 Follow this [MySQL guide](/docs/app-guides/mysql-on-fly/) to get up and running with your MySQL application in Fly.io.
@@ -79,7 +84,7 @@ fly deploy
 
 The MySQL instance you spun up in Fly.io &quot;[is closed to the public internet](/docs/reference/machines/#notes-on-networking)&quot;, and can only be accessed by another application found in your Fly.io organization's private network. You'll need a way to tunnel into the network, and finally connect to your MySQL instance.
 
-<b>In this guide you'll tunnel to your MySQL instance through the `flyctl proxy`</b>
+<b>In this guide you'll tunnel to your MySQL instance through the use of `flyctl proxy`</b>
 
 First, open your MySQL application's `fly.toml` and take note of the following:
 
@@ -97,7 +102,7 @@ Then use `flyctl proxy`  to tunnel to your MySQL application:
 flyctl proxy 3306 -a <mysql-app-name>
 ```
 
-Finally, update your local .env file and update with the values from your MySQL `fly.toml` file:
+Finally, update your local .env file with the values from your MySQL `fly.toml` file:
 
 ```env
 DB_CONNECTION=mysql
