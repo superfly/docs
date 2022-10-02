@@ -171,7 +171,7 @@ class MachineJob < ApplicationJob
       }
 
       # start a machine
-      start = Fly::Machines.create_start_machine(app, config: config)
+      start = Fly::Machines.create_and_start_machine(app, config: config)
       machine = start[:id]
 
       if machine
@@ -217,7 +217,7 @@ end
 
 Note in particular the calls to `Fly::Machines`:
 
-  * [`Fly::Machines.create_start_machine`](https://fly.io/docs/reference/machines/#create-and-start-a-machine)
+  * [`Fly::Machines.create_and_start_machine`](https://fly.io/docs/reference/machines/#create-and-start-a-machine)
   * [`Fly::Machines.get_a_machine`](https://fly.io/docs/reference/machines/#get-a-machine)
   * [`Fly::Machines.delete_machine`](https://fly.io/docs/reference/machines/#delete-a-machine-permanently)
 
