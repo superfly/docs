@@ -25,5 +25,5 @@ flyctl postgres restart [flags]
 
 ## See Also
 
-* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage Postgre clusters.
+* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage Postgres clusters.
 

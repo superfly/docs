@@ -10,6 +10,7 @@ flyctl postgres update [flags]
 
 ~~~
   -a, --app string      Application name
+      --auto-confirm    Will automatically confirm changes without an interactive prompt.
   -c, --config string   Path to application configuration file
   -h, --help            help for update
 ~~~
@@ -24,5 +25,5 @@ flyctl postgres update [flags]
 
 ## See Also
 
-* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage Postgre clusters.
+* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage Postgres clusters.
 
