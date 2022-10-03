@@ -47,7 +47,7 @@ flyctl [command] [flags]
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 * [ping](/docs/flyctl/ping/)	 - Test connectivity with ICMP ping messages
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
-* [postgres](/docs/flyctl/postgres/)	 - Manage Postgre clusters.
+* [postgres](/docs/flyctl/postgres/)	 - Manage Postgres clusters.
 * [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a fly VM
 * [redis](/docs/flyctl/redis/)	 - Launch and manage Redis databases managed by Upstash.com
 * [regions](/docs/flyctl/regions/)	 - Manage regions

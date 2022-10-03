@@ -11,6 +11,7 @@ flyctl volumes extend <id> [flags]
 
 ~~~
   -a, --app string      Application name
+      --auto-confirm    Will automatically confirm changes without an interactive prompt.
   -c, --config string   Path to application configuration file
   -h, --help            help for extend
   -s, --size int        Target volume size in gigabytes

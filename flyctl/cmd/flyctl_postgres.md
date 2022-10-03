@@ -1,4 +1,4 @@
-Manage Postgre clusters.
+Manage Postgres clusters.
 
 
 ## Usage
