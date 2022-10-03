@@ -112,7 +112,7 @@ Get details about an application, like its organization slug and name. Also, to 
 
 ### Set application secrets
 
-Fon sensitive enviornment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly apps using `flyctl`:
+For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly apps using `flyctl`:
 
 <%= partial "../partials/set_secrets", locals: { app_name: "user-functions" } %>
 
@@ -241,7 +241,7 @@ This table explains the possible machine states. A machine may only be in one st
     </tr>
     <tr>
       <td class="font-bold">started</td>
-      <td>Running and network-accesible</td>
+      <td>Running and network-accessible</td>
     </tr>
     <tr>
       <td class="font-bold">stopping</td>
