@@ -31,7 +31,7 @@ How do you connect your Laravel application running in Fly.io with a database ap
 You can start with a relational-database classic: [MySQL](https://www.mysql.com/). You can even run it as a Fly App! 
 
 In this section, you'll:
-  1. Get a reference on how to spin a MySQL Fly App 
+  1. Get a reference on how to spin up a MySQL Fly App 
   2. Connect to your MySQL Fly App from a Laravel Fly App
   3. Connect to your MySQL Fly App from a local environment
 
@@ -46,7 +46,7 @@ First, you'll have to find out your MySQL application's Fly .internal Address:
 <b>Get MySQL application's Fly .internal Address</b>
 
 Open your MySQL application's `fly.toml` as a reference, and from there get its [Fly .internal Address](/docs/laravel/the-basics/databases/#fly-internal-address). 
-As an example, your MySQL Fly .internal Address would be `"mysql-app-name.internal"`, given a `fly.toml` configuration below:
+As an example, given a `fly.toml` configuration below, your MySQL Fly .internal Address should be `"mysql-app-name.internal"`:
 
 ```toml
 app = "mysql-app-name"
@@ -56,7 +56,7 @@ app = "mysql-app-name"
   MYSQL_USER =  "<database-user>"
 ```
 
-Once you have your MySQL Fly .internal Address, go ahead and revise the `[env]` configuration in your Laravel application's `fly.toml` file to connect with your MySQL application's [Fly .internal Address](/docs/laravel/the-basics/databases/#get-mysql-application-s-fly-internal-address) and MYSQL_DATABASE:
+Once you have your MySQL Fly .internal Address, go ahead and revise the `[env]` configuration in your Laravel application's `fly.toml` file to connect using the address:
 
 ```toml
 [env]
@@ -123,7 +123,7 @@ In this setup, you'll find a basic setup of PlanetScale and Fly.io connection. H
 
 Before you can connect your Laravel [application in Fly.io to a PlanetScale instance](/docs/app-guides/planetscale/), you'll have  to tread several steps first:
 
-1. Setup a  PlanetScale database instance
+1. Setup a PlanetScale database instance
 1. Get connection information from PlanetScale instance
 1. Connect from Laravel application in Fly.io
 
@@ -180,11 +180,203 @@ Finally deploy your changes with:
 fly deploy 
 ```
 
+## __Redis in Fly.io_
+[Redis](https://redis.io/) is a NoSQL database popularly used for cache storage, as a message broker, and even as primary database. Through this section you'll learn how to:
+  <ol>
+    <li>Setup using Fly.io Redis Docker Image<li>
+    <li>Setup using the Official Redis Docker Image</li>
+  </ol>
+
+### Setup using Fly.io Redis Docker Image
+First create a new directory and initialize it with `fly launch`
+
+```cmd
+mkdir ktan-fly-redis
+cd ktan-fly-redis
+
+fly launch --image flyio/redis:6.2.6 --name ktan-fly-redis --region ams --no-deploy
+```
+<ul>
+<li>Pull the <b>flyio/redis:6.2.6</b> image from the docker repository through the `--image` argument.</li>
+<li>You can specify your Redis Fly App name through the `--name` argument</li>
+<li>You can specify your region code through the `--region` attribute</li>
+<li>You can configure not to deploy by adding `--no-deploy` argument</li>
+</ul>
+
+Afterwards, add a [volume](/docs/reference/volumes/) that will persist your Redis data
+
+```cmd
+fly volumes create redis_server --size 1
+```
+<ul>
+<li>You can specify any volume name to replace redis_server above</li>
+<li>You can specify your preferred volume size in GB through the `--size` argument</li>
+</ul>
+
+Next, set up the Redis Fly App <b>password</b> through `fly secrets`
+
+```cmd
+fly secrets set REDIS_PASSWORD=supersecretpassword
+```
+
+
+Then,  revise the generated `fly.toml` to include `[[mounts]]`:
+
+```toml
+app = "ktan-fly-redis"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[build]
+  image = "flyio/redis:6.2.6"
+
+[env]
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[mounts]]
+  destination = "/data"
+  source = "redis_server"
+```
+<ul>
+<li>Under `[[mounts]]` attach the volume created in step #2, make sure that the name specified for the created volume is exactly the same string specified for its `source` attribute</li>
+</ul>
+
+
+Finally, deploy your Redis Fly App!
+
+```cmd
+fly deploy
+```
+
+### Setup using the Official Redis Docker Image
+If you would like to use [Redis' official docker image](https://hub.docker.com/_/redis). The steps are almost identical to the previous guide, with one minor revision and an additional step.
+
+Follow the steps [above from #1 to #5](http://localhost:4567/docs/laravel/the-basics/databases#setup-using-fly-io-redis-docker-image), with a revision to step #1's `--image`
+
+```cmd
+mkdir ktan-off-redis
+cd ktan-off-redis
+
+fly launch --image redis --name ktan-off-redis --region ams --no-deploy
+```
+<ul>
+<li>Pull the <b>redis</b> image from the docker repository through the `--image` argument.</li>
+</ul>
+
+After deploying your Redis Fly App, set your Redis Fly App's password
+```
+fly ssh console -C "echo ${REDIS_PASSWORD} | redis-cli -x requirepass" 
+```
+
+<ul>
+<li>Use the `fly secret` <b>REDIS_PASSWORD</b> you've configured earlier</li>
+<li>If this passphrase is not set and your Laravel configuration sends a REDIS_PASSWORD, watch out! You'll get the infamous "ERR Client sent AUTH, but no password is set" error</li>
+</ul>
+
+
+### Connect your Redis Fly App 
+1)  First, retrieve your Redis Fly App's [Fly .internal Address](/docs/laravel/the-basics/databases/#fly-internal-address). 
+
+2) Then make sure you move to your Laravel Fly App's directory for better navigation:
+```cmd 
+cd <laravel-app-folder>
+```
+
+3) Revise your Laravel Fly App's `fly.toml` `[env]` configuration:
+
+```toml
+[env]
+  ...
+  REDIS_HOST= "<redis_app_name>.internal"
+```
+
+4) Next set your Laravel Fly App's `REDIS_PASSWORD` through the `flyctl secrets` command:
+
+```cmd
+fly secrets set REDIS_PASSWORD=<redacted>
+```
+
+5) Finally, deploy!
+```cmd
+fly deploy
+```
+
+
+## Upstash Managed Redis Fly App
+Want a fully-managed Redis Fly App? Try Upstash Redis! To set up, you can follow our-in-depth guide [here](docs/reference/redis/) or follow along below:
+
+
+### Setup Using Flyctl
+You can create an Upstash Redis directly through `flyctl`:
+```cmd
+flyctl redis create
+```
+
+<aside class="callout">
+  In case you receive an error 
+  
+  <b>"Error input:3: createAddOn You may only provision 1 Free plan per organization"</b> 
+
+
+  This is a warning from Upstash. You are currently in their free tier and can only provision 1 free Redis database.
+
+  You can upgrade your plan using `flyctl redis update`, or opt to delete the existing database if you so wish with `flyctl redis delet <db-name>`.
+
+  Find out more [here](docs/reference/redis)
+</aside>
+
+Once you've configured the necesary details through the flyctl prompts, and the app deployment completes, you should get a summary of the Redis cluster you've just deployed, like so:
+```output
+Your Upstash Redis database blue-brook-3843 is ready.
+Apps in the personal org can connect to at redis://default:<redacted>@fly-blue-brook-3843.upstash.io
+If you have redis-cli installed, use fly redis connect to connect to your database.
+```
+
+### Connect From a Laravel Fly App
+To test whether your Laravel Fly App has successfully connected to your Upstash Redis database, you can use your Upstash Redis Fly App as your Cache driver, then perform a quick cache:clear command.
+
+Revise your Laravel Fly App's `fly.toml` `[env]` configuration:
+```toml
+[env]
+  ...
+  CACHE_DRIVER="redis"
+  REDIS_URL="redis://default:<redacted>@fly-blue-brook-3843.upstash.io"
+  REDIS_CACHE_DB=0
+```
+<ul>
+<li>Set the Laravel driver to redis</li>
+<li>Using `REDIS_URL` should override `REDIS_HOST`, add here the `REDIS_URL` received during `fly redis create`</li>
+<li>Upstash only supports "database 0", so update your `REDIS_CACHE_DB` config to 0. Otherwise, you will receive an error : "SELECT` failed: ERR Only 0th database is supported! Selected DB: 1..."</li>
+</ul>
+
+Then deploy your `fly.toml` changes:
+```cmd
+fly deploy
+```
+
+Once deployment completes, you can test whether your connection is working by simply clearing your Laravel's cache
+```cmd
+fly ssh console
+```
+```output
+Connecting to top1.nearest.of.cool-moon-2754.internal... complete
+#
+```
+```cmd
+cd /var/www/html
+php artisan cache:clear
+```
+
+If all goes well here, you should be good to go! 
 
 
 ## _Database Migrations_
 <aside class="callout">
-There are several ways to run the Laravel classic: &quot;php artisan migrate&quot; command at Fly.io:
+There are several ways to run the Laravel classic: "php artisan migrate" command at Fly.io:
 </aside>
 #1 Through the `fly.toml` [deploy] configuration ( which will run in every deployment )
 
