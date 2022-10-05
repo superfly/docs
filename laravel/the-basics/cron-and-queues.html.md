@@ -29,6 +29,8 @@ The line `app = ""` is needed (with an empty string!) to keep a process group fo
 
 We created an additional process group `cron = "cron -f"`. This tells the VM to run the cron daemon rather than start the web server.
 
+Edit your `Dockerfile` to add additional cron definitions to `/etc/cron.d` if you need. The `cron -f` command will load any cron definitions found in any files in that location.
+
 ## Queue Worker
 
 We can start an instance of our queue worker by adding another process. In this example, we'll add a `worker` process group in addition to `app` and `cron` processes.
