@@ -2,7 +2,7 @@
 title: Customizing Deployments
 layout: framework_docs
 objective: Customize how Fly deploys your Laravel application.
-order: 6
+order: 2
 ---
 
 The `fly launch` command sets you up with a useful starting point, but you can customize just about everything to meet your needs. Here's a few things that might be useful to know.
