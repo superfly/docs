@@ -34,4 +34,4 @@ else
 fi
 ```
 
-Note that [release commands](/docs/reference/configuration/#the-deploy-section) run in a temporary VM. Any file-based changes done in the release command (such as `artisan view:cache`) will be lost when the release command is completed. The subsequently deployed application is a totally different VM.
+Note that [release commands](/docs/reference/configuration/#the-deploy-section) run in a temporary VM. Any file-based changes done in the release command (such as `artisan view:cache`) will be lost when the release command is completed. The subsequently deployed application is a totally different VM. Commands that result in file-based changes (such as `artisan view:cache`) is best run as a Startup Script.
