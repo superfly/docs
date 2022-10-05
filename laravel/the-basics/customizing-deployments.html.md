@@ -9,9 +9,9 @@ The `fly launch` command sets you up with a useful starting point, but you can c
 
 ## User Scripts
 
-The `fly launch` command generated a `.fly/scripts` directory. Any file in here ending in `.sh` will run anytime your application is started (via `bash`).
+The `fly launch` command generated a `.fly/scripts` directory. Any file in here ending in `.sh` will run (via `bash`) anytime your application is started.
 
-These scripts are checked for in the `ENTRYPOINT` script before anything else is ran.
+User scripts are run from the `ENTRYPOINT` script before anything else is ran.
 
 By default, `fly launch` generates the script `.fly/scripts/caches.sh`, which runs various artisan cache commands such as `config:cache`, `route:cache`, and `view:cache`.
 
@@ -21,7 +21,7 @@ You can enable or disable those as you see fit, as well as add your own `.sh` sc
 
 You may want to use the [`release_command`](/docs/reference/configuration/#the-deploy-section) to perform database migrations or other tasks. 
 
-These types of tasks could be a `.sh` user-script, or `release_command` defined in your `fly.toml` file - it's up to you and your use case.
+These types of tasks could be a `.sh` user script, or `release_command` defined in your `fly.toml` file - it's up to you and your use case.
 
 If you need a script to do something (or NOT do something) during a release command, your scripts can detect the presence of the `RELEASE_COMMAND` environment variable.
 
