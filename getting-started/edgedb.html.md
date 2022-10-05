@@ -39,7 +39,9 @@ Create a directory and create a new app. Be sure to replace `myedgedb` with a cu
 flyctl launch --name myedgedb --image edgedb/edgedb --no-deploy
 ```
 
-EdgeDB needs more RAM that the default 256MB so let's scale the RAM to 1024MB.
+Since we're using `flyctl launch`, this will create a `fly.toml`. All `flyctl` commands will now be applied against our `myedgedb` application unless otherwise specified with `--app`. 
+
+EdgeDB needs more RAM than the default `256MB` so let's scale the RAM to `1024MB`.
 
 ```cmd
 flyctl scale memory 1024
@@ -72,16 +74,20 @@ Let's discuss what's going on with all these secrets.
 Let's attach `mypostgres` to `myedgedb`.
 
 ```cmd
-flyctl postgres attach mypostgres --app myedgedb
+flyctl postgres attach mypostgres
 ```
 
 This sets the value of `DATABASE_URL` in the `myedgedb` app and creates a new role called `myedgedb` in our Postgres database. By default, this role doesn't have the full set of permissions EdgeDB needs to run. To change that, open a connection to your Postgres instance.
 
 ```cmd
-flyctl postgres connect mypostgres
+flyctl postgres connect --app mypostgres
 ```
 ```output
-? Continue using 'mypostgres' Yes
+Connecting to mypostgres.internal... complete
+psql (14.4 (Debian 14.4-1.pgdg110+1))
+Type "help" for help.
+
+postgres=# 
 ```
 
 Then run the following REPL command.
@@ -106,7 +112,7 @@ flyctl status
 
 ## Persist certificates
 
-Now we need to persist the auto-generated TLS certificate to make sure it survives EdgeDB app restarts. (If you’ve provided your own certificate, skip this step).
+We need to persist the auto-generated TLS certificate to make sure it survives EdgeDB app restarts. (If you’ve provided your own certificate, skip this step.)
 
 ```cmd
 flyctl ssh console \
@@ -116,11 +122,11 @@ flyctl ssh console \
 
 ## Connection
 
-Your EdgeDB instance should be available from any other app in the same organization at this URL:
+You'll be able to connect to your EdgeDB instance using the following DSN from *other Fly.io apps* in the same organization:
 
 `edgedb://edgedb:mysecretpassword@myedgedb.internal:8080`
 
-To connect to this database from another app, create a secret called `EDGEDB_DSN` containing this value. EdgeDB's client libraries read this environment variable and will connect to your instance automatically.
+To pass this DSN to another app, create a secret called `EDGEDB_DSN` containing this value. EdgeDB's client libraries will read this environment variable and connect to your instance automatically.
 
 ```cmd
 flyctl secrets set \
@@ -134,7 +140,7 @@ If you've [configured a Wireguard tunnel](https://fly.io/docs/reference/private-
 edgedb --dsn edgedb://edgedb:mysecretpassword@myedgedb.internal:8080 --tls-security insecure
 ```
 ```output
-EdgeDB 1.3+f4e75b7 (repl 1.2.0-dev.763+f5910ad)
+EdgeDB 2.x (repl 2.x.x)
 Type \help for help, \quit to quit.
 edgedb>
 ```
