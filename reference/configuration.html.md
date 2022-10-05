@@ -120,13 +120,15 @@ This section configures deployment-related settings such as the release command 
   release_command = "bundle exec rails db:migrate"
 ```
 
-This command runs in a temporary VM - using the successfully built release - *before* that release is deployed. This is useful for running Postgres database migrations.
+This command runs in a temporary VM - using the successfully built release - *before* that release is deployed. This is useful for running database migrations.
 
 The temporary VM has full access to the network, environment variables and secrets, but *not* to persistent volumes.  Changes made to the filesystem on the temporary VM will not be retained or deployed.  If you need to modify persistent volumes or configure your application, consider making use of `CMD` or `ENTRYPOINT` in your Dockerfile.
 
 A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
 
 To ensure the command runs in a specific region - say `dfw` - set `PRIMARY_REGION = 'dfw'` on in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if when running [database replicas in multiple regions](/docs/getting-started/multi-region-databases).
+
+The environment variable `RELEASE_COMMAND=1` is set for you within the temporary release VM. This might be useful if you need to customize your Dockerfile `ENTRYPOINT` to behave differently within a release VM.
 
 #### Picking a deployment strategy
 
