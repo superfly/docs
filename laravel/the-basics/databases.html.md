@@ -23,7 +23,7 @@ How do you connect your Laravel application running in Fly.io with a database ap
 <ol>
 <li>Get the database application's app-name from its `fly.toml`</li>
 <li>Generate the pattern for your database application's  Fly .internal Address: `"<app-name>.internal"`</li>
-<li>Use the Fly .internal Address retrieved above in your Laravel application's `fly.toml` configuration for connecting with the database</li>
+<li>Configure your Laravel application's `fly.toml` to connect with the Fly .internal Address retrieved above</li>
 </ol>
 
 
@@ -41,7 +41,7 @@ Follow this [MySQL guide](/docs/app-guides/mysql-on-fly/) to get up and running 
 
 ### _Connect from a Laravel Fly App_
 
-First, you'll have to find out your MySQL application's Fly .internal Address: 
+1) First, you'll have to find out your MySQL application's Fly .internal Address: 
 
 <b>Get MySQL application's Fly .internal Address</b>
 
@@ -56,7 +56,7 @@ app = "mysql-app-name"
   MYSQL_USER =  "<database-user>"
 ```
 
-Once you have your MySQL Fly .internal Address, go ahead and revise the `[env]` configuration in your Laravel application's `fly.toml` file to connect using the address:
+2) Once you have your MySQL Fly .internal Address, go ahead and revise the `[env]` configuration in your Laravel application's `fly.toml` file to connect using the address:
 
 ```toml
 [env]
@@ -66,13 +66,13 @@ Once you have your MySQL Fly .internal Address, go ahead and revise the `[env]` 
   DB_DATABASE= "<MYSQL_DATABASE>"
 ```
 
-Then, set up the database username and password through [Fly Secrets](/docs/flyctl/secrets/):
+3) Then, set up the database username and password through [Fly Secrets](/docs/flyctl/secrets/):
 
 ```cmd
 fly secrets set DB_USERNAME=<MYSQL_USER> DB_PASSWORD=<MYSQL_PASSWORD>
 ```
 
-Finally deploy your changes with
+4) Finally deploy your changes with
 
 ```cmd
 fly deploy 
@@ -86,7 +86,7 @@ The MySQL instance you spun up in Fly.io &quot;[is closed to the public internet
 
 <b>In this guide you'll tunnel to your MySQL instance through the use of `flyctl proxy`</b>
 
-First, open your MySQL application's `fly.toml` and take note of the following:
+1) First, open your MySQL application's `fly.toml` and take note of the following:
 
 ```toml
 app = "<mysql-app-name>"
@@ -96,13 +96,13 @@ app = "<mysql-app-name>"
   MYSQL_USER =  "<database-user>"
 ```
 
-Then use `flyctl proxy`  to tunnel to your MySQL application:
+2) Then use `flyctl proxy`  to tunnel to your MySQL application:
 
 ```cmd
 flyctl proxy 3306 -a <mysql-app-name>
 ```
 
-Finally, update your local .env file with the values from your MySQL `fly.toml` file:
+3) Finally, update your Laravel application's local .env file with the values from your MySQL `fly.toml` file:
 
 ```env
 DB_CONNECTION=mysql
@@ -156,7 +156,7 @@ Take note of the connection string provided and let's move on!
 
 ### _Connect from a Laravel Fly App_
 
-Update the `[env]` configuration in Laravel application's `fly.toml` with details from the PlanetScale connection string 
+1) Update the `[env]` configuration in Laravel application's `fly.toml` with details from the PlanetScale connection string 
 
 ```
 [env]
@@ -168,13 +168,13 @@ Update the `[env]` configuration in Laravel application's `fly.toml` with detail
 ```
 [Take note that the value for MYSQL_ATTR_SSL_CA vary depending on the Docker container used. For the default docker container used by Fly.io, the above value is the path]
 
-Next, set up the database username and password through [flyctl secrets](/docs/flyctl/secrets/):
+2) Next, set up the database username and password through [flyctl secrets](/docs/flyctl/secrets/):
 
 ```cmd
 fly secrets set DB_USERNAME=<DB_USERNAME> DB_PASSWORD=<DB_PASSWORD>
 ```
 
-Finally deploy your changes with:
+3) Finally deploy your changes with:
 
 ```cmd
 fly deploy 
@@ -188,7 +188,7 @@ fly deploy
   </ol>
 
 ### _Setup using the Fly.io Redis Docker Image_
-1) First create a new directory and initialize it with `fly launch`
+1) First create a new directory and initialize it with `fly launch`, using [Fly.io's Redis Image](https://hub.docker.com/r/flyio/redis/tags) for the build:
 
 ```cmd
 mkdir ktan-fly-redis
@@ -230,6 +230,8 @@ processes = []
   allowed_public_ports = []
   auto_rollback = true
 
+[[services]]
+
 [[mounts]]
   destination = "/data"
   source = "redis_server"
@@ -251,9 +253,9 @@ fly deploy
 ```
 
 ### _Setup using the Official Redis Docker Image_
-If you would like to use [Redis' official docker image](https://hub.docker.com/_/redis). The steps are almost identical to the previous guide, with one minor revision and an additional step.
+If you would like to use [Redis' official docker image](https://hub.docker.com/_/redis) to setup your Redis Fly App, the steps to get up and running are almost identical to the previous guide. There is just one minor revision on the image pulled and an additional step to set the Redis Fly App's password.
 
-1) Follow the steps [above](/docs/laravel/the-basics/databases#setup-using-fly-io-redis-docker-image), with a revision to the value passed for `--image`
+1) Follow the steps [above](/docs/laravel/the-basics/databases#setup-using-the-fly-io-redis-docker-image), with a revision to the value passed for `--image`
 
 ```cmd
 mkdir ktan-off-redis
@@ -281,14 +283,16 @@ fly launch --image redis --name ktan-off-redis --region ams --no-deploy
 
 ### _Connect from a Laravel Fly App_
 
-1)  First, retrieve your Redis Fly App's [Fly .internal Address](/docs/laravel/the-basics/databases/#fly-internal-address). 
+Now that you have your Redis Fly App running, the next step is to connect it with your Laravel Fly App! Follow the steps below:
 
-2) Then make sure you move to your Laravel Fly App's directory for better navigation:
+1) First, retrieve your Redis Fly App's [Fly .internal Address](/docs/laravel/the-basics/databases/#fly-internal-address). 
+
+2) Next, make sure you move to your Laravel Fly App's directory for better navigation:
 ```cmd 
 cd <laravel-app-folder>
 ```
 
-3) Revise your Laravel Fly App's `fly.toml` `[env]` configuration:
+3) Then revise your Laravel Fly App's `fly.toml` `[env]` configuration with the retrieved Fly .internal Address:
 
 ```toml
 [env]
@@ -297,7 +301,7 @@ cd <laravel-app-folder>
   CACHE_DRIVER= "redis"
 ```
 
-4) Next set your Laravel Fly App's `REDIS_PASSWORD` through the `flyctl secrets` command:
+4) Make sure you set your Laravel Fly App's `REDIS_PASSWORD` through the `flyctl secrets` command:
 
 ```cmd
 fly secrets set REDIS_PASSWORD=<redacted>
@@ -308,8 +312,11 @@ fly secrets set REDIS_PASSWORD=<redacted>
 fly deploy
 ```
 
+That's it! Your Laravel and Redis Fly Apps should now be connected.
+
+
 ### _Connect from a local environment_
-The simplest way to connect your local Laravel application to a Redis Fly App is to use `flyctl proxy`
+The simplest way to connect your local Laravel application to a Redis Fly App is to use `flyctl proxy`:
 
 1) Open your Redis Fly App's local directory
 
@@ -329,6 +336,10 @@ REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=<redacted>
 REDIS_PORT=6379
 ```
+Make sure the REDIS_PORT in your .env configuration matches the port used in `flyctl proxy`
+
+That's it! Your local Laravel application should now be connected with your Redis Fly App.
+
 
 ### Testing Connection
 
@@ -345,7 +356,7 @@ Want a fully-managed Redis Fly App? Try [Upstash Redis](https://upstash.com/)! T
 
 
 ### _Setup Using Flyctl_
-You can create an Upstash Redis directly through `flyctl`:
+1) You can create an Upstash Redis directly through `flyctl`:
 ```cmd
 flyctl redis create
 ```
@@ -371,9 +382,9 @@ If you have redis-cli installed, use fly redis connect to connect to your databa
 ```
 
 ### _Connect From a Laravel Fly App_
-To test whether your Laravel Fly App can successfully connect to your Upstash Redis database, you can use your Upstash Redis Fly App as your Cache driver, then perform a quick cache:clear command.
+To test whether your Laravel Fly App can successfully connect with your Upstash Redis database, you can use your Upstash Redis Fly App as your Cache driver, then perform a quick cache:clear command.
 
-Revise the `[env]` configuration in your Laravel Fly App's `fly.toml` file:
+1) Revise the `[env]` configuration in your Laravel Fly App's `fly.toml` file:
 ```toml
 [env]
   ...
@@ -382,17 +393,17 @@ Revise the `[env]` configuration in your Laravel Fly App's `fly.toml` file:
   REDIS_CACHE_DB=0
 ```
 <ul>
-<li>Set the Laravel driver to redis</li>
+<li>Set the Laravel cache driver to redis</li>
 <li>Using `REDIS_URL` should override `REDIS_HOST`, add here the `REDIS_URL` received during `fly redis create`</li>
 <li>Upstash only supports "database 0", so update your `REDIS_CACHE_DB` config to 0. Otherwise, you will receive an error : "SELECT` failed: ERR Only 0th database is supported! Selected DB: 1..."</li>
 </ul>
 
-Then deploy your `fly.toml` changes:
+2) Then deploy your `fly.toml` changes:
 ```cmd
 fly deploy
 ```
 
-Once deployment completes, you can test whether your connection is working by simply clearing your Laravel application's cache
+3) Once deployment completes, you can test whether your connection is working by simply clearing your Laravel application's cache
 ```cmd
 fly ssh console
 ```

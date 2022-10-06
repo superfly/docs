@@ -133,7 +133,7 @@ fly deploy
 Error not enough volumes named `<volume_name>` (1) to run `(<n>)` processes
 ```
 
-The above error can come up after configuring your volume in `fly.toml` and executing `fly launch`. 
+The above error can come up after configuring your volume in `fly.toml` and executing `fly deploy`. 
 
 It can mean that there are `<n>` processes configured in your `fly.toml` trying to use the volume!
 Take note however, that a Volume can only be used by one at any given time. 
