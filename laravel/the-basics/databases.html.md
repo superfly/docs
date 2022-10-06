@@ -180,7 +180,7 @@ Finally deploy your changes with:
 fly deploy 
 ```
 
-## __Redis in Fly.io_
+## _Redis in Fly.io_
 [Redis](https://redis.io/) is a NoSQL database popularly used for cache storage, as a message broker, and even as primary database. Through this section you'll learn how to:
   <ol>
     <li>Setup using the Fly.io Redis Docker Image<li>
@@ -253,7 +253,7 @@ fly deploy
 ### _Setup using the Official Redis Docker Image_
 If you would like to use [Redis' official docker image](https://hub.docker.com/_/redis). The steps are almost identical to the previous guide, with one minor revision and an additional step.
 
-1) Follow the steps [above](http://localhost:4567/docs/laravel/the-basics/databases#setup-using-fly-io-redis-docker-image), with a revision to the value passed for `--image`
+1) Follow the steps [above](/docs/laravel/the-basics/databases#setup-using-fly-io-redis-docker-image), with a revision to the value passed for `--image`
 
 ```cmd
 mkdir ktan-off-redis
