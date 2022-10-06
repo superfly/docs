@@ -84,7 +84,7 @@ The `fly launch` adds some files to your code base.
 1. `Dockerfile` - Used to build a container image that is run in fly
 2. `.dockerignore` - Used to ensure certain files don't make its way into your repository
 3. `fly.toml` - Configuration specific to hosting on Fly
-4. `docker` - A directory containing configuration files for running Nginx/PHP in a container
+4. `.fly` (formerly `docker`) - A directory containing configuration files for running Nginx/PHP in a container
 
 Running `fly launch` (and later `fly deploy`) uses the `Dockerfile` to build a container image, copying your application files into the resulting image.
 

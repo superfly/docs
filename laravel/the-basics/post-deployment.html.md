@@ -2,7 +2,7 @@
 title: Post Deployment
 layout: framework_docs
 objective: Interact with a deployed Laravel application.
-order: 2
+order: 3
 ---
 
 Once you have your Laravel application up and running in Fly.io, it helps to know how to execute commands on it and review events happening in your application.

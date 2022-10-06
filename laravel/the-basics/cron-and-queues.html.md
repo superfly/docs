@@ -2,7 +2,7 @@
 title: Cron and Queues
 layout: framework_docs
 objective: Run queue workers and Laravel's scheduler via cron
-order: 5
+order: 6
 ---
 
 You may need to run Laravel's scheduler (via cron) or queue workers.
@@ -28,6 +28,8 @@ To enable this, edit your `fly.toml` file and add a `[processes]` section:
 The line `app = ""` is needed (with an empty string!) to keep a process group for your application serving web requests.
 
 We created an additional process group `cron = "cron -f"`. This tells the VM to run the cron daemon rather than start the web server.
+
+Edit your `Dockerfile` to add additional cron definitions to `/etc/cron.d` if you need. The `cron -f` command will load any cron definitions found in any files in that location.
 
 ## Queue Worker
 
