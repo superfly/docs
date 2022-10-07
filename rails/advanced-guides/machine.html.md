@@ -45,6 +45,16 @@ Now use your favorite editor to make a one line change to `config/routes.rb`:
 Source to this gem is on [GitHub](https://github.com/rubys/fly.io-rails).  If
 adopted, it will move to the superfly organization.
 
+Optionally configure your project:
+
+```cmd
+bin/rails generate fly:app --passenger --serverless
+```
+
+The above command will configure you application to scale to zero whenever it has been idle for 5 minutes.  See [generator options](https://github.com/rubys/fly.io-rails#generator-options) for more details.
+
+Feel free to tailor the generated files further to suit your needs.  If you don't run the `fly:app` generator, the files necessary to deploy your application will be generated on your first deploy using default options.
+
 Deploy your project
 
 ```cmd
