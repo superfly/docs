@@ -314,17 +314,22 @@ DB_USERNAME=<Username>
 DB_PASSWORD=<Password>
 ```
 
-3) Update your php.ini file and make sure the driver for Postgres is available and <i>uncommented</i>:
+#### _Possible Errors_
+<aside class="callout">
+In case you get a quite-similar error below: 
+
+
+<b>"ERROR: could not find driver pgsql"</b>
+
+Make sure that your environment is configured properly with a pgsql driver!
+</aside>
+
+1) First up, check your php.ini file and make sure the driver for Postgres is available and <i>uncommented</i>:
 ```
 extension=pgsql
 ```
 
-4) Check your PHP version and make sure you have the php-pgsql installed for its version. Let's assume you have a PHP 8.1 running locally:
-```cmd
-sudo add-apt-repository ppa:ondrej/php
-sudo apt update
-sudo apt-get install php8.1-pgsql
-```
+2) Next, make sure you have the correct <b>php-pgsql</b> installed for your PHP version. Let's assume you have a PHP 8.1 running locally, then you must also have the compatible php8.1-pgsql in your environment.
 
 ### _Test Connection_
 To test whether you are connected to your sparkling new Postgres Fly App, a simple `php artisan migrate` should let you know.
