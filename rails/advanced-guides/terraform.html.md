@@ -71,11 +71,10 @@ bin/rails deploy
 What this will do is:
   * Build your docker image using a remote builder
   * Push your image to the fly repository
-  * Update `main.tf` with the name of the new image
   * Create a machine to run your release task
   * Wait for the release to complete
   * Remove the release machine
-  * Run `terraform apply -auto-approve`
+  * Run `terraform apply -auto-approve`, specifying the name of the image as an `image_ref` var.
 
 Once this completes -- whether it works or not, and there are plenty of
 things that can go wrong -- feel free to modify `main.tf` and
@@ -83,7 +82,7 @@ rerun `terraform` commands directly.  You can even `terraform destroy` and
 `rm terraform.tfstate` and start over.  What's important is `main.tf` already
 reflects the name of the latest image.
 
-Also, because a minimal `fly.toml` file was generated, you can use commands like `fly open`,
+Also, because a `fly.toml` file was generated, you can use commands like `fly open`,
 `fly ssh console` and `fly logs`.
 
 ## Open issues
@@ -94,18 +93,3 @@ Also, because a minimal `fly.toml` file was generated, you can use commands like
    the release was successful.  If the release fails, the machine
    is not removed and the command to show the logs is provided to
    the developer.
- * At the moment, the first image in the `main.tf` is updated when
-   a new build is complete, and the first machine listed is run
-   to perform a release.  Perhaps the template used to generate this
-   should set the `SERVER_COMMAND` environment variable explicitly
-   and the deploy command should scan for this in order to determine
-   which image is to be updated and which machine is to be executed.
- * If you deploy using `fly deploy` directly (perhaps with
-   [GitHub actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)?), the image name in `main.tf` won't be updated.  You
-   can obtain the current image name via the following command:
-
-     <p>
-     ```cmd
-     fly ssh console -C 'printenv FLY_IMAGE_REF'
-     ```
-     </p>
