@@ -16,7 +16,7 @@ flyctl launch [flags]
       --name string         Name of the new app
       --no-deploy           Do not prompt for deployment
       --now                 Deploy now without confirmation
-      --org string          Organization that will own the app
+      --org string          Organization that will own the app (use org slug here; see "fly orgs list")
       --path string         Path to app code and where a fly.toml file will be saved (default ".")
       --region string       Region to launch the new app in
       --remote-only         Perform builds remotely without using the local docker daemon

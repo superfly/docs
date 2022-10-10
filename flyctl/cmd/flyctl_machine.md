@@ -13,6 +13,7 @@ flyctl machine [command] [flags]
 * [launch](/docs/flyctl/machine-launch/)	 - Create and configure a new app from source code or a Docker image.
 * [list](/docs/flyctl/machine-list/)	 - List Fly machines
 * [remove](/docs/flyctl/machine-remove/)	 - Remove a Fly machine
+* [restart](/docs/flyctl/machine-restart/)	 - Restart one or more Fly machines
 * [run](/docs/flyctl/machine-run/)	 - Run a machine
 * [start](/docs/flyctl/machine-start/)	 - Start one or more Fly machines
 * [status](/docs/flyctl/machine-status/)	 - Show current status of a running machine
