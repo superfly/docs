@@ -391,6 +391,8 @@ Here are a few tips to help diagnose and identify problems.
 - Build the Dockerfile locally to verify it builds correctly. `docker build .`
 - Check the `:prod` config in `config/runtime.exs`, which is not used locally. Carefully review it.
 - Run `fly logs` to check server logs.
+- Run `fly logs -a my-app-db` to check database app's server logs.
+- Run `fly checks list -a my-app-db` to check the database app's health.
 
 ### _Diagnosis Tip_
 
@@ -398,7 +400,7 @@ Most difficulties center around application config. Applications generated with 
 
 The internal networks at Fly.io use a IPv6 addresses. Elixir/OTP needs some config to work smoothly.
 
-One way to idenfity an issue is to generate a new Elixir application using a current version of Phoenix. Deploy that to Fly.io with a database. With that, you have a local working example to compare against. Don't worry, you can easily [`destroy`](/docs/flyctl/destroy/) the test app when you're ready to.
+One way to identify an issue is to generate a new Elixir application using a current version of Phoenix. Deploy that to Fly.io with a database. With that, you have a local working example to compare against. Don't worry, you can easily [`destroy`](/docs/flyctl/destroy/) the test app when you're ready to.
 
 Suggested files to pay attention to when looking for config differences.
 
