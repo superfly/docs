@@ -99,7 +99,7 @@ Deployment wipes out all log files! In order to persist your Laravel log files, 
 1) First let's create a Volume:
 
 ```cmd
-fly create volume my_log_vol --region ams --size 10 #GB
+fly volumes create my_log_vol --region ams --size 10 #GB
 ```
 <ul>
 <li>You can replace the volume name `my_log_vol` with any name of your preference.</li>
