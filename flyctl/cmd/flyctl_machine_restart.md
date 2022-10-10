@@ -1,9 +1,9 @@
-Restarts each member of the Postgres cluster one by one. Downtime should be minimal.
+Restart one or more Fly machines
 
 
 ## Usage
 ~~~
-flyctl postgres restart [flags]
+flyctl machine restart <id> [<id>...] [flags]
 ~~~
 
 ## Options
@@ -11,7 +11,10 @@ flyctl postgres restart [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
+      --force           Force stop the machine(s)
   -h, --help            help for restart
+  -s, --signal string   Signal to stop the machine with (default: SIGINT)
+      --time int        Seconds to wait before killing the machine
 ~~~
 
 ## Global Options
@@ -24,5 +27,5 @@ flyctl postgres restart [flags]
 
 ## See Also
 
-* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage Postgres clusters.
+* [flyctl machine](/docs/flyctl/machine/)	 - Commands that manage machines
 

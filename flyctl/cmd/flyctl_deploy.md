@@ -12,6 +12,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
 
 ~~~
   -a, --app string             Application name
+      --auto-confirm           Will automatically confirm changes without an interactive prompt.
       --build-arg strings      Set of build time variables in the form of NAME=VALUE pairs. Can be specified multiple times.
       --build-only             Build but do not deploy
       --build-secret strings   Set of build secrets of NAME=VALUE pairs. Can be specified multiple times. See https://docs.docker.com/develop/develop-images/build_enhancements/#new-docker-build-secret-information

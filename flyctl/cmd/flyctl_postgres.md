@@ -16,7 +16,6 @@ flyctl postgres [command] [flags]
 * [failover](/docs/flyctl/postgres-failover/)	 - Failover to a new primary
 * [list](/docs/flyctl/postgres-list/)	 - List postgres clusters
 * [restart](/docs/flyctl/postgres-restart/)	 - Restarts each member of the Postgres cluster one by one.
-* [update](/docs/flyctl/postgres-update/)	 - Updates the Postgres cluster to the latest eligible version
 * [users](/docs/flyctl/postgres-users/)	 - Manage users in a postgres cluster
 
 ## Options
