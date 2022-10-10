@@ -391,6 +391,11 @@ Here are a few tips to help diagnose and identify problems.
 - Build the Dockerfile locally to verify it builds correctly. `docker build .`
 - Check the `:prod` config in `config/runtime.exs`, which is not used locally. Carefully review it.
 - Run `fly logs` to check server logs.
+
+For diagnosing database app issues, refer to the [Postgres Monitoring](/docs/reference/postgres/#monitoring) information.
+
+Here's a quick hit list of commands to help:
+
 - Run `fly logs -a <pg-db-name>` to check database app's server logs.
 - Run `fly checks list -a <pg-db-name>` to check the database app's health.
 - Run `fly status -a <pg-db-name> --all` to see if any VMs failed.
