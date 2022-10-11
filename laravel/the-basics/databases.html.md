@@ -606,7 +606,7 @@ Since SQLite is "embeddable", we no longer have to setup a separate Fly App for 
 1) Make sure you are in your Laravel Fly App's directory
 
 ```cmd
-cd <laravel-fly-app>
+cd <laravel-fly-configured-app>
 ```
 
 2) Create a volume, you'll be attaching this later to your Laravel Fly App's storage directory 
@@ -621,8 +621,11 @@ fly volumes create storage_vol --region ams --size 20 #GB
 ```
 [env]
   APP_ENV = "production"
+  LOG_CHANNEL = "stderr"
+  LOG_LEVEL = "info"
+  LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
   DB_CONNECTION="sqlite"
-  DB_DATABASE=/var/www/html/storage/database/database.sqlite
+  DB_DATABASE="/var/www/html/storage/database/database.sqlite"
 
 [mounts]
   source="storage_vol"
@@ -659,24 +662,24 @@ Side Note: Start up scripts are run in numeric-alphabetical order. Naming `1_sto
 ```bash
 FOLDER=/var/www/html/storage/app
 if [ ! -d "$FOLDER" ]; then
-    echo "$FOLDER is not a directory, copying storage_ content to storage"
-    cp -r /var/www/html/storage_/. /var/www/html/storage
+  echo "$FOLDER is not a directory, copying storage_ content to storage"
+  cp -r /var/www/html/storage_/* /var/www/html/storage
 
-    echo "deleteing storage_..."
-    rm -r /var/www/html/storage_
+  echo "deleteing storage_..."
+  rm -rf /var/www/html/storage_
 fi
 
 FOLDER=/var/www/html/storage/database
 if [ ! -d "$FOLDER" ]; then
-    echo "$FOLDER is not a directory, initializing database" 
-    mkdir /var/www/html/storage/database
-    touch /var/www/html/storage/database/database.sqlite
+  echo "$FOLDER is not a directory, initializing database" 
+  mkdir /var/www/html/storage/database
+  touch /var/www/html/storage/database/database.sqlite
 fi
 ```
 So what happened above?
 <ul>
 <li>The first condition statement checks if the app folder exists in the volumized storage folder. If it is not, it copies over the contents of the dummy storage_ folder to the volumized storage folder.</li>
-<li>The second condition statement checks if the database folder exists in the volumized storage folder. If it is not, it creates the a database directory and adds the database.sqlite file in the storage folder</li>
+<li>The second condition statement checks if the database folder exists in the volumized storage folder. If it is not, it creates a database directory inside storage/ and finally creates a database.sqlite file in the storage/database folder</li>
 </ul>
 
 5) Finally, deploy your Laravel Fly App!
