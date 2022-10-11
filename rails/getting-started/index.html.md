@@ -39,7 +39,7 @@ Once you have logged on, here are the three steps and a recap.
 
 A newly generated Rails application will display a flashy splash screen when
 run in development, but will do absolutely nothing in production until you
-add add code.
+add code.
 
 In order to demonstrate deployment of a Rails app on fly, we will create a new application, make
 a one line change that shows the splash screen even when run in production mode,
