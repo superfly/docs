@@ -149,7 +149,7 @@ As well as configuring the Wireguard service, the create command also generates 
 Wrote WireGuard configuration to 'basic.conf'; load in your WireGuard client
 ```
 
-We suggest you name your saved configuration with the same name as the peer you have created. Add the extension `.conf` to ensure it can will be recognized by the various WireGuard apps as a configuration file for a tunnel.
+We suggest you name your saved configuration with the same name as the peer you have created. Add the extension `.conf` to ensure it can will be recognized by the various WireGuard apps as a configuration file for a tunnel. Note that the name (excluding the `.conf` extension) shouldn't exceed 15 characters since this is the maximum length for an interface name on Linux.
 
 ##### Dealing with Defaults
 
