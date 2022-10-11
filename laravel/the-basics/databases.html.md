@@ -598,26 +598,31 @@ php artisan cache:clear
 If all goes well here, you should be good to go! 
 
 ## _SQLite in a Laravel Fly App_
-"SQLite" is a file-based, embedded database that is lightweight, query-performant, and very much suitable for a single-process-application set up. Since SQLite is an embedded database, we no longer have to setup a separate Fly App for it. 
+"[SQLite](https://www.sqlite.org/about.html)" is a file-based, lightweight, low-latency, and in-process library providing an embeddable SQL database engine. 
 
-We simply configure our Laravel Fly App with one.
+Since SQLite is "embeddable", we no longer have to setup a separate Fly App for it. We simply configure our Laravel Fly App with one:
 
 
+1) Make sure you are in your Laravel Fly App's directory
 
-1) Create a Volume for your storage directory 
+```cmd
+cd <laravel-fly-app>
+```
+
+2) Create a volume, you'll be attaching this later to your Laravel Fly App's storage directory 
 
 ```cmd
 fly volumes create storage_vol --region ams --size 20 #GB
 ```
 
 
-2) Revise your Laravel Fly App's `fly.toml` file to connect with the sqlite database and mount the volume created for your storage directory:
+3) Revise your Laravel Fly App's `fly.toml` file to connect with the sqlite database and mount the volume created for your storage directory:
 
 ```
 [env]
   APP_ENV = "production"
   DB_CONNECTION="sqlite"
-  DB_DATABASE=/var/www/html/storage/volumed_dir/database.sqlite
+  DB_DATABASE=/var/www/html/storage/database/database.sqlite
 
 [mounts]
   source="storage_vol"
@@ -629,14 +634,17 @@ Caution! Mounting a Volume to a folder will initially erase any item it contains
 <p></p>
 
 For example, the storage folder contains subfolders app, framework, and logs. 
-Mounting the volume to the storage folder erases those contents, and leaves a sole item "lost+found".
+Mounting the volume to the storage folder erases these contents, and leaves behind a sole item "lost+found".
 </aside>
 
-3) To fix the little storage-content-erasure issue, please go ahead and make a copy of your storage folder in a dummy folder, storage_. You'll later use this folder to copy over its contents to the volumized storage folder:
+3) To fix the little storage-content-erasure issue, please go ahead and make a copy of your storage folder in a dummy folder, storage_.
 
 ```cmd
 cp -r storage storage_
 ```
+<small>
+ You'll later use this folder to copy over its contents to the volumized storage folder.
+</small>
 
 4) Next create a Start Up Script that will initialize the volumized storage folder's contents.
 
