@@ -1,8 +1,8 @@
-Connect to a running instance of the current app.
+The SFTP FIND command lists files (from an optional root directory) on a remote VM.
 
 ## Usage
 ~~~
-flyctl ssh console [flags]
+flyctl sftp find [path] [flags]
 ~~~
 
 ## Options
@@ -12,7 +12,7 @@ flyctl ssh console [flags]
   -a, --app string       Application name
   -C, --command string   command to run on SSH session
   -c, --config string    Path to application configuration file
-  -h, --help             help for console
+  -h, --help             help for find
   -o, --org string       The organization to operate on
   -q, --quiet            Don't print progress indicators for WireGuard
   -r, --region string    Region to create WireGuard connection in
@@ -29,5 +29,5 @@ flyctl ssh console [flags]
 
 ## See Also
 
-* [flyctl ssh](/docs/flyctl/ssh/)	 - Use SSH to login to or run commands on VMs
+* [flyctl sftp](/docs/flyctl/sftp/)	 - Get or put files from a remote VM.
 

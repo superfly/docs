@@ -56,6 +56,7 @@ flyctl [command] [flags]
 * [resume](/docs/flyctl/resume/)	 - Resume an application
 * [scale](/docs/flyctl/scale/)	 - Scale app resources
 * [secrets](/docs/flyctl/secrets/)	 - Manage application secrets with the set and unset commands.
+* [sftp](/docs/flyctl/sftp/)	 - Get or put files from a remote VM.
 * [ssh](/docs/flyctl/ssh/)	 - Use SSH to login to or run commands on VMs
 * [status](/docs/flyctl/status/)	 - Show app status
 * [suspend](/docs/flyctl/suspend/)	 - Suspend an application

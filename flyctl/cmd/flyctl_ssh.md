@@ -9,6 +9,7 @@ flyctl ssh [command] [flags]
 * [console](/docs/flyctl/ssh-console/)	 - Connect to a running instance of the current app.
 * [issue](/docs/flyctl/ssh-issue/)	 - Issue a new SSH credential
 * [log](/docs/flyctl/ssh-log/)	 - Log of all issued SSH certs
+* [sftp](/docs/flyctl/ssh-sftp/)	 - Get or put files from a remote VM.
 
 ## Options
 
