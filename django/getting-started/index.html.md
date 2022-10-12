@@ -5,14 +5,14 @@ order: 1
 redirect_from: /docs/getting-started/django/
 subnav_glob: docs/django/getting-started/*.html.*
 objective: Build and deploy a very basic Django app on Fly. This guide is the fastest way to try using Fly, so if you're short on time start here.
-related_pages:
-  - /docs/django/fullapp
+# related_pages:
+#   - /docs/django/fullapp
 ---
 
 In this guide we build and deploy the Django Welcome Screen to demonstrate how quickly apps can be deployed on Fly.io. Later examples will cover linking to a database deploying Full Django apps.
 
 ## Django Set Up
-Make sure that [Python](https://www.python.org/) is already installed on your computer. We will use [venv](https://docs.python.org/3/library/venv.html#module-venv) in this example for our virtual environment but any of the other popular choices such as Poetry, Pipenv, and pyenv will work too.
+Make sure that [Python](https://www.python.org/) is already installed on your computer. We will use [venv](https://docs.python.org/3/library/venv.html#module-venv) in this example for our virtual environment but any of the other popular choices such as [Poetry](https://python-poetry.org/), [Pipenv](https://github.com/pypa/pipenv), and [pyenv](https://github.com/pyenv/pyenv) will work too.
 
 ### New Virtual Environment
 From the command line navigate to an empty directory to store your code. On both Windows and macOS the desktop is a good default if you don't already have a preferred location. We will create a new directory called `django-fly` and then activate a new Python virtual environment called `.venv` within it.
@@ -47,7 +47,7 @@ Next install Django, create a new project called `django_project`, and run `migr
 You should end up with the following directory structure.
 
 ```output
-├── db.sqlite3  
+├── db.sqlite3
 ├── django_project
 │   ├── __init__.py
 |   ├── asgi.py
@@ -74,7 +74,7 @@ Django is configured by default for local development, not production. There is 
 First, in the `django_project/settings.py` file update the `ALLOWED_HOSTS` configuration to accept all hosts.
 
 ```python
-# django_project/settings.py 
+# django_project/settings.py
 ALLOWED_HOSTS = ["*"]
 ```
 
@@ -105,7 +105,7 @@ Fourth, configure [static files](https://docs.djangoproject.com/en/4.1/howto/sta
 Create a new directory called `static` in the root-level of the project. The new structure should look like this:
 
 ```output
-├── db.sqlite3  
+├── db.sqlite3
 ├── django_project
 │   ├── __init__.py
 |   ├── asgi.py
@@ -166,7 +166,7 @@ The directory structure should now look like this:
 
 ```output
 ├── Dockerfile
-├── db.sqlite3  
+├── db.sqlite3
 ├── django_project
 │   ├── __init__.py
 |   ├── asgi.py
@@ -184,7 +184,7 @@ Fly has its own command-line utility for managing apps, [flyctl](https://fly.io/
 
 ### Provision Django
 
-The command `fly launch` will detect our new `Dockerfile` and build it on Fly servers. It will also generate a `fly.toml` configuration file, which is the final step before actual deployment. 
+The command `fly launch` will detect our new `Dockerfile` and build it on Fly servers. It will also generate a `fly.toml` configuration file, which is the final step before actual deployment.
 
 The `fly launch` prompt asks us four questions:
 
@@ -213,7 +213,7 @@ Your app is ready. Deploy with `flyctl deploy`
 
 ### fly.toml
 
-The `fly launch` command automatically creates a `fly.toml` configuration file for us. Add a `[deploy]` directive to run Django's `migrate` command and make sure both ports are listed as `8000`, which is Django's default. 
+The `fly launch` command automatically creates a `fly.toml` configuration file for us. Add a `[deploy]` directive to run Django's `migrate` command and make sure both ports are listed as `8000`, which is Django's default.
 
 ```output
 ...
@@ -255,7 +255,7 @@ We started with an empty directory and in a matter of minutes had a running
 Django application deployed to the web. A few things to note:
 
   * Your application is running on a VM, which starts out based on a
-    Docker image based on our `Dockerfile`. 
+    Docker image based on our `Dockerfile`.
   * A [`fly.toml`](https://fly.io/docs/reference/configuration/) file was created by `fly launch` which can be modified as needed.
   * `fly dashboard` can be used to monitor and adjust your application. Pretty
     much anything you can do from the browser window you can also do from the
