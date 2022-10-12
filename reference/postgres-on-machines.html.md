@@ -455,7 +455,7 @@ flyctl status -a <postgres-app-name>
 And upgrade with:
 
 ```cmd
-flyctl postgres update -a <postgres-app-name>
+flyctl image update -a <postgres-app-name>
 ```
 
 
