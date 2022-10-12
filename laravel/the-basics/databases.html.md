@@ -249,6 +249,13 @@ SELECT datname FROM pg_database;
 (4 rows)
 ```
 
+<aside class="callout">
+There are tons of ways to interact with your Postgres Fly App! If you want to get a bird's eye view on your Postgres database list outside of the `flyctl postgres connect` command, simply run the command below instead.
+</aside>
+```cmd 
+flyctl postgres db list -a <postgres-fly-app-name>
+```
+
 Once you have your running and <i>[configured](/docs/laravel/the-basics/databases/#interacting-with-your-postgres-fly-app)</i> Postgres Fly App, it's time to connect with your Laravel Fly App.
 
 ### _Connect From a Laravel Fly App by Attachment_
@@ -590,6 +597,103 @@ php artisan cache:clear
 
 If all goes well here, you should be good to go! 
 
+## _SQLite in a Laravel Fly App_
+"[SQLite](https://www.sqlite.org/about.html)" is a file-based, lightweight, low-latency, and in-process library providing an embeddable SQL database engine. 
+
+Since SQLite is "embeddable", we no longer have to setup a separate Fly App for it. We simply configure our Laravel Fly App with one:
+
+
+1) Make sure you are in your Laravel Fly App's directory
+
+```cmd
+cd <laravel-fly-configured-app>
+```
+
+2) Create a volume, you'll be attaching this later to your Laravel Fly App's storage directory 
+
+```cmd
+fly volumes create storage_vol --region ams --size 20 #GB
+```
+
+
+3) Revise your Laravel Fly App's `fly.toml` file to connect with the sqlite database and mount the volume created for your storage directory:
+
+```
+[env]
+  APP_ENV = "production"
+  LOG_CHANNEL = "stderr"
+  LOG_LEVEL = "info"
+  LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
+  DB_CONNECTION="sqlite"
+  DB_DATABASE="/var/www/html/storage/database/database.sqlite"
+
+[mounts]
+  source="storage_vol"
+  destination="/var/www/html/storage"
+```
+
+<aside class="callout">
+Caution! Mounting a Volume to a folder will initially erase any item it contains during the first time the Volume is mounted for the folder. 
+<p></p>
+
+For example, the storage folder contains subfolders app, framework, and logs. 
+Mounting the volume to the storage folder erases these contents, and leaves behind a sole item "lost+found".
+</aside>
+
+3) To fix the little storage-content-erasure issue, please go ahead and make a copy of your storage folder in a dummy folder, storage_.
+
+```cmd
+cp -r storage storage_
+```
+<small>
+ You'll later use this folder to copy over its contents to the volumized storage folder.
+</small>
+
+4) Next create a Start Up Script that will initialize the volumized storage folder's contents.
+
+```cmd
+touch .fly/scripts/1_storage_init.sh
+```
+<small>
+Side Note: Start up scripts are run in numeric-alphabetical order. Naming `1_storage_init.sh` makes sure it is the first script run. Otherwise, naming the file as `storage_init.sh` alone would've moved the `caches.sh` script above it, and would've executed before storage initialization happened. One of the commands in the `caches.sh` will not have worked properly, due to a lack of properly initialized storage directory.
+</small>
+
+<b>On to the content of the Start Up script:</b>
+```bash
+FOLDER=/var/www/html/storage/app
+if [ ! -d "$FOLDER" ]; then
+  echo "$FOLDER is not a directory, copying storage_ content to storage"
+  cp -r /var/www/html/storage_/. /var/www/html/storage
+
+  echo "deleteing storage_..."
+  rm -rf /var/www/html/storage_
+fi
+
+FOLDER=/var/www/html/storage/database
+if [ ! -d "$FOLDER" ]; then
+  echo "$FOLDER is not a directory, initializing database" 
+  mkdir /var/www/html/storage/database
+  touch /var/www/html/storage/database/database.sqlite
+fi
+```
+So what happened above?
+<ul>
+<li>The first condition statement checks if the app folder exists in the volumized storage folder. If it is not, it copies over the contents of the dummy storage_ folder to the volumized storage folder.</li>
+<li>The second condition statement checks if the database folder exists in the volumized storage folder. If it is not, it creates a database directory inside storage/ and finally creates a database.sqlite file in the storage/database folder</li>
+</ul>
+
+5) Finally, deploy your Laravel Fly App!
+
+```cmd
+fly deploy
+```
+
+### _Testing the Laravel Fly App's SQLite_
+A simple php artisan migrate should let you know if all is well:
+
+```cmd
+fly ssh console -C "php /var/www/html/artisan migrate --force"
+```
 
 ## _Database Migrations_
 <aside class="callout">
