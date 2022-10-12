@@ -126,7 +126,7 @@ The temporary VM has full access to the network, environment variables and secre
 
 A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
 
-To ensure the command runs in a specific region - say `dfw` - set `PRIMARY_REGION = 'dfw'` on in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if when running [database replicas in multiple regions](/docs/getting-started/multi-region-databases).
+To ensure the command runs in a specific region - say `dfw` - set `PRIMARY_REGION = 'dfw'` on in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if when running [database replicas in multiple regions](/docs/postgres/#high-availability-and-global-replication).
 
 The environment variable `RELEASE_COMMAND=1` is set for you within the temporary release VM. This might be useful if you need to customize your Dockerfile `ENTRYPOINT` to behave differently within a release VM.
 

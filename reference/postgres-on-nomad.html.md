@@ -1,9 +1,11 @@
 ---
-title: Fly Postgres
+title: Fly Postgres on Apps V1
 layout: docs
 sitemap: false
 nav: firecracker
 ---
+
+<div class="callout">This document applies to legacy Fly Postgres on Apps V1 (orchestrated by Nomad). Docs for newer Fly Postgres clusters live at **[Fly Postgres](/docs/postgres/)**</div>
 
 [Postgres](https://www.postgresql.org/), or PostgreSQL, is a powerful open-source object relational database system.
 
