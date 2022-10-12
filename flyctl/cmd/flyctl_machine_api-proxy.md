@@ -11,6 +11,7 @@ flyctl machine api-proxy [flags]
 ~~~
   -h, --help         help for api-proxy
   -o, --org string   The organization to operate on
+  -q, --quiet        Don't print progress indicators for WireGuard
 ~~~
 
 ## Global Options
