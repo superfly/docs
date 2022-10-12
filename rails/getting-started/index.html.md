@@ -10,7 +10,7 @@ related_pages:
   - /docs/flyctl/
   - /docs/reference/configuration/
   - /docs/reference/redis
-  - /docs/reference/postgres/
+  - /docs/postgres/
 ---
 
 In this guide we'll develop and deploy a Rails application that first
