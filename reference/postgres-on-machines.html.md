@@ -1,5 +1,5 @@
 ---
-title: Fly Postgres on Apps V2
+title: Fly Postgres
 layout: docs
 sitemap: false
 nav: firecracker
@@ -59,7 +59,7 @@ During this process, you get to choose from several preset resource configuratio
   Specify custom configuration
 ```
 
-The "Production" options give you a two-node cluster in a leader-replica configuration. A single-node "Development" instance can readily be scaled and [expanded to more regions](https://fly.io/docs/getting-started/multi-region-databases/).
+The "Production" options give you a two-node cluster in a leader-replica configuration. A single-node "Development" instance can readily be scaled and [expanded to more regions](https://fly.io/docs/postgres/#high-availability-and-global-replication).
 
 ```
 Creating postgres cluster pg-test in organization TestOrg
