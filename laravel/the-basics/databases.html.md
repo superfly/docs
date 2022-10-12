@@ -663,7 +663,7 @@ Side Note: Start up scripts are run in numeric-alphabetical order. Naming `1_sto
 FOLDER=/var/www/html/storage/app
 if [ ! -d "$FOLDER" ]; then
   echo "$FOLDER is not a directory, copying storage_ content to storage"
-  cp -r /var/www/html/storage_/* /var/www/html/storage
+  cp -r /var/www/html/storage_/. /var/www/html/storage
 
   echo "deleteing storage_..."
   rm -rf /var/www/html/storage_
