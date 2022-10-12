@@ -3,6 +3,7 @@ title: Fly Postgres
 layout: docs
 sitemap: false
 nav: firecracker
+redirect_from: /docs/reference/postgres/
 ---
 
 [Postgres](https://www.postgresql.org/), or PostgreSQL, is a powerful open-source object relational database system.
