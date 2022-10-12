@@ -13,8 +13,9 @@ flyctl postgres create [flags]
       --detach                     Return immediately instead of monitoring deployment progress
   -h, --help                       help for create
       --initial-cluster-size int   Initial cluster size
-      --machines                   Create postgres cluster on fly machines
+      --machines                   Create postgres cluster on fly machines (default true)
   -n, --name string                The name of your Postgres app
+      --nomad                      Create postgres cluster on Nomad
   -o, --org string                 The organization to operate on
   -p, --password string            The superuser password. The password will be generated for you if you leave this blank
   -r, --region string              The region to operate on
