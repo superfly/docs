@@ -1,4 +1,4 @@
-The SFTP SHELL command brings up an interactive SFTP session to fetch and push files to a VM:.
+The SFTP SHELL command brings up an interactive SFTP session to fetch and push files from/to a VM:.
 
 ## Usage
 ~~~
