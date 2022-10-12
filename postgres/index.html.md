@@ -18,9 +18,9 @@ Newly created Fly Postgres clusters now run by default on our next-gen Apps V2 a
 Your existing Fly Postgres clusters will continue to work, running on Fly Apps V1 (powered by Nomad).
 
 <ul>
-  <lh>Docs for Fly Postgres on Apps V1:</lh>
+  <lh>Docs for Fly Postgres databases on Apps V1:</lh>
   <li>
-    <a href="/docs/reference/postgres-on-nomad/">Postgres Databases</a>
+    <a href="/docs/reference/postgres-on-nomad/">Fly Postgres on Apps V1</a>
   </li>
   <li>
     <a href="/docs/getting-started/multi-region-databases/">Multi-region PostgreSQL</a> 
