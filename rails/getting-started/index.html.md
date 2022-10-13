@@ -426,4 +426,4 @@ Now that you have seen it up and running, a few things are worth noting:
   * `fly ssh console` can be used to ssh into your VM. `fly ssh console -C "/app/bin/rails console"` can be used to open a rails console.
 
 Now that you have seen how to deploy a trivial application, it is time
-to move on to [The Basics](../../the-basics/).
+to move on to [The Basics](../../rails/the-basics/).
