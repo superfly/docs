@@ -108,10 +108,10 @@ Set the `HEROKU_DATABASE_URL` variable in your Fly environment.
 fly secrets set HEROKU_DATABASE_URL=$(heroku config:get DATABASE_URL)
 ```
 
-Alright, lets start the transfer.
+Alright, lets start the transfer remotely on the Fly instance.
 
 ```cmd
-pg_dump --no-owner -C -d $HEROKU_DATABASE_URL | psql -d $DATABASE_URL
+fly ssh console -C "pg_dump --no-owner -C -d $HEROKU_DATABASE_URL | psql -d $DATABASE_URL"
 ```
 
 After the database transfers unset the `HEROKU_DATABASE_URL` variable.
