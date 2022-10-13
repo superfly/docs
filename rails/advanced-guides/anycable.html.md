@@ -15,6 +15,12 @@ The configuration below also runs [nginx](https://www.nginx.com/) as a [reverse
 proxy](https://www.nginx.com/resources/glossary/reverse-proxy-server/) to avoid
 any firewall issues.
 
+It also runs everything on one VM, which has a number of downsides including
+dropping socket connections every time a new version of your
+application is deployed.  For another take on configuring AnyCable to run
+on fly.io, see [Fly.io Deployment](https://docs.anycable.io/deployment/fly)
+on the anycable site.
+
 ## Prepare your application
 
 If you haven't already dones so, perform the steps described in the
