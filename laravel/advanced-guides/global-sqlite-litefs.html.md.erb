@@ -11,7 +11,7 @@ On the other hand, if your answer is a resounding, mundane no, you might want to
 
 ## _Global SQLite--But How?_
  
-Admitably, SQLite's <i>a bit</i> embedded, and you might think there's nary a quick way in getting your Laravel-SQLite Fly App running multiple instances, oceans apart, running in different regions with all their wonderful data in-sync.
+Admittedly, SQLite's <i>a bit</i> embedded, and you might think there's nary a quick way in getting your Laravel-SQLite Fly App running multiple instances, oceans apart, running in different regions with all their wonderful data in-sync.
 
 <i>If you haven't heard yet</i>---there's this awesome replication tool ["LiteFS"](https://github.com/superfly/litefs/blob/main/docs/ARCHITECTURE.md) that can abstract your SQLite data syncing and replication layer for you.
 Once you complete this tutorial, you'll be able to use SQLite with your Laravel Fly App running in multiple instances, everywhere, across the globe with [LiteFS](/docs/litefs/)!
@@ -112,7 +112,7 @@ Configuring the volume for this directory marks many targets in one stone: cache
 
 <%= partial "docs/laravel/partials/volume_storage_warning" %>
 
-In order to fix the volumized-storage-content-erasure above, one quick way is to re-initialize its content from a back up folder. 
+In order to fix the volumized-storage-content-erasure issue above, one quick way is to re-initialize its content from a back up folder. 
 
 1) In your local environment, duplicate the storage folder:
 
@@ -239,8 +239,8 @@ https://fly.io/apps/<app-name-found-in-flytoml>/monitoring
 
 
 ### _SQLite Setup_
-First, Pat your self in the back, you've reached the last part of this walkthrough!
-In this last section, set up your Laravel Fly App's SQlite database, do some migrations, and revel in the magic that happens on data between two instances running--separated by oceans, cities, and cultures apart.
+First, pat your self in the back, you've reached the last part of this walkthrough!
+In this final section, set up your Laravel Fly App's SQlite database, do some migrations, and revel in the magic that happens on data between two instances running--separated by oceans, cities, and cultures apart--connected by LiteFS and SQLite.
 
 1) First check how many instances of your App is running by:
 
@@ -273,7 +273,7 @@ php /var/www/html/artisan migrate
 Do you really wish to run this command? (yes/no) [no]
 ❯ yes
 
-   INFO  Preparing database.  
+  INFO  Preparing database.  
 
   Creating migration table ............................................................................................................... 12ms DONE
 
