@@ -20,4 +20,4 @@ Since many Rails applications depend on Redis for caching, background workers, a
 
 Postgres also requires consideration for global deployments.
 
-* https://fly.io/docs/getting-started/multi-region-databases/
+* https://fly.io/docs/postgres/#high-availability-and-global-replication
