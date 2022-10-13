@@ -12,7 +12,7 @@ redirect_from: /docs/reference/postgres/
 
 Fly Postgres is a regular Fly.io app, with an automated creation process and some platform integration to simplify management. It relies on building blocks available to all Fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
 
-Newly created Fly Postgres clusters now run by default on our next-gen Apps V2 architecture, built on top of [Machines](/docs/reference/machines/).
+Fly Postgres clusters created using [flyctl v0.0.412](https://github.com/superfly/flyctl/releases/tag/v0.0.412) or newer use our next-gen Apps V2 architecture, built on top of [Machines](/docs/reference/machines/).
 
 <div class="callout">
 Your existing Fly Postgres clusters will continue to work, running on Fly Apps V1 (powered by Nomad).
