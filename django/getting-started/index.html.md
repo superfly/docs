@@ -9,76 +9,93 @@ objective: Build and deploy a very basic Django app on Fly. This guide is the fa
 #   - /docs/django/fullapp
 ---
 
-In this guide we build and deploy the Django Welcome Screen to demonstrate how quickly apps can be deployed on Fly.io. Later examples will cover linking to a database deploying Full Django apps.
+In this guide we build and deploy a simple Django website to demonstrate how quickly Django apps can be deployed on Fly.io. <!-- The Django Full App example shows how to link to a database and deploy a full Django website. -->
 
-## Django Set Up
-Make sure that [Python](https://www.python.org/) is already installed on your computer. We will use [venv](https://docs.python.org/3/library/venv.html#module-venv) in this example for our virtual environment but any of the other popular choices such as [Poetry](https://python-poetry.org/), [Pipenv](https://github.com/pypa/pipenv), and [pyenv](https://github.com/pyenv/pyenv) will work too.
+## Initial Set Up
+Make sure that [Python](https://www.python.org/) is already installed on your computer along with a way to create virtual environments. We will use [venv](https://docs.python.org/3/library/venv.html#module-venv) in this example but any of the other popular choices such as [Poetry](https://python-poetry.org/), [Pipenv](https://github.com/pypa/pipenv), or [pyenv](https://github.com/pyenv/pyenv) will work too.
 
-### New Virtual Environment
-From the command line navigate to an empty directory to store your code. On both Windows and macOS the desktop is a good default if you don't already have a preferred location. We will create a new directory called `django-fly` and then activate a new Python virtual environment called `.venv` within it.
-
-```shell
-# Windows
-$ cd onedrive\desktop\code
-$ mkdir fly-django-tutorial
-$ cd fly-django-tutorial
-$ python -m venv .venv
-$ .venv\Scripts\Activate.ps1
-(.venv) $
-
-# macOS
-$ cd ~/desktop/code
-$ mkdir fly-django-tutorial
-$ cd fly-django-tutorial
-$ python3 -m venv .venv
-$ source .venv/bin/activate
-(.venv) $
-```
-
-### Install Django
-Next install Django, create a new project called `django_project`, and run `migrate` to initialize the database. Don't forget that period, `.`, at the end of the `startproject` command.
+Within a new virtual environment (called `.venv` in our example) follow the official Django docs for [Getting Started with Django](https://www.djangoproject.com/start/) to install the latest version. With your environment set up, we'll create a new Django project called `django_project` and a new app called `fly`.
 
 ```shell
-(.venv) $ python -m pip install django~=4.1.0
 (.venv) $ django-admin startproject django_project .
-(.venv) $ python manage.py migrate
+(.venv) $ python manage.py startapp fly
 ```
 
-You should end up with the following directory structure.
+Add the new `fly` app to the `INSTALLED_APPS` configuration in the `settings.py` file.
 
-```output
-├── db.sqlite3
-├── django_project
-│   ├── __init__.py
-|   ├── asgi.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── manage.py
+```python
+# django_project/settings.py
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "fly",  # new
+]
 ```
 
-### Django Welcome Page
-Start up Django's local web server with the `runserver` command.
+## Django Fly App
+
+Now let's configure a basic view that returns the text, "Hello, Fly!" by updating the `fly/views.py` file.
+
+```python
+# fly/views.py
+from django.http import HttpResponse
+
+
+def homePageView(request):
+    return HttpResponse("Hello, Fly!")
+```
+
+Create a new file called `fly/urls.py` with the following code.
+
+```python
+# fly/urls.py
+from django.urls import path
+
+from .views import homePageView
+
+urlpatterns = [
+    path("", homePageView, name="home"),
+]
+```
+
+And update the existing `django_project/urls.py` file as well.
+
+```python
+# django_project/urls.py
+from django.contrib import admin
+from django.urls import path, include  # new
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("fly.urls")),  # new
+]
+```
+
+That's it! Run the `migrate` command to initialize our local database and then `runserver` to start up Django's local server.
 
 ```shell
+(.venv) $ python manage.py migrate 
 (.venv) $ python manage.py runserver
 ```
 
-In your web browser navigate to `http://127.0.0.1:8000/`. The Django welcome page should be visible.
-
-![Django welcome page](/public/images/django-docs-welcome-page_41.png)
+If you open `http://127.0.0.1:8000/` in your web browser it now displays the text "Hello, Fly!"
 
 ## Django Deployment Checklist
-Django is configured by default for local development, not production. There is a [robust series of steps](https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/) required for proper secure deployment. However for demonstration purposes only we can take some shortcuts.
+
+By default, Django is configured for local development. The [Django deployment checklist](https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/) lists all the steps required for a secure deployment. However for demonstration purposes only we can take some shortcuts.
 
 First, in the `django_project/settings.py` file update the `ALLOWED_HOSTS` configuration to accept all hosts.
 
 ```python
 # django_project/settings.py
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*"]  # new
 ```
 
-Second, install [Gunicorn](https://gunicorn.org/) as our production server. The built-in Django web server is only suitable for local development.
+Second, install [Gunicorn](https://gunicorn.org/) as our production server. 
 
 ```shell
 (.venv) $ python -m pip install gunicorn==20.1.0
@@ -90,45 +107,9 @@ Third, create a `requirements.txt` file listing all the packages in the current 
 (.venv) $ pip freeze > requirements.txt
 ```
 
-This creates a new `requirements.txt` file in the root-level directory. If you look inside it there should be at least the following four packages:
-
-```output
-# requirements.txt
-asgiref==3.5.2
-Django==4.1.2
-gunicorn==20.1.0
-sqlparse==0.4.3
-```
-
-Fourth, configure [static files](https://docs.djangoproject.com/en/4.1/howto/static-files/) for production.
-
-Create a new directory called `static` in the root-level of the project. The new structure should look like this:
-
-```output
-├── db.sqlite3
-├── django_project
-│   ├── __init__.py
-|   ├── asgi.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── manage.py
-└── static
-```
-
-Then update the `django_project/settings.py` file with two additional lines of configuration:
-
-```python
-# django_project/settings.py
-STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]  # new
-STATIC_ROOT = STATIC_ROOT = BASE_DIR / "staticfiles"  # new
-```
-
 ## Fly Deployment
-Getting an application running on Fly.io is essentially working out how to package it as a deployable image. There are [three builders](https://fly.io/docs/reference/builders/) available but the default method is to create a [Dockerfile](https://docs.docker.com/engine/reference/builder/). That is the approach we will take here.
+Getting an application running on Fly.io is essentially working out how to package it as a deployable image. There are [three builders](https://fly.io/docs/reference/builders/) available but the default method is to create a [Dockerfile](https://docs.docker.com/engine/reference/builder/). 
 
-### Dockerfile
 In your root-level directory create a new file called `Dockerfile` with the following code.
 
 ```dockerfile
@@ -153,29 +134,9 @@ RUN set -ex && \
 
 COPY . /code/
 
-RUN python manage.py collectstatic --noinput
-
 EXPOSE 8000
 
 CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "django_project.wsgi"]
-```
-
-This image uses Python 3.10, installs packages from the local `requirements.txt` file, exposes port `8000` (Django's default), and then uses Gunicorn as the production web server.
-
-The directory structure should now look like this:
-
-```output
-├── Dockerfile
-├── db.sqlite3
-├── django_project
-│   ├── __init__.py
-|   ├── asgi.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── manage.py
-└── requirements.txt
-└── static
 ```
 
 ### flyctl
@@ -189,7 +150,7 @@ The command `fly launch` will detect our new `Dockerfile` and build it on Fly se
 The `fly launch` prompt asks us four questions:
 
 - No, we do not want Fly to overwrite our `Dockerfile`
-- You can either create a unique app name like `fly-django-getting-started` or use an auto-generated option
+- You can create a unique app name like `django-hello-fly` or use an auto-generated option
 - Select the [Fly.io region](https://fly.io/docs/reference/regions/) closest to you
 - Decline to set up a PostgreSQL database right now
 
@@ -197,15 +158,15 @@ The `fly launch` prompt asks us four questions:
 (.venv) $ fly launch
 ```
 ```output
-Creating app in /Users/wsv/Desktop/fly-django-getting-started
+Creating app in ~/django-hello-fly
 Scanning source code
 Detected a Django app
-? Overwrite "/Users/wsv/Desktop/fly-django-getting-started/Dockerfile"? No
-? App Name (leave blank to use an auto-generated name): fly-django-getting-started
-Automatically selected personal organization: Will Vincent
+? Overwrite "~/django-hello-fly/Dockerfile"? No
+? App Name (leave blank to use an auto-generated name): django-hello-fly
+Automatically selected personal organization: John Smith
 ? Select region: iad (Ashburn, Virginia (US))
-Created app fly-django-getting-started in organization personal
-Set secrets on fly-django-getting-started: SECRET_KEY
+Created app django-hello-fly in organization personal
+Set secrets on django-hello-fly: SECRET_KEY
 Wrote config file fly.toml
 ? Would you like to set up a Postgresql database now? No
 Your app is ready. Deploy with `flyctl deploy`
@@ -213,24 +174,19 @@ Your app is ready. Deploy with `flyctl deploy`
 
 ### fly.toml
 
-The `fly launch` command automatically creates a `fly.toml` configuration file for us. Add a `[deploy]` directive to run Django's `migrate` command and make sure both ports are listed as `8000`, which is Django's default.
+The `fly launch` command automatically creates a `fly.toml` configuration file. Add a `[deploy]` directive to run Django's `migrate` command and update both ports to Django's default of `8000`.
 
 ```output
-...
-[deploy]  # new
-  release_command = "python manage.py migrate --noinput"
+# fly.toml
+[deploy]  
+  release_command = "python manage.py migrate"
 
 [env]
-  PORT = "8000"  # new
-
-[experimental]
-  allowed_public_ports = []
-  auto_rollback = true
+  PORT = "8000"  
 
 [[services]]
   http_checks = []
-  internal_port = 8000  # new
-  ...
+  internal_port = 8000  
 ```
 
 ### Deploy Your Application
@@ -247,19 +203,16 @@ This will take a few seconds as it uploads your application, builds a machine im
 (.venv) $ fly open
 ```
 
-That's it! You are up and running! Wasn't that easy?
+You are up and running! Wasn't that easy?
 
 ## Recap
 
 We started with an empty directory and in a matter of minutes had a running
 Django application deployed to the web. A few things to note:
 
-  * Your application is running on a VM, which starts out based on a
-    Docker image based on our `Dockerfile`.
+  * Your application is running on a VM, which starts out based on a Docker image based on our `Dockerfile`.
   * A [`fly.toml`](https://fly.io/docs/reference/configuration/) file was created by `fly launch` which can be modified as needed.
-  * `fly dashboard` can be used to monitor and adjust your application. Pretty
-    much anything you can do from the browser window you can also do from the
-    command line using `fly` commands. Try `fly help` to see what you can do.
+  * `fly dashboard` can be used to monitor and adjust your application. Pretty much anything you can do from the browser window you can also do from the command line using `fly` commands. Try `fly help` to see what you can do.
 
-<!-- Now that you have seen how to deploy a trivial application, it is time
+<!-- Now that you have seen how to deploy a simple Django application, it is time
 to move on to a [Full Django App](../../full-django-app/). -->
