@@ -194,6 +194,11 @@ In this section you'll get to quickly:
 1) You can easily setup your Postgres in Fly.io by utilizing our `flyctl postgres create` command:
 
 ```cmd
+# Enter a new directory
+mkdir fly-pg
+cd fly-pg
+
+# Create your postgres
 fly postgres create
 ```
 
@@ -598,9 +603,13 @@ php artisan cache:clear
 If all goes well here, you should be good to go! 
 
 ## _SQLite in a Laravel Fly App_
+
+
 "[SQLite](https://www.sqlite.org/about.html)" is a file-based, lightweight, low-latency, and in-process library providing an embeddable SQL database engine. 
 
-Since SQLite is "embeddable", we no longer have to setup a separate Fly App for it. We simply configure our Laravel Fly App with one:
+This guide walks through a single instance of your Laravel Fly App running with SQLite as its main database. For a multi-region setup, do check our guide [here](/docs/laravel/advanced-guides/global-sqlite-litefs/). 
+
+<b>Since SQLite is "embeddable", we no longer have to setup a separate Fly App for it. We simply configure our Laravel Fly App with one:</b>
 
 
 1) Make sure you are in your Laravel Fly App's directory
@@ -616,7 +625,7 @@ fly volumes create storage_vol --region ams --size 20 #GB
 ```
 
 
-3) Revise your Laravel Fly App's `fly.toml` file to connect with the sqlite database and mount the volume created for your storage directory:
+3) Revise your Laravel Fly App's `fly.toml` file to mount the volume created for your storage directory, and connect with an sqlite database you'll be configuring further down below:
 
 ```
 [env]
@@ -632,15 +641,9 @@ fly volumes create storage_vol --region ams --size 20 #GB
   destination="/var/www/html/storage"
 ```
 
-<aside class="callout">
-Caution! Mounting a Volume to a folder will initially erase any item it contains during the first time the Volume is mounted for the folder. 
-<p></p>
+<%= partial "docs/laravel/partials/volume_storage_warning" %>
 
-For example, the storage folder contains subfolders app, framework, and logs. 
-Mounting the volume to the storage folder erases these contents, and leaves behind a sole item "lost+found".
-</aside>
-
-3) To fix the little storage-content-erasure issue, please go ahead and make a copy of your storage folder in a dummy folder, storage_.
+3) To fix the little storage-content-erasure issue, please go ahead and make a copy of your storage folder in a "backup" folder. You can name this directory "storage_" if you want.
 
 ```cmd
 cp -r storage storage_
@@ -649,37 +652,32 @@ cp -r storage storage_
  You'll later use this folder to copy over its contents to the volumized storage folder.
 </small>
 
-4) Next create a Start Up Script that will initialize the volumized storage folder's contents.
+4) Next create a [Startup Script](/docs/laravel/the-basics/customizing-deployments/) that will initialize the volumized storage folder's contents.
 
-```cmd
-touch .fly/scripts/1_storage_init.sh
-```
-<small>
-Side Note: Start up scripts are run in numeric-alphabetical order. Naming `1_storage_init.sh` makes sure it is the first script run. Otherwise, naming the file as `storage_init.sh` alone would've moved the `caches.sh` script above it, and would've executed before storage initialization happened. One of the commands in the `caches.sh` will not have worked properly, due to a lack of properly initialized storage directory.
-</small>
+<%= partial "docs/laravel/partials/volume_storage_script" %>
 
 <b>On to the content of the Start Up script:</b>
 ```bash
 FOLDER=/var/www/html/storage/app
 if [ ! -d "$FOLDER" ]; then
-  echo "$FOLDER is not a directory, copying storage_ content to storage"
-  cp -r /var/www/html/storage_/. /var/www/html/storage
-
-  echo "deleteing storage_..."
-  rm -rf /var/www/html/storage_
+    echo "$FOLDER is not a directory, copying storage_ content to storage"
+    cp -r /var/www/html/storage_/. /var/www/html/storage
+    echo "deleting storage_..."
+    rm -rf /var/www/html/storage_
 fi
+
 
 FOLDER=/var/www/html/storage/database
 if [ ! -d "$FOLDER" ]; then
-  echo "$FOLDER is not a directory, initializing database" 
-  mkdir /var/www/html/storage/database
-  touch /var/www/html/storage/database/database.sqlite
+    echo "$FOLDER is not a directory, initializing database" 
+    mkdir /var/www/html/storage/database
+    touch /var/www/html/storage/database/database.sqlite
 fi
 ```
 So what happened above?
 <ul>
-<li>The first condition statement checks if the app folder exists in the volumized storage folder. If it is not, it copies over the contents of the dummy storage_ folder to the volumized storage folder.</li>
-<li>The second condition statement checks if the database folder exists in the volumized storage folder. If it is not, it creates a database directory inside storage/ and finally creates a database.sqlite file in the storage/database folder</li>
+<li>The first condition statement checks if the app folder does not exist in the volumized storage folder. If it does not exist, it copies over the contents of the storage_ folder to the volumized storage folder.</li>
+<li>The second condition statement checks if the database folder does not exist in the volumized storage folder. If it does not exist, it creates a database directory inside storage/ and finally creates a database.sqlite file in the storage/database folder</li>
 </ul>
 
 5) Finally, deploy your Laravel Fly App!

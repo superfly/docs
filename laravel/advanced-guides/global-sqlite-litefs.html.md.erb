@@ -1,0 +1,306 @@
+---
+title: Global SQLite with LiteFS
+layout: framework_docs
+objective: Go LiteFS-global with your SQLite-backed Laravel Fly App!
+---
+
+So you've decided to give SQLite a chance huh? If your answer's a bold, brave <b><i>yes</i></b>, then welcome! There's priceless <b>walkthough treasures</b> waiting for you to read below! 
+
+On the other hand, if your answer is a resounding, mundane no, you might want to rethink your answer champ. You <i>are</i> here for a reason, so read on!
+
+
+## _Global SQLite--But How?_
+ 
+Admittedly, SQLite's <i>a bit</i> embedded, and you might think there's nary a quick way in getting your Laravel-SQLite Fly App running multiple instances, oceans apart, running in different regions with all their wonderful data in-sync.
+
+<i>If you haven't heard yet</i>---there's this awesome replication tool ["LiteFS"](https://github.com/superfly/litefs/blob/main/docs/ARCHITECTURE.md) that can abstract your SQLite data syncing and replication layer for you.
+Once you complete this tutorial, you'll be able to use SQLite with your Laravel Fly App running in multiple instances, everywhere, across the globe with [LiteFS](/docs/litefs/)!
+
+## _Let's Begin_
+As a brief overview for the onlookers, you'll tread nimbly over the following steps:
+1. Set up a quick Laravel-configured Fly App
+2. Set up an additional region for your Laravel Fly App through volumes and scaling
+3. Update your `fly.toml` file to configure SQLite, LiteFS, and volumed storage directory configurations
+4. Add a Startup Script to re-initialize your volumed storage folder
+5. Create your `litefs.yml` file to point to the correct database directory and execute running your Laravel server
+6. Update your Laravel-specific Dockerfile to include and configure LiteFS
+7. Revise Entrypoint to execute litefs
+8. Setup your SQLite database and do some tests
+
+
+### _Set up a quick Laravel-configured Fly App_
+1) Let's start with a clean setup here:
+
+```cmd
+composer create-project laravel/laravel my-lovely-laravel-app
+cd my-lovely-laravel-app
+```
+
+2) Then initialize our directory with a `fly.toml` configuration with the command:
+
+```cmd
+fly launch --region ams --no-deploy
+```
+<small>
+What's up above? It's simply the `fly launch` command with a bunch of prompts pre-configured:
+<ul>
+<li>Specify the region as `ams` with the `--region` argument</li>
+<li>Chill and don't deploy the app yet, include the `--no-deploy` flag</li>
+</ul>
+</small>
+
+<aside class="callout">
+Savvy! You should now have a pretty good `fly.toml` configured for your Laravel Application. Let's proceed below with setting your application to be deployed in more than one region.
+</aside>
+
+### _Set up additional region through volumes and fly scaling_
+1) Create two volumes in two different regions:
+
+```cmd
+fly volumes create storage_vol --size 20 --region ams
+fly volumes create storage_vol --size 20 --region fra
+```
+<small>Yes, the `storage_vol` <i>is</i> a replaceable name. You'll be configuring your `fly.toml` later with this volume name, so <b>make sure</b> both your two volumes have the <b>same name</b>.</small>
+
+2) Next, provision two instances for your app:
+
+```cmd
+fly scale count 2
+```
+
+<small>Scaling your application count to 2 will deploy two instances of your application. 
+Let's configure the `fly.toml` file next to make sure the volumes created will be used. Seeing the same volume name for two different regions, and two instances count, your application should get deployed in those two regions specified for the two volumes respectively.
+</small>
+
+
+### _Configure `fly.toml` with SQLite, LiteFS, and a Mounted Volume_
+
+1) First configure your `fly.toml` file's`[env]` section to include SQLite related configuration:
+```toml
+[env]
+  APP_ENV = "production"
+  LOG_CHANNEL = "stderr"
+  LOG_LEVEL = "info"
+  LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
+  DB_CONNECTION="sqlite"
+  DB_DATABASE="/var/www/html/storage/database/database.sqlite"
+```
+<small>Notice how the `DB_DATABASE` is pointing to a non-existent database file in the storage directory. Don't worry, you'll eventually create the database.sqlite file in one of the steps below.</small>
+
+2) Next, update the `[experimental]` section with the `enable_consul` attribute:
+
+```toml
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+  enable_consul = true
+```
+<small>Enabling [Consul](https://www.consul.io/) is necessary when using LiteFS, as LiteFS uses it for its Leader election mechanism.</small>
+
+
+3) Finally, configure your `fly.toml` file's `[mounts]` section to mount the storage_vol volume to your Laravel's storage directory:
+
+```toml
+[mounts]
+  source="storage_vol"
+  destination="/var/www/html/storage"
+```
+Configuring the volume for this directory marks many targets in one stone: cache, logs, and database data preserved in one volume. 
+
+
+### _Create a Startup Script to Re-initialize the Storage Folder_
+
+<%= partial "docs/laravel/partials/volume_storage_warning" %>
+
+In order to fix the volumized-storage-content-erasure issue above, one quick way is to re-initialize its content from a back up folder. 
+
+1) In your local environment, duplicate the storage folder:
+
+```cmd
+cp -r storage storage_
+```
+2) Then create in your `.fly/scripts` folder a [Startup](/docs/laravel/the-basics/customizing-deployments/) script that will be responsbile for re-initializing the Laravel Fly App's volumized storage folder with its previous content:
+
+<%= partial "docs/laravel/partials/volume_storage_script" %>
+
+<b>On to the content of the Startup script:</b>
+```bash
+FOLDER=/var/www/html/storage/app
+if [ ! -d "$FOLDER" ]; then
+    echo "$FOLDER is not a directory, copying storage_ content to storage"
+    cp -r /var/www/html/storage_/. /var/www/html/storage
+    echo "Deleting storage_..."
+    rm -rf /var/www/html/storage_
+fi
+
+
+FOLDER=/var/www/html/storage/database
+if [ ! -d "$FOLDER" ]; then
+    echo "$FOLDER is not a directory, initializing database" 
+    mkdir /var/www/html/storage/database
+fi
+```
+So what happened above?
+<ul>
+<li>The first condition statement checks if the app folder does not exist in the volumized storage folder. If it does not exist, it copies over the contents of the storage_ folder to the volumized storage folder.</li>
+<li>The second condition statement checks if the database folder does not exist in the volumized storage folder. If it does not exist, it creates a database directory inside the storage/ directory.</li>
+</ul>
+
+### _Create your LiteFS configuration file_
+1) In the root directory of your local Laravel application, create `etc/litefs.yml` file:
+```cmd
+mkdir etc
+touch etc/litefs.yml
+```
+
+2) Then update the content of `etc/litefs.yml` file with the following configuration:
+
+```yml
+# The path to where the SQLite database will be accessed.
+mount-dir: "/var/www/html/storage/database"
+
+# The path to where the underlying volume mount is.
+data-dir: "/var/www/html/storage"
+
+# You can enable debug mode to see the transactions sent out by LiteFS between nodes
+debug: true
+
+# Execute this subprocess once LiteFS connects to the cluster.
+# The execution below basically starts our Laravel server 
+# Because remember, the below process was removed from .fly/entrypoint.sh to execute litefs instead
+exec: "/init"
+
+# These environment variables will be available in your Fly.io application.
+# You must specify "experiement.enable_consul" for FLY_CONSUL_URL to be available.
+consul:
+  url: "${FLY_CONSUL_URL}"
+  advertise-url: "http://${HOSTNAME}.vm.${FLY_APP_NAME}.internal:20202"
+```
+
+### _Update Dockerfile with LiteFS configuration_
+Include LiteFS in your application container by revising the Laravel Dockerfile auto generated for you during `fly launch`:
+
+1) Add in the LiteFS image:
+
+```Dockerfile
+ARG PHP_VERSION=8.1
+ARG NODE_VERSION=14
+
+FROM flyio/litefs:pr-109 AS litefs
+
+FROM serversideup/php:${PHP_VERSION}-fpm-nginx as base
+```
+
+2) Next, include <b>bash</b> and <b>fuse</b> packages in the installation command:
+```Dockerfile
+RUN apt-get update && apt-get install -y \
+    git curl zip unzip rsync ca-certificates vim htop cron bash fuse \
+    php${PHP_VERSION}-pgsql php${PHP_VERSION}-bcmath \
+    php${PHP_VERSION}-swoole php${PHP_VERSION}-xml php${PHP_VERSION}-mbstring \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+```
+
+3)  Then somewhere below, (maybe above your asset building code block), add in the LiteFS files please:
+```Dockerfile
+COPY --from=litefs /usr/local/bin/litefs /usr/local/bin/litefs
+ADD etc/litefs.yml /etc/litefs.yml
+
+# Multi-stage build: Build static assets
+# This allows us to not include Node within the final container
+FROM node:${NODE_VERSION} as node_modules_go_brrr
+
+```
+
+
+### _Revise Entrypoint to execute litefs_
+1) For the pre-finale, open and revise your `.fly/entrypoint.sh` to:
+```sh
+#!/usr/bin/env sh
+
+# Run user scripts, if they exist
+for f in /var/www/html/.fly/scripts/*.sh; do
+    # Bail out this loop if any script exits with non-zero status code
+    bash "$f" || break
+done
+chown -R webuser:webgroup /var/www/html
+
+exec litefs
+```
+The execution of init will now be handled by [LiteFS' exec block](/docs/laravel/advanced-guides/global-sqlite-litefs/#create-your-litefs-configuration-file)
+
+2) <i>Deploy</i>
+
+```cmd
+fly deploy
+```
+
+3) Cross your hands together and see how your application deployment is faring by visiting:
+`https://fly.io/apps/<app-name-found-in-flytoml>/monitoring` or tailing your application logs with `fly logs`
+
+
+### _SQLite Setup_
+First, pat your self in the back, you've reached the last part of this walkthrough!
+
+In this final section, set up your Laravel Fly App's SQlite database, do some migrations, and revel in the magic that happens on data between two instances running--separated by oceans, cities, and cultures apart--connected by LiteFS and SQLite.
+
+1) First check how many instances of your Fly App is running by:
+
+```cmd
+fly status
+```
+```output
+Instances
+ID              PROCESS VERSION REGION  DESIRED STATUS  HEALTH CHECKS           RESTARTS        CREATED   
+b3655e8d        app     1       fra     run     running 1 total, 1 passing      0               5m14s ago
+39bba2f8        app     1       ams     run     running 1 total, 1 passing      0               6m12s ago
+```
+
+2) Hopefully you got two instances running. Connect with your closest instance with:
+
+```cmd
+fly ssh console --region ams
+```
+
+3) Then create your <b>database.sqlite</b> in the proper folder:
+```cmd
+touch /var/www/html/storage/database/database.sqlite
+```
+<small><b>"Proper folder"</b> here means the folder indicated [here](/docs/laravel/advanced-guides/global-sqlite-litefs/#configure-fly-toml-with-sqlite-litefs-and-a-mounted-volume) and [here](http://localhost:4567/docs/laravel/advanced-guides/global-sqlite-litefs/#configure-fly-toml-with-sqlite-litefs-and-a-mounted-volume). </small>
+
+4) Run a classic <b>php artisan migrate</b> to add in new tables to the freshly-baked database:
+```cmd
+php /var/www/html/artisan migrate --force
+```
+```output
+  INFO  Preparing database.  
+
+  Creating migration table ............................................................................................................... 12ms DONE
+
+   INFO  Running migrations.  
+
+  2014_10_12_000000_create_users_table ................................................................................................... 20ms DONE
+  2014_10_12_100000_create_password_resets_table ......................................................................................... 22ms DONE
+  2019_08_19_000000_create_failed_jobs_table ............................................................................................. 20ms DONE
+  2019_12_14_000001_create_personal_access_tokens_table .................................................................................. 29ms DONE
+```
+
+5) Exit the current instance and connect with the other one:
+```cmd
+fly ssh console --region fra
+```
+```output
+Connecting to top1.nearest.of.restless-glitter-5485.internal... complete
+#
+```
+
+6) Run your migration command and start marveling. 
+```cmd
+php /var/www/html/artisan migrate --force
+```
+<aside class="callout">
+<i>Because: There is none to migrate.</i>
+</aside>
+```output
+   INFO  Nothing to migrate.  
+```
