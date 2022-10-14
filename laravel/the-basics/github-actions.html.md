@@ -41,7 +41,9 @@ git remote add origin git@github.com:<username>/<repository-name>.git
 ```
 
 ## _Github CI Action: Auto Deploy to Fly.io_
-Once you have your Laravel application set up with a github repository, you can configure some Github Actions to auto deploy your changes.
+Once you have your Laravel application set up with a github repository, you can configure some Github Actions to auto deploy your changes. 
+
+In this guide, you'll be using `Fly.io`'s very own [Github action template here](https://github.com/superfly/flyctl-actions) to help deploy your application.
 
 1) Generate a `Fly token` with `fly auth token`
 
@@ -83,15 +85,15 @@ Let's go through each line above, shall we?
 <ul>
   <li><b>name: Fly Deploy</b> => This is the Workflow name</li>
   <li><b>on: [push]</b> => Any push action to the repository triggers the current workflow</li>
-  <li><b>env: `FLY_API_TOKEN`</b> => Environment Variables set for the Github Actions container</li>
-  <li><b>jobs:</b> => This is the list of jobs to for the workflow
+  <li><b>env: `FLY_API_TOKEN`</b> => Environment variable set for the Github Actions container</li>
+  <li><b>jobs:</b> => This is the list of jobs to run for the workflow
     <ul>
       <li><b>name: Deploy app</b> => Each job would have a name</li>
-      <li><b>runs-on: ubuntu-latest</b> => Each job would have an environment we want to run its virtual machine on</li>
+      <li><b>runs-on: ubuntu-latest</b> => Each job would have an container environment we want to run its virtual machine on</li>
       <li><b>steps:</b> => Each job would have a list of steps, see below:
       <ul>
-        <li><b>uses: actions/checkout@v2</b> => This is a pre-made Github Action! It allows checking out of our repository so Github Action can access it</li>
-        <li><b>uses: superfly/flyctl-actions/setup-flyctl@master</b> => This is one of Fly.io's pre-made Github action. It sets up `flyctl` in the job's virtual machine used</li>
+        <li><b>uses: actions/checkout@v2</b> => This is a pre-made Github Action. It allows checking out of your repository into the virtual machine spun up for the job</li>
+        <li><b>uses: superfly/flyctl-actions/setup-flyctl@master</b> => This is one of Fly.io's pre-made Github action. It sets up `flyctl` in the virtual machine spun up for the job</li>
         <li><b>run: flyctl deploy</b> => Need I say more? </li>
       </ul>
       </li>
