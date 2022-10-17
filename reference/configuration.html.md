@@ -330,6 +330,31 @@ Times are in milliseconds unless units are specified.
 
 **Note**: The `services.http_checks` section is optional and not generated in the default `fly.toml` file.
 
+#### `services.script_checks`
+
+Script checks are also supported in the `services.script_checks` section. The command specified will be run periodically. The script must exit with 0 for success, 1 for warning, or any other code to indicate the check is failing.
+
+```toml
+  [[services.script_checks]]
+    command       = "/path/to/your/script"
+    args          = ["a", "b", "c"]
+    grace_period  = "1s"
+    interval      = "5s"
+    restart_limit = 0
+    timeout       = "1s"
+```
+
+* `command`: The script that will be run. It needs to be part of the deployed application, and will be run as a separate task. The exit code must be 0 for success, 1 for warning, and anything else for failure.
+* `args`: Array of arguments that will be appended when invoking the script. In the example above, the args would be added to the script to run: `/path/to/your/script a b c`.
+* `grace_period`: The time to wait after a VM starts before checking its health.
+* `interval`: The time between checks.
+* `restart_limit`: The number of consecutive script check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed script health checks.
+* `timeout`: The maximum time a script can take before being reported as failing its healthcheck.
+
+Times are in milliseconds unless units are specified.
+
+**Note**: The `services.script_checks` section is optional and not generated in the default `fly.toml` file.
+
 ## The `mounts` section
 
 This section supports the Volumes feature for persistent storage. The section has two settings; both are needed.
