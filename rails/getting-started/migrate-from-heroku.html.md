@@ -112,8 +112,15 @@ Alright, lets start the transfer remotely on the Fly instance.
 
 ```cmd
 fly ssh console
-# pg_dump --no-owner -C -d $HEROKU_DATABASE_URL | psql -d $DATABASE_URL
 ```
+
+Then from the remote Fly SSH console transfer the database.
+
+```cmd
+pg_dump -Fc --no-acl --no-owner -d $HEROKU_DATABASE_URL | pg_restore --verbose --clean --no-acl --no-owner -d $DATABASE_URL
+```
+
+You may need to upgrade your Heroku database to match the version of the source Fly database. Refer to Heroku's [Upgrading the Version of a Heroku Postgres Database](https://devcenter.heroku.com/articles/upgrading-heroku-postgres-databases) for instructions on how to upgrade, then try the command above again.
 
 After the database transfers unset the `HEROKU_DATABASE_URL` variable.
 
