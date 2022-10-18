@@ -13,7 +13,7 @@ To read more, use the docs command to view Fly's help on the web.
 
 ## Usage
 ~~~
-flyctl [command] [flags]
+flyctl [flags]
 ~~~
 
 ## Available Commands
