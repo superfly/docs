@@ -12,8 +12,6 @@ flyctl machine stop <id> [<id>...] [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for stop
-  -s, --signal string   Signal to stop the machine with (default: SIGINT)
-      --time int        Seconds to wait before killing the machine
 ~~~
 
 ## Global Options
