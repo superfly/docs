@@ -94,7 +94,7 @@ It shows the size (`shared-cpu-1x`), number of CPUs, and memory (in GB or MB).
 
 ### Viewing Available VM Sizes
 
-The `fly platform vm-sizes` command will display the various sizes with cores and memory and current pricing:
+The `fly platform vm-sizes` command will display the various sizes with cores and memory:
 
 ```cmd
 fly platform vm-sizes
