@@ -215,6 +215,14 @@ Machines should be stopped before attempting deletion. Pass `force=true` to stop
 
 <%= partial "machines/delete_app" %>
 
+### Lease a machine
+
+Machine leases can be used to obtain an exlcusive lock on modifying a machine.
+
+<%= partial "machines/lease_req" %>
+<%= partial "machines/lease_resp" %>
+<%= partial "machines/lease" %>
+
 ## Notes on Networking
 
 Machines are closed to the public internet by default. To make them accessible via the associated application, you need to:
