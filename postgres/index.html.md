@@ -740,7 +740,7 @@ e784927ad23583	registry-1.docker.io	flyio/postgres	14.4 	v0.0.32	sha256:9daaa151
 148e275b1d1d89	registry-1.docker.io	flyio/postgres	14.4 	v0.0.32	sha256:9daaa15119742e5777f5480ef476024e8827016718b5b020ef33a5fb084b60e8
 ```
 
-Take note of the value in the `Tag` column, we will be using this in our next command. 
+Take note of the version specified within the `Tag` column, we will be using this in our next command. 
 
 **Warning: This deploy process will result in a small amount of downtime.  Once the PRIMARY_REGION change has been deployed, your cluster will become read-only until the failover process completes.**
 
