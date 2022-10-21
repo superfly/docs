@@ -718,7 +718,7 @@ _Note: Only healthy members residing in your `PRIMARY_REGION` will be considered
 
 There may be situations where you want to move leadership into a completely new region.  While this process is a bit more involved, you can achieve this by performing the steps below.  
 
-If you haven't already pulled down your fly.toml configuration file, you can do so by running:
+If you haven't already pulled down your `fly.toml` configuration file, you can do so by running:
 ```
 fly config save --app <app-name>
 ```
