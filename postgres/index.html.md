@@ -723,7 +723,7 @@ If you haven't already pulled down your `fly.toml` configuration file, you can d
 fly config save --app <app-name>
 ```
 
-Now, let's open up our `fly.toml` file and set the `PRIMARY_REGION` environment variable to our target region. In this example, we are looking to move leadership into the `lax` region. 
+Now, let's open up the `fly.toml` file and set the `PRIMARY_REGION` environment variable to our target region. In this example, we are looking to move leadership into the `lax` region. 
 ```toml
 [env]
 PRIMARY_REGION = "lax"
