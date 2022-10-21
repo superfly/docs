@@ -716,7 +716,11 @@ _Note: Only healthy members residing in your `PRIMARY_REGION` will be considered
 
 ### Performing a regional failover
 
+<<<<<<< HEAD
 There may be situations where you want to move leadership into a completely new region.  While this process is a bit more involved, you can achieve this by performing the steps below.  
+=======
+There may be situations where you want to move your PG leader into a completely new region.  While this process is a bit more involved, you can achieve this by performing the steps below.  
+>>>>>>> 0fdc74e (Adding PG failover docs for Machines)
 
 If you haven't already pulled down your fly.toml configuration file, you can do so by running:
 ```
