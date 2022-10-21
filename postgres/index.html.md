@@ -718,18 +718,18 @@ _Note: Only healthy members residing in your `PRIMARY_REGION` will be considered
 
 There may be situations where you want to move leadership into a completely new region.  While this process is a bit more involved, you can achieve this by performing the steps below.  
 
-If you haven't already pulled down your fly.toml configuration file, you can do so by running:
+If you haven't already pulled down your `fly.toml` configuration file, you can do so by running:
 ```
 fly config save --app <app-name>
 ```
 
-Now, let's open up our fly.toml file and set the PRIMARY_REGION environment variable to our target region.
+Now, let's open up the `fly.toml` file and set the `PRIMARY_REGION` environment variable to our target region. In this example, we are looking to move leadership into the `lax` region. 
 ```toml
 [env]
 PRIMARY_REGION = "lax"
 ```
 
-Before we can deploy this change, we first need to identify which Postgres version we are currently running.
+Before we can deploy this change, we must first identify which Postgres version we are currently running.
 ```cmd
 fly image show
 ```
@@ -740,15 +740,15 @@ e784927ad23583	registry-1.docker.io	flyio/postgres	14.4 	v0.0.32	sha256:9daaa151
 148e275b1d1d89	registry-1.docker.io	flyio/postgres	14.4 	v0.0.32	sha256:9daaa15119742e5777f5480ef476024e8827016718b5b020ef33a5fb084b60e8
 ```
 
-Take note of the `Tag` column, this is the value we will use in the next step.  
+Take note of the version specified within the `Tag` column, we will be using this in our next command. 
 
-**Warning:  Once the PRIMARY_REGION change has been deployed, your cluster will become read-only until the failover process completes.
+**Warning: This deploy process will result in a small amount of downtime.  Once the PRIMARY_REGION change has been deployed, your cluster will become read-only until the failover process completes.**
 
 ```cmd
 fly deploy . --image flyio/postgres:<tag> --strategy=immediate
 ```
 
-Once the deploy process has completed, we can now transfer leadership into our new region by running the following command:
+Once the deploy process has completed, we can now work to transfer leadership into our new region.
 ```cmd
 fly pg failover
 ```
