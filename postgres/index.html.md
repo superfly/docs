@@ -67,9 +67,8 @@ During this process, you get to choose from several preset resource configuratio
 ```
 ? Select configuration:  [Use arrows to move, type to filter]
 > Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
-  Production - Highly available, 1x shared CPU, 256MB RAM, 10GB disk
-  Production - Highly available, 1x Dedicated CPU, 2GB RAM, 50GB disk
-  Production - Highly available, 2x Dedicated CPUs, 4GB RAM, 100GB disk
+  Production - Highly available, 2x shared CPUs, 4GB RAM, 40GB disk
+  Production - Highly available, 4x shared CPUs, 8GB RAM, 80GB disk
   Specify custom configuration
 ```
 
@@ -685,12 +684,82 @@ If the leader becomes unhealthy (e.g. network or hardware issues), the proxy dro
 ### Adding replicas
 The easiest way to add additional replicas at this time is through the `fly machine clone` command:
 
+```cmd
+fly machine clone 148e306c77e089 --region ord --app <app-name>
 ```
-fly machine clone <existing-machine-id> --region ord --app <app-name>
-
+```output
+Cloning machine 148e306c77e089 into region lax
+Provisioning a new machine with image registry-1.docker.io/flyio/postgres:14...
+  Machine 17814e3b990389 has been created...
+  Waiting for machine 17814e3b990389 to start...
+  Waiting for 17814e3b990389 to become healthy (started, 3/3)
+Machine has been successfully cloned!
 ```
-This will clone the spec from the source machine and use it to create the new replica.  
 
+This will clone the spec from the source machine and use it to create the new replica in a desired region.  
+
+
+### Performing a failover
+To perform a manual failover against your HA Postgres app, run the following command:
+
+```cmd
+fly postgres failover --app <app-name>
+```
+```output
+Performing a failover
+  Waiting for e784927ad23583 to become healthy (started, 3/3)
+  Waiting for 148e306c77e089 to become healthy (started, 3/3)
+Failover complete
+```
+
+_Note: Only healthy members residing in your `PRIMARY_REGION` will be considered for leadership._
+
+### Performing a regional failover
+
+There may be situations where you want to move leadership into a completely new region.  While this process is a bit more involved, you can achieve this by performing the steps below.  
+
+If you haven't already pulled down your fly.toml configuration file, you can do so by running:
+```
+fly config save --app <app-name>
+```
+
+Now, let's open up our fly.toml file and set the PRIMARY_REGION environment variable to our target region.
+```toml
+[env]
+PRIMARY_REGION = "lax"
+```
+
+Before we can deploy this change, we first need to identify which Postgres version we are currently running.
+```cmd
+fly image show
+```
+```output
+Image Details
+MACHINE ID    	REGISTRY            	REPOSITORY    	TAG	VERSION	DIGEST
+e784927ad23583	registry-1.docker.io	flyio/postgres	14.4 	v0.0.32	sha256:9daaa15119742e5777f5480ef476024e8827016718b5b020ef33a5fb084b60e8
+148e275b1d1d89	registry-1.docker.io	flyio/postgres	14.4 	v0.0.32	sha256:9daaa15119742e5777f5480ef476024e8827016718b5b020ef33a5fb084b60e8
+```
+
+Take note of the `Tag` column, this is the value we will use in the next step.  
+
+**Warning:  Once the PRIMARY_REGION change has been deployed, your cluster will become read-only until the failover process completes.
+
+```cmd
+fly deploy . --image flyio/postgres:<tag> --strategy=immediate
+```
+
+Once the deploy process has completed, we can now transfer leadership into our new region by running the following command:
+```cmd
+fly pg failover
+```
+```output
+Performing a failover
+  Waiting for e784927ad23583 to become healthy (started, 3/3)
+  Waiting for 148e306c77e089 to become healthy (started, 3/3)
+Failover complete
+```
+
+That's it! You should now run `fly status` to verify your changes. 
 
 ### Connecting to read replicas
 
