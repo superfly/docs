@@ -748,7 +748,7 @@ Take note of the value in the `Tag` column, we will be using this in our next co
 fly deploy . --image flyio/postgres:<tag> --strategy=immediate
 ```
 
-Once the deploy process has completed, we can now transfer leadership into our new region.
+Once the deploy process has completed, we can now work to transfer leadership into our new region.
 ```cmd
 fly pg failover
 ```
