@@ -102,7 +102,7 @@ Before we get any further, note that the automated Postgres creation process doe
 flyctl <command> -a <postgres-app-name>
 ```
 
-## Connecting to Postgres
+## Connecting to Fly Postgres
 
 How you connect to Postgres depends on the tools you're using. Connection string URIs are a common way to describe a connection to a Postgres server.
 
@@ -115,11 +115,11 @@ postgres://{username}:{password}@{hostname}:{port}/{database}?options
 The output from `flyctl postgres create` contains all the values you need to make a connection string to your database.
 
 
-### Connecting to Postgres From Within Fly
+### Connecting to Fly Postgres From Within Fly
 
 As a Fly.io application, your Postgres app is accessible through Fly's [private networking](/docs/reference/private-networking/). This means applications within the same organization can look up the app at `appname.internal`. This name, when looked up, can return one or more IPv6 addresses.
 
-### Connecting to Postgres From Outside Fly
+### Connecting to Fly Postgres From Outside Fly
 #### On an instance with `flyctl` installed
 
 To connect to your Postgres database from outside your Fly organization, you need a WireGuard connection. However, `flyctl` on your local machine can connect using [user-mode WireGuard](/blog/our-user-mode-wireguard-year/) magic, without you having to set up your own WireGuard tunnel.
