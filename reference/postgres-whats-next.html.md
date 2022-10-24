@@ -34,7 +34,7 @@ Check the docs for more information: [High Availability](https://github.com/supe
 
 Looking for more? See how to:
 
-* [Connect to Postgres](https://github.com/superfly/docs/blob/main/reference/postgres.html.md#connecting-to-postgres)
-* [Attach your app](https://github.com/superfly/docs/blob/main/reference/postgres.html.md#attaching-an-app-to-a-postgres-app)
-* [Monitor your Postgres cluster](https://github.com/superfly/docs/blob/main/reference/postgres.html.md#monitoring)
-* [Scale horizontally and vertically](https://github.com/superfly/docs/blob/main/reference/postgres.html.md#scaling-the-postgres-cluster)
+* [Connect to Postgres](https://github.com/superfly/docs/blob/main/reference/postgres-on-nomad.html.md#connecting-to-postgres)
+* [Attach your app](https://github.com/superfly/docs/blob/main/reference/postgres-on-nomad.html.md#attaching-an-app-to-a-postgres-app)
+* [Monitor your Postgres cluster](https://github.com/superfly/docs/blob/main/reference/postgres-on-nomad.html.md#monitoring)
+* [Scale horizontally and vertically](https://github.com/superfly/docs/blob/main/reference/postgres-on-nomad.html.md#scaling-the-postgres-cluster)
