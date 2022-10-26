@@ -9,7 +9,7 @@ flyctl redis list [flags]
 
 ~~~
   -h, --help         help for list
-  -o, --org string   The organization to operate on
+  -o, --org string   The target Fly organization
 ~~~
 
 ## Global Options

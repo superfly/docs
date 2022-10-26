@@ -11,7 +11,7 @@ flyctl proxy <local:remote> [remote_host] [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for proxy
-  -o, --org string      The organization to operate on
+  -o, --org string      The target Fly organization
   -q, --quiet           Don't print progress indicators for WireGuard
   -s, --select          Prompt to select from available instances from the current application
 ~~~

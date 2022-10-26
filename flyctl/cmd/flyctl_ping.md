@@ -23,7 +23,7 @@ flyctl ping [hostname] [flags]
   -n, --count int         Number of probes to send (0=indefinite)
   -h, --help              help for ping
   -i, --interval string   Interval between ping probes (default "1s")
-  -o, --org string        The organization to operate on
+  -o, --org string        The target Fly organization
   -s, --size int          Size of probe to send (not including headers) (default 12)
 ~~~
 
