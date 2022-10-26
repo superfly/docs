@@ -28,6 +28,7 @@ flyctl launch [flags]
       --no-cache                      Do not use the build cache when building the image
       --no-deploy                     Do not prompt for deployment
       --now                           Deploy now without confirmation
+  -o, --org string                    The target Fly organization
       --path string                   Path to the app source root, where fly.toml file will be saved (default ".")
       --push                          Push image to registry after build is complete
   -r, --region string                 The target region (see 'flyctl platform regions')
