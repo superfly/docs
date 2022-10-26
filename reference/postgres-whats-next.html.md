@@ -30,10 +30,10 @@ Now, when you created your Postgres app, `flyctl` offered you the chance to crea
 
 Please make good use of Postgres replicas by running at least two instances. In case of node failures, a Fly Postgres cluster will automatically take the bad actor out of the picture and force a leader re-election on the healthy nodes.
 
-Check the docs for more information: [High Availability and Global Replication](/docs/postgres/#high-availability-and-global-replication)
+Check the docs for more information: [High Availability and Global Replication](/docs/postgres/high-availability-and-global-replication)
 
 Looking for more? See how to:
 
-* [Connect to Fly Postgres](/docs/postgres/#connecting-to-fly-postgres)
-* [Attach your app](/docs/postgres/#attaching-to-a-fly-app)
-* [Monitor your Postgres cluster](/docs/postgres/#monitoring)
+* [Connect to Fly Postgres](/docs/postgres/connecting)
+* [Attach your app](/docs/postgres/connecting)
+* [Monitor your Postgres cluster](/docs/postgres/monitoring)

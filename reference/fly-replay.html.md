@@ -30,7 +30,7 @@ Our proxy appends a header, `fly-replay-src`, to the replayed HTTP request, with
 
 ## Example use cases
 
-[Send a write request from a read-only replica](/docs/postgres/#high-availability-and-global-replication) to the region in which a HA database leader lives: 
+[Send a write request from a read-only replica](/docs/postgres/high-availability-and-global-replication) to the region in which a HA database leader lives:
 ```
 fly-replay: region=sjc
 ``` 
@@ -59,4 +59,4 @@ fly-replay: region=sjc;app=app-in-same-org
 
 Some combinations of fields can conflict: e.g. don't specify an app name and an instance ID that doesn't belong to that app.
 
-Related: [Multi-region PostgreSQL](/docs/postgres/#high-availability-and-global-replication); [Run Ordinary Rails Apps Globally](/blog/run-ordinary-rails-apps-globally/)
+Related: [Multi-region PostgreSQL](/docs/postgres/high-availability-and-global-replication); [Run Ordinary Rails Apps Globally](/blog/run-ordinary-rails-apps-globally/)

@@ -1,0 +1,39 @@
+---
+title: Backup, Restores, & Snapshots
+objective: Keep your data safe by backing it up and restoring it if the unthinkable happens.
+layout: framework_docs
+order: 3
+---
+
+Fly.io performs daily storage-based snapshots of each of your provisioned volumes. These snapshots can
+be used to restore your dataset into a new Postgres application.
+
+## Listing snapshots
+
+Snapshots are volume specific, so you will need to first identify a volume to target. You can list your volumes by running the `volumes list` command with your Postgres app name.
+
+```cmd
+fly volumes list -a <postgres-app-name>
+```
+```output
+ID                   NAME    SIZE REGION ATTACHED VM CREATED AT
+vol_x915grn008vn70qy pg_data 10GB atl    b780ce3d    2 weeks ago
+vol_ke628r677pvwmnpy pg_data 10GB atl    359d0e24    2 weeks ago
+```
+
+Once you have identified which volume to target, you can go ahead and list your snapshots by running the following command:
+```cmd
+fly volumes snapshots list <volume-id>
+```
+```output
+ID                  SIZE   CREATED AT
+vs_2AjJ4lGqQwDbRfxm 29 MiB 2 hours ago
+vs_BAARBQxZKl6JKU04 27 MiB 1 day ago
+vs_OPQXXna6kA2Qnhz8 26 MiB 2 days ago
+```
+## Restoring from a snapshot
+
+To restore a Postgres application from a snapshot, simply specify the `--snapshot-id` argument when running the `create` command as shown below:
+```cmd
+fly postgres create --snapshot-id <snapshot-id>
+```

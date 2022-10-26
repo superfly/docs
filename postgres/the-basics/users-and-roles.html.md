@@ -1,0 +1,26 @@
+---
+title: Users & Roles
+objective: Add users and roles to control who can access what in the database.
+layout: framework_docs
+order: 2
+---
+
+A Postgres cluster is configured with three users when created:
+
+- `postgres` - a role with superuser and login privileges that was created for you along with the cluster. Since the `postgres` role has superuser rights, it's recommended that you only use it for admin tasks and create new users with access restricted to the minimum necessary for applications
+- `flypgadmin` - this role is used internally by Fly.io to configure and query the Postgres cluster
+- `repluser` - this is the user replica servers use for replication from the leader
+
+You can view a list of users using `flyctl`
+
+```cmd
+flyctl postgres users list pg-test
+```
+
+```output
+Running flyadmin user-list
+USERNAME   SUPERUSER DATABASES
+flypgadmin true      postgres
+postgres   true      postgres
+repluser   false     postgres
+```
