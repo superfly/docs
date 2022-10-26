@@ -230,7 +230,7 @@ This section is a simple list of key/values, so the section is denoted with sing
     soft_limit = 20
 ```
 
-`type` specifies what metric is used to determine when to scale up and down, or when a given instance should receieve more or less traffic (load balancing). The two supported values are `connections` and `requests`.
+`type` specifies what metric is used to determine when to scale up and down, or when a given instance should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
 
 **connections**: Load balance and scale based on number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
 
