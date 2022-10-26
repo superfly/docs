@@ -14,7 +14,7 @@ flyctl volumes create <volumename> [flags]
   -c, --config string         Path to application configuration file
   -h, --help                  help for create
       --no-encryption         Do not encrypt the volume contents
-  -r, --region string         The region to operate on
+  -r, --region string         The target region (see 'flyctl platform regions')
       --require-unique-zone   Require volume to be placed in separate hardware zone from existing volumes (default true)
   -s, --size int              Size of volume in gigabytes (default 3)
       --snapshot-id string    Create volume from a specified snapshot

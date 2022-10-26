@@ -13,9 +13,9 @@ flyctl redis create [flags]
   -h, --help               help for create
   -n, --name string        The name of your Redis database
       --no-replicas        No replica regions
-  -o, --org string         The organization to operate on
+  -o, --org string         The target Fly organization
       --plan string        Upstash Redis plan
-  -r, --region string      The region to operate on
+  -r, --region string      The target region (see 'flyctl platform regions')
 ~~~
 
 ## Global Options

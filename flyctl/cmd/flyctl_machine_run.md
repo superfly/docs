@@ -23,7 +23,7 @@ flyctl machine run <image> [command] [flags]
   -n, --name string          Machine name, will be generated if missing
       --org string           The organization that will own the app
   -p, --port strings         Exposed port mappings (format: edgePort[:machinePort]/[protocol[:handler]])
-  -r, --region string        The region to operate on
+  -r, --region string        The target region (see 'flyctl platform regions')
       --schedule string      Schedule a machine run at hourly, daily and monthly intervals
   -s, --size string          Preset guest cpu and memory for a machine, defaults to shared-cpu-1x
   -v, --volume strings       Volumes to mount in the form of <volume_id_or_name>:/path/inside/machine[:<options>]

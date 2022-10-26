@@ -11,7 +11,7 @@ flyctl ips allocate-v4 [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for allocate-v4
-  -r, --region string   The region to operate on
+  -r, --region string   The target region (see 'flyctl platform regions')
 ~~~
 
 ## Global Options

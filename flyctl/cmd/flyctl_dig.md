@@ -18,7 +18,7 @@ flyctl dig [type] <name> [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for dig
-  -o, --org string      The organization to operate on
+  -o, --org string      The target Fly organization
   -s, --short           Just print the answers, not DNS record details
 ~~~
 
