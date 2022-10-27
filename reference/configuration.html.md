@@ -278,6 +278,31 @@ For UDP applications make sure to bind the application to the same port as defin
     port = 5000
 ```
 
+#### `services.ports.tls_options`
+
+Configure the TLS versions and ALPN protocols that Fly's edge will use to terminate TLS for your application with:
+
+```toml
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "443"
+    tls_options = { "alpn" = ["h2", "http/1.1"], "versions" = ["TLSv1.2", "TLSv1.3"], }
+```
+
+* `alpn` : Array of strings indicating how to handle ALPN negotiations with clients.
+* `versions` : Array of string indicating which TLS versions are allowed
+
+Fly can also terminate TLS only and pass through directly to your service. This works for a variety of applications that can benefit from offloading TLS termination and accept the unencrypted connection.
+
+One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS and sends h2c (HTTP/2 without TLS) directly to your application through our backhaul. The config below will negotiate http/2 with clients, and then send h2c to the application:
+
+```toml
+  [[services.ports]]
+    handlers = ["tls"]
+    port = "443"
+    tls_options = { "alpn" = ["h2"], }
+```
+
 #### `services.tcp_checks`
 
 When a service is running, the Fly platform checks up on it by connecting to a port. The `services.tcp_checks` section defines parameters for those checks. For example, the default tcp\_checks look like this:
