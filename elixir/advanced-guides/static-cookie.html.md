@@ -1,8 +1,9 @@
 ---
-title: Setting a Static Cookie for Elixir
-layout: docs
-sitemap: false
-nav: firecracker
+title: Setting a Static Cookie
+layout: framework_docs
+order: 1
+objective: Guide shows how to set a static cookie for your Elixir node that doesn't change every time time you deploy.
+redirect_from: /docs/app-guides/elixir-static-cookie/
 author: mark
 categories:
   - elixir

@@ -1,15 +1,16 @@
 ---
 title: Connecting Observer to Your App in Production
-layout: docs
-sitemap: false
-nav: firecracker
+layout: framework_docs
+order: 2
+objective: Guide shows how to connect a locally running Observer instance to your application running on Fly.
+redirect_from: /docs/app-guides/elixir-observer-connection-to-your-app/
 author: mark
 categories:
   - elixir
 date: 2021-06-15
 ---
 
-Elixir, Erlang, and really just the BEAM has a feature called "[Observer](https://elixir-lang.org/getting-started/debugging.html#observer)". It's a powerful UI that connects to a running Elixir or Erlang node and let's you "observe" what's going on inside. It has some limited ability to modify things as well, most notably you can kill running processes. This can help when something is misbehaving or you just want to play "chaos monkey" and kill parts of the system to see how it recovers.
+Elixir, Erlang, and really just the BEAM has a slick feature called "[Observer](https://elixir-lang.org/getting-started/debugging.html#observer)". It's a powerful UI that connects to a running Elixir or Erlang node and let's you "observe" what's going on inside. It has some limited ability to modify things as well, most notably you can kill running processes. This can help when something is misbehaving or you just want to play "chaos monkey" and kill parts of the system to see how it recovers.
 
 This shows a process tree for the application. Using this I can inspect individual processes or even kill them!
 
