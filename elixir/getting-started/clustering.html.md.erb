@@ -96,7 +96,7 @@ ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
 f9014bf7 26      sea    run     running 1 total, 1 passing 0        1h8m ago
 ```
 
-### _Scaling in a Single Region_
+### Scaling in a Single Region
 
 Let's scale up to 2 VMs in our current region.
 
@@ -147,7 +147,7 @@ iex(fly-elixir@fdaa:0:1da8:a7b:ac2:f901:4bf7:2)1> Node.list
 
 I included the IEx prompt because it shows the IP address of the node I'm connected to. Then getting the `Node.list` returns the other node. Our two VMs are connected and clustered!
 
-### _Scaling to Multiple Regions_
+### Scaling to Multiple Regions
 
 Fly makes it super easy to run VMs of your applications physically closer to your users. Through the magic of DNS, users are directed to the nearest region where your application is located. You can read about [regions](/docs/reference/regions/#welcome-message) here and see the list of regions to choose from.
 
@@ -215,7 +215,7 @@ iex(fly-elixir@fdaa:0:1da8:a7b:ac2:cdf6:c422:2)1> Node.list
 
 We have two VMs of our application deployed to the West and East coasts of the North American continent and they are clustered together! Our users will automatically be directed to the server nearest them. That is so cool!
 
-## The Cookie Situation
+## _The Cookie Situation_
 
 Before two Elixir nodes **can** cluster together, they must share a secret cookie. The cookie itself isn't meant to be a super secret encryption key or anything like that, it's designed to let you create multiple sets of small clusters on the same network that don't all just connect together. Different cookies means different clusters. For instance, only the nodes that all use the cookie "abc" will connect together.
 
@@ -229,11 +229,7 @@ When you build a `mix release`, it generates a long random string for the cookie
 
 The easiest solution here is to **specify** the value to use for our cookie. One that we will know outside of the build and that won't keep changing on us.
 
-## Making the Changes
-
-Let's walk through making the changes on the [hello_elixir project](https://github.com/fly-apps/hello_elixir-dockerfile) used in the [Elixir guide](/docs/elixir/getting-started) to see what's involved.
-
-### Release Section
+## _Making the Cookie Changes_
 
 In your `mix.exs` file, you can add a `releases/0` function that returns the configuration.
 
