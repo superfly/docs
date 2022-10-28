@@ -1,25 +1,17 @@
 <dl class="leading-5">
   <dt class="flex sm:justify-center">
-  <% nav_link "/docs/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors pb-1 -ml-0.5 mb-1" do %>
-      Docs Home
+  <% nav_link "/docs/getting-started", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors pb-1 -ml-0.5 mb-1" do %>
+      Getting Started
     <% end %>
   </dt>
   <dd class="mb-8 border-l border-gray-100">
     <%= nav_link "Speedrun: Deploying an App", href="/docs/speedrun/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Hands-on with Fly", href="/docs/hands-on/start/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Web Launchers", href="/launch/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-  </dd>
-  <dt>
-    <% nav_link "/docs/getting-started/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
-      Getting Started
-    <% end %>
-  </dt>
-  <dd class="mb-8 border-l border-gray-100">
     <%= nav_link "Install Flyctl", href="/docs/getting-started/installing-flyctl/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Log in to Fly", href="/docs/getting-started/log-in-to-fly/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Working with Fly Apps", href="/docs/getting-started/working-with-fly-apps/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Launching a New App", href="/docs/getting-started/launch-app/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-
     <%= nav_link "Troubleshooting Deployments", href="/docs/getting-started/troubleshooting/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
   </dd>
   <dt>
@@ -36,7 +28,23 @@
   </dd>
   <dt>
     <% nav_link "/docs/guides/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
-      Application Guides
+      Database & Storage Guides
+    <% end %>
+  </dt>
+  <dd class="mb-8 border-l border-gray-100">
+    <%= nav_link "Postgres", href="/docs/postgres/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+    <%= nav_link "MySQL", href="/docs/app-guides/mysql-on-fly/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+    <%= nav_link "SQlite & LiteFS", href="/docs/litefs/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+    <%= nav_link "Disk Volumes", href="/docs/reference/volumes", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+    <%= nav_link "Redis", href="/docs/reference/redis/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+    <%= nav_link "EdgeDB", href="/docs/getting-started/edgedb/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+    <%= nav_link "PlanetScale Database", href="/docs/app-guides/planetscale/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+    <%= nav_link "S3 Compatible Object Storage", href="/docs/app-guides/minio", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+  </dd>
+
+  <dt>
+    <% nav_link "/docs/guides/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
+      Other Guides
     <% end %>
   </dt>
   <dd class="mb-8 border-l border-gray-100">
@@ -46,12 +54,9 @@
     <%= nav_link "Build a FaaS", href="/docs/app-guides/functions-with-machines/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Run UDP Services", href="/docs/app-guides/udp-and-tcp/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Elixir Guides", href="/docs/guides/#elixir", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run a MySQL Database", href="/docs/app-guides/mysql-on-fly/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Use a PlanetScale Database", href="/docs/app-guides/planetscale/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run EdgeDB on Fly", href="/docs/getting-started/edgedb/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Use Terraform with Fly machines", href="/docs/app-guides/terraform-iac-getting-started/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Run LiteFS on Fly", href="/docs/litefs/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
   </dd>
+
   <dt>
     <% nav_link "/docs/reference/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
       Fly Reference
@@ -67,17 +72,14 @@
     <%= nav_link "Load Balancing", href="/docs/reference/load-balancing/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Machines", href="/docs/reference/machines/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Metrics", href="/docs/reference/metrics/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Postgres Databases", href="/docs/postgres/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Private Networking", href="/docs/reference/private-networking/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Public Networking", href="/docs/reference/services/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Redis Databases", href="/docs/reference/redis/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Regions", href="/docs/reference/regions/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Runtime Environment", href="/docs/reference/runtime-environment/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Scaling", href="/docs/reference/scaling/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Build Secrets", href="/docs/reference/build-secrets/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Runtime Secrets", href="/docs/reference/secrets/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "TLS Support", href="/docs/reference/tls/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Volumes", href="/docs/reference/volumes/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Monorepo Apps", href="/docs/reference/monorepo/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
   </dd>
   <dt>
