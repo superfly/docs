@@ -3,10 +3,7 @@ title: The Basics
 layout: framework_docs_overview
 toc: false
 order: 2
-redirect_from: /docs/reference/postgres-whats-next/
 ---
-
-Congrats! Your Postgres app is up and running on Fly.io. Now there are a few things you should know before moving forward.
 
 `fly pg create` helped you setup a PostgresSQL database cluster, but you can bring your own; this is an automated Postgres application. This is not a managed database. If Postgres crashes because it ran out of memory or disk space, you'll need to do a little work to get it back.
 
