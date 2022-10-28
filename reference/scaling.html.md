@@ -180,13 +180,9 @@ a592ecf4 318     iad    run     running 1 total, 1 passing 0        1m7s ago
 
 ## Autoscaling
 
-Autoscaling is based on a pool of regions where the application can be run. Using a selected model, the system will then create at least the minimum number of application instances across those regions. The model will then be able to create instances up to the maximum count. The min and max are global parameters for the scaling. There are two scaling modes, Standard and Balanced.
+Autoscaling is a horizontal scaling service based on a global pool of instances where the application can be run. The system will create at least the minimum number of application instances. The autoscaler will then create instances (scale-out) as total [application load](/docs/reference/load-balancing/#load) exceeds the `soft_limit * [instance count]` threshold, up to the `max` count. It will also remove instances (scale-in) when the max application load over a 10-minute window dips below the same threshold, down to the `min` count. The 10-minute scale-in window allows for rapid scale-out with slightly more relaxed scale-in.
 
-* *Standard*: Instances of the application, up to the minimum count, are evenly distributed among the regions in the pool. They are not relocated in response to traffic. New instances are added where there is demand, up to the maximum count.
-
-* *Balanced*: Instances of the application are, at first, evenly distributed among the regions in the pool up to the minimum count. Where traffic is high in a particular region, new instances will be created there and then, when the maximum count of instances has been used, instances will be moved from other regions to that region. This movement of instances is designed to balance the supply of compute power with demand for it.
-
-* *Disabled*: By default, autoscaling is in Disabled mode and count-based scaling is in operation. You can turn autoscaling on by setting the autoscale mode to `standard` or `balanced`
+By default, autoscaling is `Disabled` and manual count-based scaling is in operation.
 
 To determine what the current autoscale settings of an application are, run `fly autoscale show`:
 
@@ -194,52 +190,33 @@ To determine what the current autoscale settings of an application are, run `fly
 fly autoscale show
 ```
 ```output
-     Scale Mode: Standard
+     Autoscaling: Enabled
       Min Count: 1
       Max Count: 10
 ```
 
-This scaling plan sees a standard, even distribution on instances, with a minimum of 1 instance and up to 10 instances that can be created on-demand.
+This app is configured with minimum of 1 instance and up to 10 instances that can be created on-demand.
 
 ### Modifying The Autoscaling Plan
 
-You can switch the plan by calling fly autoscale and then selecting disabled, balanced or standard.
+For example if you want to run at least three instances but no more than ten, you would run:
 
 ```cmd
-fly autoscale standard
-```
-
-The `balanced` and `standard` commands can take parameters that control the model, specifically `max` and `min`.
-
-For example if you want to run at least three instances in a `balanced` model, but no more than ten, you would run:
-
-```cmd
-fly autoscale balanced min=3 max=10
+fly autoscale set min=3 max=10
 ```
 ```out
-     Scale Mode: Balanced
+     Autoscaling: Enabled
       Min Count: 3
       Max Count: 10
 ```
 
-And if you wanted to change that to a standard model with a minimum number of 5 instances, you would run:
+And if you wanted to change that to a minimum number of 5 instances, you would run:
 
 ```cmd
-fly autoscale standard min=5
+fly autoscale set min=5
 ```
 ```out
-     Scale Mode: Standard
-      Min Count: 5
-      Max Count: 10
-```
-
-The autoscale show command will display the rules that currently apply to the app:
-
-```cmd
-fly autoscale show
-```
-```out
-     Scale Mode: Standard
+     Autoscaling: Enabled
       Min Count: 5
       Max Count: 10
 ```
@@ -264,5 +241,5 @@ You can also turn off autoscaling and return to the recommended count-scaling op
 fly autoscale disable
 ```
 ```out
-     Scale Mode: Disabled
+     Autoscaling: Disabled
 ```
