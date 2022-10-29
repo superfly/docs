@@ -1,0 +1,309 @@
+---
+title: Clustering Your Application
+layout: framework_docs
+order: 4
+redirect_from:
+  - /docs/getting-started/elixir/
+  - /docs/app-guides/elixir-static-cookie/
+blog_path: /phoenix-files
+---
+
+Elixir and the BEAM have the incredible ability to be clustered together and
+processes can pass messages seamlessly to each other between nodes. Fly makes
+clustering easy! This extra (and totally optional) portion of the guide walks
+you through clustering your Elixir application.
+
+There are 2 parts to getting clustering quickly setup on Fly.
+
+- Installing and using `libcluster`
+- Scaling our application to multiple VMs
+
+## _Adding `libcluster`_
+
+The widely adopted library [libcluster](https://github.com/bitwalker/libcluster) helps here.
+
+Libcluster supports multiple strategies for finding and connecting with other nodes. The strategy we'll use is `DNSPoll` which was added in version 3.2.2 of `libcluster`, so make sure you're using that version or newer.
+
+After installing `libcluster`, add it to the application like this:
+
+```elixir
+defmodule HelloElixir.Application do
+  use Application
+
+  def start(_type, _args) do
+    topologies = Application.get_env(:libcluster, :topologies) || []
+
+    children = [
+      # ...
+      # setup for clustering
+      {Cluster.Supervisor, [topologies, [name: HelloElixir.ClusterSupervisor]]}
+    ]
+
+    # ...
+  end
+
+  # ...
+end
+```
+
+Our next step is to add the `topologies` configuration to the file `config/runtime.exs`.
+
+```elixir
+  app_name =
+    System.get_env("FLY_APP_NAME") ||
+      raise "FLY_APP_NAME not available"
+
+  config :libcluster,
+    debug: true,
+    topologies: [
+      fly6pn: [
+        strategy: Cluster.Strategy.DNSPoll,
+        config: [
+          polling_interval: 5_000,
+          query: "#{app_name}.internal",
+          node_basename: app_name
+        ]
+      ]
+    ]
+```
+
+**REMEMBER:** Deploy your updated app so the clustering code is available, with `fly deploy`.
+
+This configures `libcluster` to use the `DNSPoll` strategy and look for other deployed apps using the same `$FLY_APP_NAME` on the `.internal` private network.
+
+This assumes that your `rel/env.sh.eex` file is configured to name your Elixir node using the `$FLY_APP_NAME`. We did this earlier in the "Naming Your Elixir Node" section.
+
+Before this app can be clustered, we need more than one VM. We'll do that next!
+
+## _Running Multiple VMs_
+
+There are two ways to run multiple VMs.
+
+1. Scale our application to have multiple VMs in one region.
+2. Add a VM to another region (multiple regions).
+
+Both approaches are valid and our Elixir application doesn't change at all for the approach you choose!
+
+Let's first start with a baseline of our single deployment.
+
+```cmd
+fly status
+```
+```output
+...
+VMs
+ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
+f9014bf7 26      sea    run     running 1 total, 1 passing 0        1h8m ago
+```
+
+### Scaling in a Single Region
+
+Let's scale up to 2 VMs in our current region.
+
+```cmd
+fly scale count 2
+```
+```output
+Count changed to 2
+```
+
+Checking on the status we can see what happened.
+
+```cmd
+fly status
+```
+```output
+...
+VMs
+ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
+eb4119d3 27      sea    run     running 1 total, 1 passing 0        39s ago
+f9014bf7 27      sea    run     running 1 total, 1 passing 0        1h13m ago
+```
+
+We now have two VMs in the same region! That was easy.
+
+Let's make sure they are clustered together. We can check the logs:
+
+```cmd
+fly logs
+```
+```output
+...
+app[eb4119d3] sea [info] 21:50:21.924 [info] [libcluster:fly6pn] connected to :"fly-elixir@fdaa:0:1da8:a7b:ac2:f901:4bf7:2"
+...
+```
+
+But that's not as rewarding as seeing it from inside a node. From an IEx shell, we can ask the node we're connected to, what other nodes it can see.
+
+```
+fly ssh console
+/app/bin/hello_elixir remote
+```
+
+```elixir
+iex(fly-elixir@fdaa:0:1da8:a7b:ac2:f901:4bf7:2)1> Node.list
+[:"fly-elixir@fdaa:0:1da8:a7b:ac4:eb41:19d3:2"]
+```
+
+I included the IEx prompt because it shows the IP address of the node I'm connected to. Then getting the `Node.list` returns the other node. Our two VMs are connected and clustered!
+
+### Scaling to Multiple Regions
+
+Fly makes it super easy to run VMs of your applications physically closer to your users. Through the magic of DNS, users are directed to the nearest region where your application is located. You can read about [regions](/docs/reference/regions/#welcome-message) here and see the list of regions to choose from.
+
+Starting back from our baseline of a single VM running in `sea` which is Seattle, Washington (US), I'll add the region `ewr` which is Parsippany, NJ (US). This puts an VM on both coasts of the US.
+
+```cmd
+fly regions add ewr
+```
+```output
+Region Pool:
+ewr
+sea
+Backup Region:
+iad
+lax
+sjc
+vin
+```
+
+Looking at the status right now shows that we're only in 1 region because our count is set to 1.
+
+```cmd
+fly status
+```
+```output
+...
+VMs
+ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
+cdf6c422 29      sea    run     running 1 total, 1 passing 0        58s ago
+```
+
+Let's add a 2nd VM and see it deploy to `ewr`.
+
+```cmd
+fly scale count 2
+```
+```output
+Count changed to 2
+```
+
+Now our status shows we have two VMs spread across 2 regions!
+
+```cmd
+fly status
+```
+```output
+...
+VMs
+ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
+0a8e6666 30      ewr    run     running 1 total, 1 passing 0        16s ago
+cdf6c422 30      sea    run     running 1 total, 1 passing 0        6m47s ago
+```
+
+Let's ensure they are clustered together.
+
+```
+fly ssh console
+/app/bin/hello_elixir remote
+```
+
+```elixir
+iex(fly-elixir@fdaa:0:1da8:a7b:ac2:cdf6:c422:2)1> Node.list
+[:"fly-elixir@fdaa:0:1da8:a7b:ab2:a8e:6666:2"]
+```
+
+We have two VMs of our application deployed to the West and East coasts of the North American continent and they are clustered together! Our users will automatically be directed to the server nearest them. That is so cool!
+
+## _The Cookie Situation_
+
+Before two Elixir nodes **can** cluster together, they must share a secret cookie. The cookie itself isn't meant to be a super secret encryption key or anything like that, it's designed to let you create multiple sets of small clusters on the same network that don't all just connect together. Different cookies means different clusters. For instance, only the nodes that all use the cookie "abc" will connect together.
+
+For us, this means that in order for `my_remote` node to connect to the cluster on Fly, I need to share the same cookie value used in production.
+
+### The Cookie Problem
+
+When you build a `mix release`, it generates a long random string for the cookie value. When you **re-run** the `mix release` command, it keeps the same cookie value. That is, when you don't run it in Docker. The Dockerfile we're using is building a fresh release every time we run it. That's kind of the point of a Docker container. So **our cookie value is being randomly generated every time we deploy**. This means after every deploy, I would have to figure out what the new cookie value is so my local node can use it.
+
+### The Cookie Solution
+
+The easiest solution here is to **specify** the value to use for our cookie. One that we will know outside of the build and that won't keep changing on us.
+
+## _Making the Cookie Changes_
+
+In your `mix.exs` file, you can add a `releases/0` function that returns the configuration.
+
+This is following the [mix release](https://hexdocs.pm/mix/Mix.Tasks.Release.html) docs, these are the changes we'll make:
+
+
+```elixir
+defmodule HelloElixir.MixProject do
+  use Mix.Project
+
+  def project do
+    [
+      app: :hello_elixir,
+      # ...
+      releases: releases()
+    ]
+  end
+
+  # ...
+
+  defp releases() do
+    [
+      hello_elixir: [
+        include_executables_for: [:unix],
+        cookie: "YOUR-COOKIE-VALUE"
+      ]
+    ]
+  end
+end
+```
+
+The `releases` function returns a keyword list. To clarify, the `:hello_elixir` atom isn't actually important. It could be named `demo` or `full_app`. The name becomes important when you are defining **multiple** release configurations. However, that's beyond the scope of this guide. When only defining a single configuration, it uses that regardless of the name. So for simplicity, I'll just name it the same as the application.
+
+
+For the `:cookie` value, you can generate a unique value using the following Elixir command:
+
+```elixir
+Base.url_encode64(:crypto.strong_rand_bytes(40))
+```
+
+
+Once your pre-defined cookie value is set, deploy your updated app.
+
+```cmd
+fly deploy
+```
+
+If desired, you can verify that the cookie value was set correctly in production, here's how:
+
+```
+$ fly ssh console
+Connecting to icy-leaf-7381.internal... complete
+
+/ #  cat app/releases/COOKIE
+YOUR-COOKIE-VALUE
+```
+
+With a known and unchanging cookie value deployed in our application, we are ready for the next step!
+### Umbrella Note
+
+If you have an umbrella project, you may want to add an option called `:applications`. In it, you specify the name of all "entrypoint" applications. For instance, if I had two apps in my umbrella: `web` and `core` where `web` is a Phoenix application, that is the entrypoint. My configuration would look like this:
+
+```elixir
+  defp releases() do
+    [
+      hello_elixir: [
+        include_executables_for: [:unix],
+        applications: [web: :permanent],
+        cookie: "YOUR-COOKIE-VALUE"
+      ]
+    ]
+  end
+```
+
+This instructs which applications should be started and in which order for this release configuration. In my application `web` has a dependency on `core`, so specifying `web` is all I need to do.
+
+See the [documentation here](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-customization) for more details and what other options are available.
