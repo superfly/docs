@@ -6,11 +6,9 @@ flyctl autoscale [command] [flags]
 ~~~
 
 ## Available Commands
-* [balanced](/docs/flyctl/autoscale-balanced/)	 - Configure a traffic balanced app with params (min=int max=int)
 * [disable](/docs/flyctl/autoscale-disable/)	 - Disable autoscaling
 * [set](/docs/flyctl/autoscale-set/)	 - Set current models autoscaling parameters
 * [show](/docs/flyctl/autoscale-show/)	 - Show current autoscaling configuration
-* [standard](/docs/flyctl/autoscale-standard/)	 - Configure a standard balanced app with params (min=int max=int)
 
 ## Options
 
