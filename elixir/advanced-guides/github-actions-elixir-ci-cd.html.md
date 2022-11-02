@@ -189,8 +189,6 @@ how to clear them. In our project, go to Actions > (Sidebar) Management >
 Caches. This is the list of caches saved for the project. We can use our naming
 format to identify which cache file is for what.
 
-![Annotated screenshot of Github cache management interface](github-actions-cache-management.png?centered&card&border)
-
 ### Additional Resources
 
 - [Documentation: Caching dependencies to speed up workflows](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)
