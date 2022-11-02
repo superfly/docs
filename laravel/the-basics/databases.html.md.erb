@@ -6,57 +6,56 @@ order: 5
 ---
 No application is complete without a data store!
 
-In this guide, you'll find configuration on different database applications and different approaches to connect them with your Laravel application in Fly.io.
+In this guide, you'll find references on how to connect your Laravel application to Databases running as Fly Apps or as managed solutions from services that suite global distribution of data.
 
-You'll see here references on how you can set up a database instance through Fly.io along with other approaches that suit global distribution of data.
 <p></p>
 
-## _[Fly .internal Address](/docs/reference/private-networking/#fly-internal-addresses)_
-
-In this guide, you'll be connecting your Laravel application with various database applications running in Fly.io. A very important concept in connecting Fly.io applications with each other is [Private Networking](/docs/reference/private-networking).
-
-<aside class="callout">
-How do you connect your Laravel application running in Fly.io with a database application running in Fly.io?
 </aside> 
 
-<b>The Answer: Connect using the database application's [Fly .internal Address](/docs/reference/private-networking/#fly-internal-addresses):</b>
-<ol>
-<li>Get the database application's app-name from its `fly.toml`</li>
-<li>Generate the pattern for your database application's  Fly .internal Address: `"<app-name>.internal"`</li>
-<li>Configure your Laravel application's `fly.toml` to connect with the Fly .internal Address retrieved above</li>
-</ol>
+## _Database Migrations_
+
+<aside class="callout">
+Make sure you have a database connection with your Laravel Fly App. You can check out our various connection guides on [`MySQL`](/docs/laravel/the-basics/databases/#mysql-on-planetscale), [`Postgres`](/docs/laravel/the-basics/databases/#postgres-in-fly-io), [`Redis`](/docs/laravel/the-basics/databases/#redis-in-fly-io), and [`SQLite`](/docs/laravel/the-basics/databases/#sqlite-in-a-laravel-fly-app) below. 
+<br><br>
+Once you're set up with a database connection, there are several ways to run the Laravel classic: "`php artisan migrate`" command at Fly.io:
+</aside>
+#1 Through the `fly.toml` [deploy] configuration ( which will run in every deployment )
+
+```toml
+[deploy]
+  release_command = "php /var/www/html/artisan migrate --force"
+```
+
+#2 Through a [Start Script](/docs/laravel/the-basics/customizing-deployments/#startup-scripts) in `.fly/scripts`:
+```cmd
+echo "/usr/bin/php /var/www/html/artisan migrate --force" > ".fly/scripts/db.sh"
+```
+
+#3 Through `fly ssh console` shortcut:
+
+```cmd
+fly ssh console -C "php /var/www/html/artisan migrate --force"
+```
+
+#4 Through `fly ssh console`:
+
+```cmd
+fly ssh console
+cd /var/www/html/
+php artisan migrate --force
+```
+
+
 
 
 ## _MySQL in Fly.io_
-You can start with a relational-database classic: [MySQL](https://www.mysql.com/). You can even run it as a Fly App! 
-
-In this section, you'll:
-  1. Get a reference on how to spin up a MySQL Fly App 
+You can start with a relational-database classic: [MySQL](https://www.mysql.com/). Follow our guide [here](/docs/app-guides/mysql-on-fly/) and run MySQL as a [Fly App](/docs/app-guides/mysql-on-fly/)! Afterwards you're good to connect:
   2. Connect to your MySQL Fly App from a Laravel Fly App
   3. Connect to your MySQL Fly App from a local environment
 
-### _Setup a MySQL Fly App_
-Follow this [MySQL guide](/docs/app-guides/mysql-on-fly/) to get up and running with your MySQL application in Fly.io.
-
-
 ### _Connect from a Laravel Fly App_
 
-1) First, you'll have to find out your MySQL application's Fly .internal Address: 
-
-<b>Get MySQL application's Fly .internal Address</b>
-
-Open your MySQL application's `fly.toml` as a reference, and from there get its [Fly .internal Address](/docs/laravel/the-basics/databases/#fly-internal-address). 
-As an example, given a `fly.toml` configuration below, your MySQL Fly .internal Address should be `"mysql-app-name.internal"`:
-
-```toml
-app = "mysql-app-name"
-
-[env]
-  MYSQL_DATABASE = "<database-name>"
-  MYSQL_USER =  "<database-user>"
-```
-
-2) Once you have your MySQL Fly .internal Address, go ahead and revise the `[env]` configuration in your Laravel application's `fly.toml` file to connect using the address:
+1) Revise the `[env]` configuration in your Laravel application's `fly.toml` file to connect with your MySQL Fly App's [Fly .internal address](/docs/reference/private-networking/#fly-internal-addresses):
 
 ```toml
 [env]
@@ -66,13 +65,13 @@ app = "mysql-app-name"
   DB_DATABASE= "<MYSQL_DATABASE>"
 ```
 
-3) Then, set up the database username and password through [Fly Secrets](/docs/flyctl/secrets/):
+2) Then, set up your Laravel Fly App's database username and password through [Fly Secrets](/docs/flyctl/secrets/):
 
 ```cmd
 fly secrets set DB_USERNAME=<MYSQL_USER> DB_PASSWORD=<MYSQL_PASSWORD>
 ```
 
-4) Finally deploy your changes with
+3) Finally deploy your Laravel Fly App changes with:
 
 ```cmd
 fly deploy 
@@ -86,7 +85,7 @@ The MySQL instance you spun up in Fly.io &quot;[is closed to the public internet
 
 <b>In this guide you'll tunnel to your MySQL instance through the use of `flyctl proxy`</b>
 
-1) First, open your MySQL application's `fly.toml` and take note of the following:
+1) Open your MySQL application's `fly.toml` and take note of the following:
 
 ```toml
 app = "<mysql-app-name>"
@@ -117,30 +116,15 @@ DB_PASSWORD=<MYSQL_PASSWORD>
 
 ## _MySQL on PlanetScale_
 
-PlanetScale is a serverless, MySQL database-compatible platform built for horizontally scaling data.
+For a basic PlanetScale and Fly.io connection, follow [our guide here](/docs/app-guides/planetscale/).
+If you're up for a multi-region level up, check out our [Multi-Region Laravel with PlanetScale](https://fly.io/laravel-bytes/multi-region-laravel-with-planetscale/) article.
 
-In this setup, you'll find a basic setup of PlanetScale and Fly.io connection. However, for a multi-region level up, checkout our [Multi-Region Laravel with PlanetScale](https://fly.io/laravel-bytes/multi-region-laravel-with-planetscale/) article.
+Once you're setup with PlanetScale, connect your Laravel application in Fly.io through the following steps below:
 
-Before you can connect your Laravel [application in Fly.io to a PlanetScale instance](/docs/app-guides/planetscale/), you'll have  to tread several steps first:
+1. Get Laravel connection information from PlanetScale instance
+2. Connect from Laravel application in Fly.io
 
-1. Setup a PlanetScale database instance
-1. Get connection information from PlanetScale instance
-1. Connect from Laravel application in Fly.io
-
-
-
-### _Setup a PlanetScale database instance_
-
-You can check out their quick-start guide [here](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide), or follow along:
-<ol>
-<li>First make sure you have an account, and [login](https://auth.planetscale.com/sign-in?return_to=%2F)</li>
-<li>You'll be redirected to your organization dashboard, where you'll be able to find a `"create a database"` link.</li>
-<li>Click on the create link, and hopefully you'll get  a prompt to add in your preferred database name and region</li>
-</ol>
-
-![PlanetScale initialize database dialog](/docs/images/planetscale_laravel_new_db_dialog.png)
-
-### _Get connection information from PlanetScale instance_
+### _Get Laravel connection from PlanetScale instance_
 
 Once initialized, your database dashboard should have metrics and options like so:
 
@@ -166,7 +150,7 @@ Take note of the connection string provided and let's move on!
   DB_DATABASE= "<DB_DATABASE>"
   MYSQL_ATTR_SSL_CA="/etc/ssl/certs/ca-certificates.crt"
 ```
-[Take note that the value for MYSQL_ATTR_SSL_CA vary depending on the Docker container used. For the default docker container used by Fly.io, the above value is the path]
+Take note that the value for `MYSQL_ATTR_SSL_CA` vary depending on the Docker container used. For the default docker container used by Fly.io, the above value is the path
 
 2) Next, set up the database username and password through [flyctl secrets](/docs/flyctl/secrets/):
 
@@ -181,52 +165,50 @@ fly deploy
 ```
 
 ## _Postgres in Fly.io_
-We have a <i>[whole section](/docs/postgres/)</i> dedicated for [Postgres](https://www.postgresql.org/), we even have a `flyctl` integration to simplify the creation and management of your Postgres Fly Apps!
+We have a <i>[whole section](/docs/postgres/)</i> dedicated for [Postgres](https://www.postgresql.org/), we even have a `flyctl` integration to simplify both creation and interaction with your Postgres Fly Apps! 
 
-In this section you'll get to quickly:
-1. Setup a Postgres Fly App
-2. Connect From a Laravel Fly App by Attachment
-3. Connect From a Laravel Fly App Manually
-4. Connect From a Local Environment
-5. Test Connection 
+Make sure you have a [Postgres Fly App running](/docs/postgres/getting-started/), afterwards you can connect it with your Laravel Fly App:
 
-### _Setup a Postgres Fly App_
-1) You can easily setup your Postgres in Fly.io by utilizing our `flyctl postgres create` command:
+1. Connect From a Laravel Fly App by Attachment
+2. Connect From a Laravel Fly App Manually
+3. Connect From a Local Environment
+4. Test Connection 
 
-```cmd
-# Enter a new directory
-mkdir fly-pg
-cd fly-pg
 
-# Create your postgres
-fly postgres create
+### _Connect From a Laravel Fly App by Attachment_
+1) You can [Attach your Laravel Fly App to your Postgres Fly App](/docs/postgres/the-basics/connecting/#attaching-to-a-fly-app):
+<ul>
+<li>This should generate a database named after `<laravel-app-name>` in your Postgres Fly App</li> 
+<li>This should generate an env variable `DATABASE_URL` containing a connection string in you Laravel fly app</li>
+</ul>
+
+2) Make sure the `fly.toml` of your Laravel Fly App uses postgres:
+
+```toml
+[env]
+  APP_ENV = "production"
+  DB_CONNECTION = "pgsql"
 ```
+Postgres Connection would now be available to your Laravel Fly App using the auto generated `DATABSE_URL` from the attachment process.
 
-<small>Running the command should give you several prompts, one of which is a prompt for your resource allocation. Be sure to check out the appropriate [configuration plan](/docs/reference/postgres/#about-free-fly-postgres) based on your usecase.</small>
+### _Connect From a Laravel Fly App Manually_
 
+If you decide not to use the `flyctl postgres attach` command above, and would want to connect to your Laravel Fly App in a manual, <i>grueling</i> step by step procedure, I hear you! You'll have to:
 
-2) Soon after you should receive the auto-generated configuration for your Redis Fly App. Make sure to <b>keep them somewhere safe</b>, there will be no place to find them afterwards!
-```output
-Postgres cluster ktan-pg created
-  Username:    postgres
-  Password:    <redacted>
-  Hostname:    ktan-pg.internal
-  Proxy Port:  5432
-  Postgres Port: 5433
-```
+1. Manually set up a Database in your Postgres Fly App
+2. Manually connect your Postgres Database with your Laravel Fly App
 
-### _Interacting with your Postgres Fly App_
-Now that you have your Postgres Fly App running, how do you interact with it? Notice how there wasn't any `fly.toml` configuration file generated during the whole setup process above.
-
-Fear not! You can interact with your Postgres Fly App using `flyctl postgres connect`. 
+#### _Manually set up a Database in your Postgres Fly App_
+Manually connecting with your Postgres Fly App also means manually creating your Postgres Database. 
+You can interact with your Postgres Fly App using `flyctl postgres connect`. 
 
 1) Connect with your Postgres Fly App using its App name. 
 
 ```cmd
-flyctl postgres connect -a ktan-pg
+flyctl postgres connect -a <postgres-fly-app>
 ```
 ```output
-Connecting to ktan-pg.internal... complete
+Connecting to <postgres-fly-app>.internal... complete
 psql (14.4 (Debian 14.4-1.pgdg110+1))
 Type "help" for help.
 
@@ -261,36 +243,11 @@ There are tons of ways to interact with your Postgres Fly App! If you want to ge
 flyctl postgres db list -a <postgres-fly-app-name>
 ```
 
-Once you have your running and <i>[configured](/docs/laravel/the-basics/databases/#interacting-with-your-postgres-fly-app)</i> Postgres Fly App, it's time to connect with your Laravel Fly App.
 
-### _Connect From a Laravel Fly App by Attachment_
-You can [Attach your Laravel Fly App to your Postgres Fly App](https://github.com/superfly/docs/blob/main/reference/postgres.html.md#attaching-an-app-to-a-postgres-app):
+#### _Manually connect_ 
+Once you have your running and <i>[database configured](/docs/laravel/the-basics/databases/#manually-set-up-a-database-in-your-postgres-fly-app)</i> Postgres Fly App, it's time to connect with your Laravel Fly App:
 
-1) Run the attachment command below:
-```cmd 
-flyctl postgres attach --app <laravel-app-name> <postgres-app-name>
-```
-<ul>
-<li>This should generate a database named after <laravel-app-name> in your Postgres Fly App</li> 
-<li>This should generate an env variable `DATABASE_URL` containing a connection string in you Laravel fly app</li>
-</ul>
-
-2) Make sure the `fly.toml` of your Laravel Fly App uses postgres:
-
-```toml
-[env]
-  APP_ENV = "production"
-  DB_CONNECTION = "pgsql"
-```
-Postgres Connection would now be available to your Laravel Fly App using the auto generated `DATABSE_URL` from the attachment process.
-
-### _Connect From a Laravel Fly App Manually_
-
-If you decide not to use the `flyctl postgres attach` command above, and would want to connect to your Laravel Fly App in a manual, <i>grueling</i> step by step procedure, I hear you! 
-
-You can follow along below:
-
-1) Revise your Laravel Fly App's `fly.toml` file to connect with the `Hostname`( your Redis FLy App's .internal Address ) from the configuration output, and the `DB_Name` configured [above](/docs/laravel/the-basics/databases/#interacting-with-your-postgres-fly-app):
+1) Revise your Laravel Fly App's `fly.toml` file to connect with the `Hostname`( your Postgres Fly App's .internal Address ) from the configuration output, and the `DB_Name` configured [above](/docs/laravel/the-basics/databases/#interacting-with-your-postgres-fly-app):
 ```toml
 [env]
   APP_ENV = "production"
@@ -311,12 +268,9 @@ fly deploy
 ```
 
 ### _Connect From a Local Environment_
-1) First tunnel to your Postgres Fly App using its app name through the `fly proxy` command
-```cmd
-fly proxy 5432 -a ktan-pg
-```
+1) You can check out various ways to connect with your Postgres Fly App from [here](/docs/postgres/the-basics/connecting/#connecting-to-fly-postgres-from-outside-fly).
 
-2) Next setup your Laravel .env file to connect with the Postgres database:
+2) Once you're locally connected to your Postgres Fly App, setup your Laravel .env file to connect with the Postgres database:
 ```.env
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
@@ -375,10 +329,10 @@ You are now connected to database "<database_name_created>" as user "<user>".
 1) First create a new directory and initialize it with `fly launch`, using [Fly.io's Redis Image](https://hub.docker.com/r/flyio/redis/tags) for the build:
 
 ```cmd
-mkdir ktan-fly-redis
-cd ktan-fly-redis
+mkdir fly-redis
+cd fly-redis
 
-fly launch --image flyio/redis:6.2.6 --name ktan-fly-redis --region ams --no-deploy
+fly launch --image flyio/redis:6.2.6 --name fly-redis --region ams --no-deploy
 ```
 <ul>
 <li>Pull the <b>flyio/redis:6.2.6</b> image from the docker repository through the `--image` argument.</li>
@@ -400,7 +354,7 @@ fly volumes create redis_server --size 1
 3) Then, attach your volume to your Redis Fly App by revising its `fly.toml` to include `[[mounts]]`:
 
 ```toml
-app = "ktan-fly-redis"
+app = "fly-redis"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
@@ -442,10 +396,10 @@ If you would like to use [Redis' official docker image](https://hub.docker.com/_
 1) Follow the steps [above](/docs/laravel/the-basics/databases#setup-using-the-fly-io-redis-docker-image), with a revision to the value passed for `--image`
 
 ```cmd
-mkdir ktan-off-redis
-cd ktan-off-redis
+mkdir off-redis
+cd off-redis
 
-fly launch --image redis --name ktan-off-redis --region ams --no-deploy
+fly launch --image redis --name off-redis --region ams --no-deploy
 ```
 <ul>
 <li>Pull the <b>redis</b> image from the docker repository through the `--image` argument.</li>
@@ -505,7 +459,7 @@ The simplest way to connect your local Laravel application to a Redis Fly App is
 1) Open your Redis Fly App's local directory
 
 ```cmd
-cd ktan-off-redis
+cd off-redis
 ```
 
 2) Then run the `flyctl proxy` for port 6379 or whichever REDIS_PORT you have configured:
@@ -536,27 +490,7 @@ That's it! Your local Laravel application should now be connected with your Redi
 
 
 ## _Upstash Managed Redis Fly App_
-Want a fully-managed Redis Fly App? Try [Upstash Redis](https://upstash.com/)! To set up, you can follow our-in-depth guide [here](/docs/reference/redis/) or follow along below:
-
-
-### _Setup Using Flyctl_
-1) You can create an Upstash Redis directly through `flyctl`:
-```cmd
-flyctl redis create
-```
-
-<aside class="callout">
-  In case you receive an error 
-  
-  <b>"Error input:3: createAddOn You may only provision 1 Free plan per organization"</b> 
-
-
-  This is a warning from Upstash. You are currently in their free tier and can only provision 1 free Redis database.
-
-  You can upgrade your plan using `flyctl redis update`, or opt to delete the existing database if you so wish with `flyctl redis delete <db-name>`.
-
-  Find out more [here](/docs/reference/redis)
-</aside>
+Want a fully-managed Redis Fly App? Try [Upstash Redis](https://upstash.com/)! To set up, you can follow our-in-depth guide [here](/docs/reference/redis/) 
 
 Once you've configured the necesary details through the flyctl prompts, and the app deployment completes, you should get a summary of the Redis cluster you've just deployed, like so:
 ```output
@@ -643,7 +577,7 @@ fly volumes create storage_vol --region ams --size 20 #GB
 
 <%= partial "docs/laravel/partials/volume_storage_warning" %>
 
-3) To fix the little storage-content-erasure issue, please go ahead and make a copy of your storage folder in a "backup" folder. You can name this directory "storage_" if you want.
+3) To fix the little storage-content-erasure issue, please go ahead and make a copy of your storage folder in a "backup" folder. You can name this directory "storage_".
 
 ```cmd
 cp -r storage storage_
@@ -693,32 +627,3 @@ A simple php artisan migrate should let you know if all is well:
 fly ssh console -C "php /var/www/html/artisan migrate --force"
 ```
 
-## _Database Migrations_
-<aside class="callout">
-There are several ways to run the Laravel classic: "php artisan migrate" command at Fly.io:
-</aside>
-#1 Through the `fly.toml` [deploy] configuration ( which will run in every deployment )
-
-```toml
-[deploy]
-  release_command = "php /var/www/html/artisan migrate --force"
-```
-
-#2 Through a [Start Script](/docs/laravel/the-basics/customizing-deployments/#startup-scripts) in `.fly/scripts`:
-```cmd
-echo "/usr/bin/php /var/www/html/artisan migrate --force" > ".fly/scripts/db.sh"
-```
-
-#3 Through `fly ssh console` shortcut:
-
-```cmd
-fly ssh console -C "php /var/www/html/artisan migrate --force"
-```
-
-#4 Through `fly ssh console`:
-
-```cmd
-fly ssh console
-cd /var/www/html/
-php artisan migrate --force
-```
