@@ -1,7 +1,7 @@
 ---
 title: Connecting Observer to Your App in Production
 layout: framework_docs
-order: 2
+order: 5
 objective: Guide shows how to connect a locally running Observer instance to your application running on Fly.
 redirect_from: /docs/app-guides/elixir-observer-connection-to-your-app/
 author: mark
