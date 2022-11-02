@@ -1,5 +1,5 @@
 ---
-title: Github Actions Elixir CI/CD
+title: Github Actions for Elixir CI/CD
 layout: framework_docs
 order: 1
 objective: Setup Github CI/CD for your Elixir project.
