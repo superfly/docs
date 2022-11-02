@@ -187,7 +187,7 @@ team.
 If our caches ever cause a problem, and sometimes they can, it's good to know
 how to clear them. In our project, go to Actions > (Sidebar) Management >
 Caches. This is the list of caches saved for the project. We can use our naming
-to identify which cache file is for what.
+format to identify which cache file is for what.
 
 ![Annotated screenshot of Github cache management interface](github-actions-cache-management.png?centered&card&border)
 
