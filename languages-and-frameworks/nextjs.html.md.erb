@@ -16,6 +16,18 @@ If you just want to see how Fly deployment works, follow these steps.
 
 <%= partial "partials/flyctl" %>
 
+For your NextJS app to properly boot, it needs to be listening on the same port as `internal_port` in your `fly.toml`, port `8080`. In `package.json`, edit the `start` script:
+
+```diff
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+-   "start": "next start",
++   "start": "next start --port 8080",
+    "lint": "next lint"
+  },
+```
+
 Now let's launch your NextJS app.
 
 <%= partial "partials/launch", locals: { detected: "NextJS", app_name: app_name } %>
@@ -26,7 +38,7 @@ Now let's launch your NextJS app.
 
 If you're an NextJS user you might know that it supports [exposing environment variables to the browser](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser) using variables with name starting with `NEXT_PUBLIC_`.
 
-For our build system to understand that you need to tweak two sections we generate for you, `fly.toml` and our `Dockerfile`. 
+For our build system to understand that you need to tweak two sections we generate for you, `fly.toml` and our `Dockerfile`.
 
 Search for `[build.args]` on your `fly.toml` and add the variables you need there.
 
