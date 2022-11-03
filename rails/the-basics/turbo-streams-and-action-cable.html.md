@@ -57,32 +57,11 @@ and the instance is deployed. Now onto the implementation:
 
 ## Adding Turbo Streams to your Application
 
-There actually are five separate steps needed to make this work. Fortunately all but
-one require only a single line of code (or in one case, a single command). The third
-step actually requires two lines of code.
+There are very few steps to make this work, writing very few lines of code
 
-Start by generating a channel:
+Let's start with the turbo_stream_for helper, which under the hood uses Turbo::StreamsChannel.
 
-```cmd
-bin/rails generate channel names
-```
-
-Next, name the stream by modifying `app/channels/names_channel.rb`:
-
-```diff
-  class NamesChannel < ApplicationCable::Channel
-    def subscribed
--      # stream_from "some_channel"
-+      stream_from "names"
-    end
-
-    def unsubscribed
-      # Any cleanup needed when channel is unsubscribed
-    end
-  end
-```
-
-Then modify `app/views/names/index.html.erb` to stream from that channel:
+Modify `app/views/names/index.html.erb` to stream from "names":
 
 ```diff
   <p style="color: green"><%= notice %></p>
