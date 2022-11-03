@@ -27,7 +27,7 @@ The VMs themselves run under `firecracker`, Amazon&#39;s Rust-based
 hypervisor (and the engine behind Lambda and Fargate). Our hardware!
 Amazon&#39;s hypervisor code.
 
-Inside the VM, our code gets control again: we own the `init`that
+Inside the VM, our code gets control again: we own the `init` that
 spins things up in the VM. `init` is Rust. More and more of our fun VM
 tricks are features of our `init`.
 
