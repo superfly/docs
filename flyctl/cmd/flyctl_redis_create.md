@@ -12,7 +12,7 @@ flyctl redis create [flags]
       --enable-eviction    Evict objects when memory is full
   -h, --help               help for create
   -n, --name string        The name of your Redis database
-      --no-replicas        No replica regions
+      --no-replicas        Don't prompt for selecting replica regions
   -o, --org string         The target Fly organization
       --plan string        Upstash Redis plan
   -r, --region string      The target region (see 'flyctl platform regions')
