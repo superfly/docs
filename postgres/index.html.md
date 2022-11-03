@@ -49,7 +49,7 @@ Deploying a Fly Postgres database means you may need to manage the following:
 - **Developing a database backup & restoration plan** - Fly's self-managed Postgres ships with a basic daily volume snapshot tool that keeps snapshots around for 7 days. It does not manage off-site backups, etc.
 - **Monitoring & alerts** - Fly.io collects and exposes relevant prometheus metrics, but you'll have to configure your own monitoring and alerts to keep tabs on the performance and resource utilization of your database instances.
 - **Recovering from outages & fail-overs** - If the volume in your database fills up, a replica fails, etc. you'll have to do a little bit of work to bring your database back online.
-- **Advanced replication & high-availibility deployments** - If your application demands it, you can [customize Fly's open source Postgres HA templates](https://github.com/fly-apps/postgres-ha) to deploy Postgres clusters in pretty much any configuration, like a [Globally Distributed Postgres](https://fly.io/blog/globally-distributed-postgres/) cluster.
+- **Advanced cluster customizations** - If your application demands it, you can [fork and maintain your own branch of Fly's open source Postgres HA templates](https://github.com/fly-apps/postgres-ha) to deploy Postgres clusters in pretty much any configuration, like a [Globally Distributed Postgres](https://fly.io/blog/globally-distributed-postgres/) cluster.
 
 ## Fully-managed Postgres
 
