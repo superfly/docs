@@ -7,7 +7,7 @@ flyctl autoscale [command] [flags]
 
 ## Available Commands
 * [disable](/docs/flyctl/autoscale-disable/)	 - Disable autoscaling
-* [set](/docs/flyctl/autoscale-set/)	 - Set current models autoscaling parameters
+* [set](/docs/flyctl/autoscale-set/)	 - Set app autoscaling parameters
 * [show](/docs/flyctl/autoscale-show/)	 - Show current autoscaling configuration
 
 ## Options
