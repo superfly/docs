@@ -12,8 +12,6 @@ date: 2022-11-02
 You want the benefits of modern CI/CD for your Elixir projects? You're in the
 right place!
 
-Disclaimer: It should go without saying, but these examples use [Github Actions](https://docs.github.com/en/actions) and assume the project's code is hosted on [Github](https://github.com/).
-
 ## Continuous Integration (CI)
 
 Continuous integration is a software development practice where developers
@@ -136,7 +134,7 @@ jobs:
       run: mix test
 ```
 
-### When the Workflow Runs
+### When the Workflow Runs...
 
 When code is pushed to the `main` branch, this workflow is run. This happens
 either from directly pushing to the `main` branch or after merging a PR into the
@@ -209,6 +207,5 @@ users even being aware of the process.
 
 We can easily auto-deploy our Elixir applications on Fly. There is nothing
 specific to Elixir about this process, so please refer to this guide for the details.
-
 
 [Continuous Deployment with Fly and GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/)
