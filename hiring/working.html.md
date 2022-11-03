@@ -24,6 +24,15 @@ We have team members in Europe, Rwanda, South Africa, Mexico, Argentina, Canada,
 
 **Fly.io&#39;s comp package is the same everywhere in the world.** We don&#39;t adjust comp for cost-of-living. Our comp packages are competitive for the US market.
 
+## Visa Sponsorship
+
+We'll do our best, but it's tricky. We've got access to some legal resources, but our luck, with H1Bs in particular, hasn't
+been great. Whatever we say about visas, remember that it's USCIS making the decisions, and USCIS has a different definition
+of "responsive" than we do. 
+
+So the short answer on visa sponsorships is: we'll try, but you should take a job here on the assumption that you'll be working
+remote indefinitely.
+
 ## We Prefer Small Teams And Bottom-Up Decisions
 
 We like single-pizza teams: 3-4 people is a happy number for us.

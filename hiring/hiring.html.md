@@ -36,3 +36,34 @@ A typical hiring process for an engineering job at Fly.io looks like this:
 1. When you&#39;re ready, we deliver you a series of at-home challenges (usually 2-3). You knock them out one at a time. If things go roughly with any of them, we&#39;ll let you know.
 1. If you knock out all the challenges, we&#39;ll schedule a &quot;work day&quot;, our last challenge. That&#39;s &quot;day&quot; as in &quot;day in the life&quot; — we don&#39;t ask for a full day of your time! During the work day, you&#39;ll collaborate with us on Slack on an engineering design project.
 1. That&#39;s it! If everything goes well, the next step is us working out an offer with you.
+
+## What About Time Limits?
+
+We don't take delivery time into account when grading challenges. Take a day, take a week, take a month.
+
+We have only two caveats to offer about the amount of time you spend on challenges:
+
+1. If you really do take a month to do the challenges, our staffing situation might change by the time you're done, and we 
+won't be able to move forward immediately. So: if it's going to be a while before you can get to the challenges, let us know,
+and we'll be able to warn you if there's any time sensitivity on the role you're applying to. We don't want to have you doing
+challenges for a role that isn't open by the time you're done!
+
+2. We've said it already but we'll say it again: we've tried to calibrate these challenges (by running them many times) so 
+they take roughly the same amount of time as an interview would. You can put as much time into them as you'd like; we're not
+going to notice. But if you're getting sore about the amount of time they're taking, you should reach out to us and we 
+can try to figure out what's happening. Sometimes, you might be overthinking the challenge; other times, the role you're 
+applying to might not be a perfect fit for where you're coming from.
+
+## What If I Have Questions?
+
+You can't lose points by asking us questions. Generally, we look at questions as a positive indicator. 
+
+There are questions you might ask that we can't answer. That's fine; we'll just give evasive answers. Don't moderate
+your questions for our sake. You might be surprised at how much we're willing to cough up.
+
+A lot of hiring systems keep their cards close to the vest, and (deliberately or otherwise) evaluate candidates based
+on their ability to navigate a murky process. That's not us. 
+
+We want to predict how well you'll function on our team doing real work. In a real working week, if our processes were
+so murky that sniffing them out was a real test of your skill, on like a day-to-day basis, we'd have problems of our 
+own to fix. We want to see you in your best light. 
