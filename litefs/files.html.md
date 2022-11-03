@@ -37,6 +37,11 @@ If the `.primary` file is unavailable then the local LiteFS node is either:
 1. Currently the primary and can accept writes, or
 2. Unable to determine or connect to the primary.
 
+When a node receives a write request, it should check the `.primary` file and,
+if it exists, it should forward the request to the primary. If the file does not
+exist, the request should attempt to write locally. If the local node is not the
+primary then SQLite will return a `SQLITE_READONLY` error.
+
 
 ## Position files
 
@@ -56,4 +61,18 @@ $ cat /path/to/mnt/db-pos
 The TXID is representated a 16-character hex-encoded `uint64`. The checksum is
 encoded as a 16-character hex-encoded byte array. These are concatenated using
 a slash and a newline is appended at the end.
+
+### Using TXID to handle consistency
+
+Clients can use the TXID if they wish to ensure that the database state is
+consistent across requests to different nodes. For example, a write to the
+primary may occur at TXID 100. If a subsequent request to a replica is
+performed, then the client can pass the TXID to the application and have it
+wait until it reaches or surpasses transaction ID 100.
+
+Another approach is to redirect subsequent reads from a client to the
+primary for a few seconds after a write occurs. This is typically enough time
+to ensure that changes from the write are copied to the replica before it begins
+serving read requests to the client again. However, this provides weaker
+consistency guarantees over checking with the TXID in the position file.
 
