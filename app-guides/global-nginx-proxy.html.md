@@ -11,6 +11,7 @@ categories:
 date: 2020-09-20
 ---
 
+<%= partial "/docs/partials/obsolete_doc" %>
 
 Everything starts with a Fly app on Fly. If you already have an application running somewhere else, and want to get some of the benefits of running it close to users, you can launch a proxy app on Fly. This will forward requests to your _origin_ application for processing.
 

@@ -11,6 +11,8 @@ categories:
 date: 2020-09-21
 ---
 
+<%= partial "/docs/partials/obsolete_doc" %>
+
 So you have a PostgreSQL database somewhere in the cloud and you want to modernize how you access it. GraphQL is likely on your list of things you want to implement, but tools like Hasura - which take care of the backend complexity - need to be installed on a server somewhere. Fly can help by putting that server where it needs to be and making API requests faster than ever.
 
 Let's assume you have a Postgres database somewhere...
