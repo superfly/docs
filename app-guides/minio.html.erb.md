@@ -7,6 +7,7 @@ categories:
   - s3
   - volumes
   - object storage
+date: 2021-11-05
 ---
 
 Object storage is useful when your apps need access to unstructured data like images, videos, or documents. Amazon's S3 is an obvious solution, but you can also host your own S3-compatible object storage using the AGPLv3-licensed [MinIO](https://min.io/).
