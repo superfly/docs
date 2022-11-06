@@ -47,9 +47,10 @@ Deploying a Fly Postgres database means you may need to manage the following:
 - **Scaling storage and memory resources** - If your database is runs out of disk space or memory, you'll have to scale it up, or down if you don't need the resources.
 - **Upgrading Postgres versions & security patches** - Fly provides tools like `fly image update` to upgrade your database instances to new versions of Postgres, but you'll have to run the upgrades yourself. Same for security patches—you'll have to apply those to running Postgres clusters.
 - **Developing a database backup & restoration plan** - Fly's self-managed Postgres ships with a basic daily volume snapshot tool that keeps snapshots around for 7 days. It does not manage off-site backups, etc.
-- **Monitoring & alerts** - Fly.io collects and exposes relevant prometheus metrics, but you'll have to configure your own monitoring and alerts to keep tabs on the performance and resource utilization of your database instances.
+- **Monitoring & alerts** - Fly.io collects and exposes relevant Prometheus metrics, but you'll have to configure your own monitoring and alerts to keep tabs on the performance and resource utilization of your database instances.
 - **Recovering from outages & fail-overs** - If the volume in your database fills up, a replica fails, etc. you'll have to do a little bit of work to bring your database back online.
-- **Advanced cluster customizations** - If your application demands it, you can [fork and maintain your own branch of Fly's open source Postgres HA templates](https://github.com/fly-apps/postgres-ha) to deploy Postgres clusters in pretty much any configuration, like a [Globally Distributed Postgres](https://fly.io/blog/globally-distributed-postgres/) cluster.
+- **Global replication** - You can add read-only replicas outside the primary region to [speed up read-heavy globally distributed apps](https://fly.io/blog/globally-distributed-postgres/),  by scaling your Fly Postgres app. It's up to you to tweak your application to get writes to the leader instance, but the [Fly-Replay header](https://fly.io/docs/reference/fly-replay/) simplifies that.
+- **Advanced customization** - If your application demands additional Postgres extensions or something else in the VM, you can [fork and maintain your own branch of Fly's open source Postgres HA app](https://github.com/fly-apps/postgres-ha).
 
 ## Fully-managed Postgres
 
