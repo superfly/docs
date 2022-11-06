@@ -50,7 +50,7 @@ Your app is ready! Deploy with `flyctl deploy`
 
 There's no need for this app to be accessible from the public internet, if you run your object storage within the same [Fly IPV6 private network](https://fly.io/docs/reference/private-networking/) as the app(s) that want to connect to it.
 
-Keep the `[[services]]` block, but delete everything within it:
+Keep the `[[services]]` block in `fly.toml`, but delete everything within it:
 
 ```toml
 [[services]]
