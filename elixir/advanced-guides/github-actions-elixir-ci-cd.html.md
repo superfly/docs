@@ -6,7 +6,7 @@ objective: Setup Github CI/CD for your Elixir project.
 author: mark
 categories:
   - elixir
-date: 2022-11-07
+date: 2022-11-06
 ---
 
 You want the benefits of modern CI/CD for your Elixir projects? You're in the
