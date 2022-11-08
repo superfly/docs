@@ -9,7 +9,7 @@ flyctl ssh log [flags]
 
 ~~~
   -h, --help         help for log
-  -o, --org string   The organization to operate on
+  -o, --org string   The target Fly organization
 ~~~
 
 ## Global Options

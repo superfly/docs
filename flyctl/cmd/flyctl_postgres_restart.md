@@ -11,6 +11,7 @@ flyctl postgres restart [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
+  -f, --force           Force a restart even we don't have an active leader
   -h, --help            help for restart
 ~~~
 

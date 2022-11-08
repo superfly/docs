@@ -1,0 +1,208 @@
+---
+title: High Availability & Global Replication
+objective: Setup a Postgres cluster, configure replicas, perform fail-overs, and learn what trade-offs should be considered for a global Postgres deployment.
+layout: framework_docs
+order: 1
+redirect_from: /docs/postgres/high-availability-and-global-replication/
+---
+
+<%= partial "../partials/for-machines" %>
+
+Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ Postgres servers. It provides a number of things, including a “keeper” that controls the Postgres process, a "sentinel" that builds the cluster view, and a “proxy” that always routes connections to the current leader.
+
+If the leader becomes unhealthy (e.g. network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previous leader's VM will be replaced by another VM which will rejoin the cluster as a replica.
+
+
+## Adding replicas
+The easiest way to add additional replicas at this time is through the `fly machine clone` command:
+
+```cmd
+fly machine clone 148e306c77e089 --region ord --app <app-name>
+```
+```output
+Cloning machine 148e306c77e089 into region lax
+Provisioning a new machine with image registry-1.docker.io/flyio/postgres:14...
+  Machine 17814e3b990389 has been created...
+  Waiting for machine 17814e3b990389 to start...
+  Waiting for 17814e3b990389 to become healthy (started, 3/3)
+Machine has been successfully cloned!
+```
+
+This will clone the spec from the source machine and use it to create the new replica in a desired region.  
+
+
+## Performing a failover
+To perform a manual failover against your HA Postgres app, run the following command:
+
+```cmd
+fly postgres failover --app <app-name>
+```
+```output
+Performing a failover
+  Waiting for e784927ad23583 to become healthy (started, 3/3)
+  Waiting for 148e306c77e089 to become healthy (started, 3/3)
+Failover complete
+```
+
+_Note: Only healthy members residing in your `PRIMARY_REGION` will be considered for leadership._
+
+## Performing a regional failover
+
+There may be situations where you want to move leadership into a completely new region.  While this process is a bit more involved, you can achieve this by performing the steps below.  
+
+If you haven't already pulled down your `fly.toml` configuration file, you can do so by running:
+```
+fly config save --app <app-name>
+```
+
+Now, let's open up the `fly.toml` file and set the `PRIMARY_REGION` environment variable to our target region. In this example, we are looking to move leadership into the `lax` region. 
+```toml
+[env]
+PRIMARY_REGION = "lax"
+```
+
+Before we can deploy this change, we must first identify which Postgres version we are currently running.
+```cmd
+fly image show
+```
+```output
+Image Details
+MACHINE ID      REGISTRY              REPOSITORY      TAG VERSION DIGEST
+e784927ad23583  registry-1.docker.io  flyio/postgres  14.4  v0.0.32 sha256:9daaa15119742e5777f5480ef476024e8827016718b5b020ef33a5fb084b60e8
+148e275b1d1d89  registry-1.docker.io  flyio/postgres  14.4  v0.0.32 sha256:9daaa15119742e5777f5480ef476024e8827016718b5b020ef33a5fb084b60e8
+```
+
+Take note of the version specified within the `Tag` column, we will be using this in our next command. 
+
+**Warning: This deploy process will result in a small amount of downtime.  Once the PRIMARY_REGION change has been deployed, your cluster will become read-only until the failover process completes.**
+
+```cmd
+fly deploy . --image flyio/postgres:<tag> --strategy=immediate
+```
+
+Once the deploy process has completed, we can now work to transfer leadership into our new region.
+```cmd
+fly pg failover
+```
+```output
+Performing a failover
+  Waiting for e784927ad23583 to become healthy (started, 3/3)
+  Waiting for 148e306c77e089 to become healthy (started, 3/3)
+Failover complete
+```
+
+That's it! You should now run `fly status` to verify your changes. 
+
+## Connecting to read replicas
+
+The generated connection string uses port `5432` to connect to PostgreSQL. This port always forwards you to a writable instance. Port `5433` is direct to the PostgreSQL member, and used to connect to read replicas directly.
+
+You can use the proxy port (`5432`) to connect from every region, but it will be quite slow. Especially because we put our PostgreSQL cluster in Santiago. Connecting to "local" replicas is much quicker, but does take some app logic.
+
+The basic logic to connect is:
+
+1. Set a `PRIMARY_REGION` environment variable on your app, `scl` for our `chaos-postgres` cluster.
+2. Check the `FLY_REGION` environment variable at connect time, use `DATABASE_URL` as is when `FLY_REGION=scl`
+3. Modify the `DATABASE_URL` when running in other regions:
+   1. Change the port to `5433`
+
+This is what it looks like in Ruby:
+
+```ruby
+class Fly
+  def self.database_url
+    primary = ENV["PRIMARY_REGION"]
+    current = ENV["FLY_REGION"]
+    db_url = ENV["DATABASE_URL"]
+    
+    if primary.blank? || current.blank? || primary == current
+      return db_url
+    end
+    
+    u = URI.parse(db_url)
+    u.port = 5433
+    
+    return u.to_s
+  end
+end
+```
+
+Running this in `scl` will use the built-in `DATABASE_URL` and connect to port `5432`:
+
+```
+postgres://<user>:<password>@top1.nearest.of.chaos-postgres.internal:5432/rails_on_fly?sslmode=disable
+```
+
+In the other regions, the app will connect to port `5433`:
+```
+postgres://<user>:<password>@top1.nearest.of.chaos-postgres.internal:5433/rails_on_fly?sslmode=disable
+```
+
+
+## Detect write requests
+
+### Catch read-only errors
+PostgreSQL conveniently sends a "read only transaction" error when you attempt to write to a read replica. All you need to do to detect write requests is catch this error.
+
+### Replay the request
+
+Once caught, just send a `fly-replay` header specifying the primary region. For `chaos-postgres`, send `fly-replay: region=scl`, and we'll take care of the rest.
+
+If you're working in Rails, just add this to your `ApplicationController`:
+
+```ruby
+class ApplicationController < ActionController::Base
+  rescue_from ActiveRecord::StatementInvalid do |e|
+    if e.cause.is_a?(PG::ReadOnlySqlTransaction)
+      r = ENV["PRIMARY_REGION"]
+      response.headers["fly-replay"] = "region=#{r}"
+      Rails.logger.info "Replaying request in #{r}"
+      render plain: "retry in region #{r}", status: 409
+    else
+      raise e
+    end
+  end
+end
+```
+
+## Library support
+
+We would like to build libraries to make this seamless for most application frameworks and runtimes. If you have a particular app you'd like to distribute with PostgreSQL, [post in our community forums](https://community.fly.io/t/multi-region-database-guide/1600) and we'll write some code for you.
+
+## Consistency model
+
+This is a fairly typical read replica model. Read replicas are usually eventually consistent, and can fall behind the leader. Running read replicas across the world _can_ exacerbate this effect and make read replicas stale more frequently.
+
+### Request with writes
+
+Requests to the primary region are strongly consistent. When you use the replay header to target a particular region, the entire request runs against the leader database. Your application will behave like you expect.
+
+### Read only requests
+
+Most apps accept a `POST` or `PUT`, do a bunch of writes, and then redirect the user to a `GET` request. In most cases, the database will replicate the changes before the user makes the second request. But not always!
+
+Most read heavy applications aren't especially sensitive to stale data on subsequent requests. A lagging read replica might result in an out of date view for users, but this might be reasonable for your use case.
+
+If your app is sensitive to this (meaning, you never, under any circumstances want to show users stale data), you should be careful using read replicas.
+
+### Managing eventual consistency
+
+For apps that are sensitive to consistency issues, you can add a counter or timestamp to user sessions that indicates what "version" of the database a particular user is expecting. When the user makes a request and the session's data version differs from the replica, you can use the same `fly-replay` header to redirect their request to the primary region – and then you'll know it's not stale.
+
+In theory, you _could_ run PostgreSQL with synchronous replication and block until replicas receive writes. This probably won't work well for far flung read replicas.
+
+## This is wrong for some apps
+
+We built this set of features for read heavy apps that are primary HTTP request based. That is, most requests only perform reads and only some requests include writes.
+
+### Write-heavy workloads
+
+If you write to the database on every request, this will not work for you. You will need to make some architectural changes to run a write-heavy app in multiple regions.
+
+Some apps write background info like metrics or audit logs on every request, but are otherwise read heavy. If you're running an application like this, you should consider using something like [nats.io](https://nats.io) to send information to your primary region asynchronously.
+
+Truly write-heavy apps require latency aware data partitioning, either at the app level or in a database engine. There are lots of interesting new databases that have features for this, try them out!
+
+### Long lived connections
+
+If your app makes heavy use of long lived connections with interpolated writes, like websockets, this will not work for you. This technique is specific to HTTP request/response based apps that bundle writes up into specific requests.

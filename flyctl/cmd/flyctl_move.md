@@ -11,7 +11,7 @@ flyctl move [APPNAME] [flags]
 
 ~~~
   -h, --help         help for move
-  -o, --org string   The organization to operate on
+  -o, --org string   The target Fly organization
   -y, --yes          Accept all confirmations
 ~~~
 

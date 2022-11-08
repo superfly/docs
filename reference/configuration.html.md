@@ -126,7 +126,7 @@ The temporary VM has full access to the network, environment variables and secre
 
 A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
 
-To ensure the command runs in a specific region - say `dfw` - set `PRIMARY_REGION = 'dfw'` on in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if when running [database replicas in multiple regions](/docs/postgres/#high-availability-and-global-replication).
+To ensure the command runs in a specific region - say `dfw` - set `PRIMARY_REGION = 'dfw'` on in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if when running [database replicas in multiple regions](/docs/postgres/high-availability-and-global-replication).
 
 The environment variable `RELEASE_COMMAND=1` is set for you within the temporary release VM. This might be useful if you need to customize your Dockerfile `ENTRYPOINT` to behave differently within a release VM.
 
@@ -230,7 +230,7 @@ This section is a simple list of key/values, so the section is denoted with sing
     soft_limit = 20
 ```
 
-`type` specifies what metric is used to determine when to scale up and down, or when a given instance should receieve more or less traffic (load balancing). The two supported values are `connections` and `requests`.
+`type` specifies what metric is used to determine when to scale up and down, or when a given instance should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
 
 **connections**: Load balance and scale based on number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
 
@@ -276,6 +276,31 @@ For UDP applications make sure to bind the application to the same port as defin
   protocol = "udp"
   [[services.ports]]
     port = 5000
+```
+
+#### `services.ports.tls_options`
+
+Configure the TLS versions and ALPN protocols that Fly's edge will use to terminate TLS for your application with:
+
+```toml
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "443"
+    tls_options = { "alpn" = ["h2", "http/1.1"], "versions" = ["TLSv1.2", "TLSv1.3"], }
+```
+
+* `alpn` : Array of strings indicating how to handle ALPN negotiations with clients.
+* `versions` : Array of string indicating which TLS versions are allowed
+
+Fly can also terminate TLS only and pass through directly to your service. This works for a variety of applications that can benefit from offloading TLS termination and accept the unencrypted connection.
+
+One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS and sends h2c (HTTP/2 without TLS) directly to your application through our backhaul. The config below will negotiate http/2 with clients, and then send h2c to the application:
+
+```toml
+  [[services.ports]]
+    handlers = ["tls"]
+    port = "443"
+    tls_options = { "alpn" = ["h2"], }
 ```
 
 #### `services.tcp_checks`

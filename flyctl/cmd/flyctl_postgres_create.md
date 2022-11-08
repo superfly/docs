@@ -16,9 +16,9 @@ flyctl postgres create [flags]
       --machines                   Create postgres cluster on fly machines (default true)
   -n, --name string                The name of your Postgres app
       --nomad                      Create postgres cluster on Nomad
-  -o, --org string                 The organization to operate on
+  -o, --org string                 The target Fly organization
   -p, --password string            The superuser password. The password will be generated for you if you leave this blank
-  -r, --region string              The region to operate on
+  -r, --region string              The target region (see 'flyctl platform regions')
       --snapshot-id string         Creates the volume with the contents of the snapshot
       --vm-size string             the size of the VM
       --volume-size int            The volume size in GB

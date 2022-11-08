@@ -1,0 +1,3 @@
+<div class="callout">
+This document applies to Postgres clusters running on our next-gen [**Apps V2**](https://fly.io/docs/reference/apps/#apps-v2) architecture ([**Fly Machines**](/docs/reference/machines/)). If you created your cluster using any flyctl version before [v0.0.412](https://github.com/superfly/flyctl/releases/tag/v0.0.412), refer to [**Fly Postgres on Apps V1**](/docs/reference/postgres-on-nomad/) and [**Multi-region PostgreSQL**](/docs/getting-started/multi-region-databases/) instead.
+</div>

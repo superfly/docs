@@ -13,7 +13,7 @@ flyctl ssh sftp find [path] [flags]
   -C, --command string   command to run on SSH session
   -c, --config string    Path to application configuration file
   -h, --help             help for find
-  -o, --org string       The organization to operate on
+  -o, --org string       The target Fly organization
   -q, --quiet            Don't print progress indicators for WireGuard
   -r, --region string    Region to create WireGuard connection in
   -s, --select           select available instances

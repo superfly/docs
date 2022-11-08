@@ -16,7 +16,7 @@ flyctl machine update [machine_id] [flags]
       --entrypoint string    ENTRYPOINT replacement
   -e, --env strings          Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
   -h, --help                 help for update
-  -i, --image string         The image tag or ID to deploy
+  -i, --image string         The Docker image to deploy
       --kernel-arg strings   List of kernel arguments to be provided to the init. Can be specified multiple times.
       --memory int           Memory (in megabytes) to attribute to the machine
   -m, --metadata strings     Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
