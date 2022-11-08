@@ -1,0 +1,159 @@
+---
+title: Monitoring
+objective: Configure healthchecks and notifications for when the Postgres database runs into issues, like running out of storage or memory.
+layout: framework_docs
+order: 4
+---
+<%= partial "../partials/for-machines" %>
+
+You can use `flyctl status` to see a list of VMs and their status. The output for each VM includes it's role within the cluster.
+
+```
+$ flyctl status --app test-pg
+ID              STATE   ROLE    REGION  HEALTH CHECKS       IMAGE                         CREATED               UPDATED
+e784079b449483  started leader  iad     3 total, 3 passing  flyio/postgres:14.4 (v0.0.26) 2022-09-26T16:58:50Z  2022-09-26T16:59:04Z
+1781957c525989  started replica iad     3 total, 3 passing  flyio/postgres:14.4 (v0.0.26) 2022-09-26T17:05:25Z  2022-09-26T17:05:38Z
+
+```
+
+To view the status of an individual Machine:
+
+```
+$ flyctl machine status e784079b449483 --app test-pg
+Machine ID: e784079b449483
+Instance ID: 01GDXBSCZ0TSKA40K478CQ0P26
+State: started
+
+VM
+  ID            = e784079b449483
+  Instance ID   = 01GDXBSCZ0TSKA40K478CQ0P26
+  State         = started
+  Image         = flyio/postgres:14.4 (v0.0.26)
+  Name          = nameless-star-9637
+  Private IP    = fdaa:0:2e26:a7b:775b:4009:bf60:2
+  Region        = iad
+  Process Group =
+  Memory        = 256
+  CPUs          = 1
+  Created       = 2022-09-26T16:58:50Z
+  Updated       = 2022-09-26T16:59:04Z
+  Command       =
+  Volume        = vol_w1q85vgg998vzdxe
+
+Event Logs
+STATE   EVENT   SOURCE  TIMESTAMP                     INFO
+started start   flyd    2022-09-26T11:59:04.889-05:00
+created launch  user    2022-09-26T11:58:50.789-05:00
+```
+
+## Checks
+
+To view a list of health checks for a Fly Postgres app, run:
+
+```
+flyctl checks list -a test-pg
+Health Checks for shaun-pg-mach-test
+  NAME | STATUS  | MACHINE        | LAST UPDATED | OUTPUT
+-------*---------*----------------*--------------*-----------------------------------------------------------------------------
+  pg   | passing | 1781957c525989 | 3m49s ago    | 200 OK Output: "[✓]
+       |         |                |              |
+       |         |                |              | transactions: readonly (569.43µs)\n[✓]
+       |         |                |              |
+       |         |                |              | replication: syncing from fdaa:0:2e26:a7b:775b:4009:bf60:2 (144.39µs)\n[✓]
+       |         |                |              |
+       |         |                |              | connections: 6 used, 3 reserved, 300 max (6.3ms)"[✓]
+       |         |                |              |
+       |         |                |              |
+  vm   | passing | 1781957c525989 | 3m21s ago    | 200 OK Output: "[✓]
+       |         |                |              |
+       |         |                |              | checkDisk: 860.8 MB (87.1%) free space on /data/ (520.24µs)\n[✓]
+       |         |                |              |
+       |         |                |              | checkLoad: load averages: 0.00 0.00 0.00 (350.76µs)\n[✓]
+       |         |                |              |
+       |         |                |              | memory: system spent 0s of the last 60s waiting on memory (54.97µs)\n[✓]
+       |         |                |              |
+       |         |                |              | cpu: system spent 930ms of the last 60s waiting on cpu (23.89µs)\n[✓]
+       |         |                |              |
+       |         |                |              | io: system spent 414ms of the last 60s waiting on io (20.02µs)"[✓]
+       |         |                |              |
+       |         |                |              |
+  role | passing | 1781957c525989 | 3m53s ago    | 200 OK Output: "replica"[✓]
+       |         |                |              |
+       |         |                |              |
+  pg   | passing | e784079b449483 | 10m9s ago    | 200 OK Output: "[✓]
+       |         |                |              |
+       |         |                |              | transactions: read/write (157.2µs)\n[✓]
+       |         |                |              |
+       |         |                |              | connections: 9 used, 3 reserved, 300 max (3.7ms)"[✓]
+       |         |                |              |
+       |         |                |              |
+  vm   | passing | e784079b449483 | 10m49s ago   | 200 OK Output: "[✓]
+       |         |                |              |
+       |         |                |              | checkDisk: 918.45 MB (93.0%) free space on /data/ (48.94µs)\n[✓]
+       |         |                |              |
+       |         |                |              | checkLoad: load averages: 0.00 0.00 0.00 (91.52µs)\n[✓]
+       |         |                |              |
+       |         |                |              | memory: system spent 0s of the last 60s waiting on memory (38.75µs)\n[✓]
+       |         |                |              |
+       |         |                |              | cpu: system spent 114ms of the last 60s waiting on cpu (16.94µs)\n[✓]
+       |         |                |              |
+       |         |                |              | io: system spent 210ms of the last 60s waiting on io (14.93µs)"[✓]
+       |         |                |              |
+       |         |                |              |
+  role | passing | e784079b449483 | 10m19s ago   | 200 OK Output: "leader"[✓]
+       |         |                |              |
+       |         |                |              |
+
+```
+
+## Logs
+
+Fly Postgres apps run several processes inside each VM, including postgres, stolon keeper, stolon sentinel, stolon proxy, and postgres_export. Each of those processes redirect STDOUT and STDERR to logs which you can view with `flyctl logs`.
+
+## Metrics
+
+Fly Postgres apps export metrics to prometheus which can be seen in the Metrics UI or queried from grafana.
+
+The available metrics are
+```
+pg_stat_activity_count
+pg_stat_activity_max_tx_duration
+pg_stat_archiver_archived_count
+pg_stat_archiver_failed_count
+pg_stat_bgwriter_buffers_alloc
+pg_stat_bgwriter_buffers_backend_fsync
+pg_stat_bgwriter_buffers_backend
+pg_stat_bgwriter_buffers_checkpoint
+pg_stat_bgwriter_buffers_clean
+pg_stat_bgwriter_checkpoint_sync_time
+pg_stat_bgwriter_checkpoint_write_time
+pg_stat_bgwriter_checkpoints_req
+pg_stat_bgwriter_checkpoints_timed
+pg_stat_bgwriter_maxwritten_clean
+pg_stat_bgwriter_stats_reset
+pg_stat_database_blk_read_time
+pg_stat_database_blk_write_time
+pg_stat_database_blks_hit
+pg_stat_database_blks_read
+pg_stat_database_conflicts_confl_bufferpin
+pg_stat_database_conflicts_confl_deadlock
+pg_stat_database_conflicts_confl_lock
+pg_stat_database_conflicts_confl_snapshot
+pg_stat_database_conflicts_confl_tablespace
+pg_stat_database_conflicts
+pg_stat_database_deadlocks
+pg_stat_database_numbackends
+pg_stat_database_stats_reset
+pg_stat_database_tup_deleted
+pg_stat_database_tup_fetched
+pg_stat_database_tup_inserted
+pg_stat_database_tup_returned
+pg_stat_database_tup_updated
+pg_stat_database_xact_commit
+pg_stat_database_xact_rollback
+pg_stat_replication_pg_current_wal_lsn_bytes
+pg_stat_replication_pg_wal_lsn_diff
+pg_stat_replication_reply_time
+pg_replication_lag
+pg_database_size_bytes
+```

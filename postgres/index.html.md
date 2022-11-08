@@ -20,15 +20,13 @@ Your existing Fly Postgres clusters will continue to work, running on Fly Apps V
     <a href="/docs/getting-started/multi-region-databases/">Multi-region PostgreSQL</a>
   </li>
 </ul>
-
-
 </div>
 
 There's a few ways you can use Postgres databases with Fly apps that's crucially important for you to understand so you know how your application will scale and how to deal with failures.
 
 ## Fly Postgres
 
-Fly Postgres is a regular Fly.io app, with an automated creation process and some platform integration to simplify management. It relies on building blocks available to all Fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
+Fly Postgres is a regular app you deploy on Fly.io, with an automated creation process and some platform integration to simplify management. It relies on building blocks available to all Fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
 
 This is not a managed database. If Postgres crashes because it ran out of memory or disk space, you'll need to do a little work to get it back.
 

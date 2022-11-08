@@ -5,6 +5,9 @@ order: 1
 subnav_glob: docs/rails/getting-started/*.html.*
 objective: Quickly get a Postgres instance up and running on Fly.
 ---
+<div class="callout">
+If you have flyctl [**v0.0.412**](https://github.com/superfly/flyctl/releases/tag/v0.0.412) or newer installed, new Fly Postgres clusters you create will use our next-gen Apps V2 architecture, built on [**Fly Machines**](/docs/reference/machines/).
+</div>
 
 To create a Postgres cluster, use the `fly postgres create` command. The command will walk you through the creation with prompts for name, region, and VM resources.
 
