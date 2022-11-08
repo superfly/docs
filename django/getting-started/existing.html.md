@@ -127,16 +127,21 @@ what's going on.
 This shows the past few log file entries and tails your production log
 files. [Additional flags](https://fly.io/docs/flyctl/logs/) are available for filtering.
 
-### SSH
+### Console
 
-To SSH into your hosted Django application use the command `fly ssh console` before running Django commands like `createsuperuser`.
+To SSH into your hosted Django application use the command `fly ssh console`. For example, to execute Django's `createsuperuser` command to log into the admin do the following:
 
 ```cmd
 (.venv) $ fly ssh console
+# cd code
 # python manage.py createsuperuser
 ```
 
-<!-- the WORKDIR command in Dockerfile should mean can just run commands rather than navigate into code/ dir. Asked Mark about this... -->
+<!-- `fly ssh console` doesn't take WORKDIR from the Dockerfile into account, but pre-release commands will take WORKDIR into account since basically CMD being passed to ENTRYPOINT
+
+https://community.fly.io/t/workdir-not-working/8533/3
+
+--> 
 
 ### Secrets
 
