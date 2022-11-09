@@ -137,11 +137,17 @@ To SSH into your hosted Django application use the command `fly ssh console`. Fo
 # python manage.py createsuperuser
 ```
 
+If you prefer, this can be run as one command instead:
+
+```cmd
+(.venv) $ `fly ssh console -C 'python /code/manage.py createsuperuser'`
+```
+
 <!-- `fly ssh console` doesn't take WORKDIR from the Dockerfile into account, but pre-release commands will take WORKDIR into account since basically CMD being passed to ENTRYPOINT
 
 https://community.fly.io/t/workdir-not-working/8533/3
 
---> 
+-->
 
 ### Secrets
 
