@@ -91,7 +91,7 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
-## Private Load Balancing (aka Flycast)
+## Flycast Private Load Balancing
 
 Fly apps may accept traffic on a special "Flycast" private IPv6 address. This traffic is routed through the Fly proxy - like [public traffic](/reference/services/#anycast) - arriving in the geographically closest region with active VMs. Traffic is also load-balanced across live app VMs.
 
