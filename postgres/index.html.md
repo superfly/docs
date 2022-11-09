@@ -58,6 +58,7 @@ For people who want a fully managed database solution, there's many great option
 - [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql/#overview)
 - [Amazon RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/)
 - [Google Cloud Sql for PostgreSQL](https://cloud.google.com/sql/docs/postgres/)
+- [Neon Serverless Postgres](https://neon.tech/)
 
 ## About Free Postgres on Fly.io
 
