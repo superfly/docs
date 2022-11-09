@@ -67,3 +67,19 @@ on their ability to navigate a murky process. That's not us.
 We want to predict how well you'll function on our team doing real work. In a real working week, if our processes were
 so murky that sniffing them out was a real test of your skill, on like a day-to-day basis, we'd have problems of our 
 own to fix. We want to see you in your best light. 
+
+## What About Start Dates?
+
+This is important: we can only make offers with start dates 1 month out or
+less. If you're looking for a role to start a couple months from now (when
+you graduate, etc), you're generally welcome to run through our process and
+get a "soft yes" from us. 
+
+When you're available to take an offer starting within a month, you can 
+ping us, and we'll extend an offer. 
+
+A word of warning: while we expect to be hiring most of our roles pretty
+much continuously, the economy can get spooky. We can't make promises about
+openings several months out from now. An offer is a commitment, and that's 
+the one thing we can't do if you're looking to start several months from
+now. We'll do our best to stay up-front about this stuff!
