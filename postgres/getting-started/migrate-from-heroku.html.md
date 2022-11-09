@@ -133,4 +133,4 @@ myapp=# \dt
 
 ## Connect it to your application
 
-Read through [the documentation on connecting to your Postgres instances](/docs/postgres/this-basics/connecting) to start accessing your data.
+Read through [the documentation on connecting to your Postgres instances](/docs/postgres/the-basics/connecting) to start accessing your data.
