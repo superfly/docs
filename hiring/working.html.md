@@ -39,6 +39,25 @@ We like single-pizza teams: 3-4 people is a happy number for us.
 
 We&#39;re a product for developers, by developers. We have a [thriving community](https://community.fly.io) and everyone is expected to keep up with it and develop a sense for what&#39;s worth doing and what needs fixing. We don&#39;t have formal product roadmaps or schedules; we ship stuff when it&#39;s ready.
 
+## Leveling
+
+Levels at Fly.io are relatively informal. We're pretty flat, as companies
+go. Small teams, like we just said. Our current engineering leveling looks
+roughly like:
+
+* Level 1: Early-career or intern-level demonstrated aptitude. An L1 might need
+  ongoing support from other team members to deliver work.
+  
+* Level 2: See Level 1 and Level 3, and interpolate.
+
+* Level 3: An L3 can lead a team. We use "L3" and "Senior" interchangeably.
+
+* Staff: We're still working out what this means here. We'll generally
+  call out staff roles individually. 
+  
+We also hire engineering management (EMs). Like most modern tech companies,
+EM is a separate track from line engineering.
+
 ## We&#39;re Ruthless About Doing Customer-Visible Work
 
 We want our teams to set their own direction as much as possible, but we&#39;ll shoot things down if they&#39;re not going to move the dials for our users. We&#39;re vigilant about tar pits and projects that spin our wheels and will do our best to keep you out of them. We&#39;re not big believers in &quot;tech debt&quot;. We have a 3-month &quot;no refactoring&quot; rule for new hires. This isn&#39;t everyone&#39;s preferred work style! We try to be up front about stuff.
