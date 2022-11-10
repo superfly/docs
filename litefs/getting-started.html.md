@@ -67,6 +67,13 @@ configure your application so it's publicly visible over HTTPS.
 
 ### Launching your app
 
+Prepare Docker to build the image with the following command:
+
+```sh
+export DOCKER_BUILDKIT=0
+export COMPOSE_DOCKER_CLI_BUILD=0
+```
+
 The next step is to launch & deploy your app with the following command:
 
 ```sh
