@@ -138,6 +138,7 @@ The only required parameter is `image` in the `config` object. Other parameters:
 * `guest`: An object with the following options:
   - `cpus`: Number of vCPUs (default 1)
   - `memory_mb`: Memory in megabytes as multiples of 256 (default 256)
+  - `kernel_args`: Optional array of strings. Arguments passed to the kernel
 
 * `env`: An object filled with key/value pairs to be set as environment variables
 * `services`: An array of objects that define a single network service. Check the [machines networking section](#networking) for more information. Options:
@@ -151,6 +152,13 @@ The only required parameter is `image` in the `config` object. Other parameters:
   - `ports`: An array of objects defining the service's ports and associated handlers. Options:
       + `port`: Public-facing port number
       + `handlers`: Array of [connection handlers](https://fly.io/docs/reference/services/#connection-handlers) for TCP-based services.
+* `processes`: An optional array of objects defining multiple processes to run within a VM
+  - `name`: Process name
+  - `entrypoint`: An array of strings. The process that will run
+  - `cmd`: An array of strings. The arguments passed to the entrypoint
+  - `env`: An object filled with key/value pairs to be set as environment variables
+  - `user`: An optional user that the process runs under
+
 * `mounts`: An array of objects that reference previously created [persistent volumes](https://fly.io/docs/reference/volumes/). Currently, you may only mount *one volume* per VM.
   - `volume`: The volume ID, visible in `fly volumes list`, i.e. `vol_2n0l3vl60qpv635d`
   - `path`: Absolute path on the VM where the volume should be mounted. i.e. `/data`
