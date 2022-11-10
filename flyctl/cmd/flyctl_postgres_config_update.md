@@ -12,6 +12,7 @@ flyctl postgres config update [flags]
   -a, --app string                          Application name
       --auto-confirm                        Will automatically confirm changes without an interactive prompt.
   -c, --config string                       Path to application configuration file
+      --confirm-restart                     Will automatically confirm restart without an interactive prompt.
       --detach                              Return immediately instead of monitoring deployment progress
       --force                               Skips pg-setting value verification.
   -h, --help                                help for update
