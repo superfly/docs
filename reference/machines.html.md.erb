@@ -158,6 +158,7 @@ The only required parameter is `image` in the `config` object. Other parameters:
   - `cmd`: An array of strings. The arguments passed to the entrypoint
   - `env`: An object filled with key/value pairs to be set as environment variables
   - `user`: An optional user that the process runs under
+* `schedule`: Optionally one of `hourly`, `daily`, `weekly`, `monthly`. Runs machine at the given interval
 
 * `mounts`: An array of objects that reference previously created [persistent volumes](https://fly.io/docs/reference/volumes/). Currently, you may only mount *one volume* per VM.
   - `volume`: The volume ID, visible in `fly volumes list`, i.e. `vol_2n0l3vl60qpv635d`
