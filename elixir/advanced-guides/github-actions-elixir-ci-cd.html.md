@@ -1,8 +1,8 @@
 ---
-title: Github Actions for Elixir CI/CD
+title: GitHub Actions for Elixir CI/CD
 layout: framework_docs
 order: 1
-objective: Setup Github CI/CD for your Elixir project.
+objective: Setup GitHub CI/CD for your Elixir project.
 author: mark
 categories:
   - elixir
@@ -21,7 +21,7 @@ changes into the main development branch. The goal is to find and correct bugs
 faster, improve software quality and enable software releases to happen
 faster.
 
-To get started with Github Actions in your project, let's create a "test"
+To get started with GitHub Actions in your project, let's create a "test"
 workflow. To do this, create this path and file in the root of your project:
 
 `.github/workflows/elixir.yaml`
