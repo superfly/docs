@@ -235,7 +235,7 @@ Check out the [Fly CLI docs](https://fly.io/docs/flyctl/) for a more extensive i
 
 By default Heroku deployments are kicked off via the `git push heroku` command. Fly works a bit differently by kicking of deployments via `fly deploy`—git isn't needed to deploy to Fly. The advantage to this approach is your git history will be clean and not full of commits like `git push heroku -am "make app work"` or `git push heroku -m "ok it will really work this time"`.
 
-To achieve the desired `git push` behavior, we recommend setting up `fly deploy` as the final command in your continious integration pipeline, as outlined for Github in the [Continuous Deployment with Fly and GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/) docs.
+To achieve the desired `git push` behavior, we recommend setting up `fly deploy` as the final command in your continious integration pipeline, as outlined for GitHub in the [Continuous Deployment with Fly and GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/) docs.
 
 #### Release phase tasks
 
@@ -261,7 +261,7 @@ Remove this dependency or add more depending on the build process required for y
 
 Heroku's default deployment technique is via `git push heroku`. Fly doesn't require a git commit, just run `fly deploy` and the files on your local workstation will be deployed.
 
-Fly can be configured to deploy on git commits with the following techniques with a [Github Action](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/).
+Fly can be configured to deploy on git commits with the following techniques with a [GitHub Action](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/).
 
 ### Databases
 
