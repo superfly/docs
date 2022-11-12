@@ -12,7 +12,7 @@ be used to restore your dataset into a new Postgres application.
 
 ## Listing snapshots
 
-Snapshots are volume specific, so you will need to first identify a volume to target. You can list your volumes by running the `volumes list` command with your Postgres app name.
+Snapshots are volume specific, so you need to identify the volume whose snapshot you want to restore from. You can list your volumes by running the `volumes list` command with your Postgres app name.
 
 ```cmd
 fly volumes list -a <postgres-app-name>
@@ -23,7 +23,7 @@ vol_x915grn008vn70qy pg_data 10GB atl    b780ce3d    2 weeks ago
 vol_ke628r677pvwmnpy pg_data 10GB atl    359d0e24    2 weeks ago
 ```
 
-Once you have identified which volume to target, you can go ahead and list your snapshots by running the following command:
+Once you have identified which volume to target, you can list its snapshots:
 ```cmd
 fly volumes snapshots list <volume-id>
 ```
