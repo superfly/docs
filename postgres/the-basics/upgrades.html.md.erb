@@ -7,16 +7,20 @@ order: 6
 
 <%= partial "../partials/for-machines" %>
 
-You can update a Postgres cluster that was provisioned with `flyctl postgres create` to the latest [release](https://github.com/fly-apps/postgres-ha/releases), using [`flyctl image update`](/docs/flyctl/image-update/).
+You can update a Postgres cluster that was provisioned with `fly postgres create` to the latest [release](https://github.com/fly-apps/postgres-ha/releases), using [`fly image update`](/docs/flyctl/image-update/), _but only if that doesn't require a Postgres major version upgrade_.
 
-Check your current image with [`flyctl status`](/docs/flyctl/status/):
+Check your current image with [`fly status`](/docs/flyctl/status/):
 
 ```cmd
-flyctl status -a <postgres-app-name>
+fly status -a <postgres-app-name>
 ```
 
 And upgrade with:
 
 ```cmd
-flyctl image update -a <postgres-app-name>
+fly image update -a <postgres-app-name>
 ```
+
+The update won't go ahead if the major Postgres version in your existing Postgres app does not match that in the newest postgres-ha version.
+
+Currently, upgrading Postgres across major versions requires provisioning a new cluster and restoring your old database into it.
