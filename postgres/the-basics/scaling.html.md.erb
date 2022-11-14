@@ -9,6 +9,32 @@ order: 5
 
 You can scale VM resources for an individual machine with the `flyctl machine update` command:
 
-```
-$ fly machine update e784079b449483 --memory 1024 --app pg-test
+```cmd
+fly machine update e784079b449483 --memory 1024 --app pg-test
 ```  
+
+## Notes
+
+There 
+
+### HA clusters 
+
+* If you have more than one instance in the primary region cluster, scale them identically; they are meant to be interchangeable so the cluster can fail over if the leader fails.
+
+### Postgres resource parameters
+
+The Postgres `shared_buffers` and `max_connections` parameters are set to sensible values for the resources provisioned when you created your Postgres cluster. This means that if you scale your RAM down too far, you may end up with errors like this in your logs:
+
+```
+[info]keeper   | 2022-11-13 16:46:20.260 UTC [717] FATAL:  could not map anonymous shared memory: Cannot allocate memory
+[info]keeper   | 2022-11-13 16:46:20.260 UTC [717] HINT:  This error usually means that PostgreSQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently 1135091712 bytes), reduce PostgreSQL's shared memory usage, perhaps by reducing shared_buffers or max_connections.
+```
+
+The best remedy for this is prevention: before scaling down, adjust these values with the guidance of the [Postgres docs](https://www.postgresql.org/docs/current/runtime-config-resource.html), before scaling your resources.
+
+This can be done using `fly postgres config update`.
+
+fly postgres config update --shared-buffers 8192 -a orly
+
+
+shared-buffers            	131072 	8kB
