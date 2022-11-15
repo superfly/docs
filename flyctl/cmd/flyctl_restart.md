@@ -1,5 +1,4 @@
-The RESTART command will restart all running vms.
-
+The APPS RESTART command will perform a rolling restart against all running VM's
 
 ## Usage
 ~~~
@@ -9,7 +8,10 @@ flyctl restart [APPNAME] [flags]
 ## Options
 
 ~~~
-  -h, --help   help for restart
+  -f, --force                Will issue a restart against each Machine even if there are errors. ( Machines only )
+      --force-stop           Performs a force stop against the target Machine. ( Machines only )
+  -h, --help                 help for restart
+      --skip-health-checks   Restarts app without waiting for health checks. ( Machines only )
 ~~~
 
 ## Global Options
