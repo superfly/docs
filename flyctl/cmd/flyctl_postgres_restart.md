@@ -9,10 +9,11 @@ flyctl postgres restart [flags]
 ## Options
 
 ~~~
-  -a, --app string      Application name
-  -c, --config string   Path to application configuration file
-  -f, --force           Force a restart even we don't have an active leader
-  -h, --help            help for restart
+  -a, --app string           Application name
+  -c, --config string        Path to application configuration file
+      --force                Force a restart even we don't have an active leader
+  -h, --help                 help for restart
+      --skip-health-checks   Runs rolling restart process without waiting for health checks
 ~~~
 
 ## Global Options
