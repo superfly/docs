@@ -192,4 +192,4 @@ But if you're doing something super-custom, it's best to assume you've got somet
 
 ### UDP Must Listen On The Same Port Externally And Internally
 
-Fly will only rewrite the IP addresses for UDP packets. The destination port for inbound packets will not be rewritten. That means if your applications receives UDP traffic on port 5000 externally, the application needs to bind to `fly-global-services:5000` in order to recieve that UDP traffic.
+Fly will only rewrite the IP addresses for UDP packets. The destination port for inbound packets will not be rewritten. That means if your applications receives UDP traffic on port 5000 externally, the application needs to bind to `fly-global-services:5000` in order to receive that UDP traffic.
