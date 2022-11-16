@@ -7,8 +7,60 @@ order: 5
 
 <%= partial "../partials/for-machines" %>
 
-You can scale VM resources for an individual machine with the `flyctl machine update` command:
+You can scale VM resources for an individual machine with the [`flyctl machine update`](https://fly.io/docs/flyctl/machine-update/) command:
+
+```cmd
+fly machine update e784079b449483 --memory 1024 --app pg-test
+```  
+
+## HA clusters 
+
+If you have more than one instance in the primary region cluster, scale these VMs identically; they are meant to be interchangeable so the cluster can fail over in case of trouble.
+
+## Postgres resource parameters
+
+When you created your Fly Postgres cluster, certain Postgres configuration parameters were set to sensible values for the resources being provisioned. This means you may want to change them if you scale your VM resources. Choose values for these parameters with the guidance of the [Postgres docs](https://www.postgresql.org/docs/current/runtime-config-resource.html).
+
+View the current values for configurable Postgres parameters with [`fly postgres config view`](https://fly.io/docs/flyctl/postgres-config-view/):
+
+```cmd
+fly postgres config view
+```
+```out
+NAME                      	VALUE  	UNIT	DESCRIPTION                                                                                	PENDING RESTART
+log-min-duration-statement	-1     	ms  	Sets the minimum execution time above which all statements will be logged. (-1, 2147483647)	false
+log-statement             	none   	    	Sets the type of statements logged. [none, ddl, mod, all]                                  	false
+max-connections           	300    	    	Sets the maximum number of concurrent connections. (1, 262143)                             	false
+shared-buffers            	8192   	8kB 	Sets the number of shared memory buffers used by the server. (16, 1073741823)              	false
+shared-preload-libraries  	       	    	Lists shared libraries to preload into server.                                             	false
+wal-level                 	replica	    	Sets the level of information written to the WAL. [minimal, replica, logical]              	false
+```
+
+The `shared-buffers` value is indeed in units of 8kB, so a value of 8192 corresponds to 64MB of RAM that Postgres will use for shared buffers.
+
+If you're scaling your VMs up, do that before adjusting the Postgres config to match. If you're scaling down, adjust the cluster's Postgres parameters to match the reduced resources before scaling the VM.
+
+Use [`fly postgres config update`](https://fly.io/docs/flyctl/postgres-config-update/) to change a parameter in your cluster configuration:
+
+
+
+```cmd
+fly postgres config update --shared-buffers 16384 -a <PG-APP-NAME>
+```
+```out
+NAME          	VALUE	TARGET VALUE	RESTART REQUIRED
+shared-buffers	8192    16384           true
+
+? Are you sure you want to apply these changes? Yes
+```
+
+If you scale your RAM down too far without reducing Postgres parameters, you may end up with an unhealthy cluster and errors like this in your logs:
 
 ```
-$ fly machine update e784079b449483 --memory 1024 --app pg-test
-```  
+[info]keeper   | 2022-11-13 16:46:20.260 UTC [717] FATAL:  could not map anonymous shared memory: Cannot allocate memory
+[info]keeper   | 2022-11-13 16:46:20.260 UTC [717] HINT:  This error usually means that PostgreSQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently 1135091712 bytes), reduce PostgreSQL's shared memory usage, perhaps by reducing shared_buffers or max_connections.
+```
+
+In the above case, the `shared-buffers` parameter was too large for a VM's reduced RAM.
+
+Postgres cluster configuration applies to all instances of your Postgres app, including read replicas outside your primary region.
