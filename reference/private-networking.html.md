@@ -93,7 +93,7 @@ Examples of retrieving this information are in the [fly-examples/privatenet](htt
 
 ## Flycast Private Load Balancing
 
-Fly apps may accept traffic on a special "Flycast" private IPv6 address. This traffic is routed through the Fly proxy - like [public traffic](/reference/services/#anycast) - arriving in the geographically closest region with active VMs. Traffic is also load-balanced across live app VMs.
+Fly apps may accept traffic on a special "Flycast" private IPv6 address. This traffic is routed through the Fly proxy - like [public traffic](/docs/reference/services/#anycast) - arriving in the geographically closest region with active VMs. Traffic is also load-balanced across live app VMs.
 
 This feature might be useful in case your code can't use DNS, or you're using 3rd party software like a database that doesn't support round-robin DNS entries.
 
