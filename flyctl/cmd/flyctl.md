@@ -35,7 +35,7 @@ flyctl [flags]
 * [domains](/docs/flyctl/domains/)	 - Manage domains
 * [history](/docs/flyctl/history/)	 - List an app's change history
 * [image](/docs/flyctl/image/)	 - Manage app image
-* [info](/docs/flyctl/info/)	 - Show detailed app information
+* [info](/docs/flyctl/info/)	 - Shows information about the application
 * [ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
 * [launch](/docs/flyctl/launch/)	 - Create and configure a new app from source code or a Docker image.
 * [list](/docs/flyctl/list/)	 - Lists your Fly resources
