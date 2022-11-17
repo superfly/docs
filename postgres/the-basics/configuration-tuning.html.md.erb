@@ -1,0 +1,55 @@
+---
+title: Configuration Tuning
+objective: Learn how to tune your postgres database to your needs.
+layout: framework_docs
+order: 7
+---
+
+Through flyctl, postgres exposes a few configuration options that can be set to tune the database for your application's needs.
+But before you start tuning, it's important to understand the tradeoffs that you're making. 
+
+## View current configuration
+
+To view the current configuration, run `fly postgres config view--app <app-name>`.:
+```cmd
+fly postgres config view --app myapp
+```
+
+```output
+NAME                      	VALUE  	UNIT	DESCRIPTION                                                                                	PENDING RESTART 
+log-min-duration-statement	-1     	ms  	Sets the minimum execution time above which all statements will be logged. (-1, 2147483647)	false          	
+log-statement             	none   	    	Sets the type of statements logged. [none, ddl, mod, all]                                  	false          	
+max-connections           	300    	    	Sets the maximum number of concurrent connections. (1, 262143)                             	false          	
+shared-buffers            	131072 	8kB 	Sets the number of shared memory buffers used by the server. (16, 1073741823)              	false          	
+shared-preload-libraries  	       	    	Lists shared libraries to preload into server.                                             	false          	
+wal-level                 	replica	    	Sets the level of information written to the WAL. [minimal, replica, logical]              	false   	
+```
+For more information on these settings, see the [Postgres documentation](https://www.postgresql.org/docs/13/runtime-config.html).
+
+## Update configuration settings
+
+To demo how this works we'll update the `max-connections` setting from 300 to 500. 
+```cmd 
+fly pg config update --max-connections 500  --app <app-name>
+```
+  
+```output
+NAME           	VALUE	TARGET VALUE	RESTART REQUIRED
+max-connections	400  	500         	true
+```
+
+Now that we have issued our restart, we can take one last look at our config view and see that our max-connections value has now officially been applied!
+```cmd
+fly postgres config view --app <app-name>
+```
+
+```output
+NAME                      	VALUE  	DESCRIPTION                                                                                	PENDING RESTART
+log-min-duration-statement	-1     	Sets the minimum execution time above which all statements will be logged. (-1, 2147483647)	false
+log-statement             	none   	Sets the type of statements logged. [none, ddl, mod, all]                                  	false
+max-connections           	500    	Sets the maximum number of concurrent connections. (1, 262143)                             	false
+wal-level                 	replica	Set the level of information written to the WAL. [minimal, replica, logical]               	false
+```
+
+The current list of configurable settings is quite short… If there are additional settings you’d like to see configurable, let us know!
+

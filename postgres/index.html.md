@@ -48,6 +48,8 @@ Deploying a Fly Postgres database means you may need to manage the following:
 - **Monitoring & alerts** - Fly.io collects and exposes relevant Prometheus metrics, but you'll have to configure your own monitoring and alerts to keep tabs on the performance and resource utilization of your database instances.
 - **Recovering from outages & fail-overs** - If the volume in your database fills up, a replica fails, etc. you'll have to do a little bit of work to bring your database back online.
 - **Global replication** - You can add read-only replicas outside the primary region to [speed up read-heavy globally distributed apps](https://fly.io/blog/globally-distributed-postgres/),  by scaling your Fly Postgres app. It's up to you to tweak your application to get writes to the leader instance, but the [Fly-Replay header](https://fly.io/docs/reference/fly-replay/) simplifies that.
+- **Configutaration Tuning** - You'll need to tune your database configuration to match your application's needs. 
+There are a lot of knobs to turn, but `flyctl pg config` only supports a few of them out of the box. For more details, see [Postgres Configuration](#postgres-configuration).
 - **Advanced customization** - If your application demands additional Postgres extensions or something else in the VM, you can [fork and maintain your own branch of Fly's open source Postgres HA app](https://github.com/fly-apps/postgres-ha).
 
 ## Fully-managed Postgres
