@@ -55,7 +55,7 @@ This associates the process with the service that Fly launches.
 
 ## Deploy and test
 
-Once multiple processes are configure in the `fly.toml` file, deploy them via:
+Once multiple processes are configured in the `fly.toml` file, deploy them via:
 
 ```cmd
 fly deploy
