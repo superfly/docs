@@ -1,97 +1,27 @@
 ---
 title: Guides and Examples
 layout: docs
-toc: true
+toc: false
 nav: firecracker
 ---
 
-<% categories = HashWithIndifferentAccess.new(
-    guide: {
-      title: "Guides"
-    },
-    # performance: {
-    #   title: "Application Performance",
-    # },
-
-    # "custom domains": {
-    #   title: "Custom Domains for SaaS",
-    # },
-    # graphql: {
-    #   title: "GraphQL"
-    # },
-    app: {
-      title: "Example Applications",
-    },
-    machines: {
-      title: "Machines"
-    }
-    # proxy: {
-    #   title: "Proxies",
-    # },
-    # ci: {
-    #   title: "Deployment Tools",
-    # },
-    # msg: {
-    #   title: "Messaging"
-    # },
-    # apigw: {
-    #   title: "API Gateways"
-    # },
-    # cdn: {
-    #   title: "CDNs"
-    # },
-    # "6pn": {
-    #   title: "6PN Private Networking"
-    # },
-    # volumes: {
-    #   title: "Volumes"
-    # },
-    # certs: {
-    #   title: "Certificates"
-    # }
-  ).map { |k, v| [k, OpenStruct.new(v)] }
-  guides = sitemap.resources.select { |r| r.path =~ %r{^docs/app-guides/} }.map do |page|
-    OpenStruct.new(
-      { url: page.url }.merge(page.data)
-    )
-  end
-
-  new_guides = guides
-
-  guides.select { |g| g[:author].present? }.each do |g|
-    g[:author] = data.authors[g[:author]]
-  end
-
-  new_guides = new_guides.sort_by(&:date).reverse.first(3)
-
-  idx = HashWithIndifferentAccess.new
-  guides.each do |p|
-    p&.categories&.each do |c|
-      idx[c] ||= []
-      idx[c].push(p)
-    end
-  end
-%>
-
-<section class="grid grid-cols-1 gap-3 font-medium">
-  <% categories.each do |k, v| %>
-    <dl id="<%= k %>" class="bg-gray-100 rounded-xl p-5 text-base text-navy target:bg-violet-100">
-      <dt
-        id="h-<%= k %>"
-        class="font-heading text-xl mb-5"
-      >
-        <%= v.title %>
-      </dt>
-      <dd>
-        <ul>
-          <% idx[k].sort_by(&:title).each do |p| %>
-            <% author = p.author %>
-            <li>
-              <a href="<%= p.url %>"><%= p.title %></a>
-            </li>
-          <% end %>
-        </ul>
-      </dd>
-    </dl>
+<h2 class="group flex items-center whitespace-pre-wrap relative mt-14 mb-6 text-navy font-heading">Example Applications</h2>
+<ul>
+  <% glob("docs/app-guides/*.html.*").select{ |page| in_category?(page, categories: %w[guide]) }.sort_by{ |page| page.data.title }.each do |page| %>
+    <li><%=link_to_page page %></li>
   <% end %>
-</section>
+</ul>
+
+<h2 class="group flex items-center whitespace-pre-wrap relative mt-14 mb-6 text-navy font-heading">Machines</h2>
+<ul>
+  <% glob("docs/app-guides/*.html.*").select{ |page| in_category?(page, categories: %w[machines]) }.sort_by{ |page| page.data.title }.each do |page| %>
+    <li><%=link_to_page page %></li>
+  <% end %>
+</ul>
+
+<h2 class="group flex items-center whitespace-pre-wrap relative mt-14 mb-6 text-navy font-heading">Other Guides</h2>
+<ul>
+  <% glob("docs/app-guides/*.html.*").reject{ |page| in_category?(page, categories: %w[machines guide]) }.sort_by{ |page| page.data.title }.each do |page| %>
+    <li><%=link_to_page page %></li>
+  <% end %>
+</ul>
