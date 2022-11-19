@@ -4,6 +4,10 @@ layout: framework_docs
 order: 2
 subnav_glob: docs/django/existing/*.html.*
 objective: Learn how to run your existing Django applications on Fly.
+related_pages:
+  - /docs/django/getting-started/existing
+  - /docs/flyctl/
+  - /docs/postgres/
 ---
 
 If you have an existing Django app that you want to move over to Fly, this guide
@@ -91,9 +95,9 @@ The [Dockerfile](https://docs.docker.com/engine/reference/builder/) is essential
 
 The [`fly.toml`](https://fly.io/docs/reference/configuration/) file is used by Fly to configure applications for deployment. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here.
 
-## ALLOWED_HOSTS & CSRF_TRUSTED_ORIGINS
+## ALLOWED_HOSTS & CSRF\_TRUSTED_ORIGINS
 
-The dedicated URL for your deployment will be `<app_name>.fly.dev`. Update the [ALLOWED_HOSTS](https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts) and [CSRF_TRUSTED_ORIGINS](https://docs.djangoproject.com/en/dev/ref/settings/#csrf-trusted-origins) configurations with your `<app_name>` to include it.
+The dedicated URL for your deployment will be `<app_name>.fly.dev`. Update the [ALLOWED_HOSTS](https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts) and [CSRF\_TRUSTED\_ORIGINS](https://docs.djangoproject.com/en/dev/ref/settings/#csrf-trusted-origins) configurations with your `<app_name>` to include it.
 
 ## Deploy Your Application
 
@@ -175,12 +179,12 @@ The [Fly CLI docs](https://fly.io/docs/flyctl/) have an extensive inventory of F
 
 | Task         | Command |
 |--------------|-----------|
-| Log in | 'fly login' |
-| Launch an app | 'fly launch' |
+| Log in | `fly login` |
+| Launch an app | `fly launch` |
 | Deployments | `fly deploy` |
-| Open web dashboard | 'fly dashboard' |
-| SSH | 'fly ssh console' |
+| Open web dashboard | `fly dashboard` |
+| SSH | `fly ssh console` |
 | Tail log files | `fly logs` |
-| Secrets | 'fly secrets' |
-| View releases | `heroku releases` | `fly releases` |
-| Help | `heroku help` | `fly help` |
+| Secrets | `fly secrets` |
+| View releases | `fly releases` |
+| Help | `fly help` |

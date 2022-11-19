@@ -5,9 +5,11 @@ What's next? Well, this is only the start of your travels with Fly.
 If you're all about the code, then these guides will get you deploying from your source:
 
 * [Learn how to build and deploy the hellofly application from Go source](/docs/getting-started/golang/)
-* [Deploying a Node application with Fly.io](/docs/getting-started/node/)
 * [Deploying a Deno application with Fly.io](/docs/getting-started/deno/)
+* [Deploying a Django application with Fly.io](/docs/getting-started/django/)
+* [Deploying an Elixir application with Fly.io](/docs/getting-started/elixir/)
 * [Deploying a Laravel application with Fly.io](/docs/laravel/)
+* [Deploying a Node application with Fly.io](/docs/getting-started/node/)
 * [Deploying a Rails application with Fly.io](/docs/rails/)
 
 And if you want to automate your deployments (who doesn't), check out:

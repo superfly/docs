@@ -2,17 +2,21 @@
 title: Getting Started
 layout: framework_docs
 order: 1
+redirect_from: /docs/getting-started/django/
 subnav_glob: docs/django/getting-started/*.html.*
 objective: Build and deploy a very basic Django app on Fly. This guide is the fastest way to try using Fly, so if you're short on time start here.
 related_pages:
-  - /docs/django/existing
+  - /docs/django/getting-started/existing
+  - /docs/flyctl/
+  - /docs/reference/configuration/
+  - /docs/postgres/
 ---
 
-In this guide we will build and deploy a simple Django website to demonstrate how quickly Django apps can be deployed on Fly.io.
+In this guide we build and deploy a simple Django website to demonstrate how quickly Django apps can be deployed on Fly.io.
 
 ## Initial Set Up
 
-Make sure that [Python](https://www.python.org/) is already installed on your computer along with a way to create virtual environments. We will use [venv](https://docs.python.org/3/library/venv.html#module-venv) in this example but any of the other popular choices such as [Poetry](https://python-poetry.org/), [Pipenv](https://github.com/pypa/pipenv), or [pyenv](https://github.com/pyenv/pyenv) work too.
+Make sure that [Python](https://www.python.org/) is already installed on your computer along with a way to create virtual environments. We use [venv](https://docs.python.org/3/library/venv.html#module-venv) in this example but any of the other popular choices such as [Poetry](https://python-poetry.org/), [Pipenv](https://github.com/pypa/pipenv), or [pyenv](https://github.com/pyenv/pyenv) work too.
 
 Within a new virtual environment (called `.venv` in our example) follow the official Django docs for [Getting Started with Django](https://www.djangoproject.com/start/) to install the latest version of Django. Then create a new Django project called `demo` and a new app called `fly`.
 
