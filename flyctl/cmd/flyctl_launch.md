@@ -20,6 +20,7 @@ flyctl launch [flags]
   -e, --env strings                   Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
       --generate-name                 Always generate a name for the app, without prompting
   -h, --help                          help for launch
+      --ignorefile string             Path to a Docker ignore file. Defaults to the .dockerignore file in the working directory.
   -i, --image string                  The Docker image to deploy
       --image-label string            Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
       --local-only                    Only perform builds locally using the local docker daemon
