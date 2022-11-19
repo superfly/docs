@@ -1,18 +1,18 @@
 ---
-title: Enabling timescale
-objective: Learn how to enable timescale on your postgres database.
+title: Enabling Timescale
+objective: Learn how to enable Timescale on your postgres database.
 layout: framework_docs
 order: 8
 ---
 
-TimescaleDB is an open-source time-series database built on top of PostgreSQL. It is a powerful tool for analyzing time-series data, 
+TimescaleDB is an open source time-series database built on top of PostgreSQL. It is a powerful tool for analyzing time-series data, 
 and is a great fit for many Fly applications.
 
-This app includes the TimescaleDB extension. To enable TimescaleDB, take the following steps:
+The Fly Postgres app includes the TimescaleDB extension. To enable TimescaleDB, take the following steps:
 
-## Check postgres image version
+## Check your Postgres image version
 
-Make sure your postgres app is running >= v0.0.28.
+Make sure your Postgres app is running >= v0.0.28:
 
 ```cmd
 # View your image details
@@ -22,19 +22,19 @@ fly image show --app <app-name>
 fly image update --app <app-name>
 ```
 
-## Configure Postgres to preload the TimescaleDB library.
+## Configure Postgres to preload the TimescaleDB library
 
 ```cmd
 fly pg config update --shared-preload-libraries timescaledb --app <app-name>
 ```
 
-## Restart your Postgres app.
+## Restart your Postgres app
 
 ```cmd
 fly pg restart --app <app-name>
 ```
 
-4. Create the extension
+## Create the extension
   
 Connect to your postgres database:
 ```cmd
@@ -42,7 +42,7 @@ Connect to your postgres database:
 fly pg connect --app <app-name> --database <db-name>
 ```
 
-Then create the extension:
+From the `postgres=# %` prompt, create the extension:
 ```sql
 CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
 ```
