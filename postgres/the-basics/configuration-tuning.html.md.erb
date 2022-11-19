@@ -1,0 +1,79 @@
+---
+title: Configuration Tuning
+objective: Learn how to tune your Postgres database to your needs.
+layout: framework_docs
+order: 7
+---
+
+
+When you created your Fly Postgres cluster, Postgres configuration parameters were set to reasonable defaults for your VM resources. 
+
+flyctl exposes some of these parameters so you can tune them to your application's needs, or to match any VM scaling you do.
+
+Before you start tuning, it's important to understand the tradeoffs that you're making. Choose values for these parameters with the guidance of the [Postgres docs](https://www.postgresql.org/docs/current/runtime-config-resource.html).
+
+## View current configuration
+
+View your cluster's current configurable settings with [`fly postgres config view`](https://fly.io/docs/flyctl/postgres-config-view/):
+
+```cmd
+fly postgres config view --app <pg-app-name>
+```
+
+```output
+NAME                      	VALUE  	UNIT	DESCRIPTION                                                                                	PENDING RESTART
+log-min-duration-statement	-1     	ms  	Sets the minimum execution time above which all statements will be logged. (-1, 2147483647)	false
+log-statement             	none   	    	Sets the type of statements logged. [none, ddl, mod, all]                                  	false
+max-connections           	300    	    	Sets the maximum number of concurrent connections. (1, 262143)                             	false
+shared-buffers            	8192   	8kB 	Sets the number of shared memory buffers used by the server. (16, 1073741823)              	false
+shared-preload-libraries  	       	    	Lists shared libraries to preload into server.                                             	false
+wal-level                 	replica	    	Sets the level of information written to the WAL. [minimal, replica, logical]              	false
+```
+
+(The `shared-buffers` value is indeed in units of 8kB, so a value of 8192 corresponds to 64MB of RAM that Postgres will use for shared buffers.)
+
+
+## Update configuration settings
+
+To demo how this works we'll update the `max-connections` setting from 300 to 500 using [`fly postgres config update`](https://fly.io/docs/flyctl/postgres-config-update/). 
+
+```cmd 
+fly postgres config update --max-connections 500 --app <pg-app-name>
+```
+  
+```output
+NAME           	VALUE	TARGET VALUE	RESTART REQUIRED
+max-connections	300  	500         	true
+
+? Are you sure you want to apply these changes? Yes
+```
+
+Each VM belonging to your Postgres app will be restarted to apply the changes. If you have a replica for high availability, this is updated and restarted first, and it becomes leader before the old leader gets updated.
+
+
+We can take one last look at our config view and see that our max-connections value has now officially been applied!
+
+```cmd
+fly postgres config view --app <pg-app-name>
+```
+
+```out
+NAME                      	VALUE  	UNIT	DESCRIPTION                                                                                	PENDING RESTART
+log-min-duration-statement	-1     	ms  	Sets the minimum execution time above which all statements will be logged. (-1, 2147483647)	false
+log-statement             	none   	    	Sets the type of statements logged. [none, ddl, mod, all]                                  	false
+max-connections           	500    	    	Sets the maximum number of concurrent connections. (1, 262143)                             	false
+shared-buffers            	8192   	8kB 	Sets the number of shared memory buffers used by the server. (16, 1073741823)              	false
+shared-preload-libraries  	       	    	Lists shared libraries to preload into server.                                             	false
+wal-level                 	replica	    	Sets the level of information written to the WAL. [minimal, replica, logical]              	false
+```
+
+## Gotchas
+
+If you mismatch Postgres parameters and VM RAM, you may end up with an unhealthy cluster and errors like this in your logs:
+
+```
+[info]keeper   | 2022-11-13 16:46:20.260 UTC [717] FATAL:  could not map anonymous shared memory: Cannot allocate memory
+[info]keeper   | 2022-11-13 16:46:20.260 UTC [717] HINT:  This error usually means that PostgreSQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently 1135091712 bytes), reduce PostgreSQL's shared memory usage, perhaps by reducing shared_buffers or max_connections.
+```
+
+If you're scaling your instances up, do that before adjusting the Postgres config to match. If you're scaling down, adjust the cluster's Postgres parameters to match the reduced resources before scaling the VM.
