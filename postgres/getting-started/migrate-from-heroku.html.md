@@ -1,7 +1,7 @@
 ---
-title: Migrate from Heroku
+title: Migrate a Postgres Database from Heroku
 layout: framework_docs
-order: 2
+order: 3
 status: beta
 ---
 
