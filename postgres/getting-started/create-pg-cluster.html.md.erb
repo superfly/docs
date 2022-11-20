@@ -1,15 +1,16 @@
 ---
-title: Getting Started
+title: Create a Fly Postgres Cluster
 layout: framework_docs
-order: 1
-subnav_glob: docs/rails/getting-started/*.html.*
-objective: Quickly get a Postgres instance up and running on Fly.
+order: 2
+objective: Create a new Fly Postgres cluster.
 ---
 <div class="callout">
 If you have flyctl [**v0.0.412**](https://github.com/superfly/flyctl/releases/tag/v0.0.412) or newer installed, new Fly Postgres clusters you create will use our next-gen Apps V2 architecture, built on [**Fly Machines**](/docs/reference/machines/).
 </div>
 
 To create a Postgres cluster, use the `fly postgres create` command. The command will walk you through the creation with prompts for name, region, and VM resources.
+
+<div class="callout">Because we keep adding shorter aliases, you can use any of the following and get the same result: `flyctl postgres`, `fly postgres`, `flyctl pg`, and `fly pg`.</div>
 
 ```cmd
 fly postgres create
@@ -60,9 +61,9 @@ For example: postgres://postgres:51QstQZZ2HPcozU@pg-test.internal:5432
 
 After answering all the prompts, you'll see a message saying that the cluster is being created. Take heed of the reminder to save your password in a safe place!
 
-Your new Postgres cluster is ready to use once the deployment is complete.
+Once deployment is complete, you'll be looking to connect an app to your new Postgres cluster. There's a good chance you'll want to [attach a Fly app](docs/postgres/managing-fly-postgres/attach-detach) next.
 
-Before we get any further, note that the automated Postgres creation process doesn't generate a `fly.toml` file in the working directory. This means that when you use `flyctl` commands with Fly Postgres apps, you'll have to specify the app, like so:
+Before going any further, a note: the automated Postgres creation process doesn't generate a `fly.toml` file in the working directory. This means that when you use `flyctl` commands that would otherwise look for an app name in `fly.toml`, you'll have to specify the app, like so:
 
 ```cmd
 flyctl <command> -a <postgres-app-name>
