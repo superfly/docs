@@ -1,0 +1,91 @@
+---
+title: External Connections
+objective: Access Postgres from a different Fly internal private network, or from outside Fly.io entirely.
+layout: framework_docs
+order: 2
+---
+
+Fly Postgres databases can be used by applications outside their Fly [internal private network](/docs/reference/private-networking/); this means in a different private network belonging to your organization, in another Fly organization, or outside Fly.io altogether.
+
+This requires two adaptations: configuring your Postgres app to accept connections from the Fly proxy, and providing a publicly-resolvable hostname to your app.
+
+## Connecting external services
+
+Sometimes we need to be able to allow external services to connect to our Postgres instance.  While we don't open up any external ports by default, we can achieve this through some simple configuration changes.
+
+### Allocating an IP address
+
+If you haven't already, you will need to allocate a public IP address to your application.  You can view your list of IPs by running the following command from your application directory:
+```cmd
+fly ips list
+```
+
+You can allocate an IPv4 address by running the following:
+```cmd
+fly ips allocate-v4
+```
+If your network supports IPv6:
+```cmd
+fly ips allocate-v6
+```
+
+If you're not sure which one to use, just provision one of each and you should be good to go.
+
+
+### External port configuration
+
+Now that we have an IP address, let's configure our app to expose an external port and direct incoming requests to our Postgres instance.
+
+If you haven't already pulled down your `fly.toml` configuration file, you can do so by running:
+```cmd
+fly config save --app <app-name>
+```
+
+Now, let's open up our `fly.toml` file and configure our port mappings by defining a new `Service`.
+
+```toml
+[[services]]
+  internal_port = 5432 # Postgres instance
+  protocol = "tcp"
+
+
+# Open port 10000 for plaintext connections.
+[[services.ports]]
+  handlers = []
+  port = 10000
+```
+
+For additional information on services and service ports:
+[The services sections](https://fly.io/docs/reference/configuration/#the-services-sections)
+
+### Deploying configuration changes
+
+Once your service has been specified, it's time to deploy our new configuration.
+
+**Before running the command below, be sure to verify the version of Postgres you are running.  As an example, if you are running Postgres 12.x you would specify `flyio/postgres:14` as your target image.**
+```cmd
+fly deploy . --app <app-name> --image flyio/postgres:<major-version>
+```
+
+After the deployment completes, you can verify your `[[services]]` configuration by running the `fly info` command:
+
+```cmd
+fly info
+```
+```output
+...
+Services
+PROTOCOL PORTS
+TCP      10000 => 5432 []
+...
+```
+
+## Connection string
+
+The connection string that `fly pg create` outputs is in the form:
+
+```
+postgres://{username}:{password}@{hostname}:{port}/{database}?options
+```
+
+where the hostname is an internal one. Substitute a publicly reachable hostname here to get a connection string an external app can use.

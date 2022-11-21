@@ -1,21 +1,21 @@
 ---
-title: Migrate from Heroku
+title: Migrate a Postgres Database from Heroku
 layout: framework_docs
-order: 2
+order: 10
 status: beta
 ---
 
-This guide runs you through how to migrate a database off of Heroku and onto Fly, but before that, let's go over some major differences between Heroku's managed Postgres offering and Fly's Postgres offering.
+This guide runs you through how to migrate a database off of Heroku and onto Fly.io, but before that, let's go over some major differences between Heroku's managed Postgres offering and Fly.io's Postgres offering.
 
-First and foremost, if you deploy your Postgres database to Fly you'll be responsible for monitoring, configuring, scaling, and tuning it. If you don't provision enough disk space, your database will run out of space and stop accepting write queries. If you don't put monitoring in place for for your database, a customer might alert you to an issue.
+First and foremost, if you deploy your Postgres database to Fly.io you'll be responsible for monitoring, configuring, scaling, and tuning it. If you don't provision enough disk space, your database will run out of space and stop accepting write queries. If you don't put monitoring in place for for your database, a customer might alert you to an issue.
 
-Fly ships a set of tools that makes it easier to setup Postgres database instances, connect to their console, perform Postgres version upgrades, and create and restore snapshots of the volume where Postgres data is stored.
+Fly.io ships a set of tools that makes it easier to setup Postgres database instances, connect to their console, perform Postgres version upgrades, and create and restore snapshots of the volume where Postgres data is stored.
 
 The good news is that if you're not comfortable managing your own Postgres database, you can still deploy a Fly app that connects to your managed Heroku Postgres database.
 
 ## Provision and deploy a Postgres app to Fly
 
-Let's create a Postgres database on Fly. First we run a command to provision a database.
+Let's create a Postgres database on Fly.io. First we run a command to provision a database.
 
 ```cmd
 fly pg create -n "myapp-db"
@@ -63,7 +63,7 @@ Now we have a Fly application called `myapp-db` that's running. It's important t
 ## Transfer the Database
 
 <aside class="callout">
-  Any new data created by your Heroku app during this database migration won't be moved over to Fly. Consider taking your Heroku application offline or place in read-only mode if you want to be confident that this migration will move over 100% of your Heroku data to Fly.
+  Any new data created by your Heroku app during this database migration won't be moved over to Fly.io. Consider taking your Heroku application offline or place in read-only mode if you want to be confident that this migration will move over 100% of your Heroku data to Fly.io.
 </aside>
 
 Set the `HEROKU_DATABASE_URL` variable in your Fly environment by running the following from the root of your Heroku project.
@@ -133,4 +133,4 @@ myapp=# \dt
 
 ## Connect it to your application
 
-Read through [the documentation on connecting to your Postgres instances](/docs/postgres/the-basics/connecting) to start accessing your data.
+Read through [the documentation on connecting to your Postgres instances](/docs/postgres/connecting) to start accessing your data.

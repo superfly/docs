@@ -1,0 +1,196 @@
+---
+title: App Connection Examples
+objective: 
+layout: framework_docs
+titlecase: false
+order: 4
+---
+
+These examples demonstrate connections from within the same Fly.io internal IPv6 private network . To adapt them for external connections, substitute the internal hostname for one that's reachable over the public Internet.
+
+## psql
+
+If you have an active [WireGuard tunnel](/docs/reference/private-networking/#private-network-vpn) to your organization's private network, you can connect from a local machine to your Postgres cluster the same way you would from a Fly app within the same private network. For example, the following command would start an interactive terminal session on the cluster leader with `psql`:
+
+```cmd
+psql postgres://postgres:secret123@appname.internal:5432
+```
+
+You can, of course, run psql from a shell on a Fly app as well (as long as that app has psql installed).
+
+## Connecting with Ruby 
+[docs](https://github.com/ged/ruby-pg)
+
+Ruby apps use the `pg` gem to connect to postgres.
+
+```ruby
+require 'pg'
+
+# Output a table of current connections to the DB
+conn = PG.connect("postgres://postgres:secret123@postgresapp.internal:5432/yourdb")
+conn.exec( "SELECT * FROM pg_stat_activity" ) do |result|
+  puts "     PID | User             | Query"
+  result.each do |row|
+    puts " %7d | %-16s | %s " %
+      row.values_at('pid', 'usename', 'query')
+  end
+end
+```
+
+## Connecting with Rails 
+[docs](https://guides.rubyonrails.org/configuring.html#configuring-a-database)
+
+Rails apps automatically connect to the database specified in the `DATABASE_URL` environment variable.
+
+You can set this variable manually with `flyctl secrets set`
+```bash
+flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.internal:5432/yourdb
+```
+
+or by attaching the Postgres database to your Fly app.
+
+
+### Connecting with Go 
+[docs](https://github.com/jackc/pgx/wiki/Getting-started-with-pgx-through-database-sql)
+
+`pgx` is the recommended driver for connecting to postgres. It supports the standard `database/sql` interface as well as directly exposing low level / high performance APIs.
+
+First, add `github.com/jackc/pgx/v4` as a module depepdency.
+```bash
+go get github.com/jackc/pgx/v4
+```
+
+The following program will connect to the database in `DATABASE_URL` and run a query.
+```go
+package main
+
+import (
+  "database/sql"
+  "fmt"
+  "os"
+
+  _ "github.com/jackc/pgx/v4/stdlib"
+)
+
+func main() {
+  db, err := sql.Open("pgx", os.Getenv("DATABASE_URL"))
+  if err != nil {
+    fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+    os.Exit(1)
+  }
+  defer db.Close()
+
+  var greeting string
+  err = db.QueryRow("select 'Hello, world!'").Scan(&greeting)
+  if err != nil {
+    fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
+    os.Exit(1)
+  }
+
+  fmt.Println(greeting)
+}
+```
+
+### Connecting with Node.js 
+[docs](https://node-postgres.com)
+
+You'll use the `pg` npm module to connect to Postgres from a Node.js app.
+
+```javascript
+const { Client } = require('pg')
+const client = new Client({connectionString: process.env.DATABASE_URL})
+
+await client.connect()
+const res = await client.query('SELECT $1::text as message', ['Hello world!'])
+console.log(res.rows[0].message) // Hello world!
+await client.end()
+```
+
+### Connecting with Prisma – Node.js 
+[docs](https://www.prisma.io/)
+
+Prisma is an open-source object-relational mapper (ORM) for Node.js and works with both JavaScript and TypeScript. It consists of 3 components:
+- Prisma Client - a type-safe query builder 
+- Prisma Migrate - a data modeling and migration tool
+- Prisma Studio - a modern intuitive GUI for interacting with your database
+
+
+<details>
+<summary>Set up Prisma in your project</summary>
+
+Install the Prisma CLI and Prisma Client dependencies in your project
+
+```
+npm i --save-dev prisma
+npm i @prisma/client
+```
+
+Initialize Prisma in your project:
+
+```
+npx prisma init
+```
+This command does the following:
+- Creates a folder called `prisma` at the root of your project
+- Creates a `.env` file at the root of your project if it doesn't exist
+- Creates a `schema.prisma` file inside the `prisma` folder. This is the file that you will use to model your data
+
+Update the `DATABASE_URL` in the `.env` to your PostgreSQL database
+```
+DATABASE_URL="postgres://postgres:secret123@postgresapp.internal:5432/yourdb"
+```
+
+If you are working in a brownfield project, you can introspect your database to generate the models in your `schema.prisma` file:
+
+```
+npx prisma db pull
+```
+
+</details>
+
+Assuming you have the following model in your `schema.prisma` file:
+
+Add a model to your `schema.prisma` file:
+
+```groovy
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider  = "prisma-client-js"
+}
+
+model Post {
+  id       Int     @id @default(autoincrement())
+  title    String
+  content  String?
+}
+```
+
+You can query your database using Prisma as follows: 
+```typescript
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const posts = await prisma.post.findMany()
+
+  const newPost = await prisma.post.create({
+    data: {
+      title: 'PostgreSQL on Fly',
+      content: 'https://fly.io/docs/reference/postgres'
+    }
+  })
+}
+
+main()
+  .catch((e) => {
+    throw e
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+  })
+```
