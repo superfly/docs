@@ -147,12 +147,6 @@ If you prefer, this can be run as one command instead:
 fly ssh console -C 'python /code/manage.py createsuperuser'
 ```
 
-<!-- `fly ssh console` doesn't take WORKDIR from the Dockerfile into account, but pre-release commands will take WORKDIR into account since basically CMD being passed to ENTRYPOINT
-
-https://community.fly.io/t/workdir-not-working/8533/3
-
--->
-
 ### Secrets
 
 Secrets allow sensitive values, such as credentials and API keys, to be securely passed to your Django applications. You can set, remove, or list all secrets with the [fly secrets](https://fly.io/docs/reference/secrets/) command.
