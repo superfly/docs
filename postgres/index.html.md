@@ -50,7 +50,7 @@ Deploying a Fly Postgres database means you may need to manage the following:
 - **Global replication** - You can add read-only replicas outside the primary region to [speed up read-heavy globally distributed apps](https://fly.io/blog/globally-distributed-postgres/),  by scaling your Fly Postgres app. It's up to you to tweak your application to get writes to the leader instance, but the [Fly-Replay header](https://fly.io/docs/reference/fly-replay/) simplifies that.
 - **Configutaration Tuning** - You'll need to tune your database configuration to match your application's needs. 
 There are a lot of knobs to turn, but `flyctl pg config` only supports a few of them out of the box. For more details, see [Postgres Configuration](#postgres-configuration).
-- **Advanced customization** - If your application demands additional Postgres extensions or something else in the VM, you can [fork and maintain your own branch of Fly's open source Postgres HA app](https://github.com/fly-apps/postgres-ha).
+- **Advanced customization** - If your application demands additional Postgres extensions or something else in the VM, you can [fork and maintain your own branch of Fly's open source Postgres HA app](https://github.com/fly-apps/postgres-ha). Unless of course you want to add timescale which is already included in the default image and can be enabled with these [instructions](https://fly.io/docs/postgres/managing/enabling-timescale/).
 
 ## Fully-managed Postgres
 
