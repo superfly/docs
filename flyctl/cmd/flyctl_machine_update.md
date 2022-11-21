@@ -23,7 +23,9 @@ flyctl machine update [machine_id] [flags]
   -p, --port strings         Exposed port mappings (format: edgePort[:machinePort]/[protocol[:handler]])
       --schedule string      Schedule a machine run at hourly, daily and monthly intervals
   -s, --size string          Preset guest cpu and memory for a machine, defaults to shared-cpu-1x
+      --skip-health-checks   Updates machine without waiting for health checks.
   -v, --volume strings       Volumes to mount in the form of <volume_id_or_name>:/path/inside/machine[:<options>]
+  -y, --yes                  Accept all confirmations
 ~~~
 
 ## Global Options
