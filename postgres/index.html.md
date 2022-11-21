@@ -5,7 +5,7 @@ redirect_from: /docs/reference/postgres/
 ---
 
 <div class="callout">
-Fly Postgres clusters created with flyctl [v0.0.412](https://github.com/superfly/flyctl/releases/tag/v0.0.412) or newer use our next-gen Apps V2 architecture, built on [Fly Machines](/docs/reference/machines/). Older Fly Postgres clusters will continue to work, powered by Nomad. Docs for these databases can be found here:
+Fly Postgres clusters created with flyctl [v0.0.412](https://github.com/superfly/flyctl/releases/tag/v0.0.412) or newer use our next-gen Apps V2 architecture, built on [Fly Machines](/docs/reference/machines/). Existing Fly Postgres clusters will continue to work, powered by Nomad. Docs for these databases can be found here:
 <ul>
   <li>
     <a href="/docs/reference/postgres-on-nomad/">Fly Postgres on Apps V1</a>
@@ -16,11 +16,12 @@ Fly Postgres clusters created with flyctl [v0.0.412](https://github.com/superfly
 </ul>
 </div>
 
-Before using Fly Postgres, read [our guide on what to expect](/docs/postgres/read-me-first).
-
 [Postgres](https://www.postgresql.org/), formally known as PostgreSQL, is a powerful open source object relational database system that's used by many popular web frameworks to persist application data.
 
 Fly Postgres is a Fly app with flyctl sugar on top to help you bootstrap and manage a database cluster for your apps. It comes with most commonly used functionality (replication, failover, metrics, monitoring and daily snapshots).
+
+**[Read about why Fly Postgres is not the same thing as a managed database service](/docs/postgres/getting-started/what-you-should-know).**
+
 
 When you create a Fly Postgres cluster, you're offered several preset configurations. The "High Availability" options are two-node clusters. In case of a node failure, a HA Fly Postgres cluster will automatically take the bad actor out of the picture and, if necessary, fail over leadership to the healthy node.
 
