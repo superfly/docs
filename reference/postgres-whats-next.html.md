@@ -34,6 +34,6 @@ Check the docs for more information: [High Availability and Global Replication](
 
 Looking for more? See how to:
 
-* [Connect to Fly Postgres](/docs/postgres/the-basics/connecting)
-* [Attach your app](/docs/postgres/the-basics/connecting)
-* [Monitor your Postgres cluster](/docs/postgres/the-basics/monitoring)
+* [Connect to Fly Postgres](/docs/postgres/connecting/)
+* [Attach your app](/docs/postgres/managing/attach-detach/)
+* [Monitor your Postgres cluster](/docs/postgres/managing/monitoring)

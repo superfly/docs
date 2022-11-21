@@ -176,7 +176,7 @@ Make sure you have a [Postgres Fly App running](/docs/postgres/getting-started/)
 
 
 ### _Connect From a Laravel Fly App by Attachment_
-1) You can [Attach your Laravel Fly App to your Postgres Fly App](/docs/postgres/the-basics/connecting/#attaching-to-a-fly-app):
+1) You can [Attach your Laravel Fly App to your Postgres Fly App](/docs/postgres/managing/attach-detach/):
 <ul>
 <li>This should generate a database named after `<laravel-app-name>` in your Postgres Fly App</li> 
 <li>This should generate an env variable `DATABASE_URL` containing a connection string in you Laravel fly app</li>
@@ -268,7 +268,7 @@ fly deploy
 ```
 
 ### _Connect From a Local Environment_
-1) You can check out various ways to connect with your Postgres Fly App from [here](/docs/postgres/the-basics/connecting/#connecting-to-fly-postgres-from-outside-fly).
+1) You can check out various ways to connect with your Postgres Fly App from [here](/docs/postgres/connecting/).
 
 2) Once you're locally connected to your Postgres Fly App, setup your Laravel .env file to connect with the Postgres database:
 ```.env
