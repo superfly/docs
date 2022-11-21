@@ -34,7 +34,7 @@ Fly has its own command-line utility for managing apps, [flyctl](https://fly.io/
 To configure and launch the app, use the command `fly launch` and follow the wizard. You can set a name for the app, choose a default region, launch and attach a Postgresql database. You can also set up a Redis database though we will not be doing so in this example.
 
 ```cmd
-(.venv) $ fly launch
+fly launch
 ```
 ```output
 Creating app in ~/django-existing-app
@@ -104,13 +104,13 @@ The dedicated URL for your deployment will be `<app_name>.fly.dev`. Update the [
 To deploy the application use the following command:
 
 ```cmd
-(.venv) $ fly deploy
+fly deploy
 ```
 
 This will take a few seconds as it uploads your application, verifies the app configuration, builds the image, and then monitors to ensure it starts successfully. Once complete visit your app with the following command:
 
 ```cmd
-(.venv) $ fly open
+fly open
 ```
 
 If everything went as planned you will see your Django application homepage.
@@ -125,7 +125,7 @@ If your application didn't boot on the first deploy, run `fly logs` to see
 what's going on.
 
 ```cmd
-(.venv) $ fly logs
+fly logs
 ```
 
 This shows the past few log file entries and tails your production log
@@ -136,7 +136,7 @@ files. [Additional flags](https://fly.io/docs/flyctl/logs/) are available for fi
 To SSH into your hosted Django application use the command `fly ssh console`. For example, to execute Django's `createsuperuser` command to log into the admin do the following:
 
 ```cmd
-(.venv) $ fly ssh console
+fly ssh console
 # cd code
 # python manage.py createsuperuser
 ```
@@ -144,7 +144,7 @@ To SSH into your hosted Django application use the command `fly ssh console`. Fo
 If you prefer, this can be run as one command instead:
 
 ```cmd
-(.venv) $ `fly ssh console -C 'python /code/manage.py createsuperuser'`
+fly ssh console -C 'python /code/manage.py createsuperuser'
 ```
 
 <!-- `fly ssh console` doesn't take WORKDIR from the Dockerfile into account, but pre-release commands will take WORKDIR into account since basically CMD being passed to ENTRYPOINT

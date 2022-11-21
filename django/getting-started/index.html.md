@@ -18,11 +18,18 @@ In this guide we build and deploy a simple Django website to demonstrate how qui
 
 Make sure that [Python](https://www.python.org/) is already installed on your computer along with a way to create virtual environments. We use [venv](https://docs.python.org/3/library/venv.html#module-venv) in this example but any of the other popular choices such as [Poetry](https://python-poetry.org/), [Pipenv](https://github.com/pypa/pipenv), or [pyenv](https://github.com/pyenv/pyenv) work too.
 
-Within a new virtual environment (called `.venv` in our example) follow the official Django docs for [Getting Started with Django](https://www.djangoproject.com/start/) to install the latest version of Django. Then create a new Django project called `demo` and a new app called `fly`.
+Within a new virtual environment, follow the official Django docs for [Getting Started with Django](https://www.djangoproject.com/start/) to install the latest version of Django.
+
+Create a new Django project called `demo`.
 
 ```cmd
-(.venv) $ django-admin startproject demo .
-(.venv) $ python manage.py startapp fly
+django-admin startproject demo .
+```
+
+Now create a new app called `fly`.
+
+```cmd
+python manage.py startapp fly
 ```
 
 Add the new `fly` app to the `INSTALLED_APPS` configuration in the `demo/settings.py` file.
@@ -79,11 +86,16 @@ urlpatterns = [
 ]
 ```
 
-That's it! Run the `migrate` command to initialize our local database and then `runserver` to start up Django's local web server.
+That's it! Run the `migrate` command to initialize our local database.
 
 ```cmd
-(.venv) $ python manage.py migrate
-(.venv) $ python manage.py runserver
+python manage.py migrate
+```
+
+Now `runserver` to start up Django's local web server.
+
+```cmd
+python manage.py runserver
 ```
 
 If you open `http://127.0.0.1:8000/` in your web browser it now displays the text "Hello, Fly!"
@@ -102,13 +114,13 @@ ALLOWED_HOSTS = ["*"]  # new
 Second, install [Gunicorn](https://gunicorn.org/) as our production server.
 
 ```cmd
-(.venv) $ python -m pip install gunicorn
+python -m pip install gunicorn
 ```
 
 Third, create a `requirements.txt` file listing all the packages in the current Python virtual environment.
 
 ```cmd
-(.venv) $ pip freeze > requirements.txt
+pip freeze > requirements.txt
 ```
 
 That's it! We're ready to deploy on Fly.
@@ -123,7 +135,7 @@ Fly has its own command-line utility for managing apps, [flyctl](https://fly.io/
 To configure and launch the app, run the `fly launch` command and follow the wizard. You can set a name for the app and choose a default region. You can also choose to launch and attach a Postgresql database and/or a Redis database though we are not using either in this example.
 
 ```cmd
-(.venv) $ fly launch
+fly launch
 ```
 ```output
 Creating app in ~/django-hello-fly
@@ -155,13 +167,13 @@ We do not have [static files](https://docs.djangoproject.com/en/dev/howto/static
 To deploy the application use the following command:
 
 ```cmd
-(.venv) $ fly deploy
+fly deploy
 ```
 
 This will take a few seconds as it uploads your application, verifies the app configuration, builds the image, and then monitors to ensure it starts successfully. Once complete visit your app with the following command:
 
 ```cmd
-(.venv) $ fly open
+fly open
 ```
 
 You are up and running! Wasn't that easy?
