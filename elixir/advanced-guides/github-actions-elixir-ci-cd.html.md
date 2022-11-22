@@ -163,6 +163,12 @@ out some additional steps that can be added to your workflow.
   on the project. Refer to the project for tips on caching the PLT.
 - Customize the `mix test` command to include [code coverage](https://hexdocs.pm/mix/main/Mix.Tasks.Test.html#module-coverage) checks.
 - Add Node setup and caching if `npm` assets are part of the project's test suite.
+- Add a step to run [mix_audit](https://github.com/mirego/mix_audit). This provides
+  a `mix deps.audit` task to scan a project's Mix dependencies for known Elixir
+  security vulnerabilities
+- Add a step to run [`mix hex.audit`](https://hexdocs.pm/hex/Mix.Tasks.Hex.Audit.html).
+  This shows all Hex dependencies that have been marked as retired, which the
+  package maintainers no longer recommended using.
 
 ### Benefits of Caching
 
@@ -199,7 +205,7 @@ format to identify which cache file is for what.
 
 Continuous deployment is a software development practice that automatically
 builds and releases the project into production when new changes pass automated
-checks and a merged to the main branch. Using this practice, it is common to
+checks and are merged to the main branch. Using this practice, it is common to
 release new versions of the applications multiple times a day, ideally, without
 users even being aware of the process.
 
