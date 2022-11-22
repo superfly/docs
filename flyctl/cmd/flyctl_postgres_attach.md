@@ -13,9 +13,9 @@ flyctl postgres attach [POSTGRES APP] [flags]
   -c, --config string          Path to application configuration file
       --database-name string   The designated database name for this consuming app.
       --database-user string   The database user to create. By default, we will use the name of the consuming app.
-      --force                  Force attach (bypass confirmation)
   -h, --help                   help for attach
       --variable-name string   The environment variable name that will be added to the consuming app.  (default "DATABASE_URL")
+  -y, --yes                    Accept all confirmations
 ~~~
 
 ## Global Options
