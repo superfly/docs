@@ -1,6 +1,5 @@
 Update Postgres configuration.
 
-
 ## Usage
 ~~~
 flyctl postgres config update [flags]
@@ -10,9 +9,7 @@ flyctl postgres config update [flags]
 
 ~~~
   -a, --app string                          Application name
-      --auto-confirm                        Will automatically confirm changes without an interactive prompt.
   -c, --config string                       Path to application configuration file
-      --confirm-restart                     Will automatically confirm restart without an interactive prompt.
       --detach                              Return immediately instead of monitoring deployment progress
       --force                               Skips pg-setting value verification.
   -h, --help                                help for update
@@ -22,6 +19,7 @@ flyctl postgres config update [flags]
       --shared-buffers string               Sets the amount of memory the database server uses for shared memory buffers
       --shared-preload-libraries string     Sets the shared libraries to preload. (comma separated string)
       --wal-level string                    Sets the level of information written to the WAL. (minimal, replica, logical).
+  -y, --yes                                 Accept all confirmations
 ~~~
 
 ## Global Options

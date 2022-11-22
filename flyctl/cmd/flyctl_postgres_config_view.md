@@ -1,6 +1,5 @@
 View your Postgres configuration
 
-
 ## Usage
 ~~~
 flyctl postgres config view [flags]
