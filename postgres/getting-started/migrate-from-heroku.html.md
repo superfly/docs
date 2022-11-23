@@ -72,7 +72,7 @@ Set the `HEROKU_DATABASE_URL` variable in your Fly environment by running the fo
 fly secrets set HEROKU_DATABASE_URL=$(heroku config:get DATABASE_URL) -a myapp-db
 ```
 
-Verify your Heroku HEROKU_DATABASE_URL secret is in the Fly Postgres app.
+Verify your Heroku `HEROKU_DATABASE_URL` secret is in the Fly Postgres app.
 
 ```cmd
 fly secrets list -a myapp-db
