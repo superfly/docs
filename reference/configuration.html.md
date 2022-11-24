@@ -13,9 +13,7 @@ You don't need to create a `fly.toml` file by hand. Running [flyctl launch](/doc
 
 *VSCode users*: Install the [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml) extension for automatic `fly.toml` validation and hints drawn from this documentation.
 
-## _Fly.toml - line by line_
-
-### The `app` name
+## The `app` name
 
 The first key/value in any `fly.toml` file is the application name. This will also be used to create the host name that the application will use by default. For example:
 
@@ -25,11 +23,11 @@ app = "restless-fire-6276"
 
 Whenever `flyctl` is run, it will look for a `fly.toml` file in the current directory and use the application name in that file. This behavior can be overridden by using the `-a` flag to set the application name, or on some commands (such as `deploy`) by using a `-c` flag to point to a different `fly.toml` file.
 
-### Runtime options
+## Runtime options
 
 Various options are available to control the life-cycle of a running application. These are optional and can be placed at the top level of the `fly.toml` file:
 
-#### `kill_signal` option
+### `kill_signal` option
 
 When shutting down a Fly app instance, by default, Fly sends a `SIGINT` signal to the running process. Typically this triggers a hard shutdown option on most applications. The `kill_signal` option allows you to change what signal is sent so that you can trigger a softer, less disruptive shutdown. Options are `SIGINT` (The default), `SIGTERM`, `SIGQUIT`, `SIGUSR1`, `SIGUSR2`, `SIGKILL`, or `SIGSTOP`. For example, to set the kill signal to SIGTERM, you would add:
 
@@ -37,7 +35,7 @@ When shutting down a Fly app instance, by default, Fly sends a `SIGINT` signal t
 kill_signal = "SIGTERM"
 ```
 
-#### `kill_timeout` option
+### `kill_timeout` option
 
 When shutting down a Fly app instance, by default, after sending a signal, Fly gives an app instance five seconds to close down before being killed. Depending on the type of VM, this timeout can be adjusted. Shared VMs can extend it to 300 seconds (five minutes). Dedicated VMs can extend the timeout to 86400 seconds (twenty-four hours). To set the timeout to two minutes, you would add:
 
@@ -45,11 +43,11 @@ When shutting down a Fly app instance, by default, after sending a signal, Fly g
 kill_timeout = 120
 ```
 
-
-### The `build` section
+## The `build` section
 
 The optional build section contains key/values concerned with how the application should be built. You can read more about builders in [Builders and Fly](/docs/reference/builders/)
-#### builder
+
+### builder
 
 ```toml
 [build]
@@ -61,7 +59,7 @@ The builder "builder" uses CNB Buildpacks and Builders to create the application
 
 In our example above, the builder is being set to use [Paketo's all-purpose builder](https://paketo.io) with the NodeJS buildpack.
 
-#### Specify a Docker image
+### Specify a Docker image
 
 ```toml
 [build]
@@ -69,7 +67,8 @@ In our example above, the builder is being set to use [Paketo's all-purpose buil
 ```
 
 The image builder is used when you want to immediately deploy an existing public image. When deployed, there will be no build process; the image will be prepared and uploaded to the Fly infrastructure as is. This option is useful if you already have a working Docker image you want to deploy on Fly or you want a well known Docker image from a repository to be run.
-#### Specify a Dockerfile
+
+### Specify a Dockerfile
 
 ```toml
 [build]
@@ -80,7 +79,7 @@ The image builder is used when you want to immediately deploy an existing public
 
 This option will not change the Docker context path, which is set to the project root directory by default. If you want the `Dockerfile` to use its containing directory as the context root, use `fly deploy <directory>`.
 
-#### Specify a multistage Docker build target
+### Specify a multistage Docker build target
 
 ```toml
 [build]
@@ -89,7 +88,7 @@ This option will not change the Docker context path, which is set to the project
 
 If your Dockerfile has [multiple stages](https://docs.docker.com/develop/develop-images/multistage-build/), you can specify one as the target for deployment. The target stage must have a `CMD` or `ENTRYPOINT` set.
 
-#### Specify Docker build arguments
+### Specify Docker build arguments
 
 You can pass [build-time arguments](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg) to both Dockerfile and Buildpack builds using the `[build.args]` sub-section:
 
@@ -109,11 +108,11 @@ RUN echo $GIT_REVISION > REVISION
 
 Likewise, application environment variables and secrets are not available to builds.
 
-### The `deploy` section
+## The `deploy` section
 
 This section configures deployment-related settings such as the release command or deployment strategy.
 
-#### Run one-off commands before releasing a deployment
+### Run one-off commands before releasing a deployment
 
 ```toml
 [deploy]
@@ -130,7 +129,7 @@ To ensure the command runs in a specific region - say `dfw` - set `PRIMARY_REGIO
 
 The environment variable `RELEASE_COMMAND=1` is set for you within the temporary release VM. This might be useful if you need to customize your Dockerfile `ENTRYPOINT` to behave differently within a release VM.
 
-#### Picking a deployment strategy
+### Picking a deployment strategy
 
 ```toml
 [deploy]
@@ -153,7 +152,7 @@ The available strategies are:
 
 Note: If `max-per-region` is set to 1, the default strategy is set to `rolling`. This happens because `canary` needs to temporarily run more than one VM to work correctly. The `bluegreen` strategy will behave similarly with `max-per-region` set to 1.
 
-### The `env` variables section
+## The `env` variables section
 
 ```toml
 [env]
@@ -170,7 +169,7 @@ Env variable names are strictly case-sensitive and cannot begin with `FLY_` (as 
 
 Secrets take precedence over env variables with the same name.
 
-### The `statics` sections
+## The `statics` sections
 
 When `statics` are set, requests under `url_prefix` that are present as files in `guest_path` will be delivered directly to clients, bypassing your web server. These assets are extracted from your Docker image and delivered directly from our proxy on worker hosts.
 
@@ -182,7 +181,8 @@ When `statics` are set, requests under `url_prefix` that are present as files in
 Each `[[statics]]` block maps a URL prefix to a path inside your container. You can have up to 10 mappings in an application.
 
 The "guest path" --- the path inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
-#### Caveats
+
+### Caveats
 
 This feature should not be compared directly with a CDN, for the following reasons.
 
@@ -196,7 +196,7 @@ Assets are not delivered, by default, from all edge Fly regions. Rather, assets 
 
 `statics` does not honor symlinks. So, if `/app/public` in your container is actually a symlink to something like `/app-39403/public`, you'll want to use the absolute original path in your statics configuration.
 
-### The `services` sections
+## The `services` sections
 
 The `services` sections configure the mapping of ports on the application to ports and services on the Fly platform. These mappings determine how connections to the application will be handled on their journey from the Fly edge network to running Fly applications.
 
@@ -217,7 +217,7 @@ The `services` section itself is a table of tables in TOML, so the section is de
 * `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `protocol` : The protocol that this service will use to communicate. Typically `tcp` for most applications, but can also be `udp`.
 
-#### `services.concurrency`
+### `services.concurrency`
 
 The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and [scaling](/docs/reference/scaling).
 
@@ -239,9 +239,7 @@ This section is a simple list of key/values, so the section is denoted with sing
 * `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
 * `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application support doing so.
 
-
-
-#### `services.ports`
+### `services.ports`
 
 For each external port you want to accept connections on, you will need a `services.ports` section. One for each port, the section is denoted by double square brackets like this:
 
@@ -278,7 +276,7 @@ For UDP applications make sure to bind the application to the same port as defin
     port = 5000
 ```
 
-#### `services.ports.tls_options`
+### `services.ports.tls_options`
 
 Configure the TLS versions and ALPN protocols that Fly's edge will use to terminate TLS for your application with:
 
@@ -303,7 +301,7 @@ One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS 
     tls_options = { "alpn" = ["h2"], }
 ```
 
-#### `services.tcp_checks`
+### `services.tcp_checks`
 
 When a service is running, the Fly platform checks up on it by connecting to a port. The `services.tcp_checks` section defines parameters for those checks. For example, the default tcp\_checks look like this:
 
@@ -322,7 +320,7 @@ When a service is running, the Fly platform checks up on it by connecting to a p
 
 Times are in milliseconds unless units are specified.
 
-#### `services.http_checks`
+### `services.http_checks`
 
 Another way of checking a service is running is through HTTP checks as defined in the `services.http_checks` section. These checks are more thorough than tcp\_checks as they require not just a connection but a successful HTTP status in response (i.e, 2xx). Here is an example of a `services.http_checks` section:
 
@@ -372,6 +370,43 @@ The `source` is a volume name that this app should mount. Any volume with this n
 ### `destination`
 
 The `destination` is directory where the `source` volume should be mounted on the running app.
+
+## The `checks` section
+
+This section lets you define checks for apps outside of their `[[services]]` (or for apps without any services).
+
+It's has a few differences with service checks:
+- You need to provide a port
+- You need to provide a name
+- You need to specify the type of th check
+
+```toml
+[checks]
+  [checks.name_of_your_http_check]
+    grace_period = "30s"
+    interval = "15s"
+    method = "get"
+    path = "/path/to/status"
+    port = 5500
+    timeout = "10s"
+    type = "http"
+  [checks.name_of_your_tcp_check]
+    grace_period = "30s"
+    interval = "15s"
+    port = 1234
+    timeout = "10s"
+    type = "tcp"
+```
+
+Fields are very similar to `[[services.checks]]`:
+
+* `port`: Internal port to connect to. Needs to be available on `0.0.0.0`.
+* `type`: Either `tcp` or `http`.
+* `grace_period`: The time to wait after a VM starts before checking its health.
+* `interval`: The time in milliseconds between connectivity checks.
+* `method`: The HTTP method to be used for the check.
+* `path`: The path of the URL to be requested.
+* `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
 
 ## The `processes` section
 
