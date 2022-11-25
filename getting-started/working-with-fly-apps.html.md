@@ -8,7 +8,7 @@ nav: firecracker
 Once you have deployed a Fly application, you can view information about it, give the system secrets to share with it, and associate it with a custom domain. 
 
 
-## Viewing Applications
+## _Viewing Applications_
 
 `flyctl` can reveal useful information about the application: 
 
@@ -99,7 +99,7 @@ The log lines consist of an ISO format date and time, the allocation id - the id
 is recording an unhandled, and in this case incomplete, log line. It is also possible to filter by region or instance id. Consult the [flyctl documentation for logs](/docs/flyctl/logs/).
 
 
-## Working with Secrets
+## _Working with Secrets_
 
 Passing information, like credentials, to an application is handled through Fly's secrets. Create a secret value with a name and when the application runs, the secret will be available in the applications environment variables. Say we want to pass BANKPASSWORD to our sample application. In our node.js application, we can access that secret by using this code:
 
@@ -141,7 +141,7 @@ VERSION   TYPE      STATUS   DESCRIPTION       USER                 DATE
 v11       release            Secrets updated   demo@fly.io          just now
 ```
 
-## Fly and Custom Domains
+## _Fly and Custom Domains_
 
 When you create a Fly app, it is automatically given a fly.dev sub-domain, based on the app's name. This is great for testing but when you want to go to full production you'll want your application to appear on your own domain and have HTTPS set up for you as it is with your .fly.dev domain. That's where the `flyctl certs` command comes in. But let's step back before we set up the TLS certificate, to the first step: **Directing Traffic To Your Site**.
 
