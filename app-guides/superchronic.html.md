@@ -58,7 +58,7 @@ At the bottom of the `fly.toml` file, add the following:
 ```
 [processes]
   # The command below is used to launch a Rails server; be sure to
-  # replace with the command you're using to launcy your server.
+  # replace with the command you're using to launch your server.
   web = "bin/rails fly:server"
   cron = "cron"
 ```
