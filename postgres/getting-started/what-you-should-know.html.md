@@ -23,7 +23,7 @@ This is not a managed database. If Postgres crashes because it ran out of memory
 
 Deploying a Fly Postgres database means you may need to manage the following:
 
-- **Scaling storage and memory resources** - If your database is runs out of disk space or memory, you'll have to scale it up, or down if you don't need the resources.
+- **Scaling storage and memory resources** - If your database runs out of disk space or memory, you'll have to scale it up, or down if you don't need the resources.
 - **Upgrading Postgres versions & security patches** - Fly.io provides tools like `fly image update` to upgrade your database instances to new minor versions of Postgres, but you'll have to run the upgrades yourself. Same for security patches: you'll have to apply those to running Postgres clusters.
 - **Developing a database backup & restoration plan** - Fly.io's self-managed Postgres ships with a basic daily volume snapshot tool that keeps snapshots around for 7 days. It does not manage off-site backups, etc.
 - **Monitoring & alerts** - Fly.io collects and exposes relevant Prometheus metrics, but you'll have to configure your own monitoring and alerts to keep tabs on the performance and resource utilization of your database instances.
