@@ -1,5 +1,5 @@
 ---
-title: Crontab with Superchronic
+title: Crontab with Supercronic
 layout: docs
 sitemap: false
 nav: firecracker
@@ -7,6 +7,7 @@ author: brad
 categories:
   - cron
 date: 2022-11-19
+redirect_from: /docs/app-guides/superchronic/
 ---
 
 `crontab` is a little too opinionated for containers—it's a great little tool, but when run inside of containers it doesn't grab `ENV` vars how we'd like it to. Fortunately there's a Go binary called `supercronic` that's a drop-in replacement for containers.
@@ -29,9 +30,9 @@ If you need to run a job every 5 minutes, your `crontab` file would something li
 
 Check out [cron.help](https://cron.help) if you need a quick crontab syntax reference.
 
-## Install `superchronic` in the container
+## Install `supercronic` in the container
 
-The [latest releases for superchronic](https://github.com/aptible/supercronic/releases) are on [Github](https://github.com/aptible/supercronic), where they include copy pasta 🍝instructions for getting it in your Dockerfile. As of November 2022, the current version of `superchronic` is v0.2.1. You'll want to check the [releases page](https://github.com/aptible/supercronic/releases) for the latest version, but here's what it looks like now:
+The [latest releases for supercronic](https://github.com/aptible/supercronic/releases) are on [Github](https://github.com/aptible/supercronic), where they include copy pasta 🍝instructions for getting it in your Dockerfile. As of November 2022, the current version of `supercronic` is v0.2.1. You'll want to check the [releases page](https://github.com/aptible/supercronic/releases) for the latest version, but here's what it looks like now:
 
 ```
 # Latest releases available at https://github.com/aptible/supercronic/releases
@@ -49,7 +50,7 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
 COPY crontab crontab
 ```
 
-After you put that in your Dockerfile, we're going to configure Fly to run only once instance of `superchronic`. Why? Because if you have a cronjob that does something like deliver emails to customers, you only want them to get that once. The last thing you want is them getting as many emails from your services that matches the number of instances you're running.
+After you put that in your Dockerfile, we're going to configure Fly to run only once instance of `supercronic`. Why? Because if you have a cronjob that does something like deliver emails to customers, you only want them to get that once. The last thing you want is them getting as many emails from your services that matches the number of instances you're running.
 
 ## Setup a web &amp; cront process
 
@@ -75,7 +76,7 @@ This change tells Fly that your `web` processes that you defined under `[process
 
 ## Deploy &amp; scale the new processes
 
-Now that we've added `superchronic` to our `Dockerfile`, put the `crontab` at the root of our project folder, and reconfigured the `fly.toml` file, we're ready to deploy to production.
+Now that we've added `supercronic` to our `Dockerfile`, put the `crontab` at the root of our project folder, and reconfigured the `fly.toml` file, we're ready to deploy to production.
 
 ```
 $ fly deploy
