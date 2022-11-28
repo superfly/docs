@@ -1,18 +1,9 @@
 ---
-title: Working With the Machines API
-layout: docs
-cover: https://fly.io/blog/2022-05-24/machine-whack-a-mole.jpg
-sitemap: false
-description: Fly Machines are VMs with a fast REST API that can boot in about 300ms globally. Learn how to use the API to start, stop, configure and query machines.
-nav: firecracker
+title: Working with the Machines API
+objective: Get familiar with the Fly Machines API
+layout: framework_docs
+order: 1
 ---
-
-Fly Machines are [Firecracker VMs](https://firecracker-microvm.github.io/) with a fast REST API that can boot instances in about 300ms, in any region supported by [Fly.io](https://fly.io/docs/reference/regions/).
-
-The Machines API gives you efficient, low-level control over VM provisioning, supported by Fly.io infrastructure and networking features.
-
-Machines are also the spawning ground for new platform features like *wake-on-request* (also known as *scale-to-zero*). You can
-stop a running machine to save on compute costs. It then may be started automatically when a request arrives at the Fly proxy.
 
 This document covers usage of the Machines REST API to start, stop, update and interact with machines. For the impatient, [flyctl also provides commands](https://fly.io/docs/flyctl/machine/) for experimenting with the API.
 
@@ -75,7 +66,7 @@ You'll still need to replace the application name and machine ID for commands to
 
 ### Authentication
 
-All requests must include the fly API Token in the HTTP Headers as follows:
+All requests must include the the fly API Token in the HTTP Headers as follows:
 
 ```
 Authorization: Bearer <fly_api_token>
@@ -85,7 +76,7 @@ Authorization: Bearer <fly_api_token>
 
 Machines must be associated with a Fly application. App names must be unique.
 
-<%= partial "machines/create_app_req" %>
+<%= partial "/docs/reference/machines/create_app_req" %>
 
 ### Allocate an IP address for global request routing
 
@@ -107,14 +98,14 @@ The app will answer on this IP address, and after a small delay, at `user-functi
 ### Get application details
 
 Get details about an application, like its organization slug and name. Also, to check if the app exists!
-<%= partial "machines/get_app_req" %>
-<%= partial "machines/get_app_resp" %>
+<%= partial "/docs/reference/machines/get_app_req" %>
+<%= partial "/docs/reference/machines/get_app_resp" %>
 
 ### Set application secrets
 
 For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly apps using `flyctl`:
 
-<%= partial "../partials/set_secrets", locals: { app_name: "user-functions" } %>
+<%= partial "/docs/partials/set_secrets", locals: { app_name: "user-functions" } %>
 
 Machines inherit secrets from the app. Existing machines must be [updated](#update-a-machine) to pick up secrets set after the machine was created.
 
@@ -164,8 +155,8 @@ The only required parameter is `image` in the `config` object. Other parameters:
   - `volume`: The volume ID, visible in `fly volumes list`, i.e. `vol_2n0l3vl60qpv635d`
   - `path`: Absolute path on the VM where the volume should be mounted. i.e. `/data`
 
-<%= partial "machines/launch_req" %>
-<%= partial "machines/launch_resp" %>
+<%= partial "/docs/reference/machines/launch_req" %>
+<%= partial "/docs/reference/machines/launch_resp" %>
 
 ### Wait for a machine to reach a Specified State
 
@@ -174,63 +165,63 @@ Wait for a machine to reach a specific state. Specify the desired state with the
 This request will block for up to 60 seconds. Set a longer timeout with the `timeout` parameter.
 
 
-<%= partial "machines/wait_req" %>
-<%= partial "machines/wait_resp" %>
+<%= partial "/docs/reference/machines/wait_req" %>
+<%= partial "/docs/reference/machines/wait_resp" %>
 
 ### Get a Machine
 
 Given a machine ID, fetch details about it.
 
-<%= partial "machines/get_req" %>
-<%= partial "machines/get_resp" %>
+<%= partial "/docs/reference/machines/get_req" %>
+<%= partial "/docs/reference/machines/get_resp" %>
 
 ### Update a Machine
 
 `region` and `name` are immutable and cannot be updated. Updating the `config` requires specifying the complete config.
 
-<%= partial "machines/update_req" %>
-<%= partial "machines/update_resp" %>
+<%= partial "/docs/reference/machines/update_req" %>
+<%= partial "/docs/reference/machines/update_resp" %>
 
 ### Stop a Machine
 
-Stopping a machine will shut down the VM, but not destroy it. The VM may be started again with `machines/start`.
+Stopping a machine will shut down the VM, but not destroy it. The VM may be started again with `machines/<id>/start`.
 
-<%= partial "machines/stop_req" %>
-<%= partial "machines/stop_resp" %>
+<%= partial "/docs/reference/machines/stop_req" %>
+<%= partial "/docs/reference/machines/stop_resp" %>
 
 ### Start a Machine
 
 Start a previously stopped machine.  Machines that are restarted are completely
 reset to their original state so that they start clean on the next run.
 
-<%= partial "machines/start_req" %>
-<%= partial "machines/start_resp" %>
+<%= partial "/docs/reference/machines/start_req" %>
+<%= partial "/docs/reference/machines/start_resp" %>
 
 ### Delete a Machine permanently
 
 Delete a machine, never to be seen again. This action cannot be undone!
 
-<%= partial "machines/delete_req" %>
-<%= partial "machines/delete_resp" %>
+<%= partial "/docs/reference/machines/delete_req" %>
+<%= partial "/docs/reference/machines/delete_resp" %>
 
 ### List machines for an app
 
-<%= partial "machines/list_req" %>
-<%= partial "machines/list_resp" %>
+<%= partial "/docs/reference/machines/list_req" %>
+<%= partial "/docs/reference/machines/list_resp" %>
 
 ### Delete a Fly application
 
 Machines should be stopped before attempting deletion. Pass `force=true` to stop and delete immediately.
 
-<%= partial "machines/delete_app" %>
+<%= partial "/docs/reference/machines/delete_app" %>
 
 ### Lease a machine
 
 Machine leases can be used to obtain an exclusive lock on modifying a machine.
 
-<%= partial "machines/lease_req" %>
-<%= partial "machines/lease_resp" %>
-<%= partial "machines/lease" %>
+<%= partial "/docs/reference/machines/lease_req" %>
+<%= partial "/docs/reference/machines/lease_resp" %>
+<%= partial "/docs/reference/machines/lease" %>
 
 ## Notes on Networking
 

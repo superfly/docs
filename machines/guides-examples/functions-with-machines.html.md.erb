@@ -1,12 +1,13 @@
 ---
-title: Running user code on Fly Machines
-layout: docs
+title: Run User Code on Fly Machines
+layout: framework_docs
 sitemap: false
 author: joshua
 categories:
   - machines
 nav: firecracker
 date: 2022-05-20
+redirect_from: /docs/app-guides/functions-with-machines/
 ---
 
 [Fly Machines](/docs/reference/machines) are [Firecracker VMs](https://firecracker-microvm.github.io/) with a fast REST API that can boot instances in about 300ms, in any region supported by [Fly.io](https://fly.io/docs/reference/regions/).
@@ -32,7 +33,7 @@ Here we'll use a [simple Fastify server](https://github.com/fly-apps/fastify-fun
 
 Pick a unique name and create the required application to group machines together. This application is also the gateway to accessing the machines from the internet.
 
-<%= partial "../reference/machines/create_app" %>
+<%= partial "/docs/reference/machines/create_app" %>
 
 Note the `network` field. This is necessary to isolate the app from other private networks on the organization.
 
@@ -46,7 +47,7 @@ fly ips allocate-v4 -a user-functions
 
 Launch a user machine by supplying a Docker image and a networking configuration. We can also [configure the machine's memory/CPU](https://fly.io/docs/reference/machines/#create-and-start-a-machine).
 
-<%= partial "../reference/machines/launch_req" %>
+<%= partial "/docs/reference/machines/launch_req" %>
 
 Machines are permanent, so keep the ID from the response handy.
 
@@ -54,19 +55,19 @@ Your users' service will boot immediately after this API call. Launch speed is a
 
 Try accessing your new machine at `https://user-functions.fly.dev`. If no requests arrive within 4 seconds, the machine will exit, but a request will force it to start back up automatically.
 
-## Launch in another region
+## Launch a Machine in another region
 
 That machine was launched in the region nearest to you. Say you want your user function to run fast for users in Australia. Let's launch another machine there.
 
 The Anycast IP you allocated will route traffic to the nearest region with a deployed machine. If it's stopped, it will start up automatically.
 
-<%= partial "../reference/machines/launch_syd_req" %>
+<%= partial "/docs/reference/machines/launch_syd_req" %>
 
-## Stopping a machine
+## Stop a machine
 
 In a FaaS environment, you'll usually want to wait for a machine to exit. You can stop them with an API call, however, if needed.
 
-<%= partial "../reference/machines/stop" %>
+<%= partial "/docs/reference/machines/stop" %>
 
 ## Start an existing machine
 
@@ -74,7 +75,7 @@ Once created, a machine may be stopped and started until you delete it. The good
 
 Use the existing machine ID again to start it:
 
-<%= partial "../reference/machines/start" %>
+<%= partial "/docs/reference/machines/start" %>
 
 The start API call only returns successfully if the machine is in a stopped state. It's safe to call start on a running machine, though. If you're unsure of the machine state, just call start and ignore the error response.
 
@@ -102,13 +103,13 @@ Here we see that one of the machine exited itself.
 
 The equivalent API call for such an overview:
 
-<%= partial "../reference/machines/list_req" %>
+<%= partial "/docs/reference/machines/list_req" %>
 
 ## Delete a machine
 
 When you're done, delete the machine:
 
-<%= partial "../reference/machines/delete" %>
+<%= partial "/docs/reference/machines/delete" %>
 
 
 ## Additional notes
