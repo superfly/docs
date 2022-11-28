@@ -2,7 +2,6 @@
 title: Migrate from Heroku
 layout: framework_docs
 order: 2
-status: beta
 ---
 
 This guide runs you through how to migrate a basic Rails application off of Heroku and onto Fly. It assumes you're running the following services on Heroku:
