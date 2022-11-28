@@ -43,7 +43,16 @@
     <%= nav_link "PlanetScale Database", href="/docs/app-guides/planetscale/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "MinIO Object Storage", href="/docs/app-guides/minio", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
   </dd>
-
+  <dt>
+    <% nav_link "/docs/machines/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
+    Fly Machines
+    <% end %>
+  </dt>
+  <dd class="mb-8 border-l border-gray-100">
+    <%= nav_link "Working with the Machines API", href="/docs/machines/working-with-machines/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+    <%= nav_link "Run User Code on Fly Machines", href="/docs/machines/guides-examples/functions-with-machines/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+    <%= nav_link "Use Terraform with Fly Machines", href="/docs/machines/guides-examples/terraform-iac-getting-started/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
+  </dd>
   <dt>
     <% nav_link "/docs/guides/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
       Other Guides
@@ -53,10 +62,8 @@
     <%= nav_link "Custom Domains for SaaS", href="/docs/app-guides/custom-domains-with-fly/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Deploy with GitHub Actions", href="/docs/app-guides/continuous-deployment-with-github-actions/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Run Multiple Processes", href="/docs/app-guides/multiple-processes/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Build a FaaS", href="/docs/app-guides/functions-with-machines/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Run UDP Services", href="/docs/app-guides/udp-and-tcp/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
     <%= nav_link "Elixir Guides", href="/docs/guides/#elixir", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Use Terraform with Fly machines", href="/docs/app-guides/terraform-iac-getting-started/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
   </dd>
 
   <dt>
