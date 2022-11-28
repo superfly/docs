@@ -307,7 +307,7 @@ Fly offers free usage for up to 3 full time VMs with 256MB of RAM, which is enou
 
 Heroku's Hobby tier is limited to 10,000 rows of data, which gets exceeded pretty quickly requiring the purchase of additional rows of data.
 
-| Resource | Specs | Price |
+| Heroku Resource | Specs | Price |
 |----------|------|-------|
 | App Dyno | 512MB RAM | $7/mo |
 | Database Server | 10,000,000 rows | $9/mo |
@@ -315,7 +315,7 @@ Heroku's Hobby tier is limited to 10,000 rows of data, which gets exceeded prett
 
 Fly's pricing is [metered for the resources](https://fly.io/docs/about/pricing/) you use. Database is billed by the amount of RAM and disk space used, not by rows. The closest equivalent to the Heroku Hobby tier on Fly looks like this:
 
-| Resource | Specs | Price |
+| Fly Resource | Specs | Price |
 |----------|------|-------|
 | App Server | 1GB RAM | ~$5.70/mo |
 | Database Server | 256MB RAM / 10Gb disk | ~$3.44/mo |
@@ -325,7 +325,7 @@ Fly's pricing is [metered for the resources](https://fly.io/docs/about/pricing/)
 
 There's too many variables to compare Fly and Heroku's pricing for larger Rails applications depending on your needs, so you'll definitely want to do your homework before migrating everything to Fly. This comparison focuses narrowly on the costs of app & database resources, and excludes other factors such as bandwidth costs, bundled support, etc.
 
-| Resource | Specs | Price | Quantity | Total  |
+| Heroku Resource | Specs | Price | Quantity | Total  |
 |----------|-------|-------|----------|--------|
 | App Dyno | 2.5GB RAM | $250/mo | 8 | $2,000/mo |
 | Database | 61GB RAM / 1TB disk | $2,500/mo | 1 | $2,500/mo |
@@ -333,7 +333,7 @@ There's too many variables to compare Fly and Heroku's pricing for larger Rails 
 
 Here's roughly the equivalent resources on Fly:
 
-| Resource | Specs | Price | Quantity | Total  |
+| Fly Resource | Specs | Price | Quantity | Total  |
 |----------|-------|-------|----------|--------|
 | App Server | 4GB RAM / 2X CPU | ~$62.00/mo | 8 | ~$496/mo |
 | Database Server | 64GB RAM / 500GB disk | ~$633/mo | 2 | ~$1,266/mo |
