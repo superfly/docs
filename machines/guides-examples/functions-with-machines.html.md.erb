@@ -1,5 +1,5 @@
 ---
-title: Running User Code on Fly Machines
+title: Run User Code on Fly Machines
 layout: framework_docs
 sitemap: false
 author: joshua
@@ -55,7 +55,7 @@ Your users' service will boot immediately after this API call. Launch speed is a
 
 Try accessing your new machine at `https://user-functions.fly.dev`. If no requests arrive within 4 seconds, the machine will exit, but a request will force it to start back up automatically.
 
-## Launch a in another region
+## Launch a Machine in another region
 
 That machine was launched in the region nearest to you. Say you want your user function to run fast for users in Australia. Let's launch another machine there.
 
@@ -63,7 +63,7 @@ The Anycast IP you allocated will route traffic to the nearest region with a dep
 
 <%= partial "/docs/reference/machines/launch_syd_req" %>
 
-## Stopping a machine
+## Stop a machine
 
 In a FaaS environment, you'll usually want to wait for a machine to exit. You can stop them with an API call, however, if needed.
 
