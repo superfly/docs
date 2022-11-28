@@ -310,7 +310,7 @@ Heroku's Hobby tier is limited to 10,000 rows of data, which gets exceeded prett
 | Heroku Resource | Specs | Price |
 |----------|------|-------|
 | App Dyno | 512MB RAM | $7/mo |
-| Database Server | 10,000,000 rows | $9/mo |
+| Database | 10,000,000 rows | $9/mo |
 | **Estimated cost** | | $16/mo |
 
 Fly's pricing is [metered for the resources](https://fly.io/docs/about/pricing/) you use. Database is billed by the amount of RAM and disk space used, not by rows. The closest equivalent to the Heroku Hobby tier on Fly looks like this:
