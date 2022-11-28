@@ -5,7 +5,7 @@ redirect_from: /docs/reference/postgres/
 ---
 
 <div class="callout">
-Fly Postgres clusters created with flyctl [v0.0.412](https://github.com/superfly/flyctl/releases/tag/v0.0.412) or newer use our next-gen Apps V2 architecture, built on [Fly Machines](/docs/reference/machines/). Existing Fly Postgres clusters will continue to work, powered by Nomad. Docs for these databases can be found here:
+Fly Postgres clusters created with flyctl [v0.0.412](https://github.com/superfly/flyctl/releases/tag/v0.0.412) or newer use our next-gen [Apps V2](https://fly.io/docs/reference/apps/) architecture, built on [Fly Machines](/docs/reference/machines/). Existing Fly Postgres clusters will continue to work, powered by Nomad. Docs for these databases can be found here:
 <ul>
   <li>
     <a href="/docs/reference/postgres-on-nomad/">Fly Postgres on Apps V1</a>
