@@ -169,6 +169,9 @@ out some additional steps that can be added to your workflow.
 - Add a step to run [`mix hex.audit`](https://hexdocs.pm/hex/Mix.Tasks.Hex.Audit.html).
   This shows all Hex dependencies that have been marked as retired, which the
   package maintainers no longer recommended using.
+- Add a set to run [`mix deps.unlock --check-unused`](https://hexdocs.pm/mix/Mix.Tasks.Deps.Unlock.html).
+  This checks that the `mix.lock` file has no unused dependencies. This is useful
+  if you want to reject contributions with extra dependencies.
 
 ### Benefits of Caching
 
