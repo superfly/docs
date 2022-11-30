@@ -1,0 +1,285 @@
+---
+title: Fly Machine Run Reference
+objective: 
+layout: framework_docs
+order: 4
+---
+
+`fly machine run` is a command for configuring (and if desired, running) a new Machines VM. To just restart an exited (`stopped`) but still-extant (i.e. not `removed`) machine, use `fly machine start` instead. To change the configuration of an existing machinem use `fly machine update`.
+
+Caveat about fly.toml: If a machine belongs to an app with a fly.toml (perhaps generated using `fly m launch`), the app's settings will override any conflicting ones set using fly machine run. (this is not quite right)
+
+## Source
+
+[https://github.com/superfly/flyctl/blob/master/internal/command/machine/run.go](https://github.com/superfly/flyctl/blob/master/internal/command/machine/run.go)
+
+## Usage
+
+```
+$ flyctl machine run <image> [command] [flags]
+```
+
+A VM on Fly.io needs an OCI image to generate its filesystem from.
+
+## The Image
+
+### 
+
+
+
+
+## Building an image
+
+The image doesn't have to be prebuilt.
+
+### Specify a Dockerfile
+
+```
+--dockerfile    Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
+```
+
+(`fly m run .`—wait—I think we need the `.` though, right? In which case the note about the default would be off. Check.)
+
+### Build but don't run
+
+```
+--build-only    Only build the image without running the machine
+```
+
+Pushes to the Fly registry, too, iirc
+
+### Force remote builds
+
+If you don't want to, or can't, build the image on the local machine (e.g. it's a different architecture than the deployment hardware), use `--build-remote-only`  to have the build run on a Fly.io remote builder.
+
+```
+--build-remote-only    Perform builds remotely without using the local docker daemon
+```
+
+### Force local builds
+
+Conversely, you can force a local build.
+
+```
+--build-local-only    Only perform builds locally using the local docker daemon
+```
+
+### Build-time variables
+
+```
+--build-arg    Set of build time variables in the form of NAME=VALUE pairs. Can be specified multiple times. 
+```
+
+Use `--build-arg` if you need a variable to be available at build time. Normal environment variables set with `-e` or `—env` are only available inside the booted VM.
+
+### Image label
+
+```
+--image-label    Image label to use when tagging and pushing to the fly registry. Defaults to \"deployment-{timestamp}\".
+```
+
+### Set the target build stage
+
+```
+--build-target     Set the target build stage to build if the Dockerfile has more than one stage.
+```
+
+If your Dockerfile has multiple stages, use `--build-target` to stop at a specific stage.
+
+### Don't use cached layers
+
+```
+--no-build-cache    Do not use the cache when building the image.
+```
+
+A Dockerfile command that looks unchanged, but whose output isn't always the same,  can result in the reuse of an out-of-date layer from the cache. As an example, if your Dockerfile runs `apt-get` to install packages, you may want to bust the cache to get the latest versions. Use `--no-build-cache` to rebuild the image layers.
+
+
+
+## The Command
+
+You can define the command run within the Docker image built.
+
+You can pass a single command:
+
+```
+fly m run pierrezemb/gostatic /my-command
+```
+
+However you may need Docker's array form for the command, e.g. `["/my-command", "some-argument"]`. To do that, pass multiple quoted strings:
+
+```
+fly m run pierrezemb/gostatic "/my-command" "some-argument"
+```
+
+## Stuff for the running machine
+
+### Set environment variables
+
+```
+-e, --env    Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
+```
+
+(example)
+
+[Set secrets on the app](https://fly.io/docs/flyctl/secrets/) for environment variables that should be kept secret.
+
+### Mount an existing storage volume
+
+```
+-v, --volume    Volumes to mount in the form of <volume_id_or_name>:/path/inside/machine[:]    
+```
+
+A Fly.io VM can only mount a volume that already exists on an SSD on the same physical host, which means, obviously, that a machine that mounts a volume can only be run in a region that has an unclaimed volume that fulfils the criteria given here (volume id or volume name), belonging to the same app.
+
+A machine can only mount one volume at a time, and each volume can only be mounted on one machine.
+
+### Override(?) the Dockerfile's ENTRYPOINT
+
+```
+--entrypoint    ENTRYPOINT replacement
+```
+
+If you don't want to change the Dockerfile but do want to run a different command on boot, use this. Is this a real Docker entrypoint that gets built into the image? If so, maybe that should go in the building section
+
+### Expose internal ports
+
+```
+-p, --port    Exposed port mappings (format: edgePort[:machinePort]/[protocol[:handler]])
+```
+
+You can map an internal port to an exposed port on the VM. If your development server listens on port 4000, and you want it to be accessible from outside on port 4000,
+
+Can I write `-p 4000/tcp` ? i.e. don't specify the internal port if it's the same as the external (that works in Docker, right?), and don't specify the handler?
+
+```
+ -p 443:8080/tcp:tls \ 
+  -p 4000:4000/tcp:tls \
+```
+
+### 
+
+### Kernel arguments
+
+```
+--kernel-arg    List of kernel arguments to be provided to the init. Can be specified multiple times.
+```
+
+## Administration
+
+### Specify which app the VM should belong to
+
+```
+-a, --app    Application name
+```
+
+If there's a fly.toml in the working directory with an app name in it, `fly machine run` will attach the VM to that app by default. If there is no fly.toml in the working directory, or if you want to run the machine under a different app, use the `-a` option.
+
+### Specify the region in which to run the VM
+
+```
+-r, --region    The region to operate on
+```
+
+_if I don't specify this, what happens? If I specify a volume id (or a volume name that only exists in one region), will the machine get put in the same region without me specifying one?_
+
+### 
+
+### Give the machine a name
+
+```
+-n, --name    Machine name, will be generated if missing
+```
+
+The machine name is used for whatever you want, but I'm not sure where it gets used.
+
+### Assign the app to an organization (if creating a new app)
+
+```
+--org    The organization that will own the app
+```
+
+This only exists because you can use `fly machine run` without an existing app. It will create one for you, with this org, or it will prompt you for an org.
+
+### 
+
+## VM Resources
+
+### Choose a preset CPU/RAM config
+
+```
+-s, --size    Preset guest cpu and memory for a machine, defaults to shared-cpu-1x
+```
+
+Values probably in api.MachinePresets
+
+### Set the VM CPU scale
+
+```
+--cpus    Number of CPUs
+```
+
+Need to define "CPU".
+
+### Set the VM memory
+
+```
+--memory    Memory (in megabytes) to attribute to the machine
+```
+
+
+## Deprecated update
+
+
+### Update and restart a specific machine
+
+(deprecated)
+
+```
+--id    Machine ID, if previously known
+```
+
+Currently can be used to update a machine config and restart.
+
+
+## Help
+
+```
+ -h, --help                help for run
+```
+
+## Global Options
+
+
+
+```
+  -t, --access-token string   Fly API Access Token
+  -j, --json                  json output
+      --verbose               verbose output
+```
+
+
+
+## 8<—————————————
+
+## Stuff that we should leave out, at least for now
+
+### Use a specific fly.toml
+
+```
+-c, --config    Path to application configuration file
+```
+
+This option is for pointing to a `fly.toml`. Used for?
+
+Right now this is ignored by `fly machine run`.
+
+### Detach from the machine's logs
+
+```
+-d, --detach    Detach from the machine's logs
+```
+
+This is currently ignored. When the `-d` flag is used, flyctl will return immediately rather than tailing the machine's logs until the machine is up.
+
+JS: This is ignored. Should be removed, though in the future, it would behave like `deploy`, which will tail release command logs during a deployment.
