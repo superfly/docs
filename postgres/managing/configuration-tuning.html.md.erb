@@ -46,6 +46,27 @@ NAME           	VALUE	TARGET VALUE	RESTART REQUIRED
 max-connections	300  	500         	true
 
 ? Are you sure you want to apply these changes? Yes
+Acquired lease f912530da158 on machine: 4d89649b460987
+Performing update...
+Update complete!
+Please note that some of your changes will require a cluster restart before they will be applied.
+To review the state of your changes, run: `fly postgres config view`
+? Restart cluster now? Yes
+Identifying cluster role(s)
+  Machine e286030f792186: replica
+  Machine e784977a42e983: replica
+  Machine 4d89649b460987: leader
+Restarting machine e286030f792186
+  Waiting for e286030f792186 to become healthy (started, 3/3)
+Machine e286030f792186 restarted successfully!
+Restarting machine e784977a42e983
+  Waiting for e784977a42e983 to become healthy (started, 3/3)
+Machine e784977a42e983 restarted successfully!
+Attempting to failover 4d89649b460987
+Restarting machine 4d89649b460987
+  Waiting for 4d89649b460987 to become healthy (started, 3/3)
+Machine 4d89649b460987 restarted successfully!
+Postgres cluster has been successfully restarted!
 ```
 
 Each VM belonging to your Postgres app will be restarted to apply the changes. If you have a replica for high availability, this is updated and restarted first, and it becomes leader before the old leader gets updated.
