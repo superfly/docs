@@ -6,7 +6,6 @@ flyctl checks [command] [flags]
 ~~~
 
 ## Available Commands
-* [handlers](/docs/flyctl/checks-handlers/)	 - Manage health check handlers
 * [list](/docs/flyctl/checks-list/)	 - List health checks
 
 ## Options
