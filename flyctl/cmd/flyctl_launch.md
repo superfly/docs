@@ -25,7 +25,7 @@ flyctl launch [flags]
       --image-label string            Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
       --local-only                    Only perform builds locally using the local docker daemon
       --name string                   Name of the new app
-      --nixpacks                      Deploy using nixpacks to generate the image
+      --nixpacks                      Deploy using nixpacks to build the image
       --no-cache                      Do not use the build cache when building the image
       --no-deploy                     Do not prompt for deployment
       --now                           Deploy now without confirmation

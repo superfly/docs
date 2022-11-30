@@ -10,6 +10,7 @@ flyctl machine update [machine_id] [flags]
 
 ~~~
   -a, --app string           Application name
+      --build-nixpacks       Build your image with nixpacks
   -c, --config string        Path to application configuration file
       --cpus int             Number of CPUs
       --dockerfile string    Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
