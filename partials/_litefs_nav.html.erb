@@ -1,23 +1,28 @@
-<dl class="leading-5">
-  <dt class="flex sm:justify-center">
-    <% nav_link "/docs/litefs/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
-      LiteFS Overview
-    <% end %>
-  </dt>
-  <dd class="mb-8 border-l border-gray-100">
-    <%= nav_link "Getting Started with LiteFS", "/docs/litefs/getting-started", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "How LiteFS Works", "/docs/litefs/how-it-works", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-  </dd>
-  
-  <dt class="flex sm:justify-center">
-    <% nav_link "/docs/litefs/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
-      LiteFS Reference
-    <% end %>
-  </dt>
-  <dd class="mb-8 border-l border-gray-100">
-    <%= nav_link "Special Files", "/docs/litefs/files", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Config Reference", "/docs/litefs/config", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-  </dd>
+<ul class="outline-list">
+  <li>
+    <%= nav_link "LiteFS Overview", "/docs/litefs/" %>
+    <ul>
+      <li>
+        <%= nav_link "Getting Started with LiteFS", "/docs/litefs/getting-started" %>
+      </li>
+      <li>
+        <%= nav_link "How LiteFS Works", "/docs/litefs/how-it-works" %>
+      </li>
+    </ul>
+  </li>
+</ul>
 
-  <footer class="text-gray-400 text-right pt-3 border-t"></footer>
-</dl>
+<ul class="outline-list">
+  <li>
+    <%= nav_link "LiteFS Reference", "/docs/litefs/" %>
+    <ul>
+      <li>
+        <%= nav_link "Special Files", "/docs/litefs/files" %>
+      </li>
+      <li>
+        <%= nav_link "Config Reference", "/docs/litefs/config" %>
+      </li>
+    </ul>
+  </li>
+</ul>
+  

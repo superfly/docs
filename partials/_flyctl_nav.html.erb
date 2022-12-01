@@ -1,59 +1,143 @@
-<dl class="leading-5">
-  <dt class="flex sm:justify-center">
-    <% nav_link "/docs/reference/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
-      Fly Reference
-    <% end %>
-  </dt>
-  <dd class="mb-8 border-l border-gray-100">
-    <%= nav_link "Introducing Flyctl", "/docs/flyctl", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Installing Flyctl", "/docs/flyctl/installing/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Integrating Flyctl ", "/docs/flyctl/integrating/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-  </dd>
-  <dt class="flex items-center text-sm font-semibold transition-colors py-1 mb-1">
-    Commands
-  </dt>
-  <dd class="mb-8 border-l border-gray-100">
-    <%= nav_link "Launch an App", "/docs/flyctl/launch/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Manage Apps", "/docs/flyctl/apps/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Manage Machines", "/docs/flyctl/machine/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Autoscaling App resources", "/docs/flyctl/autoscale/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Login and Authentication", "/docs/flyctl/auth/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Certificates for Apps", "/docs/flyctl/certs/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Manage health checks", "/docs/flyctl/checks/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Configuring Apps", "/docs/flyctl/config/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Open web dashboard", "/docs/flyctl/dashboard/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Deploy an App", "/docs/flyctl/deploy/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Delete an App", "/docs/flyctl/destroy/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "View Fly docs", "/docs/flyctl/docs/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Manage DNS Records*", "/docs/flyctl/dns-records/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Manage Domains*", "/docs/flyctl/domains/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "View App history", "/docs/flyctl/history/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "View App information", "/docs/flyctl/info/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Managing IP addresses", "/docs/flyctl/ips/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "List Apps and Orgs", "/docs/flyctl/list/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "View App logs", "/docs/flyctl/logs/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Monitor deployments", "/docs/flyctl/monitor/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Move an App", "/docs/flyctl/move/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "View App with browser", "/docs/flyctl/open/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Manage Organizations", "/docs/flyctl/orgs/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Platform information", "/docs/flyctl/platform/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Manage Postgres clusters", "/docs/flyctl/postgres/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Proxy connection to app", "/docs/flyctl/proxy/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Selecting Regions", "/docs/flyctl/regions/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Managing App releases", "/docs/flyctl/releases/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Restart an App", "/docs/flyctl/restart/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Resume an App", "/docs/flyctl/resume/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Scaling Apps", "/docs/flyctl/scale/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Managing App secrets", "/docs/flyctl/secrets/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Manage SSH", "/docs/flyctl/ssh/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "View an App's status", "/docs/flyctl/status/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Suspend an App", "/docs/flyctl/suspend/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "About Flyctl versions", "/docs/flyctl/version/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Manage VM instances", "/docs/flyctl/vm/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Manage Disks*", "/docs/flyctl/volumes/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "WireGuard VPN*", "/docs/flyctl/wireguard/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-  </dd>
-  <footer class="text-gray-400 text-right pt-3 border-t">
-    
-  </footer>
-</dl>
+<ul class="outline-list">
+  <li>
+    <%= nav_link "Fly Reference", "/docs/reference/" %>
+    <ul>
+      <li>
+        <%= nav_link "Introducing Flyctl", "/docs/flyctl" %>
+      </li>
+      <li>
+        <%= nav_link "Installing Flyctl", "/docs/flyctl/installing/" %>
+      </li>
+      <li>
+        <%= nav_link "Integrating Flyctl ", "/docs/flyctl/integrating/" %>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<ul class="outline-list">
+  <li>
+    <span>
+      Commands
+    </span>
+    <ul>
+      <li>
+        <%= nav_link "Launch an App", "/docs/flyctl/launch/" %>
+      </li>
+      <li>
+        <%= nav_link "Manage Apps", "/docs/flyctl/apps/" %>
+      </li>
+      <li>
+        <%= nav_link "Manage Machines", "/docs/flyctl/machine/" %>
+      </li>
+      <li>
+        <%= nav_link "Autoscaling App resources", "/docs/flyctl/autoscale/" %>
+      </li>
+      <li>
+        <%= nav_link "Login and Authentication", "/docs/flyctl/auth/" %>
+      </li>
+      <li>
+        <%= nav_link "Certificates for Apps", "/docs/flyctl/certs/" %>
+      </li>
+      <li>
+        <%= nav_link "Manage health checks", "/docs/flyctl/checks/" %>
+      </li>
+      <li>
+        <%= nav_link "Configuring Apps", "/docs/flyctl/config/" %>
+      </li>
+      <li>
+        <%= nav_link "Open web dashboard", "/docs/flyctl/dashboard/" %>
+      </li>
+      <li>
+        <%= nav_link "Deploy an App", "/docs/flyctl/deploy/" %>
+      </li>
+      <li>
+        <%= nav_link "Delete an App", "/docs/flyctl/destroy/" %>
+      </li>
+      <li>
+        <%= nav_link "View Fly docs", "/docs/flyctl/docs/" %>
+      </li>
+      <li>
+        <%= nav_link "Manage DNS Records*", "/docs/flyctl/dns-records/" %>
+      </li>
+      <li>
+        <%= nav_link "Manage Domains*", "/docs/flyctl/domains/" %>
+      </li>
+      <li>
+        <%= nav_link "View App history", "/docs/flyctl/history/" %>
+      </li>
+      <li>
+        <%= nav_link "View App information", "/docs/flyctl/info/" %>
+      </li>
+      <li>
+        <%= nav_link "Managing IP addresses", "/docs/flyctl/ips/" %>
+      </li>
+      <li>
+        <%= nav_link "List Apps and Orgs", "/docs/flyctl/list/" %>
+      </li>
+      <li>
+        <%= nav_link "View App logs", "/docs/flyctl/logs/" %>
+      </li>
+      <li>
+        <%= nav_link "Monitor deployments", "/docs/flyctl/monitor/" %>
+      </li>
+      <li>
+        <%= nav_link "Move an App", "/docs/flyctl/move/" %>
+      </li>
+      <li>
+        <%= nav_link "View App with browser", "/docs/flyctl/open/" %>
+      </li>
+      <li>
+        <%= nav_link "Manage Organizations", "/docs/flyctl/orgs/" %>
+      </li>
+      <li>
+        <%= nav_link "Platform information", "/docs/flyctl/platform/" %>
+      </li>
+      <li>
+        <%= nav_link "Manage Postgres clusters", "/docs/flyctl/postgres/" %>
+      </li>
+      <li>
+        <%= nav_link "Proxy connection to app", "/docs/flyctl/proxy/" %>
+      </li>
+      <li>
+        <%= nav_link "Selecting Regions", "/docs/flyctl/regions/" %>
+      </li>
+      <li>
+        <%= nav_link "Managing App releases", "/docs/flyctl/releases/" %>
+      </li>
+      <li>
+        <%= nav_link "Restart an App", "/docs/flyctl/restart/" %>
+      </li>
+      <li>
+        <%= nav_link "Resume an App", "/docs/flyctl/resume/" %>
+      </li>
+      <li>
+        <%= nav_link "Scaling Apps", "/docs/flyctl/scale/" %>
+      </li>
+      <li>
+        <%= nav_link "Managing App secrets", "/docs/flyctl/secrets/" %>
+      </li>
+      <li>
+        <%= nav_link "Manage SSH", "/docs/flyctl/ssh/" %>
+      </li>
+      <li>
+        <%= nav_link "View an App's status", "/docs/flyctl/status/" %>
+      </li>
+      <li>
+        <%= nav_link "Suspend an App", "/docs/flyctl/suspend/" %>
+      </li>
+      <li>
+        <%= nav_link "About Flyctl versions", "/docs/flyctl/version/" %>
+      </li>
+      <li>
+        <%= nav_link "Manage VM instances", "/docs/flyctl/vm/" %>
+      </li>
+      <li>
+        <%= nav_link "Manage Disks*", "/docs/flyctl/volumes/" %>
+      </li>
+      <li>
+        <%= nav_link "WireGuard VPN*", "/docs/flyctl/wireguard/" %>
+      </li>
+    </ul>
+  </li>
+</ul>

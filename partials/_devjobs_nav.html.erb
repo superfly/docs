@@ -1,13 +1,19 @@
-<dl class="leading-5">
-  <dt class="flex sm:justify-center">
-    <% nav_link "/docs/hiring/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
-      Engineering Jobs At Fly.io
-    <% end %>
-  </dt>
-  <dd class="mb-8 border-l border-gray-100">
-    <%= nav_link "Our Stack", "/docs/hiring/stack", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Our Roles", "/docs/hiring/roles", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Our Hiring Process", "/docs/hiring/hiring", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-    <%= nav_link "Working at Fly.io", "/docs/hiring/working", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" %>
-  </dd>
-</dl>
+<ul class="outline-list">
+  <li>
+    <%= nav_link "Engineering Jobs at Fly.io", "/docs/hiring/" %>
+    <ul>
+      <li>
+        <%= nav_link "Our Stack", "/docs/hiring/stack" %>
+      </li>
+      <li>
+        <%= nav_link "Our Roles", "/docs/hiring/roles" %>
+      </li>
+      <li>
+        <%= nav_link "Our Hiring Process", "/docs/hiring/hiring" %>
+      </li>
+      <li>
+        <%= nav_link "Working at Fly.io", "/docs/hiring/working" %>
+      </li>
+    </ul>
+  </li>
+</ul>

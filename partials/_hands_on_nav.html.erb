@@ -1,30 +1,28 @@
-<dl class="leading-5">
-  <dt class="flex sm:justify-center">
-    <% nav_link "/docs/hands-on/", class: "flex items-center text-sm font-semibold hover:text-violet-600 transition-colors py-1 -ml-0.5 mb-1" do %>
-      Hands-on with Fly.io
-    <% end %>
-  </dt>
-  <dd class="mb-8 border-l border-gray-100">
-    <% nav_link "/docs/hands-on/install-flyctl/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" do %>
-      1. Install flyctl
-    <% end %>
-    <% nav_link "/docs/hands-on/sign-up/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" do %>
-      2. Sign Up
-    <% end %>
-    <% nav_link "/docs/hands-on/sign-in/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" do %>
-      3. Sign In
-    <% end %>
-    <% nav_link "/docs/hands-on/launch-app/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" do %>
-      4. Launch App
-    <% end %>
-    <% nav_link "/docs/hands-on/check-app-status/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" do %>
-      5. Check App Status
-    <% end %>
-    <% nav_link "/docs/hands-on/open-app/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" do %>
-      6. Visit App
-    <% end %>
-    <% nav_link "/docs/hands-on/next/", class: "flex hover:text-violet-600 transition-colors py-1 border-l-[3px] pl-4 -ml-0.5 border-transparent hover:border-violet-500" do %>
-      7. Further Reading
-    <% end %>
-  </dd>
-</dl>
+<ul class="outline-list">
+  <li>
+    <%= nav_link "Hands-on with Fly.io", "/docs/hands-on/" %>
+    <ul>
+      <li>
+        <%= nav_link "1. Install flyctl", "/docs/hands-on/install-flyctl/" %>
+      </li>
+      <li>
+        <%= nav_link "2. Sign Up", "/docs/hands-on/sign-up/" %>
+      </li>
+      <li>
+        <%= nav_link "3. Sign In", "/docs/hands-on/sign-in/" %>
+      </li>
+      <li>
+        <%= nav_link "4. Launch App", "/docs/hands-on/launch-app/" %>
+      </li>
+      <li>
+        <%= nav_link "5. Check App Status", "/docs/hands-on/check-app-status/" %>
+      </li>
+      <li>
+        <%= nav_link "6. Visit App", "/docs/hands-on/open-app/" %>
+      </li>
+      <li>
+        <%= nav_link "7. Further Reading", "/docs/hands-on/next/" %>
+      </li>
+    </ul>
+  </li>
+</ul>

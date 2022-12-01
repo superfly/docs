@@ -65,7 +65,8 @@ Take note however that Fly.io logs are kept only for **2 days**, before they're 
 
 ### _Volumed Log File_
 
-<h4>Laravel Log File</h4>
+#### Laravel Log File
+
 If you would like to persist your application logs for a longer duration, you can instead opt to save the logs in a log file by configuring `"single"`, `"daily"`, or `"stack"` as the **LOG_CHANNEL**. 
 
 So update your `fly.toml`:
@@ -91,7 +92,7 @@ Note: You can even add `"stderr"` in the stack's channels list to view your logs
   Then, through the Fly SSH Console, you can access the logs in your application!
 </aside>
 
-<h4>Adding Volume</h4>
+#### Adding Volume
 
 Deployment wipes out all log files! In order to persist your Laravel log files, you'll need to add a [volume](/docs/reference/volumes/) to persist your log folder's state.
 
@@ -101,14 +102,10 @@ Deployment wipes out all log files! In order to persist your Laravel log files, 
 ```cmd
 fly volumes create my_log_vol --region ams --size 10 #GB
 ```
-<ul>
-<li>You can replace the volume name `my_log_vol` with any name of your preference.</li>
-<li>You can specify your region code through the --region attribute</li>
-<li>You can specify your volume's size in GB through the --size attribute</li>
-</ul>
 
-<p></p>
-
+- You can replace the volume name `my_log_vol` with any name of your preference.
+- You can specify your region code through the --region attribute
+- You can specify your volume's size in GB through the --size attribute
 
 2) Revise `fly.toml` to mount that volume in your `/var/www/html/storage/logs` folder:
 
@@ -127,7 +124,7 @@ fly deploy
   Hopefully now, regardless of how many more deployments you make from here, your logs will persist!
 </aside>
 
-<h5>**_Possible Errors_**</h5>
+#### **_Possible Errors_**
 
 ```output
 Error not enough volumes named `<volume_name>` (1) to run `(<n>)` processes
