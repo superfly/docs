@@ -61,7 +61,7 @@ At the bottom of the `fly.toml` file, add the following:
   # The command below is used to launch a Rails server; be sure to
   # replace with the command you're using to launch your server.
   web = "bin/rails fly:server"
-  cron = "cron"
+  cron = "supercronic /app/crontab"
 ```
 
 Then we have to tell Fly that your `web` process matches up with a service by having this under the `[[services]].`
