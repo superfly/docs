@@ -241,7 +241,7 @@ This section is a simple list of key/values, so the section is denoted with sing
 
 ### `services.ports`
 
-For each external port you want to accept connections on, you will need a `services.ports` section. One for each port, the section is denoted by double square brackets like this:
+For each `services` section in your `fly.toml`, i.e. for each external port you want to accept connections on, you need a `services.ports` section. The section is denoted by double square brackets like this:
 
 ```toml
   [[services.ports]]
@@ -252,11 +252,12 @@ For each external port you want to accept connections on, you will need a `servi
 
 This example defines an HTTP handler on port 80.
 
-* `handlers` : An array of strings, each string selecting a handler process to terminate the connection with at the edge. Here, the ["HTTP" handler](/docs/services/#http) will accept HTTP traffic and pass it on to the internal port of the application which we defined earlier.
+* `handlers` : An array of strings, each string selecting a handler process to terminate the connection with at the edge. Here, the `http` handler will accept HTTP traffic and pass it on to the `internal_port` of the application, which we defined in the `services` section above.
+  For the list of available handlers, and how they manage network traffic, see the [Public Network Services documentation](/docs/reference/services/).
 * `port` : An integer representing the external port to listen on (ports 1-65535).
 * `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
 
-You can have more than one `services.ports` sections. The default configuration, for example, contains two. We've already seen one above. The second one defines an external port 443 for secure connections, using the ["tls" handler](/docs/services/#tls).
+You can have more than one `services.ports` section. The default configuration, for example, contains two. We've already seen one above. The second one defines an external port 443 for secure connections, using the `tls` handler.
 
 ```toml
   [[services.ports]]
@@ -264,9 +265,7 @@ You can have more than one `services.ports` sections. The default configuration,
     port = "443"
 ```
 
-The details of how these handlers manage network traffic, and other handlers available, are detailed in the [Network Services](/docs/services/) documentation.
-
-For UDP applications make sure to bind the application to the same port as defined in the relevant `services.ports` section. For example, the configuration below will listen on port 5000 and the application will need to bind to `fly-global-services:5000` to receive traffic. Leave `handlers` unset for UDP services.
+For UDP applications, make sure to bind the application to the same port as defined in the relevant `services.ports` section. For example, the configuration below will listen on port 5000 and the application will need to bind to `fly-global-services:5000` to receive traffic. Leave `handlers` unset for UDP services.
 
 ```toml
 [[services]]
@@ -276,7 +275,7 @@ For UDP applications make sure to bind the application to the same port as defin
     port = 5000
 ```
 
-### `services.ports.tls_options`
+#### `services.ports.tls_options`
 
 Configure the TLS versions and ALPN protocols that Fly's edge will use to terminate TLS for your application with:
 
