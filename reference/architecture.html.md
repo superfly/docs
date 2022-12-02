@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-## _Fly Scaling_
+## Fly Scaling
 
 Fly auto-scaling is designed to be simple and easy to understand. When more users connect to your app, we add CPUs and memory. By default, we allocate one CPU to the first 20 TCP connections, and an additional CPU for every subsequent 20 TCP connections.
 
@@ -29,7 +29,7 @@ We use "concurrent connections" to determine microVM capacity. By default, we al
 
 When a client connects, we send them to the nearest microVM with capacity. If the existing VMs are at capacity, we [launch more](#auto-scaling) in the busiest regions. When there are idle VMs, we shut them off.
 
-## _Fly Networking_
+## Fly Networking
 
 ### BGP Anycast
 
@@ -37,7 +37,7 @@ We broadcast and accept traffic from ranges of IP addresses (both IPv4 and IPv6)
 
 ### Proxy
 
-Every server in our infrastructure runs a Rust-based proxy named `fly-proxy`. The proxy is responsible for accepting client connections, matching them to customer applications, applying [handlers](/docs/services/#connection-handlers) (eg: TLS termination), and [backhaul](#backhaul) between servers.
+Every server in our infrastructure runs a Rust-based proxy named `fly-proxy`. The proxy is responsible for accepting client connections, matching them to customer applications, applying [handlers](/docs/reference/services/#connection-handlers) (eg: TLS termination), and [backhaul](#backhaul) between servers.
 
 ### Backhaul
 

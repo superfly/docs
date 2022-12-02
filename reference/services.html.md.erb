@@ -7,7 +7,7 @@ nav: firecracker
 
 Fly has public and private network services available. The public network services connect applications to the wider public internet, while the [private network services](/docs/reference/private-networking) allow application instances to communicate with other application instances within the Fly private network.
 
-## _IP addresses_
+## IP addresses
 
 Fly applications have dedicated IP addresses. Each application starts with two addresses &mdash; one IPv6 and one IPv4. IPv6 addresses are free, global IPv4 addresses are billed monthly.
 
@@ -15,9 +15,17 @@ Fly applications have dedicated IP addresses. Each application starts with two a
 
 We announce global IP blocks from all of our datacenters over BGP, otherwise known as anycast. Anycast is a core internet routing mechanism that connects clients to the "nearest" server advertising a block of IPs. [You can read all about it on Wikipedia](https://en.wikipedia.org/wiki/Anycast).
 
-## _Connection handlers_
+## Connection handlers
 
-The `handlers` config setting specifies which middleware applies to incoming TCP connections. Use these to convert TCP connections into something your application can handle.
+Set the `handlers` config setting in the `services.ports` section of [`fly.toml`](/docs/reference/configuration/) to specify which middleware applies to incoming TCP connections for each port you accept external connections on. Use these to convert TCP connections into something your application can handle.
+
+Valid handler strings:
+* `"tls"`: Convert TLS connection to unencrypted TCP
+* `"pg_tls"`: Handle TLS for PostgreSQL connections
+* `"http"`: Convert TCP connection to HTTP
+* `"edge_http"`: Convert TCP connection to HTTP (at the edge)
+* `"proxy_proto"`: Wrap TCP connection in PROXY protocol
+
 
 ### TLS
 The `TLS` middleware terminates TLS using Fly managed application certificates, then forwards a plaintext connection to the application process. This is useful for running TCP services and offloading `TLS` to the Fly proxy.
@@ -57,7 +65,10 @@ If you don't specify handlers, we just forward TCP to your application as is. Th
 
 The `proxy_proto` handler adds information about the original connection, including client IP + port and server IP + port (from the client's perspective). Most applications need additional logic to accept the proxy protocol, either using a prebuilt library or implementing the [proxy protocol](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt) directly.
 
+### Postgres connections
 
-## _HTTP to HTTPS redirects_
+The `pg_tls` handler manages Postgres connections, so that you can expose your Postgres databases over the proxy securely. Some interesting notes by @glebarez on why standard TLS termination won't work for Postgres: https://github.com/glebarez/pgssl#readme
+
+## HTTP to HTTPS redirects
 
 The `force_https` configuration option automatically redirects HTTP to HTTPS. When enabled, all HTTP requests return a redirect response with a `301` status code. This option can only be set on HTTP handlers - deployments will fail if set on other handlers.

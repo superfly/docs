@@ -5,87 +5,116 @@ layout: framework_docs
 order: 2
 ---
 
-Fly Postgres databases can be used by applications outside their Fly [internal private network](/docs/reference/private-networking/); this means in a different private network belonging to your organization, in another Fly organization, or outside Fly.io altogether.
+Fly Postgres databases can be used by applications outside their Fly.io [internal private network](/docs/reference/private-networking/); this means in a different private network belonging to your organization, in another Fly organization, or outside Fly.io altogether.
 
-This requires two adaptations: configuring your Postgres app to accept connections from the Fly proxy, and providing a publicly-resolvable hostname to your app.
+We don't expose Postgres apps to the internet by default. To get this working, you'll need to make two adaptations: configuring your Postgres app to accept connections from the Fly proxy, and providing a publicly-resolvable hostname to your app.
 
-## Connecting external services
+## Allocate an IP address
 
-Sometimes we need to be able to allow external services to connect to our Postgres instance.  While we don't open up any external ports by default, we can achieve this through some simple configuration changes.
-
-### Allocating an IP address
-
-If you haven't already, you will need to allocate a public IP address to your application.  You can view your list of IPs by running the following command from your application directory:
+If you haven't already, you will need to allocate a public IP address to your Postgres app. You can view your list of IPs by running the following command from your application directory:
 ```cmd
-fly ips list
+fly ips list --app <pg-app-name>
 ```
 
 You can allocate an IPv4 address by running the following:
 ```cmd
-fly ips allocate-v4
+fly ips allocate-v4 --app <pg-app-name>
 ```
 If your network supports IPv6:
 ```cmd
-fly ips allocate-v6
+fly ips allocate-v6 --app <pg-app-name>
 ```
 
-If you're not sure which one to use, just provision one of each and you should be good to go.
+## Configure an external service
 
+Now that you have an IP address, it's time to configure your app to accept connections on an external port, and direct incoming requests to your Postgres instance.
 
-### External port configuration
+Pull down a `fly.toml` configuration file for your Postgres app, if you don't have it:
 
-Now that we have an IP address, let's configure our app to expose an external port and direct incoming requests to our Postgres instance.
-
-If you haven't already pulled down your `fly.toml` configuration file, you can do so by running:
 ```cmd
-fly config save --app <app-name>
+fly config save --app <pg-app-name>
 ```
 
-Now, let's open up our `fly.toml` file and configure our port mappings by defining a new `Service`.
+Open up your `fly.toml` file.
+
+This may come with a default `services` section for `internal_port` 8080. Replace that with the following to configure your port mappings to work with Postgres:
 
 ```toml
 [[services]]
   internal_port = 5432 # Postgres instance
   protocol = "tcp"
 
-
-# Open port 10000 for plaintext connections.
 [[services.ports]]
-  handlers = []
-  port = 10000
+  handlers = ["pg_tls"]
+  port = 5432
 ```
+
+Note the use of the `pg_tls` [handler](/docs/reference/services/#connection-handlers) to manage the specific requirements of Postgres connections.
 
 For additional information on services and service ports:
 [The services sections](https://fly.io/docs/reference/configuration/#the-services-sections)
 
-### Deploying configuration changes
+## Deploy with the new configuration
 
-Once your service has been specified, it's time to deploy our new configuration.
+Once your service has been set up in `fly.toml`, it's time to deploy with the new configuration.
 
-**Before running the command below, be sure to verify the version of Postgres you are running.  As an example, if you are running Postgres 12.x you would specify `flyio/postgres:14` as your target image.**
+Verify the version of Postgres you are running.  **This step is important, because [there can be changes in the internal storage format between major versions of Postgres](https://www.postgresql.org/docs/current/upgrading.html).**
+
+Figure out which image and tag (Postgres version) you’re on:
+
+```cmd
+fly image show --app <pg-app-name>
+```
+```out
+Image Details
+  Registry   = registry-1.docker.io
+  Repository = flyio/postgres
+  Tag        = 14.4
+  Version    = v0.0.32
+```
+
+Deploy your cluster, using `--image` with the `image:tag` found in the previous step:
+
 ```cmd
 fly deploy . --app <app-name> --image flyio/postgres:<major-version>
 ```
 
-After the deployment completes, you can verify your `[[services]]` configuration by running the `fly info` command:
+As an example, if you are running Postgres 14.x you would specify `flyio/postgres:14` as your target image. 
+
+After the deployment completes, you can verify your `services` configuration by running the `fly info` command:
 
 ```cmd
 fly info
 ```
 ```output
 ...
+
 Services
-PROTOCOL PORTS
-TCP      10000 => 5432 []
+PROTOCOL	PORTS                	FORCE HTTPS
+TCP     	5432 => 5432 [PG_TLS]	False
 ...
 ```
 
-## Connection string
+You should then be able to access your Postgres cluster via psql like:
 
-The connection string that `fly pg create` outputs is in the form:
+```cmd
+psql "sslmode=require host=<pg-app-name>.fly.dev dbname=<db name> user=<username>"
+```
+```out
+Password for user <username>:
+psql (14.5 (Homebrew), server 13.6 (Debian 13.6-1.pgdg110+1))
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, bits: 256, compression: off)
+Type "help" for help.
+
+<db name>=#
+```
+
+## Adapting the connection string
+
+The connection string that `fly pg create` outputs for use in consuming apps is in the form:
 
 ```
 postgres://{username}:{password}@{hostname}:{port}/{database}?options
 ```
 
-where the hostname is an internal one. Substitute a publicly reachable hostname here to get a connection string an external app can use.
+where the `hostname` is an internal one. Substitute your newly publicly reachable hostname (`<pg-app-name>.fly.dev`) here to get a connection string an external app can use.
