@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-## _Fly Scaling_
+## Fly Scaling
 
 Fly auto-scaling is designed to be simple and easy to understand. When more users connect to your app, we add CPUs and memory. By default, we allocate one CPU to the first 20 TCP connections, and an additional CPU for every subsequent 20 TCP connections.
 
@@ -29,7 +29,7 @@ We use "concurrent connections" to determine microVM capacity. By default, we al
 
 When a client connects, we send them to the nearest microVM with capacity. If the existing VMs are at capacity, we [launch more](#auto-scaling) in the busiest regions. When there are idle VMs, we shut them off.
 
-## _Fly Networking_
+## Fly Networking
 
 ### BGP Anycast
 
