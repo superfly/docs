@@ -9,7 +9,7 @@ Fly Postgres databases can be used by applications outside their Fly.io [interna
 
 We don't expose Postgres apps to the internet by default. To get this working, you'll need to make two adaptations: configuring your Postgres app to accept connections from the Fly proxy, and providing a publicly-resolvable hostname to your app.
 
-## Allocating an IP address
+## Allocate an IP address
 
 If you haven't already, you will need to allocate a public IP address to your Postgres app. You can view your list of IPs by running the following command from your application directory:
 ```cmd
@@ -25,9 +25,9 @@ If your network supports IPv6:
 fly ips allocate-v6 --app <pg-app-name>
 ```
 
-### External port configuration
+## Configure an external service
 
-Now that you have an IP address, it's time to configure your app to accept connections on an external port and direct incoming requests to your Postgres instance.
+Now that you have an IP address, it's time to configure your app to accept connections on an external port, and direct incoming requests to your Postgres instance.
 
 Pull down a `fly.toml` configuration file for your Postgres app, if you don't have it:
 
@@ -54,9 +54,9 @@ Note the use of the `pg_tls` [handler](/docs/reference/services/#connection-hand
 For additional information on services and service ports:
 [The services sections](https://fly.io/docs/reference/configuration/#the-services-sections)
 
-### Deploying configuration changes
+## Deploy configuration changes
 
-Once your service has been specified, it's time to deploy your new configuration.
+Once your service has been set up in `fly.toml`, it's time to deploy with the new configuration.
 
 Verify the version of Postgres you are running.  **This step is important, because [there can be changes in the internal storage format between major versions of Postgres](https://www.postgresql.org/docs/current/upgrading.html).**
 
