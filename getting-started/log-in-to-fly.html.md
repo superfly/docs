@@ -47,5 +47,5 @@ Now proceed to globally deploying Docker Images, Go Applications, Node Applicati
   * [Elixir](/docs/elixir/getting-started/) - Elixir, Phoenix, and Postgres
   * [Static Web Server](/docs/getting-started/static/) - HTML and a compact web server.
 * And there's more information in [Working with Fly apps](/docs/getting-started/working-with-fly-apps/)
-* When it doesn't go right, checkout our [Troubleshooting Deloyments](/docs/getting-started/troubleshooting/) page.
+* When it doesn't go right, check out our [Troubleshooting Deployments](/docs/getting-started/troubleshooting/) page.
 
