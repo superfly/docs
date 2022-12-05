@@ -53,7 +53,7 @@ Machines are permanent, so keep the ID from the response handy.
 
 Your users' service will boot immediately after this API call. Launch speed is a function of image size. Tiny images should boot in less than 2 seconds. Large, complex images are much slower to boot.
 
-Try accessing your new machine at `https://user-functions.fly.dev`. If no requests arrive within 4 seconds, the machine will exit, but a request will force it to start back up automatically.
+Try accessing your new machine at `https://user-functions.fly.dev`. If no requests arrive within 120 seconds ([default](https://github.com/fly-apps/fastify-functions/blob/0f4ef94451/start.sh#L3) but configurable), the machine will exit, but a request will force it to start back up automatically.
 
 ## Launch a Machine in another region
 
