@@ -9,7 +9,7 @@ Rails applications commonly defer complex tasks that take a long to complete to 
 
 ## Provision a Redis server
 
-Sidekiq depends on Redis to communicate between the Rails server process and the background workers. Follow the [Redis setup guide](/docs/reference/redis) to provision a Redis server and set a `REDIS_URL` within the Rails app. Be sure to set the `REDIS_URL` via a secret as demonstrated in the [Redis documentation](reference/redis/#access-from-other-fly-applications-via-redis_url).
+Sidekiq depends on Redis to communicate between the Rails server process and the background workers. Follow the [Redis setup guide](/docs/reference/redis) to provision a Redis server and set a `REDIS_URL` within the Rails app. Be sure to set the `REDIS_URL` via a secret as demonstrated [here](/rails/the-basics/configuration/#secret-variables).
 
 Verify the `REDIS_URL` is available to your Rails application before you continue by running:
 
