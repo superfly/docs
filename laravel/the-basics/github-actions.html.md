@@ -1,7 +1,7 @@
 ---
 title: GitHub Actions - CICD
 layout: framework_docs
-objective: Configure continous integration and development on your Laravel Fly App through GitHub. 
+objective: Configure continuous integration and development on your Laravel Fly App through GitHub. 
 order: 7
 ---
 

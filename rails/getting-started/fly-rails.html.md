@@ -11,7 +11,7 @@ Please note that the `fly-rails` gem is designed to work well with common Rails 
 
 ## Install the `flyctl` command line interface
 
-First you'll need to [install the Fly CLI and signup for a Fly account](/docs/hands-on/install-flyctl/). The gem used in the next step will use this CLI to deploy your applicaton to Fly and it's something that's worth learning more about as you become more comfortable with Fly.
+First you'll need to [install the Fly CLI and signup for a Fly account](/docs/hands-on/install-flyctl/). The gem used in the next step will use this CLI to deploy your application to Fly and it's something that's worth learning more about as you become more comfortable with Fly.
 
 ## Install the gem
 

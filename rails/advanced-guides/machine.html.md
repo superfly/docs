@@ -192,7 +192,7 @@ class MachineJob < ApplicationJob
         return
       end
 
-      # wait for machine to copmlete, checking every 10 seconds,
+      # wait for machine to complete, checking every 10 seconds,
       # and timing out after 5 minutes.
       event = nil
       30.times do

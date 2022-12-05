@@ -10,7 +10,7 @@ Rails application with
 [nginx](https://www.nginx.com/) and [Phusion
 Passenger](https://www.phusionpassenger.com/).  This may be useful if you need
 functionality that nginx and/or Passenger provide, such as reverse
-proxying or hosting multiple applicationss.
+proxying or hosting multiple applications.
 
 ## Replacing the Dockerfile
 
@@ -21,7 +21,7 @@ This is the same default that Rails provides for new applications.
 
 This Dockerfile can be customized or replaced to meet your needs.  This
 guide will show you how to replace the Dockerfile with one that chooses
-Phusion Passeger.  The new Dockerfile will make use of the
+Phusion Passenger.  The new Dockerfile will make use of the
 [phusion/passenger-full](https://github.com/phusion/passenger-docker#docker-base-images-for-ruby-python-nodejs-and-meteor-web-apps) image.
 
 To get started, replace your Dockerfile with the following:

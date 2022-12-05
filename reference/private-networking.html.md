@@ -153,7 +153,7 @@ We suggest you name your saved configuration with the same name as the peer you 
 
 ##### Dealing with Defaults
 
-A default `region` and `name` will be used if they are not provided to the create command. In most cases, this is fine. However, the default generated name will start with `interactive-*` which are filtered out of DNS (because of the sheer volume of them) and subseqently can't be queried with `_peer.internal` or `<peername>._peer.internal`. If you wish to interact with your peer via it's name, be sure to specify it when creating.
+A default `region` and `name` will be used if they are not provided to the create command. In most cases, this is fine. However, the default generated name will start with `interactive-*` which are filtered out of DNS (because of the sheer volume of them) and subsequently can't be queried with `_peer.internal` or `<peername>._peer.internal`. If you wish to interact with your peer via it's name, be sure to specify it when creating.
 
 First, look up available regions by running `fly platform regions`. Select a region with a check mark in the Gateway column.
 

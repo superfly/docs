@@ -69,7 +69,7 @@ Promote the main branch to production. The production branch is protected, highl
 
 ![Screenshot](docs/images/planetscale_promote.png)
 
-Assuming you have a _Scaler_, _Team_, or _Enterprise_ account, you will be able to add addditional read-only regions. They can greatly improve the performance of your application, reducing the latency of reads from regions close to them. Click on the _main_ branch (the production one). You should see the option to _Add region_:
+Assuming you have a _Scaler_, _Team_, or _Enterprise_ account, you will be able to add additional read-only regions. They can greatly improve the performance of your application, reducing the latency of reads from regions close to them. Click on the _main_ branch (the production one). You should see the option to _Add region_:
 
 ![Screenshot](docs/images/planetscale_add_region.png)
 
@@ -90,7 +90,7 @@ To run it locally you will need [NodeJS](https://nodejs.org/en/download/)
 1. Clone the [`nodejs-planetscale-read-replicas`](https://github.com/fly-apps/nodejs-planetscale-read-replicas) repo.
 2. Run `npm install` to install its dependencies.
 3. Duplicate `.env.example`, naming it `.env`.
-4. The applicaton needs to know about all the available regions. There are different ways this could be done. We've opted to use a single comma-separated string of connection strings. In the `.env`, set `DATABASE_URL` as _all_ of the connection URLs you have, separated by a comma. The **first** one should be the one for your **primary** (and possibly only) database. Follow it with those for any read-only regions you've added. It will look something like this. Note the comma between them:
+4. The application needs to know about all the available regions. There are different ways this could be done. We've opted to use a single comma-separated string of connection strings. In the `.env`, set `DATABASE_URL` as _all_ of the connection URLs you have, separated by a comma. The **first** one should be the one for your **primary** (and possibly only) database. Follow it with those for any read-only regions you've added. It will look something like this. Note the comma between them:
 ```
 DATABASE_URL='mysql://user1:password1@region1/name?ssl={"rejectUnauthorized":true},mysql://user2:password2@region2/name?ssl={"rejectUnauthorized":true}'
 ```
@@ -290,7 +290,7 @@ If you try deploying the app to Fly and that fails, the most _likely_ reason is 
 
 - If you have any read-only replicas and use this approach (replaying a write to them using Fly's `fly-replay` header) make sure to not enable auto-scaling for your app. There is currently an issue where vms are not evenly distributed and so you can be sure there will be a vm in your primary region. And if not, writes to the database will fail.
 
-- For this example we used the same branch for local development _and_ on Fly. In reality you would have a development branch and a separate production branch. As such, the connection string(s) in your local `.env` file would differ from the one your applicaton uses on Fly. And in fact would likely instead be a local installation of MySQL to reduce costs.
+- For this example we used the same branch for local development _and_ on Fly. In reality you would have a development branch and a separate production branch. As such, the connection string(s) in your local `.env` file would differ from the one your application uses on Fly. And in fact would likely instead be a local installation of MySQL to reduce costs.
 
 - Adding additional regions in PlanetScale increases the cost of storage. For example if your primary database is 10GB, adding an additional region (for a read replica) would double the cost of storage.
 

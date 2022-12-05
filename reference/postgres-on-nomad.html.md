@@ -181,7 +181,7 @@ Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader elect
 
 5433 is the port the keeper tells postgres to listen on. Connecting there goes straight to Postgres, though it might be the leader or the replica. Since clients need writes, the proxy is listening on the default 5432 port so clients are connected to the current leader.
 
-If the leader becomes unhealthy (eg network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previoius leader's VM will be replaced by another VM which will rejoin the cluster as a replica.
+If the leader becomes unhealthy (eg network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previous leader's VM will be replaced by another VM which will rejoin the cluster as a replica.
 
 **In general, your clients should connect to port 5432.**
 
@@ -240,7 +240,7 @@ conn.exec( "SELECT * FROM pg_stat_activity" ) do |result|
   puts "     PID | User             | Query"
   result.each do |row|
     puts " %7d | %-16s | %s " %
-      row.values_at('pid', 'usename', 'query')
+      row.values_at('pid', 'username', 'query')
   end
 end
 ```
@@ -261,7 +261,7 @@ or by attaching the postgres database to your Fly app.
 
 `pgx` is the recommended driver for connecting to postgres. It supports the standard `database/sql` interface as well as directly exposing low level / high performance APIs.
 
-First, add `github.com/jackc/pgx/v4` as a module depepdency.
+First, add `github.com/jackc/pgx/v4` as a module dependency.
 ```bash
 go get github.com/jackc/pgx/v4
 ```
