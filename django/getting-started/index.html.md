@@ -186,4 +186,4 @@ We started with an empty directory and in a matter of minutes had a running Djan
   * The `fly.toml` file controls your app configuration and can be modified as needed.
   * `fly dashboard` can be used to monitor and adjust your application. Pretty much anything you can do from the browser window you can also do from the command line using `fly` commands. Try `fly help` to see what you can do.
 
-Now that you have seen how to deploy a simple Django application, it is time to move on to [Existing Django Apps](../../existing/) that feature static files and a PostgreSQL database.
+Now that you have seen how to deploy a simple Django application, it is time to move on to [Existing Django Apps](/docs/django/getting-started/existing/) that feature static files and a PostgreSQL database.
