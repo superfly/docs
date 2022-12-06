@@ -78,7 +78,7 @@ Now, technically this whole step could take place after the app had deployed but
 
 ## Fly Deploy
 
-We can now deploy Hasura. We'll use the -i option of `flyctl deploy` which allows you to install publically available images from Docker hub.
+We can now deploy Hasura. We'll use the -i option of `flyctl deploy` which allows you to install publicly available images from Docker hub.
 
 ```cmd
 flyctl deploy -i hasura/graphql-engine:v1.1.0

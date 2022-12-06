@@ -234,7 +234,7 @@ Check out the [Fly CLI docs](https://fly.io/docs/flyctl/) for a more extensive i
 
 By default Heroku deployments are kicked off via the `git push heroku` command. Fly works a bit differently by kicking of deployments via `fly deploy`—git isn't needed to deploy to Fly. The advantage to this approach is your git history will be clean and not full of commits like `git push heroku -am "make app work"` or `git push heroku -m "ok it will really work this time"`.
 
-To achieve the desired `git push` behavior, we recommend setting up `fly deploy` as the final command in your continious integration pipeline, as outlined for GitHub in the [Continuous Deployment with Fly and GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/) docs.
+To achieve the desired `git push` behavior, we recommend setting up `fly deploy` as the final command in your continuous integration pipeline, as outlined for GitHub in the [Continuous Deployment with Fly and GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/) docs.
 
 #### Release phase tasks
 
@@ -285,7 +285,7 @@ This is a great way to get comfortable with Fly if you prefer a managed database
 
 The most important thing you'll want to be comfortable with using Fly's database offering is [backing up and restoring your database](/docs/rails/the-basics/backup-and-restoring-data/).
 
-As your application grows, you'll probably first [scale disk and RAM resources](/docs/reference/postgres/#scaling-vertically-adding-more-vm-resources), then [scale out with multiple replicas](/docs/reference/postgres/#scaling-horizontally-adding-more-replicas). Common maintaince tasks will include [upgrading Postgres](/docs/reference/postgres/#upgrading-the-postgres-app) as new versions are released with new features and security updates.
+As your application grows, you'll probably first [scale disk and RAM resources](/docs/reference/postgres/#scaling-vertically-adding-more-vm-resources), then [scale out with multiple replicas](/docs/reference/postgres/#scaling-horizontally-adding-more-replicas). Common maintenance tasks will include [upgrading Postgres](/docs/reference/postgres/#upgrading-the-postgres-app) as new versions are released with new features and security updates.
 
 [You Postgres, now what?](/docs/reference/postgres-whats-next/) is a more comprehensive guide for what's required when running your Postgres databases on Fly.
 

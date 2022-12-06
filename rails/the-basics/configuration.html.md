@@ -1,7 +1,7 @@
 ---
 title: Environment Configuration
 layout: framework_docs
-objective: Add environment variables to your Rails applications, configure secrets, and use the encrypted `credentials.yml` file to manage your application's configuratio on Fly.
+objective: Add environment variables to your Rails applications, configure secrets, and use the encrypted `credentials.yml` file to manage your application's configuration on Fly.
 order: 4
 ---
 
@@ -9,7 +9,7 @@ Rails applications are usually configured via the encrypted `credentials.yml` fi
 
 ## Environmental variables
 
-Enviornment variables are a great way to configure a Rails application that needs to run in multiple environments.
+Environment variables are a great way to configure a Rails application that needs to run in multiple environments.
 
 ### Secret variables
 
