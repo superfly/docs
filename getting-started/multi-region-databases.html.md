@@ -20,6 +20,27 @@ In most runtimes, it's straightforward to catch a read-only database error in a 
 
 This guide is all about PostgreSQL, but the deployment topology will work with MySQL, MongoDB, and any other database with read replica support.
 
+<aside class="callout">
+
+## Existing application support
+
+Be aware that there is already some framework support for going multi-region with Postgres on Fly. The Postgres portions outlined here are still relevant even if you use one of the available libraries.
+
+The following libraries help applications when working with globally replicated Postgres databases.
+
+### Elixir/Phoenix
+
+[`fly_postgres`](https://github.com/superfly/fly_postgres_elixir) - Library for working with local read-replica postgres databases and performing writes through RPC calls to other nodes in the primary Fly.io region.
+
+This does not use the `fly-replay` header approach outlined here, but instead uses Elixir clustering to RPC write database operations to a node running in the primary region. This is Postgres specific.
+
+### Ruby/Rails
+
+[`fly-ruby`](https://github.com/superfly/fly-ruby) - Ruby gem for handling requests within a Fly.io multi-region database setup.
+
+This uses the `fly-replay` header and works equally well with Postgres, MySQL and other databases. Check out the Advanced Rails guide [Multi-region Deployments](https://fly.io/docs/rails/advanced-guides/multi-region/) for more information.
+</aside>
+
 ## Create a PostgreSQL cluster
 
 If you don't already have a PostgreSQL cluster running, you can create one with the `fly` CLI:
@@ -28,7 +49,7 @@ If you don't already have a PostgreSQL cluster running, you can create one with 
 fly pg create --name chaos-postgres --region scl
 ```
 
-Choose a high-availability configuration to create a two-node PostgreSQL cluster in Santiago Chile, one leader for writes, one replica for redundancy. 
+Choose a high-availability configuration to create a two-node PostgreSQL cluster in Santiago Chile, one leader for writes, one replica for redundancy.
 
 ## Add read replicas
 
@@ -91,14 +112,14 @@ class Fly
     primary = ENV["PRIMARY_REGION"]
     current = ENV["FLY_REGION"]
     db_url = ENV["DATABASE_URL"]
-    
+
     if primary.blank? || current.blank? || primary == current
       return db_url
     end
-    
+
     u = URI.parse(db_url)
     u.port = 5433
-    
+
     return u.to_s
   end
 end
