@@ -7,11 +7,15 @@ order: 50
 
 <%= partial "../partials/for-machines" %>
 
-You can scale VM resources for an individual machine with the [`flyctl machine update`](https://fly.io/docs/flyctl/machine-update/) command:
+See [Monitoring](/docs/postgres/managing/monitoring/) for how to check the current sizes of the VMs in your Postgres cluster.
+
+Scale VM resources for each Machine in the cluster with the [`flyctl machine update`](https://fly.io/docs/flyctl/machine-update/) command. Here's an example of scaling RAM to 1GB on a machine:
 
 ```cmd
 fly machine update e784079b449483 --memory 1024 --app pg-test
 ```  
+
+You can use [`fly machine status`](/docs/flyctl/machine-status/) again to confirm the new scale of the Machine.
 
 ## HA clusters 
 
@@ -20,8 +24,3 @@ If you have more than one instance in the primary region cluster, scale these VM
 ## Postgres resource parameters
 
 When you created your Fly Postgres cluster, certain Postgres configuration parameters were set to sensible values for the resources being provisioned. This means you may want, or need, to change them if you scale your VM resources. Read [Configuration Tuning](/docs/postgres/managing/configuration-tuning.html) before scaling down!
-
-
-
-
-
