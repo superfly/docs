@@ -1,5 +1,5 @@
 ---
-title: "Multi-region PostgreSQL"
+title: "Multi-region Postgres (Legacy)"
 layout: docs
 sitemap: false
 nav: firecracker
