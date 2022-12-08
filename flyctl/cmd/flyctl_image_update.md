@@ -14,7 +14,7 @@ flyctl image update [flags]
       --detach               Return immediately instead of monitoring update progress. (Nomad only)
   -h, --help                 help for update
       --image string         Target a specific image. (Machines only)
-      --skip-health-checks   Skip waiting for health checks in-between VM updates. (Machines only)
+      --skip-health-checks   Skip waiting for health checks inbetween VM updates. (Machines only)
       --strategy string      Deployment strategy. (Nomad only)
   -y, --yes                  Accept all confirmations
 ~~~
