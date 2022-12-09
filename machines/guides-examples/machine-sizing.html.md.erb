@@ -1,0 +1,128 @@
+---
+title: Machine Sizing
+layout: framework_docs
+sitemap: false
+author: fideloper
+categories:
+  - machines
+nav: firecracker
+date: 2022-12-08
+---
+
+Here are a few ways to set the size (CPU and memory) of your Machine VMs.
+
+## General Rules
+
+We have some [preset sizes](/docs/about/pricing/#machines) for you to choose from. Each CPU selection defaults to a specific amount of memory.
+
+You can, however, scale your machine's CPU and memory separately. Memory limits are `2gb * shared CPU size` or `8gb * performance CPU size`. Minimum memory is `256m * shared CPU size` or `2048m * performance CPU size`.
+
+**Examples:**
+
+* If you have 4 shared CPUs, the max memory you can add is `2048 * 4 = 8192`.
+* If you have 4 performance CPU's, the max memory you can add is `8192 * 4 = 32768`.
+
+## Using Size Presets
+
+Any size listed for Machines on the [pricing page](/docs/about/pricing/#machines) can be used when creating a Machine.
+
+Here's what that looks like to launch a `performance-2x` machine (2 CPU, 4gb memory):
+
+```bash
+curl -i -X POST \
+  -H "Authorization: Bearer ${FLY_API_TOKEN}" \
+  -H "Content-Type: application/json" \
+  "http://${FLY_API_HOSTNAME}/v1/apps/user-functions/machines" \
+  -d '{
+  "name": "savvy-machine",
+  "config": {
+    "image": "some-savvy-image",
+    "size": "performance-2x"
+  }
+}'
+```
+
+If you're using `flyctl`, the equivalent command looks like this:
+
+```bash
+fly machine run \
+    -a user-functions \
+    --name savvy-machine \
+    --size performance-2x \
+    some-savvy-image
+```
+
+## Custom Sizes
+
+When creating a machine, you can define the CPU and memory sizes yourself. Memory must be a multiple of 256 for shared sizes, and 2048 for performance sizes.
+
+Here we create a machine with a 2 CPUs but double the RAM you'd get if using size `shared-cpu-2x`.
+
+```bash
+curl -i -X POST \
+  -H "Authorization: Bearer ${FLY_API_TOKEN}" \
+  -H "Content-Type: application/json" \
+  "http://${FLY_API_HOSTNAME}/v1/apps/user-functions/machines" \
+  -d '{
+  "name": "savvy-machine",
+  "config": {
+    "image": "some-savvy-image",
+    "guest": {
+      "cpu_kind": "shared",
+      "cpus": 2,
+      "memory_mb": 1024
+    }
+  }
+}'
+```
+
+The `cpu_kind` parameter can be one of `shared` or `performance`.
+
+If you're using `flyctl`, the equivalent command looks like this:
+
+```bash
+fly machine run \
+    -a user-functions \
+    --name savvy-machine \
+    --cpus 2 \
+    --memory 1024 \
+    some-savvy-image
+```
+
+There is not yet a CLI flag for `shared` vs `performance`. It defaults to `shared` CPU types.
+
+## Adjusting Machine Size
+
+You can adjust CPU and Memory by [updating a Machine](/docs/machines/working-with-machines/#update-a-machine). Updating a machine replaces the machine with a new one, but keeps the machine ID.
+
+If we create a machine with the same command as above (using 1024m memory), but want to reduce that to the minimum 512m, we can make the following example API call:
+
+```bash
+# Updating a machine requires the *entire* config
+# so treat this as an example
+curl -i -X POST \
+  -H "Authorization: Bearer ${FLY_API_TOKEN}" \
+  -H "Content-Type: application/json" \
+  "http://${FLY_API_HOSTNAME}/v1/apps/user-functions/machines/73d8d46dbee589" \
+  -d '{
+  "config": {
+    "image": "some-savvy-image",
+    "guest": {
+      "cpu_kind": "shared",
+      "cpus": 2,
+      "memory_mb": 512
+    }
+  }
+}'
+```
+
+If you're using `flyctl`, the equivalent command looks like this:
+
+```bash
+fly machine update \
+    -a user-functions \
+    -i some-savvy-image \
+    --cpus 2 \
+    --memory 512 \
+    73d8d46dbee589
+```
