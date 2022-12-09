@@ -131,6 +131,7 @@ The only required parameter is `image` in the `config` object. Other parameters:
   - `memory_mb`: Memory in megabytes as multiples of 256 (default 256)
   - `kernel_args`: Optional array of strings. Arguments passed to the kernel
 
+* `size`: A [named size](/docs/about/pricing/#machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mututally exclusive.
 * `env`: An object filled with key/value pairs to be set as environment variables
 * `services`: An array of objects that define a single network service. Check the [machines networking section](#networking) for more information. Options:
 

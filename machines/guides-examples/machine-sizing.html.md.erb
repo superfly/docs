@@ -93,9 +93,9 @@ There is not yet a CLI flag for `shared` vs `performance`. It defaults to `share
 
 ## Adjusting Machine Size
 
-You can adjust CPU and Memory by [updating a Machine](/docs/machines/working-with-machines/#update-a-machine). Updating a machine replaces the machine with a new one, but keeps the machine ID.
+You can adjust CPU and memory by [updating a Machine](/docs/machines/working-with-machines/#update-a-machine). Updating a machine replaces the VM with a new one, but machine ID stays the same.
 
-If we create a machine with the same command as above (using 1024m memory), but want to reduce that to the minimum 512m, we can make the following example API call:
+If we create a machine with the same command as above (using 1024m memory), but later want to reduce that to 512m (the minimum allowed), we can make the following API call:
 
 ```bash
 # Updating a machine requires the *entire* config
