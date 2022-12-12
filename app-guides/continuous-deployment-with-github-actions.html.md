@@ -57,7 +57,7 @@ If you want to watch the process take place, head to the Repository and select t
 
 ## A longer look at the deployment process
 
-**Step 1**, is a a simple GitHub Fork; there's not a lot to say about that except that you need to do it because you want control of the repository that you are deploying from.
+**Step 1**, is a simple GitHub Fork; there's not a lot to say about that except that you need to do it because you want control of the repository that you are deploying from.
 
 ### API Tokens and deployment
 
