@@ -234,8 +234,15 @@ Machines are closed to the public internet by default. To make them accessible v
 For an application with a single machine, all requests will be routed to that machine. A machine in the `stopped` state will be started up
 automatically when a request arrives.
 
-For an application with multiple machines with the same configuration, requests will be distributed across them. Warm-start behavior in this situation
+For an application with multiple machines *with the same configuration*, requests will be distributed across them. Warm-start behavior in this situation
 is not well-defined now, so should not be relied upon for apps with multiple machines.
+
+Requests to machines with *mixed* configurations will be distributed across machines whos configurations match the request.
+For example, if 3 out of 6 machines have service configurations set to listen on port 80, requests to port 80 will be distributed amongst those 3.
+
+### Reaching Machines
+
+Machines can be reached within the private network by hostname in the format `<id>.vm.<app-name>.internal`. For example: `3d8d413b29d089.vm.user-functions.internal`.
 
 ## Machine States
 
