@@ -12,6 +12,7 @@ flyctl ips allocate-v4 [flags]
   -c, --config string   Path to application configuration file
   -h, --help            help for allocate-v4
   -r, --region string   The target region (see 'flyctl platform regions')
+      --shared          Allocates a shared IPv4
 ~~~
 
 ## Global Options
