@@ -34,4 +34,3 @@ curl -i -X POST \\
     }'
 
 ```
-**Status: 200**

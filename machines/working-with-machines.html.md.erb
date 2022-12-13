@@ -72,172 +72,109 @@ All requests must include the the fly API Token in the HTTP Headers as follows:
 Authorization: Bearer <fly_api_token>
 ```
 
-### Create a Fly application
-
-Machines must be associated with a Fly application. App names must be unique.
-
-<%= partial "/docs/reference/machines/create_app_req" %>
-
-### Allocate an IP address for global request routing
-
-If you intend for machines to be accessible to the internet, you'll need to allocate an IP address to the application. Currently
-this is done using `flyctl` or the [Fly GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](https://fly.io/docs/reference/services/#anycast). Read more about this in [the Networking section](https://fly.io/docs/reference/services/#notes-on-networking).
-
-Example:
-
-```cmd
-flyctl ips allocate-v4 -a user-functions
-```
-```out
-TYPE ADDRESS    REGION CREATED AT
-v4   37.16.9.52 global 7s ago
-```
-
-The app will answer on this IP address, and after a small delay, at `user-functions.fly.dev`.
-
-### Get application details
-
-Get details about an application, like its organization slug and name. Also, to check if the app exists!
-<%= partial "/docs/reference/machines/get_app_req" %>
-<%= partial "/docs/reference/machines/get_app_resp" %>
-
-### Set application secrets
-
-For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly apps using `flyctl`:
-
-<%= partial "/docs/partials/set_secrets", locals: { app_name: "user-functions" } %>
-
-Machines inherit secrets from the app. Existing machines must be [updated](#update-a-machine) to pick up secrets set after the machine was created.
-
-For non-sensitive information, you _can_ set different environment variables per machine at creation time.
-
 ### Create a machine
 
 Create machine, which starts running immediately. This is where you configure the machine characteristics, like its CPU and memory. You can also allow connections from the internet through the Fly proxy. Learn more about this behavior in the [networking section](#networking).
-
 Following this call, you can make a [blocking API request](#wait-for-a-machine-to-start) to wait for a machine to start.
 
-The only required parameter is `image` in the `config` object. Other parameters:
-
-`name`: Unique name for this machine. If omitted, one is generated for you.
-
-`region`: The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you).
-
-`config`: An object defining the machine configuration. Options
-
-* `image`: The Docker image to run
-* `guest`: An object with the following options:
-  - `cpus`: Number of vCPUs (default 1)
-  - `memory_mb`: Memory in megabytes as multiples of 256 (default 256)
-  - `kernel_args`: Optional array of strings. Arguments passed to the kernel
-
-* `size`: A [named size](/docs/about/pricing/#machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
-* `env`: An object filled with key/value pairs to be set as environment variables
-* `services`: An array of objects that define a single network service. Check the [machines networking section](#networking) for more information. Options:
-
-  - `protocol`: `tcp` or `udp`. [Learn more about running raw TCP/UDP services](https://fly.io/docs/app-guides/udp-and-tcp/).
-  - `concurrency`: load balancing concurrency settings
-      + `type`: `connections` (TCP) or `requests` (HTTP). Defaults to connections.
-      + `soft_limit`: "ideal" service concurrency. We will attempt to spread load to keep services at or below this limit
-      + `hard_limit`: maximum allowed concurrency. We will queue or reject when a service is at this limit
-  - `internal_port`: Port the machine VM listens on
-  - `ports`: An array of objects defining the service's ports and associated handlers. Options:
-      + `port`: Public-facing port number
-      + `handlers`: Array of [connection handlers](https://fly.io/docs/reference/services/#connection-handlers) for TCP-based services.
-* `processes`: An optional array of objects defining multiple processes to run within a VM
-  - `name`: Process name
-  - `entrypoint`: An array of strings. The process that will run
-  - `cmd`: An array of strings. The arguments passed to the entrypoint
-  - `env`: An object filled with key/value pairs to be set as environment variables
-  - `user`: An optional user that the process runs under
-* `schedule`: Optionally one of `hourly`, `daily`, `weekly`, `monthly`. Runs machine at the given interval. Interval starts at time of machine creation
-
-* `mounts`: An array of objects that reference previously created [persistent volumes](https://fly.io/docs/reference/volumes/). Currently, you may only mount *one volume* per VM.
-  - `volume`: The volume ID, visible in `fly volumes list`, i.e. `vol_2n0l3vl60qpv635d`
-  - `path`: Absolute path on the VM where the volume should be mounted. i.e. `/data`
+##### Parameters
+<div class="params">
+<ul style="list-style: none;">
+<% data.machines.create.attrs.each do |attr| %>
+  <li style="list-style: none; border-bottom: 1px solid #80808029;padding-bottom: 5px;">
+    <span style="font-weight: 600; font-size:15px;"><%= attr.name %></span>
+    <% if attr.required %>
+      <span style="text-transform: uppercase; font-size: 10px; background-color: #faa387; border-radius: 5px; padding: 3px;">Required</span>
+    <% end %>
+    <div>
+      <p style="font-size:14px;"><%= attr.description %></p>
+    </div>
+    <% if attr.kv %>
+      <ul>
+      <% attr.kv.each do |kv| %>
+        <li style="list-style: none; border-bottom: 1px solid #80808029;padding-bottom: 5px;">
+        <span style="font-weight: 600; font-size:15px;"><%= kv.name %></span>
+        <% if kv.required %>
+          <span style="text-transform: uppercase; font-size: 10px; background-color: #faa387; border-radius: 5px; padding: 3px;">Required</span>
+        <% end %>
+        <div>
+          <p style="font-size:14px;"><%= kv.description %></p>
+        </div>
+        <% if kv.kv %>
+      <ul>
+        <% kv.kv.each do |nkv| %>
+        <li style="list-style: none; border-bottom: 1px solid #80808029;padding-bottom: 5px;">
+          <span style="font-weight: 600; font-size:15px;"><%= nkv.name %></span>
+          <% if nkv.required %>
+            <span style="text-transform: uppercase; font-size: 10px; background-color: #faa387; border-radius: 5px; padding: 3px;">Required</span>
+          <% end %>
+          <div>
+          <p style="font-size:14px;"><%= nkv.description %></p>
+          </div>
+        </li>
+      <% end %>
+      </ul>
+    <% end %>
+        </li>
+      <% end %>
+      </ul>
+    <% end %>
+  </li>
+<% end %>
+</ul>
+</div>
 
 <%= partial "/docs/reference/machines/launch_req" %>
+
+##### Returns
+Returns the machine object if create succeeded. This call will return an error if something goes wrong. 
+<div class="returns">
+<ul style="list-style: none;">
+<% data.machines.machine.each do |attr| %>
+  <li style="list-style: none; border-bottom: 1px solid #80808029;padding-bottom: 5px;">
+    <span style="font-weight: 600; font-size:15px;"><%= attr.name %></span>
+    <span style="text-transform: uppercase; font-size: 10px; padding: 3px;"><%= attr.type %></span>
+    <div>
+      <p style="font-size:14px;"><%= attr.description %></p>
+    </div>
+    <% if attr.kv %>
+      <ul>
+      <% attr.kv.each do |kv| %>
+        <li style="list-style: none; border-bottom: 1px solid #80808029;padding-bottom: 5px;">
+        <span style="font-weight: 600; font-size:15px;"><%= kv.name %></span>
+        <% if kv.required %>
+          <span style="text-transform: uppercase; font-size: 10px; background-color: #faa387; border-radius: 5px; padding: 3px;">Required</span>
+        <% end %>
+        <div>
+          <p style="font-size:14px;"><%= kv.description %></p>
+        </div>
+        </li>
+      <% end %>
+      </ul>
+      <%end%>
+  </li>
+<% end %>
+</ul>
+</div>
+
 <%= partial "/docs/reference/machines/launch_resp" %>
 
-### Wait for a machine to reach a Specified State
+### Get Machine
 
-Wait for a machine to reach a specific state. Specify the desired state with the `state` parameter.  See the [table below](#machine-states) for a list of possible states.  The default for this parameter is `started`.
+### Start machine
 
-This request will block for up to 60 seconds. Set a longer timeout with the `timeout` parameter.
+### Stop machine
+
+### Update machine
+
+### Delete machine
+
+### List Machines
+
+### Lease Machines
 
 
-<%= partial "/docs/reference/machines/wait_req" %>
-<%= partial "/docs/reference/machines/wait_resp" %>
-
-### Get a Machine
-
-Given a machine ID, fetch details about it.
-
-<%= partial "/docs/reference/machines/get_req" %>
-<%= partial "/docs/reference/machines/get_resp" %>
-
-### Update a Machine
-
-`region` and `name` are immutable and cannot be updated. Updating the `config` requires specifying the complete config.
-
-<%= partial "/docs/reference/machines/update_req" %>
-<%= partial "/docs/reference/machines/update_resp" %>
-
-### Stop a Machine
-
-Stopping a machine will shut down the VM, but not destroy it. The VM may be started again with `machines/<id>/start`.
-
-<%= partial "/docs/reference/machines/stop_req" %>
-<%= partial "/docs/reference/machines/stop_resp" %>
-
-### Start a Machine
-
-Start a previously stopped machine.  Machines that are restarted are completely
-reset to their original state so that they start clean on the next run.
-
-<%= partial "/docs/reference/machines/start_req" %>
-<%= partial "/docs/reference/machines/start_resp" %>
-
-### Delete a Machine permanently
-
-Delete a machine, never to be seen again. This action cannot be undone!
-
-<%= partial "/docs/reference/machines/delete_req" %>
-<%= partial "/docs/reference/machines/delete_resp" %>
-
-### List machines for an app
-
-<%= partial "/docs/reference/machines/list_req" %>
-<%= partial "/docs/reference/machines/list_resp" %>
-
-### Delete a Fly application
-
-Machines should be stopped before attempting deletion. Pass `force=true` to stop and delete immediately.
-
-<%= partial "/docs/reference/machines/delete_app" %>
-
-### Lease a machine
-
-Machine leases can be used to obtain an exclusive lock on modifying a machine.
-
-<%= partial "/docs/reference/machines/lease_req" %>
-<%= partial "/docs/reference/machines/lease_resp" %>
-<%= partial "/docs/reference/machines/lease" %>
-
-## Notes on Networking
-
-Machines are closed to the public internet by default. To make them accessible via the associated application, you need to:
-
-* Allocate an IP address to the application
-* Adding one or more `services` to the machine config with ports and handlers, as seen in the launch example here
-
-For an application with a single machine, all requests will be routed to that machine. A machine in the `stopped` state will be started up
-automatically when a request arrives.
-
-For an application with multiple machines with the same configuration, requests will be distributed across them. Warm-start behavior in this situation
-is not well-defined now, so should not be relied upon for apps with multiple machines.
-
-## Machine States
+### Machine States
 
 This table explains the possible machine states. A machine may only be in one state at a time.
 
