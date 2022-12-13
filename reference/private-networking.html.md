@@ -91,13 +91,31 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
-## Flycast Private Load Balancing
+## Flycast - Private Load Balancing
 
-Fly apps may accept traffic on a special "Flycast" private IPv6 address. This traffic is routed through the Fly proxy - like [public traffic](/docs/reference/services/#anycast) - arriving in the geographically closest region with active VMs. Traffic is also load-balanced across live app VMs.
+Flycast offers the same [geographically-aware load balancing](http://localhost:4567/docs/reference/load-balancing/) as the public Fly proxy while restricting traffic to private networks.
 
-This feature might be useful in case your code can't use DNS, or you're using 3rd party software like a database that doesn't support round-robin DNS entries.
+Use this feature under the following circumstances:
 
-To assign a Flycast IP to your app:
+* Your app can't use DNS
+* You're using 3rd party software, like a database, that doesn't support round-robin DNS entries
+* Your want to limit access to specific ports/services in your app from other Fly organizations
+* You private service needs advanced proxy features like TLS termination or proxy protocol support
+
+The general flow for setting this up is:
+
+1. Allocate a private IPv6 address on one of your Fly organization networks
+2. Expose services in your app's fly.toml `[services]` block
+3. Deploy your app
+4. Access the services on the private IP from the target organization network
+
+Flycast IP have no associated DNS entry.
+
+**Note: If you have a public IP address assigned to your app, services in fly.toml will be exposed to the public internet. Verify this with `fly ips list`.**
+
+### Assigning a Flycast address
+
+By default, the Flycast IP is allocated on app's parent organization network.
 
 ```cmd
  fly ips allocate-v6 --private
@@ -107,7 +125,16 @@ VERSION	IP                	TYPE   	REGION	CREATED AT
 v6     	fdaa:0:22b7:0:1::3	private	global	just now
 ```
 
-This IP should now be visible to all apps deployed in the app's organization.
+If you want to expose services to another Fly organization you have access to, use the `--org` flag.
+
+```cmd
+ fly ips allocate-v6 --private --org my-other-org
+ ```
+ ```output
+VERSION	IP                	TYPE   	REGION	CREATED AT
+v6     	fdaa:0:22b7:0:1::3	private	global	just now
+```
+
 ## Private Network VPN
 
 You can use the [WireGuard](https://wireguard.com/) VPN to connect to our [6PN private network](/docs/reference/private-networking/). This is a flexible and secure way to plug into each one of your Fly organizations and connect to any and all apps within that organization.
