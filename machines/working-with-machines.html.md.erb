@@ -77,7 +77,7 @@ Authorization: Bearer <fly_api_token>
 Create machine, which starts running immediately. This is where you configure the machine characteristics, like its CPU and memory. You can also allow connections from the internet through the Fly proxy. Learn more about this behavior in the [networking section](#networking).
 Following this call, you can make a [blocking API request](#wait-for-a-machine-to-start) to wait for a machine to start.
 
-#### Parameters
+### Parameters
 <div class="params">
 <ul style="list-style: none;">
 <% data.machines.create.attrs.each do |attr| %>
@@ -126,7 +126,7 @@ Following this call, you can make a [blocking API request](#wait-for-a-machine-t
 
 <%= partial "/docs/reference/machines/launch_req" %>
 
-#### Returns
+### Returns
 Returns the machine object if create succeeded. This call will return an error if something goes wrong. 
 <div class="returns">
 <ul style="list-style: none;">
@@ -174,7 +174,7 @@ Returns the machine object if create succeeded. This call will return an error i
 ## Lease Machines
 
 
-### Machine States
+## Machine States
 
 This table explains the possible machine states. A machine may only be in one state at a time.
 
