@@ -14,7 +14,7 @@ stop a running machine to save on compute costs. It then may be started automati
 
 [Read the Fly Machines announcement post.](https://fly.io/blog/fly-machines/)
 
-## TL;DR Machine Features
+## Machine Features
 
 1. They can be managed by API
 1. They turn off automatically when a program exits
