@@ -93,7 +93,7 @@ Examples of retrieving this information are in the [fly-examples/privatenet](htt
 
 ## Flycast - Private Load Balancing
 
-Flycast offers the same [geographically-aware load balancing](http://localhost:4567/docs/reference/load-balancing/) as the public Fly proxy while restricting traffic to private networks.
+Flycast offers the same [geographically-aware load balancing](/docs/reference/load-balancing/) as the public Fly proxy while restricting traffic to private networks.
 
 Use this feature under the following circumstances:
 
