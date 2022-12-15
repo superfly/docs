@@ -10,9 +10,10 @@ flyctl apps move [APPNAME] [flags]
 ## Options
 
 ~~~
-  -h, --help         help for move
-  -o, --org string   The target Fly organization
-  -y, --yes          Accept all confirmations
+  -h, --help                 help for move
+  -o, --org string           The target Fly organization
+      --skip-health-checks   Update machines without waiting for health checks. (Machines only)
+  -y, --yes                  Accept all confirmations
 ~~~
 
 ## Global Options
