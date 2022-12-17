@@ -1,25 +1,27 @@
 ---
-title: Monitoring
-objective: Configure healthchecks and notifications for when the Postgres database runs into issues, like running out of storage or memory.
+title: Monitor a Postgres App
+objective: Check on the health of your cluster, view logs, see which metrics are available for export.
 layout: framework_docs
 order: 20
 ---
 <%= partial "../partials/for-machines" %>
 
-You can use `flyctl status` to see a list of VMs and their status. The output for each VM includes it's role within the cluster.
+## App Status
+
+You can use `fly status` to see a list of VMs and an overview of their status. The output for each VM includes its role within the cluster.
 
 ```
-$ flyctl status --app test-pg
+$ fly status --app test-pg
 ID              STATE   ROLE    REGION  HEALTH CHECKS       IMAGE                         CREATED               UPDATED
 e784079b449483  started leader  iad     3 total, 3 passing  flyio/postgres:14.4 (v0.0.26) 2022-09-26T16:58:50Z  2022-09-26T16:59:04Z
 1781957c525989  started replica iad     3 total, 3 passing  flyio/postgres:14.4 (v0.0.26) 2022-09-26T17:05:25Z  2022-09-26T17:05:38Z
 
 ```
 
-To view the status of an individual Machine:
+To view the status of an individual Machine in more detail:
 
 ```
-$ flyctl machine status e784079b449483 --app test-pg
+$ fly machine status e784079b449483 --app test-pg
 Machine ID: e784079b449483
 Instance ID: 01GDXBSCZ0TSKA40K478CQ0P26
 State: started
@@ -51,7 +53,7 @@ created launch  user    2022-09-26T11:58:50.789-05:00
 To view a list of health checks for a Fly Postgres app, run:
 
 ```
-flyctl checks list -a test-pg
+fly checks list -a test-pg
 Health Checks for shaun-pg-mach-test
   NAME | STATUS  | MACHINE        | LAST UPDATED | OUTPUT
 -------*---------*----------------*--------------*-----------------------------------------------------------------------------
@@ -108,11 +110,11 @@ Health Checks for shaun-pg-mach-test
 
 ## Logs
 
-Fly Postgres apps run several processes inside each VM, including postgres, stolon keeper, stolon sentinel, stolon proxy, and postgres_export. Each of those processes redirect STDOUT and STDERR to logs which you can view with `flyctl logs`.
+Fly Postgres apps run several processes inside each VM, including Postgres, Stolon keeper, Stolon sentinel, HAProxy, and postgres_export. Each of those processes redirect STDOUT and STDERR to logs which you can view with `fly logs`.
 
 ## Metrics
 
-Fly Postgres apps export metrics to prometheus which can be seen in the Metrics UI or queried from grafana.
+Fly Postgres apps export metrics to Prometheus which can be seen in the Metrics UI or queried from Grafana.
 
 The available metrics are
 ```
