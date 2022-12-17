@@ -12,7 +12,7 @@ order: 100
 Get an overview of the app, including a list of its VM instances with Machine IDs: 
 
 ```cmd
-fly status -app <pg-app-name>
+fly status --app <pg-app-name>
 ``` 
 
 ## VM Scale
@@ -20,7 +20,7 @@ fly status -app <pg-app-name>
 List more details about an individual Machine:
 
 ```cmd
-fly machine status <machine-id> -app <pg-app-name>
+fly machine status <machine-id> --app <pg-app-name>
 ``` 
 
 From this information you can get the scale of the VM (both `Memory` and `CPUs`), and the ID of its attached [Fly Volume](/docs/reference/volumes/).
@@ -30,7 +30,7 @@ From this information you can get the scale of the VM (both `Memory` and `CPUs`)
 You can check the sizes of all the storage volumes provisioned for your Postgres App with
 
 ```cmd
-fly vol list -a <pg-app-name>
+fly vol list --app <pg-app-name>
 ```
 
 ## Public Anycast IP Addresses
