@@ -6,7 +6,7 @@ nav: firecracker
 ---
 
 <figure class="flex ai:center jc:center w:full r:lg bg:yellow-gradient p:4 mb:4">
-  <img src="/public/images/celebrate.png" srcset="/public/images/celebrate@2x.png 2x" alt="The Fly balloon celebrating with confetti" class="w:11">
+  <img src="/static/images/celebrate.png" srcset="/static/images/celebrate@2x.png 2x" alt="The Fly balloon celebrating with confetti" class="w:11">
 </figure>
 
 Welcome to Fly! You've just successfully signed up and you're ready to get going. We're here to help you on your way.
