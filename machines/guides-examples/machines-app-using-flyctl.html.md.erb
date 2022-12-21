@@ -30,7 +30,7 @@ None of this is special for Machines; if we haven't built a bells-and-whistles l
 
 Imagine you have a Dockerfile in the current working directory; maybe some source code that that Dockerfile draws on; and when you build it, you get an image for something that listens on internal port 8080. You want that to be reachable from the world on port 443, where browsers send HTTPS connections.
 
-If you like to do things in an orderly fashion, you might want the App to exist and have public IP addresses before you boot the Machine:
+If you like to do things in an orderly fashion, you might want the App to have public IP addresses before you boot the Machine:
 
 ```
 fly apps create --machines --name testrun
