@@ -55,7 +55,7 @@ In order to access this API on a fly VM, make the token available as a secret:
 flyctl secrets set FLY_API_TOKEN=$(fly auth token)
 ```
 
-A convenient way to set the FLY_API_HOSTNAME is to add it to your `Dockerfile`:
+A convenient way to set the `FLY_API_HOSTNAME` is to add it to your `Dockerfile`:
 
 ```
 ENV FLY_API_HOSTNAME="_api.internal:4280
@@ -282,4 +282,4 @@ This table explains the possible machine states. A machine may only be in one st
   </table>
 
 
-Internal note: the replaced state is only possible when requesting a specific instance_id.
+Internal note: the replaced state is only possible when requesting a specific `instance_id`.
