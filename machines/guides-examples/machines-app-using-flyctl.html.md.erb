@@ -34,18 +34,20 @@ If you like to do things in an orderly fashion, you might want the App to exist 
 
 ```
 fly apps create --machines --name testrun
-fly ips allocate-v4 -a testrun
+fly ips allocate-v4 --shared -a testrun
 fly ips allocate-v6 -a testrun
 fly m run . -p 443:8080/tcp:tls --region yyz -a testrun
 ```
 
 The last command configures and deploys the VM. See the `.` in there? That, in this case, is the path to the Dockerfile. Such a diminutive, easy-to-miss representation of _everything you want to supply for the VM to run_. Don't leave it out. You may notice that we're not using a `fly.toml` with `fly m run`; we specify our configuration right in the command.
 
+Note the allocation of a [shared IPv4 address](/docs/reference/services/#shared-ipv4) above. For regular HTTP(S) web apps, shared IPv4 works fine, and helps conserve the world's dwindling IPv4 supply (and can [save you money](/docs/about/pricing/#anycast-ip-addresses)). If your app runs other services and you need a dedicated IPv4, you can provision one by leaving out the `--shared` flag.
+
 If your app doesn't exist yet, `fly m run` will prompt you to create it, so you can actually do this instead:
 
 ```
 fly m run . -p 443:8080/tcp:tls --region yyz -a testrun
-fly ips allocate-v4 -a testrun
+fly ips allocate-v4 --shared -a testrun
 fly ips allocate-v6 -a testrun
 ```
 
@@ -69,7 +71,7 @@ And just try it out:
 
 ```
 fly apps create --machines --name testrun 
-fly ips allocate-v4 -a testrun
+fly ips allocate-v4 --shared -a testrun
 fly ips allocate-v6 -a testrun
 fly m run . -p 443:8080/tcp:tls --region yyz -a testrun
 ```
@@ -151,7 +153,7 @@ fly logs -a testrun
 ```
 
 I see a lot of messages from the proxy like `[info]Still waiting for machine to listen on 0.0.0.0:8080 (waited 43.329214343s so far)`
-and `error.message="failed to connect to fly machine: Gave up after 50 retries"`. So my machine is started, but it's not listening where I've told the Fly Proxy it would be. If I scroll up closer to the start of the logs:
+and `error.message="failed to connect to fly machine: Gave up after 50 retries"`. So my Machine is started, but it's not listening where I've told the Fly Proxy it would be. If I scroll up closer to the start of the logs:
 
 ```
 [INFO] Listening at: http://0.0.0.0:4999 (512)
@@ -260,7 +262,7 @@ to update every VM on the App to the new image.
 
 ### By creating a new Machine
 
-I can create another machine with `fly m run` using the same image as the others are running, on the same App, but in a different region (use the correct port this time):
+I can create another Machine with `fly m run` using the same image as the others are running, on the same App, but in a different region (use the correct port this time):
 
 ```cmd
 fly m run registry.fly.io/testrun:v12 -p 443:4999/tcp:tls --region syd -a testrun
