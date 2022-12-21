@@ -24,7 +24,7 @@ To get a single Machine running a stateless app, and serving it to the world at 
 1. A port mapping for the HTTP service you want to expose
 1. A Docker image
 
-We cook up VMs starting from Docker images, so you need to tell the platform how to get, or build, a Docker container. 
+We cook up VMs starting from Docker images, so you need to tell the platform how to get, or build, an image. 
 
 None of this is special for Machines; if we haven't built a bells-and-whistles launcher for your kind of project, then you have to do it for V1 (Nomad) Apps launched with `fly launch` too.
 
@@ -288,7 +288,7 @@ At this point I've deployed my app, fixed the mistakes I made while deploying it
 
 We can do this using just flyctl and [user-mode WireGuard](https://fly.io/blog/our-user-mode-wireguard-year/), thanks to a program called [Hallpass](https://fly.io/blog/ssh-and-user-mode-ip-wireguard/) that runs on each Fly.io App VM.
 
-You can get a shell on a specific Machine with `fly ssh console -s`:
+You can ssh into a specific Machine with `fly ssh console -s`:
 
 ```cmd
 fly ssh console -s -a testrun
@@ -302,11 +302,13 @@ fly ssh console -s -a testrun
 
 If you can ssh into it, that's a sure sign of life. You can also make modifications from in there. Just be aware that anything you do to the root filesystem (i.e. not on a mounted Fly Volume or a separate database app) will be undone next time you start up the Machine.
 
+Note: You can only get a console interface on a VM if there's some sort of shell installed in your project. 
+
 ## Scale Down Temporarily By Stopping a VM
 
 Use `fly m stop` to stop a Machine; `fly m start` to get it going again. 
 
-There is a subtlety here where if you have a public service defined, if the Fly Proxy happens to send a request to a stopped Machine, it will try to get it started, too. One mitigation for this is to have Machines run a main process that exits after some time idle, thus shutting down the VM.
+There is a subtlety here where if you have a public service defined, if the Fly Proxy happens to send a request to a stopped Machine, it will try to get it started, too. One mitigation for this is to have Machines run a main process that exits after some time idle, thus shutting down the VM. Then if the proxy wakes a VM up just for some random bot hit, it won't stay up indefinitely.
 
 ## Scale Down Permanently
 
