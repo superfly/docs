@@ -5,6 +5,8 @@ nav: firecracker
 toc: false
 ---
 
+<img src="/static/images/support.jpg" srcset="/static/images/support@2x.jpg 2x" alt="An open laptop with a Fly.io sticker on it, sitting on the ground next to a coffee mug and a cute turtle.">
+
 Need support? We can help! Here's where to look.
 
 ## Fly.io Status 
