@@ -37,6 +37,7 @@ flyctl [flags]
 * [image](/docs/flyctl/image/)	 - Manage app image
 * [info](/docs/flyctl/info/)	 - Shows information about the application
 * [ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
+* [jobs](/docs/flyctl/jobs/)	 - Show jobs at Fly.io
 * [launch](/docs/flyctl/launch/)	 - Create and configure a new app from source code or a Docker image.
 * [list](/docs/flyctl/list/)	 - Lists your Fly resources
 * [logs](/docs/flyctl/logs/)	 - View app logs
