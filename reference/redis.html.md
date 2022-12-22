@@ -97,7 +97,7 @@ Upstash Redis is available in all Fly regions via a [private IPv6 address](/docs
 
 ### Writing to replica regions
 
-**Replicas forward writes to the primary**. Replicas can't written to. Writes are synchronous, and synchronous writes over geographical distance experience latency. Plan for this latency in your application design.
+**Replicas forward writes to the primary**. Replicas can't be written to. Writes are synchronous, and synchronous writes over geographical distance experience latency. Plan for this latency in your application design.
 
 If you're using Redis as region-local cache and don't require a shared cache, setup separate databases per-region and enable object eviction.
 
