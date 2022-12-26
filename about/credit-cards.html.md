@@ -6,13 +6,13 @@ nav: firecracker
 
 We require an active, valid credit card on file for most Fly.io accounts. This is primarily a means to prevent abuse and ensure that we can collect payment at the end of the month.
 
-# Preauthorization Requests
+## Preauthorization Requests
 
 We may send a preauthorization request to the issuing bank to verify a bank will authorize charges. Some credit card companies present these as real charges, which may surprise you.
 
 A preauth is really just a hold on a credit card. We'll typically preauthorize a small amount (usually less than $5) after signup, then cancel the authorization immediately. Banks may show the preauth for up to 7 days, even though we have not collected any money.
 
-# When will I get charged?
+## When will I get charged?
 
 If you provision services beyond the free included usage, we will charge you actual money at the end of each month.
 
