@@ -1,5 +1,5 @@
 ---
-title: How we use credit cards
+title: How We Use Credit Cards
 layout: docs
 nav: firecracker
 ---
