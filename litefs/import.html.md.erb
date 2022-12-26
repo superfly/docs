@@ -1,0 +1,64 @@
+---
+title: LiteFS Import Command
+layout: docs
+sitemap: false
+nav: litefs
+toc: true
+---
+
+<%= partial "partials/disclaimer" %>
+
+## Overview
+
+The `import` command will upload a SQLite database to a LiteFS cluster. If the
+named database doesn't exist, it will be created. If it does exist, it will be
+replaced. This command is safe to used on a live database.
+
+The database file is not validated for integrity by LiteFS. You can perform an
+integrity check first by running "PRAGMA integrity_check" from the SQLite CLI.
+
+
+## Usage
+
+```sh
+litefs import [arguments] PATH
+```
+
+## Arguments
+
+You'll need to specify a name for the database using the `-name` flag. This is
+the filename that your application will use to access the database.
+
+```
+  -name string
+      database name
+```
+
+If you are importing a database to a remote LiteFS node, you'll need to specify
+the base API URL for that node. This defaults to the local LiteFS node.
+
+```
+  -url string
+      LiteFS API URL (default "http://localhost:20202")
+```
+
+## Examples
+
+### Importing to a local instance
+
+Import a database from `/path/to/db` to a database called `my.db` on a local
+LiteFS node:
+
+```sh
+litefs import -name my.db /path/to/db
+```
+
+
+### Importing to a remote instance
+
+Import a database from `/path/to/db` to a database called `my.db` on a remote
+LiteFS node with a hostname of `myotherhost`:
+
+```sh
+litefs import -name my.db -url http://myotherhost:20202 /path/to/db
+```

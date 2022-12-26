@@ -1,0 +1,62 @@
+---
+title: LiteFS Mount Command
+layout: docs
+sitemap: false
+nav: litefs
+toc: true
+---
+
+<%= partial "partials/disclaimer" %>
+
+## Overview
+
+The `mount` command will mount a LiteFS directory via FUSE and begin communicating
+with the LiteFS cluster. The mount will be accessible once the node becomes the
+primary or is able to connect and sync with the primary.
+
+Most options are specified in the [litefs.yml config file](config).
+
+
+## Usage
+
+```sh
+litefs mount [arguments]
+```
+
+## Arguments
+
+### Configuration
+
+A specific config file path can be specified using the `-config` flag. If the
+config file cannot be read from this path, LiteFS will exit with an error and
+not attempt to search the other config paths.
+
+Environment variable expansion can be disabled via the `-no-expand-env` flag.
+
+
+```
+  -config string
+      config file path
+  -no-expand-env
+      do not expand env vars in config
+```
+
+
+### Debugging
+
+These debugging flags can produce verbose output so they are not recommended for
+regular use. The `-fuse.debug` flag enables logging for every FUSE request and
+response. This can also be enabled via the config file.
+
+The `-tracing` flag enables logging for LiteFS-specific events such as reading
+and writing database pages or acquiring and releasing locks. This flag enables
+output to `STDOUT` but a disk-based tracing log can be enabled via the config
+file.
+
+```
+  -fuse.debug
+      enable FUSE debug logging
+  -tracing
+      enable trace logging to stdout
+```
+
