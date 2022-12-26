@@ -18,12 +18,8 @@ failures.
 ## Capturing SQLite Transactions
 
 SQLite works by updating a subset of pages in the database file on every
-transaction. It does this by using the file system API with the following
-steps:
-
-1. Create a journal file to start the transaction.
-2. Update page in the main database file while copying old pages to the journal.
-3. Delete the journal file to finish the transaction.
+transaction. It does this by using the file system API and the exact steps
+depend on whether you're using a rollback journal or a write-ahead log.
 
 LiteFS acts as a passthrough file system which intercepts these API calls and
 copies out the page sets for each transaction. These page sets are stored in an
@@ -35,6 +31,38 @@ state of our SQLite database at any point in time. We can also copy them to
 another nodes in order to replicate the changes in real-time to our cluster.
 
 
+### Rollback journal handling
+
+The following steps occur when SQLite creates a transaction with either the
+`DELETE`, `PERSIST`, or `TRUNCATE` journal modes:
+
+1. Obtain an exclusive lock on the `RESERVED` byte.
+1. Create a journal file to start the transaction.
+1. Update page in the main database file while copying old pages to the journal.
+1. Invalidate the journal file to finish the transaction.
+1. Release the lock on the `RESERVED` byte.
+
+LiteFS maintains a set of dirty database pages based on `write(2)` calls to the
+database file. When the journal file is invalidated, LiteFS will copy out the
+dirty pages in sequential order to an LTX transaction file.
+
+
+### Write-ahead log (WAL) handling
+
+The following steps occur when SQLite creates a transaction with the `WAL`
+journal mode:
+
+1. Acquire an exclusive lock on the `WAL_WRITE_LOCK`.
+1. Write a WAL frame to the end of the WAL for each new or updated page.
+1. On commit, write the new size of the database to the `commit` field in the last WAL frame header.
+1. Release the exclusive lock on the `WAL_WRITE_LOCK`.
+
+Because all page changes are in the write-ahead log, LiteFS does not need to
+maintain a dirty page set. Instead, it reads from the previous ending offset
+of the WAL to the end to capture all new & changed pages into an LTX file.
+
+
+
 ## Replication Position
 
 Each database within the LiteFS directory contains a replication position. This
@@ -44,7 +72,7 @@ write transaction that occurs.
 
 You can track the relative position between nodes by reading from the database's
 position file in the LiteFS mount directory. For example, if you have a
-database called `/mnt/db` then you can read the position from `/mnt/db-pos`:
+database called `/mnt/db` then you can read the position from `/mnt/db-pos` file:
 
 ```sh
 $ cat /mnt/db-pos

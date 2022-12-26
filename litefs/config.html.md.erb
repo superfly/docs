@@ -8,31 +8,98 @@ toc: true
 
 <%= partial "partials/disclaimer" %>
 
-LiteFS is primarily configured via a `litefs.yml` config file. This file can
-be in the current directory, the home directory, or at `/etc/litefs.yml`. You
-can also pass in a path using a command line flag:
+
+Most of the configuration options for LiteFS are set via a `litefs.yml` config
+file. You can find a fully-commented version of [`litefs.yml`](https://github.com/superfly/litefs/blob/main/cmd/litefs/etc/litefs.yml)
+in the LiteFS repository.
+
+
+## Config file search path
+
+LiteFS will search the following paths to find the config file:
+
+1. The current directory:  `./litefs.yml`
+2. The home directory: `~/litefs.yml`
+3. The system configuration directory: `/etc/litefs.yml`
+
+You can also explicitly set the config path using a command line flag:
 
 ```sh
 litefs -config /path/to/litefs.yml
 ```
 
-## Directories
+## Environment Variables
 
-LiteFS works by mounting a file system to a _mount directory_ and storing the
-underlying data in a _data directory_. The mount directory is the path that
-your application will use to interact with LiteFS.
+LiteFS can evaluate environment variables within the configuration file.
+Variables can be referenced using either the `$MY_VAR` syntax or
+the `${MY_VAR}` syntax.
 
-The mount directory is a required field in the config file. However, if the data
-directory is omitted, LiteFS will use a hidden directory based on the name of
-the mount directory. For example, a mount directory of `/path/to/mnt` will have
-a default data directory of `/path/to/.mnt`
+Basic string equality & inequality expressions can also be evaluated using either
+single or double quotes:
+
+```
+${MY_VAR == "xyz"}
+```
+
+```
+${MY_VAR != "xyz"}
+```
+
+Environment variable evaluation can be disabled by specifying the `-no-expand-env`
+flag from the command line arguments.
+
+
+## FUSE directory
+
+LiteFS uses a [FUSE](https://www.kernel.org/doc/html/latest/filesystems/fuse.html)
+directory mount to intercept Linux file system calls to track when SQLite
+transactions start and end so they can be replicated. The recommended path is
+`/litefs` and it is the directory your application should use when interacting
+with the database.
 
 ```yml
-# Required. Path used to access LiteFS from your application.
-mount-dir: "/path/to/mnt"
+# The FUSE section handles settings on the FUSE file system. FUSE
+# provides a layer for intercepting SQLite transactions on the
+# primary node so they can be shipped to replica nodes
+# transparently.
+fuse:
+  # Required. This is the mount directory that applications will
+  # use to access their SQLite databases.
+  dir: "/litefs"
 
-# Optional. Path to store underlying data.
-data-dir: "/path/to/data"
+  # The debug flag enables debug logging of all FUSE API calls.
+  # This will produce a lot of logging. Not for general use.
+  debug: false
+```
+
+## Internal data directory
+
+LiteFS acts as a passthrough filesystem so all your database files still need to
+be stored internally on a regular file system. This internal data directory
+should be saved on a persistent volume so you don't lose your data between restarts.
+
+LiteFS also stores transaction files (called _LTX files_) in this directory.
+These files are are periodically removed through an internal process called
+_retention enforcement_.
+
+```yml
+# The data section specifies where internal LiteFS data is stored
+# and how long to retain the transaction files.
+# 
+# Transaction files are used to ship changes to replica nodes so
+# they should persist long enough for replicas to retrieve them,
+# even in the face of a short network interruption or a redeploy.
+# Under high load, these files can grow large so it's not advised
+# to extend retention too long.
+data:
+  # Path to internal data storage.
+  dir: "/var/lib/litefs"
+
+  # Duration to keep LTX files. Latest LTX file is always kept.
+  retention: "10m"
+
+  # Frequency with which to check for LTX files to delete.
+  retention-monitor-interval: "1m"
 ```
 
 ## Supervisor / Exec
@@ -44,66 +111,29 @@ application. It will pass signals to your application and it will automatically
 shutdown when your application shuts down.
 
 ```yml
+# The exec field specifies a command to run as a subprocess of
+# LiteFS. This command will be executed after LiteFS either
+# becomes primary or is connected to the primary node. LiteFS
+# will forward signals to the subprocess and LiteFS will
+# automatically shut itself down when the subprocess stops.
+#
+# This can also be specified after a double-dash (--) on the
+# command line invocation of the 'litefs mount' command.
 exec: "myapp -addr :8080"
 ```
 
 
-## Leadership Settings
+## HTTP API Server
 
-By default, any node in the LiteFS cluster can be a "candidate" which means that
-they are eligible to become the leader. However, if you want to restrict
-candidancy to only a subset of nodes, you can mark non-candidate nodes in
-their config:
+LiteFS communicates with other nodes' API over HTTP. This can be configured in
+the `http` section of the config.
 
-```yml
-# The candidate flag specifies whether the node
-# can become the primary.
-candidate: false
-```
-
-
-## Debug
-
-LiteFS will generate regular log entries to STDOUT so users can verify that
-nodes are connecting and replicating. Additionally, you can specify the `debug`
-setting to also add verbose FUSE logging. This may be helpful when debugging or
-reporting an issue to the project.
-
-```yml
-# The debug flag enables debug logging of all FUSE API calls.
-debug: true
-```
-
-## Retention
-
-Each transaction performed in LiteFS will generate an LTX file. These files are
-replicated to other nodes in the cluster to propagate changes. Eventually, these
-files could fill the local disk if they're not removed so LiteFS runs retention
-enforcement on regular intervals.
-
-By default, LiteFS will remove any LTX files that are more than 1 minute old and
-it will perform this retention check every minute. You can update these settings
-in the `retention` section of the config:
-
-```yml
-retention:
-  # The amount of time to keep LTX files.
-  # Latest LTX file is always kept.
-  duration: "60s"
-
-  # The frequency with which to check for LTX files to delete.
-  monitor-interval: "60s"
-```
-
-
-## HTTP Server
-
-LiteFS communicates with other nodes over HTTP and this can be configured in the
-`http` section of the config. Currently, there is only an `addr` field to
-specify the bind address, which defaults to `":20202"`
+The default port for LiteFS is `20202`. **This port MUST NOT be publicly accessible.**
 
 
 ```yml
+# This section defines settings for the LiteFS HTTP API server.
+# This API server is how noes communicate with each other.
 http:
   # Specifies the bind address of the HTTP API server.
   addr: ":20202"
@@ -115,51 +145,65 @@ http:
 Leadership is managed by using an external lease system. This can be done using
 either Consul or by specifying a single, static primary node.
 
+```
+# The lease section defines how LiteFS creates a cluster and
+# implements leader election. For dynamic clusters, use the
+# "consul". This allows the primary to change automatically when
+# the current primary goes down. For a simpler setup, use
+# "static" which assigns a single node to be the primary and does
+# not failover.
+lease:
+  # Required. Must be either "consul" or "static".
+  type: "consul"
+
+  # Required. The URL for this node's LiteFS API.
+  # Should match HTTP port.
+  advertise-url: "http://$HOSTNAME:20202"
+
+  # Sets the hostname that other nodes will use to reference this
+  # node. Automatically assigned based on hostname(1) if not set.
+  hostname: ""
+
+  # Specifies whether the node can become the primary. If using
+  # "static" leasing, this should be set to true on the primary
+  # and false on the replicas.
+  candidate: true
+```
+
+
 ### Consul Leasing
 
 Consul is the recommended lease backend as it allows leadership to change when
 the primary node stops. The `url` and `advertise-url` are required so that the
 node can connect to Consul and broadcast its LiteFS API URL.
 
-The `hostname` is the name that will be shown to replicas in the `.primary` file
-so it should be set to a hostport that is accessible to other nodes in the
-cluster. This is set to the value of [`hostname(1)`](https://linux.die.net/man/1/hostname).
-
-The `key` specifies the name to store the primary data under in Consul. It can
-be useful to change this if you are running multiple LiteFS clusters with the
-same Consul instance.
-
-The `ttl` and `lock-delay` specify how long a lock exists before expiration and
-how long until a new lock can be obtained after expiration. These only apply to
-primary nodes when they are uncleanly shutdown. If a node is properly shutdown
-via `SIGINT` then it will remove its lease and another node can obtain it
-immediately.
-
 ```yml
-# A Consul server provides leader election and ensures that the
-# responsibility of the primary node can be moved in the event
-# of a deployment or a failure.
-consul:
-  # Required. The base URL of the Consul server.
-  url: "http://localhost:8500"
+lease:
+  # A Consul server provides leader election and ensures that the
+  # responsibility of the primary node can be moved in the event
+  # of a deployment or a failure.
+  consul:
+    # Required. The base URL of the Consul server.
+    url: "http://myhost:8500"
 
-  # Required. The URL that litefs is accessible on.
-  advertise-url: "http://localhost:20202"
+    # Required. The key used for obtaining a lease by the primary.
+    # This must be unique for each cluster of LiteFS servers
+    key: ""
 
-  # Sets the hostname that other nodes will use to reference node.
-  # Automatically assigned based on hostname(1) if not set.
-  hostname: "localhost"
+    # Length of time before a lease expires. The primary will
+    # automatically renew the lease while it is alive, however,
+    # if it fails to renew in time then a new primary may be
+    # elected after the TTL. This only occurs for unexpected loss
+    # of the leader as normal operation will allow the leader to
+    # handoff the lease to another replica without downtime.
+    #
+    # Consul does not allow a TTL of less than 10 seconds.
+    ttl: "10s"
 
-  # The key used for obtaining a lease by the primary.
-  # This must be unique for each cluster of LiteFS servers
-  key: "litefs/primary"
-
-  # Length of time before a lease expires.
-  ttl: "10s"
-
-  # Length of time after the lease expires before a
-  # candidate can become leader.
-  lock-delay: "5s"
+    # Length of time after the lease expires before a candidate
+    # can become leader. This buffer is intended to prevent
+    # overlap in leadership due to clock skew or in-flight calls.
+    lock-delay: "1s"
 ```
 
 
@@ -169,27 +213,53 @@ If you do not wish to run a separate Consul instance and you can tolerate
 downtime of your primary node, you can run LiteFS with a static lease. A static
 lease means that only a single, fixed node will ever be the primary.
 
-To set this up, set the `static.hostname` and `static.advertise-url` to the
-values for the primary node. This should be done on the config for all nodes in
-the cluster.
+There is no additional configuration section for static leasing. Simply set the
+`lease.candidate` config field to `true` on the primary and `false` on the
+replicas. You will need to set `lease.hostname` and `lease.advertise-url` on the
+primary as well.
 
-Then, set the `static.primary` field to `true` on the primary node and `false`
-on all other nodes.
 
+## Other options
+
+### Exit on error
 
 ```yml
-# Static leadership can be used instead of Consul if only one
-# node should ever be the primary. Only one node in the cluster
-# can be marked as the "primary".
-static:
-  # Specifies that the current node is the primary.
-  primary: true
-
-  # Required. Hostname of the primary node.
-  hostname: "localhost"
-
-  # Required. The API URL of the primary node.
-  advertise-url: "http://localhost:20202"
+# If true, then LiteFS will not exit if there is a validation
+# issue on startup. This can be useful for debugging issues as
+# it avoids constantly restarting the node on ephemeral hosting.
+exit-on-error: false
 ```
 
+### Skip sync
 
+```yml
+# If true, then LiteFS will not wait until the node becomes the
+# primary or connects to the primary before starting the subprocess.
+skip-sync: false
+```
+
+### Trace Log
+
+The trace log provides a very low-level log of events inside LiteFS. It is
+typically only used for debugging issues and is turned off by default. This
+log can produce a lot of disk IO when enabled.
+
+```yml
+# The tracing section enables a rolling, on-disk tracing log.
+# This records every operation to the database so it can be
+# verbose and it can degrade performance. This is for debugging
+# only and should not typically be enabled in production.
+tracing:
+  # Output path on disk.
+  path: "/var/log/lifefs/trace.log"
+
+  # Maximum size of a single trace log before rolling.
+  # Specified in megabytes.
+  max-size: 64
+
+  # Maximum number of trace logs to retain.
+  max-count: 10
+
+  # If true, historical logs will be compressed using gzip.
+  compress: true
+```
