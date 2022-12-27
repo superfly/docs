@@ -127,24 +127,33 @@ cp -r storage storage_
 ```bash
 FOLDER=/var/www/html/storage/app
 if [ ! -d "$FOLDER" ]; then
-    echo "$FOLDER is not a directory, copying storage_ content to storage"
-    cp -r /var/www/html/storage_/. /var/www/html/storage
-    echo "Deleting storage_..."
-    rm -rf /var/www/html/storage_
+ echo "$FOLDER is not a directory, copying storage_ content to storage"
+ cp -r /var/www/html/storage_/. /var/www/html/storage
+ echo "Deleting storage_..."
+ rm -rf /var/www/html/storage_
 fi
-
 
 FOLDER=/var/www/html/storage/database
 if [ ! -d "$FOLDER" ]; then
-    echo "$FOLDER is not a directory, initializing database" 
-    mkdir /var/www/html/storage/database
+ echo "$FOLDER is not a directory, adding database directory" 
+ mkdir /var/www/html/storage/database
+fi
+
+FILE=/var/www/html/storage/database/database.sqlite
+if [ ! -f "$FILE" ]; then
+  echo "$FILE  does not exist. Adding file for litefs primary lease identification..." 
+  touch /var/www/html/storage/database/database.sqlite
 fi
 ```
 So what happened above?
 <ul>
 <li>The first condition statement checks if the app folder does not exist in the volumized storage folder. If it does not exist, it copies over the contents of the storage_ folder to the volumized storage folder.</li>
 <li>The second condition statement checks if the database folder does not exist in the volumized storage folder. If it does not exist, it creates a database directory inside the storage/ directory.</li>
+<li>The third condition statement checks if the database.sqlite exists in the storage/database folder. If it does not, it creates the database.sqlite file inside storage/database directory.</li>
 </ul>
+<aside class="callout">
+<i>Creating the <b>database.sqlite</b> in the proper directory [`specified`](/docs/laravel/advanced-guides/global-sqlite-litefs/#create-your-litefs-configuration-file) in your `etc/litefs.yml`'s <b>mount-dir</b> config is important to properly set your database.sqlite per instance as primary and writable!</i>
+</aside>
 
 ### _Create your LiteFS configuration file_
 1) In the root directory of your local Laravel application, create `etc/litefs.yml` file:
@@ -242,7 +251,7 @@ fly deploy
 ### _SQLite Setup_
 First, pat your self in the back, you've reached the last part of this walkthrough!
 
-In this final section, set up your Laravel Fly App's SQlite database, do some migrations, and revel in the magic that happens on data between two instances running--separated by oceans, cities, and cultures apart--connected by LiteFS and SQLite.
+In this final section, set up your Laravel Fly App's SQlite database with some migrations, and revel in the magic that happens on data between two instances running--separated by oceans, cities, and cultures apart--connected by LiteFS and SQLite.
 
 1) First check how many instances of your Fly App is running by:
 
@@ -259,16 +268,14 @@ b3655e8d        app     1       fra     run     running 1 total, 1 passing      
 2) Hopefully you got two instances running. Connect with your closest instance with:
 
 ```cmd
-fly ssh console --region ams
+fly ssh console --select
+```
+```output
+fra.withered-frog-7998.internal (fdaa:0:a12a:a7b:caca:3:b732:2)
+> ams.withered-frog-7998.internal (fdaa:0:a12a:a7b:c207:3:b731:2)
 ```
 
-3) Then create your <b>database.sqlite</b> in the proper folder:
-```cmd
-touch /var/www/html/storage/database/database.sqlite
-```
-<small><b>"Proper folder"</b> here means the folder indicated [here](/docs/laravel/advanced-guides/global-sqlite-litefs/#configure-fly-toml-with-sqlite-litefs-and-a-mounted-volume) and [here](/docs/laravel/advanced-guides/global-sqlite-litefs/#configure-fly-toml-with-sqlite-litefs-and-a-mounted-volume). </small>
-
-4) Run a classic <b>php artisan migrate</b> to add in new tables to the freshly-baked database:
+3) Run a classic <b>php artisan migrate</b> to add in new tables to the freshly-baked database:
 ```cmd
 php /var/www/html/artisan migrate --force
 ```
@@ -285,16 +292,16 @@ php /var/www/html/artisan migrate --force
   2019_12_14_000001_create_personal_access_tokens_table .................................................................................. 29ms DONE
 ```
 
-5) Exit the current instance and connect with the other one:
+4) Exit the current instance and connect with the other one:
 ```cmd
-fly ssh console --region fra
+fly ssh console --select
 ```
 ```output
-Connecting to top1.nearest.of.restless-glitter-5485.internal... complete
-#
+> fra.withered-frog-7998.internal (fdaa:0:a12a:a7b:caca:3:b732:2)
+ams.withered-frog-7998.internal (fdaa:0:a12a:a7b:c207:3:b731:2)
 ```
 
-6) Run your migration command and start marveling. 
+5) Run your migration command and start marveling. 
 ```cmd
 php /var/www/html/artisan migrate --force
 ```
