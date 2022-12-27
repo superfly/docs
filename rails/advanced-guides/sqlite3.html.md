@@ -46,7 +46,7 @@ time in two places:
   destination="/mnt/name"
 ```
 
-Next move the dependency on the `db:migrate` task from the `release` to `server` in `lib/tasks/fly.toml`:
+Next move the dependency on the `db:migrate` task from the `release` to `server` in `lib/tasks/fly.rake`:
 
 ```diff
  # commands used to deploy a Rails application
