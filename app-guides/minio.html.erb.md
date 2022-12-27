@@ -7,12 +7,16 @@ categories:
   - s3
   - volumes
   - object storage
-date: 2021-11-05
+date: 2022-12-11
 ---
 
 Object storage is useful when your apps need access to unstructured data like images, videos, or documents. Amazon's S3 is an obvious solution, but you can also host your own S3-compatible object storage using the AGPLv3-licensed [MinIO](https://min.io/).
 
 We're going to set up a single instance of MinIO on Fly.io, backed by [Fly Volume storage](/docs/reference/volumes/).
+
+A note: it's been observed that some features of the MinIO browser console are memory-intensive enough to crash a VM with 256MB of RAM. For even small-scale production use you'll probably need a larger (non-free) VM. 512MB seems to work for poking around and uploading small objects. (For perspective, [MinIO docs recommend a minimum of 128**GB** RAM](https://min.io/docs/minio/container/operations/checklists/hardware.html#minio-hardware-checklist) for deployment at scale.)
+
+This is a guide to a demonstration deployment of the official standalone MinIO Docker image, and isn't tuned in any way. Check out the [MinIO](https://min.io/docs/minio/linux/index.html) [docs](https://github.com/minio/minio/tree/master/docs) for more sophisticated use.
 
 ## Dockerfile 
 
