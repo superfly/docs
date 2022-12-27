@@ -131,6 +131,28 @@ After a minute of MySQL initializing itself (on its first run), you should now h
 
 Your other apps can access the MySQL service by its name. In my case, I would use `my-mysql.internal` as the hostname. Any app that needs to access the database should set the hostname and username as environment variables, and create a secret for the database password.
 
+## Access the database from outside
+
+To connect to your MySQL database from outside of your Fly organization, you need a WireGuard connection. However, `fly` on your local machine can connect using [user-mode WireGuard](/blog/our-user-mode-wireguard-year/) magic, without you having to set up your own WireGuard tunnel.
+
+You can forward the MySQL server port to your local machine using [`fly proxy`](/docs/flyctl/proxy/):
+
+```cmd
+flyctl proxy 3306 -a my-mysql
+```
+
+You can also set a different local port, if your `3306` port is already in use:
+
+```cmd
+flyctl proxy 13306:3306 -a my-mysql
+```
+
+Then connect to your MySQL server at `localhost:3306` and the username and password credentials from above:
+
+```cmd
+mysql -h localhost -P 3306 -u hotdogs_are_tacos -ppassword cube_theory
+```
+
 ## Backups
 
 We'll take a snapshot of the created volume every day. We retain 7 days of snapshots.
