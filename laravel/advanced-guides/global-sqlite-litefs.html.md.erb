@@ -57,8 +57,8 @@ Savvy! You should now have a pretty good `fly.toml` configured for your Laravel 
 1) Create two volumes in two different regions:
 
 ```cmd
-fly volumes create storage_vol --size 20 --region ams
-fly volumes create storage_vol --size 20 --region fra
+fly volumes create storage_vol --size 5 --region ams
+fly volumes create storage_vol --size 5 --region fra
 ```
 <small>Yes, the `storage_vol` <i>is</i> a replaceable name. You'll be configuring your `fly.toml` later with this volume name, so <b>make sure</b> both your two volumes have the <b>same name</b>.</small>
 
@@ -127,33 +127,24 @@ cp -r storage storage_
 ```bash
 FOLDER=/var/www/html/storage/app
 if [ ! -d "$FOLDER" ]; then
- echo "$FOLDER is not a directory, copying storage_ content to storage"
- cp -r /var/www/html/storage_/. /var/www/html/storage
- echo "Deleting storage_..."
- rm -rf /var/www/html/storage_
+    echo "$FOLDER is not a directory, copying storage_ content to storage"
+    cp -r /var/www/html/storage_/. /var/www/html/storage
+    echo "Deleting storage_..."
+    rm -rf /var/www/html/storage_
 fi
+
 
 FOLDER=/var/www/html/storage/database
 if [ ! -d "$FOLDER" ]; then
- echo "$FOLDER is not a directory, adding database directory" 
- mkdir /var/www/html/storage/database
-fi
-
-FILE=/var/www/html/storage/database/database.sqlite
-if [ ! -f "$FILE" ]; then
-  echo "$FILE  does not exist. Adding file for litefs primary lease identification..." 
-  touch /var/www/html/storage/database/database.sqlite
+    echo "$FOLDER is not a directory, initializing database" 
+    mkdir /var/www/html/storage/database
 fi
 ```
 So what happened above?
 <ul>
 <li>The first condition statement checks if the app folder does not exist in the volumized storage folder. If it does not exist, it copies over the contents of the storage_ folder to the volumized storage folder.</li>
 <li>The second condition statement checks if the database folder does not exist in the volumized storage folder. If it does not exist, it creates a database directory inside the storage/ directory.</li>
-<li>The third condition statement checks if the database.sqlite exists in the storage/database folder. If it does not, it creates the database.sqlite file inside storage/database directory.</li>
 </ul>
-<aside class="callout">
-<i>Creating the <b>database.sqlite</b> in the proper directory [`specified`](/docs/laravel/advanced-guides/global-sqlite-litefs/#create-your-litefs-configuration-file) in your `etc/litefs.yml`'s <b>mount-dir</b> config is important to properly set your database.sqlite per instance as primary and writable!</i>
-</aside>
 
 ### _Create your LiteFS configuration file_
 1) In the root directory of your local Laravel application, create `etc/litefs.yml` file:
@@ -165,25 +156,44 @@ touch etc/litefs.yml
 2) Then update the content of `etc/litefs.yml` file with the following configuration:
 
 ```yml
-# The path to where the SQLite database will be accessed.
-mount-dir: "/var/www/html/storage/database"
+# The fuse section describes settings for the FUSE file system. This file system
+# is used as a thin layer between the SQLite client in your application and the
+# storage on disk. It intercepts disk writes to determine transaction boundaries
+# so that those transactions can be saved and shipped to replicas.
 
-# The path to where the underlying volume mount is.
-data-dir: "/var/www/html/storage"
+# The fuse.dir is the path to where the SQLite database will be accessed
+fuse:
+    dir: "/var/www/html/storage/database"
 
-# You can enable debug mode to see the transactions sent out by LiteFS between nodes
-debug: true
+# The data section describes settings for the internal LiteFS storage. 
+# Make sure to mount a volume that this directory is scoped in so it can be persisted across restarts.
+# However, this data should not be accessed directly by the user application..
+data:
+    dir: "/var/www/html/storage/database/litefs"
+
+# This flag ensure that LiteFS continues to run if there is an issue on starup.
+# It makes it easy to ssh in and debug any issues you might be having rather
+# than continually restarting on initialization failure.
+exit-on-error: false
 
 # Execute this subprocess once LiteFS connects to the cluster.
 # The execution below basically starts our Laravel server 
 # Because remember, the below process was removed from .fly/entrypoint.sh to execute litefs instead
 exec: "/init"
 
+# The lease section specifies how the cluster will be managed. We're using the
+# "consul" lease type so that our application can dynamically change the primary.
+#
 # These environment variables will be available in your Fly.io application.
 # You must specify "experiement.enable_consul" for FLY_CONSUL_URL to be available.
-consul:
-    url: "${FLY_CONSUL_URL}"
+lease:
+    type: "consul"
     advertise-url: "http://${HOSTNAME}.vm.${FLY_APP_NAME}.internal:20202"
+
+    consul:
+      url: "${FLY_CONSUL_URL}"
+      key: "litefs/${FLY_APP_NAME}"
+
 ```
 
 ### _Update Dockerfile with LiteFS configuration_
@@ -195,7 +205,7 @@ Include LiteFS in your application container by revising the Laravel Dockerfile 
 ARG PHP_VERSION=8.1
 ARG NODE_VERSION=14
 
-FROM flyio/litefs:pr-109 AS litefs
+FROM flyio/litefs:0.3 AS litefs
 
 FROM serversideup/php:${PHP_VERSION}-fpm-nginx as base
 ```
@@ -234,7 +244,7 @@ for f in /var/www/html/.fly/scripts/*.sh; do
 done
 chown -R webuser:webgroup /var/www/html
 
-exec litefs
+exec litefs mount
 ```
 The execution of init will now be handled by [LiteFS' exec block](/docs/laravel/advanced-guides/global-sqlite-litefs/#create-your-litefs-configuration-file)
 
@@ -251,7 +261,7 @@ fly deploy
 ### _SQLite Setup_
 First, pat your self in the back, you've reached the last part of this walkthrough!
 
-In this final section, set up your Laravel Fly App's SQlite database with some migrations, and revel in the magic that happens on data between two instances running--separated by oceans, cities, and cultures apart--connected by LiteFS and SQLite.
+In this final section, set up your Laravel Fly App's SQlite database, do some migrations, and revel in the magic that happens on data between two instances running--separated by oceans, cities, and cultures apart--connected by LiteFS and SQLite.
 
 1) First check how many instances of your Fly App is running by:
 
@@ -271,8 +281,8 @@ b3655e8d        app     1       fra     run     running 1 total, 1 passing      
 fly ssh console --select
 ```
 ```output
-fra.withered-frog-7998.internal (fdaa:0:a12a:a7b:caca:3:b732:2)
-> ams.withered-frog-7998.internal (fdaa:0:a12a:a7b:c207:3:b731:2)
+> fra.sparkling-silence-742.internal (fdaa:0:a12a:a7b:cbb7:3:bacc:2)
+  ams.sparkling-silence-742.internal (fdaa:0:a12a:a7b:c988:3:bacb:2)
 ```
 
 3) Run a classic <b>php artisan migrate</b> to add in new tables to the freshly-baked database:
@@ -294,11 +304,12 @@ php /var/www/html/artisan migrate --force
 
 4) Exit the current instance and connect with the other one:
 ```cmd
-fly ssh console --select
+fly ssh console --select 
+
 ```
 ```output
-> fra.withered-frog-7998.internal (fdaa:0:a12a:a7b:caca:3:b732:2)
-ams.withered-frog-7998.internal (fdaa:0:a12a:a7b:c207:3:b731:2)
+fra.sparkling-silence-742.internal (fdaa:0:a12a:a7b:cbb7:3:bacc:2)
+> ams.sparkling-silence-742.internal (fdaa:0:a12a:a7b:c988:3:bacb:2)
 ```
 
 5) Run your migration command and start marveling. 
