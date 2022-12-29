@@ -33,9 +33,13 @@ primary may occur at TXID 100. If a subsequent request to a replica is
 performed, then the client can pass the TXID to the application and have it
 wait until it reaches or surpasses transaction ID 100.
 
+
+### Using a time-delay to handle consistency
+
 Another approach is to redirect subsequent reads from a client to the
 primary for a few seconds after a write occurs. This is typically enough time
 to ensure that changes from the write are copied to the replica before it begins
 serving read requests to the client again. However, this provides weaker
-consistency guarantees over checking with the TXID in the position file.
+consistency guarantees over checking with the TXID in the position file since
+replication is not guaranteed to occur within a specified time frame.
 
