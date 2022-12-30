@@ -11,7 +11,7 @@ date: 2022-12-20
 
 We talk up the Machines API for running user code, for ephemeral jobs, or both. Fly Machines are also the VM building blocks for the V2 of the Fly.io app-platform-as-a-service offering.
 
-The next-generation PaaS apparatus is still a work in progress, but Machines VMs themselves are mature enough for routine use&mdash;they're now the basis for Fly Postgres apps&mdash;and flyctl provides an interface for running Machines on a higher-than-API level, which means less typing and less JSON to look at.
+The next-generation PaaS apparatus is still a work in progress, but Machines VMs themselves are mature enough for routine use&mdash;they're now the basis for Fly Postgres apps&mdash;and flyctl provides an interface for running individual Machines on a higher-than-API level, which means less typing and less JSON to look at.
 
 If you don't need Nomad-style orchestration and you're willing to get your hands a little dirty, you can run an ordinary app on Machines using just flyctl.
 
@@ -28,6 +28,8 @@ We cook up VMs starting from Docker images, so you need to tell the platform how
 
 None of this is special for Machines; if we haven't built a bells-and-whistles launcher for your kind of project, then you have to do it for V1 (Nomad) Apps launched with `fly launch` too.
 
+The big difference here is that instead of putting an app-wide configuration into a `fly.toml` file and running `fly deploy`, we'll incorporate per-VM config into the `fly m run` (AKA `fly machine run`) command that creates the VM.
+
 Imagine you have a Dockerfile in the current working directory; maybe some source code that that Dockerfile draws on; and when you build it, you get an image for something that listens on internal port 8080. You want that to be reachable from the world on port 443, where browsers send HTTPS connections.
 
 If you like to do things in an orderly fashion, you might want the App to have public IP addresses before you boot the Machine:
@@ -39,7 +41,7 @@ fly ips allocate-v6 -a testrun
 fly m run . -p 443:8080/tcp:tls --region yyz -a testrun
 ```
 
-The last command configures and deploys the VM. See the `.` in there? That, in this case, is the path to the Dockerfile. Such a diminutive, easy-to-miss representation of _everything you want to supply for the VM to run_. Don't leave it out. You may notice that we're not using a `fly.toml` with `fly m run`; we specify our configuration right in the command.
+The last command configures and deploys the VM. See the `.` in there? That, in this case, is the path to the Dockerfile. Such a diminutive, easy-to-miss representation of _everything you want to supply for the VM to run_. Don't leave it out.
 
 Note the allocation of a [shared IPv4 address](/docs/reference/services/#shared-ipv4) above. For regular HTTP(S) web apps, shared IPv4 works fine, and helps conserve the world's dwindling IPv4 supply (and can [save you money](/docs/about/pricing/#anycast-ip-addresses)). If your app runs other services and you need a dedicated IPv4, you can provision one by leaving out the `--shared` flag.
 
