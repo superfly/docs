@@ -2,29 +2,22 @@
 title: Global SQLite with LiteFS
 layout: framework_docs
 objective: Go LiteFS-global with your SQLite-backed Laravel Fly App!
+status: beta
+order: 2
 ---
 
-So you've decided to give SQLite a chance huh? If your answer's a bold, brave <b><i>yes</i></b>, then welcome! There's priceless <b>walkthough treasures</b> waiting for you to read below! 
-
-On the other hand, if your answer is a resounding, mundane no, you might want to rethink your answer champ. You <i>are</i> here for a reason, so read on!
-
-
-## _Global SQLite--But How?_
- 
-Admittedly, SQLite's <i>a bit</i> embedded, and you might think there's nary a quick way in getting your Laravel-SQLite Fly App running multiple instances, oceans apart, running in different regions with all their wonderful data in-sync.
-
-<i>If you haven't heard yet</i>---there's this awesome replication tool ["LiteFS"](https://github.com/superfly/litefs/blob/main/docs/ARCHITECTURE.md) that can abstract your SQLite data syncing and replication layer for you.
-Once you complete this tutorial, you'll be able to use SQLite with your Laravel Fly App running in multiple instances, everywhere, across the globe with [LiteFS](/docs/litefs/)!
+This is a technology preview. ["LiteFS"](/docs/litefs/) enables replication of SQLite data across multiple instances of an application.
+This tutorial guides you on configuring your [Laravel Fly App](/docs/laravel/) to work with LiteFS and SQLite.
 
 ## _Let's Begin_
 As a brief overview for the onlookers, you'll tread nimbly over the following steps:
-1. Set up a quick Laravel-configured Fly App
+1. Set up a quick [Laravel-configured Fly App](/docs/laravel/)
 2. Set up an additional region for your Laravel Fly App through volumes and scaling
 3. Update your `fly.toml` file to configure SQLite, LiteFS, and volumed storage directory configurations
-4. Add a Startup Script to re-initialize your volumed storage folder
+4. Add a [Startup Script](/docs/laravel/the-basics/customizing-deployments/#startup-scripts) to re-initialize your volumed storage folder
 5. Create your `litefs.yml` file to point to the correct database directory and execute running your Laravel server
 6. Update your Laravel-specific Dockerfile to include and configure LiteFS
-7. Revise Entrypoint to execute litefs
+7. Revise Entrypoint to execute LiteFS
 8. Setup your SQLite database and do some tests
 
 
@@ -133,7 +126,6 @@ if [ ! -d "$FOLDER" ]; then
     rm -rf /var/www/html/storage_
 fi
 
-
 FOLDER=/var/www/html/storage/database
 if [ ! -d "$FOLDER" ]; then
     echo "$FOLDER is not a directory, initializing database" 
@@ -153,28 +145,29 @@ mkdir etc
 touch etc/litefs.yml
 ```
 
-2) Then update the content of `etc/litefs.yml` file with the following configuration:
+The `litefs.yml` file serves as configuration for your LiteFS integration. You can read more about configuration options [here](/docs/litefs/config/). 
+
+
+2) Update the content of `etc/litefs.yml` file with the following configuration:
 
 ```yml
 # The fuse section describes settings for the FUSE file system. This file system
 # is used as a thin layer between the SQLite client in your application and the
 # storage on disk. It intercepts disk writes to determine transaction boundaries
 # so that those transactions can be saved and shipped to replicas.
-
-# The fuse.dir is the path to where the SQLite database will be accessed
 fuse:
+    # This is the path your application will access your SQLite database
     dir: "/var/www/html/storage/database"
+
+    # This option allows non-root users to access the fuse.dir above
+    # This option requires a properly configured fuse.conf file
+    allow-other: true
 
 # The data section describes settings for the internal LiteFS storage. 
 # Make sure to mount a volume that this directory is scoped in so it can be persisted across restarts.
 # However, this data should not be accessed directly by the user application..
 data:
-    dir: "/var/www/html/storage/database/litefs"
-
-# This flag ensure that LiteFS continues to run if there is an issue on starup.
-# It makes it easy to ssh in and debug any issues you might be having rather
-# than continually restarting on initialization failure.
-exit-on-error: false
+    dir: "/var/www/html/storage/litefs"
 
 # Execute this subprocess once LiteFS connects to the cluster.
 # The execution below basically starts our Laravel server 
@@ -193,8 +186,20 @@ lease:
     consul:
       url: "${FLY_CONSUL_URL}"
       key: "litefs/${FLY_APP_NAME}"
-
 ```
+The directory specified in `fuse.dir` will automatically get its ownership updated to `root.` Because of this, non-root users won't be able to access your database.sqlite found in your directory.
+To allow access to your directory from a different user, make sure to set the `fuse.allow-other` option to `true` and include a `fuse.conf` file.
+
+3) Create a `fuse.conf` file with `touch etc/fuse.conf` and update its content with:
+```conf
+# etc/fuse.conf 
+
+# This allows users other than owner to access a mounted fuse.
+# This option must appear on a line by itself. There is no value, just the
+# presence of the option.
+user_allow_other
+```
+
 
 ### _Update Dockerfile with LiteFS configuration_
 Include LiteFS in your application container by revising the Laravel Dockerfile auto generated for you during `fly launch`:
@@ -205,7 +210,7 @@ Include LiteFS in your application container by revising the Laravel Dockerfile 
 ARG PHP_VERSION=8.1
 ARG NODE_VERSION=14
 
-FROM flyio/litefs:0.3 AS litefs
+FROM flyio/litefs:pr-251 AS litefs
 
 FROM serversideup/php:${PHP_VERSION}-fpm-nginx as base
 ```
@@ -224,6 +229,7 @@ RUN apt-get update && apt-get install -y \
 ```Dockerfile
 COPY --from=litefs /usr/local/bin/litefs /usr/local/bin/litefs
 ADD etc/litefs.yml /etc/litefs.yml
+ADD etc/fuse.conf /etc/fuse.conf
 
 # Multi-stage build: Build static assets
 # This allows us to not include Node within the final container
@@ -258,67 +264,67 @@ fly deploy
 `https://fly.io/apps/<app-name-found-in-flytoml>/monitoring` or tailing your application logs with `fly logs`
 
 
-### _SQLite Setup_
-First, pat your self in the back, you've reached the last part of this walkthrough!
+### _Redirecting Write Requests with Fly-Replay_
 
-In this final section, set up your Laravel Fly App's SQlite database, do some migrations, and revel in the magic that happens on data between two instances running--separated by oceans, cities, and cultures apart--connected by LiteFS and SQLite.
+[LiteFS works](/docs/litefs/how-it-works/#cluster-management-using-leases) by restricting database writes to one, primary node. Read requests are available to all instances, but only the primary node instance can make write requests. 
 
-1) First check how many instances of your Fly App is running by:
+Write requests received by a "replica" instance of your application needs to be forwarded to the primary node for successful writes. This can be easily integrated in your Laravel Fly app with the use of the [`fly-replay`](/docs/reference/fly-replay/#fly-replay) response header.
 
-```cmd
-fly status
+Once your application returns a response with a `fly-replay` response header, Fly's proxy will make replay your [request to the configured](/docs/reference/fly-replay/#fly-replay) instance. 
+
+1)  First, create a middleware `php artisan make:middleware LiteFSForwardWrite` that will get the [primary node](/docs/litefs/primary/) and return a response with the `fly-replay` response header.
+```php
+public function handle(Request $request, Closure $next)
+{
+  // Get the Primary Node Instance Id
+  $primaryNodeId = $this->readPrimaryNodeId();
+
+  // Replicas will always have a primary node id reference
+  // If we can get the primary node id, that means 
+  // Our current instance is a replica, time to forward!
+  if( $primaryNodeId !== '' ){
+      return response('', 200, [
+          'fly-replay' => "instance=$primaryNodeId",
+      ]);
+  }
+
+  // Not Having a primary node id means 
+  // our current instance is the primary, 
+  // process the request now!
+  return $next($request);
+}
 ```
-```output
-Instances
-ID              PROCESS VERSION REGION  DESIRED STATUS  HEALTH CHECKS           RESTARTS        CREATED   
-b3655e8d        app     1       fra     run     running 1 total, 1 passing      0               5m14s ago
-39bba2f8        app     1       ams     run     running 1 total, 1 passing      0               6m12s ago
+Instances running replica nodes are [given a reference](/docs/litefs/primary/) to the primary node's instance id. This reference is a file `.primary` that is configured by LiteFS inside our `fuse.dir.`
+
+2) Create the function called above to retrieve our primary node id from the reference file:
+```php
+function readPrimaryNodeId()
+{
+    $primaryNodeId = '';
+    $pathToPrimaryId = '/var/www/html/storage/database/.primary';
+    if( file_exists( $pathToPrimaryId ) ) {
+        $primaryNodeId = file_get_contents( $pathToPrimaryId );
+    }
+    return $primaryNodeId;
+}
+```
+In our case, our `fuse.dir` is '/var/www/html/storage/database', so we retrieve our `.primary` file from there!
+
+3) You'll want to apply this middleware to specific write endpoints only, so add it as a route middleware in `\App\Http\Kernel.php`:
+```php
+protected $routeMiddleware = [
+  ...
++ 'fly-replay.litefs-write' => \App\Http\Middleware\LiteFSForwardWrite::class
+];
+```
+Make sure to apply this middleware to endpoints processing database writes. 
+
+Lastly, for `fly-replay` forwarded requests to work, make sure to [update your SESSION_DRIVER to a none-file driver](/laravel-bytes/taking-laravel-global/#problem-session-storage). Otherwise session CSRF tokens created in an instance won't be available in your primary node instance, and you'll get a `419 expired` token error.
+
+4) The [simplest solution](/laravel-bytes/taking-laravel-global/#problem-session-storage) would be to use a secured cookie-based session configuration:
+```
+# Your .env
+SESSION_DRIVER=cookie
+SESSION_SECURE_COOKIE=true
 ```
 
-2) Hopefully you got two instances running. Connect with your closest instance with:
-
-```cmd
-fly ssh console --select
-```
-```output
-> fra.sparkling-silence-742.internal (fdaa:0:a12a:a7b:cbb7:3:bacc:2)
-  ams.sparkling-silence-742.internal (fdaa:0:a12a:a7b:c988:3:bacb:2)
-```
-
-3) Run a classic <b>php artisan migrate</b> to add in new tables to the freshly-baked database:
-```cmd
-php /var/www/html/artisan migrate --force
-```
-```output
-  INFO  Preparing database.  
-
-  Creating migration table ............................................................................................................... 12ms DONE
-
-   INFO  Running migrations.  
-
-  2014_10_12_000000_create_users_table ................................................................................................... 20ms DONE
-  2014_10_12_100000_create_password_resets_table ......................................................................................... 22ms DONE
-  2019_08_19_000000_create_failed_jobs_table ............................................................................................. 20ms DONE
-  2019_12_14_000001_create_personal_access_tokens_table .................................................................................. 29ms DONE
-```
-
-4) Exit the current instance and connect with the other one:
-```cmd
-fly ssh console --select 
-
-```
-```output
-fra.sparkling-silence-742.internal (fdaa:0:a12a:a7b:cbb7:3:bacc:2)
-> ams.sparkling-silence-742.internal (fdaa:0:a12a:a7b:c988:3:bacb:2)
-```
-
-5) Run your migration command and start marveling. 
-```cmd
-php /var/www/html/artisan migrate --force
-```
-<aside class="callout">
-<i>Because: There is none to migrate.</i>
-</aside>
-```output
-   INFO  Nothing to migrate.  
-```
