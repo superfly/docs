@@ -2,6 +2,7 @@
 title: Multiple Fly Applications
 layout: framework_docs
 objective: At some point a Laravel application will need to run additional services, perhaps Redis for a cache or session storage. Learn how to manage multiple applications from one Laravel project to keep your monolith a monolith.
+order: 1
 ---
 
 This guide discusses how to manage multiple Fly applications within a Laravel project. This is useful for Laravel projects that need to run other services, like running a Redis service for queues, cache, and session storage.
