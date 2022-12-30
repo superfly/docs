@@ -293,7 +293,7 @@ function readPrimaryNodeId()
 ```php
 protected $routeMiddleware = [
   ...
-+ 'fly-replay.litefs-write' => \App\Http\Middleware\LiteFSForwardWrite::class
++ 'fly-replay.litefs-write' => \App\Http\Middleware\FlyReplayLiteFSWrite::class
 ];
 ```
 <small>Make sure to apply this middleware to endpoints processing database writes.</small>
