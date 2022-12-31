@@ -7,7 +7,6 @@ objective: Learn how to run your existing Django applications on Fly.
 related_pages:
   - /docs/django/getting-started/existing
   - /docs/flyctl/
-  - /docs/postgres/
 ---
 
 If you have an existing Django app that you want to move over to Fly, this guide
