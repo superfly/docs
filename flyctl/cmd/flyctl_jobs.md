@@ -5,6 +5,9 @@ Show jobs at Fly.io, including maybe ones you should apply to
 flyctl jobs [flags]
 ~~~
 
+## Available Commands
+* [open](/docs/flyctl/jobs-open/)	 - Open fly.io/jobs
+
 ## Options
 
 ~~~
