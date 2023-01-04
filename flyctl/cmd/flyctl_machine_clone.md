@@ -9,11 +9,12 @@ flyctl machine clone <id> [flags]
 ## Options
 
 ~~~
-  -a, --app string      Application name
-  -c, --config string   Path to application configuration file
-  -h, --help            help for clone
-      --name string     Optional name for the new machine
-      --region string   Target region for the new machine
+  -a, --app string             Application name
+  -c, --config string          Path to application configuration file
+      --from-snapshot string   Clone attached volumes and restore from snapshot, use 'last' for most recent snapshot. The default is an empty volume
+  -h, --help                   help for clone
+      --name string            Optional name for the new machine
+      --region string          Target region for the new machine
 ~~~
 
 ## Global Options
