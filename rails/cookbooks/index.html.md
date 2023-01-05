@@ -29,8 +29,19 @@ order, if the concept of multi-stage docker builds is
 new to you starting with the first cookbook will make
 understading the rest easier. 
 
+If you are comfortable skpping the first cookbook, all cookbooks start with an empty directory
+and a seed `Dockerfile`.  Run `fly launch` to create an application, and then proceed from
+there, running `fly deploy` after you make changes.
+
+These cookbooks can be more than mere educational materials.  Using throwaway applications is
+often better than experimenting in production when you want to make configuration changes.
+Starting a minimal application, using `flyctl ssh console` to shell into that machine and
+explore and make changes, rerunning `fly deploy` to reset the machine when those experiments
+fail and making changes to your `Dockerfile` and `fly.toml` when things work is an effective
+way to validate an aproach before making changes to your application.  
+
 Let's get started.
 
 ## Cookbooks
 
-  * [Minimal Rails Application](./minimial.html.md)
+  * [Minimal Rails Application](./minimial)

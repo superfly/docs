@@ -1,0 +1,18 @@
+# syntax = docker/dockerfile:1
+
+FROM ruby:slim
+
+RUN apt-get update &&\
+    apt-get install --yes build-essential git
+
+RUN gem install rails
+RUN rails new demo --minimal --skip-active-record
+
+COPY <<-"EOF" /demo/config/routes.rb
+Rails.application.routes.draw { root "rails/welcome#index" }
+EOF
+
+WORKDIR demo
+ENV RAILS_ENV=production
+ENV PORT=8080
+CMD bin/rails server
