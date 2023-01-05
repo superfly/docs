@@ -1,5 +1,5 @@
 ---
-title: Databases
+title: Laravel and Databases
 layout: framework_docs
 objective: Notes and configurations on connecting with Databases
 order: 5
@@ -12,7 +12,7 @@ In this guide, you'll find references on how to connect your Laravel application
 
 </aside> 
 
-## _Database Migrations_
+## _Laravel Database Migrations_
 
 <aside class="callout">
 Make sure you have a database connection with your Laravel Fly App. You can check out our various connection guides on [`MySQL`](/docs/laravel/the-basics/databases/#mysql-on-planetscale), [`Postgres`](/docs/laravel/the-basics/databases/#postgres-in-fly-io), [`Redis`](/docs/laravel/the-basics/databases/#redis-in-fly-io), and [`SQLite`](/docs/laravel/the-basics/databases/#sqlite-in-a-laravel-fly-app) below. 
@@ -48,7 +48,7 @@ php artisan migrate --force
 
 
 
-## _MySQL in Fly.io_
+## _Laravel with MySQL in Fly.io_
 You can start with a relational-database classic: [MySQL](https://www.mysql.com/). Follow our guide [here](/docs/app-guides/mysql-on-fly/) and run MySQL as a [Fly App](/docs/app-guides/mysql-on-fly/)! Afterwards you're good to connect:
   2. Connect to your MySQL Fly App from a Laravel Fly App
   3. Connect to your MySQL Fly App from a local environment
@@ -79,7 +79,7 @@ fly deploy
 
 
 
-### _Connect  from a local environment_
+### _Connect from a local environment_
 
 The MySQL instance you spun up in Fly.io &quot;[is closed to the public internet](/docs/reference/machines/#notes-on-networking)&quot;, and can only be accessed by another application found in your Fly.io organization's private network. You'll need a way to tunnel into the network, and finally connect to your MySQL instance.
 
@@ -114,7 +114,7 @@ DB_PASSWORD=<MYSQL_PASSWORD>
 
 
 
-## _MySQL on PlanetScale_
+## _Laravel with MySQL on PlanetScale_
 
 For a basic PlanetScale and Fly.io connection, follow [our guide here](/docs/app-guides/planetscale/).
 If you're up for a multi-region level up, check out our [Multi-Region Laravel with PlanetScale](https://fly.io/laravel-bytes/multi-region-laravel-with-planetscale/) article.
@@ -164,7 +164,7 @@ fly secrets set DB_USERNAME=<DB_USERNAME> DB_PASSWORD=<DB_PASSWORD>
 fly deploy 
 ```
 
-## _Postgres in Fly.io_
+## _Laravel Postgres in Fly.io_
 We have a <i>[whole section](/docs/postgres/)</i> dedicated for [Postgres](https://www.postgresql.org/), we even have a `flyctl` integration to simplify both creation and interaction with your Postgres Fly Apps! 
 
 Make sure you have a [Postgres Fly App running](/docs/postgres/getting-started/), afterwards you can connect it with your Laravel Fly App:
@@ -198,7 +198,7 @@ If you decide not to use the `flyctl postgres attach` command above, and would w
 1. Manually set up a Database in your Postgres Fly App
 2. Manually connect your Postgres Database with your Laravel Fly App
 
-#### _Manually set up a Database in your Postgres Fly App_
+#### _Manually set up Laravel with a Database in your Postgres Fly App_
 Manually connecting with your Postgres Fly App also means manually creating your Postgres Database. 
 You can interact with your Postgres Fly App using `flyctl postgres connect`. 
 
@@ -280,7 +280,7 @@ DB_USERNAME=<Username>
 DB_PASSWORD=<Password>
 ```
 
-#### _Possible Errors_
+#### _Laravel Possible PGSQL Errors_
 <aside class="callout">
 In case you get a quite-similar error below: 
 
@@ -318,7 +318,7 @@ You are now connected to database "<database_name_created>" as user "<user>".
 
 
 
-## _Redis in Fly.io_
+## _Laravel with Redis in Fly.io_
 [Redis](https://redis.io/) is a NoSQL database popularly used for cache storage, as a message broker, and even as primary database. Through this section you'll learn how to:
   <ol>
     <li>Setup using the Fly.io Redis Docker Image<li>
@@ -489,7 +489,7 @@ That's it! Your local Laravel application should now be connected with your Redi
 </aside>
 
 
-## _Upstash Managed Redis Fly App_
+## _Laravel with Upstash Managed Redis Fly App_
 Want a fully-managed Redis Fly App? Try [Upstash Redis](https://upstash.com/)! To set up, you can follow our-in-depth guide [here](/docs/reference/redis/) 
 
 Once you've configured the necesary details through the flyctl prompts, and the app deployment completes, you should get a summary of the Redis cluster you've just deployed, like so:
@@ -536,7 +536,7 @@ php artisan cache:clear
 
 If all goes well here, you should be good to go! 
 
-## _SQLite in a Laravel Fly App_
+## _Laravel with SQLite in a Laravel Fly App_
 
 
 "[SQLite](https://www.sqlite.org/about.html)" is a file-based, lightweight, low-latency, and in-process library providing an embeddable SQL database engine. 
