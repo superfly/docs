@@ -35,6 +35,8 @@ Pull down a `fly.toml` configuration file for your Postgres app, if you don't ha
 fly config save --app <pg-app-name>
 ```
 
+Note that this could overwrite a `fly.toml` in the current directory, so be careful!
+
 Open up your `fly.toml` file.
 
 This may come with a default `services` section for `internal_port` 8080. Replace that with the following to configure your port mappings to work with Postgres:
@@ -76,7 +78,7 @@ Image Details
 Deploy your cluster, using `--image` with the `image:tag` found in the previous step:
 
 ```cmd
-fly deploy . --app <app-name> --image flyio/postgres:<major-version>
+fly deploy . --app <pg-app-name> --image flyio/postgres:<major-version>
 ```
 
 As an example, if you are running Postgres 14.x you would specify `flyio/postgres:14` as your target image. 
