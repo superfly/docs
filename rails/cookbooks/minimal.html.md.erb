@@ -2,13 +2,16 @@
 title: Minimal Rails application
 layout: framework_docs
 order: 1
-published: false
+status: alpha
 ---
+
+
+## Miminal Rails with Full Ruby Image
 
 Create an empty directory, and place the following Dockerfile in there:
 
 ```dockerfile
-<%= partial("minimal/Dockerfile1").strip %>
+<%= partial "minimal/Dockerfile1" %>
 ```
 
 If you've ever seen a Dockerfile before, the above seems too good to be true.  But try it.
@@ -55,7 +58,7 @@ to imagine it being this straightforward and simple.  None of the Dockerfiles
 you have seen before are as clear as this, so there must be more to this
 story.
 
----
+## Miminal Rails with Slim Ruby Image
 
 Scrolling by during the build was the size of the image.  That size was
 948MB.  That's compressed.  That seems a bit much for a welcome splash
@@ -104,7 +107,7 @@ a 45% reduction.  Not bad.
 
 But we can do even better.
 
----
+## Multi-stage build
 
 Build tools are only needed at build time, they don't need to be included in the deployed image.
 
@@ -135,7 +138,7 @@ by setting the `GEM_HOME` environment variable.  Bundler has a
 [docker guide](https://bundler.io/guides/bundler_docker_guide.html#dockerfiles-for-multiple-ruby-applications-and-gems)
 that provides more information.
 
----
+## Recap
 
 A recap of the progress so far.  The entire Dockerfile isn't that big:
 
