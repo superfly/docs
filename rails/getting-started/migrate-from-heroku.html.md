@@ -238,7 +238,7 @@ To achieve the desired `git push` behavior, we recommend setting up `fly deploy`
 
 #### Release phase tasks
 
-Heroku has a `release: rake db:migrate` command in their Procfiles to run tasks while the application is deployed. Fly accomplishes the same thing by making `assets:precompile` a dependency of the `:release` task in your `lib/tasks/fly.toml` file:
+Heroku has a `release: rake db:migrate` command in their Procfiles to run tasks while the application is deployed. Fly accomplishes the same thing by making `assets:precompile` a dependency of the `:release` task in your `lib/tasks/fly.rake` file:
 
 ```ruby
 task :release => 'db:migrate'
