@@ -18,11 +18,11 @@ fly ips list --app <pg-app-name>
 
 You can allocate an IPv4 address by running the following:
 ```cmd
-fly ips allocate-v4 --app <pg-app-name>
+flyctl ips allocate-v4 --app <pg-app-name>
 ```
 If your network supports IPv6:
 ```cmd
-fly ips allocate-v6 --app <pg-app-name>
+flyctl ips allocate-v6 --app <pg-app-name>
 ```
 
 ## Configure an external service
@@ -32,7 +32,7 @@ Now that you have an IP address, it's time to configure your app to accept conne
 Pull down a `fly.toml` configuration file for your Postgres app, if you don't have it:
 
 ```cmd
-fly config save --app <pg-app-name>
+flyctl config save --app <pg-app-name>
 ```
 
 Note that this could overwrite a `fly.toml` in the current directory, so be careful!
@@ -65,7 +65,7 @@ Verify the version of Postgres you are running.  **This step is important, becau
 Figure out which image and tag (Postgres version) you’re on:
 
 ```cmd
-fly image show --app <pg-app-name>
+flyctl image show --app <pg-app-name>
 ```
 ```out
 Image Details
@@ -78,7 +78,7 @@ Image Details
 Deploy your cluster, using `--image` with the `image:tag` found in the previous step:
 
 ```cmd
-fly deploy . --app <pg-app-name> --image flyio/postgres:<major-version>
+flyctl deploy . --app <pg-app-name> --image flyio/postgres:<major-version>
 ```
 
 As an example, if you are running Postgres 14.x you would specify `flyio/postgres:14` as your target image. 
@@ -86,7 +86,7 @@ As an example, if you are running Postgres 14.x you would specify `flyio/postgre
 After the deployment completes, you can verify your `services` configuration by running the `fly info` command:
 
 ```cmd
-fly info
+flyctl info
 ```
 ```output
 ...
