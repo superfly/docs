@@ -1,19 +1,16 @@
 # syntax = docker/dockerfile:1
 
-FROM node:current-slim AS node
 FROM ruby:slim as base
 
-COPY --from=node /usr/lib /usr/lib
-COPY --from=node /usr/local/share /usr/local/share
-COPY --from=node /usr/local/lib /usr/local/lib
-COPY --from=node /usr/local/include /usr/local/include
-COPY --from=node /usr/local/bin /usr/local/bin
-COPY --from=node /opt /opt
+ENV VOLTA_HOME=/usr/local
 
 FROM base as build
 
 RUN apt-get update &&\
-    apt-get install --yes build-essential git
+    apt-get install --yes build-essential git curl
+
+RUN curl https://get.volta.sh | bash &&\
+    volta install node@lts yarn@latest
 
 RUN gem install rails
 RUN rails new demo --skip-active-record --javascript esbuild
@@ -24,6 +21,8 @@ RUN yarn add react react-dom
 FROM base
 
 WORKDIR demo
+COPY --from=build $VOLTA_HOME/bin $VOLTA_HOME/bin
+COPY --from=build $VOLTA_HOME/tools $VOLTA_HOME/tools
 COPY --from=build /demo /demo
 COPY --from=build /usr/local/bundle /usr/local/bundle
 

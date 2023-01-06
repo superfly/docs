@@ -44,5 +44,6 @@ Let's get started.
 
 ## Cookbooks
 
-  * [Minimal Rails Application](./minimal)
+  * [Minimal](./minimal)
   * [Databases](./databases)
+  * [Node](./node)

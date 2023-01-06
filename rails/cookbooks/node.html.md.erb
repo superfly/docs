@@ -1,0 +1,142 @@
+---
+title: "Rails with Node.js"
+layout: framework_docs
+order: 2
+status: alpha
+---
+
+If your application is based on Rails 5.2 through 6.1, or is a Rails 7 app
+selecting one of the javascript options or many of the css options, you will
+require node to be included in your deployment image.
+
+While it is unsurprising that the slim ruby image doesn't include nodejs by
+default, what is surprising is that the most obvious way of installing
+node and yarn using the debian packages included with the distribution
+results in seriously outdated versions being installed.  Specifically,
+nodejs version 12.22.12, and yarnpkg version 1.12.10.
+
+Active support for node 12 ended in 2020, and security support
+ended in 2022.
+
+Attempting to run anyway ends up with an error running 'yarn build',
+first because yarn is called yarnpkg, and second because the generated
+`package.json` has no build step.
+
+Fortunately, there are alternatives.
+
+## Nodesource
+
+We can start with the Node.js
+[recommendation](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions).
+
+
+```dockerfile
+<%= begin
+  dockerfile = IO.read(File.join(__dir__, 'node/Dockerfile1')).strip
+
+  dockerfile[/WORKDIR demo\nRUN yarn add.*\n+/] = ''
+
+  dockerfile[/RUN bin\/rails.*EOF/m] = [
+    'COPY <<-"EOF" /demo/config/routes.rb',
+    'Rails.application.routes.draw { root "rails/welcome#index" }',
+    'EOF'
+  ].join("\n")
+
+  dockerfile
+end %>
+```
+
+Unfortunately this results in a rather chonky image, clocking in at 750MB.  And
+attempting to reduce the size by installing packages such as `build-essentials`
+later results in failures.
+
+## merging images
+
+Another approach is merge files from the official node and ruby images.
+
+```dockerfile
+<%= begin
+  dockerfile = IO.read(File.join(__dir__, 'node/Dockerfile2')).strip
+
+  dockerfile[/WORKDIR demo\nRUN yarn add.*\n+/] = ''
+
+  dockerfile[/RUN bin\/rails.*EOF/m] = [
+    'COPY <<-"EOF" /demo/config/routes.rb',
+    'Rails.application.routes.draw { root "rails/welcome#index" }',
+    'EOF'
+  ].join("\n")
+
+  dockerfile
+end %>
+```
+
+The resulting images size is smaller at 465MB.  The danger here is that the node and
+ruby images may not be based on the same image.  At the current time both are based
+on Debian buster, but that may not always remain the case.  Both
+[ruby](https://hub.docker.com/_/ruby) and [node](https://hub.docker.com/_/node)
+provide multiple alternates so it shouldn't be difficult to find a match.
+
+## volta
+
+A third approach is to use a version manager.  Much like how Ruby has rvm,
+rbenv, chruby and others, Node has several.
+[Volta](https://docs.volta.sh/guide/) is one written in Rust that works well
+for this task.
+
+A minimal Dockerfile making use of Volta would look like the following:
+
+```dockerfile
+<%= begin
+  dockerfile = IO.read(File.join(__dir__, 'node/Dockerfile3')).strip
+
+  dockerfile[/WORKDIR demo\nRUN yarn add.*\n+/] = ''
+
+  dockerfile[/RUN bin\/rails.*EOF/m] = [
+    'COPY <<-"EOF" /demo/config/routes.rb',
+    'Rails.application.routes.draw { root "rails/welcome#index" }',
+    'EOF'
+  ].join("\n")
+
+  dockerfile
+end %>
+```
+
+The resulting image is slightly larger at 499 MB.  The advantage of this approach
+is that you don't have to worry about base images matching.
+
+---
+
+## Example application
+
+Below is an example application that demonstrates React.js working with esbuild.
+
+Start by adding the following lines immediately before the `FROM base` line:
+
+```
+WORKDIR demo
+RUN yarn add react react-dom
+```
+
+Replace the three lines starting with
+`COPY <<-"EOF" config/routes.rb` with the following:
+
+```dockerfile
+<%= begin
+  dockerfile = IO.read(File.join(__dir__, 'node/Dockerfile1')).strip
+
+  dockerfile[/RUN bin\/rails.*EOF/m]
+end %>
+```
+
+Since this isn't a React or Rails tutorial, an overview of the contents will suffice:
+
+  * A counter component which extracts attributes from the root element and
+    displays a counter which increments every second.
+  * A time controller and view which includes an svg image and sets 
+    HTML attributes containing the Ruby, Rails, and Node versions.
+
+## Recap
+
+There are multiple ways to build an image containing both Node.js and Ruby.
+Finding the right one for your application requires a bit of trial and error
+and personal preference.

@@ -1,19 +1,16 @@
 # syntax = docker/dockerfile:1
 
-FROM node:current-slim AS node
 FROM ruby:slim as base
 
-COPY --from=node /usr/lib /usr/lib
-COPY --from=node /usr/local/share /usr/local/share
-COPY --from=node /usr/local/lib /usr/local/lib
-COPY --from=node /usr/local/include /usr/local/include
-COPY --from=node /usr/local/bin /usr/local/bin
-COPY --from=node /opt /opt
+RUN apt-get update &&\
+    apt-get install --yes git curl build-essential
+
+RUN curl -sL https://deb.nodesource.com/setup_current.x | bash - &&\
+    apt-get update && \
+    apt-get install --yes --no-install-recommends nodejs &&\
+    npm install -g yarn
 
 FROM base as build
-
-RUN apt-get update &&\
-    apt-get install --yes build-essential git
 
 RUN gem install rails
 RUN rails new demo --skip-active-record --javascript esbuild
