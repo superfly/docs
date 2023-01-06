@@ -104,7 +104,38 @@ end %>
 The resulting image is slightly larger at 499 MB.  The advantage of this approach
 is that you don't have to worry about base images matching.
 
----
+## Node as the base
+
+A fourth option is to flip the script: start with node as the base and add ruby.
+Debian bullseye includes Ruby 2.7 which is supported until the end of March 2023.
+
+```dockerfile
+<%= begin
+  dockerfile = IO.read(File.join(__dir__, 'node/Dockerfile4')).strip
+
+  dockerfile[/WORKDIR demo\nRUN yarn add.*\n+/] = ''
+
+  dockerfile[/RUN bin\/rails.*EOF/m] = [
+    'COPY <<-"EOF" /demo/config/routes.rb',
+    'Rails.application.routes.draw { root "rails/welcome#index" }',
+    'EOF'
+  ].join("\n")
+
+  dockerfile
+end %>
+```
+
+Node the change to the second `COPY --from=gems` line as the location of the
+gem directory has changed.
+
+This results in the smallest image yet, at 424 MB.  The downside is that you
+get a dated Ruby.
+
+Variations are possible, including copying Ruby from the base docker image
+or using a Ruby version manager such as
+[rvm](https://rvm.io/rvm/install),
+[rbenv](https://github.com/rbenv/rbenv#installation), or
+[chruby](https://github.com/postmodern/chruby#install).
 
 ## Example application
 
