@@ -11,7 +11,7 @@ status: alpha
 Create an empty directory, and place the following Dockerfile in there:
 
 ```dockerfile
-<%= partial "minimal/Dockerfile1" %>
+<%= partial("minimal/Dockerfile1").strip %>
 ```
 
 If you've ever seen a Dockerfile before, the above seems too good to be true.  But try it.
@@ -143,32 +143,10 @@ that provides more information.
 A recap of the progress so far.  The entire Dockerfile isn't that big:
 
 ```dockerfile
-# syntax = docker/dockerfile:1
-
-FROM ruby:slim as build
-
-RUN apt-get update &&\
-    apt-get install --yes build-essential git
-
-RUN gem install rails
-RUN rails new demo
-
-FROM ruby:slim
-
-COPY --from=build /demo /demo
-COPY --from=build /usr/local/bundle /usr/local/bundle
-
-COPY <<-"EOF" /demo/config/routes.rb
-Rails.application.routes.draw { root "rails/welcome#index" }
-EOF
-
-WORKDIR demo
-ENV RAILS_ENV=production
-ENV PORT=8080
-CMD bin/rails server
+<%= partial("minimal/Dockerfile3").strip %>
 ```
 
-A total of 23 lines, 8 of them blank.
+A total of 23 lines, 7 of them blank.
 
 The docker portions (FROM, RUN, COPY, WORKDIR, ENV, CMD) are
 very straightforward, even including advanced techniques
