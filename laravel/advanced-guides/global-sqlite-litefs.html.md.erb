@@ -12,7 +12,7 @@ Read further on the official [LiteFS documentation](/docs/litefs/getting-started
 
 ## Laravel Specific Configuration
 
-Take note of the following important steps in configuring your Laravel Fly App with `LiteFS`:
+Take note of the following important steps in configuring your [Laravel Fly App](/docs/laravel/) with `LiteFS`:
 
 1) You'll have to configure SQLite connection in your [`fly.toml`](https://github.com/fly-apps/fly-laravel-litefs/blob/main/fly.toml) file:
 ```toml
@@ -41,7 +41,7 @@ exec: "supervisord -c /etc/supervisor/supervisord.conf"
 ```
 4) Include a ( [etc/fuse.conf](https://github.com/fly-apps/fly-laravel-litefs/blob/main/etc/fuse.conf) ) file to enable `allow-other` option above to work.
 
-5) Revise the generated [Dockerfile](https://github.com/fly-apps/fly-laravel-litefs#dockerfile) to include the `LiteFS` image, install required packages, and copy the configuration files `etc/litefs.yml` and `etc/fuse.conf` to a [proper location](https://fly.io/docs/litefs/config/#config-file-search-path) `LiteFS` can read.
+5) Revise the generated [Dockerfile](https://github.com/fly-apps/fly-laravel-litefs#dockerfile) to include the `LiteFS` image, install required packages, and copy the configuration files `etc/litefs.yml` and `etc/fuse.conf` to a [proper location](/docs/litefs/config/#config-file-search-path) `LiteFS` can read.
 
 6) Create a [middleware](https://github.com/fly-apps/fly-laravel-litefs/blob/main/app/Http/Middleware/FlyReplayLiteFSWrite.php) to forward write requests to the [primary node](/docs/litefs/primary/) using [fly-replay](/docs/reference/fly-replay/#fly-replay)
 
