@@ -138,4 +138,4 @@ You have successfully built, deployed, and connected to your first Rails applica
 
 We've accomplished a lot with only just over a handful of lines of code and
 just over a dozen commands. When you are ready, proceed to a
-[recap](/docs/rails/quick-start/recap/).
+[recap](/docs/rails/getting-started#recap).
