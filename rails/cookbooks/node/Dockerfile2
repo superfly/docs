@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1
 
-FROM node:current-slim AS node
+FROM node:slim AS node
 FROM ruby:slim as base
 
 COPY --from=node /usr/lib /usr/lib
