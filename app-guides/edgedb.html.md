@@ -3,6 +3,8 @@ title: EdgeDB on Fly
 layout: docs
 sitemap: false
 nav: firecracker
+categories:
+  - database
 redirect_from: /docs/getting-started/edgedb/
 ---
 

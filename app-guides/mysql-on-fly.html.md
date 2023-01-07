@@ -7,6 +7,7 @@ author: fideloper
 categories:
   - mysql
   - guide
+  - database
 date: 2022-07-29
 ---
 
