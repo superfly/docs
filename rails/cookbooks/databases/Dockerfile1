@@ -18,7 +18,6 @@ RUN bin/rails generate model Visitor counter:integer &&\
     bin/rails generate channel counter
 
 COPY <<-"EOF" app/controllers/visitors_controller.rb
-Rails.application.routes.draw { root "visitor#counter" }
 class VisitorsController < ApplicationController
   def counter
     @visitor = Visitor.find_or_create_by(id: 1)
@@ -45,7 +44,6 @@ COPY <<-"EOF" app/views/visitors/_counter.html.erb
 <%= turbo_frame_tag(dom_id visitor) do %>
   <%= visitor.counter.to_i %>
 <% end %>
-
 EOF
 
 COPY <<-"EOF" config/routes.rb

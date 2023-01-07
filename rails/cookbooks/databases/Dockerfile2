@@ -19,7 +19,6 @@ RUN bin/rails generate model Visitor counter:integer &&\
     bin/rails generate channel counter
 
 COPY <<-"EOF" app/controllers/visitors_controller.rb
-Rails.application.routes.draw { root "visitor#counter" }
 class VisitorsController < ApplicationController
   def counter
     @visitor = Visitor.find_or_create_by(id: 1)
