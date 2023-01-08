@@ -53,3 +53,4 @@ Let's get started.
 
   * [Sources](./sources) - adding sources from outside of your `Dockerfile`.
   * [Optimizing builds](./build) - ordering, splitting, staging, and caching.
+  * [Optimizing deployments](./deploy) - jemmalloc, yjit, swap.
