@@ -1,0 +1,189 @@
+---
+title: "Copy source"
+layout: framework_docs
+order: 10
+status: alpha
+---
+
+
+In the cookbooks so far, you've seen COPY statements with heredocs, and COPY
+statements with `--from` options.  This page contains a number of recipies
+which you an add to an existing Dockerfile to incorporate content from outside
+of the  Dockerfile.
+
+The way to do this is extremely simple.  As an example, the following statements
+will copy the contents of your current directory (recursively) into the image:
+
+```
+COPY . .
+```
+
+So you would think that with an existing Rails project you could remove a lot
+of statements and replace them with a single COPY statement.  Generally it turns
+out that the reverse is true.  For starters what once was:
+
+```dockerfile
+RUN gem install rails
+RUN rails new demo --minimal --skip-active-record
+```
+
+Becomes
+
+```dockerfile
+RUN mkdir demo
+WORKDIR demo
+COPY . .
+RUN bundle install
+RUN yarn install
+```
+
+And then even with that change, when you try to deploy you get a message that looks something like this:
+
+```
+#14 0.539 Your Ruby version is 3.2.0, but your Gemfile specified 3.1.2
+```
+
+## Versioning
+
+The fix for this is simple.  You change your base image.  Find occurences in your Dockerfile
+that look like:
+
+```
+FROM ruby:slim
+```
+
+And replace them with
+
+```
+FROM ruby:3.1.2-slim
+```
+
+And many people will do the following to make it even clearer as to what
+parts may need to be tailored and what parts are fixed:
+
+```
+ARG RUBY_VERSION=3.1.2
+
+FROM ruby:$RUBY_VERSION-slim
+```
+
+At this point, your Dockerfile may work, but eagle eyes may spot a warning that looks something
+like the following:
+
+```
+Bundler 2.4.2 is running, but your lockfile was generated with 2.2.33. Installing Bundler 2.2.33 and restarting 
+```
+
+This means that while the [right thing](https://bundler.io/blog/2022/01/23/bundler-v2-3.html) was eventually done, but your build process could be improved to
+use the right version in the first place.  And while node and yarn aren't as strict or as
+whiny, installing the versions of these tools that you tested with will minimize surprises.
+
+For bundler, the change looks something this:
+
+```
+ARG BUNDLER_VERSION=2.2.33
+RUN gem install -N bundler -v ${BUNDLER_VERSION}
+COPY . . 
+RUN bundle _${BUNDLER_VERSION}_ install
+```
+
+The process for yarn is similar, and slightly simpler:
+
+```
+ARG YARN_VERSION=1.22.19
+RUN npm install -g yarn@${YARN_VERSION}
+```
+
+For node, four different ways were defined, so there are four different techniques:
+
+* nodesource: we can change `setup_current.x` to specify the major node version,
+  for example `setup_18.x` for the current lts version.  It isn't possible with
+  this technique to specify the minor or patch version.  If this is important to
+  you, chose one of the other three alternatives.
+* merging images: just as you can specify `FROM ruby:3.2.0-slim` you can specify
+  `FROM node:18.13.0-slim`.  It is important to ensure that both images are
+  based on the same operating system (e.g. debian vs alpine), and release
+  (e.g. bullseye vs buster).  To make things clearer and avoid problems,
+  include the OS release in the name, for example
+  `ruby:3.2.0-bullseye-slim` and `node:18.13.0-bullseye-slim`.
+* volta: specify the node version on the install, for
+  example: `volta install node@18.13.0`.
+* node as base: specify the desired node version on the FROM line, but then
+  use a Ruby version manager to install the desired version of Ruby.  If
+  you have no preference, `rvm` seems to be the most commonly used by people
+  who build Dockerfiles, despite `rbenv` generally being more popular on
+  MacOS.
+
+A few examples to demonstrate these concepts:
+  * [minimal/import maps](./sources/Dockerfile1)
+  * [esbuild/volta](./sources/Dockerfile2)
+  * [api](./sources/Dockerfile3)
+
+## dockerignore
+
+While `COPY . .` is effective, it is a bit too inclusive.  For the same reason
+that you have a `.gitignore` file you need a `.dockerignore` file: you don't 
+want to deploy your tmp files, your test databases, your node_modules directory
+or your master key.
+
+If you don't already have one, copy your `.gitignore` file.
+
+Now run `fly secrets list`.  If you don't see RAILS_MASTER_KEY listed there make your
+master key available to your deployment image by setting a secret.  Mac and Linux
+users can run the following command:
+
+```cmd
+fly secrets set RAILS_MASTER_KEY=$(cat config/master.key)
+```
+
+Windows users can run the same command but will need to copy/paste the key.
+
+You may already have both the `.dockerignore` file and secret set by this point as
+`fly launch` will do both for you.
+
+## binstubs
+
+At this point you are including all of your source minus binaries, irrelevant
+files, and sensitive files.
+
+There still remains one set of files that aren't binary, are very relevant, but
+may be platform specific: binstubs.
+
+These files start with a [she bang](https://en.wikipedia.org/wiki/Shebang_(Unix)),
+which on Windows machines may contain the letters `.exe`.  And consist of multiple
+lines where the line separator is `\r` on Windows vs `\n` on Linux.  And on
+Linux need to be marked executable in order to run.
+
+For these reasons, Windows users may need lines like the following in their Dockerfile:
+
+```dockerfile
+# Adjust binstubs to run on Linux
+RUN chmod +x /app/bin/* && \
+    sed -i 's/ruby.exe\r*/ruby/' /app/bin/* && \
+    sed -i 's/ruby\r*/ruby/' /app/bin/*
+```
+[chmod](https://en.wikipedia.org/wiki/Chmod) can be used to set permissions and
+mark files as executable.
+
+[sed](https://www.gnu.org/software/sed/manual/sed.html) is a useful tool for
+making string substitions in text files.
+
+What subset of these lines are needed, or
+whether these lines are needed at all, can be determined at the time the
+Dockerfile is generated.
+
+## Recap
+
+What started out as a seemingly simple matter - namely copying your source to the
+deployment machine - turns out to require considerably more thought than most would
+initialy have thought.
+
+As with before, Dockerfiles continue provide a concise way to capture these
+actions and have them executed reproducibly.  That being said, there is a 
+subtle shift in the reaction for many when presented with two Dockerfiles:
+one that does steps you would expect to be needed in a clear and consise way,
+and another that does steps that you hadn't realized were needed.
+
+Task specific documentation like these pages are one way to address this
+need.  Another is tools that not only set up Dockerfiles for you initially
+but help you maintain them as you iterate on your application.

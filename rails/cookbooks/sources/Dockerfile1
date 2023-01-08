@@ -1,0 +1,32 @@
+# syntax = docker/dockerfile:1
+
+ARG RUBY_VERSION=3.2.0
+
+FROM ruby:$RUBY_VERSION-slim as build
+
+ARG BUNDLER_VERSION=2.4.2
+
+RUN apt-get update &&\
+    apt-get install --yes build-essential git pkg-config
+
+RUN mkdir demo
+WORKDIR demo
+RUN gem install -N bundler -v ${BUNDLER_VERSION}
+COPY . .
+RUN bundle _${BUNDLER_VERSION}_ install
+
+FROM ruby:$RUBY_VERSION-slim
+
+COPY --from=build /demo /demo
+COPY --from=build /usr/local/bundle /usr/local/bundle
+
+COPY <<-"EOF" /demo/config/routes.rb
+Rails.application.routes.draw { root "rails/welcome#index" }
+EOF
+
+WORKDIR demo
+ENV RAILS_ENV=production
+# ENV RAILS_SERVE_STATIC_FILES=true
+ENV RAILS_LOG_TO_STDOUT=true
+ENV PORT=8080
+CMD bin/rails server

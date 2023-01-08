@@ -44,7 +44,11 @@ Let's get started.
 
 ## Cookbooks
 
-  * [Minimal](./minimal)
-  * [Databases](./databases)
-  * [Node](./node)
-  * [API](./api)
+  * [Minimal](./minimal) - full ruby, slim ruby, multi-stage build
+  * [Databases](./databases) - sqlite3, postgresql, mysql
+  * [Node](./node) - support for esbuild, rollup, webpack
+  * [API](./api) - api only rails servers with web front end
+
+## Recipies
+
+  * [Sources](./sources) - adding sources from outside of your `Dockerfile`.
