@@ -16,9 +16,9 @@ can use to troubleshoot issues you may encounter.
 
 ## Configure Django
 
-The official [How to Deploy Django](https://docs.djangoproject.com/en/dev/howto/deployment/) guide and [Django Deployment Checklist](https://docs.djangoproject.com/en/dev/howto/deployment/checklist/) are a good first step to ensure your app is ready for deployment.
+The official [How to Deploy Django](https://docs.djangoproject.com/en/stable/howto/deployment/) guide and [Django Deployment Checklist](https://docs.djangoproject.com/en/stable/howto/deployment/checklist/) are a good first step to ensure your app is ready for deployment.
 
-The third-party package [WhiteNoise](https://whitenoise.evans.io/en/stable/) is recommended for serving static files in production as this requires [additional configuration](https://docs.djangoproject.com/en/dev/howto/static-files/deployment/).
+The third-party package [WhiteNoise](https://whitenoise.evans.io/en/stable/) is recommended for serving static files in production as this requires [additional configuration](https://docs.djangoproject.com/en/stable/howto/static-files/deployment/).
 
 A production web server must be installed, typically either [Gunicorn](https://docs.gunicorn.org/en/latest/install.html) or [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/). The database adapter [Psycopg](https://www.psycopg.org/docs/) is commonly used along with [dj-database-url](https://pypi.org/project/dj-database-url/) to establish a Django database connection via a `DATABASE_URL` environment variable.
 
@@ -97,7 +97,7 @@ The [`fly.toml`](https://fly.io/docs/reference/configuration/) file is used by F
 
 ## ALLOWED_HOSTS & CSRF\_TRUSTED_ORIGINS
 
-The dedicated URL for your deployment will be `<app_name>.fly.dev`. Update the [ALLOWED_HOSTS](https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts) and [CSRF\_TRUSTED\_ORIGINS](https://docs.djangoproject.com/en/dev/ref/settings/#csrf-trusted-origins) configurations with your `<app_name>` to include it.
+The dedicated URL for your deployment will be `<app_name>.fly.dev`. Update the [ALLOWED_HOSTS](https://docs.djangoproject.com/en/stable/ref/settings/#allowed-hosts) and [CSRF\_TRUSTED\_ORIGINS](https://docs.djangoproject.com/en/stable/ref/settings/#csrf-trusted-origins) configurations with your `<app_name>` to include it.
 
 ## Deploy Your Application
 
