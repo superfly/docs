@@ -53,10 +53,9 @@ ENV RUBY_YJIT_ENABLE=1
 You can set `VARIANT` to `jemalloc-slim` to include jemalloc.
 
 For those that would prefer to just get a yjit enabled ruby without
-changing the base image, try
+changing the base image, try either (rvm)[https://rvm.io/] or
 (rbenv)[https://github.com/rbenv/rbenv] which will install yjit
-by default
-[if rustc is available](https://github.com/rbenv/ruby-build/pull/2005).
+by default if rustc is available.
 
 ## Enabling swap
 
