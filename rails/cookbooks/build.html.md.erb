@@ -19,7 +19,7 @@ more frequently.
 This works well until you get to the point where steps need
 to be ordered.
 
-Now that you are copying sources from outside of the dockerfile,
+Now that you are copying sources from outside of the Dockerfile,
 a change to *any* source will trigger a rebuild from the point
 of the COPY statement on, including time consuming steps like
 `bundle install` and `yarn install`.
@@ -125,7 +125,7 @@ That's a lot to unpack.  Statement by statement:
  * the install is performed
  * unused gems are removed
  * a vendor subdirectory is created.
- * the bundle directory is chenged to be  `vendor` subdirectory
+ * the bundle directory is changed to be  `vendor` subdirectory
  * the contents of the `/srv/vendor` cache is copied to the
    vendor subdirectory.
 
@@ -133,7 +133,7 @@ The final build stage can copy the entire app directory from
 the build stage that included the above `RUN` statement to
 pick up the configuration as well as the gems.
 
-With this in place, adding a single gem to your gemfile will
+With this in place, adding a single gem to your Gemfile will
 result in only the installation of that one gem.
 
 ## recap
@@ -144,9 +144,9 @@ involving ordering, splitting, staging, and caching of statements
 and results.
 
 We started with something that was simple and slow and ended with
-a solution that is considerably less simple but decidely faster.
+a solution that is considerably less simple but decidedly faster.
 
-This results in a tradeoff.  For small projects it may make
+This results in a trade-off.  For small projects it may make
 sense to only adopt some of these techniques to keep the
 Dockerfile maintainable.  For other projects it may make
 sense to incorporate more.

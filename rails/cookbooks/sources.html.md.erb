@@ -7,7 +7,7 @@ status: alpha
 
 
 In the cookbooks so far, you've seen COPY statements with heredocs, and COPY
-statements with `--from` options.  This page contains a number of recipies
+statements with `--from` options.  This page contains a number of recipes
 which you an add to an existing Dockerfile to incorporate content from outside
 of the  Dockerfile.
 
@@ -45,7 +45,7 @@ And then even with that change, when you try to deploy you get a message that lo
 
 ## Versioning
 
-The fix for this is simple.  You change your base image.  Find occurences in your Dockerfile
+The fix for this is simple.  You change your base image.  Find occurrences in your Dockerfile
 that look like:
 
 ```
@@ -166,7 +166,7 @@ RUN chmod +x /app/bin/* && \
 mark files as executable.
 
 [sed](https://www.gnu.org/software/sed/manual/sed.html) is a useful tool for
-making string substitions in text files.
+making string substitutions in text files.
 
 What subset of these lines are needed, or
 whether these lines are needed at all, can be determined at the time the
@@ -176,12 +176,12 @@ Dockerfile is generated.
 
 What started out as a seemingly simple matter - namely copying your source to the
 deployment machine - turns out to require considerably more thought than most would
-initialy have thought.
+initially have thought.
 
 As with before, Dockerfiles continue provide a concise way to capture these
 actions and have them executed reproducibly.  That being said, there is a 
 subtle shift in the reaction for many when presented with two Dockerfiles:
-one that does steps you would expect to be needed in a clear and consise way,
+one that does steps you would expect to be needed in a clear and concise way,
 and another that does steps that you hadn't realized were needed.
 
 Task specific documentation like these pages are one way to address this
