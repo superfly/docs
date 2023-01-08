@@ -52,3 +52,4 @@ Let's get started.
 ## Recipies
 
   * [Sources](./sources) - adding sources from outside of your `Dockerfile`.
+  * [Optimizing builds](./build) - ordering, splitting, staging, and caching.
