@@ -234,13 +234,20 @@ guide to set up a MySQL application.
 Once you have it up and running, the instructions are roughly
 the same as with postgresql, with the following modifications:
 
-  * You need to run `fly secrets set DATABASE_URL=` in your
-    application.  For postgresql this is taken care of for you
-    by the `flyctl postgres attach` command.
+  * On the rails new line, specify `--database mysql` instead of `--database postgresql`
   * [default-libmysqlclient-dev](https://packages.debian.org/bullseye/default-libmysqlclient-dev) 
-    if the package containing the mysql libraries.
+    is the package containing the mysql libraries.
   * [default-mysql-client](https://packages.debian.org/bullseye/default-mysql-client)
     is the package containing the mysql client.
+  * Add the deploy release command to `fly.toml` from the postgresql instructions above.
+  * You need to run `fly secrets set DATABASE_URL=` in your
+    application.  For postgresql this is taken care of for you
+    by the `flyctl postgres attach` command.  This will look
+    something like the following:
+
+     ```
+     fly secrets set DATABASE_URL=mysql2://root:password@mysql-app-name.internal:3306/
+     ```
 
 ## Recap
 
@@ -257,3 +264,4 @@ the same as with postgresql, with the following modifications:
 
  * [sqlite3](./databases/Dockerfile1)
  * [postgres](./databases/Dockerfile2)
+ * [mysql](./databases/Dockerfile3)
