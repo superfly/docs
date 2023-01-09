@@ -5,7 +5,6 @@ order: 10
 status: alpha
 ---
 
-
 In the cookbooks so far, you've seen COPY statements with heredocs, and COPY
 statements with `--from` options.  This page contains a number of recipes
 which you an add to an existing Dockerfile to incorporate content from outside
@@ -105,14 +104,12 @@ For node, four different ways were defined, so there are four different techniqu
   based on the same operating system (e.g. debian vs alpine), and release
   (e.g. bullseye vs buster).  To make things clearer and avoid problems,
   include the OS release in the name, for example
-  `ruby:3.2.0-bullseye-slim` and `node:18.13.0-bullseye-slim`.
+  `ruby:3.2.0-slim-bullseye` and `node:18.13.0-bullseye-slim`.  Yes,
+  these two projects do order the parts to this name differently.
 * volta: specify the node version on the install, for
   example: `volta install node@18.13.0`.
 * node as base: specify the desired node version on the FROM line, but then
-  use a Ruby version manager to install the desired version of Ruby.  If
-  you have no preference, `rvm` seems to be the most commonly used by people
-  who build Dockerfiles, despite `rbenv` generally being more popular on
-  MacOS.
+  use a Ruby version manager to install the desired version of Ruby.
 
 A few examples to demonstrate these concepts:
   * [minimal/import maps](./sources/Dockerfile1)
@@ -136,10 +133,11 @@ users can run the following command:
 fly secrets set RAILS_MASTER_KEY=$(cat config/master.key)
 ```
 
-Windows users can run the same command but will need to copy/paste the key.
+Windows users will need to replace the `$(...)` expression with the
+contents of the file.
 
-You may already have both the `.dockerignore` file and secret set by this point as
-`fly launch` will do both for you.
+You may already have both the `.dockerignore` file and secret set by this point
+as `fly launch` will do both for you.
 
 ## binstubs
 

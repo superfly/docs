@@ -82,8 +82,7 @@ packages](https://packages.debian.org/stable/allpackages) you can find
 count and found there to be 58,733 packages on that list.  The best way to find
 out what you need is pasting the error message you find when you don't include
 what is needed in your favorite search engine and reviewing the answer you find
-on places like StackOverflow.  And if you are lucky, you may discover that
-`pkg-config` is also required.
+on places like StackOverflow.
 
 The way to install packages on Debian is to use a tool named
 `apt-get`, so when we are done, the `FROM ruby` line gets replaced with the following:
@@ -92,7 +91,7 @@ The way to install packages on Debian is to use a tool named
 FROM ruby:slim
 
 RUN apt-get update &&\
-    apt-get install --yes build-essential git pkg-config
+    apt-get install --yes build-essential git
 ```
 
 Note that this time we opted to use a single RUN statement, and use the shell `&&`
@@ -111,8 +110,8 @@ But we can do even better.
 
 Build tools are only needed at build time, they don't need to be included in the deployed image.
 
-This is accomplished by building two images.  The first with the necessary build tools, and then
-start over, copying the necessary files from the first image and then proceeding on from there.
+This is accomplished by building two images.  In the first one we build the necessary build tools.  We then start fresh with a new image,
+copy over the necessary files from the first image and then proceed on from there.
 We can use [multi-stage builds](https://docs.docker.com/build/building/multi-stage/) to do that.
 
 This is easier than it sounds.  You put multiple FROM statements in your Dockerfile, optionally

@@ -27,8 +27,8 @@ end %>
 This Dockerfile contains a number of small changes from the minimal
 one:
 
-  * For Active Record to work, we need to add `pkg-config` to the list
-    of packages installed via `apt-get`.
+  * For Active Record (or more precisely, sqlite3) to work, we need to add
+    `pkg-config` to the list of packages installed via `apt-get`.
   * For Action Cable to work, we need to add `redis` to the list
     of packages installed via `apt-get`.
   * `--minimal` and `--skip-active-record` are removed from the
@@ -51,7 +51,7 @@ one:
         ```
 
 In general, requests that never make it to Rails are served fastest, so
-having fly serve the static files is the better approach.
+the second approach where fly serves the static files is the better approach.
 
 ---
 

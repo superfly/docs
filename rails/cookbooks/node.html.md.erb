@@ -7,7 +7,7 @@ status: alpha
 
 If your application is based on Rails 5.2 through 6.1, or is a Rails 7 app
 selecting one of the javascript options or many of the css options, you will
-require node to be included in your deployment image.
+require Node.js to be included in your deployment image.
 
 While it is unsurprising that the slim ruby image doesn't include Nodejs by
 default, what is surprising is that the most obvious way of installing
@@ -72,7 +72,7 @@ end %>
 
 The resulting images size is smaller at 465MB.  The danger here is that the node and
 ruby images may not be based on the same image.  At the current time both are based
-on Debian buster, but that may not always remain the case.  Both
+on Debian bullseye, but that may not always remain the case.  Both
 [ruby](https://hub.docker.com/_/ruby) and [node](https://hub.docker.com/_/node)
 provide multiple alternates so it shouldn't be difficult to find a match.
 

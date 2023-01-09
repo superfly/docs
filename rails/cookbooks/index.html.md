@@ -22,17 +22,18 @@ use cases.
 While this tutorial is anchored by focusing on deploying Ruby on Rails on
 fly.io, the concepts apply to other frameworks and other cloud providers. 
 
-For best results, you are encouraged to try out each step.  To do so, you will need to [Log in to Fly](https://fly.io/docs/getting-started/log-in-to-fly/).  Nothing you do in this tutorial will exceed the [Free Allowances](https://fly.io/docs/about/pricing/#free-allowances) provided.
-
 While you are welcome to explore these cookbooks in any
 order, if the concept of multi-stage docker builds is
 new to you starting with the first cookbook will make
 understading the rest easier. 
 
-If you are comfortable skpping the first cookbook, all cookbooks start with an empty directory
-and a seed `Dockerfile`.  Run `fly launch` to create an application, and then proceed from
-there, running `fly deploy` after you make changes.
+If you are comfortable skpping the first cookbook, all cookbooks start with an
+empty directory and a seed `Dockerfile`.  Run `fly launch` to create an
+application, and then proceed from there, running `fly deploy` after you make
+changes.  The recipies the follow contain fragments that can be added
+to multiple cookbooks.
 
+For best results, you are encouraged to try out each step.  To do so, you will need to [Log in to Fly](https://fly.io/docs/getting-started/log-in-to-fly/).  Nothing you do in this tutorial will exceed the [Free Allowances](https://fly.io/docs/about/pricing/#free-allowances) provided.
 These cookbooks can be more than mere educational materials.  Using throwaway applications is
 often better than experimenting in production when you want to make configuration changes.
 Starting a minimal application, using `flyctl ssh console` to shell into that machine and
