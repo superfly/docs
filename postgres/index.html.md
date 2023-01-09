@@ -4,16 +4,12 @@ layout: framework_docs
 redirect_from: /docs/reference/postgres/
 ---
 
+<img src="/static/images/postgres.jpg" srcset="/static/images/postgres@2x.jpg 2x" alt="A model airplane with the Fly.io logo painted on its side, sitting next to some paint and brushes.">
+
 <div class="callout">
 Fly Postgres clusters created with flyctl [v0.0.412](https://github.com/superfly/flyctl/releases/tag/v0.0.412) or newer use our next-gen [Apps V2](https://fly.io/docs/reference/apps/) architecture, built on [Fly Machines](/docs/reference/machines/). **Existing Fly Postgres clusters will continue to work, powered by Nomad.** Docs for these databases can be found here:
-<ul>
-  <li>
-    <a href="/docs/postgres/postgres-on-nomad/"><strong>Legacy Fly Postgres Clusters</strong></a>
-  </li>
-  <li>
-    <a href="/docs/getting-started/multi-region-databases/"><strong>Multi-region Postgres (Legacy)</strong></a>
-  </li>
-</ul>
+  - **[Legacy Fly Postgres Clusters](/docs/postgres/postgres-on-nomad/)**
+  - **[Multi-region Postgres (Legacy)](/docs/getting-started/multi-region-databases/)**
 </div>
 
 [Postgres](https://www.postgresql.org/), formally known as PostgreSQL, is a powerful open source object relational database system that's used by many popular web frameworks to persist application data.

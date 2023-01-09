@@ -6,22 +6,19 @@ nav: firecracker
 ---
 
 <h2 class="group flex items-center whitespace-pre-wrap relative mt-14 mb-6 text-navy font-heading">Example Applications</h2>
+
 <ul>
-  <% glob("docs/app-guides/*.html.*").select{ |page| in_category?(page, categories: %w[guide]) }.sort_by{ |page| page.data.title }.each do |page| %>
-    <li><%=link_to_page page %></li>
-  <% end %>
+  <li>
+    <%= nav_link "Custom Domains for SaaS", "/docs/app-guides/custom-domains-with-fly/" %>
+  </li>
+  <li>
+    <%= nav_link "Deploy with GitHub Actions", "/docs/app-guides/continuous-deployment-with-github-actions/" %>
+  </li>
+  <li>
+    <%= nav_link "Run Multiple Processes", "/docs/app-guides/multiple-processes/" %>
+  </li>
+  <li>
+    <%= nav_link "Run UDP Services", "/docs/app-guides/udp-and-tcp/" %>
+  </li>
 </ul>
 
-<h2 class="group flex items-center whitespace-pre-wrap relative mt-14 mb-6 text-navy font-heading">Machines</h2>
-<ul>
-  <% glob("docs/app-guides/*.html.*").select{ |page| in_category?(page, categories: %w[machines]) }.sort_by{ |page| page.data.title }.each do |page| %>
-    <li><%=link_to_page page %></li>
-  <% end %>
-</ul>
-
-<h2 class="group flex items-center whitespace-pre-wrap relative mt-14 mb-6 text-navy font-heading">Other Guides</h2>
-<ul>
-  <% glob("docs/app-guides/*.html.*").reject{ |page| in_category?(page, categories: %w[machines guide]) }.sort_by{ |page| page.data.title }.each do |page| %>
-    <li><%=link_to_page page %></li>
-  <% end %>
-</ul>

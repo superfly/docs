@@ -1,0 +1,176 @@
+---
+title: Minimal Rails application
+layout: framework_docs
+order: 1
+status: beta
+---
+
+
+## Miminal Rails with Full Ruby Image
+
+Create an empty directory, and place the following Dockerfile in there:
+
+```dockerfile
+<%= partial("minimal/Dockerfile1").strip %>
+```
+
+If you've ever seen a Dockerfile before, the above seems too good to be true.  But try it.
+In your new directory run `flyctl launch`.
+Accept all the defaults, then run `flyctl deploy`, followed by `flyctl open`.
+
+Congratulations, you've deployed a Rails app.  True, it doesn't do much, but we will
+add more later.
+
+Now let's review that file.  The first line is a
+[syntax directive](https://docs.docker.com/build/buildkit/dockerfile-frontend/).  All
+dockerfiles should have this.  In fact, this example wouldn't work without it as it
+uses here docs.
+
+The next line, `FROM ruby`, specifies a base image.  A base image contains a completely
+preconfigured operating system along with selected other packages.  You can find
+the definition for the ruby image on [hub.docker.com](https://hub.docker.com/_/ruby).
+
+Next up is two `RUN` statements.  The commands you see there should be familiar:
+`gem install rails` and `rails new demo`.  `RUN` statements are run on the build
+machine.
+
+Then comes a `COPY` statement.  This statement uses a
+[heredoc](https://www.docker.com/blog/introduction-to-heredocs-in-dockerfiles/)
+which pretty much are the same thing as
+[heredoc in Ruby](https://www.rubyguides.com/2018/11/ruby-heredoc/).  The effect
+of these three lines will be to replace `config/routes.rb` with a route that
+shows the Rails welcome page.
+
+`WORKDIR` and `ENV` unsurprisingly set the current working directory and
+an environment variable respectively.
+
+A note on port 8080.  By default, Rails uses port 3000.  By default, fly.io
+expects port 8080.  By setting an environment variable you can control
+what port Rails uses.  Alternately, you can modify the `fly.toml` file to
+tell fly to monitor port 3000 instead.  Both ways work.
+
+Finally, there is a `CMD` which is run on the deployed server as opposed to
+the build server.  It is run in the specified WORKDIR with the
+environment variables you set.
+
+EZ-Peasy.  If you didn't see it working with your own eyes, it would be hard
+to imagine it being this straightforward and simple.  None of the Dockerfiles
+you have seen before are as clear as this, so there must be more to this
+story.
+
+## Minimal Rails with Slim Ruby Image
+
+Scrolling by during the build was the size of the image.  That size was
+948MB.  That's compressed.  That seems a bit much for a welcome splash
+screen.  Large images take longer to build and longer to deploy.
+Let's make the image smaller.
+
+Returning to [hub.docker.com](https://hub.docker.com/_/ruby), you can see a lot
+of alternatives.  If you scan that page and find the word `slim`, you can click
+on it and find the Dockerfile that was used to create that image.  That image,
+in turn, is based on `bullseye`, which is the latest release of the
+[Debian](https://www.debian.org/) distribution of LInux.  Knowing this is
+important.
+
+While the full `ruby` image contains everything you *might* need, including plenty
+that you will never use, `ruby:slim` doesn't contain things that will be needed
+to generate your demo application.  Things like `make` and `git`.
+
+Scanning the list of [debian bullseye
+packages](https://packages.debian.org/stable/allpackages) you can find
+`build-essential` and `git`.  OK, at this point, I'm just kidding.  I ran a
+count and found there to be 58,733 packages on that list.  The best way to find
+out what you need is pasting the error message you find when you don't include
+what is needed in your favorite search engine and reviewing the answer you find
+on places like StackOverflow.
+
+The way to install packages on Debian is to use a tool named
+`apt-get`, so when we are done, the `FROM ruby` line gets replaced with the following:
+
+```dockerfile
+FROM ruby:slim
+
+RUN apt-get update &&\
+    apt-get install --yes build-essential git
+```
+
+Note that this time we opted to use a single RUN statement, and use the shell `&&`
+operator to run the second command only if the preceding one completed.  This
+is a common technique you will find in Dockerfiles and it marginally makes the
+images smaller as two separate steps are combined into one.
+
+All in all not *too* bad.  Not exactly novice friendly, but still fairly concise.
+
+Concise, and effective.  With this one change we got the image size down from 948MB to 520MB,
+a 45% reduction.  Not bad.
+
+But we can do even better.
+
+## Multi-stage build
+
+Build tools are only needed at build time, they don't need to be included in the deployed image.
+
+This is accomplished by building two images.  In the first one we build the necessary build tools.  We then start fresh with a new image,
+copy over the necessary files from the first image and then proceed on from there.
+We can use [multi-stage builds](https://docs.docker.com/build/building/multi-stage/) to do that.
+
+This is easier than it sounds.  You put multiple FROM statements in your Dockerfile, optionally
+providing aliases to some images with an `as` keyword, and then use the `--from` flag on
+your COPY commands.  Seeing it in action helps.  Start by adding `as build` to the existing
+FROM command, then add the following immediately after the `RUN rails new demo` line:
+
+```dockerfile
+FROM ruby:slim
+
+COPY --from=build /demo /demo
+COPY --from=build /usr/local/bundle /usr/local/bundle
+```
+
+Your deployed application will contain your demo application as well as all of the
+necessary gems, but none of the build tools used to create the application.  The
+compressed image size is now down to 209MB.  While still substantial, this is
+a dramatic 78% improvement over where we started.
+
+At this point you might be wondering where `/usr/local/bundle` came from.  Where
+bundler places installed gems is operating system specific, and can be overridden
+by setting the `GEM_HOME` environment variable.  Bundler has a
+[docker guide](https://bundler.io/guides/bundler_docker_guide.html#dockerfiles-for-multiple-ruby-applications-and-gems)
+that provides more information.
+
+## Recap
+
+A recap of the progress so far.  The entire Dockerfile isn't that big:
+
+```dockerfile
+<%= partial("minimal/Dockerfile3").strip %>
+```
+
+A total of 23 lines, 7 of them blank.
+
+The docker portions (FROM, RUN, COPY, WORKDIR, ENV, CMD) are
+very straightforward, even including advanced techniques
+such as multi-stage builds and here docs.
+
+The parts that need explaining are the operating system
+parts: `apt-get`, `pkg-config`, `/usr/local/bundle`,
+and `8080`.  This will remain true as you continue your
+journey: the hard part isn't learning Docker, but rather
+getting to know what for many of you is an entirely new
+operating system.
+
+In this case, the operating system is Debian, but Alpine
+is common, and you will occasionally see member of
+the RedHat family (Centos, Fedora) as well as others.
+
+Docker files make working with these operating systems easy,
+but do nothing to hide them.
+
+To be fair, there still is a bit more to learn about
+Dockerfiles, but mostly the above statement will
+continue to be true.
+
+## Downloads
+
+ * [ruby-full](./minimal/Dockerfile1)
+ * [ruby-slim](./minimal/Dockerfile2)
+ * [multi-stage](./minimal/Dockerfile3)

@@ -1,0 +1,152 @@
+---
+title: "Optimizing your build"
+layout: framework_docs
+order: 11
+status: beta
+---
+
+# Ordering steps
+
+The initial cookbooks in this series seemed to automatically cache
+build steps and perform predictably - make a change to the Dockerfile
+and the build will pick up from the point of the change.
+
+In such cases, when there are steps that can be executed in order
+it is a good idea to order the steps that take longest and/or are
+least likely to change earlier than quick steps that may change
+more frequently.
+
+This works well until you get to the point where steps need
+to be ordered.
+
+Now that you are copying sources from outside of the Dockerfile,
+a change to *any* source will trigger a rebuild from the point
+of the COPY statement on, including time consuming steps like
+`bundle install` and `yarn install`.
+
+The relevant portion of the Dockerfile looks something like
+the following:
+
+```
+COPY . .
+RUN bundle install
+```
+
+Splitting that into two copy statements can make a dramatic
+improvement in build times:
+
+```
+COPY Gemfile* .
+RUN bundle install
+COPY . .
+```
+
+As the first statement will only copy `Gemfile` and `Gemfile.lock`,
+the time consuming `bundle install` step will *only* be run if these
+two specific files have changed.
+
+This can result in a dramatic reduction in build times for cases
+where the Gemfile did not change.
+
+# Multi-stage builds
+
+Now consider `bundle install` and `yarn install`.  Both can be
+time consuming.  They can be run in either order.  If run sequentially,
+you will be faced with a choice: should a change to the `Gemfile`
+result in an unnecessary reinstall of node modules, or should a
+change to `package.json` result in an unnecessary reinstall of gems?
+
+We've seen how multi-stage builds can reduce image size.  They also
+can be used to reduce build times.  An example to illustrate:
+
+```
+FROM ruby as base
+RUN apt-get install -y build-essential &&
+    volta install node@lts yarn@latest
+
+WORKDIR /demo
+
+FROM base as gems
+COPY Gemfile* .
+RUN bundle install
+
+FROM base as node
+COPY package*.json .
+RUN yarn install
+
+FROM base
+RUN apt-get install -y postgresql-client
+
+COPY . .
+COPY --from=gems /usr/local/bundle /usr/local/bundle
+COPY --from=node /demo/node-modules /demo/node-modules
+```
+
+Such a Dockerfile will only run `bundle install` if the `Gemfile`
+has changed, and only run `yarn install` if `package.json`
+changed.
+
+Even better, if both changed, they will be run concurrently.
+In fact, on the first run they will be run concurrently with
+the installation of `postgresql-client`.
+
+# Caching
+
+We've seen how splitting COPY statements can reduce the number of
+steps, but it still remains the case that any change to the Gemfile
+will result in reinstalling all gems.
+
+This can be improved by using the
+[dedicated RUN cache](https://docs.docker.com/build/cache/#id=%22use-the-dedicated-run-cache%22).
+
+Applied to bundle installs, the resulting build instructions would
+look something like the following:
+
+```
+RUN --mount=type=cache,id=dev-gem-cache,sharing=locked,target=/srv/vendor \
+    bundle config set app_config .bundle && \
+    bundle config set without 'development test' && \
+    bundle config set path /srv/vendor && \
+    bundle install && \
+    bundle clean && \
+    mkdir -p vendor && \
+    bundle config set path vendor && \
+    cp -ar /srv/vendor .
+```
+
+That's a lot to unpack.  Statement by statement:
+
+ * a `gem-cache` directory is mounted on `/srv/vendor`
+ * the bundle config directory is set to be a `.bundle` subdirectory
+   of the current application.
+ * gems marked as *development* or *test* in the Gemfile are not to be
+    installed.
+ * the bundle directory is set to the `/srv/vendor` directory
+ * the install is performed
+ * unused gems are removed
+ * a vendor subdirectory is created.
+ * the bundle directory is changed to be  `vendor` subdirectory
+ * the contents of the `/srv/vendor` cache is copied to the
+   vendor subdirectory.
+
+The final build stage can copy the entire app directory from
+the build stage that included the above `RUN` statement to
+pick up the configuration as well as the gems.
+
+With this in place, adding a single gem to your Gemfile will
+result in only the installation of that one gem.
+
+## recap
+
+Starting from a simple sequence of two statements (potentially three
+if `yarn install` is added) we have explored a number of techniques
+involving ordering, splitting, staging, and caching of statements
+and results.
+
+We started with something that was simple and slow and ended with
+a solution that is considerably less simple but decidedly faster.
+
+This results in a trade-off.  For small projects it may make
+sense to only adopt some of these techniques to keep the
+Dockerfile maintainable.  For other projects it may make
+sense to incorporate more.

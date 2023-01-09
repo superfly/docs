@@ -3,6 +3,9 @@ title: EdgeDB on Fly
 layout: docs
 sitemap: false
 nav: firecracker
+categories:
+  - database
+redirect_from: /docs/getting-started/edgedb/
 ---
 
 [EdgeDB](https://www.edgedb.com) is a [graph-relational database](https://www.edgedb.com/blog/the-graph-relational-database-defined) that runs on top of Postgres and is designed as a spiritual successor to SQL. This guide explains how to perform a single-region deployment of EdgeDB with persistent storage. It will require two apps: one for Postgres and one for the EdgeDB container.

@@ -1,0 +1,267 @@
+---
+title: "Rails with Databases"
+layout: framework_docs
+order: 2
+status: beta
+---
+
+## Initial Dockerfile
+
+Below is a minimal, multi-stage build, Dockerfiler that is capable of
+supporting both ActiveRecord and Action Cable:
+
+```dockerfile
+<%= begin
+  dockerfile = IO.read(File.join(__dir__, 'databases/Dockerfile1')).strip
+
+  dockerfile[/RUN bin\/rails.*EOF/m] = [
+    'COPY <<-"EOF" /demo/config/routes.rb',
+    'Rails.application.routes.draw { root "rails/welcome#index" }',
+    'EOF'
+  ].join("\n")
+
+  dockerfile
+end %>
+```
+
+This Dockerfile contains a number of small changes from the minimal
+one:
+
+  * For Active Record (or more precisely, sqlite3) to work, we need to add
+    `pkg-config` to the list of packages installed via `apt-get`.
+  * For Action Cable to work, we need to add `redis` to the list
+    of packages installed via `apt-get`.
+  * `--minimal` and `--skip-active-record` are removed from the
+    `rails new` line.
+  * Since the example below uses Tailwindcss, we need to add `--css tailwind` to the
+    `rails new` line.
+  * We need to add `RUN bin/rails assets:precompile` and
+    `RUN bin/rails db:prepare` immediately after the
+    `ENV RAILS_ENV=production` line.
+  * In order to see the log messages, add `ENV RAILS_LOG_TO_STDOUT=true`
+    after the `ENV PORT=8080` line.
+  * We need to serve the assets.  Chose one of the following two methods:
+      * Set `ENV RAILS_SERVE_STATIC_FILES=true`
+      * Add to the bottom of `fly.toml`:
+
+        ```
+        [[statics]]
+        guest_path = "/demo/public"
+        url_prefix = "/"
+        ```
+
+In general, requests that never make it to Rails are served fastest, so
+the second approach where fly serves the static files is the better approach.
+
+---
+
+## Example application
+
+In order to demonstrate Action Cable and Active Record functionality, we need
+a Rails application.  Following is a simple visitors counter.
+
+Replace the three lines starting with
+`COPY <<-"EOF" config/routes.rb` with the following:
+
+```dockerfile
+<%= begin
+  dockerfile = IO.read(File.join(__dir__, 'databases/Dockerfile1')).strip
+
+  dockerfile[/RUN bin\/rails.*EOF/m]
+end %>
+```
+
+Since this isn't a Rails tutorial, an overview of the contents will suffice:
+
+  * A `Vistor` model with a single counter column.
+  * A `Counter` channel to send realtime updates.
+  * A controller method that updates the model, broadcasts the results,
+    and renders the initial page.
+  * HTML that connects to the channel, displays the fly.io logo, and
+    renders a partial.
+  * A partial that shows the counter inside a turbo frame.
+  * A route that connects the root to the controller method we defined above.
+
+## Setting up Redis
+
+Before we deploy this application, we need to 
+create the redis database.  We will be using
+[Redis by Upstash](https://fly.io/docs/reference/redis/), and creating
+the database and connecting it to the demo application is a matter
+of issuing two commands:
+
+
+```
+flyctl redis create
+flyctl secrets set \
+  REDIS_URL=redis://default:REDACTED@NAME-redis.upstash.io
+```
+
+Replace the secret with the private URL provided by the `redis create` command.
+And you don't need to split the `secrets set` line, that was merely done to
+fit in your browser window.
+
+If you have deployed the minimal application previously, 
+at this point, your application has been redeployed, and you can visit the
+page to see a counter.  If you open multiple windows, each will be updated
+simultaneously.  If you haven't launched and deployed the application previously
+do it now.
+
+## Making a persistent sqlite3 database
+
+The counter itself needs to be saved in a database, and by default that
+database is sqlite3 for Rails.  For that database to be kept intact
+across deploys it needs to be placed on a
+[volume](https://fly.io/docs/reference/volumes/).
+
+We can create a volume using the CLI:
+
+```
+flyctl volumes create sqlite3_volume
+```
+
+To use this volume, we are going to need to mount it and set an
+environment variable relocating the database to be on that volume.
+We can do both by editing `fly.toml`:
+
+```toml
+[env]
+  DATABASE_URL = "sqlite3:///mnt/volume/production.sqlite3"
+
+[mounts]
+  source = "sqlite3_volume"
+  destination = "/mnt/volume"
+```
+
+One last problem remains: the `db:prepare` step needs to be run *after*
+the volume is mounted, which means that it needs to run on the deployment
+machine, not on the build machine.  This means that in your Dockerfile
+this needs to be done by the CMD statement not on a RUN statement.
+
+Start by removing `RUN bin/rails db:prepare`, then replace the CMD
+statement with:
+
+```
+CMD ["/bin/bash", "-c", "bin/rails db:prepare; bin/rails server"]
+```
+
+The issue here is that Dockerfiles are limited to one CMD statement.
+An alternative solution is to create a script (perhaps using a "here"
+document), and have the CMD run that script.
+
+The next time you deploy after this change you will start with
+a new database.  After that, all future deploys will use the
+same database.
+
+Before proceeding to the next step, run `flyctl volumes list` to
+find the volume id.  Delete the volume using `flyctl volumes delete`.
+Also remove the `DATABASE_URL` from the `[env]` section and
+delete the `[mounts]` section.
+
+## Changing the database to Postgresql
+
+Postgresql is an alternative to sqlite3.  To use it, you will need to
+install a library and a gem:
+
+  * Add `libpq-dev` to the `apt-get install` line.
+  * Add `--database postgresql` to the `rails new` line.
+
+Once again, knowing what libraries to install is a matter of knowing
+Debian conventions: [libps-dev](https://packages.debian.org/bullseye/libpq-dev).
+Digging deeper into the [filelist](https://packages.debian.org/bullseye/amd64/libpq-dev/filelist),
+there is one file, `libpq.so` that needs to be available at deploy time.
+
+One approach is to add a copy line:
+
+```
+COPY --from=build /usr/lib/x86_64-linux-gnu/ /usr/lib/x86_64-linux-gnu/
+```
+
+Another is to install something that includes it that might be needed anyway at deploy time,
+such as `postgresql-client`.  Since this will be on the deploy image the multi-stage build
+approach of install and copy only what you need needs to be reversed: install and remove
+what you don't need.  That's why you will often see lines like the following in Dockerfiles:
+
+```
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists /var/cache/apt/archives
+```
+
+Now you are ready to create a postgres cluster:
+
+```
+flyctl postgres create
+```
+
+When done, you will find a link to
+[This Is Not Managed Postgres ](https://fly.io/docs/postgres/getting-started/what-you-should-know/).  That information may be useful in the future so
+bookmark the link (or return back to this page), but Fly Postgres is
+fine for this demo.
+
+Your postgres app will be assigned a name if you didn't provide one.
+Find that name and then run:
+
+```
+flyctl postgres attach happy-store-1234
+```
+
+... replacing the name with the one assigned or selected by you. 
+
+Before proceeding, there is one more change that might be worth making.
+If you ever plan to scale up to multiple application machines it would
+be better to run `db:prepare` exactly once per deploy rather than once
+per vm.  You can accomplish this by adding the following to your `fly.toml`:
+
+```
+[deploy]
+  release_command = "bin/rails db:prepare"
+```
+
+Then restore the CMD line in your Dockerfile:
+
+```
+CMD bin/rails server
+```
+
+## Changing the database to MySQL
+
+[MySQL on Fly](https://fly.io/docs/app-guides/mysql-on-fly/)
+is more of a do it yourself kinda thing at the moment.  Follow that
+guide to set up a MySQL application.
+
+Once you have it up and running, the instructions are roughly
+the same as with postgresql, with the following modifications:
+
+  * On the rails new line, specify `--database mysql` instead of `--database postgresql`
+  * [default-libmysqlclient-dev](https://packages.debian.org/bullseye/default-libmysqlclient-dev) 
+    is the package containing the mysql libraries.
+  * [default-mysql-client](https://packages.debian.org/bullseye/default-mysql-client)
+    is the package containing the mysql client.
+  * Add the deploy release command to `fly.toml` from the postgresql instructions above.
+  * You need to run `fly secrets set DATABASE_URL=` in your
+    application.  For postgresql this is taken care of for you
+    by the `flyctl postgres attach` command.  This will look
+    something like the following:
+
+     ```
+     fly secrets set DATABASE_URL=mysql2://root:password@mysql-app-name.internal:3306/
+     ```
+
+## Recap
+
+* Adding databases require a lot of configuration:
+  * Much of the configuration involve actions outside your Dockerfile: i.e,
+    setting up volumes, secrets, virtual machines, etc.
+  * While Dockerfiles don't reduce the number of steps required, they do provide
+    a place where these actions can be captured concisely and reproducible executed.
+* Knowing what packages to add and where shared libraries are to be found is once again
+  requires more knowledge of operating system conventions (in this case Debian) than
+  Docker knowledge.
+
+## Downloads
+
+ * [sqlite3](./databases/Dockerfile1)
+ * [postgres](./databases/Dockerfile2)
+ * [mysql](./databases/Dockerfile3)

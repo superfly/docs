@@ -1,0 +1,91 @@
+---
+title: "Rails API-only Applications"
+layout: framework_docs
+order: 4
+status: beta
+---
+
+Rails [API-only](https://guides.rubyonrails.org/api_app.html) Applications
+are composed of two parts: a streamlined Rails server typically serving
+JSON responses, and a JavaScript client, typically using a framework
+such as React, Vue, or Angular.
+
+## Minimal Dockerfile
+
+Below is a Dockerfile that deploys a
+[Create React App](https://create-react-app.dev/) client with a
+Rails API server:
+
+
+```dockerfile
+<%= begin
+  dockerfile = IO.read(File.join(__dir__, 'api/Dockerfile1')).strip
+
+  dockerfile[%r{RUN node --version.*?EOF\n\n}m] = ''
+  dockerfile[%r{COPY --from=react /client/.node-version /demo.*EOF\n}m] =
+    "\nWORKDIR demo"
+
+  dockerfile
+end %>
+```
+
+Differences from a minimal Rails app:
+
+* A `react` build stage based on the `node:slim` image and consisting
+   of two `RUN` steps: one that creates a react app, and one that
+   builds it.
+* An `--api` flag is added to the `rails new` command.
+* A `COPY` statement copies the build artifacts to the demo application's
+  public directory.
+* `RAILS_SERVE_STATIC_FILES` is set to true.  This is necessary as
+  [`[[statics]]`](https://fly.io/docs/reference/configuration/#the-statics-sections)
+  won't find index.html files at the root.  Even so, adding a statics
+  section to the `toml` file is useful for the remainder of the bundled
+  assets:
+
+      ```
+      [[statics]]
+      guest_path = "/demo/public"
+      url_prefix = "/"
+      ```
+
+If the above is deployed you will see a spinning react logo.
+
+## Example
+
+Following is a example that demonstrates a React client working with
+a Rails API server.  First the React client:
+
+```dockerfile
+<%= begin
+  dockerfile = IO.read(File.join(__dir__, 'api/Dockerfile1'))
+  dockerfile[%r{RUN node --version.*?EOF\n}m].strip
+end %>
+```
+
+The above captures the node version into a file, and defines a React
+hook that fetches version information from the API server and
+renders the rotating React logo followed by this version information.
+
+Now the server implementation:
+
+```dockerfile
+<%= begin
+  dockerfile = IO.read(File.join(__dir__, 'api/Dockerfile1'))
+  dockerfile[%r{COPY --from=react /client/.node-version /demo.*EOF}m]
+end %>
+```
+
+This consists of an additional `COPY` statement to add the `.node-version`
+information to the image, and a controller that returns various
+version strings as a JSON object.
+
+## Recap
+
+From a Fly.io perspective what you have is a standard Rails application
+with an additional build step.  That build step bundles the client
+into static assets (HTML, CSS, and JavaScript).
+
+## Downloads
+
+ * [api example](./api/Dockerfile1)

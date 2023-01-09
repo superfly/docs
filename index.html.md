@@ -6,7 +6,7 @@ nav: firecracker
 ---
 
 <figure>
-  <img src="/public/images/docs-intro.jpg" srcset="/public/images/docs-intro@2x.jpg 2x" alt="">
+  <img src="/static/images/docs-intro.jpg" srcset="/static/images/docs-intro@2x.jpg 2x" alt="">
 </figure>
 
 Fly.io is a global application distribution platform. We run your code in [Firecracker](https://firecracker-microvm.github.io/) microVMs around the world.

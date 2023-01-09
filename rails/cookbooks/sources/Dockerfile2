@@ -1,0 +1,41 @@
+# syntax = docker/dockerfile:1
+
+ARG RUBY_VERSION=3.2.0
+
+FROM ruby:$RUBY_VERSION-slim as base
+
+ARG BUNDLER_VERSION=2.4.2
+ARG NODE_VERSION=19.3.0
+ARG YARN_VERSION=1.22.19
+
+ENV VOLTA_HOME=/usr/local
+
+FROM base as build
+
+RUN apt-get update &&\
+    apt-get install --yes build-essential git curl pkg-config
+
+RUN curl https://get.volta.sh | bash &&\
+    volta install node@$NODE_VERSION yarn@$YARN_VERSION
+
+RUN mkdir demo
+WORKDIR demo
+RUN gem install -N bundler -v ${BUNDLER_VERSION}
+COPY . .
+RUN bundle _${BUNDLER_VERSION}_ install
+RUN yarn install
+
+FROM base
+
+WORKDIR demo
+COPY --from=build $VOLTA_HOME/bin $VOLTA_HOME/bin
+COPY --from=build $VOLTA_HOME/tools $VOLTA_HOME/tools
+COPY --from=build /demo /demo
+COPY --from=build /usr/local/bundle /usr/local/bundle
+
+ENV RAILS_ENV=production
+ENV RAILS_LOG_TO_STDOUT=true
+# ENV RAILS_SERVE_STATIC_FILES=true
+RUN bin/rails assets:precompile
+ENV PORT=8080
+CMD bin/rails server

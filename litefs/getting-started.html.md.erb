@@ -8,172 +8,186 @@ toc: true
 
 <%= partial "partials/disclaimer" %>
 
-This tutorial will get you up and running with LiteFS on Fly.io. While using
-Fly.io is not required, it provides services such as Consul that make it easy
-to run LiteFS with minimal configuration. It should take you about 10 minutes
-to go through this tutorial.
+
+## Overview
+
+This guide will walk you through the steps to add LiteFS to your existing SQLite
+application. This guide is not specific to Fly.io. You can run LiteFS anywhere
+that runs Linux. Please see the [LiteFS Example Application guide](/docs/litefs/example)
+for a walkthrough of running LiteFS on Fly.io.
 
 
-## Prerequisites
+## Installing LiteFS
 
-First, you'll need to install [`flyctl`](/docs/hands-on/install-flyctl/).
-Then, either sign up or log in:
+### Dependencies
 
-```sh
-# Sign up for a new account.
-fly auth signup
-```
-
-```sh
-# Or sign in with an existing account.
-fly auth login
-```
-
-Once the CLI is ready, you'll need to download the [`litefs-example`](https://github.com/superfly/litefs-example)
-repository. The app will give you a simple Go & SQLite app that can utilize
-LiteFS' distributed database layer.
+The `litefs` binary is self-contained but you'll need to install the `fuse`
+library so LiteFS is able to mount a local file system. This installation
+depends on your package manager but some examples are:
 
 ```sh
-git clone https://github.com/superfly/litefs-example
-cd litefs-example
+# Install on Alpine
+$ apk add fuse
 ```
-
-## Deploying your app
-
-### Set up your Fly.io config
-
-Once you have the `litefs-example` repository downloaded, create a new `fly.toml`
-file in the root with the following contents:
-
-```toml
-[experimental]
-  enable_consul = true
-
-[[services]]
-  internal_port = 8080
-  protocol = "tcp"
-
-  [[services.ports]]
-    handlers = ["http"]
-    port = 80
-    force_https = true
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = "443"
-```
-
-This config will give you a Consul endpoint to use with LiteFS and it will
-configure your application so it's publicly visible over HTTPS.
-
-
-### Launching your app
-
-The next step is to launch & deploy your app with the following command:
 
 ```sh
-fly launch
+# Install on Ubuntu
+$ apt install fuse
 ```
 
-This will ask you a few questions such as if you want to use the `fly.toml` in
-the current directory. Go ahead and answer `"Y"` to that and choose a region.
-You'll also have the option to make a name for your application or have it
-randomly generated. Remember that application name for later.
 
-The application should build and deploy and you should see it up in running
-after a minute or so. You can go to `https://$APPNAME.fly.dev/` and see your
-application running live.
+### With Docker
+
+LiteFS is meant to run inside your container along side your application. You
+can pull in the `litefs` binary by copying it from the official Docker image:
+
+```Docker
+COPY --from=flyio/litefs:0.3 /usr/local/bin/litefs /usr/local/bin/litefs
+```
+
+If your `PATH` includes `/usr/local/bin` then you will be able to run LiteFS
+by simply calling `litefs` as your `CMD` or `ENTRYPOINT`.
 
 
-## Scaling up your app
+### Without Docker
 
-The application is a simple interface for generating fake people records. It's
-just for illustrating how LiteFS can easily replicate your data between nodes.
+If you're running on a Linux VPS without Docker, you can download the latest
+version from our [LiteFS releases page](https://github.com/superfly/litefs/releases).
+LiteFS can run on either `amd64` or `arm64` architectures.
 
-When you click the _"Generate Record"_ button, it will create that row in a
-local SQLite database that is running on a LiteFS file system. Any other node
-running LiteFS will automatically get those updates and apply them to their
-local copy of the database. That lets every node keep an exact copy of the same
-database.
 
-Right now we only have 1 instance of our application running in the region that
-you chose during launch. Let's add more regions in London (`lhr`) and
-Sydney (`syd`):
+## Configuring LiteFS
+
+Most configuration options for LiteFS are set via a YAML configuration file
+called `litefs.yml`. This file is typically placed in `/etc/litefs.yml` but
+you can change the path by using the `-config` flag.
+
+
+Let's first set two fields to tell LiteFS where to mount its file system and
+where to store its internal data.
+
+```yml
+# This directory is where your application will access the database.
+fuse:
+  dir: "/litefs"
+
+# This directory is where LiteFS will store internal data.
+# You must place this directory on a persistent volume.
+data:
+  dir: "/var/lib/litefs"
+```
+
+### Lease configuration
+
+LiteFS only allows a single node to be the _primary_ at any given time. The
+primary node is the only one that can write data to the database. The other
+nodes are called _replicas_ and they provide a read-only copy.
+
+The primary is determined by using a [_distributed lease_](https://martinfowler.com/articles/patterns-of-distributed-systems/time-bound-lease.html).
+There are two leasing modes in LiteFS: `"static"` & `"consul"`. Static leasing
+is simple as it sets a single node to always be the primary. The downside of
+this approach is that you will lose write availability if that node goes down.
+
+Consul leasing allows the primary to be moved dynamically if a primary goes
+down. We'll be using static leasing in this guide. You can find more information
+about configuring Consul leases in the [configuration reference](/docs/litefs/config).
+
+On the primary node, you'll need to configure your lease so that it is a
+_candidate_. Being a candidate means that it is able to acquire the lease.
+
+```yml
+lease:
+  type: "static"
+  candidate: true
+```
+
+On the replica nodes, you'll need to disable candidacy and set the primary's
+connection information:
+
+```yml
+lease:
+  type: "static"
+  candidate: false
+  hostname: "${PRIMARY_HOSTNAME}"
+  advertise-url: "http://${PRIMARY_HOSTNAME}:20202"
+```
+
+Replace the `${PRIMARY_HOSTNAME}` with the hostname of your primary node or set
+the `PRIMARY_HOSTNAME` environment variable to the primary's hostname.
+
+
+## Running LiteFS
+
+The main command used to start LiteFS is the `litefs mount` command. This mounts
+a FUSE file system (typically to `/litefs`) and then starts an API server for
+LiteFS nodes to communicate with each other.
+
+```
+litefs mount
+```
+
+### Running as a supervisor
+
+LiteFS can either be run on its own or it can act as a simple supervisor process
+for your application. Running as a supervisor lets LiteFS wait to start the
+application until after it has connected to the cluster.
+
+To run as a supervisor, specify your application's command line invocation 
+from the `exec` field in `litefs.yml`:
+
+```yml
+exec: "rails server"
+```
+
+or you can add it after a double dash on the command line:
 
 ```sh
-fly regions add lhr syd
+litefs mount -- rails server
 ```
 
-Now that we have the regions, we also need to scale the number of instances up:
+Once LiteFS is mounted, you can use SQLite clients or the `sqlite3` CLI to
+interact with databases on the mount directory:
+
+```
+sqlite3 /litefs/my.db
+```
+
+LiteFS only allows files in the root of the mount and it does not currently
+support subdirectories.
+
+
+## Importing your database
+
+If you have an existing database, you can import it using the `ltx import`
+command.
 
 ```sh
-fly scale count 3 --max-per-region=1
+ltx import -name my.db /path/to/database
 ```
 
-You can use `fly status` or `fly logs` to monitor for the new nodes to startup
-and join the cluster automatically.
+See the [`ltx import`](/docs/litefs/import) documentation for more details.
 
-LiteFS uses [Consul](https://www.consul.io/) to track the current primary node
-in the cluster. Other nodes will automatically find the primary on startup and
-connect to it and replicate from it. In the event that the primary node fails,
-it will lose its `"primary"` status and another node can become primary.
-
-The directory that LiteFS mounts on the file system provides a file called
-`.primary` that tells the application the hostname of the current primary node.
-The application can use this to redirect write requests to the primary node
-and the replica node can service any read-only requests.
+<div class="callout">
+  ❗️ **You should only interact with SQLite databases on LiteFS through
+  a SQLite client or through the `litefs` tooling. Do not use `cp` to copy a
+  database into place.**
+</div>
 
 
-## Watching real-time replication
+## Application development with LiteFS
 
-Fly.io will automatically connect you to the closest region in order to minimize
-latency. If you're in Europe, you'll connect to the `lhr` region. If you're in
-Australia, you'll connect to the `syd` region.
+LiteFS aims to be as transparent as possible, however, there are a few things
+your application needs to be aware of.
 
-However, we want to see that our data replicates to each region. For that, we've
-added a `region` query parameter to our application's logic. If you want to view
-the application from the `lhr` region, you can navigate to:
+First, you'll need to send all write requests to the primary node as that is the
+only node that can write to the database. With a static lease, this is
+straightforward since only one node will ever be the primary. If you use dynamic
+leasing with Consul, please see the documentation on
+[how to determine the current primary](/docs/litefs/primary).
 
-```
-https://$APPNAME.fly.dev?region=lhr
-```
-
-Replication in LiteFS is fast though so let's set up real-time updates using the
-[`watch`](https://linux.die.net/man/1/watch) command in our terminal. If you're
-using macOS, you may need to install it using `brew install watch`.
-
-The `watch` command will continuously run a subcommand and display its output
-until we stop it with `CTRL-C`.
-
-We'll be running a cURL command to continuously fetch our app's data every 100ms
-so we can see updates as they happen. Open a new terminal window for each of
-your regions and run the following (except change the "region" at the end):
-
-```sh
-watch -n 0.1 "curl -s -H 'Accept: text/plain' https://${APPNAME}.fly.dev?region=lhr"
-```
-
-Now, when you click on the _"Generate Record"_ in your browser, you should see
-your other nodes update with new data almost instantly. The time to update is
-approximately the ping time. For example, a ping from London to Sydney is
-around 250ms.
-
-
-### Safety & Persistence
-
-By default, Fly.io runs ephemeral instances which means that all data is deleted
-when the instance is shutdown. Since we have multiple instances running and
-replicating, data is automatically copied between nodes during a rolling restart
-so it appears that our cluster has persistence.
-
-However, in the event that all nodes shutdown at the same time, the database
-would be lost. That's no good.
-
-To protect against this, you're encouraged to use volumes. This allows nodes to
-retain their data between restarts. Please see the [Volumes](/docs/reference/volumes/)
-documentation for more information.
-
-Additionally, you'll need to set the `data-dir` in the `litefs.yml` configuration
-file to point to your mount directory for your volume.
-
+Second, you'll need to handle consistency if you writing to the primary and
+reading from a replica. It's possible to write to the primary and then issue a
+read request to a replica before the change has been propagated to the replica
+node. Please see the documentation on [tracking replication position](/docs/litefs/position)
+for ways to handle consistency.
 

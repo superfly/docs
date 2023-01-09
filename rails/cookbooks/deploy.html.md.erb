@@ -1,0 +1,86 @@
+---
+title: "Optimizing your deployment"
+layout: framework_docs
+order: 12
+status: beta
+---
+
+Before proceeding, you are encouraged to read (or at least skim) the excellent
+docs Fly.io provides for
+[Scaling and Autoscaling](https://fly.io/docs/reference/scaling/).  Getting
+the right sized machine close to your users may be enough.
+
+Once you have settled on a machine configuration, there are a number of things
+you can do to get the most out of that machine.  For each item below it is
+worth benchmarking the results of the change with your application because,
+as they say, your mileage may vary.
+
+## Jemalloc
+
+Memory allocation is key to performance, and
+[jemalloc](http://jemalloc.net/) is an alternative malloc implementation.
+
+Enabling it is a matter of adding the following to your Dockerfile:
+
+```
+RUN apt-get install libjemalloc2
+ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2
+ENV MALLOC_CONF=dirty_decay_ms:1000,narenas:2,background_thread:true
+```
+
+## YJIT
+
+A "Just In Time" compiler can make your application run faster.
+Starting with Ruby 3.1,
+[YJIT](https://github.com/Shopify/yjit) has been included in
+the official Ruby release sources.  Using it requires a build
+time option and enabling at runtime.
+
+Unfortunately, at the present time, the official Ruby docker
+image for 3.2.0 does not support YJIT
+([Issue #401](https://github.com/docker-library/ruby/issues/401)).
+
+Fortunately, [Fullstaq Ruby](https://fullstaqruby.org/) does,
+and images can be found on
+[Quay.io](https://quay.io/repository/evl.ms/fullstaq-ruby?tab=tags&tag=latest).
+
+```dockerfile
+ARG RUBY_VERSION=3.2.0
+ARG VARIANT=bullseye-slim
+FROM quay.io/evl.ms/fullstaq-ruby:${RUBY_VERSION}-${VARIANT} as base
+ENV RUBY_YJIT_ENABLE=1
+```
+
+You can set `VARIANT` to `jemalloc-bullseye-slim` to include jemalloc.
+
+For those that would prefer to just get a yjit enabled ruby without
+changing the base image, try either [rvm](https://rvm.io/) or
+[rbenv](https://github.com/rbenv/rbenv) which will install yjit
+by default if rustc is available.
+
+## Enabling swap
+
+While RAM is always faster, not everything that is loaded into RAM needs 
+equal treatment.  Enabling swap can allow less frequently used regions
+of memory to be moved out to disk (which these days is SSD).  Running
+the following commands at runtime will enable swap:
+
+```
+fallocate -l 512M /swapfile
+chmod 0600 /swapfile
+mkswap /swapfile
+echo 10 > /proc/sys/vm/swappiness
+swapon /swapfile
+echo 1 > /proc/sys/vm/overcommit_memory
+```
+
+The way to incorporate these commands into your deploy is to change
+the CMD (or ENTRYPOINT) of your Dockerfile to run either a rake task 
+or shell script which runs these commands then starts your server.
+
+## Recap
+
+While the number of "one size fits all" deployment optimizations are few and
+far between, testing out a new configuration is generally a matter of adding
+a few lines to a Dockerfile and deploying it.  This makes it easy to experiment
+and find the combination that is right for your application.

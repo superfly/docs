@@ -6,7 +6,7 @@ nav: firecracker
 ---
 
 <figure>
-  <img src="/public/images/docs-guide.jpg" srcset="/public/images/docs-guide@2x.jpg 2x" alt="">
+  <img src="/static/images/docs-guide.jpg" srcset="/static/images/docs-guide@2x.jpg 2x" alt="">
 </figure>
 
 This section of the Fly docs is all about getting you up and running quickly.

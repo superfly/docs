@@ -113,6 +113,19 @@ jobs:
           ${{ runner.os }}-mix-${{ env.cache-name }}-
           ${{ runner.os }}-mix-
 
+    # Step: Conditionally bust the cache when job is re-run.
+    # Sometimes, we may have issues with incremental builds that are fixed by
+    # doing a full recompile. In order to not waste dev time on such trivial
+    # issues (while also reaping the time savings of incremental builds for
+    # *most* day-to-day development), force a full recompile only on builds
+    # that are retried.
+    - name: Clean to rule out incremental build as a source of flakiness
+      if: github.run_attempt != '1'
+      run: |
+        mix deps.clean --all
+        mix clean
+      shell: sh
+
     # Step: Download project dependencies. If unchanged, uses
     # the cached version.
     - name: Install dependencies
@@ -141,7 +154,7 @@ either from directly pushing to the `main` branch or after merging a PR into the
 `main` branch.
 
 This workflow is also configured to run checks on PR branches that target the
-`main` branch. This is where it's most helpful. We can work on a fix or a new
+`main` branch. This is where it is most helpful. We can work on a fix or a new
 feature in a branch and as we work and push our code up, it automatically runs
 the full gamut of checks we want.
 
@@ -196,6 +209,36 @@ how to clear them. In our project, go to Actions > (Sidebar) Management >
 Caches. This is the list of caches saved for the project. We can use our naming
 format to identify which cache file is for what.
 
+### Retrying Failed Builds
+
+We cache aggressively because we want the productivity benefits that incremental
+compiles bring the team. However, on occasion, incremental builds can fail. The
+quick fix is to perform a full recompile.
+
+The following step from our CI pipeline does this for us.
+
+```yaml
+    # Step: Conditionally bust the cache when job is re-run.
+    # Sometimes, we may have issues with incremental builds that are fixed by
+    # doing a full recompile. In order to not waste dev time on such trivial
+    # issues (while also reaping the time savings of incremental builds for
+    # *most* day-to-day development), force a full recompile only on builds
+    # that are retried.
+    - name: Clean to rule out incremental build as a source of flakiness
+      if: github.run_attempt != '1'
+      run: |
+        mix deps.clean --all
+        mix clean
+      shell: sh
+```
+
+If this is not the first run attempt, meaning we are re-running the job, then it
+busts our cache by cleaning out the `deps` and `_build` directories.
+
+This compromise works well. Most of the time, we get fast checks and, where
+there is a problem, we only need to retry the failed task to force a clean
+build.
+
 ### Additional Resources
 
 - [Documentation: Caching dependencies to speed up workflows](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)
@@ -203,6 +246,9 @@ format to identify which cache file is for what.
 - [erlef/setup-beam](https://github.com/erlef/setup-beam) - Set up your BEAM-based GitHub Actions workflow (Erlang, Elixir, and more)
   - See project for settings and ENV options
   - [Elixir setup action - Archived](https://github.com/actions/setup-elixir#phoenix-example) - Includes helpful examples like setting up the Postgres service database.
+- [Felt blog: Taking Hashrocket's "Ultimate Elixir CI" to the Next Level](https://felt.com/blog/hashrocket-ultimate-elixir-to-the-next-level)
+  - [felt/ultimate-elixir-ci](https://github.com/felt/ultimate-elixir-ci) - Good examples on CI setup with explanations.
+  - [Source for cleaning out incremental builds on retry](https://github.com/felt/ultimate-elixir-ci/blob/main/.github/actions/elixir-setup/action.yml#L97)
 
 ## Continuous Deployment (CD)
 

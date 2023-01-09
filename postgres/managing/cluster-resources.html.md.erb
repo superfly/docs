@@ -1,0 +1,44 @@
+---
+title: Check Provisioned Resources
+objective: See what platform resources you have provisioned for your Postgres cluster
+layout: framework_docs
+order: 100
+---
+
+<%= partial "../partials/for-machines" %>
+
+## Instances
+
+Get an overview of the app, including a list of its VM instances with Machine IDs: 
+
+```cmd
+fly status --app <pg-app-name>
+``` 
+
+## VM Scale
+
+List more details about an individual Machine:
+
+```cmd
+fly machine status <machine-id> --app <pg-app-name>
+``` 
+
+From this information you can get the scale of the VM (both `Memory` and `CPUs`), and the ID of its attached [Fly Volume](/docs/reference/volumes/).
+
+## Provisioned Volume Size
+
+You can check the sizes of all the storage volumes provisioned for your Postgres App with
+
+```cmd
+fly vol list --app <pg-app-name>
+```
+
+## Public Anycast IP Addresses
+
+If you've configured your Postgres cluster to be reachable by external services, you'll have provisioned at least one public anycast IP address. You can check these with
+
+```cmd
+fly ips list --app <pg-app-name>
+```
+
+Pricing for all resources can be found at https://fly.io/pricing.
