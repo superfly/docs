@@ -2,7 +2,7 @@
 title: Cookbooks
 layout: framework_docs
 order: 4
-status: alpha
+status: beta
 ---
 
 It is official.  Rails 7.1 will have
