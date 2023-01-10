@@ -10,6 +10,7 @@ flyctl machine clone <id> [flags]
 
 ~~~
   -a, --app string             Application name
+      --attach-volume string   Existing volume to attach to the new machine
   -c, --config string          Path to application configuration file
       --from-snapshot string   Clone attached volumes and restore from snapshot, use 'last' for most recent snapshot. The default is an empty volume
   -h, --help                   help for clone
