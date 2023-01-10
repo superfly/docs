@@ -48,7 +48,7 @@ fly-prefer-region: ams
 ## Example use cases
 
 Here are a few examples that should clarify the behavior of these features.
-### Replaying writes in secondary regions
+### Replay writes in secondary regions
 
 Fly.io Postgres supports [global read replicas](/docs/postgres/high-availability-and-global-replication) for speeding up reads in regions close to users.
 
