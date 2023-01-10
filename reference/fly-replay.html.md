@@ -77,7 +77,7 @@ fly-replay: instance=00bb33ff
 
 ### Passing state to replay targets
 
-Request replay targets may need to know why the request was routed to it.
+The request replay target may need to know why the request was routed to it.
 ```
 fly-replay: region=sjc;state=captured_write
 ```
