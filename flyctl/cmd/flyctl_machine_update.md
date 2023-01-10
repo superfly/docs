@@ -21,7 +21,7 @@ flyctl machine update [machine_id] [flags]
       --kernel-arg strings   List of kernel arguments to be provided to the init. Can be specified multiple times.
       --memory int           Memory (in megabytes) to attribute to the machine
   -m, --metadata strings     Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
-  -p, --port strings         Exposed port mappings (format: edgePort[:machinePort]/[protocol[:handler]])
+  -p, --port strings         Exposed port mappings (format: (edgePort|startPort-endPort)[:machinePort]/[protocol[:handler]])
       --schedule string      Schedule a machine run at hourly, daily and monthly intervals
   -s, --size string          Preset guest cpu and memory for a machine, defaults to shared-cpu-1x
       --skip-health-checks   Updates machine without waiting for health checks.
