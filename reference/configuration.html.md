@@ -255,6 +255,8 @@ This example defines an HTTP handler on port 80.
 * `handlers` : An array of strings, each string selecting a handler process to terminate the connection with at the edge. Here, the `http` handler will accept HTTP traffic and pass it on to the `internal_port` of the application, which we defined in the `services` section above.
   For the list of available handlers, and how they manage network traffic, see the [Public Network Services documentation](/docs/reference/services/).
 * `port` : An integer representing the external port to listen on (ports 1-65535).
+* `start_port` : For a port range, the first port to listen on.
+* `end_port` : For a port range, the last port to listen on.
 * `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
 
 You can have more than one `services.ports` section. The default configuration, for example, contains two. We've already seen one above. The second one defines an external port 443 for secure connections, using the `tls` handler.
@@ -273,6 +275,15 @@ For UDP applications, make sure to bind the application to the same port as defi
   protocol = "udp"
   [[services.ports]]
     port = 5000
+```
+
+Instead of using multiple port definitions, you can specify a range of ports. For example, the configuration below will listen on the ports `8080`, `8081`, `8082`, `8083`, `8084` and `8085`:
+
+```toml
+[[services.ports]]
+  handlers = ["tls"]
+  start_port = 8080
+  end_port = 8085
 ```
 
 #### `services.ports.tls_options`
