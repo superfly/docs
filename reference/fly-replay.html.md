@@ -75,7 +75,7 @@ Replay the request to a specific VM by ID:
 fly-replay: instance=00bb33ff
 ```
 
-### Passing state to replay targets
+### Pass state to replay targets
 
 The request replay target may need to know why the request was routed to it.
 ```
