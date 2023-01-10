@@ -68,7 +68,7 @@ To send the request to an instance of a different app in the same organization, 
 fly-replay: app=app-in-same-org
 ```
 
-### Replaying requests to specific VMs
+### Replay requests to specific VMs
 
 Replay the request to a specific VM by ID:
 ```
