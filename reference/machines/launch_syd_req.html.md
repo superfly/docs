@@ -1,13 +1,14 @@
-```
-curl -i -X POST \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "http://${FLY\_API\_HOSTNAME}/v1/apps/user-functions/machines" \\
-  -d '{
+```sh
+curl -i -X POST \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" \
+    -H "Content-Type: application/json" \
+    "http://${FLY_API_HOSTNAME}/v1/apps/user-functions/machines" \
+    -d '{
       "name": "machine-syd",
       "config": {
         "image": "flyio/fastify-functions",
         "env": {
-          "APP\_ENV": "production"
+          "APP_ENV": "production"
         },
         "services": [
           {
@@ -27,12 +28,12 @@ curl -i -X POST \\
               }
             ],
             "protocol": "tcp",
-            "internal\_port": 8080
+            "internal_port": 8080
           }
         ]
       },
       "region": "syd"
     }'
-
 ```
+
 **Status: 200**

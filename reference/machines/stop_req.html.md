@@ -1,7 +1,8 @@
+```sh
+curl -i -X POST \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" \
+    -H "Content-Type: application/json" \
+    "http://${FLY_API_HOSTNAME}/v1/apps/user-functions/machines/73d8d46dbee589/stop"
 ```
-curl -i -X POST \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "http://${FLY\_API\_HOSTNAME}/v1/apps/user-functions/machines/73d8d46dbee589/stop" 
 
-```
 **Status: 200**

@@ -1,6 +1,5 @@
-
 ```json
 {
-  "previous\_state": "stopped"
+  "previous_state": "stopped"
 }
 ```

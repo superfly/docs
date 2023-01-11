@@ -1,11 +1,11 @@
-```
-curl -i -X POST \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "http://${FLY\_API\_HOSTNAME}/v1/apps" \\
+```sh
+curl -i -X POST \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+    "http://${FLY_API_HOSTNAME}/v1/apps" \
   -d '{
-      "app\_name": "user-functions",
-      "org\_slug": "personal"
+      "app_name": "user-functions",
+      "org_slug": "personal"
     }'
-
 ```
+
 **Status: 201**

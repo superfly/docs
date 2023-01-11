@@ -1,4 +1,3 @@
-
 ```json
 [
   {
@@ -6,11 +5,11 @@
     "name": "quirky-machine",
     "state": "started",
     "region": "cdg",
-    "instance\_id": "01G3SHPT434MNW8TS4ENX11RQY",
-    "private\_ip": "fdaa:0:3ec2:a7b:5adc:6068:5b85:2",
+    "instance_id": "01G3SHPT434MNW8TS4ENX11RQY",
+    "private_ip": "fdaa:0:3ec2:a7b:5adc:6068:5b85:2",
     "config": {
       "env": {
-        "APP\_ENV": "production"
+        "APP_ENV": "production"
       },
       "init": {
         "exec": null,
@@ -19,23 +18,21 @@
         "tty": false
       },
       "image": "flyio/fastify-functions:latest",
-      "metadata": {
-      },
+      "metadata": {},
       "restart": {
         "policy": "",
-        "max\_retries": 3
+        "max_retries": 3
       },
       "size": "shared-cpu-1x"
     },
-    "image\_ref": {
+    "image_ref": {
       "registry": "registry-1.docker.io",
       "repository": "flyio/fastify-functions",
       "tag": "latest",
       "digest": "sha256:e15c11a07e1abbc50e252ac392a908140b199190ab08963b3b5dffc2e813d1e8",
-      "labels": {
-      }
+      "labels": {}
     },
-    "created\_at": "2022-05-23T22:48:21Z"
+    "created_at": "2022-05-23T22:48:21Z"
   }
 ]
 ```
