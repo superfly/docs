@@ -314,7 +314,7 @@ You are now connected to database "<database_name_created>" as user "<user>".
 ## _Laravel with Redis in Fly.io_
 [Redis](https://redis.io/) is a NoSQL database popularly used for cache storage, as a message broker, and even as primary database. Through this section you'll learn how to:
 <ol>
-  <li>Setup using the Fly.io Redis Docker Image<li>
+  <li>Setup using the Fly.io Redis Docker Image</li>
   <li>Setup using the Official Redis Docker Image</li>
 </ol>
 
@@ -497,6 +497,7 @@ To test whether your Laravel Fly App can successfully connect with your Upstash 
 
 <ol>
 <li>
+
 Revise the `[env]` configuration in your Laravel Fly App's `fly.toml` file:
 ```toml
 [env]
@@ -506,11 +507,12 @@ Revise the `[env]` configuration in your Laravel Fly App's `fly.toml` file:
   REDIS_CACHE_DB=0
 ```
 <ul>
-<li>Set the Laravel cache driver to redis</li>
-<li>Using `REDIS_URL` should override `REDIS_HOST`, add here the `REDIS_URL` received during `fly redis create`</li>
-<li>Upstash only supports "database 0", so update your `REDIS_CACHE_DB` config to 0. Otherwise, you will receive an error : "SELECT` failed: ERR Only 0th database is supported! Selected DB: 1..."</li>
+  <li>Set the Laravel cache driver to redis</li>
+  <li>Using `REDIS_URL` should override `REDIS_HOST`, add here the `REDIS_URL` received during `fly redis create`</li>
+  <li>Upstash only supports "database 0", so update your `REDIS_CACHE_DB` config to 0. Otherwise, you will receive an error : "SELECT` failed: ERR Only 0th database is supported! Selected DB: 1..."</li>
 </ul>
 </li>
+<br />
 <li>
 Then deploy your `fly.toml` changes:
 ```cmd
@@ -559,7 +561,7 @@ fly volumes create storage_vol --region ams --size 20 #GB
 </li>
 
 <li>
-3) Revise your Laravel Fly App's `fly.toml` file to mount the volume created for your storage directory, and connect with an sqlite database you'll be configuring further down below:
+Revise your Laravel Fly App's `fly.toml` file to mount the volume created for your storage directory, and connect with an sqlite database you'll be configuring further down below:
 
 ```
 [env]
@@ -584,10 +586,11 @@ To fix the little storage-content-erasure issue, please go ahead and make a copy
 ```cmd
 cp -r storage storage_
 ```
-<small>
- You'll later use this folder to copy over its contents to the volumized storage folder.
-</small>
+You'll later use this folder to copy over its contents to the volumized storage folder.
+<br />
+
 </li>
+
 <li>
 Next create a [Startup Script](/docs/laravel/the-basics/customizing-deployments/) that will initialize the volumized storage folder's contents.
 
@@ -616,7 +619,7 @@ So what happened above?
 <li>The first condition statement checks if the app folder does not exist in the volumized storage folder. If it does not exist, it copies over the contents of the storage_ folder to the volumized storage folder.</li>
 <li>The second condition statement checks if the database folder does not exist in the volumized storage folder. If it does not exist, it creates a database directory inside storage/ and finally creates a database.sqlite file in the storage/database folder</li>
 </ul>
-
+<br />
 </li>
 
 <li>
