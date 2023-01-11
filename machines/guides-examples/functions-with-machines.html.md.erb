@@ -42,7 +42,7 @@ Allocate an IP address to the app. This makes our app accessible at the IP, and 
 
 ```cmd
 fly ips allocate-v4 -a user-functions
-````
+```
 
 ## Launch a new machine
 
@@ -89,6 +89,7 @@ Now we have a couple machines running, we can use `fly logs -a user-functions` t
 ```cmd
 fly status -a user-functions
 ```
+
 ```out
 App
   Name     = user-functions
@@ -123,13 +124,13 @@ Standard `flyctl` operations like `deploy`, `scale`, `autoscaling` aren't curren
 
 `ssh` is supported. You can SSH to a machine using its IPv6 address (from `fly machines list`):
 
-```
+```cmd
 fly ssh console '[fdaa:0:6787:a7b:a15f:1a8c:2c01:2]'
 ```
 
 Or you can select a machine to connect to from a list using `fly ssh console -s`:
 
-```
+```cmd
 fly ssh console -a user-functions -s
 ? Select instance:  [Use arrows to move, type to filter]
 > sjc (fdaa:0:6787:a7b:a15f:ee6a:3882:2)

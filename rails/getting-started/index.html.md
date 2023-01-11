@@ -26,7 +26,7 @@ Before proceeding, something to be aware of. While Rails is [Optimized for Progr
 The command to be used to address this is:
 
 <div style="margin: 0 0 1em 2em">
-```fly scale vm shared-cpu-1x --memory 512```
+`fly scale vm shared-cpu-1x --memory 512`
 </div>
 
 While this does take you beyond what is offered with the free offering, the current
@@ -135,7 +135,7 @@ That's it!  You are up and running!  Wasn't that easy?
 If you have seen enough and are eager to get started, feel free to
 skip ahead to the [Recap](#recap) where you will see some tips.
 
-For those that want to dig in deeper, let`s make the application a bit more
+For those that want to dig in deeper, let's make the application a bit more
 interesting.
 
 ## Scaffold to Success

@@ -424,7 +424,8 @@ Fields are very similar to `[[services.checks]]`:
 
 Known issues:
 * Running multiple processes in this way is not compatible with autoscaling.
-* Unexpected behavior with regions may arise if you use a `[processes]` block and then delete it.</div>
+* Unexpected behavior with regions may arise if you use a `[processes]` block and then delete it.
+</div>
 
 The `processes` section allows you to run multiple processes. This way you can define one application, but run it multiple times.
 

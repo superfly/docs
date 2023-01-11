@@ -8,10 +8,6 @@ No application is complete without a data store!
 
 In this guide, you'll find references on how to connect your Laravel application to Databases running as Fly Apps or as managed solutions from services that suite global distribution of data.
 
-<p></p>
-
-</aside> 
-
 ## _Laravel Database Migrations_
 
 <aside class="callout">
@@ -315,15 +311,12 @@ You are now connected to database "<database_name_created>" as user "<user>".
 <database_name_created>=# \d
 ```
 
-
-
-
 ## _Laravel with Redis in Fly.io_
 [Redis](https://redis.io/) is a NoSQL database popularly used for cache storage, as a message broker, and even as primary database. Through this section you'll learn how to:
-  <ol>
-    <li>Setup using the Fly.io Redis Docker Image<li>
-    <li>Setup using the Official Redis Docker Image</li>
-  </ol>
+<ol>
+  <li>Setup using the Fly.io Redis Docker Image<li>
+  <li>Setup using the Official Redis Docker Image</li>
+</ol>
 
 ### _Setup using the Fly.io Redis Docker Image_
 1) First create a new directory and initialize it with `fly launch`, using [Fly.io's Redis Image](https://hub.docker.com/r/flyio/redis/tags) for the build:
@@ -502,7 +495,9 @@ If you have redis-cli installed, use fly redis connect to connect to your databa
 ### _Connect From a Laravel Fly App_
 To test whether your Laravel Fly App can successfully connect with your Upstash Redis database, you can use your Upstash Redis Fly App as your Cache driver, then perform a quick cache:clear command.
 
-1) Revise the `[env]` configuration in your Laravel Fly App's `fly.toml` file:
+<ol>
+<li>
+Revise the `[env]` configuration in your Laravel Fly App's `fly.toml` file:
 ```toml
 [env]
   ...
@@ -515,8 +510,9 @@ To test whether your Laravel Fly App can successfully connect with your Upstash 
 <li>Using `REDIS_URL` should override `REDIS_HOST`, add here the `REDIS_URL` received during `fly redis create`</li>
 <li>Upstash only supports "database 0", so update your `REDIS_CACHE_DB` config to 0. Otherwise, you will receive an error : "SELECT` failed: ERR Only 0th database is supported! Selected DB: 1..."</li>
 </ul>
-
-2) Then deploy your `fly.toml` changes:
+</li>
+<li>
+Then deploy your `fly.toml` changes:
 ```cmd
 fly deploy
 ```
@@ -544,21 +540,25 @@ If all goes well here, you should be good to go!
 This guide walks through a single instance of your Laravel Fly App running with SQLite as its main database. For a multi-region setup, do check our guide [here](/docs/laravel/advanced-guides/global-sqlite-litefs/). 
 
 <b>Since SQLite is "embeddable", we no longer have to setup a separate Fly App for it. We simply configure our Laravel Fly App with one:</b>
-
-
-1) Make sure you are in your Laravel Fly App's directory
+</li>
+</ol>
+<ol>
+<li>
+Make sure you are in your Laravel Fly App's directory
 
 ```cmd
 cd <laravel-fly-configured-app>
 ```
-
-2) Create a volume, you'll be attaching this later to your Laravel Fly App's storage directory 
+</li>
+<li>
+Create a volume, you'll be attaching this later to your Laravel Fly App's storage directory 
 
 ```cmd
 fly volumes create storage_vol --region ams --size 20 #GB
 ```
+</li>
 
-
+<li>
 3) Revise your Laravel Fly App's `fly.toml` file to mount the volume created for your storage directory, and connect with an sqlite database you'll be configuring further down below:
 
 ```
@@ -577,7 +577,9 @@ fly volumes create storage_vol --region ams --size 20 #GB
 
 <%= partial "docs/laravel/partials/volume_storage_warning" %>
 
-3) To fix the little storage-content-erasure issue, please go ahead and make a copy of your storage folder in a "backup" folder. You can name this directory "storage_".
+</li>
+<li>
+To fix the little storage-content-erasure issue, please go ahead and make a copy of your storage folder in a "backup" folder. You can name this directory "storage_".
 
 ```cmd
 cp -r storage storage_
@@ -585,8 +587,9 @@ cp -r storage storage_
 <small>
  You'll later use this folder to copy over its contents to the volumized storage folder.
 </small>
-
-4) Next create a [Startup Script](/docs/laravel/the-basics/customizing-deployments/) that will initialize the volumized storage folder's contents.
+</li>
+<li>
+Next create a [Startup Script](/docs/laravel/the-basics/customizing-deployments/) that will initialize the volumized storage folder's contents.
 
 <%= partial "docs/laravel/partials/volume_storage_script" %>
 
@@ -614,7 +617,10 @@ So what happened above?
 <li>The second condition statement checks if the database folder does not exist in the volumized storage folder. If it does not exist, it creates a database directory inside storage/ and finally creates a database.sqlite file in the storage/database folder</li>
 </ul>
 
-5) Finally, deploy your Laravel Fly App!
+</li>
+
+<li>
+Finally, deploy your Laravel Fly App!
 
 ```cmd
 fly deploy
@@ -626,4 +632,5 @@ A simple php artisan migrate should let you know if all is well:
 ```cmd
 fly ssh console -C "php /var/www/html/artisan migrate --force"
 ```
-
+</li>
+</ol>
