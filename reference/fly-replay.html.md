@@ -23,32 +23,8 @@ The content of the `fly-replay` header fields tells our proxy which magic to per
 |`state` | Optional arbitrary string to include in the `fly-replay-src` header appended to the request being replayed. |
 |`elsewhere` | Boolean. If `true`, the responding instance will be excluded from the next round of load-balancing. |
 
-## The `fly-replay-src` request header
-
-Our proxy appends a header, `fly-replay-src`, to the replayed HTTP request, with information about the instance that sent the `fly-replay`.
-
-|Field |Description |
-|---|---|
-|`instance` | The ID of the instance emitting `fly-replay`. |
-|`region` | The region `fly-replay` was sent from. |
-|`t` | A timestamp: microseconds since the Unix epoch. |
-|`state` | The contents of the `state` supplied by the `fly-replay` header, if any. |
-
-## The `fly-prefer-region` request header
-
-Clients accessing Fly.io apps may append the `fly-prefer-region` header to attempt sending the request directly to a desired target region. This is useful for cases where `fly-replay` isn't practical, such as large file uploads which can't be replayed once buffered by the proxy.
-
-If the target regions hosts no healthy instances, the nearest region with healthy instances will field the request.
-
-Example:
-```
-fly-prefer-region: ams
-```
-
-## Example use cases
-
-Here are a few examples that should clarify the behavior of these features.
-### Replay writes in secondary regions
+Here are a few example use cases for the `fly-replay' response header.
+### Replaying writes in secondary regions
 
 Fly.io Postgres supports [global read replicas](/docs/postgres/high-availability-and-global-replication) for speeding up reads in regions close to users.
 
@@ -90,3 +66,25 @@ fly-replay: region=sjc;app=app-in-same-org
 Some combinations of fields can conflict: e.g. don't specify an app name and an instance ID that doesn't belong to that app.
 
 Related: [Multi-region PostgreSQL](/docs/postgres/high-availability-and-global-replication); [Run Ordinary Rails Apps Globally](/blog/run-ordinary-rails-apps-globally/)
+
+## The `fly-replay-src` request header
+
+Our proxy appends a header, `fly-replay-src`, to the replayed HTTP request, with information about the instance that sent the `fly-replay`.
+
+|Field |Description |
+|---|---|
+|`instance` | The ID of the instance emitting `fly-replay`. |
+|`region` | The region `fly-replay` was sent from. |
+|`t` | A timestamp: microseconds since the Unix epoch. |
+|`state` | The contents of the `state` supplied by the `fly-replay` header, if any. |
+
+## The `fly-prefer-region` request header
+
+Clients accessing Fly.io apps may append the `fly-prefer-region` header to attempt sending the request directly to a desired target region. This is useful for cases where `fly-replay` isn't practical, such as large file uploads which can't be replayed once buffered by the proxy.
+
+If the target regions hosts no healthy instances, the nearest region with healthy instances will field the request.
+
+Example:
+```
+fly-prefer-region: ams
+```
