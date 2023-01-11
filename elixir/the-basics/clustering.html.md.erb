@@ -4,7 +4,9 @@ layout: framework_docs
 order: 4
 redirect_from:
   - /docs/app-guides/elixir-static-cookie/
+  - /docs/elixir/getting-started/clustering/
 blog_path: /phoenix-files
+objective: Cluster your erlang nodes into a single distributed network!
 ---
 
 Elixir and the BEAM have the incredible ability to be clustered together and
