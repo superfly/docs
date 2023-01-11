@@ -47,6 +47,8 @@ The output ends with instructions for configuring the database and starting the 
 
 <%= partial "docs/languages-and-frameworks/partials/launch_with_postgres", locals: { detected: "Phoenix", app_name: "hello_elixir" } %>
 
+To recap the `fly launch` command detected that we are using Phoenix, setup a Fly app, created a Postgres instance and configured it for us, updated our Dockerfile, and created special modules and scripts to run ecto migrations for us!
+
 ### Storing secrets on Fly.io
 
 You may also have some secrets you'd like set on your app.
