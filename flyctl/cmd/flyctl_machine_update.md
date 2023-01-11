@@ -13,6 +13,7 @@ flyctl machine update [machine_id] [flags]
       --build-nixpacks       Build your image with nixpacks
   -c, --config string        Path to application configuration file
       --cpus int             Number of CPUs
+      --detach               Return immediately instead of monitoring deployment progress
       --dockerfile string    Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
       --entrypoint string    ENTRYPOINT replacement
   -e, --env strings          Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
