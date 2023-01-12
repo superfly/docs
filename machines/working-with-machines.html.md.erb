@@ -144,12 +144,14 @@ The only required parameter is `image` in the `config` object. Other parameters:
   - `ports`: An array of objects defining the service's ports and associated handlers. Options:
       + `port`: Public-facing port number
       + `handlers`: Array of [connection handlers](https://fly.io/docs/reference/services/#connection-handlers) for TCP-based services.
-* `processes`: An optional array of objects defining multiple processes to run within a VM
+
+* `processes`: An optional array of objects defining multiple processes to run within a VM. The Machine will stop if *any* process exits without error.
   - `name`: Process name
   - `entrypoint`: An array of strings. The process that will run
   - `cmd`: An array of strings. The arguments passed to the entrypoint
   - `env`: An object filled with key/value pairs to be set as environment variables
   - `user`: An optional user that the process runs under
+
 * `schedule`: Optionally one of `hourly`, `daily`, `weekly`, `monthly`. Runs machine at the given interval. Interval starts at time of machine creation
 
 * `mounts`: An array of objects that reference previously created [persistent volumes](https://fly.io/docs/reference/volumes/). Currently, you may only mount *one volume* per VM.
