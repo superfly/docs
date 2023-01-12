@@ -46,6 +46,31 @@ With a working Dockerfile, we can spin this up with `flyctl apps create`, then d
 
 Now, some options to actually run this stuff:
 
+### Use Process Groups
+
+We've had the notion of [named process groups](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) around for a bit. You can run define multiple processes in your `fly.toml`, giving each a name.
+
+You can see that in action in the below (truncated) `fly.toml` file:
+
+```toml
+[processes]
+web = "/app/server"
+bar_web = "/app/server -bar"
+
+[[services]]
+  processes = ["web"] # this service only applies to the web process
+  http_checks = []
+  internal_port = 8080
+  protocol = "tcp"
+  script_checks = []
+```
+
+Here we define two processes `web` and `bar_web`. Both defined processes will run into your VM!
+
+Note that under the `[[services]]` section, we define a service for process `web`. The `processes = [...]` section is like a filter - it will apply only to the processes listed.
+
+See the [announcement post](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) for more details on scaling with multiple processes. Also note that it's a bit finnicky - it's best to start new apps with multiple processes. Adding them on top of existing apps (or removing them from apps that are using them) may cause some confusion. We're working on it!
+
 ### Just Use Bash
 
 This is gross, but a suggestion Docker makes in its own documentation, so it must be OK. We boot our Docker container into a shell script. That shell script is:
@@ -85,31 +110,6 @@ This works well enough to connect the app to Fly.io's Anycast network, so here's
 ```
 
 (It's a contrived example, so I'm only lighting one of the ports up, but whatever). 
-
-### Use Process Groups
-
-We've had the notion of [named process groups](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) around for a bit. You can run define multiple processes in your `fly.toml`, giving each a name.
-
-You can see that in action in the below (truncated) `fly.toml` file:
-
-```toml
-[processes]
-web = "bundle exec rails server -b [::] -p 8080"
-worker = "bundle exec sidekiqswarm"
-
-[[services]]
-  processes = ["web"] # this service only applies to the web process
-  http_checks = []
-  internal_port = 8080
-  protocol = "tcp"
-  script_checks = []
-```
-
-Here we define two processes `web` and `worker`. Both defined processes will run into your VM!
-
-Note that under the `[[services]]` section, we define a service for process `web`. The `processes = [...]` section is like a filter - it will apply only to the processes listed.
-
-See the [announcement post](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) for more details on scaling with multiple processes. Also note that it's a bit finnicky - it's best to start new apps with multiple processes. Adding them on top of existing apps (or removing them from apps that are using them) may cause some confusion. We're working on it!
 
 ### Use Supervisord
 
