@@ -1,9 +1,9 @@
-Remove a Fly machine
+Destroy a Fly machine
 
 
 ## Usage
 ~~~
-flyctl machine remove <id> [flags]
+flyctl machine destroy <id> [flags]
 ~~~
 
 ## Options
@@ -12,7 +12,7 @@ flyctl machine remove <id> [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -f, --force           force kill machine if it's running
-  -h, --help            help for remove
+  -h, --help            help for destroy
 ~~~
 
 ## Global Options

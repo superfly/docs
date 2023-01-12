@@ -1,15 +1,15 @@
-Delete a volume Requires the volume's ID
+Destroy a volume Requires the volume's ID
 number to operate. This can be found through the volumes list command
 
 ## Usage
 ~~~
-flyctl volumes delete <id> [flags]
+flyctl volumes destroy <id> [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -h, --help   help for delete
+  -h, --help   help for destroy
   -y, --yes    Accept all confirmations
 ~~~
 
