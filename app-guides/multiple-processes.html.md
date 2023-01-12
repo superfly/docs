@@ -90,29 +90,15 @@ This works well enough to connect the app to Fly.io's Anycast network, so here's
 
 We've had the notion of [named process groups](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) around for a bit. You can run define multiple processes in your `fly.toml`, giving each a name.
 
-You can see that in action in the following `fly.toml` file:
+You can see that in action in the below (truncated) `fly.toml` file:
 
 ```toml
-app = "fly-global-rails"
-
 [processes]
 web = "bundle exec rails server -b [::] -p 8080"
 worker = "bundle exec sidekiqswarm"
 
-[build]
-  builder = "heroku/buildpacks:20"
-  [build.args]
-    RAILS_ENV="production"
-    RAILS_SERVE_STATIC_FILES = "true"
-
-[env]
-  PORT = "8080"
-  RAILS_ENV = "production"
-  RAILS_SERVE_STATIC_FILES = "true"
-  PRIMARY_REGION = "scl"
-
 [[services]]
-  processes = ["web"] # this service only applies to the web block
+  processes = ["web"] # this service only applies to the web process
   http_checks = []
   internal_port = 8080
   protocol = "tcp"
