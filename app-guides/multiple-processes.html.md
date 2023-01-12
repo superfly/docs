@@ -48,7 +48,11 @@ Now, some options to actually run this stuff:
 
 ### Use Process Groups
 
-We've had the notion of [named process groups](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) around for a bit. You can run define multiple processes in your `fly.toml`, giving each a name.
+OK, I know I said "run multiple processes inside of an app", but I'm gonna cheat. 
+
+The first example here actually runs each process in it's own VM. It's the recommended way! That being said, we'll get to cramming everything into one app, just bear with me!
+
+Fly.io has had the notion of [named process groups](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) around for a bit. You can run define multiple processes in your `fly.toml`, giving each a name. Each runs in its own VM.
 
 You can see that in action in the below (truncated) `fly.toml` file:
 
@@ -65,11 +69,27 @@ bar_web = "/app/server -bar"
   script_checks = []
 ```
 
-Here we define two processes `web` and `bar_web`. Both defined processes will run into your VM!
+Here we define two processes: `web` and `bar_web`. Each command (e.g. `/app/server`) is setting the `CMD` passed to your Dockerfile entrypoint. That means your entrypoint needs to be able to handle a command being passed to it.
 
-Note that under the `[[services]]` section, we define a service for process `web`. The `processes = [...]` section is like a filter - it will apply only to the processes listed.
+Here's an example of such an entrypoint:
 
-See the [announcement post](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) for more details on scaling with multiple processes. Also note that it's a bit finnicky - it's best to start new apps with multiple processes. Adding them on top of existing apps (or removing them from apps that are using them) may cause some confusion. We're working on it!
+```bash
+#!/bin/bash
+
+if [[ $# -gt 0 ]]; then
+    # If we pass a command, run it
+    exec "$@"
+else
+    # Else default to starting the server
+    exec /app/server
+fi
+```
+
+Furthermore, note that under the `[[services]]` section, we define a service for process `web`. The `processes = [...]` section is like a filter - it will apply only to the processes listed.
+
+See the [announcement post](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) for more details on scaling with multiple processes. Also note that it's a bit finnicky - it's best to create *new* apps with multiple processes. Adding them on top of existing apps (or removing them from apps that are using them) may cause some confusion. We're working on it!
+
+Now let's talk about running multiple processes within one app, as promised!
 
 ### Just Use Bash
 
