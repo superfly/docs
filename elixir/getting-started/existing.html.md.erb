@@ -1,0 +1,75 @@
+---
+title: Existing Elixir Apps
+layout: framework_docs
+objective: Learn how to run your existing Elixir applications on Fly.
+status: beta
+order: 2
+---
+
+If you have an existing Elixir app that you want to move over to Fly, this guide walks you through the initial deployment process and shows you techniques you can use to troubleshoot issues you may encounter in a new environment.
+
+### Provision Elixir and Postgres Servers
+
+To configure and launch your Elixir app, you can use `fly launch` and follow the wizard.
+
+<%= partial "docs/languages-and-frameworks/partials/launch_with_postgres", locals: { detected: "Phoenix", app_name: "<app_name>" } %>
+
+You can set a name for the app, choose a default region, and choose to launch and attach a PostgreSQL database.
+
+### Deploy your application
+
+Deploying your application is done with the following command:
+
+```cmd
+fly deploy
+```
+
+This will take a few seconds as it uploads your application, builds a machine image,
+deploys the images, and then monitors to ensure it starts successfully. Once complete
+visit your app with the following command:
+
+```cmd
+fly open
+```
+
+If all went well, you'll see your Elixir application homepage.
+
+## Troubleshooting your initial deployment
+
+Since this is an existing Elixir app, its highly likely it might not boot because you probably need to configure secrets or other service dependencies. Let's walk through how to troubleshoot these issues so you can get your app running.
+
+
+### View log files
+
+If your application didn't boot on the first deploy, run `fly logs` to see what's going on.
+
+```cmd
+fly logs
+```
+
+This shows the past few log file entries and tails your production log files.
+
+### Open an IEx Session
+
+It can be helpful to open a IEx Session to run commands and diagnose production issues.
+
+To do this, we will [login with SSH](/docs/flyctl/ssh/) to our
+application VM. There is a one-time setup task for using SSH. Follow the instructions.
+
+```
+fly ssh issue --agent
+```
+
+With SSH configured, let's open a console.
+
+```cmd
+fly ssh console -C "app/bin/hello_elixir remote"
+```
+```output
+Connecting to hello_elixir.internal... complete
+Erlang/OTP 23 [erts-11.2.1] [source] [64-bit] [smp:1:1] [ds:1:1:10] [async-threads:1]
+
+Interactive Elixir (1.11.2) - press Ctrl+C to exit (type h() ENTER for help)
+iex(hello_elixir@fdaa:0:1da8:a7b:ac4:b204:7e29:2)1>
+```
+You have a live IEx shell into your application!

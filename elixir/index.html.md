@@ -12,7 +12,13 @@ When you deploy your clustered application around the world, you give your users
 
 ## [Getting Started](./getting-started)
 
-Run through the [Elixir Getting Started](./getting-started/) guide to get a feel for what it's like to deploy to Fly. This is the best jumping-off point for getting your app up and running. Follow the additional steps to add Clustering and see how easy it is to scale out globally.
+Run through the [Elixir Getting Started](./getting-started/) guide to get a feel for what it's like to deploy to Fly. This is the best jumping-off point for getting your app up and running.
+
+
+## [The Basics](./the-basics)
+
+Go from running an app to clustering your app globally and administering with Fly. 
+
 
 ## [Advanced Guides](./advanced-guides)
 

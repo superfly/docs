@@ -85,6 +85,15 @@ This shows the past few log file entries and tails your production log files.
 
 It can be helpful to open a Rails console to run commands and diagnose production issues.
 
+To do this, we will [login with SSH](/docs/flyctl/ssh/) to our
+application VM. There is a one-time setup tasks for using SSH. Follow the instructions.
+
+```
+fly ssh issue --agent
+```
+
+With SSH configured, let's open a console.
+
 ```cmd
 fly ssh console -C "/app/bin/rails console"
 ```

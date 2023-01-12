@@ -2,6 +2,7 @@
 title: Troubleshooting
 layout: framework_docs
 order: 10
+redirect_from: docs/elixir/getting-started/troubleshooting/
 blog_path: /phoenix-files
 objective: Common troubleshooting issues and resources for getting unstuck.
 ---
@@ -39,3 +40,16 @@ Suggested files to pay attention to when looking for config differences.
 - `config/runtime.exs`
 - `Dockerfile`
 - `mix.exs`
+
+
+## Not Enough Connections
+
+A common failure mode is the application exhuasting the number of free connections, your default `fly.toml` has the following settings:
+```toml
+  [services.concurrency]
+    hard_limit = 50
+    soft_limit = 25
+    type = "connections"
+```
+
+Setting the `hard_limit` and `soft_limit` closer to your needs will free up the number of live connections per node. 
