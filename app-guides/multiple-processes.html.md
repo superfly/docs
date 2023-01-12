@@ -48,11 +48,11 @@ Now, some options to actually run this stuff:
 
 ### Use Process Groups
 
-OK, I know I said "run multiple processes inside of an app", but I'm gonna cheat. 
+You expect that each option listed here will run multiple processes within one VM. However the first example here actually runs each process in its own VM. It's the recommended way! 
 
-The first example here actually runs each process in it's own VM. It's the recommended way! That being said, we'll get to cramming everything into one app, just bear with me!
+That being said, we'll also discuss cramming everything into one app, just bear with me!
 
-Fly.io has had the notion of [named process groups](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) around for a bit. You can run define multiple processes in your `fly.toml`, giving each a name. Each runs in its own VM.
+Fly.io has had the notion of [named process groups](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) around for a bit. You can run define multiple processes in your `fly.toml`, giving each a name. Each process runs in its own VM within the app.
 
 You can see that in action in the below (truncated) `fly.toml` file:
 
@@ -88,8 +88,6 @@ fi
 Furthermore, note that under the `[[services]]` section, we define a service for process `web`. The `processes = [...]` section is like a filter - it will apply only to the processes listed.
 
 See the [announcement post](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) for more details on scaling with multiple processes. Also note that it's a bit finnicky - it's best to create *new* apps with multiple processes. Adding them on top of existing apps (or removing them from apps that are using them) may cause some confusion. We're working on it!
-
-Now let's talk about running multiple processes within one app, as promised!
 
 ### Just Use Bash
 
