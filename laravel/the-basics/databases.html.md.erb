@@ -488,6 +488,7 @@ If you have redis-cli installed, use fly redis connect to connect to your databa
 To test whether your Laravel Fly App can successfully connect with your Upstash Redis database, you can use your Upstash Redis Fly App as your Cache driver, then perform a quick cache:clear command.
 
 1.  Revise the `[env]` configuration in your Laravel Fly App's `fly.toml` file:
+
     ```toml
     [env]
       ...
@@ -502,7 +503,9 @@ To test whether your Laravel Fly App can successfully connect with your Upstash 
     ```cmd
     fly deploy
     ```
+
 3.  Once deployment completes, you can test whether your connection is working by simply clearing your Laravel application's cache
+
     ```cmd
     fly ssh console
     ```
