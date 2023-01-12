@@ -45,9 +45,16 @@ You will also be prompted for credit card payment information, required for char
 ```output
 ? Would you like to set up a Postgresql database now? (y/N)
 ```
-Lastly, the CLI will ask if you need a Postgresql database. You can reply no for now.
+Then CLI will ask if you need a Postgresql database. You can reply no for now.
 
 At this point, `flyctl` creates an app for you and writes your configuration to a `fly.toml` file. The `fly.toml` file now contains a default configuration for deploying your app.
+
+Lastly, the CLI will ask you if you would like to deploy now - please say no if your app doesn't use `internal_port = 8080`.
+
+```output
+? Would you like to deploy now? Yes
+==> Building image
+```
 
 ```toml
 
