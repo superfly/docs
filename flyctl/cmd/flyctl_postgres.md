@@ -8,7 +8,7 @@ flyctl postgres [command] [flags]
 
 ## Available Commands
 * [attach](/docs/flyctl/postgres-attach/)	 - Attach a postgres cluster to an app
-* [config](/docs/flyctl/postgres-config/)	 - View and manage Postgres configuration.
+* [config](/docs/flyctl/postgres-config/)	 - Show and manage Postgres configuration.
 * [connect](/docs/flyctl/postgres-connect/)	 - Connect to the Postgres console
 * [create](/docs/flyctl/postgres-create/)	 - Create a new PostgreSQL cluster
 * [db](/docs/flyctl/postgres-db/)	 - Manage databases in a cluster

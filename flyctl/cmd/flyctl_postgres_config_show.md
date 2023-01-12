@@ -1,8 +1,8 @@
-View your Postgres configuration
+Show Postgres configuration
 
 ## Usage
 ~~~
-flyctl postgres config view [flags]
+flyctl postgres config show [flags]
 ~~~
 
 ## Options
@@ -10,7 +10,7 @@ flyctl postgres config view [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for view
+  -h, --help            help for show
 ~~~
 
 ## Global Options
@@ -23,5 +23,5 @@ flyctl postgres config view [flags]
 
 ## See Also
 
-* [flyctl postgres config](/docs/flyctl/postgres-config/)	 - View and manage Postgres configuration.
+* [flyctl postgres config](/docs/flyctl/postgres-config/)	 - Show and manage Postgres configuration.
 

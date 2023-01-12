@@ -32,5 +32,5 @@ flyctl postgres config update [flags]
 
 ## See Also
 
-* [flyctl postgres config](/docs/flyctl/postgres-config/)	 - View and manage Postgres configuration.
+* [flyctl postgres config](/docs/flyctl/postgres-config/)	 - Show and manage Postgres configuration.
 

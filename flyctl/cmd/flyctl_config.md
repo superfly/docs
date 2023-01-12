@@ -6,9 +6,9 @@ flyctl config [command] [flags]
 ~~~
 
 ## Available Commands
-* [display](/docs/flyctl/config-display/)	 - Display an app's configuration
 * [env](/docs/flyctl/config-env/)	 - Display an app's runtime environment variables
 * [save](/docs/flyctl/config-save/)	 - Save an app's config file
+* [show](/docs/flyctl/config-show/)	 - Show an app's configuration
 * [validate](/docs/flyctl/config-validate/)	 - Validate an app's config file
 
 ## Options

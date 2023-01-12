@@ -1,9 +1,9 @@
-Display an application's configuration. The configuration is presented
+Show an application's configuration. The configuration is presented
 in JSON format. The configuration data is retrieved from the Fly service.
 
 ## Usage
 ~~~
-flyctl config display [flags]
+flyctl config show [flags]
 ~~~
 
 ## Options
@@ -11,7 +11,7 @@ flyctl config display [flags]
 ~~~
   -a, --app string      App name to operate on
   -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
-  -h, --help            help for display
+  -h, --help            help for show
 ~~~
 
 ## Global Options

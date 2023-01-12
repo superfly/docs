@@ -1,4 +1,4 @@
-View and manage Postgres configuration.
+Show and manage Postgres configuration.
 
 
 ## Usage
@@ -7,8 +7,8 @@ flyctl postgres config [command] [flags]
 ~~~
 
 ## Available Commands
+* [show](/docs/flyctl/postgres-config-show/)	 - Show Postgres configuration
 * [update](/docs/flyctl/postgres-config-update/)	 - Update Postgres configuration.
-* [view](/docs/flyctl/postgres-config-view/)	 - View your Postgres configuration
 
 ## Options
 
