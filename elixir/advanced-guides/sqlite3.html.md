@@ -217,7 +217,7 @@ ftlctl sftp shell
 
 And use the `put` command to transfer your file to the volume path,
 
-* NOTE* because our server is running we first need to give the database a new name. Do try to put this file in the same place as your current `DATABASE_PATH`.
+* NOTE* because our server is running we first need to give the database a new name. Do **not** try to put this file in the same place as your current `DATABASE_PATH`.
 
 ```
 » put ./name.db mnt/name-prod.db
