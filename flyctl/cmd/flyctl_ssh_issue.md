@@ -4,19 +4,19 @@ validity.
 
 ## Usage
 ~~~
-flyctl ssh issue [org] [email] [path] [flags]
+flyctl ssh issue [org] [path] [flags]
 ~~~
 
 ## Options
 
 ~~~
-      --agent             Add key to SSH agent
-  -d, --dotssh            Store keys in ~/.ssh, like normal keys
-  -h, --help              help for issue
-      --hours int         Expiration, in hours (<72) (default 24)
-  -o, --org string        The target Fly organization
-      --overwrite         Overwrite existing SSH keys in same location, if we generated them
-  -u, --username string   Unix username for SSH cert
+      --agent              Add key to SSH agent
+  -d, --dotssh             Store keys in ~/.ssh, like normal keys
+  -h, --help               help for issue
+      --hours int          Expiration, in hours (<72) (default 24)
+  -o, --org string         The target Fly organization
+      --overwrite          Overwrite existing SSH keys in same location, if we generated them
+  -u, --username strings   Unix usernames the SSH cert can authenticate as (default [root,fly])
 ~~~
 
 ## Global Options
