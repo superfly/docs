@@ -9,7 +9,7 @@ categories:
   - github
   - guide
 priority: 10
-date: 2020-06-20
+date: 2023-01-13
 ---
 
 <img src="/static/images/continuous-deployment.jpg" alt="A man writing code on a vintage desktop computer" class="rounded-xl">
@@ -25,11 +25,10 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
 1.  Fork [go-example](https://github.com/fly-apps/go-example) to your own GitHub repository.
 2.  Get a Fly API token with `flyctl auth token`.
 3.  Go to your newly created repository on GitHub and select Settings.
-4.  Go to Secrets and create a secret called `FLY_API_TOKEN` with the value of the token from step 2
+4.  Within **Secrets and variables**, click **Actions**. Click the **New repository secret** button. Name it `FLY_API_TOKEN` and enter the value of the token from step 2
 5.  Clone the repository to your local machine to edit it
-6.  Edit .gitignore and remove fly.toml - fly.toml will need to be pushed into the repository to allow deployment to happen.
-7.  Run `flyctl apps create` to create a fly.toml file.
-8.  Create `.github/workflows/fly.yml` with these contents
+6.  Run `fly launch`. You will be prompted to provide some details. That will create a `fly.toml` file. You will be asked if you would like to set up a database (say No) and whether you would like to deploy now (say No).
+7.  Create `.github/workflows/fly.yml` with these contents
     <br>
     <br>
 ```yaml
@@ -37,21 +36,22 @@ name: Fly Deploy
 on:
   push:
     branches:
-      - main
+    # the sample repo uses a "master" branch (if you use "main", edit the line below)
+    - master
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 jobs:
   deploy:
-      name: Deploy app
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-        - uses: superfly/flyctl-actions/setup-flyctl@master
-        - run: flyctl deploy --remote-only
+    name: Deploy app
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: superfly/flyctl-actions/setup-flyctl@master
+    - run: flyctl deploy --remote-only
 ```
 
-9.  Commit your changes and push them up to GitHub.
-10. This is where the magic happens - The push will have triggered a deploy and from now on whenever you push a change, the app will automatically be redeployed.
+8.  Commit your changes and push them up to GitHub.
+9. This is where the magic happens - The push will have triggered a deploy and from now on whenever you push a change, the app will automatically be redeployed.
 
 If you want to watch the process take place, head to the Repository and select the **Actions** tab where you can view live logs of the commands running.
 
@@ -69,15 +69,11 @@ If you want to watch the process take place, head to the Repository and select t
 
 **Step 5** is just cloning the repository to your local system so you can edit and push changes to it.
 
-**Step 6** is an interesting step - when we ship examples, we avoid putting the `fly.toml` file in the repository by including `fly.toml` in the `.gitignore` file. Users should be creating their own with `fly apps create`. When using GitHub Actions though, we want `fly.toml` in the repository so the action can use it in the deployment process.
-
-So, we pull `fly.toml` out of  the `.gitignore`. Which then allows us to perform Step 7.
-
-**Step 7**: Creating a fly.toml file to go into the repository.
+**Step 6** is an interesting step - when we ship examples, we avoid putting the `fly.toml` file in the repository by including `fly.toml` in the `.gitignore` file. Users should be creating their own with `fly launch`. When using GitHub Actions though, we want `fly.toml` in the repository so the action can use it in the deployment process.
 
 ### Building the workflow
 
-**Step 8** is the heart of the process, where we put in place a workflow. Now, GitHub has a UI which allows you to select and edit workflows, but you can also modify them as part of the repository. So we create `.github/workflows/fly.yml` - you'll likely want to `mkdir -p .github/workflows` to quickly create the directories - and load up the file with a GitHub Action recipe. We'll go through it line by line now:
+**Step 7** is the heart of the process, where we put in place a workflow. Now, GitHub has a UI which allows you to select and edit workflows, but you can also modify them as part of the repository. So we create `.github/workflows/fly.yml` - you'll likely want to `mkdir -p .github/workflows` to quickly create the directories - and load up the file with a GitHub Action recipe. We'll go through it line by line now:
 
 ```yaml
 name: Fly Deploy
@@ -89,10 +85,10 @@ This sets the displayed name for the action.
 on:
   push:
     branches:
-      - main
+      - master
 ```
 
-When should this action be run. There's lots of options but in this case, in response to any `push` to the repository's `main` branch. If your repository uses a default branch other than `main`, you should change that here.
+When should this action be run. There's lots of options but in this case, in response to any `push` to the repository's `master` branch. If your repository uses a default branch other than `master` (likely `main`), you should change that here.
 
 ```yaml
 env:
@@ -124,6 +120,15 @@ The first step is one of the built in Actions steps. The step `uses` the `checko
 
 This step `uses` the superfly/flyctl-actions action. This is a GitHub action created by Fly which wraps around the `flyctl` command. The wrapper is invoked with the `deploy` argument which will take over the process of building and moving the application to the Fly infrastructure. It uses the settings from the `fly.toml` file to guide it and uses the `FLY_API_TOKEN` to authorize its access to the Fly API.
 
+All being well you should see something like:
+
+```
+v0 is being deployed
+abc12345: lhr running healthy
+abc12345: lhr running healthy [health checks: 1 total, 1 passing]
+--> v0 deployed successfully
+```
+
 ## Conclusion and further reading
 
 And that's the deployment process. You can, of course, leverage the GitHub Actions environment to manage more intricate deployments, interact with other applications - say to send Slack messages on completion - or whatever else you can dream of.
@@ -135,8 +140,4 @@ And that's the deployment process. You can, of course, leverage the GitHub Actio
 **See:**
 
 * [GitHub Actions for flyctl](https://github.com/superfly/flyctl-actions)
-
-
-
-
 
