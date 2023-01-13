@@ -46,13 +46,11 @@ With a working Dockerfile, we can spin this up with `flyctl apps create`, then d
 
 Now, some options to actually run this stuff:
 
-### Use Process Groups
+### Process Groups
 
-You expect that each option listed here will run multiple processes within one VM. However the first example here actually runs each process in its own VM. It's the recommended way! 
+This is the recommended way to run multiple processes. **This method runs each process in its own VM**. Examples of running multiple processes within a single VM are found below!
 
-That being said, we'll also discuss cramming everything into one app, just bear with me!
-
-Fly.io has had the notion of [named process groups](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) around for a bit. You can run define multiple processes in your `fly.toml`, giving each a name. Each process runs in its own VM within the app.
+Fly.io has the notion of [process groups](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316). You can define multiple processes in your `fly.toml`, giving each a name. Each defined process runs in its own VM within the one app.
 
 You can see that in action in the below (truncated) `fly.toml` file:
 
@@ -69,7 +67,7 @@ bar_web = "/app/server -bar"
   script_checks = []
 ```
 
-Here we define two processes: `web` and `bar_web`. Each command (e.g. `/app/server`) is setting the `CMD` passed to your Dockerfile entrypoint. That means your entrypoint needs to be able to handle a command being passed to it.
+Here we define two processes: `web` and `bar_web`. Each command (e.g. `/app/server` and `/app/server -bar`) is setting the *command* passed to your Dockerfile *entrypoint*. That means your entrypoint needs to be able to handle a command being passed to it!
 
 Here's an example of such an entrypoint:
 
@@ -85,7 +83,7 @@ else
 fi
 ```
 
-Furthermore, note that under the `[[services]]` section, we define a service for process `web`. The `processes = [...]` section is like a filter - it will apply only to the processes listed.
+Note that under the `[[services]]` section of the `fly.toml` file, we define a service for process `web`. The `processes = [...]` array acts as a filter - it will apply only to the processes listed.
 
 See the [announcement post](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) for more details on scaling with multiple processes. Also note that it's a bit finnicky - it's best to create *new* apps with multiple processes. Adding them on top of existing apps (or removing them from apps that are using them) may cause some confusion. We're working on it!
 
