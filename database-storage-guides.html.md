@@ -34,17 +34,23 @@ If your application calls for a different solution, you can deploy it yourself a
 
 - **[MinIO Object Storage](/docs/app-guides/minio/)** - [MinIO](https://min.io/) is software that allows you to self-host S3-compatible storage. 
 
-## External Services
+## Recommended External Providers
 
 If you want a fully managed database or storage solution for your Fly Apps, there are many great options, including:
 
-- [Heroku Managed Data Services](https://www.heroku.com/managed-data-services)
-- [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql/#overview)
-- [Amazon RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/)
-- [Google Cloud SQL for PostgreSQL](https://cloud.google.com/sql/docs/postgres/)
-- [Digital Ocean Managed Postgres](https://www.digitalocean.com/products/managed-databases-postgresql)
+- [Crunchy Bridge Managed Postgres](https://www.crunchydata.com/products/crunchy-bridge) (on AWS, Azure, GCP, or Heroku)
 - [Neon Serverless Postgres](https://neon.tech/)
-- [Supabase Postgres](https://supabase.com/database)
 - [PlanetScale Serverless MySQL](https://planetscale.com/) ([guide to use with Fly Apps](docs/app-guides/planetscale/))
+- [Supabase Postgres](https://supabase.com/database)
+- [MinIO Hosted Object Storage](https://min.io/)
+
+## Other Places
+
+You can connect your Fly Apps to the usual suspects, too:
+
+- [Amazon RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/)
+- [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql/#overview)
+- [Digital Ocean Managed Postgres](https://www.digitalocean.com/products/managed-databases-postgresql)
+- [Google Cloud SQL for PostgreSQL](https://cloud.google.com/sql/docs/postgres/)
+- [Heroku Managed Data Services](https://www.heroku.com/managed-data-services)
 - [AWS S3 Object Storage](https://aws.amazon.com/s3/)
-- [Hosted MinIO Object Storage](https://min.io/)
