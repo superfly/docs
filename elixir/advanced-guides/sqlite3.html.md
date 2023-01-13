@@ -5,7 +5,7 @@ objective: This guide shows you how to use SQLite3 as your database
 status: beta
 ---
 
-While Elixir applications on [fly.io](https://fly.io) normally run on Postgres databases, you can
+While Elixir applications on [Fly.io](https://fly.io) normally run on Postgres databases, you can
 choose to run them on [SQLite3](https://www.sqlite.org/index.html). This guide will assume you have an already setup 
 and configured Phoenix Application using [ecto_sqlite3](https://github.com/elixir-sqlite/ecto_sqlite3) running locally.
 
@@ -44,9 +44,12 @@ time in two places:
   destination="/mnt/name"
 ```
 
-Next move remove the release step from the deploy section of your `fly.toml`
+Next move remove the release step from the deploy section of your `fly.toml` and add a DATABASE_PATH variable
 
 ```diff
+[env]
++ DATABASE_PATH = "/mnt/name/name.db"
+
 -[deploy]
 -  release_command = "/app/bin/migrate"
 ```
@@ -147,14 +150,19 @@ The `ecto_sqlite3` documentation have a [good guide](https://hexdocs.pm/ecto_sql
 ### Transfering Data from Postgres/MySql to SQLite3
 
 <aside class="callout"> 
-This section is something to give you a starting point on how to get from X to SQLite. No warranty or support is offered if you go this route. Make sure to backup your data and by hyper vigilant because this kind of thing is fraught at best.
+This section is something to give you a starting point on how to get from X to SQLite. Make sure to backup your data and by hyper vigilant because this kind of thing is fraught at best.
 </aside>
 
-There is really no very easy way to do this since the datatypes between the databases are different... But here is one way that has worked for me in the past and might work for you! The Ruby [Sequel](https://sequel.jeremyevans.net/) project comes with a [command line tool for Copying Databases](https://sequel.jeremyevans.net/rdoc/files/doc/bin_sequel_rdoc.html#label-Copy+Databases).  This method *should* help when transferring between ADO, Amalgalite, IBM_DB, JDBC, MySQL, Mysql2, ODBC, Oracle, PostgreSQL, SQLAnywhere, and TinyTDS to SQLite3. That said it has limits! This is directly from the documentation:
+There is really no very easy way to do this since the datatypes between the databases are different... 
 
-> This copies the table structure, table data, indexes, and foreign keys from the MySQL database to the PostgreSQL database.
+But here is one way that has worked for me in the past and might work for you! The Ruby [Sequel](https://sequel.jeremyevans.net/) project comes with a [command line tool for Copying Databases](https://sequel.jeremyevans.net/rdoc/files/doc/bin_sequel_rdoc.html#label-Copy+Databases).  This method *should* help when transferring between ADO, Amalgalite, IBM_DB, JDBC, MySQL, Mysql2, ODBC, Oracle, PostgreSQL, SQLAnywhere, and TinyTDS to SQLite3. That said it has limits! This is directly from the documentation:
 
-> Note that the support for copying is fairly limited. It doesn’t handle database views, functions, triggers, schemas, partial indexes, functional indexes, and many other things. Also, the data type conversion may not be exactly what you want. It is best designed for quick conversions and testing. For serious production use, use the database’s tools to copy databases for the same database type, and for different database types, use the Sequel API.
+<p class="callout">
+This copies the table structure, table data, indexes, and foreign keys from the MySQL database to the PostgreSQL database.
+<br />
+<br />
+Note that the support for copying is fairly limited. It doesn’t handle database views, functions, triggers, schemas, partial indexes, functional indexes, and many other things. Also, the data type conversion may not be exactly what you want. It is best designed for quick conversions and testing. For serious production use, use the database’s tools to copy databases for the same database type, and for different database types, use the Sequel API.
+</p>
 
 So YMMV on how useful this is for you. If you have a relatively simple database it might work great!
 
@@ -166,7 +174,6 @@ brew install ruby
 
 # Ubuntu
 apt-get install ruby-full
-
 ```
 
 The ruby database adapter Sequel comes with a really slick command line tool for copying databases, lets install that
@@ -174,25 +181,72 @@ The ruby database adapter Sequel comes with a really slick command line tool for
 gem install sequel 
 ```
 
-Depending on your database you may need to install an extra adapter in this example I will be using Postgres so lets install that:
+Depending on your database you may need to install an extra adapter in this example we will be using Postgres so lets install that:
 ```sh
 gem install pg
 ```
 
-Next all we need to do is run the Sequel Copy command 
+Next all we need to do is run the Sequel Copy command, where the first database is from and the second database is to
 
 ```sh
 sequel -C postgres://localhost/database sqlite3://name.db
 ```
 
-And that's it! If you open up your SQLite database using the command line it should have your tables and data all moved over.
+And that's it! If you open up your SQLite database using the command line it should have your tables and data all moved over. If you get an error here about connecting you will need to figure out which ruby gem handles your adapter and install it like we did for pg. 
 
 ```sh
 sqlite3 name.db
 ```
 
-### Notes from Postgres Copying
+#### Note on types
 
-SQLite doesn't have official support for Postgres Arrays or Hstores. These will be copied into strings in the resulting SQLite table like so `{item1, item2, item3,}` if you want to still use the Array type you need to use string manipulation to convert them to json and then it should work just fine. This is just one example, but the positive is that it's all just Strings in SQLite, so if you can make the string look like json you are golden! 
+SQLite doesn't have official support for Postgres Arrays or Hstores, and most special datatypes! These will be copied into strings in the resulting SQLite table, so for Arrays the data will look like `{item1, item2, item3}` if you want to still use this as an array you need to use [string manipulation](https://www.sqlitetutorial.net/sqlite-replace-function/) to convert them to json and then it should work just fine. This is just one example, but the positive is that it's all just strings in SQLite, so if you can make the string look like json you are set! 
 
+### Copying an existing database to a fly volume
 
+If you've exported or copied your database to SQLite you will need to get your database file up to Fly. To do this we will use the [flyctl sftp](/docs/flyctl/sftp/) command. 
+
+First open an sftp shell
+
+```cmd
+ftlctl sftp shell
+```
+```output
+»
+```
+
+And use the `put` command to transfer your file to the volume path,
+
+* NOTE* because our server is running we first need to give the database a new name. Do try to put this file in the same place as your current `DATABASE_PATH`.
+
+```
+» put ./name.db mnt/name-prod.db
+```
+
+Check that it's there
+
+```cmd
+» ls /mnt
+```
+```output
+name.db
+name-prod.db
+.... other files
+```
+
+Then `ctrl-c` to exit.
+
+Finally update your env in fly.toml 
+
+```toml
+[env]
+- DATABASE_PATH = "/mnt/name.db"
++ DATABASE_PATH = "/mnt/name-prod.db"
+```
+
+And to persist that change
+```sh
+fly deploy
+```
+
+Next time it boot's it should use your new database! 
