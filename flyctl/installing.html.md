@@ -56,3 +56,4 @@ Run the Powershell install script:
 ```cmd
 iwr https://fly.io/install.ps1 -useb | iex
 ```
+iwr https://fly.io/install.ps1 -useb | iex
