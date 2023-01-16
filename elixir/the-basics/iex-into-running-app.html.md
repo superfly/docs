@@ -43,4 +43,4 @@ You have a live IEx shell into your application!
 
 With another quick update we can prepare our application for clustering by naming our nodes differently.
 
-Next up, [Naming Your Elixir Node](/docs/elixir/getting-started/naming-your-elixir-node/)!
+Next up, [Naming Your Elixir Node](/docs/elixir/the-basics/naming-your-elixir-node/)!
