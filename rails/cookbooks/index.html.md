@@ -55,3 +55,8 @@ Let's get started.
   * [Sources](./sources) - adding sources from outside of your `Dockerfile`.
   * [Optimizing builds](./build) - ordering, splitting, staging, and caching.
   * [Optimizing deployments](./deploy) - jemmalloc, yjit, swap.
+
+A Rails generator incorporating these techniques can be found at
+[dockerfile-rails](https://github.com/rubys/dockerfile-rails), and
+is being proposed as the generator to be included by default in
+Rails 7.1.

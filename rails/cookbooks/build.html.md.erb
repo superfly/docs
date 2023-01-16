@@ -60,7 +60,7 @@ We've seen how multi-stage builds can reduce image size.  They also
 can be used to reduce build times.  An example to illustrate:
 
 ```
-FROM ruby as base
+FROM ruby:slim as base
 RUN apt-get install -y build-essential &&
     volta install node@lts yarn@latest
 
