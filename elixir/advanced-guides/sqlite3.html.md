@@ -185,15 +185,15 @@ Depending on your database you may need to install an extra adapter in this exam
 gem install pg
 ```
 
-Next all we need to do is run the Sequel Copy command, where the first database is from and the second database is to
+Next all we need to do is run the Sequel Copy command, where the first database is the source and the second database is the destination:
 
-```sh
+```cmd
 sequel -C postgres://localhost/database sqlite3://name.db
 ```
 
 And that's it! If you open up your SQLite database using the command line it should have your tables and data all moved over. If you get an error here about connecting you will need to figure out which ruby gem handles your adapter and install it like we did for pg. 
 
-```sh
+```cmd
 sqlite3 name.db
 ```
 
@@ -203,26 +203,26 @@ SQLite doesn't have official support for Postgres Arrays or Hstores, and most sp
 
 ### Copying an existing database to a fly volume
 
-If you've exported or copied your database to SQLite you will need to get your database file up to Fly. To do this we will use the [flyctl sftp](/docs/flyctl/sftp/) command. 
+If you've exported or copied your database to SQLite you will need to get your database file up to Fly.io. To do this we will use the [fly sftp](/docs/flyctl/sftp/) command. 
 
 First open an sftp shell
 
 ```cmd
-ftlctl sftp shell
+fly sftp shell
 ```
 ```output
 »
 ```
 
-And use the `put` command to transfer your file to the volume path,
+And use the `put` command to transfer your file to the volume path.
 
-* NOTE* because our server is running we first need to give the database a new name. Do **not** try to put this file in the same place as your current `DATABASE_PATH`.
+**NOTE**: Because our server is running, we first need to give the database a new name. Do **not** try to put this file in the same place as your current `DATABASE_PATH`.
 
 ```
 » put ./name.db mnt/name-prod.db
 ```
 
-Check that it's there
+Check that it's there:
 
 ```cmd
 » ls /mnt
@@ -244,8 +244,8 @@ Finally, update your env in `fly.toml`:
 ```
 
 And to persist that change:
-```sh
+```cmd
 fly deploy
 ```
 
-Next time it boot's it should use your new database! 
+Next time it boots it should use your new database! 
