@@ -14,7 +14,7 @@ as your deployment image will get overwritten the next time you deploy.
 Volumes are limited to one host, this currently means that fly.io hosted Rails applications that use
 sqlite3 for their database can't be deployed to multiple regions.
 
-But if you are okay using beta software, [LiteFS](/docs/litefs) could work for multi-region sync, check it out! But this guide is going to assume you have one node and one volume.
+But if you are okay using beta software, [LiteFS](/docs/litefs) could work for multi-region sync, check it out! But this guide assumes you have one node and one volume.
 
 Following are the steps required to make this work:
 
