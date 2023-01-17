@@ -129,7 +129,7 @@ if config_env() == :prod do
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5")
 ```
 
-Finally update your Repo to use the SQLite adapter in `lib/name/repo.ex`
+Finally update your Repo to use the SQLite adapter in `lib/name/repo.ex`:
 
 ```elixir
 defmodule Name.Repo do
