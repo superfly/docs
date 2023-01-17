@@ -105,7 +105,7 @@ config :name, Name.Repo,
   show_sensitive_data_on_connection_error: true
 ```
 
-Update the repo configuration in `config/test.exs`
+Update the repo configuration in `config/test.exs`:
 ```elixir
 config :name, Name.Repo,
   database: Path.expand("../name_test.db", Path.dirname(__ENV__.file)),
