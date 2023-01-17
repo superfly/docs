@@ -529,80 +529,44 @@ This guide walks through a single instance of your Laravel Fly App running with 
 
 <b>Since SQLite is "embeddable", we no longer have to setup a separate Fly App for it. We simply configure our Laravel Fly App with one:</b>
 
-1.  Make sure you are in your Laravel Fly App's directory
-
-    ```cmd
-    cd <laravel-fly-configured-app>
-    ```
-2.  Create a volume, you'll be attaching this later to your Laravel Fly App's storage directory 
-
-    ```cmd
-    fly volumes create storage_vol --region ams --size 20 #GB
-    ```
-
-3.  Revise your Laravel Fly App's `fly.toml` file to mount the volume created for your storage directory, and connect with an sqlite database you'll be configuring further down below:
-
-    ```
-    [env]
-      APP_ENV = "production"
-      LOG_CHANNEL = "stderr"
-      LOG_LEVEL = "info"
-      LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
-      DB_CONNECTION="sqlite"
-      DB_DATABASE="/var/www/html/storage/database/database.sqlite"
-
-    [mounts]
-      source="storage_vol"
-      destination="/var/www/html/storage"
-    ```
-    <%= partial "docs/laravel/partials/volume_storage_warning" %>
-
-4.  To fix the little storage-content-erasure issue, please go ahead and make a copy of your storage folder in a "backup" folder. You can name this directory "storage_".
-
-    ```cmd
-    cp -r storage storage_
-    ```
-    You'll later use this folder to copy over its contents to the volumized storage folder.
-    <br />
-    <br />
-
-5.  Next create a [Startup Script](/docs/laravel/the-basics/customizing-deployments/) that will initialize the volumized storage folder's contents.
-
-    <%= partial "docs/laravel/partials/volume_storage_script" %>
-
-    <b>On to the content of the Start Up script:</b>
-    ```bash
-    FOLDER=/var/www/html/storage/app
-    if [ ! -d "$FOLDER" ]; then
-        echo "$FOLDER is not a directory, copying storage_ content to storage"
-        cp -r /var/www/html/storage_/. /var/www/html/storage
-        echo "deleting storage_..."
-        rm -rf /var/www/html/storage_
-    fi
+<%= partial "docs/laravel/partials/volume_storage_steps" %>
 
 
-    FOLDER=/var/www/html/storage/database
-    if [ ! -d "$FOLDER" ]; then
-        echo "$FOLDER is not a directory, initializing database" 
-        mkdir /var/www/html/storage/database
-        touch /var/www/html/storage/database/database.sqlite
-    fi
-    ```
-    So what happened above?
-    - The first condition statement checks if the app folder does not exist in the volumized storage folder. If it does not exist, it copies over the contents of the storage_ folder to the volumized storage folder.
-    - The second condition statement checks if the database folder does not exist in the volumized storage folder. If it does not exist, it creates a database directory inside storage/ and finally creates a database.sqlite file in the storage/database folder.
-    <br />
-    <br />
+<b>On to the content of the Start Up script:</b>
+```bash
+FOLDER=/var/www/html/storage/app
+if [ ! -d "$FOLDER" ]; then
+    echo "$FOLDER is not a directory, copying storage_ content to storage"
+    cp -r /var/www/html/storage_/. /var/www/html/storage
+    echo "deleting storage_..."
+    rm -rf /var/www/html/storage_
+fi
 
-6.  Finally, deploy your Laravel Fly App!
 
-    ```cmd
-    fly deploy
-    ```
+FOLDER=/var/www/html/storage/database
+if [ ! -d "$FOLDER" ]; then
+    echo "$FOLDER is not a directory, initializing database" 
+    mkdir /var/www/html/storage/database
+    touch /var/www/html/storage/database/database.sqlite
+fi
+```
+<small>
+So what happened above?
+- The first condition statement checks if the app folder does not exist in the volumized storage folder. If it does not exist, it copies over the contents of the storage_ folder to the volumized storage folder.
+- The second condition statement checks if the database folder does not exist in the volumized storage folder. If it does not exist, it creates a database directory inside storage/ and finally creates a database.sqlite file in the storage/database folder.
+</small>
+<br />
+<br />
 
-    ### _Testing the Laravel Fly App's SQLite_
-    A simple php artisan migrate should let you know if all is well:
+<b>Finally, deploy your Laravel Fly App!</b>
 
-    ```cmd
-    fly ssh console -C "php /var/www/html/artisan migrate --force"
-    ```
+```cmd
+fly deploy
+```
+
+### _Testing the Laravel Fly App's SQLite_
+A simple php artisan migrate should let you know if all is well:
+
+```cmd
+fly ssh console -C "php /var/www/html/artisan migrate --force"
+```

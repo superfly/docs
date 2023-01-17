@@ -2,7 +2,7 @@
 title: "Laravel: GitHub Actions - CICD"
 layout: framework_docs
 objective: Configure continuous integration and development on your Laravel Fly App through GitHub. 
-order: 7
+order: 3
 ---
 
 Laravel applications are alive and bustling with feature updates and revisions. You'll want to add your Laravel Fly App in a GitHub repository for safe-versions-keeping, healthy-code-reviews, and good-old team-code management.

@@ -22,12 +22,14 @@ Take note of the following important steps in configuring your [Laravel Fly App]
     DB_DATABASE="/var/www/html/storage/database/database.sqlite"
 ```
 
-2) Execute `litefs mount` instead of starting the server in [`.fly/entrypoint.sh`](https://github.com/fly-apps/fly-laravel-litefs/blob/main/.fly/entrypoint.sh):
+2) Since we're saving the SQLite database in the storage directory, make sure to mount a volume on it by following this [guide here](/docs/laravel/the-basics/laravel-volume-storage/).
+
+3) Execute `litefs mount` instead of starting the server in [`.fly/entrypoint.sh`](https://github.com/fly-apps/fly-laravel-litefs/blob/main/.fly/entrypoint.sh):
 ```
 exec litefs mount
 ```
 
-3) Make sure to properly configure the configuration file( [etc/litefs.yml](https://github.com/fly-apps/fly-laravel-litefs/blob/main/etc/litefs.yml) ) [read](/docs/litefs/config/) by LiteFS:
+4) Make sure to properly configure the configuration file( [etc/litefs.yml](https://github.com/fly-apps/fly-laravel-litefs/blob/main/etc/litefs.yml) ) [read](/docs/litefs/config/) by LiteFS:
 ```yml
 fuse:
   # Point to the directory containing your DB_DATABASE in fly.toml
@@ -39,11 +41,11 @@ fuse:
 # Start the server, this was previously run in .fly/entrypoint.sh
 exec: "supervisord -c /etc/supervisor/supervisord.conf"
 ```
-4) Include a ( [etc/fuse.conf](https://github.com/fly-apps/fly-laravel-litefs/blob/main/etc/fuse.conf) ) file to enable `allow-other` option above to work.
+5) Include a ( [etc/fuse.conf](https://github.com/fly-apps/fly-laravel-litefs/blob/main/etc/fuse.conf) ) file to enable `allow-other` option above to work.
 
-5) Revise the generated [Dockerfile](https://github.com/fly-apps/fly-laravel-litefs#dockerfile) to include the `LiteFS` image, install required packages, and copy the configuration files `etc/litefs.yml` and `etc/fuse.conf` to a [proper location](/docs/litefs/config/#config-file-search-path) `LiteFS` can read.
+6) Revise the generated [Dockerfile](https://github.com/fly-apps/fly-laravel-litefs#dockerfile) to include the `LiteFS` image, install required packages, and copy the configuration files `etc/litefs.yml` and `etc/fuse.conf` to a [proper location](/docs/litefs/config/#config-file-search-path) `LiteFS` can read.
 
-6) Create a [middleware](https://github.com/fly-apps/fly-laravel-litefs/blob/main/app/Http/Middleware/FlyReplayLiteFSWrite.php) to forward write requests to the [primary node](/docs/litefs/primary/) using [fly-replay](/docs/reference/fly-replay/#fly-replay)
+7) Create a [middleware](https://github.com/fly-apps/fly-laravel-litefs/blob/main/app/Http/Middleware/FlyReplayLiteFSWrite.php) to forward write requests to the [primary node](/docs/litefs/primary/) using [fly-replay](/docs/reference/fly-replay/#fly-replay)
 
-7) Use a none-file session driver to [allow fly-replay to work](https://github.com/fly-apps/fly-laravel-litefs#fly-replay-and-csrf-tokens) on Laravel CSRF protection. 
+8) Use a none-file session driver to [allow fly-replay to work](https://github.com/fly-apps/fly-laravel-litefs#fly-replay-and-csrf-tokens) on Laravel CSRF protection. 
 
