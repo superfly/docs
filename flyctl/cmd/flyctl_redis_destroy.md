@@ -1,14 +1,15 @@
-Delete an Upstash Redis database
+Permanently destroy an Upstash Redis database
 
 ## Usage
 ~~~
-flyctl redis delete <name> [flags]
+flyctl redis destroy <name> [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -h, --help   help for delete
+  -h, --help   help for destroy
+  -y, --yes    Accept all confirmations
 ~~~
 
 ## Global Options
