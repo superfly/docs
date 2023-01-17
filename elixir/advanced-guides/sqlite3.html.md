@@ -144,7 +144,7 @@ end
 
 ### Limitations
 
-The `ecto_sqlite3` documentation have a [good guide](https://hexdocs.pm/ecto_sqlite3/Ecto.Adapters.SQLite3.html#module-limitations-and-caveats) on the limits of using Ecto with SQLite3. We recommend at least skimming this before putting it into production.
+The `ecto_sqlite3` documentation includes a [good guide](https://hexdocs.pm/ecto_sqlite3/Ecto.Adapters.SQLite3.html#module-limitations-and-caveats) on the limits of using Ecto with SQLite3. We recommend at least skimming this before putting it into production.
 
 ### Transfering Data from Postgres/MySql to SQLite3
 
