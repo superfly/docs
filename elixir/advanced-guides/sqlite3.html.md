@@ -43,7 +43,7 @@ time in two places:
   destination="/mnt/name"
 ```
 
-Next move remove the release step from the deploy section of your `fly.toml` and add a DATABASE_PATH variable
+Next remove the release step from the deploy section of your `fly.toml` and add a DATABASE_PATH variable:
 
 ```diff
 [env]
