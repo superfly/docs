@@ -1,5 +1,6 @@
 <aside class="callout">
 Caution! Mounting a Volume to a folder will initially erase any item it contains during the first time the Volume is mounted for the folder. 
+<br/><br/>
 
 For example, Laravel's storage folder contains subfolders: app, framework, and logs. 
 Mounting the volume to the storage folder erases these directories, and leaves behind a sole item paradoxically named as "lost+found". 
