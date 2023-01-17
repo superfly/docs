@@ -235,7 +235,7 @@ name-prod.db
 
 Then `ctrl-c` to exit.
 
-Finally update your env in fly.toml 
+Finally, update your env in `fly.toml`:
 
 ```toml
 [env]
