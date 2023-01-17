@@ -152,7 +152,7 @@ The `ecto_sqlite3` documentation includes a [good guide](https://hexdocs.pm/ecto
 This section is something to give you a starting point on how to get from X to SQLite. Make sure to back up your data and be vigilant, because this kind of thing is fraught at best.
 </aside>
 
-There is really no very easy way to do this since the datatypes between the databases are different... 
+There is really no very easy way to do this since the data types between the databases are different... 
 
 But here is one way that has worked for me in the past and might work for you! The Ruby [Sequel](https://sequel.jeremyevans.net/) project comes with a [command line tool for Copying Databases](https://sequel.jeremyevans.net/rdoc/files/doc/bin_sequel_rdoc.html#label-Copy+Databases).  This method *should* help when transferring between ADO, Amalgalite, IBM_DB, JDBC, MySQL, Mysql2, ODBC, Oracle, PostgreSQL, SQLAnywhere, and TinyTDS to SQLite3. That said it has limits! This is directly from the documentation:
 
@@ -165,7 +165,7 @@ Note that the support for copying is fairly limited. It doesn’t handle databas
 
 So YMMV on how useful this is for you. If you have a relatively simple database it might work great!
 
-Install ruby if you don't have ruby running on your machine:
+Install Ruby if you don't already have it on your machine.
 
 ```sh
 # Macos
@@ -176,12 +176,12 @@ apt-get install ruby-full
 ```
 
 The ruby database adapter Sequel comes with a really slick command line tool for copying databases, lets install that
-```sh 
+```cmd
 gem install sequel 
 ```
 
-Depending on your database you may need to install an extra adapter in this example we will be using Postgres so lets install that:
-```sh
+Depending on your database, you may need to install an extra adapter. In this example we use Postgres, so let's install that:
+```cmd
 gem install pg
 ```
 
