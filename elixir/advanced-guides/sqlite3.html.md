@@ -78,7 +78,7 @@ mix phx.new my_app --database sqlite3
 
 But if you're working with existing code, here are the steps you'll need to make on a Phoenix 1.6+ application.
 
-Append the following your `.gitignore` to ignore SQLite database files
+Append the following your `.gitignore` to ignore SQLite database files:
 
 ```.gitignore
 # Database files
