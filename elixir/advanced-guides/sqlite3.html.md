@@ -113,7 +113,7 @@ config :name, Name.Repo,
   pool: Ecto.Adapters.SQL.Sandbox
 ```
 
-And replace the `DATABASE_URL` in `config/runtime.exs` for production
+And replace the `DATABASE_URL` in `config/runtime.exs` for production:
 
 ```elixir
 if config_env() == :prod do
