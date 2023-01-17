@@ -149,7 +149,7 @@ The `ecto_sqlite3` documentation includes a [good guide](https://hexdocs.pm/ecto
 ### Transferring Data from Postgres/MySQL to SQLite3
 
 <aside class="callout"> 
-This section is something to give you a starting point on how to get from X to SQLite. Make sure to backup your data and by hyper vigilant because this kind of thing is fraught at best.
+This section is something to give you a starting point on how to get from X to SQLite. Make sure to back up your data and be vigilant, because this kind of thing is fraught at best.
 </aside>
 
 There is really no very easy way to do this since the datatypes between the databases are different... 
