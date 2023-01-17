@@ -146,7 +146,7 @@ end
 
 The `ecto_sqlite3` documentation includes a [good guide](https://hexdocs.pm/ecto_sqlite3/Ecto.Adapters.SQLite3.html#module-limitations-and-caveats) on the limits of using Ecto with SQLite3. We recommend at least skimming this before putting it into production.
 
-### Transfering Data from Postgres/MySql to SQLite3
+### Transferring Data from Postgres/MySQL to SQLite3
 
 <aside class="callout"> 
 This section is something to give you a starting point on how to get from X to SQLite. Make sure to backup your data and by hyper vigilant because this kind of thing is fraught at best.
