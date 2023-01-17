@@ -53,8 +53,8 @@ Next remove the release step from the deploy section of your `fly.toml` and add 
 -  release_command = "/app/bin/migrate"
 ```
 
-This step is required because a volume may not be ready once your application release runs, so to fix this we need to run Migrations on 
-application start. This can be accomplished by adding the following line to your `lib/name/application.ex`:
+This step is required because a volume may not be ready once your application release runs, so to fix this we need to run migrations on 
+application start. this can be accomplished by adding the following line to your `lib/name/application.ex:
 
 ```diff
   @impl true
@@ -65,8 +65,11 @@ application start. This can be accomplished by adding the following line to your
 
 ## Deploy
 
-These changes can be deployed using `fly deploy`.
+These changes can be deployed:
 
+```cmd
+fly deploy
+```
 
 ## Converting to SQLite3
 
@@ -154,7 +157,7 @@ This section is something to give you a starting point on how to get from X to S
 
 There is really no very easy way to do this since the data types between the databases are different... 
 
-But here is one way that has worked for me in the past and might work for you! The Ruby [Sequel](https://sequel.jeremyevans.net/) project comes with a [command line tool for Copying Databases](https://sequel.jeremyevans.net/rdoc/files/doc/bin_sequel_rdoc.html#label-Copy+Databases).  This method *should* help when transferring between ADO, Amalgalite, IBM_DB, JDBC, MySQL, Mysql2, ODBC, Oracle, PostgreSQL, SQLAnywhere, and TinyTDS to SQLite3. That said it has limits! This is directly from the documentation:
+But here is one way that has worked for me in the past and might work for you! The Ruby [Sequel](https://sequel.jeremyevans.net/) project comes with a [command line tool for copying databases](https://sequel.jeremyevans.net/rdoc/files/doc/bin_sequel_rdoc.html#label-Copy+Databases).  This method *should* help when transferring between ADO, Amalgalite, IBM_DB, JDBC, MySQL, Mysql2, ODBC, Oracle, PostgreSQL, SQLAnywhere, and TinyTDS to SQLite3. That said it has limits! This is directly from the documentation:
 
 <p class="callout">
 This copies the table structure, table data, indexes, and foreign keys from the MySQL database to the PostgreSQL database.
@@ -167,16 +170,19 @@ So YMMV on how useful this is for you. If you have a relatively simple database 
 
 Install Ruby if you don't already have it on your machine.
 
-```sh
-# Macos
+#### Macos
+```cmd
 brew install ruby
+```
+or 
 
-# Ubuntu
+#### Ubuntu
+```cmd
 apt-get install ruby-full
 ```
 
-The ruby database adapter Sequel comes with a really slick command line tool for copying databases, lets install that
-```cmd
+The Ruby database adapter Sequel comes with a really slick command line tool for copying databases; let's install that
+```sh 
 gem install sequel 
 ```
 
@@ -224,10 +230,10 @@ And use the `put` command to transfer your file to the volume path.
 
 Check that it's there:
 
-```cmd
+```sh
 » ls /mnt
 ```
-```output
+```sh
 name.db
 name-prod.db
 .... other files
