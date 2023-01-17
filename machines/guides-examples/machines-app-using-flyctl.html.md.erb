@@ -38,7 +38,7 @@ If you like to do things in an orderly fashion, you might want the App to have p
 fly apps create --machines --name testrun
 fly ips allocate-v4 --shared -a testrun
 fly ips allocate-v6 -a testrun
-fly m run . -p 443:8080/tcp:tls --region yyz -a testrun
+fly m run . -p 443:8080/tcp:tls:http -p 80:8080/tcp:http --region yyz -a testrun
 ```
 
 The last command configures and deploys the VM. See the `.` in there? That, in this case, is the path to the Dockerfile. Such a diminutive, easy-to-miss representation of _everything you want to supply for the VM to run_. Don't leave it out.
@@ -48,7 +48,7 @@ Note the allocation of a [shared IPv4 address](/docs/reference/services/#shared-
 If your app doesn't exist yet, `fly m run` will prompt you to create it, so you can actually do this instead:
 
 ```
-fly m run . -p 443:8080/tcp:tls --region yyz -a testrun
+fly m run . -p 443:8080/tcp:tls:http -p 80:8080/tcp:http --region yyz -a testrun
 fly ips allocate-v4 --shared -a testrun
 fly ips allocate-v6 -a testrun
 ```
@@ -75,7 +75,7 @@ And just try it out:
 fly apps create --machines --name testrun 
 fly ips allocate-v4 --shared -a testrun
 fly ips allocate-v6 -a testrun
-fly m run . -p 443:8080/tcp:tls --region yyz -a testrun
+fly m run . -p 443:8080/tcp:tls:http -p 80:8080/tcp:http --region yyz -a testrun
 ```
 
 Once I get a message like this:
@@ -168,7 +168,7 @@ Oh noes, I told Fly Proxy to send requests to internal port 8080 when all along,
 If this was a Fly Apps V1 (Nomad) app, I'd edit the internal port in my `fly.toml` and redeploy. I'll do the Fly Machines equivalent: `fly m update` with the modification I want to make to the configuration.
 
 ```cmd
-fly m update -p 443:4999/tcp:tls 21781160b41d89 -a testrun
+fly m update -p 443:4999/tcp:tls:http -p 80:4999/tcp:http 21781160b41d89 -a testrun
 ```
 ```out
 Searching for image 'registry.fly.io/testrun:deployment-01GMF1WS8C28CDDYAFBVHA8F0Q' remotely...
@@ -178,19 +178,30 @@ Image size: 54 MB
 
 Configuration changes to be applied to machine: 21781160b41d89 (lingering-shape-1541)
 
-        ... // 14 identical lines
-                        {
-                                "protocol": "tcp",
--                               "internal_port": 8080,
-+                               "internal_port": 4999,
-                                "ports": [
-                                        {
-        ... // 18 identical lines
+  	{
+    ...
+  	... // 2 identical lines
+  			{
+  				"protocol": "tcp",
+- 				"internal_port": 8080,
++ 				"internal_port": 4999,
+  				"ports": [
+  					{
+  	... // 8 identical lines
+  			{
+  				"protocol": "tcp",
+- 				"internal_port": 8080,
++ 				"internal_port": 4999,
+  				"ports": [
+  					{
+  	... // 15 identical lines
   
 ? Apply changes? Yes
 Updating machine 21781160b41d89
 No health checks found
 Machine 21781160b41d89 updated successfully!
+==> Monitoring health checks
+No health checks found
 
 Monitor machine status here:
 https://fly.io/apps/testrun/machines/21781160b41d89
@@ -267,7 +278,7 @@ to update every VM on the App to the new image.
 I can create another Machine with `fly m run` using the same image as the others are running, on the same App, but in a different region (use the correct port this time):
 
 ```cmd
-fly m run registry.fly.io/testrun:v12 -p 443:4999/tcp:tls --region syd -a testrun
+fly m run registry.fly.io/testrun:v12 -p 443:4999/tcp:tls:http -p 80:4999/tcp:http --region syd -a testrun
 ```
 
 ### By cloning a Machine
