@@ -59,7 +59,7 @@ application start. This can be accomplished by adding the following line to your
 ```diff
   @impl true
   def start(_type, _args) do
-+ . Name.Release.migrate()
++   Name.Release.migrate()
     children = [
 ```
 
