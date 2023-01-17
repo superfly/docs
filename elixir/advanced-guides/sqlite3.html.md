@@ -37,7 +37,7 @@ The default volume size is 3 gigabytes.
 Add the following to your `fly.toml`, once again replacing the name with what you selected, this
 time in two places:
 
-```
+```toml
 [mounts]
   source="name"
   destination="/mnt/name"
