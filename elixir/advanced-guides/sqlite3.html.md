@@ -27,8 +27,7 @@ Following are the steps required to make this work:
 fly volumes create name
 ```
 
-Replace `name` with your desired volume name.  Only alphanumeric characters an
-underscores are allowed in names.
+Replace `name` with your desired volume name.  Only alphanumeric characters and underscores are allowed in names.
 
 Optionally, you may specify the size of the volume, in gigabytes, by adding a `--size int` argument.
 The default volume size is 3 gigabytes.
