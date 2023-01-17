@@ -34,4 +34,4 @@ fly deploy
 
 Nice! Our application is ready for clustering!
 
-Next up, [Clustering](/docs/elixir/getting-started/clustering/)!
+Next up, [Clustering](/docs/elixir/the-basics/clustering/)!
