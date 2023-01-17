@@ -76,7 +76,7 @@ Creating a new project with SQLite3 as the default is as simple as
 mix phx.new my_app --database sqlite3
 ```
 
-But if your working with existing code here are the steps you'll need to make on a Phoenix 1.6+ application.
+But if you're working with existing code, here are the steps you'll need to make on a Phoenix 1.6+ application.
 
 Append the following your `.gitignore` to ignore SQLite database files
 
