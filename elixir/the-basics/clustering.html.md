@@ -247,7 +247,7 @@ Also from the docs, we can generate the cookie string to use with this Elixir co
 Base.url_encode64(:crypto.strong_rand_bytes(40))
 ```
 
-After deploying the application, we can verify that the cookie is being used by getting an [IEx shell into our running server](/docs/elixir/getting-started/iex-into-running-app/) and issuing the following command:
+After deploying the application, we can verify that the cookie is being used by getting an [IEx shell into our running server](/docs/elixir/the-basics/iex-into-running-app/) and issuing the following command:
 
 ```
 Node.get_cookie()

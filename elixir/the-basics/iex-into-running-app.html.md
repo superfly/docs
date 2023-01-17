@@ -3,8 +3,7 @@ title: IEx into Your Running App
 layout: framework_docs
 order: 1
 redirect_from:
-  - /docs/getting-started/elixir/
-  - /docs/getting-started/iex-into-running-app/
+  - /docs/elixir/getting-started/iex-into-running-app/
 blog_path: /phoenix-files
 objective: Get an IEx shell into your running production app on Fly!
 ---
