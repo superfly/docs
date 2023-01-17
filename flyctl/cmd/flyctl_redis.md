@@ -9,7 +9,7 @@ flyctl redis [command] [flags]
 * [connect](/docs/flyctl/redis-connect/)	 - Connect to a Redis database using redis-cli
 * [create](/docs/flyctl/redis-create/)	 - Create an Upstash Redis database
 * [dashboard](/docs/flyctl/redis-dashboard/)	 - View your Upstash Redis databases on the Upstash web console
-* [delete](/docs/flyctl/redis-delete/)	 - Delete an Upstash Redis database
+* [destroy](/docs/flyctl/redis-destroy/)	 - Permanently destroy an Upstash Redis database
 * [list](/docs/flyctl/redis-list/)	 - List Upstash Redis databases for an organization
 * [plans](/docs/flyctl/redis-plans/)	 - List available Redis plans
 * [reset](/docs/flyctl/redis-reset/)	 - Reset the password for an Upstash Redis database
