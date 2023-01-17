@@ -6,7 +6,7 @@ status: beta
 ---
 
 While Elixir applications on [Fly.io](https://fly.io) normally run on Postgres databases, you can
-choose to run them on [SQLite3](https://www.sqlite.org/index.html). This guide will assume you have an already setup 
+choose to run them on [SQLite3](https://www.sqlite.org/index.html). This guide will assume you have setup 
 and configured Phoenix Application using [ecto_sqlite3](https://github.com/elixir-sqlite/ecto_sqlite3) running locally.
 
 To make this work, you will need to place your databases on persistent [Volumes](https://www.sqlite.org/index.html)
@@ -43,7 +43,7 @@ time in two places:
   destination="/mnt/name"
 ```
 
-Next remove the release step from the deploy section of your `fly.toml` and add a DATABASE_PATH variable:
+Next remove the release step from the `[deploy]` section of your `fly.toml` and add a DATABASE_PATH variable:
 
 ```diff
 [env]
@@ -54,7 +54,7 @@ Next remove the release step from the deploy section of your `fly.toml` and add 
 ```
 
 This step is required because a volume may not be ready once your application release runs, so to fix this we need to run migrations on 
-application start. this can be accomplished by adding the following line to your `lib/name/application.ex:
+application start. This can be accomplished by adding the following line to your `lib/name/application.ex:
 
 ```diff
   @impl true
@@ -132,7 +132,7 @@ if config_env() == :prod do
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5")
 ```
 
-Finally update your Repo to use the SQLite adapter in `lib/name/repo.ex`:
+Finally, update your Repo to use the SQLite adapter in `lib/name/repo.ex`:
 
 ```elixir
 defmodule Name.Repo do
@@ -170,7 +170,7 @@ So YMMV on how useful this is for you. If you have a relatively simple database 
 
 Install Ruby if you don't already have it on your machine.
 
-#### Macos
+#### macOS
 ```cmd
 brew install ruby
 ```
