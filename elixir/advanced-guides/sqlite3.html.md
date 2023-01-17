@@ -86,7 +86,7 @@ Append the following your `.gitignore` to ignore SQLite database files
 *.db-*
 ```
 
-Replace the `:postgex` dep from your `mix.exs` with `ecto_sqlite`
+Replace the `:postgrex` dep from your `mix.exs` with `ecto_sqlite`.
 
 ```elixir
 def deps do
