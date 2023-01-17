@@ -278,7 +278,7 @@ to update every VM on the App to the new image.
 I can create another Machine with `fly m run` using the same image as the others are running, on the same App, but in a different region (use the correct port this time):
 
 ```cmd
-fly m run registry.fly.io/testrun:v12  -p 443:4999/tcp:tls:http -p 80:4999/tcp:http --region syd -a testrun
+fly m run registry.fly.io/testrun:v12 -p 443:4999/tcp:tls:http -p 80:4999/tcp:http --region syd -a testrun
 ```
 
 ### By cloning a Machine
