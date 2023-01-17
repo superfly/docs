@@ -243,7 +243,7 @@ Then `ctrl-c` to exit.
 
 Finally, update your env in `fly.toml`:
 
-```toml
+```diff
 [env]
 - DATABASE_PATH = "/mnt/name.db"
 + DATABASE_PATH = "/mnt/name-prod.db"
