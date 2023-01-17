@@ -97,7 +97,7 @@ def deps do
 end
 ```
 
-Update the repo configuration in `config/dev.exs`
+Update the repo configuration in `config/dev.exs`:
 ```elixir
 config :name, Name.Repo,
   database: Path.expand("../name_dev.db", Path.dirname(__ENV__.file)),
