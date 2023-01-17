@@ -243,7 +243,7 @@ Finally, update your env in `fly.toml`:
 + DATABASE_PATH = "/mnt/name-prod.db"
 ```
 
-And to persist that change
+And to persist that change:
 ```sh
 fly deploy
 ```
