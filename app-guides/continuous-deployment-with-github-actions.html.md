@@ -35,19 +35,19 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
 ```yaml
 name: Fly Deploy
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 env:
-    FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 jobs:
-    deploy:
-        name: Deploy app
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: superfly/flyctl-actions/setup-flyctl@master
-            - run: flyctl deploy --remote-only
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
 ```
 
 9.  Commit your changes and push them up to GitHub.
