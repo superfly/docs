@@ -298,11 +298,11 @@ Configure the TLS versions and ALPN protocols that Fly's edge will use to termin
 ```
 
 * `alpn` : Array of strings indicating how to handle ALPN negotiations with clients.
-* `versions` : Array of string indicating which TLS versions are allowed
+* `versions` : Array of strings indicating which TLS versions are allowed.
 
 Fly can also terminate TLS only and pass through directly to your service. This works for a variety of applications that can benefit from offloading TLS termination and accept the unencrypted connection.
 
-One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS and sends h2c (HTTP/2 without TLS) directly to your application through our backhaul. The config below will negotiate http/2 with clients, and then send h2c to the application:
+One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS and sends h2c (HTTP/2 without TLS) directly to your application through our backhaul. The config below will negotiate HTTP/2 with clients, and then send h2c to the application:
 
 ```toml
   [[services.ports]]
@@ -465,6 +465,18 @@ Some `fly` commands accept a process name as an argument. The following examples
 * Change regions: `fly regions set iad --group worker`
 
 For a bit more context on the `processes` feature, you can read our [community announcement](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/).
+
+## The `metrics` section
+
+Fly apps can be configured to export custom metrics to the Fly.io hosted Prometheus service. Add this section to fly.toml.
+
+```toml
+[metrics]
+port = 9091       # default for most prometheus clients
+path = "/metrics" # default for most prometheus clients
+```
+
+Check out the [Metrics on Fly](/docs/reference/metrics/) for more information about collecting metrics for your apps.
 
 ## The `experimental` section
 
