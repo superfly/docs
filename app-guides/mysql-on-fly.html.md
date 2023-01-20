@@ -152,7 +152,7 @@ flyctl proxy 13306:3306 -a my-mysql
 Then connect to your MySQL server at `localhost:3306` and the username and password credentials from above:
 
 ```cmd
-mysql -h localhost -P 3306 -u hotdogs_are_tacos -ppassword some_db
+mysql -h localhost -P 3306 -u non_root_user -ppassword some_db
 ```
 
 ## Backups
