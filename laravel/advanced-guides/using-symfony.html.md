@@ -40,9 +40,9 @@ class FlySymfonyRuntime extends SymfonyRuntime
 }
 ```
 
-This just disables the requirement for a `.env` file to be present.
+This disables the requirement for the `.env` file to be present.
 
-We can then update our Dockerfile to copy that file into our application when we deploy to Fly.io:
+We can then update our `Dockerfile` to copy our new PHP file into the application when we deploy to Fly.io:
 
 ```dockerfile
 # Add this command into the Dockerfile in the string of
@@ -51,7 +51,7 @@ We can then update our Dockerfile to copy that file into our application when we
 cp .fly/FlySymfonyRuntime.php /var/www/html/src/FlySymfonyRuntime.php
 ```
 
-We also need to tell Symfony to use this new runtime by setting an environment variable in `fly.toml`:
+We also need to tell Symfony to use the `FlySymfonyRuntime` by setting an environment variable in `fly.toml`:
 
 ```toml
 [env]
@@ -60,12 +60,12 @@ We also need to tell Symfony to use this new runtime by setting an environment v
 
 ## The Fly Proxy
 
-We need our application to be aware of the Fly Proxy, which is a routing layer (like a load balancer) that sits between your application server and the public internet.
+Symfony needs to be aware of the Fly Proxy in order to generate links correctly (among other things). The Fly proxy is a routing layer (similar to a load balancer) that sits between your application server and the public internet.
 
-The proxy terminates SSL connections, and sends "http" requests to your application. Tell Symfony to [trust this proxy](https://symfony.com/doc/current/deployment/proxies.html) by editing file `config/packages/framework.yaml` and adding `trusted_proxies: '127.0.0.1,REMOTE_ADDR'`.
+The proxy terminates SSL connections, and sends "http" requests to your application. We need to tell Symfony to [trust this proxy](https://symfony.com/doc/current/deployment/proxies.html) by editing file `config/packages/framework.yaml` and adding `trusted_proxies: '127.0.0.1,REMOTE_ADDR'`.
 
 ## Detail Work
 
-That's basically it! From then on, running `fly deploy` should let you deploy the application and run your Symfony application!
+That's basically it! From then on, running `fly deploy` should let you deploy the application and run your Symfony application.
 
 If you want to see examples of running queues or connecting to a database, check out [this article](https://dejager.sh/articles/deploying-symfony-on-fly) which has details on that.
