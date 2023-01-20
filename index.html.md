@@ -30,7 +30,7 @@ If you have an app running on [Heroku](https://www.heroku.com/), you may be inte
 
 More on [builders](/docs/reference/builders).
 
-## Happiness on the CLI
+## flyctl: your CLI command center
 
 `flyctl` is our command-line tool to facilitate app configuration, building, deployment and management. [It's the command center for your Fly.io apps.](/docs/flyctl/)
 
@@ -42,6 +42,6 @@ That's the short version. And you do have to write your app, in the language of 
 
 `flyctl` can then help you manage your app's [deployment regions](/docs/reference/regions/), [scaling](/docs/reference/scaling/), and [secrets](/docs/reference/secrets/).
 
-If you want to experience `flyctl` for yourself, you can go hands-on for free and [launch a container on Fly](/docs/hands-on/start/).
+If you want to experience `flyctl` for yourself, you can go hands-on for free and [launch a VM on Fly](/docs/hands-on/start/).
 
 If you just want to read about all the talents of `flyctl`, here's another link to its [documentation](/docs/flyctl/).
