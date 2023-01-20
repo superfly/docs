@@ -66,8 +66,8 @@ kill_timeout = 5
   destination="/data"
 
 [env]
-  MYSQL_DATABASE = "cube_theory"
-  MYSQL_USER = "hotdogs_are_tacos"
+  MYSQL_DATABASE = "some_db"
+  MYSQL_USER = "non_root_user"
 
 [build]
   image = "mysql:8"
@@ -86,6 +86,7 @@ There's a few important things to note:
 1. We deleted the `[[services]]` block and everything under it. We don't need it!
 1. We added the `[build]` section to specify an existing Docker image. We don't need to create a `Dockerfile` of our own.
 1. The `[env]` section contains two not-so-secret environment variables that MySQL will need to initialize itself.
+    1. The `MYSQL_USER` here should be any user but `root`, which already exists
 1. We added the `[experimental]` section, which lets us pass a custom command (overriding Docker's `CMD`).
     1. For MySQL 8, you'll want to use the `mysql_native_password` password plugin
     1. **More importantly**, we set MySQL's data directory to a **subdirectory** of our mounted volume
@@ -151,7 +152,7 @@ flyctl proxy 13306:3306 -a my-mysql
 Then connect to your MySQL server at `localhost:3306` and the username and password credentials from above:
 
 ```cmd
-mysql -h localhost -P 3306 -u hotdogs_are_tacos -ppassword cube_theory
+mysql -h localhost -P 3306 -u hotdogs_are_tacos -ppassword some_db
 ```
 
 ## Backups
