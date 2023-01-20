@@ -476,7 +476,7 @@ port = 9091       # default for most prometheus clients
 path = "/metrics" # default for most prometheus clients
 ```
 
-Check out the [Metrics on Fly](/docs/reference/metrics/) for more information about collecting metrics for your apps.
+Check out [Metrics on Fly](/docs/reference/metrics/) for more information about collecting metrics for your apps.
 
 ## The `experimental` section
 
