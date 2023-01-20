@@ -22,7 +22,7 @@ We want you to run your full stack close to users, whether it’s a simple web s
 
 One thing to know: Docker images ([OCI container images](/blog/docker-without-docker/)) are how we give Firecracker your app to make into a microVM. That means you *can* use Docker to build the container image with your app and its environment. You can also point to a pre-built image.
 
-In many cases, you won't have to touch Docker; we can scan your source code and detect which [pre-existing buildpack](https://fly.io/docs/reference/builders/#buildpacks) matches the configuration you need, and our remote builder will build your app container image on deploy.
+[In many cases](https://fly.io/docs/languages-and-frameworks/), you won't have to touch Docker; `fly launch` can scan your source code and configure your project for deployment on Fly.io, and our remote builder will build your app's Docker image when you deploy.
 
 <div class="callout">
 If you have an app running on [Heroku](https://www.heroku.com/), you may be interested in our quick-and-easy [**Turboku web launcher**](https://fly.io/launch/heroku) to deploy it on Fly.io too. [**Read more here**](https://fly.io/blog/new-turboku/).
