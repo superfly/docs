@@ -1,5 +1,5 @@
 ---
-title: Introducing Flyctl - The Fly.io CLI
+title: Introducing Flyctl - The Fly CLI
 layout: docs
 sitemap: false
 nav: flyctl
