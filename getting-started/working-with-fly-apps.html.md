@@ -1,20 +1,20 @@
 ---
-title: Working with Fly Applications
+title: Working with Fly Apps
 layout: docs
 sitemap: false
 nav: firecracker
 ---
 
-Once you have deployed a Fly application, you can view information about it, give the system secrets to share with it, and associate it with a custom domain. 
+Once you have deployed an application to Fly.io, you can view information about it, give the system secrets to share with it, associate it with a custom domain, and more. 
 
 
 ## _Viewing Applications_
 
-`flyctl` can reveal useful information about the application: 
+flyctl can reveal useful information about the app: 
 
-* generally about the application configuration
-* specifically about the application deployment 
-* and historically with the applications logs
+* generally about the app configuration
+* specifically about the app deployment 
+* and historically with the app logs
 
 ### General Information
 
@@ -23,7 +23,7 @@ The `info` subcommand will reveal the name of the current application, owner, a 
 Finally, it shows the **IP Addresses** that the application is mapped to. You'll need this information for configuring your custom domains.
 
 ```cmd
-flyctl info
+fly info
 ```
 ```output
 App
@@ -44,7 +44,7 @@ IP Addresses
   v6     2a09:8280:1:27a2:d07e:157d:dd9e:87d2   2020-01-17T16:51:24Z
 ```
 
-The IP Address information is also available with the `flyctl ips list` command.
+The IP Address information is also available with the `fly ips list` command.
 
 ### Deployment Status
 
@@ -53,7 +53,7 @@ the deployment is currently running, it will also break that down. When the appl
 in the various global datacenters. The `status` command will also detail those, including their status, region and when they were created.
 
 ```cmd
-flyctl status
+fly status
 ```
 ```output
 App
@@ -80,7 +80,7 @@ Allocations
 Each Fly application has a log. It includes the console output of all instances of an application. Running `fly logs` you will display those logs and automatically wait for new log entries. For example, when we run the hellofly sample:
 
 ```cmd
-flyctl logs
+fly logs
 ```
 ```output
 2020-01-22T14:35:05.933Z 70fda853 ams [info] {"message":"\r","app":3366,"region":"ams","alloc":"70fda853"}
@@ -107,22 +107,22 @@ Passing information, like credentials, to an application is handled through Fly'
 password=process.env.BANKPASSWORD
 ```
 
-All we need to do now is set it, and that's done with `flyctl secrets set`. It takes a list of names and values as parameters.
+All we need to do now is set it, and that's done with `fly secrets set`. It takes a list of names and values as parameters.
 
 ```cmd
-flyctl secrets set BANKPASSWORD="M0M0NEY"
+fly secrets set BANKPASSWORD="M0M0NEY"
 ```
 ```output
 VERSION   TYPE      STATUS   DESCRIPTION       USER                 DATE
 v1        release            Secrets updated   demo@fly.io          just now
 ```
 
-New instances of the app will now see that value. The `secrets set` command can also set a number of secrets at the same time and take secrets from STDIN. See the [flyctl documentation for secrets set](/docs/flyctl/secrets-set/) for details.
+New instances of the app will now see that value. The `secrets set` command can also set a number of secrets at the same time and take secrets from STDIN. See the [flyctl documentation for `secrets set`](/docs/flyctl/secrets-set/) for details.
 
-If you need to know what secrets have been set then `flyctl secrets list` will show you:
+If you need to know what secrets have been set then `fly secrets list` will show you:
 
 ```cmd
-flyctl secrets list
+fly secrets list
 ```
 ```output
 NAME           DIGEST                             DATE
@@ -131,19 +131,19 @@ BANKPASSWORD   51e7d4ab982ee30a690d12f15b866370   8m7s ago
 
 It will only show you the name. The value is not shown as it is a secret.
 
-If you need to remove a secret from an app, `flyctl secrets unset` will remove them by name
+If you need to remove a secret from an app, `fly secrets unset` will remove them by name
 
 ```cmd
-flyctl secrets unset BANKPASSWORD
+fly secrets unset BANKPASSWORD
 ```
 ```output
 VERSION   TYPE      STATUS   DESCRIPTION       USER                 DATE
 v11       release            Secrets updated   demo@fly.io          just now
 ```
 
-## _Fly and Custom Domains_
+## Fly.io and Custom Domains
 
-When you create a Fly app, it is automatically given a fly.dev sub-domain, based on the app's name. This is great for testing but when you want to go to full production you'll want your application to appear on your own domain and have HTTPS set up for you as it is with your .fly.dev domain. That's where the `flyctl certs` command comes in. But let's step back before we set up the TLS certificate, to the first step: **Directing Traffic To Your Site**.
+When you create a Fly App, it is automatically given a fly.dev sub-domain, based on the app's name. This is great for testing but when you want to go to full production you'll want your application to appear on your own domain and have HTTPS set up for you as it is with your .fly.dev domain. That's where the `fly certs` command comes in. But let's step back before we set up the TLS certificate, to the first step: **Directing Traffic To Your Site**.
 
 ### Setting A CNAME Record
 
@@ -161,7 +161,7 @@ Now, accessing `mydreamdomain.com` will tell the DNS system to look up `exemplum
 
 The other option is slightly more complicated in that it uses the IP address of the app, rather than its DNS name. The upside is that it is slightly faster. 
 
-To start, we need the Fly IP address of our deployed application. To get that, use the `flyctl ips list` command we covered earlier on.
+To start, we need the Fly IP address of our deployed application. To get that, use the `fly ips list` command we covered earlier on.
 
 You'll need to configure this with your DNS provider.
 
@@ -172,10 +172,10 @@ If we have our domain `mydreamdomain.com`,
 ### Getting Certified
 
 To enable HTTPS on the domain, you need to get a certificate. Fly does that for you automatically! 
-It starts with creating a certificate for *your* custom domain with `flyctl certs create example.com`:
+It starts with creating a certificate for *your* custom domain with `fly certs create example.com`:
 
 ```cmd
-flyctl certs add mydreamdomain.com
+fly certs add mydreamdomain.com
 ```
 ```output
   Hostname                    = mydreamdomain.com
@@ -191,10 +191,10 @@ flyctl certs add mydreamdomain.com
   Status                      =
 ```
 
-This will start the process of getting a certificate. Run `flyctl certs show example.com` to get the details needed for your next step:
+This will start the process of getting a certificate. Run `fly certs show example.com` to get the details needed for your next step:
 
 ```cmd
-flyctl certs show mydreamdomain.com
+fly certs show mydreamdomain.com
 ```
 ```output
   Hostname                    = mydreamdomain.com

@@ -26,7 +26,7 @@ Be sure to have generated an up-to-date `requirements.txt` file for any new pack
 
 ## flyctl
 
-Fly has its own command-line utility for managing apps, [flyctl](https://fly.io/docs/hands-on/install-flyctl/). If not already installed, follow the instructions on the [installation guide](https://fly.io/docs/getting-started/installing-flyctl/) and [log in to Fly](https://fly.io/docs/getting-started/log-in-to-fly/).
+Fly.io has its own command-line utility for managing apps, [flyctl](https://fly.io/docs/hands-on/install-flyctl/). If not already installed, follow the instructions on the [installation guide](https://fly.io/docs/getting-started/installing-flyctl/) and [log in to Fly](https://fly.io/docs/getting-started/log-in-to-fly/).
 
 
 ## Provision Django and Postgres Servers
@@ -93,7 +93,7 @@ The `fly launch` command creates two new files in the project that are automatic
 
 The [Dockerfile](https://docs.docker.com/engine/reference/builder/) is essentially instructions for creating an image. On the last line make sure to replace `"demo.wsgi"` with your Django project's name.
 
-The [`fly.toml`](https://fly.io/docs/reference/configuration/) file is used by Fly to configure applications for deployment. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here.
+The [`fly.toml`](https://fly.io/docs/reference/configuration/) file is used by Fly.io to configure applications for deployment. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here.
 
 ## ALLOWED_HOSTS & CSRF\_TRUSTED_ORIGINS
 
@@ -153,23 +153,23 @@ Secrets allow sensitive values, such as credentials and API keys, to be securely
 
 ### Git
 
-Fly deployments are initiated via the `fly deploy` command--git isn't needed to deploy to Fly. The advantage of this approach is that your git history will be clean and not full of `git push` commits such as occurs on other hosting platforms.
+Deployments are initiated via the `fly deploy` command--git isn't needed to deploy to Fly.io. The advantage of this approach is that your git history will be clean and not full of `git push` commits such as occurs on other hosting platforms.
 
 This also means that `.gitignore` files are not ignored. If you have secrets or other sensitive information in your git history, it is recommended to create a `.dockerignore` file and add the git repo there.
 
 ### Databases
 
-Fly comes with built-in [Postgres support](https://fly.io/docs/postgres/) to automate provisioning, maintenance, and snapshot tasks for your Postgres database, but it does not manage it. If you run out of disk space, RAM, or other resources on your Fly Postgres instances, you'll have to scale those virtual machines from the Fly CLI. If you prefer, you can instead connect to an [external fully-managed Postgres database](https://fly.io/docs/postgres/#fully-managed-postgres).
+Fly.io has a [Postgres offering](https://fly.io/docs/postgres/) to automate provisioning, maintenance, and snapshot tasks for your Postgres database, but it does not manage it. If you run out of disk space, RAM, or other resources on your Fly Postgres instances, you'll have to scale those virtual machines from the Fly CLI. If you prefer, you can instead connect to an [external fully-managed Postgres database](https://fly.io/docs/postgres/#fully-managed-postgres).
 
 ### Custom Domain & SSL Certificates
 
-After you finish deploying your application to Fly and have tested it extensively, [read through the Custom Domain docs](/docs/app-guides/custom-domains-with-fly) and point your domain at Fly.
+After you finish deploying your application to Fly.io and have tested it extensively, [read through the Custom Domain docs](/docs/app-guides/custom-domains-with-fly) and point your domain at Fly.
 
-In addition to supporting [`CNAME` DNS records](/docs/app-guides/custom-domains-with-fly#option-i-cname-records), Fly also supports [`A` and `AAAA` records](/docs/app-guides/custom-domains-with-fly#option-ii-a-and-aaaa-records) for those who want to point `example.com` (without the `www.example.com`) directly at Fly.
+In addition to supporting [`CNAME` DNS records](/docs/app-guides/custom-domains-with-fly#option-i-cname-records), Fly.io also supports [`A` and `AAAA` records](/docs/app-guides/custom-domains-with-fly#option-ii-a-and-aaaa-records) for those who want to point `example.com` (without the `www.example.com`) directly at Fly.
 
-### Flyctl Commands
+### flyctl Commands
 
-The [Fly CLI docs](https://fly.io/docs/flyctl/) have an extensive inventory of Fly commands. Here are a few common commands especially if you are coming from another hosting service like Heroku.
+The [flyctl CLI docs](https://fly.io/docs/flyctl/) have an extensive inventory of `fly` commands. Here are a few common commands especially if you are coming from another hosting service like Heroku.
 
 | Task         | Command |
 |--------------|-----------|

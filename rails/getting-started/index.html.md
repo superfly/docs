@@ -4,7 +4,7 @@ layout: framework_docs
 order: 1
 redirect_from: /docs/getting-started/rails/
 subnav_glob: docs/rails/getting-started/*.html.*
-objective: Quickly get a very basic Rails blog up and running at Fly. This guide is the fastest way to try using Fly, so if you're short on time start here.
+objective: Quickly get a very basic Rails blog up and running on Fly.io. This guide is the fastest way to try using Fly, so if you're short on time start here.
 related_pages:
   - /docs/rails/the-basics
   - /docs/flyctl/
@@ -18,7 +18,7 @@ demonstrates a trivial view, then scaffolds a database table, and finally makes
 use of [Turbo Streams](https://turbo.hotwired.dev/handbook/streams) to dynamically
 update pages.
 
-In order to start working with Fly you will need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once thats installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
+In order to start working with Fly.io, you will need `flyctl`, our CLI app for managing apps. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once thats installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
 
 <div class="callout">
 Before proceeding, something to be aware of. While Rails is [Optimized for Programmer happiness](https://rubyonrails.org/doctrine#optimize-for-programmer-happiness), it isn't particularly optimized for minimum RAM consumption. If you wish to deploy an app of any appreciable size or even make extensive use of features like `rails console`, you likely will hit RAM limits on your machine. And when applications run out of memory, they tend to behave unpredictably as error recovery actions will often also fail due to lack of memory.
@@ -191,7 +191,7 @@ Let's deploy it.
 ### Deployment
 
 Normally at this point you have database migrations to worry about, code to push,
-and server processes to restart. Fly takes care of all of this and more, so all
+and server processes to restart. Fly.io takes care of all of this and more, so all
 you need to do is the following:
 
 ``` shell
@@ -409,7 +409,7 @@ Rails application deployed to the web. A few things to note:
   * From a Rails perspective, we demonstrated Action Cable, Action Pack,
     Action View, Active Job, Active Model, Active Record, and Turbo
     Streams.
-  * From a Fly perspective, we demonstrated deployment of a Rails app,
+  * From a Fly.io perspective, we demonstrated deployment of a Rails app,
     a Postgres DB, a Redis cluster, and the setting of secrets.
 
 Now that you have seen it up and running, a few things are worth noting:

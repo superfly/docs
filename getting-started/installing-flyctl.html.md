@@ -6,7 +6,7 @@ nav: firecracker
 toc: true
 ---
 
-Flyctl is a command-line utility that lets you work with Fly, from creating your account to deploying your applications. It runs on your local device so you'll want to install the version that's appropriate for your operating system:
+Flyctl is a command-line utility that lets you work with Fly.io, from creating your account to deploying your applications. It runs on your local device so you'll want to install the version that's appropriate for your operating system:
 
 <h2 id="macos" class="group flex items-center relative mt-14 sm:mt-16 mb-10 group text-navy font-heading pb-1 border-b">
   <a href="#macos" class="absolute ml-[-1em] pr-[0.5em] after:hash opacity-0 group-hover:opacity-50 transition-all" aria-label="Anchor"></a>
@@ -56,4 +56,4 @@ Run the Powershell install script:
 iwr https://fly.io/install.ps1 -useb | iex
 ```
 
-Your next step should be to [Log in to Fly](/docs/getting-started/log-in-to-fly/).
+Your next step should be to [Log in to Fly.io](/docs/getting-started/log-in-to-fly/).

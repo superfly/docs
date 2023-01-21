@@ -45,7 +45,7 @@ a number of replica regions, enable eviction, and select a plan.
 
 The most important line in this output is the second to the last one which will contain
 a URL starting with `redis:`. The URL you see will be considerably longer than the one
-you see above. You will need to provide this URL to Rails, and with fly this is done
+you see above. You will need to provide this URL to Rails, and with Fly.io this is done
 via [secrets](https://fly.io/docs/reference/secrets/). Run the following command replacing the url with the one from the output above:
 
 ```cmd
@@ -134,7 +134,7 @@ for the student.
 
 # Arrived at Destination
 
-You have successfully built, deployed, and connected to your first Rails application on Fly.
+You have successfully built, deployed, and connected to your first Rails application on Fly.io.
 
 We've accomplished a lot with only just over a handful of lines of code and
 just over a dozen commands. When you are ready, proceed to a
