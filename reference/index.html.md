@@ -45,4 +45,4 @@ This section looks at Fly's networking and its support for IPv4 and IPv6 address
 Fly's Private Networking provides secure connections between your applications and a VPN option that allows you to connect into your Fly organization and do the same from your desktop or mobile device. It uses WireGuard and DNS to provide connectivity and discoverability. Find out how to use it in your applications, and how to install and configure the VPN in this section.
 
 * [**Redis**](/docs/reference/redis/):
-The Redis key/value store is integrated into the Fly infrastructure and this section covers how you can access it to enable hashing and caching.
+Redis by Upstash is a fully-managed, Redis-compatible database service offering global read replicas for reduced latency in distant regions.
