@@ -14,7 +14,7 @@ This comes up a lot: how can you run multiple programs in an app on Fly.io? Reca
 
 Well, [we don't use Docker to run containers](https://fly.io/blog/docker-without-docker/). Your app is running in a VM, with its own kernel. You can do pretty much anything you want inside of it, including running as many programs as you like. Most of the time, the trick is just telling Docker how to do that.
 
-There are a couple different ways to run multiple processes in a Fly.io app. All of them address the first rule of programs running in Fly.app: when your entrypoint program exits, our `init` kills the VM and we start a new one. So at the end of the day, *something* has to keep running "in the foreground".
+There are a couple different ways to run multiple processes in a Fly.io app. All of them address the first rule of programs running in Fly VM: when your entrypoint program exits, our `init` kills the VM and we start a new one. So at the end of the day, *something* has to keep running "in the foreground".
 
 <div class="callout">Fly.io <u>[Machines](/docs/machines)</u> can run multiple processes</u> natively, no need for extra configuration. <u>[Examples here](https://community.fly.io/t/multi-process-machines/8375)</u>.</div>
 
@@ -42,7 +42,7 @@ I'll spare you the 10 lines of Go code, but it's just a server that runs "Hello 
 
 And we're not running anything right now; it's just going to sit there inert while we figure out how to run both instances of the program. 
 
-With a working Dockerfile, we can spin this up with `flyctl apps create`, then deploy it with `flyctl deploy`. When we've got things working, we'll edit `fly.toml` to tell Fly.io about the two ports we're listening on.
+With a working Dockerfile, we can spin this up with `fly launch`. We'll edit `fly.toml` to tell Fly.io about the two internal ports we're listening on, and `fly deploy` to effect that change.
 
 Now, some options to actually run this stuff:
 
