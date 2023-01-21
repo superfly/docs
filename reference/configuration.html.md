@@ -363,6 +363,34 @@ Times are in milliseconds unless units are specified.
 
 **Note**: The `services.http_checks` section is optional and not generated in the default `fly.toml` file.
 
+## The `http_service` section
+
+For apps that only need HTTP and HTTPS services, use the this section to define a service that listens on ports 80 and 443. Port 80 will have an http handler. Port 443 will have a tls and http handler. Additional services defined with `[[services]]` will be configured as well.
+
+```toml
+[http_service]
+  internal_port = 8080
+  force_https = true
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 200
+    hard_limit = 250
+```
+
+* `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
+* `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
+
+The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
+
+* `type` specifies what metric is used to determine when to scale up and down, or when a given instance should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
+
+**connections**: Load balance and scale based on number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
+
+**requests**: Load balance and scale based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
+
+* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
+* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application support doing so.
+
 ## The `mounts` section
 
 This section supports the Volumes feature for persistent storage. The section has two settings; both are needed.
