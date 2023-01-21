@@ -158,6 +158,39 @@ The only required parameter is `image` in the `config` object. Other parameters:
   - `volume`: The volume ID, visible in `fly volumes list`, i.e. `vol_2n0l3vl60qpv635d`
   - `path`: Absolute path on the VM where the volume should be mounted. i.e. `/data`
 
+* `checks`: An optional object that defines one or more named checks
+  - the key for each check is the check name
+  - the value for each check supports:
+      + `type`: `tcp` or `http`
+      + `port`: The port to connect to, likely should be the same as `internal_port`
+      + `interval`: The time between connectivity checks
+      + `timeout`: The maximum time a connection can take before being reported as failing its healthcheck
+      + `method`: For http checks, the HTTP method to use to when making the request
+      + `path`: For http checks, the path to send the request to
+
+An example of two checks:
+
+```json
+        "checks": {
+            "tcp-alive": {
+                "type": "tcp",
+                "port": 8080,
+                "interval": "15s",
+                "timeout": "10s"
+            },
+            "http-get": {
+                "type": "http",
+                "port": 8080,
+                "method": "GET",
+                "path": "/",
+                "interval": "15s",
+                "timeout": "10s"
+            }
+        }
+```
+
+Example create machine request and response:
+
 <%= partial "/docs/reference/machines/launch_req" %>
 <%= partial "/docs/reference/machines/launch_resp" %>
 

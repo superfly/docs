@@ -47,7 +47,16 @@
       "cpu\_kind": "shared",
       "cpus": 1,
       "memory\_mb": 256
-    }
+    },
+    "checks": {
+      "httpget": {
+        "type": "http",
+        "port": 8080,
+        "interval": "15s",
+        "timeout": "10s",
+        "method": "GET",
+        "path": "/"
+      }
   },
   "image\_ref": {
     "registry": "registry-1.docker.io",

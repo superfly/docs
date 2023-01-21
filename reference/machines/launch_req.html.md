@@ -29,7 +29,17 @@ curl -i -X POST \\
             "protocol": "tcp",
             "internal\_port": 8080
           }
-        ]
+        ],
+        "checks": {
+            "httpget": {
+                "type": "http",
+                "port": 8080,
+                "method": "GET",
+                "path": "/",
+                "interval": "15s",
+                "timeout": "10s"
+            }
+        }
       }
     }'
 
