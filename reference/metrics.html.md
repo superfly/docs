@@ -8,7 +8,7 @@ nav: firecracker
 The Fly platform includes a fully-managed metrics solution to help you easily monitor your Fly apps.
 It includes the following components:
 
-- [**Prometheus on Fly.io**](#prometheus-on-fly): Managed, Prometheus-compatible time series storage
+- [**Prometheus on Fly.io**](#prometheus-on-fly.io): Managed, Prometheus-compatible time series storage
 - [**Dashboards**](#dashboards): Managed Grafana with detailed visualizations of all built-in metrics
 - [**Built-in Metrics**](#built-in-metrics): Metrics automatically sent from every Fly app you deploy
 - [**Custom Metrics**](#custom-metrics): Expose additional metrics from Fly apps for further customization
