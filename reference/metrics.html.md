@@ -1,5 +1,5 @@
 ---
-title: Metrics on Fly
+title: Metrics on Fly.io
 layout: docs
 sitemap: false
 nav: firecracker
@@ -8,17 +8,17 @@ nav: firecracker
 The Fly platform includes a fully-managed metrics solution to help you easily monitor your Fly apps.
 It includes the following components:
 
-- [**Prometheus on Fly**](#prometheus-on-fly): Managed, Prometheus-compatible time series storage
+- [**Prometheus on Fly.io**](#prometheus-on-fly): Managed, Prometheus-compatible time series storage
 - [**Dashboards**](#dashboards): Managed Grafana with detailed visualizations of all built-in metrics
 - [**Built-in Metrics**](#built-in-metrics): Metrics automatically sent from every Fly app you deploy
 - [**Custom Metrics**](#custom-metrics): Expose additional metrics from Fly apps for further customization
 
-## Prometheus on Fly
+## Prometheus on Fly.io
 
 [Prometheus](https://prometheus.io/) is a popular open source monitoring system used to store and query metrics efficiently,
 with a stable [HTTP querying API](https://prometheus.io/docs/prometheus/latest/querying/api/) compatible with a range of systems.
 
-**Prometheus on Fly** is a fully-managed service based on [VictoriaMetrics](https://victoriametrics.com/).
+**Prometheus on Fly.io** is a fully-managed service based on [VictoriaMetrics](https://victoriametrics.com/).
 It [supports](https://docs.victoriametrics.com/#prometheus-querying-api-usage) most common Prometheus querying API endpoints:
 - [`/api/v1/query`](https://prometheus.io/docs/prometheus/latest/querying/api/#instant-queries)
 - [`/api/v1/query_range`](https://prometheus.io/docs/prometheus/latest/querying/api/#range-queries)
@@ -35,7 +35,7 @@ is [not supported](https://docs.victoriametrics.com/FAQ.html#why-doesnt-victoria
 ### MetricsQL
 
 Prometheus queries are typically based on the [PromQL](https://prometheus.io/docs/prometheus/latest/querying/basics/) query language.
-Prometheus on Fly queries use VictoriaMetrics [MetricsQL](https://docs.victoriametrics.com/MetricsQL.html),
+Prometheus on Fly.io queries use VictoriaMetrics [MetricsQL](https://docs.victoriametrics.com/MetricsQL.html),
 a backwards-compatible query language that fixes user experience issues and adds
 useful features and functions on top of PromQL.
 
@@ -109,7 +109,7 @@ Note: Managed Grafana is still an early preview release.
 
 ### External or self-hosted Grafana
 
-You can also configure your Prometheus endpoint with an existing Grafana installation, or [host one on Fly](https://github.com/fly-apps/grafana). Either way, you set it up thusly:
+You can also configure your Prometheus endpoint with an existing Grafana installation, or [host one on Fly.io](https://github.com/fly-apps/grafana). Either way, you set it up thusly:
 
 1. [Add](https://grafana.com/docs/grafana/latest/datasources/add-a-data-source/) a [Prometheus data source](https://grafana.com/docs/grafana/latest/datasources/prometheus/) (Settings -> Data Sources -> Add data source -> Prometheus)
 2. Fill the form with the following:
@@ -302,9 +302,9 @@ fly_volume_size_bytes
 fly_volume_used_pct (0-100)
 ```
 
-### PostgreSQL - `pg_`
+### Postgres - `pg_`
 
-If you have a [PostgreSQL](https://fly.io/docs/reference/postgres/) database hosted on Fly, you'll automatically get the following series,
+If you have a [Postgres](https://fly.io/docs/reference/postgres/) database hosted on Fly.io, you'll automatically get the following series,
 published via [`postgres_exporter`](https://github.com/prometheus-community/postgres_exporter):
 
 ```

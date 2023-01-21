@@ -5,11 +5,11 @@ sitemap: false
 nav: firecracker
 ---
 
-The Fly platform uses `fly.toml` to configure applications for deployment. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here.
+You can configure an app for deployment on Fly.io using a `fly.toml` file. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here. 
 
 TOML is a [simple configuration file format](https://github.com/toml-lang/toml). Here's a [useful introduction](https://npf.io/2014/08/intro-to-toml/) on its syntax.
 
-You don't need to create a `fly.toml` file by hand. Running [flyctl launch](/docs/flyctl/launch/) will create a `fly.toml` file for you. You can also generate one from an existing app by running [flyctl config save](/docs/flyctl/config-save/).
+You don't need to create a `fly.toml` file by hand. Running [flyctl launch](/docs/flyctl/launch/) will create one file for you. You can also generate one from an existing app by running [flyctl config save](/docs/flyctl/config-save/).
 
 *VSCode users*: Install the [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml) extension for automatic `fly.toml` validation and hints drawn from this documentation.
 
@@ -66,7 +66,7 @@ In our example above, the builder is being set to use [Paketo's all-purpose buil
   image = "flyio/hellofly:latest"
 ```
 
-The image builder is used when you want to immediately deploy an existing public image. When deployed, there will be no build process; the image will be prepared and uploaded to the Fly infrastructure as is. This option is useful if you already have a working Docker image you want to deploy on Fly or you want a well known Docker image from a repository to be run.
+The image builder is used when you want to immediately deploy an existing public image. When deployed, there will be no build process; the image will be prepared and uploaded to Fly.io infrastructure as is. This option is useful if you already have a working Docker image you want to deploy on Fly.io or you want a well known Docker image from a repository to be run.
 
 ### Specify a Dockerfile
 
@@ -192,13 +192,13 @@ Statics will not find `index.html` at the root. The full path must be requested.
 
 You can't set `Cache-Control` or any other headers on assets. If you need those, you'll need to deliver them from your application and set the relevant headers.
 
-Assets are not delivered, by default, from all edge Fly regions. Rather, assets are delivered from the regions the application is deployed in.
+Assets are not delivered, by default, from all edge Fly.io regions. Rather, assets are delivered from the regions the application is deployed in.
 
 `statics` does not honor symlinks. So, if `/app/public` in your container is actually a symlink to something like `/app-39403/public`, you'll want to use the absolute original path in your statics configuration.
 
 ## The `services` sections
 
-The `services` sections configure the mapping of ports on the application to ports and services on the Fly platform. These mappings determine how connections to the application will be handled on their journey from the Fly edge network to running Fly applications.
+The `services` sections configure the mapping of ports on the application to ports and services on Fly.io. These mappings determine how connections to the application will be handled on their journey from the Fly.io edge network to running Fly Apps.
 
 You can have:
 
@@ -300,7 +300,7 @@ Configure the TLS versions and ALPN protocols that Fly's edge will use to termin
 * `alpn` : Array of strings indicating how to handle ALPN negotiations with clients.
 * `versions` : Array of strings indicating which TLS versions are allowed.
 
-Fly can also terminate TLS only and pass through directly to your service. This works for a variety of applications that can benefit from offloading TLS termination and accept the unencrypted connection.
+Fly.io can also terminate TLS only and pass through directly to your service. This works for a variety of applications that can benefit from offloading TLS termination and accept the unencrypted connection.
 
 One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS and sends h2c (HTTP/2 without TLS) directly to your application through our backhaul. The config below will negotiate HTTP/2 with clients, and then send h2c to the application:
 
@@ -313,7 +313,7 @@ One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS 
 
 ### `services.tcp_checks`
 
-When a service is running, the Fly platform checks up on it by connecting to a port. The `services.tcp_checks` section defines parameters for those checks. For example, the default tcp\_checks look like this:
+When a service is running, Fly Proxy can check up on it by connecting to a port. The `services.tcp_checks` section defines parameters for those checks. For example, the default `tcp_checks` looks like this:
 
 ```toml
   [[services.tcp_checks]]
@@ -448,7 +448,7 @@ Fields are very similar to `[[services.checks]]`:
 
 ## The `processes` section
 
-<div class="callout">The `processes` feature is in [preview](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316). Let us know in the <a href="https://community.fly.io" style="text-decoration: underline;">Fly community forum</a> if you run into issues when deploying.
+<div class="callout">The `processes` feature is in [preview](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316). Let us know in the <a href="https://community.fly.io" style="text-decoration: underline;">Fly.io community forum</a> if you run into issues when deploying.
 
 Known issues:
 * Running multiple processes in this way is not compatible with autoscaling.
@@ -504,7 +504,7 @@ port = 9091       # default for most prometheus clients
 path = "/metrics" # default for most prometheus clients
 ```
 
-Check out [Metrics on Fly](/docs/reference/metrics/) for more information about collecting metrics for your apps.
+Check out [Metrics on Fly.io](/docs/reference/metrics/) for more information about collecting metrics for your apps.
 
 ## The `experimental` section
 
