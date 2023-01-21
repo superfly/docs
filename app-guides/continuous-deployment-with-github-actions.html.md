@@ -1,9 +1,8 @@
 ---
-title: "Continuous Deployment with Fly and GitHub Actions"
+title: "Continuous Deployment with Fly.io and GitHub Actions"
 layout: docs
 sitemap: false
 nav: firecracker
-author: dj
 categories:
   - ci
   - github
@@ -18,7 +17,7 @@ So you want your application continuously deployed to Fly.io from its GitHub rep
 
 We'll start with an application from one of our other examples, [go-example](https://github.com/fly-apps/go-example). It's a simple lightweight app, built with a Dockerfile.
 
-We'll speed-run through the steps needed to make this automatically deploy to Fly from GitHub and then we'll loop back for a longer look at some of the steps.
+We'll speed-run through the steps needed to make this automatically deploy to Fly.io from GitHub and then we'll loop back for a longer look at some of the steps.
 
 ## Speed-run your way to continuous deployment
 

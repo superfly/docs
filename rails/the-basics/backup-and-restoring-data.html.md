@@ -1,13 +1,13 @@
 ---
 title: Backup and Restore Data
 layout: framework_docs
-objective: Provision Postgres database clusters with Fly for your Rails application and learn how to create backups from daily snapshots and restore them to a new database.
+objective: Provision Postgres database clusters with Fly.io for your Rails application and learn how to create backups from daily snapshots and restore them to a new database.
 order: 5
 ---
 
 The most important part of running any Rails application is making sure your data is backed up and safe, and if the unspeakable happens, it's straightforward to restore data and get back up and running.
 
-Postgres databases on Fly are treated as Fly.io apps, which you can [read more about in the docs](/docs/postgres). What that means is backing up data is an exercise in taking snapshots of the Postgres app's volumes, then restoring the snapshots to a new database server, verifying the restoration, and connecting the application to the restored database.
+Postgres databases on Fly.io are treated as Fly Apps, which you can [read more about in the docs](/docs/postgres). What that means is backing up data is an exercise in taking snapshots of the Postgres app's volumes, then restoring the snapshots to a new database server, verifying the restoration, and connecting the application to the restored database.
 
 ## Get the name of the database app instance
 
@@ -53,7 +53,7 @@ and look for the database instance under the `NAME` column on the list.
 
 ## Daily Backup snapshots
 
-Fly creates a snapshot of the database volumes once per day and retains them for 7 days. To view the snapshots for the database run:
+Fly.io creates a snapshot of the database volumes once per day and retains them for 7 days. To view the snapshots for the database run:
 
 ```cmd
 fly volumes list -a my-rails-app-db
@@ -106,7 +106,7 @@ Postgres cluster my-rails-app-db-restored created
 Save your credentials in a secure place, you won't be able to see them again!
 ```
 
-This provisions and launches a new Fly database server with the snapshot you specified.
+This provisions and launches a new Fly Postgres database server with the snapshot you specified.
 
 ## Connect the Restored Database
 

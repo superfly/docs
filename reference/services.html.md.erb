@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-Fly has public and private network services available. The public network services connect applications to the wider public internet, while the [private network services](/docs/reference/private-networking) allow application instances to communicate with other application instances within the Fly private network.
+Fly.io has public and private network services available. The public network services connect applications to the wider public internet, while the [private network services](/docs/reference/private-networking) allow application instances to communicate with other application instances within the Fly.io private network.
 
 ## IP addresses
 
@@ -15,7 +15,7 @@ We announce global IP blocks from all of our datacenters over BGP, otherwise kno
 
 ### IPv6
 
-A new Fly application running a [public service](/docs/reference/configuration/#the-services-sections) automatically gets a dedicated anycast IPv6 address when it's first deployed.
+A new Fly App running a [public service](/docs/reference/configuration/#the-services-sections) automatically gets a dedicated anycast IPv6 address when it's first deployed.
 
 ### Shared IPv4
 
@@ -60,27 +60,27 @@ Valid handler strings:
 
 
 ### TLS
-The `TLS` middleware terminates TLS using Fly managed application certificates, then forwards a plaintext connection to the application process. This is useful for running TCP services and offloading `TLS` to the Fly proxy.
+The `TLS` middleware terminates TLS using Fly.io-managed application certificates, then forwards a plaintext connection to the application process. This is useful for running TCP services and offloading `TLS` to the Fly Proxy.
 
-For performance purposes, the Fly proxy will terminate TLS on the host a client connects to, and then forward the connection to the nearest available application instance.
+For performance purposes, the Fly Proxy will terminate TLS on the host a client connects to, and then forward the connection to the nearest available application instance.
 
-_Note:_ the `TLS` handler includes ALPN negotiation for HTTP/2. When possible, applications will connect to these kinds of Fly services using HTTP/2, and we will forward an unencrypted HTTP/2 connection (`h2c`) to the application process.
+_Note:_ the `TLS` handler includes ALPN negotiation for HTTP/2. When possible, applications will connect to these kinds of Fly.io services using HTTP/2, and we will forward an unencrypted HTTP/2 connection (`h2c`) to the application process.
 
 ### HTTP
 Many applications have limited HTTP support, the `HTTP` middleware normalizes HTTP connections and sends HTTP 1.1 requests to the application process. This is roughly how `nginx` and other reverse proxies work, and allows your application to globally accept modern HTTP protocols (like HTTP/2) without extra complexity.
 
 If your application stack has good HTTP/2 support (like Go), you will get better performance accepting TCP connections directly, and using the TLS handler to terminate SSL. Your application _does_ need to understand `h2c` for this to work, however.
 
-The HTTP handler adds a number of standard HTTP headers to requests, and a few Fly specific headers for convenience:
+The HTTP handler adds a number of standard HTTP headers to requests, and a few Fly.io-specific headers for convenience:
 
 | Header | Description
 | -- | -- |
-| `Fly-Client-IP` | The IP address Fly accepted a connection from |
+| `Fly-Client-IP` | The IP address Fly.io accepted a connection from |
 | `X-Forwarded-For` | A comma separated list of proxy servers the request passed through. MDN has [full documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) for this header |
 | `X-Forwarded-Proto` | Original client protocol, either `http` or `https` |
 | `X-Forwarded-SSL` | Indicates if client connected over SSL, either `on` or `off` |
 | `X-Forwarded-Port` | Original connection port, header may be set by client |
-| `Fly-Forwarded-Port` | Original connection port, always set by Fly |
+| `Fly-Forwarded-Port` | Original connection port, always set by Fly.io |
 | `Fly-Region` | Original incoming connection region |
 
 You can set a preference on HTTP requests for which region you would like to connect to:

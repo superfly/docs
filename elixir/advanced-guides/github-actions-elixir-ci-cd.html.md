@@ -260,7 +260,7 @@ users even being aware of the process.
 
 ### Auto-Deploying our Elixir Applications
 
-We can easily auto-deploy our Elixir applications on Fly. There is nothing
+We can easily auto-deploy our Elixir applications on Fly.io. There is nothing
 specific to Elixir about this process, so please refer to this guide for the details.
 
-[Continuous Deployment with Fly and GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/)
+[Continuous Deployment with Fly.io and GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/)

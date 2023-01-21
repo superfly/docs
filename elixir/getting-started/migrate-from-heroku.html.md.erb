@@ -4,7 +4,7 @@ layout: framework_docs
 order: 2
 ---
 
-This guide runs you through how to migrate a basic Elixir application off of Heroku and onto Fly. It assumes you're running the following services on Heroku:
+This guide runs you through how to migrate a basic Elixir application off of Heroku and onto Fly.io. It assumes you're running the following services on Heroku:
 
 * Postgres database
 * Custom domain
@@ -57,16 +57,16 @@ SECRET_KEY_BASE               5afb43c2ddbba6c02ffa7e2834689692  1m22s ago
 ### Transfer the Database
 
 <aside class="callout">
-  Any new data created by your Heroku app during this database migration won't be moved over to Fly. Consider taking your Heroku application offline or place in read-only mode if you want to be confident that this migration will move over 100% of your Heroku data to Fly.
+  Any new data created by your Heroku app during this database migration won't be moved over to Fly.io. Consider taking your Heroku application offline or place in read-only mode if you want to be confident that this migration will move over 100% of your Heroku data to Fly.io.
 </aside>
 
-Set the `HEROKU_DATABASE_URL` variable in your Fly environment.
+Set the `HEROKU_DATABASE_URL` variable in your Fly.io environment.
 
 ```cmd
 fly secrets set HEROKU_DATABASE_URL=$(heroku config:get DATABASE_URL)
 ```
 
-Alright, lets start the transfer remotely on the Fly instance.
+Alright, lets start the transfer remotely on the Fly.io instance.
 
 ```cmd
 fly ssh console
@@ -78,7 +78,7 @@ Then from the remote Fly SSH console transfer the database.
 pg_dump -Fc --no-acl --no-owner -d $HEROKU_DATABASE_URL | pg_restore --verbose --clean --no-acl --no-owner -d $DATABASE_URL
 ```
 
-You may need to upgrade your Heroku database to match the version of the source Fly database. Refer to Heroku's [Upgrading the Version of a Heroku Postgres Database](https://devcenter.heroku.com/articles/upgrading-heroku-postgres-databases) for instructions on how to upgrade, then try the command above again.
+You may need to upgrade your Heroku database to match the version of the source Fly.io database. Refer to Heroku's [Upgrading the Version of a Heroku Postgres Database](https://devcenter.heroku.com/articles/upgrading-heroku-postgres-databases) for instructions on how to upgrade, then try the command above again.
 
 After the database transfers unset the `HEROKU_DATABASE_URL` variable.
 
@@ -96,19 +96,19 @@ If you have a Redis server, there's a good chance you need to set that up.
 
 ### Custom Domain & SSL Certificates
 
-After you finish deploying your application to Fly and have tested it extensively, [read through the Custom Domain docs](/docs/app-guides/custom-domains-with-fly) and point your domain at Fly.
+After you finish deploying your application to Fly.io and have tested it extensively, [read through the Custom Domain docs](/docs/app-guides/custom-domains-with-fly) and point your domain at it.
 
-In addition to supporting [`CNAME` DNS records](/docs/app-guides/custom-domains-with-fly#option-i-cname-records), Fly also supports [`A` and `AAAA` records](/docs/app-guides/custom-domains-with-fly#option-ii-a-and-aaaa-records) for those who want to point `example.com` (without the `www.example.com`) directly at Fly.
+In addition to supporting [`CNAME` DNS records](/docs/app-guides/custom-domains-with-fly#option-i-cname-records), Fly.io also supports [`A` and `AAAA` records](/docs/app-guides/custom-domains-with-fly#option-ii-a-and-aaaa-records) for those who want to point `example.com` (without the `www.example.com`) directly at their App on Fly.io.
 
 ## Cheat Sheet
 
-Old habits die hard, especially good habits like deploying frequently to production. Below is a quick overview of the differences you'll notice initially between Fly and Heroku.
+Old habits die hard, especially good habits like deploying frequently to production. Below is a quick overview of the differences you'll notice initially between Fly.io and Heroku.
 
 ### Commands
 
-Fly commands are a bit different than Heroku, but you'll get use to them after a few days.
+flyctl commands are a bit different than Heroku, but you'll get use to them after a few days.
 
-| Task         | Heroku     | Fly |
+| Task         | Heroku     | Fly.io |
 |--------------|-----------|------------|
 | Deployments | `git push heroku` | `fly deploy` |
 | IEx console | `heroku console` | `fly ssh console -C "/app/bin/app remote"` |
@@ -119,60 +119,60 @@ Fly commands are a bit different than Heroku, but you'll get use to them after a
 | View releases | `heroku releases` | `fly releases` |
 | Help | `heroku help` | `fly help` |
 
-Check out the [Fly CLI docs](https://fly.io/docs/flyctl/) for a more extensive inventory of Fly commands.
+Check out the [Fly.io CLI docs](https://fly.io/docs/flyctl/) for a more extensive inventory of flyctl commands.
 
 ### Deployments
 
-By default Heroku deployments are kicked off via the `git push heroku` command. Fly works a bit differently by kicking of deployments via `fly deploy`—git isn't needed to deploy to Fly. The advantage to this approach is your git history will be clean and not full of commits like `git push heroku -am "make app work"` or `git push heroku -m "ok it will really work this time"`.
+By default Heroku deployments are kicked off via the `git push heroku` command. Fly.io works a bit differently by kicking of deployments via `fly deploy`—git isn't needed to deploy to Fly.io. The advantage to this approach is your git history will be clean and not full of commits like `git push heroku -am "make app work"` or `git push heroku -m "ok it will really work this time"`.
 
-To achieve the desired `git push` behavior, we recommend setting up `fly deploy` as the final command in your continuous integration pipeline, as outlined for GitHub in the [Continuous Deployment with Fly and GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/) docs.
+To achieve the desired `git push` behavior, we recommend setting up `fly deploy` as the final command in your continuous integration pipeline, as outlined for GitHub in the [Continuous Deployment with Fly.io and GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/) docs.
 
 #### Deploy via git
 
-Heroku's default deployment technique is via `git push heroku`. Fly doesn't require a git commit, just run `fly deploy` and the files on your local workstation will be deployed.
+Heroku's default deployment technique is via `git push heroku`. Fly.io doesn't require a git commit, just run `fly deploy` and the files on your local workstation will be deployed.
 
-Fly can be configured to deploy on git commits with the following techniques with a [GitHub Action](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/).
+Fly.io can be configured to deploy on git commits with the following techniques with a [GitHub Action](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/).
 
 ### Databases
 
-Fly and Heroku have different Postgres database offerings. The most important distinction to understand about using Fly is that it automates provisioning, maintenance, and snapshot tasks for your Postgres database, but it does not manage it. If you run out of disk space, RAM, or other resources on your Fly Postgres instances, you'll have to scale those virtual machines from the [Fly CLI](https://fly.io/docs/reference/postgres/).
+Fly.io and Heroku have different Postgres database offerings. The most important distinction to understand about using Fly.io is that it automates provisioning, maintenance, and snapshot tasks for your Postgres database, but it does not manage it. If you run out of disk space, RAM, or other resources on your Fly Postgres instances, you'll have to scale those virtual machines from the [Fly CLI](https://fly.io/docs/reference/postgres/).
 
 Contrast that with Heroku, which fully manages your database and includes an extensive suite of tools to provision, backup, snapshot, fork, patch, upgrade, and scale up/down your database resources.
 
-The good news for people who want a highly managed Postgres database is they can continue hosting it at Heroku and point their Fly instances to it!
+The good news for people who want a highly managed Postgres database is they can continue hosting it at Heroku and point their Fly.io instances to it!
 
 #### Heroku's managed database
 
-One command is all it takes to point Fly apps at your Heroku managed database.
+One command is all it takes to point Fly Apps at your Heroku managed database.
 
 ```cmd
 fly secrets set DATABASE_URL=$(heroku config:get DATABASE_URL)
 ```
 
-This is a great way to get comfortable with Fly if you prefer a managed database provider. In the future if you decide you want to migrate your data to Fly, you can do so [pretty easily with a few commands](#transfer-the-database).
+This is a great way to get comfortable with Fly.io if you prefer a managed database provider. In the future if you decide you want to migrate your data to Fly, you can do so [pretty easily with a few commands](#transfer-the-database).
 
 
-#### Fly's databases
+#### Fly Postgres
 
-The most important thing you'll want to be comfortable with using Fly's database offering is [backing up and restoring your database](/docs/postgres/managing/backup-and-restore/).
+The most important thing you'll want to be comfortable with using Fly.io's database offering is [backing up and restoring your database](/docs/postgres/managing/backup-and-restore/).
 
 As your application grows, you'll probably first [scale disk and RAM resources](/docs/reference/postgres/#scaling-vertically-adding-more-vm-resources), then [scale out with multiple replicas](/docs/reference/postgres/#scaling-horizontally-adding-more-replicas). Common maintenance tasks will include [upgrading Postgres](/docs/reference/postgres/#upgrading-the-postgres-app) as new versions are released with new features and security updates.
 
-[You Postgres, now what?](/docs/reference/postgres-whats-next/) is a more comprehensive guide for what's required when running your Postgres databases on Fly.
+[See here](/docs/postgres/getting-started/what-you-should-know/) for a more comprehensive guide for what's required when running your Postgres databases on Fly.io.
 
 ### Pricing
 
-Heroku and Fly have very different pricing structures. You'll want to read through the details on [Fly's pricing page](/docs/about/pricing/) before launching to production. The sections below serve as a rough comparison between Heroku and Fly's plans as of August 2022.
+Heroku and Fly.io have very different pricing structures. You'll want to read through the details on [Fly.io's pricing page](/docs/about/pricing/) before launching to production. The sections below serve as a rough comparison between Heroku's and Fly.io's plans as of August 2022.
 
 <div class="callout">
-  Please do your own comparison of plans before switching from Heroku to Fly. The examples below are illustrative estimates between two very different offerings, which focuses on the costs of app & database servers. It does not represent the final costs of each plan. Also, the prices below may not be immediately updated if Fly or Heroku change prices.
+  Please do your own comparison of plans before switching from Heroku to Fly.io. The examples below are illustrative estimates between two very different offerings, which focuses on the costs of app & database servers. It does not represent the final costs of each plan. Also, the prices below may not be immediately updated if Fly.io or Heroku change prices.
 </div>
 
 #### Free Plans
 
 Heroku will not offer free plans as of November 28, 2022.
 
-Fly offers free usage for up to 3 full time VMs with 256MB of RAM, which is enough to run a Elixir app and Postgres database to get a feel for how Fly works.
+Fly.io offers free usage for up to 3 full time VMs with 256MB of RAM, which is enough to run a Elixir app and Postgres database to get a feel for how Fly.io works.
 
 #### Plans for Small Elixir Apps
 
@@ -184,9 +184,9 @@ Heroku's Hobby tier is limited to 10,000 rows of data, which gets exceeded prett
 | Database | 10,000,000 rows | $9/mo |
 | **Estimated cost** | | $16/mo |
 
-Fly's pricing is [metered for the resources](https://fly.io/docs/about/pricing/) you use. Database is billed by the amount of RAM and disk space used, not by rows. The closest equivalent to the Heroku Hobby tier on Fly looks like this:
+Fly.io pricing is [metered for the resources](https://fly.io/docs/about/pricing/) you use. Database is billed by the amount of RAM and disk space used, not by rows. The closest equivalent to the Heroku Hobby tier on Fly.io looks like this:
 
-| Fly Resource | Specs | Price |
+| Fly.io Resource | Specs | Price |
 |----------|------|-------|
 | App Server | 1GB RAM | ~$5.70/mo |
 | Database Server | 256MB RAM / 10Gb disk | ~$3.44/mo |
@@ -194,7 +194,7 @@ Fly's pricing is [metered for the resources](https://fly.io/docs/about/pricing/)
 
 #### Plans for Medium to Elixir Apps
 
-There's too many variables to compare Fly and Heroku's pricing for larger Elixir applications depending on your needs, so you'll definitely want to do your homework before migrating everything to Fly. This comparison focuses narrowly on the costs of app & database resources, and excludes other factors such as bandwidth costs, bundled support, etc.
+There's too many variables to compare Fly.io's and Heroku's pricing for larger Elixir applications depending on your needs, so you'll definitely want to do your homework before migrating everything to Fly.io. This comparison focuses narrowly on the costs of app & database resources, and excludes other factors such as bandwidth costs, bundled support, etc.
 
 | Heroku Resource | Specs | Price | Quantity | Total  |
 |----------|-------|-------|----------|--------|
@@ -204,10 +204,10 @@ There's too many variables to compare Fly and Heroku's pricing for larger Elixir
 
 Here's roughly the equivalent resources on Fly:
 
-| Fly Resource | Specs | Price | Quantity | Total  |
+| Fly.io Resource | Specs | Price | Quantity | Total  |
 |----------|-------|-------|----------|--------|
 | App Server | 4GB RAM / 2X CPU | ~$62.00/mo | 8 | ~$496/mo |
 | Database Server | 64GB RAM / 500GB disk | ~$633/mo | 2 | ~$1,266/mo |
 | **Estimated cost** | | | | ~$1,762/mo |
 
-Again, the comparison isn't realistic because it focuses only on application and database servers, but it does give you an idea of how the different cost structures scale on each platform. For example, Heroku's database offering at this level is redundant, whereas Fly offers 2 database instances to achieve similar levels of redundancy.
+Again, the comparison isn't realistic because it focuses only on application and database servers, but it does give you an idea of how the different cost structures scale on each platform. For example, Heroku's database offering at this level is redundant, whereas Fly.io offers 2 database instances to achieve similar levels of redundancy.

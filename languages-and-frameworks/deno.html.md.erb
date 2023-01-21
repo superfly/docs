@@ -44,7 +44,7 @@ export {
 
 There's nothing else to run. Deno will manage getting packages for itself.
 
-## _Running The Application_
+## Running The Application
 
 Run `deno run --allow-net main.ts` to start the application:
 
@@ -55,20 +55,19 @@ deno run --allow-net main.ts
 listening on http://0.0.0.0:8080/
 ```
 
-And connect to localhost:8080 to confirm that you have a working Deno application by receiving a greeting. Now to package it up for Fly. There are a number of ways to do this. You can use flyctl's own simple builder,
+And connect to localhost:8080 to confirm that you have a working Deno application by receiving a greeting. Now to package it up for Fly.io. There are a number of ways to do this. You can use flyctl's own simple builder,
 
-## _Install Flyctl and Login_
+## Install Flyctl and Login
 
-We are ready to start working with Fly and that means we need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once thats installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
+We are ready to start working with Fly.io, and that means we need `flyctl`, our CLI app for managing apps on Fly.io. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once thats installed you'll want to [log in to Fly.io](/docs/getting-started/log-in-to-fly/).
 
-## _Configuring the App for Fly_
+## Configuring the App for Fly.io
 
-Each Fly application needs a `fly.toml` file to tell the system how we'd like to deploy it.
-That file can be automatically generated with the command `flyctl launch` command. This command
-will also generate a Dockerfile for deployment.
+Each Fly App needs a `fly.toml` file to tell the system how we'd like to deploy it.
+That file can be automatically generated with the command `flyctl launch` command. This command will also generate a Dockerfile for deployment.
 
 ```cmd
-flyctl launch
+fly launch
 ```
 ```output
 Creating app in /fly/guides/hellodeno
@@ -82,10 +81,10 @@ Your app is ready. Deploy with `flyctl deploy`
 ? Would you like to deploy now? (y/N)
 ```
 
-First you'll be prompted for an organization. Organizations are a way of sharing applications between Fly users. When you are asked to select an organization, there should be one with your account name; this is your personal organization. Select that.
+First you'll be prompted for an organization. Organizations are a way of sharing applications between Fly.io users. When you are asked to select an organization, there should be one with your account name; this is your personal organization. Select that.
 Then, pick the region you want to deploy in.
 
-## _Inside `fly.toml`_
+## Inside `fly.toml`
 
 The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also created a Fly-side application slot of the same name, "hellodeno". If we look at the `fly.toml` configuration file we can see the name in there:
 
@@ -97,30 +96,30 @@ app = "empty-sea-2541"
 ...
 ```
 
-We can also see a default run command for the main web process. We can change that to refer to `./main.ts`.
+We can also see a default `run` command for the main web process. We can change that to refer to `./main.ts`.
 
-The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly platform.
+The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly.io platform.
 
 The rest of the file contains settings to be applied to the application when it deploys.
 
-## _Deploying to Fly_
+## Deploying to Fly.io
 
-We are now ready to deploy our containerized app to the Fly platform. At the command line, just run:
+We are now ready to deploy our containerized app to Fly.io. At the command line, just run:
 
 ```cmd
-flyctl deploy
+fly deploy
 ```
 
 This will lookup our `fly.toml` file and get the app name `empty-sea-2541` from there.
 
-Then `flyctl` will start the process of deploying our application to the Fly platform using the Dockerfile. Flyctl will return you to the command line when it's done.
+Then `flyctl` will start the process of deploying our application to Fly.io using the Dockerfile. Flyctl will return you to the command line when it's done.
 
-## _Viewing the Deployed App_
+## Viewing the Deployed App
 
-If you want to find out more about the deployment. The command `flyctl info` will give you all the essential details.
+If you want to find out more about the deployment. The command `fly info` will give you all the essential details.
 
 ```cmd
-flyctl info
+fly info
 ```
 ```output
 App
@@ -137,16 +136,16 @@ ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
 
 ## _Connecting to the App_
 
-The quickest way to view your application is to run `flyctl open` which will open your browser on the URL for your application. Run `flyctl open /name` to get an extra greeting from the app.
+The quickest way to view your application is to run `fly open` which will open your browser on the URL for your application. Run `fly open /name` to get an extra greeting from the app.
 
-If you want to manually enter a URL to check, remember to replace `empty-sea-2541.fly.dev` with the hostname you got from `flyctl info` and connect to `http://hellodeno.fly.dev/` where you should find a greeting - it will normally be upgraded to a secure connection. Use `https://hellodeno.fly.dev` to start with a secure connection. Add `/name` and you'll get an extra greeting from the hellodeno application.
+If you want to manually enter a URL to check, remember to replace `empty-sea-2541.fly.dev` with the hostname you got from `fly info` and connect to `http://hellodeno.fly.dev/` where you should find a greeting - it will normally be upgraded to a secure connection. Use `https://hellodeno.fly.dev` to start with a secure connection. Add `/name` and you'll get an extra greeting from the hellodeno application.
 
-## _Bonus Points_
+## Bonus Points
 
-If you want to know what IP addresses the app is using, try `flyctl ips list`:
+If you want to know what IP addresses the app is using, try `fly ips list`:
 
 ```cmd
-flyctl ips list
+fly ips list
 ```
 
 ```out
@@ -154,8 +153,8 @@ TYPE ADDRESS                              REGION CREATED AT
 v4   213.188.199.2                        global 2021-04-22T23:23:01Z
 v6   2a09:8280:1:2958:3b6c:fdfd:70f9:da9d        2021-04-22T23:23:01Z
 ```
-## _Arrived at Destination_
+## Arrived at Destination
 
-You have successfully built, deployed, and connected to your first Deno application on Fly.
+You have successfully built, deployed, and connected to your first Deno application on Fly.io.
 
 

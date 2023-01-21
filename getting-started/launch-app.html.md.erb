@@ -9,12 +9,12 @@ toc: false
 <div class="callout">
 ### New to Fly.io?
 
-Start with the [Speedrun](/docs/speedrun), or for a little more detail, [Hands-on with Fly](/docs/hands-on/).
+Start with the [Speedrun](/docs/speedrun), or for a little more detail, [Hands-on with Fly.io](/docs/hands-on/).
 </div>
 
 Usually, to create a new app on Fly.io, you'll write your source code and then run `fly launch`. [`fly launch`](/docs/flyctl/launch/) is an all-in-one tool that automates as much as possible between writing the code and deploying on Fly.io, setting you up with a running app with good defaults.
 
-The language-specific launchers built into flyctl via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly, whether this happens through `fly launch` or through a more manual process you might begin with `fly apps create`.
+The language-specific launchers built into flyctl via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through `fly launch` or through a more manual process you might begin with `fly apps create`.
 
 ## New App Creation
 
@@ -23,13 +23,13 @@ When `fly launch` or `fly apps create` creates a new app, it gets a name, an org
 
 ## Build Configuration
 
-An app deployed on Fly has to be packaged into a Docker image so we can turn it into a Firecracker VM.
+An app deployed on Fly.io has to be packaged into a Docker image so we can turn it into a Firecracker VM.
 
 This image can be pre-built, or it can be built during the deploy process, based on a Dockerfile. a Buildpack, [or a Nixpack](https://community.fly.io/t/build-images-with-nixpacks/6169).
 
 This information can be specified in the `build section of fly.toml`. `fly launch` will fill this in automatically if it can. It can be overridden at deployment time using flags with `fly deploy`.
 
-Reference: [Builders and Fly](/docs/reference/builders/)
+Reference: [Builders and Fly.io](/docs/reference/builders/)
 
 ## App Configuration
 
@@ -65,7 +65,7 @@ Initial CPU and RAM specs default to the smallest available. Some projects will 
 
 If all goes well, one of several things will happen when you run `fly launch` in a project's working directory:
 
-1. An existing app will be redeployed. This happens if a `fly.toml` is found in the directory, containing an app name that belongs to an app that exists in the Fly app database but does not have a healthy instance running. In this case, deployment is attempted using the configuration present inside this `fly.toml`.
+1. An existing app will be redeployed. This happens if a `fly.toml` is found in the directory, containing an app name that belongs to an app that exists in the Fly.io app database but does not have a healthy instance running. In this case, deployment is attempted using the configuration present inside this `fly.toml`.
 1. If the `--image` flag was used, the app will be configured to use a preexisting Docker image on deployment and no further configuration will be done.
 1. If the `--dockerfile` flag was used, the app will be configured to use the specified Dockerfile to build the image and no further configuration will be done.
 2. Otherwise, flyctl scans the local working directory.
