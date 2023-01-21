@@ -69,7 +69,7 @@ If you want to watch the process take place, head to the Repository and select t
 
 **Step 5** is just cloning the repository to your local system so you can edit and push changes to it.
 
-**Step 6** is an interesting step - when we ship examples, we avoid putting the `fly.toml` file in the repository by including `fly.toml` in the `.gitignore` file. Users should be creating their own with `fly apps create`. When using GitHub Actions though, we want `fly.toml` in the repository so the action can use it in the deployment process.
+**Step 6** is an interesting step - when we ship examples, we avoid putting the `fly.toml` file in the repository by including `fly.toml` in the `.gitignore` file. Users should be creating their own with `fly launch`. When using GitHub Actions though, we want `fly.toml` in the repository so the action can use it in the deployment process.
 
 So, we pull `fly.toml` out of  the `.gitignore`. Which then allows us to perform Step 7.
 
