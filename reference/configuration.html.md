@@ -9,7 +9,7 @@ You can configure an app for deployment on Fly.io using a `fly.toml` file. Confi
 
 TOML is a [simple configuration file format](https://github.com/toml-lang/toml). Here's a [useful introduction](https://npf.io/2014/08/intro-to-toml/) on its syntax.
 
-You don't need to create a `fly.toml` file by hand. Running [flyctl launch](/docs/flyctl/launch/) will create one file for you. You can also generate one from an existing app by running [flyctl config save](/docs/flyctl/config-save/).
+You don't need to create a `fly.toml` file by hand. Running [flyctl launch](/docs/flyctl/launch/) will create one for you. You can also generate one from an existing app by running [flyctl config save](/docs/flyctl/config-save/).
 
 *VSCode users*: Install the [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml) extension for automatic `fly.toml` validation and hints drawn from this documentation.
 
