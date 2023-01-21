@@ -14,7 +14,7 @@ date: 2020-06-20
 
 <img src="/static/images/continuous-deployment.jpg" alt="A man writing code on a vintage desktop computer" class="rounded-xl">
 
-So you want to have your Fly application being continuously deployed from its GitHub repository. Let's work through setting up an application for just that.
+So you want your application continuously deployed to Fly.io from its GitHub repository. Let's work through setting up an application for just that.
 
 We'll start with an application from one of our other examples, [go-example](https://github.com/fly-apps/go-example). It's a simple lightweight app, built with a Dockerfile.
 
@@ -28,7 +28,7 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
 4.  Go to Secrets and create a secret called `FLY_API_TOKEN` with the value of the token from step 2
 5.  Clone the repository to your local machine to edit it
 6.  Edit .gitignore and remove fly.toml - fly.toml will need to be pushed into the repository to allow deployment to happen.
-7.  Run `flyctl apps create` to create a fly.toml file.
+7.  Run `flyctl launch` to create a `fly.toml` configuration file. Say `N` to adding databases and `N` to immediate deployment.
 8.  Create `.github/workflows/fly.yml` with these contents
     <br>
     <br>
@@ -73,7 +73,7 @@ If you want to watch the process take place, head to the Repository and select t
 
 So, we pull `fly.toml` out of  the `.gitignore`. Which then allows us to perform Step 7.
 
-**Step 7**: Creating a fly.toml file to go into the repository.
+**Step 7**: Creating a `fly.toml` file to go into the repository.
 
 ### Building the workflow
 
@@ -122,7 +122,7 @@ The first step is one of the built in Actions steps. The step `uses` the `checko
         - run: flyctl deploy --remote-only
 ```
 
-This step `uses` the superfly/flyctl-actions action. This is a GitHub action created by Fly which wraps around the `flyctl` command. The wrapper is invoked with the `deploy` argument which will take over the process of building and moving the application to the Fly infrastructure. It uses the settings from the `fly.toml` file to guide it and uses the `FLY_API_TOKEN` to authorize its access to the Fly API.
+This step `uses` the superfly/flyctl-actions action. This is a GitHub action created by Fly.io which wraps around the `flyctl` command. The wrapper is invoked with the `deploy` argument which will take over the process of building and moving the application to the Fly.io infrastructure. It uses the settings from the `fly.toml` file to guide it and uses the `FLY_API_TOKEN` to authorize its access to the Fly.io GraphQL API.
 
 ## Conclusion and further reading
 
