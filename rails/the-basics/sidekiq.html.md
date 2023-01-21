@@ -36,20 +36,10 @@ Add the following to the `fly.toml`:
 
 ```toml
 [processes]
-web = "bin/rails fly:server"
+app = "bin/rails fly:server"
 worker = "bundle exec sidekiq"
 ```
 
-Then under the `[[services]]` directive, find the entry that maps to `internal_port = 8080`, and change `processes = ["app"]` to `processes = ["web"]`. The configuration file should look something like this:
-
-```toml
-[[services]]
-  processes = ["web"] # this service only applies to the web process
-  http_checks = []
-  internal_port = 8080
-  protocol = "tcp"
-  script_checks = []
-```
 
 This associates the process with the service that Fly launches.
 
@@ -61,7 +51,7 @@ Once multiple processes are configured in the `fly.toml` file, deploy them via:
 fly deploy
 ```
 
-If all goes well the application should launch with both `web` and `worker` processes. Be sure to run through the application and test features that kick-off background jobs. If you're having issues getting it working, run `fly logs` to see errors.
+If all goes well the application should launch with both `app` and `worker` processes. Be sure to run through the application and test features that kick-off background jobs. If you're having issues getting it working, run `fly logs` to see errors.
 
 ## Scaling
 
