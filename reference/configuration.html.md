@@ -514,6 +514,7 @@ This section is for flags and feature settings which have yet to be promoted int
 [experimental]
 cmd = ["path/to/command", "arg1", "arg2"]
 entrypoint = ["path/to/command", "arg1", "arg2"]
+exec = ["path/to/command", "arg1", "arg2"]
 ```
 
 ### `cmd`
