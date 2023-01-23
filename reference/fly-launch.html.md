@@ -4,8 +4,8 @@ layout: docs
 sitemap: false
 nav: firecracker
 toc: false
-redirect-from:
-   - /docs/getting-started/launch-app/
+redirect_from:
+  - /docs/getting-started/launch-app/
 ---
 
 Usually, to create a new App on Fly.io, you'll write your source code and then run `fly launch`. [`fly launch`](/docs/flyctl/launch/) is an all-in-one tool that automates as much as possible between writing the code and deploying on Fly.io, setting you up with a running app with good defaults.
