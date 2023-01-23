@@ -6,7 +6,7 @@ nav: firecracker
 toc: false
 ---
 
-If you haven't installed flyctl yet, you'll need it to work with Fly.io. Details on how to do that are available in [Installing flyctl](/docs/getting-started/installing-flyctl.html).
+If you haven't installed flyctl yet, you'll need it to work with Fly.io. Details on how to do that are available in [Install flyctl](/docs/hands-on/install-flyctl/).
 
 ## Already got a Fly.io account? Log in.
 
