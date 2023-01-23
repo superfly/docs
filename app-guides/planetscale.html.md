@@ -103,7 +103,7 @@ You've successfully connected to a PlanetScale database!
 
 ## Deploy the app to Fly
 
-If you haven't already done so, [install the Fly CLI](https://fly.io/docs/getting-started/installing-flyctl/) and  then [log in to Fly](https://fly.io/docs/getting-started/log-in-to-fly/).
+If you haven't already done so, [install the Fly CLI](https://fly.io/docs/hands-on/install-flyctl/) and  then [log in to Fly](https://fly.io/docs/getting-started/log-in-to-fly/).
 
 We've added a few files to make this sample app ready to run on Fly: a `Dockerfile`, `.dockerignore` and `fly.toml`. The `Dockerfile` tells Fly how to _package_ the application. The `.dockerignore` file specifies the files/folders we want included (else it would include ones like `.env` that we do not want). The `fly.toml` file _configures_ the application. The Fly CLI can make that for you. But since we know which variables, ports, services and so on our app needs, we made one.
 
