@@ -18,7 +18,7 @@ demonstrates a trivial view, then scaffolds a database table, and finally makes
 use of [Turbo Streams](https://turbo.hotwired.dev/handbook/streams) to dynamically
 update pages.
 
-In order to start working with Fly.io, you will need `flyctl`, our CLI app for managing apps. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/getting-started/installing-flyctl/). Once thats installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
+In order to start working with Fly.io, you will need `flyctl`, our CLI app for managing apps. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/hands-on/install-flyctl/). Once thats installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
 
 <div class="callout">
 Before proceeding, something to be aware of. While Rails is [Optimized for Programmer happiness](https://rubyonrails.org/doctrine#optimize-for-programmer-happiness), it isn't particularly optimized for minimum RAM consumption. If you wish to deploy an app of any appreciable size or even make extensive use of features like `rails console`, you likely will hit RAM limits on your machine. And when applications run out of memory, they tend to behave unpredictably as error recovery actions will often also fail due to lack of memory.

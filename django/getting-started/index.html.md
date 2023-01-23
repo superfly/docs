@@ -127,7 +127,7 @@ That's it! We're ready to deploy on Fly.
 
 ## flyctl
 
-Fly has its own command-line utility for managing apps, [flyctl](https://fly.io/docs/hands-on/install-flyctl/). If not already installed, follow the instructions on the [installation guide](https://fly.io/docs/getting-started/installing-flyctl/) and [log in to Fly](https://fly.io/docs/getting-started/log-in-to-fly/).
+Fly has its own command-line utility for managing apps, [flyctl](https://fly.io/docs/hands-on/install-flyctl/). If not already installed, follow the instructions on the [installation guide](https://fly.io/docs/hands-on/install-flyctl/) and [log in to Fly](https://fly.io/docs/getting-started/log-in-to-fly/).
 
 
 ## Provision Django

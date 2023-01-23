@@ -7,7 +7,7 @@ nav: flyctl
 
 The `flyctl` command is your primary way to interact with Fly.io.
 
-If you are doing anything with Fly.io, you'll need it. We have [flyctl installation instructions](/docs/flyctl/installing/) to guide you through installing it on your system. There's also [flyctl and continuous integration](/docs/flyctl/integrating/) which covers environment variables, JSON and other automation related information about flyctl.
+If you are doing anything with Fly.io, you'll need it. We have [flyctl installation instructions](/docs/hands-on/install-flyctl/) to guide you through installing it on your system. There's also [flyctl and continuous integration](/docs/flyctl/integrating/) which covers environment variables, JSON and other automation related information about flyctl.
 
 ## Using your Fly.io Account
 

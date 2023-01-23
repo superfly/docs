@@ -39,7 +39,7 @@ For any Fly application, you need to reserve an app name. So let's create an app
 flyctl apps create
 ```
 
-**If you don't have `flyctl`, you'll need to install it. Check out our [Installing Flyctl](/docs/flyctl/installing/) guide. If you haven't got a Fly account yet, run `flyctl auth signup` to get your own free account.**
+**If you don't have `flyctl`, you'll need to install it. Check out our [Install Flyctl](/docs/hands-on/install-flyctl/) guide. If you haven't got a Fly account yet, run `flyctl auth signup` to get your own free account.**
 
 You will be asked for an app name at this point. Hit return to have one auto-generated for you. You'll see the app name when the create has been completed like this:
 
