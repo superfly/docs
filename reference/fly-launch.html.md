@@ -1,25 +1,20 @@
 ---
-title: Launching a New App
+title: Fly Launch
 layout: docs
 sitemap: false
 nav: firecracker
 toc: false
+redirect-from:
+   - /docs/getting-started/launch-app/
 ---
 
-<div class="callout">
-### New to Fly.io?
-
-Start with the [Speedrun](/docs/speedrun), or for a little more detail, [Hands-on with Fly.io](/docs/hands-on/).
-</div>
-
-Usually, to create a new app on Fly.io, you'll write your source code and then run `fly launch`. [`fly launch`](/docs/flyctl/launch/) is an all-in-one tool that automates as much as possible between writing the code and deploying on Fly.io, setting you up with a running app with good defaults.
+Usually, to create a new App on Fly.io, you'll write your source code and then run `fly launch`. [`fly launch`](/docs/flyctl/launch/) is an all-in-one tool that automates as much as possible between writing the code and deploying on Fly.io, setting you up with a running app with good defaults.
 
 The language-specific launchers built into flyctl via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through `fly launch` or through a more manual process you might begin with `fly apps create`.
 
 ## New App Creation
 
 When `fly launch` or `fly apps create` creates a new app, it gets a name, an organization, a preferred deployment region, and a default configuration that's good for simple apps that should be publicly available on the web. At this early stage there's nothing to deploy; you can create an app before you even decide what language to write it in.
-
 
 ## Build Configuration
 
