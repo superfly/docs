@@ -2,7 +2,6 @@
 title: Cookbooks
 layout: framework_docs
 order: 4
-status: beta
 ---
 
 It is official.  Rails 7.1 will have
@@ -12,12 +11,14 @@ going forward, Rails applications will include Dockerfiles.
 
 For a large number of people that will move the task of learning Dockerfiles from something that needs to be done someday to something that is important to have at least a working knowledge of relatively soon.
 
-There is a lot of good docs out there, ranging from
-[deep dives](https://docs.docker.com/get-started/overview/) to
-[prepackaged solutions](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development).
+There is a lot of good docs out there.  A good place to start is with
+[Rails on Docker](https://fly.io/ruby-dispatch/rails-on-docker/) which
+will walk you through the current Rails template.
 
-Fly Rails cookbooks aspire to be different.  In each, you will start with a minimal Dockerfile that focuses on one topic.  And you wil be introduced to a small number of new alternatives, exploring different tradeoffs or
-use cases.
+Fly Rails cookbooks are for those that wish to explore further.  In each, you
+will start with a minimal Dockerfile that focuses on one topic.  And you wil be
+introduced to a small number of new alternatives, exploring different tradeoffs
+or use cases.
 
 While this tutorial is anchored by focusing on deploying Ruby on Rails on
 fly.io, the concepts apply to other frameworks and other cloud providers. 

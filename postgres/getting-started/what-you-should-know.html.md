@@ -23,6 +23,7 @@ This is not a managed database. If Postgres crashes because it ran out of memory
 
 Deploying a Fly Postgres database means you may need to manage the following:
 
+- **Provisioning the right cluster config for you** - Consider what your availability needs are. If you run only a single instance, then anything that happens to that disk, that server or the network in that region can cause your database to be unavailable.
 - **Scaling storage and memory resources** - If your database runs out of disk space or memory, you'll have to scale it up, or down if you don't need the resources.
 - **Upgrading Postgres versions & security patches** - Fly.io provides tools like `fly image update` to upgrade your database instances to new minor versions of Postgres, but you'll have to run the upgrades yourself. Same for security patches: you'll have to apply those to running Postgres clusters.
 - **Developing a database backup & restoration plan** - Fly.io's self-managed Postgres ships with a basic daily volume snapshot tool that keeps snapshots around for 7 days. It does not manage off-site backups, etc.
@@ -35,22 +36,21 @@ There are a lot of knobs to turn, but `fly pg config` only supports a few of the
 
 ## Fully managed Postgres
 
-If you want a fully managed database solution for your Fly apps, there are many great options; for example:
+### Recommended External Providers
 
-- [Heroku Managed Data Services](https://www.heroku.com/managed-data-services)
-- [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql/#overview)
-- [Amazon RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/)
-- [Google Cloud SQL for PostgreSQL](https://cloud.google.com/sql/docs/postgres/)
-- [Digital Ocean Managed Postgres](https://www.digitalocean.com/products/managed-databases-postgresql)
+If you want a fully managed database solution for your Fly Apps, there are many great options, including:
+
+- [Crunchy Bridge Managed Postgres](https://www.crunchydata.com/products/crunchy-bridge) (on AWS, Azure, GCP, or Heroku)
 - [Neon Serverless Postgres](https://neon.tech/)
+- [PlanetScale Serverless MySQL](https://planetscale.com/) ([guide to use with Fly Apps](docs/app-guides/planetscale/))
 - [Supabase Postgres](https://supabase.com/database)
 
-## About Free Postgres on Fly.io
+### Other Places
 
-You can use Fly.io's [free resource allowance](https://fly.io/docs/about/pricing/#free-allowances) in one place, or split it up. The following Postgres configurations fit within the free volume usage limit:
+You can connect your Fly Apps to the usual suspects, too:
 
-- Single node, 3gb volume (single database)
-- 2 x 1gb volumes (database in two regions, or a primary and replica in the same region)
-- 3 x 1gb volumes (database in three regions)
-
-If you want to keep your whole project free, save some compute allowance for your other apps.
+- [Amazon RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/)
+- [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql/#overview)
+- [Digital Ocean Managed Postgres](https://www.digitalocean.com/products/managed-databases-postgresql)
+- [Google Cloud SQL for PostgreSQL](https://cloud.google.com/sql/docs/postgres/)
+- [Heroku Managed Data Services](https://www.heroku.com/managed-data-services)
