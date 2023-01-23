@@ -15,7 +15,7 @@ Fly.io allows you to deploy any kind of app as long as it is packaged in a **Doc
 Each Fly.io application needs a `fly.toml` file to tell the system how we'd like to deploy it. That file can be automatically generated with the `flyctl launch` command, which will ask a few questions to set everything up. Let's run through it now: 
 
 ```cmd
-flyctl launch --image flyio/hellofly:latest
+fly launch --image flyio/hellofly:latest
 ```
 ```output 
 ? App Name (leave blank to use an auto-generated name):
@@ -30,31 +30,35 @@ Here you can enter the name of the app. Please note that you can only use number
     If you did not add another organization to your account, the `personal` organization will be selected automatically.  
 </div>
 
+Next, you'll be prompted to select a region to deploy in.
+
 ```output
 ? Select region: ord (Chicago, Illinois (US))
 ```
-Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region. 
 
+At this point, flyctl creates a shell of an app for you and writes a starter configuration to a `fly.toml` file. 
 
 <div class="callout">
 
-You will also be prompted for credit card payment information, required for charges outside the free allowances on Fly.io. See [Pricing](/docs/about/pricing) for more details.
+If you have just signed up, you will also be prompted for credit card payment information, required for charges outside the free allowances on Fly.io. See [How We Use Credit Cards](/docs/about/credit-cards/) and [Pricing](/docs/about/pricing) for more details.
 
 </div>
 
+The CLI will ask if you need a Postgres or Redis database. You can reply "No" for this demonstration.
+
 ```output
-? Would you like to set up a Postgresql database now? (y/N)
+? Would you like to set up a Postgresql database now? No
+? Would you like to set up an Upstash Redis database now? No
 ```
-Then CLI will ask if you need a Postgresql database. You can reply no for now.
 
-At this point, `flyctl` creates an app for you and writes your configuration to a `fly.toml` file. The `fly.toml` file now contains a default configuration for deploying your app.
-
-Lastly, the CLI will ask you if you would like to deploy now - please say no if your app doesn't use `internal_port = 8080`.
+Lastly, the CLI will ask you if you would like to deploy now&mdash;if you're deploying an app that doesn't use `internal_port = 8080`, please say no, and take a moment to edit `fly.toml`.
 
 ```output
 ? Would you like to deploy now? Yes
 ==> Building image
 ```
+
+Whether you deploy straight away or not, `flyctl` will download a `fly.toml` configuration file to the working directory, for use on the next deployment.
 
 ```toml
 
@@ -69,19 +73,16 @@ app = "hellofly"
 ...
 ```
 
-The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name value at the start. That name will be used to identify the application on the Fly.io platform. You can also see how the app will be built and that internal port setting. The rest of the file contains settings to be applied to the application when it deploys. 
+The Fly CLI will always check to see if this file exists in the current directory, specifically for the `app` name value at the start. Many commands use this app name to determine which Fly App to apply to by default.
 
-We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
+You can also see how the app will be built (from a pre-built Docker image, in this case), that internal port setting, and further configuration to be applied to the application when it deploys.
 
-[Next: Deploying Your App](/docs/hands-on/deploy-app/)
-
-
-We are now ready to deploy our containerized app. At the command line, just run:
+If you stopped to customize your `fly.toml`, you'll want to deploy your app now. At the command line, just run:
 
 ```cmd
-flyctl deploy
+fly deploy
 ```
 
-This will look up our `fly.toml` file, and get the app name `hellofly` from there. Then flyctl will start the process of deploying our application to the Fly.io platform. flyctl will return you to the command line when it's done.
+This will get the app name `hellofly` from `fly.toml`. Then flyctl will start the process of deploying your application to the Fly.io platform. flyctl will return you to the command line when it's done.
 
 [Next: Check your app's status](/docs/hands-on/check-app-status/)
