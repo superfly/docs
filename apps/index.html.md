@@ -1,9 +1,10 @@
 ---
-title: Fly Apps
-layout: docs
-sitemap: false
-nav: firecracker
+title: "Fly Apps"
+layout: framework_docs_overview
+toc: false
+redirect_from: /docs/reference/apps/
 ---
+
 On Fly.io, an "app" groups one or more VM instances into a single administrative entity. It stores information our platform needs in order to run your code in Firecracker VMs and to route your services.
 
 Since we [introduced Fly Machines](/blog/fly-machines/), there are two forms this administrative package can take: Apps V1, for Nomad-orchestrated VMs; and Apps V2, for Machines VMs. 
