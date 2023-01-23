@@ -10,7 +10,7 @@ order: 1
 Create an empty directory, and place the following Dockerfile in there:
 
 ```dockerfile
-<%= partial("minimal/Dockerfile1").strip %>
+<%= dockerfile("docs/rails/cookbooks/minimal/Dockerfile1") %>
 ```
 
 If you've ever seen a Dockerfile before, the above seems too good to be true.  But try it.
@@ -141,7 +141,7 @@ that provides more information.
 A recap of the progress so far.  The entire Dockerfile isn't that big:
 
 ```dockerfile
-<%= partial("minimal/Dockerfile3").strip %>
+<%= dockerfile("docs/rails/cookbooks/minimal/Dockerfile3") %>
 ```
 
 A total of 23 lines, 7 of them blank.

@@ -30,18 +30,13 @@ We can start with the Node.js
 
 
 ```dockerfile
-<%= begin
-  dockerfile = IO.read(File.join(__dir__, 'node/Dockerfile1')).strip
-
-  dockerfile[/WORKDIR demo\nRUN yarn add.*\n+/] = ''
-
-  dockerfile[/RUN bin\/rails.*EOF/m] = [
+<%= dockerfile 'docs/rails/cookbooks/node/Dockerfile1' do |patch|
+  patch[/WORKDIR demo\nRUN yarn add.*\n+/] = ''
+  patch[/RUN bin\/rails.*EOF/m] = [
     'COPY <<-"EOF" /demo/config/routes.rb',
     'Rails.application.routes.draw { root "rails/welcome#index" }',
     'EOF'
   ].join("\n")
-
-  dockerfile
 end %>
 ```
 
@@ -54,18 +49,13 @@ later results in failures.
 Another approach is merge files from the official node and ruby images.
 
 ```dockerfile
-<%= begin
-  dockerfile = IO.read(File.join(__dir__, 'node/Dockerfile2')).strip
-
-  dockerfile[/WORKDIR demo\nRUN yarn add.*\n+/] = ''
-
-  dockerfile[/RUN bin\/rails.*EOF/m] = [
+<%= dockerfile 'docs/rails/cookbooks/node/Dockerfile2' do |patch|
+  patch[/WORKDIR demo\nRUN yarn add.*\n+/] = ''
+  patch[/RUN bin\/rails.*EOF/m] = [
     'COPY <<-"EOF" /demo/config/routes.rb',
     'Rails.application.routes.draw { root "rails/welcome#index" }',
     'EOF'
   ].join("\n")
-
-  dockerfile
 end %>
 ```
 
@@ -85,18 +75,13 @@ for this task.
 A minimal Dockerfile making use of Volta would look like the following:
 
 ```dockerfile
-<%= begin
-  dockerfile = IO.read(File.join(__dir__, 'node/Dockerfile3')).strip
-
-  dockerfile[/WORKDIR demo\nRUN yarn add.*\n+/] = ''
-
-  dockerfile[/RUN bin\/rails.*EOF/m] = [
+<%= dockerfile 'docs/rails/cookbooks/node/Dockerfile3' do |patch|
+  patch[/WORKDIR demo\nRUN yarn add.*\n+/] = ''
+  patch[/RUN bin\/rails.*EOF/m] = [
     'COPY <<-"EOF" /demo/config/routes.rb',
     'Rails.application.routes.draw { root "rails/welcome#index" }',
     'EOF'
   ].join("\n")
-
-  dockerfile
 end %>
 ```
 
@@ -109,18 +94,13 @@ A fourth option is to flip the script: start with node as the base and add ruby.
 Debian bullseye includes Ruby 2.7 which is supported until the end of March 2023.
 
 ```dockerfile
-<%= begin
-  dockerfile = IO.read(File.join(__dir__, 'node/Dockerfile4')).strip
-
-  dockerfile[/WORKDIR demo\nRUN yarn add.*\n+/] = ''
-
-  dockerfile[/RUN bin\/rails.*EOF/m] = [
+<%= dockerfile 'docs/rails/cookbooks/node/Dockerfile4' do |patch|
+  patch[/WORKDIR demo\nRUN yarn add.*\n+/] = ''
+  patch[/RUN bin\/rails.*EOF/m] = [
     'COPY <<-"EOF" /demo/config/routes.rb',
     'Rails.application.routes.draw { root "rails/welcome#index" }',
     'EOF'
   ].join("\n")
-
-  dockerfile
 end %>
 ```
 
@@ -151,10 +131,8 @@ Replace the three lines starting with
 `COPY <<-"EOF" config/routes.rb` with the following:
 
 ```dockerfile
-<%= begin
-  dockerfile = IO.read(File.join(__dir__, 'node/Dockerfile1')).strip
-
-  dockerfile[/RUN bin\/rails.*EOF/m]
+<%= dockerfile 'docs/rails/cookbooks/node/Dockerfile1' do |patch|
+  patch[/RUN bin\/rails.*EOF/m]
 end %>
 ```
 

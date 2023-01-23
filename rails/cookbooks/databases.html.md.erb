@@ -9,18 +9,16 @@ order: 2
 Below is a minimal, multi-stage build, Dockerfiler that is capable of
 supporting both ActiveRecord and Action Cable:
 
-```dockerfile
-<%= begin
-  dockerfile = IO.read(File.join(__dir__, 'databases/Dockerfile1')).strip
 
-  dockerfile[/RUN bin\/rails.*EOF/m] = [
+```dockerfile
+<%= dockerfile "docs/rails/cookbooks/databases/Dockerfile1" do |patch|
+  patch[/RUN bin\/rails.*EOF/m] = [
     'COPY <<-"EOF" /demo/config/routes.rb',
     'Rails.application.routes.draw { root "rails/welcome#index" }',
     'EOF'
   ].join("\n")
-
-  dockerfile
-end %>
+end
+%>
 ```
 
 This Dockerfile contains a number of small changes from the minimal
@@ -63,10 +61,8 @@ Replace the three lines starting with
 `COPY <<-"EOF" config/routes.rb` with the following:
 
 ```dockerfile
-<%= begin
-  dockerfile = IO.read(File.join(__dir__, 'databases/Dockerfile1')).strip
-
-  dockerfile[/RUN bin\/rails.*EOF/m]
+<%= dockerfile 'docs/rails/cookbooks/databases/Dockerfile1' do |patch|
+  patch[/RUN bin\/rails.*EOF/m]
 end %>
 ```
 

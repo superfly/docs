@@ -17,14 +17,10 @@ Rails API server:
 
 
 ```dockerfile
-<%= begin
-  dockerfile = IO.read(File.join(__dir__, 'api/Dockerfile1')).strip
-
-  dockerfile[%r{RUN node --version.*?EOF\n\n}m] = ''
-  dockerfile[%r{COPY --from=react /client/.node-version /demo.*EOF\n}m] =
+<%= dockerfile 'docs/rails/cookbooks/api/Dockerfile1' do |patch|
+  patch[%r{RUN node --version.*?EOF\n\n}m] = ''
+  patch[%r{COPY --from=react /client/.node-version /demo.*EOF\n}m] =
     "\nWORKDIR demo"
-
-  dockerfile
 end %>
 ```
 
@@ -56,9 +52,8 @@ Following is a example that demonstrates a React client working with
 a Rails API server.  First the React client:
 
 ```dockerfile
-<%= begin
-  dockerfile = IO.read(File.join(__dir__, 'api/Dockerfile1'))
-  dockerfile[%r{RUN node --version.*?EOF\n}m].strip
+<%= dockerfile 'docs/rails/cookbooks/api/Dockerfile1' do |patch|
+  patch[%r{RUN node --version.*?EOF\n}m].strip
 end %>
 ```
 
@@ -69,9 +64,8 @@ renders the rotating React logo followed by this version information.
 Now the server implementation:
 
 ```dockerfile
-<%= begin
-  dockerfile = IO.read(File.join(__dir__, 'api/Dockerfile1'))
-  dockerfile[%r{COPY --from=react /client/.node-version /demo.*EOF}m]
+<%= dockerfile 'docs/rails/cookbooks/api/Dockerfile1' do |patch|
+  patch[%r{COPY --from=react /client/.node-version /demo.*EOF}m]
 end %>
 ```
 
