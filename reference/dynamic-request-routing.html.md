@@ -1,8 +1,11 @@
 ---
-title: Regional Request Routing
+title: Dynamic Request Routing
 layout: docs
 sitemap: false
 nav: firecracker
+redirect_from:
+  - /docs/reference/fly-replay/
+  - /docs/reference/regional-request-routing/
 ---
 
 Traffic sent to multi-region Fly.io apps is automatically routed to the region nearest to the client, thanks to Anycast-enabled IP addresses. [Read more Anycast on on Wikipedia](https://en.wikipedia.org/wiki/Anycast).
