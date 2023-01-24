@@ -114,7 +114,7 @@ Get details about an application, like its organization slug and name. Also, to 
 
 For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly apps using `flyctl`:
 
-<%= partial "../partials/set_secrets", locals: { app_name: "user-functions" } %>
+<%= partial "partials/set_secrets", locals: { app_name: "user-functions" } %>
 
 Machines inherit secrets from the app. Existing machines must be [updated](#update-a-machine) to pick up secrets set after the machine was created.
 
