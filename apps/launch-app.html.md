@@ -5,12 +5,15 @@ layout: framework_docs
 order: 10
 ---
 
+To create a brand new app on Fly.io, run `fly launch` from the root directory of your project. 
 
-## From prerelease announcement: 
+This command initializes a new App under your Organization and tries to configure it for deployment. 
 
-Launch apps with `fly launch`. It should work like it does for apps on Nomad. All the scanners and builders are supported, as usual.
+## Language and Framework Scanners
 
-To try out Apps v2 use an app that does not require statics. Apps v2 doesn’t support statics, yet. We’ll announce when that changes.
+`fly launch` scans your project's source code, and for many programming languages and frameworks it can get a whole project configured and deployed in a single step.
+
+For other projects, you'll have to give flyctl more information to configure and build your project, before it can be deployed. Since Fly.io Apps run in VMs cooked up from Docker images, a big part of this is figuring out how to get or build this Docker image.
 
 I’ll start an nginx app, and use that for the rest of the examples in this post.
 
@@ -36,6 +39,9 @@ No machines in dry-pond-1475 app, launching one new machine
   Machine 21781973f03e89 update finished: success
   Finished deploying
 ```
+To try out Apps v2 use an app that does not require statics. Apps v2 doesn’t support statics, yet. We’ll announce when that changes.
+
+
 
 Once `fly launch` finishes, use `fly open` to open the app’s homepage in a browser. The “Welcome to nginx!” page will show if everything worked.
 
