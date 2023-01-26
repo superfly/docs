@@ -160,7 +160,7 @@ before you deploy them by running the following commands:
 bin/rails dockerfile generate --compose
 docker buildx build . -t rails-welcome
 docker run -p 3000:3000 -e RAILS_MASTER_KEY=$(cat config/master.key) rails-welcome
-###
+```
 
 Change `rails-welcome` to the name of your application.
 
