@@ -131,3 +131,37 @@ Ruby images starting with 3.2 include [YJIT](https://github.com/Shopify/yjit) bu
 ```cmd
 bin/rails dockerfile generate --yjit
 ```
+
+## Updates
+
+Your application is unlikely to stay the same forever.  Perhaps you've
+updated to a new version of Ruby, bundler, node, or other package.  Or
+added a gem which has system dependencies.  When this occurs, you will
+need to update your Dockerfile to match.  In most cases, all you need
+to do is rerun the generator:
+
+```cmd
+bin/rails dockerfile generate
+```
+
+The generator will remember the options you selected before (these are
+stored in `config/dockerfile.yml`).  If you need to change a boolean
+option, add or remove a `no-` prefix before the option name.
+
+If you have made hand edits to your Dockerfile you may want to take advantage
+of the option to diff the changes before they are applied.
+
+## Testing Locally
+
+If you have Docker installed locally, you can test your applications
+before you deploy them by running the following commands:
+
+```sh
+bin/rails dockerfile generate --compose
+docker buildx build . -t rails-welcome
+docker run -p 3000:3000 -e RAILS_MASTER_KEY=$(cat config/master.key) rails-welcome
+###
+
+Change `rails-welcome` to the name of your application.
+
+Add `--load` to the `buildx` command if you want to save the image to the local docker.
