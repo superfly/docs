@@ -1,5 +1,5 @@
 ---
-title: "Elixir Phoenix on Fly.io"
+title: "Elixir on Fly.io"
 layout: framework_docs
 order: 1
 toc: false
