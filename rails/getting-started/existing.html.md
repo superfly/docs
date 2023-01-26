@@ -3,7 +3,7 @@ title: Existing Rails Apps
 layout: framework_docs
 objective: Learn how to run your existing Rails applications on Fly.
 status: beta
-order: 2
+order: 3
 ---
 
 If you have an existing Rails app that you want to move over to Fly, this guide walks you through the initial deployment process and shows you techniques you can use to troubleshoot issues you may encounter in a new environment.

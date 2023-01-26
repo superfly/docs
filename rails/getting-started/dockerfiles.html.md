@@ -1,8 +1,8 @@
 ---
 title: Dockerfiles and fly.toml
 layout: framework_docs
-status: alpha
-order: 3
+status: beta
+order: 4
 ---
 
 Once you have completed running `fly launch` you have some new files,
