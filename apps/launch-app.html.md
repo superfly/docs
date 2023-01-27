@@ -95,4 +95,4 @@ No machines in testrun app, launching one new machine
 
 Once `fly launch` finishes, use `fly open` to open the app’s homepage in a browser. The “Welcome to nginx!” page will show if everything worked.
 
-If it didn't, you'll want to head for [Observe an App](/docs/apps/observe-app/) and [Troubleshooting Your Deployment](/docs/getting-started/troubleshooting/) to get to the bottom of it.
+If it didn't, you'll want to head for [Observe an App](/docs/apps/examine-app/) and [Troubleshooting Your Deployment](/docs/getting-started/troubleshooting/) to get to the bottom of it.
