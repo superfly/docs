@@ -37,7 +37,7 @@ If you can perform uploads via `XMLHTTPRequest` (aja Ajax), you can prepend the 
 
 ## `fly-replay` use cases
 
-Here are a few example use cases for the `fly-replay' response header.
+Here are a few example use cases for the `fly-replay` response header.
 
 ### Replaying writes in secondary regions
 
