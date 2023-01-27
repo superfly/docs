@@ -51,7 +51,7 @@ Let's get started.
   * [Node](./node) - support for esbuild, rollup, webpack
   * [API](./api) - api only rails servers with web front end
 
-## Recipies
+## Recipes
 
   * [Sources](./sources) - adding sources from outside of your `Dockerfile`.
   * [Optimizing builds](./build) - ordering, splitting, staging, and caching.
