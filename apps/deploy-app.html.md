@@ -1,7 +1,7 @@
 ---
 title: Deploy Changes to an App
 objective: 
-layout: framework_docs
+layout: appsv2
 order: 30
 ---
 

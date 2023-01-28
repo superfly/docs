@@ -1,7 +1,7 @@
 ---
 title: Scale VM Count on an App
 objective: 
-layout: framework_docs
+layout: appsv2
 order: 60
 ---
 

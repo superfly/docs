@@ -1,12 +1,9 @@
 ---
 title: Scale VM Resources on an App
 objective: 
-layout: framework_docs
+layout: appsv2
 order: 50
 ---
-
-[x] prerelease announcement
-
 
 Scale memory and cpu with `fly machine update`:
 

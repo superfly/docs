@@ -1,7 +1,8 @@
 ---
 title: "Fly Apps"
-layout: framework_docs_overview
+layout: docs
 toc: false
+nav: apps
 redirect_from: /docs/reference/apps/
 ---
 

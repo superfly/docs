@@ -1,49 +1,44 @@
 ---
 title: Launch a New App on Fly.io
 objective: 
-layout: framework_docs
+layout: appsv2
 order: 10
 ---
 
-To create a brand new app on Fly.io, run `fly launch` from the root directory of your project. 
-
-This command initializes a new App under your Organization and tries to configure it for deployment. 
+To create a brand new app on Fly.io, run `fly launch` from the root directory of your project. This command initializes a new App under your Organization and tries to configure it for deployment. 
 
 We'll get to a demonstration, but if you're in a hurry to try your first launch, we also have a condensed [Hands-on](/docs/hands-on/).
 
-## Projects with Language and Framework Scanners
+## Launch Scanners
 
 `fly launch` scans your project's source code, and for many programming languages and frameworks it can go from source to deployed app in a single step.
 
 Have a look at our [Language & Framework Guides](/docs/languages-and-frameworks/) for instructions tailored to your project.
 
-## Other Projects
+`fly launch` will help you set up your app, even if its scanners don't detect a project it can deploy automatically. You'll have to give flyctl more information to configure and build the project, before it can be deployed. 
 
-`fly launch` will help you set up apps that aren't supported by scanners, too. You'll have to give flyctl more information to configure and build the project, before it can be deployed. 
-
-Since Fly.io Apps run in VMs cooked up from Docker images, a big part of this is figuring out how to get or build this Docker image. See [Builders](/docs/reference/builders) for the ways that this can happen.
+The building blocks for Fly.io Apps are Fly Machines. Machines are Linux VMs cooked up from Docker images, so a big part of this is figuring out how to get or build this Docker image. See [Builders](/docs/reference/builders) for the ways that this can happen.
 
 ## App Configuration
 
-Fly.io uses a TOML file to express user-defined configuration for Fly Apps. `fly launch` downloads a copy of this file, `fly.toml`, before deploying any VMs on a new app. 
+Fly.io uses a TOML file to express user-defined configuration for Fly Apps. `fly launch` downloads a copy of this file, `fly.toml`, before deploying any Machines on a new app. 
 
-If a launch scanner has detected that it matches your project's language or framework, it tweaks the configuration to suit. If no scanner matched your project, you get a `fly.toml` containing "sensible defaults" for a web app listening for HTTP and HTTPS connections.
+If a launch scanner has detected that it matches your project's language or framework, it tweaks the configuration to suit. If no scanner matched your project, you get a `fly.toml` containing "sensible defaults" for a web app listening for HTTP and HTTPS connections. This includes setting up HTTP services to get Fly Proxy to route requests to your app, and establishing TCP health checks that Fly.io uses to determine if a deployment has succeeded.
 
-This includes setting up HTTP services to get Fly Proxy to route requests to your app. 
-
-You can find more information on the configuration settings in `fly.toml` in [App Configuration](/docs/reference/configuration/).
+If and when you need more control, `fly.toml` lets you set environment variables, deployment strategy, release commands, internet-exposed services, disk mounts, custom metrics, health checks, and process-group Machines to be configured on the next deployment. More in [App Configuration](/docs/reference/configuration/).
 
 If you need to make configuration changes, respond `N` when `fly launch` offers to `deploy now`, and edit `fly.toml`. Then you can deploy using `fly deploy`.
 
 ## Resources for Apps
 
-`fly launch` will offer to take you through provisioning a Fly Postgres database cluster and a Redis for caching (in partnership with Upstash). You can say `Y` to these at launch time, or come back to them later.
 
 A basic web app will need a public IP address so that it can be reached. You may also want to prepare other resources before deploying your app, such as app secrets or a persistent storage volume.
 
 For our best-supported frameworks, `fly launch` will do some or all of the above using the API.
 
 Standard HTTP apps (listening on standard ports) are automatically given a dedicated IPv6 Anycast IP address and a shared IPv4 Anycast address on deployment. See [Public Networking](/docs/reference/services/).
+
+`fly launch` will ask if you want to provision a Fly Postgres database cluster and a Redis store (in partnership with Upstash). If you're not sure, you can say `N` to these, and set them up later if needed.
 
 You can say no to `deploy now?` if there's anything you want to set up first, and then deploy with `fly deploy`.
 
@@ -95,4 +90,4 @@ No machines in testrun app, launching one new machine
 
 Once `fly launch` finishes, use `fly open` to open the app’s homepage in a browser. The “Welcome to nginx!” page will show if everything worked.
 
-If it didn't, you'll want to head for [Observe an App](/docs/apps/examine-app/) and [Troubleshooting Your Deployment](/docs/getting-started/troubleshooting/) to get to the bottom of it.
+If it didn't, you'll want to head for [Examine an App](/docs/apps/examine-app/) and [Troubleshooting Your Deployment](/docs/getting-started/troubleshooting/) to get to the bottom of it.
