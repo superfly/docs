@@ -1,7 +1,8 @@
 ---
 title: Manage Persistent Storage on a Fly App
 objective: 
-layout: appsv2
+layout: docs
+nav: firecracker
 order: 40
 ---
 

@@ -1,7 +1,8 @@
 ---
 title: Launch a New App on Fly.io
 objective: 
-layout: appsv2
+layout: docs
+nav: firecracker
 order: 10
 ---
 

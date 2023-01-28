@@ -1,7 +1,8 @@
 ---
 title: Restart an App
 objective: 
-layout: appsv2
+layout: docs
+nav: firecracker
 order: 70
 ---
 

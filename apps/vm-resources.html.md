@@ -1,7 +1,8 @@
 ---
 title: Scale VM Resources on an App
 objective: 
-layout: appsv2
+layout: docs
+nav: firecracker
 order: 50
 ---
 

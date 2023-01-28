@@ -1,7 +1,7 @@
 ---
 title: Delete an App on Fly.io
 objective: 
-layout: appsv2
+layout: docs
 order: 110
 ---
 
