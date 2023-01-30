@@ -83,7 +83,7 @@ Regenerate your Dockerfile specifying that you no longer want the
 prepare step there:
 
 ```cmd
-bin/rals dockerfile generate --no-prepare
+bin/rails dockerfile generate --no-prepare
 ```
 
 Next, add a deploy step to your fly.toml:
