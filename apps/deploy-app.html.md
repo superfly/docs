@@ -7,7 +7,7 @@ nav: firecracker
 order: 30
 ---
 
-`fly deploy` lets you manage your App's Machines as a group, creating a new release of the app and updating them with the same changes.
+`fly deploy` creates a new release of the App and updates the App's Machines as a group.
 
 Whether you have an App up and running and it's time to update it, or you've run `fly launch` and need to tweak something to get it running properly, you can make your changes locally and deploy a new release by running `fly deploy` from the root directory of your project, where any app source, project config, `fly.toml`, and Dockerfile are located. 
 
@@ -17,8 +17,15 @@ If there's a `fly.toml`, it will look there for configuration and the name of th
 If you run `fly deploy` on an older Machines App&mdash;an App created using `fly create --machines` or `fly machine run`&mdash;you will be prompted to confirm whether you want to [migrate the App to Apps V2](/docs/apps/migrate-to-v2/).
 </div>
 
+## Machines not managed by `fly deploy`
+
 Machines created using `fly deploy` (or as part of a deployment during `fly launch`), or by `fly clone`ing such a Machine, will be updated as a group on all subsequent `fly deploy` commands, as will Machines that existed on a Machines App when it was migrated to the V2 Apps platform.
 
+New Machines created within an App using `fly machine run` are not automatically managed by `fly deploy`, so these can have their own configuration not matching that of the App, and can be based on a different Docker image.
+
+## Volume mounts and `fly deploy`
+
+If a Machine has a mounted [volume](/docs/reference/volumes/), `fly deploy` can't be used to change it. You can change its mount point within the Machine, though. This is configured in the `[mounts]` section of `fly.toml`.
 
 ## `fly deploy` configuration in `fly.toml`
 

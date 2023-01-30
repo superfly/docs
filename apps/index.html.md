@@ -2,7 +2,7 @@
 title: "Fly Apps"
 layout: docs
 toc: false
-nav: apps
+nav: firecracker
 redirect_from: /docs/reference/apps/
 ---
 
