@@ -6,10 +6,12 @@ nav: firecracker
 order: 40
 ---
 
-[x] prerel announcement
+If your `fly.toml` has a `[mounts]` section on launch, `fly launch` will create a volume to go with the App's first Machine. Subsequent volumes will have to be created individually with `fly volume create` and attached to cloned machines with `fly machine update --volume`.
 
 
-Volumes need to be created and manually attached to machines. The `source` setting in the `[mounts]` section is no longer supported in fly.toml. There is no enforcement around volumes names.
+OR:
+
+Volumes need to be created and manually attached to machines. The `source` setting in the `[mounts]` section is no longer supported in `fly.toml`. There is no enforcement around volume names.
 
 Attach volumes with the Machines API for now. We’re working on making this easier with `fly machine update` and `fly machine clone`.
 

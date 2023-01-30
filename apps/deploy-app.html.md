@@ -7,15 +7,32 @@ nav: firecracker
 order: 30
 ---
 
-You deploy a new release of your App by running `fly deploy` from the root directory of your project. `fly deploy` looks there for a `fly.toml` file and uses this, and any options you passed with `fly deploy`, to update the App and its Machines.
+`fly deploy` lets you manage your App's Machines as a group, creating a new release of the app and updating them with the same changes.
 
-If you run `fly deploy` on an existing Machines App&mdash;an App with Machines VMs in it created using `fly create --machines` or `fly machine run`, you will be prompted to confirm whether you want to migrate the app to Apps V2.
+Whether you have an App up and running and it's time to update it, or you've run `fly launch` and need to tweak something to get it running properly, you can make your changes locally and deploy a new release by running `fly deploy` from the root directory of your project, where any app source, project config, `fly.toml`, and Dockerfile are located. 
 
-Machines created using `fly deploy`, or by `fly clone`ing such a Machine, will be updated as a group on all subsequent `fly deploy` commands, as will Machines that existed on a Machines App when it was [migrated to the V2 Apps platform](/docs/apps/migrate-to-v2/).
+If there's a `fly.toml`, it will look there for configuration and the name of the app to operate on. There are [a number of options](/docs/flyctl/deploy/) you can use with the `fly deploy` command.
+
+<div class="callout">
+If you run `fly deploy` on an older Machines App&mdash;an App created using `fly create --machines` or `fly machine run`&mdash;you will be prompted to confirm whether you want to [migrate the App to Apps V2](/docs/apps/migrate-to-v2/).
+</div>
+
+Machines created using `fly deploy` (or as part of a deployment during `fly launch`), or by `fly clone`ing such a Machine, will be updated as a group on all subsequent `fly deploy` commands, as will Machines that existed on a Machines App when it was migrated to the V2 Apps platform.
+
+
+## `fly deploy` configuration in `fly.toml`
+
+
+Configure the following deployment behavior in the [`[deploy]` section](/docs/reference/configuration/#the-deploy-section) of `fly.toml`.
+
+### One-off commands on deployment
+You can run a one-off release command in a temporary VM&mdash;using the successfully built release&mdash;before that release is deployed. This is good for, e.g., running database migrations.
+
+### Deployment strategy
+You can specify `rolling` deployment (wait for each Machine to be successfully deployed before starting the update of the next one), or `immediate` deployment (go ahead and bring all instances down for update at once).
 
 
 
-Whether you have an App up and running, or you've launched and something wasn't quite right on the first deployment, you can make your changes locally to your source, Dockerfile or App config, and apply them to a new release with `fly deploy`.
 
 ```cmd
 fly deploy
@@ -29,10 +46,8 @@ Deploying dry-pond-1475 app with rolling strategy
   Finished deploying
 ```
 
-You can run a one-off release command in a temporary VM - using the successfully built release - before that release is deployed. This is good for, e.g., running database migrations.
+## Not all changes require a new App release
 
-Release commands and deployment strategy (rolling or immediate) are specified in the [`[deploy]` section](/docs/reference/configuration/#the-deploy-section) of `fly.toml`.
+Not all changes require a fresh release. You can add an IP address to an App, for example, without redeploying.
 
-Not all changes require a fresh release. You can add an IP address to an app, for example, without redeploying.
-
-Adding a secret to the app does require a restart, so `fly secrets set` triggers a new deployment.
+Adding a [secret](/docs/reference/secrets/) to the App does require a restart, so `fly secrets set` triggers a new deployment.

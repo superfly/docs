@@ -6,9 +6,7 @@ nav: firecracker
 order: 60
 ---
 
-[x] prerelease announcement
-
-Scaling an app is different with Apps v2. Use `fly machine clone` to horizontally scale the app, even across regions:
+Use `fly machine clone` to add a Machine that will be managed by `fly deploy`. The new Machine will be, as you would expect, a copy of the specified Machine. If the original Machine has a volume attached, a blank volume will be provisioned for the new Machine. It's up to you to decide what to put on the new volume; Fly.io will not automatically copy the contents of the original Machine's volume.
 
 ```
 fly machine clone 21781973f03e89
