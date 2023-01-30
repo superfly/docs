@@ -1,7 +1,6 @@
 ---
 title: Dockerfiles and fly.toml
 layout: framework_docs
-status: beta
 order: 4
 ---
 
@@ -25,7 +24,7 @@ are based on Debian [bullseye](https://www.debian.org/releases/bullseye/),
 and there are a [large number of packages](https://packages.debian.org/stable/)
 available to be installed in this manner.
 
-The [Dockerfile generator for Rails](https://github.com/rubys/dockerfile-rails#overview) attempts to detect common dependencies and handle them for you.  If you come across a dependency that may be useful to others, please consider opening up an issue or a pull request.
+The [Dockerfile generator for Rails](https://github.com/rubys/dockerfile-rails#overview) attempts to detect common dependencies and handle them for you.  If you come across a dependency that may be useful to others, please consider opening up an [issue](https://github.com/rubys/dockerfile-rails/issues) or a [pull request](https://github.com/rubys/dockerfile-rails/pulls).
 
 ## Using Sqlite3
 
