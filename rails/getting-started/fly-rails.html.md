@@ -2,7 +2,7 @@
 title: Experimental Fly Rails Gem
 layout: framework_docs
 status: alpha
-order: 3
+order: 5
 ---
 
 This guide runs you through how to use the `fly-rails` gem to deploy your Rails applications to Fly.io using Rails commands.
