@@ -362,7 +362,6 @@ Times are in milliseconds unless units are specified.
 * `services.http_checks.headers`: This is a sub-section of `services.http_checks`. It uses the key/value pairs as a specification of header and header values that will get passed with the http_check call.
 
 
-
 **Note**: The `services.http_checks` section is optional and not generated in the default `fly.toml` file.
 
 ## The `http_service` section
