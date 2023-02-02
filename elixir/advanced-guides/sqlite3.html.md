@@ -3,6 +3,9 @@ title: SQLite3
 layout: framework_docs
 objective: This guide shows you how to use SQLite3 as your database
 status: beta
+author: jason
+categories:
+  - elixir
 ---
 
 While Elixir applications on [Fly.io](https://fly.io) normally run on Postgres databases, you can
