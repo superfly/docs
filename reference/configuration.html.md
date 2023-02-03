@@ -322,13 +322,13 @@ When a service is running, Fly Proxy can check up on it by connecting to a port.
     restart_limit = 0
     timeout = "2s"
 ```
+Times are in milliseconds unless units are specified.
 
 * `grace_period`: The time to wait after a VM starts before checking its health.
 * `interval`: The time between connectivity checks.
 * `restart_limit`: The number of consecutive TCP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed TCP health checks.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
 
-Times are in milliseconds unless units are specified.
 
 ### `services.http_checks`
 
@@ -349,8 +349,10 @@ Another way of checking a service is running is through HTTP checks as defined i
 
 Roughly translated, this section says every ten seconds, perform a HTTP GET on the root path (e.g. http://appname.fly.dev/) looking for it to return a HTTP 200 status within two seconds. The parameters of a `http_check` are listed below.
 
+Times are in milliseconds unless units are specified.
+
 * `grace_period`: The time to wait after a VM starts before checking its health.
-* `interval`: The time in milliseconds between connectivity checks.
+* `interval`: The time between connectivity checks.
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
 * `protocol`: The protocol to be used (`http` or `https`)
@@ -359,7 +361,6 @@ Roughly translated, this section says every ten seconds, perform a HTTP GET on t
 * `tls_skip_verify`: When `true` (and using HTTPS protocol) skip verifying the certificates sent by the server.
 * `services.http_checks.headers`: This is a sub-section of `services.http_checks`. It uses the key/value pairs as a specification of header and header values that will get passed with the http_check call.
 
-Times are in milliseconds unless units are specified.
 
 **Note**: The `services.http_checks` section is optional and not generated in the default `fly.toml` file.
 
@@ -416,7 +417,7 @@ This section lets you define checks for apps outside of their `[[services]]` (or
 It's has a few differences with service checks:
 - You need to provide a port
 - You need to provide a name
-- You need to specify the type of th check
+- You need to specify the type of the check
 
 ```toml
 [checks]
@@ -441,10 +442,12 @@ Fields are very similar to `[[services.checks]]`:
 * `port`: Internal port to connect to. Needs to be available on `0.0.0.0`.
 * `type`: Either `tcp` or `http`.
 * `grace_period`: The time to wait after a VM starts before checking its health.
-* `interval`: The time in milliseconds between connectivity checks.
+* `interval`: The time between connectivity checks.
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
+
+Again, times are in milliseconds unless units are specified.
 
 ## The `processes` section
 

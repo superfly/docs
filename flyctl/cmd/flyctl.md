@@ -39,7 +39,6 @@ flyctl [flags]
 * [ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
 * [jobs](/docs/flyctl/jobs/)	 - Show jobs at Fly.io
 * [launch](/docs/flyctl/launch/)	 - Create and configure a new app from source code or a Docker image.
-* [list](/docs/flyctl/list/)	 - Lists your Fly resources
 * [logs](/docs/flyctl/logs/)	 - View app logs
 * [machine](/docs/flyctl/machine/)	 - Commands that manage machines
 * [monitor](/docs/flyctl/monitor/)	 - Monitor currently running application deployments
@@ -61,7 +60,7 @@ flyctl [flags]
 * [ssh](/docs/flyctl/ssh/)	 - Use SSH to login to or run commands on VMs
 * [status](/docs/flyctl/status/)	 - Show app status
 * [suspend](/docs/flyctl/suspend/)	 - Suspend an application
-* [turboku](/docs/flyctl/turboku/)	 - Launches heroku apps
+* [turboku](/docs/flyctl/turboku/)	 - Launch a Heroku app on Fly.io
 * [version](/docs/flyctl/version/)	 - Show version information for the flyctl command
 * [vm](/docs/flyctl/vm/)	 - Commands that manage VM instances
 * [volumes](/docs/flyctl/volumes/)	 - Volume management commands
