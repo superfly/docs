@@ -60,7 +60,7 @@ flyctl [flags]
 * [ssh](/docs/flyctl/ssh/)	 - Use SSH to login to or run commands on VMs
 * [status](/docs/flyctl/status/)	 - Show app status
 * [suspend](/docs/flyctl/suspend/)	 - Suspend an application
-* [turboku](/docs/flyctl/turboku/)	 - Launches heroku apps
+* [turboku](/docs/flyctl/turboku/)	 - Launch a Heroku app on Fly.io
 * [version](/docs/flyctl/version/)	 - Show version information for the flyctl command
 * [vm](/docs/flyctl/vm/)	 - Commands that manage VM instances
 * [volumes](/docs/flyctl/volumes/)	 - Volume management commands
