@@ -19,9 +19,9 @@ If you run `fly deploy` on an older Machines App&mdash;an App created using `fly
 
 ## Machines not managed by `fly deploy`
 
-Machines created using `fly deploy` (or as part of a deployment during `fly launch`), or by `fly clone`ing such a Machine, will be updated as a group on all subsequent `fly deploy` commands, as will Machines that existed on a Machines App when it was migrated to the V2 Apps platform.
+Machines created using `fly deploy` (or as part of a deployment during `fly launch`), or by `fly clone`ing such a Machine, carry a piece of metadata marking them as belonging to the Fly Apps V2 platform. These machines are updated as a group on all subsequent `fly deploy` commands, as are Machines that existed on a Machines App at the moment that it was migrated to Apps V2.
 
-New Machines created within an App using `fly machine run` are not automatically managed by `fly deploy`, so these can have their own configuration not matching that of the App, and can be based on a different Docker image.
+New Machines created within an App using `fly machine run` don't have the Apps V2 metadata, and are not automatically managed by `fly deploy`, so these can have their own configuration different from that of the App, and can even be based on a different Docker image.
 
 ## Volume mounts and `fly deploy`
 

@@ -6,7 +6,7 @@ nav: firecracker
 order: 20
 ---
 
-The first time you run `fly deploy` on an App with Machines running under it (if you created the App with `fly machine run` or `fly apps create --machines`), you will be prompted to convert it to an Apps V2 App.
+The first time you run `fly deploy` on an App with Machines running under it (if you created the App with `fly machine run` or `fly apps create --machines`), you will be prompted to convert it to an Apps V2 App. This migration adds metadata to all the App's Machines to indicate that they are managed by `fly deploy` under the Fly Apps V2 platform.
 
 <div class="callout">
 **Note/Warning**: this will overwrite the config for all these machines, based on the values set in `fly.toml` and the existing config on the machines. As an example, the services and environment values will come from `fly.toml`, replacing whatever was present before. Any mounts will not change, though `fly deploy` may change the mount path if the `destination` path under the `[mounts]` section in `fly.toml` is different than what’s currently on a Machine.
