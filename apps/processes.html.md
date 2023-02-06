@@ -9,7 +9,7 @@ order: 90
 **WIP**
 
 
-Sometimes it's useful to break down an App's work into processes that run on separate Machines; the classic example is an App with a front end that users interact with directly, with one or more background tasks that can be placed on their own Machines and scaled differently.
+Sometimes it's useful to break down an App's work into processes that run on separate Machines; a classic example is an App with a front end that users interact with directly, with one or more background tasks that can be placed on their own Machines and scaled differently.
 
 On Fly.io, you can accomplish this by defining [`Processes`](https://fly.io/docs/reference/configuration/#the-processes-section) for the App in `fly.toml`. Each process type runs a different command at Machine boot.
 
