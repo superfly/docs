@@ -2,6 +2,7 @@
 title: Delete an App on Fly.io
 objective: 
 layout: docs
+nav: firecracker
 order: 110
 ---
 
