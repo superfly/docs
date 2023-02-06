@@ -18,11 +18,15 @@ flyctl launch [flags]
       --dockerfile string             Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
       --dockerignore-from-gitignore   If a .dockerignore does not exist, create one from .gitignore files
   -e, --env strings                   Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
+      --force-machines                Use the Apps v2 platform built with Machines
+      --force-nomad                   Use the Apps v1 platform built with Nomad
       --generate-name                 Always generate a name for the app, without prompting
   -h, --help                          help for launch
       --ignorefile string             Path to a Docker ignore file. Defaults to the .dockerignore file in the working directory.
   -i, --image string                  The Docker image to deploy
       --image-label string            Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
+      --internal-port int             Set internal_port for all services in the generated fly.toml (default -1)
+      --lease-timeout int             Seconds to lease individual machines while running deployment. All machines are leased at the beginning and released at the end, so this needs to be as long as the entire deployment. flyctl releases leases in most cases. (default 1800)
       --local-only                    Only perform builds locally using the local docker daemon
       --name string                   Name of the new app
       --nixpacks                      Deploy using nixpacks to build the image
@@ -35,6 +39,7 @@ flyctl launch [flags]
   -r, --region string                 The target region (see 'flyctl platform regions')
       --remote-only                   Perform builds on a remote builder instance instead of using the local docker daemon
       --strategy string               The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. Default is canary, or rolling when max-per-region is set.
+      --wait-timeout int              Seconds to wait for individual machines to transition states and become healthy. (default 120)
 ~~~
 
 ## Global Options
