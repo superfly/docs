@@ -1,5 +1,5 @@
 ---
-title: The Fly Global Application Platform
+title: "Fly.io: A New Public Cloud"
 layout: docs
 sitemap: false
 nav: firecracker
@@ -9,7 +9,7 @@ nav: firecracker
   <img src="/static/images/docs-intro.jpg" srcset="/static/images/docs-intro@2x.jpg 2x" alt="">
 </figure>
 
-Fly.io is a global application distribution platform. We run your code in [Firecracker](https://firecracker-microvm.github.io/) microVMs around the world.
+We're doing something ambitious at Fly.io: a new public cloud, built on bare-metal servers we run in data centers around the world, and designed to make it easy to deploy distributed and real-time apps close to your users, wherever they are.
 
 
 <div class="callout">
@@ -20,15 +20,10 @@ We want you to run your full stack close to users, whether it’s a simple web s
 
 ## Docker without Docker, with or without Docker
 
-One thing to know: Docker images ([OCI container images](/blog/docker-without-docker/)) are how we give Firecracker your app to make into a microVM. That means you *can* use Docker to build the container image with your app and its environment. You can also point to a pre-built image.
+We upgrade [containers](/blog/docker-without-docker/) to full-fledged [Firecracker](https://firecracker-microvm.github.io/) microVMs. You *can* use a Dockerfile and our remote builders to build an image with your app and its environment. You can also point to a pre-built Docker image.
 
-[In many cases](https://fly.io/docs/languages-and-frameworks/), you won't have to touch Docker; `fly launch` can scan your source code and configure your project for deployment on Fly.io, and our remote builder will build your app's Docker image when you deploy.
+[In many cases](https://fly.io/docs/languages-and-frameworks/), you won't have to touch Docker; `fly launch` can scan your source code and configure your project for deployment on Fly.io, and our builders will build your app's Docker image when you deploy.
 
-<div class="callout">
-If you have an app running on [Heroku](https://www.heroku.com/), you may be interested in our quick-and-easy [**Turboku web launcher**](https://fly.io/launch/heroku) to deploy it on Fly.io too. [**Read more here**](https://fly.io/blog/new-turboku/).
-</div>
-
-More on [builders](/docs/reference/builders).
 
 ## flyctl: your CLI command center
 
