@@ -35,7 +35,6 @@ flyctl [flags]
 * [domains](/docs/flyctl/domains/)	 - Manage domains
 * [history](/docs/flyctl/history/)	 - List an app's change history
 * [image](/docs/flyctl/image/)	 - Manage app image
-* [info](/docs/flyctl/info/)	 - Shows information about the application
 * [ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
 * [jobs](/docs/flyctl/jobs/)	 - Show jobs at Fly.io
 * [launch](/docs/flyctl/launch/)	 - Create and configure a new app from source code or a Docker image.
@@ -56,6 +55,7 @@ flyctl [flags]
 * [resume](/docs/flyctl/resume/)	 - Resume an application
 * [scale](/docs/flyctl/scale/)	 - Scale app resources
 * [secrets](/docs/flyctl/secrets/)	 - Manage application secrets with the set and unset commands.
+* [services](/docs/flyctl/services/)	 - Show the application's services
 * [sftp](/docs/flyctl/sftp/)	 - Get or put files from a remote VM.
 * [ssh](/docs/flyctl/ssh/)	 - Use SSH to login to or run commands on VMs
 * [status](/docs/flyctl/status/)	 - Show app status

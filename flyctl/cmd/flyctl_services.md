@@ -1,16 +1,17 @@
-Shows information about the application.
+Shows information about the services of the application.
 
 ## Usage
 ~~~
-flyctl info [flags]
+flyctl services [command] [flags]
 ~~~
+
+## Available Commands
+* [list](/docs/flyctl/services-list/)	 - List services
 
 ## Options
 
 ~~~
-  -a, --app string      Application name
-  -c, --config string   Path to application configuration file
-  -h, --help            help for info
+  -h, --help   help for services
 ~~~
 
 ## Global Options
