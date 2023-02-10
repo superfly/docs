@@ -21,18 +21,18 @@ for a walkthrough of running LiteFS on Fly.io.
 
 ### Dependencies
 
-The `litefs` binary is self-contained but you'll need to install the `fuse`
+The `litefs` binary is self-contained but you'll need to install the `fuse3`
 library so LiteFS is able to mount a local file system. This installation
 depends on your package manager but some examples are:
 
 ```sh
-# Install on Ubuntu
-$ apt install fuse
+# Install on Alpine
+$ apk add fuse3
 ```
 
 ```sh
-# Install on Alpine
-$ apk add fuse
+# Install on Ubuntu
+$ apt install fuse3
 ```
 
 
