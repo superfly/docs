@@ -20,19 +20,6 @@ update pages.
 
 In order to start working with Fly.io, you will need `flyctl`, our CLI app for managing apps. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/hands-on/install-flyctl/). Once thats installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
 
-<div class="callout">
-Before proceeding, something to be aware of. While Rails is [Optimized for Programmer happiness](https://rubyonrails.org/doctrine#optimize-for-programmer-happiness), it isn't particularly optimized for minimum RAM consumption. If you wish to deploy an app of any appreciable size or even make extensive use of features like `rails console`, you likely will hit RAM limits on your machine. And when applications run out of memory, they tend to behave unpredictably as error recovery actions will often also fail due to lack of memory.
-<p></p>
-The command to be used to address this is:
-
-<div style="margin: 0 0 1em 2em">
-`fly scale vm shared-cpu-1x --memory 512`
-</div>
-
-While this does take you beyond what is offered with the free offering, the current
-cost of adding this additional memory to what otherwise would be a free machine runs about five cents a day, or about a buck and a half a month, or less than twenty dollars a year.
-</div>
-
 Once you have logged on, here are the three steps and a recap.
 
 ## Rails Splash Screen
@@ -73,46 +60,62 @@ Now use your favorite editor to make a one line change to `config/routes.rb`:
 
 ### Provision Rails and Postgres Servers
 
-To configure and launch the app, you can use `fly launch` and follow the wizard.
-We are not going to use a database yet, but say *yes* to setting up a Postgresql database
-in order to prepare for the next step in this guide.
+To configure and launch the app, you can use `fly launch` and follow the
+wizard.  We are not going to use a database or redis yet, but say *yes* to both
+setting up a Postgresql database and to setting up Redis in order to prepare
+for the next step in this guide.
 
 ```cmd
 fly launch
 ```
 ```output
-Creating app in ~/list
+Creating app in /Users/rubys/tmp/list
 Scanning source code
 Detected a Rails app
-? App Name (leave blank to use an auto-generated name): list
-? Select organization: John Smith (personal)
-? Select region: iad (Ashburn, Virginia (US))
+? Choose an app name (leave blank to generate one): list
+? Select Organization: Sam Ruby (personal)
+? Choose a region for deployment: Ashburn, Virginia (US) (iad)
 Created app list in organization personal
+Admin URL: https://fly.io/apps/list
+Hostname: list.fly.dev
 Set secrets on list: RAILS_MASTER_KEY
-Wrote config file fly.toml
 ? Would you like to set up a Postgresql database now? Yes
-For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clusters
+For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clu
 ? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
-Creating postgres cluster list-db in organization personal
-Postgres cluster list-db created
-  Username:    postgres
-  Password:    <redacted>
-  Hostname:    list-db.internal
-  Proxy Port:  5432
-  PG Port: 5433
-Save your credentials in a secure place -- you won't be able to see them again!
-
-Monitoring Deployment
-
-1 desired, 1 placed, 1 healthy, 0 unhealthy [health checks: 3 total, 3 passing]
---> v0 deployed successfully
+Creating postgres cluster in organization personal
 
 . . .
 
-Now: run 'fly deploy' to deploy your Rails app.
+Postgres cluster list-db is now attached to namelist
+? Would you like to set up an Upstash Redis database now? Yes
+? Select an Upstash Redis plan Free: 100 MB Max Data Size
+
+Your Upstash Redis database namelist-redis is ready.
+
+. . .
+
+      create  Dockerfile
+      create  .dockerignore
+      create  bin/docker-entrypoint
+      create  config/dockerfile.yml
+Wrote config file fly.toml
+
+Your Rails app is prepared for deployment.
+
+Before proceeding, please review the posted Rails FAQ:
+https://fly.io/docs/rails/getting-started/dockerfiles/.
+
+Once ready: run 'fly deploy' to deploy your Rails app.
 ```
 
-You can set a name for the app, choose a default region, and choose to launch and attach a Postgresql database.
+You can chose a name for your application or allow one to be assigned to you.
+You can chose where the application is run or a location near you will be
+picked.  You can pick machine sizes for your database machine and redis; for
+demo purposes you can let these default.  You can always change these later.
+
+It is worth heeding the advice at the end of this:
+Before proceeding, please review the posted Rails FAQ:
+[https://fly.io/docs/rails/getting-started/dockerfiles/](https://fly.io/docs/rails/getting-started/dockerfiles/).
 
 ### Deploy your application
 
@@ -213,54 +216,6 @@ come alive using [Turbo Streams](https://turbo.hotwired.dev/handbook/streams).
 This will involve provisioning a [redis](https://redis.com/) cluster and a
 surprisingly small number of updates to your application.
 
-### Provisioning Redis
-
-Before proceeding, verify that your application is already set up to use Redis.
-Examine your `Gemfile` and look for the following lines:
-
-``` ruby
-# Use Redis adapter to run Action Cable in production
-gem "redis", "~> 4.0"
-```
-
-If the second line is commented out, uncomment it and then run `bundle install`. Rails will automatically have done this for you if it detected the `redis-server` executable on your machine at that time the application was created.
-
-Now that Rails is ready to make use of Redis, lets deploy a redis cluster:
-
-```cmd
-fly redis create
-```
-```output
-? Select Organization: John Smith (personal)
-? Choose a Redis database name (leave blank to generate one): list-redis
-? Choose a primary region (can't be changed later) Ashburn, Virginia (US) (iad)
-? Optionally, choose one or more replica regions (can be changed later):
-
-Upstash Redis can evict objects when memory is full. This is useful when caching in Redis. This setting can be changed later.
-Learn more at https://fly.io/docs/reference/redis/#memory-limits-and-object-eviction-policies
-? Would you like to enable eviction? No
-? Select an Upstash Redis plan Free: 100 MB Max Data Size
-
-Your Upstash Redis database list-redis is ready.
-Apps in the personal org can connect to at redis://default:<redacted>.upstash.io
-If you have redis-cli installed, use fly redis connect to connect to your database.
-```
-
-Once again, you can set a name for the database, chose a primary region as well as
-a number of replica regions, enable eviction, and select a plan.
-
-The most important line in this output is the second to the last one which will contain
-a URL starting with `redis:`. The URL you see will be considerably longer than the one
-you see above. You will need to provide this URL to Rails, and with fly this is done
-via [secrets](https://fly.io/docs/reference/secrets/). Run the following command replacing the url with the one from the output above:
-
-```cmd
-fly secrets set REDIS_URL=redis://default:<redacted>.upstash.io
-```
-
-Now you are ready. Rails is set up to use redis, knows where to find the redis instance,
-and the instance is deployed. Now onto the implementation:
-
 ### Adding turbo streams to your application.
 
 There actually are five separate steps needed to make this work. Fortunately all but
@@ -344,40 +299,6 @@ There is only one step left, and that is to modify `app/controllers/names_contro
   end
 ```
 
-### Patching Action Cable to handle Redis timeouts
-
-In order to conserve resources, redis connections time out periodically.
-There is a [pull request](https://github.com/rails/rails/pull/45478)
-open to restart Action Cable server on Redis connection failures, but
-until it lands you can achieve the same effect by placing the following
-into `config/initializers/action_cable.rb`:
-
-```ruby
-# Restart Action Cable server on Redis connection failures.
-# See: https://github.com/rails/rails/pull/45478
-require 'action_cable/subscription_adapter/redis'
-
-module ActionCableRedisListenerPatch
-  private
-
-  def ensure_listener_running
-    @thread ||= Thread.new do
-      Thread.current.abort_on_exception = true
-      conn = @adapter.redis_connection_for_subscriptions
-      listen conn
-    rescue ::Redis::BaseConnectionError
-      @thread = @raw_client = nil
-      ::ActionCable.server.restart
-    end
-  end
-end
-
-ActionCable::SubscriptionAdapter::Redis::Listener.prepend(ActionCableRedisListenerPatch)
-```
-
-Even with this patch, the connection will still drop periodically and you
-may see stack traceback information in your logs.
-
 ### Deployment and testing
 
 By now it should be no surprise that deployment is as easy as `fly deploy` and
@@ -417,13 +338,18 @@ Now that you have seen it up and running, a few things are worth noting:
   * No changes were required to your application to get it to work.
   * Your application is running on a VM, which starts out based on a
     docker image. To make things easy, `fly launch` generates a
-    `Dockerfile` for you which you are free to modify.
-  * Other files of note: `.dockerignore` and [`fly.toml`](https://fly.io/docs/reference/configuration/), both of which you can also modify. All three files
-    should be checked into your git repository.
+    `Dockerfile` and a `bin/docker-entrypoint` for you which you are free to modify.
+  * There is also a `config/dockerfile.yml` file which keeps track of your
+    dockerfile generation options.  This was covered by the
+    [FAQ](https://fly.io/docs/rails/getting-started/dockerfiles/) you read above.
+  * Other files of note: `.dockerignore` and
+    [`fly.toml`](https://fly.io/docs/reference/configuration/), both of which
+    you can also modify.
+    All five files should be checked into your git repository.
   * `fly dashboard` can be used to monitor and adjust your application. Pretty
     much anything you can do from the browser window you can also do from the
     command line using `fly` commands. Try `fly help` to see what you can do.
-  * `fly ssh console` can be used to ssh into your VM. `fly ssh console -C "/app/bin/rails console"` can be used to open a rails console.
+  * `fly ssh console` can be used to ssh into your VM. `fly ssh console -C "/rails/bin/rails console"` can be used to open a rails console.
 
 Now that you have seen how to deploy a trivial application, it is time
 to move on to [The Basics](../../rails/the-basics/).
