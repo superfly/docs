@@ -20,37 +20,58 @@ The steps below run you through the process of migrating your Rails app from Her
 
 ### Provision and deploy Rails app to Fly
 
-From the root of the Rails app you're running on Heroku, run `fly launch` and select the options to provision a new Postgres database.
+From the root of the Rails app you're running on Heroku, run `fly launch` and
+select the options to provision a new Postgres database, and optionally a Redis
+database if you make use of Action Cable, caching, and popular third party gems
+like Sidekiq.
+
 
 ```cmd
 fly launch
 ```
 ```output
-Creating app in ~/my-rails-app
+Creating app in ~/list
 Scanning source code
 Detected a Rails app
-? Overwrite "~/my-rails-app/.dockerignore"? Yes
-? App Name (leave blank to use an auto-generated name): my-rails-app
-Automatically selected personal organization: Brad Gessler
-? Select region: sjc (San Jose, California (US))
-Created app my-rails-app in organization personal
-Wrote config file fly.toml
+? Choose an app name (leave blank to generate one): list
+? Select Organization: John Smith (personal)
+? Choose a region for deployment: Ashburn, Virginia (US) (iad)
+Created app list in organization personal
+Admin URL: https://fly.io/apps/list
+Hostname: list.fly.dev
+Set secrets on list: RAILS_MASTER_KEY
 ? Would you like to set up a Postgresql database now? Yes
-For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clusters
+For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clu
 ? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
-Creating postgres cluster my-rails-app-db in organization personal
-Postgres cluster my-rails-app-db created
-  Username:    postgres
-  Password:    <redacted>
-  Hostname:    my-rails-app-db.internal
-  Proxy Port:  5432
-  PG Port: 5433
-Save your credentials in a secure place -- you won't be able to see them again!
+Creating postgres cluster in organization personal
 
-Monitoring Deployment
+. . .
 
-1 desired, 1 placed, 0 healthy, 0 unhealthy [health checks: 3 total, 2 passing, 1 critical]
+Postgres cluster list-db is now attached to namelist
+? Would you like to set up an Upstash Redis database now? Yes
+? Select an Upstash Redis plan Free: 100 MB Max Data Size
+
+Your Upstash Redis database namelist-redis is ready.
+
+. . .
+
+      create  Dockerfile
+      create  .dockerignore
+      create  bin/docker-entrypoint
+      create  config/dockerfile.yml
+Wrote config file fly.toml
+
+Your Rails app is prepared for deployment.
+
+Before proceeding, please review the posted Rails FAQ:
+https://fly.io/docs/rails/getting-started/dockerfiles/.
+
+Once ready: run 'fly deploy' to deploy your Rails app.
 ```
+
+It is worth heeding the advice at the end of this:
+Before proceeding, please review the posted Rails FAQ:
+[https://fly.io/docs/rails/getting-started/dockerfiles/](https://fly.io/docs/rails/getting-started/dockerfiles/).
 
 After the application is provisioned, deploy it by running:
 
@@ -67,7 +88,7 @@ fly open
 There's still work to be done to move more Heroku stuff over, so don't worry if the app doesn't boot right away. There's a few commands that you'll find useful to configure your environment:
 
 * `fly logs` - Read error messages and stack traces emitted by your Rails application.
-* `fly ssh console -C "/app/bin/rails console"` - Launches a Rails shell, which is useful to interactively test components of your Rails application.
+* `fly ssh console -C "/rails/bin/rails console"` - Launches a Rails shell, which is useful to interactively test components of your Rails application.
 
 ### Transfer Heroku secrets
 
@@ -135,28 +156,6 @@ fly open
 
 If you have a Redis server, there's a good chance you need to set that up.
 
-### Provision a Redis server
-
-Create a redis server by running:
-
-```cmd
-fly redis create
-```
-
-Select the size and configuration Redis server you'd like. When that command completes you should see a Redis URL. Copy the URL and set `REDIS_URL` in your applications secrets.
-
-```cmd
-fly secrets set REDIS_URL=redis://default:<redacted>@fly-my-rails-app-redis.upstash.io
-```
-
-Once that's done Fly will deploy the application with the new environment variable. Let's open Fly and see if everything is running:
-
-```cmd
-fly open
-```
-
-At this point, most Rails apps should boot since they depend on Redis and PostgresSQL. If you're still having problems run `fly logs` to view error messages and post your issues in the [Fly Community Forum](https://community.fly.io).
-
 ### Multiple processes & background workers
 
 Heroku uses Procfiles to describe multi-process Rails applications. Fly describes multi-processes with the [`[processes]` directive](/docs/reference/configuration/#the-processes-section) in the `fly.toml` file.
@@ -169,7 +168,7 @@ worker: bundle exec sidekiq
 release: rails db:migrate
 ```
 
-Move everything except for the `release:` line to you `fly.toml` file:
+Move everything except for the `release:` line to your `fly.toml` file:
 
 ```toml
 [processes]
@@ -177,11 +176,18 @@ web = "bundle exec puma -C config/puma.rb"
 worker = "bundle exec sidekiq"
 ```
 
-If you have a `release:` line in your Heroku Procfile, that will be handled by your
-`lib/tasks/fly.rake` file:
+If you have a `release:` line in your Heroku Procfile, that will listed separately in your `fly.toml` file:
 
-```ruby
-task :release => 'db:migrate'
+```toml
+[deploy]
+  release_command = "bin/rails db:migrate"
+```
+
+You will also want to want to prevent your release command from also being
+run during the deploy step.  To do so, regenerate your dockerfile using:
+
+```shell
+$ bin/rails generate dockerfile --no-prepare
 ```
 
 Next, under the `[[services]]` directive, find the entry that maps to `internal_port = 8080`, and add `processes = ["web"]`. The configuration file should look something like this:
@@ -238,23 +244,9 @@ To achieve the desired `git push` behavior, we recommend setting up `fly deploy`
 
 #### Release phase tasks
 
-Heroku has a `release: rake db:migrate` command in their Procfiles to run tasks while the application is deployed. Fly accomplishes the same thing by making `assets:precompile` a dependency of the `:release` task in your `lib/tasks/fly.rake` file:
-
-```ruby
-task :release => 'db:migrate'
-```
+Heroku has a `release: rake db:migrate` command in their Procfiles to run tasks while the application is deployed.  Rails 7.1 will include a `bin/rails db:prepare` in the list of commands to be run on deploy in their `bin/docker-entrypoint` file.  Fly.io supports both approaches.
 
 If you don't want to run migrates by default per release, delete the prequite but leave the `:release` task. You'll be able to manually run migrations on Fly via `fly ssh console -C "/app/bin/rails db:migrate"`.
-
-#### Build commands
-
-Asset compilations and build activities that happen before an application deploys can also be customized in the `lib/tasks/fly.toml` that's included in your project.
-
-```ruby
-task :build => 'assets:precompile'
-```
-
-Remove this dependency or add more depending on the build process required for your application.
 
 #### Deploy via git
 
