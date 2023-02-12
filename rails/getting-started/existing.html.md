@@ -2,7 +2,6 @@
 title: Existing Rails Apps
 layout: framework_docs
 objective: Learn how to run your existing Rails applications on Fly.
-status: beta
 order: 3
 ---
 
@@ -19,35 +18,46 @@ fly launch
 Creating app in ~/list
 Scanning source code
 Detected a Rails app
-? App Name (leave blank to use an auto-generated name): list
-? Select organization: John Smith (personal)
-? Select region: iad (Ashburn, Virginia (US))
+? Choose an app name (leave blank to generate one): list
+? Select Organization: John Smith (personal)
+? Choose a region for deployment: Ashburn, Virginia (US) (iad)
 Created app list in organization personal
+Admin URL: https://fly.io/apps/list
+Hostname: list.fly.dev
 Set secrets on list: RAILS_MASTER_KEY
-Wrote config file fly.toml
 ? Would you like to set up a Postgresql database now? Yes
-For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clusters
+For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clu
 ? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
-Creating postgres cluster list-db in organization personal
-Postgres cluster list-db created
-  Username:    postgres
-  Password:    <redacted>
-  Hostname:    list-db.internal
-  Proxy Port:  5432
-  PG Port: 5433
-Save your credentials in a secure place -- you won't be able to see them again!
-
-Monitoring Deployment
-
-1 desired, 1 placed, 1 healthy, 0 unhealthy [health checks: 3 total, 3 passing]
---> v0 deployed successfully
+Creating postgres cluster in organization personal
 
 . . .
 
-Now: run 'fly deploy' to deploy your Rails app.
+Postgres cluster list-db is now attached to namelist
+? Would you like to set up an Upstash Redis database now? Yes
+? Select an Upstash Redis plan Free: 100 MB Max Data Size
+
+Your Upstash Redis database namelist-redis is ready.
+
+. . .
+
+      create  Dockerfile
+      create  .dockerignore
+      create  bin/docker-entrypoint
+      create  config/dockerfile.yml
+Wrote config file fly.toml
+
+Your Rails app is prepared for deployment.
+
+Before proceeding, please review the posted Rails FAQ:
+https://fly.io/docs/rails/getting-started/dockerfiles/.
+
+Once ready: run 'fly deploy' to deploy your Rails app.
 ```
 
-You can set a name for the app, choose a default region, and choose to launch and attach a PostgreSQL database.
+You can set a name for the app, choose a default region, and choose to launch
+and attach either or both a PostgreSQL and Redis databases.  Be sure to include
+Redis is if you make use of Action Cable, caching, and popular third party gems
+like Sidekiq.
 
 ### Deploy your application
 
@@ -81,24 +91,21 @@ fly logs
 
 This shows the past few log file entries and tails your production log files.
 
+Rails stack tracebacks can be lengthy, and the information you often want
+to see is at the top.  If not enough information is available in the
+`fly logs` command, try running `fly dashboard`, and select `Monitoring`
+in the left hand column.
+
 ### Open a Rails console
 
 It can be helpful to open a Rails console to run commands and diagnose production issues.
 
-To do this, we will [login with SSH](/docs/flyctl/ssh/) to our
-application VM. There is a one-time setup tasks for using SSH. Follow the instructions.
-
-```
-fly ssh issue --agent
-```
-
-With SSH configured, let's open a console.
-
 ```cmd
-fly ssh console -C "/app/bin/rails console"
+fly ssh console -C "/rails/bin/rails console"
 ```
 ```output
-irb>
+Loading production environment (Rails 7.0.4.2)
+irb(main):001:0> 
 ```
 
 ## Common initial deployment issues
@@ -107,19 +114,48 @@ Now that you know the basics of troubleshooting production deployments, lets hav
 
 ### Access to Environment Variables at Build Time
 
-The most common reason Rails developers find that they need to access secrets
-during build time is that `assets:precompile` loads your application's
-environment, and this may fail without access to secrets.  If this applies
-to you, generally the fix is to move this step from being done at build
-time to being a prerequisite for deployment.
+Some third party gems and services require configuration including the
+setting of secrets/environment variables.  The `assets:precompile` step
+will load your configuration and may fail if those secrets aren't set
+even if they aren't actually used by the `assets:precompile` step.
 
-This can be accomplished by modifying `lib/tasks/fly.rake`, and in there
-moving `assets:precompile` from being a prerequisite of the `:build`
-task to being a prerequisite of the  `:server` task.
+Rails itself has such a variable, and you will see some combination of
+`SECRET_KEY_BASE` and `DUMMY` in most Dockerfiles.
 
-Other situations can be handled similarly.  But should the need for
-secrets to be available at build time be unavoidable, take a look
+If you have need for more such dummy values, add them directly to the
+`Dockerfile`.  Just be sure that any such values you add to your Dockerfile
+don't contain actual secrets as your Dockerfile will generally be
+committed to git or otherwise may be visible.
+
+If you have need for actual secrets at build time, take a look
 at [Build Secrets](../../../reference/build-secrets/).
+
+Finally, if there are no other options you can generate a Dockerfile that will
+run `assets:precompile` at deployment time with the following command:
+
+```
+bin/rails generate dockerfile --precompile=defer
+```
+
+This will result in larger images that are slower to deploy:
+
+  * The precompile step will be run for each server you deploy rather
+    that once during build time to produce an image that can be deployed
+    multiple times.
+  * Normally Dockerfiles are structured so that packages that are only needed
+    at build time (e.g. Node.js) are not present on the deployed machine.  
+    If you defer the `assets:precompile` step, these packages will need
+    to be present in order to deploy.
+
+If you are evaluating Fly.io for the first time there may be some value
+in setting precompile to defer initially for evaluation and then work over
+time to eliminate the issues that prevent you from running this step at
+build time.  Once those issues are resolved, regenerate your Dockerfile
+using the following command:
+
+```
+bin/rails generate dockerfile --precompile=build
+```
 
 ### Language Runtime Versions
 
@@ -131,32 +167,55 @@ commands to see what versions you are using in development:
 $ bundle -v
 $ node -v
 $ ruby -v
+$ yarn -v
 ```
 
-Compare and update these versions with what you see in your `fly.toml` file:
+There also are files used by version managers to keep your development
+environment in sync: `.ruby-version`, and `.node-version`.
 
-```toml
-[build]  
-  [build.args]
-    BUNDLER_VERSION = "2.3.18"
-    NODE_VERSION = "14" 
-    RUBY_VERSION = "3.1.2"
+Finally, `package.json` files may have verson numbers in `engines.node`
+and `packageManager` values.
+
+Whenever you update your tools, run the following command to update your
+Dockerfile:
+
+```shell
+$ bin/rails generate dockerfile
 ```
+
+You can see the versions of each tool that will be use on your deployment
+machine by looking for lines that start with `ARG` in your Dockerfile.
+
 
 ### Postgres database drivers
 
-If your Rails application wasn't created with the `--database=postgresql` option
-and you didn't subsequently add the Postgres gem to your bundle, do so now
-via:
+If you didn't initially deploy with a postgres database but want to add
+one later, you can create a databae using<code>
+[fly postgres create](https://fly.io/docs/postgres/getting-started/create-pg-cluster/)
+</code>.  Next, update your dockerfile to include the postgres libraries
+using:
 
-```cmd
-bundle add pg --group production
+```shell
+$ bin/rails generate dockerfile --postgresql
 ```
 
-Your database settings will be passed to your app via a `DATABASE_URL` environment
-variable (which Rails picks up automatically). That means you can drop a lot of the production configuration from `config/database.yml`.
+Finally, attach the database to your application using
+<code>[fly postgres attach](https://fly.io/docs/postgres/managing/attach-detach/)</code>.
+
+Multiple Rails applications can use the same PostgresQL server.  Just take
+care to make sure that each Rails application uses a different database name.
 
 ### Rails encrypted credentials
+
+`fly launch` will extract your master.key if your project has one make it
+available to your deployed application as a
+[secret](https://fly.io/docs/reference/secrets/).
+
+If you've already run `fly launch` on a project which doesn't have a master key
+(commonly because files containing these values are excluded from being pushed by being listed in your `.gitignore` file), you will need to generate a key
+and set the secret yourself.
+
+The [Ruby on Rails Guides](https://guides.rubyonrails.org/security.html#custom-credentials) contain information on generating new credentials.
 
 If you've got your app's secrets stored in an encrypted credentials file such as `config/credentials.yml.enc`
 or `config/credentials/production.yml.enc`, you'll need to provide the master key to your app via
@@ -177,5 +236,3 @@ You can see what `RAILS_MASTER_KEY` is deployed using:
 ```cmd
 fly ssh console -C 'printenv RAILS_MASTER_KEY'
 ```
-
-

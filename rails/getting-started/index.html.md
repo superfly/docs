@@ -69,11 +69,11 @@ for the next step in this guide.
 fly launch
 ```
 ```output
-Creating app in /Users/rubys/tmp/list
+Creating app in ~/list
 Scanning source code
 Detected a Rails app
 ? Choose an app name (leave blank to generate one): list
-? Select Organization: Sam Ruby (personal)
+? Select Organization: John Smith (personal)
 ? Choose a region for deployment: Ashburn, Virginia (US) (iad)
 Created app list in organization personal
 Admin URL: https://fly.io/apps/list
