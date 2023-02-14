@@ -54,7 +54,7 @@ to be able to handle a large number of concurrent connections.
 Both [fullstaq](https://fullstaqruby.org/) and [jemalloc](https://jemalloc.net/) are used by many to reduce their memory footprint.  As every application is different, test your application to see if either are appropriate for you.  Enabling one or both can be done by regenerating your Dockerfile and specifying the appropriate option(s):
 
 ```cmd
-bin/rails dockerfile generate --fullstaq --jemalloc
+bin/rails generate dockerfile --fullstaq --jemalloc
 ```
 
 At some point you may find that you need more memory.  There are two types:
