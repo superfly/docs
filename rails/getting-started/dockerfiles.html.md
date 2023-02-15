@@ -70,7 +70,7 @@ fly scale memory 1024
 To allocate 512MB of swap space for use as virtual memory, use:
 
 ```cmd
-bin/rails dockerfile generate --swap=512M
+bin/rails generate dockerfile --swap=512M
 ```
 
 ## Scaling
@@ -106,7 +106,7 @@ To enable `bin/rails` commands to be run in this manner, adjust your
 deployed binstubs to set the current working directory:
 
 ```cmd
-bin/rails dockerfile generate --bin-cd
+bin/rails generate dockerfile --bin-cd
 ```
 
 ## Build speeds
@@ -120,7 +120,7 @@ in parallel can reduce build time.  You can regenerate your Dockerfile
 to enable one or both:
 
 ```cmd
-bin/rails dockerfile generate --cache --parallel
+bin/rails generate dockerfile --cache --parallel
 ```
 
 ## Runtime performance
@@ -128,7 +128,7 @@ bin/rails dockerfile generate --cache --parallel
 Ruby images starting with 3.2 include [YJIT](https://github.com/Shopify/yjit) but disabled.  You can enable YJIT using:
 
 ```cmd
-bin/rails dockerfile generate --yjit
+bin/rails generate dockerfile --yjit
 ```
 
 ## Updates
@@ -140,7 +140,7 @@ need to update your Dockerfile to match.  In most cases, all you need
 to do is rerun the generator:
 
 ```cmd
-bin/rails dockerfile generate
+bin/rails generate dockerfile
 ```
 
 The generator will remember the options you selected before (these are
@@ -156,7 +156,7 @@ If you have Docker installed locally, you can test your applications
 before you deploy them by running the following commands:
 
 ```sh
-bin/rails dockerfile generate --compose
+bin/rails generate dockerfile --compose
 docker buildx build . -t rails-welcome
 docker run -p 3000:3000 -e RAILS_MASTER_KEY=$(cat config/master.key) rails-welcome
 ```
