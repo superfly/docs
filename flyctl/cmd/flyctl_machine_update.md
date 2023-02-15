@@ -3,7 +3,7 @@ Update a machine
 
 ## Usage
 ~~~
-flyctl machine update [machine_id] [flags]
+flyctl machine update <machine_id> [flags]
 ~~~
 
 ## Options
