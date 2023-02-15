@@ -4,7 +4,7 @@ organization the current user belongs to.
 
 ## Usage
 ~~~
-flyctl move [APPNAME] [flags]
+flyctl move <APPNAME> [flags]
 ~~~
 
 ## Options

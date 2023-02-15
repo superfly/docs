@@ -3,7 +3,7 @@ Detach a postgres cluster from an app
 
 ## Usage
 ~~~
-flyctl postgres detach [POSTGRES APP] [flags]
+flyctl postgres detach <POSTGRES APP> [flags]
 ~~~
 
 ## Options
