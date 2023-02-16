@@ -1,6 +1,6 @@
 ---
 title: Going to Production
-layout: framework_docs
+layout: framework_docs_overview
 toc: false
 order: 1
 ---
