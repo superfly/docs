@@ -23,7 +23,7 @@ With the foundation pieces in place, there are additional things to consider.
 
 ## Production Databases
 
-For a production [Postgres database](/docs/postgres/) database, a [High Availability server](/docs/postgres/advanced-guides/high-availability-and-global-replication/) should be used. That means it runs multiple instances of the database server. This is important because when one server is rebooted, your app doesn't lose database access for a period of time. Otherwise, at some point, your database will have an outage.
+For a production [Postgres database](/docs/postgres/), a [High Availability server](/docs/postgres/advanced-guides/high-availability-and-global-replication/) should be used. That means it runs multiple instances of the database server. This is important because when one server is rebooted, your app doesn't lose database access for a period of time. Otherwise, at some point, your database will have an outage.
 
 **Additional Resources:**
 
