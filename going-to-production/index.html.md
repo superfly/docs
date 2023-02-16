@@ -1,12 +1,7 @@
 ---
 title: Going to Production
-layout: docs
-sitemap: false
-nav: firecracker
-categories:
-  - production
-  - guide
-date: 2023-02-14
+layout: framework_docs
+toc: false
 ---
 
 You have a serious project or service and you're looking for guidance on how to
