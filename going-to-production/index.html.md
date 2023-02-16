@@ -31,12 +31,8 @@ For a production [Postgres database](/docs/postgres/) database, a [High Availabi
 
 **Additional Resources:**
 
-- Backup and Restore database
-  - TODO: merge the [Rails DB backup/restore](https://fly.io/docs/rails/the-basics/backup-and-restoring-data/) with [PG Backup/restore doc](https://fly.io/docs/postgres/managing/backup-and-restore/)
-- https://github.com/fly-apps/postgres-migrator
-- IMPORTANT: Ensure running multiple instances for HA (High Availability). Running with a single database server will have service interruptions at some point.
-- https://fly.io/docs/postgres/advanced-guides/high-availability-and-global-replication/
-
+- [Database Backup and Restore](/docs/postgres/managing/backup-and-restore/)
+- [Postgres DB Migrator](https://github.com/fly-apps/postgres-migrator) - Fly app that works to streamline Postgres migrations.
 
 ## Exporting Logs
 
