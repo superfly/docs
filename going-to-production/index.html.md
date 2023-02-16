@@ -21,10 +21,6 @@ Any application intended for production use should do the following things first
 
 With the foundation pieces in place, there are additional things to consider.
 
-## Dev, Staging & Production
-
-- Mark has docs in progress for this section.
-
 ## Production Databases
 
 For a production [Postgres database](/docs/postgres/) database, a [High Availability server](/docs/postgres/advanced-guides/high-availability-and-global-replication/) should be used. That means it runs multiple instances of the database server. This is important because when one server is rebooted, your app doesn't lose database access for a period of time. Otherwise, at some point, your database will have an outage.
@@ -33,6 +29,10 @@ For a production [Postgres database](/docs/postgres/) database, a [High Availabi
 
 - [Database Backup and Restore](/docs/postgres/managing/backup-and-restore/)
 - [Postgres DB Migrator](https://github.com/fly-apps/postgres-migrator) - Fly app that works to streamline Postgres migrations.
+
+## Dev, Staging & Production
+
+- Mark has docs in progress for this section.
 
 ## Exporting Logs
 
