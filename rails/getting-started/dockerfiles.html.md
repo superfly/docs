@@ -45,7 +45,7 @@ available to be installed in this manner.
 
 An example adding basic kernel and network monitoring packages from this list:
 
-```bash
+```cmd
 bin/rails generate dockerfile --add procps net-tools traceroute iputils-ping
 ```
 
