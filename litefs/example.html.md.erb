@@ -45,11 +45,8 @@ cd litefs-example
 First, we'll need to create our application on Fly.io:
 
 ```sh
-fly apps create my-litefs-app
+fly apps create
 ```
-
-Your application name will need to be unique. You can also specify the
-`--autogenerate-name` flag and Fly.io will generate a name for you.
 
 
 ### Creating a volume
@@ -58,7 +55,7 @@ Next, we need to set up a persistent volume so that our data is not lost between
 restarts. Be sure to replace the `-a` value with your application name.
 
 ```sh
-fly volumes create -a my-litefs-app -r den --size 1 litefs
+fly volumes create -a ${APPNAME} -r den --size 1 litefs
 ```
 
 This will create a 1GB volume in Denver (`den`) called `"litefs"` for your
@@ -71,7 +68,7 @@ Once you have your app created, create a new `fly.toml` file in the root with
 the following contents. **Make sure to set the correct app name!**
 
 ```toml
-app = "my-litefs-app"
+app = ""
 
 [experimental]
   enable_consul = true
