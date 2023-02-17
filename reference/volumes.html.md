@@ -7,7 +7,7 @@ nav: firecracker
 
 Volumes are persistent storage for Fly apps. They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
 
-A volume on Fly is a slice of an NVMe drive on the physical server your app runs on. One consequence of this: if your app uses persistent storage, every instance of that app can only run on a host that has a volume provisioned for it.
+A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. One consequence of this: if your app uses persistent storage, every instance of that app can only run on a host that has a volume provisioned for it. Another: there's a one-to-one mapping between VMs and volumes. You can't share a volume between apps, nor can two VMs mount the same volume at the same time.
 
 Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command. 
 
