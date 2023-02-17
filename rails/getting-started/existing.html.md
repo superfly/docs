@@ -205,17 +205,17 @@ Finally, attach the database to your application using
 Multiple Rails applications can use the same PostgresQL server.  Just take
 care to make sure that each Rails application uses a different database name.
 
-### Rails encrypted credentials
+### ActiveSupport::MessageEncryptor::InvalidMessage
 
-`fly launch` will extract your master.key if your project has one make it
+Generally this means that there is a problem with your `RAILS_MASTER_KEY`. It is a common initial setup problem, but once it works it tends to keep working.
+
+`fly launch` will extract your master key if your project has one and make it
 available to your deployed application as a
 [secret](https://fly.io/docs/reference/secrets/).
 
 If you've already run `fly launch` on a project which doesn't have a master key
 (commonly because files containing these values are excluded from being pushed by being listed in your `.gitignore` file), you will need to generate a key
-and set the secret yourself.
-
-The [Ruby on Rails Guides](https://guides.rubyonrails.org/security.html#custom-credentials) contain information on generating new credentials.
+and set the secret yourself.  The [Ruby on Rails Guides](https://guides.rubyonrails.org/security.html#custom-credentials) contain information on generating new credentials.
 
 If you've got your app's secrets stored in an encrypted credentials file such as `config/credentials.yml.enc`
 or `config/credentials/production.yml.enc`, you'll need to provide the master key to your app via
@@ -225,7 +225,10 @@ or `config/credentials/production.yml.enc`, you'll need to provide the master ke
 fly secrets set RAILS_MASTER_KEY=$(cat config/master.key)
 ```
 
-You can verify that your credentials are encoded using your current `config/master.key` using:
+Non bash, non WSL2, Windows developers need to replace the value after the =
+sign with the contents of `config\master.key`.
+
+You can verify that your credentials are encoded using your current master key using:
 
 ```cmd
 bin/rails credentials:show

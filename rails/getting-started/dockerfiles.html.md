@@ -37,7 +37,7 @@ of the option to diff the changes before they are applied.
 
 The [Dockerfile generator for Rails](https://github.com/rubys/dockerfile-rails#overview) attempts to detect common dependencies and handle them for you.  If you come across a dependency that may be useful to others, please consider opening up an [issue](https://github.com/rubys/dockerfile-rails/issues) or a [pull request](https://github.com/rubys/dockerfile-rails/pulls).
 
-You may have needs beyond what is automatically detected.  
+You may have needs beyond what is automatically detected.
 Most [official Ruby docker images](https://hub.docker.com/_/ruby)
 are based on Debian [bullseye](https://www.debian.org/releases/bullseye/),
 and there are a [large number of packages](https://packages.debian.org/stable/)
