@@ -14,17 +14,40 @@ If after reading this and you still need help, please post on
 support](https://community.fly.io/t/fly-io-support-community-vs-email-read-this-first/9962/1),
 for the apps you really care about.
 
+## Updates
+
+Your application is unlikely to stay the same forever.  Perhaps you've
+updated to a new version of Ruby, bundler, node, or other package.  Or
+added a gem which has system dependencies.  When this occurs, you will
+need to update your Dockerfile to match.  In most cases, all you need
+to do is rerun the generator:
+
+```cmd
+bin/rails generate dockerfile
+```
+
+The generator will remember the options you selected before (these are
+stored in `config/dockerfile.yml`).  If you need to change a boolean
+option, add or remove a `no-` prefix before the option name.
+
+If you have made hand edits to your Dockerfile you may want to take advantage
+of the option to diff the changes before they are applied.
+
 ## Custom Packages
 
-Some Ruby gems and npm packages require development or runtime libraries
-to be installed.  Your Dockerfile typically has one or more lines that
-include the words `apt-get install`.  Add the packages you need to these
-lines.  Most [official Ruby docker images](https://hub.docker.com/_/ruby)
+The [Dockerfile generator for Rails](https://github.com/rubys/dockerfile-rails#overview) attempts to detect common dependencies and handle them for you.  If you come across a dependency that may be useful to others, please consider opening up an [issue](https://github.com/rubys/dockerfile-rails/issues) or a [pull request](https://github.com/rubys/dockerfile-rails/pulls).
+
+You may have needs beyond what is automatically detected.  
+Most [official Ruby docker images](https://hub.docker.com/_/ruby)
 are based on Debian [bullseye](https://www.debian.org/releases/bullseye/),
 and there are a [large number of packages](https://packages.debian.org/stable/)
 available to be installed in this manner.
 
-The [Dockerfile generator for Rails](https://github.com/rubys/dockerfile-rails#overview) attempts to detect common dependencies and handle them for you.  If you come across a dependency that may be useful to others, please consider opening up an [issue](https://github.com/rubys/dockerfile-rails/issues) or a [pull request](https://github.com/rubys/dockerfile-rails/pulls).
+An example adding basic kernel and network monitoring packages from this list:
+
+```bash
+bin/rails generate dockerfile --add procps net-tools traceroute iputils-ping
+```
 
 ## Using Sqlite3
 
@@ -130,25 +153,6 @@ Ruby images starting with 3.2 include [YJIT](https://github.com/Shopify/yjit) bu
 ```cmd
 bin/rails generate dockerfile --yjit
 ```
-
-## Updates
-
-Your application is unlikely to stay the same forever.  Perhaps you've
-updated to a new version of Ruby, bundler, node, or other package.  Or
-added a gem which has system dependencies.  When this occurs, you will
-need to update your Dockerfile to match.  In most cases, all you need
-to do is rerun the generator:
-
-```cmd
-bin/rails generate dockerfile
-```
-
-The generator will remember the options you selected before (these are
-stored in `config/dockerfile.yml`).  If you need to change a boolean
-option, add or remove a `no-` prefix before the option name.
-
-If you have made hand edits to your Dockerfile you may want to take advantage
-of the option to diff the changes before they are applied.
 
 ## Testing Locally
 
