@@ -21,8 +21,3 @@ Any application intended for production use should do the following things first
 3. Sign up for a [Plan](/plans) to get email support
 
 With the foundation pieces in place, there are additional things to consider.
-
-
-## Exporting Logs
-
-- Create Fideloper's NATs log article in docs and link to it from here.
