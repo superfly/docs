@@ -4,7 +4,7 @@ from the Fly platform.
 
 ## Usage
 ~~~
-flyctl apps destroy [APPNAME] [flags]
+flyctl apps destroy <APPNAME> [flags]
 ~~~
 
 ## Options

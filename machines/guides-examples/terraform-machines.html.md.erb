@@ -33,16 +33,6 @@ export FLY_API_TOKEN=$(fly auth token)
 
 This gets your Fly.io token into an environment variable Terraform can use to authenticate us.
 
-## Open WireGuard tunnel
-
-In its own terminal (or in the background; the point is that we want to keep this running) run
-
-```cmd
-flyctl machines api-proxy
- ```
-
-This will proxy a local port over [user-mode WireGuard](https://fly.io/blog/our-user-mode-wireguard-year/) to the internal Machines API endpoint, so Terraform on your machine can access it.
-
 ## Set up the Terraform project
 
 Let's make a directory for this project and set up a Terraform file for us to work in.
@@ -59,9 +49,15 @@ terraform {
   required_providers {
     fly = {
       source = "fly-apps/fly"
-      version = "0.0.16"
+      version = "0.0.20"
     }
   }
+}
+
+provider "fly" {
+  useinternaltunnel    = true
+  internaltunnelorg    = "personal"
+  internaltunnelregion = "ewr"
 }
 ```
 
@@ -69,7 +65,7 @@ Now kick off your Terraform project:
 
 ```cmd
  terraform init
- ```
+```
 
  This will download the Fly.io provider and get it ready to use.
 

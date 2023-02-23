@@ -6,7 +6,7 @@ the number of configured instances.
 
 ## Usage
 ~~~
-flyctl resume [APPNAME] [flags]
+flyctl resume <APPNAME> [flags]
 ~~~
 
 ## Options

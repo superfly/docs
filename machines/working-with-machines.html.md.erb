@@ -115,7 +115,7 @@ For non-sensitive information, you _can_ set different environment variables per
 
 Create machine, which starts running immediately. This is where you configure the machine characteristics, like its CPU and memory. You can also allow connections from the internet through the Fly proxy. Learn more about this behavior in the [networking section](#networking).
 
-Following this call, you can make a [blocking API request](#wait-for-a-machine-to-start) to wait for a machine to start.
+Following this call, you can make a [blocking API request](#wait-for-a-machine-to-reach-a-specified-state) to wait for a machine to start.
 
 The only required parameter is `image` in the `config` object. Other parameters:
 
@@ -167,6 +167,9 @@ The only required parameter is `image` in the `config` object. Other parameters:
       + `timeout`: The maximum time a connection can take before being reported as failing its healthcheck
       + `method`: For http checks, the HTTP method to use to when making the request
       + `path`: For http checks, the path to send the request to
+      + `protocol`: For http checks, whether to use `http` or `https`
+      + `tls_skip_verify`: For http checks with https protocol, whether or not to verify the TLS certificate
+      + `headers`: For http checks, an array of objects with string field `name` and array of strings vield `values`
 
 An example of two checks:
 
@@ -181,6 +184,7 @@ An example of two checks:
             "http-get": {
                 "type": "http",
                 "port": 8080,
+                "protocol": "http"
                 "method": "GET",
                 "path": "/",
                 "interval": "15s",
@@ -288,6 +292,10 @@ This table explains the possible machine states. A machine may only be in one st
     <tr>
       <td class="font-bold">created</td>
       <td>Initial status</td>
+    </tr>
+    <tr>
+      <td class="font-bold">starting</td>
+      <td>Transitioning from `stopped` to `started`</td>
     </tr>
     <tr>
       <td class="font-bold">started</td>

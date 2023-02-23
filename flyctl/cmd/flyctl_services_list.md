@@ -1,9 +1,8 @@
-Detach a postgres cluster from an app
-
+List the services that are associated with an app
 
 ## Usage
 ~~~
-flyctl postgres detach <POSTGRES APP> [flags]
+flyctl services list [flags]
 ~~~
 
 ## Options
@@ -11,7 +10,7 @@ flyctl postgres detach <POSTGRES APP> [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for detach
+  -h, --help            help for list
 ~~~
 
 ## Global Options
@@ -24,5 +23,5 @@ flyctl postgres detach <POSTGRES APP> [flags]
 
 ## See Also
 
-* [flyctl postgres](/docs/flyctl/postgres/)	 - Manage Postgres clusters.
+* [flyctl services](/docs/flyctl/services/)	 - Show the application's services
 

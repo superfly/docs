@@ -14,17 +14,40 @@ If after reading this and you still need help, please post on
 support](https://community.fly.io/t/fly-io-support-community-vs-email-read-this-first/9962/1),
 for the apps you really care about.
 
+## Updates
+
+Your application is unlikely to stay the same forever.  Perhaps you've
+updated to a new version of Ruby, bundler, node, or other package.  Or
+added a gem which has system dependencies.  When this occurs, you will
+need to update your Dockerfile to match.  In most cases, all you need
+to do is rerun the generator:
+
+```cmd
+bin/rails generate dockerfile
+```
+
+The generator will remember the options you selected before (these are
+stored in `config/dockerfile.yml`).  If you need to change a boolean
+option, add or remove a `no-` prefix before the option name.
+
+If you have made hand edits to your Dockerfile you may want to take advantage
+of the option to diff the changes before they are applied.
+
 ## Custom Packages
 
-Some Ruby gems and npm packages require development or runtime libraries
-to be installed.  Your Dockerfile typically has one or more lines that
-include the words `apt-get install`.  Add the packages you need to these
-lines.  Most [official Ruby docker images](https://hub.docker.com/_/ruby)
+The [Dockerfile generator for Rails](https://github.com/rubys/dockerfile-rails#overview) attempts to detect common dependencies and handle them for you.  If you come across a dependency that may be useful to others, please consider opening up an [issue](https://github.com/rubys/dockerfile-rails/issues) or a [pull request](https://github.com/rubys/dockerfile-rails/pulls).
+
+You may have needs beyond what is automatically detected.
+Most [official Ruby docker images](https://hub.docker.com/_/ruby)
 are based on Debian [bullseye](https://www.debian.org/releases/bullseye/),
 and there are a [large number of packages](https://packages.debian.org/stable/)
 available to be installed in this manner.
 
-The [Dockerfile generator for Rails](https://github.com/rubys/dockerfile-rails#overview) attempts to detect common dependencies and handle them for you.  If you come across a dependency that may be useful to others, please consider opening up an [issue](https://github.com/rubys/dockerfile-rails/issues) or a [pull request](https://github.com/rubys/dockerfile-rails/pulls).
+An example adding basic kernel and network monitoring packages from this list:
+
+```cmd
+bin/rails generate dockerfile --add procps net-tools traceroute iputils-ping
+```
 
 ## Using Sqlite3
 
@@ -54,7 +77,7 @@ to be able to handle a large number of concurrent connections.
 Both [fullstaq](https://fullstaqruby.org/) and [jemalloc](https://jemalloc.net/) are used by many to reduce their memory footprint.  As every application is different, test your application to see if either are appropriate for you.  Enabling one or both can be done by regenerating your Dockerfile and specifying the appropriate option(s):
 
 ```cmd
-bin/rails dockerfile generate --fullstaq --jemalloc
+bin/rails generate dockerfile --fullstaq --jemalloc
 ```
 
 At some point you may find that you need more memory.  There are two types:
@@ -70,7 +93,7 @@ fly scale memory 1024
 To allocate 512MB of swap space for use as virtual memory, use:
 
 ```cmd
-bin/rails dockerfile generate --swap=512M
+bin/rails generate dockerfile --swap=512M
 ```
 
 ## Scaling
@@ -83,7 +106,7 @@ Regenerate your Dockerfile specifying that you no longer want the
 prepare step there:
 
 ```cmd
-bin/rails dockerfile generate --no-prepare
+bin/rails generate dockerfile --no-prepare
 ```
 
 Next, add a deploy step to your fly.toml:
@@ -106,7 +129,7 @@ To enable `bin/rails` commands to be run in this manner, adjust your
 deployed binstubs to set the current working directory:
 
 ```cmd
-bin/rails dockerfile generate --bin-cd
+bin/rails generate dockerfile --bin-cd
 ```
 
 ## Build speeds
@@ -120,7 +143,7 @@ in parallel can reduce build time.  You can regenerate your Dockerfile
 to enable one or both:
 
 ```cmd
-bin/rails dockerfile generate --cache --parallel
+bin/rails generate dockerfile --cache --parallel
 ```
 
 ## Runtime performance
@@ -128,27 +151,8 @@ bin/rails dockerfile generate --cache --parallel
 Ruby images starting with 3.2 include [YJIT](https://github.com/Shopify/yjit) but disabled.  You can enable YJIT using:
 
 ```cmd
-bin/rails dockerfile generate --yjit
+bin/rails generate dockerfile --yjit
 ```
-
-## Updates
-
-Your application is unlikely to stay the same forever.  Perhaps you've
-updated to a new version of Ruby, bundler, node, or other package.  Or
-added a gem which has system dependencies.  When this occurs, you will
-need to update your Dockerfile to match.  In most cases, all you need
-to do is rerun the generator:
-
-```cmd
-bin/rails dockerfile generate
-```
-
-The generator will remember the options you selected before (these are
-stored in `config/dockerfile.yml`).  If you need to change a boolean
-option, add or remove a `no-` prefix before the option name.
-
-If you have made hand edits to your Dockerfile you may want to take advantage
-of the option to diff the changes before they are applied.
 
 ## Testing Locally
 
@@ -156,7 +160,7 @@ If you have Docker installed locally, you can test your applications
 before you deploy them by running the following commands:
 
 ```sh
-bin/rails dockerfile generate --compose
+bin/rails generate dockerfile --compose
 docker buildx build . -t rails-welcome
 docker run -p 3000:3000 -e RAILS_MASTER_KEY=$(cat config/master.key) rails-welcome
 ```

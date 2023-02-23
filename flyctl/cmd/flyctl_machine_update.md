@@ -3,7 +3,7 @@ Update a machine
 
 ## Usage
 ~~~
-flyctl machine update [machine_id] [flags]
+flyctl machine update <machine_id> [flags]
 ~~~
 
 ## Options
@@ -11,6 +11,7 @@ flyctl machine update [machine_id] [flags]
 ~~~
   -a, --app string           Application name
       --build-nixpacks       Build your image with nixpacks
+  -C, --command string       Command to run
   -c, --config string        Path to application configuration file
       --cpus int             Number of CPUs
       --detach               Return immediately instead of monitoring deployment progress
