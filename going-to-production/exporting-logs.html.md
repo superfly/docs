@@ -50,15 +50,15 @@ Before launching your application, you should edit the generated `fly.toml` file
   internal_port = 8686
 ```
 
-Then you can launch it:
+Then you can deploy it:
 
 ```cmd
-fly launch
+fly deploy
 ```
 
 ## Shipping Specific Logs
 
-By default, the log shipper gets logs from *every* application running within your organization (the org is set by the `ORG` secret/environment variable).
+By default, the log shipper gets logs from *every* application running within your organization (which organization is set by the `ORG` secret/environment variable).
 
 To narrow that down, you can set a [`SUBJECT`](https://github.com/superfly/fly-log-shipper#subject) environment variable in your instance of the Fly Log Shipper. That can be set as a secret, or as an environment variable in your `fly.toml` file.
 
