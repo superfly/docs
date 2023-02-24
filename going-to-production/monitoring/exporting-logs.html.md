@@ -2,7 +2,7 @@
 title: Exporting Logs
 layout: framework_docs
 objective: Aggregate your logs to a service of your choice.
-order: 3
+order: 1
 ---
 
 Your applications' output to `stdout` become logs in Fly.io. The logs for all VM instances within any given app can be viewed within an app's Monitoring page. However, these logs are intermingled and do not persist very long.
