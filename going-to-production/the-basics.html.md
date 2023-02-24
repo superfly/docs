@@ -3,6 +3,7 @@ title: The Basics
 layout: framework_docs_overview
 toc: false
 order: 2
+status: beta
 ---
 
 Setting up a production ready web application is more than putting it on a public server to be reachable by the public. We need to think about things like database availability, environment isolation, secret management, monitoring, and more.

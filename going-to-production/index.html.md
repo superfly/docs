@@ -7,6 +7,7 @@ subnav_glob: docs/going-to-production/*.html.*
 related_pages:
   - /docs/going-to-production/the-basics
   - /docs/going-to-production/monitoring
+status: beta
 ---
 
 You have a serious project or service and you're looking for guidance on how to

@@ -3,6 +3,7 @@ title: Production and Staging Isolation
 layout: framework_docs
 objective: How to separate a production environment from staging, testing, dev, whatever.
 order: 2
+status: beta
 ---
 
 There are various reasons and approaches to isolating different environments. Regardless of the motivation, [Fly Organizations](/docs/flyctl/orgs/) may be a good way to isolate more sensitive environments.
