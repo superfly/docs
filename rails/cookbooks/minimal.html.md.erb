@@ -43,10 +43,8 @@ shows the Rails welcome page.
 `WORKDIR` and `ENV` unsurprisingly set the current working directory and
 an environment variable respectively.
 
-A note on port 8080.  By default, Rails uses port 3000.  By default, fly.io
-expects port 8080.  By setting an environment variable you can control
-what port Rails uses.  Alternately, you can modify the `fly.toml` file to
-tell fly to monitor port 3000 instead.  Both ways work.
+The [`EXPOSE 3000`](https://docs.docker.com/engine/reference/builder/#expose)
+line declares the network port that Rails will listed to at runtime.
 
 Finally, there is a `CMD` which is run on the deployed server as opposed to
 the build server.  It is run in the specified WORKDIR with the
