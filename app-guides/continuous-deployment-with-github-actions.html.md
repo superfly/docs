@@ -37,8 +37,6 @@ on:
   push:
     branches:
       - main
-env:
-  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 jobs:
   deploy:
     name: Deploy app
@@ -47,6 +45,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 ```
 
 9.  Commit your changes and push them up to GitHub.
@@ -94,13 +94,6 @@ on:
 When should this action be run. There's lots of options but in this case, in response to any `push` to the repository's `main` branch. If your repository uses a default branch other than `main`, you should change that here.
 
 ```yaml
-env:
-  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-```
-
-Remember our API token from earlier? Well, here is where we pull it from GitHub's secrets engine and put it into the environmental variables passed to the action.
-
-```yaml
 jobs:
   deploy:
       name: Deploy app
@@ -120,8 +113,16 @@ The first step is one of the built in Actions steps. The step `uses` the `checko
         - uses: superfly/flyctl-actions/setup-flyctl@master
         - run: flyctl deploy --remote-only
 ```
-
 This step `uses` the superfly/flyctl-actions action. This is a GitHub action created by Fly.io which wraps around the `flyctl` command. The wrapper is invoked with the `deploy` argument which will take over the process of building and moving the application to the Fly.io infrastructure. It uses the settings from the `fly.toml` file to guide it and uses the `FLY_API_TOKEN` to authorize its access to the Fly.io GraphQL API.
+
+```yaml
+          env:
+            FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+```
+
+As we mentioned the API token. Well, here is where we pull it from GitHub's secrets engine and put it into the environmental variables passed to the action.
+
+
 
 ## Conclusion and further reading
 
