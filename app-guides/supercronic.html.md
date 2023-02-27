@@ -52,7 +52,7 @@ COPY crontab crontab
 
 After you put that in your Dockerfile, we're going to configure Fly to run only once instance of `supercronic`. Why? Because if you have a cronjob that does something like deliver emails to customers, you only want them to get that once. The last thing you want is them getting as many emails from your services that matches the number of instances you're running.
 
-## Setup a web &amp; cron process
+## Setup a web & cron process
 
 At the bottom of the `fly.toml` file, add the following:
 
@@ -74,7 +74,7 @@ Then we have to tell Fly that your `web` process matches up with a service by ha
 
 This change tells Fly that your `web` processes that you defined under `[processes]` will be exposed to the public internet. Your `cron` process won't be exposed to the public Internet because it doesn't need to!
 
-## Deploy &amp; scale the new processes
+## Deploy & scale the new processes
 
 Now that we've added `supercronic` to our `Dockerfile`, put the `crontab` at the root of our project folder, and reconfigured the `fly.toml` file, we're ready to deploy to production.
 

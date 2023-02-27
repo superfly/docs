@@ -19,7 +19,7 @@ For platform-wide issues and updates, please view our [status page](https://stat
 
 All customers have access to our active [community forum](https://community.fly.io). We&#39;re in the forums regularly to help out with customer issues and post new feature announcements.
 
-Customers also frequently help each other out and share insights on running their apps on Fly.  Especially helpful contributors can earn a special &quot;Aeronaut&quot; badge to signify their troubleshooting prowess, great advice, and exceptional kindness.
+Customers also frequently help each other out and share insights on running their apps on Fly.  Especially helpful contributors can earn a special "Aeronaut" badge to signify their troubleshooting prowess, great advice, and exceptional kindness.
 
 ## Email support
 **Who can use this:** Customers with paid plans
