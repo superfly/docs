@@ -31,33 +31,12 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
 8.  Create `.github/workflows/fly.yml` with these contents
     <br>
     <br>
-<<<<<<< HEAD
-```yaml
-name: Fly Deploy
-on:
-  push:
-    branches:
-      - main
-jobs:
-  deploy:
-    name: Deploy app
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-```
-=======
     ```yaml
     name: Fly Deploy
     on:
       push:
         branches:
           - main
-    env:
-      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
     jobs:
       deploy:
         name: Deploy app
@@ -66,8 +45,9 @@ jobs:
           - uses: actions/checkout@v3
           - uses: superfly/flyctl-actions/setup-flyctl@master
           - run: flyctl deploy --remote-only
+            env:
+              FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
     ```
->>>>>>> b6d6156 (minor clarifications and whitespace)
 
 9.  Commit your changes and push them up to GitHub.
 10. This is where the magic happens - The push will have triggered a deploy and from now on whenever you push a change, the app will automatically be redeployed.
@@ -83,6 +63,15 @@ If you want to watch the process take place, head to the Repository and select t
 **Step 2** is all about getting an API token. Once you are logged in with `flyctl` you can request its API token to use to authorize applications. That's what `flyctl auth token` gives you.
 
 **Step 3 and 4**: Now you have a token you need to make it available to GitHub Actions that run against your repository. For that, there's secrets in the repository's settings. GitHub provides four combinations: Environment and Repository, and Secrets and Variables.  Click on the green "New repository secret" button in the top left, pop our secret under the `FLY_API_TOKEN` name, and we can move on.
+
+If you would prefer an environment secret instead, make sure you list the environment you selected in your deploy step.  Example:
+
+```yaml
+deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    environment: production
+```
 
 ### fly.toml and the Repository
 
