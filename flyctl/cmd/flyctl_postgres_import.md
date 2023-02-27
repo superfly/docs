@@ -10,7 +10,7 @@ flyctl postgres import [flags]
 
 ~~~
   -a, --app string          Application name
-      --clean               Drop database objects prior to creating them. (default true)
+      --clean               Drop database objects prior to creating them.
   -c, --config string       Path to application configuration file
       --create              Begin by creating the database itself and reconnecting to it. If --clean is also specified, the script drops and recreates the target database before reconnecting to it. (default true)
       --data-only           Dump only the data, not the schema (data definitions).
