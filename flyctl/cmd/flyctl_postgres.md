@@ -14,6 +14,7 @@ flyctl postgres [command] [flags]
 * [db](/docs/flyctl/postgres-db/)	 - Manage databases in a cluster
 * [detach](/docs/flyctl/postgres-detach/)	 - Detach a postgres cluster from an app
 * [failover](/docs/flyctl/postgres-failover/)	 - Failover to a new primary
+* [import](/docs/flyctl/postgres-import/)	 - Imports database from a specified Postgres URI
 * [list](/docs/flyctl/postgres-list/)	 - List postgres clusters
 * [restart](/docs/flyctl/postgres-restart/)	 - Restarts each member of the Postgres cluster one by one.
 * [users](/docs/flyctl/postgres-users/)	 - Manage users in a postgres cluster
