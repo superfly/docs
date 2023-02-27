@@ -1,0 +1,12 @@
+---
+title: Delete a Postgres Cluster
+objective: 
+layout: framework_docs
+order: 90
+---
+
+**Before deleting any app with a volume, including a Fly Postgres app, make certain that you no longer need any of its data; once an app is deleted, its volumes are deleted and you lose access to their snapshots too.**
+
+If you no longer need any database that a Fly Postgres app serves, you can delete the cluster with `fly apps destroy <pg-app-name>`. 
+
+Double-check which databases live on the cluster using `fly pg db list -a <pg-app-name>`.

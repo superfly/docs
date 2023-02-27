@@ -1,0 +1,40 @@
+---
+title: "Persisting the Storage Folder"
+layout: framework_docs
+objective: Mount a volume to a re-initialized storage folder 
+order: 7
+---
+
+The [storage folder](https://laravel.com/docs/9.x/filesystem#the-local-driver) by default, holds several "generated" essentials of your Laravel application. 
+
+It's the default burrow for session, cache, and file data amongst others. If you'd opt to persist data on this folder, you'll have to mount a [volume](/docs/reference/volumes/) to it.
+
+
+## The Steps
+
+<%= partial "docs/laravel/partials/volume_storage_steps" %>
+
+<b>On to the content of the Start Up script:</b>
+
+```bash
+FOLDER=/var/www/html/storage/app
+if [ ! -d "$FOLDER" ]; then
+    echo "$FOLDER is not a directory, copying storage_ content to storage"
+    cp -r /var/www/html/storage_/. /var/www/html/storage
+    echo "deleting storage_..."
+    rm -rf /var/www/html/storage_
+fi
+```
+
+<small>
+So what happened above?
+- The condition statement checks if the app folder does not exist in the volumized storage folder. If it does not exist, it copies over the contents of the storage_ folder to the volumized storage folder.
+</small>
+<br />
+<br />
+
+<b>Finally, deploy your Laravel Fly App!</b>
+
+```cmd
+fly deploy
+```

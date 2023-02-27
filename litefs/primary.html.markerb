@@ -1,0 +1,41 @@
+---
+title: Determining the LiteFS primary
+layout: docs
+sitemap: false
+nav: litefs
+toc: true
+---
+
+<%= partial "partials/disclaimer" %>
+
+The LiteFS directory (typically `/litefs`) provides a `.primary` file that
+applications can read to determine the current primary node. This file only
+exists if the node is currently a replica _and_ it is connected to the primary
+LiteFS node.
+
+You can use `cat(1)` to view the contents on a replica node:
+
+```sh
+$ cat /litefs/.primary
+hostname.example.com
+```
+
+This file will return the `hostname` specified in the primary node's
+configuration file or, if unspecified, it will read `hostname(2)` from the
+primary node's operating system. A newline is appended to the end.
+
+If the `.primary` file is unavailable then the local LiteFS node is either:
+
+1. Currently the primary and can accept writes, or
+2. Unable to determine or connect to the primary.
+
+When a node receives a write request, it should check the `.primary` file and,
+if it exists, it should forward the request to the primary. If the file does not
+exist, the request should attempt to write locally.
+
+If the local node is not the primary then SQLite will return a
+`SQLITE_READONLY` error when using the rollback journal and it will return a
+`disk I/O error` when using the write-ahead log. Unfortunately, there's not a
+better error that LiteFS can return to SQLite when using the WAL.
+
+

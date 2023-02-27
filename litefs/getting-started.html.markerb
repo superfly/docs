@@ -1,0 +1,193 @@
+---
+title: Getting Started with LiteFS
+layout: docs
+sitemap: false
+nav: litefs
+toc: true
+---
+
+<%= partial "partials/disclaimer" %>
+
+
+## Overview
+
+This guide will walk you through the steps to add LiteFS to your existing SQLite
+application. This guide is not specific to Fly.io. You can run LiteFS anywhere
+that runs Linux. Please see the [LiteFS Example Application guide](/docs/litefs/example)
+for a walkthrough of running LiteFS on Fly.io.
+
+
+## Installing LiteFS
+
+### Dependencies
+
+The `litefs` binary is self-contained but you'll need to install the `fuse`
+library so LiteFS is able to mount a local file system. This installation
+depends on your package manager but some examples are:
+
+```sh
+# Install on Alpine
+$ apk add fuse
+```
+
+```sh
+# Install on Ubuntu
+$ apt install fuse
+```
+
+
+### With Docker
+
+LiteFS is meant to run inside your container along side your application. You
+can pull in the `litefs` binary by copying it from the official Docker image:
+
+```Docker
+COPY --from=flyio/litefs:0.3 /usr/local/bin/litefs /usr/local/bin/litefs
+```
+
+If your `PATH` includes `/usr/local/bin` then you will be able to run LiteFS
+by simply calling `litefs` as your `CMD` or `ENTRYPOINT`.
+
+
+### Without Docker
+
+If you're running on a Linux VPS without Docker, you can download the latest
+version from our [LiteFS releases page](https://github.com/superfly/litefs/releases).
+LiteFS can run on either `amd64` or `arm64` architectures.
+
+
+## Configuring LiteFS
+
+Most configuration options for LiteFS are set via a YAML configuration file
+called `litefs.yml`. This file is typically placed in `/etc/litefs.yml` but
+you can change the path by using the `-config` flag.
+
+
+Let's first set two fields to tell LiteFS where to mount its file system and
+where to store its internal data.
+
+```yml
+# This directory is where your application will access the database.
+fuse:
+  dir: "/litefs"
+
+# This directory is where LiteFS will store internal data.
+# You must place this directory on a persistent volume.
+data:
+  dir: "/var/lib/litefs"
+```
+
+### Lease configuration
+
+LiteFS only allows a single node to be the _primary_ at any given time. The
+primary node is the only one that can write data to the database. The other
+nodes are called _replicas_ and they provide a read-only copy.
+
+The primary is determined by using a [_distributed lease_](https://martinfowler.com/articles/patterns-of-distributed-systems/time-bound-lease.html).
+There are two leasing modes in LiteFS: `"static"` & `"consul"`. Static leasing
+is simple as it sets a single node to always be the primary. The downside of
+this approach is that you will lose write availability if that node goes down.
+
+Consul leasing allows the primary to be moved dynamically if a primary goes
+down. We'll be using static leasing in this guide. You can find more information
+about configuring Consul leases in the [configuration reference](/docs/litefs/config).
+
+On the primary node, you'll need to configure your lease so that it is a
+_candidate_. Being a candidate means that it is able to acquire the lease.
+
+```yml
+lease:
+  type: "static"
+  candidate: true
+```
+
+On the replica nodes, you'll need to disable candidacy and set the primary's
+connection information:
+
+```yml
+lease:
+  type: "static"
+  candidate: false
+  hostname: "${PRIMARY_HOSTNAME}"
+  advertise-url: "http://${PRIMARY_HOSTNAME}:20202"
+```
+
+Replace the `${PRIMARY_HOSTNAME}` with the hostname of your primary node or set
+the `PRIMARY_HOSTNAME` environment variable to the primary's hostname.
+
+
+## Running LiteFS
+
+The main command used to start LiteFS is the `litefs mount` command. This mounts
+a FUSE file system (typically to `/litefs`) and then starts an API server for
+LiteFS nodes to communicate with each other.
+
+```
+litefs mount
+```
+
+### Running as a supervisor
+
+LiteFS can either be run on its own or it can act as a simple supervisor process
+for your application. Running as a supervisor lets LiteFS wait to start the
+application until after it has connected to the cluster.
+
+To run as a supervisor, specify your application's command line invocation 
+from the `exec` field in `litefs.yml`:
+
+```yml
+exec: "rails server"
+```
+
+or you can add it after a double dash on the command line:
+
+```sh
+litefs mount -- rails server
+```
+
+Once LiteFS is mounted, you can use SQLite clients or the `sqlite3` CLI to
+interact with databases on the mount directory:
+
+```
+sqlite3 /litefs/my.db
+```
+
+LiteFS only allows files in the root of the mount and it does not currently
+support subdirectories.
+
+
+## Importing your database
+
+If you have an existing database, you can import it using the `ltx import`
+command.
+
+```sh
+ltx import -name my.db /path/to/database
+```
+
+See the [`ltx import`](/docs/litefs/import) documentation for more details.
+
+<div class="callout">
+  ❗️ **You should only interact with SQLite databases on LiteFS through
+  a SQLite client or through the `litefs` tooling. Do not use `cp` to copy a
+  database into place.**
+</div>
+
+
+## Application development with LiteFS
+
+LiteFS aims to be as transparent as possible, however, there are a few things
+your application needs to be aware of.
+
+First, you'll need to send all write requests to the primary node as that is the
+only node that can write to the database. With a static lease, this is
+straightforward since only one node will ever be the primary. If you use dynamic
+leasing with Consul, please see the documentation on
+[how to determine the current primary](/docs/litefs/primary).
+
+Second, you'll need to handle consistency if you writing to the primary and
+reading from a replica. It's possible to write to the primary and then issue a
+read request to a replica before the change has been propagated to the replica
+node. Please see the documentation on [tracking replication position](/docs/litefs/position)
+for ways to handle consistency.
+

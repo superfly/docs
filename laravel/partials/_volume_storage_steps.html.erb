@@ -1,0 +1,38 @@
+1.  Make sure you are in your Laravel Fly App's directory
+
+    ```cmd
+    cd <laravel-fly-configured-app>
+    ```
+2.  [Create a volume](/docs/flyctl/volumes-create/), you'll be attaching this later to your Laravel Fly App's storage directory 
+
+    ```cmd
+    fly volumes create storage\_vol --region ams --size 20 
+    ```
+
+3.  Revise your Laravel Fly App's `fly.toml` file to mount the volume created for your storage directory, and connect with an sqlite database you'll be configuring further down below:
+  ```
+    [mounts]
+      source="storage_vol"
+      destination="/var/www/html/storage"
+  ```
+
+    <%= partial "docs/laravel/partials/volume_storage_warning" %>
+
+4.  To fix the little storage-content-erasure issue as stated in the callout above, please go ahead and make a copy of your storage folder in a "backup" folder. You can name this directory "storage_".
+
+    ```cmd
+    cp -r storage storage_
+    ```
+    You'll later use this folder to copy over its contents to the volumized storage folder.
+    <br />
+    <br />
+
+5.  Next create a [Startup Script](/docs/laravel/the-basics/customizing-deployments/) that will initialize the volumized storage folder's contents.
+    ```cmd
+    touch .fly/scripts/1\_storage\_init.sh
+    ```
+
+    <small>
+    Side Note: Start up scripts are run in numeric-alphabetical order. Naming `1\_storage\_init.sh` makes sure it is the first script run. Otherwise, naming the file as `storage_init.sh` alone would've moved the `caches.sh` script above it, and would've executed before storage initialization happened. One of the commands in the `caches.sh` will not have worked properly, due to a lack of properly initialized storage directory.
+    </small>
+
