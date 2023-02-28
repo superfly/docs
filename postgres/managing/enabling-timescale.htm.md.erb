@@ -3,18 +3,21 @@ title: Enable TimescaleDB
 objective: Learn how to enable Timescale on your Postgres database.
 layout: framework_docs
 order: 80
+redirect_from: /docs/postgres/managing/enabling-timescale/
 ---
 
 TimescaleDB is an open source time-series database built on top of PostgreSQL. It is a powerful tool for analyzing time-series data,
-and is a great fit for many Fly applications.
+and is a great fit for many applications you might run on Fly.io.
 
-The Fly Postgres app no longer includes the TimescaleDB extension by default. To enable TimescaleDB,
-you will need to provision a new Postgres app while specifying our TimescaleDB-enabled image.
+The default Fly Postgres app no longer includes the TimescaleDB extension. To enable TimescaleDB,
+provision a new Postgres app using our TimescaleDB-adapted image.
 
-## Provision a new Postgres app
+## Provision a new Postgres app with TimescaleDB
+
+Specify the `postgres-flex-timescaledb` image with the `--image-ref` flag:
 
 ```cmd
-fly pg create  --image-ref flyio/postgres-flex-timescaledb:15
+fly pg create --image-ref flyio/postgres-flex-timescaledb:15
 ```
 
 ## Create the extension
