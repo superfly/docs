@@ -10,7 +10,7 @@ Once your Fly App is launched, `flyctl` has various tools for getting informatio
 
 ## Find all your Apps
 
-You can see a list of all your Fly.io Apps:
+You can see a list of all your Fly Apps:
 
 ```cmd
 fly apps list
@@ -23,7 +23,7 @@ olddeadapp                              personal        dead            nomad   
 
 ## App Overviews
 
-If you want a brief App overview, including a list of Machines on that App:
+If you want a brief app overview, including a list of Machines on that app:
 
 ```cmd
 fly status
@@ -86,9 +86,23 @@ started start   flyd    2023-01-26T17:52:36.678-05:00
 created launch  user    2023-01-26T17:52:33.348-05:00
 ```
 
+## Services
+
+See the configured services with `fly services list`.
+
+```cmd
+fly services list
+```
+```out
+Services
+PROTOCOL        PORTS                   FORCE HTTPS 
+TCP             80 => 8080 [HTTP]       True       
+                443 => 8080 [TLS,HTTP]  False 
+```
+
 ## Public IP addresses
 
-Find your App's public Anycast IPs with `fly ips list`.
+Find your app's public Anycast IPs with `fly ips list`.
 
 ```cmd
 fly ips list
@@ -104,7 +118,7 @@ Read more about [Public Network Services](/docs/reference/services/) and [Privat
 
 ## SSH into it
 
-You can use `fly ssh console` to get a prompt on a Machine in your App (as long as the Machine's Docker image includes `sh`). You may want to connect to a specific Machine, and you can do that with `fly ssh console -s`:
+You can use `fly ssh console` to get a prompt on a Machine in your app (as long as the Machine's Docker image includes `sh`). You may want to connect to a specific Machine, and you can do that with `fly ssh console -s`:
 
 ```cmd
 fly ssh console -s
@@ -117,10 +131,10 @@ Connecting to fdaa:0:3b99:a7b:8aeb:fea3:148b:2... complete
 
 ## Inspect the Current Configuration of a Deployed App or Machine
 
-Machines can be configured individually, but the App's config is applied on `fly deploy` to all Machines that are administered by the App. Display the App configuration in JSON format with `fly config show`, or a tack a specific Machine's current configuration onto the end of `fly machine status` by appending the `-d` flag.
+Machines can be configured individually, but the app's config is applied on `fly deploy` to all Machines that are administered by the app. Display the app configuration in JSON format with `fly config show`, or a tack a specific Machine's current configuration onto the end of `fly machine status` by appending the `-d` flag.
 
 ```cmd
-$ fly m status e784459b655483 -d
+fly m status e784459b655483 -d
 ```
 ```out
 Machine ID: e784459b655483
