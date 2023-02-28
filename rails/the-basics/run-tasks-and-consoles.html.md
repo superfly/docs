@@ -21,10 +21,19 @@ Then start using the console, but be careful! You're in a production environment
 
 ## Interactive shell
 
-To access an interactive shell, simply run:
+To access an interactive shell as the `rails` user, run:
 
 ```cmd
-fly ssh console
+fly ssh console -C 'su - rails'
+```
+```output
+$
+```
+
+To access an interactive shell as the `root` user, run:
+
+```cmd
+fly ssh console -C '/bin/bash'
 ```
 ```output
 #
@@ -64,7 +73,7 @@ keystrokes it takes to launch a console:
 ```ruby
 namespace :fly do
   task :ssh do
-    sh 'fly ssh console'
+    sh 'fly ssh console -C "su - rails"'
   end
 
   task :console do
