@@ -13,6 +13,7 @@ flyctl postgres create [flags]
       --detach                     Return immediately instead of monitoring deployment progress
       --flex                       Create a postgres cluster that's managed by Repmgr (default true)
   -h, --help                       help for create
+      --image-ref string           Specify a non-default base image for the Postgres app
       --initial-cluster-size int   Initial cluster size
   -n, --name string                The name of your Postgres app
   -o, --org string                 The target Fly organization
