@@ -5,7 +5,7 @@ order: 10
 status: beta
 ---
 
-This guide runs you through how to import your database from Heroku and onto Fly.io, but before that, let's go over some major differences between Heroku's managed Postgres offering and Fly.io's Postgres offering.
+This guide runs you through how to migrate a database off of Heroku and onto Fly.io, but before that, let's go over some major differences between Heroku's managed Postgres offering and Fly.io's Postgres offering.
 
 First and foremost, if you deploy your Postgres database to Fly.io you'll be responsible for monitoring, configuring, scaling, and tuning it. If you don't provision enough disk space, your database will run out of space and stop accepting write queries. If you don't put monitoring in place for for your database, a customer might alert you to an issue.
 
@@ -36,7 +36,7 @@ Machine 5683004b797d8e is created
 Postgres cluster myapp-db created
   Username:    postgres
   Password:    92u0rN52VUV2SFq
-  Hostname:    myapp-db .internal
+  Hostname:    myapp-db.internal
   Flycast:     fdaa:0:2e26:0:1::b6
   Proxy port:  5432
   Postgres port:  5433
@@ -76,7 +76,7 @@ Waiting for machine 6e82946c0dd0e8 to stop...
 6e82946c0dd0e8 has been destroyed
 ```
 
-## Verify the import
+## Confirm your data has been imported correctly
 
 Then connect to your database instance and run a few queries to see if its there.
 
