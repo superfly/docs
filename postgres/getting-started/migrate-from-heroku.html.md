@@ -45,7 +45,7 @@ Postgres cluster myapp-db created
 Save your credentials in a secure place -- you won't be able to see them again!
 
 Connect to postgres
-Any app within the Shaun Davis organization can connect to this Postgres using the above connection string
+Any app within the Brad Gessler organization can connect to this Postgres using the above connection string
 
 Now that you've set up Postgres, here's what you need to understand: https://fly.io/docs/postgres/getting-started/what-you-should-know/
 ```
