@@ -32,7 +32,6 @@ flyctl [flags]
 * [dns-records](/docs/flyctl/dns-records/)	 - Manage DNS records
 * [docs](/docs/flyctl/docs/)	 - View Fly documentation
 * [doctor](/docs/flyctl/doctor/)	 - The DOCTOR command allows you to debug your Fly environment
-* [domains](/docs/flyctl/domains/)	 - Manage domains
 * [history](/docs/flyctl/history/)	 - List an app's change history
 * [image](/docs/flyctl/image/)	 - Manage app image
 * [ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
