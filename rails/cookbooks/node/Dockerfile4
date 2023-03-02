@@ -127,5 +127,5 @@ EOF
 
 ENV RAILS_ENV=production
 RUN bin/rails assets:precompile
-ENV PORT=8080
+EXPOSE 3000
 CMD bin/rails server

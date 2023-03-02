@@ -14,5 +14,5 @@ EOF
 
 WORKDIR demo
 ENV RAILS_ENV=production
-ENV PORT=8080
+EXPOSE 3000
 CMD bin/rails server

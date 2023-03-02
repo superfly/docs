@@ -36,7 +36,7 @@ one:
     `RUN bin/rails db:prepare` immediately after the
     `ENV RAILS_ENV=production` line.
   * In order to see the log messages, add `ENV RAILS_LOG_TO_STDOUT=true`
-    after the `ENV PORT=8080` line.
+    immediately before the `CMD bin/rails server` line.
   * We need to serve the assets.  Chose one of the following two methods:
       * Set `ENV RAILS_SERVE_STATIC_FILES=true`
       * Add to the bottom of `fly.toml`:

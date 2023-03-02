@@ -5,44 +5,62 @@ objective: Access the Rails console, run rake tasks, and access the SSH shell of
 order: 3
 ---
 
-Running one-off tasks on Fly can be accomplished via `fly ssh console`.
-
-## Rails tasks
-
-To execture the `rails` command on Fly, run:
-
-```cmd
-fly ssh console -C "app/bin/rails db:migrate"
-```
-
-To list all the available tasks, run:
-
-```cmd
-fly ssh console -C "app/bin/rails help"
-```
-
 ## Rails console
 
 To access an interactive Rails console, run:
 
 ```cmd
-fly ssh console -C "app/bin/rails console"
+fly ssh console -C "rails/bin/rails console"
 ```
 ```output
-irb>
+Loading production environment (Rails 7.0.4.2)
+irb(main):001:0>
 ```
 
 Then start using the console, but be careful! You're in a production environment.
 
 ## Interactive shell
 
-To access an interactive shell, simply run:
+To access an interactive shell as the `rails` user, run:
 
 ```cmd
-fly ssh console
+fly ssh console -C 'su - rails'
+```
+```output
+$
+```
+
+To access an interactive shell as the `root` user, run:
+
+```cmd
+fly ssh console -C '/bin/bash'
 ```
 ```output
 #
+```
+
+## Rails tasks
+
+In order to run other Rails tasks, a small change is needed to your Rails
+binstubs to set the current working directory.  The following command will
+make the adjustment for you:
+
+```cmd
+bin/rails generate dockerfile --bin-cd
+```
+
+Accept the changes to your Dockerfile, and then rerun `fly deploy`.
+
+Once this is complete, you can execute other commands on Fly, for example:
+
+```cmd
+fly ssh console -C "rails/bin/rails db:migrate"
+```
+
+To list all the available tasks, run:
+
+```cmd
+fly ssh console -C "rails/bin/rails help"
 ```
 
 ## Custom Rake tasks
@@ -55,15 +73,15 @@ keystrokes it takes to launch a console:
 ```ruby
 namespace :fly do
   task :ssh do
-    sh 'fly ssh console'
+    sh 'fly ssh console -C "su - rails"'
   end
 
   task :console do
-    sh 'fly ssh console -C "app/bin/rails console"'
+    sh 'fly ssh console -C "rails/bin/rails console"'
   end
 
   task :dbconsole do
-    sh 'fly ssh console -C "app/bin/rails dbconsole"'
+    sh 'fly ssh console -C "rails/bin/rails dbconsole"'
   end
 end
 ```

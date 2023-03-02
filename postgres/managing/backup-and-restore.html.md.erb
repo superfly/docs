@@ -3,14 +3,61 @@ title: Backup, Restores, & Snapshots
 objective: Keep your data safe by backing it up and restoring it if the unthinkable happens.
 layout: framework_docs
 order: 30
+redirect_from:
+  - /docs/rails/the-basics/backup-and-restoring-data/
 ---
 
 <%= partial "docs/postgres/partials/for-machines" %>
 
-Fly.io performs daily storage-based snapshots of each of your provisioned volumes. These snapshots can
-be used to restore your dataset into a new Postgres application.
+An important part of running any production db-backed application is making sure your data is backed up and safe, and if the unspeakable happens, it's straightforward to restore data and get back up and running.
+
+Postgres databases on Fly.io are treated as Fly Apps, which you can [read more about in the docs](/docs/postgres). What that means is backing up data is an exercise in taking snapshots of the Postgres app's volumes, then restoring the snapshots to a new database server, verifying the restoration, and connecting the application to the restored database.
+
+## Finding the database app instance
+
+If you set up your application using `fly launch`, the name of your database defaults to `<app-name>-db`. To figure that out for sure, run the following from the root of the project:
+
+```cmd
+fly info
+```
+```output
+App
+  Name     = my-app
+  Owner    = personal
+  Version  = 40
+  Status   = running
+  Hostname = my-app.fly.dev
+```
+
+The `Name` key is the name of your app. In this case, the database app would be `my-app-db`. Let's see if that instance exists by appending the `-a` flag with the name of the database application:
+
+```cmd
+fly info -a my-app-db
+```
+```output
+App
+  Name     = my-app-db
+  Owner    = personal
+  Version  = 40
+  Status   = running
+  Hostname = my-app-db.fly.dev
+```
+
+If that doesn't work, then try to find the database instance by running:
+
+```cmd
+fly postgres list
+```
+```output
+NAME                       OWNER    STATUS  LATEST DEPLOY
+my-app-db       personal running 37m11s ago
+```
+
+and look for the database instance under the `NAME` column on the list.
 
 ## Listing snapshots
+
+Fly.io performs daily storage-based snapshots of each of your provisioned volumes. These snapshots can be used to restore your dataset into a new Postgres application.
 
 Snapshots are volume specific, so you need to identify the volume whose snapshot you want to restore from. You can list your volumes by running the `volumes list` command with your Postgres app name.
 
@@ -23,7 +70,10 @@ vol_x915grn008vn70qy pg_data 10GB atl    b780ce3d    2 weeks ago
 vol_ke628r677pvwmnpy pg_data 10GB atl    359d0e24    2 weeks ago
 ```
 
+The number of volumes varies depending on how many database replicas were elected when provisioning the database. One primary database and one replica yields 2 volumes.
+
 Once you have identified which volume to target, you can list its snapshots:
+
 ```cmd
 fly volumes snapshots list <volume-id>
 ```
@@ -33,9 +83,47 @@ vs_2AjJ4lGqQwDbRfxm 29 MiB 2 hours ago
 vs_BAARBQxZKl6JKU04 27 MiB 1 day ago
 vs_OPQXXna6kA2Qnhz8 26 MiB 2 days ago
 ```
+
+The values under the `ID` columns are what will be used to restore a snapshot.
+
 ## Restoring from a snapshot
 
 To restore a Postgres application from a snapshot, simply specify the `--snapshot-id` argument when running the `create` command as shown below:
+
 ```cmd
 fly postgres create --snapshot-id <snapshot-id>
 ```
+```output
+? App Name: my-app-db-restored
+Automatically selected personal organization: Awesome Person
+? Select region:  [Use arrows to move, type to filter]
+? Select region: sjc (San Jose, California (US))
+? Specify the initial cluster size: 2
+? Select VM size: shared-cpu-1x - 256
+Creating postgres cluster my-app-db-restored in organization personal
+Postgres cluster my-app-db-restored created
+  Username:    postgres
+  Password:    <redacted>
+  Hostname:    my-app-db-restored.internal
+  Proxy Port:  5432
+  PG Port: 5433
+Save your credentials in a secure place, you won't be able to see them again!
+```
+
+This provisions and launches a new Fly Postgres database server with the specified snapshot.
+
+## Connect the Restored Database
+
+Detach the web application from the current Postgres cluster:
+
+```cmd
+fly postgres detach my-app-db
+```
+
+Then attach it to the new cluster:
+
+```cmd
+fly postgres attach my-app-db-restored
+```
+
+Now your application is pointing at the restored database.
