@@ -1,9 +1,10 @@
 ---
-title: Deploy Changes to an App
+title: Deploy a Release
 objective: 
 layout: docs
 nav: firecracker
 nav: firecracker
+titlecase: false
 order: 30
 ---
 
@@ -25,10 +26,9 @@ New Machines created within an App using `fly machine run` don't have the Apps V
 
 ## Volume mounts and `fly deploy`
 
-If a Machine has a mounted [volume](/docs/reference/volumes/), `fly deploy` can't be used to change it. You can change its mount point within the Machine, though. This is configured in the `[mounts]` section of `fly.toml`.
+If a Machine has a mounted [volume](/docs/reference/volumes/), `fly deploy` can't be used to mount a different one. You can change the volume's mount point within the Machine, though. This is configured in the `[mounts]` section of `fly.toml`.
 
 ## `fly deploy` configuration in `fly.toml`
-
 
 Configure the following deployment behavior in the [`[deploy]` section](/docs/reference/configuration/#the-deploy-section) of `fly.toml`.
 
