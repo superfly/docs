@@ -16,14 +16,13 @@ If you are doing anything with Fly.io, you'll need it. We have [flyctl installat
 
 ## Working with Apps
 
-* Creating An App: [fly launch](/docs/flyctl/launch/)
-* Deploying An App: [fly deploy](/docs/flyctl/deploy/)
-* Managing App Secrets: [fly secrets](/docs/flyctl/secrets/)
-* Viewing your App: [fly open](/docs/flyctl/open/)
+* Create An App: [fly launch](/docs/flyctl/launch/)
+* Deploy An App: [fly deploy](/docs/flyctl/deploy/)
+* Manage App Secrets: [fly secrets](/docs/flyctl/secrets/)
+* View your App: [fly open](/docs/flyctl/open/)
 
 ## Viewing and Monitoring an App
 
-* Show App Information: [fly info](/docs/flyctl/info/)
 * Show App Logs: [fly logs](/docs/flyctl/logs/)
 * Show App Deployment Status: [fly status](/docs/flyctl/status/)
 * Show App History: [fly history](/docs/flyctl/history/)
