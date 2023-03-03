@@ -32,7 +32,6 @@ flyctl [flags]
 * [dns-records](/docs/flyctl/dns-records/)	 - Manage DNS records
 * [docs](/docs/flyctl/docs/)	 - View Fly documentation
 * [doctor](/docs/flyctl/doctor/)	 - The DOCTOR command allows you to debug your Fly environment
-* [domains](/docs/flyctl/domains/)	 - Manage domains
 * [history](/docs/flyctl/history/)	 - List an app's change history
 * [image](/docs/flyctl/image/)	 - Manage app image
 * [ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
@@ -51,7 +50,6 @@ flyctl [flags]
 * [redis](/docs/flyctl/redis/)	 - Launch and manage Redis databases managed by Upstash.com
 * [regions](/docs/flyctl/regions/)	 - Manage regions
 * [releases](/docs/flyctl/releases/)	 - List app releases
-* [restart](/docs/flyctl/restart/)	 - Restart an application
 * [resume](/docs/flyctl/resume/)	 - Resume an application
 * [scale](/docs/flyctl/scale/)	 - Scale app resources
 * [secrets](/docs/flyctl/secrets/)	 - Manage application secrets with the set and unset commands.
