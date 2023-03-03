@@ -50,7 +50,6 @@ flyctl [flags]
 * [redis](/docs/flyctl/redis/)	 - Launch and manage Redis databases managed by Upstash.com
 * [regions](/docs/flyctl/regions/)	 - Manage regions
 * [releases](/docs/flyctl/releases/)	 - List app releases
-* [restart](/docs/flyctl/restart/)	 - Restart an application
 * [resume](/docs/flyctl/resume/)	 - Resume an application
 * [scale](/docs/flyctl/scale/)	 - Scale app resources
 * [secrets](/docs/flyctl/secrets/)	 - Manage application secrets with the set and unset commands.
