@@ -109,8 +109,6 @@ The general flow for setting this up is:
 3. Deploy your app
 4. Access the services on the private IP from the target organization network
 
-Flycast IP have no associated DNS entry.
-
 **Note: If you have a public IP address assigned to your app, services in fly.toml will be exposed to the public internet. Verify this with `fly ips list`.**
 
 ### Assigning a Flycast address
@@ -134,6 +132,12 @@ If you want to expose services to another Fly organization you have access to, u
 VERSION	IP                	TYPE   	REGION	CREATED AT
 v6     	fdaa:0:22b7:0:1::3	private	global	just now
 ```
+
+### DNS
+
+You can use `appname.flycast` domains. They behave like `appname.internal` domains except they only return Flycast addresses (if you have any) of the app.
+
+The original motivation for this is accommodating PostgreSQL clients that don’t like raw IPv6 addresses in the connection string. The eagle eyed, and elephant-memoried of you might remember that we introduced Flycast for PostgreSQL to get away from DNS! Why are we going back? The problem we were trying to get away from with DNS is avoiding the case where there is a lag between a PostgreSQL instance becoming unhealthy or dying and it getting removed from DNS. Flycast IPs don’t change so we don’t have to worry about that issue in this case.
 
 ## Private Network VPN
 
