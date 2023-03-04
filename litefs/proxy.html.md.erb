@@ -1,0 +1,84 @@
+---
+title: Built-in HTTP Proxy
+layout: docs
+sitemap: false
+nav: litefs
+toc: true
+---
+
+<%= partial "partials/disclaimer" %>
+
+## Overview
+
+LiteFS uses a single primary node for writing data and that primary node
+replicates out to other replica nodes for fast reads. This poses two issues
+for applications:
+
+1. Requests that write data must be forwarded to the primary.
+
+2. Requests that only read data should wait until previous writes have been
+   replicated to a node before reading from that node.
+
+LiteFS provides a built-in HTTP proxy server that can handle these issues
+automatically for most web applications as long as they follow some common
+idioms:
+
+- `GET` requests should not perform write operations (e.g. `INSERT`, `UPDATE`, etc).
+
+- Clients must have cookies enabled.
+
+
+## How it works
+
+The built-in proxy is a thin layer in front of your application. It inspects
+HTTP requests and performs intelligent routing depending on the type of request
+and the node's status.
+
+All HTTP requests that go to the primary are handled normally since the primary
+node can perform writes and always has the latest data. The proxy simply adds
+a cookie to the outgoing response from the primary to tag the current
+replication position.
+
+The proxy handles requests a bit differently on replicas since they cannot write
+data and they may lag slightly behind the primary. First, write requests
+(`POST`, `PUT`, etc) are forwarded to primary node using [`fly-replay` header][].
+This ensures that all writes occur on the primary.
+
+For read requests (`GET`), the replica will wait for the replication position on
+the database to catch up to the position stored in the cookie set by the primary
+server. This ensures that any writes forwarded to the primary are visible by the
+replicas before processing the request.
+
+[`fly-replay` header]: /docs/reference/dynamic-request-routing/
+
+
+## Configuring the proxy
+
+By default, the proxy is disabled. You can enable it by setting fields in the
+[proxy section][] of the config:
+
+```yml
+proxy:
+  # Bind address for the proxy to listen on.
+  addr: ":8080"
+
+  # Hostport of your application.
+  target: "localhost:8081"
+
+  # Filename of the SQLite database you want to use for TXID tracking.
+  db: "my.db"
+```
+
+You'll also need to ensure that your application is running on the target port,
+which is `8081` in this example. Additionally, make sure your [internal port][]
+is configured to the proxy's bind port in your `fly.toml`:
+
+```toml
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+```
+
+[proxy section]: /docs/litefs/config#proxy
+[internal port]: /docs/reference/configuration/#the-services-sections
+

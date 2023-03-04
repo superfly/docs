@@ -26,13 +26,13 @@ library so LiteFS is able to mount a local file system. This installation
 depends on your package manager but some examples are:
 
 ```sh
-# Install on Alpine
-$ apk add fuse
+# Install on Ubuntu
+$ apt install fuse
 ```
 
 ```sh
-# Install on Ubuntu
-$ apt install fuse
+# Install on Alpine
+$ apk add fuse
 ```
 
 
@@ -42,7 +42,7 @@ LiteFS is meant to run inside your container along side your application. You
 can pull in the `litefs` binary by copying it from the official Docker image:
 
 ```Docker
-COPY --from=flyio/litefs:0.3 /usr/local/bin/litefs /usr/local/bin/litefs
+COPY --from=flyio/litefs:0.4 /usr/local/bin/litefs /usr/local/bin/litefs
 ```
 
 If your `PATH` includes `/usr/local/bin` then you will be able to run LiteFS
