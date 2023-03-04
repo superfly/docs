@@ -1,0 +1,64 @@
+---
+title: Running database migrations
+layout: docs
+sitemap: false
+nav: litefs
+toc: true
+---
+
+<%= partial "partials/disclaimer" %>
+
+## Overview
+
+LiteFS is a single-writer system so, by default, only the primary node can
+write to the database. When you deploy a new version of your application, you
+will likely need to run a database migration but you aren't guaranteed to deploy
+to the primary node first.
+
+LiteFS has the ability to temporarily halt writes on the primary node so that a
+replica can issue its own writes. This is useful when you want to execute a
+migration script from any node.
+
+## Using the `run` command
+
+To perform a remote write, you can use the `litefs run` command to temporarily
+borrow the write lock from the primary and run a subcommand with the ability
+to write.
+
+You'll need to specify the `-with-halt-lock-on` flag with a path to the database
+that you want to write to. Then append a double dash & the shell comand you want
+to run:
+
+```sh
+$ litefs run -with-halt-lock-on /litefs/db -- bin/rails db:migrate
+```
+
+The command will be able to write to the local database—even if it is running on
+a replica. The lock will be released once the command exits.
+
+Please note that the `HALT` lock is limited to 30 seconds before it is
+automatically released to ensure that replicas do not permanently lock the
+primary.
+
+
+## How it works
+
+The LiteFS API server on the primary has an endpoint that allows callers to
+acquire the `HALT` lock, which in turn, will acquire the SQLite file write locks
+on the SQLite database. This prevents any changes to the database until the
+`HALT` lock is released.
+
+The replica node that holds the `HALT` lock can then issue write transactions
+locally and they will be forwarded to the primary and applied to its database.
+These transactions are then propagated out to all other replicas just like any
+other transaction.
+
+LiteFS provides an API to applications through the FUSE file system via a lock
+file. Each database in LiteFS has an associated `-lock` file. If your database
+is named `my.db` then your lock file will be named `my.db-lock`. By using the
+`F_OFD_SETLKW` command with [`fcntl`][], you can acquire and release the `HALT`
+lock using byte `72`. You can find a reference implementation of this on the
+[litefs-go][] client library.
+
+[`fcntl`]: https://man7.org/linux/man-pages/man2/fcntl.2.html
+[litefs-go]: https://github.com/superfly/litefs-go
