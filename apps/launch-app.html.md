@@ -8,7 +8,7 @@ order: 10
 
 To create a brand new app on Fly.io, run `fly launch` from the root directory of your project. This command initializes a new App under your Organization and tries to configure it for deployment. 
 
-We'll get to a demonstration, but if you're in a hurry to try your first launch, we also have a condensed [Hands-on](/docs/hands-on/).
+We'll get to a demonstration, but if you're in a hurry to try your first launch, we also have a condensed [Hands-on](/docs/hands-on/). If you're anxious to deploy your own project, have a look at our [short guides for specific languages and frameworks](/docs/languages-and-frameworks/) and read more here later!
 
 ## Launch Scanners
 
@@ -31,7 +31,6 @@ If and when you need more control, `fly.toml` lets you set environment variables
 If you need to make configuration changes, respond `N` when `fly launch` offers to `deploy now`, and edit `fly.toml`. Then you can deploy using `fly deploy`.
 
 ## Resources for Apps
-
 
 A basic web app will need a public IP address so that it can be reached. You may also want to prepare other resources before deploying your app, such as app secrets or a persistent storage volume.
 
