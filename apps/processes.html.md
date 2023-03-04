@@ -6,11 +6,7 @@ nav: firecracker
 order: 90
 ---
 
-**WIP**
-
-See []
-
-Process groups are a way to manage separate tasks under the umbrella of a single Fly App. Everything gets deployed in a single release, but different processes run on their own Machines&mdash;which means they don't compete with each other for VM resources, and they can be scaled individually.
+Process groups are a way to manage separate tasks under the umbrella of a single Fly App. You can maintain a single code base, and everything gets deployed in a single release, but different processes run on their own Machines&mdash;which means they don't compete with each other for VM resources, and they can be scaled individually.
 
 When you deploy a Fly App, you start up one or more Fly Machines from a single Docker image; all the VMs have the same things installed. But Machines in different process groups run different commands at boot.
 
@@ -37,19 +33,6 @@ This example is purely illustrative!
 Changes to `fly.toml` are applied on the next deployment of the Fly App (including on `fly launch` if the app doesn't exist yet).
 
 If the app has never been deployed, one Machine will be created for each process group on the first deployment.
-
-
-If the app already has Machines running, 
-
-* check what happens when you add a process group to an app with just "app"
-
-* what happens when you define only "web" (do you still get "app" too?)
-
-* what happens when you add a process group to an app with just "web"
-
-* what happens when you remove a process group from fly.toml and redeploy
-
-* what happens when you add a process group to an app with two differently scaled process groups
 
 ## Services and process groups
 
@@ -117,5 +100,27 @@ Deploying dry-pond-1475 app with rolling strategy
   Finished deploying
 ```
 
-## Process groups and legacy apps
+## Process groups and legacy (Nomad) apps
 
+<div class="callout">The `processes` feature is in [preview](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316). Let us know in the <a href="https://community.fly.io" style="text-decoration: underline;">Fly.io community forum</a> if you run into issues when deploying.
+
+Known issues:
+* Running multiple processes in this way is not compatible with autoscaling.
+* Unexpected behavior with regions may arise if you use a `[processes]` block and then delete it.
+</div>
+
+After adding process groups to your app's `fly.toml` and deploying, scale them up with per-process commands. For example:
+
+```
+$ fly scale count web=2 worker=2
+```
+
+### Per-process commands
+
+Some legacy `fly` commands accept a process name as an argument. The following examples shows which:
+
+* Change VM counts: `fly scale count web=2 worker=1`
+* Change VM size: `fly scale vm shared-cpu-1x --group worker`
+* Change regions: `fly regions set iad --group worker`
+
+For a bit more context on the `processes` feature, you can read our [community announcement](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/).

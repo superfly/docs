@@ -23,7 +23,7 @@ app = "restless-fire-6276"
 
 Whenever `flyctl` is run, it will look for a `fly.toml` file in the current directory and use the application name in that file. This behavior can be overridden by using the `-a` flag to set the application name, or on some commands (such as `deploy`) by using a `-c` flag to point to a different `fly.toml` file.
 
-## Runtime options
+## Runtime options (Legacy Nomad Apps Only)
 
 Various options are available to control the life-cycle of a running application. These are optional and can be placed at the top level of the `fly.toml` file:
 
@@ -142,13 +142,22 @@ The environment variable `RELEASE_COMMAND=1` is set for you within the temporary
 
 The available strategies are:
 
-**canary**: The default for apps without persistent volumes. `canary` will boot a single, new VM with the new release, verify its health, then proceed with a `rolling` restart strategy.
+
 
 **rolling**: The default for apps with persistent volumes. One by one, each running VM is taken down and replaced by a new release VM. This is the default strategy for apps with volumes.
 
-**bluegreen**: For every running VM, a new one is booted alongside it in the same region. Once all of the new VMs pass health checks, traffic gets migrated to new VMs. If your app is scaled to 2 or more VMs, this strategy can reduce deploy time by running tasks in parallel.
+
 
 **immediate**: Replace all VMs with new releases immediately without waiting for health checks to pass. This is useful in emergency situations where you're confident about release health and can't wait for health checks.
+
+
+#### For Nomad (Legacy) Apps Only
+
+Legacy Fly Apps orchestrated by Nomad can also be deployed with `canary` or `bluegreen` strategies.
+
+**canary**: The default for apps without persistent volumes. `canary` will boot a single, new VM with the new release, verify its health, then proceed with a `rolling` restart strategy.
+
+**bluegreen**: For every running VM, a new one is booted alongside it in the same region. Once all of the new VMs pass health checks, traffic gets migrated to new VMs. If your app is scaled to 2 or more VMs, this strategy can reduce deploy time by running tasks in parallel.
 
 Note: If `max-per-region` is set to 1, the default strategy is set to `rolling`. This happens because `canary` needs to temporarily run more than one VM to work correctly. The `bluegreen` strategy will behave similarly with `max-per-region` set to 1.
 
@@ -219,7 +228,7 @@ The `services` section itself is a table of tables in TOML, so the section is de
 
 ### `services.concurrency`
 
-The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and [scaling](/docs/reference/scaling).
+The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and, for legacy apps only, [scaling](/docs/reference/legacy-scaling).
 
 This section is a simple list of key/values, so the section is denoted with single square brackets like so:
 
@@ -230,14 +239,14 @@ This section is a simple list of key/values, so the section is denoted with sing
     soft_limit = 20
 ```
 
-`type` specifies what metric is used to determine when to scale up and down, or when a given instance should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
+`type` specifies what metric is used to determine when a given instance has reached a concurrency limit. The two supported values are `connections` and `requests`.
 
-**connections**: Load balance and scale based on number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
+**connections**: Load balance based on number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
 
-**requests**: Load balance and scale based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
+**requests**: Load balance based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
 
-* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
-* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application support doing so.
+* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. For Nomad apps only, the system will bring up another instance if the autoscaling policy supports doing so.
+* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. For Nomad apps only, the system will likely bring up another instance if the auto scaling policy for the application supports doing so.
 
 ### `services.ports`
 
@@ -452,15 +461,11 @@ Again, times are in milliseconds unless units are specified.
 ## The `processes` section
 
 <div class="callout">The `processes` feature is in [preview](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316). Let us know in the <a href="https://community.fly.io" style="text-decoration: underline;">Fly.io community forum</a> if you run into issues when deploying.
-
-Known issues:
-* Running multiple processes in this way is not compatible with autoscaling.
-* Unexpected behavior with regions may arise if you use a `[processes]` block and then delete it.
 </div>
 
-The `processes` section allows you to run multiple processes. This way you can define one application, but run it multiple times.
+The `processes` section allows you to define process groups to be run on separate VMs within a single app.
 
-**Each application instance can be started with a different command**, allowing you to re-use your code base for different tasks (web server, queue worker, etc).
+**Each machine can be started with a different command**, allowing you to re-use your code base for different tasks (web server, queue worker, etc).
 
 To run multiple processes, you'll need a `[processes]` block containing a map of a name and command to start the application.
 
@@ -481,21 +486,6 @@ Furthermore, you can "match" a specific process (or processes) to a `services`, 
   script_checks = []
 ```
 
-After configuring the processes, you'll need to scale them up with per-process commands. For example:
-
-```
-$ fly scale count web=2 worker=2
-```
-
-### Per-process commands
-
-Some `fly` commands accept a process name as an argument. The following examples shows which:
-
-* Change VM counts: `fly scale count web=2 worker=1`
-* Change VM size: `fly scale vm shared-cpu-1x --group worker`
-* Change regions: `fly regions set iad --group worker`
-
-For a bit more context on the `processes` feature, you can read our [community announcement](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/).
 
 ## The `metrics` section
 
@@ -509,7 +499,7 @@ path = "/metrics" # default for most prometheus clients
 
 Check out [Metrics on Fly.io](/docs/reference/metrics/) for more information about collecting metrics for your apps.
 
-## The `experimental` section
+## The `experimental` section (Legacy Nomad Apps Only)
 
 This section is for flags and feature settings which have yet to be promoted into the main configuration.
 
