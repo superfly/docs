@@ -1,0 +1,59 @@
+---
+title: LiteFS Export Command
+layout: docs
+sitemap: false
+nav: litefs
+toc: true
+---
+
+<%= partial "partials/disclaimer" %>
+
+## Overview
+
+The `export` command will download a SQLite database from a LiteFS cluster. If 
+the named database doesn't exist, it will return an error. This command is safe
+to use on a live database.
+
+
+## Usage
+
+```sh
+litefs export [arguments] PATH
+```
+
+## Arguments
+
+You'll need to specify a name for the database using the `-name` flag. 
+
+```
+  -name string
+      database name
+```
+
+If you are exporting a database from a remote LiteFS node, you'll need to
+specify the base API URL for that node. This defaults to the local LiteFS node.
+
+```
+  -url string
+      LiteFS API URL (default "http://localhost:20202")
+```
+
+## Examples
+
+### Exporting from a local instance
+
+Export a database named `my.db` on LiteFS to the local `/path/to/db` path on disk:
+
+```sh
+litefs export -name my.db /path/to/db
+```
+
+
+### Exporting from a remote instance
+
+Export a database named `my.db` on a remote LiteFS node to the local file path
+`/path/to/db`:
+
+```sh
+litefs export -name my.db -url http://myotherhost:20202 /path/to/db
+```
