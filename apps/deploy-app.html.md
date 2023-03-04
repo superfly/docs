@@ -1,8 +1,6 @@
 ---
 title: Deploy a Release
-objective: 
 layout: docs
-nav: firecracker
 nav: firecracker
 titlecase: false
 order: 30
@@ -26,7 +24,7 @@ New Machines created within an App using `fly machine run` don't have the Apps V
 
 ## Volume mounts and `fly deploy`
 
-If a Machine has a mounted [volume](/docs/reference/volumes/), `fly deploy` can't be used to mount a different one. You can change the volume's mount point within the Machine, though. This is configured in the `[mounts]` section of `fly.toml`.
+If a Machine has a mounted [volume](/docs/reference/volumes/), `fly deploy` can't be used to mount a different one. You can change the mount point at which the volume's data is available in the Machine's file system, though. This is configured in the [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) of `fly.toml`.
 
 ## `fly deploy` configuration in `fly.toml`
 
@@ -38,8 +36,7 @@ You can run a one-off release command in a temporary VM&mdash;using the successf
 ### Deployment strategy
 You can specify `rolling` deployment (wait for each Machine to be successfully deployed before starting the update of the next one), or `immediate` deployment (go ahead and bring all instances down for update at once).
 
-
-
+Nomad only: Legacy apps can continue to use `canary` and `bluegreen` deployment strategies.
 
 ```cmd
 fly deploy
@@ -55,6 +52,6 @@ Deploying dry-pond-1475 app with rolling strategy
 
 ## Not all changes require a new App release
 
-Not all changes require a fresh release. You can add an IP address to an App, for example, without redeploying.
+Not all changes require a fresh release. You can [add an IP address](/docs/reference/services/#ip-addresses) to an App, for example, without redeploying.
 
 Adding a [secret](/docs/reference/secrets/) to the App does require a restart, so `fly secrets set` triggers a new deployment.

@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-Volumes are persistent storage for Fly apps. They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
+Volumes are persistent storage for Fly Apps. They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
 
 A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. One consequence of this: if your app uses persistent storage, every instance of that app can only run on a host that has a volume provisioned for it. Another: there's a one-to-one mapping between VMs and volumes. You can't share a volume between apps, nor can two VMs mount the same volume at the same time.
 
@@ -20,15 +20,17 @@ Create a volume for an app using `fly volumes create`. The default volume size i
 The following command creates a new volume named "myapp_data" with 40GB of storage in the lhr (London Heathrow) region, for the application whose `fly.toml` file is in the working directory. To specify a different app, use the `-a` or `--app` flag.
 
 ```cmd
-fly volumes create myapp_data --region lhr --size 40
+fly volumes create myapp_data --region yyz --size 1
 ```
 ```out
-        ID: Qn1Ln6nBZOz0lHM268OZ
+        ID: vol_kgj54500d3qry2wz
       Name: myapp_data
-    Region: lhr
-   Size GB: 40
+       App: gah
+    Region: yyz
+      Zone: acc6
+   Size GB: 1
  Encrypted: true
-Created at: 04 Jan 21 10:14 UTC
+Created at: 04 Mar 23 03:32 UTC
 ```
 
 Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--no-encryption` to instead create an unencrypted volume for improved performance at deployment and runtime.
@@ -37,7 +39,7 @@ Volumes are bound to both apps and regions. A volume is directly associated with
 
 Most people use volumes for databases, so for high availability, we default to putting each of your app's volumes on different hardware (equivalent to using `--require-unique-zone=true` with `fly volumes create`). This setting does limit the number of volumes your app can have in a region.
 
-When you create a volume, its region is added to the apps region pool to allow app instances to be started with it.
+When you create a volume on a legacy (Nomad) Fly App, its region is added to the app's region pool to allow app instances to be started with it.
 
 ## Using Volumes
 
@@ -49,7 +51,7 @@ source="myapp_data"
 destination="/data"
 ```
 
-This would make `myapp_data` appear under the `/data` directory of the application. With this present, if an app instance is started and cannot find an unused volume named `myapp_data`, it will not be started and the system will look elsewhere in the region pool to start the app instance. 
+When a Fly App is deployed with this configuration file, the data from a volume named `myapp_data` appears under the `/data` directory of the application. With this present, if an app instance is started and cannot find an unused volume named `myapp_data`, it will not be started and the system will look elsewhere in the region pool to start the app instance. 
 
 Also, if you have specified a mounts section in `fly.toml` and forgotten to create a volume, your deployment will fail. 
 
@@ -63,27 +65,27 @@ You can [get a list of all volumes created for an app](https://fly.io/docs/flyct
 fly volumes list
 ```
 ```out
-ID                   Name       Size Region Created At
-
-Onk6nLnV7yzR9H93wl5O myapp_data 40GB iad    38 minutes ago
-x7K57J7klmq14UgY0lG7 myapp_data 40GB lhr    39 minutes ago
-Qn1Ln6nBZOz0lHM268OZ myapp_data 40GB lhr    1 hour ago
+ID                      STATE   NAME          SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
+vol_xme149kke8ovowpl    created myapp_data    1GB     iad     7806    true                            2 minutes ago
+vol_od56vjpp95mvny30    created myapp_data    1GB     lhr     79f0    true                            2 minutes ago
+vol_kgj54500d3qry2wz    created myapp_data    1GB     yyz     acc6    true                            9 minutes ago
 ```
 
 The unique ID can be used in commands that reference a specific volume, such as the `show` or `delete` sub-command. For example, the `show` command can display the details for a particular volume:
 
 ```cmd
-fly volumes show Qn1Ln6nBZOz0lHM268OZ
+flybld vol show vol_kgj54500d3qry2wz
 ```
 ```out
-        ID: Qn1Ln6nBZOz0lHM268OZ
+        ID: vol_kgj54500d3qry2wz
       Name: myapp_data
-    Region: lhr
-   Size GB: 40
+       App: myapp
+    Region: yyz
+      Zone: acc6
+   Size GB: 1
  Encrypted: true
-Created at: 04 Jan 21 10:14 UTC
+Created at: 04 Mar 23 03:32 UTC
 ```
-
 ## Extending Volumes
 
 [Volumes can be extended](https://fly.io/docs/flyctl/volumes-extend/), but cannot be made smaller. To make a volume larger, find its ID with `fly volumes list`, then use:
@@ -94,7 +96,7 @@ fly volumes extend <volume-id> -s <new-size>
 
 where `<new-size>` is the desired size in GB. 
 
-The VM using the target volume will have to be restarted in order to allow the file system to be resized. For "normal" apps, this will happen automatically; [Machines VMs](/docs/reference/machines/) will have to be restarted explicitly.
+The VM using the target volume will have to be restarted in order to allow the file system to be resized. For Fly Apps, this happens automatically. Any [Machines VMs](/docs/reference/machines/) not managed by `fly deploy` have to be restarted explicitly.
 
 ## Snapshots and Restores
 
