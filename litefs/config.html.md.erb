@@ -67,6 +67,10 @@ fuse:
   # use to access their SQLite databases.
   dir: "/litefs"
 
+  # Enable mounting of the file system by non-root users.
+  # You must enable the 'user_allow_other' option in /etc/fuse.conf as well.
+  allow-other: false
+
   # The debug flag enables debug logging of all FUSE API calls.
   # This will produce a lot of logging. Not for general use.
   debug: false
@@ -94,6 +98,9 @@ _retention enforcement_.
 data:
   # Path to internal data storage.
   dir: "/var/lib/litefs"
+
+  # If true, compresses LTX files using LZ4 compression. Enabled by default.
+  compress: true
 
   # Duration to keep LTX files. Latest LTX file is always kept.
   retention: "10m"
@@ -137,6 +144,36 @@ The default port for LiteFS is `20202`. **This port MUST NOT be publicly accessi
 http:
   # Specifies the bind address of the HTTP API server.
   addr: ":20202"
+```
+
+
+## HTTP Proxy Server
+
+LiteFS includes a built-in HTTP proxy server that handles data consistency and
+request forwarding for most web applications. It is disabled by default but can
+be enabled by specifying a bind address & target.
+
+```yml
+# This section defines settings for the option HTTP proxy.
+# This proxy can handle primary forwarding & replica consistency
+# for applications that use a single SQLite database.
+proxy:
+  # Specifies the bind address of the proxy server.
+  addr: ":8080"
+
+  # The hostport of the target application. If blank, proxy is disabled.
+  target: "localhost:8081"
+
+  # The name of the database used for TXID tracking.
+  db: "my.db"
+
+  # If true, enables verbose logging of requests by the proxy.
+  debug: false
+
+  # List of paths that are ignored by the proxy. The asterisk is
+  # the only available wildcard. These requests are passed
+  # through to the target as-is.
+  passthrough: ["/debug/*", "*.png"]
 ```
 
 
