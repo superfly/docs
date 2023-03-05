@@ -173,5 +173,3 @@ Windows Powershell users will want to use the following command instead of expor
 ```powershell
 $Env:RAILS_MASTER_KEY = Get-Content 'config\master.key'
 ```
-
-Add `--load` to the `buildx` command if you want to save the image to the local docker.
