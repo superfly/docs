@@ -465,7 +465,7 @@ Again, times are in milliseconds unless units are specified.
 
 The `processes` section allows you to define process groups to be run on separate VMs within a single app.
 
-**Each machine can be started with a different command**, allowing you to re-use your code base for different tasks (web server, queue worker, etc).
+**Each machine can run a different command on start**, allowing you to re-use your code base for different tasks (web server, queue worker, etc).
 
 To run multiple processes, you'll need a `[processes]` block containing a map of a name and command to start the application.
 
