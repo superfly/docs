@@ -29,4 +29,7 @@ If a Machine is misbehaving (for instance, it's not `stop`ping successfully), yo
 fly machine destroy --force 0e286039f42e86
 ```
 
+If you `destroy` a Machine, don't forget that any volume that it had been using still exists until you either `fly volumes delete` it or `fly destroy` the Fly App it belongs to.
+
+
 **For existing Nomad/V1 Fly Apps**: Existing apps whose VMs are managed by Nomad can still be scaled "horizontally" using [`fly scale count`](/docs/flyctl/scale-count/).
