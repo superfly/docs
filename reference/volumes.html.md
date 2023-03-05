@@ -25,7 +25,7 @@ fly volumes create myapp_data --region yyz --size 1
 ```out
         ID: vol_kgj54500d3qry2wz
       Name: myapp_data
-       App: gah
+       App: myapp
     Region: yyz
       Zone: acc6
    Size GB: 1

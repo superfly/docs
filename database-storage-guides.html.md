@@ -5,8 +5,6 @@ toc: true
 nav: firecracker
 ---
 
-
-
 ## Fly Volumes - Disk Storage
 
 Anything an App VM writes to its root disk is ephemeral: when the VM is redeployed, the root filesystem is rebuilt using its Docker image, deleting any data written to it since it was started up. This is fine for `/tmp` files, but most apps need to keep state in a database or another form of persistent storage.
