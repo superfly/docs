@@ -161,10 +161,17 @@ before you deploy them by running the following commands:
 
 ```sh
 bin/rails generate dockerfile --compose
-docker buildx build . -t rails-welcome
-docker run -p 3000:3000 -e RAILS_MASTER_KEY=$(cat config/master.key) rails-welcome
+export RAILS_MASTER_KEY=$(cat config/master.key)
+docker compose build
+docker compose up
 ```
 
 Change `rails-welcome` to the name of your application.
+
+Windows Powershell users will want to use the following command instead of export:
+
+```powershell
+$Env:RAILS_MASTER_KEY = Get-Content 'config\master.key'
+```
 
 Add `--load` to the `buildx` command if you want to save the image to the local docker.
