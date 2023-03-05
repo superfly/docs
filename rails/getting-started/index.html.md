@@ -108,8 +108,8 @@ https://fly.io/docs/rails/getting-started/dockerfiles/.
 Once ready: run 'fly deploy' to deploy your Rails app.
 ```
 
-You can chose a name for your application or allow one to be assigned to you.
-You can chose where the application is run or a location near you will be
+You can choose a name for your application or allow one to be assigned to you.
+You can choose where the application is run or a location near you will be
 picked.  You can pick machine sizes for your database machine and redis; for
 demo purposes you can let these default.  You can always change these later.
 

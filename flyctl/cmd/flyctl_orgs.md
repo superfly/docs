@@ -9,6 +9,7 @@ flyctl orgs [command] [flags]
 ~~~
 
 ## Available Commands
+* [apps-v2](/docs/flyctl/orgs-apps-v2/)	 - Manage apps v2 default
 * [create](/docs/flyctl/orgs-create/)	 - Create an organization
 * [delete](/docs/flyctl/orgs-delete/)	 - Delete an organization
 * [invite](/docs/flyctl/orgs-invite/)	 - Invite user (by email) to organization
