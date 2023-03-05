@@ -5,9 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-The Fly platform routes requests to individual instances of your applications using a combination of concurrency settings specified on your application, current load, and closeness. This page describes the details of load balancing traffic to your applications on Fly.io.
-
-See [Scaling and Autoscaling](docs/reference/scaling) for details on how to scale the number of instances of your applications.
+Fly.io routes requests to individual instances of your applications using a combination of concurrency settings specified on your application, current load, and closeness. This page describes the details of load balancing traffic to your applications on Fly.io.
 
 ## Load Balancing Strategy
 
@@ -53,12 +51,7 @@ We set `type = "requests"` so Fly.io will use concurrent http requests to determ
 
 We choose to set our `soft_limit` to 20, so we have a little room for Fly.io to shift load to other instances before a single instance becomes overwhelmed.
 
-We deployed 10 instances in four regions with:
-
-```bash
-fly regions set ams maa sea sin
-fly scale count 10 --max-per-region 5
-```
+We deployed 10 VMs in four regions: `ams`, `maa`, `sea`, and `sin`, with three of those in `ams`.
 
 In this contrived example, all of the users are currently in Amsterdam (ams region) so their traffic is arriving at one of the Fly.io edges in Amsterdam. There are currently 3 instances of our web service running Amsterdam.
 
