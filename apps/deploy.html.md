@@ -6,15 +6,17 @@ titlecase: false
 order: 30
 ---
 
-`fly deploy` creates a new release of the App and updates the App's Machines as a group.
+`fly deploy` creates a new release of your Fly App and updates the app's Machines as a group.
 
-Whether you have an App up and running and it's time to update it, or you've run `fly launch` and need to tweak something to get it running properly, you can make your changes locally and deploy a new release by running `fly deploy` from the root directory of your project, where any app source, project config, `fly.toml`, and Dockerfile are located. 
+<div class="callout">
+**Note:** The first time you run `fly deploy` on an older Machines App&mdash;an app created using `fly create --machines` or `fly machine run`&mdash;it will migrate that app to the Fly Apps Platform and unify the configuration for all the app's existing Machines. **Do not run `fly deploy` on a pre-V2 app with existing Fly Machines, if they have different configs and/or code bases and you want to keep it that way.** See [**Migrate a Machines App to Apps V2**](/docs/apps/migrate-to-v2) for more information.
+</div>
+
+Whether you have an App up and running and it's time to update it, or you've run `fly launch` and need to tweak something to get it running properly, you can make your changes locally and deploy a new release by running `fly deploy` from the root directory of your project, where any app source, project config, `fly.toml`, and Dockerfile are located.
 
 If there's a `fly.toml`, it will look there for configuration and the name of the app to operate on. There are [a number of options](/docs/flyctl/deploy/) you can use with the `fly deploy` command.
 
-<div class="callout">
-If you run `fly deploy` on an older Machines App&mdash;an App created using `fly create --machines` or `fly machine run`&mdash;you will be prompted to confirm whether you want to [migrate the App to Apps V2](/docs/apps/migrate-to-v2/).
-</div>
+
 
 ## Machines not managed by `fly deploy`
 
