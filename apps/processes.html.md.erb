@@ -6,6 +6,8 @@ nav: firecracker
 order: 90
 ---
 
+<%= partial "/docs/partials/v2_transition_banner" %>
+
 Process groups are a way to manage separate tasks under the umbrella of a single Fly App. You can maintain a single code base, and everything gets deployed in a single release, but different processes run on their own Machines&mdash;which means they don't compete with each other for VM resources, and they can be scaled individually.
 
 When you deploy a Fly App, you start up one or more Fly Machines from a single Docker image; all the VMs have the same things installed. But Machines in different process groups run different commands at boot.

@@ -1,0 +1,19 @@
+---
+title: "Fly Apps"
+layout: docs
+toc: false
+nav: firecracker
+---
+<%= partial "/docs/partials/v2_transition_banner" %>
+
+In this section we'll talk about how to create and manage a [Fly App](/docs/reference/apps/).
+
+[Configure and deploy a new app](/docs/apps/launch/) with `fly launch`.
+
+`fly deploy` creates and updates the app's [Fly Machines](/docs/machines/) as a group, creating a new app release.
+
+You can also configure and manage Machines atomically; see the [Fly Machines](/docs/machines/) docs.
+
+We're starting to roll out our new Apps V2 platform to new organizations. You'll find some differences in instructions between apps deployed on Apps V2 (flyd and Fly Machines) and the original Nomad-orchestrated app platform. 
+
+You can check if your org defaults to Apps V2 deployments with `fly orgs apps-v2 <org-slug>`. Get your organization slug using `fly orgs list`.

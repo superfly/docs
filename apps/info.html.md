@@ -26,7 +26,7 @@ olddeadapp                              personal        dead            nomad   
 If you want a brief app overview, including a list of Machines on that app:
 
 ```cmd
-fly status
+fly status -a testrun
 ```
 ```out
 App
@@ -38,6 +38,8 @@ App
 ID              STATE   REGION  HEALTH CHECKS           IMAGE                                           CREATED                 UPDATED              
 06e82d43ad1587  started yyz     1 total, 1 passing      testrun:deployment-01GQ0HKV6TDT7DX0G50MT50FZD   2023-01-17T17:54:04Z    2023-01-17T21:42:33Z
 ```
+
+As with many flyctl commands, if you leave off the `-a` flag, `fly status` will infer the app name from the `fly.toml` file in the working directory, if there is one.
 
 `fly machine list` yields similar Machine information, but only for V2 Apps.
 
