@@ -7,6 +7,8 @@ redirect_from: /docs/reference/machines/
 
 Fly Machines are [Firecracker VMs](https://firecracker-microvm.github.io/) with a fast REST API that can boot instances in about 300ms, in any region supported by [Fly.io](https://fly.io/docs/reference/regions/).
 
+Machines are the VM building blocks for the [Fly Apps](/docs/apps/) Platform, but you can also configure, start and stop individual Machines directly. 
+
 The [Machines API](/docs/machines/working-with-machines/) gives you efficient, low-level control over VM provisioning, supported by Fly.io infrastructure and networking features.
 
 Machines are also the spawning ground for new platform features like *wake-on-request* (also known as *scale-to-zero*). You can
