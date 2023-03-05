@@ -9,11 +9,9 @@ nav: firecracker
 date: 2022-12-20
 ---
 
-We talk up the Machines API for running user code, for ephemeral jobs, or both. Fly Machines are also the VM building blocks for the V2 of the Fly.io app-platform-as-a-service offering.
+We talk up the Machines API for running user code, for ephemeral jobs, or both. Fly Machines are also the VM building blocks for V2 of the [Fly.io app-platform-as-a-service offering](/docs/apps/).
 
-The next-generation PaaS apparatus is still a work in progress, but Machines VMs themselves are mature enough for routine use&mdash;they're now the basis for Fly Postgres apps&mdash;and flyctl provides an interface for running individual Machines on a higher-than-API level, which means less typing and less JSON to look at.
-
-If you don't need Nomad-style orchestration and you're willing to get your hands a little dirty, you can run an ordinary app on Machines using just flyctl.
+flyctl provides commands for managing individual Machines from the CLI, on a level more granular than `fly deploy`ing an app.
 
 ## Elements of a Machines Web App Deployment
 
