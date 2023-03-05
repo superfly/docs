@@ -51,11 +51,14 @@ source="myapp_data"
 destination="/data"
 ```
 
-When a Fly App is deployed with this configuration file, the data from a volume named `myapp_data` appears under the `/data` directory of the application. With this present, if an app instance is started and cannot find an unused volume named `myapp_data`, it will not be started and the system will look elsewhere in the region pool to start the app instance. 
+When a Fly App is deployed with this configuration file, the data from a volume named `myapp_data` appears under the `/data` directory of the application. With this present, if an app instance is started and cannot find an unused volume named `myapp_data`, it will not be started.
 
 Also, if you have specified a mounts section in `fly.toml` and forgotten to create a volume, your deployment will fail. 
 
 There can be multiple volumes of the same volume name in a region. Each volume has a unique ID to distinguish itself from others to allow for this. This allows multiple instances of an app to run in one region. Creating three volumes named `myapp_data` would let up to three instances of the app start up and run.
+
+Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app.
+
 
 ## Listing Volumes
 

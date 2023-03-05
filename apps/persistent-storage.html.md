@@ -6,49 +6,60 @@ titlecase: false
 order: 30
 ---
 
-Apps can store ephemeral data on the root file systems of their member Machines, but this data will be deleted each time the app is deployed or the Machine is restarted.
+Running apps can store ephemeral data on the root file systems of their member Machines, but a Machine's file system is rebuilt from scratch each time the app is deployed or the Machine is restarted.
 
-Fly Volumes are slices of NVMe disk storage attached to the server your app's Machine runs on. 
+A [Fly Volume](/docs/reference/volumes/) is a slice of NVMe disk storage attached to the server that hosts your Machine, so if your app needs a volume on every Machine, you'll need to run as many volumes as there are Machines. 
 
-## Using Volumes in a Fly App
+A volume has to exist at the time of Machine creation in order to be mounted. A Machine that uses a volume can only be created in a region that has an existing unattached volume.
 
-If your app needs a volume attached, you'll have to provision one volume for each VM. Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app.
+## Launch an app with a Fly Volume
 
-### To launch a new app with a volume
+### Launch, but don't deploy immediately.
 
-A volume has to exist at the time of Machine creation in order for it to be mounted. The Machine has to be created on the server that also hosts the volume.
-
-* launch but don't deploy. Make sure there's a mounts section in fly.toml.
-* create the volume
-* deploy
-
-In the `fly.toml` for the app, there should be a section that mounts a volume into the app, like so:
-
+```cmd
+fly launch 
 ```
+```out
+...
+Wrote config file fly.toml
+? Would you like to deploy now? No
+Your app is ready! Deploy with `flyctl deploy`
+```
+
+### Configure the app to mount the volume
+
+Make sure there's a `[mounts]` section in `fly.toml`. As an example, the following configures the app to expose data from a volume named `myapp_data` under the `/data` directory of the application.
+
+```toml
 [mounts]
 source="myapp_data"
 destination="/data"
 ```
 
-When a Fly App is deployed with this configuration file, the data from a volume named `myapp_data` appears under the `/data` directory of the application. With this present, if an app instance is started and cannot find an unused volume named `myapp_data`, it will not be started and the system will look elsewhere in the region pool to start the app instance. 
+### Provision the volume
 
-Also, if you have specified a mounts section in `fly.toml` and forgotten to create a volume, your deployment will fail. 
- Creating three volumes named `myapp_data` would let up to three instances of the app start up and run.
+Create the volume for the app, with the name you chose, in the same region you're deploying the app to:
 
-## Listing Volumes
+```cmd
+fly volumes create myapp_data --region lhr --size 1 --app myapp
+```
 
-You can [get a list of all volumes created for an app](https://fly.io/docs/flyctl/volumes-list/) using the sub-command `list`. 
+### Deploy the app
+
+```cmd
+fly deploy 
+```
+
+### Confirm the volume is mounted
+
+After deployment, you can check on all the volumes in your app using `fly volumes list`. The `ATTACHED VM` column lets you know which Machine, if any, the volume is mounted on.
 
 ```cmd
 fly volumes list
 ```
 ```out
-ID                      STATE   NAME          SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
-vol_xme149kke8ovowpl    created myapp_data    1GB     iad     7806    true                            2 minutes ago
-vol_od56vjpp95mvny30    created myapp_data    1GB     lhr     79f0    true                            2 minutes ago
-vol_kgj54500d3qry2wz    created myapp_data    1GB     yyz     acc6    true                            9 minutes ago
+ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT     
+vol_n0l9vlppld84635d    created data    1GB     lhr     b6a7    true            9080e694c64787  1 minute ago 
 ```
-
-
 
 Explore options for data storage in [Databases & Storage](/docs/database-storage-guides/)
