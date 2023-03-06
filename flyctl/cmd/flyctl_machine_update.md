@@ -9,26 +9,27 @@ flyctl machine update <machine_id> [flags]
 ## Options
 
 ~~~
-  -a, --app string           Application name
-      --build-nixpacks       Build your image with nixpacks
-  -C, --command string       Command to run
-  -c, --config string        Path to application configuration file
-      --cpus int             Number of CPUs
-      --detach               Return immediately instead of monitoring deployment progress
-      --dockerfile string    Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
-      --entrypoint string    ENTRYPOINT replacement
-  -e, --env strings          Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
-  -h, --help                 help for update
-  -i, --image string         The Docker image to deploy
-      --kernel-arg strings   List of kernel arguments to be provided to the init. Can be specified multiple times.
-      --memory int           Memory (in megabytes) to attribute to the machine
-  -m, --metadata strings     Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
-  -p, --port strings         Exposed port mappings (format: (edgePort|startPort-endPort)[:machinePort]/[protocol[:handler]])
-      --schedule string      Schedule a machine run at hourly, daily and monthly intervals
-  -s, --size string          Preset guest cpu and memory for a machine, defaults to shared-cpu-1x
-      --skip-health-checks   Updates machine without waiting for health checks.
-  -v, --volume strings       Volumes to mount in the form of <volume_id_or_name>:/path/inside/machine[:<options>]
-  -y, --yes                  Accept all confirmations
+  -a, --app string              Application name
+      --build-nixpacks          Build your image with nixpacks
+  -C, --command string          Command to run
+  -c, --config string           Path to application configuration file
+      --cpus int                Number of CPUs
+      --detach                  Return immediately instead of monitoring deployment progress
+      --dockerfile string       Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
+      --entrypoint string       ENTRYPOINT replacement
+  -e, --env strings             Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
+  -h, --help                    help for update
+  -i, --image string            The Docker image to deploy
+      --kernel-arg strings      List of kernel arguments to be provided to the init. Can be specified multiple times.
+      --memory int              Memory (in megabytes) to attribute to the machine
+  -m, --metadata strings        Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
+  -p, --port strings            Exposed port mappings (format: (edgePort|startPort-endPort)[:machinePort]/[protocol[:handler]])
+      --schedule string         Schedule a machine run at hourly, daily and monthly intervals
+  -s, --size string             Preset guest cpu and memory for a machine, defaults to shared-cpu-1x
+      --skip-dns-registration   Do not register the machine's 6PN IP with the intenral DNS system
+      --skip-health-checks      Updates machine without waiting for health checks.
+  -v, --volume strings          Volumes to mount in the form of <volume_id_or_name>:/path/inside/machine[:<options>]
+  -y, --yes                     Accept all confirmations
 ~~~
 
 ## Global Options
