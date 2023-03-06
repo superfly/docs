@@ -15,13 +15,19 @@ Unless you've not deployed successfully before. In which case it will just fail 
 
 So the first thing to check is can your application see the world.
 
-When you deploy, you see a message like:
+Check to see how your services are configured with `fly services list`:
 
+```cmd
+fly services list -a <app-name>
 ```
-TCP 80/443 ⇢ 8080
+```out
+Services
+PROTOCOL        PORTS                   
+TCP             80 => 8080 [HTTP]      
+                443 => 8080 [TLS, HTTP]
 ```
 
-quite early on. This is the Fly services setting and comes from this part for the `fly.toml` file:
+This is the Fly services setting and comes from this part for the `fly.toml` file:
 
 ```
 [[services]]
