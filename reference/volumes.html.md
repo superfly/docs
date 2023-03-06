@@ -201,7 +201,7 @@ Created at: 02 Aug 22 21:27 UTC
 
 The `flyctl` output shows the details of the new volume, including its size.
 
-## Deleting Volumes
+## Delete Volumes
 
 The `delete` sub-command allows you to delete a specific volume.
 

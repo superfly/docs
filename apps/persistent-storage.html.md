@@ -15,15 +15,20 @@ Often the solution to persistent data storage is to connect your Fly App to a se
 
 Fly.io offers a [deploy-it-yourself Postgres app](/docs/postgres/) with some tools to make it easier to manage yourself.
 
-If you want hardware-local disk storage on your Fly App VMs&mdash;for example, if your Fly App _is_ a database (or if you want to use [LiteFS](/docs/litefs))&mdash;you'll want to use [Fly Volumes](/docs/reference/volumes/).
+If you need hardware-local disk storage on your Fly App VMs&mdash;for example, if your Fly App _is_ a database (or if you want to use [LiteFS](/docs/litefs))&mdash;you'll want to use [Fly Volumes](/docs/reference/volumes/).
 
-A Fly Volume is a slice of NVMe disk storage attached to the server that hosts your Machine. This has pros and cons, and you should look at the [Fly Volumes](/docs/reference/volumes/) page before deciding that this is the best solution for your use case. 
+A Fly Volume is a slice of NVMe disk storage attached to the server that hosts your Machine. This has pros and cons, and you should look at the [Fly Volumes](/docs/reference/volumes/) page before deciding that this is the best solution for your use case.
+
+The TLDC (too lazy, didn't click) of that is: Disk storage attached to your app's worker is a lot like the disk inside your laptop. It's fast and convenient to use, right there in your app's file system. Also like your laptop, an app with a single Machine and a single volume does not have high availability built in. Hardware fails. **You should run at least two Machines per app, and if you're using volumes that means two volumes. You will have downtime if you only create one.**
 
 Explore further options for data storage in [Databases & Storage](/docs/database-storage-guides/).
 
 Fly Postgres has [its own usage docs](/docs/postgres/), so here we'll focus on using Fly Volumes with your app.
 
 ## Launch an app with a Fly Volume
+
+The first rule of Fly Volumes is always run at least two of them per application.  That's the nature of hardware.
+
 
 ### Launch, but don't deploy immediately.
 
@@ -49,11 +54,13 @@ destination="/data"
 
 ### Provision the volume
 
-Create the volume for the app, with the name you chose, in the same region you're deploying the app to:
+Create a volume for the app, with the name you chose, in the same region you're deploying the app to:
 
 ```cmd
 fly volumes create myapp_data --region lhr --size 1 --app myapp
 ```
+
+Now create the second volume. If you're OK with downtime
 
 ### Deploy the app
 
@@ -73,7 +80,7 @@ ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       
 vol_n0l9vlppld84635d    created data    1GB     lhr     b6a7    true            9080e694c64787  1 minute ago 
 ```
 
-## Removing a volume from an app
+## Remove a volume from an app
 
 To remove a volume from a Fly App, delete the `mounts` section in `fly.toml` and `fly deploy` for a new release with this updated configuration. The volume will no longer be mounted on the file systems of the app's Machines.
 
