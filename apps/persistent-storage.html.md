@@ -19,7 +19,9 @@ If you need hardware-local disk storage on your Fly App VMs&mdash;for example, i
 
 A Fly Volume is a slice of NVMe disk storage attached to the server that hosts your Machine. This has pros and cons, and you should look at the [Fly Volumes](/docs/reference/volumes/) page before deciding that this is the best solution for your use case.
 
-The TLDC (too lazy, didn't click) of that is: Disk storage attached to your app's worker is a lot like the disk inside your laptop. It's fast and convenient to use, right there in your app's file system. Also like your laptop, an app with a single Machine and a single volume does not have high availability built in. Hardware fails. **You should run at least two Machines per app, and if you're using volumes that means two volumes. You will have downtime if you only create one.**
+<div class="callout">
+**The TLDC (too lazy, didn't click) of that is:** Volume storage attached to your app's worker is a lot like the disk inside your laptop. It's fast and convenient to use, right there in your app's file system. Also like your laptop, an app with a single Machine and a single volume does not have high availability built in. **Hardware fails. You should run at least two Machines per app, and if you're using volumes, that means two volumes. You will experience downtime at some point if you only create one.**
+</div>
 
 Explore further options for data storage in [Databases & Storage](/docs/database-storage-guides/).
 
@@ -27,8 +29,7 @@ Fly Postgres has [its own usage docs](/docs/postgres/), so here we'll focus on u
 
 ## Launch an app with a Fly Volume
 
-The first rule of Fly Volumes is always run at least two of them per application.  That's the nature of hardware.
-
+The first rule of Fly Volumes is always run at least two of them per application, so that's what we'll do here. Volumes don't sync up by themselves; different apps will have their own ways of dealing with this so we won't get into that here.
 
 ### Launch, but don't deploy immediately.
 

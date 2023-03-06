@@ -5,15 +5,19 @@ sitemap: false
 nav: firecracker
 ---
 
-Volumes are local persistent storage for Fly App VMs. They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
+Volumes are local persistent storage for [Fly Machines](/docs/machines/). They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
 
-A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. 
+A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware.
 
-Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being right there attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
+<div class="callout">
+**The first rule of Fly Volumes is: Always run at least two of them per application.** If you don't, at some point you'll have downtime.
+</div>
 
-Things to consider before settling on volume storage:
+Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
 
-* If your app needs a volume on every Machine (i.e. every VM), you'll need to run as many volumes as there are Machines.
+**Things to consider before settling on volume storage:**
+
+* You'll need to run as many volumes as there are Machines.
 * There's a one-to-one mapping between VMs and volumes. You can't share a volume between apps, nor can two VMs mount the same volume at the same time. A single VM can only mount one volume at a time.
 * Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app, so if you need the volumes to sync up, your app has to make that happen.
 * If your app needs a volume to function, and the NVMe drive hosting your volume fails, that instance of your app goes down. There's no way around that. 
