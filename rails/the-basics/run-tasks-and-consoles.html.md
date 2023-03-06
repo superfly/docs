@@ -21,15 +21,6 @@ Then start using the console, but be careful! You're in a production environment
 
 ## Interactive shell
 
-To access an interactive shell as the `rails` user, run:
-
-```cmd
-fly ssh console -C 'su - rails'
-```
-```output
-$
-```
-
 To access an interactive shell as the `root` user, run:
 
 ```cmd
@@ -37,6 +28,24 @@ fly ssh console -C '/bin/bash'
 ```
 ```output
 #
+```
+
+To access an interactive shell as the `rails` user, requires a tiny bit of setup:
+
+```cmd
+bin/rails generate dockerfile --sudo
+```
+
+Accept the changes to your Dockerfile, and then rerun `fly deploy`.
+
+Once this is complete, you can create an interactive shell:
+
+
+```cmd
+fly ssh console -C 'sudo -iu rails'
+```
+```output
+$
 ```
 
 ## Rails tasks
@@ -73,7 +82,7 @@ keystrokes it takes to launch a console:
 ```ruby
 namespace :fly do
   task :ssh do
-    sh 'fly ssh console -C "su - rails"'
+    sh 'fly ssh console -C "sudo -iu rails"'
   end
 
   task :console do
