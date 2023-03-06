@@ -8,9 +8,20 @@ order: 30
 
 Running apps can store ephemeral data on the root file systems of their member Machines, but a Machine's file system is rebuilt from scratch each time the app is deployed or the Machine is restarted.
 
-A [Fly Volume](/docs/reference/volumes/) is a slice of NVMe disk storage attached to the server that hosts your Machine, so if your app needs a volume on every Machine, you'll need to run as many volumes as there are Machines. 
 
-A volume has to exist at the time of Machine creation in order to be mounted. A Machine that uses a volume can only be created in a region that has an existing unattached volume.
+## Choosing an approach to storage
+
+Often the solution to persistent data storage is to connect your Fly App to a separate [database or object store](/docs/database-storage-guides/).
+
+Fly.io offers a [deploy-it-yourself Postgres app](/docs/postgres/) with some tools to make it easier to manage yourself.
+
+If you want hardware-local disk storage on your Fly App VMs&mdash;for example, if your Fly App _is_ a database (or if you want to use [LiteFS](/docs/litefs))&mdash;you'll want to use [Fly Volumes](/docs/reference/volumes/).
+
+A Fly Volume is a slice of NVMe disk storage attached to the server that hosts your Machine. This has pros and cons, and you should look at the [Fly Volumes](/docs/reference/volumes/) page before deciding that this is the best solution for your use case. 
+
+Explore further options for data storage in [Databases & Storage](/docs/database-storage-guides/).
+
+Fly Postgres has [its own usage docs](/docs/postgres/), so here we'll focus on using Fly Volumes with your app.
 
 ## Launch an app with a Fly Volume
 
@@ -62,4 +73,8 @@ ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       
 vol_n0l9vlppld84635d    created data    1GB     lhr     b6a7    true            9080e694c64787  1 minute ago 
 ```
 
-Explore options for data storage in [Databases & Storage](/docs/database-storage-guides/)
+## Removing a volume from an app
+
+To remove a volume from a Fly App, delete the `mounts` section in `fly.toml` and `fly deploy` for a new release with this updated configuration. The volume will no longer be mounted on the file systems of the app's Machines.
+
+If you are done with the volume (or volumes, if there's more than one), **and you no longer need the data stored there**, you can delete each volume using `fly volume delete <vol-id>`. You'll continue to be charged for volumes you've provisioned even if they're not being used by any VMs.

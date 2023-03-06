@@ -5,9 +5,23 @@ sitemap: false
 nav: firecracker
 ---
 
-Volumes are persistent storage for Fly Apps. They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
+Volumes are local persistent storage for Fly App VMs. They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
 
-A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. One consequence of this: if your app uses persistent storage, every instance of that app must run on a host that has a volume provisioned for it. Another: there's a one-to-one mapping between VMs and volumes. You can't share a volume between apps, nor can two VMs mount the same volume at the same time.
+A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. 
+
+Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being right there attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
+
+Things to consider before settling on volume storage:
+
+* If your app needs a volume on every Machine (i.e. every VM), you'll need to run as many volumes as there are Machines.
+* There's a one-to-one mapping between VMs and volumes. You can't share a volume between apps, nor can two VMs mount the same volume at the same time. A single VM can only mount one volume at a time.
+* Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app, so if you need the volumes to sync up, your app has to make that happen.
+* If your app needs a volume to function, and the NVMe drive hosting your volume fails, that instance of your app goes down. There's no way around that. 
+* If you only have a single copy of your data on a single Fly Volume, and that drive fails, data is lost. Fly.io takes daily snapshots, retained for 5 days, but these are meant as a backstop, not your primary backup method.
+
+Explore further options for data storage in [Databases & Storage](/docs/database-storage-guides/).
+
+## Fly Volumes and flyctl
 
 Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command. 
 
@@ -58,7 +72,6 @@ Also, if you have specified a mounts section in `fly.toml` and forgotten to crea
 There can be multiple volumes of the same volume name in a region. Each volume has a unique ID to distinguish itself from others to allow for this. This allows multiple instances of an app to run in one region. Creating three volumes named `myapp_data` would let up to three instances of the app start up and run.
 
 Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app.
-
 
 ## List an App's Volumes
 
@@ -145,7 +158,9 @@ Here, the volume is mounted under `/storage` in the Machine's root file system a
 
 ## Snapshots and Restores
 
-We take daily block-level snapshots of volumes. Snapshots are kept for five days. [Find the snapshots belonging to your target volume](https://fly.io/docs/flyctl/volumes-snapshots-list/) with `fly volumes snapshots list <volume-id>`:
+We take daily block-level snapshots of volumes. Snapshots are kept for five days. These may not have your latest data. You should implement your own backup plan for important data.
+
+[Find the snapshots belonging to your target volume](https://fly.io/docs/flyctl/volumes-snapshots-list/) with `fly volumes snapshots list <volume-id>`:
 
 ```cmd
 fly volumes snapshots list vol_wod56vjyd6pvny30
