@@ -38,3 +38,19 @@ So what happened above?
 ```cmd
 fly deploy
 ```
+
+#### **_Possible Errors_**
+
+```output
+Error not enough volumes named `<volume_name>` (1) to run `(<n>)` processes
+```
+
+The above error can come up after configuring your volume in `fly.toml` and executing `fly deploy`. 
+
+It can mean that there are `<n>` processes configured in your `fly.toml` trying to use the volume!
+Take note however, that a Volume can only be used by one at any given time. 
+
+One way to fix this issue is to separate each process into [different Fly.io apps](/docs/app-guides/multiple-processes/#maybe-you-want-multiple-apps-though). Of course, separate application per process might require inter-communication between the applications. 
+
+Fly.io applications can easily communicate with each other over a [private network](/docs/reference/private-networking/). Not only that, but Fly.io also offers the `fly-replay` [response header](/docs/reference/dynamic-request-routing/#the-fly-replay-response-header) which can be used to "redirect" request from one application to another, and return response from the correct application.
+ 
