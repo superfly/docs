@@ -6,6 +6,8 @@ titlecase: false
 order: 30
 ---
 
+<%= partial "/docs/partials/v2_transition_banner" %>
+
 Running apps can store ephemeral data on the root file systems of their member Machines, but a Machine's file system is rebuilt from scratch each time the app is deployed or the Machine is restarted.
 
 ## Choosing an approach to storage
@@ -120,6 +122,14 @@ vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            
 
 At this point there are two identically configured Machines on the app, each with a volume of the same size. You take it from here, setting up whatever data replication you need. 
 
+### On a Nomad app
+
+Create an additional volume in the desired region, then [use `fly scale count`](/docs/legacy-scaling/) to add a VM to use it.
+
 ## Remove a volume from an app
 
-You can't currently unmount a volume from an existing Machine. If you need to remove volumes from your app, you can [scale it](/docs/apps/scale-count/) down to zero Machines, destroy all the volumes, remove the `mounts` section from `fly.toml`, and redeploy.
+You can't currently unmount a volume from an existing Machine. If you need to remove volumes from your app, you can [scale it](/docs/apps/scale-count/) down to zero Machines, [destroy all the volumes](/docs/reference/volumes#delete-a-volume), remove the `mounts` section from `fly.toml`, and redeploy. **Only destroy a volume whose data you no longer need access to.**
+
+### On a Nomad app
+
+Remove the `mounts` section from `fly.toml` and redeploy. This will create a new VM without a volume. [Destroy any unused volumes](/docs/reference/volumes#delete-a-volume), **only if you no longer need their data**.
