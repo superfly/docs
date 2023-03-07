@@ -14,25 +14,9 @@ When you deploy a Fly App, you start up one or more Fly Machines from a single D
 
 ## The default process group
 
-When you deploy a Fly App for the first time, a single Machine is started. This first Machine belongs to the default process group, called `"app"`. It'll run whatever process the Docker image specifies.
+By default, Fly Apps Machines belong to the `"app"` process group. Machines in this process group run whatever process the Docker image specifies (unless you change that by specifying a command for it in `fly.toml`; this will be clearer in a minute).
 
-## Adding process groups to an app
-
-### Configure the process groups
-
-Additional process groups are defined in the [`processes` section](https://fly.io/docs/reference/configuration/#the-processes-section) of `fly.toml`.
-
-For each process group, specify a name and a command to be run at startup. Here's an example: 
-
-```toml
-[processes]
-web = "nginx -g 'daemon off;'"
-worker = "tail -F /dev/null"
-```
-
-(It would not be efficient to run a whole worker VM to do nothing, but it works for demonstration purposes.)
-
-Create a [`services` section](/docs/reference/configuration/#the-services-sections) for each process group that should be able to accept connections via Fly Proxy (publicly or via Flycast). The `services` section in the default app configuration applies to the default `"app"` process:
+The `services` section in the default app configuration applies to the `"app"` process:
 
 ```toml
 ...
@@ -42,51 +26,104 @@ Create a [`services` section](/docs/reference/configuration/#the-services-sectio
   processes = ["app"]
 ```
 
+## Adding process groups to an app
+
+### Configure the process groups
+
+Additional process groups are defined in the [`processes` section](https://fly.io/docs/reference/configuration/#the-processes-section) of `fly.toml`.
+
+For each process group, specify a name and a command to be run at startup. If you're keeping the `"app"` process, add it to the `processes` section too. Here's an example: 
+
+```toml
+[processes]
+app = ""
+worker = "tail -F /dev/null"
+```
+
+(It would not be efficient to run a whole worker VM to do nothing, but this is just illustrative.)
+
+Create a [`services` section](/docs/reference/configuration/#the-services-sections) for each process group that should be able to accept connections via Fly Proxy (publicly or via Flycast). 
+
 Fly Proxy doesn't know about process groups: it may send requests to any Machine with a matching port, according to its own load-balancing rules. If more than one process group needs services defined, have each one handle connections on different external ports. 
+
+
+## First deploy
+
+With the app configured in `fly.toml`, launch it and say yes to deploy straight away:
+
+```cmd
+fly launch --image nginx
+```
+<aside>Since nginx listens on port 80 by default, I would have to set `internal_port` correspondingly in my `fly.toml` in order to reach my app.</aside>
+
+A single Machine is started and as expected, it has process group `"app"`:
+
+```cmd
+fly status
+```
+```out
+App
+  Name     = testrun                  
+  Owner    = personal              
+  Hostname = testrun.fly.dev          
+  Image    = library/nginx:latest  
+  Platform = machines              
+
+Machines
+ID              PROCESS VERSION REGION  STATE   HEALTH CHECKS   LAST UPDATED         
+6e82d411c77287  app     3       yyz     started 1 total, 1 passing      2023-03-07T00:49:57Z
+```
 
 ### Create a VM for each additional process group
 
 Add a Machine for each additional command/entrypoint you want a group for, by `fly m clone`-ing the "app" Machine and adding the name of the new group with the `--process-group` option.
 
   ```cmd
-  fly machine clone --process-group worker 21781973f03e89
+  fly machine clone --process-group worker 6e82d411c77287
   ```
 
 The above creates a new Machine with metadata identifying it as belonging to the `worker` process group.
 
-### Deploy the app
+If the app hasn't been deployed since you added the `"worker"` process to `fly.toml`, deploy now to update the command, services, and health checks for each Machine according to what's configured for its process group.
 
-The next deployment updates the command, services, and health checks for each Machine according to what's configured for its process group in `fly.toml`.
 
-## Change the process group of the initial Machine
+```cmd
+fly status
+```
+```out
+App
+  Name     = testrun                  
+  Owner    = personal              
+  Hostname = testrun.fly.dev          
+  Image    = library/nginx:latest  
+  Platform = machines              
+
+Machines
+ID              PROCESS VERSION REGION  STATE   HEALTH CHECKS           LAST UPDATED         
+6e82d411c77287  app     3       yyz     started 1 total, 1 passing      2023-03-07T00:49:57Z
+e2865641be9786  worker  3       yyz     started                         2023-03-07T00:50:02Z
+```
 
 ## Scale a process group horizontally
 
-`fly machine clone` can be used to build out multiple instances within a process group:
+`fly machine clone` can be used to build out multiple VMs within a process group: 
 
 ```
-fly machine clone --region gru 21781973f03e89
+fly machine clone --region gru e2865641be9786
 ```
+
+If Machine 21781973f03e89 belongs to the `"worker"` process group, the new Machine will be created in the `gru` (São Paulo) region with the command, services, and checks that are configured on the app for `"worker"` Machines. 
 
 ## Scale a process group vertically
 
-To change the VM size for an entire process group, update each Machine that belongs to it. 
-
-Get all the Machines belonging to the app with `fly machine list`
-
-* fly m list
-* fly m update
-* fly deploy
+At the moment, to change the VM size for an entire process group, you have to update each Machine that belongs to it. See [Scale Machine CPU and RAM](/docs/apps/scale-machine/) for how to do this.
 
 ## Move a Machine between process groups
  
 You can change the process group of an existing Machine by updating its metadata:
 
-
-I think, because `m update` doesn't have the `--process-group` option, and furthermore, while `fly m clone` gets the config of the original Machine, `fly m update` only changes what you tell it to, so you have to run `fly deploy` after changing the metadata.)
-
 ```cmd
-fly machine update --metadata fly_process_group=web 21781973f03e89
+fly machine update --metadata fly_process_group=app 21781973f03e89
 ```
 Then deploy the app to apply the configuration for that process group to the Machine:
 
@@ -116,4 +153,4 @@ Some Nomad-only `fly` commands accept a process name as an argument. The followi
 * Change VM size: `fly scale vm shared-cpu-1x --group worker`
 * Change regions: `fly regions set iad --group worker`
 
-For a bit more context on the `processes` feature, you can read our [community announcement](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/).
+For a bit more context on the original `processes` feature, you can read our [community announcement](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/).
