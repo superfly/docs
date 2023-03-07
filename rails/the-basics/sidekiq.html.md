@@ -36,17 +36,17 @@ Add the following to the `fly.toml`:
 
 ```toml
 [processes]
-web = "bin/rails fly:server"
+web = "bin/rails server"
 worker = "bundle exec sidekiq"
 ```
 
-Then under the `[[services]]` directive, find the entry that maps to `internal_port = 8080`, and change `processes = ["app"]` to `processes = ["web"]`. The configuration file should look something like this:
+Then under the `[[services]]` directive, find the entry that maps to `internal_port = 3000`, and change `processes = ["app"]` to `processes = ["web"]`. The configuration file should look something like this:
 
 ```toml
 [[services]]
   processes = ["web"] # this service only applies to the web process
   http_checks = []
-  internal_port = 8080
+  internal_port = 3000
   protocol = "tcp"
   script_checks = []
 ```
