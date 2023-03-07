@@ -139,17 +139,15 @@ Restart the Machine:
 fly machine restart <machine-id>
 ```
 
-You can check that the new volume size is reflected in the Machine's file system by bringing up a console on that Machine and running `df`.
+You can check that the new volume size is reflected in the Machine's file system by running `df` via `fly ssh console`. If there's more than one Machine on the app, `fly ssh console -s` allows you to select the correct one:
 
-If there's more than one Machine on the app, `fly ssh console -s` allows you to select the correct one.
 ```cmd
-fly ssh console -s 
+fly ssh console -s -C df
 ```
 ```out 
 ? Select VM:  [Use arrows to move, type to filter]
 > yyz: 4d891de2f66587 fdaa:0:3b99:a7b:ef:8cc4:dc49:2 withered-shadow-4027           
 Connecting to fdaa:0:3b99:a7b:ef:8cc4:dc49:2... complete
-# df
 Filesystem     1K-blocks   Used Available Use% Mounted on
 devtmpfs          103068      0    103068   0% /dev
 /dev/vda         8191416 172752   7582852   3% /
