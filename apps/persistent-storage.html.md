@@ -61,13 +61,19 @@ Create a volume for the app, with the name you chose, in the same region you're 
 fly volumes create myapp_data --region lhr --size 1 --app myapp
 ```
 
-Now create the second volume. If you're OK with downtime
+Now create the second volume. You'll create an app to use it soon.
+
+```cmd
+fly volumes create myapp_data --region lhr --size 1 --app myapp
+```
 
 ### Deploy the app
 
 ```cmd
 fly deploy 
 ```
+
+On the first deployment, you'll get one Machine.
 
 ### Confirm the volume is mounted
 
@@ -80,9 +86,3 @@ fly volumes list
 ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT     
 vol_n0l9vlppld84635d    created data    1GB     lhr     b6a7    true            9080e694c64787  1 minute ago 
 ```
-
-## Remove a volume from an app
-
-To remove a volume from a Fly App, delete the `mounts` section in `fly.toml` and `fly deploy` for a new release with this updated configuration. The volume will no longer be mounted on the file systems of the app's Machines.
-
-If you are done with the volume (or volumes, if there's more than one), **and you no longer need the data stored there**, you can delete each volume using `fly volume delete <vol-id>`. You'll continue to be charged for volumes you've provisioned even if they're not being used by any VMs.
