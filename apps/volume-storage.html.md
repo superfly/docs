@@ -28,11 +28,11 @@ Fly Postgres has [its own usage docs](/docs/postgres/), so here we'll focus on u
 
 ## Launch an app with a Fly Volume
 
-The first rule of Fly Volumes is: always run at least two of them per application. 
+**The first rule of Fly Volumes is: always run at least two of them per application.** The way to do this is to run two Machines. Volumes don't sync up by themselves; different apps will have their own ways of dealing with this, so we won't get into that here.
 
-<aside class="callout">Volumes don't sync up by themselves; different apps will have their own ways of dealing with this, so we won't get into that here.</aside>
+### Launch the app, but don't deploy immediately.
 
-### Launch, but don't deploy immediately.
+The app has to exist for the volume to be created. The volume has to exist before you can mount it to a Machine. The first deployment will create a Machine. So the shortest path to a Machine with a mounted volume begins by launching the app, and saying `N` to "deploy now?":
 
 ```cmd
 fly launch 
@@ -62,29 +62,64 @@ Create a volume for the app, with the name you chose, in the same region you're 
 fly volumes create myapp_data --region lhr --size 1 --app myapp
 ```
 
-Now create the second volume. You'll create a Machine for it later.
-
-```cmd
-fly volumes create myapp_data --region lhr --size 1 --app myapp
-```
-
 ### Deploy the app
 
 ```cmd
 fly deploy 
 ```
 
-On the first deployment, you'll get one Machine.
+On the first deployment, you'll get one Machine. You can confirm this with `fly status`.
 
 ### Confirm the volume is mounted
 
-After deployment, you can check on all the volumes in your app using `fly volumes list`. The `ATTACHED VM` column lets you know which Machine, if any, the volume is mounted on.
+You can check on all the volumes in your app using `fly volumes list`. The `ATTACHED VM` column lets you know which Machine, if any, the volume is mounted on.
 
 ```cmd
 fly volumes list
 ```
 ```out
-ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT     
-vol_n0l9vlppld84635d    created data    1GB     lhr     b6a7    true            9080e694c64787  1 minute ago 
+ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
+vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  3 minutes ago
 ```
 
+You can also see the volume in the Machine's file system (there's only one Machine so far):
+```cmd
+fly ssh console -s -C df
+```
+```out
+? Select VM: lhr: 5683606c41098e fdaa:0:3b99:a7b:7e:3155:9844:2 nameless-feather-6339
+Connecting to fdaa:0:3b99:a7b:7e:3155:9844:2... complete
+Filesystem     1K-blocks   Used Available Use% Mounted on
+devtmpfs          103068      0    103068   0% /dev
+/dev/vda         8191416 172748   7582856   3% /
+shm               113224      0    113224   0% /dev/shm
+tmpfs             113224      0    113224   0% /sys/fs/cgroup
+/dev/vdb         1011672   2564    940500   1% /storage
+```
+
+Voilà: our 1GB volume is mounted at `/storage`.
+
+### Clone the first Machine to scale out to two VMs
+
+```cmd
+fly machine clone 5683606c41098e
+```
+
+Check what that did:
+
+```cmd
+fly volumes list
+```
+```
+ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT     
+vol_ez1nvxkwl3jrmxl7    created data    1GB     lhr     4de2    true            91851edb6ee983  39 seconds ago
+vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  7 minutes ago
+```
+
+`fly machine clone` creates an additional Machine with the same configuration as the source, and creates and mounts a volume for the new Machine, if the source Machine has one. **`fly machine clone` doesn't write data into the new volume.**
+
+At this point there are two identically configured Machines on the app, each with a volume of the same size. You take it from here, setting up whatever data replication you need. 
+
+## Remove a volume from an app
+
+You can't currently unmount a volume from an existing Machine. If you need to remove volumes from your app, you can [scale it](/docs/apps/scale-count/) down to zero Machines, destroy all the volumes, remove the `mounts` section from `fly.toml`, and redeploy.
