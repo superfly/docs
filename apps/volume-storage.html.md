@@ -1,5 +1,5 @@
 ---
-title: Persistent Storage for Fly Apps
+title: Add Volume Storage
 layout: docs
 nav: firecracker
 titlecase: false
@@ -7,7 +7,6 @@ order: 30
 ---
 
 Running apps can store ephemeral data on the root file systems of their member Machines, but a Machine's file system is rebuilt from scratch each time the app is deployed or the Machine is restarted.
-
 
 ## Choosing an approach to storage
 
@@ -29,7 +28,9 @@ Fly Postgres has [its own usage docs](/docs/postgres/), so here we'll focus on u
 
 ## Launch an app with a Fly Volume
 
-The first rule of Fly Volumes is always run at least two of them per application, so that's what we'll do here. Volumes don't sync up by themselves; different apps will have their own ways of dealing with this so we won't get into that here.
+The first rule of Fly Volumes is: always run at least two of them per application. 
+
+<aside class="callout">Volumes don't sync up by themselves; different apps will have their own ways of dealing with this, so we won't get into that here.</aside>
 
 ### Launch, but don't deploy immediately.
 
@@ -61,7 +62,7 @@ Create a volume for the app, with the name you chose, in the same region you're 
 fly volumes create myapp_data --region lhr --size 1 --app myapp
 ```
 
-Now create the second volume. You'll create an app to use it soon.
+Now create the second volume. You'll create a Machine for it later.
 
 ```cmd
 fly volumes create myapp_data --region lhr --size 1 --app myapp
@@ -86,3 +87,4 @@ fly volumes list
 ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT     
 vol_n0l9vlppld84635d    created data    1GB     lhr     b6a7    true            9080e694c64787  1 minute ago 
 ```
+
