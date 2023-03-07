@@ -9,7 +9,7 @@
     fly volumes create storage\_vol --region ams --size 20 
     ```
 
-3.  Revise your Laravel Fly App's `fly.toml` file to mount the volume created for your storage directory, and connect with an sqlite database you'll be configuring further down below:
+3.  Revise your Laravel Fly App's `fly.toml` file to mount the volume created for your storage directory:
   ```
     [mounts]
       source="storage_vol"
