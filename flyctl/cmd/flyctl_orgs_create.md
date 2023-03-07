@@ -10,7 +10,8 @@ flyctl orgs create [name] [flags]
 ## Options
 
 ~~~
-  -h, --help   help for create
+      --apps-v2-default-on   Configure this org to use apps v2 by default for new apps
+  -h, --help                 help for create
 ~~~
 
 ## Global Options
