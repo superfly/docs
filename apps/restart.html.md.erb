@@ -18,4 +18,18 @@ Sometimes you don't want to update anything; you just want to reboot and start t
 
 ## Restart an Individual Machine
 
-If one particular Machine needs a kick, restart it using `fly m restart <machine-id>`.
+If one particular Machine needs a kick, restart it using `fly machine restart`:
+
+```cmd
+fly machine restart <machine-id>
+```
+
+You can provide multiple <machine-id>s to restart several Machines in one command.
+
+### On a Nomad app
+
+On Nomad apps the equivalent is `fly vm restart`:
+
+```cmd
+fly vm restart <instance-id> -a <app-name>
+```
