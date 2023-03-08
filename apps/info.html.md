@@ -16,14 +16,14 @@ You can see a list of all your Fly Apps:
 fly apps list
 ```
 ```out
-NAME                                    OWNER           STATUS          PLATFORM        LATEST DEPLOY        
-testrun                                 personal        deployed        machines                            
-olddeadapp                              personal        dead            nomad           2022-12-27T23:33:07Z
+NAME          OWNER           STATUS          PLATFORM        LATEST DEPLOY        
+testrun       personal        deployed        machines                            
+olddeadapp    personal        dead            nomad           2022-12-27T23:33:07Z
 ```
 
 ## App Overviews
 
-If you want a brief app overview, including a list of Machines on that app:
+If you want a brief app overview, including a list of Machines on that app with their current status, use `fly status`:
 
 ```cmd
 fly status -a testrun
@@ -41,21 +41,21 @@ ID              STATE   REGION  HEALTH CHECKS           IMAGE                   
 
 As with many flyctl commands, if you leave off the `-a` flag, `fly status` will infer the app name from the `fly.toml` file in the working directory, if there is one.
 
-`fly machine list` yields similar Machine information, but only for V2 Apps.
+`fly machine list` yields a different set of information for each Machine on a [V2 App](/docs/reference/apps/), including the Machine's [internal IPv6 address](/docs/reference/private-networking/):
 
 ```cmd
-fly machine list
+fly machine list -a testrun
 ```
 ```out
 1 machines have been retrieved from app testrun.
 View them in the UI here (​https://fly.io/apps/testrun/machines/)
 
 testrun
-ID              NAME            STATE   REGION  IMAGE                                         IP ADDRESS                       VOLUME  CREATED                 LAST UPDATED         
-e286065f969386  rough-tree-1360 started iad     testrun:deployment-01GQR4GN7EA8G12VE1DBRQG4KQ   fdaa:0:3b99:a7b:8aeb:fea3:148b:2         2023-01-25T21:35:32Z    2023-01-26T22:52:36Z
+ID              NAME                    STATE   REGION  IMAGE                                           IP ADDRESS                           VOLUME  CREATED                 LAST UPDATED            APP PLATFORM    PROCESS GROUP 
+178115db494e18  holy-waterfall-9884     started lhr     testrun:deployment-01GTYFV11PM7D7B30AWZSH1FZE       fdaa:0:3b99:a7b:a98:6c48:67c5:2              2023-03-07T16:52:59Z    2023-03-07T16:53:06Z    v2              app    
 ```
 
-## Examine a specific Machine
+## Examine a specific Machine (V2 only)
 
 You can drill down and get an overview of a particular Machine with `fly machine status`.  This is where you'll find the Machine's CPU size and RAM settings.
 
@@ -118,7 +118,7 @@ v4      66.241.125.211          public (shared)
 Read more about [Public Network Services](/docs/reference/services/) and [Private Networking](/docs/reference/private-networking/).
 
 
-## SSH into it
+## Check on it from inside
 
 You can use `fly ssh console` to get a prompt on a Machine in your app (as long as the Machine's Docker image includes `sh`). You may want to connect to a specific Machine, and you can do that with `fly ssh console -s`:
 
@@ -131,9 +131,37 @@ Connecting to fdaa:0:3b99:a7b:8aeb:fea3:148b:2... complete
 # 
 ```
 
+If you have a particular command in mind, it might be quicker to use the `-C` flag to just run the command; for example to check on free space in the Machine file system, you might run
+
+```cmd
+fly ssh console -C df
+```
+```out
+Connecting to fdaa:0:3b99:a7b:7e:3155:9844:2... complete
+Filesystem     1K-blocks   Used Available Use% Mounted on
+devtmpfs          103068      0    103068   0% /dev
+/dev/vda         8191416 172748   7582856   3% /
+shm               113224      0    113224   0% /dev/shm
+tmpfs             113224      0    113224   0% /sys/fs/cgroup
+/dev/vdb         1011672   2564    940500   1% /storage
+```
+
+
+
 ## Inspect the Current Configuration of a Deployed App or Machine
 
-Machines can be configured individually, but the app's config is applied on `fly deploy` to all Machines that are administered by the app. Display the app configuration in JSON format with `fly config show`, or a tack a specific Machine's current configuration onto the end of `fly machine status` by appending the `-d` flag.
+Machines can be configured individually, but the app's config is applied on `fly deploy` to all Machines that are administered by the app. Display the app configuration in JSON format with `fly config show`, 
+
+
+### Show the app config
+
+```cmd
+fly config show -a testrun
+```
+
+### Show a Machine's configuration
+
+Tack a specific Machine's current configuration onto the output of `fly machine status` by appending the `-d` flag. Machines belonging to a Fly App will _usually_ be managed by `fly deploy` and so have the same configuration as their app.
 
 ```cmd
 fly m status e784459b655483 -d
@@ -215,3 +243,29 @@ Config:
   }
 }
 ```
+
+## Watch an app's logs
+
+Running `fly logs` displays an app's logs as they happen. Logs include the console output of all instances of an application. Here are logs for an app that hangs around doing nothing but has a volume mounted so you can ssh in and create files.
+
+```cmd
+fly logs -a testrun
+```
+```out
+2023-03-07T16:17:48Z runner[5683606c41098e] lhr [info]Pulling container image
+2023-03-07T16:17:51Z runner[5683606c41098e] lhr [info]Unpacking image
+2023-03-07T16:18:00Z runner[5683606c41098e] lhr [info]Setting up volume 'data'
+2023-03-07T16:18:00Z runner[5683606c41098e] lhr [info]Uninitialized volume 'data', initializing...
+2023-03-07T16:18:00Z runner[5683606c41098e] lhr [info]Encrypting volume
+2023-03-07T16:18:05Z runner[5683606c41098e] lhr [info]Opening encrypted volume
+2023-03-07T16:18:07Z runner[5683606c41098e] lhr [info]Formatting volume
+2023-03-07T16:18:08Z runner[5683606c41098e] lhr [info]Configuring firecracker
+2023-03-07T16:18:08Z app[5683606c41098e] lhr [info]Starting init (commit: 08b4c2b)...
+2023-03-07T16:18:08Z app[5683606c41098e] lhr [info]Mounting /dev/vdb at /storage w/ uid: 0, gid: 0 and chmod 0755
+2023-03-07T16:18:08Z app[5683606c41098e] lhr [info]Preparing to run: `sleep infinity` as root
+2023-03-07T16:18:08Z app[5683606c41098e] lhr [info]2023/03/07 16:18:08 listening on [fdaa:0:3b99:a7b:7e:3155:9844:2]:22 (DNS: [fdaa::3]:53)
+```
+
+`fly logs` stays open, watching the logs, until you stop it (<kbd>ctrl-C</kbd>).
+
+You can also [ship logs to an external service](/blog/shipping-logs/).

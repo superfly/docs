@@ -28,29 +28,7 @@ ID              PROCESS VERSION REGION  STATE   HEALTH CHECKS   LAST UPDATED
 178115db494e18  app     2       lhr     started                 2023-03-07T16:53:06Z
 ```
 
-### View Logs
-
-Each Fly application has a log. It includes the console output of all instances of an application. Running `fly logs` you will display those logs and automatically wait for new log entries. For example, when we run the hellofly sample:
-
-```cmd
-fly logs
-```
-```output
-2020-01-22T14:35:05.933Z 70fda853 ams [info] {"message":"\r","app":3366,"region":"ams","alloc":"70fda853"}
-2020-01-22T14:35:05.935Z 70fda853 ams [info] - using env:	export GIN_MODE=release
-2020-01-22T14:35:05.935Z 70fda853 ams [info] - using code:	gin.SetMode(gin.ReleaseMode)
-2020-01-22T14:35:05.935Z 70fda853 ams [info] {"message":"\r","app":3366,"region":"ams","alloc":"70fda853"}
-2020-01-22T14:35:05.936Z 70fda853 ams [info] -
-2020-01-22T14:35:05.937Z 70fda853 ams [info] - hellofly.tmpl
-2020-01-22T14:35:05.937Z 70fda853 ams [info] {"message":"\r","app":3366,"region":"ams","alloc":"70fda853"}
-```
-
-The log lines consist of an ISO format date and time, the allocation id - the identifier for a particular instance of the app that is running, the [region](/docs/regions/) where this instance of the app is running, the level of the attached message and then the actual log line. An entry such as 
-
-`{"message":"\r","app":3366,"region":"ams","alloc":"70fda853"}` 
-
-is recording an unhandled, and in this case incomplete, log line. It is also possible to filter by region or instance id. Consult the [flyctl documentation for logs](/docs/flyctl/logs/).
-
+[More ways to examine your app](/docs/apps/info/)
 
 ## Set Secrets
 
