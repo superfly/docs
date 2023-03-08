@@ -15,6 +15,7 @@ flyctl apps create [APPNAME] [flags]
       --machines         Use the machines platform
       --name string      The app name to use
       --network string   Specify custom network id
+      --nomad            Use the nomad platform
   -o, --org string       The target Fly organization
 ~~~
 
