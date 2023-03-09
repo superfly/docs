@@ -73,7 +73,7 @@ fastify.get('/', async (request, reply) => {
 // Run the server!
 const start = async () => {
   try {
-    await fastify.listen(8080)
+    await fastify.listen({ port: 8080 })
     fastify.log.info(`server listening on ${fastify.server.address().port}`)
   } catch (err) {
     fastify.log.error(err)
@@ -94,13 +94,13 @@ v1 failed - Failed due to unhealthy allocations - no stable job version to auto 
 ***v1 failed - Failed due to unhealthy allocations - no stable job version to auto revert to
 ```
 
-That's not good, and there's no obvious reference to a host there. If we look at the fastify listen function though, we find it also takes a second parameter, the hostname as a string. If we just modify that line and add in the "0.0.0.0" host there...
+That's not good, and there's no obvious reference to a host there. Lucky for us the fastify listen function accepts an object for defining additional options like host. We can pass in "0.0.0.0" as the host to successfully run inside a Docker container like so:
 
 ```jsx
 ...
 const start = async () => {
   try {
-    await fastify.listen(8080,"0.0.0.0")
+    await fastify.listen({ port: 8080, host: "0.0.0.0" })
 ...
 ```
 
