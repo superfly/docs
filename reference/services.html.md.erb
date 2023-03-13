@@ -24,7 +24,7 @@ Along with the dedicated IPv6, apps [configured](/docs/reference/configuration/#
 * HTTP on port 80, or
 * TLS & HTTP on port 443
 
-(or both) are automatically given a shared anycast IPv4 address on the first deployment. 
+(or both) are automatically given a shared anycast IPv4 address on the first deployment.
 
 If you want to allocate a shared IPv4 to an app without a public IPv4 address, this is possible (with flyctl v0.0.439 and newer) using
 
@@ -36,17 +36,24 @@ This command will fail if the app has a dedicated IPv4 address. You can release 
 
 ### Dedicated IPv4
 
-Allocating a dedicated IPv4 anycast address is now opt-in only, but can still be done manually with 
+Allocating a dedicated IPv4 anycast address is now opt-in only, but can still be done manually with
 
 ```cmd
 fly ips allocate-v4
-``` 
+```
 
 when needed; for example, if you want your app to handle TCP directly.
 
 
 IPv6 addresses are free. Global IPv4 addresses are [billed](/docs/about/pricing/#anycast-ip-addresses) monthly.
 
+## Idle Connection Timeouts
+
+To reduce strain on the Fly.io public proxy, idle TCP connections are closed automatically after 60 seconds. This limitation applies to all types of public services.
+Idle connection timeouts usually surface as `ECONNRESET` errors on the client.
+
+If you're connecting to a database on Fly.io -- like Redis or Postgres -- over the internet, ensure that your database
+client can handle reconnects cleanly. For example, the `ioredis` Node.js client [handles reconnects automatically](https://ioredis.readthedocs.io/en/stable/README/#auto-reconnect).
 
 ## Connection handlers
 
