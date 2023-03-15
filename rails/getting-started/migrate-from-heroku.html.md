@@ -183,7 +183,7 @@ If you have a `release:` line in your Heroku Procfile, that will listed separate
   release_command = "bin/rails db:migrate"
 ```
 
-You will also want to want to prevent your release command from also being
+You will also want to prevent your release command from also being
 run during the deploy step.  To do so, regenerate your dockerfile using:
 
 ```shell
