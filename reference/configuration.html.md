@@ -366,7 +366,7 @@ Times are in milliseconds unless units are specified.
 
 ## The `http_service` section
 
-For apps that only need HTTP and HTTPS services, use the this section to define a service that listens on ports 80 and 443. Port 80 will have an http handler. Port 443 will have a tls and http handler. Additional services defined with `[[services]]` will be configured as well.
+For apps that only need HTTP and HTTPS services, use this section to define a service that listens on ports 80 and 443. Port 80 will have an http handler. Port 443 will have a tls and http handler. Additional services defined with `[[services]]` will be configured as well.
 
 ```toml
 [http_service]
