@@ -62,6 +62,12 @@ $ root@f066b83b:/# dig +short aaaa paulgra-ham.internal @fdaa:0:18::3
 fdaa:0:18:a7b:7d:f066:b83b:2
 ```
 
+## Connecting to a running service via it's 6PN address
+In the `/etc/hosts` of a deployed fly app, we alias the 6PN address of the app to `fly-local-6pn`.  
+So in order for a service to be accessible via it's 6PN address, they need to bind to or listen on `fly-local-6pn`.  
+For example, if you have a service running on port 8080, you need to bind it to `fly-local-6pn:8080` for it to be accesible at "[6PN_Address:8080]".  
+(`fly-local-6pn` is to 6pn-addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine)
+
 ## Fly `.internal` addresses
 
 A typical .internal address is composed of a region qualifier, followed by the app name followed by `.internal`.
