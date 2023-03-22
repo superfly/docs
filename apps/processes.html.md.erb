@@ -8,15 +8,13 @@ order: 90
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-Process groups are a way to manage separate tasks under the umbrella of a single Fly App. You can maintain a single code base, and everything gets deployed in a single release. But different processes run on their own Machines&mdash;which means they don't compete with each other for VM resources, and they can be scaled individually.
-
-When you deploy a Fly App, you start up one or more Fly Machines from a single Docker image; all the VMs have the same things installed. But Machines in different process groups run different commands at boot.
+Fly.io has the notion of process groups to let a single Fly App run multiple programs. You can define multiple processes in your `fly.toml`, giving each a name. Each defined process runs in its own Fly Machine within the app, which means they don't compete with each other for VM resources, and they can be scaled individually.
 
 ## The default process group
 
-By default, Fly Apps Machines belong to the `"app"` process group. Machines in this process group run whatever process the Docker image specifies (unless you change that by specifying a command for it in `fly.toml`; this will be clearer in a minute).
+If you don't explicitly define any processes, the Machines in a Fly App belong to the `"app"` process group, and on boot they run whatever entrypoint process the app's Docker image has.
 
-The `services` section in the default app configuration applies to the `"app"` process:
+You may have noticed that the `services` section in the default app configuration applies to the `"app"` process:
 
 ```toml
 ...
@@ -26,19 +24,41 @@ The `services` section in the default app configuration applies to the `"app"` p
   processes = ["app"]
 ```
 
-## Adding process groups to an app
+Once any processes are explicitly defined, there are no implicit processes; if you want an `"app"` process, it has to be included in the config.
 
-### Configure the process groups
+## Add process groups to an app
 
-Additional process groups are defined in the [`processes` section](https://fly.io/docs/reference/configuration/#the-processes-section) of `fly.toml`.
-
-For each process group, specify a name and a command to be run at startup. If you're keeping the `"app"` process, add it to the `processes` section too. Here's an example: 
+To run multiple processes, make sure all the things you want to run are installed in your app's Docker image. Then, define a `[processes]` block in your `fly.toml`, matching process group names and the commands they should run.  Here's an example: 
 
 ```toml
 [processes]
-app = ""
-worker = "tail -F /dev/null"
+  web = "bin/rails fly:server"
+  cron = "supercronic /app/crontab"
 ```
+
+The commands you configure here correspond to CMD in Docker; they don't replace the ENTRYPOINT of your app but will supersede.
+
+### Processes and other configuration options
+* to configure services, mount, and [statics] configurations: these accept an array of process names to match the config block
+
+
+
+
+
+ `fly deploy` creates and rolls out a single release, 
+
+Say you have a user-facing web app and you'd like to run Sidekiq workers or Supercronic alongside it. You can 
+
+When you deploy a Fly App, you start up one or more Fly Machines from a single Docker image; all the VMs have the same things installed. But Machines in different process groups run different commands at boot.
+
+Before launch
+
+* what if there's a volume? Do mounts work by process groups?
+
+
+Additional process groups are defined in the [`processes` section](https://fly.io/docs/reference/configuration/#the-processes-section) of `fly.toml`.
+
+``
 
 (It would not be efficient to run a whole worker VM to do nothing, but this is just illustrative.)
 

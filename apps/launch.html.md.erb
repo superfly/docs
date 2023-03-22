@@ -8,29 +8,38 @@ order: 10
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-To create a brand new app on Fly.io, run `fly launch` from the root directory of your project. This command initializes a new App under your Organization and tries to configure it for deployment. 
+To create a brand new app on Fly.io, run `fly launch` from the root directory of your project. This command initializes a new App under your Organization and tries to configure it for deployment.
 
 We'll get to a demonstration, but if you're in a hurry to try your first launch, we also have a condensed [Hands-on](/docs/hands-on/). If you're anxious to deploy your own project, have a look at our [short guides for specific languages and frameworks](/docs/languages-and-frameworks/) and read more here later!
 
+`fly launch` performs several tasks:
+
+* detection of known project types
+* app configuration
+* provisioning of resources like Postgres clusters, Redis databases, and IP addresses
+* the first deployment
+
 ## Launch Scanners
 
-`fly launch` scans your project's source code, and for many programming languages and frameworks it can go from source to deployed app in a single step.
+If you don't specify an image or Dockerfile to use, `fly launch` scans your project's source code, and for many programming languages and frameworks it can go from source to deployed app in a single step.
 
-Have a look at our [Language & Framework Guides](/docs/languages-and-frameworks/) for instructions tailored to your project.
+Have a look at our [Language & Framework Guides](/docs/languages-and-frameworks/) for instructions tailored to your.
 
 `fly launch` will help you set up your app, even if its scanners don't detect a project that it can deploy automatically. You'll have to give flyctl more information to configure and build the project, before it can be deployed. 
+
+## The build 
 
 The building blocks for Fly.io Apps are Fly Machines. Machines are Linux VMs cooked up from Docker images, so a big part of this is figuring out how to get or build this Docker image. See [Builders](/docs/reference/builders) for the ways that this can happen.
 
 ## App Configuration
 
-Fly.io uses a TOML file to express user-defined configuration for Fly Apps. `fly launch` downloads a copy of this file, `fly.toml`, before deploying any Machines on a new app. 
+User-defined configuration to be used by `fly deploy` is stored in TOML file on your local machine. 
 
-If a launch scanner has detected that it matches your project's language or framework, it tweaks the configuration to suit. If no scanner matched your project, you get a `fly.toml` containing "sensible defaults" for a web app listening for HTTP and HTTPS connections. This includes setting up HTTP services to get Fly Proxy to route requests to your app, and establishing TCP health checks that Fly.io uses to determine if a deployment has succeeded.
+If a launch scanner has detected that it matches your project's language or framework, it tweaks the configuration to suit. If no scanner matched your project, you get a `fly.toml` containing "sensible defaults" for a web app listening for HTTP and HTTPS connections. This includes defining HTTP services to get Fly Proxy to route requests to your app, and establishing TCP health checks that Fly.io uses to determine if a deployment has succeeded.
 
-If and when you need more control, `fly.toml` lets you set environment variables, deployment strategy, release commands, internet-exposed services, disk mounts, custom metrics, health checks, and process-group Machines to be configured on the next deployment. More in [App Configuration](/docs/reference/configuration/).
+`fly launch` downloads the new app's config into a `fly.toml` in the working directory, before deploying. 
 
-If you need to make configuration changes, respond `N` when `fly launch` offers to `deploy now`, and edit `fly.toml`. Then you can deploy using `fly deploy`.
+If and when you need more control, you can edit`fly.toml` to set environment variables, deployment strategy, release commands, internet-exposed services, disk mounts, custom metrics, health checks, and process-group Machines to be configured on the next deployment. More in [App Configuration](/docs/reference/configuration/).
 
 ## Resources for Apps
 
@@ -40,13 +49,15 @@ You may also want to prepare other resources before deploying your app, such as 
 
 `fly launch` will ask if you want to provision a Fly Postgres database cluster and a Redis store (in partnership with Upstash). If you're not sure, you can say `N` to these, and set them up later if needed.
 
-You can say no to `deploy now?` if there's anything you want to set up first, and then [deploy with `fly deploy`](/docs/apps/deploy/).
+## First deployment
+
+`fly launch` will offer to deploy immediately if it thinks it has succeeded in setting up the project. If you need to make configuration changes before the first deployment, respond `N` when `fly launch` offers to `deploy now`, and edit `fly.toml`. You can then [deploy with `fly deploy`](/docs/apps/deploy/).
 
 ## Next steps
 
 Once your app is deployed you'll probably want to check up on it using one or more of the techniques in [Get Information About an App](/docs/apps/info/). When you're ready to [go to production](/docs/going-to-production/), [scale up](/docs/apps/scale-count/) to two or more Machines [for high availability](/docs/apps/).
 
-## Example
+## Fly Launch Example
 
 As a demonstration, let's launch an app using an existing Docker image: [plain nginx](https://hub.docker.com/_/nginx). 
 
