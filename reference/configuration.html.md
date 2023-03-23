@@ -142,8 +142,6 @@ The environment variable `RELEASE_COMMAND=1` is set for you within the temporary
 
 The available strategies are:
 
-
-
 **rolling**: The default for apps with persistent volumes. One by one, each running VM is taken down and replaced by a new release VM. This is the default strategy for apps with volumes.
 
 
@@ -338,7 +336,6 @@ Times are in milliseconds unless units are specified.
 * `restart_limit`: The number of consecutive TCP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed TCP health checks.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
 
-
 ### `services.http_checks`
 
 Another way of checking a service is running is through HTTP checks as defined in the `services.http_checks` section. These checks are more thorough than tcp\_checks as they require not just a connection but a successful HTTP status in response (i.e, 2xx). Here is an example of a `services.http_checks` section:
@@ -369,7 +366,6 @@ Times are in milliseconds unless units are specified.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
 * `tls_skip_verify`: When `true` (and using HTTPS protocol) skip verifying the certificates sent by the server.
 * `services.http_checks.headers`: This is a sub-section of `services.http_checks`. It uses the key/value pairs as a specification of header and header values that will get passed with the http_check call.
-
 
 **Note**: The `services.http_checks` section is optional and not generated in the default `fly.toml` file.
 
@@ -421,9 +417,9 @@ The `destination` is directory where the `source` volume should be mounted on th
 
 ## The `checks` section
 
-This section lets you define checks for apps outside of their `[[services]]` (or for apps without any services).
+This section lets you define top-level checks for apps outside of their `[[services]]` (or for apps without any services).
 
-It's has a few differences with service checks:
+Some differences between top-level checks and service checks:
 - You need to provide a port
 - You need to provide a name
 - You need to specify the type of the check
@@ -475,7 +471,7 @@ web = "bundle exec rails server -b [::] -p 8080"
 worker = "bundle exec sidekiqswarm"
 ```
 
-Furthermore, you can "match" a specific process (or processes) to a `services`, `mount`, or `statics` configuration. For example:
+Furthermore, you can "match" a specific process (or processes) to a `services` configuration. For example:
 
 ```toml
 [[services]]
@@ -486,10 +482,11 @@ Furthermore, you can "match" a specific process (or processes) to a `services`, 
   script_checks = []
 ```
 
+In legacy Nomad apps only, volumes can also be assigned to specific processes; use double brackets to include more than one `[[mounts]]` section and mount differently named volumes to VMs in different process groups.
 
 ## The `metrics` section
 
-Fly apps can be configured to export custom metrics to the Fly.io hosted Prometheus service. Add this section to fly.toml.
+Fly apps can be configured to export custom metrics to the Fly.io-hosted Prometheus service. Add this section to fly.toml.
 
 ```toml
 [metrics]
