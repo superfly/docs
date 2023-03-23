@@ -8,13 +8,15 @@ order: 90
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-Fly.io has the notion of process groups to let a single Fly App run multiple programs. You can define multiple processes in your `fly.toml`, giving each a name. Each defined process runs in its own Fly Machine within the app, which means they don't compete with each other for VM resources, and they can be scaled individually.
+Process groups are a way to configure a single Fly App to run multiple different programs.
+
+You define processes in your `fly.toml`, giving process group each a name and a command to run at boot. Each defined process runs in its own Fly Machine(s) within the app, which means they don't compete with each other for VM resources, and they can be scaled individually.
 
 ## The default process group
 
-If you don't explicitly define any processes, the Machines in a Fly App belong to the `"app"` process group, and on boot they run whatever entrypoint process the app's Docker image has.
+If you don't explicitly define any processes, the Machines in a Fly App belong to the default `app` process group, and on boot they run whatever entrypoint process the app's Docker image has. (Apps are shipped to Fly.io in Docker images, even though [we run VMs, not containers](https://fly.io/blog/docker-without-docker/).)
 
-You may have noticed that the `services` section in the default app configuration applies to the `"app"` process:
+Related: you may have noticed that the `services` section in the default app configuration applies to the `app` process:
 
 ```toml
 ...
@@ -22,13 +24,16 @@ You may have noticed that the `services` section in the default app configuratio
   http_checks = []
   internal_port = 8080
   processes = ["app"]
+  ...
 ```
 
-Once any processes are explicitly defined, there are no implicit processes; if you want an `"app"` process, it has to be included in the config.
+This implicit process only exists if you don't have explicitly defined processes. 
 
-## Add process groups to an app
+## Run multiple processes
 
-To run multiple processes, make sure all the things you want to run are installed in your app's Docker image. Then, define a `[processes]` block in your `fly.toml`, matching process group names and the commands they should run.  Here's an example: 
+To run multiple processes, first make sure all the things you want to run are installed in your app's Docker image.
+
+Define a [`processes` section](https://fly.io/docs/reference/configuration/#the-processes-section) in your app's `fly.toml`, pairing process group names with the commands they should run.  Here's an example: 
 
 ```toml
 [processes]
@@ -36,93 +41,34 @@ To run multiple processes, make sure all the things you want to run are installe
   cron = "supercronic /app/crontab"
 ```
 
-The commands you configure here correspond to CMD in Docker; they don't replace the ENTRYPOINT of your app but will supersede.
+Once there's a `[processes]` section in your config, flyctl assumes this is a complete list of your desired processes. If you want an `app` process group alongside others, add it to the config explicitly.
 
-### Processes and other configuration options
-* to configure services, mount, and [statics] configurations: these accept an array of process names to match the config block
+Process group commands in a Fly App correspond to CMD in Docker; they don't replace the ENTRYPOINT of your app image, but will supersede CMD.
 
+## Processes and services
+ 
+Chances are, you only want user requests to hit one of your processes; in the above example, that process is `web`. You can define services selectively for any processes that need to accept connections via Fly Proxy (whether [publicly](/docs/reference/services/) or via [Flycast](/docs/reference/private-networking/#flycast-private-load-balancing)).
 
+In the example above, you would specify the `web` process in the [`[[services]]` section](/docs/reference/configuration/#the-services-sections) for the app's HTTP service: 
 
-
-
- `fly deploy` creates and rolls out a single release, 
-
-Say you have a user-facing web app and you'd like to run Sidekiq workers or Supercronic alongside it. You can 
-
-When you deploy a Fly App, you start up one or more Fly Machines from a single Docker image; all the VMs have the same things installed. But Machines in different process groups run different commands at boot.
-
-Before launch
-
-* what if there's a volume? Do mounts work by process groups?
-
-
-Additional process groups are defined in the [`processes` section](https://fly.io/docs/reference/configuration/#the-processes-section) of `fly.toml`.
-
-``
-
-(It would not be efficient to run a whole worker VM to do nothing, but this is just illustrative.)
-
-Create a [`services` section](/docs/reference/configuration/#the-services-sections) for each process group that should be able to accept connections via Fly Proxy (publicly or via Flycast). 
-
-Fly Proxy doesn't know about process groups: it may send requests to any Machine with a matching port, according to its own load-balancing rules. If more than one process group needs services defined, have each one handle connections on different external ports. 
-
-
-## First deploy
-
-With the app configured in `fly.toml`, launch it and say yes to deploy straight away:
-
-```cmd
-fly launch --image nginx
-```
-<aside>Since nginx listens on port 80 by default, I would have to set `internal_port` correspondingly in my `fly.toml` in order to reach my app.</aside>
-
-A single Machine is started and as expected, it has process group `"app"`:
-
-```cmd
-fly status
-```
-```out
-App
-  Name     = testrun                  
-  Owner    = personal              
-  Hostname = testrun.fly.dev          
-  Image    = library/nginx:latest  
-  Platform = machines              
-
-Machines
-ID              PROCESS VERSION REGION  STATE   HEALTH CHECKS   LAST UPDATED         
-6e82d411c77287  app     3       yyz     started 1 total, 1 passing      2023-03-07T00:49:57Z
+```toml
+...
+[[services]]
+  http_checks = []
+  internal_port = 8080
+  processes = ["web"]
+  ...
 ```
 
-### Create a VM for each additional process group
+Fly Proxy doesn't know about process groups: it load-balances requests among all Machines with a service configured on the requested port. If more than one process group needs services defined, make sure they handle connections on different external ports, using multiple `[[services]]` sections.
 
-Add a Machine for each additional command/entrypoint you want a group for, by `fly m clone`-ing the "app" Machine and adding the name of the new group with the `--process-group` option.
+## Deployment
 
-  ```cmd
-  fly machine clone --process-group worker 6e82d411c77287
-  ```
+`fly deploy` makes sure that the app has at least one Machine for each process group you've defined, and destroys any Machines belonging to any process group that isn't configured in `fly.toml`. It also updates the command, services, and health checks for each `fly deploy`-managed Machine on the app; and creates a new app release.
 
-The above creates a new Machine with metadata identifying it as belonging to the `worker` process group.
+So on the first deployment (either at the end of `fly launch` or at the first explicit `fly deploy`), flyctl creates and starts one Machine for each process group in `fly.toml`. 
 
-If the app hasn't been deployed since you added the `"worker"` process to `fly.toml`, deploy now to update the command, services, and health checks for each Machine according to what's configured for its process group.
-
-
-```cmd
-fly status
-```
-```out
-App
-  Name     = testrun                  
-  Owner    = personal              
-  Hostname = testrun.fly.dev          
-  Image    = library/nginx:latest  
-  Platform = machines              
-
-Machines
-ID              PROCESS VERSION REGION  STATE   HEALTH CHECKS           LAST UPDATED         
-6e82d411c77287  app     3       yyz     started 1 total, 1 passing      2023-03-07T00:49:57Z
-e2865641be9786  worker  3       yyz     started                         2023-03-07T00:50:02Z
-```
+If additional process groups are configured in an app's `[processes]` block, the next `fly deploy` spins up one new Machine to run each new process.
 
 ## Scale a process group horizontally
 
@@ -132,7 +78,7 @@ e2865641be9786  worker  3       yyz     started                         2023-03-
 fly machine clone --region gru e2865641be9786
 ```
 
-If Machine 21781973f03e89 belongs to the `"worker"` process group, the new Machine will be created in the `gru` (São Paulo) region with the command, services, and checks that are configured on the app for `"worker"` Machines. 
+If Machine 21781973f03e89 belongs to the `worker` process group, the new Machine will be created in the `gru` (São Paulo) region with the command, services, and checks that are configured on the app for `worker` Machines. 
 
 ## Scale a process group vertically
 
