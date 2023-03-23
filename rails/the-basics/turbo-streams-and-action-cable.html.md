@@ -59,7 +59,7 @@ and the instance is deployed. Now onto the implementation:
 
 There are very few steps to make this work, writing very few lines of code
 
-Let's start with the turbo_stream_for helper, which under the hood uses Turbo::StreamsChannel.
+Let's start with the `turbo_stream_for` helper, which under the hood uses `Turbo::StreamsChannel`.
 
 Modify `app/views/names/index.html.erb` to stream from "names":
 
