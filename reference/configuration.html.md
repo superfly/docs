@@ -75,9 +75,9 @@ The image builder is used when you want to immediately deploy an existing public
   dockerfile = "Dockerfile.test"
 ```
 
-`dockerfile` accepts a relative path to a Dockerfile. By default, `flyctl` looks for `Dockerfile` in the application root.
+`dockerfile` accepts a relative path to a Dockerfile, or a URL. By default, `flyctl` looks for `Dockerfile` in the application root.
 
-This option will not change the Docker context path, which is set to the project root directory by default. If you want the `Dockerfile` to use its containing directory as the context root, use `fly deploy <directory>`.
+**Gotchas:** 1) This option will not change the Docker context path, which is set to the project root directory by default. If you want the `Dockerfile` to use its containing directory as the context root, use `fly deploy <directory>`. 2) When specifying a local Dockerfile, make sure it's not excluded from the Docker build context in your `.dockerignore`.
 
 ### Specify a multistage Docker build target
 
