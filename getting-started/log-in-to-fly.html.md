@@ -18,6 +18,12 @@ fly auth login
 
 Your browser will open up with the Fly.io sign-in screen; enter your user name and password to sign in. If you signed up with GitHub, use the `Sign in with GitHub` button to sign in.
 
+Microsoft WSL users may need to run the following command to make this work:
+
+```cmd
+ln -s /usr/bin/wslview /usr/local/bin/xdg-open
+```
+
 Now proceed to globally deploying Docker Images, Go Applications, Node Applications and more.
 
 ## First-Time or No Fly.io account? Sign up for Fly.io.
