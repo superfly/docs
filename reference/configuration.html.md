@@ -470,7 +470,7 @@ web = "bundle exec rails server -b [::] -p 8080"
 worker = "bundle exec sidekiqswarm"
 ```
 
-Furthermore, you can "match" a specific process (or processes) to a `services`, `mount`, or `statics` configuration. For example:
+Furthermore, you can "match" a specific process (or processes) to a `services` or `statics` configuration. For example:
 
 ```toml
 [[services]]
