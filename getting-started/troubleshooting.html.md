@@ -47,7 +47,7 @@ The important part of this is the internal port, in this case, set to 8080.
 
 Now, that means that there must be an open TCP port on port 8080. If you've opened port 80 or 443 on your application, that's likely to be the wrong port.
 
-So, first stop, check what port you have open on your application. If you are using a Dockerfile, also make sure you have `EXPOSE port` in there. Redeploy and see what happens...
+So, first stop, check what port you have open on your application. Sometimes an app's logs will tell you which internal port it's listening on, which brings us to...
 
 ## _Logs Have Knowledge_
 
