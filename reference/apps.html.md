@@ -17,7 +17,7 @@ At the moment, there are two types of Fly App.
 
 ## Legacy Apps ("Fly Apps V1")
 
-"Fly Apps V1" are our original Firecracker apps. Instances of V1 apps are orchestrated using Hashicorp Nomad. 
+"Fly Apps V1" are our original Firecracker apps. Instances of V1 apps are orchestrated using Hashicorp Nomad. New organizations no longer deploy Fly Apps to the V1 version of the platform, but existing V1 apps are unchanged and can be managed in the same way.
 
 ## Apps V2
 
