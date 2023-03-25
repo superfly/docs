@@ -5,6 +5,8 @@ sitemap: false
 nav: firecracker
 ---
 
+<%= partial "/docs/partials/v2_transition_banner" %>
+
 Volumes are local persistent storage for [Fly Machines](/docs/machines/). They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
 
 A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware.
@@ -116,11 +118,7 @@ fly volumes extend <volume-id> -s <new-size>
 
 where `<new-size>` is the desired size in GB. 
 
-The Machine attached to the target volume must be restarted to allow the file system to be resized. 
-
-<div class="callout">
-On legacy Nomad-orchestrated Apps, the instance is automatically restarted, so this step isn't needed.
-</div>
+The Machine attached to the target volume must be restarted to allow the file system to be resized. On legacy Nomad-orchestrated Apps, the instance is automatically restarted, so this step isn't needed.
 
 Get the id of the Machine that has the volume mounted (find it under `ATTACHED VM`).
 
