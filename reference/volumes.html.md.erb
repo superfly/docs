@@ -118,9 +118,9 @@ fly volumes extend <volume-id> -s <new-size>
 
 where `<new-size>` is the desired size in GB. 
 
-The Machine attached to the target volume must be restarted to allow the file system to be resized. On legacy Nomad-orchestrated Apps, the instance is automatically restarted, so this step isn't needed.
+The Machine attached to the target volume must be restarted to allow the file system to be resized. **On legacy Nomad-orchestrated Apps, the instance is automatically restarted, so this step isn't needed.**
 
-Get the id of the Machine that has the volume mounted (find it under `ATTACHED VM`).
+Get the `id` of the Machine that has the volume mounted (find it under `ATTACHED VM`).
 
 ```cmd
 fly volumes list
