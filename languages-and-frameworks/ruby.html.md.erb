@@ -5,54 +5,68 @@ sitemap: false
 redirect_from: /docs/getting-started/ruby/
 ---
 
-<%= partial "partials/intro", locals: { runtime: "Ruby" } %>
+Deploying a Ruby application on Fly.io requires two essential ingredients:
+a [Gemfile](docs/languages-and-frameworks/ruby/) and a [config.ru](https://github.com/rack/rack/wiki/(tutorial)-rackup-howto) file.
+Full-stack frameworks like Rails, Padrino, and Hanami provide both of these for you.
+Micro-frameworks like Sinatra, Camping, and Rack itself require you to create your own.
 
-## _The Helloruby Application_
+## Gemfile
 
-Our example will be a basic "hello world" example using Sinatra. We'll assume that you already have Ruby and Bundler installed.
+If you don't have a gemfile, the best way to get started is to run:
 
-You can get the code for the example from [the helloruby GitHub repository](https://github.com/fly-apps/helloruby-builtin). Just `git clone https://github.com/fly-apps/helloruby-builtin` to get a local copy. Here's all the code for our `app.rb`:
+```cmd
+bundle init
+```
+
+Once this file is created, proceed to add gems needed by your application, for example:
+
+```cmd
+bundle add rackup
+```
+
+The Gemfile needs to include the framework you may be using, so if you are using, for example, Sinatra or Camping, add that gem too.
+
+Finally add a web server, like puma, thin, or falcon.  If you are not sure what web server to use, puma is a safe bet:
+
+```cmd
+bundle add puma
+```
+
+## config.ru
+
+The most basic `config.ru` file would be the following:
 
 ```ruby
-#!/usr/bin/env ruby
-
-require 'rubygems'
-require 'bundler/setup'
-require 'sinatra'
-
-get '/' do
-  "<h1>Hello From Ruby on Fly!</h1>"
-end
-
-get '/:name' do
-  "<h1>Hello From Ruby on Fly!</h1></br>and hello to #{params[:name]}"
+run do |env|
+  [200, {}, ["Hello World"]]
 end
 ```
 
-We'll call this file `app.rb`. We also need to install Sinatra - `bundle add sinatra` and create a config.ru file for Rack to start up the server:
-
-```ruby
-# config.ru
-
-require './app.rb'
-
-run Sinatra::Application
-```
+Phusion Passenger guides provide a [helpful list](https://www.phusionpassenger.com/docs/advanced_guides/deployment_and_scaling/apache/config_ru.html) of starter `config.ru`
+files for various Ruby web frameworks.
 
 We're now ready to run the app locally.
 
 ## _Running The Application_
 
-Run `rackup` to start the application
+Run `bundle exec rackup` to start the application
 
 ```cmd
-rackup
+bundle exec rackup
 ```
 ```output
-[2020-08-18 14:46:21] INFO  WEBrick 1.4.2
-[2020-08-18 14:46:21] INFO  ruby 2.6.5 (2019-10-01) [x86_64-darwin19]
-[2020-08-18 14:46:21] INFO  WEBrick::HTTPServer#start: pid=39638 port=9292
+Puma starting in single mode...
+* Puma version: 6.1.1 (ruby 3.2.1-p31) ("The Way Up")
+*  Min threads: 0
+*  Max threads: 5
+*  Environment: development
+*          PID: 26873
+* Listening on http://127.0.0.1:9292
+* Listening on http://[::1]:9292
+Use Ctrl-C to stop
 ```
+
+If you see a message suggesting that you need to run `bundle binstub rack`, that message can be safely ignored.
 
 And connect to localhost:9292 to confirm that you have a working Ruby application. Now to package it up for Fly.
 
@@ -70,99 +84,91 @@ To launch an app on fly, run `flyctl launch` in the directory with your source c
 flyctl launch
 ```
 ```output
+Creating app in /Users/rubys/tmp/snapshot
 Scanning source code
-Detected Ruby app
-Using the following build configuration
-        Builder: paketobuildpacks/builder:base
-        Buildpacks: gcr.io/paketo-buildpacks/ruby
-? Select organization: Demo (demo)
-? Select region: ord (Chicago, Illinois (US))
-? Would you like to deploy now? Yes
+Detected a Ruby app
+? Choose an app name (leave blank to generate one): 
+? Select Organization: Sam Ruby (personal)
+Some regions require a paid plan (fra, maa).
+See https://fly.io/plans to set up a plan.
 
-Deploying helloruby
+? Choose a region for deployment: Ashburn, Virginia (US) (iad)
+Created app 'late-bird-1771' in organization 'personal'
+Admin URL: https://fly.io/apps/late-bird-1771
+Hostname: late-bird-1771.fly.dev
+? Would you like to set up a Postgresql database now? No
+? Would you like to set up an Upstash Redis database now? No
+Wrote config file fly.toml
+
+Your Ruby app is prepared for deployment.
+
+If you need custom packages installed, or have problems with your deployment
+build, you may need to edit the Dockerfile for app-specific changes. If you
+need help, please post on https://community.fly.io.
+
+Now: run 'fly deploy' to deploy your Ruby app.
 ...
 ```
 
-First, this command scans your source code to determine how to build a deployment image as well as identify any other configuration your app needs, such as secrets and exposed ports.
+First, this command scans your source code to determine if it meets the requirements for a deployable Ruby app.
 
 After your source code is scanned and the results are printed, you'll be prompted for an organization. Organizations are a way of sharing application and resources between Fly users. Every fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
 
 Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region.
 
+Finally you will be given the option to start a Postgres and/or a Redis database.  If you need one or both, it is convenient to set them up now.  Otherwise you can always add them later.
+
 At this point, `flyctl` creates an app for you and writes your configuration to a `fly.toml` file. You'll then be prompted to build and deploy your app. Once complete, your app will be running on fly.
 
-## _Inside `fly.toml`_
+## _Config First!_
 
-The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also created a Fly-side application slot of the same name, "helloruby". If we look at the `fly.toml` file we can see the name in there:
+Most Dockerfiles expect some configuration settings through `ENV`. The generated `fly.toml` file has a place for you to add your custom `ENV` settings. It's the `[env]` block.
 
 ```toml
-app = "helloruby"
-
-[build]
-  builder = "paketobuildpacks/builder:base"
-  buildpacks = ["gcr.io/paketo-buildpacks/ruby"]
-
-[[services]]
-  internal_port = 8080
-  protocol = "tcp"
-
-  [services.concurrency]
-    hard_limit = 25
-    soft_limit = 20
-
-  [[services.ports]]
-    handlers = ["http"]
-    port = "80"
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = "443"
-
-  [[services.tcp_checks]]
-    interval = 10000
-    timeout = 2000
+[env]
+  MY_SPECIAL_ENV = "some_value"
+  MAX_PLAYER_COUNT = "15"
 ```
 
-The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly platform. The rest of the file contains settings to be applied to the application when it deploys.
+Add whatever values your Dockerfile or container requires.
 
-We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
+Sometimes you have secrets that shouldn't be checked in to `git` or shared publicly. For those settings, you can set them using [`fly secrets`](https://fly.io/docs/reference/secrets/#setting-secrets).
+
+```cmd
+fly secrets set MY_SECRET=romance
+```
+```output
+Secrets are staged for the first deployment
+```
+
+You can list the secrets you've already set using `fly secrets list`
+
+```cmd
+fly secrets list
+```
+```
+NAME      DIGEST                           DATE
+MY_SECRET b9e37b7b239ee4aefc75352fe3fa6dc6 1m20s ago
+```
+
+The values aren't displayed since they are secret!
 
 ## _Deploying to Fly_
 
 To deploy changes to your app, just run just run:
 
 ```cmd
-flyctl deploy
+fly deploy
 ```
 
-This will lookup our `fly.toml` file, and get the app name `helloruby` from there. Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl will return you to the command line when it's done.
-
-## _Viewing the Deployed App_
-
-Now the application has been deployed, let's find out more about its deployment. The command `flyctl info` will give you all the essential details.
-
-```cmd
-flyctl status
-```
-```output
-App
-  Name     = helloruby
-  Owner    = demo
-  Version  = 1
-  Status   = running
-  Hostname = helloruby.fly.dev
-
-Allocations
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-d61b5d88 1       fra    run     running 1 total, 1 passing 0        2m21s ago
-```
+This will lookup our `fly.toml` file, and get the app name from there. Then `fly` will start the process of deploying our application to the Fly platform. Flyctl will return you to the command line when it's done.
 
 ## _Connecting to the App_
 
 The quickest way to browse your newly deployed application is with the `flyctl open` command.
 
 ```cmd
-flyctl open
+fly open
 ```
 ```output
 Opening http://helloruby.fly.dev/
@@ -170,19 +176,12 @@ Opening http://helloruby.fly.dev/
 
 Your browser will be sent to the displayed URL. Fly will auto-upgrade this URL to a HTTPS secured URL.
 
-## _Bonus Points_
-
-* If you want to know what IP addresses the app is using, try `flyctl ips list`:
-
-```cmd
-flyctl ips list
-```
-```out
-TYPE ADDRESS                             CREATED AT
-v4   50.31.246.176                       31m16s ago
-v6   2a09:8280:1:ec33:28d:5d1c:e0e9:2839 31m16s ago
-```
-
 ## _Arrived at Destination_
 
 You have successfully built, deployed, and connected to your first Ruby application on Fly.
+
+You can monitor and explore your app with the following command:
+
+```cmd
+fly dashboard
+```

@@ -62,6 +62,11 @@ $ root@f066b83b:/# dig +short aaaa paulgra-ham.internal @fdaa:0:18::3
 fdaa:0:18:a7b:7d:f066:b83b:2
 ```
 
+## Connecting to a running service via its 6PN address
+In the `/etc/hosts` of a deployed fly app, we alias the 6PN address of the app to `fly-local-6pn`.  
+So, in order for a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, you need to bind it to `fly-local-6pn:8080` for it to be accesible at "[6PN_Address:8080]".  
+(`fly-local-6pn` is to 6pn-addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine)
+
 ## Fly `.internal` addresses
 
 A typical .internal address is composed of a region qualifier, followed by the app name followed by `.internal`.
@@ -109,8 +114,6 @@ The general flow for setting this up is:
 3. Deploy your app
 4. Access the services on the private IP from the target organization network
 
-Flycast IP have no associated DNS entry.
-
 **Note: If you have a public IP address assigned to your app, services in fly.toml will be exposed to the public internet. Verify this with `fly ips list`.**
 
 ### Assigning a Flycast address
@@ -134,6 +137,12 @@ If you want to expose services to another Fly organization you have access to, u
 VERSION	IP                	TYPE   	REGION	CREATED AT
 v6     	fdaa:0:22b7:0:1::3	private	global	just now
 ```
+
+### DNS
+
+You can use `appname.flycast` domains. They behave like `appname.internal` domains except they only return Flycast addresses (if you have any) of the app.
+
+The original motivation for this is accommodating PostgreSQL clients that don’t like raw IPv6 addresses in the connection string. The eagle eyed, and elephant-memoried of you might remember that we introduced Flycast for PostgreSQL to get away from DNS! Why are we going back? The problem we were trying to get away from with DNS is avoiding the case where there is a lag between a PostgreSQL instance becoming unhealthy or dying and it getting removed from DNS. Flycast IPs don’t change so we don’t have to worry about that issue in this case.
 
 ## Private Network VPN
 

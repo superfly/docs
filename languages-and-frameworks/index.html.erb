@@ -20,6 +20,7 @@ toc: false
   <li><%=link_to_page find_page("/docs/elixir") %></li>
   <li><%=link_to_page find_page("/docs/rails") %></li>
   <li><%=link_to_page find_page("/docs/laravel") %></li>
+  <li><%=link_to_page find_page("/docs/django") %></li>
 </ul>
 
 <h2 id="supported" class="group flex items-center relative mt-14 sm:mt-16 mb-10 group text-navy font-heading pb-1 border-b">
@@ -31,7 +32,6 @@ toc: false
 Each one of the language guides will take you through creating and deploying a simple application.
 
 <ul>
-  <li><%=link_to_page find_page("/docs/django") %></li>
   <% current_page.children.each do |page| %>
     <li>
       <%= link_to_page page %>
