@@ -27,7 +27,7 @@ Apps V2 doesn't behave identically to V1. It's less Nomady.
 
 At the moment, for example, flyd won't magically move a Machine from one host to another. There's a lot more information about this in [Carving the Scheduler Out of Our Orchestrator](/blog/carving-the-scheduler-out-of-our-orchestrator/).
 
-Machines within a single V2 App can also have different configurations and run different images, if you want. 
+Machines within a single V2 app can also have different configurations and run different images, if you want. Machines [deployed with `fly deploy`](/docs/apps/deploy/) are managed as a group, though, and run from the same image and the same config. 
 
 Your organization can have V1 apps and V2 apps on the same private network, running different layers of your full-stack application.
 
