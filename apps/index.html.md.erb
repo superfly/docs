@@ -1,0 +1,19 @@
+---
+title: "Fly Apps"
+layout: docs
+toc: false
+nav: firecracker
+---
+<%= partial "/docs/partials/v2_transition_banner" %>
+
+In this section we'll talk about how to create and manage a [Fly App](/docs/reference/apps/).
+
+A Fly App is a collection of one or more [Fly Machines](/docs/machines/) VMs. The `fly launch` and `fly deploy` commands let you manage an app's Machines as a group with a unified [configuration](/docs/reference/configuration/).
+
+
+<div class="callout">
+**That should really say "two or more" Machines.** A Machine is planted firmly on a particular server. If that server becomes incapacitated, or if someone cuts an undersea cable and your users can't talk to it, **your app will have downtime.** It'll happen eventually. So run two or more Machines for high availability. Even better, put Machines in different regions.
+</div>
+
+You can also configure and manage Machines individually; see the [Fly Machines](/docs/machines/) docs.
+

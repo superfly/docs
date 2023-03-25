@@ -1,0 +1,95 @@
+---
+title: Deploy a Fly App
+layout: docs
+nav: firecracker
+titlecase: false
+order: 30
+---
+
+<%= partial "/docs/partials/v2_transition_banner" %>
+
+<div class="callout">
+**Note:** The first time you run `fly deploy` on a pre-V2 Machines App&mdash;an app created using `fly create --machines` or `fly machine run`&mdash;it will migrate that app to the Fly Apps Platform and unify the configuration for all the app's existing Machines. **Do not run `fly deploy` on a pre-V2 app with existing Fly Machines, if they have different configs and/or code bases and you want to keep it that way.** See [**Migrate a Machines App to Apps V2**](/docs/apps/migrate-to-v2) for more information.
+</div>
+
+
+The `fly deploy` flyctl command builds your Fly App and spins it up on one or more Fly Machines. 
+
+Whether you've run [`fly launch`](/docs/apps/launch/) but haven't deployed yet, or want to apply changes to your deployed Fly App's source or configuration, you can make a new release by running 
+
+````cmd
+fly deploy
+``` 
+
+from the root directory of your project, where any app source code, project config, `fly.toml`, and Dockerfile are located.
+
+If you haven't deployed the app before, `fly deploy` will create one Machine for every [process group](/docs/apps/processes/) defined in the app's configuration. If you haven't explicitly defined any process groups, the first deployment gives you one Machine.
+
+Subsequent deployments update the app's Machines as a group, with the latest local changes to the app's source and configuration. It is possible for a Fly App to have Machines that aren't managed by `fly deploy`.
+
+
+
+## Configuration
+
+flyctl will look for a `fly.toml` file to find the name of the app to operate on, and for an app configuration to apply during deployment. Use `fly deploy -a <app-name>` to override the app name given in `fly.toml` and deploy the project in the current working directory to a different existing Fly App.
+
+There are [a number of other options](/docs/flyctl/deploy/) you can use with the `fly deploy` command.
+
+## The build
+
+`fly deploy` builds, or gets, the Docker image for the app, and refreshes Machines with the latest changes.
+
+Here's how `fly deploy` determines how to get the app's Docker image:
+
+1. If an image is specified, either with the `--image` option or in the `[build]` section of `fly.toml`, use that image, regardless of the presence of a Dockerfile in the working directory or the use of the `--dockerfile` option.
+2. Otherwise, if a Dockerfile is specified, either with the `--dockerfile` or in the `[build]` section of `fly.toml`, use that Dockerfile to build the image.
+3. Otherwise, if there's a `Dockerfile` (named exactly `Dockerfile`) in the local working directory, use that Dockerfile for the build.
+
+Like `fly launch`, `fly deploy` takes the `--image` or `--dockerfile` options to specify how to get the app's Docker image. Unlike `fly launch`, `fly deploy` actually retrieves the image or gets it built (either with Docker on your local machine or using one of our remote builders) `fly deploy` checks the `[build]` section of `fly.toml` to determine how to get the app's Docker image.
+
+## IP addresses
+
+If the app to be deployed is configured with an eligible HTTP `[[services]]` section, and it does not yet have [public IP addresses](/docs/reference/services/), `fly deploy` provisions a public IPv6 and a shared public IPv4 Anycast address. 
+
+## Machines not managed by `fly deploy`
+
+Machines created using `fly deploy` (or as part of a deployment during `fly launch`), or by `fly clone`ing such a Machine, carry a piece of metadata marking them as belonging to the Fly Apps V2 platform. These machines are updated as a group on all subsequent `fly deploy` commands, as are Machines that existed on a Machines App at the moment that it was migrated to Apps V2.
+
+New Machines created within an App using `fly machine run` don't have the Apps V2 metadata, and are not automatically managed by `fly deploy`, so these can have their own configuration different from that of the App, and can even be based on a different Docker image.
+
+## Volume mounts and `fly deploy`
+
+If a Machine has a mounted [volume](/docs/reference/volumes/), `fly deploy` can't be used to mount a different one. You can change the mount point at which the volume's data is available in the Machine's file system, though. This is configured in the [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) of `fly.toml`.
+
+[More about using Fly Volumes with Fly Apps](/docs/apps/volume-storage/)
+
+## `fly deploy` configuration in `fly.toml`
+
+Configure the following deployment behavior in the [`[deploy]` section](/docs/reference/configuration/#the-deploy-section) of `fly.toml`.
+
+### Release commands
+You can run a one-off [release command](/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment) in a temporary VM&mdash;using the successfully built release&mdash;before that release is deployed. This is good for, e.g., running database migrations.
+
+### Deployment strategy
+You can specify `rolling` deployment (wait for each Machine to be successfully deployed before starting the update of the next one), or `immediate` deployment (go ahead and bring all instances down for update at once).
+
+
+```cmd
+fly deploy
+```
+```out
+==> Building image
+Searching for image 'nginx' remotely...
+image found: img_wd57v5nge95v38o0
+Deploying dry-pond-1475 app with rolling strategy
+  Machine 21781973f03e89 update finished: success
+  Finished deploying
+```
+
+Nomad only: Legacy apps can continue to use `canary` and `bluegreen` deployment strategies.
+
+## Not all changes require a new App release
+
+You can [add an IP address](/docs/reference/services/#ip-addresses) to an App, for example, without redeploying.
+
+Adding a [secret](/docs/reference/secrets/) to the App does require a restart, so `fly secrets set` triggers a new deployment.

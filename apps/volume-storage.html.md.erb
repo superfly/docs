@@ -1,0 +1,135 @@
+---
+title: Add Volume Storage
+layout: docs
+nav: firecracker
+titlecase: false
+order: 30
+---
+
+<%= partial "/docs/partials/v2_transition_banner" %>
+
+Running apps can store ephemeral data on the root file systems of their member Machines, but a Machine's file system is rebuilt from scratch each time the app is deployed or the Machine is restarted.
+
+## Choosing an approach to storage
+
+Often the solution to persistent data storage is to connect your Fly App to a separate [database or object store](/docs/database-storage-guides/).
+
+Fly.io offers a [deploy-it-yourself Postgres app](/docs/postgres/) with some tools to make it easier to manage yourself.
+
+If you need hardware-local disk storage on your Fly App VMs&mdash;for example, if your Fly App _is_ a database (or if you want to use [LiteFS](/docs/litefs))&mdash;you'll want to use [Fly Volumes](/docs/reference/volumes/).
+
+A Fly Volume is a slice of NVMe disk storage attached to the server that hosts your Machine. This has pros and cons, and you should look at the [Fly Volumes](/docs/reference/volumes/) page before deciding that this is the best solution for your use case.
+
+<div class="callout">
+**The TLDC (too lazy, didn't click) of that is:** Volume storage attached to your app's worker is a lot like the disk inside your laptop. It's fast and convenient to use, right there in your app's file system. Also like your laptop, an app with a single Machine and a single volume does not have high availability built in. **Hardware fails. You should run at least two Machines per app, and if you're using volumes, that means two volumes. You will experience downtime at some point if you only create one.**
+</div>
+
+Explore further options for data storage in [Databases & Storage](/docs/database-storage-guides/).
+
+Fly Postgres has [its own usage docs](/docs/postgres/), so here we'll focus on using Fly Volumes with your app.
+
+## Launch an app with a Fly Volume
+
+**The first rule of Fly Volumes is: always run at least two of them per application.** The way to do this is to run two Machines. Volumes don't sync up by themselves; different apps will have their own ways of dealing with this, so we won't get into that here.
+
+### Launch the app, but don't deploy immediately.
+
+The app has to exist for the volume to be created. The volume has to exist before you can mount it to a Machine. The first deployment will create a Machine. So the shortest path to a Machine with a mounted volume begins by launching the app, and saying `N` to "deploy now?":
+
+```cmd
+fly launch 
+```
+```out
+...
+Wrote config file fly.toml
+? Would you like to deploy now? No
+Your app is ready! Deploy with `flyctl deploy`
+```
+
+### Configure the app to mount the volume
+
+Make sure there's a `[mounts]` section in `fly.toml`. As an example, the following configures the app to expose data from a volume named `myapp_data` under the `/data` directory of the application.
+
+```toml
+[mounts]
+source="myapp_data"
+destination="/data"
+```
+
+### Provision the volume
+
+Create a volume for the app, with the name you chose, in the same region you're deploying the app to:
+
+```cmd
+fly volumes create myapp_data --region lhr --size 1 --app myapp
+```
+
+### Deploy the app
+
+```cmd
+fly deploy 
+```
+
+On the first deployment, you'll get one Machine. You can confirm this with `fly status`.
+
+### Confirm the volume is mounted
+
+You can check on all the volumes in your app using `fly volumes list`. The `ATTACHED VM` column lets you know which Machine, if any, the volume is mounted on.
+
+```cmd
+fly volumes list
+```
+```out
+ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
+vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  3 minutes ago
+```
+
+You can also see the volume in the Machine's file system (there's only one Machine so far):
+```cmd
+fly ssh console -s -C df
+```
+```out
+? Select VM: lhr: 5683606c41098e fdaa:0:3b99:a7b:7e:3155:9844:2 nameless-feather-6339
+Connecting to fdaa:0:3b99:a7b:7e:3155:9844:2... complete
+Filesystem     1K-blocks   Used Available Use% Mounted on
+devtmpfs          103068      0    103068   0% /dev
+/dev/vda         8191416 172748   7582856   3% /
+shm               113224      0    113224   0% /dev/shm
+tmpfs             113224      0    113224   0% /sys/fs/cgroup
+/dev/vdb         1011672   2564    940500   1% /data
+```
+
+Voilà: our 1GB volume is mounted at `/data`.
+
+### Clone the first Machine to scale out to two VMs
+
+```cmd
+fly machine clone 5683606c41098e
+```
+
+Check what that did:
+
+```cmd
+fly volumes list
+```
+```
+ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT     
+vol_ez1nvxkwl3jrmxl7    created data    1GB     lhr     4de2    true            91851edb6ee983  39 seconds ago
+vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  7 minutes ago
+```
+
+`fly machine clone` creates an additional Machine with the same configuration as the source, and creates and mounts a volume for the new Machine, if the source Machine has one. **`fly machine clone` doesn't write data into the new volume.**
+
+At this point there are two identically configured Machines on the app, each with a volume of the same size. You take it from here, setting up whatever data replication you need. 
+
+### On a Nomad app
+
+Create an additional volume in the desired region, then [use `fly scale count`](/docs/legacy-scaling/) to add a VM to use it.
+
+## Remove a volume from an app
+
+You can't currently unmount a volume from an existing Machine. If you need to remove volumes from your app, you can [scale it](/docs/apps/scale-count/) down to zero Machines, [destroy all the volumes](/docs/reference/volumes#delete-a-volume), remove the `mounts` section from `fly.toml`, and redeploy. **Only destroy a volume whose data you no longer need access to.**
+
+### On a Nomad app
+
+Remove the `mounts` section from `fly.toml` and redeploy. This will create a new VM without a volume. [Destroy any unused volumes](/docs/reference/volumes#delete-a-volume), **only if you no longer need their data**.

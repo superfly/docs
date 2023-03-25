@@ -5,6 +5,8 @@ sitemap: false
 nav: firecracker
 ---
 
+<%= partial "/docs/partials/v2_transition_banner" %>
+
 Volumes are local persistent storage for [Fly Machines](/docs/machines/). They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
 
 A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware.
@@ -31,22 +33,24 @@ Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command.
 
 <div class="callout">`fly volumes` is aliased to `fly volume` and `fly vol` for convenience.</div>
 
-## Creating Volumes
+## Create a Volume
 
 Create a volume for an app using `fly volumes create`. The default volume size is 3GB. See [`fly volumes create`](/docs/flyctl/volumes-create/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
 The following command creates a new volume named "myapp_data" with 40GB of storage in the lhr (London Heathrow) region, for the application whose `fly.toml` file is in the working directory. To specify a different app, use the `-a` or `--app` flag.
 
 ```cmd
-fly volumes create myapp_data --region lhr --size 40
+fly volumes create myapp_data --region yyz --size 1
 ```
 ```out
-        ID: Qn1Ln6nBZOz0lHM268OZ
+        ID: vol_kgj54500d3qry2wz
       Name: myapp_data
-    Region: lhr
-   Size GB: 40
+       App: myapp
+    Region: yyz
+      Zone: acc6
+   Size GB: 1
  Encrypted: true
-Created at: 04 Jan 21 10:14 UTC
+Created at: 04 Mar 23 03:32 UTC
 ```
 
 Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--no-encryption` to instead create an unencrypted volume for improved performance at deployment and runtime.
@@ -55,9 +59,9 @@ Volumes are bound to both apps and regions. A volume is directly associated with
 
 Most people use volumes for databases, so for high availability, we default to putting each of your app's volumes on different hardware (equivalent to using `--require-unique-zone=true` with `fly volumes create`). This setting does limit the number of volumes your app can have in a region.
 
-When you create a volume, its region is added to the apps region pool to allow app instances to be started with it.
+When you create a volume on a legacy (Nomad) Fly App, its region is added to the app's region pool to allow app instances to be started with it.
 
-## Using Volumes
+## Mount a Volume
 
 In the `fly.toml` for the app, there should be a section that mounts a volume into the app, like so:
 
@@ -67,13 +71,15 @@ source="myapp_data"
 destination="/data"
 ```
 
-This would make `myapp_data` appear under the `/data` directory of the application. With this present, if an app instance is started and cannot find an unused volume named `myapp_data`, it will not be started and the system will look elsewhere in the region pool to start the app instance. 
+When a Fly App is deployed with this configuration file, the data from a volume named `myapp_data` appears under the `/data` directory of the application. With this present, if an app instance is started and cannot find an unused volume named `myapp_data`, it will not be started.
 
 Also, if you have specified a mounts section in `fly.toml` and forgotten to create a volume, your deployment will fail. 
 
 There can be multiple volumes of the same volume name in a region. Each volume has a unique ID to distinguish itself from others to allow for this. This allows multiple instances of an app to run in one region. Creating three volumes named `myapp_data` would let up to three instances of the app start up and run.
 
-## Listing Volumes
+Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app.
+
+## List an App's Volumes
 
 You can [get a list of all volumes created for an app](https://fly.io/docs/flyctl/volumes-list/) using the sub-command `list`. 
 
@@ -81,28 +87,28 @@ You can [get a list of all volumes created for an app](https://fly.io/docs/flyct
 fly volumes list
 ```
 ```out
-ID                   Name       Size Region Created At
-
-Onk6nLnV7yzR9H93wl5O myapp_data 40GB iad    38 minutes ago
-x7K57J7klmq14UgY0lG7 myapp_data 40GB lhr    39 minutes ago
-Qn1Ln6nBZOz0lHM268OZ myapp_data 40GB lhr    1 hour ago
+ID                      STATE   NAME          SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
+vol_xme149kke8ovowpl    created myapp_data    1GB     iad     7806    true                            2 minutes ago
+vol_od56vjpp95mvny30    created myapp_data    1GB     lhr     79f0    true                            2 minutes ago
+vol_kgj54500d3qry2wz    created myapp_data    1GB     yyz     acc6    true                            9 minutes ago
 ```
 
 The unique ID can be used in commands that reference a specific volume, such as the `show` or `delete` sub-command. For example, the `show` command can display the details for a particular volume:
 
 ```cmd
-fly volumes show Qn1Ln6nBZOz0lHM268OZ
+fly vol show vol_kgj54500d3qry2wz
 ```
 ```out
-        ID: Qn1Ln6nBZOz0lHM268OZ
+        ID: vol_kgj54500d3qry2wz
       Name: myapp_data
-    Region: lhr
-   Size GB: 40
+       App: myapp
+    Region: yyz
+      Zone: acc6
+   Size GB: 1
  Encrypted: true
-Created at: 04 Jan 21 10:14 UTC
+Created at: 04 Mar 23 03:32 UTC
 ```
-
-## Extending Volumes
+## Extend a Volume
 
 [Volumes can be extended](https://fly.io/docs/flyctl/volumes-extend/), but cannot be made smaller. To make a volume larger, find its ID with `fly volumes list`, then use:
 
@@ -112,12 +118,49 @@ fly volumes extend <volume-id> -s <new-size>
 
 where `<new-size>` is the desired size in GB. 
 
-The VM using the target volume will have to be restarted in order to allow the file system to be resized. For "normal" apps, this will happen automatically; [Machines VMs](/docs/reference/machines/) will have to be restarted explicitly.
+The Machine attached to the target volume must be restarted to allow the file system to be resized. **On legacy Nomad-orchestrated Apps, the instance is automatically restarted, so this step isn't needed.**
+
+Get the `id` of the Machine that has the volume mounted (find it under `ATTACHED VM`).
+
+```cmd
+fly volumes list
+```
+```out
+ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT     
+vol_od56vjp5pzmvny30    created data    2GB     yyz     acc6    true            4d891de2f66587  36 minutes ago
+```
+
+
+Restart the Machine:
+
+```cmd
+fly machine restart <machine-id>
+```
+
+You can check that the new volume size is reflected in the Machine's file system by running `df` via `fly ssh console`. If there's more than one Machine on the app, `fly ssh console -s` allows you to select the correct one:
+
+```cmd
+fly ssh console -s -C df
+```
+```out 
+? Select VM:  [Use arrows to move, type to filter]
+> yyz: 4d891de2f66587 fdaa:0:3b99:a7b:ef:8cc4:dc49:2 withered-shadow-4027           
+Connecting to fdaa:0:3b99:a7b:ef:8cc4:dc49:2... complete
+Filesystem     1K-blocks   Used Available Use% Mounted on
+devtmpfs          103068      0    103068   0% /dev
+/dev/vda         8191416 172752   7582852   3% /
+shm               113224      0    113224   0% /dev/shm
+tmpfs             113224      0    113224   0% /sys/fs/cgroup
+/dev/vdb         2043856   3072   1930400   1% /storage
+```
+
+Here, the volume is mounted under `/storage` in the Machine's root file system and has been resized to 2GB.
 
 ## Snapshots and Restores
 
-We take daily block-level snapshots of volumes. Snapshots are kept for five days. [Find the snapshots belonging to your target volume](https://fly.io/docs/flyctl/volumes-snapshots-list/) with `fly volumes snapshots list <volume-id>`:
+We take daily block-level snapshots of volumes. Snapshots are kept for five days. These may not have your latest data. You should implement your own backup plan for important data.
 
+[Find the snapshots belonging to your target volume](https://fly.io/docs/flyctl/volumes-snapshots-list/) with `fly volumes snapshots list <volume-id>`:
 
 ```cmd
 fly volumes snapshots list vol_wod56vjyd6pvny30
@@ -158,7 +201,7 @@ Created at: 02 Aug 22 21:27 UTC
 
 The `flyctl` output shows the details of the new volume, including its size.
 
-## Deleting Volumes
+## Delete a Volume
 
 The `delete` sub-command allows you to delete a specific volume.
 

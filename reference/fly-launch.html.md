@@ -8,7 +8,17 @@ redirect_from:
   - /docs/getting-started/launch-app/
 ---
 
-Usually, to create a new App on Fly.io, you'll write your source code and then run `fly launch`. [`fly launch`](/docs/flyctl/launch/) is an all-in-one tool that automates as much as possible between writing the code and deploying on Fly.io, setting you up with a running app with good defaults.
+The usual way to create a new Fly App is to write your project and then run `fly launch`. [`fly launch`](/docs/flyctl/launch/) is an all-in-one tool that automates as much as possible between writing the code and deploying on Fly.io, setting you up with a running app with good defaults.
+
+`fly launch` can perform several tasks, depending on the project:
+
+* initialization of a new App under your Fly.io organization
+* detection of known project types
+* app configuration
+* building of the Docker image we use to launch app VMs
+* provisioning of resources like Postgres clusters, Redis databases, and IP addresses
+* the first deployment
+
 
 The language-specific launchers built into flyctl via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through `fly launch` or through a more manual process you might begin with `fly apps create`.
 
@@ -60,7 +70,6 @@ Initial CPU and RAM specs default to the smallest available. Some projects will 
 
 If all goes well, one of several things will happen when you run `fly launch` in a project's working directory:
 
-1. An existing app will be redeployed. This happens if a `fly.toml` is found in the directory, containing an app name that belongs to an app that exists in the Fly.io app database but does not have a healthy instance running. In this case, deployment is attempted using the configuration present inside this `fly.toml`.
 1. If the `--image` flag was used, the app will be configured to use a preexisting Docker image on deployment and no further configuration will be done.
 1. If the `--dockerfile` flag was used, the app will be configured to use the specified Dockerfile to build the image and no further configuration will be done.
 2. Otherwise, flyctl scans the local working directory.

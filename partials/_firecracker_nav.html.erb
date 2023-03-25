@@ -9,19 +9,13 @@
         <%= nav_link "Hands-on with Fly.io", "/docs/hands-on/" %>
       </li>
       <li>
-        <%= nav_link "Web Launchers", "/launch/" %>
-      </li>
-      <li>
-        <%= nav_link "Install Flyctl", "/docs/hands-on/install-flyctl/" %>
-      </li>
-      <li>
-        <%= nav_link "Log in to Fly.io", "/docs/getting-started/log-in-to-fly/" %>
-      </li>
-      <li>
         <%= nav_link "Working with Fly Apps", "/docs/getting-started/working-with-fly-apps/" %>
       </li>
       <li>
         <%= nav_link "Troubleshooting Deployments", "/docs/getting-started/troubleshooting/" %>
+      </li>
+      <li>
+        <%= nav_link "Web Launchers", "/launch/" %>
       </li>
     </ul>
   </li>
@@ -44,6 +38,49 @@
       </li>
       <li>
         <%= nav_link "More...", "/docs/languages-and-frameworks/" %>
+      </li>
+    </ul>
+  </li>
+</ul>
+<ul class="outline-list">
+  <li>
+    <%= nav_link "Fly Apps", "/docs/apps/" %>
+    <ul>
+      <li>
+        <%= nav_link "Launch a New App", "/docs/apps/launch/" %>
+      </li>
+      <li>
+        <%= nav_link "Deploy a Fly App", "/docs/apps/deploy/" %>
+      </li>
+      <li>
+        <%= nav_link "Get Information about an App", "/docs/apps/info/" %>
+      </li>  
+      <li>
+        <%= nav_link "Add Volume Storage", "/docs/apps/volume-storage/" %>
+      </li>
+      <li>
+        <%= nav_link "Scale Machine CPU and RAM", "/docs/apps/scale-machine/" %>
+      </li>
+      <li>
+        <%= nav_link "Add or Remove Machines", "/docs/apps/scale-count/" %>
+      </li>
+      <li>
+        <%= nav_link "Restart an App", "/docs/apps/restart/" %>
+      </li>
+      <li>
+        <%= nav_link "Run Multiple Processes in an App", "/docs/apps/processes/" %>
+      </li>
+      <li>
+        <%= nav_link "Delete an App", "/docs/apps/delete/" %>
+      </li>
+      <li>
+        <%= nav_link "Scale V1 (Nomad) Apps", "/docs/apps/legacy-scaling/" %>
+      </li>
+            <li>
+        <%= nav_link "Migrate a Machines App to Apps V2", "/docs/apps/migrate-to-v2/" %>
+      </li>      
+      <li>
+        <%= nav_link "App Configuration Reference", "/docs/reference/configuration/" %>
       </li>
     </ul>
   </li>
@@ -164,9 +201,6 @@
       </li>
       <li>
         <%= nav_link "Runtime Environment", "/docs/reference/runtime-environment/" %>
-      </li>
-      <li>
-        <%= nav_link "Scaling", "/docs/reference/scaling/" %>
       </li>
       <li>
         <%= nav_link "Build Secrets", "/docs/reference/build-secrets/" %>

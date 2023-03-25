@@ -1,0 +1,210 @@
+---
+title: Launch a New App on Fly.io
+objective: 
+layout: docs
+nav: firecracker
+order: 10
+---
+
+<%= partial "/docs/partials/v2_transition_banner" %>
+
+To create a brand new app on Fly.io, run 
+
+```cmd
+fly launch
+``` 
+
+from the root directory of your project.
+
+If you're in a hurry to try your first launch, we also have a condensed [Hands-on](/docs/hands-on/). You may also be interested in our [language- and framework-specific launch guides](/docs/languages-and-frameworks/).
+
+## Ingredients of a ready-to-deploy Fly App
+
+Here are the components of a successful launch, ready for the first deployment:
+
+* a way to get a Docker image that Fly.io can use to boot up a VM with your app running
+* Fly.io-specific [configuration](/docs/reference/configuration/) for the app, in the form of a `fly.toml` file.
+* platform resources such as [public IP addresses](/docs/reference/services/), [Fly Volumes](/docs/reference/volumes), [app secrets](/docs/reference/secrets/), [Fly Postgres](/docs/postgres/) clusters, integrated resources like [Redis by Upstash](/docs/reference/redis/)
+
+## Framework launch scanners
+
+Depending on your project, `fly launch` may be able to look at your app's source code and get through that list, straight to a deployed Fly App, in one swoop. This is most likely for frameworks on which Fly.io has people specializing full time. Right now that's [Elixir/Phoenix](/docs/elixir/), [Laravel](/docs/laravel/), [Rails](/docs/rails/), and [Django](/docs/django/), but we have launch guides for various other [languages and frameworks](/docs/languages-and-frameworks/).
+
+Our best scanners furnish a Dockerfile from which your app's image will be built. Some of our terrible older scanners may invoke [buildpacks](/docs/reference/builders/#buildpacks), which tend to be slow and brittle.
+
+Running `fly launch` in a directory containing a working Django app (it happens to be the one from [our Django getting-started example](https://fly.io/docs/django/getting-started/)):
+
+```cmd
+fly launch
+```
+```out
+Creating app in /Users/chris/FlyTests/django
+Scanning source code
+Detected a Django app
+? Choose an app name (leave blank to generate one): 
+...
+```
+
+The flyctl Django scanner has taken ownership of my launch. Visit our [Django guide](/docs/django/getting-started/) to see how that story will end. (Spoiler: it has a happy ending.)
+
+## Custom launch
+
+You can nudge `fly launch` to better suit your project. 
+
+### Choose how the Docker image is built
+
+Tell `fly launch` how you want to get the Docker image for your app, using either the `--image` or `--dockerfile` option, or by catching the Dockerfile launch scanner's attention with the presence of a [Dockerfile](/docs/languages-and-frameworks/dockerfile/) in your app's root directory. The Dockerfile scanner doesn't do a lot of configuration, but it prevents other scanners from taking over.
+
+The actual Docker image build (or image pull) for a Fly App takes place during deployment. `fly launch` sets the stage by recording how to build, or get, the image, and both the first and all later deploys use that information.
+
+### Customize the configuration file
+
+You can provide your own `fly.toml` and `fly launch` will offer to read it in, in lieu of the default config. That sets a starting point for the app configuration, and under some circumstances a framework launch scanner may overwrite parts of it.
+
+There are also [a number of other options](/docs/flyctl/launch/) you can use to exert control over `fly launch`.
+
+If `fly launch` doesn't have a scanner that can set up your app automatically, it will still initialize a new Fly App in your Fly.io organization and provide you with a default app configuration that's a reasonable starting point for a simple web app. 
+
+It's also possible to perform an entirely manual "launch", skipping all the launch scanners and full-service resource provisioning, using `fly apps create`, a hand-crafted (or copied) `fly.toml`, and step-by-step resource provisioning, followed by `fly deploy`.
+
+### An example
+
+Here's me launching my Flask app that I've written and tested using the local dev server:
+
+```cmd
+fly launch 
+```
+```out            
+Creating app in /Users/chris/FlyTests/hello-gunicorn-flask
+Scanning source code
+Detected a Python app
+Using the following build configuration:
+        Builder: paketobuildpacks/builder:base
+? Choose an app name (leave blank to generate one): 
+```
+
+If I carry on with this buildpack-based build, this story does not end with a working Flask app. Dockerfile-based deployments are much simpler and faster anyway, so I decide to use a Dockerfile. (I hit ctrl-C to stop the launch.)
+
+Conveniently, there's also already a [Dockerfile that works with this app](https://github.com/fly-apps/hello-gunicorn-flask/blob/main/Dockerfile).
+
+With a Dockerfile in my working directory, if I run `fly launch` again, the Dockerfile launcher takes over before the generic Python buildpack one has a chance to.
+
+```cmd
+fly launch
+```
+```out
+An existing fly.toml file was found for app testrun
+? Would you like to copy its configuration to the new app? No
+```
+I have a `fly.toml` in my working directory from cloning [the `fly-apps/hello-gunicorn-flask` repo](https://github.com/fly-apps/hello-gunicorn-flask) to my local machine, but I want to use whatever config `fly launch` gives me, so I answer `No` to that question.
+
+```
+Creating app in /Users/chris/FlyTests/hello-gunicorn-flask
+Scanning source code
+Detected a Dockerfile app
+```
+There's the Dockerfile scanner taking over. Now some general app configuration:
+
+```
+? Choose an app name (leave blank to generate one): testrun
+? Select Organization: Chris (personal)
+Some regions require a paid plan (fra, maa).
+See https://fly.io/plans to set up a plan.
+
+? Choose a region for deployment: Toronto, Canada (yyz)
+```
+
+This is the region where flyctl will start Machines for this app if not otherwise specified. The first deployment will put its Machine(s) in that region.
+
+```
+Created app 'testrun' in organization 'personal'
+Admin URL: https://fly.io/apps/testrun
+Hostname: testrun.fly.dev
+? Would you like to set up a Postgresql database now? No
+? Would you like to set up an Upstash Redis database now? No
+```
+
+`fly launch` offers to provision [Fly Postgres](/docs/postgres/) and [Redis by Upstash](/docs/reference/redis/) databases. I don't need them for my very simple web app.
+
+```
+Wrote config file fly.toml
+? Would you like to deploy now? Yes
+==> Building image
+Remote builder fly-builder-crimson-dew-6190 ready
+...
+```
+
+It's downloaded the new app's configuration into `fly.toml` and offered to deploy straight away. I accept. By default, the Docker build happens on one of Fly.io's remote builder Machines.
+
+`fly launch` always rewrites `fly.toml` even if it's just writing an identical config back into the file. 
+
+
+Aside: In the case of my Dockerfile app, I ended up with the default `fly.toml`, configured with an HTTP service suitable for a basic web app, but with one small tweak. My Dockerfile contains the line:
+
+```Dockerfile
+EXPOSE 4999
+```
+
+My Flask app listens on port 4999, not the more common (and default for `fly.toml`) port 8080.
+
+Fly.io doesn't care about EXPOSE statements in Dockerfiles directly, because we don't actually run containers, and services via our proxy are configured in `fly.toml`, not in the Dockerfile. But as a convenience, the Dockerfile `fly launch` scanner catches EXPOSE if it's there, and fills in `internal_port` on the [public HTTP `[[services]]` section](/docs/reference/configuration/#the-services-sections) accordingly.
+
+Coming back to the deployment, skipping some of the build output:
+
+```
+...
+--> Pushing image done
+image: registry.fly.io/testrun:deployment-01GWAPGQWQ5N1HY5651D5DX5B0
+image size: 141 MB
+Provisioning ips for testrun
+  Dedicated ipv6: 2a09:8280:1::5b:297
+  Shared ipv4: 66.241.125.144
+  Add a dedicated ipv4 with: fly ips allocate-v4
+
+```
+
+Because I had an HTTP service configured, and no [public IP addresses](/docs/reference/services/), these were [provisioned on deployment](/docs/apps/deploy/#ip-addresses).
+
+```
+Process groups have changed. This will:
+ * create 1 "app" machine
+No machines in group 'app', launching one new machine
+  Machine 17811122f5d089 [app] update finished: success
+  Finished deploying
+```
+
+The first deployment has finished!
+
+I haven't explicitly configured [process groups](/docs/apps/processes/), so my app gets a single Machine assigned to the default `app` process. With `fly status` I can see that this machine is running in `yyz` (Toronto), where I told `fly launch` I wanted my app to be deployed. 
+
+```cmd
+fly status
+```
+```out
+App
+  Name     = testrun                                        
+  Owner    = personal                                   
+  Hostname = testrun.fly.dev                                
+  Image    = testrun:deployment-01GWAPGQWQ5N1HY5651D5DX5B0  
+  Platform = machines                                   
+
+Machines
+ID              PROCESS VERSION REGION  STATE   HEALTH CHECKS   LAST UPDATED         
+17811122f5d089  app     1       yyz     started                 2023-03-24T20:56:45Z
+```
+
+I can [scale out](/docs/apps/scale-count/) by adding Machines in other regions if I want to get close to users in more corners of the world.
+
+To check that my new web app is actually working, I run
+
+```cmd
+fly open
+```
+
+to visit my app in the browser!
+
+## After `fly launch`
+
+If you've run `fly launch` but haven't deployed yet, want to change your configuration, update your app source, or change or provision platform resources such as [public IP addresses](/docs/reference/services/), [Fly Volumes](/docs/reference/volumes), [app secrets](/docs/reference/secrets/), [Fly Postgres](/docs/postgres/) clusters, or integrated resources like [Redis by Upstash](/docs/reference/redis/), you can go ahead and do so, and [(re)deploy with `fly deploy`](/docs/apps/deploy/).
+
+Once your app is deployed you'll probably want to check up on it using one or more of the techniques in [Get Information About an App](/docs/apps/info/). When you're ready to [go to production](/docs/going-to-production/), [scale up](/docs/apps/scale-count/) to two or more Machines [for high availability](/docs/apps/).

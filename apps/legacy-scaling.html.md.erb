@@ -1,9 +1,12 @@
 ---
-title: Scaling and Autoscaling
+title: Scale V1 (Nomad) Apps
 layout: docs
 sitemap: false
 nav: firecracker
+redirect_from: /docs/reference/scaling/
 ---
+
+<%= partial "docs/partials/legacy_apps_doc" %>
 
 There are multiple dimensions of scaling on Fly.io.
 
@@ -31,11 +34,13 @@ lhr
 Backup Region:
 ```
 
-Backup regions are disabled by default as they cause more problems than they solve.
-
 The create command, in this case, was issued in the UK, so London (LHR-London Heathrow) is the closest region.
 
 ### Backup Regions
+
+<div class="callout">
+Backup regions are disabled by default as they cause more problems than they solve.
+</div>
 
 Continuing our previous example: if for any reason your application can't be deployed in LHR, Fly will attempt to bring it up in either `ams` (Amsterdam) or `fra` (Frankfurt). Users won't notice this! They’re directed to the nearest running instance automatically. Backup Regions are selected based on the geographical closeness of the regions selected for your region pool.
 

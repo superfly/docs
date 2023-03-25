@@ -1,0 +1,39 @@
+---
+title: Add or Remove Machines
+objective: 
+layout: docs
+nav: firecracker
+order: 60
+---
+<%= partial "/docs/partials/v2_transition_banner" %>
+
+## Scale up
+
+Use `fly machine clone` to add a Machine that will be managed by `fly deploy`. The new Machine will be, as you would expect, a copy of the specified Machine. If the original Machine has a [Fly Volume](/docs/reference/volumes/) attached, an empty volume will be provisioned for the new Machine. It's up to you to decide what to put on the new volume; `fly machine clone` will not automatically copy the contents of the original Machine's volume.
+
+```
+fly machine clone 21781973f03e89
+fly machine clone --region syd 21781973f03e89
+fly machine clone --region ams 21781973f03e89
+```
+
+After running the above commands, there are four Machines running for this app: the original Machine plus three new ones. 
+
+## Scale down
+
+Use `fly machine stop` and `fly machine destroy` to scale down the app:
+
+```
+$ fly machine stop 9080524f610e87
+$ fly machine destroy 9080524f610e87
+```
+
+If a Machine is misbehaving (for instance, it's not `stop`ping successfully), you can try `fly machine destroy --force` to get rid of it.
+
+```cmd
+fly machine destroy --force 0e286039f42e86
+```
+
+If you `destroy` a Machine, don't forget that any volume that it had been using still exists until you either `fly volumes delete` it or `fly destroy` the Fly App it belongs to.
+
+**For existing Nomad/V1 Fly Apps**: Existing apps whose VMs are managed by Nomad can still be scaled "horizontally" using [`fly scale count`](/docs/flyctl/scale-count/). For more, see [Scale V1 (Nomad) Apps](/docs/apps/legacy-scaling/).

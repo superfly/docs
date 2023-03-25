@@ -8,25 +8,22 @@ redirect_from:
   - /docs/hands-on/view-app/
 ---
 
-Now the application has been deployed, let's find out more about its deployment. The command `flyctl status` will give you all the essential details.
+Now the application has been deployed, let's find out more about its deployment. The command `fly status` will give you the basic details.
 
 ```cmd
-flyctl status
+fly status
 ```
-```output
+```out
 App
-  Name     = hellofly
-  Owner    = dj
-  Version  = 0
-  Status   = running
-  Hostname = hellofly.fly.dev
+  Name     = hellofly          
+  Owner    = personal       
+  Hostname = hellofly.fly.dev  
+  Platform = machines       
 
-Allocations
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-987e3ac2 0       fra    run     running 1 total, 1 passing 0        58s ago
-$
+ID              STATE   REGION  HEALTH CHECKS           IMAGE                   CREATED              UPDATED              
+e78492ecee0d83  started iad     1 total, 1 passing      flyio/hellofly:latest   2023-01-22T03:32:52Z 2023-01-22T03:32:53Z
 ```
 
-As you can see, the application has been deployed with a DNS hostname of hellofly.fly.dev. Your deployment's name will, of course, be different. We can also see that one instance of the app is now running in the fra (Frankfurt) region. Next, we connect to it.
+In this example, the application has been deployed with a DNS hostname of `hellofly.fly.dev`. Your deployment's name will, of course, be different. We can also see that the app has a single VM running in the iad (Virginia) region.
 
-[Next: Visit Your App on Fly](/docs/hands-on/open-app/)
+[Next: Visit Your App on Fly.io](/docs/hands-on/open-app/)
