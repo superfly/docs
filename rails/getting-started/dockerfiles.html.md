@@ -166,8 +166,6 @@ docker compose build
 docker compose up
 ```
 
-Change `rails-welcome` to the name of your application.
-
 Windows Powershell users will want to use the following command instead of export:
 
 ```powershell
