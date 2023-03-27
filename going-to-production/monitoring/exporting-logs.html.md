@@ -70,14 +70,14 @@ There are [2 wildcards](https://docs.nats.io/nats-concepts/subjects#wildcards) y
 * `*` wildcards go between strings and can be used multiple times
 * `>` wildcards go at the end of a string and can be used once
 
-For example, to only ship logs for an application named `sandwhich`, you would set the `SUBJECT` environment variable like so (in your Log Shipper `fly.toml` file):
+For example, to only ship logs for an application named `sandwich`, you would set the `SUBJECT` environment variable like so (in your Log Shipper `fly.toml` file):
 
 ```toml
 [env]
   SUBJECT = "logs.sandwich.>"
 ```
 
-This uses wildcard `>` to say to grab all logs from application `sandwhich` no matter what region or instance they came from.
+This uses wildcard `>` to say to grab all logs from application `sandwich` no matter what region or instance they came from.
 
 Another example:
 
