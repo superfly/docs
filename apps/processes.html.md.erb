@@ -47,9 +47,7 @@ Process group commands in a Fly App correspond to CMD in Docker; they don't repl
 
 ## Processes and services
  
-Chances are, you only want user requests to hit one of your processes; in the above example, that process is `web`. You can define services selectively for any processes that need to accept connections via Fly Proxy (whether [publicly](/docs/reference/services/) or via [Flycast](/docs/reference/private-networking/#flycast-private-load-balancing)).
-
-In the example above, you would specify the `web` process in the [`[[services]]` section](/docs/reference/configuration/#the-services-sections) for the app's HTTP service: 
+Chances are, you only want user requests to hit one of your processes; in the above example, that process is `web`, so you would specify the `web` process in the [`[[services]]` section](/docs/reference/configuration/#the-services-sections) for the app's HTTP service:
 
 ```toml
 ...
@@ -60,7 +58,9 @@ In the example above, you would specify the `web` process in the [`[[services]]`
   ...
 ```
 
-Fly Proxy doesn't know about process groups: it load-balances requests among all Machines with a service configured on the requested port. If more than one process group needs services defined, make sure they handle connections on different external ports, using multiple `[[services]]` sections.
+You can define distinct services for each process that needs to accept connections via Fly Proxy (whether [publicly](/docs/reference/services/) or via [Flycast](/docs/reference/private-networking/#flycast-private-load-balancing)), by creating multiple `[[services]]` sections in `fly.toml`. 
+
+**Note:** Make sure processes handle connections on different [external ports](/docs/reference/configuration/#services-ports). Fly Proxy doesn't know about process groups; it load-balances requests among all Machines with a service configured on the requested port.
 
 ## Deployment
 
