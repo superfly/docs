@@ -5,6 +5,8 @@ toc: false
 nav: firecracker
 ---
 
+<%= partial "/docs/partials/v2_transition_banner" %>
+
 Every customer VM on Fly.io belongs to a Fly App, which owns the information we need to run your code in Firecracker VMs and to route to your services. Anycast IPs, certificates, and custom domains belong to Apps.
 
 Fly Machines are the Firecracker VM building blocks of Fly Apps. 

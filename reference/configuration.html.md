@@ -5,6 +5,8 @@ sitemap: false
 nav: firecracker
 ---
 
+<%= partial "/docs/partials/v2_transition_banner" %>
+
 You can configure an app for deployment on Fly.io using a `fly.toml` file. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here. 
 
 TOML is a [simple configuration file format](https://github.com/toml-lang/toml). Here's a [useful introduction](https://npf.io/2014/08/intro-to-toml/) on its syntax.
