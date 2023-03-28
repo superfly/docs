@@ -369,9 +369,9 @@ Times are in milliseconds unless units are specified.
 
 **Note**: The `services.http_checks` section is optional and not generated in the default `fly.toml` file.
 
-## The `http_service` section
+## The `http_service` section (Apps V2 only)
 
-For apps that only need HTTP and HTTPS services, use this section to define a service that listens on ports 80 and 443. Port 80 will have an http handler. Port 443 will have a tls and http handler. Additional services defined with `[[services]]` will be configured as well.
+[**Apps V2**](/docs/reference/apps/#apps-v2) **only:** For apps that only need HTTP and HTTPS services, you can replace the full-blown `[[services]]` section with this simpler alternative. An `[http_service]` section defines a service that listens on ports 80 and 443. Port 80 will have an http handler. Port 443 will have a tls and http handler. Using `[http_service]` does not prevent you from  configuring more services on different ports using `[[services]]`.
 
 ```toml
 [http_service]
