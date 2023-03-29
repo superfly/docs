@@ -124,16 +124,19 @@ or your master key.
 
 If you don't already have one, copy your `.gitignore` file.
 
-Now run `fly secrets list`.  If you don't see RAILS_MASTER_KEY listed there make your
+Now run `fly secrets list`.  If you don't see `RAILS_MASTER_KEY` listed there make your
 master key available to your deployment image by setting a secret.  Mac and Linux
 users can run the following command:
 
-```cmd
+```
 fly secrets set RAILS_MASTER_KEY=$(cat config/master.key)
 ```
 
-Windows users will need to replace the `$(...)` expression with the
-contents of the file.
+Windows users can run the following command in Powershell:
+
+```
+fly secrets set RAILS_MASTER_KEY=$(Get-Content config\master.key)
+```
 
 You may already have both the `.dockerignore` file and secret set by this point
 as `fly launch` will do both for you.
