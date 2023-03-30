@@ -99,17 +99,27 @@ If you need to deploy in another region, also clone, but into another region:
 fly m clone --select --region ams
 ```
 
-### Make it reachable from your custom domain
+### Add and check certs; switch DNS
 
-If you have domains/certs attached to your app, you'll want to add them here again:
+If you have [domains/certs](/docs/app-guides/custom-domains-with-fly/) attached to your app, you'll want to add them here again:
 
 ```cmd
 fly certs add <my-custom-domain.com>
-```
+``
 
 The output will show you the IP allocated for your app, or you can use `fly ips list`.
 
-Finally, you'll want to point your DNS to the new IP allocated for your app.
+Check that any certificates have been issued:
+
+```cmd
+fly certs check
+```
+
+```cmd
+dig txt _acme-challenge.mydomain.com +short
+```
+
+Finally, point your DNS to the new IP allocated for your app.
 
 ### Delete the old V1 app
 
