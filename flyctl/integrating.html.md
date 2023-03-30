@@ -9,7 +9,7 @@ The flyctl command has a number of features that enable it to be seamlessly inte
 
 ## Environment Variables
 
-* `FLY_ACCESS_TOKEN` is an environment variable which can be used to pass an access token to an instance of Flyctl. The token may be obtained using `flyctl auth token`.
+* `FLY_ACCESS_TOKEN` is an environment variable which can be used to pass an access token to an instance of Flyctl. The token may be obtained using `flyctl auth token`. A token with permission to manage a single app can be generated with `fly tokens create deploy`.
 * `FLY_APP` is an environment variable which is used as the application name.
 
 ## JSON output
