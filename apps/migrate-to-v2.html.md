@@ -105,7 +105,7 @@ If you have [domains/certs](/docs/app-guides/custom-domains-with-fly/) attached 
 
 ```cmd
 fly certs add <my-custom-domain.com>
-``
+```
 
 The output will show you the IP allocated for your app, or you can use `fly ips list`.
 
