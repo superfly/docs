@@ -31,4 +31,4 @@ Customers on [Launch, Scale, and Enterprise plans](https://fly.io/plans) have ac
 Your support address is in the [Fly.io dashboard](https://fly.io/dashboard). Select your organization, and look for your Support email address in the Billing section.
 
 ## Other questions?
-For questions about a specific invoice or  account management issues, email us at [support@fly.io](mailto:support@fly.io).
+For questions about a specific invoice or  account management issues, email us at [billing@fly.io](mailto:billing@fly.io).
