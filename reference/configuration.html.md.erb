@@ -25,6 +25,14 @@ app = "restless-fire-6276"
 
 Whenever `flyctl` is run, it will look for a `fly.toml` file in the current directory and use the application name in that file. This behavior can be overridden by using the `-a` flag to set the application name, or on some commands (such as `deploy`) by using a `-c` flag to point to a different `fly.toml` file.
 
+## Primary Region
+
+**Apps V2 only:**  `fly deploy` under Apps V2 uses the `primary_region` option to determine where to create new Machines, as well as to set the `PRIMARY_REGION` environment variable within the Machines it deploys. Replace `ord` with the three-letter code for your [Fly Region](/docs/reference/regions/) of choice.
+
+```toml
+primary_region = "ord"
+```
+
 ## Runtime options (Legacy Nomad Apps Only)
 
 Various options are available to control the life-cycle of a running application. These are optional and can be placed at the top level of the `fly.toml` file:
