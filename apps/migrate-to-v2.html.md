@@ -58,6 +58,26 @@ fly secrets set DATABASE_URL=<database-url-from-old-app> REDIS_URL=<redis-url-fr
 
 in the new app's working directory.
 
+Here's a shell script to combine the above steps, using the ability of [`fly secrets import`](/docs/flyctl/secrets-import/) to import key=value pairs from stdin:
+
+```sh
+#!/bin/sh
+#
+# Clone secrets from one Fly app to another
+
+TEMPFILE=`mktemp`
+trap "rm -rf $TEMPFILE" EXIT
+
+SECRET_KEYS=`fly secrets list -a $1 | tail -n +2 | cut -f1 -d" "`
+fly ssh console -a $1 -C env | tr -d '\r' > $TEMPFILE
+
+for key in $SECRET_KEYS; do
+  PATTERN="${PATTERN}\|${key}"
+done
+
+grep $PATTERN $TEMPFILE | fly secrets import -a $2
+```
+
 ### A note on Fly Volumes
 
 If your app uses Fly Volumes, you'll have to [provision a volume](/docs/apps/volume-storage) for the first Machine to be deployed. Volumes cannot be transferred between apps, you may need to copy data down from the old app, or create the new volume from a snapshot.
