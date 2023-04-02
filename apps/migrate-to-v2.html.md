@@ -13,14 +13,13 @@ We don't _yet_ have an automated tool to convert an existing "V1" (managed by No
 
 The idea is to get the new app up and running satisfactorily, keeping your old one running until you're comfortable to migrate DNS to the new Machines-based app.
 
-
 ### Create a new app with the V2 (Machines) platform
 
 ```cmd
 fly apps create --machines --name <my-app-v2> -o <my-org>
 ```
 
-### Edit the `fly.toml` config file for app name and primary region
+### Put the new app name into the `fly.toml` config file
 
 Edit `fly.toml` in place, or make a duplicate of your app's source directory to use for the new app.
 
@@ -30,11 +29,15 @@ Replace the app name with the new app name. If your new app is literally called 
 app = "my-app-v2"
 ```
 
-Add a `primary_region` option, which Apps V2 uses to determine where to deploy the initial Machine (or Machines, if your configuration includes multiple [process groups](/docs/apps/processes/)), as well as to set the `PRIMARY_REGION` environment variable within the app's Machines. Replace `ord` with the three-letter code for your [Fly Region](/docs/reference/regions/) of choice.
+### Set the app's primary region
+
+Still in `fly.toml`, add a `primary_region` option, which `fly deploy` in Apps V2 uses to determine where to create new Machines, as well as to set the `PRIMARY_REGION` environment variable within the Machines it deploys. Replace `ord` with the three-letter code for your [Fly Region](/docs/reference/regions/) of choice.
 
 ```toml
 primary_region = "ord"
 ```
+
+**Note:** Apps V2 does **not** make use of region groups or `fly regions` commands. [Use `fly machine clone --region`](/docs/apps/scale-count/) to create Machines in specific regions.
 
 ### ​Copy any secrets you need from your existing app
 
