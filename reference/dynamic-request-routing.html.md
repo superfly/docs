@@ -8,7 +8,7 @@ redirect_from:
   - /docs/reference/regional-request-routing/
 ---
 
-Traffic sent to multi-region Fly.io apps is automatically routed to the region nearest to the client, thanks to Anycast-enabled IP addresses. [Read more Anycast on on Wikipedia](https://en.wikipedia.org/wiki/Anycast).
+Traffic sent to multi-region Fly.io apps is automatically routed to the region nearest to the client, thanks to Anycast-enabled IP addresses. [Read more about Anycast on Wikipedia](https://en.wikipedia.org/wiki/Anycast).
 
 Sometimes it's useful, or necessary, to route requests to other regions, other apps, or both. You can use custom request and response HTTP headers to achieve this.
 
