@@ -8,12 +8,44 @@ nav: firecracker
 
 In this section we'll talk about how to create and manage a [Fly App](/docs/reference/apps/).
 
-A Fly App is a collection of one or more [Fly Machines](/docs/machines/) VMs. The `fly launch` and `fly deploy` commands let you manage an app's Machines as a group with a unified [configuration](/docs/reference/configuration/).
+<ul class="outline-list">
+    <li>
+    <%= nav_link "Launch a New App", "/docs/apps/launch/" %>
+    </li>
+    <li>
+    <%= nav_link "Deploy a Fly App", "/docs/apps/deploy/" %>
+    </li>
+    <li>
+    <%= nav_link "Get Information about an App", "/docs/apps/info/" %>
+    </li>
+    <li>
+    <%= nav_link "Add Volume Storage", "/docs/apps/volume-storage/" %>
+    </li>
+    <li>
+    <%= nav_link "Scale Machine CPU and RAM", "/docs/apps/scale-machine/" %>
+    </li>
+    <li>
+    <%= nav_link "Add or Remove Machines", "/docs/apps/scale-count/" %>
+    </li>
+    <li>
+    <%= nav_link "Restart an App", "/docs/apps/restart/" %>
+    </li>
+    <li>
+    <%= nav_link "Run Multiple Processes in an App", "/docs/apps/processes/" %>
+    </li>
+    <li>
+    <%= nav_link "Delete an App", "/docs/apps/delete/" %>
+    </li>
+    <li>
+    <%= nav_link "Scale V1 (Nomad) Apps", "/docs/apps/legacy-scaling/" %>
+    </li>
+    <li>
+    <%= nav_link "Migrate an Existing Fly App to Apps V2", "/docs/apps/migrate-to-v2/" %>
+    </li>
+    <li>
+    <%= nav_link "App Configuration Reference", "/docs/reference/configuration/" %>
+    </li>
+</ul>
 
-
-<div class="callout">
-**That should really say "two or more" Machines.** A Machine is planted firmly on a particular server. If that server becomes incapacitated, or if someone cuts an undersea cable and your users can't talk to it, **your app will have downtime.** It'll happen eventually. So run two or more Machines for high availability. Even better, put Machines in different regions.
-</div>
-
+<br>
 You can also configure and manage Machines individually; see the [Fly Machines](/docs/machines/) docs.
-
