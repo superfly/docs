@@ -6,7 +6,7 @@ nav: firecracker
 ---
 
 <figure>
-  <img src="/static/images/docs-guide.jpg" srcset="/static/images/docs-guide@2x.jpg 2x" alt="Illustration by Annie Ruygt of a chair and a small table holding a hot drink, on a rooftop, with a city skyline and hot-air balloons in the background">
+  <img src="/static/images/docs-guide.webp" srcset="/static/images/docs-guide@2x.webp 2x" alt="Illustration by Annie Ruygt of a chair and a small table holding a hot drink, on a rooftop, with a city skyline and hot-air balloons in the background">
 </figure>
 
 This section of the Fly.io docs is all about getting you up and running quickly.

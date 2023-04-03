@@ -76,7 +76,7 @@ Save the notebook with your project. I suggest creating a "notebook" folder to h
 
 At this point, we haven't connected to your project yet so you can't access your code. Let's do that now. Click the "Runtime settings" button.
 
-![Livebook runtime connection](/docs/images/livebook-data-analysis-runtime-click.png?card&centered)
+![Livebook runtime connection](/docs/images/livebook-data-analysis-runtime-click.webp?card&centered)
 
 Choose "Mix standalone" and click "Connect". If you started Livebook from your project's directory, it should already be in the right location for the mix project. Assuming your application compiles, it starts a runtime with your project's code available!
 
@@ -143,7 +143,7 @@ Vl.new()
 
 The `Vl` is the VegaLite alias. Here's the result:
 
-![Pie chart visualization](/docs/images/livebook-personality-pie-visualization.png?card&centered)
+![Pie chart visualization](/docs/images/livebook-personality-pie-visualization.webp?card&centered)
 
 Nice! I get a better sense for the personality type distribution in the question data.
 
@@ -172,13 +172,13 @@ Vl.new(width: 300, height: 300)
 
 Here's the result:
 
-![Bar chart visualization](/docs/images/livebook-personality-bar-visualization.png?card&centered)
+![Bar chart visualization](/docs/images/livebook-personality-bar-visualization.webp?card&centered)
 
 ### Getting Started with VegaLite
 
 If the VegaLite code looks scary, don't worry! I'm actually a total VegaLite noob! Livebook includes some built-in notebooks you should check out for code examples on how to structure data and configure VegaLite for the visualization you want.
 
-![VegaLite examples](/docs/images/livebook-vegalite-examples.png?card&2/3&centered)
+![VegaLite examples](/docs/images/livebook-vegalite-examples.webp?card&2/3&centered)
 
 Then I customized a little using the [VegaLite docs](https://vega.github.io/vega-lite/docs/) and [examples](https://vega.github.io/vega-lite/examples/).
 

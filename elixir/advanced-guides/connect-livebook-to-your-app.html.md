@@ -16,7 +16,7 @@ Livebook ends up being very flexible and powerful. Because Elixir nodes can easi
 
 Visualizing the setup:
 
-![WireGuard livebook connection](/docs/images/elixir-livebook-to-server-fly-overview.png?2/3&centered)
+![WireGuard livebook connection](/docs/images/elixir-livebook-to-server-fly-overview.webp?2/3&centered)
 
 ## Requirements
 
@@ -93,19 +93,19 @@ Create a new notebook titled, "Remote Connect Test" and add a Section.
 
 On the left side, click the "Runtime settings" as pictured below:
 
-![Runtime settings location on sidebar](/docs/images/livebook-data-analysis-runtime-click-step1.png?centered&card)
+![Runtime settings location on sidebar](/docs/images/livebook-data-analysis-runtime-click-step1.webp?centered&card)
 
 Before we can run any Elixir code, we need to connect to the remote server. To connect to the remote server, we will "Configure" the server we want to connect to.
 
-![Runtime settings configure connection](/docs/images/livebook-data-analysis-runtime-click-step2.png?centered&card)
+![Runtime settings configure connection](/docs/images/livebook-data-analysis-runtime-click-step2.webp?centered&card)
 
 Now we use "Attached Node" to connect to an existing Elixir node.
 
-![Runtime settings configure connection](/docs/images/livebook-data-analysis-runtime-click-step3.png?centered&card)
+![Runtime settings configure connection](/docs/images/livebook-data-analysis-runtime-click-step3.webp?centered&card)
 
 With the "Attached Node" mode selected, we need to provide 2 additional pieces of information before we can connect.
 
-![Attach steps](/docs/images/livebook-runtime-attach-steps.png?centered&card)
+![Attach steps](/docs/images/livebook-runtime-attach-steps.webp?centered&card)
 
 1. **Name** - Our node's name
 2. **Cookie** - The cookie value used by the deployed server

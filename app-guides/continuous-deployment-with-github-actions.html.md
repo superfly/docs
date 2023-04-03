@@ -11,7 +11,7 @@ priority: 10
 date: 2020-06-20
 ---
 
-<img src="/static/images/continuous-deployment.jpg" alt="A man writing code on a vintage desktop computer" class="rounded-xl">
+<img src="/static/images/continuous-deployment.webp" alt="A man writing code on a vintage desktop computer" class="rounded-xl">
 
 So you want your application continuously deployed to Fly.io from its GitHub repository. Let's work through setting up an application for just that.
 

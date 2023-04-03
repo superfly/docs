@@ -9,12 +9,12 @@ categories:
   - performance
   - proxy
   - cdn
-image: https://fly.io/ui/images/image-service.jpg
+image: https://fly.io/ui/images/image-service.webp
 date: 2020-05-10
 ---
 
 <figure class="flex ai:center jc:center w:full r:lg overflow:off mb:4">
-  <img src="/static/images/image-service.jpg" alt="A hand holding scissors and cutting out paper for a scrapbook" class="w:full h:full fit:cover">
+  <img src="/static/images/image-service.webp" alt="A hand holding scissors and cutting out paper for a scrapbook" class="w:full h:full fit:cover">
 </figure>
 
 <%= partial "/docs/partials/obsolete_doc" %>
@@ -85,10 +85,10 @@ To test our local image, let's process a file. In this case, we're going to crop
 In another terminal session, run:
 
 ```cmd
-curl -O "http://localhost:8080/crop?width=500&height=400&url=https://raw.githubusercontent.com/h2non/imaginary/master/testdata/large.jpg"
+curl -O "http://localhost:8080/crop?width=500&height=400&url=https://raw.githubusercontent.com/h2non/imaginary/master/testdata/large.webp"
 ```
 
-This will ask Imaginary to crop, to 100x100, an image stored in the Imaginary GitHub repository. This should result in a file, `large.jpg` being written to disc which you can display using your preferred image viewer. MacOS users can simply `open large.jpg` at the command line.
+This will ask Imaginary to crop, to 100x100, an image stored in the Imaginary GitHub repository. This should result in a file, `large.webp` being written to disc which you can display using your preferred image viewer. MacOS users can simply `open large.webp` at the command line.
 
 Open the cropped image. Take a moment to play with the width and height values in the URL we're querying and you will get different sized cropped images. Once you are happy the local build is working, you can return to the session where you started the docker image and ctrl-C to stop it.
 
@@ -261,13 +261,13 @@ IP Addresses
 This tells you all you need to know about your currently deployed application. If you take the `Hostname` you can use that in a URL request to the Fly deployment:
 
 ```cmd
-curl -O "http://flyimaginary.fly.dev/crop?width=500&height=400&url=https://raw.githubusercontent.com/h2non/imaginary/master/testdata/large.jpg"
+curl -O "http://flyimaginary.fly.dev/crop?width=500&height=400&url=https://raw.githubusercontent.com/h2non/imaginary/master/testdata/large.webp"
 ```
 
 Notice that we didn't need to specifiy port 8080 as we did with the local docker build. That's because port 80 on the host routes to port 8080. As an added bonus, we also got HTTPS support as port 443 also routes to port 8080, with Fly managing the TLS termination and the Let's Encrypt certificates. We can do the same query, over a secured connection, with:
 
 ```cmd
-curl -O "https://flyimaginary.fly.dev/crop?width=500&height=400&url=https://raw.githubusercontent.com/h2non/imaginary/master/testdata/large.jpg"
+curl -O "https://flyimaginary.fly.dev/crop?width=500&height=400&url=https://raw.githubusercontent.com/h2non/imaginary/master/testdata/large.webp"
 ```
 
 ## _Summary_

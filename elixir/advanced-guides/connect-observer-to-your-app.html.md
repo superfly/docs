@@ -14,7 +14,7 @@ Elixir, Erlang, and really just the BEAM has a slick feature called "[Observer](
 
 This shows a process tree for the application. Using this I can inspect individual processes or even kill them!
 
-![Observer screen shot](/docs/images/observer-tictac-local-application-pane.png?card&2/3&centered)
+![Observer screen shot](/docs/images/observer-tictac-local-application-pane.webp?card&2/3&centered)
 
 One very cool way to run Observer is to run it on your local machine (which has the ability to display the UI) and connect to a production server (with no windowing UI available) and "observe" it from a distance. So yeah... have a problem in production? Not sure what's going on? You can literally tunnel in, crack the lid and poke, prod, and peek around to see what's going on.
 
@@ -26,7 +26,7 @@ Fly.io natively supports [WireGuard](https://www.wireguard.com/), Jason Donenfel
 
 This is what we're going to do.
 
-![WireGuard observer connection](/docs/images/elixir-wireguard-observer-tunnel.png?2/3&centered)
+![WireGuard observer connection](/docs/images/elixir-wireguard-observer-tunnel.webp?2/3&centered)
 
 We will bring up a secure WireGuard tunnel that links to your servers on Fly. In this graphic, there are two `my_app` Elixir nodes clustered together running on Fly.
 
@@ -115,17 +115,17 @@ Interactive Elixir (1.12.1) - press Ctrl+C to exit (type h() ENTER for help)
 
 When observer first opens, it might looks something like this:
 
-![Observer connected to local node](/docs/images/observer-local-node.png?centered)
+![Observer connected to local node](/docs/images/observer-local-node.webp?centered)
 
 Notice that the window title shows `my_remote@...`? This means it's showing the stats of my local IEx node that isn't actually running any of my code. So this data isn't very interesting yet.
 
 If everything worked and it's connected, under the Nodes menu you should see the connected remote node.
 
-![Observer connected to local node](/docs/images/observer-local-node-menu.png?card&2/3&centered)
+![Observer connected to local node](/docs/images/observer-local-node-menu.webp?card&2/3&centered)
 
 When the remote node is selected, then all the stats and information changes to reflect what's going on in the selected node.
 
-![Observer connected to local node](/docs/images/observer-local-node-connected.png?scentered)
+![Observer connected to local node](/docs/images/observer-local-node-connected.webp?scentered)
 
 It worked! I'm seeing the information for the production node!
 
