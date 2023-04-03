@@ -26,7 +26,10 @@ Along with the dedicated IPv6, apps [configured](/docs/reference/configuration/#
 
 (or both) are automatically given a shared anycast IPv4 address on the first deployment.
 
-Shared IPs are IPs shared across many apps and organizations. Routing is based on your app's domain.
+Shared IPs are the default and recommended unless you have an explicit need for your own IP.
+These IPs shared across many apps and organizations.
+Routing is based on your app's domain.
+One reason to use a dedicated IP is if your app needs to do something over UDP.
 
 If you want to allocate a shared IPv4 to an app without a public IPv4 address, this is possible (with flyctl v0.0.439 and newer) using
 
