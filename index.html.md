@@ -6,7 +6,7 @@ nav: firecracker
 ---
 
 <figure>
-  <img src="/static/images/docs-intro.jpg" srcset="/static/images/docs-intro@2x.jpg 2x" alt="">
+  <img src="/static/images/docs-intro.webp" srcset="/static/images/docs-intro@2x.webp 2x" alt="">
 </figure>
 
 We're doing something ambitious at Fly.io: a new public cloud, built on bare-metal servers we run in data centers around the world, designed to make it easy to deploy distributed and real-time apps close to your users, wherever they are.
