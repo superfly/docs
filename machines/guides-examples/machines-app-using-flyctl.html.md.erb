@@ -95,7 +95,7 @@ fly open -a testrun
 
 …and, I get nothing. (Note that I'm appending `-a` to most of my flyctl commands, because we're not using a `fly.toml` for configuration, and a `fly.toml` in the working directory is where flyctl usually gets the app name that it thinks you're implying when you don't specify one.)
 
-![Browser screenshot saying 'This page isn't working; testrun.fly.dev didn't send any data. ERR_EMPTY_RESPONSE'](images/testrun-err-empty-response.png)
+![Browser screenshot saying 'This page isn't working; testrun.fly.dev didn't send any data. ERR_EMPTY_RESPONSE'](images/testrun-err-empty-response.webp)
 
 What can be wrong here?
 
@@ -209,7 +209,7 @@ The VM is restarted with the updated configuration.
 
 Now I try `fly open -a testrun` again, and voilà:
 
-![The web app running in the browser. It says 'Hello from a Flask app on Fly.io; Or goodbye'. The word 'goodbye' is a hyperlink.](images/testrun-hello.png)
+![The web app running in the browser. It says 'Hello from a Flask app on Fly.io; Or goodbye'. The word 'goodbye' is a hyperlink.](images/testrun-hello.webp)
 
 (If you're following along and have this example app deployed, try going to `https://<your-app>.fly.dev/<your-name>`)
 

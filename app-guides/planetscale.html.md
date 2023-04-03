@@ -22,27 +22,27 @@ The sample app assumes a database already exists. You'll need to create that dat
 
 Click on the black 'New database' button and pick 'Create new database'. Give it a name and choose its region. This is your **primary** database (we'll refer to it in multiple places later on). Choose the closest region to where you will deploy your app for the best performance:
 
-![Screenshot](docs/images/planetscale_new_database_dialog.png)
+![Screenshot](docs/images/planetscale_new_database_dialog.webp)
 
 PlanetScale uses branches for schemas. An initial `main` branch will be automatically created. It will take a few seconds to initialise so wait until that notification disappears. You should see a page similar to this:
 
-![Screenshot](docs/images/planetscale_database_created.png)
+![Screenshot](docs/images/planetscale_database_created.webp)
 
 Click on the _Connect_ button (or on the blue _"connect to your database"_ link). A dialog will open showing your username and password. Handily PlanetScale makes connection strings for various clients. For this app we'll choose the one listed to connect with Node.js. When we mention using the connection string for your primary database below, _this_ is the one we mean. Make a temporary note of this as it will only show you it once:
 
-![Screenshot](docs/images/planetscale_connect_nodejs.png)
+![Screenshot](docs/images/planetscale_connect_nodejs.webp)
 
 There are many SQL clients you could use to manage your database. We'll use [ArcType](https://arctype.com/). That comes with a PlanetScale integration. However to use its PlanetScale integration you need to create an Arctype account. For now we won't. So instead we'll use the standard _MySQL_ option. Click the appropriate option in your SQL client to create a new connection:
 
-![Screenshot](docs/images/planetscale_arctype_connections.png)
+![Screenshot](docs/images/planetscale_arctype_connections.webp)
 
 To save typing in all the details (a username, a password, and so on) we'll use that connection string noted above. Copy the entire value (starting from _"mysql://"_) into this box and then click the "Test connection" button. After a moment you should see a message to say it successfully connected. Click the blue "Save" button to proceed:
 
-![Screenshot](docs/images/planetscale_arctype_connection_url.png)
+![Screenshot](docs/images/planetscale_arctype_connection_url.webp)
 
 Click the blue "New Query" button in the top-right ready to run some basic SQL. Again, your editor will look slightly different:
 
-![Screenshot](docs/images/planetscale_arctype_new_query.png)
+![Screenshot](docs/images/planetscale_arctype_new_query.webp)
 
 We'll use the names of some fruits as some sample data. So paste this into your query editor and click the "Run" (or equivalent) button:
 
@@ -55,7 +55,7 @@ CREATE TABLE `fruits` (
 
 You should see it succeeded:
 
-![Screenshot](docs/images/planetscale_arctype_create_table_succeeded.png)
+![Screenshot](docs/images/planetscale_arctype_create_table_succeeded.webp)
 
 Add a few rows to that table:
 
@@ -67,19 +67,19 @@ INSERT INTO `fruits` (id, name) VALUES  (3, 'strawberry');
 
 Promote the main branch to production. The production branch is protected, highly available and is automatically backed up. You can promote a branch within the PlanetScale UI by simply clicking this button:
 
-![Screenshot](docs/images/planetscale_promote.png)
+![Screenshot](docs/images/planetscale_promote.webp)
 
 Assuming you have a _Scaler_, _Team_, or _Enterprise_ account, you will be able to add additional read-only regions. They can greatly improve the performance of your application, reducing the latency of reads from regions close to them. Click on the _main_ branch (the production one). You should see the option to _Add region_:
 
-![Screenshot](docs/images/planetscale_add_region.png)
+![Screenshot](docs/images/planetscale_add_region.webp)
 
 Choose the region you would like to create it in:
 
-![Screenshot](docs/images/planetscale_add_region_dialog.png)
+![Screenshot](docs/images/planetscale_add_region_dialog.webp)
 
 After a few moments those additional read-only regions should be ready. They may take slightly longer if there is a large amount of data to be replicated. Each region has its own, unique credentials. So click the "..." and then on _Connect_. It will show you a username, password and host. Make a connection string for each region that will look like this: "mysql://**username**:**password**@**host**/**database-name**?ssl={"rejectUnauthorized":true}":
 
-![Screenshot](docs/images/planetscale_add_region_connect.png)
+![Screenshot](docs/images/planetscale_add_region_connect.webp)
 
 Your database is now ready to be queried by our sample app!
 
@@ -296,7 +296,7 @@ If you try deploying the app to Fly and that fails, the most _likely_ reason is 
 
 - Make sure to keep an eye on usage. If you exceed your included monthly allowance you are billed an additional fee:
 
-![Screenshot](docs/images/planetscale_misc_statistics.png)
+![Screenshot](docs/images/planetscale_misc_statistics.webp)
 
 - Since the usage is based on rows read (not rows fetched) make sure all of your queries are optimised. If they don't use an index, they could result in a table scan which will increase your costs.
 
@@ -337,4 +337,4 @@ To avoid charges you might want to delete the app and the PlanetScale database:
 - To delete the sample Fly app (this is irreversible), run `fly destroy the-app-name-here`
 - To delete the PlanetScale database, click the red delete button within the database's _Settings_ tab:
 
-![Screenshot](docs/images/planetscale_misc_delete.png)
+![Screenshot](docs/images/planetscale_misc_delete.webp)

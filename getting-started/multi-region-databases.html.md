@@ -14,7 +14,7 @@ Most read-heavy, PostgreSQL-backed applications work natively across regions on 
 
 With regional read replicas configured, the `fly-replay` header lets you specify exactly which requests need to be serviced by the primary, writable database. When we detect this header, we will replay the entire request to the region you specify. It looks something like this:
 
-<img src="/static/images/fly-global-postgres.png"  alt="Diagram of app + global postgres on Fly.io">
+<img src="/static/images/fly-global-postgres.webp"  alt="Diagram of app + global postgres on Fly.io">
 
 In most runtimes, it's straightforward to catch a read-only database error in a replica region and serve a response with the appropriate replay header.
 
