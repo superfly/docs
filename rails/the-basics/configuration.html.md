@@ -53,3 +53,9 @@ When deploying to production, the `RAILS_MASTER_KEY` that will decrypt the crede
 ```cmd
 fly secrets set RAILS_MASTER_KEY=$(cat config/master.key)
 ```
+
+For Windows/Powershell:
+
+```powershell
+$Env:RAILS_MASTER_KEY = Get-Content 'config\master.key'
+```
