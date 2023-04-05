@@ -103,6 +103,25 @@ fly status
 
 [More ways to get info about an app, its Machines, and its status](/docs/apps/info/)
 
+### Make sure the Machines' Restart Policy Suits Your App
+
+Fly Machines have a restart policy as part of their configuration, determining whether the Machine should restart when its main process exits, or just enter the `stopped` state. 
+
+There are three possible policies: `no`, `always`, and `on-fail`.
+
+The default policy configured by `fly deploy` is equivalent to `on-fail`: flyd will try restarting a Machine up to 10 times if it exits with a non-zero exit code.
+
+There is a temporary gotcha with this policy, however: right now, when a host reboots, this is not recognised as a failure, and so Machines enter the `stopped` state when the host comes up, instead of being restarted. Machines with services configured will tend to be woken by Fly Proxy in the course of its load-balancing activities, but Machines _without_ services will stay stopped until you start them. 
+
+We recommend updating such Machines to use the `always` restart policy, to ensure that they come back up after a host reboot: 
+
+```cmd
+fly machine update --restart always <machine-id>
+```
+
+See [more about restart policies here](https://community.fly.io/t/issues-with-machines-restart-policy/11943/25).
+
+
 ### Scale your deployed Machine(s)
 First deployment spins up a Machine with a single shared CPU core and 256MB RAM. If your app needs more oomph, [scale it](/docs/apps/scale-machine) with `fly m update`.
 
