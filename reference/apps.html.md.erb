@@ -9,7 +9,7 @@ nav: firecracker
 
 On Fly.io, an App is an abstraction for a group of virtual machines running your code, along with the the configuration, provisioned resources, and data we need to keep track of to run and route to your VMs. 
 
-Anycast IPs, certificates, and custom domains belong to Apps, and every customer VM on Fly.io belongs to a Fly App. 
+Every customer VM on Fly.io lives in a Fly App. Anycast IPs, certificates, Fly Volumes, and custom domains belong to Apps as well.
 
 The `fly launch` and `fly deploy` commands create and update an app's VMs as a unit with a single [configuration](/docs/reference/configuration/) and code base. To learn more about configuring and deploying a Fly App, see the [Apps](/docs/apps/) docs.
 
