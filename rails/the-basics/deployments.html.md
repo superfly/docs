@@ -53,7 +53,7 @@ task :release => 'db:migrate'
 To disable automatic migrations for deploys, remove the dependency from the `:release` task. Then, to manually run migrations after a deployment, run:
 
 ```cmd
-fly ssh console -C "app/bin/rails db:migrate"
+fly ssh console -C "rails/bin/rails db:migrate"
 ```
 
 ## Run ad-hoc tasks after deploying
