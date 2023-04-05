@@ -10,7 +10,7 @@ order: 3
 To access an interactive Rails console, run:
 
 ```cmd
-fly ssh console -C "rails/bin/rails console"
+fly ssh console --pty -C "rails/bin/rails console"
 ```
 ```output
 Loading production environment (Rails 7.0.4.2)
@@ -19,12 +19,14 @@ irb(main):001:0>
 
 Then start using the console, but be careful! You're in a production environment.
 
+<div class="callout">The `--pty` flag tells the SSH server to run the command in a pseudo-terminal. You will generally need this only when running interactive commands, like the Rails console.</div>
+
 ## Interactive shell
 
 To access an interactive shell as the `root` user, run:
 
 ```cmd
-fly ssh console -C '/bin/bash'
+fly ssh console --pty -C '/bin/bash'
 ```
 ```output
 #
@@ -42,7 +44,7 @@ Once this is complete, you can create an interactive shell:
 
 
 ```cmd
-fly ssh console -C 'sudo -iu rails'
+fly ssh console --pty -C 'sudo -iu rails'
 ```
 ```output
 $
@@ -82,15 +84,15 @@ keystrokes it takes to launch a console:
 ```ruby
 namespace :fly do
   task :ssh do
-    sh 'fly ssh console -C "sudo -iu rails"'
+    sh 'fly ssh console --pty -C "sudo -iu rails"'
   end
 
   task :console do
-    sh 'fly ssh console -C "rails/bin/rails console"'
+    sh 'fly ssh console --pty -C "rails/bin/rails console"'
   end
 
   task :dbconsole do
-    sh 'fly ssh console -C "rails/bin/rails dbconsole"'
+    sh 'fly ssh console --pty -C "rails/bin/rails dbconsole"'
   end
 end
 ```

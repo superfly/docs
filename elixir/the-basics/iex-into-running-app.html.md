@@ -23,7 +23,7 @@ fly ssh issue --agent
 With SSH configured, let's open a console.
 
 ```cmd
-fly ssh console -C "app/bin/hello_elixir remote"
+fly ssh console --pty -C "app/bin/hello_elixir remote"
 ```
 ```output
 Connecting to hello_elixir.internal... complete
@@ -36,6 +36,10 @@ You have a live IEx shell into your application!
 
 <div class="callout">
 **Tip:** One of several ways to [exit the IEx shell](https://hexdocs.pm/iex/IEx.html#module-exiting-the-shell) is to hit `Ctrl+C, Ctrl+C`; to log out of the VM console, use `Ctrl+D` or `exit`.
+</div>
+
+<div class="callout">
+The `--pty` flag tells the SSH server to run the command in a pseudo-terminal. You will generally need this only when running interactive commands, like IEx.
 </div>
 
 ## What's Next?

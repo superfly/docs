@@ -122,7 +122,7 @@ Fly provides the ability to `ssh` into your application, and it would
 be convenient to run things like the Rails console in one line:
 
 ```cmd
-fly ssh console -C '/rails/bin/rails console'
+fly ssh console --pty -C '/rails/bin/rails console'
 ```
 
 To enable `bin/rails` commands to be run in this manner, adjust your

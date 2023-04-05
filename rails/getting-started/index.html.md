@@ -349,7 +349,7 @@ Now that you have seen it up and running, a few things are worth noting:
   * `fly dashboard` can be used to monitor and adjust your application. Pretty
     much anything you can do from the browser window you can also do from the
     command line using `fly` commands. Try `fly help` to see what you can do.
-  * `fly ssh console` can be used to ssh into your VM. `fly ssh console -C "/rails/bin/rails console"` can be used to open a rails console.
+  * `fly ssh console` can be used to ssh into your VM. `fly ssh console --pty -C "/rails/bin/rails console"` can be used to open a rails console.
 
 Now that you have seen how to deploy a trivial application, it is time
 to move on to [The Basics](../../rails/the-basics/).

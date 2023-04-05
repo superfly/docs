@@ -63,7 +63,7 @@ fly ssh issue --agent
 With SSH configured, let's open a console.
 
 ```cmd
-fly ssh console -C "app/bin/hello_elixir remote"
+fly ssh console --pty -C "app/bin/hello_elixir remote"
 ```
 ```output
 Connecting to hello_elixir.internal... complete

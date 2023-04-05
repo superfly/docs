@@ -88,7 +88,7 @@ fly open
 There's still work to be done to move more Heroku stuff over, so don't worry if the app doesn't boot right away. There's a few commands that you'll find useful to configure your environment:
 
 * `fly logs` - Read error messages and stack traces emitted by your Rails application.
-* `fly ssh console -C "/rails/bin/rails console"` - Launches a Rails shell, which is useful to interactively test components of your Rails application.
+* `fly ssh console --pty -C "/rails/bin/rails console"` - Launches a Rails shell, which is useful to interactively test components of your Rails application.
 
 ### Transfer Heroku secrets
 
@@ -226,7 +226,7 @@ Fly commands are a bit different than Heroku, but you'll get use to them after a
 | Task         | Heroku     | Fly |
 |--------------|-----------|------------|
 | Deployments | `git push heroku` | `fly deploy` |
-| Rails console | `heroku console` | `fly ssh console -C "/app/bin/rails console"` |
+| Rails console | `heroku console` | `fly ssh console --pty -C "/app/bin/rails console"` |
 | Database migration | `heroku rake db:migrate` | `fly ssh console -C "/app/bin/rake db:migrate"` |
 | Postgres console | `heroku psql` | `fly postgres connect -a <name-of-database-app-server>`
 | Tail log files | `heroku logs` | `fly logs` |

@@ -101,7 +101,7 @@ in the left hand column.
 It can be helpful to open a Rails console to run commands and diagnose production issues.
 
 ```cmd
-fly ssh console -C "/rails/bin/rails console"
+fly ssh console --pty -C "/rails/bin/rails console"
 ```
 ```output
 Loading production environment (Rails 7.0.4.2)
