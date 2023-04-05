@@ -146,6 +146,7 @@ tmpfs             113224      0    113224   0% /sys/fs/cgroup
 /dev/vdb         1011672   2564    940500   1% /storage
 ```
 
+<div class="callout">If you are running an interactive command (like a shell, IEx, or the Rails console), you may need to use the `--pty` flag. This tells the SSH server to run the command in a pseudo-terminal. (If you're familiar with OpenSSH, this is like the `-t` flag for `ssh`.)</div>
 
 
 ## Inspect the Current Configuration of a Deployed App or Machine

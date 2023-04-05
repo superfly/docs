@@ -144,8 +144,10 @@ fly ssh console
 If you prefer, this can be run as one command instead:
 
 ```cmd
-fly ssh console -C 'python /code/manage.py createsuperuser'
+fly ssh console --pty -C 'python /code/manage.py createsuperuser'
 ```
+
+<div class="callout">The `--pty` flag tells the SSH server to run the command in a pseudo-terminal, which `createsuperuser` requires.</div>
 
 ### Secrets
 
