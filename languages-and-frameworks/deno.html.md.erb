@@ -116,10 +116,10 @@ Then `flyctl` will start the process of deploying our application to Fly.io usin
 
 ## Viewing the Deployed App
 
-If you want to find out more about the deployment. The command `fly info` will give you all the essential details.
+If you want to find out more about the deployment. The command `fly status` will give you all the essential details.
 
 ```cmd
-fly info
+fly status
 ```
 ```output
 App
@@ -138,7 +138,7 @@ ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
 
 The quickest way to view your application is to run `fly open` which will open your browser on the URL for your application. Run `fly open /name` to get an extra greeting from the app.
 
-If you want to manually enter a URL to check, remember to replace `empty-sea-2541.fly.dev` with the hostname you got from `fly info` and connect to `http://hellodeno.fly.dev/` where you should find a greeting - it will normally be upgraded to a secure connection. Use `https://hellodeno.fly.dev` to start with a secure connection. Add `/name` and you'll get an extra greeting from the hellodeno application.
+If you want to manually enter a URL to check, remember to replace `empty-sea-2541.fly.dev` with the hostname you got from `fly status` and connect to `http://hellodeno.fly.dev/` where you should find a greeting - it will normally be upgraded to a secure connection. Use `https://hellodeno.fly.dev` to start with a secure connection. Add `/name` and you'll get an extra greeting from the hellodeno application.
 
 ## Bonus Points
 
