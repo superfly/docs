@@ -7,17 +7,17 @@ nav: firecracker
 
 <img src="/static/images/app-pricing.webp" srcset="/static/images/app-pricing@2x.webp 2x" alt="A landscape painting with hot air balloons flying over a mountain range.">
 
-## How it works
+## _How it works_
 
-Our pricing is designed to let you run small applications for free, and scale costs affordably as your needs grow.
+Our pricing is designed to let you a small application for free, and scale costs affordably as your needs grow.
 
-Fly.io services are billed per organization. Billing is based on the resources provisioned for your app, prorated for the time they are up.
+Fly.io services are billed per organization. Billing is based on the resources provisioned for your apps, pro-rated for the time they are provisioned.
 
-## Plans
+## _Plans_
 
 Each organization starts on the Hobby plan, which is a straightforward pay-as-you-go option. 
 
-Our free allowance applies to all plans, including the Hobby plan, and includes enough usage to run a small full-stack app for free. You can keep it running for free as long as you like. 
+We don't offer a "free tier." Instead, we offer some free resource allowances that apply to all plans, including the Hobby plan, and includes enough usage per month to run a small full-stack app, full-time, for free. 
 
 If you want to scale beyond the included free resources, you can pay for just what you need at the usage-based pricing listed below.
 
@@ -25,7 +25,7 @@ If you need more support or compliance options, you can choose one of our [paid 
 
 For details and to select a different plan, see: [Plan Pricing](https://fly.io/plans)
 
-## Free allowances
+## _Free allowances_
 
 Resources included for free on all plans:
 
@@ -35,21 +35,21 @@ Resources included for free on all plans:
 
 Additional resources are billed at the usage-based pricing detailed below.
 
-<strong><sup>†</sup></strong>3 VM's total between [Apps](/docs/about/pricing/#apps) and [Machines](/docs/about/pricing/#machines)
+<strong><sup>†</sup></strong>3 VMs total between [V2 apps](/docs/about/pricing/#apps-v2-and-machines), [V1 apps](http://localhost:4567/docs/about/pricing/#apps-v1), and [Machines](/docs/about/pricing/#apps-v2-and-machines)
 
 ## _Compute_
 
-### Apps
+### Apps V2 and Machines
 
-Pricing for application virtual machines. These are the regular apps you run on Fly.
-
-<%= partial("shared/cpu_mem_pricing") %>
-
-### Machines
-
-Pricing for [Machines](/docs/machines/), which includes [Fly Postgres](/docs/postgres/).
+Pricing for [Fly Machines](/docs/machines/) VMs, which are also the virtual-machine building blocks of the [Fly Apps V2 platform](/docs/reference/apps/#apps-v2) and [Fly Postgres](/docs/postgres/) apps.
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
+
+### Apps V1
+
+Pricing for virtual machines running in [Fly Apps V1](/docs/reference/apps/#legacy-apps-fly-apps-v1) (Nomad-orchestrated) apps.
+
+<%= partial("shared/cpu_mem_pricing") %>
 
 ## _Persistent Storage Volumes_
 
