@@ -116,3 +116,31 @@ The `pg_tls` handler manages Postgres connections, so that you can expose your P
 ## HTTP to HTTPS redirects
 
 The `force_https` configuration option automatically redirects HTTP to HTTPS. When enabled, all HTTP requests return a redirect response with a `301` status code. This option can only be set on HTTP handlers - deployments will fail if set on other handlers.
+
+## Outbound IP addresses
+
+VMs have IPv6 addresses from which they make requests to the wider Internet without going through the Fly Proxy.
+
+We don’t offer static IPs or regional IP ranges, and we discourage the use of our outbound IPs to bypass firewalls. A VM's outbound IP is liable to change without notice. This shouldn't be a daily occurrence, but it will happen if a VM is moved for whatever reason, whether it's Nomad moving an allocation or load-balancing of Fly Machines between servers in one region.
+
+If you depend on knowing this address for some reason, it's up to you to monitor it for changes.
+
+### Find your VM's outbound IP
+
+Use `fly ssh console -s` to get an interactive shell on the VM of your choice, and call out to an external service that'll tell you your IP. For example:
+
+```
+/ # curl text.ipv6.wtfismyip.com
+2605:4c40:92:520a:0:8c93:3d8a:1
+```
+
+or
+
+```
+/ # dig +short txt o-o.myaddr.l.google.com @ns1.google.com
+"2605:4c40:92:520a:0:8c93:3d8a:1"
+```
+
+So this VM's outbound IPv6 address is `2605:4c40:92:520a:0:8c93:3d8a:1`.
+
+You may have to install software on the VM to use `dig` or `curl`. On Debian, `dig` belongs to the `dnsutils` package.
