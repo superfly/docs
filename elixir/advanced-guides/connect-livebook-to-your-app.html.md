@@ -10,7 +10,7 @@ categories:
 date: 2021-06-22
 ---
 
-[Livebook](https://github.com/elixir-nx/livebook) is an exciting advancement in the Elixir community. It was created for the Elixir machine learning library [nx](https://github.com/elixir-nx/nx). You can think of it as Elixir's version of [Jupyter Notebooks](https://jupyter.org/).
+[Livebook](https://github.com/elixir-nx/livebook) is an exciting advancement in the Elixir community. It was created for the Elixir machine learning library [Nx](https://github.com/elixir-nx/nx). You can think of it as Elixir's version of [Jupyter Notebooks](https://jupyter.org/).
 
 Livebook ends up being very flexible and powerful. Because Elixir nodes can easily be clustered together, you can run Livebook on your local machine, connect it to your Elixir servers, and do some really interesting things.
 
@@ -36,17 +36,27 @@ You may need to update the version in your Dockerfile and deploy the application
 
 ## Installing Livebook
 
-There are several ways to [install and run Livebook](https://livebook.dev/#install). [Livebook Desktop](https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu) is really slick and deploying a [Livebook on Fly](https://fly.io/launch/livebook) is super easy, however, these approaches currently won't work for what we're doing here. We need to launch Livebook with some special settings and we want to connect to our deployed application through Wireguard. To do that, we'll use the `escript` setup for Livebook.
+There are several ways to [install and run Livebook](https://livebook.dev/#install). [Livebook Desktop](https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu) is really slick and deploying a [Livebook on Fly](https://fly.io/launch/livebook) is super easy.
 
-Fortunately for us, [installing Livebook as an escript](https://github.com/elixir-nx/livebook#escript) is versatile and convenient.
+Livebook Desktop can be installed as an app on Mac and Window. For Linux, we can pull the source or install it as an [Escript]((https://github.com/elixir-nx/livebook#escript).
+
+### Using Livebook Desktop
+
+When running [Livebook Desktop]((https://livebook.dev/#install)), Livebook will invoke on boot a file named `~/.livebookdesktop.sh` on macOS or `%USERPROFILE%\.livebookdesktop.bat` on Windows. This file can be modified to set environment variables used by Livebook, such as:
+
+```
+export LIVEBOOK_DISTRIBUTION=name
+export ERL_AFLAGS="-proto_dist inet6_tcp"
+```
 
 ### Install as an Escript
 
 This section assumes you are already setup for [local Elixir development](https://elixir-lang.org/install.html).
 
-Following the Livebook [Escript README section](https://github.com/elixir-nx/livebook#escript), this is how you install Livebook.
+Following the Livebook [Escript README section](https://github.com/elixir-nx/livebook#escript), this is how to install Livebook.
 
-```cmd
+```
+mix do local.rebar --force, local.hex --force
 mix escript.install hex livebook
 ```
 
@@ -56,13 +66,11 @@ Then locally launching Livebook is:
 livebook server
 ```
 
-When connecting to a Fly.io app, we need to launch it like this:
+When connecting to a Fly.io app, we can pass the needed ENV value like this:
 
 ```cmd
-ERL_AFLAGS="-proto_dist inet6_tcp" livebook server --name livebook@127.0.0.1
+LIVEBOOK_DISTRIBUTION=name ERL_AFLAGS="-proto_dist inet6_tcp" livebook server
 ```
-
-The special customization we need is the `ERL_AFLAGS` settings passed to the beam on startup. The `--name` setting gives our local node a fully qualified name, which helps us connect to remote servers.
 
 <aside class="callout">
 **Upgrading an Escript Installed Livebook**
@@ -74,6 +82,12 @@ When upgrading your Livebook version while using [asdf](https://asdf-vm.com/) fo
 * Re-shim to get the command: `asdf reshim elixir`
 * Verify you have the upgrade: `livebook --version`
 </aside>
+
+### ENV Values
+
+The `ERL_AFLAGS` settings is passed to the BEAM on startup. The `LIVEBOOK_DISTRIBUTION=name` setting configures Livebook to run with a fully qualified name and to be ready for clustering.
+
+The Livebook README page [documents the supported ENV values](https://github.com/livebook-dev/livebook#environment-variables).
 
 ## Running Livebook
 
