@@ -38,7 +38,7 @@ You may need to update the version in your Dockerfile and deploy the application
 
 There are several ways to [install and run Livebook](https://livebook.dev/#install). [Livebook Desktop](https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu) is really slick and deploying a [Livebook on Fly](https://fly.io/launch/livebook) is super easy.
 
-Livebook Desktop can be installed as an app on Mac and Window. For Linux, we can pull the source or install it as an [Escript]((https://github.com/elixir-nx/livebook#escript).
+Livebook Desktop can be installed as an app on Mac and Window. For Linux, we can pull the source or install it as an [Escript](https://github.com/elixir-nx/livebook#escript).
 
 ### Using Livebook Desktop
 
