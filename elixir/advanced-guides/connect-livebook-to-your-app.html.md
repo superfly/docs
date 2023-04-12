@@ -42,7 +42,7 @@ Livebook Desktop can be installed as an app on Mac and Window. For Linux, we can
 
 ### Using Livebook Desktop
 
-When running [Livebook Desktop]((https://livebook.dev/#install)), Livebook will invoke on boot a file named `~/.livebookdesktop.sh` on macOS or `%USERPROFILE%\.livebookdesktop.bat` on Windows. This file can be modified to set environment variables used by Livebook, such as:
+When running [Livebook Desktop](https://livebook.dev/#install), Livebook will invoke on boot a file named `~/.livebookdesktop.sh` on macOS or `%USERPROFILE%\.livebookdesktop.bat` on Windows. This file can be modified to set environment variables used by Livebook, such as:
 
 ```
 export LIVEBOOK_DISTRIBUTION=name
