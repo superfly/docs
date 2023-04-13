@@ -28,7 +28,6 @@ If you haven't deployed the app before, `fly deploy` will create one Machine for
 Subsequent deployments update the app's Machines as a group, with the latest local changes to the app's source and configuration. It is possible for a Fly App to have Machines that aren't managed by `fly deploy`.
 
 
-
 ## Configuration
 
 flyctl will look for a `fly.toml` file to find the name of the app to operate on, and for an app configuration to apply during deployment. Use `fly deploy -a <app-name>` to override the app name given in `fly.toml` and deploy the project in the current working directory to a different existing Fly App.
@@ -42,10 +41,9 @@ There are [a number of other options](/docs/flyctl/deploy/) you can use with the
 Here's how `fly deploy` determines how to get the app's Docker image:
 
 1. If an image is specified, either with the `--image` option or in the `[build]` section of `fly.toml`, use that image, regardless of the presence of a Dockerfile in the working directory or the use of the `--dockerfile` option.
-2. Otherwise, if a Dockerfile is specified, either with the `--dockerfile` or in the `[build]` section of `fly.toml`, use that Dockerfile to build the image.
-3. Otherwise, if there's a `Dockerfile` (named exactly `Dockerfile`) in the local working directory, use that Dockerfile for the build.
-
-Like `fly launch`, `fly deploy` takes the `--image` or `--dockerfile` options to specify how to get the app's Docker image. Unlike `fly launch`, `fly deploy` actually retrieves the image or gets it built (either with Docker on your local machine or using one of our remote builders) `fly deploy` checks the `[build]` section of `fly.toml` to determine how to get the app's Docker image.
+2. Otherwise, check the [`[build]` section of `fly.toml`](/docs/reference/configuration/#the-build-section) and use the method specified there, whether it's a Dockerfile or a buildpack (but don't use buildpacks if you don't have to; they're brittle, bloated, and prone to change).
+3. Otherwise, if the `--dockerfile` flag supplies a path to a Dockerfile, use that Dockerfile to build the image. You read that right. The `--dockerfile` flag is looked at _after_ the `[build]` section of the config file. This will hopefully change soon.
+4. Otherwise, if there's a `Dockerfile` (named exactly `Dockerfile` or `dockerfile`) in the local working directory, use that Dockerfile for the build.
 
 ## IP addresses
 
