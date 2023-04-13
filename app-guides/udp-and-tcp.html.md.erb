@@ -142,7 +142,7 @@ In a real Go app doing something like DNS, you might have a single thread readin
 This program, [with a simple Dockerfile](https://github.com/fly-apps/udp-echo-/blob/main/Dockerfile) and the `fly.toml` configuration above, should just work on Fly.io. [Boot it up](https://fly.io/docs/flyctl/deploy/) and throw some UDP packets at it with netcat:
 
 ```cmd
-echo hello world | nc udp-echo-sample.fly.dev 5000
+echo hello world | nc -w1 -u udp-echo-sample.fly.dev 5000
 ```
 ```output
 hello world
