@@ -217,7 +217,7 @@ Given a machine ID, fetch details about it.
 
 ### Update a Machine
 
-`region` and `name` are immutable and cannot be updated. Updating the `config` requires specifying the complete config.
+`region` and `name` are immutable and cannot be updated. **We don't support partial updates, you're required to specify the entire config**.
 
 <%= partial "/docs/reference/machines/update_req" %>
 <%= partial "/docs/reference/machines/update_resp" %>
