@@ -57,7 +57,9 @@ Next remove the release step from the `[deploy]` section of your `fly.toml` and 
 ```
 
 This step is required because a volume may not be ready once your application release runs, so to fix this we need to run migrations on 
-application start. This can be accomplished by adding the following line to your `lib/name/application.ex:
+application start. To run migrations, you need the `Name.Release` module, so be sure to generate it by running
+[mix phx.gen.release](https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Release.html) in your project if you haven't already done so.
+Add the following line to your `lib/name/application.ex` to let `Name.Release` run the migrations:
 
 ```diff
   @impl true
