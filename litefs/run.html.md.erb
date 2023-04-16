@@ -10,12 +10,12 @@ toc: true
 
 ## Overview
 
-The `run` command will execute a shell command and provides options to run it
-within the context of a `HALT` lock. This allows replica nodes to [execute
-migration scripts][migrations] that perform writes on the database and to have
-those writes forwarded to the primary node.
+The `run` command will execute the program listed after the double dash. It
+provides options for promoting the current node or for performing write 
+forwarding using the `HALT` lock. See the [migrations guide][] for details
+about promotion & write forwarding.
 
-[migrations]: /docs/litefs/migrations
+[migrations guide]: /docs/litefs/migrations
 
 ## Usage
 
@@ -25,11 +25,11 @@ litefs run [arguments] -- CMD [ARGS...]
 
 ### Arguments
 
-To acquire a `HALT` lock while executing the subcommand, use the
-`-with-halt-lock-on` flag against the database you wish to lock. Acquiring the
-`HALT` lock on the primary node has no affect.
-
 ```
+  -if-candidate
+      only execute if node is a candidate
+  -promote
+      promote node to primary
   -with-halt-lock-on string
       full database path to halt
 ```
@@ -37,8 +37,16 @@ To acquire a `HALT` lock while executing the subcommand, use the
 
 ## Examples
 
-To run Rails migrations on the `/litefs/db` database from any node:
+Promote the local node to become the primary and then run Rails migrations:
+
+```sh
+litefs run -promote -- bin/rails db:migrate
+```
+
+Run Rails migrations on the `/litefs/db` database from any node and have those
+write forwarded back to the primary node:
 
 ```sh
 litefs run -with-halt-lock-on /litefs/db -- bin/rails db:migrate
 ```
+
