@@ -1,0 +1,88 @@
+---
+title: Running database migrations
+layout: docs
+sitemap: false
+nav: litefs
+toc: true
+---
+
+<%= partial "partials/disclaimer" %>
+
+## Overview
+
+LiteFS is a single-writer system so only the primary node can write to the
+database. When you deploy a new version of your application, you will likely
+need to run a database migration but the first node you deploy to won't
+necessarily be the primary node.
+
+There are two options for performing migrations when a node starts up:
+auto-promotion & write forwarding.
+
+
+## Auto-promotion
+
+The recommended way to run migrations when you deploy is to have candidate nodes
+automatically promote themselves after they've connected to the cluster and are
+sync'd up. This can be done by setting the `lease.promote` field to `true` in
+the configuration and then running your migrations as one of your `exec`
+commands.
+
+```yml
+lease:
+  candidate: ${FLY_REGION == PRIMARY_REGION}
+  promote: true
+
+exec:
+  - cmd: "rails db:migrate"
+    if-candidate: true
+
+  - cmd: "rails server"
+```
+
+In this example `litefs.yml` config, we are marking nodes whose region
+(`FLY_REGION`) is equal to the primary region of the app (`PRIMARY_REGION`).
+On startup, they will request a primary handoff from the current primary node
+and become the primary themselves.
+
+Once they are promoted, LiteFS will execute the `rails db:migrate` command on
+the node if it is a candidate. Then it will run `rails server` on all nodes.
+
+Your migrations must be idempotent as they will be run on each candidate node.
+Your application must also handle running against the next version of the
+database schema as replica nodes can receive database updates before a new
+deployment of the app has completed.
+
+### Using the `run` command
+
+You can also perform migrations separately from your deploy by logging into a
+candidate node and using `litefs run` with the `-promote` command:
+
+```sh
+litefs run -promote -- /path/to/my_migration.sh
+```
+
+This will perform a primary handoff before running the given script.
+
+
+## Write forwarding
+
+All LiteFS nodes also have the ability to halt writes on the primary node and
+temporarily perform writes on the local node. These changes are then forwarded
+back to the primary node and propagated out to the rest of the cluster.
+
+To perform a remote write, you can use the `litefs run` command and the
+`-with-halt-lock-on` flag to specify the database you wish to lock.
+
+```sh
+litefs run -with-halt-lock-on /litefs/db -- bin/rails db:migrate
+```
+
+This command is meant for small, infrequent transactions as it is slower than
+writing to the primary node. Please note that the `HALT` lock is limited to 30
+seconds before it is automatically released to ensure that replicas do not
+permanently lock the primary.
+
+You can find a reference implementation of a client library in the [litefs-go][]
+repository.
+
+[litefs-go]: https://github.com/superfly/litefs-go

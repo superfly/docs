@@ -1,0 +1,52 @@
+---
+title: LiteFS Run Command
+layout: docs
+sitemap: false
+nav: litefs
+toc: true
+---
+
+<%= partial "partials/disclaimer" %>
+
+## Overview
+
+The `run` command will execute the program listed after the double dash. It
+provides options for promoting the current node or for performing write 
+forwarding using the `HALT` lock. See the [migrations guide][] for details
+about promotion & write forwarding.
+
+[migrations guide]: /docs/litefs/migrations
+
+## Usage
+
+```sh
+litefs run [arguments] -- CMD [ARGS...]
+```
+
+### Arguments
+
+```
+  -if-candidate
+      only execute if node is a candidate
+  -promote
+      promote node to primary
+  -with-halt-lock-on string
+      full database path to halt
+```
+
+
+## Examples
+
+Promote the local node to become the primary and then run Rails migrations:
+
+```sh
+litefs run -promote -- bin/rails db:migrate
+```
+
+Run Rails migrations on the `/litefs/db` database from any node and have those
+write forwarded back to the primary node:
+
+```sh
+litefs run -with-halt-lock-on /litefs/db -- bin/rails db:migrate
+```
+
