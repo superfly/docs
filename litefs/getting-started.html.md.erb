@@ -11,10 +11,14 @@ toc: true
 
 ## Overview
 
-This guide will walk you through the steps to add LiteFS to your existing SQLite
-application. This guide is not specific to Fly.io. You can run LiteFS anywhere
-that runs Linux. Please see the [LiteFS Example Application guide](/docs/litefs/example)
-for a walkthrough of running LiteFS on Fly.io.
+This guide will walk you through the steps of getting a LiteFS cluster up and
+running. Some of the steps may include Fly.io commands for convenience, however,
+you can run LiteFS anywhere that runs Linux.
+
+For a full, working example of a LiteFS application, please see the
+[litefs-example][] repository.
+
+[litefs-example]: https://github.com/superfly/litefs-example
 
 
 ## Installing LiteFS
@@ -45,9 +49,6 @@ can pull in the `litefs` binary by copying it from the official Docker image:
 COPY --from=flyio/litefs:0.4 /usr/local/bin/litefs /usr/local/bin/litefs
 ```
 
-If your `PATH` includes `/usr/local/bin` then you will be able to run LiteFS
-by simply calling `litefs` as your `CMD` or `ENTRYPOINT`.
-
 
 ### Without Docker
 
@@ -63,6 +64,8 @@ called `litefs.yml`. This file is typically placed in `/etc/litefs.yml` but
 you can change the path by using the `-config` flag.
 
 
+### File system
+
 Let's first set two fields to tell LiteFS where to mount its file system and
 where to store its internal data.
 
@@ -77,6 +80,21 @@ data:
   dir: "/var/lib/litefs"
 ```
 
+If you're running on Fly.io, you should create a volume:
+
+```sh
+fly volumes create litefs --size 10
+```
+
+And then specify it as a mount in your `fly.toml`:
+
+```toml
+[mounts]
+  source = "litefs"
+  destination = "/var/lib/litefs"
+```
+
+
 ### Lease configuration
 
 LiteFS only allows a single node to be the _primary_ at any given time. The
@@ -84,43 +102,71 @@ primary node is the only one that can write data to the database. The other
 nodes are called _replicas_ and they provide a read-only copy.
 
 The primary is determined by using a [_distributed lease_](https://martinfowler.com/articles/patterns-of-distributed-systems/time-bound-lease.html).
-There are two leasing modes in LiteFS: `"static"` & `"consul"`. Static leasing
-is simple as it sets a single node to always be the primary. The downside of
-this approach is that you will lose write availability if that node goes down.
+In this guide, we'll be using a [Consul][] lease as it allows the primary to
+automatically failover in order to have high write availability. You can find
+details about static leasing in our [Static Leasing guide][].
 
-Consul leasing allows the primary to be moved dynamically if a primary goes
-down. We'll be using static leasing in this guide. You can find more information
-about configuring Consul leases in the [configuration reference](/docs/litefs/config).
+In you're running on Fly.io, you can obtain a Consul URL by logging into [fly.io][],
+going to the [GraphQL API page][], and executing the following query with your
+app name:
 
-On the primary node, you'll need to configure your lease so that it is a
-_candidate_. Being a candidate means that it is able to acquire the lease.
+```graphql
+mutation{
+  enablePostgresConsul(input:{appId: "$YOUR_APP_NAME"}) {
+    consulUrl
+  }
+}
+```
+
+Next, set the returned URL as a secret on your app:
+
+```sh
+fly secrets set FLY_CONSUL_URL=...
+```
+
+Then in your `litefs.yml`, set the `lease` section:
 
 ```yml
 lease:
-  type: "static"
-  candidate: true
+  type: "consul"
+
+  # Specifies if this node can become primary. The expression below evaluates
+  # to true on nodes that are run in the primary region. Nodes in other regions
+  # act as non-candidate, read-only replicas.
+  candidate: ${FLY_REGION == PRIMARY_REGION}
+  
+  # If true, then the node will automatically become primary after it has
+  # connected with the cluster and sync'd up. This makes it easier to run
+  # migrations on start up.
+  promote: true
+  
+  # The API URL that other nodes will use to connect to this node.
+  advertise-url: "http://${FLY_ALLOC_ID}.vm.${FLY_APP_NAME}.internal:20202"
+
+  consul:
+    # The URL of the Consul cluster.
+    url: "${FLY_CONSUL_URL}"
+
+    # A unique key shared by all nodes in the LiteFS cluster.
+    # Change this if you are running multiple clusters in a single app!
+    key: "${FLY_APP_NAME}/primary"
 ```
 
-On the replica nodes, you'll need to disable candidacy and set the primary's
-connection information:
+You can find more details in the [lease management][] section of the configuration
+guide.
 
-```yml
-lease:
-  type: "static"
-  candidate: false
-  hostname: "${PRIMARY_HOSTNAME}"
-  advertise-url: "http://${PRIMARY_HOSTNAME}:20202"
-```
-
-Replace the `${PRIMARY_HOSTNAME}` with the hostname of your primary node or set
-the `PRIMARY_HOSTNAME` environment variable to the primary's hostname.
+[Consul]: https://consul.io
+[Static Leasing guide]: /docs/litefs/static-lease
+[fly.io]: https://fly.io
+[GraphQL API page]: https://api.fly.io/graphql
+[lease management]: /docs/litefs/config#lease-management
 
 
 ## Running LiteFS
 
 The main command used to start LiteFS is the `litefs mount` command. This mounts
-a FUSE file system (typically to `/litefs`) and then starts an API server for
-LiteFS nodes to communicate with each other.
+a FUSE file system and then starts an API server for LiteFS nodes to
+communicate with each other.
 
 ```
 litefs mount
@@ -132,18 +178,22 @@ LiteFS can either be run on its own or it can act as a simple supervisor process
 for your application. Running as a supervisor lets LiteFS wait to start the
 application until after it has connected to the cluster.
 
-To run as a supervisor, specify your application's command line invocation 
-from the `exec` field in `litefs.yml`:
+You can specify one or more commands in the `exec` section of your config. If
+you set `lease.promote` to `true`, then you can specify to run your migration
+scripts only on candidate nodes. This means that candidates will automatically
+promote to the primary and run the migrations.
 
 ```yml
-exec: "rails server"
+exec:
+  # Only run migrations on candidate nodes.
+  - cmd: "rails db:migrate"
+    if-candidate: true
+
+  # Then run the application server on all nodes.
+  - cmd: "rails server"
 ```
 
-or you can add it after a double dash on the command line:
-
-```sh
-litefs mount -- rails server
-```
+### Testing your LiteFS instance
 
 Once LiteFS is mounted, you can use SQLite clients or the `sqlite3` CLI to
 interact with databases on the mount directory:
@@ -174,20 +224,39 @@ See the [`ltx import`](/docs/litefs/import) documentation for more details.
 </div>
 
 
-## Application development with LiteFS
+## Configuring the proxy (Fly.io only)
 
-LiteFS aims to be as transparent as possible, however, there are a few things
-your application needs to be aware of.
+LiteFS has a few differences from regular SQLite since it is a distributed
+system. LiteFS requires that all writes occur on the primary node which means
+that applications need to redirect write requests to the current primary. It's
+also possible to issue a write to the primary and then read from a replica
+before the change is propagated to that replica.
 
-First, you'll need to send all write requests to the primary node as that is the
-only node that can write to the database. With a static lease, this is
-straightforward since only one node will ever be the primary. If you use dynamic
-leasing with Consul, please see the documentation on
-[how to determine the current primary](/docs/litefs/primary).
+For most web applications, they can take advantage of a thin, built-in proxy
+inside LiteFS that automatically handles these write redirection and replica
+consistency issues if your application follows some simple rules:
 
-Second, you'll need to handle consistency if you writing to the primary and
-reading from a replica. It's possible to write to the primary and then issue a
-read request to a replica before the change has been propagated to the replica
-node. Please see the documentation on [tracking replication position](/docs/litefs/position)
-for ways to handle consistency.
+- `GET` requests should not perform write operations (e.g. `INSERT`, `UPDATE`, etc).
 
+- Clients must have cookies enabled.
+
+To configure the proxy, you'll need to set the `proxy` section in the config file: 
+
+```yml
+proxy:
+  # Bind address for the proxy to listen on.
+  addr: ":8080"
+
+  # Hostport of your application.
+  target: "localhost:8081"
+
+  # Filename of the SQLite database you want to use for TXID tracking.
+  db: "my.db"
+```
+
+Then you'll need to update your application server's port to what is specified
+in the `target` field (`8081`).
+
+You can find more details on the [proxy configuration guide][].
+
+[proxy configuration guide]: /docs/litefs/proxy
