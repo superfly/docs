@@ -186,32 +186,37 @@ Env variable names are strictly case-sensitive and cannot begin with `FLY_` (as 
 
 Secrets take precedence over env variables with the same name.
 
-## The `statics` sections
+## The `http_service` section
 
-When `statics` are set, requests under `url_prefix` that are present as files in `guest_path` will be delivered directly to clients, bypassing your web server. These assets are extracted from your Docker image and delivered directly from our proxy on worker hosts.
+[**Apps V2**](/docs/reference/apps/#apps-v2) **only:** For apps that only need HTTP and HTTPS services, you can replace the full-blown `[[services]]` section with this simpler alternative. 
+
+An `[http_service]` section defines a service that listens on ports 80 and 443. Port 80 will have an HTTP handler. Port 443 will have a TLS and HTTP handler. You can configure additional services on different ports by adding `[[services]]` sections.
+
+As with the more verbose [`[[services]]`](#the-services-sections), you can specify a list of [processes](#the-processes-section) to limit the service definition to Machines belonging to process groups that should receive HTTP requests.
 
 ```toml
-[[statics]]
-  guest_path = "/app/public"
-  url_prefix = "/public"
+[http_service]
+  internal_port = 8080
+  force_https = true
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 200
+    hard_limit = 250
 ```
-Each `[[statics]]` block maps a URL prefix to a path inside your container. You can have up to 10 mappings in an application.
 
-The "guest path" --- the path inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
+* `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
+* `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
 
-### Caveats
+The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
 
-This feature should not be compared directly with a CDN, for the following reasons.
+* `type` specifies what metric is used to determine when to scale up and down, or when a given instance should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
 
-This feature does not exempt you from having to run a web service in your VM.
+**connections**: Load balance and scale based on number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
 
-Statics will not find `index.html` at the root. The full path must be requested.
+**requests**: Load balance and scale based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
 
-You can't set `Cache-Control` or any other headers on assets. If you need those, you'll need to deliver them from your application and set the relevant headers.
-
-Assets are not delivered, by default, from all edge Fly.io regions. Rather, assets are delivered from the regions the application is deployed in.
-
-`statics` does not honor symlinks. So, if `/app/public` in your container is actually a symlink to something like `/app-39403/public`, you'll want to use the absolute original path in your statics configuration.
+* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
+* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application support doing so.
 
 ## The `services` sections
 
@@ -219,9 +224,9 @@ The `services` sections configure the mapping of ports on the application to por
 
 You can have:
 
-* No `services` section: The application has no mappings to the external internet - typically apps like databases that talk over [6PN private networking](/docs/reference/private-networking/) to other apps.
-* One `services` section: One internal port mapped to the one or more external ports on the internet.
-* Multiple `services` sections: Mapping multiple internal ports to multiple external ports.
+* No `services` section (and no [`http_service` section](#the-http_service-section)): The application has no mappings to the external internet - typically apps like databases that talk over [6PN private networking](/docs/reference/private-networking/) to other apps.
+* One `services` section (or an [`http_service` section](#the-http_service-section)): One internal port mapped to the one or more external ports on the internet.
+* Multiple `services` sections (or an [`http_service` section](#the-http_service-section) and one or more `services` sections): Mapping multiple internal ports to multiple external ports.
 
 The `services` section itself is a table of tables in TOML, so the section is delimited with double square brackets, like this:
 
@@ -379,37 +384,9 @@ Times are in milliseconds unless units are specified.
 
 **Note**: The `services.http_checks` section is optional and not generated in the default `fly.toml` file.
 
-## The `http_service` section
-
-[**Apps V2**](/docs/reference/apps/#apps-v2) **only:** For apps that only need HTTP and HTTPS services, you can replace the full-blown `[[services]]` section with this simpler alternative. An `[http_service]` section defines a service that listens on ports 80 and 443. Port 80 will have an http handler. Port 443 will have a tls and http handler. Using `[http_service]` does not prevent you from  configuring more services on different ports using `[[services]]`.
-
-```toml
-[http_service]
-  internal_port = 8080
-  force_https = true
-  [http_service.concurrency]
-    type = "requests"
-    soft_limit = 200
-    hard_limit = 250
-```
-
-* `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
-* `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
-
-The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
-
-* `type` specifies what metric is used to determine when to scale up and down, or when a given instance should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
-
-**connections**: Load balance and scale based on number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
-
-**requests**: Load balance and scale based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
-
-* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
-* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application support doing so.
-
 ## The `mounts` section
 
-This section supports the Volumes feature for persistent storage. The section has two settings; both are needed.
+This section supports the Volumes feature for persistent storage. The section has two required entries: `source` and `destination`.
 
 ```toml
 [mounts]
@@ -424,6 +401,8 @@ The `source` is a volume name that this app should mount. Any volume with this n
 ### `destination`
 
 The `destination` is directory where the `source` volume should be mounted on the running app.
+
+Optionally, you can specify a list of [processes](#the-processes-section) to limit volume mounts by process group. You can even specify two different `[[mounts]]` sections to mount different source volumes to VMs in different process groups. Note the need to use double brackets if there are multiple `[[mounts]]` defined.
 
 ## The `checks` section
 
@@ -466,9 +445,6 @@ Again, times are in milliseconds unless units are specified.
 
 ## The `processes` section
 
-<div class="callout">The `processes` feature is in [preview](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316). Let us know in the <a href="https://community.fly.io" style="text-decoration: underline;">Fly.io community forum</a> if you run into issues when deploying.
-</div>
-
 The `processes` section allows you to define process groups to be run on separate VMs within a single app.
 
 **Each machine can run a different command on start**, allowing you to re-use your code base for different tasks (web server, queue worker, etc).
@@ -481,18 +457,23 @@ web = "bundle exec rails server -b [::] -p 8080"
 worker = "bundle exec sidekiqswarm"
 ```
 
-Furthermore, you can "match" a specific process (or processes) to a `services` configuration. For example:
+Furthermore, you can "match" a specific process (or processes) to an [`[http_service]`](#the-http_service-section) or [`[[services]]`](#the-services-sections) configuration. For example:
 
 ```toml
-[[services]]
+[http_service]
   processes = ["web"] # this service only applies to the web process
-  http_checks = []
   internal_port = 8080
-  protocol = "tcp"
-  script_checks = []
+  force_https = true
 ```
 
-In legacy Nomad apps only, volumes can also be assigned to specific processes; use double brackets to include more than one `[[mounts]]` section and mount differently named volumes to VMs in different process groups.
+Volumes can also be assigned to specific processes; use double brackets to include more than one [`[[mounts]]`](#the-mounts-section) section, and mount differently named volumes to VMs in different process groups:
+
+```toml
+[[mounts]]
+  source = "data"
+  destination = "/data"
+  processes = ["app"]
+```
 
 ## The `metrics` section
 
@@ -505,6 +486,34 @@ path = "/metrics" # default for most prometheus clients
 ```
 
 Check out [Metrics on Fly.io](/docs/reference/metrics/) for more information about collecting metrics for your apps.
+
+## The `statics` sections
+
+When `statics` are set, requests under `url_prefix` that are present as files in `guest_path` will be delivered directly to clients, bypassing your web server. These assets are extracted from your Docker image and delivered directly from our proxy on worker hosts.
+
+```toml
+[[statics]]
+  guest_path = "/app/public"
+  url_prefix = "/public"
+```
+Each `[[statics]]` block maps a URL prefix to a path inside your container. You can have up to 10 mappings in an application.
+
+The "guest path" --- the path inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
+
+### Caveats
+
+This feature should not be compared directly with a CDN, for the following reasons.
+
+This feature does not exempt you from having to run a web service in your VM.
+
+Statics will not find `index.html` at the root. The full path must be requested.
+
+You can't set `Cache-Control` or any other headers on assets. If you need those, you'll need to deliver them from your application and set the relevant headers.
+
+Assets are not delivered, by default, from all edge Fly.io regions. Rather, assets are delivered from the regions the application is deployed in.
+
+`statics` does not honor symlinks. So, if `/app/public` in your container is actually a symlink to something like `/app-39403/public`, you'll want to use the absolute original path in your statics configuration.
+
 
 ## The `experimental` section (Legacy Nomad Apps Only)
 
