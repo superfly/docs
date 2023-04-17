@@ -172,6 +172,26 @@ Once you've switched over to the new V2 app and you're confident you don't need 
 
 The Fly Apps V2 platform allows you to manage Fly Machines with app-wide configuration and coordinated releases, using `fly launch` and `fly deploy`. If you have a non-Apps-V2 Machine app&mdash;created using `fly create --machines` or `fly machine run`&mdash;you may or may not want to migrate it onto the Apps V2 platform in order to gain `fly deploy` functionality. 
 
-This is easy to do: `fly deploy` migrates that app to the Fly Apps Platform and unify the configuration for all the app's existing Machines. The Machines belonging to an app at the time of its migration to the V2 Apps platform, and any Machines created by `fly clone`ing these Machines, will be managed by `fly deploy` from then on.
+<div class="callout">
+**This is an important point: `fly deploy` unifies all the Machines it manages to use a single Docker image and a single configuration.** As an example, the services and environment variables will come from `fly.toml` on the next deployment, replacing whatever was present before.
+</div>
 
-**Note/Warning:** This will overwrite the config for all these machines, based on the values set in `fly.toml` and the existing config on the machines. As an example, the services and environment values will come from `fly.toml`, replacing whatever was present before. Any Fly Volume mounts will not change, though `fly deploy` may change the mount path if the `destination` path under the `[mounts]` section in `fly.toml` is different than what’s currently on a Machine.
+Thus, migrating a Machines Fly App to the Apps V2 platform is fairly straightforward **if all the Machines belonging to the app are running the same image with the same configuration.**
+
+From your project's root directory (where you'll be deploying it from, and where `fly.toml` should live):
+
+```
+$ fly config save -a appname # to get a fly.toml from a machine's config
+$ fly machine update --metadata fly_platform_version=v2 9080eee5a1d518 # do this for each machine 
+$ fly deploy
+```
+
+**For an app with Machines running different images,** it's more awkward. There's a good chance you'd be better off starting with a fresh V2 app, and adding any special Machines with `fly machine run` after it's deployed.
+
+`fly config save` doesn't expect there to be a difference between Machines, so it's not currently possible to select a specific Machine to pull a new app config from. In this case, the process would look more like:
+
+* get or create a `fly.toml` to match the config you want `fly deploy` to apply to its Machines
+* run `fly machine update --metadata fly_platform_version=v2 <machine-id>` **only on any Machines that you want `fly deploy` to manage.**
+* `fly deploy`
+
+This deployment now updates the adopted Machines with the app-wide image and configuration. 
