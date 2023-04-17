@@ -47,6 +47,8 @@ The important part of this is the internal port, in this case, set to 8080.
 
 Now, that means that there must be an open TCP port on port 8080. If you've opened port 80 or 443 on your application, that's likely to be the wrong port.
 
+As for _external ports_, if you're running services over IPv4 on ports other than 80 or 443, you need to make sure your app has a [dedicated IPv4 address](https://fly.io/docs/reference/services/#dedicated-ipv4). The [shared IPv4 addresses](https://fly.io/docs/reference/services/#shared-ipv4) that comes bundled with new apps will only accept connections on those two ports.
+
 So, first stop, check what port you have open on your application. Sometimes an app's logs will tell you which internal port it's listening on, which brings us to...
 
 ## _Logs Have Knowledge_
