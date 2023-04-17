@@ -155,3 +155,18 @@ Use these two commands to see environment variables.
 flyctl secrets list
 flyctl config env
 ```
+
+## _Is your buildpack-based app failing to deploy?_
+
+First of all, we think using a [Dockerfile](https://fly.io/docs/languages-and-frameworks/dockerfile/) rather than buildpacks is more reliable and faster to deploy.
+
+That's because buildpacks come with lots of dependencies to be able to build different app stacks rather than just what you need. On top of that, we've seen buildpack providers upgrade the image on dockerhub and things Stop Working (even with no code changes on your app). Fly launch already generates Dockerfiles for [many](https://fly.io/ruby-dispatch/rails-on-docker/) [popular](https://fly.io/docs/elixir/getting-started/#generate-the-app-and-deploy-with-postgres) [frameworks](https://fly.io/docs/django/getting-started/#provision-django).
+
+That said, one option is to try using a fixed SHA so the build is reproducible. For example, `heroku/buildpacks:20` uses Github Actions for pushing new images and the SHA256 can be found on their [Build, Publish, Test action](https://github.com/heroku/builder/actions/runs/4684001790/jobs/8299757439). Finding and using a known-good build (example):
+
+```
+[build]
+  builder = "heroku/buildpacks@sha256:4b3478410cb52c480c77f18a26a0c88cfc7e23c259df4ca833e0500215ab5535"
+```
+
+instead of the most recent one might help fixing deploys that stopped working for no good reason.
