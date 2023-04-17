@@ -43,7 +43,7 @@ Every Fly Volume belongs to a [Fly App](/docs/reference/apps/).
 
 Create a volume for an app using `fly volumes create`. The default volume size is 3GB. See [`fly volumes create`](/docs/flyctl/volumes-create/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
-The following command creates a new volume named "myapp_data" with 40GB of storage in the lhr (London Heathrow) region, for the application whose `fly.toml` file is in the working directory. To specify a different app, use the `-a` or `--app` flag.
+The following command creates a new volume named "myapp_data" with 1GB of storage in the yyz (Toronto) region, for the application whose `fly.toml` file is in the working directory. To specify a different app, use the `-a` or `--app` flag.
 
 ```cmd
 fly volumes create myapp_data --region yyz --size 1
@@ -61,7 +61,7 @@ Created at: 04 Mar 23 03:32 UTC
 
 Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--no-encryption` to instead create an unencrypted volume for improved performance at deployment and runtime.
 
-Volumes are bound to both apps and regions. A volume is directly associated with only one app and exists in only one region. No other app can see this volume and only an instance of the app running in the LHR region can access it.
+Volumes are bound to both apps and regions. A volume is directly associated with only one app and exists in only one region. No other app can see this volume and only an instance of the app running in the yyz region can access it.
 
 Most people use volumes for databases, so for high availability, we default to putting each of your app's volumes on different hardware (equivalent to using `--require-unique-zone=true` with `fly volumes create`). This setting does limit the number of volumes your app can have in a region.
 
