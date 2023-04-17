@@ -10,7 +10,7 @@ redirect_from:
   - /docs/flyctl/installing/
 ---
 
-flyctl is a command-line utility that lets you work with Fly.io, from creating your account to deploying your applications. It runs on your local device so you'll want to install the version that's appropriate for your operating system:
+flyctl is a command-line utility that lets you work with Fly.io, from creating your account to deploying your applications. It runs on your local device so you'll want to install the version that's appropriate for your operating system.
 
 <h2 id="macos" class="group flex items-center relative mt-14 sm:mt-16 mb-10 group text-navy font-heading pb-1 border-b">
   <a href="#macos" class="absolute ml-[-1em] pr-[0.5em] after:hash opacity-0 group-hover:opacity-50 transition-all" aria-label="Anchor"></a>
@@ -31,7 +31,7 @@ If not, you can run the install script:
 ```cmd
 curl -L https://fly.io/install.sh | sh
 ```
-After that, you should add the flyctl directory to your shell rc file. Check the output of the install script for the exact command. Copy, paste and run it and the `flyctl` command will be available everywhere. Or for maximum efficiency, you can use the `fly` command! 
+If you used curl to install flyctl, then you need to add the flyctl directory to your shell rc file. Check the output of the install script for the entries to copy and paste into the file. Now you can use the `flyctl` command from any directory. Or for maximum efficiency, you can use the `fly` command! 
 
 <h2 id="linux" class="group flex items-center relative mt-14 sm:mt-16 mb-10 group text-navy font-heading pb-1 border-b">
   <a href="#linux" class="absolute ml-[-1em] pr-[0.5em] after:hash opacity-0 group-hover:opacity-50 transition-all" aria-label="Anchor"></a>
@@ -61,6 +61,6 @@ Run the Powershell install script:
 powershell -Command "iwr https://fly.io/install.ps1 -useb | iex"
 ```
 
-
-* If this is your first time with Fly.io, your next step will be to [Sign up](/docs/hands-on/sign-up/).
-* If you already have a Fly.io account, then your next step is to [Sign in to Fly.io](/docs/hands-on/sign-in/).
+Next:
+* If this is your first time with Fly.io, then [Sign up](/docs/hands-on/sign-up/).
+* If you already have a Fly.io account, then [Sign in to Fly.io](/docs/hands-on/sign-in/).
