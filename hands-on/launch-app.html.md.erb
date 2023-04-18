@@ -83,9 +83,7 @@ app = "hellofly"
 ...
 ```
 
-flyctl always checks to see if `fly.toml` exists in the current directory, specifically for the `app` value at the start. Many commands use this app name to determine which Fly App to apply to by default.
-
-You can also see how the app will be built (from a pre-built Docker image, in this case), that internal port setting, and further configuration to be applied to the application when it deploys.
+flyctl always checks to see if `fly.toml` exists in the current directory, and then checks the `app` value at the start of the file. Many commands use this app name to determine which Fly App to apply to by default. You can also see how the app will be built (from a pre-built Docker image, in this case), that internal port setting, and further configuration to be applied to the application when it deploys.
 
 If you stopped to customize your `fly.toml`, you'll want to deploy your app now. At the command line, just run:
 
