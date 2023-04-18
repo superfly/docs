@@ -10,55 +10,65 @@ redirect_from:
 
 ---
 
-Fly.io allows you to deploy any kind of app as long as it is packaged in a **Docker image**. That also means you can just deploy a Docker image and as it happens we have one ready to go in `flyio/hellofly:latest`. 
+Fly.io enables you to deploy almost any kind of app using a Docker image. To learn more about the different ways to get your app ready to deploy, refer to [Launch a New App on Fly.io](/docs/apps/launch/).
 
-Each Fly.io application needs a `fly.toml` file to tell the system how we'd like to deploy it. That file can be automatically generated with the `flyctl launch` command, which will ask a few questions to set everything up. Let's run through it now: 
+For this example, you can use our pre-built Docker image, `flyio/hellofly:latest`, to try out creating and deploying an app. 
+
+Each Fly.io application needs a `fly.toml` file to tell the system how to deploy it. The `fly.toml` file can be automatically generated with the `fly launch` command, which will ask a few questions to set everything up. Let's run through it now:
 
 ```cmd
 fly launch --image flyio/hellofly:latest
 ```
 ```output 
-? App Name (leave blank to use an auto-generated name):
+? Choose an app name (leave blank to generate one):
 ```
-Here you can enter the name of the app. Please note that you can only use numbers, lowercase letters and dashes.
+
+Here you can enter the name of the app. App names can include only numbers, lowercase letters, and dashes.
+
 ```output 
 ? Select organization: Personal (personal)
 ```
-**Organizations**: Organizations are a way of sharing applications and resources between Fly.io users. Every Fly.io account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
+
+**Organizations**: Organizations are a way of sharing applications and resources between Fly.io users. Every Fly.io account has a personal organization, called `personal`, which is only visible to your account. Select the 'personal' organization for this example.
 
 <div class="callout">
-    If you did not add another organization to your account, the `personal` organization will be selected automatically.  
+    If you didn't add another organization to your account, the `personal` organization is selected automatically.  
 </div>
 
 Next, you'll be prompted to select a region to deploy in.
 
 ```output
-? Select region: ord (Chicago, Illinois (US))
+? Choose a region for deployment: Chicago, Illinois (US) (ord)
 ```
 
 At this point, flyctl creates a shell of an app for you and writes a starter configuration to a `fly.toml` file. 
 
 <div class="callout">
 
-If you have just signed up, you will also be prompted for credit card payment information, required for charges outside the free allowances on Fly.io. See [How We Use Credit Cards](/docs/about/credit-cards/) and [Pricing](/docs/about/pricing) for more details.
+If you've just signed up, then you'll also be prompted for credit card payment information, which is required for charges outside the free allowances on Fly.io. See [How We Use Credit Cards](/docs/about/credit-cards/) and [Pricing](/docs/about/pricing) for more details.
 
 </div>
 
-The CLI will ask if you need a Postgres or Redis database. You can reply "No" for this demonstration.
+The CLI will ask if you need a Postgres or Redis database. You can enter "No" for this example.
 
 ```output
 ? Would you like to set up a Postgresql database now? No
 ? Would you like to set up an Upstash Redis database now? No
 ```
 
-Lastly, the CLI will ask you if you would like to deploy now&mdash;if you're deploying an app that doesn't use `internal_port = 8080`, please say no, and take a moment to edit `fly.toml`.
+Finally, the CLI will ask you if you would like to deploy.
+
+<div class="callout">
+If you're deploying an app that doesn't use `internal_port = 8080`, then enter "No", and edit the `fly.toml` file.
+<div>
 
 ```output
 ? Would you like to deploy now? Yes
 ==> Building image
+...
 ```
 
-Whether you deploy straight away or not, `flyctl` will download a `fly.toml` configuration file to the working directory, for use on the next deployment.
+Whether you deploy right away or not, flyctl will download a `fly.toml` configuration file to the working directory, for use on the next deployment.
 
 ```toml
 
@@ -73,9 +83,7 @@ app = "hellofly"
 ...
 ```
 
-The Fly CLI will always check to see if this file exists in the current directory, specifically for the `app` name value at the start. Many commands use this app name to determine which Fly App to apply to by default.
-
-You can also see how the app will be built (from a pre-built Docker image, in this case), that internal port setting, and further configuration to be applied to the application when it deploys.
+flyctl always checks to see if `fly.toml` exists in the current directory, and then checks the `app` value at the start of the file. Many commands use this app name to determine which Fly App to apply to by default. You can also see how the app will be built (from a pre-built Docker image, in this case), that internal port setting, and further configuration to be applied to the application when it deploys.
 
 If you stopped to customize your `fly.toml`, you'll want to deploy your app now. At the command line, just run:
 
@@ -83,6 +91,6 @@ If you stopped to customize your `fly.toml`, you'll want to deploy your app now.
 fly deploy
 ```
 
-This will get the app name `hellofly` from `fly.toml`. Then flyctl will start the process of deploying your application to the Fly.io platform. flyctl will return you to the command line when it's done.
+The `fly deploy` command gets the app name `hellofly` from `fly.toml`. Then flyctl will start the process of deploying your application to the Fly.io platform and then return you to the command line when it's done.
 
 [Next: Check your app's status](/docs/hands-on/check-app-status/)
