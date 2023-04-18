@@ -11,8 +11,7 @@ order: 50
 <br>
 [**`fly scale`**](docs/flyctl/scale) commands apply VM memory and CPU settings to entire process groups in a Fly App. There are two subcommands for scaling these per-VM resources: `fly scale vm` applies a preset CPU/RAM combination; `fly scale memory` adjusts RAM relative to the preset's base RAM.
 
-
-**Note:** At the moment, `fly scale count` doesn't work with Apps V2; see [Add or Remove Machines](/docs/apps/scale-count/) for horizontal scaling of V2 apps.
+You can scale an app even if it has crashed. Its VMs are restarted with the new specification.
 
 **For existing Nomad/V1 Fly Apps:** There's a whole doc on [scaling V1 (Nomad) apps](/docs/apps/legacy-scaling/).
 
@@ -110,9 +109,11 @@ VM
 
 Looks good!
 
-## Increase the RAM
+## Add RAM
 
-If you are happy with the provisioned CPU resources, but want more memory, use `fly scale memory` to top up the RAM: 
+If you are happy with the provisioned CPU resources, but want more memory, use `fly scale memory` to top up the RAM.
+
+If your app crashes with an an out-of-memory error, scale up its RAM and its Machines are restarted to use the new setting.
 
 ```cmd
 fly scale memory 4096
