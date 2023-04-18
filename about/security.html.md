@@ -42,6 +42,20 @@ AppSec is the practice of ensuring software is secure by design, secured during 
 - We make decisions that minimize our attack surface. Most interactions with [Fly.io](http://Fly.io) are well-described in a GraphQL API, and occur through flyctl, our open-source command-line tool.
 - We perform internal code reviews with a modern, PR-based development workflow, and engage external testing firms to assess our software security.
 
+## Vulnerability Remediation
+
+Vulnerabilities that directly affect Fly.io's systems and services will be patched or otherwise remediated within a timeframe appropriate for the severity of the vulnerability, subject to the public availability of a patch or other remediation instructions.
+
+**Severity: Timeframe**
+* Critical:	24 hours
+* High:	1 week
+* Medium:		1 month
+* Low: 3 months
+* Informational:	As necessary
+
+If there's a severity rating that accompanies a vulnerability disclosure, we'll generally rely on that as a starting point, but may upgrade or downgrade the severity in our best judgement. 
+
+
 ## SOC2 and HIPAA
 
 [We have our SOC2 Type I](/blog/soc2-the-screenshots-will-continue-until-security-improves/) where we've documented a bunch of these controls. Additionally, we've detailed a number of controls for folks exploring [running HIPAA-compliant applications on our platform](/docs/about/healthcare).
