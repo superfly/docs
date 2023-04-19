@@ -1,5 +1,5 @@
 ---
-title: Automatically Stop and Start App Machines
+title: Automatically Stop and Start App V2 Machines
 objective: 
 layout: docs
 nav: firecracker
@@ -13,8 +13,8 @@ You can decide whether you want to automatically stop, or downscale, instances o
 ```toml
 ...
 [[services]]
-  autostart = true
-  autostop = true
+  auto_stop_machines = true
+  auto_start_machines = true
 ...
 ```
 
@@ -28,16 +28,16 @@ You can decide whether you want to automatically stop, or downscale, instances o
 ...
 ```
 
-## Default and recomended values
+## Default and recommended values
 
-New V2 apps are automatically started and automatically stopped by default:
+New V2 app created using the `fly launch` command are automatically started and automatically stopped by default:
 
 ```toml
 auto_stop_machines = true
 auto_start_machines = true
 ```
 
-Existing apps are automatically started but not automatically stopped by default:
+Existing apps—or any apps that don't have these settings in `fly.toml`—are automatically started but not automatically stopped by default:
 
 ```toml
 auto_stop_machines = false
