@@ -10,11 +10,15 @@ order: 65
 This feature only works for V2 apps. For information about scaling V1 apps, refer to [Scale V1 Nomad Apps](/docs/apps/legacy-scaling/).
 </div>
 
-You can decide whether you want to automatically stop an app's Fly Machines when they're idle and automatically restart them when they're needed. Fly Proxy controls automatically starting and automatically stopping Machines according to settings in your `fly.toml` file, in either the `services` or `http_service` sections:
+Fly Machines are fast to start and stop, and you don't pay for their CPU and RAM when they're in the `stopped` state. For Fly Apps with a service configured, Fly Proxy can start and stop existing Machines based on incoming requests, so that your app can accommodate bursts in demand without keeping extra Machines running constantly.
+
+You can configure automatic starts and automatic stops independently with the `auto_stop_machines` and `auto_start_machines` settings, and tune them with concurrency limits, within the [[[services]]](/docs/reference/configuration/#the-services-sections) or [[http_service]](/docs/reference/configuration/#the-http_service-section) sections of `fly.toml`.
 
 ```toml
 ...
 [[services]]
+  internal_port = 8080
+  protocol = "tcp"
   auto_stop_machines = true
   auto_start_machines = true
 ...
@@ -56,7 +60,7 @@ If `auto_start_machines = false` and `auto_stop_machines = true`, Fly Proxy will
 
 The Fly Proxy runs a process to automatically stop and start Fly Machines every few minutes.
 
-When `auto_stop_machines = true` in your `fly.toml`, the proxy looks at Machines running in a single region and uses the [`soft_limit` setting](/docs/reference/configuration/#the-http_service-section) for each Machine to determine if there's excess capacity. If the proxy decides there's excess capcity, it will stop exactly one machine. The proxy repeats this process every few minutes, stopping only one machine per region, if needed, each time.
+When `auto_stop_machines = true` in your `fly.toml`, the proxy looks at Machines running in a single region and uses the [`soft_limit` setting](/docs/reference/configuration/#the-http_service-section) for each Machine to determine if there's excess capacity. If the proxy decides there's excess capacity, it will stop exactly one machine. The proxy repeats this process every few minutes, stopping only one machine per region, if needed, each time.
 
 Fly Proxy considers all of the app's Machines that are currently running in a given region, such as `fra`, and determines excess capacity as follows:
 
@@ -67,7 +71,7 @@ Fly Proxy considers all of the app's Machines that are currently running in a gi
   * the proxy checks if the Machine has any traffic
   * if the Machine has no traffic (a load of 0), then the proxy stops the Machine
 
-When `auto_start_machines = true` in your `fly.toml`, the Fly Proxy restarts an a Machine in the nearest region when required.
+When `auto_start_machines = true` in your `fly.toml`, the Fly Proxy restarts a Machine in the nearest region when required.
 
 Fly Proxy determines when to start a Machine as follows:
 
