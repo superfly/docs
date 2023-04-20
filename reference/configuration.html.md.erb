@@ -212,7 +212,7 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
 * `auto_start_machines`: Whether to automatically start an application's machines when a new request is made to the application and there's no excess capacity, per region. If there's only one machine in a region, then it's started whenever a request is made to the application. The default is `true`.
 
 <div class="callout">
-We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having machines that either never start or never stop. Learn more about [automatically starting and stopping V2 app Fly machines](/docs/apps/autostart-stop/), including how the process determines excess capacity in a region using the `soft_limit` setting.
+We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having machines that either never start or never stop. Learn more about [automatically starting and stopping V2 app Fly machines](/docs/apps/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
 </div>
 
 The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
@@ -252,7 +252,7 @@ The `services` section itself is a table of tables in TOML, so the section is de
 * `auto_start_machines`: Whether to automatically start an application's machines when a new request is made to the application and there's no excess capacity, per region. If there's only one machine in a region, then it's started whenever a request is made to the application. The default is `true`.
 
 <div class="callout">
-We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having machines that either never start or never stop. Learn more about [automatically starting and stopping V2 app Fly machines](/docs/apps/autostart-stop/), including how the process determines excess capacity in a region using the `soft_limit` setting.
+We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having machines that either never start or never stop. Learn more about [automatically starting and stopping V2 app Fly machines](/docs/apps/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
 </div>
 
 ### `services.concurrency`
