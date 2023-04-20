@@ -198,6 +198,8 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
 [http_service]
   internal_port = 8080
   force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
   [http_service.concurrency]
     type = "requests"
     soft_limit = 200
@@ -206,6 +208,12 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
 
 * `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
+* `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs a process to automatically stop machines every few minutes. The default it `true`.
+* `auto_start_machines`: Whether to automatically start an application's machines when a new request is made to the application and there's no excess capacity, per region. If there's only one machine in a region, then it's started whenever a request is made to the application. The default is `true`.
+
+<div class="callout">
+We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having machines that either never start or never stop. Learn more about [automatically starting and stopping V2 app Fly machines](/docs/apps/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
+</div>
 
 The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
 
@@ -234,10 +242,18 @@ The `services` section itself is a table of tables in TOML, so the section is de
 [[services]]
   internal_port = 8080
   protocol = "tcp"
+  auto_stop_machines = true
+  auto_start_machines = true
 ```
 
 * `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `protocol` : The protocol that this service will use to communicate. Typically `tcp` for most applications, but can also be `udp`.
+* `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs the checks to automatically stop machines every few minutes. The default it `true`.
+* `auto_start_machines`: Whether to automatically start an application's machines when a new request is made to the application and there's no excess capacity, per region. If there's only one machine in a region, then it's started whenever a request is made to the application. The default is `true`.
+
+<div class="callout">
+We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having machines that either never start or never stop. Learn more about [automatically starting and stopping V2 app Fly machines](/docs/apps/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
+</div>
 
 ### `services.concurrency`
 
