@@ -208,7 +208,7 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
 
 * `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
-* `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs the checks to automatically stop machines every few minutes. The default it `true`.
+* `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs a process to automatically stop machines every few minutes. The default it `true`.
 * `auto_start_machines`: Whether to automatically start an application's machines when a new request is made to the application and there's no excess capacity, per region. If there's only one machine in a region, then it's started whenever a request is made to the application. The default is `true`.
 
 <div class="callout">
