@@ -170,3 +170,7 @@ That said, if the build used to work, then you can try using a previous, fixed b
 [build]
   builder = "heroku/buildpacks@sha256:4b3478410cb52c480c77f18a26a0c88cfc7e23c259df4ca833e0500215ab5535"
 ```
+
+## _Do you have enough RAM?_
+
+Some apps (like NodeJS ones that use Prisma) can be RAM intensive. So your app may be killed for out-of-memory (OOM) reasons. The solution is just to [add more RAM](https://fly.io/docs/apps/scale-machine/#add-ram).
