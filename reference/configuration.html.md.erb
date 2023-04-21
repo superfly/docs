@@ -138,7 +138,7 @@ A non-zero exit status from this command will stop the deployment. `fly deploy` 
 
 To ensure the command runs in a specific region - say `dfw` - set `PRIMARY_REGION = 'dfw'` on in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if when running [database replicas in multiple regions](/docs/postgres/high-availability-and-global-replication).
 
-The environment variable `RELEASE_COMMAND=1` is set for you within the temporary release VM. This might be useful if you need to customize your Dockerfile `ENTRYPOINT` to behave differently within a release VM.
+The environment variable `RELEASE_COMMAND=1` is set within the temporary release VM. You can use this to define behavior in your Dockerfile's `ENTRYPOINT`  that's conditional on being run on a release VM.
 
 ### Picking a deployment strategy
 
