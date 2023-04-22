@@ -22,7 +22,8 @@ At this point you have two choices.  You can run `fly launch` and follow the ins
 
   * In `Dockerfile`, add `FROM flyio/litefs:pr-109`, `fuse` package, `COPY --from=lite fs`, `COPY config/litefls.yml`, `mkdir /data`.  Change `SERVER_COMMAND` to `litefs`.
   * In `lit/tasks/fly.rake`, remove the `release` step.
-  * In `fly.toml`, change `SERVER_COMMAND` to `litefs`, remove `[deploy]` section, set `DATABASE_URL` to `"sqlite3:///data/production.sqlite3"`, add `enable_consul` to the `[experimental]` section, and add a `[mount]` section.
+  * In `fly.toml`, change `SERVER_COMMAND` to `litefs`, remove `[deploy]` section, set `DATABASE_URL` to `"sqlite3:///data/production.sqlite3"`, and add a `[mount]` section.
+  * Run `fly consul attach` to provision a Consul cluster and set its url to a new secret named `FLY_CONSUL_URL`.
   * Add `config/litefs.yml`, with `data-dir` set to `/mnt/volume` and `exec` set to `bin/rails fly:server`.
   * create two volumes with the same name and in two different regions.
 
