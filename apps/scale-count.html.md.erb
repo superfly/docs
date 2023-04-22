@@ -37,12 +37,3 @@ fly machine destroy --force 0e286039f42e86
 If you `destroy` a Machine, don't forget that any volume that it had been using still exists until you either `fly volumes delete` it or `fly destroy` the Fly App it belongs to.
 
 **For existing Nomad/V1 Fly Apps**: Existing apps whose VMs are managed by Nomad can still be scaled "horizontally" using [`fly scale count`](/docs/flyctl/scale-count/). For more, see [Scale V1 (Nomad) Apps](/docs/apps/legacy-scaling/).
-
-### Scale to zero
-
-To have your app automatically scale to zero, you just need to make its process terminate. If your app's process exits, the Machine running it stops, so you don't get charged for CPU/memory. Then when a request comes, our Fly Proxy will wake it up again. There are many ways to make a web app exit after some inactivity, for example:
-- here is a minimal app in Typescript/Remix: [code](https://github.com/fly-apps/autoscale-to-zero-demo) & [demo](https://autoscale-to-zero-demo.fly.dev/).
-- here is a [blog post](https://fly.io/phoenix-files/shut-down-idle-phoenix-app/) about it in Elixir/Phoenix, that makes sure that no client connection is active when it stops.
-- for Rails apps, dockerfile-rails provides a [--max-idle](https://github.com/rubys/dockerfile-rails#addremove-a-feature) option that will exit after _n_ seconds of inactivity.
-
-As of `flyctl` v0.0.520, Fly Postgres [support this too](https://community.fly.io/t/scale-to-zero-postgres-for-hobby-projects/12212)!
