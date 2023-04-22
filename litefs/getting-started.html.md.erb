@@ -104,8 +104,7 @@ nodes are called _replicas_ and they provide a read-only copy.
 
 The primary is determined by using a [_distributed lease_](https://martinfowler.com/articles/patterns-of-distributed-systems/time-bound-lease.html).
 In this guide, we'll be using a [Consul][] lease as it allows the primary to
-automatically failover in order to have high write availability. You can find
-details about static leasing in our [Static Leasing guide][].
+automatically failover in order to have high write availability.
 
 In you're running on Fly.io, you can obtain a Consul URL by logging into [fly.io][],
 going to the [GraphQL API page][], and executing the following query with your
