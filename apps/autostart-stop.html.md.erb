@@ -12,6 +12,8 @@ This feature only works for V2 apps. For information about scaling V1 apps, refe
 
 Fly Machines are fast to start and stop, and you don't pay for their CPU and RAM when they're in the `stopped` state. For Fly Apps with a service configured, Fly Proxy can start and stop existing Machines based on incoming requests, so that your app can accommodate bursts in demand without keeping extra Machines running constantly.
 
+This Fly Proxy feature also plays well with apps whose Machines [exit from within](#stop-a-machine-by-terminating-its-main-process) when idle.
+
 You can configure automatic starts and automatic stops independently with the `auto_stop_machines` and `auto_start_machines` settings, and tune them with concurrency limits, within the [[[services]]](/docs/reference/configuration/#the-services-sections) or [[http_service]](/docs/reference/configuration/#the-http_service-section) sections of `fly.toml`.
 
 ```toml
@@ -86,3 +88,14 @@ If your app has highly variable request workloads, then you can set `auto_stop_m
 The difference between this feature and what is typical in autoscaling, is that it doesn't create new Machines up to a specified maximum. It will automatically start only existing Machines. For example, if you want to have a maximum of 10 Machines available to service requests, then you need to create 10 Machines for your app.
 
 If you need your app to be “always on”, then you can set `auto_stop_machines` and `auto_start_machines` to `false`. If `auto_stop_machines` is set to `true` and there’s no traffic to your app, eventually all of your app's Machines could be stopped.
+
+## Stop a Machine by terminating its main process
+
+There are many ways to make a web app exit after some inactivity. Here are some examples:
+
+* [Shutting Down a Phoenix App When Idle](https://fly.io/phoenix-files/shut-down-idle-phoenix-app/): a post by Chris McCord on adding a task to an Elixir app's supervision tree that shuts down the Erlang runtime when there are no active connections.
+* For Rails apps, dockerfile-rails provides a [--max-idle](https://github.com/rubys/dockerfile-rails#addremove-a-feature) option that will exit after _n_ seconds of inactivity.
+* [A Tired Proxy in Go](https://github.com/superfly/tired-proxy) used in [Building an In-Browser IDE the Hard Way](https://fly.io/blog/remote-ide-machines/). [There's a community fork with more recent updates](https://community.fly.io/t/improved-tired-proxy-for-use-with-fly-machines/10584).
+* A minimal demo app in Typescript/Remix: [code](https://github.com/fly-apps/autoscale-to-zero-demo) &amp; [demo](https://autoscale-to-zero-demo.fly.dev/).
+
+As of `flyctl` v0.0.520, Fly Postgres [supports this too](https://community.fly.io/t/scale-to-zero-postgres-for-hobby-projects/12212)!
