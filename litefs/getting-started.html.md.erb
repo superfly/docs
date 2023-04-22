@@ -106,23 +106,13 @@ The primary is determined by using a [_distributed lease_](https://martinfowler.
 In this guide, we'll be using a [Consul][] lease as it allows the primary to
 automatically failover in order to have high write availability.
 
-In you're running on Fly.io, you can obtain a Consul URL by logging into [fly.io][],
-going to the [GraphQL API page][], and executing the following query with your
-app name:
+In you're running on Fly.io, you can add a Consul URL to your app with:
 
-```graphql
-mutation{
-  enablePostgresConsul(input:{appId: "$YOUR_APP_NAME"}) {
-    consulUrl
-  }
-}
+```
+fly consul attach
 ```
 
-Next, set the returned URL as a secret on your app:
-
-```sh
-fly secrets set FLY_CONSUL_URL=...
-```
+That will set a `FLY_CONSUL_URL` secret for the app, which will have the cluster url.
 
 Then in your `litefs.yml`, set the `lease` section:
 
