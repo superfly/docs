@@ -24,6 +24,7 @@ flyctl [flags]
 * [certs](/docs/flyctl/certs/)	 - Manage certificates
 * [checks](/docs/flyctl/checks/)	 - Manage health checks
 * [config](/docs/flyctl/config/)	 - Manage an app's configuration
+* [consul](/docs/flyctl/consul/)	 - Enable and manage Consul clusters
 * [curl](/docs/flyctl/curl/)	 - Run a performance test against a URL
 * [dashboard](/docs/flyctl/dashboard/)	 - Open web browser on Fly Web UI for this app
 * [deploy](/docs/flyctl/deploy/)	 - Deploy Fly applications
