@@ -363,8 +363,8 @@ When a service is running, Fly Proxy can check up on it by connecting to a port.
 ```
 Times are in milliseconds unless units are specified.
 
-* `grace_period`: The time to wait after a VM starts before checking its health.
-* `interval`: The time between connectivity checks.
+* `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your application to start up. For example if your app takes 2 seconds to start up, give it some runway by setting this to at least 3 seconds.
+* `interval`: The time between connectivity checks. If it's long and your grace_period shorter than your app's startup time, health check will take long adding you your deployment time.
 * `restart_limit`: The number of consecutive TCP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed TCP health checks.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
 
@@ -389,8 +389,8 @@ Roughly translated, this section says every ten seconds, perform a HTTP GET on t
 
 Times are in milliseconds unless units are specified.
 
-* `grace_period`: The time to wait after a VM starts before checking its health.
-* `interval`: The time between connectivity checks.
+* `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your app to start up. For example if your app takes 2 seconds to start up, give it some runway by setting to at least 3 seconds.
+* `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If it's long and your grace_period shorter than your app's startup time, health check will take too long adding you your deployment time.
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
 * `protocol`: The protocol to be used (`http` or `https`)
@@ -452,8 +452,8 @@ Fields are very similar to `[[services.checks]]`:
 
 * `port`: Internal port to connect to. Needs to be available on `0.0.0.0`.
 * `type`: Either `tcp` or `http`.
-* `grace_period`: The time to wait after a VM starts before checking its health.
-* `interval`: The time between connectivity checks.
+* `grace_period`: The time to wait after a VM starts before checking its health. Make sure you give your app enough time to start up. For example if your app takes 2 seconds to start up, give it some runway by setting this to at least 3 seconds.  
+* `interval`: The time between connectivity checks. If it's long and your grace_period shorter than your app's startup time, health will take long adding you your deployment time.
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
