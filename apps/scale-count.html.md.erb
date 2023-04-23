@@ -7,33 +7,297 @@ order: 60
 ---
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-## Scale up
+<div class="callout">This document describes horizontal scaling of [V2 apps](/docs/reference/apps/#apps-v2), running on Fly Machines. 
 
-Use `fly machine clone` to add a Machine that will be managed by `fly deploy`. The new Machine will be, as you would expect, a copy of the specified Machine. If the original Machine has a [Fly Volume](/docs/reference/volumes/) attached, an empty volume will be provisioned for the new Machine. It's up to you to decide what to put on the new volume; `fly machine clone` will not automatically copy the contents of the original Machine's volume.
+**For existing Nomad/V1 Fly Apps:** There's a whole doc on [scaling legacy V1 apps](/docs/apps/legacy-scaling/).
+
+</div>
+
+There are two ways to scale the number of platform Machines&mdash;Machines managed by `fly deploy`&mdash;on a V2 Fly App after its first deployment: 
+
+1. with the `fly scale count` subcommand
+2. by explicitly [cloning](#scale-up-with-fly-machine-clone) or [destroying](#scale-down-with-fly-machine-destroy) existing Machines on the app
+
+<div class="callout">
+`fly scale count` does not yet support scaling Machines with [persistent storage volumes](/docs/apps/volume-storage/). Use [`fly machine clone`](#scale-up-with-fly-machine-clone) and [`fly machine destroy`](#scale-down-with-fly-machine-destroy) to scale any process groups with mounted volumes.
+</div>
+
+`fly scale count` uses internal rules to create or destroy Machines to reach the target scale that you specify. As you would expect, specifying a target number of Machines that's higher than the existing total results in the creation of Machines, while a lower target results in the destruction of Machines.
+
+When Machines are created or destroyed using either of the above methods, the resulting scale is preserved by `fly deploy`&mdash;except in the case that you scale right down to zero Machines. In that case, `fly deploy` seeds the app with new Machines according to the `primary_region` and `[processes]` configured in `fly.toml`.
+
+Further adjustments to the capacity of the app can be made by starting and stopping its Machines. Stopped Machines cost less than running Machines because they don't consume any CPU or RAM resources. See [Automatically Stop and Start App Machines](/docs/apps/autostart-stop/) for ways to do this dynamically.
+
+
+## View the app's current scale 
+
+`fly scale show` outputs all the scale information about an app's Machines: how many Machines of each VM specification, in each of the app's process groups, in each region.
+
+Here's an example to illustrate that:
+
+```cmd
+fly scale show
+```
+```out
+VM Resources for app: scalecmd
+
+Groups
+NAME    COUNT   KIND            CPUS    MEMORY  REGIONS
+app     3       shared          4       1024 MB mia,scl(2)
+other   3       shared          4       1024 MB ord(2),scl
+task    4       performance     1       2048 MB iad,mia,ord,scl
+```
+
+This app has 10 Machines total. The `app` process group has two in scl (Santiago) and one in mia (Miami). `other` has two in ord (Chicago) and one in scl. `task` has one Machine in each of iad (Ashburn, Virginia), mia, ord, and scl. You can put your Machines wherever works best for your app!
+
+## Scale a simple app in a single region
+
+The default process name in a Fly App is `app`. If you don't define [process groups](docs/apps/processes/), all the app's platform Machines belong to the `app` group. 
+
+`fly scale count` applies changes to the default process group if it is not [passed explicit per-process target counts](#change-the-number-of-machines-in-a-process-group).
+
+Here's the `fly scale show` output for a simple newly deployed web app, with two machines in yyz (Toronto):
+
+```cmd
+fly scale show
+```
+```out
+VM Resources for app: scalecmd
+
+Groups
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS 
+app     2       shared  1       256 MB  yyz(2) 
+```
+
+The simplest way to scale up is simply `fly scale count <target-count>`. This just adds more Machines of the default process group in the app's existing region:
+
+```cmd
+fly scale count 4
+```
+
+The result:
 
 ```
-fly machine clone 21781973f03e89
-fly machine clone --region syd 21781973f03e89
-fly machine clone --region ams 21781973f03e89
+Groups
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS 
+app     4       shared  1       256 MB  yyz(4) 
 ```
 
-After running the above commands, there are four Machines running for this app: the original Machine plus three new ones. 
+Now there are four Machines in yyz.
 
-## Scale down
+## Scale an app's regions
 
-Use `fly machine stop` and `fly machine destroy` to scale down the app:
+The `--region` option takes one or more [region codes](/docs/reference/regions/). `fly scale count` creates and/or destroys Machines to reach the specified target count across the regions you list in this option, and tries to balance its changes across these regions. 
+
+If `--region` is not used, the target count is distributed across all regions in which the app already has platform Machines belonging to any process group.
+
+You can set the scale explicitly per region by specifying a single region per `fly scale` command.
+
+An example: to end up with a total of three Machines between the yyz and ewr (Secaucus, NJ) regions on an app:
+
+```cmd
+fly scale count 3 --region yyz,ewr
+```
+
+In the above example, the resulting total Machine count seen with `fly scale show` will be more than 3 if it has Machines in regions other than yyz and ewr:
+
+```
+Groups
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS        
+web     4       shared  1       256 MB  ewr,mia,yyz(2)
+```
+
+You can also set the scale explicitly per region by specifying a single region per `fly scale` command.
+
+
+## Change the number of Machines in a process group
+
+`fly scale count` takes explicit target counts per process group. 
+
+Here's an app with two process groups running in two regions, nrt (Tokyo) and yyz (Toronto):
+
+```cmd
+fly scale show
+```
+```out
+VM Resources for app: scalecmd
+
+Groups
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS       
+web     4       shared  1       256 MB  nrt(2),yyz(2)
+worker  4       shared  1       256 MB  nrt(2),yyz(2)
+```
+
+Scale it out to 10 `web` Machines and 6 `worker` Machines, without constraining the change by region:
+
+```cmd
+fly scale count web=10 worker=6
+```
+```out
+App 'scalecmd' is going to be scaled according to this plan:
+  +3 machines for group 'web' on region 'yyz' with size 'shared-cpu-1x'
+  +3 machines for group 'web' on region 'nrt' with size 'shared-cpu-1x'
+  +1 machines for group 'worker' on region 'yyz' with size 'shared-cpu-1x'
+  +1 machines for group 'worker' on region 'nrt' with size 'shared-cpu-1x'
+? Scale app scalecmd? Yes
+Executing scale plan
+  Created 9080eeddc29387 group:web region:yyz size:shared-cpu-1x
+  ...
+  Created 1781779b52d489 group:worker region:nrt size:shared-cpu-1x
+```
+
+```cmd
+fly scale show
+```
+```out
+...
+Groups
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS       
+web     10      shared  1       256 MB  nrt(5),yyz(5)
+worker  6       shared  1       256 MB  nrt(3),yyz(3)
+```
+
+Say we've decided have more capacity than we'll need, for the foreseeable future, in Toronto. Scale both processes down by one Machine just in yyz:
+
+```cmd
+fly scale count web=4 worker=2 --region yyz
+```
+
+As requested, nrt is unchanged, but in yyz the `web` process is scaled down to 4 and `worker` to 2 Machines.
+
+```
+Groups
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS       
+web     9       shared  1       256 MB  nrt(5),yyz(4)
+worker  5       shared  1       256 MB  nrt(3),yyz(2)
+```
+
+
+You can specify process groups to act on, and restrict the changes by region with the `--region` option in the same command.
+
+
+## Add a new region
+
+In Apps V2, adding a region to an app just means putting at least one Machine there. 
+
+For example, add syd (Sydney, Australia) to an app's regions by scaling up from 0 there:
+
+```cmd
+fly scale count 2 --region syd
+```
+
+Now syd will show up in the app's `regions list`:
+
+```cmd
+fly regions list
+```
+```out
+Regions [app]: yyz, syd
+```
+
+If the app has multiple process groups, specify which process or processes to put in the new region:
+
+```
+fly scale count web=1 worker=1 --region syd
+```
+
+Alternatively, you can [clone](#scale-up-with-fly-machine-clone) specific Machines to a new region, and the new Machine inherits the process group of its source Machine.
+
+
+## Balance Machines between regions with `--max-per-region`
+
+Use `--max-per-region` for added control over Machine placement by region if the changes proposed by `fly scale count` look unbalanced. This option caps the resulting count of Machines in any one region to the number you provide.
+
+
+You can also use `--max-per-region` to redistribute the Machine count more evenly among regions.
+For example, on an app with 8 machines in yyz, 2 in yul (Montreal) and only 1 in ewr:
+
+```
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS           
+app     11      shared  1       256 MB  ewr,yul(2),yyz(8)
+```
+
+```cmd
+fly scale count 11 --max-per-region 5
+```
+
+```
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS              
+app     11      shared  1       256 MB  ewr(3),yul(3),yyz(5)
+```
+
+You can combine `--max-per-region` with process groups and `--region` in a single `fly scale count` command.
+
+## Scale to zero and back up
+
+Scale to zero Machines with `fly scale count`. Don't leave out any processes:
+
+```cmd
+fly scale count web=0 worker=0
+```
+
+Check that it worked:
+
+```cmd
+fly scale show
+```
+```out
+VM Resources for app: scalecmd
+
+Groups
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS 
+
+```
+
+Now if there are no Machines in any process groups, we can't just scale up, because `fly scale count` relies on essentially cloning an existing Machine. But we can simply redeploy!
+
+
+```cmd
+fly deploy
+```
+
+```cmd
+fly scale show
+```
+```out
+...
+Groups
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS 
+web     2       shared  1       256 MB  yyz(2) 
+worker  2       shared  1       256 MB  yyz(2) 
+```
+
+`fly deploy` creates two Machines per process, for resilience purposes. 
+
+We're back in business and can scale as desired!
+
+
+
+## Scale up with `fly machine clone`
+
+You can add platform Machines to an app by cloning platform Machines. The new Machine will be, as you would expect, a copy of the specified Machine, and will belong to the same process group. If the original Machine has a [Fly Volume](https://file+.vscode-resource.vscode-cdn.net/docs/reference/volumes/) attached, an empty volume will be provisioned for the new Machine. It's up to you to decide what to put on the new volume; `fly machine clone` will not automatically copy the contents of the original Machine&#39;s volume.
+
+```
+$ fly machine clone 21781973f03e89
+$ fly machine clone --region syd 21781973f03e89
+$ fly machine clone --region ams 21781973f03e89
+```
+
+After running the above commands, there are four Machines running for this app: the original Machine plus three new ones
+
+## Scale down with `fly machine destroy`
+
+Use `fly machine stop` and `fly machine destroy` to scale down the app by removing specific Machines:
 
 ```
 $ fly machine stop 9080524f610e87
 $ fly machine destroy 9080524f610e87
 ```
 
-If a Machine is misbehaving (for instance, it's not `stop`ping successfully), you can try `fly machine destroy --force` to get rid of it.
+If a Machine is misbehaving (for instance, it's not `stop`ping successfully), you can use `fly machine destroy --force` to get rid of it.
 
 ```cmd
 fly machine destroy --force 0e286039f42e86
 ```
 
-If you `destroy` a Machine, don't forget that any volume that it had been using still exists until you either `fly volumes delete` it or `fly destroy` the Fly App it belongs to.
-
-**For existing Nomad/V1 Fly Apps**: Existing apps whose VMs are managed by Nomad can still be scaled "horizontally" using [`fly scale count`](/docs/flyctl/scale-count/). For more, see [Scale V1 (Nomad) Apps](/docs/apps/legacy-scaling/).
+<div class="callout"> If you `destroy` a Machine, don't forget that any volume that it had been using still exists until you either `fly volumes delete` it or `fly destroy` the Fly App it belongs to.</div>
