@@ -9,7 +9,9 @@ order: 20
 
 ## A V1 (Nomad) App
 
-We don't _yet_ have an automated tool to convert an existing "V1" (managed by Nomad) Fly App to [Apps V2](/docs/reference/apps/) (running on Fly Machines). If you're raring to go, here are some steps you can use to create a new V2 app modeled on a fairly simple existing V1 app. 
+**Update:** [We have an automated tool you can run to migrate an existing V1 app to Apps V2](https://community.fly.io/t/fly-migrate-to-v2-apps-with-volumes-support/12316).
+
+If you'd rather work through the process manually, here are some steps to convert a fairly simple existing "V1" (managed by Nomad) Fly App to [Apps V2](/docs/reference/apps/) (running on Fly Machines).
 
 The idea is to get the new app up and running satisfactorily, keeping your old one running until you're comfortable to migrate DNS to the new Machines-based app.
 
