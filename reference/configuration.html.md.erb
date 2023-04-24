@@ -190,6 +190,8 @@ Env variable names are strictly case-sensitive and cannot begin with `FLY_` (as 
 
 Secrets take precedence over env variables with the same name.
 
+**Note:** In Apps V2, the [`primary_region` option](#primary-region) sets the `PRIMARY_REGION` environment variable within a Machine and overrides any value set in the `[env]` section.
+
 ## The `http_service` section
 
 [**Apps V2**](/docs/reference/apps/#apps-v2) **only:** For apps that only need HTTP and HTTPS services, you can replace the full-blown `[[services]]` section with this simpler alternative. 
