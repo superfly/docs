@@ -11,6 +11,8 @@ categories:
 date: 2022-07-29
 ---
 
+<%= partial "/docs/partials/v2_transition_banner" %>
+
 If you just want to run a quick, self-managed MySQL instance on Fly.io, here's how to do it. It's pretty basic, with one caveat around using a [Volume](/docs/reference/volumes/) to persist data.
 
 Most Fly apps use a `Dockerfile` to define an application and its dependencies. However, in this case we can use MySQL's official container directly - no need for a custom `Dockerfile`!
@@ -70,7 +72,7 @@ kill_timeout = 5
 primary_region = "bos"
 
 [processes]
-app = "  --datadir /data/mysql 
+app = "--datadir /data/mysql 
   --default-authentication-plugin mysql_native_password 
   --performance-schema=OFF 
   --innodb-buffer-pool-size 64M"
