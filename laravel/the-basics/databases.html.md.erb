@@ -356,9 +356,6 @@ You are now connected to database "<database_name_created>" as user "<user>".
 
     [env]
 
-    [experimental]
-      auto_rollback = true
-
     [[services]]
 
     [[mounts]]
@@ -396,7 +393,7 @@ If you would like to use [Redis' official docker image](https://hub.docker.com/_
 
 2.  Before deploying, make sure to revise your `fly.toml` file to specify your Redis Fly App's password.
 
-    For apps on V2 of Fly Apps Platform, add the `[processes]` section for the default `app` process and add the following commands:
+    For apps on V2 of the Fly Apps platform, add the `[processes]` section for the default `app` process and add the following commands:
 
     ```toml
     [processes]
@@ -404,7 +401,7 @@ If you would like to use [Redis' official docker image](https://hub.docker.com/_
     ```
 
     For apps on V1 of the Fly Apps platform, add the following commands under the [experimental] section:
-    
+
     ```toml
     [experimental]
       allowed_public_ports = []

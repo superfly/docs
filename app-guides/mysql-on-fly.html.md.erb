@@ -61,12 +61,12 @@ Finally, edit the `fly.toml` file that `fly launch` generated.
 For apps on V2 of the Fly Apps platform (if you're new to Fly.io, this is you) using MySQL 8+:
 
 ```toml
-# fly.toml app configuration file generated for v2mysql on 2023-04-25T10:15:53-04:00
+# fly.toml app configuration file generated for my-mysql on 2023-04-25T10:15:53-04:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "v2mysql"
+app = "my-mysql"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "bos"
@@ -85,23 +85,20 @@ app = "--datadir /data/mysql
   MYSQL_DATABASE = "some_db"
   MYSQL_USER = "non_root_user"
 
-[experimental]
-  auto_rollback = true
-
 [build]
   image = "mysql:8.0.32"
 ```
 
 There's a few important things to note:
 
-1. We deleted the `[[services]]` block and everything under it. We don't need it!
+1. We deleted the `[[services]]` or the `[[http_service]]` block and everything under it. We don't need it!
 1. We added the `[build]` section to specify an existing Docker image. We don't need to create a `Dockerfile` of our own.
 1. In the `[env]` section, we added two not-so-secret environment variables that MySQL will need to initialize itself.
     * The `MYSQL_USER` here should be any user but `root`, which already exists.
 1. We added the `[processes]` section for the default `app` process, which lets us pass custom commands (overriding Docker's `CMD`).
-    * For MySQL 8, you'll want to use the `mysql_native_password` password plugin.
-    * Also for MySQL 8, to reduce memory usage, add the performance schema and buffer pool size flags. Note that `--performance-schema=OFF` is all one string.
-    * **Important**: For MySQL 5.7 and MySQL 8, we set MySQL's data directory to a subdirectory of our mounted volume.
+    * For MySQL 8+, you'll want to use the `mysql_native_password` password plugin.
+    * Also for MySQL 8+, to reduce memory usage, add the performance schema and buffer pool size flags. Note that `--performance-schema=OFF` is all one string.
+    * **Important**: For MySQL 5.7 and MySQL 8+, we set MySQL's data directory to a subdirectory of our mounted volume.
 
 <div class="callout">⚠️ Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. Therefore, we use a subdirectory of the mounted location: `/data/mysql`.</div>
 
