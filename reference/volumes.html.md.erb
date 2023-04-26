@@ -7,18 +7,15 @@ nav: firecracker
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
+Apps can store ephemeral data on the root file systems of their Machines, but a Machine's file system is rebuilt from scratch each time the app is deployed or the Machine is restarted. Volumes are local persistent storage for [Fly Machines](/docs/machines/). Volumes allow an app to save its state—to preserve configuration, session or user data—and then be restarted with that information in place.
 
-**This is a reference doc for Fly Volumes. For the use of volumes with Fly Apps or Fly Machines, see the [Apps](/docs/apps/) and [Machines](/docs/machines/) docs respectively.**
-
-Volumes are local persistent storage for [Fly Machines](/docs/machines/). They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
-
-A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware.
+A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware. Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
 
 <div class="callout">
-**The first rule of Fly Volumes is: Always run at least two of them per application.** If you don't, at some point you'll have downtime.
+**The first rule of Fly Volumes is: Always run at least two of them per application.** If you don't, you'll have downtime whenever you deploy your app, because only one Machine can be attached to a volume at a time. 
 </div>
 
-Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
+There are exceptions to the rule of running at least two Fly Volumes. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not worried about downtime while you redeply your app, then you can run a single Machine with an attached volume.
 
 **Things to consider before settling on volume storage:**
 
@@ -28,7 +25,7 @@ Fly Volumes are a lot like the disk inside your laptop, with the speed and simpl
 * If your app needs a volume to function, and the NVMe drive hosting your volume fails, that instance of your app goes down. There's no way around that. 
 * If you only have a single copy of your data on a single Fly Volume, and that drive fails, data is lost. Fly.io takes daily snapshots, retained for 5 days, but these are meant as a backstop, not your primary backup method.
 
-Explore further options for data storage in [Databases & Storage](/docs/database-storage-guides/).
+If volumes won't work for your use case, you can explore further options for data storage in [Databases & Storage](/docs/database-storage-guides/).
 
 ## Fly Volumes and flyctl
 
@@ -38,7 +35,7 @@ Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command.
 
 ## Fly Volumes and Fly Apps
 
-[Read more about using Fly Volumes with the Fly Apps platform](/docs/apps/volume-storage/).
+Learn how to more about [launch an app with a volume](/docs/apps/volume-storage/).
 
 ## Create a Volume
 
