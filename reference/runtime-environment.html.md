@@ -26,6 +26,9 @@ Request headers carry information that is specific to the incoming request and i
 
 Not to be confused with the [HTTP header](/docs/reference/runtime-environment/#fly-region) `Fly-Region`, which is where the connection was accepted from.
 
+### `FLY_PUBLIC_IP`
+**IPV6 Public IP**: The full public IPV6 for this instance. Read more in the [Network Services](/docs/reference/services/) section.
+
 ## _Request Headers_
 
 ### `Fly-Client-IP`
