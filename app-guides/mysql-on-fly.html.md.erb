@@ -11,6 +11,8 @@ categories:
 date: 2022-07-29
 ---
 
+<%= partial "/docs/partials/v2_transition_banner" %>
+
 If you just want to run a quick, self-managed MySQL instance on Fly.io, here's how to do it. It's pretty basic, with one caveat around using a [Volume](/docs/reference/volumes/) to persist data.
 
 Most Fly apps use a `Dockerfile` to define an application and its dependencies. However, in this case we can use MySQL's official container directly - no need for a custom `Dockerfile`!
@@ -54,9 +56,65 @@ fly secrets set MYSQL_PASSWORD=password MYSQL_ROOT_PASSWORD=password
 
 Save these secrets somewhere, because they're not accessible after you set them.
 
-Finally, edit the `fly.toml` file generated to look something like this:
+Finally, edit the `fly.toml` file that `fly launch` generated.
 
+For apps on V2 of the Fly Apps platform (if you're new to Fly.io, this is you) using MySQL 8+:
+
+```toml
+app = "my-mysql"
+kill_signal = "SIGINT"
+kill_timeout = 5
+
+# If copy/paste'ing, adjust this
+# to the region you're deploying to
+primary_region = "bos"
+
+[processes]
+app = "--datadir /data/mysql 
+  --default-authentication-plugin mysql_native_password 
+  --performance-schema=OFF 
+  --innodb-buffer-pool-size 64M"
+
+[mounts]
+  source="mysqldata"
+  destination="/data"
+
+[env]
+  MYSQL_DATABASE = "some_db"
+  MYSQL_USER = "non_root_user"
+
+# As of 04/25/2023:
+# MySQL 8.0.33 has a bug in it
+# so avoid that specific version
+[build]
+  image = "mysql:8.0.32"
 ```
+
+There's a few important things to note:
+
+1. We deleted the `[[services]]` or the `[[http_service]]` block and everything under it. We don't need it!
+1. We added the `[build]` section to specify an existing Docker image. We don't need to create a `Dockerfile` of our own.
+1. In the `[env]` section, we added two not-so-secret environment variables that MySQL will need to initialize itself.
+    * The `MYSQL_USER` here should be any user but `root`, which already exists.
+1. We added the `[processes]` section for the default `app` process, which lets us pass custom commands (overriding Docker's `CMD`).
+    * For MySQL 8+, you'll want to use the `mysql_native_password` password plugin.
+    * Also for MySQL 8+, to reduce memory usage, add the performance schema and buffer pool size flags. Note that `--performance-schema=OFF` is all one string.
+    * **Important**: For MySQL 5.7 and MySQL 8+, we set MySQL's data directory to a subdirectory of our mounted volume.
+
+If you're using MySQL 5.7, your `app` process can be simplified:
+
+```toml
+[processes]
+app = "--datadir /data/mysql"
+```
+
+<div class="callout">⚠️ Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. Therefore, we use a subdirectory of the mounted location: `/data/mysql`.</div>
+
+### On a Nomad (V1) App
+
+For apps on V1 of the Fly Apps platform, edit the `fly.toml` file to look something like this:
+
+```toml
 app = "my-mysql"
 kill_signal = "SIGINT"
 kill_timeout = 5
@@ -86,10 +144,11 @@ There's a few important things to note:
 1. We deleted the `[[services]]` block and everything under it. We don't need it!
 1. We added the `[build]` section to specify an existing Docker image. We don't need to create a `Dockerfile` of our own.
 1. The `[env]` section contains two not-so-secret environment variables that MySQL will need to initialize itself.
-    1. The `MYSQL_USER` here should be any user but `root`, which already exists
+    * The `MYSQL_USER` here should be any user but `root`, which already exists.
 1. We added the `[experimental]` section, which lets us pass a custom command (overriding Docker's `CMD`).
-    1. For MySQL 8, you'll want to use the `mysql_native_password` password plugin
-    1. **More importantly**, we set MySQL's data directory to a **subdirectory** of our mounted volume
+    * For MySQL 8, you'll want to use the `mysql_native_password` password plugin.
+    * Also for MySQL 8, to reduce memory usage, add the performance schema and buffer pool size flags. Note that `--performance-schema=OFF` is all one string.
+    * **More importantly**, we set MySQL's data directory to a **subdirectory** of our mounted volume.
 
 <div class="callout">⚠️ Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. Therefore, we use a subdirectory of the mounted location: `/data/mysql`.</div>
 
@@ -106,20 +165,6 @@ fly scale memory 2048
 ```
 
 This isn't necessary with MySQL 5.7.
-
-If you need MySQL 8, but wish to stay in the free tier, you can also reduce MySQL 8's memory usage with additional start up flags. Edit `fly.toml` and adjust the following:
-
-```toml
-# Add the performance schema and buffer pool size flags
-# Note that --performance-schema=OFF is all one string
-[experimental]
-  cmd = [
-    "--default-authentication-plugin", "mysql_native_password",
-    "--datadir", "/data/mysql",
-    "--performance-schema=OFF",
-    "--innodb-buffer-pool-size", "64M"
-  ]
-```
 
 ## Deploy the App
 
@@ -157,9 +202,9 @@ mysql -h localhost -P 3306 -u non_root_user -ppassword some_db
 
 ## Backups
 
-We'll take a snapshot of the created volume every day. We retain 7 days of snapshots.
+We'll take a snapshot of the created volume every day. We retain 5 days of snapshots.
 
-To restore a snapshot, make sure you have the latest version of the `fly` command, and pass a `--snapshot-id` flag when creating a new volume.
+To restore a snapshot, make sure you have the latest version of the `fly` command, and then create a new volume using the `--snapshot-id` flag.
 
 ```bash
 # Get a volume ID

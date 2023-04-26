@@ -4,6 +4,9 @@ layout: framework_docs
 objective: Notes and configurations on connecting with Databases
 order: 5
 ---
+
+<%= partial "/docs/partials/v2_transition_banner" %>
+
 No application is complete without a data store!
 
 In this guide, you'll find references on how to connect your Laravel application to Databases running as Fly Apps or as managed solutions from services that suite global distribution of data.
@@ -345,16 +348,13 @@ You are now connected to database "<database_name_created>" as user "<user>".
     app = "fly-redis"
     kill_signal = "SIGINT"
     kill_timeout = 5
+    primary_region = "ams"
     processes = []
 
     [build]
       image = "flyio/redis:6.2.6"
 
     [env]
-
-    [experimental]
-      allowed_public_ports = []
-      auto_rollback = true
 
     [[services]]
 
@@ -391,7 +391,17 @@ If you would like to use [Redis' official docker image](https://hub.docker.com/_
     <br />
     <br />
 
-2.  Before deploying, make sure to revise your `fly.toml` file to specify your Redis Fly App's password by adding commands under `[experimental]`
+2.  Before deploying, make sure to revise your `fly.toml` file to specify your Redis Fly App's password.
+
+    For apps on V2 of the Fly Apps platform, add the `[processes]` section for the default `app` process and add the following commands:
+
+    ```toml
+    [processes]
+    app = "sh -c exec redis-server --requirepass \"$REDIS_PASSWORD\""
+    ```
+
+    For apps on V1 of the Fly Apps platform, add the following commands under the [experimental] section:
+
     ```toml
     [experimental]
       allowed_public_ports = []
