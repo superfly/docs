@@ -61,14 +61,12 @@ Finally, edit the `fly.toml` file that `fly launch` generated.
 For apps on V2 of the Fly Apps platform (if you're new to Fly.io, this is you) using MySQL 8+:
 
 ```toml
-# fly.toml app configuration file generated for my-mysql on 2023-04-25T10:15:53-04:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
 app = "my-mysql"
 kill_signal = "SIGINT"
 kill_timeout = 5
+
+# If copy/paste'ing, adjust this
+# to the region you're deploying to
 primary_region = "bos"
 
 [processes]
@@ -78,13 +76,16 @@ app = "--datadir /data/mysql
   --innodb-buffer-pool-size 64M"
 
 [mounts]
-  source="v2mysqldata"
+  source="mysqldata"
   destination="/data"
 
 [env]
   MYSQL_DATABASE = "some_db"
   MYSQL_USER = "non_root_user"
 
+# As of 04/25/2023:
+# MySQL 8.0.33 has a bug in it
+# so avoid that specific version
 [build]
   image = "mysql:8.0.32"
 ```
@@ -99,6 +100,13 @@ There's a few important things to note:
     * For MySQL 8+, you'll want to use the `mysql_native_password` password plugin.
     * Also for MySQL 8+, to reduce memory usage, add the performance schema and buffer pool size flags. Note that `--performance-schema=OFF` is all one string.
     * **Important**: For MySQL 5.7 and MySQL 8+, we set MySQL's data directory to a subdirectory of our mounted volume.
+
+If you're using MySQL 5.7, your `app` process can be simplified:
+
+```toml
+[processes]
+app = "--datadir /data/mysql"
+```
 
 <div class="callout">⚠️ Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. Therefore, we use a subdirectory of the mounted location: `/data/mysql`.</div>
 
