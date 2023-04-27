@@ -190,10 +190,8 @@ machine by looking for lines that start with `ARG` in your Dockerfile.
 ### Postgres database drivers
 
 If you didn't initially deploy with a postgres database but want to add
-one later, you can create a databae using<code>
-[fly postgres create](https://fly.io/docs/postgres/getting-started/create-pg-cluster/)
-</code>.  Next, update your dockerfile to include the postgres libraries
-using:
+one later, you can create a databae using [`fly postgres create`](https://fly.io/docs/postgres/getting-started/create-pg-cluster/).  
+Next, update your dockerfile to include the postgres libraries using:
 
 ```shell
 $ bin/rails generate dockerfile --postgresql

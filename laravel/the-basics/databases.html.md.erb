@@ -198,6 +198,7 @@ Manually connecting with your Postgres Fly App also means manually creating your
 You can interact with your Postgres Fly App using `flyctl postgres connect`. 
 
 1.  Connect with your Postgres Fly App using its App name. 
+
     ```cmd
     flyctl postgres connect -a <postgres-fly-app>
     ```
@@ -213,7 +214,8 @@ You can interact with your Postgres Fly App using `flyctl postgres connect`.
     <br /> 
     <br /> 
 2.  Great, you're connected! Go ahead and complete your setup with a new database:
-    ```postgres
+
+    ```sql
     create database <DB_NAME>;
     ```
 
@@ -245,6 +247,7 @@ flyctl postgres db list -a <postgres-fly-app-name>
 Once you have your running and <i>[database configured](/docs/laravel/the-basics/databases/#manually-set-up-a-database-in-your-postgres-fly-app)</i> Postgres Fly App, it's time to connect with your Laravel Fly App:
 
 1.  Revise your Laravel Fly App's `fly.toml` file to connect with the `Hostname`( your Postgres Fly App's .internal Address ) from the configuration output, and the `DB_Name` configured [above](/docs/laravel/the-basics/databases/#interacting-with-your-postgres-fly-app):
+
     ```toml
     [env]
       APP_ENV = "production"
@@ -255,11 +258,13 @@ Once you have your running and <i>[database configured](/docs/laravel/the-basics
     ```
 
 2.  Set your Laravel database `DB_USERNAME` and `DB_PASSWORD` with `fly secrets` based on the configuration output received during your Postgres Fly App creation:
+
     ```cmd
     fly secrets set DB_USERNAME=<Username> DB_PASSWORD=<PASSWORD>
     ```
 
 3.  You've <i>finally</i> reached the last part. You can now rest easy and deploy:
+
     ```cmd
     fly deploy
     ```
@@ -268,7 +273,8 @@ Once you have your running and <i>[database configured](/docs/laravel/the-basics
 1. You can check out various ways to connect with your Postgres Fly App from [here](/docs/postgres/connecting/).
 
 2.  Once you're locally connected to your Postgres Fly App, setup your Laravel .env file to connect with the Postgres database:
-    ```.env
+
+    ```sh
     DB_CONNECTION=pgsql
     DB_HOST=127.0.0.1
     DB_PORT=5432
@@ -288,6 +294,7 @@ Make sure that your environment is configured properly with a pgsql driver!
 </aside>
 
 1.  First up, check your php.ini file and make sure the driver for Postgres is available and <i>uncommented</i>:
+
     ```
     extension=pgsql
     ```
@@ -344,6 +351,7 @@ You are now connected to database "<database_name_created>" as user "<user>".
     <br />
 
 3. Then, attach your volume to your Redis Fly App by revising its `fly.toml` to include `[[mounts]]`:
+
     ```toml
     app = "fly-redis"
     kill_signal = "SIGINT"
@@ -421,6 +429,7 @@ Now that you have your Redis Fly App running, the next step is to connect it wit
 1. First, retrieve your Redis Fly App's [Fly .internal Address](/docs/laravel/the-basics/databases/#fly-internal-address). 
 
 2.  Next, make sure you move to your Laravel Fly App's directory for better navigation:
+
     ```cmd 
     cd <laravel-app-folder>
     ```
@@ -441,6 +450,7 @@ Now that you have your Redis Fly App running, the next step is to connect it wit
     ```
 
 5.  Finally, deploy!
+
     ```cmd
     fly deploy
     ```
@@ -458,12 +468,14 @@ The simplest way to connect your local Laravel application to a Redis Fly App is
     ```
 
 2. Then run the `flyctl proxy` for port 6379 or whichever REDIS_PORT you have configured:
+
     ```cmd
     fly proxy 6379
     ```
 
 3. Next, revise your local Laravel application's .env file to update your Redis connection:
-    ```.env
+
+    ```env
     CACHE_DRIVER=redis
     REDIS_HOST=127.0.0.1
     REDIS_PASSWORD=<redacted>
@@ -508,8 +520,9 @@ To test whether your Laravel Fly App can successfully connect with your Upstash 
     ```
     - Set the Laravel cache driver to redis
     - Using `REDIS_URL` should override `REDIS_HOST`, add here the `REDIS_URL` received during `fly redis create`
-    - Upstash only supports "database 0", so update your `REDIS_CACHE_DB` config to 0. Otherwise, you will receive an error : "SELECT` failed: ERR Only 0th database is supported! Selected DB: 1..."
+    - Upstash only supports "database 0", so update your `REDIS_CACHE_DB` config to 0. Otherwise, you will receive an error : `SELECT failed: ERR Only 0th database is supported! Selected DB: 1...`
 2.  Then deploy your `fly.toml` changes:
+
     ```cmd
     fly deploy
     ```

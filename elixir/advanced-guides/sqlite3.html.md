@@ -57,7 +57,7 @@ Next remove the release step from the `[deploy]` section of your `fly.toml` and 
 ```
 
 This step is required because a volume may not be ready once your application release runs, so to fix this we need to run migrations on 
-application start. This can be accomplished by adding the following line to your `lib/name/application.ex:
+application start. This can be accomplished by adding the following line to your `lib/name/application.ex`:
 
 ```diff
   @impl true
