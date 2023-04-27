@@ -10,11 +10,11 @@ order: 30
 
 Volumes are local persistent storage for [Fly Machines](/docs/machines/). Volumes allow an app to save its state—to preserve configuration, session or user data—and then be restarted with that information in place.
 
-**The first rule of Fly Volumes is: always run at least two of them per application.** The way to do this is to run at least two Machines per app. Also note that volumes don't sync up by themselves. Your app need to take care of that. Refer to [Fly Volumes](/docs/reference/volumes/) for exceptions to the rule and details about how volumes are implemented.
+**The first rule of Fly Volumes is: always run at least two of them per application.** The way to do this is to run at least two Machines per app. Also note that volumes don't sync up by themselves. Your app needs to take care of that. Refer to [Fly Volumes](/docs/reference/volumes/) for exceptions to the rule and details about how volumes are implemented.
 
 ## Launch an app with a Fly Volume
 
-Follow these steps to create a new app, a new volume, and then mount the volume before deply. If you need to add a volume to an exsiting app, refer to TBD. 
+Follow these steps to create a new app, a new volume, and then mount the volume before deploy. If you need to add a volume to an existing app, refer to [Add a volume to an existing app by cloning](#add-a-volume-to-an-existing-app-by-cloning). 
 
 ### Launch the app, but don't deploy it yet
 
@@ -130,7 +130,32 @@ Create an additional volume in the desired region, then [use `fly scale count`](
 
 ## Add a volume to an existing app by cloning
 
-TBD since there are 2 open PRs to possibly improve this process
+If you try to add a volume to an app that's already been deployed, you might get errors because the volume and the Machine created for your app on deploy need to be on the same physical host. One way to get around this is to attach a new volume to a clone of one of your app's Machines.
+
+Create new volume for your app in the same region the app will be deployed:
+
+```cmd
+fly volumes create myapp_data --region lhr --size 1 --app myapp
+```
+
+Clone one of your app's Machine (with no volume) and attach the volume you just created:
+
+```cmd
+fly machine clone <machine-id> --attach-volume <vol-id>
+```
+
+Destroy the Machine you used to create the clone:
+```cmd
+fly machine destroy <non-volume-machine-id>
+```
+
+Check whether the volume is properly attached to the Machine:
+
+```cmd
+fly volumes list
+```
+
+The volume you just created should have the newly-cloned Machine's ID listed under `ATTACHED VM`.
 
 ## Remove a volume from an app
 
