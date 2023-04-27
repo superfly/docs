@@ -272,6 +272,43 @@ fly image update --image registry.fly.io/testrun:v2 -a testrun
 
 to update every VM on the App to the new image.
 
+## Update the Configuration via fly.toml
+Another way to update machine configuration is through its `fly.toml` file. 
+
+For this, I'll need to access to the machine app's `fly.toml` file. The repository above already has its `fly.toml` file included in its directory, but, what about for other repositories that don't have it? 
+  
+To retrieve a Fly machine's `fly.toml` file, simply pull the file using the command: ( Make sure to change `testrun` to your app name above. )
+```cmd
+fly config save -a testrun
+```
+ Once the `fly.toml` file is available, I'll go ahead and revise the port configured from `8080` to `4999`:
+```toml
+app = "testrun"
+
+# other config here...
+
+[[services]]
+-  internal_port = 8080
++  internal_port = 4999
+# other config here...
+```
+After the revision I run the `fly deploy` to deploy my changes. But, not all deployments are always a-ok. We might encounter an error as a result of running that command:
+```error
+`fly deploy` only updates machines with fly_platform_version=v2 in their metadata.
+```
+If so, this means the machine started for our Fly app is not tagged with the `fly_platform_version=v2` meatadata. Before `flyctl deploy` can work, I'll need to apply this metadata to my app's machine. So, I'll first list the machine(s) of the Fly app with:
+```
+fly machine list -a testrun
+``` 
+Then for each machine, run the following command for each machine id:
+```
+fly machine update --metadata fly_platform_version=v2 <machine id>
+```
+This will ask whether changes should be applied, to which I simply press enter to select "yes". 
+
+Finally, I run `fly deploy` to deploy changes made to the `fly.toml` file.
+
+
 ## Add an instance in another region
 
 ### By creating a new Machine
