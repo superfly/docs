@@ -1,5 +1,5 @@
 ---
-title: Run a Machines App Using flyctl
+title: Run Machines with flyctl
 layout: framework_docs
 sitemap: false
 order: 20
@@ -9,18 +9,21 @@ nav: firecracker
 date: 2022-12-20
 ---
 
-<div class="callout">**Stale doc:** This document illustrates some ways to work with Fly Machines individually using flyctl, and was written before [Fly Apps V2](/docs/reference/apps/#apps-v2) made it possible to manage Machines as a group, using a `fly.toml` config file and `fly deploy`. For most web apps, the [**Fly Apps docs**](/docs/apps/) are a better place to start!</div>
-
-
 We talk up the Machines API for running user code, for ephemeral jobs, or both. Fly Machines are also the VM building blocks for V2 of the [Fly.io app-platform-as-a-service offering](/docs/apps/).
 
 flyctl provides commands for managing individual Machines from the CLI, on a level more granular than `fly deploy`ing an app.
 
-## Elements of a Machines Web App Deployment
+⚠️ **Stale doc!** This document illustrates some ways to work with Fly Machines individually using flyctl, and was written before [Fly Apps V2](/docs/reference/apps/#apps-v2) made it possible to manage Machines as a group, using a `fly.toml` config file and `fly deploy`. For most web apps, the [**Fly Apps docs**](/docs/apps/) are a better place to start!
+
+The [`fly machine` command docs](/docs/flyctl/machines/) are another good resource.
+
+## Elements of a Machines Web App
+
+
 
 To get a single Machine running a stateless app, and serving it to the world at `<app-name>.fly.dev`, you need to assemble the following pieces:
 
-1. A Machines-flavoured Fly App: the administrative entity that owns your VMs and things like anycast IPs and volumes
+1. A Machines-flavoured [Fly App](/docs/reference/apps/)&mdash;you're not using `fly deploy` to manage the app's Machines, but you still need an app, as it's the administrative entity that owns your VMs and things like anycast IPs and volumes
 1. At least an IPv4 public anycast IP address
 1. A port mapping for the HTTP service you want to expose
 1. A Docker image
@@ -31,7 +34,7 @@ None of this is special for Machines; if we haven't built a bells-and-whistles l
 
 The big difference here is that instead of putting an app-wide configuration into a `fly.toml` file and running `fly deploy`, we'll incorporate per-VM config into the `fly m run` (AKA `fly machine run`) command that creates the VM.
 
-Imagine you have a Dockerfile in the current working directory; maybe some source code that that Dockerfile draws on; and when you build it, you get an image for something that listens on internal port 8080. You want that to be reachable from the world on port 443, where browsers send HTTPS connections.
+Imagine you have a Dockerfile in the current working directory, along with maybe some source code that that Dockerfile draws on; and when you build it, you get an image for something that listens on internal port 8080. You want that to be reachable from the world on port 443, where browsers send HTTPS connections.
 
 If you like to do things in an orderly fashion, you might want the App to have public IP addresses before you boot the Machine:
 
@@ -54,9 +57,13 @@ fly ips allocate-v4 --shared -a testrun
 fly ips allocate-v6 -a testrun
 ```
 
-## Get a Simple Public Web App Up and Running
+## Example: A Simple Public Web App
 
-Let's make this more concrete with an example. (Spoiler: I'm also going to make a little mistake or two to help us learn our way around a Machines App.) I want to run a tiny Python/Flask app with almost-static content.
+Let's make this more concrete with an example. I want to run a tiny Python/Flask app with almost-static content.
+
+While there's no need to go down to the level of controlling individual Machines for a simple web app&mdash;you'd just run `fly launch` to get a [Fly App](/docs/apps/) configured and have the conveniences of `fly deploy`&mdash;we can do it if we want to.  
+
+Heads up! I'm also going to make a little mistake or two to help us learn our way around a Machines App.
 
 I'll get the code and Dockerfile from the repo:
 
@@ -166,7 +173,7 @@ Oh noes, I told Fly Proxy to send requests to internal port 8080 when all along,
 
 ## Update the Machine configuration
 
-If this was a Fly Apps V1 (Nomad) app, I'd edit the internal port in my `fly.toml` and redeploy. I'll do the Fly Machines equivalent: `fly m update` with the modification I want to make to the configuration.
+If I were working with a [Fly App](https://fly.io/docs/reference/apps/) instead of with Machines directly, I'd edit the internal port in my `fly.toml` and redeploy. I'll do the Fly Machines equivalent: `fly m update` with the modification I want to make to the configuration.
 
 ```cmd
 fly m update -p 443:4999/tcp:tls:http -p 80:4999/tcp:http 21781160b41d89 -a testrun
@@ -333,11 +340,3 @@ Use `fly m stop`, then `fly m remove` to remove a Machines VM entirely.
 ## Delete the app
 
 If I want to yeet the whole App and all its Machines, IP addresses, Volumes, etc., I can run `fly apps destroy` on it, just like a V1 App.
-
-## Differences from a Nomad app
-
-Here are some things to keep in mind:
-
-Machines VMs are tied to hardware, even if they don't have a Volume. If the hardware goes down, the instance goes down. We do not notice that you have the wrong number of Machines running and try to get an instance going somewhere else.
-
-Each Machine has its own config that goes with it, and you can run Machines with different images in one Machines app, with different services on different ports.
