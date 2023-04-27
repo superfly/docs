@@ -31,15 +31,21 @@ If volumes won't work for your use case, you can explore other options for data 
 
 ## Fly Volumes and Fly Apps
 
-Learn how to [use volume storage with apps](/docs/apps/volume-storage/).
+Learn how to [add and use volume storage for your app](/docs/apps/volume-storage/), step-by-step.
+
+Learn about the [`mounts` section](/docs/reference/configuration/#the-mounts-section) for volumes in the `fly.toml` app configuration file.
 
 ## Fly Volumes and flyctl
 
-Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command. 
+Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command.
 
-## Create a Volume
+## Working with volumes
 
-Every Fly Volume belongs to a [Fly App](/docs/reference/apps/).
+This section is a reference for working with volumes. If you want the steps to create a new app with a volume, or to add a a volume to an app, then refer to [Add and Use Volume Storage](/docs/apps/volume-storage/).
+
+### Create a Volume
+
+Every Fly Volume belongs to a [Fly App](/docs/reference/apps/). 
 
 Create a volume for an app using `fly volumes create`. The default volume size is 3GB. The maximum size is 500GB. Refer to [`fly volumes create`](/docs/flyctl/volumes-create/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
@@ -71,7 +77,7 @@ There can be multiple volumes of the same volume name in a region. Each volume h
 
 Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app.
 
-## List an App's Volumes
+### List Volumes
 
 Get a list of all the volumes created for an app using `fly volumes list`. Refer to [`fly volumes list`](https://fly.io/docs/flyctl/volumes-list/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
@@ -100,7 +106,16 @@ fly vol show vol_kgj54500d3qry2wz
  Encrypted: true
 Created at: 04 Mar 23 03:32 UTC
 ```
-## Extend a Volume
+
+### Mount a Volume
+
+The [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml` is where you list the volumes and their destination directories.
+
+### Access a Volume
+
+You can access and write to a volume on a Machine just like a regular directory. The `destination` entry under `[mounts]` in `fly.toml` is the path for the mounted volume.
+
+### Extend a Volume
 
 Extend a volume using `fly volumes extend`. Volumes can be extended, or made larger, but can't be made smaller. Refer to [`fly volumes extend`](https://fly.io/docs/flyctl/volumes-extend/) in the [flyctl reference](/docs/flyctl) for usage and options. 
 
@@ -149,7 +164,7 @@ tmpfs             113224      0    113224   0% /sys/fs/cgroup
 
 Here, the volume is mounted under `/storage` in the Machine's root file system and has been resized to 2GB. The `df` command shows disk space in 1K blocks by default. You can use the `-h` flag to return a more human-readable format.
 
-## Snapshots and Restores
+### Restore from a Snapshot
 
 Find the snapshots belonging to your target volume using the `fly volumes snapshots list` command. We take daily block-level snapshots of volumes. Snapshots are kept for five days. These may not have your latest data. You should implement your own backup plan for important data. Refer to [`fly volumes snapshots list`](https://fly.io/docs/flyctl/volumes-snapshots-list/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
@@ -190,7 +205,7 @@ Created at: 02 Aug 22 21:27 UTC
 
 The `flyctl` output shows the details of the new volume, including its size.
 
-## Destroy a Volume
+### Destroy a Volume
 
 Delete a volume using the `fly volumes destroy` command. Refer to in the [flyctl reference](/docs/flyctl) for usage and options.
 
