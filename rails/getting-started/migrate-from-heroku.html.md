@@ -98,7 +98,7 @@ To see all of your Heroku env vars and secrets, run:
 heroku config -s | grep -v -e "RAILS_MASTER_KEY" -e "DATABASE_URL" -e "REDIS_URL" -e "REDIS_TLS_URL" | fly secrets import
 ```
 
-This command exports the following Heroku secrets: `RAILS_MASTER_KEY`, `DATABASE_URL` `REDIS_URL`, and `REDIS_TLS_URL`, and imports them into Fly.
+This command exports the Heroku secrets, excluding `RAILS_MASTER_KEY`, `DATABASE_URL` `REDIS_URL`, and `REDIS_TLS_URL`, and imports them into Fly.
 
 Verify your Heroku secrets are in Fly.
 
