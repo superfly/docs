@@ -77,13 +77,14 @@ Here's `goodbye.html`.
 
 goStatic is designed to run in a container, and the [image](https://hub.docker.com/r/pierrezemb/gostatic) is available at Docker Hub. This is super convenient for us, because Fly apps need container images too!
 
-We can use the goStatic image as a base image. We just have to copy our site's files to `/srv/http/` in the image.
+We can use the goStatic image as a base image. We just have to copy our site's files to `/srv/http/` in the image and change the port from goStatic's default of 8043, to the standard 8080 port.
 
 Here's our Dockerfile to do that:
 
 ```docker
 FROM pierrezemb/gostatic
 COPY ./public/ /srv/http/
+ENTRYPOINT ["/goStatic", "-port", "8080"]
 ```
 
 The Dockerfile should be placed in the working directory (here, `hello-static`).
@@ -113,17 +114,6 @@ Your app is ready. Deploy with `flyctl deploy`
 ```
 
 This has configured the app with some default parameters, and generated a `fly.toml` configuration file for us.
-
-Before deploying, we need to do one more thing. goStatic listens on port 8043 by default, but the default `fly.toml` assumes port 8080. Edit `internal_port` in the [`services`](/docs/reference/configuration/#the-services-sections) section to reflect this:
-
-```toml
-[[services]]
-  http_checks = []
-  internal_port = 8043
-  processes = ["app"]
-  protocol = "tcp"
-  script_checks = []
-  ```
 
 Now we're ready to deploy:
 
