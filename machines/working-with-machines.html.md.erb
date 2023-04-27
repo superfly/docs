@@ -15,6 +15,12 @@ The Machines API endpoint requires a connection to your Fly private network - ei
 
 This guide assumes that you have `flyctl` and `curl` installed, and have authenticated to the Fly.io platform.
 
+### Using the api.machines.dev
+
+The easiest (and recommended) way to connect to the machines api is to use `api.machines.dev`, an easy to use and more performant alternative to doing all the wireguard shenanigans.
+
+Simply skip down to [setting up the environment](###Setting up the environment), and make sure to set `$FLY_API_HOSTNAME` to `api.machines.dev`
+
 ### Connecting via WireGuard
 
 This method requires more setup but gives you direct access to machines over the Wireguard VPN.
@@ -45,7 +51,7 @@ If you are using a Wireguard VPN or a `flyctl` proxy,
 set these environment variables to make the following commands easier to use.
 
 ```bash
-$ export FLY_API_HOSTNAME="_api.internal:4280" # or set to `127.0.0.1:4280` when using 'flyctl proxy'
+$ export FLY_API_HOSTNAME="api.machines.dev" # set to _api.internal:4280 when using Wireguard or `127.0.0.1:4280` when using 'flyctl proxy'
 $ export FLY_API_TOKEN=$(fly auth token)
 ```
 
@@ -58,7 +64,7 @@ flyctl secrets set FLY_API_TOKEN=$(fly auth token)
 A convenient way to set the `FLY_API_HOSTNAME` is to add it to your `Dockerfile`:
 
 ```
-ENV FLY_API_HOSTNAME="_api.internal:4280
+ENV FLY_API_HOSTNAME="api.machines.dev"
 ```
 
 
