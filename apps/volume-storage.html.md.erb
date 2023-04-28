@@ -14,7 +14,7 @@ Volumes are local persistent storage for [Fly Machines](/docs/machines/). Volume
 
 ## Launch an app with a Fly Volume
 
-Follow these steps to create a new app, a new volume, and then mount the volume before deploy. If you need to add a volume to an existing app, refer to [Add a volume to an existing app by cloning](#add-a-volume-to-an-existing-app-by-cloning). 
+Follow these steps to create a new app, add the volume you want to create to `fly.toml`, and then deploy the app. 
 
 ### Launch the app, but don't deploy it yet
 
@@ -31,17 +31,9 @@ Wrote config file fly.toml
 Your app is ready! Deploy with `flyctl deploy`
 ```
 
-### Provision the volume
+### Configure the app to mount the new volume
 
-Create a volume for the app, with the name you chose, in the same region you're deploying the app to. For example, the following command creates a volume called `myapp_data`, in region `lhr`, with 1GB of storage, for the app named `myapp`:
-
-```cmd
-fly volumes create myapp_data --region lhr --size 1 --app myapp
-```
-
-### Configure the app to mount the volume
-
-Add a `[mounts]` section in the app's `fly.toml`. For example, the following configures the app to expose data from a volume named `myapp_data` under the `/data` directory of the application.
+Add a `[mounts]` section in the app's `fly.toml`. The `fly deploy` command you'll run in the next step will create the volume during the deploy process. For example, the following configures the app to expose data from a volume named `myapp_data` under the `/data` directory of the application.
 
 ```toml
 [mounts]
@@ -71,7 +63,7 @@ App
 
 Machines
 PROCESS	ID            	VERSION	REGION	STATE  	CHECKS 	LAST UPDATED
-app    	6e82944a79dd87	1      	lhr   	started	1 total	2023-04-26T20:40:48Z
+app    	5683606c41098e	1      	lhr   	started	1 total	2023-04-26T20:40:48Z
 ```
 
 ### Confirm the volume is mounted
@@ -101,7 +93,7 @@ tmpfs             113224      0    113224   0% /sys/fs/cgroup
 /dev/vdb         1011672   2564    940500   1% /data
 ```
 
-Voilà: our 1GB volume is mounted at `/data`.
+Voilà: our 1GB volume is mounted at `/data`. You can access and write to a volume on a Machine just like a regular directory.
 
 ### Clone the first Machine to scale out to two VMs
 
@@ -127,35 +119,6 @@ At this point there are two identically configured Machines on the app, each wit
 ### On a V1 (Nomad) app
 
 Create an additional volume in the desired region, then [use `fly scale count`](/docs/legacy-scaling/) to add a VM to use it.
-
-## Add a volume to an existing app by cloning
-
-If you try to add a volume to an app that's already been deployed, you might get errors because the volume and the Machine created for your app on deploy need to be on the same physical host. One way to get around this is to attach a new volume to a clone of one of your app's Machines.
-
-Create new volume for your app in the same region the app will be deployed:
-
-```cmd
-fly volumes create myapp_data --region lhr --size 1 --app myapp
-```
-
-Clone one of your app's Machine (with no volume) and attach the volume you just created:
-
-```cmd
-fly machine clone <machine-id> --attach-volume <vol-id>
-```
-
-Destroy the Machine you used to create the clone:
-```cmd
-fly machine destroy <non-volume-machine-id>
-```
-
-Check whether the volume is properly attached to the Machine:
-
-```cmd
-fly volumes list
-```
-
-The volume you just created should have the newly-cloned Machine's ID listed under `ATTACHED VM`.
 
 ## Remove a volume from an app
 

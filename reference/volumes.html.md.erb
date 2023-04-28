@@ -41,11 +41,11 @@ Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command.
 
 ## Working with volumes
 
-This section is a reference for working with volumes. If you want the steps to create a new app with a volume, or to add a a volume to an app, then refer to [Add and Use Volume Storage](/docs/apps/volume-storage/).
+This section is a reference for working with volumes. If you want the steps to launch a new app with a volume then refer to [Add and Use Volume Storage](/docs/apps/volume-storage/).
 
 ### Create a Volume
 
-Every Fly Volume belongs to a [Fly App](/docs/reference/apps/). 
+Every Fly Volume belongs to a [Fly App](/docs/reference/apps/).
 
 Create a volume for an app using `fly volumes create`. The default volume size is 3GB. The maximum size is 500GB. Refer to [`fly volumes create`](/docs/flyctl/volumes-create/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
@@ -127,7 +127,11 @@ fly volumes extend vol_od56vjp5pzmvny30 -s 2
 
 where `<new-size>` is the extended size in GB. 
 
-You'll need to restart the Machine attached to the target volume to allow the file system to be resized. On Nomad (V1) Apps, the instance is automatically restarted, so this step isn't needed.
+You'll need to restart the Machine attached to the target volume to allow the file system to be resized. 
+
+<div class="callout">
+On Nomad (V1) Apps, the instance is automatically restarted, so this step isn't needed.
+</div>
 
 Get the `id` of the Machine that has the volume mounted (find it under `ATTACHED VM`).
 
@@ -207,7 +211,7 @@ The `flyctl` output shows the details of the new volume, including its size.
 
 ### Destroy a Volume
 
-Delete a volume using the `fly volumes destroy` command. Refer to in the [flyctl reference](/docs/flyctl) for usage and options.
+Destroy a volume using the `fly volumes destroy` command. Refer to in the [flyctl reference](/docs/flyctl) for usage and options.
 
 ```cmd
 fly volumes destroy vol_2n0l9vlnklpr635d -a myapp

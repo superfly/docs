@@ -11,7 +11,7 @@ Often the solution to persistent data storage is to connect your Fly App to a se
 
 Fly.io offers a [deploy-it-yourself Postgres app](/docs/postgres/) with some tools to make it easier to manage yourself.
 
-If you need hardware-local disk storage on your Fly App VMs&mdash;for example, if your Fly App _is_ a database (or if you want to use [LiteFS](/docs/litefs))&mdash;then you'll want to use [Fly Volumes](/docs/reference/volumes/).
+If you need hardware-local disk storage on your Fly App Machines&mdash;for example, if your Fly App _is_ a database (or if you want to use [LiteFS](/docs/litefs))&mdash;then you'll want to use [Fly Volumes](/docs/reference/volumes/).
 
 Explore these, and further options, for data storage in the following sections.
 
@@ -20,7 +20,6 @@ Explore these, and further options, for data storage in the following sections.
 Anything an App VM writes to its root disk is ephemeral: when the VM is redeployed, the root file system is rebuilt using its Docker image, deleting any data written to it since it was started up. This is fine for `/tmp` files, but most apps need to keep state in a database or another form of persistent storage.
 
 - **[Fly Volumes](/docs/reference/volumes/)** - Persistent storage on Fly.io is provided by Fly Volumes. You can use Volumes on an App directly, or run a separate database App with Volume storage and connect an App to that. A Fly Volume is a slice of NVMe disk storage attached to the server that hosts your Machine. Volumes have pros and cons, and you should read up on [Fly Volumes](/docs/reference/volumes/) before deciding whether they're the best solution for your use case.
-
 
 ## Fly.io Database Projects
 
