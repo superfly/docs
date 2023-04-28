@@ -7,46 +7,49 @@ nav: firecracker
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
+Apps can store ephemeral data on the root file systems of their Machines, but a Machine's file system is rebuilt from scratch each time the app is deployed or the Machine is restarted. Volumes are local persistent storage for [Fly Machines](/docs/machines/). Volumes allow an app to save its state—to preserve configuration, session or user data—and then be restarted with that information in place.
 
-**This is a reference doc for Fly Volumes. For the use of volumes with Fly Apps or Fly Machines, see the [Apps](/docs/apps/) and [Machines](/docs/machines/) docs respectively.**
-
-Volumes are local persistent storage for [Fly Machines](/docs/machines/). They allow an app to save its state, preserving configuration, session or user data, and be restarted with that information in place.
-
-A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware.
+A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware. Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
 
 <div class="callout">
-**The first rule of Fly Volumes is: Always run at least two of them per application.** If you don't, at some point you'll have downtime.
+**The first rule of Fly Volumes is: Always run at least two of them per application.** If you don't, you'll have downtime whenever you deploy your app, because only one Machine can be attached to a volume at a time. 
 </div>
 
-Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
+There are exceptions to the rule of running at least two Fly Volumes. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not worried about downtime while you deploy it, then you can run a single Machine with an attached volume.
 
 **Things to consider before settling on volume storage:**
 
 * You'll need to run as many volumes as there are Machines.
-* There's a one-to-one mapping between VMs and volumes. You can't share a volume between apps, nor can two VMs mount the same volume at the same time. A single VM can only mount one volume at a time.
+* There's a one-to-one mapping between Machines and volumes. You can't share a volume between apps, nor can two Machines mount the same volume at the same time. A single Machine can only mount one volume at a time.
 * Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app, so if you need the volumes to sync up, your app has to make that happen.
 * If your app needs a volume to function, and the NVMe drive hosting your volume fails, that instance of your app goes down. There's no way around that. 
-* If you only have a single copy of your data on a single Fly Volume, and that drive fails, data is lost. Fly.io takes daily snapshots, retained for 5 days, but these are meant as a backstop, not your primary backup method.
+* If you only have a single copy of your data on a single Fly Volume, and that drive fails, data is lost. Fly.io takes daily snapshots and retains them for 5 days, but these are meant as a backstop, not your primary backup method.
 
-Explore further options for data storage in [Databases & Storage](/docs/database-storage-guides/).
-
-## Fly Volumes and flyctl
-
-Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command. 
+If volumes won't work for your use case, you can explore other options for data storage in [Databases & Storage](/docs/database-storage-guides/).
 
 <div class="callout">`fly volumes` is aliased to `fly volume` and `fly vol` for convenience.</div>
 
 ## Fly Volumes and Fly Apps
 
-[Read more about using Fly Volumes with the Fly Apps platform](/docs/apps/volume-storage/).
+Learn how to [add and use volume storage for your app](/docs/apps/volume-storage/), step-by-step.
 
-## Create a Volume
+Learn about the [`mounts` section](/docs/reference/configuration/#the-mounts-section) for volumes in the `fly.toml` app configuration file.
+
+## Fly Volumes and flyctl
+
+Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command.
+
+## Working with volumes
+
+This section is a reference for working with volumes. If you want the steps to launch a new app with a volume then refer to [Add and Use Volume Storage](/docs/apps/volume-storage/).
+
+### Create a Volume
 
 Every Fly Volume belongs to a [Fly App](/docs/reference/apps/).
 
-Create a volume for an app using `fly volumes create`. The default volume size is 3GB. The maximum size is 500GB. See [`fly volumes create`](/docs/flyctl/volumes-create/) in the [flyctl reference](/docs/flyctl) for usage and options.
+Create a volume for an app using `fly volumes create`. The default volume size is 3GB. The maximum size is 500GB. Refer to [`fly volumes create`](/docs/flyctl/volumes-create/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
-The following command creates a new volume named "myapp_data" with 1GB of storage in the yyz (Toronto) region, for the application whose `fly.toml` file is in the working directory. To specify a different app, use the `-a` or `--app` flag.
+The following example command creates a new volume named "myapp_data" with 1GB of storage in the yyz (Toronto) region, for the application whose `fly.toml` file is in the working directory. To specify a different app, use the `-a` or `--app` flag.
 
 ```cmd
 fly volumes create myapp_data --region yyz --size 1
@@ -66,18 +69,17 @@ Volumes are, by default, created with encryption-at-rest enabled for additional 
 
 Volumes are bound to both apps and regions. A volume is directly associated with only one app and exists in only one region. No other app can see this volume and only an instance of the app running in the yyz region can access it.
 
-Most people use volumes for databases, so for high availability, we default to putting each of your app's volumes on different hardware (equivalent to using `--require-unique-zone=true` with `fly volumes create`). This setting does limit the number of volumes your app can have in a region.
+Most developers use volumes for databases, so for high availability, we default to putting each of your app's volumes on different hardware (equivalent to using `--require-unique-zone=true` with `fly volumes create`). This setting does limit the number of volumes your app can have in a region.
 
-When you create a volume on a legacy (Nomad) Fly App, its region is added to the app's region pool to allow app instances to be started with it.
-
+When you create a volume on a Nomad (V1) App, its region is added to the app's region pool to allow app instances to be started with it.
 
 There can be multiple volumes of the same volume name in a region. Each volume has a unique ID to distinguish itself from others to allow for this. This allows multiple instances of an app to run in one region. Creating three volumes named `myapp_data` would let up to three instances of the app start up and run.
 
 Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app.
 
-## List an App's Volumes
+### List Volumes
 
-You can [get a list of all volumes created for an app](https://fly.io/docs/flyctl/volumes-list/) using the sub-command `list`. 
+Get a list of all the volumes created for an app using `fly volumes list`. Refer to [`fly volumes list`](https://fly.io/docs/flyctl/volumes-list/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
 ```cmd
 fly volumes list
@@ -89,7 +91,7 @@ vol_od56vjpp95mvny30    created myapp_data    1GB     lhr     79f0    true      
 vol_kgj54500d3qry2wz    created myapp_data    1GB     yyz     acc6    true                            9 minutes ago
 ```
 
-The unique ID can be used in commands that reference a specific volume, such as the `show` or `delete` sub-command. For example, the `show` command can display the details for a particular volume:
+The unique volume ID can be used in commands that reference a specific volume, such as the `show` or `delete` sub-commands. For example, the `fly volumes show` command can display the details for a particular volume:
 
 ```cmd
 fly vol show vol_kgj54500d3qry2wz
@@ -104,17 +106,32 @@ fly vol show vol_kgj54500d3qry2wz
  Encrypted: true
 Created at: 04 Mar 23 03:32 UTC
 ```
-## Extend a Volume
 
-[Volumes can be extended](https://fly.io/docs/flyctl/volumes-extend/), but cannot be made smaller. To make a volume larger, find its ID with `fly volumes list`, then use:
+### Mount a Volume
+
+The [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml` is where you list the volumes and their destination directories.
+
+### Access a Volume
+
+You can access and write to a volume on a Machine just like a regular directory. The `destination` entry under `[mounts]` in `fly.toml` is the path for the mounted volume.
+
+### Extend a Volume
+
+Extend a volume using `fly volumes extend`. Volumes can be extended, or made larger, but can't be made smaller. Refer to [`fly volumes extend`](https://fly.io/docs/flyctl/volumes-extend/) in the [flyctl reference](/docs/flyctl) for usage and options. 
+
+To extend a volume, find its ID with `fly volumes list`, then use `fly volumes extend <volume-id> -s <new-size>`:
 
 ```cmd
-fly volumes extend <volume-id> -s <new-size>
+fly volumes extend vol_od56vjp5pzmvny30 -s 2
 ```
 
-where `<new-size>` is the desired size in GB. 
+where `<new-size>` is the extended size in GB. 
 
-The Machine attached to the target volume must be restarted to allow the file system to be resized. **On legacy Nomad-orchestrated Apps, the instance is automatically restarted, so this step isn't needed.**
+You'll need to restart the Machine attached to the target volume to allow the file system to be resized. 
+
+<div class="callout">
+On Nomad (V1) Apps, the instance is automatically restarted, so this step isn't needed.
+</div>
 
 Get the `id` of the Machine that has the volume mounted (find it under `ATTACHED VM`).
 
@@ -126,11 +143,10 @@ ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       
 vol_od56vjp5pzmvny30    created data    2GB     yyz     acc6    true            4d891de2f66587  36 minutes ago
 ```
 
-
-Restart the Machine:
+Restart the Machine using `fly machine restart <machine-id>`:
 
 ```cmd
-fly machine restart <machine-id>
+fly machine restart 4d891de2f66587
 ```
 
 You can check that the new volume size is reflected in the Machine's file system by running `df` via `fly ssh console`. If there's more than one Machine on the app, `fly ssh console -s` allows you to select the correct one:
@@ -150,13 +166,13 @@ tmpfs             113224      0    113224   0% /sys/fs/cgroup
 /dev/vdb         2043856   3072   1930400   1% /storage
 ```
 
-Here, the volume is mounted under `/storage` in the Machine's root file system and has been resized to 2GB.
+Here, the volume is mounted under `/storage` in the Machine's root file system and has been resized to 2GB. The `df` command shows disk space in 1K blocks by default. You can use the `-h` flag to return a more human-readable format.
 
-## Snapshots and Restores
+### Restore from a Snapshot
 
-We take daily block-level snapshots of volumes. Snapshots are kept for five days. These may not have your latest data. You should implement your own backup plan for important data.
+Find the snapshots belonging to your target volume using the `fly volumes snapshots list` command. We take daily block-level snapshots of volumes. Snapshots are kept for five days. These may not have your latest data. You should implement your own backup plan for important data. Refer to [`fly volumes snapshots list`](https://fly.io/docs/flyctl/volumes-snapshots-list/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
-[Find the snapshots belonging to your target volume](https://fly.io/docs/flyctl/volumes-snapshots-list/) with `fly volumes snapshots list <volume-id>`:
+To list a volume's snapshots, find its ID with `fly volumes list`, then use `fly volumes snapshots list <volume-id>`:
 
 ```cmd
 fly volumes snapshots list vol_wod56vjyd6pvny30
@@ -172,13 +188,9 @@ vs_pZlGZvq3gkAlAcaZ	17655830	4 days ago
 vs_A9k6age3bQov6twj	17631880	5 days ago
 ```
 
-Restoring from the snapshot to a new volume is a matter of:
-
-```cmd
-fly volumes create <volume-name> --snapshot-id <snapshot-id> -s <volume-size> [-a <app-name>]
-```
-
 A volume snapshot can be restored into a volume that's the same size as, or larger than, the source volume, but not a smaller one. If you don't specify a size with the `-s` flag, `fly volumes create` will request a 3GB volume. 
+
+To restore from the snapshot to a new volume, use `fly volumes create <volume-name> --snapshot-id <snapshot-id> -s <volume-size> [-a <app-name>]`:
 
 ```cmd
 fly volumes create pg_data --snapshot-id vs_0Gvz2kBKJ28Mph4y -a cat-pg
@@ -197,15 +209,15 @@ Created at: 02 Aug 22 21:27 UTC
 
 The `flyctl` output shows the details of the new volume, including its size.
 
-## Delete a Volume
+### Destroy a Volume
 
-The `delete` sub-command allows you to delete a specific volume.
+Destroy a volume using the `fly volumes destroy` command. Refer to in the [flyctl reference](/docs/flyctl) for usage and options.
 
 ```cmd
-fly volumes delete vol_2n0l9vlnklpr635d -a myapp
+fly volumes destroy vol_2n0l9vlnklpr635d -a myapp
 ```
 ```out
-Deleting a volume is not reversible.
-? Are you sure you want to delete this volume? Yes
-Deleted volume vol_2n0l9vlnklpr635d from myapp
+Warning! Individual volumes are pinned to individual hosts. You should create two or more volumes per application. Deleting this volume will leave you with 1 volume(s) for this application, and it is not reversible.  Learn more at https://fly.io/docs/reference/volumes/
+? Are you sure you want to destroy this volume? Yes
+Destroyed volume vol_2n0l9vlnklpr635d from myapp
 ```

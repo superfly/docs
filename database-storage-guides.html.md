@@ -5,18 +5,28 @@ toc: true
 nav: firecracker
 ---
 
+## Choosing an approach to storage
+
+Often the solution to persistent data storage is to connect your Fly App to a separate database or object store.
+
+Fly.io offers a [deploy-it-yourself Postgres app](/docs/postgres/) with some tools to make it easier to manage yourself.
+
+If you need hardware-local disk storage on your Fly App Machines&mdash;for example, if your Fly App _is_ a database (or if you want to use [LiteFS](/docs/litefs))&mdash;then you'll want to use [Fly Volumes](/docs/reference/volumes/).
+
+Explore these, and further options, for data storage in the following sections.
+
 ## Fly Volumes - Disk Storage
 
-Anything an App VM writes to its root disk is ephemeral: when the VM is redeployed, the root filesystem is rebuilt using its Docker image, deleting any data written to it since it was started up. This is fine for `/tmp` files, but most apps need to keep state in a database or another form of persistent storage.
+Anything an App VM writes to its root disk is ephemeral: when the VM is redeployed, the root file system is rebuilt using its Docker image, deleting any data written to it since it was started up. This is fine for `/tmp` files, but most apps need to keep state in a database or another form of persistent storage.
 
-- **[Fly Volumes](/docs/reference/volumes/)** - Persistent storage on Fly.io is provided by Fly Volumes, which are slices of SSDs attached to the server your App VM runs on. You can use Volumes on an App directly, or run a separate database App with Volume storage and connect an App to that.
+- **[Fly Volumes](/docs/reference/volumes/)** - Persistent storage on Fly.io is provided by Fly Volumes. You can use Volumes on an App directly, or run a separate database App with Volume storage and connect an App to that. A Fly Volume is a slice of NVMe disk storage attached to the server that hosts your Machine. Volumes have pros and cons, and you should read up on [Fly Volumes](/docs/reference/volumes/) before deciding whether they're the best solution for your use case.
 
 ## Fly.io Database Projects
 
 These are projects that we develop and support. They're not managed services; you can deploy them yourself as Fly Apps.
 
 - **[Fly Postgres](/docs/postgres/)** - [PostgreSQL](https://www.postgresql.org/) is a popular relational database. When you deploy an App on Fly.io, we give you the option to launch a Fly Postgres App and attach it to your App. We provide tools for deployment and management; you manage the cluster once it's deployed.
-- **[SQLite & LiteFS](/docs/litefs/)** - [SQLite](https://www.sqlite.org/index.html) is a very lightweight file-based database. [LiteFS](/docs/litefs/) is a distributed filesystem that transparently replicates SQLite databases. You deploy it and you manage it.
+- **[LiteFS for SQLite](/docs/litefs/)** - [SQLite](https://www.sqlite.org/index.html) is a very lightweight file-based database. [LiteFS](/docs/litefs/) is a distributed file system that transparently replicates SQLite databases. You deploy it and you manage it.
 
 ## Partner Integrations Running on Fly.io
 

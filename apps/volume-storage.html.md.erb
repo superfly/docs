@@ -1,5 +1,5 @@
 ---
-title: Add Volume Storage
+title: Add and Use Volume Storage
 layout: docs
 nav: firecracker
 titlecase: false
@@ -8,33 +8,17 @@ order: 30
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-Running apps can store ephemeral data on the root file systems of their member Machines, but a Machine's file system is rebuilt from scratch each time the app is deployed or the Machine is restarted.
+Volumes are local persistent storage for [Fly Machines](/docs/machines/). Volumes allow an app to save its state—to preserve configuration, session or user data—and then be restarted with that information in place.
 
-## Choosing an approach to storage
-
-Often the solution to persistent data storage is to connect your Fly App to a separate [database or object store](/docs/database-storage-guides/).
-
-Fly.io offers a [deploy-it-yourself Postgres app](/docs/postgres/) with some tools to make it easier to manage yourself.
-
-If you need hardware-local disk storage on your Fly App VMs&mdash;for example, if your Fly App _is_ a database (or if you want to use [LiteFS](/docs/litefs))&mdash;you'll want to use [Fly Volumes](/docs/reference/volumes/).
-
-A Fly Volume is a slice of NVMe disk storage attached to the server that hosts your Machine. This has pros and cons, and you should look at the [Fly Volumes](/docs/reference/volumes/) page before deciding that this is the best solution for your use case.
-
-<div class="callout">
-**The TLDC (too lazy, didn't click) of that is:** Volume storage attached to your app's worker is a lot like the disk inside your laptop. It's fast and convenient to use, right there in your app's file system. Also like your laptop, an app with a single Machine and a single volume does not have high availability built in. **Hardware fails. You should run at least two Machines per app, and if you're using volumes, that means two volumes. You will experience downtime at some point if you only create one.**
-</div>
-
-Explore further options for data storage in [Databases & Storage](/docs/database-storage-guides/).
-
-Fly Postgres has [its own usage docs](/docs/postgres/), so here we'll focus on using Fly Volumes with your app.
+**The first rule of Fly Volumes is: always run at least two of them per application.** The way to do this is to run at least two Machines per app. Also note that volumes don't sync up by themselves. Your app needs to take care of that. Refer to [Fly Volumes](/docs/reference/volumes/) for exceptions to the rule and details about how volumes are implemented.
 
 ## Launch an app with a Fly Volume
 
-**The first rule of Fly Volumes is: always run at least two of them per application.** The way to do this is to run two Machines. Volumes don't sync up by themselves; different apps will have their own ways of dealing with this, so we won't get into that here.
+Follow these steps to create a new app, add the volume you want to create to `fly.toml`, and then deploy the app. 
 
-### Launch the app, but don't deploy immediately.
+### Launch the app, but don't deploy it yet
 
-The app has to exist for the volume to be created. The volume has to exist before you can mount it to a Machine. The first deployment will create a Machine. So the shortest path to a Machine with a mounted volume begins by launching the app, and saying `N` to "deploy now?":
+The app has to exist for the volume to be created. The volume has to exist before you can mount it to a Machine. The first deployment of your app will create a Machine. So the shortest path to a Machine with a mounted volume begins by launching the app, and saying `N` to "deploy now?":
 
 ```cmd
 fly launch 
@@ -43,25 +27,18 @@ fly launch
 ...
 Wrote config file fly.toml
 ? Would you like to deploy now? No
+...
 Your app is ready! Deploy with `flyctl deploy`
 ```
 
-### Configure the app to mount the volume
+### Configure the app to mount the new volume
 
-Make sure there's a `[mounts]` section in `fly.toml`. As an example, the following configures the app to expose data from a volume named `myapp_data` under the `/data` directory of the application.
+Add a `[mounts]` section in the app's `fly.toml`. The `fly deploy` command you'll run in the next step will create the volume during the deploy process. For example, the following configures the app to expose data from a volume named `myapp_data` under the `/data` directory of the application.
 
 ```toml
 [mounts]
 source="myapp_data"
 destination="/data"
-```
-
-### Provision the volume
-
-Create a volume for the app, with the name you chose, in the same region you're deploying the app to:
-
-```cmd
-fly volumes create myapp_data --region lhr --size 1 --app myapp
 ```
 
 ### Deploy the app
@@ -71,6 +48,23 @@ fly deploy
 ```
 
 On the first deployment, you'll get one Machine. You can confirm this with `fly status`.
+
+```cmd
+fly status
+```
+
+```out
+App
+  Name     = myapp
+  Owner    = personal
+  Hostname = myapp.fly.dev
+  Image    = image:latest
+  Platform = machines
+
+Machines
+PROCESS	ID            	VERSION	REGION	STATE  	CHECKS 	LAST UPDATED
+app    	5683606c41098e	1      	lhr   	started	1 total	2023-04-26T20:40:48Z
+```
 
 ### Confirm the volume is mounted
 
@@ -99,7 +93,7 @@ tmpfs             113224      0    113224   0% /sys/fs/cgroup
 /dev/vdb         1011672   2564    940500   1% /data
 ```
 
-Voilà: our 1GB volume is mounted at `/data`.
+Voilà: our 1GB volume is mounted at `/data`. You can access and write to a volume on a Machine just like a regular directory.
 
 ### Clone the first Machine to scale out to two VMs
 
@@ -122,7 +116,7 @@ vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            
 
 At this point there are two identically configured Machines on the app, each with a volume of the same size. You take it from here, setting up whatever data replication you need. 
 
-### On a Nomad app
+### On a V1 (Nomad) app
 
 Create an additional volume in the desired region, then [use `fly scale count`](/docs/legacy-scaling/) to add a VM to use it.
 
@@ -130,6 +124,6 @@ Create an additional volume in the desired region, then [use `fly scale count`](
 
 You can't currently unmount a volume from an existing Machine. If you need to remove volumes from your app, you can [scale it](/docs/apps/scale-count/) down to zero Machines, [destroy all the volumes](/docs/reference/volumes#delete-a-volume), remove the `mounts` section from `fly.toml`, and redeploy. **Only destroy a volume whose data you no longer need access to.**
 
-### On a Nomad app
+### On a V1 (Nomad) app
 
-Remove the `mounts` section from `fly.toml` and redeploy. This will create a new VM without a volume. [Destroy any unused volumes](/docs/reference/volumes#delete-a-volume), **only if you no longer need their data**.
+Remove the `mounts` section from `fly.toml` and redeploy. This will create a new Machine without a volume. [Destroy any unused volumes](/docs/reference/volumes#delete-a-volume), **only if you no longer need their data**.
