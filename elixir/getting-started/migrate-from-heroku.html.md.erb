@@ -112,7 +112,7 @@ flyctl commands are a bit different than Heroku, but you'll get use to them afte
 |--------------|-----------|------------|
 | Deployments | `git push heroku` | `fly deploy` |
 | IEx console | `heroku console` | `fly ssh console --pty -C "/app/bin/app remote"` |
-| Database migration | `heroku rake db:migrate` | `fly ssh console -C "/app/bin/migrage"` |
+| Database migration | `heroku rake db:migrate` | `fly ssh console -C "/app/bin/migrate"` |
 | Postgres console | `heroku psql` | `fly postgres connect -a <name-of-database-app-server>`
 | Tail log files | `heroku logs` | `fly logs` |
 | View configuration | `heroku config` | `fly ssh console -C "printenv"` |
