@@ -1,4 +1,4 @@
-Connect to a running instance of the current app.
+Connect to a running instance of the current app. Run [`flyctl ssh issue`](https://fly.io/docs/flyctl/ssh-issue/) first to issue a new SSH credential.
 
 ## Usage
 ~~~
