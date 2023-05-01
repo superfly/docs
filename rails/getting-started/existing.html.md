@@ -122,10 +122,25 @@ even if they aren't actually used by the `assets:precompile` step.
 Rails itself has such a variable, and you will see some combination of
 `SECRET_KEY_BASE` and `DUMMY` in most Dockerfiles.
 
-If you have need for more such dummy values, add them directly to the
-`Dockerfile`.  Just be sure that any such values you add to your Dockerfile
-don't contain actual secrets as your Dockerfile will generally be
-committed to git or otherwise may be visible.
+In many cases, you can avoid the problem by adding an `if` statement.  For example, if your code looks like:
+
+```ruby
+Stripe.api_key = Rails.application.credentials.stripe[:secret_key]
+```
+
+Changing the configuration file to the following will avoid the build time
+error:
+
+```ruby
+if Rails.application.credentials.stripe
+  Stripe.api_key = Rails.application.credentials.stripe[:secret_key]
+end
+```
+
+If that is not sufficient and you have need for more such dummy values, add
+them directly to the `Dockerfile`.  Just be sure that any such values you add
+to your Dockerfile don't contain actual secrets as your Dockerfile will
+generally be committed to git or otherwise may be visible.
 
 If you have need for actual secrets at build time, take a look
 at [Build Secrets](../../../reference/build-secrets/).
