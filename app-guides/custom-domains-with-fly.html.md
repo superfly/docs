@@ -60,7 +60,7 @@ Once these settings are in place, you can add the custom domain to the applicati
 flyctl certs create example.com
 ```
 
-If you are adding a wildcard domain, remember to place quotes around the hostname to avoid inadvertent shell expansion:
+If you are using [dedicated IPs](https://fly.io/docs/reference/services/#dedicated-ipv4) and want to add a wildcard domain, remember to place quotes around the hostname to avoid inadvertent shell expansion:
 
 ```cmd
 flyctl certs create "*.example.com"
