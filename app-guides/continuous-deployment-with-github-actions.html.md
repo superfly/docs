@@ -60,7 +60,7 @@ If you want to watch the process take place, head to the Repository and select t
 
 ### API Tokens and deployment
 
-**Step 2** is all about getting an API token. Once you are logged in with `flyctl` you can generate a deploy token to use to authorize applications. That's what `flyctl auth token deploy` gives you. For a more powerful token that can manage multiple applications, run `flyctl auth token`.
+**Step 2** is all about getting an API token. Once you are logged in with `flyctl` you can generate a deploy token to use to authorize a specific application. That's what `flyctl tokens create deploy -x 9999999h` gives you. For a more powerful token that can manage multiple applications, run `flyctl auth token`.
 
 **Step 3 and 4**: Now you have a token you need to make it available to GitHub Actions that run against your repository. For that, there's secrets in the repository's settings. GitHub provides four combinations: Environment and Repository, and Secrets and Variables.  Click on the green "New repository secret" button in the top left, pop our secret under the `FLY_API_TOKEN` name, and we can move on.
 
