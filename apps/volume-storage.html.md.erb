@@ -1,5 +1,5 @@
 ---
-title: Add and Use Volume Storage
+title: Add Volume Storage
 layout: docs
 nav: firecracker
 titlecase: false
@@ -8,13 +8,13 @@ order: 30
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-Volumes are local persistent storage for [Fly Machines](/docs/machines/). Volumes allow an app to save its state—to preserve configuration, session or user data—and then be restarted with that information in place.
+Volumes are local persistent storage for [Fly Machines](/docs/machines/). Volumes allow an app to save its state&mdash;to preserve configuration, session or user data&mdash;and then be restarted with that information in place. You can access and write to a volume on a Machine just like a regular directory.
 
-**The first rule of Fly Volumes is: always run at least two of them per application.** The way to do this is to run at least two Machines per app. Also note that volumes don't sync up by themselves. Your app needs to take care of that. Refer to [Fly Volumes](/docs/reference/volumes/) for exceptions to the rule and details about how volumes are implemented.
+**The first rule of Fly Volumes is: always run at least two of them per application.** The way to do this is to run at least two Machines per app. Also note that volumes don't sync up by themselves. Your app needs to take care of that. Refer to [Fly Volumes](/docs/reference/volumes/) details about how volumes are implemented.
 
-## Launch an app with a Fly Volume
+## Launch a new app with a Fly Volume
 
-Follow these steps to create a new app, add the volume you want to create to `fly.toml`, and then deploy the app. 
+Follow these steps to create a new app, add the volume configuration to `fly.toml`, and then deploy the app. 
 
 ### Launch the app, but don't deploy it yet
 
@@ -118,12 +118,109 @@ At this point there are two identically configured Machines on the app, each wit
 
 ### On a V1 (Nomad) app
 
-Create an additional volume in the desired region, then [use `fly scale count`](/docs/legacy-scaling/) to add a VM to use it.
+Create an additional volume in the desired region, then [use `fly scale count`](/docs/apps/legacy-scaling/) to add a VM to use it.
+
+## Add volumes to an existing app
+
+You can add a volume, or volumes, to an existing app by adding `[mounts]` to the app's `fly.toml` file and creating the volumes using flyctl.
+
+### Configure the app to mount the new volume
+
+Add a `[mounts]` section in the app's `fly.toml`. The following example configures the app to expose data from a volume named `myapp_data` under the `/data` directory of the application.
+
+```toml
+[mounts]
+source="myapp_data"
+destination="/data"
+```
+
+### Create the volume
+
+Create the volume (or volumes) in the same region as your app.
+
+```cmd
+fly volume myapp_data -r lhr
+```
+
+<div class="callout">
+You need to create as many volumes as you have Machines per process in your app. Newer apps deployed using the `fly launch` command might have two Machines in the `app` process by default.
+</div>
+
+If you configure [mounts] in `fly.toml` and then run `fly deploy` without first creating enough volumes, then you'll get an error similar to this one:
+
+```out
+Error: Process group 'app' needs volumes with name 'myapp_data' to fullfill mounts defined in fly.toml; 
+Run fly volume create myapp_data -r REGION for the following regions and counts: lhr=1.`
+```
+
+The error indicates that the app needs one more volume in the `lhr` region.
+
+### Deploy the app
+
+```cmd
+fly deploy 
+```
+
+Run `fly volumes list` to verify that your volumes now have `ATTACHED VM` populated.
+
+```cmd
+fly volumes list
+```
+```out
+ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
+vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  3 minutes ago
+```
+
+## Add a volume to a Machine clone
+
+You can add a volume to an existing Machine by cloning a Machine with no volume and attaching a new volume to it. When you clone a Machine with a volume already attached, you'll also get a new Machine with a new, empty, volume attached.
+
+### Create the volume
+
+Create the volume in the same region as your app.
+
+```cmd
+fly volume myapp_data -r lhr
+```
+
+### Clone the Machine
+
+Clone one of your app's Machines (with no volume) and attach the volume you just created:
+
+```
+fly machine clone <machine-id> --attach-volume <vol-id>:<destination-mount-path>
+```
+
+`destination-mount-path` is the directory where the volume should be mounted on the file system.
+
+For example:
+
+```cmd
+fly machine clone 148eddeef09789 --attach-volume vol_8l524yj0ko347zmp:/data
+```
+
+### Destroy the Machine used to create the clone
+
+```cmd
+fly machine destroy 148eddeef09789
+```
+
+Run `fly volumes list` to verify that the volume you just created has the newly-cloned Machine's ID listed under `ATTACHED VM`.
+
+```cmd
+fly volumes list
+```
+```out
+ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
+vol_8l524yj0ko347zmp    created data    1GB     lhr     b6a7    true            5683606c41098e  3 minutes ago
+```
+
+Repeat the process for each machine that you want to add a volume to.
 
 ## Remove a volume from an app
 
-You can't currently unmount a volume from an existing Machine. If you need to remove volumes from your app, you can [scale it](/docs/apps/scale-count/) down to zero Machines, [destroy all the volumes](/docs/reference/volumes#delete-a-volume), remove the `mounts` section from `fly.toml`, and redeploy. **Only destroy a volume whose data you no longer need access to.**
+You can't currently unmount a volume from an existing Machine. If you need to remove volumes from your app, you can [scale it](/docs/apps/scale-count/) down to zero Machines, [destroy all the volumes](/docs/reference/volumes#destroy-a-volume), remove the `mounts` section from `fly.toml`, and redeploy. **Only destroy a volume whose data you no longer need access to.**
 
 ### On a V1 (Nomad) app
 
-Remove the `mounts` section from `fly.toml` and redeploy. This will create a new Machine without a volume. [Destroy any unused volumes](/docs/reference/volumes#delete-a-volume), **only if you no longer need their data**.
+Remove the `mounts` section from `fly.toml` and redeploy. This will create a new Machine without a volume. [Destroy any unused volumes](/docs/reference/volumes#destroy-a-volume), **only if you no longer need their data**.

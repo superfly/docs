@@ -12,10 +12,10 @@ Apps can store ephemeral data on the root file systems of their Machines, but a 
 A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware. Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
 
 <div class="callout">
-**The first rule of Fly Volumes is: Always run at least two of them per application.** If you don't, you'll have downtime whenever you deploy your app, because only one Machine can be attached to a volume at a time. 
+**The first rule of Fly Volumes is: Always run at least two of them per application.** If you don't, you'll have downtime if there's a host or network failure, and whenever you deploy your app, because only one Machine can be attached to a volume at a time.
 </div>
 
-There are exceptions to the rule of running at least two Fly Volumes. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not worried about downtime while you deploy it, then you can run a single Machine with an attached volume.
+There are exceptions to the rule of running at least two Fly volumes. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not worried about downtime while you deploy it, then you can run a single Machine with an attached volume.
 
 **Things to consider before settling on volume storage:**
 
@@ -27,25 +27,25 @@ There are exceptions to the rule of running at least two Fly Volumes. For exampl
 
 If volumes won't work for your use case, you can explore other options for data storage in [Databases & Storage](/docs/database-storage-guides/).
 
-<div class="callout">`fly volumes` is aliased to `fly volume` and `fly vol` for convenience.</div>
-
 ## Fly Volumes and Fly Apps
 
-Learn how to [add and use volume storage for your app](/docs/apps/volume-storage/), step-by-step.
+Learn how to [add volume storage for your app](/docs/apps/volume-storage/), step-by-step.
 
 Learn about the [`mounts` section](/docs/reference/configuration/#the-mounts-section) for volumes in the `fly.toml` app configuration file.
 
 ## Fly Volumes and flyctl
 
-Volumes are managed using the [`fly volumes`](/docs/flyctl/volumes/) command.
+Manage volumes using the [`fly volumes`](/docs/flyctl/volumes/) command.
+
+<div class="callout">`fly volumes` is aliased to `fly volume` and `fly vol` for convenience.</div>
 
 ## Working with volumes
 
-This section is a reference for working with volumes. If you want the steps to launch a new app with a volume then refer to [Add and Use Volume Storage](/docs/apps/volume-storage/).
+This section is a reference for working with volumes. Refer to [Add Volume Storage](/docs/apps/volume-storage/) to add a volume to an existing app or launch a new app with a volume.
 
 ### Create a Volume
 
-Every Fly Volume belongs to a [Fly App](/docs/reference/apps/).
+Every Fly Volume belongs to a [Fly App](/docs/reference/apps/). Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app.
 
 Create a volume for an app using `fly volumes create`. The default volume size is 3GB. The maximum size is 500GB. Refer to [`fly volumes create`](/docs/flyctl/volumes-create/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
@@ -65,17 +65,15 @@ fly volumes create myapp_data --region yyz --size 1
 Created at: 04 Mar 23 03:32 UTC
 ```
 
-Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--no-encryption` to instead create an unencrypted volume for improved performance at deployment and runtime.
-
 Volumes are bound to both apps and regions. A volume is directly associated with only one app and exists in only one region. No other app can see this volume and only an instance of the app running in the yyz region can access it.
 
 Most developers use volumes for databases, so for high availability, we default to putting each of your app's volumes on different hardware (equivalent to using `--require-unique-zone=true` with `fly volumes create`). This setting does limit the number of volumes your app can have in a region.
 
-When you create a volume on a Nomad (V1) App, its region is added to the app's region pool to allow app instances to be started with it.
-
 There can be multiple volumes of the same volume name in a region. Each volume has a unique ID to distinguish itself from others to allow for this. This allows multiple instances of an app to run in one region. Creating three volumes named `myapp_data` would let up to three instances of the app start up and run.
 
-Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app.
+Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--no-encryption` to instead create an unencrypted volume for improved performance at deployment and runtime.
+
+When you create a volume on a Nomad (V1) App, its region is added to the app's region pool to allow app instances to be started with it.
 
 ### List Volumes
 
@@ -107,13 +105,9 @@ fly vol show vol_kgj54500d3qry2wz
 Created at: 04 Mar 23 03:32 UTC
 ```
 
-### Mount a Volume
+### Access a volume
 
-The [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml` is where you list the volumes and their destination directories.
-
-### Access a Volume
-
-You can access and write to a volume on a Machine just like a regular directory. The `destination` entry under `[mounts]` in `fly.toml` is the path for the mounted volume.
+You can access and write to a volume on a Machine just like a regular directory. For Fly Apps, the `destination` under `[mounts]` in `fly.toml` is the path for the mounted volume. When you [clone a Machine and add a volume](/docs/apps/volume-storage/#add-a-volume-to-a-machine-clone), you specify the mount path in the `fly machine clone` command.
 
 ### Extend a Volume
 
@@ -211,7 +205,7 @@ The `flyctl` output shows the details of the new volume, including its size.
 
 ### Destroy a Volume
 
-Destroy a volume using the `fly volumes destroy` command. Refer to in the [flyctl reference](/docs/flyctl) for usage and options.
+Destroy a volume using the `fly volumes destroy` command. Refer to [`fly volumes destroy`](https://fly.io/docs/flyctl/volumes-destroy/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
 ```cmd
 fly volumes destroy vol_2n0l9vlnklpr635d -a myapp
