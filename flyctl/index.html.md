@@ -2,6 +2,7 @@
 title: Introducing Flyctl - The Fly CLI
 layout: docs
 sitemap: false
+edit: false
 nav: flyctl
 ---
 
