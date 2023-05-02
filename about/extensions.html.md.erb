@@ -1,0 +1,58 @@
+---
+title: Fly.io Extensions Program
+layout: docs
+sitemap: true
+nav: firecracker
+---
+
+Fly.io Extensions Program
+
+Fly.io is a global cloud service for running full stack apps close to users. We're committed to giving customers a great developer experience, and we're building a platform that makes it easy to deploy and manage apps in any region of the world, beyond the footprint of traditional cloud platforms.
+
+Extensions are 3rd party services  -- those that we wouldn't build ourselves -- that extend our platform to serve customer needs. Services such as managed databases, exception handlers or log aggregators fit the bill. Check out our [managed Redis extension by Upstash](https://fly.io/docs/reference/redis/) to get an idea of what's possible.
+
+Now, rather than bolting a grab bag of products on to ours, we're interested in deep integration with a few select partners. We want to offer a seamless experience for customers, and we want to make it easy for you to reach them.
+
+We run our own hardware, all over the world, and we're cheaper than big clouds. [Check out our documentation](https://fly.io/docs) to see what our platform has to offer.
+
+Contact us at [extensions@fly.io](mailto:extensions@fly.io) to discuss your case!
+
+## Provider Requirements
+
+As an extension provider, you should give us a way to:
+
+* Provision resources, user accounts and organizations
+* Allow single sign-on login into your UI
+* Fetch billing details on a daily basis so we may bill customers
+
+Read on for more details.
+
+## Account provisioning
+
+Where possible, our organizations should map to your organizations, and our user accounts to yours. In both cases, we provide obfuscated addresses that route to individual customers or to organization adminstrators.
+
+## Resource provisioning
+
+You should give us an API endpoint to provision extensions synchronously. This request should respond with unique resource ID, connection strings, tokens and other relevant information.
+
+## Single sign on
+
+Customers should be able to login to your UI using a single command, like: flyctl ext logjam dashboard. This may be done by initiating an OAuth flow to our OAuth provider endpoint.
+
+Once logged in, customers should have access to your standard platform features. There may be details to iron out here, such as which privileges to assign to Fly.io-provisioned users.
+
+## Billing
+
+We want you to be free to model your pricing as you see fit. But, for the best customer experience, Fly.io should ultimately be the one that charges a customer. Also, Pay-as-you-go pricing fits our model best, since it's how we bill.
+
+So you should run your own billing logic, and offer an API to provide up-to-date, per-account billing details.
+
+Contact us at [extensions@fly.io](mailto:extensions@fly.io) to discuss billing options.
+
+## Deploying latency sensitive services on the Fly.io platform
+
+Thus we can fulfil our promise of a performant application in any Fly.io region, services that are sensitive to network latency — like Redis or MySQL — should ideally be deployed on Fly.io. You'll also benefit from cheaper cloud resources and a growing number of [global points of presence](https://fly.io/docs/reference/regions/).
+
+Your Fly.io network is essentially a global, encrypted LAN, with DNS service discovery and load balancing built-in. This greatly simplifies configuration of services that cluster and gossip. Customers access your service via a single private IP address that automatically routes traffic to the nearest provider VM.
+
+We also offer cost-cutting features such as automatic VM stop/start based on incoming request volume. Contact us  at [extensions@fly.io](mailto:extensions@fly.io) to learn more.
