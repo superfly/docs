@@ -1,5 +1,5 @@
 ---
-title: Configuration Tuning
+title: Postgres Configuration Tuning
 objective: Learn how to tune your Postgres database to your needs.
 layout: framework_docs
 order: 60
@@ -90,7 +90,7 @@ wal-level                 	replica	    	Sets the level of information written to
 
 ## Gotchas
 
-If you mismatch Postgres parameters and VM RAM, you may end up with an unhealthy cluster and errors like this in your logs:
+If you mismatch Postgres parameters and VM RAM, you may end up with an unhealthy cluster and errors like this in your logs (these are from an older Stolon-managed cluster):
 
 ```
 [info]keeper   | 2022-11-13 16:46:20.260 UTC [717] FATAL:  could not map anonymous shared memory: Cannot allocate memory

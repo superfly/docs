@@ -9,6 +9,8 @@ order: 50
 
 See [Monitoring](/docs/postgres/managing/monitoring/) for how to check the current sizes of the VMs in your Postgres cluster.
 
+**Before scaling a Postgres VM:** Consider the [Postgres configuraton parameters](/docs/postgres/managing/configuration-tuning.html) of your cluster, and adjust the resources accordingly. If you're scaling your VMs up, scale before adjusting the Postgres config to match. If you're scaling down, adjust the cluster's Postgres parameters to match the reduced resources before scaling the VM. **In particular, too high a `shared-buffers` value with too little VM RAM can cause a Postgres VM to fail its health checks.**
+
 Scale VM resources for each Machine in the cluster with the [`flyctl machine update`](https://fly.io/docs/flyctl/machine-update/) command. Here's an example of scaling RAM to 1GB on a machine:
 
 ```cmd
