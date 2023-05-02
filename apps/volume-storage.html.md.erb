@@ -118,7 +118,7 @@ At this point there are two identically configured Machines on the app, each wit
 
 ### On a V1 (Nomad) app
 
-Create an additional volume in the desired region, then [use `fly scale count`](/docs/legacy-scaling/) to add a VM to use it.
+Create an additional volume in the desired region, then [use `fly scale count`](/docs/apps/legacy-scaling/) to add a VM to use it.
 
 ## Add volumes to an existing app
 
@@ -219,8 +219,8 @@ Repeat the process for each machine that you want to add a volume to.
 
 ## Remove a volume from an app
 
-You can't currently unmount a volume from an existing Machine. If you need to remove volumes from your app, you can [scale it](/docs/apps/scale-count/) down to zero Machines, [destroy all the volumes](/docs/reference/volumes#delete-a-volume), remove the `mounts` section from `fly.toml`, and redeploy. **Only destroy a volume whose data you no longer need access to.**
+You can't currently unmount a volume from an existing Machine. If you need to remove volumes from your app, you can [scale it](/docs/apps/scale-count/) down to zero Machines, [destroy all the volumes](/docs/reference/volumes#destroy-a-volume), remove the `mounts` section from `fly.toml`, and redeploy. **Only destroy a volume whose data you no longer need access to.**
 
 ### On a V1 (Nomad) app
 
-Remove the `mounts` section from `fly.toml` and redeploy. This will create a new Machine without a volume. [Destroy any unused volumes](/docs/reference/volumes#delete-a-volume), **only if you no longer need their data**.
+Remove the `mounts` section from `fly.toml` and redeploy. This will create a new Machine without a volume. [Destroy any unused volumes](/docs/reference/volumes#destroy-a-volume), **only if you no longer need their data**.
