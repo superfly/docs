@@ -12,10 +12,10 @@ Apps can store ephemeral data on the root file systems of their Machines, but a 
 A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware. Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
 
 <div class="callout">
-**The first rule of Fly Volumes is: Always run at least two of them per application.** If you don't, you'll have downtime whenever you deploy your app, because only one Machine can be attached to a volume at a time. 
+**The first rule of Fly Volumes is: Always run at least two of them per application.** If you don't, you'll have downtime if there's a host or network failure, and whenever you deploy your app, because only one Machine can be attached to a volume at a time.
 </div>
 
-There are exceptions to the rule of running at least two Fly Volumes. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not worried about downtime while you deploy it, then you can run a single Machine with an attached volume.
+There are exceptions to the rule of running at least two Fly volumes. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not worried about downtime while you deploy it, then you can run a single Machine with an attached volume.
 
 **Things to consider before settling on volume storage:**
 
@@ -105,13 +105,9 @@ fly vol show vol_kgj54500d3qry2wz
 Created at: 04 Mar 23 03:32 UTC
 ```
 
-### Mount a Volume
+### Access a volume
 
-The [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml` is where you list the volumes and their destination directories. Unless you're [launching a new app with a volume](/docs/apps/volume-storage/#launch-a-new-app-with-a-fly-volume), you also need to [create the volumes](#create-a-volume).
-
-### Access a Volume
-
-You can access and write to a volume on a Machine just like a regular directory. The `destination` entry under `[mounts]` in `fly.toml` is the path for the mounted volume.
+You can access and write to a volume on a Machine just like a regular directory. For Fly Apps, the `destination` under `[mounts]` in `fly.toml` is the path for the mounted volume. When you [clone a Machine and add a volume](/docs/apps/volume-storage/#add-a-volume-to-a-machine-clone), you specify the mount path in the `fly machine clone` command.
 
 ### Extend a Volume
 
