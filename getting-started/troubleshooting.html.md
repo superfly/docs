@@ -11,7 +11,7 @@ The first thing to remember is that your application may well be running but be 
 
 Unless you've not deployed successfully before. In which case it will just fail as there's nothing to roll back to.
 
-## _Port Checking_
+## Port Checking
 
 So the first thing to check is can your application see the world.
 
@@ -51,7 +51,7 @@ As for _external ports_, if you're running services over IPv4 on ports other tha
 
 So, first stop, check what port you have open on your application. Sometimes an app's logs will tell you which internal port it's listening on, which brings us to...
 
-## _Logs Have Knowledge_
+## Logs Have Knowledge
 
 Still can't connect? Ok, the first thing to do is look at the logs of the app when it's running. `flyctl logs` will give you the most recent log entries.
 
@@ -59,7 +59,7 @@ The next question is do the logs say why it is failing?
 
 If you can see messages about the app just exiting, then there's likely a specific app issue, and you'll need to address that and redeploy, BUT...
 
-## _Host Checking_
+## Host Checking
 
 If there are messages about being unable to bind to a network port or listening to localhost, your problem is different. A lot of frameworks will, in development mode or similar, open a port on the localhost so that the developer can talk to the app.
 
@@ -114,11 +114,11 @@ const start = async () => {
 
 And redeploy that, it will work.
 
-## _Inspecting with SSH_
+## Inspecting with SSH
 
 You can use `flyctl ssh console` to connect to a running instance of your application. Use `flyctl ssh console -s` to select a specific instance.
 
-## _Health checks failing_
+## Health checks failing
 
 If your health checks keep failing during deployment...
 
@@ -144,11 +144,11 @@ To increase the grace period for your app (ex: if it takes about 30 seconds for 
     ...
 ```
 
-## _HTTPS in fly.toml_
+## HTTPS in fly.toml
 
 If you specify in your `fly.toml` that `protocol = "https"`, this means your application must be serving TLS directly. If you have enabled this, try disabling for debugging.
 
-## _Are your variables set?_
+## Are your variables set?
 
 For example if you notice in your logs that the database is failing to connect to `DATABASE_URL`, make sure that variable is set.
 
@@ -158,7 +158,7 @@ flyctl secrets list
 flyctl config env
 ```
 
-## _Did your buildpack-based deploy stop working?_
+## Did your buildpack-based deploy stop working?
 
 First of all, we think using a [Dockerfile](https://fly.io/docs/languages-and-frameworks/dockerfile/) rather than buildpacks is more reliable and faster to deploy. If possible, making the switch is probably a good idea!
 
@@ -171,6 +171,85 @@ That said, if the build used to work, then you can try using a previous, fixed b
   builder = "heroku/buildpacks@sha256:4b3478410cb52c480c77f18a26a0c88cfc7e23c259df4ca833e0500215ab5535"
 ```
 
-## _Do you have enough RAM?_
+## Do you have enough RAM?
 
 Some apps (like NodeJS ones that use Prisma) can be RAM intensive. So your app may be killed for out-of-memory (OOM) reasons. The solution is just to [add more RAM](https://fly.io/docs/apps/scale-machine/#add-ram).
+
+## Ways to connect to a service
+
+You've checked your app VMs are running. You're pretty sure your service is listening on the internal port you put in your `fly.toml` or Machine config, it's listening on all network interfaces and not just localhost, and it's got public IP addresses, but you still can't connect to it in the browser. It's time to get systematic. There are a number of other ways you can try to connect to your service, to narrow down where the problem starts.
+
+From the inside outward (you could start at the other end and work inward too):
+
+### Connect from inside the VM, on localhost
+
+You may want to make sure the process is doing what you think it is, inside the VM. If you should have a service running internally, you can try connecting to it with cURL from within the VM. Pull up an interactive shell with `fly ssh console`. If your Docker image doesn't have `curl` installed, you can install it; it'll be wiped away next time the VM is restarted (e.g. on the next `fly deploy`).
+
+A HEAD request (`curl -I`) should be enough to see if you're getting a response:
+
+```
+# curl -I http://localhost:80
+HTTP/1.1 200 OK
+Server: nginx/1.23.4
+Date: Tue, 02 May 2023 20:32:32 GMT
+Content-Type: text/html
+Content-Length: 615
+Last-Modified: Tue, 28 Mar 2023 15:01:54 GMT
+Connection: keep-alive
+ETag: "64230162-267"
+Accept-Ranges: bytes
+
+```
+
+That `200 OK` means my service is running on port 80 as anticipated.
+
+You can further check that the right HTML is being served, with `curl http://localhost:<port>` (leaving out the `-I`).
+
+### Check if the process is listening at its address in the private IPv6 network
+
+Inside a VM, the `fly-local-6pn` hostname resolves to the VM's private IPv6 address. You can use this (or the actual address) to check whether your service is bound to this address:
+
+```
+ # curl -I http://fly-local-6pn:80
+HTTP/1.1 200 OK
+Server: nginx/1.23.4
+...
+
+```
+
+If this fails, the service won't be reachable on your private WireGuard network.
+
+### Check that the service is actually available on the private network
+
+You can find the private IPv6 addresses of your app's VMs using [internal DNS](https://fly.io/docs/reference/private-networking/)—either right from an interactive shell on one of those very same app VMs, from a shell on another app in the same private network, or from your local computer [connected over WireGuard](https://fly.io/docs/reference/private-networking/#private-network-vpn). Once you have an address, you can visit it with `curl`, this time from outside the VM!
+
+```
+curl -g -6 'http://[fdaa:0:3b99:a7b:88dc:e1a6:42b4:2]:80/‘
+
+```
+
+### Check if the service is available via its hostname
+
+You can try `curl`ing the hostname (and port if desired), just to make sure the problem isn't some sort of browser shenanigans. cURL doesn't follow redirects unless you tell it to, and it doesn't cache.
+
+```
+$ curl -I https://<app-name>.fly.dev:443  
+HTTP/2 200 
+...
+
+```
+
+The HTTP URL always elicits a 301 redirect, because the Fly Proxy upgrades HTTP connections to HTTPS. To get cURL to follow the redirect to see if there's anything there, use the `-L` flag.
+
+```
+$ curl -IL http://<app-name>.fly.dev:80
+HTTP/1.1 301 Moved Permanently
+location: https://<app-name>.fly.dev/
+...
+
+HTTP/2 200 
+...
+
+```
+
+Success!
