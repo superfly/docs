@@ -22,7 +22,7 @@ Deploy your project in a few minutes on the [Fly Apps](/docs/apps/) Platform. Ma
 
 [flyctl](/docs/flyctl/) helps you herd VMs, but puts the power in your hands.
 
-Scale locally, or put your app next to your users in ten more cities. Either way, it's [one command](/docs/apps/scale-count/). Add CPU oomph or RAM, again with [one command](/docs/apps/scale-machine.html.md.erb). Pay for what you use, and have your VMs stop when they're idle, so you don't use more than you need. 
+Scale locally, or put your app next to your users in ten more cities. Either way, it's [one command](/docs/apps/scale-count/). Add CPU oomph or RAM, again with [one command](/docs/apps/scale-machine/). Pay for what you use, and have your VMs stop when they're idle, so you don't use more than you need. 
 
 ## Color outside the lines
 
