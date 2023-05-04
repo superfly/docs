@@ -5,17 +5,15 @@ sitemap: true
 nav: firecracker
 ---
 
-Fly.io Extensions Program
+# Fly.io Extensions Program
 
-Fly.io is a global cloud service for running full stack apps close to users. We're committed to giving customers a great developer experience, and we're building a platform that makes it easy to deploy and manage apps in any region of the world, beyond the footprint of traditional cloud platforms.
+Fly.io is a global cloud service for running full stack apps close to users. We run on our own hardware in [datacenters all over the world](https://fly.io/docs/reference/regions/).
 
-Extensions are 3rd party services&mdash;those that we wouldn't build ourselves&mdash;that extend our platform to serve customer needs. Services such as managed databases, exception handlers or log aggregators fit the bill. Check out our [managed Redis extension by Upstash](https://fly.io/docs/reference/redis/) to get an idea of what's possible.
+We have two main goals: to deliver a slick developer experience, and to build the best possible platform for running full stack apps. We're looking for partners that share this goal, extending Fly.io with services our customers need.
 
-Now, rather than bolting a grab bag of products on to ours, we're interested in deep integration with a few select partners. We want to offer a seamless experience for customers, and we want to make it easy for you to reach them.
+Services such as managed databases, exception handlers, CI runners or log aggregators are great examples. Check out our [managed Redis extension by Upstash](https://fly.io/docs/reference/redis/) to get an idea of what's possible, and how we integrate servies directly into our CLI.
 
-We run our own hardware, all over the world, and we're cheaper than big clouds. [Check out our documentation](https://fly.io/docs) to see what our platform has to offer.
-
-Contact us at [extensions@fly.io](mailto:extensions@fly.io) to discuss your case!
+[Check out our documentation](https://fly.io/docs) to see what our platform has to offer. Contact us at [extensions@fly.io](mailto:extensions@fly.io) to discuss your case!
 
 ## Provider Requirements
 
@@ -37,7 +35,7 @@ You should give us an API endpoint to provision extensions synchronously. This r
 
 ## Single sign on
 
-Customers should be able to login to your UI using a single command, like: flyctl ext logjam dashboard. This may be done by initiating an OAuth flow to our OAuth provider endpoint.
+Customers should be able to login to your UI using a single command like `flyctl ext logjam dashboard``. This may be done by integrating with our OAuth authentication flow.
 
 Once logged in, customers should have access to your standard platform features. There may be details to iron out here, such as which privileges to assign to Fly.io-provisioned users.
 
@@ -51,8 +49,8 @@ Contact us at [extensions@fly.io](mailto:extensions@fly.io) to discuss billing o
 
 ## Deploying latency sensitive services on the Fly.io platform
 
-Thus we can fulfil our promise of a performant application in any Fly.io region, services that are sensitive to network latency — like Redis or MySQL — should ideally be deployed on Fly.io. You'll also benefit from cheaper cloud resources and a growing number of [global points of presence](https://fly.io/docs/reference/regions/).
+To fulfil our promise of a performant application in any Fly.io region, latency sensitive services — like Redis or MySQL — should be deployed on Fly.io. You'll also benefit from volume discounts on cloud resources and a growing number of [global points of presence](https://fly.io/docs/reference/regions/).
 
 Your Fly.io network is essentially a global, encrypted LAN, with DNS service discovery and load balancing built-in. This greatly simplifies configuration of services that cluster and gossip. Customers access your service via a single private IP address that automatically routes traffic to the nearest provider VM.
 
-We also offer cost-cutting features such as automatic VM stop/start based on incoming request volume. Contact us  at [extensions@fly.io](mailto:extensions@fly.io) to learn more.
+We also offer cost-cutting features such as automatic VM stop/start based on incoming request volume. Contact us  at [extensions@fly.io](mailto:extensions@fly.io) to learn more - we're happy to help you get started!
