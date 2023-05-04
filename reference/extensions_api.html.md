@@ -2,7 +2,7 @@
 title: Provisioning Fly.io Extensions
 layout: docs
 sitemap: false
-nav: firecracker
+nav: **firecracker**
 ---
 
 *This document is super-alpha: expect things to change! Please give us feedback.*
@@ -28,12 +28,40 @@ We'll send you an email alias that routes to the administrators of the customer 
 
 This section covers our proposal for a REST-based provisioning API.
 
+## Authentication and Request Signing
+
+Given the high privilege afforded to us by your platform, we request that you:
+
+* Authenticate requests using a shared secret token
+* Validate signed requests using a different shared secret
+
+ At some point, we'll sign all provisioning requests with a secret key, regardless of the authentication mechanism. You should validate these signatures for added security.
+
+We follow the [IETF HTTP Message Signature Spec](https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-05.html), using the [HMAC SHA-256](https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-05.html#name-hmac-using-sha-256) algorithm. Here's a list of libraries that implement the spec:
+
+Golang: [https://github.com/zntrio/httpsig](https://github.com/zntrio/httpsig)
+Ruby: [https://github.com/99designs/http-signatures-ruby](https://github.com/99designs/http-signatures-ruby)
+Python: [https://pypi.org/project/requests-http-signature](https://pypi.org/project/requests-http-signature/)
+
+Here's an example verifier from a Rails app.
+
+```ruby
+require "http_signatures"
+
+$http_sig = HttpSignatures::Context.new(
+  keys: {"flyio-signing-secret" => ENV{'FLYIO_SIGNING_SECRET']},
+  algorithm: "hmac-sha256",
+  headers: ["(request-target)", "Date", "Content-Length"],
+)
+
+$http_sig.verifier.valid?(request)
+
+```
 ## Request Path
 
 We recommend your API offer a single base URL, like `https://logjam.io/flyio`, and append the paths below as REST resources.
 
 ## Resource provisioning
-
 
 Fly.io will send a signed `POST` request to `{base_url}/extensions` with the following parameters.
 
@@ -113,32 +141,6 @@ scope: {organization_id: "abc", permission: "admin"}
 
 In the event of a successful authentication, you'll receive an authorization code which can be exchanged for an access token. The access token currently has no permissions, and may be discarded. since the goal of this exchange is purely to verify the user's account and organization membership on Fly.io.
 
-## Securing HTTP Requests
-
-Given the high privilege afforded to us by your platform, we sign provisioning requests with a secret key, regardless of the API authentication mechanism. You should validate these signatures for added security.
-
-Rather than roll our own request signing, we follow the [IETF HTTP Message Signature Spec](https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-05.html), using the [HMAC SHA-256](https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-05.html#name-hmac-using-sha-256) algorithm. Here's a list of libraries that implement the spec:
-
-Golang: [https://github.com/zntrio/httpsig](https://github.com/zntrio/httpsig)
-
-Ruby: [https://github.com/99designs/http-signatures-ruby](https://github.com/99designs/http-signatures-ruby)
-
-Python: [https://pypi.org/project/requests-http-signature](https://pypi.org/project/requests-http-signature/)
-
-Here's an example verifier from a Rails app.
-
-```ruby
-require "http_signatures"
-
-$http_sig = HttpSignatures::Context.new(
-  keys: {"flyio-signing-secret" => ENV{'FLYIO_SIGNING_SECRET']},
-  algorithm: "hmac-sha256",
-  headers: ["(request-target)", "Date", "Content-Length"],
-)
-
-$http_sig.verifier.valid?(request)
-
-```
 
 # Deploying your service on Fly.io
 
