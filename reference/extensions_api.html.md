@@ -138,18 +138,19 @@ extension_id=123
 If the user is already logged in, you should redirect them to the target extension in your UI. If not, you should start an OAuth authorization request to Fly.io:
 
 ```
-https://fly.io/oauth/authorize?client_id=123&request_type=code&scope=encodedscope
+GET https://fly.io/oauth/authorize?client_id=123&response_type=code&redirect_uri=https://logjam.io/flyio/callback&scope=%7B%22organization_id%22:%22abc%22,%22permission%22:%22admin%22%7D
 
 ```
 
-You should pass the organization ID and desired permission level in the scope. Only `admin` is permitted as a permission level. It means that only Fly.io organization admins may successfully login via SSO to your platform.
+`scope` is URL-encoded JSON:
 
 ```
-scope: {organization_id: "abc", permission: "admin"}
-
+{organization_id: "abc", permission: "admin"}
 ```
 
-We'll verify that the user belongs to the required org, and is an admin. Then, we'll redirect to your OAUth `redirect_uri` with an authorization code you may exchange for an access token.
+You should pass the organization ID and desired permission level, `admin` or `member`. `admin`, the default, means that only Fly.io organization admins can authenticate to your platform.
+
+Once we authenticate the user and verify this scope, we'll redirect to your OAUth `redirect_uri` with an authorization code you may exchange for an access token.
 
 Note that the access token currently has no permissions, and may be discarded, since the goal of this exchange is purely to verify the user's account and organization membership on Fly.io.
 
