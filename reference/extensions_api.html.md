@@ -2,7 +2,7 @@
 title: Provisioning Fly.io Extensions
 layout: docs
 sitemap: false
-nav: **firecracker**
+nav: firecracker
 ---
 
 *This document is super-alpha: expect things to change! Please give us feedback.*
@@ -119,13 +119,15 @@ PATCH {base_url]/extensions/{extension_id}
 
 ```
 
-# Single Sign On Flow
+## Single Sign On Flow
 
 We want to get users into your platform with as little friction as possible, directly from `flyctl`. Example:
 
 `flyctl ext logjam dashboard -a myapp`
 
-If the user isn't already logged in, you should issue an OAuth authorization request to:
+This command will send a `POST` request to `{base_url}/sso?organization_id=123&extension_id=123`.
+
+If the user is already logged in, you should redirect them to the extension in your UI. If not, you should start an OAuth authorization request to Fly.io:
 
 ```
 https://fly.io/oauth/authorize?client_id=123&request_type=code&scope=encodedscope
@@ -139,8 +141,9 @@ scope: {organization_id: "abc", permission: "admin"}
 
 ```
 
-In the event of a successful authentication, you'll receive an authorization code which can be exchanged for an access token. The access token currently has no permissions, and may be discarded. since the goal of this exchange is purely to verify the user's account and organization membership on Fly.io.
+We'll verify that the user belongs to the required org, and is an admin. Then, we'll redirect to your OAUth `redirect_uri` with an authorization code you may exchange for an access token.
 
+Note that the access token currently has no permissions, and may be discarded, since the goal of this exchange is purely to verify the user's account and organization membership on Fly.io.
 
 # Deploying your service on Fly.io
 
