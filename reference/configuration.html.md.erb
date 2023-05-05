@@ -128,7 +128,7 @@ To run a command in a temporary VM&mdash;using the app's successfully built Dock
 
 ```toml
 [deploy]
-  release_command = "bundle exec rails db:migrate"
+  release_command = "bin/rails db:prepare"
 ```
 
 The `release_command` value replaces `CMD` in the temporary VM. This is useful for running database migrations before app VMs are created or updated with the new release. Note that the Docker image's `ENTRYPOINT` is not overridden by the `release_command`; `ENTRYPOINT` always runs.
