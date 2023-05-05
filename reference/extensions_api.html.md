@@ -9,13 +9,13 @@ nav: firecracker
 
 Read our [Extensions Program overview](https://fly.io/docs/about/extensions) before digging into this doc.
 
-# Provisioning Flow
+## Provisioning Flow
 
 Fly.io is a CLI-first platform. So provisioning extensions starts there. Either when launching an app, or when a customer explicitly asks to provision an extension.
 
 We'll forward this provision request on to you, along with details about the provisioning Fly.io organization. You should reply synchronously with details about your provisioned extension, and we'll attach these details to a target application, where applicable.
 
-# Provisioning Accounts and Organizations
+## Provisioning Accounts and Organizations
 
 To support single-sign on (SSO), billing and email communication with customers, you should provision the following along with a resource:
 * An account to own extensions provisioned through Fly
@@ -24,11 +24,11 @@ To support single-sign on (SSO), billing and email communication with customers,
 
 We'll send you an email alias that routes to the administrators of the customer Fly.io organization. You can use that to send notifications, support tickets, etc. We recommend that for each resource provisioning request, you provision the above inline, idempotently. This removes the need for a separate account provisioning API.
 
-# Provisioning API
+## Provisioning API
 
 This section covers our proposal for a REST-based provisioning API.
 
-## Authentication and Request Signing
+### Authentication and Request Signing
 
 Given the high privilege afforded to us by your platform, we request that you:
 
@@ -57,11 +57,11 @@ $http_sig = HttpSignatures::Context.new(
 $http_sig.verifier.valid?(request)
 
 ```
-## Request Path
+### Request Path
 
 We recommend your API offer a single base URL, like `https://logjam.io/flyio`, and append the paths below as REST resources.
 
-## Resource provisioning
+### Resource provisioning
 
 Fly.io will send a signed `POST` request to `{base_url}/extensions` with the following parameters.
 
@@ -104,11 +104,11 @@ Your response should contain, at least, a list of key/value pairs of secrets tha
 
 ```
 
-## Fetching extension data
+### Fetching extension data
 
 We might want to fetch data about your extension. Implementing this endpoint is optional. We should discuss this on a case-by-case basis.
 
-## Updating Extensions
+### Updating Extensions
 
 We like to make extensions updatable directly from `flyctl`. For example, a database might allow adding or removing read replica regions, or we may want to allow updating payment plans.
 
@@ -119,15 +119,23 @@ PATCH {base_url]/extensions/{extension_id}
 
 ```
 
-## Single Sign On Flow
+### Single Sign On Flow
 
 We want to get users into your platform with as little friction as possible, directly from `flyctl`. Example:
 
 `flyctl ext logjam dashboard -a myapp`
 
-This command will send a `POST` request to `{base_url}/sso?organization_id=123&extension_id=123`.
+This command should ultimately get the customer logged in to your UI as the organizational user you provisioned, and redirected to the target extension screen.
 
-If the user is already logged in, you should redirect them to the extension in your UI. If not, you should start an OAuth authorization request to Fly.io:
+This command will send a `POST` request to `{base_url}/extensions/{extension_id}/sso`
+with the following params:
+
+```
+organization_id=123
+extension_id=123
+```
+
+If the user is already logged in, you should redirect them to the target extension in your UI. If not, you should start an OAuth authorization request to Fly.io:
 
 ```
 https://fly.io/oauth/authorize?client_id=123&request_type=code&scope=encodedscope
@@ -145,6 +153,6 @@ We'll verify that the user belongs to the required org, and is an admin. Then, w
 
 Note that the access token currently has no permissions, and may be discarded, since the goal of this exchange is purely to verify the user's account and organization membership on Fly.io.
 
-# Deploying your service on Fly.io
+## Deploying your service on Fly.io
 
 Contact us at extensions@fly.io about deploying your service here.
