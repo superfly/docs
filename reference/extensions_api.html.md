@@ -125,9 +125,17 @@ We want to get users into your platform with as little friction as possible, dir
 
 `flyctl ext logjam dashboard -a myapp`
 
-This command will send a `POST` request to `{base_url}/sso?organization_id=123&extension_id=123`.
+This command should ultimately get the customer logged in to your UI as the organizational user you provisioned, and redirected to the target extension screen.
 
-If the user is already logged in, you should redirect them to the extension in your UI. If not, you should start an OAuth authorization request to Fly.io:
+This command will send a `POST` request to `{base_url}/extensions/{extension_id}/sso`
+with the following params:
+
+```
+organization_id=123
+extension_id=123
+```
+
+If the user is already logged in, you should redirect them to the target extension in your UI. If not, you should start an OAuth authorization request to Fly.io:
 
 ```
 https://fly.io/oauth/authorize?client_id=123&request_type=code&scope=encodedscope
