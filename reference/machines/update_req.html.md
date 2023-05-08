@@ -1,7 +1,7 @@
 ```
 curl -i -X POST \\
     -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY\_API\_PROTOCOL}://${FLY\_API\_HOSTNAME}/v1/apps/user-functions/machines/73d8d46dbee589" \\
+    "${FLY\_API\_HOSTNAME}/v1/apps/user-functions/machines/73d8d46dbee589" \\
   -d '{
       "config": {
         "image": "flyio/fastify-functions",
