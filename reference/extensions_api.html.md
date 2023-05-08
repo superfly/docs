@@ -94,6 +94,8 @@ POST https://logjam.io/flyio/extensions
 
 **Parameters**
 
+These parameters are sent with every provisioning request.
+
 | Name | Type | Description | Example |
 | --- | --- | --- | --- |
 | **name** | string | Name of the extension, unique across the Fly.io platform | `collider-prod` |
@@ -108,6 +110,10 @@ POST https://logjam.io/flyio/extensions
 
 These parameters would only be sent for extensions that are region-aware or that deploy on Fly.io.
 
+These parameters are sent with every provisioning request.
+
+| Name | Type | Description | Example |
+| --- | --- | --- | --- |
 | **primary_region** | string | The three-letter, primary Fly.io region where the target app intends to write from | `mad` |
 | **read_regions** | array | An array of Fly.io region codes where read replicas should be provisioned | `["mad", "ord"]` |
 | **ip_address** | string | An IPv6 address on the customer network assigned to this extension | `fdaa:0:47fb:0:1::1d` |
