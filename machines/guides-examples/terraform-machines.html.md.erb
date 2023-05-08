@@ -80,13 +80,13 @@ resource "fly_app" "exampleApp" {
 }
 
 resource "fly_ip" "exampleIp" {
-  app        = "flyiac" #Replace this with your own app name
+  app        = fly_app.exampleApp.name
   type       = "v4"
   depends_on = [fly_app.exampleApp]
 }
 
 resource "fly_ip" "exampleIpv6" {
-  app        = "flyiac" #Replace this with your own app name
+  app        = fly_app.exampleApp.name
   type       = "v6"
   depends_on = [fly_app.exampleApp]
 }
@@ -113,7 +113,7 @@ This example creates machines running in `ewr` (Secaucus, NJ) and `lax` (Los Ang
 ```terraform
 resource "fly_machine" "exampleMachine" {
   for_each = toset(["ewr", "lax"])
-  app    = "flyiac" #Replace this with your own app name
+  app    = fly_app.exampleApp.name
   region = each.value
   name   = "flyiac-${each.value}"
   image  = "flyio/iac-tutorial:latest"
