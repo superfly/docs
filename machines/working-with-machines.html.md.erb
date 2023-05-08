@@ -19,7 +19,7 @@ This guide assumes that you have `flyctl` and `curl` installed, and have authent
 
 The easiest (and recommended) way to connect to the machines api is to use `api.machines.dev`, an easy to use and more performant alternative to doing all the wireguard shenanigans.
 
-Simply skip down to [setting up the environment](#setting-up-the-environment), and make sure to set `$FLY_API_HOSTNAME` to `api.machines.dev`
+Simply skip down to [setting up the environment](#setting-up-the-environment), and make sure to set `$FLY_API_HOSTNAME` to `api.machines.dev`, and `$FLY_API_PROTOCOL` to `https`.
 
 ### Connecting via WireGuard
 
@@ -28,6 +28,8 @@ This method requires more setup but gives you direct access to machines over the
 First, follow the [instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly network. We recommend WireGuard because you can directly test your machines from your local machine.
 
 Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
+
+The internal API is only available via `http` (not `https`), so you will need to set `FLY_API_PROTOCOL` to `http` (instead of the default `https`) for the commands below.
 
 ### Connecting via `flyctl proxy`
 
@@ -47,12 +49,12 @@ If you successfully reach the API, it should respond with a `404 page not found`
 
 ### Setting up the environment
 
-If you are using a Wireguard VPN or a `flyctl` proxy,
-set these environment variables to make the following commands easier to use.
+Set these environment variables to make the following commands easier to use.
 
 ```bash
 $ export FLY_API_HOSTNAME="api.machines.dev" # set to _api.internal:4280 when using Wireguard or `127.0.0.1:4280` when using 'flyctl proxy'
 $ export FLY_API_TOKEN=$(fly auth token)
+$ export FLY_API_PROTOCOL=https # set to http if you are using Wireguard or 'flyctl proxy'
 ```
 
 For local development, you can see the token used by `flyctl` with `flyctl auth token`. You can also create a new auth token in the [personal access token section of the fly.io dashboard](https://fly.io/user/personal_access_tokens).
