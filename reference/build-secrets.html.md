@@ -25,7 +25,7 @@ RUN --mount=type=secret,id=MY_SUPER_SECRET \
     && more_commands_maybe
 ```
 
-This creates a new file when running `docker build`. Secrets are stored in athe `/run/secrets` directory. The file name is the `id` you passed when mounting the secret. The content of that file contains the value of the secret.
+This creates a new file when running `docker build`. Secrets are stored in the `/run/secrets` directory. The file name is the `id` you passed when mounting the secret. The content of that file contains the value of the secret.
 
 The `--mount` directive is not a shell command, so there's no need to add `&&` after it as you commonly see when chaining commands.
 
