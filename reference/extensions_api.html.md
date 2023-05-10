@@ -130,8 +130,7 @@ Your response should contain, at least, a list of key/value pairs of secrets tha
 
 ### Fetching extension data
 
-Im some cases, we'll want to be able to fetch data about your extension. For example, when displaying credentials to users directly via the CLI, we won't store these
-credentials in our database. We'll pass this request directly to your API.
+Im some cases, we'll want to be able to fetch data about your extension. For example, when displaying credentials to users directly via the CLI, we won't store these credentials in our database. We'll pass this request directly to your API.
 
 This endpoint should be discussed on a case-by-base basis.
 
@@ -142,8 +141,7 @@ Customers should be able to update some extensions directly from `flyctl`. For e
 Your API should support updates using the same parameters as the `POST` request above at:
 
 ```
-PATCH {base_url]/extensions/{extension_id}
-
+PATCH {base_url}/extensions/{extension_id}
 ```
 
 ### Single Sign On Flow
@@ -152,10 +150,9 @@ We want to get users into your platform with as little friction as possible, dir
 
 `flyctl ext logjam dashboard -a myapp`
 
-This command should ultimately get the customer logged in to your UI redirected to the target resource.
+This command should log the customer in to your UI, on the extension detail screen.
 
-This command will send a `POST` request to `{base_url}/extensions/{extension_id}/sso`
-with the following params:
+First we'll send a `POST` request to `{base_url}/extensions/{extension_id}/sso` with the following params:
 
 ```
 organization_id=123
@@ -169,22 +166,62 @@ user_email=4km03qm5@customer.fly.io
 If the user is already logged in as the correct user, you should redirect them to the target extension in your UI. If not, you should start an OAuth authorization request to Fly.io:
 
 ```
-GET https://fly.io/oauth/authorize?client_id=123&response_type=code&redirect_uri=https://logjam.io/flyio/callback&scope=%7B%22organization_id%22:%22abc%22,%22permission%22:%22admin%22%7D
-
+GET https://fly.io/oauth/authorize?client_id=123&response_type=code&redirect_uri=https://logjam.io/flyio/callback&scope=read
 ```
 
-`scope` is URL-encoded JSON:
+You should pass the organization ID and desired permissions scope. Currently, only the 'read' scope is supported.
+
+Once we authenticate the user, we'll redirect to your OAUth `redirect_uri` with an authorization code you may exchange for an access token via a POST request.
 
 ```
-{organization_id: "abc", permission: "admin"}
+POST https://fly.io/oauth/token
+
+client_id=logjam
+client_secret=123
+grant_type=authorization_code
+code=myauthcode
+redirect_uri=https://logjam.io/flyio/callback
 ```
 
-You should pass the organization ID and desired permission level, `admin` or `member`. `admin`, the default, means that only Fly.io organization admins can authenticate to your platform.
+The JSON response:
 
-Once we authenticate the user and verify this scope, we'll redirect to your OAUth `redirect_uri` with an authorization code you may exchange for an access token.
+```
+{
+  "access_token"=>"fo1__034hk03k4mhjea0l4224hk",
+  "token_type"=>"Bearer",
+  "expires_in"=>7200,
+  "refresh_token"=>"j-elry40hpy05m2qbaptr",
+  "scope"=>"read",
+  "created_at"=>1683733170
+}
+ ```
 
-Note that the access token currently has no permissions, and may be discarded, since the goal of this exchange is purely to verify the user's account and organization membership on Fly.io.
+You may use this access token to learn more information about the user, such as which Fly organizations they belong to. Use this information to decide whether the user has access to the target resource or not.
+
+```
+POST https://fly.io/oauth/token
+
+client_id=logjam
+client_secret=123
+grant_type=authorization_code
+code=myauthcode
+redirect_uri=https://logjam.io/flyio/callback
+```
+
+The JSON response:
+
+```
+{
+  "resource_owner_id"=>"rzjkdw3g0ypx061q",
+  "user_id"=>"rzjkdw3g0ypx061q",
+  "organization_ids"=>["zd3e5wvkjel6pgqw", "zgyep87w1m4q06d4"],
+  "scope"=>["read"],
+  "expires_in"=>7200,
+  "application"=>{"uid"=>"logjam"},
+  "created_at"=>1683740928
+}
+```
 
 ## Deploying your service on Fly.io
 
-Contact us at extensions@fly.io about deploying your service here.
+Contact us at [extensions@fly.io](mailto:extensions@fly.io) about deploying your service on the Fly.io platform.
