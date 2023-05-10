@@ -1,6 +1,6 @@
 ---
 title: App Connection Examples
-objective: 
+objective:
 layout: framework_docs
 titlecase: false
 order: 4
@@ -18,7 +18,7 @@ psql postgres://postgres:secret123@appname.internal:5432
 
 You can, of course, run psql from a shell on a Fly app as well (as long as that app has psql installed).
 
-## Connecting with Ruby 
+### Connecting with Ruby
 [docs](https://github.com/ged/ruby-pg)
 
 Ruby apps use the `pg` gem to connect to postgres.
@@ -37,7 +37,7 @@ conn.exec( "SELECT * FROM pg_stat_activity" ) do |result|
 end
 ```
 
-## Connecting with Rails 
+### Connecting with Rails
 [docs](https://guides.rubyonrails.org/configuring.html#configuring-a-database)
 
 Rails apps automatically connect to the database specified in the `DATABASE_URL` environment variable.
@@ -50,7 +50,7 @@ flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.intern
 or by attaching the Postgres database to your Fly app.
 
 
-### Connecting with Go 
+### Connecting with Go
 [docs](https://github.com/jackc/pgx/wiki/Getting-started-with-pgx-through-database-sql)
 
 `pgx` is the recommended driver for connecting to postgres. It supports the standard `database/sql` interface as well as directly exposing low level / high performance APIs.
@@ -91,7 +91,7 @@ func main() {
 }
 ```
 
-### Connecting with Node.js 
+### Connecting with Node.js
 [docs](https://node-postgres.com)
 
 You'll use the `pg` npm module to connect to Postgres from a Node.js app.
@@ -106,11 +106,11 @@ console.log(res.rows[0].message) // Hello world!
 await client.end()
 ```
 
-### Connecting with Prisma – Node.js 
+### Connecting with Prisma – Node.js
 [docs](https://www.prisma.io/)
 
 Prisma is an open-source object-relational mapper (ORM) for Node.js and works with both JavaScript and TypeScript. It consists of 3 components:
-- Prisma Client - a type-safe query builder 
+- Prisma Client - a type-safe query builder
 - Prisma Migrate - a data modeling and migration tool
 - Prisma Studio - a modern intuitive GUI for interacting with your database
 
@@ -169,7 +169,7 @@ model Post {
 }
 ```
 
-You can query your database using Prisma as follows: 
+You can query your database using Prisma as follows:
 ```typescript
 import { PrismaClient } from '@prisma/client'
 

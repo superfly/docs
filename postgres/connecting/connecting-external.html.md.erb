@@ -81,20 +81,18 @@ Deploy your cluster, using `--image` with the `image:tag` found in the previous 
 fly deploy . --app <pg-app-name> --image flyio/postgres:<major-version>
 ```
 
-As an example, if you are running Postgres 14.x you would specify `flyio/postgres:14` as your target image. 
+As an example, if you are running Postgres 14.x you would specify `flyio/postgres:14` as your target image.
 
-After the deployment completes, you can verify your `services` configuration by running the `fly info` command:
+After the deployment completes, you can verify your `services` configuration by running the `fly services list` command:
 
 ```cmd
-fly info
+fly services list
 ```
 ```output
-...
-
 Services
-PROTOCOL	PORTS                	FORCE HTTPS
-TCP     	5432 => 5432 [PG_TLS]	False
-...
+PROTOCOL        PORTS                   FORCE HTTPS
+TCP             5432 => 5432 [PG_TLS]   False
+TCP             5433 => 5433 [PG_TLS]   False
 ```
 
 You should then be able to access your Postgres cluster via psql like:
