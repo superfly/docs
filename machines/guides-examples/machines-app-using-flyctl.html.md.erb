@@ -13,13 +13,15 @@ We talk up the Machines API for running user code, for ephemeral jobs, or both. 
 
 flyctl provides commands for managing individual Machines from the CLI, on a level more granular than `fly deploy`ing an app.
 
-⚠️ **Stale doc!** This document illustrates some ways to work with Fly Machines individually using flyctl, and was written before [Fly Apps V2](/docs/reference/apps/#apps-v2) made it possible to manage Machines as a group, using a `fly.toml` config file and `fly deploy`. For most web apps, the [**Fly Apps docs**](/docs/apps/) are a better place to start!
+<section class="warning icon">
+# This Document is Stale!
+
+This document illustrates some ways to work with Fly Machines individually using flyctl, and was written before [Fly Apps V2](/docs/reference/apps/#apps-v2) made it possible to manage Machines as a group, using a `fly.toml` config file and `fly deploy`. For most web apps, the [Fly Apps docs](/docs/apps/) are a better place to start!
+</section>
 
 The [`fly machine` command docs](/docs/flyctl/machine/) are another good resource.
 
 ## Elements of a Machines Web App
-
-
 
 To get a single Machine running a stateless app, and serving it to the world at `<app-name>.fly.dev`, you need to assemble the following pieces:
 
