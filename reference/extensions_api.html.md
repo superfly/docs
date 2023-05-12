@@ -79,9 +79,10 @@ POST https://logjam.io/flyio/extensions
 {
   name: "test",
   id: "test",
-  organization_id: "highflyers",
+  organization_id: "04La2mblTaz",
   organization_name: "High Flyers",
-  email: "v9WvKokd@customer.fly.io",
+  organization_email: "04La2mblTaz@customer.fly.io",
+  user_email: "v9WvKokd@customer.fly.io",
   user_id: "NeBO2G0l0yJ6",
   primary_region: "mad",
   ip_address: "fdaa:0:47fb:0:1::1d",
