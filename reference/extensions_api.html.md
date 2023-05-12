@@ -17,14 +17,12 @@ We'll forward this request on to you, along with details about the provisioning 
 
 ## Provisioning Accounts and Organizations
 
-We'd like customers to have full access to your platform features through their Fly.io-provisioned account. And you should be able to communicate with customers via email.
-
-To that end, all provisioning requests are acccompanied by:
+We'd like customers to have full access to your platform features through their Fly.io-provisioned account. And you should be able to communicate with customers via email. To that end, all provisioning requests are acccompanied by:
 
 * A unique user ID and working email alias
 * A unique organization ID and working email alias that emails org admins
 
-Our SSO flow also allows you to fetch user and organization data.
+Our SSO flow allows you to fetch user and organization data, to determine whether the user has access to a given resource.
 
 You should provision, at least:
 
@@ -81,9 +79,10 @@ POST https://logjam.io/flyio/extensions
 {
   name: "test",
   id: "test",
-  organization_id: "highflyers",
+  organization_id: "04La2mblTaz",
   organization_name: "High Flyers",
-  email: "v9WvKokd@customer.fly.io",
+  organization_email: "04La2mblTaz@customer.fly.io",
+  user_email: "v9WvKokd@customer.fly.io",
   user_id: "NeBO2G0l0yJ6",
   primary_region: "mad",
   ip_address: "fdaa:0:47fb:0:1::1d",
@@ -152,18 +151,11 @@ We want to get users into your platform with as little friction as possible, dir
 
 This command should log the customer in to your UI, on the extension detail screen.
 
-First we'll send a `POST` request to `{base_url}/extensions/{extension_id}/sso` with the following params:
+The CLI will open the user's browser and send a `GET` request.
 
-```
-organization_id=123
-organization_email=4km03qm5@customer.fly.io
-extension_id=123
-user_id=123
-user_email=4km03qm5@customer.fly.io
+`GET {base_url}/extensions/{extension_id}/sso`
 
-```
-
-If the user is already logged in as the correct user, you should redirect them to the target extension in your UI. If not, you should start an OAuth authorization request to Fly.io:
+If the user is already logged in, you should redirect them to the extension detail screen. If not, you should start an OAuth authorization request to Fly.io, by redirecting to:
 
 ```
 GET https://fly.io/oauth/authorize?client_id=123&response_type=code&redirect_uri=https://logjam.io/flyio/callback&scope=read
@@ -196,7 +188,7 @@ The JSON response:
 }
  ```
 
-You may use this access token to learn more information about the user, such as which Fly organizations they belong to. Use this information to decide whether the user has access to the target resource or not.
+Finally, use this access token to issue an inline request to our [token introspection endpoint](https://www.oauth.com/oauth2-servers/token-introspection-endpoint/). The response gives you enough information, for example, to authorize the user if they belong the correct parent organization in your system, or to provision the user and add them to these organizations.
 
 ```
 POST https://fly.io/oauth/token
