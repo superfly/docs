@@ -1,0 +1,46 @@
+---
+title: Scale to zero for Development projects
+objective: Learn about the scale to zero after one hour feature, and how to remove it, for your Postgres Development project.
+layout: framework_docs
+order: 70
+---
+
+If you select the Development configuration when you create your Postgres cluster, then you also get the option to have your database scale down to zero after one hour. 
+
+After one hour, if there are no open connections, then the databse shuts down and waits until something tries to connect again. If there are open connections, then the process repeats one hour later.
+
+<div class="callout">
+You need to configure your app to scale to zero as well, otherwise your Postgres database will never scale down. For Phoenix apps, for example, you can [shut down the app when it's idle](https://fly.io/phoenix-files/shut-down-idle-phoenix-app/). Learn more about the [scale to zero setting](/docs/postgres/getting-started/scale-to-zero/), including how to turn it off.
+</div>
+
+The scale to zero feature is only available for new Postres clusters that use the Development configuration. The one hour timeout is not configurable.
+
+## Turn off the scale to zero setting
+
+The scale to zero feature is controlled by the `FLY_SCALE_TO_ZERO` environment variable.
+
+You can turn off the scale to zero feature by removing `FLY_SCALE_TO_ZERO` environment variable from the `fly.toml` file.
+
+First, you'll need to get and save the `fly.toml` file locally, since the the automated Postgres creation process doesn't generate a `fly.toml` file in the working directory.
+
+```
+fly config save --app <app-name>
+```
+
+Open the `fly.toml` file and remove the following line from the `[env]` section:
+
+```
+  FLY_SCALE_TO_ZERO = "1h"
+```
+
+Verify what image you’re running:
+
+```
+fly image show --app <app-name>
+```
+
+Finally, deploy your changes. For example:
+
+```
+fly deploy . --image flyio/postgres-flex:15.2
+```
