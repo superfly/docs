@@ -173,7 +173,7 @@ vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            
 
 ## Add a volume to a Machine clone
 
-You can add a volume to an existing Machine by cloning a Machine with no volume and attaching a new volume to it. When you clone a Machine with a volume already attached, you'll also get a new Machine with a new, empty, volume attached.
+If you're not using the `fly.toml` with `fly deploy` workflow for your Machines, you can add a volume by cloning a Machine with no volume and attaching a new volume to it. You can also clone a Machine with a volume already attached, which gives you a new Machine with a new, empty, volume attached.
 
 ### Create the volume
 
