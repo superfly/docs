@@ -10,15 +10,15 @@ order: 30
 
 Volumes are local persistent storage for [Fly Machines](/docs/machines/). Volumes allow an app to save its state&mdash;to preserve configuration, session or user data&mdash;and then be restarted with that information in place. You can access and write to a volume on a Machine just like a regular directory.
 
-**The first rule of Fly Volumes is: Always run at least two volumes per application.** The way to do this is to run at least two Machines per app. Also note that volumes don't sync up by themselves. Your app needs to take care of that. Refer to [Fly Volumes](/docs/reference/volumes/) details about how volumes are implemented.
+**The first rule of Fly Volumes is: Always run at least two volumes per application.** The way to do this is to run at least two Machines per app. Also note that volumes don't sync up by themselves; your app needs to take care of that. Refer to [Fly Volumes](/docs/reference/volumes/) for details about how volumes work.
 
 ## Launch a new app with a Fly Volume
 
-Follow these steps to create a new app, add the volume configuration to `fly.toml`, and then deploy the app. 
+Launch a new app with one Machine and an attached volume, and then clone the Machine to scale out.
 
 ### Launch the app, but don't deploy it yet
 
-The app has to exist for the volume to be created. The volume has to exist before you can mount it to a Machine. The first deployment of your app will create a Machine. So the shortest path to a Machine with a mounted volume begins by launching the app, and saying `N` to "deploy now?":
+The app has to exist for the volume to be created. The volume has to exist before you can mount it to a Machine. The shortest path to a Machine with a mounted volume begins by launching the app, and saying `N` to "deploy now?":
 
 ```cmd
 fly launch 
@@ -33,7 +33,7 @@ Your app is ready! Deploy with `flyctl deploy`
 
 ### Configure the app to mount the new volume
 
-Add a `[mounts]` section in the app's `fly.toml`. The `fly deploy` command you'll run in the next step will create the volume during the deploy process. For example, the following configures the app to expose data from a volume named `myapp_data` under the `/data` directory of the application.
+Add a `[mounts]` section in the app's `fly.toml`. The `fly deploy` command you'll run in the next step will create the Machine and the volume during the deploy process. The following configuration exposes data from a volume named `myapp_data` under the `/data` directory of the application.
 
 ```toml
 [mounts]
@@ -143,7 +143,7 @@ fly volume myapp_data -r lhr
 ```
 
 <div class="callout">
-You need to create as many volumes as you have Machines per process in your app. Newer apps deployed using the `fly launch` command might have two Machines in the `app` process by default.
+You need to create as many volumes as you have Machines per process in your app. New apps deployed using the `fly launch` command might have two Machines in the `app` process by default.
 </div>
 
 If you configure [mounts] in `fly.toml` and then run `fly deploy` without first creating enough volumes, then you'll get an error similar to this one:
@@ -173,7 +173,7 @@ vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            
 
 ## Add a volume to a Machine clone
 
-If you're not using the `fly.toml` with `fly deploy` workflow for your Machines, you can add a volume by cloning a Machine with no volume and attaching a new volume to it. You can also clone a Machine with a volume already attached, which gives you a new Machine with a new, empty, volume attached.
+If you're not using the `fly.toml` with `fly deploy` workflow for some Machines, you can still add a volume by cloning a Machine with no volume and attaching a new volume to it. You can also clone a Machine with a volume already attached, which gives you a new Machine with a new, empty, volume attached.
 
 ### Create the volume
 
