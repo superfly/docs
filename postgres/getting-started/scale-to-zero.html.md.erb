@@ -13,7 +13,7 @@ After one hour, if there are no open connections, then the database shuts down a
 You need to configure your app to scale to zero as well, otherwise your Postgres database will never scale down. For Phoenix apps, for example, you can [shut down the app when it's idle](https://fly.io/phoenix-files/shut-down-idle-phoenix-app/). Learn more about the [scale to zero setting](/docs/postgres/getting-started/scale-to-zero/), including how to turn it off.
 </div>
 
-The scale to zero feature is only available for new Postres clusters that use the Development configuration. The one hour timeout is not configurable.
+The scale to zero feature is only available for new Postgres clusters that use the Development configuration. The one hour timeout is not configurable.
 
 ## Turn off the scale to zero feature
 
