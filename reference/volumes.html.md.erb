@@ -7,22 +7,22 @@ nav: firecracker
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-Apps can store only ephemeral data on the root file systems of their Machines, because a Machine's file system is rebuilt from scratch each time the app is deployed or the Machine is restarted. Volumes are local persistent storage for [Fly Machines](/docs/machines/). Volumes allow an app to save its state&mdash;to preserve configuration, session or user data&mdash;and then be restarted with that information in place.
+Apps can store only ephemeral data on the root file systems of their Machines, because a Machine's file system is rebuilt from scratch each time you deploy your app, or the Machine is restarted. Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can use volumes to store your database files or backups, to save your app's state, configuration, and session or user data, or for any information that needs to persist after deploy or restart.
 
 A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware. Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
 
-If you already know you want to use volumes, learn how to [add volume storage for your app](/docs/apps/volume-storage/), step-by-step.
+If you already know how volumes work and you're ready to get started, then learn how to [add volume storage for your app](/docs/apps/volume-storage/), step-by-step.
 
 ## Volume Considerations
 
-* **A volume belongs to one app:**: Every Fly Volume belongs to a [Fly App](/docs/reference/apps/) and you can't share a volume between apps.
+* **A volume belongs to one app**: Every Fly Volume belongs to a [Fly App](/docs/reference/apps/) and you can't share a volume between apps.
 * **A volume exists in one region**: A volume exists in only one region. Only an instance of the app running in the same region can access it.
-* **A volume can attach to one machine**: You need to run as many volumes as there are Machines. There's a one-to-one mapping between Machines and volumes. A Machine can only mount one volume at a time and a volume can be attached to only one Machine.
+* **A volume can attach to one Machine**: You need to run as many volumes as there are Machines. There's a one-to-one mapping between Machines and volumes. A Machine can only mount one volume at a time and a volume can be attached to only one Machine.
 * **Develop your app to handle replication**: Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app, so if you need the volumes to sync up, then your app has to make that happen.
-* **Use availability features**: If your app needs a volume to function, and the NVMe drive hosting your volume fails, then that instance of your app goes down. There's no way around that. There are features you can use to mitigate hardware failure, like 
+* **Create high availability in your primary region**: If your app needs a volume to function, and the NVMe drive hosting your volume fails, then that instance of your app goes down. There's no way around that. You can run multiple Machines with volumes in your app's primary region to mitigate hardware failures.
 * **Create and store backups**: If you only have a single copy of your data on a single volume, and that drive fails, then the data is lost. Fly.io takes daily snapshots and retains them for 5 days, but the snapshots shouldn't be your primary backup method.
 
-If volumes won't work for your use case, then you can explore other options for data storage in [Databases & Storage](/docs/database-storage-guides/).
+If volumes just don't work for your use case, then you can explore other options for data storage in [Databases & Storage](/docs/database-storage-guides/).
 
 ## Volumes and Regions
 
@@ -30,13 +30,13 @@ You can run multiple instances of an app in one region by creating volumes with 
 
 ## Volumes and High availability
 
-<div class="callout">
+<div class="warning">
 **Always run at least two volumes per app.** We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each machine should have an attached volume. If you only have one Machine and volume, you'll have downtime if there's a host or network failure, and whenever you deploy your app.
 </div>
 
 There are a few cases where you can run a single Machine with an attached volume. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not yet worried about downtime.
 
-Many developers use volumes for databases, so when you create a volume, each of your app's volumes is placed in a separate hardware zone by default. When each volume is in a separate hardware zone, the number of volumes your app can have in a region is limited. You can configure this setting with the `--require-unique-zone` option when you run [`fly volumes create`](/docs/flyctl/volumes-create/).
+Many developers use volumes for databases, so each volume you create for your app is placed in a separate hardware zone by default. Note that having each volume in a separate hardware zone limits the number of volumes your app can have in a region. You can configure this setting with the `--require-unique-zone` option when you run [`fly volumes create`](/docs/flyctl/volumes-create/).
 
 ## Volumes and Fly Apps
 
@@ -44,17 +44,9 @@ Learn how to [add volume storage for your app](/docs/apps/volume-storage/), step
 
 Learn about the [`mounts` section](/docs/reference/configuration/#the-mounts-section) for volumes in the `fly.toml` app configuration file.
 
-<!-- 
-## Fly Volumes and flyctl
-
-Manage volumes using the [`fly volumes`](/docs/flyctl/volumes/) command.
-
-<div class="callout">`fly volumes` is aliased to `fly volume` and `fly vol` for convenience.</div>
--->
-
 ## Working with volumes using flyctl
 
-This section is a reference for working with volumes using the [`fly volumes`](/docs/flyctl/volumes/) command. Refer to [Add Volume Storage](/docs/apps/volume-storage/) to add a volume to an existing app or launch a new app with a volume.
+This section is a reference for working with volumes using the [`fly volumes`](/docs/flyctl/volumes/) command. To add a volume to an existing app or launch a new app with a volume refer to [Add Volume Storage](/docs/apps/volume-storage/).
 
 <div class="callout">`fly volumes` is aliased to `fly volume` and `fly vol` for convenience.</div>
 
@@ -116,7 +108,7 @@ Created at: 04 Mar 23 03:32 UTC
 
 ### Access a volume
 
-You can access and write to a volume on a Machine just like a regular directory. For Fly Apps, the `destination` under `[mounts]` in `fly.toml` is the path for the mounted volume. When you [clone a Machine and add a volume](/docs/apps/volume-storage/#add-a-volume-to-a-machine-clone), you specify the mount path in the `fly machine clone` command.
+You can access and write to a volume on a Machine just like a regular directory. For Fly Apps, the `destination` under `[mounts]` in `fly.toml` is the path for the mounted volumes. For Machines that are managed separately from the Fly App, you specify the mount path in the `fly machine clone` command, when you [clone a Machine and add a volume](/docs/apps/volume-storage/#add-a-volume-to-a-machine-clone).
 
 ### Extend a Volume
 
