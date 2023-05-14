@@ -97,6 +97,101 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
+
+### Example: Ping an app via an `.internal` addresss
+
+A quick to tutorial to show private networks in action. If you've arrived on private networking, we'll assume you've at least installed the CLI and are at least a little familiar with deploying apps on Fly.
+
+For this example we'll use the [hello-fly](https://github.com/fly-apps/hello-fly) repository.
+
+```cmd
+# clone the repository
+git clone https://github.com/fly-apps/hello-fly
+
+cd hello-fly
+
+# create an app on fly
+fly launch
+
+# output omitted...
+
+? Would you like to deploy now? (y/N)
+N
+
+# deploying now is fine, but we'll want to modify
+# the fly.toml and redeploy again
+```
+
+#### Expose an `internal_port` in the fly.toml
+
+In order for internal requests to reach your app, an `internal_port` will need to be exposed in the app's fly.toml that was generated during launch. Here's what the _fly.toml_ might look like exposing port 8080:
+
+```toml
+app = "my-app-name"
+primary_region = "nrt"
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8080 # <-- this is the important line
+  processes = ["app"]
+
+# remaining contents omitted
+```
+
+#### Install dig and/or curl in your Dockerfile
+
+To test the internal network we need tool for that. By default dig and curl won't be installed on a machine. Just add `dnsutils` (for dig) and `curl` to your Dockerfile so you can access them later. Here's the line to add to your the Dockerfile:
+
+```docker
+RUN apt-get update -y && \
+  apt-get install -y curl dnsutils \
+  && apt-get clean && rm -f /var/lib/apt/lists/*_*
+```
+
+#### Deploy the app
+
+If you haven't already, run `fly deploy` and make sure the app is running. If you're using the [hello-fly](https://github.com/fly-apps/hello-fly) example then `service.port`'s were set in your fly.toml. You can  visit https://[[ your app name]].fly.dev and see a "Welcome to Fly" message.
+
+#### Ping an internal address
+
+Now it's time for the cool stuff.
+
+1. SSH into the app `fly ssh console -a my-app-name`
+2. Curl the app through the internal network:
+
+```cmd
+curl my-app-name.internal:8080
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fly.io</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Fly.io (nrt)</h1>
+    <p>Welcome to Fly.io (nrt)</p>
+  </body>
+</html>
+
+# ↑↑↑ the same output as `curl https://my-app-name.fly.dev`
+```
+
+Nice! We've hit our app via the internal network.
+
+```cmd
+# to see a list of apps on your private network:
+dig -t txt _apps.internal +short
+```
+
+#### Tips
+
+- If your app is deployed to multiple regions, you can also hit a different instance of the app based on region using curl [[region]].[[your app name]].internal:8080
+- In the example we pinged the same app we deployed, but try hitting another app in your network from within ssh console
+- Heads up: prefixing an internal network url request with http:// is fine, but obviously there aren't ssl certs issues for an private internal network so https:// won't work
+
+
 ## Flycast - Private Load Balancing
 
 Flycast offers the same [geographically-aware load balancing](/docs/reference/load-balancing/) as the public Fly proxy while restricting traffic to private networks.
