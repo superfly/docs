@@ -98,7 +98,7 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
 
-### Example: Ping an app via an `.internal` addresss
+### Example: Ping an app via an `.internal` address
 
 A quick to tutorial to show private networks in action. If you've arrived on private networking, we'll assume you've at least installed the CLI and are at least a little familiar with deploying apps on Fly.
 
