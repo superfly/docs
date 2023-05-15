@@ -7,11 +7,11 @@ nav: firecracker
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-Apps can store only ephemeral data on the root file systems of their Machines, because a Machine's file system is rebuilt from scratch each time you deploy your app, or the Machine is restarted. Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can use volumes to store your database files or backups, to save your app's state, configuration, and session or user data, or for any information that needs to persist after deploy or restart.
+Apps can store only ephemeral data on the root file systems of their Machines, because a Machine's file system is rebuilt from scratch each time you deploy your app, or the Machine is restarted. Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can use volumes to store your database files, to save your app's state, such as configuration and session or user data, or for any information that needs to persist after deploy or restart.
 
 A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware. Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
 
-If you already know how volumes work and you're ready to get started, then learn how to [add volume storage for your app](/docs/apps/volume-storage/), step-by-step.
+If you already know how volumes work, and you're ready to get started, then learn how to [add volume storage for your app](/docs/apps/volume-storage/), step-by-step.
 
 ## Volume Considerations
 
@@ -22,7 +22,7 @@ If you already know how volumes work and you're ready to get started, then learn
 * **Create high availability in your primary region**: If your app needs a volume to function, and the NVMe drive hosting your volume fails, then that instance of your app goes down. There's no way around that. You can run multiple Machines with volumes in your app's primary region to mitigate hardware failures.
 * **Create and store backups**: If you only have a single copy of your data on a single volume, and that drive fails, then the data is lost. Fly.io takes daily snapshots and retains them for 5 days, but the snapshots shouldn't be your primary backup method.
 
-If volumes just don't work for your use case, then you can explore other options for data storage in [Databases & Storage](/docs/database-storage-guides/).
+If volumes don't work for your use case, then you can explore other options for data storage in [Databases & Storage](/docs/database-storage-guides/).
 
 ## Volumes and Regions
 
@@ -48,7 +48,7 @@ Learn about the [`mounts` section](/docs/reference/configuration/#the-mounts-sec
 
 This section is a reference for working with volumes using the [`fly volumes`](/docs/flyctl/volumes/) command. To add a volume to an existing app or launch a new app with a volume refer to [Add Volume Storage](/docs/apps/volume-storage/).
 
-<div class="callout">`fly volumes` is aliased to `fly volume` and `fly vol` for convenience.</div>
+<div class="callout">`fly volumes` is aliased to `fly volume` and `fly vol`.</div>
 
 ### Create a Volume
 
