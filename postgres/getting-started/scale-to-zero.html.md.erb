@@ -5,12 +5,12 @@ layout: framework_docs
 order: 70
 ---
 
-If you select the Development configuration when you create your Postgres cluster, then you also get the option to have your database scale down to zero after one hour. 
+If you select the Development configuration when you [create your Fly Postgres app](/docs/postgres/getting-started/create-pg-cluster/), then you also get the option to have your database scale down to zero after one hour. 
 
-After one hour, if there are no open connections, then the database shuts down and waits until something tries to connect again. If there are open connections, then the process repeats one hour later.
+After one hour, if there are no open connections, then the database shuts down and waits to restart until something tries to connect again. If there are open connections, then the database stays running and checks for open connections again in one hour.
 
 <div class="callout">
-You need to configure your app to scale to zero as well, otherwise your Postgres database will never scale down. For Phoenix apps, for example, you can [shut down the app when it's idle](https://fly.io/phoenix-files/shut-down-idle-phoenix-app/). Learn more about the [scale to zero setting](/docs/postgres/getting-started/scale-to-zero/), including how to turn it off.
+You need to configure your app to scale to zero as well, otherwise your Postgres database will never scale down. Learn more about making apps exit when idle(/docs/apps/autostart-stop/#stop-a-machine-by-terminating-its-main-process).
 </div>
 
 The scale to zero feature is only available for new Postgres clusters that use the Development configuration. The one hour timeout is not configurable.
@@ -18,8 +18,6 @@ The scale to zero feature is only available for new Postgres clusters that use t
 ## Turn off the scale to zero feature
 
 The scale to zero feature is controlled by the `FLY_SCALE_TO_ZERO` environment variable.
-
-You can turn off the scale to zero feature by removing `FLY_SCALE_TO_ZERO` environment variable from the `fly.toml` file.
 
 First, you'll need to get and save the `fly.toml` file locally, since the the automated Postgres creation process doesn't generate a `fly.toml` file in the working directory.
 
