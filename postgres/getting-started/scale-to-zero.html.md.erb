@@ -10,7 +10,7 @@ If you select the Development configuration when you [create your Fly Postgres a
 After one hour, if there are no open connections, then the database shuts down and waits to restart until something tries to connect again. If there are open connections, then the database stays running and checks for open connections again in one hour.
 
 <div class="callout">
-You need to configure your app to scale to zero as well, otherwise your Postgres database will never scale down. Learn more about making apps exit when idle(/docs/apps/autostart-stop/#stop-a-machine-by-terminating-its-main-process).
+You probably need to configure your app to scale to zero as well, otherwise your Postgres database will never have zero connection and will never scale down. You can learn more about making apps exit when idle(/docs/apps/autostart-stop/#stop-a-machine-by-terminating-its-main-process).
 </div>
 
 The scale to zero feature is only available for new Postgres clusters that use the Development configuration. The one hour timeout is not configurable.
@@ -19,7 +19,7 @@ The scale to zero feature is only available for new Postgres clusters that use t
 
 The scale to zero feature is controlled by the `FLY_SCALE_TO_ZERO` environment variable.
 
-First, you'll need to get and save the `fly.toml` file locally, since the the automated Postgres creation process doesn't generate a `fly.toml` file in the working directory.
+To turn off scale to zero, you first need to get and save the `fly.toml` file locally, since the the automated Postgres creation process doesn't generate a `fly.toml` file in the working directory.
 
 ```
 fly config save --app <app-name>
