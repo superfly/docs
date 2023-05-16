@@ -111,7 +111,7 @@ Use this feature under the following circumstances:
 The general flow for setting this up is:
 
 1. Allocate a private IPv6 address on one of your Fly organization networks
-2. Expose services in your app's fly.toml `[services]` block
+2. Expose services in your app's `fly.toml` `[services]` or `[http_service]` block; **do not use `force_https` as Flycast is HTTP-only** 
 3. Deploy your app
 4. Access the services on the private IP from the target organization network
 
