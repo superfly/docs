@@ -18,8 +18,6 @@ flyctl launch [flags]
       --dockerfile string             Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
       --dockerignore-from-gitignore   If a .dockerignore does not exist, create one from .gitignore files
   -e, --env strings                   Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
-      --force-machines                Use the Apps v2 platform built with Machines
-      --force-nomad                   Use the Apps v1 platform built with Nomad
       --generate-name                 Always generate a name for the app, without prompting
   -h, --help                          help for launch
       --ignorefile string             Path to a Docker ignore file. Defaults to the .dockerignore file in the working directory.

@@ -21,8 +21,6 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
       --detach                 Return immediately instead of monitoring deployment progress
       --dockerfile string      Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
   -e, --env strings            Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
-      --force-machines         Use the Apps v2 platform built with Machines
-      --force-nomad            Use the Apps v1 platform built with Nomad
   -h, --help                   help for deploy
       --ignorefile string      Path to a Docker ignore file. Defaults to the .dockerignore file in the working directory.
   -i, --image string           The Docker image to deploy
