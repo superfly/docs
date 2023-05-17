@@ -34,6 +34,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
   -r, --region string          The target region (see 'flyctl platform regions')
       --remote-only            Perform builds on a remote builder instance instead of using the local docker daemon
       --strategy string        The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. Default is canary, or rolling when max-per-region is set.
+      --vm-size                The VM size to use when deploying for the first time. See "fly platform vm-sizes" for valid values
       --wait-timeout int       Seconds to wait for individual machines to transition states and become healthy. (default 120)
 ~~~
 
