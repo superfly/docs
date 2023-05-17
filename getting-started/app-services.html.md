@@ -17,8 +17,8 @@ Here's a cheat sheet for configuring apps to be reachable by each of these means
 ||Fly Proxy|Internal (6PN)|
 |---|---|---|
 |Bind to | `0.0.0.0:<port>` ([<u>not UDP</u>](#udp-is-special)) | `fly-local-6pn:<port>`|
-|Configure services? | YES | NO |
-|App needs an IP? | YES ([<u>generally</u>](#a-note-on-fly-app-ips))| NO |
+|Needs `services` or<br>`http_service` in config? | YES | NO |
+|App needs an IP? | YES ([<u>not for Fly-Replay</u>](#a-note-on-fly-app-ips-and-fly-replay-routing))| NO |
 
 There are some subtleties, which is why the rest of this document exists.
 
@@ -53,12 +53,12 @@ To have Fly Proxy route requests to an app from the public internet, provision a
 
 #### Private (Flycast) apps
 
-To have Fly Proxy load-balance among VMs on a non-public app, [allocate a _private_ (Flycast) IPv6 address](/docs/reference/private-networking/#assigning-a-flycast-address) using `fly ips allocate-v6 --private`, and **remove any public IPs from the app** using `fly ips release`. Flycast IPs can only be reached from within the private network they're allocated on, which must belong to the same Fly Organization as the Fly App it points to. 
+To have Fly Proxy load-balance among VMs on a non-public app, [allocate a _private_ (Flycast) IPv6 address](/docs/reference/private-networking/#assigning-a-flycast-address) using `fly ips allocate-v6 --private`, and **remove any public IPs from the app** using `fly ips release`. A Flycast IP can only be reached from within the private network it's allocated on, which must belong to the same Fly Organization as the Fly App it points to. 
 
 <section class="warning icon">
 If your configuration includes any services for Fly Proxy to route to, and the app has a public IP, that service is exposed to the whole internet.</section>
 
-### A note on Fly App IPs
+### A note on Fly App IPs and Fly-Replay routing
 
 App-wide IP addresses (public and private) tell Fly Proxy which app to deliver a request to. If a service _only_ needs to be reachable by Fly Proxy in its handling of the [Fly-Replay](/docs/reference/dynamic-request-routing/) response header, its app does not need an IP; app information is incorporated directly in the header.
 
@@ -126,7 +126,7 @@ cURL is a useful tool for checking that a service is reachable where it should b
 |---|---|---|
 |Listening on the expected<br>address and port [1] | within a VM [2]| `curl -I http://0.0.0.0:<port>` [3] |
 |Reachable by Anycast [4] | anywhere | `curl -I https://<app-name>.fly.dev:443`<br>or<br>`curl -IL http://<app-name>.fly.dev:80` [5]|
-|Reachable by Flycast [6]| within the app's 6PN [7]| `curl -I http://<app-name>.flycast:<service-port>`<br>or<br>`curl -I 'http://[<app-flycast-ip>]:<service-port>'`|
+|Reachable by Flycast [6]| within the Flycast IP's 6PN [7]| `curl -I http://<app-name>.flycast:<service-port>`<br>or<br>`curl -I 'http://[<app-flycast-ip>]:<service-port>'`|
 
 
 ### Private 6PN services
@@ -134,8 +134,8 @@ cURL is a useful tool for checking that a service is reachable where it should b
 |Success means |From | Use |
 |---|---|---|
 |Listening on the expected<br> address and port [8] | within a VM [2]| `curl -I http://fly-local-6pn:<port>` |
-|Reachable by internal DNS | within the app's 6PN | `curl -I http://<app-name>.internal:<port>` |
-|Reachable on a particular VM | within the app's 6PN | `curl -I 'http://[<vm-6pn-address>]:<port>'`|
+|Reachable on the app<br>via internal DNS | within the app's 6PN | `curl -I http://<app-name>.internal:<port>` |
+|Reachable on a<br>particular VM | within the app's 6PN | `curl -I 'http://[<vm-6pn-address>]:<port>'`|
 
 [1] If this fails (i.e. returns a status code that's not 200), Fly Proxy won't be able to reach the service to route to it. 
 
@@ -149,7 +149,7 @@ cURL is a useful tool for checking that a service is reachable where it should b
 
 [6] If the check within the VM succeeded, but this step fails, check everything in note [5], plus: Ensure that there's an HTTP service configured and `force_https` is not set to `true`; Flycast doesn't work over HTTPS.
 
-[7] Or from the 6PN [where the Flycast IP was allocated](/docs/reference/private-networking/#assigning-a-flycast-address).
- 
+[7] A Flycast IP [can be allocated](/docs/reference/private-networking/#assigning-a-flycast-address) on a different private network from the app it points to, if both networks belong to the same org. This lets your apps reach your service in a different 6PN, if the service is configured to be available over Flycast.
+
 [8] If this fails, the service won't be reachable directly over its 6PN address (or, by extension, through `.internal` names) in the private WireGuard network.
 
