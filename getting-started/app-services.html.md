@@ -43,7 +43,7 @@ Define a [service](/docs/reference/configuration/#the-http_service-section) in `
 
 #### Private (Flycast) apps
 
-Configure a service as for a public app, but in addition: [Flycast](/docs/reference/private-networking/#flycast-private-load-balancing) is HTTP-only, so make sure you've defined an HTTP service and **not** included `force_https = true` in its definition.
+Configure a service as for a public app, but in addition: [Flycast](/docs/reference/private-networking/#flycast-private-load-balancing) doesn't do HTTPS, so make sure you've defined a non-HTTPS service, and also ensure that `force_https = true` is **not** included in any HTTP service definition.
 
 ### Allocate a public or private IP to the app
 
