@@ -152,7 +152,7 @@ RUN apt-get update -y && \
 
 #### Deploy the app
 
-If you haven't already, run `fly deploy` and make sure the app is running. If you're using the [hello-fly](https://github.com/fly-apps/hello-fly) example then `service.port`'s were set in your fly.toml. You can  visit https://[[ your app name]].fly.dev and see a "Welcome to Fly" message.
+If you haven't already, run `fly deploy` and make sure the app is running. If you're using the [hello-fly](https://github.com/fly-apps/hello-fly) example, then `service.port`'s were set in your fly.toml. You can visit https://[[ your app name]].fly.dev and see a "Welcome to Fly.io" message.
 
 #### Ping an internal address
 
