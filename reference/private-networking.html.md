@@ -118,7 +118,7 @@ fly launch
 ? Would you like to deploy now? (y/N)
 N
 
-# deploying now is fine, but we'll want to modify
+# deploying now is fine, but you'll want to modify
 # the fly.toml and redeploy again
 ```
 
