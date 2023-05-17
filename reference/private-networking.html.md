@@ -142,7 +142,7 @@ kill_timeout = "5s"
 
 #### Install dig and/or curl in your Dockerfile
 
-To test the internal network we need tool for that. By default dig and curl won't be installed on a machine. Just add `dnsutils` (for dig) and `curl` to your Dockerfile so you can access them later. Here's the line to add to your the Dockerfile:
+Next, install some tools to test the internal network. By default, dig and curl won't be installed on a Machine. Just add `dnsutils` (for dig) and `curl` to your Dockerfile so you can access them later. Here's the line to add to your Dockerfile:
 
 ```docker
 RUN apt-get update -y && \
