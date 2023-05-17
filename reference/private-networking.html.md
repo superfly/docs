@@ -102,7 +102,7 @@ Examples of retrieving this information are in the [fly-examples/privatenet](htt
 
 The following example shows private networks in action. You'll need to install [flyctl](/docs/hands-on/install-flyctl/) and be at least a little familiar with deploying apps on Fly.io.
 
-For this example we'll use the [hello-fly](https://github.com/fly-apps/hello-fly) repository.
+For this example, you'll use the [hello-fly](https://github.com/fly-apps/hello-fly) repository. First, clone the `hello-fly` repo, and then run `fly launch`:
 
 ```cmd
 # clone the repository
