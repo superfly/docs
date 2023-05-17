@@ -100,7 +100,7 @@ Examples of retrieving this information are in the [fly-examples/privatenet](htt
 
 ### Example: Ping an app via an `.internal` address
 
-A quick to tutorial to show private networks in action. If you've arrived on private networking, we'll assume you've at least installed the CLI and are at least a little familiar with deploying apps on Fly.
+The following example shows private networks in action. You'll need to install [flyctl](/docs/hands-on/install-flyctl/) and be at least a little familiar with deploying apps on Fly.io.
 
 For this example we'll use the [hello-fly](https://github.com/fly-apps/hello-fly) repository.
 
