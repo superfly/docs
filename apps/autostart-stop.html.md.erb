@@ -7,7 +7,7 @@ order: 65
 ---
 
 <div class="callout">
-This feature only works for V2 apps running on Fly Machines. You might also be interested in learning about [scaling the nuber of machines](/docs/apps/scale-count/) for the V2 Apps Platform. For information about scaling V1 apps, refer to [Scale V1 Nomad Apps](/docs/apps/legacy-scaling/).
+This feature only works for V2 apps running on Fly Machines. You might also be interested in learning about [scaling the number of machines](/docs/apps/scale-count/) for the V2 Apps Platform. For information about scaling V1 apps, refer to [Scale V1 Nomad Apps](/docs/apps/legacy-scaling/).
 </div>
 
 Fly Machines are fast to start and stop, and you don't pay for their CPU and RAM when they're in the `stopped` state. For Fly Apps with a service configured, Fly Proxy can start and stop existing Machines based on incoming requests, so that your app can accommodate bursts in demand without keeping extra Machines running constantly. And if your app needs to have one or more Machines always running in your primary region, then you can set a minimum number of machines to keep running.
@@ -66,7 +66,7 @@ You can set `min_machines_running` to `1` or higher if your use case calls for h
 The Fly Proxy runs a process to automatically stop and start existing Fly Machines every few minutes.
 
 <div class="callout">
-The automtic start and stop feature only works on existing Machines and never creates or destroys Machines for you. The maximum number of running Machines is the number of Machines you've cerated for your app using `fly scale count` or `fly machine clone`. Learn more about [scaling the number of Machines](/docs/apps/scale-count/). 
+The automatic start and stop feature only works on existing Machines and never creates or destroys Machines for you. The maximum number of running Machines is the number of Machines you've created for your app using `fly scale count` or `fly machine clone`. Learn more about [scaling the number of Machines](/docs/apps/scale-count/). 
 </div>
 
 When `auto_stop_machines = true` in your `fly.toml`, the proxy looks at Machines running in a single region and uses the concurrency [`soft_limit` setting](/docs/reference/configuration/#the-http_service-section) for each Machine to determine if there's excess capacity. If the proxy decides there's excess capacity, it will stop exactly one machine. The proxy repeats this process every few minutes, stopping only one machine per region, if needed, each time.
@@ -94,7 +94,7 @@ If your app has highly variable request workloads, then you can set `auto_stop_m
 
 The difference between this feature and what is typical in autoscaling, is that it doesn't create new Machines up to a specified maximum. It automatically starts only existing Machines. For example, if you want to have a maximum of 10 Machines available to service requests, then you need to create 10 Machines for your app.
 
-If you need your all of you app's Machines to be “always on”, then you can set `auto_stop_machines` and `auto_start_machines` to `false`. If `auto_stop_machines = true`, `min_machines_running = 0`, and there’s no traffic to your app, eventually all of your app's Machines could be stopped. If you only need one or a few instances of your app to keep running in your primary region all the time, then you can set `min_machines_running` to `1` or higher.
+If you need all of you app's Machines to be “always on”, then you can set `auto_stop_machines` and `auto_start_machines` to `false`. If `auto_stop_machines = true`, `min_machines_running = 0`, and there’s no traffic to your app, eventually all of your app's Machines could be stopped. If you only need one or a few instances of your app to keep running in your primary region all the time, then you can set `min_machines_running` to `1` or higher.
 
 ## Stop a Machine by terminating its main process
 
