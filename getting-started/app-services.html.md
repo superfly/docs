@@ -114,26 +114,26 @@ Accept-Ranges: bytes
 
 ```
 
-That `200 OK` means the service is running, and listening on port 80 as anticipated.
+That `200 OK` means the service (nginx) is running, and listening on port 80 as anticipated.
 
 You can further check that the right HTML is being served, with `curl http://localhost:<port>` (leaving out the `-I`).
 
-cURL is a useful tool for checking that a service is reachable where it should be. Here are some further tests that may help with understanding networking issues.
+cURL is a useful tool for checking that a service is reachable where it should be. Here are some further tests that may help with understanding networking issues. We'll carry on with the example of an HTTP app.
 
-### Public or Flycast services
+### Connect to Public or Flycast services
 
 |Success means |From | Use |
 |---|---|---|
-|Listening on the expected<br>address and port [1] | within a VM [2]| `curl -I http://0.0.0.0:<port>` [3] |
+|Listening on the expected<br>address and port [1] | within the VM [2]| `curl -I http://0.0.0.0:<port>` [3] |
 |Reachable by Anycast [4] | anywhere | `curl -I https://<app-name>.fly.dev:443`<br>or<br>`curl -IL http://<app-name>.fly.dev:80` [5]|
-|Reachable by Flycast [6]| within the Flycast IP's 6PN [7]| `curl -I http://<app-name>.flycast:<service-port>`<br>or<br>`curl -I 'http://[<app-flycast-ip>]:<service-port>'`|
+|Reachable by Flycast [6]| within the<br>Flycast IP's 6PN [7]| `curl -I http://<app-name>.flycast:80`<br>or<br>`curl -I 'http://[<app-flycast-ip>]:80'`|
 
 
-### Private 6PN services
+### Connect to Private 6PN services
 
 |Success means |From | Use |
 |---|---|---|
-|Listening on the expected<br> address and port [8] | within a VM [2]| `curl -I http://fly-local-6pn:<port>` |
+|Listening on the expected<br> address and port [8] | within the VM [2]| `curl -I http://fly-local-6pn:<port>` |
 |Reachable on the app<br>via internal DNS | within the app's 6PN | `curl -I http://<app-name>.internal:<port>` |
 |Reachable on a<br>particular VM | within the app's 6PN | `curl -I 'http://[<vm-6pn-address>]:<port>'`|
 
@@ -145,7 +145,7 @@ cURL is a useful tool for checking that a service is reachable where it should b
 
 [4] If this fails, but the local check succeeded, the next thing to confirm is that the app or Machine config includes a properly configured `services` or `http_service` section, with `internal_port` matching `<port>` used in this test.
 
-[5] The HTTP URL always elicits a 301 redirect, because the Fly Proxy upgrades HTTP connections to HTTPS. To get cURL to follow the redirect to see if there's anything there, use the `-L` flag. This example uses the standard ports 80 and 443; if you're using different ports, substitute those in.
+[5] The HTTP URL always elicits a 301 redirect, because the Fly Proxy upgrades HTTP connections to HTTPS. To get cURL to follow the redirect to see if there's anything there, use the `-L` flag. This example has the services configured to handle HTTP and HTTPS requests on the conventional ports 80 and 443 respectively; if you're using different ports, substitute those in.
 
 [6] If the check within the VM succeeded, but this step fails, check everything in note [5], plus: Ensure that there's an HTTP service configured and `force_https` is not set to `true`; Flycast doesn't work over HTTPS.
 
