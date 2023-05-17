@@ -121,7 +121,7 @@ cURL is a useful tool for checking that a service is reachable where it should b
 
 ### Connect to Public or Flycast services
 
-|Success means |From | Use |
+|Check that the service is |From | Use |
 |---|---|---|
 |Listening on the expected<br>address and port [1] | within the VM [2]| `curl -I http://0.0.0.0:<port>` [3] |
 |Reachable by Anycast [4] | anywhere | `curl -I https://<app-name>.fly.dev:443`<br>or<br>`curl -IL http://<app-name>.fly.dev:80` [5]|
@@ -130,7 +130,7 @@ cURL is a useful tool for checking that a service is reachable where it should b
 
 ### Connect to Private 6PN services
 
-|Success means |From | Use |
+|Check that the service is |From | Use |
 |---|---|---|
 |Listening on the expected<br> address and port [8] | within the VM [2]| `curl -I http://fly-local-6pn:<port>` |
 |Reachable on the app<br>via internal DNS | within the app's 6PN | `curl -I http://<app-name>.internal:<port>` |
