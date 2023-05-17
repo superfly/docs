@@ -94,7 +94,7 @@ If your app has highly variable request workloads, then you can set `auto_stop_m
 
 The difference between this feature and what is typical in autoscaling, is that it doesn't create new Machines up to a specified maximum. It automatically starts only existing Machines. For example, if you want to have a maximum of 10 Machines available to service requests, then you need to create 10 Machines for your app.
 
-If you need all of you app's Machines to be “always on”, then you can set `auto_stop_machines` and `auto_start_machines` to `false`. If `auto_stop_machines = true`, `min_machines_running = 0`, and there’s no traffic to your app, eventually all of your app's Machines could be stopped. If you only need one or a few instances of your app to keep running in your primary region all the time, then you can set `min_machines_running` to `1` or higher.
+If you need all of your app's Machines to be “always on”, then you can set `auto_stop_machines` and `auto_start_machines` to `false`. If `auto_stop_machines = true`, `min_machines_running = 0`, and there’s no traffic to your app, eventually all of your app's Machines could be stopped. If you only need one or a few instances of your app to keep running in your primary region all the time, then you can set `min_machines_running` to `1` or higher.
 
 ## Stop a Machine by terminating its main process
 
