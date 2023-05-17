@@ -63,8 +63,8 @@ fdaa:0:18:a7b:7d:f066:b83b:2
 ```
 
 ## Connecting to a running service via its 6PN address
-In the `/etc/hosts` of a deployed Fly App, we alias the 6PN address of the app to `fly-local-6pn`.  
-So, in order for a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, you need to bind it to `fly-local-6pn:8080` for it to be accesible at "[6PN_Address:8080]".  
+In the `/etc/hosts` of a deployed Fly App, we alias the 6PN address of the app to `fly-local-6pn`.
+So, in order for a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, you need to bind it to `fly-local-6pn:8080` for it to be accesible at "[6PN_Address:8080]".
 (`fly-local-6pn` is to 6pn-addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine)
 
 ## Fly `.internal` addresses
@@ -98,46 +98,26 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
 
-### Example: Ping an app via an `.internal` address
+### Example: Reach an app via an `.internal` address
 
 The following example shows private networks in action. You'll need to install [flyctl](/docs/hands-on/install-flyctl/) and be at least a little familiar with deploying apps on Fly.io.
 
-For this example, you'll use the [hello-fly](https://github.com/fly-apps/hello-fly) repository. First, clone the `hello-fly` repo, and then run `fly launch`:
+For this example, you'll use the [hello-fly](https://github.com/fly-apps/hello-fly) repository. First, clone the `hello-fly` repo, and then run `fly launch`. This will generate a `fly.toml` file in root folder of the project.
 
-```cmd
-# clone the repository
-git clone https://github.com/fly-apps/hello-fly
+#### Take note of `internal_port` in the fly.toml
 
-cd hello-fly
-
-# create an app on fly
-fly launch
-
-# output omitted...
-
-? Would you like to deploy now? (y/N)
-N
-
-# deploying now is fine, but you'll want to modify
-# the fly.toml and redeploy again
-```
-
-#### Expose an `internal_port` in the fly.toml
-
-In order for internal requests to reach your app, an `internal_port` will need to be exposed in the app's fly.toml that was generated during launch. Here's what the _fly.toml_ might look like exposing port 8080:
+If you look at the generated fly.toml, you'll see an `internal_port` with a value that you'll need later.
 
 ```toml
 app = "my-app-name"
 primary_region = "nrt"
-kill_signal = "SIGINT"
-kill_timeout = "5s"
 
-[[services]]
-  protocol = "tcp"
-  internal_port = 8080 # <-- this is the important line
-  processes = ["app"]
-
-# remaining contents omitted
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
 ```
 
 #### Install dig and/or curl in your Dockerfile
@@ -150,11 +130,11 @@ RUN apt-get update -y && \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 ```
 
-#### Deploy the app
+#### Redeploy the app
 
-If you haven't already, run `fly deploy` and make sure the app is running. If you're using the [hello-fly](https://github.com/fly-apps/hello-fly) example, then `service.port`'s were set in your fly.toml. You can visit https://[[ your app name]].fly.dev and see a "Welcome to Fly.io" message.
+If you haven't already, re-run `fly deploy` and make sure the app is running. You can visit `https://<my-app-name>.fly.dev` and see a "Welcome to Fly" message.
 
-#### Ping an internal address
+#### Reach an internal address
 
 Now it's time for the cool stuff.
 
@@ -163,6 +143,9 @@ Now it's time for the cool stuff.
 
 ```cmd
 curl my-app-name.internal:8080
+```
+
+```output
 <!DOCTYPE html>
 <html>
   <head>
@@ -170,7 +153,7 @@ curl my-app-name.internal:8080
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Fly.io (nrt)</h1>
+    <h1>Fly.io</h1>
     <p>Welcome to Fly.io (nrt)</p>
   </body>
 </html>
@@ -187,9 +170,9 @@ dig -t txt _apps.internal +short
 
 #### Tips
 
-- If your app is deployed to multiple regions, you can also hit a different instance of the app based on region using curl [[region]].[[your app name]].internal:8080
+- If your app is deployed to multiple regions, you can also hit a different instance of the app based on region using `curl <region>.<my-app-name>.internal:8080`
 - In the example we pinged the same app we deployed, but try hitting another app in your network from within ssh console
-- Heads up: prefixing an internal network url request with http:// is fine, but obviously there aren't ssl certs issues for an private internal network so https:// won't work
+- Heads up: prefixing an internal network url request with `http://` is fine, but since ssl certs aren't issued for private internal networks, `https://` won't work
 
 
 ## Flycast - Private Load Balancing
