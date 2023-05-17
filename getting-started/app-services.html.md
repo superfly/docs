@@ -86,8 +86,7 @@ Our [private networking docs](https://fly.io/docs/reference/private-networking/#
 
 ## A note on IPv4 and IPv6 wildcards
 
-Services to be routed to using Fly Proxy need to bind to IPv4 addresses, and services to be reached over 6PN need to bind to IPv6, as described above. However, the strictness of `[::]` or `0.0.0.0` to IPv6 or IPv4 may vary by language, library, or application. IPv4 mapping, if enabled on the VM, can also allow Fly Proxy to reach a service bound to a port on `[::]`.
-
+Services to be routed to using Fly Proxy need to bind to IPv4 addresses, and services to be reached over 6PN need to bind to IPv6, as described above. However, you may find that your service works even if you haven't used the addresses we specified. IPv4-mapped IPv6 addresses, if enabled on the VM, can allow IPv4 (and thus Fly Proxy) connections to a service bound on `[::]`. Further, the wildcard syntax `[::]` or `0.0.0.0` sometimes covers both IPv4 and IPv6, depending on the language, library, or application. 
 
 ## Troubleshoot connections to a service
 
