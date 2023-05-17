@@ -64,7 +64,7 @@ App-wide IP addresses (public and private) tell Fly Proxy which app to deliver a
 
 ## Private services on 6PN (direct WireGuard connections)
 
-If you don't need load balancing or other Fly Proxy features, you (or one of your apps) can connect directly on a VM's 6PN address: its address on its IPv6 private WireGuard network.
+If you don't need load balancing or other Fly Proxy features, you (or one of your apps) can connect directly on a VM's 6PN address (i.e., its address on its IPv6 private WireGuard network).
 
 <section class="callout">By default, all of an organization's Fly Apps live on the same private network, but you can create apps on different private networks to isolate them from one another. You'd want to do this if you run separate apps for your customers, for example.</section>
 
