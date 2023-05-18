@@ -8,7 +8,7 @@ redirect_from:
   - /docs/hands-on/view-app/
 ---
 
-Now the application has been deployed, let's find out more about its deployment. The command `fly status` will give you the basic details.
+Now that the application has been deployed, let's find out more about its deployment. The command `fly status` will give you the basic details.
 
 ```cmd
 fly status
@@ -17,13 +17,16 @@ fly status
 App
   Name     = hellofly          
   Owner    = personal       
-  Hostname = hellofly.fly.dev  
+  Hostname = hellofly.fly.dev
+  Image    = flyio/hellofly:latest
   Platform = machines       
 
-ID              STATE   REGION  HEALTH CHECKS           IMAGE                   CREATED              UPDATED              
-e78492ecee0d83  started iad     1 total, 1 passing      flyio/hellofly:latest   2023-01-22T03:32:52Z 2023-01-22T03:32:53Z
+Machines
+PROCESS	ID            	VERSION	REGION	STATE  	CHECKS	LAST UPDATED
+app    	148e453b7d7289	1      	ord   	started	      	2023-05-17T17:39:37Z
+app    	5683d311c3228e	1      	ord   	stopped	      	2023-05-17T17:38:44Z
 ```
 
-In this example, the application has been deployed with a DNS hostname of `hellofly.fly.dev`. Your deployment's name will, of course, be different. We can also see that the app has a single VM running in the iad (Virginia) region.
+In this example, the application has been deployed with a DNS hostname of `hellofly.fly.dev`. Your deployment's name will, of course, be different. We can also see that the app has 2 Machines running in the `ord` region. We recommend running at least 2 machines to improve availability in case of hardware or host failure.
 
 [Next: Visit Your App on Fly.io](/docs/hands-on/open-app/)

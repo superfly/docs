@@ -64,6 +64,7 @@ If you're deploying an app that doesn't use `internal_port = 8080`, then enter "
 
 ```output
 ? Would you like to deploy now? Yes
+...
 ==> Building image
 ...
 ```
@@ -73,14 +74,14 @@ Whether you deploy right away or not, flyctl will download a `fly.toml` configur
 ```toml
 
 app = "hellofly"
+primary_region = "ord"
 
 [build]
   image = "flyio/hellofly:latest"
 
-[[services]]
+[http_service]
   internal_port = 8080
-
-...
+  ...
 ```
 
 flyctl always checks to see if `fly.toml` exists in the current directory, and then checks the `app` value at the start of the file. Many commands use this app name to determine which Fly App to apply to by default. You can also see how the app will be built (from a pre-built Docker image, in this case), that internal port setting, and further configuration to be applied to the application when it deploys.
@@ -91,6 +92,6 @@ If you stopped to customize your `fly.toml`, you'll want to deploy your app now.
 fly deploy
 ```
 
-The `fly deploy` command gets the app name `hellofly` from `fly.toml`. Then flyctl will start the process of deploying your application to the Fly.io platform and then return you to the command line when it's done.
+The `fly deploy` command gets the app name `hellofly` from `fly.toml`. Then flyctl will start the process of deploying your application to the Fly.io platform and return you to the command line when it's done.
 
 [Next: Check your app's status](/docs/hands-on/check-app-status/)
