@@ -28,14 +28,12 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
 5.  Go to your newly-created repository on GitHub and select **Settings**.
 6.  Under **Secrets and variables**, select **Actions**, and then create a new repository secret called `FLY_API_TOKEN` with the value of the token you created and copied in step 4.
 7.  Back in your app's root directory, create `.github/workflows/fly.yml` with these contents:
-    <br>
-    <br>
     ```yaml
     name: Fly Deploy
     on:
       push:
         branches:
-          - main
+          - master
     jobs:
       deploy:
         name: Deploy app
@@ -64,7 +62,7 @@ If you want to watch the process take place, head to the repository and select t
 
 **Step 2** is just cloning the repository to your local system so you can edit and push changes to it.
 
-**Step 3**: Creating a `fly.toml` file to go into the repository.
+**Step 3** creates a `fly.toml` file to go into the repository.
 
 <div class="callout">
 A note about `fly.toml` in repositories. Usually, when we ship examples, we avoid putting the `fly.toml` file in the repository by including `fly.toml` in the `.gitignore` file. Users should be creating their own `fly.toml` with the `fly launch` command. When using GitHub Actions though, you want your `fly.toml` in the repository so the action can use it in the deployment process.
