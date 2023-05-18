@@ -23,11 +23,11 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
 
 1.  Fork the [go-example](https://github.com/fly-apps/go-example) repository to your GitHub account.
 2.  Clone the new repository to your local machine.
-3.  Run `fly launch` to create a new app and `fly.toml` configuration file. Say `N` to adding databases and `N` to deploy now.
-4.  Get a Fly API deploy token by running `fly tokens create deploy -x 999999h` and then copy the output.
+3.  Run `fly launch` from within the app's root directory to create a new app and a `fly.toml` configuration file. Say `N` to adding databases and `N` to deploy now.
+4.  Still in the app's root directory, get a Fly API deploy token by running `fly tokens create deploy -x 999999h`. Copy the output.
 5.  Go to your newly-created repository on GitHub and select **Settings**.
 6.  Under **Secrets and variables**, select **Actions**, and then create a new repository secret called `FLY_API_TOKEN` with the value of the token you created and copied in step 4.
-7.  Back in your app working directory, create `.github/workflows/fly.yml` with these contents:
+7.  Back in your app's root directory, create `.github/workflows/fly.yml` with these contents:
     <br>
     <br>
     ```yaml
@@ -48,11 +48,9 @@ We'll speed-run through the steps needed to make this automatically deploy to Fl
               FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
     ```
 
-  <div class="callout">
-  Note that the `go-example`’s default branch is currently `master`. If you’re using a different app, yours might be `main`. Change the `fly.yml` file accordingly.
-  </div>
+    Note that the `go-example`’s default branch is currently `master`. If you’re using a different app, yours might be `main`. Change the `fly.yml` file accordingly.
 
-8.  Commit your changes and push them up to GitHub. The changes will be two new files: `fly.toml`, the Fly App configuration file, and `fly.yml`, the GitHub action file.
+8.  Commit your changes and push them up to GitHub. The changes are two new files: `fly.toml`, the Fly App configuration file, and `fly.yml`, the GitHub action file.
 
   This is where the magic happens - The push triggers a deploy, and from now on whenever you push a change, the app will automatically be redeployed.
 
