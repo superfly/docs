@@ -166,7 +166,7 @@ docker compose build
 docker compose up
 ```
 
-Windows Powershell users will want to use the following command instead of export:
+Windows PowerShell users will want to use the following command instead of export:
 
 ```powershell
 $Env:RAILS_MASTER_KEY = Get-Content 'config\master.key'
