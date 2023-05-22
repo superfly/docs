@@ -10,7 +10,7 @@ order: 3
 To access an interactive Rails console, run:
 
 ```cmd
-fly ssh console --pty -C "rails/bin/rails console"
+fly ssh console --pty -C "/rails/bin/rails console"
 ```
 ```output
 Loading production environment (Rails 7.0.4.2)
@@ -65,13 +65,13 @@ Accept the changes to your Dockerfile, and then rerun `fly deploy`.
 Once this is complete, you can execute other commands on Fly, for example:
 
 ```cmd
-fly ssh console -C "rails/bin/rails db:migrate"
+fly ssh console -C "/rails/bin/rails db:migrate"
 ```
 
 To list all the available tasks, run:
 
 ```cmd
-fly ssh console -C "rails/bin/rails help"
+fly ssh console -C "/rails/bin/rails help"
 ```
 
 ## Custom Rake tasks
@@ -88,11 +88,11 @@ namespace :fly do
   end
 
   task :console do
-    sh 'fly ssh console --pty -C "rails/bin/rails console"'
+    sh 'fly ssh console --pty -C "/rails/bin/rails console"'
   end
 
   task :dbconsole do
-    sh 'fly ssh console --pty -C "rails/bin/rails dbconsole"'
+    sh 'fly ssh console --pty -C "/rails/bin/rails dbconsole"'
   end
 end
 ```
