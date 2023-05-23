@@ -39,10 +39,10 @@ We can start an instance of our queue worker by adding another process. In this 
 [processes]
   app = ""
   cron = "cron -f"
-  worker = "php artisan queue:work"
+  worker = "php artisan queue:listen"
 ```
 
-Note that you may want to expand on the `queue:work` command. For example, you could run `php artisan queue:work sqs --sleep=3 --tries=3 --max-time=3600` to use the `sqs` driver and determine other behaviors.
+Note that you may want to expand on the `queue:listen` command. For example, you could run `php artisan queue:listen sqs --sleep=3 --tries=3 --max-time=3600` to use the `sqs` driver and determine other behaviors.
 
 ## Extra Credit
 
