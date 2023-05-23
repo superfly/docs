@@ -83,7 +83,7 @@ deploy:
     environment: production
 ```
 
-### Building the workflow
+### Building the workflow and Deployment
 
 **Step 7** is the heart of the process, where we put in place a workflow. Now, GitHub has a UI which allows you to select and edit workflows, but you can also modify them as part of the repository. So we create `.github/workflows/fly.yml` - you'll likely want to `mkdir -p .github/workflows` to quickly create the directories - and load up the file with a GitHub Action recipe. We'll go through it line by line now:
 
@@ -130,6 +130,8 @@ This step `uses` the superfly/flyctl-actions action. This is a GitHub action cre
 ```
 
 Here is where we pull the API token from GitHub's secrets engine and put it into the environmental variables passed to the action.
+
+**Step 8** pushes your two new files to the repository: `fly.toml`, the Fly App configuration file, and `fly.yml`, the GitHub action file. The push triggers your first automatic deploy. The GitHub action now triggers a redeploy each time you push changes to your repo.
 
 ## Conclusion and further reading
 
