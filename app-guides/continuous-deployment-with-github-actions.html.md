@@ -131,7 +131,7 @@ This step `uses` the superfly/flyctl-actions action. This is a GitHub action cre
 
 Here is where we pull the API token from GitHub's secrets engine and put it into the environmental variables passed to the action.
 
-**Step 8** push your two new files: `fly.toml`, the Fly App configuration file, and `fly.yml`, the GitHub action file. This triggers your first automatic deploy.
+**Step 8** pushes your two new files to the repository: `fly.toml`, the Fly App configuration file, and `fly.yml`, the GitHub action file. The push triggers your first automatic deploy. The GitHub action now triggers a redeploy each time you push changes to your repo.
 
 ## Conclusion and further reading
 
