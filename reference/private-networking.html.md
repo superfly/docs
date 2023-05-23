@@ -87,6 +87,7 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 |`<alloc_id>.vm.<appname>.internal`|specific app instance<br/>|none
 |`vms.<appname>.internal`|none|comma-separated alloc-ids<br/> of app instances|none
 |`<region>.<appname>.internal`|app instances<br/> in region|none
+|`<process_group>.process.<appname>.internal`|app instances<br/> in process group|none
 |`global.<appname>.internal`|app instances<br/> in all regions|none
 |`regions.<appname>.internal`|none|region names<br/> where app is deployed|
 |`<appname>.internal`|app instances<br/> in any region|none
