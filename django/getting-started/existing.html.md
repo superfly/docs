@@ -5,7 +5,6 @@ order: 2
 subnav_glob: docs/django/existing/*.html.*
 objective: Learn how to run your existing Django applications on Fly.
 related_pages:
-  - /docs/django/getting-started/existing
   - /docs/flyctl/
   - /docs/postgres/
 ---
