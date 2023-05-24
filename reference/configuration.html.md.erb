@@ -53,6 +53,13 @@ When shutting down a Fly app instance, by default, after sending a signal, Fly g
 kill_timeout = 120
 ```
 
+## Console command
+
+If you want to use the `fly console` command 
+```toml
+console_command = 
+```
+
 ## The `build` section
 
 The optional build section contains key/values concerned with how the application should be built. You can read more about builders in [Builders and Fly](/docs/reference/builders/)
@@ -158,8 +165,6 @@ The available strategies are:
 
 **rolling**: The default for apps with persistent volumes. One by one, each running VM is taken down and replaced by a new release VM. This is the default strategy for apps with volumes.
 
-
-
 **immediate**: Replace all VMs with new releases immediately without waiting for health checks to pass. This is useful in emergency situations where you're confident about release health and can't wait for health checks.
 
 
@@ -206,13 +211,15 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
+  min_machines_running = 0
   [http_service.concurrency]
     type = "requests"
     soft_limit = 200
     hard_limit = 250
 ```
 
-* `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
+* `processes`: For apps with multiple processes. The process group that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
+* `internal_port`: The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
 * `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs a process to automatically stop machines every few minutes. The default it `true`.
 * `auto_start_machines`: Whether to automatically start an application's machines when a new request is made to the application and there's no excess capacity, per region. If there's only one machine in a region, then it's started whenever a request is made to the application. The default is `true`.
@@ -251,12 +258,15 @@ The `services` section itself is a table of tables in TOML, so the section is de
   protocol = "tcp"
   auto_stop_machines = true
   auto_start_machines = true
+  min_machines_running = 0
 ```
 
+* `processes`: For apps with multiple processes. The process group that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
 * `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `protocol` : The protocol that this service will use to communicate. Typically `tcp` for most applications, but can also be `udp`.
 * `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs the checks to automatically stop machines every few minutes. The default it `true`.
 * `auto_start_machines`: Whether to automatically start an application's machines when a new request is made to the application and there's no excess capacity, per region. If there's only one machine in a region, then it's started whenever a request is made to the application. The default is `true`.
+* `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines = true`.
 
 <div class="callout">
 We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having machines that either never start or never stop. Learn more about [automatically starting and stopping V2 app Fly machines](/docs/apps/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
@@ -371,7 +381,7 @@ Times are in milliseconds unless units are specified.
 
 * `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your application to start up. For example if your app takes 2 seconds to start up, give it some runway by setting this to at least 3 seconds.
 * `interval`: The time between connectivity checks. If it's long and your grace_period shorter than your app's startup time, health check will take long adding you your deployment time.
-* `restart_limit`: The number of consecutive TCP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed TCP health checks.
+* `restart_limit`: Only applicable to V1 (Nomad) apps. The number of consecutive TCP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed TCP health checks.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
 
 ### `services.http_checks`
@@ -397,11 +407,11 @@ Times are in milliseconds unless units are specified.
 
 * `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your app to start up. For example if your app takes 2 seconds to start up, give it some runway by setting to at least 3 seconds.
 * `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If it's long and your grace_period shorter than your app's startup time, health check will take too long adding you your deployment time.
+* `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
+* `restart_limit`: Only applicable to V1 (Nomad) apps. The number of consecutive HTTP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed HTTP health checks.
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
-* `protocol`: The protocol to be used (`http` or `https`)
-* `restart_limit`: The number of consecutive HTTP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed HTTP health checks.
-* `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
+* `protocol`: The protocol to be used (`http` or `https`).
 * `tls_skip_verify`: When `true` (and using HTTPS protocol) skip verifying the certificates sent by the server.
 * `services.http_checks.headers`: This is a sub-section of `services.http_checks`. It uses the key/value pairs as a specification of header and header values that will get passed with the http_check call.
 
@@ -424,6 +434,8 @@ The `source` is a volume name that this app should mount. Any volume with this n
 ### `destination`
 
 The `destination` is directory where the `source` volume should be mounted on the running app.
+
+### `processes`
 
 Optionally, you can specify a list of [processes](#the-processes-section) to limit volume mounts by process group. You can even specify two different `[[mounts]]` sections to mount different source volumes to VMs in different process groups. Note the need to use double brackets if there are multiple `[[mounts]]` defined.
 
@@ -468,7 +480,7 @@ Again, times are in milliseconds unless units are specified.
 
 ## The `processes` section
 
-The `processes` section allows you to define process groups to be run on separate VMs within a single app.
+The `processes` section allows you to define process groups to be run on separate VMs within a single app. Learn more about [running multiple process groups in an app](/docs/apps/processes/).
 
 **Each machine can run a different command on start**, allowing you to re-use your code base for different tasks (web server, queue worker, etc).
 
@@ -525,20 +537,20 @@ The "guest path" --- the path inside your container where the files to serve are
 
 ### Caveats
 
-This feature should not be compared directly with a CDN, for the following reasons.
+This feature should not be compared directly with a CDN, for the following reasons:
 
-This feature does not exempt you from having to run a web service in your VM.
+* This feature does not exempt you from having to run a web service in your VM.
 
-Statics will not find `index.html` at the root. The full path must be requested.
+* Statics will not find `index.html` at the root. The full path must be requested.
 
-You can't set `Cache-Control` or any other headers on assets. If you need those, you'll need to deliver them from your application and set the relevant headers.
+* You can't set `Cache-Control` or any other headers on assets. If you need those, you'll need to deliver them from your application and set the relevant headers.
 
-Assets are not delivered, by default, from all edge Fly.io regions. Rather, assets are delivered from the regions the application is deployed in.
+* Assets are not delivered, by default, from all edge Fly.io regions. Rather, assets are delivered from the regions the application is deployed in.
 
-`statics` does not honor symlinks. So, if `/app/public` in your container is actually a symlink to something like `/app-39403/public`, you'll want to use the absolute original path in your statics configuration.
+* `statics` does not honor symlinks. So, if `/app/public` in your container is actually a symlink to something like `/app-39403/public`, you'll want to use the absolute original path in your statics configuration.
 
 
-## The `experimental` section (Legacy Nomad Apps Only)
+## The `experimental` section (V1 Nomad Apps Only)
 
 This section is for flags and feature settings which have yet to be promoted into the main configuration.
 
