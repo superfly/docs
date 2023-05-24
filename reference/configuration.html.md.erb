@@ -55,9 +55,12 @@ kill_timeout = 120
 
 ## Console command
 
-If you want to use the `fly console` command 
+The command to run when you run the [`fly console` command](/docs/flyctl/console/). Configure the `console_command` field with the command that opens your framework's console, and then `fly console` will run that command automatically in a new, dedicated Machine. The new Machine is configured with the image and environment from your app’s latest release, but your app isn’t started, and no traffic will be routed to it. The Machine gets destroyed when you exit the console.
+
+Here's an example of a console command for Django:
+
 ```toml
-console_command = 
+console_command = "/code/manage.py shell"
 ```
 
 ## The `build` section
@@ -95,6 +98,15 @@ The image builder is used when you want to immediately deploy an existing public
 `dockerfile` accepts a relative path to a Dockerfile, or a URL. By default, `flyctl` looks for `Dockerfile` in the application root.
 
 **Gotchas:** 1) This option will not change the Docker context path, which is set to the project root directory by default. If you want the `Dockerfile` to use its containing directory as the context root, use `fly deploy <directory>`. 2) When specifying a local Dockerfile, make sure it's not excluded from the Docker build context in your `.dockerignore`.
+
+### Specify a Docker ignore file
+
+```toml
+[build]
+  ignorefile = "/path/.dockerignore"
+```
+
+`ignorefile` accepts a relative path to a `.dockerignore` file. By default, `flyctl` looks for the `.dockerignore` file in the working directory.
 
 ### Specify a multistage Docker build target
 
@@ -475,6 +487,7 @@ Fields are very similar to `[[services.checks]]`:
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
+* `processes`: For apps with multiple processes. The process group to apply the health checks to. Define process groups in the [processes](#the-processes-section) section.
 
 Again, times are in milliseconds unless units are specified.
 
