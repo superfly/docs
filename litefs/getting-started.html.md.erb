@@ -51,6 +51,10 @@ can pull in the `litefs` binary by copying it from the official Docker image:
 COPY --from=flyio/litefs:0.4 /usr/local/bin/litefs /usr/local/bin/litefs
 ```
 
+It's recommended that you run LiteFS as `root` in Docker instead of using the
+`USER` command to change users. If you need to run your application as another
+user, use the `su` command to run your application as a non-root user.
+
 
 ### Without Docker
 
