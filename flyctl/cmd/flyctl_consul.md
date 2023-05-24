@@ -1,6 +1,5 @@
 Enable and manage Consul clusters
 
-
 ## Usage
 ~~~
 flyctl consul [command] [flags]
@@ -13,14 +12,14 @@ flyctl consul [command] [flags]
 ## Options
 
 ~~~
-  -h, --help   help for postgres
+  -h, --help   help for consul
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

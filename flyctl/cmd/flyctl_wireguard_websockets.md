@@ -2,7 +2,7 @@ Enable or disable WireGuard tunneling over WebSockets
 
 ## Usage
 ~~~
-flyctl wireguard websockets [enable/disable] [flags]
+flyctl wireguard websockets [enable|disable] [flags]
 ~~~
 
 ## Options
@@ -15,8 +15,7 @@ flyctl wireguard websockets [enable/disable] [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

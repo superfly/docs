@@ -1,28 +1,28 @@
-Sets the region pool with provided regions
+V1 APPS ONLY: Sets the region pool with provided regions
 
 ## Usage
 ~~~
-flyctl regions set REGION ... [flags]
+flyctl regions set REGION [REGION...] [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
-      --group string    The process group to set regions for
-  -h, --help            help for set
+  -a, --app string     Application name
+      --group string   The process group to add the region to
+  -h, --help           help for set
+  -j, --json           JSON output
+  -y, --yes            Accept all confirmations
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also
 
-* [flyctl regions](/docs/flyctl/regions/)	 - Manage regions
+* [flyctl regions](/docs/flyctl/regions/)	 - V1 APPS ONLY: Manage regions
 

@@ -12,6 +12,7 @@ flyctl apps create [APPNAME] [flags]
 ~~~
       --generate-name    Generate an app name
   -h, --help             help for create
+  -j, --json             JSON output
       --name string      The app name to use
       --network string   Specify custom network id
   -o, --org string       The target Fly organization
@@ -21,8 +22,7 @@ flyctl apps create [APPNAME] [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

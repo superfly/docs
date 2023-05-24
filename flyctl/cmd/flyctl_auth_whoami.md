@@ -9,14 +9,14 @@ flyctl auth whoami [flags]
 
 ~~~
   -h, --help   help for whoami
+  -j, --json   JSON output
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

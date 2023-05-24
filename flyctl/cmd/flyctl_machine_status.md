@@ -13,14 +13,14 @@ flyctl machine status <id> [flags]
   -c, --config string    Path to application configuration file
   -d, --display-config   Display the machine config as JSON
   -h, --help             help for status
+      --select           Select from a list of machines
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

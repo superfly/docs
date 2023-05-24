@@ -1,5 +1,5 @@
 Invite a user, by email, to join organization. The invitation will be
-sent, and the user will be pending until they respond. See also orgs revoke.
+sent, and the user will be pending until they respond.
 
 
 ## Usage
@@ -11,14 +11,14 @@ flyctl orgs invite [slug] [email] [flags]
 
 ~~~
   -h, --help   help for invite
+  -j, --json   JSON output
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

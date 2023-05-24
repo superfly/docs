@@ -1,23 +1,23 @@
-Show current Fly platform status in a browser
+Show current Fly platform status in a browser or via json with the json flag
 
 
 ## Usage
 ~~~
-flyctl platform status [flags]
+flyctl platform status [kind] [flags]
 ~~~
 
 ## Options
 
 ~~~
   -h, --help   help for status
+  -j, --json   JSON output
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

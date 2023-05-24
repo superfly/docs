@@ -1,9 +1,8 @@
-Import DNS records. Will import from a file is a filename is given, otherwise
-imports from StdIn.
+Import DNS records. Will import from a file is a filename is given, otherwise imports from StdIn.
 
 ## Usage
 ~~~
-flyctl dns-records import <domain> [<filename>] [flags]
+flyctl dns-records import <domain> [filename] [flags]
 ~~~
 
 ## Options
@@ -16,8 +15,7 @@ flyctl dns-records import <domain> [<filename>] [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

@@ -7,12 +7,13 @@ flyctl version [flags]
 ~~~
 
 ## Available Commands
-* [update](/docs/flyctl/version-update/)	 - Checks for available updates and automatically updates
+* [upgrade](/docs/flyctl/version-upgrade/)	 - Checks for available updates and automatically upgrades
 
 ## Options
 
 ~~~
   -h, --help                 help for version
+  -j, --json                 JSON output
   -s, --saveinstall string   Save parameter in config
 ~~~
 
@@ -20,8 +21,7 @@ flyctl version [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

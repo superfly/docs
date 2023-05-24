@@ -1,4 +1,4 @@
-Show current autoscaling configuration
+V1 APPS ONLY: Show current autoscaling configuration
 
 ## Usage
 ~~~
@@ -8,20 +8,19 @@ flyctl autoscale show [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
-  -h, --help            help for show
+  -a, --app string   Application name
+  -h, --help         help for show
+  -j, --json         JSON output
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also
 
-* [flyctl autoscale](/docs/flyctl/autoscale/)	 - Autoscaling app resources
+* [flyctl autoscale](/docs/flyctl/autoscale/)	 - V1 APPS ONLY: Autoscaling app resources
 

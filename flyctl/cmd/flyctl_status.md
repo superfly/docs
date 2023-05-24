@@ -19,6 +19,7 @@ flyctl status [flags]
   -c, --config string   Path to application configuration file
       --deployment      Always show deployment status
   -h, --help            help for status
+  -j, --json            JSON output
       --rate int        Refresh Rate for --watch (default 5)
       --watch           Refresh details
 ~~~
@@ -27,8 +28,7 @@ flyctl status [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

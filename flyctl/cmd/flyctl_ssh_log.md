@@ -9,6 +9,7 @@ flyctl ssh log [flags]
 
 ~~~
   -h, --help         help for log
+  -j, --json         JSON output
   -o, --org string   The target Fly organization
 ~~~
 
@@ -16,8 +17,7 @@ flyctl ssh log [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

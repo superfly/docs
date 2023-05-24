@@ -1,4 +1,4 @@
-Enable autoscaling and set the application's autoscaling parameters:
+V1 APPS ONLY: Enable autoscaling and set the application's autoscaling parameters:
 
 min=int - minimum number of instances to be allocated globally.
 max=int - maximum number of instances to be allocated globally.
@@ -11,20 +11,19 @@ flyctl autoscale set [flags]
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
-  -h, --help            help for set
+  -a, --app string   Application name
+  -h, --help         help for set
+  -j, --json         JSON output
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also
 
-* [flyctl autoscale](/docs/flyctl/autoscale/)	 - Autoscaling app resources
+* [flyctl autoscale](/docs/flyctl/autoscale/)	 - V1 APPS ONLY: Autoscaling app resources
 

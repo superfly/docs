@@ -9,14 +9,14 @@ flyctl volumes snapshots list <volume-id> [flags]
 
 ~~~
   -h, --help   help for list
+  -j, --json   JSON output
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

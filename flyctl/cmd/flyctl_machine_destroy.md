@@ -1,4 +1,5 @@
-Destroy a Fly machine
+Destroy a Fly machine.
+This command requires a machine to be in a stopped state unless the force flag is used.
 
 
 ## Usage
@@ -11,16 +12,16 @@ flyctl machine destroy <id> [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -f, --force           force kill machine if it's running
+  -f, --force           force kill machine regardless of current state
   -h, --help            help for destroy
+      --select          Select from a list of machines
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

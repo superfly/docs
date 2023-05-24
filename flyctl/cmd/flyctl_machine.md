@@ -9,7 +9,7 @@ flyctl machine [command] [flags]
 ## Available Commands
 * [api-proxy](/docs/flyctl/machine-api-proxy/)	 - Establish a proxy to the Machine API through a Wireguard tunnel for local connections
 * [clone](/docs/flyctl/machine-clone/)	 - Clone a Fly machine
-* [destroy](/docs/flyctl/machine-destroy/)	 - Destroy a Fly machine
+* [destroy](/docs/flyctl/machine-destroy/)	 - Destroy a Fly machine.
 * [exec](/docs/flyctl/machine-exec/)	 - Execute a command on a machine
 * [kill](/docs/flyctl/machine-kill/)	 - Kill (SIGKILL) a Fly machine
 * [leases](/docs/flyctl/machine-leases/)	 - Manage machine leases
@@ -31,8 +31,7 @@ flyctl machine [command] [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

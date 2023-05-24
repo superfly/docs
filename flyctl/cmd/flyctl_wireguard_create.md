@@ -2,7 +2,7 @@ Add a WireGuard peer connection to an organization
 
 ## Usage
 ~~~
-flyctl wireguard create [org] [region] [name] [flags]
+flyctl wireguard create [org] [region] [name] [file] [flags]
 ~~~
 
 ## Options
@@ -15,8 +15,7 @@ flyctl wireguard create [org] [region] [name] [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

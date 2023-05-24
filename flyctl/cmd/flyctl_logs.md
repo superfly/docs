@@ -10,6 +10,11 @@ to all instances running in a specific region using the --region/-r flag.
 flyctl logs [flags]
 ~~~
 
+## Available Commands
+* [dashboard](/docs/flyctl/logs-dashboard/)	 - View and analyze logs in a web browser
+* [ship](/docs/flyctl/logs-ship/)	 - Ship application logs to Logtail
+* [unship](/docs/flyctl/logs-unship/)	 - Stop shipping application logs to Logtail
+
 ## Options
 
 ~~~
@@ -17,6 +22,7 @@ flyctl logs [flags]
   -c, --config string     Path to application configuration file
   -h, --help              help for logs
   -i, --instance string   Filter by instance ID
+  -j, --json              JSON output
   -r, --region string     The target region (see 'flyctl platform regions')
 ~~~
 
@@ -24,8 +30,7 @@ flyctl logs [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also
