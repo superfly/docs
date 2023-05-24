@@ -27,17 +27,18 @@ For a full, working example of a LiteFS application, please see the
 ### Dependencies
 
 The `litefs` binary is self-contained but you'll need to install the `fuse3`
-library so LiteFS is able to mount a local file system. This installation
+library so LiteFS is able to mount a local file system. You'll also need
+`ca-certificates` if you're connecting to Consul. This installation
 depends on your package manager but some examples are:
 
 ```sh
 # Install on Alpine
-$ apk add fuse3
+$ apk add ca-certificates fuse3
 ```
 
 ```sh
-# Install on Ubuntu
-$ apt install fuse3
+# Install on Debian/Ubuntu
+$ apt install ca-certificates fuse3
 ```
 
 
