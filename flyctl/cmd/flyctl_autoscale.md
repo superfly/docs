@@ -1,4 +1,4 @@
-Autoscaling application resources
+V1 APPS ONLY: Autoscaling application resources
 
 ## Usage
 ~~~
@@ -6,24 +6,21 @@ flyctl autoscale [command] [flags]
 ~~~
 
 ## Available Commands
-* [disable](/docs/flyctl/autoscale-disable/)	 - Disable autoscaling
+* [disable](/docs/flyctl/autoscale-disable/)	 - V1 APPS ONLY: Disable autoscaling
 * [set](/docs/flyctl/autoscale-set/)	 - Set app autoscaling parameters
-* [show](/docs/flyctl/autoscale-show/)	 - Show current autoscaling configuration
+* [show](/docs/flyctl/autoscale-show/)	 - V1 APPS ONLY: Show current autoscaling configuration
 
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
-  -h, --help            help for autoscale
+  -h, --help   help for autoscale
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

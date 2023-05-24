@@ -12,6 +12,8 @@ flyctl machine exec <machine-id> <command> [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for exec
+  -j, --json            JSON output
+      --select          Select from a list of machines
       --timeout int     Timeout in seconds
 ~~~
 
@@ -19,8 +21,7 @@ flyctl machine exec <machine-id> <command> [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

@@ -1,5 +1,4 @@
-Detach Consul cluster from an app, and unsetting the `FLY_CONSUL_URL` secret
-
+Detach Consul cluster from an app, and unsetting the FLY_CONSUL_URL secret
 
 ## Usage
 ~~~
@@ -19,10 +18,10 @@ flyctl consul detach [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also
 
-* [flyctl consul](/docs/flyctl/consul/)	 - Manage Postgres clusters.
+* [flyctl consul](/docs/flyctl/consul/)	 - Enable and manage Consul clusters
 

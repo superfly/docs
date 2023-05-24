@@ -1,27 +1,27 @@
-Sets the backup region pool with provided regions
+V1 APPS ONLY: Sets the backup region pool with provided regions
 
 ## Usage
 ~~~
-flyctl regions backup REGION ... [flags]
+flyctl regions backup REGION [REGION...] [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -a, --app string      App name to operate on
-  -c, --config string   Path to an app config file or directory containing one (default "./fly.toml")
-  -h, --help            help for backup
+  -a, --app string   Application name
+  -h, --help         help for backup
+  -j, --json         JSON output
+  -y, --yes          Accept all confirmations
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also
 
-* [flyctl regions](/docs/flyctl/regions/)	 - Manage regions
+* [flyctl regions](/docs/flyctl/regions/)	 - V1 APPS ONLY: Manage regions
 

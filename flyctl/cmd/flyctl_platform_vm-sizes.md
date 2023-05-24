@@ -10,14 +10,14 @@ flyctl platform vm-sizes [flags]
 
 ~~~
   -h, --help   help for vm-sizes
+  -j, --json   JSON output
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

@@ -1,5 +1,4 @@
-Attach Consul cluster to an app, and setting the `FLY_CONSUL_URL` secret
-
+Attach Consul cluster to an app, and setting the FLY_CONSUL_URL secret
 
 ## Usage
 ~~~
@@ -19,10 +18,10 @@ flyctl consul attach [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also
 
-* [flyctl consul](/docs/flyctl/consul/)	 - Manage Postgres clusters.
+* [flyctl consul](/docs/flyctl/consul/)	 - Enable and manage Consul clusters
 

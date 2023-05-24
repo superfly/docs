@@ -9,35 +9,41 @@ flyctl machine update <machine_id> [flags]
 ## Options
 
 ~~~
-  -a, --app string              Application name
-      --build-nixpacks          Build your image with nixpacks
-  -C, --command string          Command to run
-  -c, --config string           Path to application configuration file
-      --cpus int                Number of CPUs
-      --detach                  Return immediately instead of monitoring deployment progress
-      --dockerfile string       Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
-      --entrypoint string       ENTRYPOINT replacement
-  -e, --env strings             Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
-  -h, --help                    help for update
-  -i, --image string            The Docker image to deploy
-      --kernel-arg strings      List of kernel arguments to be provided to the init. Can be specified multiple times.
-      --memory int              Memory (in megabytes) to attribute to the machine
-  -m, --metadata strings        Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
-  -p, --port strings            Exposed port mappings (format: (edgePort|startPort-endPort)[:machinePort]/[protocol[:handler]])
-      --schedule string         Schedule a machine run at hourly, daily and monthly intervals
-  -s, --size string             Preset guest cpu and memory for a machine, defaults to shared-cpu-1x
-      --skip-dns-registration   Do not register the machine's 6PN IP with the intenral DNS system
-      --skip-health-checks      Updates machine without waiting for health checks.
-  -v, --volume strings          Volumes to mount in the form of <volume_id_or_name>:/path/inside/machine[:<options>]
-  -y, --yes                     Accept all confirmations
+  -a, --app string               Application name
+      --autostart                Automatically start a stopped machine when a network request is received (default true)
+      --autostop                 Automatically stop a machine when there aren't network requests for it (default true)
+      --build-nixpacks           Build your image with nixpacks
+  -C, --command string           Command to run
+  -c, --config string            Path to application configuration file
+      --detach                   Return immediately instead of monitoring deployment progress
+      --dockerfile string        Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
+      --entrypoint string        ENTRYPOINT replacement
+  -e, --env stringArray          Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
+  -h, --help                     help for update
+  -i, --image string             The Docker image to deploy
+      --kernel-arg stringArray   List of kernel arguments to be provided to the init. Can be specified multiple times.
+  -m, --metadata stringArray     Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
+      --mount-point string       New volume mount point
+  -p, --port strings             Publish ports, format: port[:machinePort][/protocol[:handler[:handler...]]])
+                                 	i.e.: --port 80/tcp --port 443:80/tcp:http:tls --port 5432/tcp:pg_tls
+                                 	To remove a port mapping use '-' as handler, i.e.: --port 80/tcp:-
+      --restart string           Configure restart policy, for a machine. Options include 'no', 'always' and 'on-fail'. Default is set to always
+      --schedule string          Schedule a machine run at hourly, daily and monthly intervals
+      --select                   Select from a list of machines
+      --skip-dns-registration    Do not register the machine's 6PN IP with the internal DNS system
+      --skip-health-checks       Updates machine without waiting for health checks.
+      --standby-for strings      Comma separated list of machine ids to watch for
+      --vm-cpus int              Number of CPUs
+      --vm-memory int            Memory (in megabytes) to attribute to the machine
+  -s, --vm-size string           Preset guest cpu and memory for a machine, defaults to shared-cpu-1x
+  -y, --yes                      Accept all confirmations
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

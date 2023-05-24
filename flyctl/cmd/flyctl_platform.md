@@ -9,7 +9,7 @@ flyctl platform [command] [flags]
 
 ## Available Commands
 * [regions](/docs/flyctl/platform-regions/)	 - List regions
-* [status](/docs/flyctl/platform-status/)	 - Show current platform status
+* [status](/docs/flyctl/platform-status/)	 - Show current platform status with an optional filter for maintenance or incidents in json mode (eg. incidents, maintenance)
 * [vm-sizes](/docs/flyctl/platform-vm-sizes/)	 - List VM Sizes
 
 ## Options
@@ -22,8 +22,7 @@ flyctl platform [command] [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also

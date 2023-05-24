@@ -13,14 +13,14 @@ flyctl ips allocate-v4 [flags]
   -h, --help            help for allocate-v4
   -r, --region string   The target region (see 'flyctl platform regions')
       --shared          Allocates a shared IPv4
+      --yes             Auto-confirm IPv4 allocation
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-  -j, --json                  json output
-      --verbose               verbose output
+      --verbose               Verbose output
 ~~~
 
 ## See Also
