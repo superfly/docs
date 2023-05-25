@@ -23,7 +23,7 @@ bin/rails generate scaffold Name name
 echo 'Rails.application.routes.draw {root "names#index"}' >> config/routes.rb
 ```
 
-Launching this will require a litefs configuration file (`litefs.yml`) and a number of changes to your dockerfile.  Fly.io provides a [dockerfile generator](https://github.com/rubys/dockerfile-rails) which will do this for you.  Run it immediately after `fly launch` thus:
+Launching this will require a litefs configuration file (`litefs.yml`) and a number of changes to your dockerfile.  Fly.io provides a [dockerfile generator](https://github.com/fly-apps/dockerfile-rails) which will do this for you.  Run it immediately after `fly launch` thus:
 
 
 ```sh
@@ -33,7 +33,7 @@ bin/rails generate dockerfile --litefs
 
 `fly launch` will prompt you for a name, region, and whether or not you want postgres or redis databases.  Say no to the databases, you won't need them for this demo.
 
-`generate dockerfile` will prompt you whether or not you want to accept the changes.  Feel free to peruse the diffs, but ultimately accept the changes.
+`generate dockerfile` will prompt you whether or not you want to accept the changes.  Feel free to peruse the diffs, but ultimately accept the changes.  If you would rather not even be prompted to see the diffs, you can add a `--force` option the command.
 
 Before we deploy, let's make a one-line change to our `fly.toml` to keep our machines running so that we can ssh into them whenever we want:
 
