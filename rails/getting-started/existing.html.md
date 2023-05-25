@@ -202,10 +202,27 @@ You can see the versions of each tool that will be use on your deployment
 machine by looking for lines that start with `ARG` in your Dockerfile.
 
 
+### ActiveStorage
+
+From the [documentation](https://guides.rubyonrails.org/active_storage_overview.html#what-is-active-storage-questionmark):
+
+<blockquote style="margin-left: 3em">
+Active Storage facilitates uploading files to a cloud storage service like Amazon S3, Google Cloud Storage, or Microsoft Azure Storage and attaching those files to Active Record objects. It comes with a local disk-based service for development and testing and supports mirroring files to subordinate services for backups and migrations.
+</blockquote>
+
+Accordingly:
+
+* Don't use [Disk service](https://community.fly.io/t/active-storage-images-are-not-persisting-in-disk-part-2/13095/3) unless you put the data on a [Volume](https://fly.io/docs/reference/volumes/) and are prepared to sync the data between machines
+* If you want to have your active storage data hosted on fly.io, consider using the [postgres adapter](https://github.com/lsylvester/active_storage-postgresql) or [MinIO](https://fly.io/docs/app-guides/minio/).
+* Of course, you are welcome to use [Amazon S3](https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis), [Microsoft Azure](https://edgeguides.rubyonrails.org/active_storage_overview.html#microsoft-azure-storage-service), or [Google Cloud Services](https://edgeguides.rubyonrails.org/active_storage_overview.html#google-cloud-storage-service).
+
+[Litefs](https://fly.io/docs/litefs/) is currently in beta, and if there were a sqlite3 active storage adapter it could be used for this purpose.  If this is of interest, bring up the topic on [community.fly.io](https://community.fly.io/).
+
 ### Postgres database drivers
 
-If you didn't initially deploy with a postgres database but want to add
-one later, you can create a databae using [`fly postgres create`](https://fly.io/docs/postgres/getting-started/create-pg-cluster/).  
+If you didn't initially deploy with a postgres database but want to add one
+later, you can create a databae using [`fly postgres
+create`](https://fly.io/docs/postgres/getting-started/create-pg-cluster/).
 Next, update your dockerfile to include the postgres libraries using:
 
 ```shell
