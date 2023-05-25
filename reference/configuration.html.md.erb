@@ -211,7 +211,7 @@ Secrets take precedence over env variables with the same name.
 
 ## The `http_service` section
 
-[**Apps V2**](/docs/reference/apps/#apps-v2) **only:** For apps that only need HTTP and HTTPS services, you can replace the full-blown `[[services]]` section with this simpler alternative. 
+[**Apps V2**](/docs/reference/apps/#apps-v2) **only:** For apps that only need HTTP and HTTPS services, you can replace the `[[services]]` section with this simpler alternative. 
 
 An `[http_service]` section defines a service that listens on ports 80 and 443. Port 80 will have an HTTP handler. Port 443 will have a TLS and HTTP handler. You can configure additional services on different ports by adding `[[services]]` sections.
 
@@ -241,6 +241,8 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
 We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having machines that either never start or never stop. Learn more about [automatically starting and stopping V2 app Fly machines](/docs/apps/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
 </div>
 
+### `http_service.concurrency`
+
 The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
 
 * `type` specifies what metric is used to determine when to scale up and down, or when a given instance should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
@@ -251,6 +253,10 @@ The `[http_service.concurrency]` section has the same settings as `[services.con
 
 * `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
 * `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application support doing so.
+
+### `http_service.http_options`
+
+
 
 ## The `services` sections
 
@@ -563,7 +569,7 @@ This feature should not be compared directly with a CDN, for the following reaso
 * `statics` does not honor symlinks. So, if `/app/public` in your container is actually a symlink to something like `/app-39403/public`, you'll want to use the absolute original path in your statics configuration.
 
 
-## The `experimental` section (V1 Nomad Apps Only)
+## The `experimental` section
 
 This section is for flags and feature settings which have yet to be promoted into the main configuration.
 
