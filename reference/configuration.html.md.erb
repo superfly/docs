@@ -158,7 +158,7 @@ The temporary VM inherits the size from the largest machine in the default proce
 
 A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
 
-To ensure the command runs in a specific region - say `dfw` - set `PRIMARY_REGION = 'dfw'` in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if when running [database replicas in multiple regions](/docs/postgres/high-availability-and-global-replication).
+To ensure the command runs in a specific region, such as `dfw`, set `PRIMARY_REGION = 'dfw'` in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if you're running [database replicas in multiple regions](/docs/postgres/high-availability-and-global-replication).
 
 The environment variable `RELEASE_COMMAND=1` is set within the temporary release VM. You can use this to define behavior in your Dockerfile's `ENTRYPOINT`  that's conditional on being run on a release VM.
 
@@ -233,7 +233,7 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
 * `processes`: For apps with multiple processes. The process group that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
 * `internal_port`: The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
-* `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs a process to automatically stop machines every few minutes. The default it `true`.
+* `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs a process to automatically stop machines every few minutes. The default is `true`.
 * `auto_start_machines`: Whether to automatically start an application's machines when a new request is made to the application and there's no excess capacity, per region. If there's only one machine in a region, then it's started whenever a request is made to the application. The default is `true`.
 * `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines = true`.
 
@@ -247,22 +247,24 @@ The `[http_service.concurrency]` section has the same settings as `[services.con
 
 * `type` specifies what metric is used to determine when to scale up and down, or when a given instance should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
 
-**connections**: Load balance and scale based on number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
+**connections**: Load balance and scale based on the number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
 
 **requests**: Load balance and scale based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
 
 * `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
-* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application support doing so.
+* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application supports doing so.
 
 ### `http_service.http_options.response.headers`
 
-Add or remove HTTP response headers. In the following example, `example-header` would be removed from the final response that Fly Proxy sends, and `example-header-1` and `example-multi-value` and their values would be added to the response headers.
+Add or remove HTTP response headers. 
+
+In the following example, `Example-Header` will be removed from the final response that Fly Proxy sends, while `Example-Header-1` and `Example-Multi-Value` and their values will be added to the response header.
 
 ```toml
   [http_service.http_options.response.headers]
-    example-header = false
-    example-header-1 = "value"
-    example-multi-value = ["value1", "value2"]
+    Example-Header = false
+    Example-Header-1 = "value"
+    Example-Multi-Value = ["value1", "value2"]
 ```
 
 ## The `services` sections
@@ -289,7 +291,7 @@ The `services` section itself is a table of tables in TOML, so the section is de
 * `processes`: For apps with multiple processes. The process group that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
 * `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `protocol` : The protocol that this service will use to communicate. Typically `tcp` for most applications, but can also be `udp`.
-* `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs the checks to automatically stop machines every few minutes. The default it `true`.
+* `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs the checks to automatically stop machines every few minutes. The default is `true`.
 * `auto_start_machines`: Whether to automatically start an application's machines when a new request is made to the application and there's no excess capacity, per region. If there's only one machine in a region, then it's started whenever a request is made to the application. The default is `true`.
 * `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines = true`.
 
@@ -312,7 +314,7 @@ This section is a simple list of key/values, so the section is denoted with sing
 
 `type` specifies what metric is used to determine when a given instance has reached a concurrency limit. The two supported values are `connections` and `requests`.
 
-**connections**: Load balance based on number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
+**connections**: Load balance based on the number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
 
 **requests**: Load balance based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
 
@@ -370,13 +372,13 @@ Instead of using multiple port definitions, you can specify a range of ports. Fo
 
 Add or remove HTTP response headers. 
 
-In the following example, `Example-Header` is removed from the final response that Fly Proxy sends, while `Example-Header-1` and `Example-Multi-Value` and their values are added to the response header.
+In the following example, `Example-Header` will be removed from the final response that Fly Proxy sends, while `Example-Header-1` and `Example-Multi-Value` and their values will be added to the response header.
 
 ```toml
   [services.ports.http_options.response.headers]
-    example-header = false
-    example-header-1 = "value"
-    example-multi-value = ["value1", "value2"]
+    Example-Header = false
+    Example-Header-1 = "value"
+    Example-Multi-Value = ["value1", "value2"]
 ```
 
 #### `services.ports.tls_options`
@@ -418,7 +420,7 @@ When a service is running, Fly Proxy can check up on it by connecting to a port.
 Times are in milliseconds unless units are specified.
 
 * `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your application to start up. For example if your app takes 2 seconds to start up, give it some runway by setting this to at least 3 seconds.
-* `interval`: The time between connectivity checks. If it's long and your grace_period shorter than your app's startup time, health check will take long adding you your deployment time.
+* `interval`: The time between connectivity checks. If the interval is long, and the `grace_period` is shorter than your app's startup time, then the health check will take longer and will add to your deployment time.
 * `restart_limit`: Only applicable to V1 (Nomad) apps. The number of consecutive TCP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed TCP health checks.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
 
@@ -443,7 +445,7 @@ Roughly translated, this section says every ten seconds, perform a HTTP GET on t
 
 Times are in milliseconds unless units are specified.
 
-* `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your app to start up. For example if your app takes 2 seconds to start up, give it some runway by setting to at least 3 seconds.
+* `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.
 * `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If it's long and your grace_period shorter than your app's startup time, health check will take too long adding you your deployment time.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
 * `restart_limit`: Only applicable to V1 (Nomad) apps. The number of consecutive HTTP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed HTTP health checks.
@@ -471,7 +473,7 @@ The `source` is a volume name that this app should mount. Any volume with this n
 
 ### `destination`
 
-The `destination` is directory where the `source` volume should be mounted on the running app.
+The `destination` is the directory where the `source` volume should be mounted on the running app.
 
 ### `processes`
 
@@ -508,8 +510,8 @@ Fields are very similar to `[[services.checks]]`:
 
 * `port`: Internal port to connect to. Needs to be available on `0.0.0.0`.
 * `type`: Either `tcp` or `http`.
-* `grace_period`: The time to wait after a VM starts before checking its health. Make sure you give your app enough time to start up. For example if your app takes 2 seconds to start up, give it some runway by setting this to at least 3 seconds.  
-* `interval`: The time between connectivity checks. If it's long and your grace_period shorter than your app's startup time, health will take long adding you your deployment time.
+* `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.  
+* `interval`: The time between connectivity checks. If the interval is long, and the `grace_period` is shorter than your app's startup time, then the health check will take longer and will add to your deployment time.
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
