@@ -158,7 +158,7 @@ The temporary VM inherits the size from the largest machine in the default proce
 
 A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
 
-To ensure the command runs in a specific region - say `dfw` - set `PRIMARY_REGION = 'dfw'` on in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if when running [database replicas in multiple regions](/docs/postgres/high-availability-and-global-replication).
+To ensure the command runs in a specific region - say `dfw` - set `PRIMARY_REGION = 'dfw'` in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if when running [database replicas in multiple regions](/docs/postgres/high-availability-and-global-replication).
 
 The environment variable `RELEASE_COMMAND=1` is set within the temporary release VM. You can use this to define behavior in your Dockerfile's `ENTRYPOINT`  that's conditional on being run on a release VM.
 
@@ -254,9 +254,16 @@ The `[http_service.concurrency]` section has the same settings as `[services.con
 * `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
 * `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application support doing so.
 
-### `http_service.http_options`
+### `http_service.http_options.response.headers`
 
+Add or remove HTTP response headers. In the following example, `example-header` would be removed from the final response that Fly Proxy sends, and `example-header-1` and `example-multi-value` and their values would be added to the response headers.
 
+```toml
+  [http_service.http_options.response.headers]
+    example-header = false
+    example-header-1 = "value"
+    example-multi-value = ["value1", "value2"]
+```
 
 ## The `services` sections
 
@@ -357,6 +364,19 @@ Instead of using multiple port definitions, you can specify a range of ports. Fo
   handlers = ["tls"]
   start_port = 8080
   end_port = 8085
+```
+
+#### `services.ports.http_options.response.headers`
+
+Add or remove HTTP response headers. 
+
+In the following example, `Example-Header` is removed from the final response that Fly Proxy sends, while `Example-Header-1` and `Example-Multi-Value` and their values are added to the response header.
+
+```toml
+  [services.ports.http_options.response.headers]
+    example-header = false
+    example-header-1 = "value"
+    example-multi-value = ["value1", "value2"]
 ```
 
 #### `services.ports.tls_options`
