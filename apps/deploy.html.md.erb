@@ -68,19 +68,29 @@ You can run a one-off [release command](/docs/reference/configuration/#run-one-o
 You can specify one of the following deployment strategies:
 
 * `rolling` (default): wait for each Machine to be successfully deployed before starting the update of the next one
-* `immediate`: bring all instances down for update at once
+* `immediate`: bring all Machines down for update at once
 * `canary`: boot a single new Machine, verify its health, and then proceed with a rolling restart strategy
 
 ```cmd
-fly deploy
+fly deploy --strategy canary
 ```
 ```out
+...
 ==> Building image
-Searching for image 'nginx' remotely...
-image found: img_wd57v5nge95v38o0
-Deploying dry-pond-1475 app with rolling strategy
-  Machine 21781973f03e89 update finished: success
+Searching for image 'flyio/hellofly:latest' remotely...
+image found: img_z1nr0lpjz9v5q98w
+
+Watch your app at https://fly.io/apps/aged-water-8803/monitoring
+
+Creating canary machine for group app
+  Machine 328745da023e85 [app] update finished: success
+Canary machines successfully created and healthy, destroying before continuing
+machine 328745da023e85 was found and is currently in created state, attempting to destroy...
+Updating existing machines in 'example-app-8803' with canary strategy
+  [1/2] Machine 3287457df77785 [app] update finished: success
+  [2/2] Machine 91857266c41638 [app] update finished: success
   Finished deploying
+...
 ```
 
 Nomad only: Legacy apps can continue to `bluegreen` deployment strategies.
