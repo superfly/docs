@@ -70,7 +70,7 @@ Adjust the name of the source to match the name of the volume you created.
 
 ## Out of Memory
 
-RAM memory is a precious commodity - both to those on Hobby plans who want
+RAM is a precious commodity - both to those on Hobby plans who want
 to remain within or near the free allowances, and to apps that want to scale
 to be able to handle a large number of concurrent connections.
 
