@@ -7,7 +7,7 @@ nav: firecracker
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-You can configure an app for deployment on Fly.io using a `fly.toml` file. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here. 
+You can configure an app for deployment on Fly.io using a `fly.toml` file. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here.
 
 TOML is a [simple configuration file format](https://github.com/toml-lang/toml). Here's a [useful introduction](https://npf.io/2014/08/intro-to-toml/) on its syntax.
 
@@ -213,7 +213,7 @@ Secrets take precedence over env variables with the same name.
 
 ## The `http_service` section
 
-[**Apps V2**](/docs/reference/apps/#apps-v2) **only:** For apps that only need HTTP and HTTPS services, you can replace the `[[services]]` section with this simpler alternative. 
+[**Apps V2**](/docs/reference/apps/#apps-v2) **only:** For apps that only need HTTP and HTTPS services, you can replace the `[[services]]` section with this simpler alternative.
 
 An `[http_service]` section defines a service that listens on ports 80 and 443. Port 80 will have an HTTP handler. Port 443 will have a TLS and HTTP handler. You can configure additional services on different ports by adding `[[services]]` sections.
 
@@ -258,7 +258,7 @@ The `[http_service.concurrency]` section has the same settings as `[services.con
 
 ### `http_service.http_options.response.headers`
 
-Add or remove HTTP response headers. 
+Add or remove HTTP response headers.
 
 In the following example, `Example-Header` will be removed from the final response that Fly Proxy sends, while `Example-Header-1` and `Example-Multi-Value` and their values will be added to the response header.
 
@@ -372,7 +372,7 @@ Instead of using multiple port definitions, you can specify a range of ports. Fo
 
 #### `services.ports.http_options.response.headers`
 
-Add or remove HTTP response headers. 
+Add or remove HTTP response headers.
 
 In the following example, `Example-Header` will be removed from the final response that Fly Proxy sends, while `Example-Header-1` and `Example-Multi-Value` and their values will be added to the response header.
 
@@ -483,12 +483,13 @@ Optionally, you can specify a list of [processes](#the-processes-section) to lim
 
 ## The `checks` section
 
-This section lets you define top-level checks for apps outside of their `[[services]]` (or for apps without any services).
+If your app doesn't have public-facing services, or you want independent health checks that don't affect request routing,
+use this top-level `checks` section instead of `[[services.checks]]`.
 
-Some differences between top-level checks and service checks:
-- You need to provide a port
-- You need to provide a name
-- You need to specify the type of the check
+Unlike service-level checks, top-level checks require:
+- A port number
+- A unique name
+- The type of check (`http` or `tcp`)
 
 ```toml
 [checks]
@@ -500,6 +501,10 @@ Some differences between top-level checks and service checks:
     port = 5500
     timeout = "10s"
     type = "http"
+    [checks.name_of_your_http_check.headers]
+      Content-Type = "application/json"
+      Authorization = "super-secret"
+
   [checks.name_of_your_tcp_check]
     grace_period = "30s"
     interval = "15s"
@@ -510,14 +515,18 @@ Some differences between top-level checks and service checks:
 
 Fields are very similar to `[[services.checks]]`:
 
-* `port`: Internal port to connect to. Needs to be available on `0.0.0.0`.
-* `type`: Either `tcp` or `http`.
-* `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.  
-* `interval`: The time between connectivity checks. If the interval is long, and the `grace_period` is shorter than your app's startup time, then the health check will take longer and will add to your deployment time.
+* `port`: Internal port to connect to. Needs to be available on `0.0.0.0`. Required.
+* `type`: Either `tcp` or `http`. Required.
+* `grace_period`: The time to wait after a VM starts before checking its health. Make sure you give your app enough time to start up. For example if your app takes 2 seconds to start up, give it some runway by setting this to at least 3 seconds.
+* `interval`: The time between check runs. If your `grace_period` is shorter than your app's startup time, and `interval` is too long, checks will increase deployment times.
+* `processes`: For apps with multiple processes. The process group to apply the health checks to. Define process groups in the [processes](#the-processes-section) section.
+
+For http checks only:
+
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
 * `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
-* `processes`: For apps with multiple processes. The process group to apply the health checks to. Define process groups in the [processes](#the-processes-section) section.
+* `headers`: Specify key/value pairs will get passed as HTTP headers on the check request.
 
 Again, times are in milliseconds unless units are specified.
 
