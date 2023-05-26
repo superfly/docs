@@ -175,9 +175,11 @@ The environment variable `RELEASE_COMMAND=1` is set within the temporary release
 
 The available strategies are:
 
-**rolling**: The default for apps with persistent volumes. One by one, each running VM is taken down and replaced by a new release VM. This is the default strategy for apps with volumes.
+**rolling**: The default strategy for apps with or without volumes. One by one, each running VM is taken down and replaced by a new release VM.
 
 **immediate**: Replace all VMs with new releases immediately without waiting for health checks to pass. This is useful in emergency situations where you're confident about release health and can't wait for health checks.
+
+**canary**: Boots a single, new VM with the new release, verifies its health, and then proceeds with a `rolling` restart strategy.
 
 
 #### For Nomad (Legacy) Apps Only
