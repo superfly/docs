@@ -36,15 +36,15 @@ Add the following to the `fly.toml`:
 
 ```toml
 [processes]
-web = "bin/rails server"
+app = "bin/rails server"
 worker = "bundle exec sidekiq"
 ```
 
-Then under the `[[services]]` directive, find the entry that maps to `internal_port = 3000`, and change `processes = ["app"]` to `processes = ["web"]`. The configuration file should look something like this:
+Then under the `[http_service]` directive, add `processes = ["app"]`. The configuration file should look something like this:
 
 ```toml
-[[services]]
-  processes = ["web"] # this service only applies to the web process
+[http_service]
+  processes = ["app"] # this service only applies to the app process
   http_checks = []
   internal_port = 3000
   protocol = "tcp"
@@ -61,14 +61,14 @@ Once multiple processes are configured in the `fly.toml` file, deploy them via:
 fly deploy
 ```
 
-If all goes well the application should launch with both `web` and `worker` processes. Be sure to run through the application and test features that kick-off background jobs. If you're having issues getting it working, run `fly logs` to see errors.
+If all goes well the application should launch with both `app` and `worker` processes. Be sure to run through the application and test features that kick-off background jobs. If you're having issues getting it working, run `fly logs` to see errors.
 
 ## Scaling
 
 Scaling up and down processes may be accomplished by running:
 
 ```cmd
-fly scale count web=3 worker=3
+fly scale count app=3 worker=3
 ```
 
 To view the current state of the application's scale, run:
@@ -87,11 +87,11 @@ App
 Instances
 ID        PROCESS VERSION REGION  DESIRED STATUS  HEALTH CHECKS       RESTARTS  CREATED
 15088508  worker  41      ord     run     running                     0         34s ago
-8789ef49  web     41      ord     run     running 1 total, 1 passing  0         2022-07-26T16:06:34Z
-c419942b  web     41      ord     run     running 1 total, 1 passing  0         2022-07-26T16:05:52Z
-ea7af986  web     41      ord     run     running 1 total, 1 passing  0         2022-07-26T16:05:52Z
+8789ef49  app     41      ord     run     running 1 total, 1 passing  0         2022-07-26T16:06:34Z
+c419942b  app     41      ord     run     running 1 total, 1 passing  0         2022-07-26T16:05:52Z
+ea7af986  app     41      ord     run     running 1 total, 1 passing  0         2022-07-26T16:05:52Z
 d681c33d  worker  41      ord     run     running                     0         2022-07-26T15:42:30Z
 d8d8dc08  worker  41      ord     run     running                     0         2022-07-26T15:42:30Z
 ```
 
-In this case, we can see that 3 worker processes and 3 web processes are running in the `ord` region.
+In this case, we can see that 3 worker processes and 3 app processes are running in the `ord` region.
