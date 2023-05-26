@@ -45,10 +45,11 @@ Then under the `[http_service]` directive, add `processes = ["app"]`. The config
 ```toml
 [http_service]
   processes = ["app"] # this service only applies to the app process
-  http_checks = []
   internal_port = 3000
-  protocol = "tcp"
-  script_checks = []
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
 ```
 
 This associates the process with the service that Fly launches.
