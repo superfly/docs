@@ -17,8 +17,9 @@ flyctl console [flags]
       --machine string   Run the console in the existing machine with the specified ID
   -s, --select           Select the machine on which to execute the console from a list
   -u, --user string      Unix username to connect as (default "root")
-      --vm-cpus int      How many (shared) CPUs to give the new machine
+      --vm-cpus int      How many CPUs to give the new machine
       --vm-memory int    How much memory (in MB) to give the new machine
+      --vm-size string   Use a preset size for the new machine
 ~~~
 
 ## Global Options
