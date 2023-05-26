@@ -64,8 +64,12 @@ Configure the following deployment behavior in the [`[deploy]` section](/docs/re
 You can run a one-off [release command](/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment) in a temporary VM&mdash;using the successfully built release&mdash;before that release is deployed. This is good for, e.g., running database migrations.
 
 ### Deployment strategy
-You can specify `rolling` deployment (wait for each Machine to be successfully deployed before starting the update of the next one), or `immediate` deployment (go ahead and bring all instances down for update at once).
 
+You can specify one of the following deployment strategies:
+
+* `rolling` (default): wait for each Machine to be successfully deployed before starting the update of the next one
+* `immediate`: bring all instances down for update at once
+* `canary`: boot a single new Machine, verify its health, and then proceed with a rolling restart strategy
 
 ```cmd
 fly deploy
@@ -79,7 +83,7 @@ Deploying dry-pond-1475 app with rolling strategy
   Finished deploying
 ```
 
-Nomad only: Legacy apps can continue to use `canary` and `bluegreen` deployment strategies.
+Nomad only: Legacy apps can continue to `bluegreen` deployment strategies.
 
 ## Not all changes require a new App release
 
