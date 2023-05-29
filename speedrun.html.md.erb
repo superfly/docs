@@ -16,7 +16,7 @@ For many languages and frameworks, you can deploy your app from zero, with the f
 
 1. [Install flyctl](/docs/hands-on/install-flyctl/) - you'll need it.
 2. Create an account with `fly auth signup` or login with `fly auth login`.
-3. Run `fly launch` - create, configure, and deploy a new application.
+3. Run `fly launch` from inside your project source directory - create, configure, and deploy a new application.
 
 `fly launch` can configure and deploy the following kinds of apps automatically:
 
@@ -34,8 +34,12 @@ See [Fly Launch](/docs/reference/fly-launch/) for more on what `fly launch` does
 
 If things don't go as smoothly as you'd like, visit our [community forum](https://community.fly.io) and get help!
 
-Would you like to know more? You should read up on [private networking](https://fly.io/docs/reference/private-networking/), [volumes](/docs/reference/volumes/), and [global Postgres](https://fly.io/docs/postgres/high-availability-and-global-replication).
+Would you like to know more?
 
-It's also easy to [bring your Heroku app to Fly.io](/launch/turboku) [Turboku](https://fly.io/launch/heroku) web launcher. Read about it in the [New Turboku launch post](https://fly.io/blog/new-turboku/).
+* **Apps can store only ephemeral data in their root file systems.** Learn about [persistent storage options](/docs/database-storage-guides/).
+* **You have control over how your app deploys and what resources it uses.** Learn about [Fly Apps](/docs/apps/).
+* **Beyond just launching your app; go deeper with our most comprehensive framework guides.** Learn about [Elixir on Fly.io](/docs/elixir), [Rails on Fly.io](/docs/rails/), [Laravel on Fly.io](/docs/laravel/), and [Django on Fly.io](/docs/django). 
+
+It's also easy to [bring your Heroku app to Fly.io](/launch/turboku). Read more about it in the [Turboku launch post](https://fly.io/blog/new-turboku/).
 
 Check out our other [Web Launchers](/launch), too.
