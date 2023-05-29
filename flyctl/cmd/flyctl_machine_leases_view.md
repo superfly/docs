@@ -3,7 +3,7 @@ View machine leases
 
 ## Usage
 ~~~
-flyctl machine leases view [flags]
+flyctl machine leases view <machine-id> [flags]
 ~~~
 
 ## Options
