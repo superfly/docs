@@ -3,7 +3,7 @@ Clear machine leases
 
 ## Usage
 ~~~
-flyctl machine leases clear [flags]
+flyctl machine leases clear <machine-id> [flags]
 ~~~
 
 ## Options

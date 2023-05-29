@@ -7,6 +7,8 @@ flyctl tokens [command] [flags]
 
 ## Available Commands
 * [create](/docs/flyctl/tokens-create/)	 - Create Fly.io API tokens
+* [list](/docs/flyctl/tokens-list/)	 - List tokens
+* [revoke](/docs/flyctl/tokens-revoke/)	 - Revoke tokens
 
 ## Options
 
