@@ -28,7 +28,7 @@ litefs export -name my.db /path/to/backup
 gzip /path/to/backup
 
 # Upload the file to S3.
-aws s3 aws s3 cp /path/to/backup.gz s3://mybucket/backup.gz
+aws s3 cp /path/to/backup.gz s3://mybucket/backup.gz
 ```
 
 It's also recommended to perform a rolling backup based on either hour, day or
