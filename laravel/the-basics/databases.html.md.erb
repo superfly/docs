@@ -354,17 +354,11 @@ You are now connected to database "<database_name_created>" as user "<user>".
 
     ```toml
     app = "fly-redis"
-    kill_signal = "SIGINT"
-    kill_timeout = 5
+    # Your primary region may differ
     primary_region = "ams"
-    processes = []
 
     [build]
       image = "flyio/redis:6.2.6"
-
-    [env]
-
-    [[services]]
 
     [[mounts]]
       destination = "/data"
