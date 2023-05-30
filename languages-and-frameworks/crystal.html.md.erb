@@ -5,6 +5,8 @@ sitemap: false
 redirect_from: /docs/getting-started/crystal/
 ---
 
+<%= partial "/docs/partials/v2_needs_update" %>
+
 <%= partial "partials/intro", locals: { runtime: "Crystal" } %>
 
 ## _Creating a Lucky App_
@@ -200,7 +202,7 @@ To deploy to multiple regions, first [Create a PostgreSQL Cluster](/docs/postgre
 
   ```toml
 [env]
-PRIMARY_REGION = "ord"
+  PRIMARY_REGION = "ord"
   ```
 
 1. Add the [superfly/fly.cr shard](https://github.com/superfly/fly.cr) shard to your project
