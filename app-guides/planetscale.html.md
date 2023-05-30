@@ -111,7 +111,7 @@ We've added a few files to make this sample app ready to run on Fly: a `Dockerfi
 
 1. Update the app's name at the top to one of your choice `app = "your-name-here"`.
 
-2. Update the region to the one nearest _your_ primary database: `PRIMARY_REGION = "lhr"`. We created _our_ database in `eu-west`. But Fly uses different region names than PlanetScale. And so you need to use the Fly region you would want your primary PlanetScale database to always be used from. As an example, let's say you have a PlanetScale database in _eu-west-1_. You plan on having a Fly app deployed to `lhr` and `iad`. You would set `PRIMARY_REGION = "lhr"` in the `fly.toml`. As that is the closest Fly region to the primary database's region.
+2. Update the region to the one nearest _your_ primary database: `primary_region = "lhr"`. We created _our_ database in `eu-west`. But Fly uses different region names than PlanetScale. And so you need to use the Fly region you would want your primary PlanetScale database to always be used from. As an example, let's say you have a PlanetScale database in _eu-west-1_. You plan on having a Fly app deployed to `lhr` and `iad`. You would set `primary_region = "lhr"` in the `fly.toml`, because that is the closest Fly region to the primary database's region.
 
 To deploy the app, run `fly launch` from the application's directory.
 
@@ -135,7 +135,7 @@ You'll be asked to give the app a name. Type a name using lowercase characters a
 
 You'll be prompted to pick an organization. Since every Fly user has a personal organization, let's pick that for now.
 
-You'll be asked for the region to deploy the first vm to. That will be the same value you set for `PRIMARY_REGION` above. For example `lhr`.
+You'll be asked for the region to deploy the first vm to. That will be the same value you set for `primary_region` above. For example, `lhr`.
 
 It will ask if you want a PostgreSQL database. Type _N_ (no) as you are using PlanetScale for its database!
 
