@@ -38,12 +38,12 @@ This section covers describes a REST-based API for provisioning individual exten
 
 ### Authentication and Request Signing
 
-Given the high privilege afforded to us by your platform, we sign all outgoing HTTP requests to providers APIs. We require providers to validate these signatures.
+Given the high privilege afforded to us by your platform, we sign all HTTP requests made to provider APIs. We require that providers verify these signatures.
 
 We follow the [IETF HTTP Message Signature Spec](https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-05.html), using the [HMAC SHA-256](https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-05.html#name-hmac-using-sha-256) algorithm. Here's a list of libraries that implement the spec:
 
 * Golang: [https://github.com/zntrio/httpsig](https://github.com/zntrio/httpsig)
-* Ruby: [https://github.com/99designs/http-signatures-ruby](https://github.com/99designs/http-signatures-ruby)
+* Ruby: [https://github.com/planetscale/http-signatures-ruby](https://github.com/planetscale/http-signatures-ruby)
 * Python: [https://pypi.org/project/requests-http-signature](https://pypi.org/project/requests-http-signature/)
 
 Here's an example verifier from a Rails app.
