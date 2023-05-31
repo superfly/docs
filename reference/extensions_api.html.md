@@ -38,18 +38,13 @@ This section covers describes a REST-based API for provisioning individual exten
 
 ### Authentication and Request Signing
 
-Given the high privilege afforded to us by your platform, we request that you:
-
-* Authenticate requests using a shared secret
-* Validate signed requests using a different shared secret
-
- We'll sign all provisioning requests with a secret key, regardless of the authentication mechanism. You should validate these signatures for added security.
+Given the high privilege afforded to us by your platform, we sign all outgoing HTTP requests to providers APIs. We require providers to validate these signatures.
 
 We follow the [IETF HTTP Message Signature Spec](https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-05.html), using the [HMAC SHA-256](https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-05.html#name-hmac-using-sha-256) algorithm. Here's a list of libraries that implement the spec:
 
-Golang: [https://github.com/zntrio/httpsig](https://github.com/zntrio/httpsig)
-Ruby: [https://github.com/99designs/http-signatures-ruby](https://github.com/99designs/http-signatures-ruby)
-Python: [https://pypi.org/project/requests-http-signature](https://pypi.org/project/requests-http-signature/)
+* Golang: [https://github.com/zntrio/httpsig](https://github.com/zntrio/httpsig)
+* Ruby: [https://github.com/99designs/http-signatures-ruby](https://github.com/99designs/http-signatures-ruby)
+* Python: [https://pypi.org/project/requests-http-signature](https://pypi.org/project/requests-http-signature/)
 
 Here's an example verifier from a Rails app.
 
@@ -57,9 +52,9 @@ Here's an example verifier from a Rails app.
 require "http_signatures"
 
 $http_sig = HttpSignatures::Context.new(
-  keys: {"flyio-signing-secret" => ENV{'FLYIO_SIGNING_SECRET']},
+  keys: [{"flyio-signing-secret" => ENV{'FLYIO_SIGNING_SECRET'}],
   algorithm: "hmac-sha256",
-  headers: ["(request-target)", "Date", "Content-Length"],
+  headers: ["(request-target)", "(created)", "Content-Length"],
 )
 
 $http_sig.verifier.valid?(request)
