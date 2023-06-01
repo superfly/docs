@@ -38,11 +38,11 @@ This section covers describes a REST-based API for provisioning individual exten
 
 ### Authentication and Request Signing
 
-Given the high privilege afforded to us by your platform, we sign all HTTP requests made to provider APIs using SHA-256 HMAC, using a shared secret. We require that providers verify these signatures.
+Given the high privilege afforded to us by your platform, we sign all requests with a shared secret and a SHA256 HMAC. We require that providers verify these signatures.
 
 All requests are accompanied by an `X-Signature` header containing the HMAC of the request contents: the query string for `GET` and `DELETE` requests, and the request body for `POST` and `PATCH` requests.
 
-We add the following parameters to help you verify the authenticity of requests. We recommend at least verifying that URL matches the request URL.
+We add the following parameters to help you verify the authenticity of requests. We recommend at least verifying that the signed URL matches the request URL.
 
 ```
 timestamp: A UNIX epoch timestamp value
