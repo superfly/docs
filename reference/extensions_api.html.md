@@ -38,31 +38,21 @@ This section covers describes a REST-based API for provisioning individual exten
 
 ### Authentication and Request Signing
 
-Given the high privilege afforded to us by your platform, we sign all HTTP requests made to provider APIs. We require that providers verify these signatures.
+Given the high privilege afforded to us by your platform, we sign all requests with a shared secret and a SHA256 HMAC. We require that providers verify these signatures.
 
-We follow the [IETF HTTP Message Signature Spec](https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-05.html), using the [HMAC SHA-256](https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-05.html#name-hmac-using-sha-256) algorithm. Here's a list of libraries that implement the spec:
+All requests are accompanied by an `X-Signature` header containing the HMAC of the request contents: the query string for `GET` and `DELETE` requests, and the request body for `POST` and `PATCH` requests.
 
-* Golang: [https://github.com/zntrio/httpsig](https://github.com/zntrio/httpsig)
-* Ruby: [https://github.com/planetscale/http-signatures-ruby](https://github.com/planetscale/http-signatures-ruby)
-* Python: [https://pypi.org/project/requests-http-signature](https://pypi.org/project/requests-http-signature/)
+We add the following parameters to help you verify the authenticity of requests. We recommend at least verifying that the signed URL matches the request URL.
 
-Here's an example verifier from a Rails app.
-
-```ruby
-require "http_signatures"
-
-$http_sig = HttpSignatures::Context.new(
-  keys: [{"flyio-signing-secret" => ENV{'FLYIO_SIGNING_SECRET'}],
-  algorithm: "hmac-sha256",
-  headers: ["(request-target)", "(created)", "Content-Length"],
-)
-
-$http_sig.verifier.valid?(request)
+```
+timestamp: A UNIX epoch timestamp value
+nonce: A random unique string identifying the invididual request
+url: The full request target URL
 ```
 
 ### Request Base URL
 
-We recommend your API offer a single base URL, like `https://logjam.io/flyio`, and append the paths below as REST resources.
+We recommend that your partner API builds upon base URL, like `https://logjam.io/flyio`. You can append then the paths shown below as REST resources.
 
 ### Resource provisioning
 
@@ -81,7 +71,10 @@ POST https://logjam.io/flyio/extensions
   user_id: "NeBO2G0l0yJ6",
   primary_region: "mad",
   ip_address: "fdaa:0:47fb:0:1::1d",
-  read_regions: ["syd", "scl"]
+  read_regions: ["syd", "scl"],
+  url: "https://logjam.io/flyio/extensions",
+  nonce: "e3f7b4c8f5ea016d0d2e92048ca0d856",
+  timestamp: 1685641159
 }
 
 ```
