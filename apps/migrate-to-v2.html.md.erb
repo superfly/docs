@@ -7,9 +7,24 @@ toc: true
 order: 20
 ---
 
-## A V1 (Nomad) App
+<%= partial "/docs/partials/v2_transition_banner" %>
 
-**Update:** [We have an automated tool you can run to migrate an existing V1 app to Apps V2](https://community.fly.io/t/fly-migrate-to-v2-apps-with-volumes-support/12316).
+## Migrate a V1 App with a flyctl Command
+
+flyctl includes a command you can run yourself to migrate an existing V1 app to Apps V2. Find [more detail and discussion](https://community.fly.io/t/fly-migrate-to-v2-apps-with-volumes-support/12316) in our community forum.
+
+1. Make sure you're running the latest flyctl, with `fly version upgrade` (or `brew update && brew upgrade flyctl` on macOS).
+2. Enter your Fly App's source directory. If you don't already have one for this app, create a new directory first; the migration command saves the updated configuration into `fly.toml` locally.
+3. Save a backup copy of the app's old `fly.toml` if there is one.
+4. Run `fly migrate-to-v2 -c ./fly.toml`.
+
+### Read this if your app uses volume storage
+
+If your app uses Fly Volumes for persistent storage, migration will cause a brief downtime while `fly migrate-to-v2` clones the volume contents onto new volumes. VMs are shut down before the copying starts, for data-integrity reasons.
+
+**`fly migrate-to-v2` does not delete the original volumes,** out of an abundance of caution. We leave this for you to do **once you are certain the migration has succeeded with the volume data intact.** The active volumes have the original volume names, but with `-machines` appended&mdash;keep those ones!
+
+## Migrate a V1 App Manually
 
 If you'd rather work through the process manually, here are some steps to convert a fairly simple existing "V1" (managed by Nomad) Fly App to [Apps V2](/docs/reference/apps/) (running on Fly Machines).
 
@@ -85,9 +100,9 @@ grep $PATTERN $TEMPFILE | fly secrets import -a $2
 
 ### A note on Fly Volumes
 
-If your app uses Fly Volumes, you'll have to [provision a volume](/docs/apps/volume-storage) for the first Machine to be deployed. Volumes cannot be transferred between apps, you may need to copy data down from the old app, or create the new volume from a snapshot.
+If your app uses Fly Volumes, you'll have to [provision a volume](/docs/apps/volume-storage) for the first Machine to be deployed. Volumes cannot be transferred between apps; you may need to copy data down from the old app, or create the new volume from a snapshot.
 
-[Horizontal scaling](docs/apps/scale-count) of Machines is done using `fly m clone`, which will provision a new volume for the new Machine but will not copy any data into it; it's up to your app to do data replication between instances, if needed.
+[Horizontal scaling](docs/apps/scale-count) of Machines that have volumes is done using `fly m clone`, which will provision a new volume for the new Machine but will not copy any data into it; it's up to your app to do data replication between instances, if needed.
 
 ### Deploy your new V2 app
 
@@ -170,7 +185,7 @@ Finally, point your DNS to the new IP allocated for your app.
 Once you've switched over to the new V2 app and you're confident you don't need the V1 app anymore, [delete it](/docs/apps/delete/).
 
 
-## A non-platform Machines App
+## Adopt "non-platform" Fly Machines into the Apps V2 platform
 
 The Fly Apps V2 platform allows you to manage Fly Machines with app-wide configuration and coordinated releases, using `fly launch` and `fly deploy`. If you have a non-Apps-V2 Machine app&mdash;created using `fly create --machines` or `fly machine run`&mdash;you may or may not want to migrate it onto the Apps V2 platform in order to gain `fly deploy` functionality. 
 
