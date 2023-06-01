@@ -9,9 +9,10 @@ flyctl certs remove <hostname> [flags]
 ## Options
 
 ~~~
-  -a, --app string   Application name
-  -h, --help         help for remove
-  -y, --yes          Accept all confirmations
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+  -h, --help            help for remove
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options

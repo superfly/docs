@@ -8,11 +8,12 @@ flyctl regions remove REGION [REGION...] [flags]
 ## Options
 
 ~~~
-  -a, --app string     Application name
-      --group string   The process group to add the region to
-  -h, --help           help for remove
-  -j, --json           JSON output
-  -y, --yes            Accept all confirmations
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+      --group string    The process group to add the region to
+  -h, --help            help for remove
+  -j, --json            JSON output
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options

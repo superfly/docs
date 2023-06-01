@@ -8,9 +8,10 @@ flyctl autoscale show [flags]
 ## Options
 
 ~~~
-  -a, --app string   Application name
-  -h, --help         help for show
-  -j, --json         JSON output
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+  -h, --help            help for show
+  -j, --json            JSON output
 ~~~
 
 ## Global Options
