@@ -10,6 +10,7 @@ flyctl postgres barman recover <primary machine ID> [flags]
 ~~~
   -a, --app string           Application name
   -b, --backup-id string     choose one backup ID. Default: latest (default "latest")
+  -c, --config string        Path to application configuration file
   -h, --help                 help for recover
   -T, --target-time string   choose a target time for PITR. Example: "2023-05-16 20:55:05.958774+00:00". Default: last WAL file on barman
 ~~~

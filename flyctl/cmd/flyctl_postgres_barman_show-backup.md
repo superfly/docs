@@ -8,8 +8,9 @@ flyctl postgres barman show-backup <backup-id> [flags]
 ## Options
 
 ~~~
-  -a, --app string   Application name
-  -h, --help         help for show-backup
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+  -h, --help            help for show-backup
 ~~~
 
 ## Global Options

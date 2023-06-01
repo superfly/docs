@@ -8,10 +8,11 @@ flyctl regions backup REGION [REGION...] [flags]
 ## Options
 
 ~~~
-  -a, --app string   Application name
-  -h, --help         help for backup
-  -j, --json         JSON output
-  -y, --yes          Accept all confirmations
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+  -h, --help            help for backup
+  -j, --json            JSON output
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options

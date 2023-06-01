@@ -8,8 +8,9 @@ flyctl postgres barman check [flags]
 ## Options
 
 ~~~
-  -a, --app string   Application name
-  -h, --help         help for check
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+  -h, --help            help for check
 ~~~
 
 ## Global Options

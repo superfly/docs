@@ -9,6 +9,7 @@ flyctl tokens create deploy [flags]
 
 ~~~
   -a, --app string        Application name
+  -c, --config string     Path to application configuration file
   -x, --expiry duration   The duration that the token will be valid (default 175200h0m0s)
   -h, --help              help for deploy
   -j, --json              JSON output
