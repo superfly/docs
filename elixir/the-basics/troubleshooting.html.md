@@ -42,9 +42,9 @@ Suggested files to pay attention to when looking for config differences.
 - `mix.exs`
 
 
-## Not Enough Connections
+## _Not Enough Connections_
 
-A common failure mode is the application exhuasting the number of free connections, your default `fly.toml` has the following settings:
+A common failure mode is the application exhausting the number of free connections, your default `fly.toml` has the following settings:
 ```toml
   [services.concurrency]
     hard_limit = 50
@@ -52,4 +52,57 @@ A common failure mode is the application exhuasting the number of free connectio
     type = "connections"
 ```
 
-Setting the `hard_limit` and `soft_limit` closer to your needs will free up the number of live connections per node. 
+Setting the `hard_limit` and `soft_limit` closer to your needs will free up the number of live connections per node. A safe starting point could be 1000 for the hard_limit and 975 for the soft_limit. The "right" amount depends on how much data is actively stored in the LiveView processes. That value will vary for each application.
+
+## _Clustering_
+
+Here are some troubleshooting tips when working with [Clustering](./clustering).
+
+When using [IEx to remote into a running application](./iex-into-running-app) to diagnose connection issues, note if you see this warning when connecting:
+
+```
+warning: the --remsh option will be ignored because IEx is running on limited shell
+```
+
+When that warning is present, the Elixir node we are connecting to is not the remote running node. A new node was launched when the remote shell request was ignored. Refer to the [docs here about the `--pty`](./iex-into-running-app) option.
+
+Another indication of this situation is when typing `Node.self()`, the name of the node is returned with a prefix similar to "rem-ea46-".
+Example:
+
+```
+:"rem-ea46-hello_elixir@fdaa:0:1da8:a7b:115:5641:7e85:2"
+```
+
+A working remote shell will return a node name more like this:
+```
+:"hello_elixir@fdaa:0:1da8:a7b:115:5641:7e85:2"
+```
+
+### Testing Node Connectivity
+
+Using `libcluster` is an easy way to [auto-cluster](./clustering) an Elixir application. However, going through the process manually can help diagnose issues.
+
+We can open two terminals locally on our machine. In terminal A, we get an [IEx terminal](./iex-into-running-app.html.md) to one node. Then in terminal B, we get an IEx terminal to a different node.
+
+In each terminal, we can ask the node for it's name:
+```
+Node.self
+```
+
+Then, taking the response node in terminal A, we can explicitly try to connect through terminal B (on the other node).
+
+That command might look like this:
+```
+Node.connect(:"result-from-terminal-A@ipvs-address")
+```
+
+If the result is `true` then it either connected to the other node or we entered into the wrong terminal and it says it's connected to itself.
+
+If we received a `true` response, we can check the list of connected nodes using this command:
+```
+Node.list()
+```
+
+An empty list means is has no connections.
+
+During the process, make note of any logged messages that that might help explain why the two nodes can't connect.
