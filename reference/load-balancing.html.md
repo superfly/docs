@@ -38,7 +38,7 @@ To help clarify how the Fly.io platform makes load balancing decisions, we provi
 
 ### Web service
 
-We have a web service that we know can handle 25 concurrent requests with the currently configured cpu and memory settings. So, we set the following the values in our fly.toml:
+We have a web service that we know can handle 25 concurrent requests with the currently configured cpu and memory settings. So, we set the following values in our fly.toml:
 
 ```toml
   [services.concurrency]
