@@ -53,7 +53,7 @@ We choose to set our `soft_limit` to 20, so we have a little room for Fly.io to 
 
 We deployed 10 VMs in four regions: `ams`, `maa`, `sea`, and `sin`, with three of those in `ams`.
 
-In this contrived example, all of the users are currently in Amsterdam (ams region) so their traffic is arriving at one of the Fly.io edges in Amsterdam. There are currently 3 instances of our web service running Amsterdam.
+In this contrived example, all of the users are currently in Amsterdam (ams region) so their traffic is arriving at one of the Fly.io edges in Amsterdam. There are currently 3 instances of our web service running in Amsterdam.
 
 When users in Amsterdam generate up to 60 concurrent http requests, those requests are divided evenly between the three application instances in the ams region. Closeness of the worker and edge will determine which of the 3 instances each request goes to.
 
