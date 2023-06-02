@@ -50,7 +50,7 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
 COPY crontab crontab
 ```
 
-After you put that in your Dockerfile, we're going to configure Fly to run only once instance of `supercronic`. Why? Because if you have a cronjob that does something like deliver emails to customers, you only want them to get that once. The last thing you want is them getting as many emails from your services that matches the number of instances you're running.
+After you put that in your Dockerfile, we're going to configure Fly to run only one instance of `supercronic`. Why? Because if you have a cronjob that does something like deliver emails to customers, you only want them to get that once. The last thing you want is them getting as many emails from your services that matches the number of instances you're running.
 
 ## Setup a web &amp; cron process
 
