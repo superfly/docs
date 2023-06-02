@@ -13,7 +13,7 @@ In the Fly.io Reference Section, you will find the definitive documentation for 
 A detailed view of Fly.io's implementation of Firecracker VMs, Scaling, Anycast networking, Proxies, and the Backhaul network, all of which come together to create Fly.io's infrastructure.
 
 * [**Regions**](/docs/reference/regions/):
-We run servers around the word so your apps can run close to your users.
+We run servers around the world so your apps can run close to your users.
 
 ## Creating and Deploying Applications
 
