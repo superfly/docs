@@ -1,0 +1,91 @@
+---
+title: High Availability Apps
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+The Apps V2 platform has features to help make your app more resilient in case of outages or hardware failures.
+
+For apps or process groups without services:
+
+* Standby machines
+
+For apps or process groups with services:
+
+* Automatic creation of two Machines
+* Automatically start and stop Machines 
+* Health check-based routing
+
+These features require or depend on your app configuration in the fly.toml file. Learn more about [app configuration](/docs/reference/configuration/).
+
+You might also be interested in how we do [load balancing](/docs/reference/load-balancing/).
+
+## High availability by default on first deploy
+
+The first time you deploy your app to the Fly.io platform, you get some default high availability configurations. These settings help you to deploy a recommended setup without having to think about it. On the other hand, if these defaults aren't what you're looking for, then it's easy to reconfigure your app and processes the way you want. (TBD: link to scaling, etc?)
+
+Here's what `fly launch` / `fly deploy` does based on your app configuration:
+
+* creates one Machine and one standby Machine for apps or process groups without services
+* creates and starts two Machines for apps or process groups with services
+* creates and starts only 1 machine if the process group has mounts (volumes)
+
+## Standby Machines
+
+Standby Machines are a high availability feature for apps, or process groups within apps, with no services defined.
+
+A standby Machine is a stopped Machine that's essentially paired to a running Machine. The standby will only be started if the paired Machine becomes unavailable.
+
+The deploy process creates Standby machines for an app, or for process groups within an app, when:
+
+* you deploy an app for the first time using `fly launch` or `fly deploy`, or 
+* you redeploy an app using `fly deploy` after scaling down to zero
+
+Because the standby Machine is never started until it's needed, it doesn't consume resources or incur costs while in standby.
+
+### Scaling apps or process groups with standby Machines
+
+When an app or process group has one Machine and one standby Machine, the standby Machine is destroyed first if you scale down to one Machine. The standby Machine is not recreated when you scale or up back down using `fly scale count`. For details about using the `fly scale count` command, refer to Scale the Number of Machines.
+
+You can recreate the standby Machine only if you scale down to 0 and then run `fly deploy`, which creates 1 Machine and 1 standby Machine again. 
+
+## Automatically create two Machines
+
+A basic way to ensure high availability is to create more than one Machine per app or process group. If your app or process group has services defined, then `fly deploy` creates and starts two Machines automatically. 
+
+The deploy process creates two Machines for an app, or for process groups within an app, when:
+
+* you deploy an app for the first time using `fly launch` or `fly deploy`,
+* you redeploy an app using `fly deploy` after scaling down to zero, or
+* you add a new process group in fly.toml and then run `fly deploy`
+
+Maybe you don't want to keep Machines running all the time for an app with a variable or small workload. The automatic start and stop feature for Machines, makes it possible to run at least two Machines for high availability without wasting resources.
+
+If you never want `fly deploy` to create two Machines, then you can use the `--ha` flag to turn off the feature:
+
+```cmd
+fly deploy --ha=false
+```
+## Automatically start and stop Machines
+
+Automatic start and stop is a high availability feature for apps, or process groups within app, with services defined.
+
+Fly Machines are fast to start and stop, and you don't pay for their CPU and RAM when they're in the stopped state. For Fly Apps with a service configured, Fly Proxy can start and stop existing Machines based on incoming requests, so that your app can accommodate bursts in demand without keeping extra Machines running constantly. And if your app needs to have one or more Machines always running in your primary region, then you can set a minimum number of machines to keep running.
+Learn more about automatically stopping and starting Machines.
+
+## Health check-based routing
+'
+Health check-based routing routes network connections away from Machines that are failing health checks.
+
+Health check-based routing works for apps or process groups with services defined and is based on the configuration of services.tcp_checks or services.http_checks.
+
+If the configured health checks are failing for a Machine, then network connections aren't routed to that Machine. Connections are routed to a healthy Machine instead. 
+
+If there aren't any healthy Machines, then the connection will block, waiting for a Machine to become healthy.
+
+<div class="callout">
+Health check based routing isn't available for the top-level health checks defined in the checks section of fly.toml.
+</div>
+
+TBD note?: (auto-start and stop also relies on the Fly Proxy…) Also, this only works through our proxy, i.e. connections that come in from the public internet or via .flycast domains. .internal domains will bypass any health checks.
