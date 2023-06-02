@@ -106,7 +106,7 @@ Use this feature under the following circumstances:
 
 * Your app can't use DNS
 * You're using 3rd party software, like a database, that doesn't support round-robin DNS entries
-* Your want to limit access to specific ports/services in your app from other Fly organizations
+* You want to limit access to specific ports/services in your app from other Fly organizations
 * You private service needs advanced proxy features like TLS termination or proxy protocol support
 
 The general flow for setting this up is:
@@ -159,7 +159,7 @@ Fly's command line  can generate you a tunnel configuration file with private ke
 
 #### Install your WireGuard App
 
-There are many options for installing WireGuard on your system, detailed on the [WireGuard](https://www.wireguard.com/install/) site. Install the software that is appropriate for your system. Window and macOS have apps available to install. Linux systems have packages, typically named wireguard and wireguard-tools, you should install both.
+There are many options for installing WireGuard on your system, detailed on the [WireGuard](https://www.wireguard.com/install/) site. Install the software that is appropriate for your system. Windows and macOS have apps available to install. Linux systems have packages, typically named wireguard and wireguard-tools, you should install both.
 
 #### Creating your tunnel configuration
 
@@ -187,7 +187,7 @@ As well as configuring the Wireguard service, the create command also generates 
 Wrote WireGuard configuration to 'basic.conf'; load in your WireGuard client
 ```
 
-We suggest you name your saved configuration with the same name as the peer you have created. Add the extension `.conf` to ensure it can will be recognized by the various WireGuard apps as a configuration file for a tunnel. Note that the name (excluding the `.conf` extension) shouldn't exceed 15 characters since this is the maximum length for an interface name on Linux.
+We suggest you name your saved configuration with the same name as the peer you have created. Add the extension `.conf` to ensure it will be recognized by the various WireGuard apps as a configuration file for a tunnel. Note that the name (excluding the `.conf` extension) shouldn't exceed 15 characters since this is the maximum length for an interface name on Linux.
 
 ##### Dealing with Defaults
 
