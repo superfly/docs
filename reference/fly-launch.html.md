@@ -50,7 +50,7 @@ Reference: [App Configuration (fly.toml)](/docs/reference/configuration/)
 
 ## Platform Resource Provisioning
 
-Before deployment, you may want create and configure a [storage volume](/docs/reference/volumes/) or [Postgres database](/docs/reference/postgres/), or [set app secrets](/docs/reference/secrets/).
+Before deployment, you may want to create and configure a [storage volume](/docs/reference/volumes/) or [Postgres database](/docs/reference/postgres/), or [set app secrets](/docs/reference/secrets/).
 
 Some flyctl launchers will do some or all of this using the API.
 
