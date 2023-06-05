@@ -12,9 +12,11 @@ This feature only works for V2 apps running on Fly Machines. You might also be i
 
 Fly Machines are fast to start and stop, and you don't pay for their CPU and RAM when they're in the `stopped` state. For Fly Apps with a service configured, Fly Proxy can start and stop existing Machines based on incoming requests, so that your app can accommodate bursts in demand without keeping extra Machines running constantly. And if your app needs to have one or more Machines always running in your primary region, then you can set a minimum number of machines to keep running.
 
-This Fly Proxy feature also plays well with apps whose Machines [exit from within](#stop-a-machine-by-terminating-its-main-process) when idle.
+This Fly Proxy feature also plays well with apps whose Machines [exit from within](#stop-a-machine-by-terminating-its-main-process) when idle. If your app already shuts down when idle, then the proxy can restart it when there's traffic.
 
-You can configure automatic starts and stops with the `auto_start_machines` and `auto_stop_machines` settings, and set the minimum number of machines to keep running with the `min_machines_running` setting, within the [[[services]]](/docs/reference/configuration/#the-services-sections) or [[http_service]](/docs/reference/configuration/#the-http_service-section) sections of `fly.toml`. Concurrency limits for services affect [how automatic starts and stops work](#how-it-works).
+You can configure automatic starts and stops separately with the `auto_start_machines` and `auto_stop_machines` settings, and set the minimum number of machines to keep running with the `min_machines_running` setting. The autostart and stop settings apply per service, so you set them within the [[[services]]](/docs/reference/configuration/#the-services-sections) or [[http_service]](/docs/reference/configuration/#the-http_service-section) sections of `fly.toml`.
+
+Concurrency limits for services affect [how automatic starts and stops work](#how-it-works).
 
 ## Default and recommended values
 
@@ -44,16 +46,16 @@ Default settings in `fly.toml` for V2 apps:
 ```
 
 <div class="callout">
-Existing V2 apps—or any V2 apps that don't have these settings in `fly.toml`—will automatically start but not automatically stop Machines.
+Existing V2 apps&mdash;or any V2 apps that don't have these settings in `fly.toml`&mdash;have the default values `auto_start_machines = true` and `auto_stop_machines = false`.
 </div>
 
-In most cases, we recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having Machines that either never start or never stop. 
+In general, we recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having Machines that either never start or never stop. 
 
-If `auto_start_machines = true` and `auto_stop_machines = false`, then Fly Proxy will automatically start your Machines but will never stop them. This means you'll have to stop Machines manually.
+If `auto_start_machines = true` and `auto_stop_machines = false`, then Fly Proxy will automatically start your Machines but will never stop them. This means you'll have to stop Machines manually, or have your [app exit when idle](#stop-a-machine-by-terminating-its-main-process).
 
-If `auto_start_machines = false` and `auto_stop_machines = true`, then Fly Proxy will automatically stop your Machines when there's low traffic, but won't be able to start them again. If all or most of your Machines are stopped, then requests will start failing.
+If `auto_start_machines = false` and `auto_stop_machines = true`, then Fly Proxy will automatically stop your Machines when there's low traffic, but won't be able to start them again. If all or most of your Machines are stopped, then requests to your app will start failing.
 
-You can set `min_machines_running` to `1` or higher if your use case calls for having at least one instance of your app running all the time. This setting is for the total number of Machines, not Machines per region. For example, if `min_machines_running = 1`, then your app will scale down until there is only one Machine running in your primary region.
+You can set `min_machines_running` to `1` or higher if your use case requires at least one instance of your app running all the time. This setting is for the total number of Machines, not Machines per region. For example, if `min_machines_running = 1`, then your app will scale down until there is only one Machine running in your primary region.
 
 ## How It Works
 
@@ -98,7 +100,9 @@ If you only need one or a few instances of your app to keep running in your prim
 
 ## Stop a Machine by terminating its main process
 
-There are many ways to make a web app exit after some inactivity. Here are some examples:
+Setting your app to automatically stop when there's excess capacity using `auto_stop = true` is a substitute for when your app doesn't implement automatic shut down after a period of inactivity. If you want a custom shut-down process for your app, then you can code your app to exit from within when idle.
+
+Here are some examples:
 
 * [Shutting Down a Phoenix App When Idle](https://fly.io/phoenix-files/shut-down-idle-phoenix-app/): a post by Chris McCord on adding a task to an Elixir app's supervision tree that shuts down the Erlang runtime when there are no active connections.
 * For Rails apps, dockerfile-rails provides a [--max-idle](https://github.com/rubys/dockerfile-rails#addremove-a-feature) option that will exit after _n_ seconds of inactivity.
