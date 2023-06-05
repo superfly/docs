@@ -150,6 +150,8 @@ If you try to set an incompatible CPU/RAM combination through `fly scale memory`
 
 ## Scale by process group
 
+Use the `--group` option to specify the process group to scale, with either `fly scale vm` or `fly scale memory`.
+
 Here's an app with two process groups defined:
 
 ```cmd
@@ -194,8 +196,6 @@ NAME    COUNT   KIND            CPUS    MEMORY  REGIONS
 worker  2       performance     2       4096 MB ams,yyz
 web     1       shared          1       512 MB  yyz 
 ```
-
-**Don't leave out the `--group` option if your app has multiple process groups!** If you don't tell flyctl which process group to scale, **it will pick one!**
 
 ## Machines not belonging to the Fly Apps Platform
 
