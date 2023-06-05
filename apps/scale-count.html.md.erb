@@ -172,6 +172,11 @@ web     9       shared  1       256 MB  nrt(5),yyz(4)
 worker  5       shared  1       256 MB  nrt(3),yyz(2)
 ```
 
+You can also specify a single process group to scale using the `--process-group` option:
+
+```cmd
+fly scale count 4 --process-group web
+```
 
 You can specify process groups to act on, and restrict the changes by region with the `--region` option in the same command.
 
