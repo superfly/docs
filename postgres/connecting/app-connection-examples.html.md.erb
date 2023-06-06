@@ -198,14 +198,10 @@ main()
 ### Connecting with Sequelize – Node.js
 [docs](https://sequelize.org)
 
-Sequelize is an open-source object-relational mapper (ORM) for Node.js and works with JavaScript and TypeScript contains 4 components:
-- config, contains config file, which tells CLI how to connect with database
-- models, contains all models for your project
-- migrations, contains all migration files
-- seeders, contains all seed files
+Sequelize is an open-source object-relational mapper (ORM) for Node.js and works with JavaScript and TypeScript.
 
 <details>
-<summary>Set up Sequelize in your project</summary>
+<summary>Set up Sequelize inside your project</summary>
 
 Install the Sequelize dependencies and CLI into your project
 ```
@@ -217,12 +213,56 @@ Initialize Sequelize into your project:
 ```
 npx sequelize init
 ```
+This will create the following folders:
+- config, contains config file, which tells CLI how to connect with database
+- models, contains all models for your project
+- migrations, contains all migration files
+- seeders, contains all seed files
+
+[Docs: Creating your first model](https://sequelize.org/docs/v6/other-topics/migrations/#creating-the-first-model-and-migration)
 
 </details>
 
-Pass the DATABASE_URL into the Sequelize constructor inside of Models/index.js
+
+After initializing we will need to tell the CLI how to connect to the database inside of config/config.js
+
 ```
+{
+  "development": {
+    "username": "username",
+    "password": "password",
+    "database": "database_development",
+    "host": "0.0.0.0",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "username",
+    "password": "password",
+    "database": "database_test",
+    "host": "0.0.0.0",
+    "dialect": "postgres"
+  },
+  "production": {
+    `"database": process.env.DATABASE_URL`,
+    "host": "0.0.0.0",
+    "dialect": "postgres"
+  }
+}
+```
+
+Next pass the `DATABASE_URL` into the Sequelize constructor inside of models/index.js to be able to connect to fly-postgres on deployment
+```javascript
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(process.env.DATABASE_URL);
+```
+
+An example of how to query from the User Model
+```javascript
+//import the User's model into the current file
+const { User } require("../db/models")
+
+// Find all users from the User's model
+const users = await User.findAll();
+console.log("All users:", users);
 ```
