@@ -1,6 +1,6 @@
 Authenticate with Fly (and logout if you need to).
 If you do not have an account, start with the AUTH SIGNUP command.
-If you do have and account, begin with the AUTH LOGIN subcommand.
+If you do have an account, begin with the AUTH LOGIN subcommand.
 
 
 ## Usage
