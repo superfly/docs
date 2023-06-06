@@ -194,3 +194,36 @@ main()
     await prisma.$disconnect()
   })
 ```
+
+### Connecting with Sequelize – Node.js
+[docs](https://sequelize.org)
+
+Sequelize is an open-source object-relational mapper (ORM) for Node.js and works with JavaScript and TypeScript
+- Sequelize Model - models provide an abstraction layer for querying and manipulating data in the database
+- Sequelize Migrate - allow you to create, modify, or delete database tables, columns, and relationships in a structured manner
+- Sequelize CLI - provides a set of useful commands to streamline the development workflow
+
+
+<details>
+<summary>Set up Sequelize in your project</summary>
+
+Install the Sequelize dependencies in your project
+```
+npm install --save sequelize
+```
+
+Initialize Sequelize into your project:
+```
+npm install --save pg pg-hstore
+```
+
+</details>
+
+Passing the DATABASE_URL into Sequelize
+```
+
+const { Sequelize } = require('sequelize');
+
+const sequelize = new Sequelize(process.env.DATABASE_URL);
+
+```
