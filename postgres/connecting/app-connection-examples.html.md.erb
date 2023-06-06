@@ -198,32 +198,31 @@ main()
 ### Connecting with Sequelize – Node.js
 [docs](https://sequelize.org)
 
-Sequelize is an open-source object-relational mapper (ORM) for Node.js and works with JavaScript and TypeScript
-- Sequelize Model - models provide an abstraction layer for querying and manipulating data in the database
-- Sequelize Migrate - allow you to create, modify, or delete database tables, columns, and relationships in a structured manner
-- Sequelize CLI - provides a set of useful commands to streamline the development workflow
-
+Sequelize is an open-source object-relational mapper (ORM) for Node.js and works with JavaScript and TypeScript contains 4 components:
+- config, contains config file, which tells CLI how to connect with database
+- models, contains all models for your project
+- migrations, contains all migration files
+- seeders, contains all seed files
 
 <details>
 <summary>Set up Sequelize in your project</summary>
 
-Install the Sequelize dependencies in your project
+Install the Sequelize dependencies and CLI into your project
 ```
 npm install --save sequelize
+npm install --save-dev sequelize-cli
 ```
 
 Initialize Sequelize into your project:
 ```
-npm install --save pg pg-hstore
+npx sequelize init
 ```
 
 </details>
 
-Passing the DATABASE_URL into Sequelize
+Pass the DATABASE_URL into the Sequelize constructor inside of Models/index.js
 ```
-
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(process.env.DATABASE_URL);
-
 ```
