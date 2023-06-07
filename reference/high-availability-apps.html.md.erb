@@ -41,7 +41,7 @@ You might also be interested in how we do [load balancing](/docs/reference/load-
 
 ## High availability by default on first deploy
 
-The first time you deploy your app to the Fly.io platform, you get some default high availability configurations. These settings help you to deploy a recommended setup without having to think about it. On the other hand, if the defaults aren't what you're looking for, then you can still configure your app and processes the way you want. Learn more about [scaling Machine CPU and RAM](https://fly.io/docs/apps/scale-machine/) and [scaling the number of Machines](https://fly.io/docs/apps/scale-count/).
+The first time you deploy your app to the Fly.io platform, you get some default high availability configurations. These settings help you to deploy a recommended setup without having to think about it. On the other hand, if the defaults aren't what you're looking for, then you can still configure your app and processes the way you want. Learn more about [scaling Machine CPU and RAM](/docs/apps/scale-machine/) and [scaling the number of Machines](/docs/apps/scale-count/).
 
 A Fly App with no extra process groups defined still uses the `app` process group by default. So there's no such thing as an app with no process groups.
 
@@ -85,7 +85,7 @@ The standby Machine doesn't consume resources or start up until it's needed.
 
 #### Remove a standby Machine
 
-When an app or process group has one Machine and one standby Machine, the standby Machine is destroyed first if you scale down to one Machine. The standby Machine isn't subsequently recreated when you [scale up or back down](https://fly.io/docs/apps/scale-count/) using `fly scale count`.
+When an app or process group has one Machine and one standby Machine, the standby Machine is destroyed first if you scale down to one Machine. The standby Machine isn't subsequently recreated when you [scale up or back down](/docs/apps/scale-count/) using `fly scale count`.
 
 If you add services to the process group in `fly.toml`, then the standby designation is removed from the standby Machine on the next deploy.
 
@@ -105,13 +105,13 @@ New V2 apps created using the `fly launch` command are configured by default to 
 
 Existing V2 apps&mdash;or any V2 apps that don't have these settings in fly.toml&mdash;will automatically start but not automatically stop Machines.
 
-Get all the details about [automatically stopping and starting Machines](https://fly.io/docs/apps/autostart-stop/).
+Get all the details about [automatically stopping and starting Machines](/docs/apps/autostart-stop/).
 
 ## Health check-based routing
 
 Fly Proxy routes network connections away from Machines that are failing health checks.
 
-Health check-based routing works for process groups with services defined and is based on the configuration of `services.tcp_checks` or `services.http_checks`.
+Health check-based routing works for process groups with services defined and is based on the configuration of [`services.tcp_checks`](/docs/reference/configuration/#services-tcp_checks) or [`services.http_checks`](/docs/reference/configuration/#services-http_checks) in your app's `fly.toml` file.
 
 If the configured health checks are failing for a Machine, then the proxy doesn't route network connections to that Machine. The proxy routes connections to a healthy Machine instead. If there aren't any healthy Machines, then the connection will block, waiting for a Machine to become healthy.
 
