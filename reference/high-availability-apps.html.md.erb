@@ -10,6 +10,7 @@ A highly available app is resistant to events like hardware failures or outages.
 But first, it's important to understand the important pieces that your app needs to manage.
 
 ## What your app needs to do
+
 Your app needs to be able to scale to meet demand. Decisions that impact scaling include the architecture, framework, and database that you choose.
 
 For databases, you'll need to follow the recommendations specific to your deployment, including how to set up clusters for replication and failover.
@@ -116,5 +117,5 @@ Health check-based routing works for process groups with services defined and is
 If the configured health checks are failing for a Machine, then the proxy doesn't route network connections to that Machine. The proxy routes connections to a healthy Machine instead. If there aren't any healthy Machines, then the connection will block, waiting for a Machine to become healthy.
 
 <div class="callout">
-Health check based routing isn't available for the top-level health checks defined in the `checks` section of fly.toml.
+Health check-based routing isn't available for the top-level health checks defined in the `checks` section of fly.toml.
 </div>
