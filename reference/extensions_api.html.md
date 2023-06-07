@@ -146,7 +146,7 @@ The CLI will open the user's browser and send a `GET` request.
 If the user is already logged in, you should redirect them to the extension detail screen. If not, you should start an OAuth authorization request to Fly.io, by redirecting to:
 
 ```
-GET https://fly.io/oauth/authorize?client_id=123&response_type=code&redirect_uri=https://logjam.io/flyio/callback&scope=read
+GET https://api.fly.io/oauth/authorize?client_id=123&response_type=code&redirect_uri=https://logjam.io/flyio/callback&scope=read
 ```
 
 You should pass the organization ID and desired permissions scope. Currently, only the 'read' scope is supported.
@@ -154,7 +154,7 @@ You should pass the organization ID and desired permissions scope. Currently, on
 Once we authenticate the user, we'll redirect to your OAUth `redirect_uri` with an authorization code you may exchange for an access token via a POST request.
 
 ```
-POST https://fly.io/oauth/token
+POST https://api.fly.io/oauth/token
 
 client_id=logjam
 client_secret=123
@@ -179,13 +179,8 @@ The JSON response:
 Finally, use this access token to issue an inline request to our [token introspection endpoint](https://www.oauth.com/oauth2-servers/token-introspection-endpoint/). The response gives you enough information, for example, to authorize the user if they belong the correct parent organization in your system, or to provision the user and add them to these organizations.
 
 ```
-POST https://fly.io/oauth/token
-
-client_id=logjam
-client_secret=123
-grant_type=authorization_code
-code=myauthcode
-redirect_uri=https://logjam.io/flyio/callback
+GET https://api.fly.io/oauth/token/info
+Authorization: Bearer fo1__034hk03k4mhjea0l4224hk
 ```
 
 The JSON response:
