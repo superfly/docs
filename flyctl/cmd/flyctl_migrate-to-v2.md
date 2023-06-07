@@ -5,6 +5,9 @@ Migrates an Apps V1 (Nomad) app to the Apps V2 (machines) platform
 flyctl migrate-to-v2 [flags]
 ~~~
 
+## Available Commands
+* [troubleshoot](/docs/flyctl/migrate-to-v2-troubleshoot/)	 - Troubleshoot an app that has been migrated to Apps V2
+
 ## Options
 
 ~~~
