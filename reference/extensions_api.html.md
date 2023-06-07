@@ -179,13 +179,8 @@ The JSON response:
 Finally, use this access token to issue an inline request to our [token introspection endpoint](https://www.oauth.com/oauth2-servers/token-introspection-endpoint/). The response gives you enough information, for example, to authorize the user if they belong the correct parent organization in your system, or to provision the user and add them to these organizations.
 
 ```
-POST https://api.fly.io/oauth/token
-
-client_id=logjam
-client_secret=123
-grant_type=authorization_code
-code=myauthcode
-redirect_uri=https://logjam.io/flyio/callback
+GET https://api.fly.io/oauth/token/info
+Authorization: Bearer fo1__034hk03k4mhjea0l4224hk
 ```
 
 The JSON response:
