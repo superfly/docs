@@ -13,6 +13,10 @@ related_pages:
   - /docs/postgres/
 ---
 
+<div>
+  <img src="/static/images/rails-intro.webp" srcset="/static/images/rails-intro@2x.webp 2x" alt="">
+</div>
+
 In this guide we'll develop and deploy a Rails application that first
 demonstrates a trivial view, then scaffolds a database table, and finally makes
 use of [Turbo Streams](https://turbo.hotwired.dev/handbook/streams) to dynamically

@@ -12,6 +12,10 @@ related_pages:
   - /docs/postgres/
 ---
 
+<div>
+  <img src="/static/images/django-intro.webp" srcset="/static/images/django-intro@2x.webp 2x" alt="">
+</div>
+
 In this guide we build and deploy a simple Django website to demonstrate how quickly Django apps can be deployed on Fly.io.
 
 ## Initial Set Up
