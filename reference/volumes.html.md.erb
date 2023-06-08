@@ -19,7 +19,7 @@ If you already know how volumes work, and you're ready to get started, then lear
 * **A volume exists in one region**: A volume exists in only one region. Only an instance of the app running in the same region can access it.
 * **A volume can attach to one Machine**: You need to run as many volumes as there are Machines. There's a one-to-one mapping between Machines and volumes. A Machine can only mount one volume at a time and a volume can be attached to only one Machine.
 * **Develop your app to handle replication**: Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app, so if you need the volumes to sync up, then your app has to make that happen.
-* **Create high availability in your primary region**: If your app needs a volume to function, and the NVMe drive hosting your volume fails, then that instance of your app goes down. There's no way around that. You can run multiple Machines with volumes in your app's primary region to mitigate hardware failures.
+* **Create redundancy in your primary region**: If your app needs a volume to function, and the NVMe drive hosting your volume fails, then that instance of your app goes down. There's no way around that. You can run multiple Machines with volumes in your app's primary region to mitigate hardware failures.
 * **Create and store backups**: If you only have a single copy of your data on a single volume, and that drive fails, then the data is lost. Fly.io takes daily snapshots and retains them for 5 days, but the snapshots shouldn't be your primary backup method.
 
 If volumes don't work for your use case, then you can explore other options for data storage in [Databases & Storage](/docs/database-storage-guides/).
@@ -28,15 +28,15 @@ If volumes don't work for your use case, then you can explore other options for 
 
 You can run multiple instances of an app in one region by creating volumes with the same name. For example, creating three volumes named `myapp_data` would let up to three instances of the app start up and run. Every volume has a unique ID to allow for multiple volumes with the same name. 
 
-## Volumes and High availability
+## Volumes and Redundancy
 
 <div class="warning">
-**Always run at least two volumes per app.** We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each machine should have an attached volume. If you only have one Machine and volume, you'll have downtime if there's a host or network failure, and whenever you deploy your app.
+**Always run at least two volumes per app.** We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each machine should have an attached volume. If you only have one Machine and volume, you'll have downtime if there's a host or network failure, and whenever you deploy your app. Keep in mind that volumes don't have built-in replication between them.
 </div>
 
 There are a few cases where you can run a single Machine with an attached volume. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not yet worried about downtime.
 
-Many developers use volumes for databases, so each volume you create for your app is placed in a separate hardware zone by default. Note that having each volume in a separate hardware zone limits the number of volumes your app can have in a region. You can configure this setting with the `--require-unique-zone` option when you run [`fly volumes create`](/docs/flyctl/volumes-create/).
+Many developers use volumes for databases, so if possible, each volume you create for your app is placed in a separate hardware zone by default. Note that having each volume in a separate hardware zone limits the number of volumes your app can have in a region. You can configure this setting with the `--require-unique-zone` option when you run [`fly volumes create`](/docs/flyctl/volumes-create/).
 
 ## Volumes and Fly Apps
 
