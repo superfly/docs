@@ -256,13 +256,3 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(process.env.DATABASE_URL);
 ```
-
-An example of how to query from the User model
-```javascript
-//import the User's model into the current file
-const { User } require("../db/models")
-
-// Find all users from the User's model
-const users = await User.findAll();
-console.log("All users:", users);
-```
