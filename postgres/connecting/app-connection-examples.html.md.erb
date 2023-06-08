@@ -219,7 +219,7 @@ This will create the following folders:
 - migrations, contains all migration files
 - seeders, contains all seed files
 
-[Docs: Creating your first model](https://sequelize.org/docs/v6/other-topics/migrations/#creating-the-first-model-and-migration)
+[Docs: Create your first model](https://sequelize.org/docs/v6/other-topics/migrations/#creating-the-first-model-and-migration)
 
 </details>
 
@@ -250,9 +250,32 @@ After initializing we will need to tell the CLI how to connect to the database i
 }
 ```
 
-Next pass the `DATABASE_URL` into the Sequelize constructor inside of models/index.js to be able to connect to fly-postgres on deployment
+Next pass the `DATABASE_URL` into the Sequelize constructor inside of models/index.js to connect to fly-postgres on deployment
 ```javascript
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(process.env.DATABASE_URL);
+```
+
+
+
+You can confirm your database connection as follows:
+
+```javascript
+const { Sequelize } = require('sequelize');
+
+async function testConnection() {
+  const sequelize = new Sequelize(process.env.DATABASE_URL);
+
+  try {
+    await sequelize.authenticate();
+    console.log('Connection to the database has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  } finally {
+    await sequelize.close();
+  }
+}
+
+testConnection();
 ```
