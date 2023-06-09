@@ -6,3 +6,30 @@ nav: litefs
 toc: true
 ---
 
+You can create and manage a LiteFS Cloud cluster via `flyctl`.
+
+## Create a LiteFS Cloud cluster
+
+```cmd
+fly litefs-cloud create
+```
+
+## Get a LiteFS Cloud token
+
+```cmd
+fly tokens create litefs-cloud --cluster $(cluster name)
+```
+
+## Destroy a LiteFS Cloud cluster
+
+Note: this will destroy the LiteFS Cloud cluster, but it will not impact
+your LiteFS cluster. Your data will continue to be available as long as
+your LiteFS cluster has nodes. We recommend to
+[configure alternative backups][Backing up your LiteFS cluster] before taking
+this action.
+
+[Backing up your LiteFS cluster]: /docs/litefs/backup
+
+```cmd
+fly litefs-cloud delete $(cluster name)
+```
