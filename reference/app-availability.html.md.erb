@@ -11,15 +11,15 @@ But first, it's important to understand what your app needs to take care of.
 
 ## What your app needs to do
 
-<div class="callout">
-<p><b>A note about Fly Proxy</b>: 
-Fly Proxy does a lot of work in the background, applying handlers, managing traffic and load balancing, and managing connections to services. Fly Proxy also automatically starts and stops Machines based on traffic to your app. The proxy works for [process groups with services defined](/docs/getting-started/app-services/#services-routed-with-fly-proxy).
-</div>
-
 Since Fly Proxy does load balancing by default, you need to consider how your app handles:
 
 * session storage, so that users stay logged in when their session moves to a different server
 * persistent file storage and replication, as discussed in the following paragraphs
+
+<div class="callout">
+<p><b>A note about Fly Proxy</b>: 
+Fly Proxy does a lot of work in the background, applying handlers, managing traffic and load balancing, and managing connections to services. Fly Proxy also automatically starts and stops Machines based on traffic to your app. The proxy works for [process groups with services defined](/docs/getting-started/app-services/#services-routed-with-fly-proxy).
+</div>
 
 For databases, you'll need to follow the specific recommendations for the database you're using, including how to set up clusters for replication and failover.
 
