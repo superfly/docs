@@ -19,6 +19,26 @@ For a full, working example of a LiteFS application, please see the
 [litefs-example]: https://github.com/superfly/litefs-example
 
 
+## Creating a LiteFS Cloud Cluster (optional)
+
+If you want to back up your database using LiteFS Cloud, you'll need to create
+a LiteFS Cloud cluster. You can do this in the Fly.io dashboard. First,
+[sign up for an account][Sign up] if you haven't already. After you're signed in,
+navigate to the LiteFS Cloud section on the left navbar, and then use the Create
+button to create a new cluster.
+[Here's a handy link to create a new cluster][Create LiteFS Cloud] if you prefer!
+
+When you create your LiteFS Cloud cluster, you'll be asked to save an auth token.
+Keep this handy - you'll use it below.
+
+Just a note: if you decide not to create a LiteFS Cloud cluster right now,
+you can always change your mind and add it later. Take a look at the
+[LiteFS Cloud backup][] docs for more details.
+
+[Sign up]: /docs/hands-on/sign-up
+[Create LiteFS Cloud]: https://fly.io/dashboard/personal/litefs-cloud/new
+[LiteFS Cloud backup]: /docs/litefs/cloud-backups
+
 ## Installing LiteFS
 
 ### Dependencies
@@ -153,6 +173,22 @@ guide.
 [GraphQL API page]: https://api.fly.io/graphql
 [lease management]: /docs/litefs/config#lease-management
 
+
+### LiteFS Cloud Configuration
+
+If you're using LiteFS Cloud for backups, you'll need to provide a LiteFS Cloud
+API authentication token, which you got when you created the cluster (or you can
+create a new one from [the LiteFS Cloud section][LiteFS Cloud Dashboard] in Fly.io
+dashboard).
+
+This token should be made available to LiteFS via the `LITEFS_CLOUD_TOKEN` environment
+variable. If you're running on Fly.io, you can add a secret for it with:
+
+```
+fly secrets set LITEFS_CLOUD_TOKEN=$(litefs cloud auth token)
+```
+
+[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs-cloud
 
 ## Running LiteFS
 
