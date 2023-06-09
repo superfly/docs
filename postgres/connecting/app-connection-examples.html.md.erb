@@ -224,58 +224,64 @@ This will create the following folders:
 </details>
 
 
-After initializing we will need to tell the CLI how to connect to the database inside of config/config.js
+After initializing you will need to show the CLI how to connect to the database inside of config/config.json
 
-```
+```json
 {
   "development": {
-    "username": "username",
-    "password": "password",
+    "username": "root",
+    "password": null,
     "database": "database_development",
-    "host": "0.0.0.0",
+    "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "username",
-    "password": "password",
+    "username": "root",
+    "password": null,
     "database": "database_test",
-    "host": "0.0.0.0",
+    "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    `"database": process.env.DATABASE_URL`,
+    "use_env_variable": "DATABASE_URL",
     "host": "0.0.0.0",
     "dialect": "postgres"
   }
 }
+
+
 ```
 
-Next pass the `DATABASE_URL` into the Sequelize constructor inside of models/index.js to connect to fly-postgres on deployment
+Next pass the `DATABASE_URL` into the Sequelize constructor in models/index.js to connect to fly-postgres on deployment
 ```javascript
-const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize(process.env.DATABASE_URL);
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env.DATABASE_URL);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
+
 ```
-
 
 
 You can confirm your database connection as follows:
 
 ```javascript
-const { Sequelize } = require('sequelize');
 
-async function testConnection() {
-  const sequelize = new Sequelize(process.env.DATABASE_URL);
-
-  try {
-    await sequelize.authenticate();
-    console.log('Connection to the database has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  } finally {
-    await sequelize.close();
-  }
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env.DATABASE_URL);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-testConnection();
+// Check database connection
+sequelize.authenticate()
+.then(() => {
+    console.log('Connected to the database!');
+  })
+  .catch(err => {
+    console.error('Error connecting to the database:', err);
+  });
 ```
