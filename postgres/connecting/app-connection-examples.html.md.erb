@@ -194,3 +194,94 @@ main()
     await prisma.$disconnect()
   })
 ```
+
+### Connecting with Sequelize – Node.js
+[docs](https://sequelize.org)
+
+Sequelize is an open-source object-relational mapper (ORM) for Node.js and works with JavaScript and TypeScript.
+
+<details>
+<summary>Set up Sequelize inside your project</summary>
+
+Install the Sequelize dependencies and CLI into your project
+```
+npm install --save sequelize
+npm install --save-dev sequelize-cli
+```
+
+Initialize Sequelize into your project:
+```
+npx sequelize init
+```
+This will create the following folders:
+- config, contains config file, which tells CLI how to connect with database
+- models, contains all models for your project
+- migrations, contains all migration files
+- seeders, contains all seed files
+
+[Docs: Create your first model](https://sequelize.org/docs/v6/other-topics/migrations/#creating-the-first-model-and-migration)
+
+</details>
+
+
+After initializing you will need to show the CLI how to connect to the database inside of config/config.json
+
+```json
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "database_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL",
+    "host": "0.0.0.0",
+    "dialect": "postgres"
+  }
+}
+
+
+```
+
+Next pass the `DATABASE_URL` into the Sequelize constructor in models/index.js to connect to fly-postgres on deployment
+```javascript
+
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env.DATABASE_URL);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
+
+```
+
+
+You can confirm your database connection as follows:
+
+```javascript
+
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env.DATABASE_URL);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
+
+// Check database connection
+sequelize.authenticate()
+.then(() => {
+    console.log('Connected to the database!');
+  })
+  .catch(err => {
+    console.error('Error connecting to the database:', err);
+  });
+```
