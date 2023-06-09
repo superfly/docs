@@ -7,6 +7,7 @@ flyctl tokens create [command] [flags]
 
 ## Available Commands
 * [deploy](/docs/flyctl/tokens-create-deploy/)	 - Create deploy tokens
+* [litefs-cloud](/docs/flyctl/tokens-create-litefs-cloud/)	 - Create LiteFS Cloud tokens
 * [org](/docs/flyctl/tokens-create-org/)	 - Create org deploy tokens
 
 ## Options
