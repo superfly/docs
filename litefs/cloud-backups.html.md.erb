@@ -6,3 +6,57 @@ nav: litefs
 toc: true
 ---
 
+The simplest way to implement disaster recovery for your LiteFS cluster is
+to use Fly.io's LiteFS Cloud for backups. LiteFS Cloud provides reliable backup
+and restore functionality, which reduce the risk of data loss in the event of a
+bug or disk corruption.
+
+In this doc, we'll show you how to add LiteFS Cloud to an existing LiteFS
+cluster. If you're not using LiteFS yet, take a look at the
+[getting started guide][], which walks you through setting LiteFS up for your
+app, including LiteFS Cloud.
+
+If you'd rather implement your own backups, take a look at the
+[Backing up your LiteFS cluster][] docs.
+
+[getting started guide]: /docs/litefs/getting-started
+[Backing up your LiteFS cluster]: /docs/litefs/backup
+
+## Creating a LiteFS Cloud cluster
+
+If you want to back up your database using LiteFS Cloud, you'll need to create
+a LiteFS Cloud cluster. You can do this in the Fly.io dashboard. First,
+[sign up for an account][Sign up] if you haven't already. After you're signed in,
+navigate to the LiteFS Cloud section on the left navbar, and then use the Create
+button to create a new cluster.
+[Here's a handy link to create a new cluster][Create LiteFS Cloud] if you prefer!
+
+When you create your LiteFS Cloud cluster, you'll be asked to save an auth token.
+Keep this handy - you'll use it below.
+
+[Sign up]: /docs/hands-on/sign-up
+[Create LiteFS Cloud]: https://fly.io/dashboard/personal/litefs-cloud/new
+
+## Configuring LiteFS to use LiteFS Cloud
+
+When you created your LiteFS Cloud cluster, you got a LiteFS Cloud API authentication
+token. (If you lost it, you can create a new one in
+[the LiteFS Cloud dashboard][LiteFS Cloud Dashboard].)
+
+This token should be made available to LiteFS via the `LITEFS_CLOUD_TOKEN` environment
+variable. If you're running on Fly.io, you can add a secret for it with:
+
+```cmd
+fly secrets set LITEFS_CLOUD_TOKEN=$(litefs cloud auth token)
+```
+
+After you've added the env variable (or secret), you need to restart LiteFS. If
+your app is running on Fly.io, the easiest way of doing this is just to re-deploy:
+
+```cmd
+fly deploy
+```
+
+TODO: write about what to do if you're running elsewhere (e.g. restart litefs)
+
+[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs-cloud
