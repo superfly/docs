@@ -57,6 +57,13 @@ your app is running on Fly.io, the easiest way of doing this is just to re-deplo
 fly deploy
 ```
 
-TODO: write about what to do if you're running elsewhere (e.g. restart litefs)
+If you're not running on Fly.io, how you restart depends on how you have configured
+LiteFS. If you're using `systemd`, then you can restart with:
+
+```cmd
+systemctl restart litefs
+```
+
+This needs to be run for every LiteFS Node.
 
 [LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs-cloud
