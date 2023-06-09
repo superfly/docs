@@ -58,12 +58,19 @@ fly deploy
 ```
 
 If you're not running on Fly.io, how you restart depends on how you have configured
-LiteFS. If you're using `systemd`, then you can restart with:
+LiteFS. If you're running LiteFS separately from your app, then for each node, you should:
+
+* Update your configuration with the new environment variable
+* Stop your app (so that it's not reading/writing data anymore)
+* Restart litefs
+* Start your app again!
+
+If you're running LiteFS via `systemd`, you can restart it with:
 
 ```cmd
 systemctl restart litefs
 ```
 
-This needs to be run for every LiteFS Node.
+Remember that this needs to be run for every LiteFS node.
 
 [LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs-cloud
