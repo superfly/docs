@@ -10,7 +10,9 @@ order: 30
 
 Volumes are local persistent storage for [Fly Machines](/docs/machines/). Volumes allow an app to save its state&mdash;to preserve configuration, session or user data&mdash;and then be restarted with that information in place. You can access and write to a volume on a Machine just like a regular directory.
 
-**The first rule of Fly Volumes is: Always run at least two volumes per application.** The way to do this is to run at least two Machines per app. Also note that volumes don't sync up by themselves; your app needs to take care of that. Refer to [Fly Volumes](/docs/reference/volumes/) for details about how volumes work.
+<div class="warning">
+<b>Always run at least two volumes per app.</b> We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each Machine should have an attached volume. Also note that volumes don't sync up by themselves; your app needs to take care of that. Refer to [Fly Volumes](/docs/reference/volumes/) for details about how volumes work.
+</div>
 
 ## Launch a new app with a Fly Volume
 
