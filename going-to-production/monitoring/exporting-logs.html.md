@@ -90,7 +90,7 @@ This `SUBJECT` says to grab logs from all instances of any applications hosted i
 
 ## Internals
 
-Fly.io ships logs through a [NATS](nats.io) stream. This is available to all of your applications via `nats://[fdaa::3]:4223`, which is where the Log Shipper grabs the logs.
+Fly.io ships logs through a [NATS](https://nats.io) stream. This is available to all of your applications via `nats://[fdaa::3]:4223`, which is where the Log Shipper grabs the logs.
 
 The Vector configuration to grab those logs within the Log Shipper is [seen here](https://github.com/superfly/fly-log-shipper/blob/main/vector-configs/vector.toml).
 
