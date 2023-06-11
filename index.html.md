@@ -1,7 +1,7 @@
 ---
 title: "Fly.io Docs"
 layout: docs
-sitemap: false
+sitemap: true
 nav: firecracker
 ---
 
