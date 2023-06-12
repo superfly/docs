@@ -17,7 +17,16 @@ fly litefs-cloud create
 ## Get a LiteFS Cloud token
 
 ```cmd
-fly tokens create litefs-cloud --cluster $(cluster name)
+fly tokens create litefs-cloud --cluster my-cluster
+```
+
+## Restore a LiteFS Cluster to a specific point in time
+
+You can restore your LiteFS cluster to any specific point in time (since you've
+configured LiteFS Cloud).
+
+```cmd
+fly litefs-cloud restore my-cluster [--timestamp 2023-06-12T15:55]
 ```
 
 ## Destroy a LiteFS Cloud cluster
@@ -31,5 +40,15 @@ this action.
 [Backing up your LiteFS cluster]: /docs/litefs/backup
 
 ```cmd
-fly litefs-cloud delete $(cluster name)
+fly litefs-cloud delete my-cluster
+```
+
+If you intend to continue running your LiteFS cluster, don't forget to remove the
+`LITEFS_CLOUD_TOKEN` after you've deleted your LiteFS Cloud cluster. If you don't,
+LiteFS will continue to function, but performance may be negatively impacted, and
+you will see errors in the logs. If you're running LiteFS on Fly.io, you unset the
+secret:
+
+```cmd
+fly secrets unset LITEFS_CLOUD_TOKEN
 ```

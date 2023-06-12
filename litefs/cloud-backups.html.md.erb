@@ -8,8 +8,10 @@ toc: true
 
 The simplest way to implement disaster recovery for your LiteFS cluster is
 to use Fly.io's LiteFS Cloud for backups. LiteFS Cloud provides reliable backup
-and restore functionality, which reduce the risk of data loss in the event of a
-bug or disk corruption.
+and restore functionality, which reduce the risk of of data loss in the event
+that your cluster is lost. You'll also be able to restore your cluster to any
+point in time (not just the most recent snapshot), in case you need to revert
+your state.
 
 In this doc, we'll show you how to add LiteFS Cloud to an existing LiteFS
 cluster. If you're not using LiteFS yet, take a look at the
@@ -39,6 +41,16 @@ Keep this handy - you'll use it below.
 
 ## Configuring LiteFS to use LiteFS Cloud
 
+### Update LiteFS
+
+Before configuring LiteFS Cloud, you must update your LiteFS to a version that supports
+LiteFS Cloud. Update to `v0.5.0` or greater. You can do this by
+[installing the latest version][LiteFS Installation].
+
+[LiteFS Installation]: /docs/litefs/getting-started/#installing-litefs
+
+### LiteFS Cloud Configuration
+
 When you created your LiteFS Cloud cluster, you got a LiteFS Cloud API authentication
 token. (If you lost it, you can create a new one in
 [the LiteFS Cloud dashboard][LiteFS Cloud Dashboard].)
@@ -50,14 +62,8 @@ variable. If you're running on Fly.io, you can add a secret for it with:
 fly secrets set LITEFS_CLOUD_TOKEN=$(litefs cloud auth token)
 ```
 
-After you've added the env variable (or secret), you need to restart LiteFS. If
-your app is running on Fly.io, the easiest way of doing this is just to re-deploy:
-
-```cmd
-fly deploy
-```
-
-If you're not running on Fly.io, how you restart depends on how you have configured
+If you're not running on Fly.io, you need to set the `LITEFS_CLOUD_TOKEN` environment
+variable, and then restart LiteFS on each node. How you do this depends on how you have configured
 LiteFS. If you're running LiteFS separately from your app, then for each node, you should:
 
 * Update your configuration with the new environment variable
