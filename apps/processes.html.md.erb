@@ -16,7 +16,7 @@ You define processes in your `fly.toml`, giving each process group a name and a 
 
 If you don't explicitly define any processes, then the Machines in a Fly App belong to the default `app` process group, and on boot they run whatever entrypoint process the app's Docker image has. (Apps are shipped to Fly.io in Docker images, even though [we run VMs, not containers](https://fly.io/blog/docker-without-docker/).)
 
-The `app` process is the process group for the `http_service` section in the default app configuration of your `fly.toml` file, even though there is no `processes` value in that section.
+The `app` process is the process group for the `http_service` section in the default app configuration of your `fly.toml` file, even though there's no explicit `processes` value in that section.
 
 ## Run multiple processes
 
@@ -57,9 +57,9 @@ You can define distinct services for each process that needs to accept connectio
 
 So on the first deployment (either at the end of `fly launch` or at the first explicit `fly deploy`), flyctl creates and starts at least one Machine for each process group in `fly.toml`. 
 
-If you add new process groups in an app's `[processes]` block, the next `fly deploy` spins up at least one new Machine to run each new process.
+If you add new process groups in an app's `[processes]` block, then the next `fly deploy` spins up at least one new Machine to run each new process.
 
-If you remove any process groups from an app's `[processes]` block, the next `fly deploy` destroys the Machines that belong to the deleted process.
+If you remove any process groups from an app's `[processes]` block, then the next `fly deploy` destroys the Machines that belong to the deleted process.
 
 For more information about how many Machines are created by `fly launch` and `fly deploy`, refer to [App Availability and Resiliency](/docs/reference/app-availability/).
 
@@ -73,9 +73,9 @@ You can scale the number of Machines (up or down) per process group with the `fl
 fly scale count web=8 cron=2
 ```
 
-Alternatively, the `fly machine clone` and `fly machine destroy` commands can also be used to scale the number of Machines individually within a process group. When you clone a Machine that belongs to a process group, the new Machine is created with the command, services, and checks that are configured on the app for that process. 
+Alternatively, you can also use the `fly machine clone` and `fly machine destroy` commands to scale the number of Machines individually within a process group. When you clone a Machine that belongs to a process group, the new Machine is created with the command, services, and checks that are configured on the app for that process. 
 
-Run `fly status` to get a list of Machines with IDs and process groups.
+First, run `fly status` to get a list of Machines with IDs and process groups.
 
 The following example clones a Machine into the `gru` (São Paulo) region:
 
@@ -99,6 +99,8 @@ The following example changes the CPU/RAM of Machines in the `web` process group
 ```
 fly scale vm performance-2x --group web
 ```
+
+Run `fly platform vm-sizes` for a list of the valid CPU/RAM preset combinations.
 
 This example changes only the RAM of Machines in the `web` process group:
 
