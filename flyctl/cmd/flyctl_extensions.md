@@ -6,6 +6,7 @@ flyctl extensions [command] [flags]
 ~~~
 
 ## Available Commands
+* [planetscale](/docs/flyctl/extensions-planetscale/)	 - Setup a PlanetScale project for this app
 * [sentry](/docs/flyctl/extensions-sentry/)	 - Setup a Sentry project for this app
 
 ## Options
