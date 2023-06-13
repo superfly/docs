@@ -12,9 +12,9 @@ Once you've completed the [Server-side Rendering setup](https://inertiajs.com/se
 _________________________________________________
 
 ## Dockerfile Changes
-[Inertia SSR](https://inertiajs.com/server-side-rendering) requires a background [Node process](https://inertiajs.com/server-side-rendering#:~:text=Node%20must%20be%20available) that will render requested html pages. You'll have to update Fly.io's generated `Dockerfile` for your Laravel app in order to include support for `Node`. This can be done two ways:
+[Inertia SSR](https://inertiajs.com/server-side-rendering) requires a background [Node process](https://inertiajs.com/server-side-rendering#:~:text=Node%20must%20be%20available) that will render requested html pages. You'll have to update Fly.io's generated `Dockerfile` for your Laravel app in order to include support for `Node`. You can follow any of the below options to include `Node`:
 
-### 1. Quick copy over of Node 
+### Option 1: Quick copy of Node to Final Image
 The Laravel fly-scanner already generates a Dockerfile that makes use of a `Node` image, but uses a different final image. The quickest way to include Node into your app's final image, is to copy over the `Node` image's `node` binaries and generated `node_modules` to the final `fly-laravel` image:
 
 ```dockerfile
@@ -24,8 +24,8 @@ FROM base
 +  COPY --from=node_modules_go_brrr /app/node_modules /var/www/html/node_modules
 ```
 
-### 2. Install Node in Final Image
-Of course, you can also opt to instead fully install node in your final `fly-laravel` image. Include instructions to install `node`, and build the necessary assets/node_modules into your final image:
+### Option 2: Install Node in Final Image
+Of course, you can also instead opt to fully install `Node` in your final `fly-laravel` image. So, revise your Dockerfile to include instructions to install `node`, and build the necessary assets/node_modules into your final image:
 ```dockerfile
 # Install node in fly-laravel image
 RUN cd ~ \
@@ -34,7 +34,8 @@ RUN cd ~ \
     && apt install nodejs \ 
     && cd /var/www/html
 
-# Note: We run "production" for Mix and "build" for Vite
+# The snippet below already exists in the Dockerfile btw,
+# In the multi-stage build set up:
 RUN if [ -f "vite.config.js" ]; then \
         ASSET_CMD="build"; \
     else \
@@ -61,7 +62,7 @@ EXPOSE 8080
 
 ENTRYPOINT ["/entrypoint"]
 ```
-Since we now have node and its assets/modules in the `fly-laravel` image, we can remove our multi-build setup where we use a separate `FROM node` image to build assets and node_modules, and copy over the assets to the final image:
+Since we now have node and its assets/modules in the `fly-laravel` image, we can remove our multi-build setup where we use a separate `FROM node` image ( to build and copy assets and node_modules ):
 
 ```dockerfile
 # Remove the "multi stage build setup" lines below:
@@ -81,12 +82,17 @@ Since we now have node and its assets/modules in the `fly-laravel` image, we can
 
 
 ## Running SSR as A Process
-After getting your Dockerfile set up for Inertia SSR to work, you'll need to run the SSR Server as a [background process](https://inertiajs.com/server-side-rendering#:~:text=server%20as%20a-,background%20process,-%2C%20typically%20using%20a). Here at Fly.io, you can easily run a separate VM to run this SSR server instead of a monitoring tool like Supervisor( cool right?! ). Update your `fly.toml` file to include an `ssr` process group:
+After getting your Dockerfile set up for Inertia SSR to work, you can run the SSR Server as a [background process](https://inertiajs.com/server-side-rendering#:~:text=server%20as%20a-,background%20process,-%2C%20typically%20using%20a). Here at Fly.io, you can easily run a separate VM for your SSR server instead of a monitoring tool like Supervisor. 
+
+Update your `fly.toml` file to include an `ssr` [process group](https://fly.io/docs/apps/processes/#run-multiple-processes):
 ```toml
 [processes]
   app=""
   ssr="php /var/www/html/artisan inertia:start-ssr"
 ```
+Adding the SSR process above creates a new machine specially for your SSR server. You'll now have separate machines for your web app, and ssr server:
+![Machines created for the processes](/docs/images/laravel-app-ssr-vms.png)
+<small>Notice there are four machines above? The two machines listed at the bottom are back ups.</small>
 
 Now that you have more than one process group for your Fly.io app, you'll have to make sure that the [`[http_service]`](/docs/reference/configuration/#the-http_service-section) is properly mapped to your `app` process. Update your `fly.toml`'s `http_service` section with the `app` process:
 ```toml
@@ -99,13 +105,13 @@ Now that you have more than one process group for your Fly.io app, you'll have t
 +  processes = ["app"]
 ```
 
-## Web and SSR Communication
-The SSR server will be created as a separate VM from your web app. You'll have to configure your Laravel web VM to talk with it. 
 
-First, revise the fly.toml file to include an SSR_URL that will contain the ssr process' .internal address:
+
+### Web and SSR Communication
+The SSR server will be created as a separate VM from your web app. You'll have to configure your Laravel web VM to [talk with it](https://community.fly.io/t/process-group-aware-internal-dns-route-between-processes-with-ease/13063/4). To do so, first revise the `fly.toml` file to include an `SSR_URL` that will contain the ssr process' [.internal address](https://fly.io/docs/reference/private-networking/#fly-internal-addresses) routed to SSR's applicable port ( in the case below, 13714):
 ```.env
 [env]
-  SSR_URL="ssr.process.late-dawn-1295.internal:13714"
+  SSR_URL="ssr.process.<yourAppNameHerePlease>.internal:13714"
   // other envs here
 ```
 Finally, pull the [inertia.php](https://github.com/inertiajs/inertia-laravel/blob/master/config/inertia.php) config file into your config directory, and  update it to use the `SSR_URL` env variable:
@@ -113,9 +119,8 @@ Finally, pull the [inertia.php](https://github.com/inertiajs/inertia-laravel/blo
 /* config/inertia.php */
 'ssr' => [
     'enabled' => true,
-
     'url' => env('SSR_URL','http://127.0.0.1:13714')
 ],
 ```
 
-With that, do a quick `fly deploy` and your good to go!
+With that, do a quick `fly deploy` and you're good to go!
