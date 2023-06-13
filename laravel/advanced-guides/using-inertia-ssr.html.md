@@ -99,4 +99,23 @@ Now that you have more than one process group for your Fly.io app, you'll have t
 +  processes = ["app"]
 ```
 
+## Web and SSR Communication
+The SSR server will be created as a separate VM from your web app. You'll have to configure your Laravel web VM to talk with it. 
+
+First, revise the fly.toml file to include an SSR_URL that will contain the ssr process' .internal address:
+```.env
+[env]
+  SSR_URL="ssr.process.late-dawn-1295.internal:13714"
+  // other envs here
+```
+Finally, pull the [inertia.php](https://github.com/inertiajs/inertia-laravel/blob/master/config/inertia.php) config file into your config directory, and  update it to use the `SSR_URL` env variable:
+```php
+/* config/inertia.php */
+'ssr' => [
+    'enabled' => true,
+
+    'url' => env('SSR_URL','http://127.0.0.1:13714')
+],
+```
+
 With that, do a quick `fly deploy` and your good to go!
