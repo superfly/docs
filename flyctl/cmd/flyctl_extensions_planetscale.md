@@ -10,7 +10,8 @@ flyctl extensions planetscale [command] [flags]
 * [create](/docs/flyctl/extensions-planetscale-create/)	 - Provision a PlanetScale project for a Fly.io app
 * [dashboard](/docs/flyctl/extensions-planetscale-dashboard/)	 - View your PlanetScale database dashboard
 * [destroy](/docs/flyctl/extensions-planetscale-destroy/)	 - Permanently destroy a database
-* [list](/docs/flyctl/extensions-planetscale-list/)	 - List Upstash Redis databases for an organization
+* [list](/docs/flyctl/extensions-planetscale-list/)	 - List PlanetScale databases for an organization
+* [status](/docs/flyctl/extensions-planetscale-status/)	 - Show status of a PlanetScale database
 
 ## Options
 

@@ -1,15 +1,15 @@
-List PlanetScale databases for an organization
+Show status of a PlanetScale database
+
 
 ## Usage
 ~~~
-flyctl extensions planetscale list [flags]
+flyctl extensions planetscale status <name> [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -h, --help         help for list
-  -o, --org string   The target Fly organization
+  -h, --help   help for status
 ~~~
 
 ## Global Options
