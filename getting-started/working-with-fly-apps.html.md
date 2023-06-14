@@ -11,7 +11,7 @@ nav: firecracker
 
 Once you have deployed an application to Fly.io, you can view information about it, give the system secrets to share with it, associate it with a custom domain, and more. 
 
-### Check Deployment Status
+## Check Deployment Status
 
 The `fly status` command shows information on when the application was last deployed, what version is deployed and the status of that deployment. If
 the deployment is currently running, it will also break that down. Once the app is deployed, its VMs are listed, including their status, region and when they were created.
@@ -80,9 +80,9 @@ v11       release            Secrets updated   demo@fly.io          just now
 
 When you create a Fly App, it is automatically given a fly.dev sub-domain, based on the app's name. This is great for testing but when you want to go to full production you'll want your application to appear on your own domain and have HTTPS set up for you as it is with your .fly.dev domain. That's where the `fly certs` command comes in. But let's step back before we set up the TLS certificate, to the first step: **Directing Traffic To Your Site**.
 
-### Set A CNAME Record
+**Set a CNAME Record**
 
-The simplest option for directing traffic to your site is to create a CNAME record for your custom domain that points at your .fly.dev host. So if you have a custom domain called `mydreamdomain.com` and an app called exemplum.fly.dev, you can create a CNAME record for mydreamdomain.com's DNS that would look like:
+The simplest option for directing traffic to your site is to create a CNAME record for your custom domain that points at your .fly.dev host. So if you have a custom domain called `example.com` and an app called exemplum.fly.dev, you can create a CNAME record for example.com's DNS that would look like:
 
 ```
 CNAME @ exemplum.fly.dev
@@ -90,37 +90,33 @@ CNAME @ exemplum.fly.dev
 
 You'll need to configure this with your DNS provider. 
 
-Now, accessing `mydreamdomain.com` will tell the DNS system to look up `exemplum.fly.dev` and return its results for you. 
+Now, accessing `example.com` will tell the DNS system to look up `exemplum.fly.dev` and return its results for you. 
 
-### Set The A Record
+**Set the A Record**
 
 The other option is slightly more complicated in that it uses the IP address of the app, rather than its DNS name. The upside is that it is slightly faster. 
 
 To start, we need the Fly IP address of our deployed application. To get that, use the `fly ips list` command we covered earlier on.
 
-You'll need to configure this with your DNS provider.
+You'll need to configure this with your DNS provider. You need to add in an "A Record" for your domain that points to the IP address. Once this is done and propagated through the DNS system, you should be able to connect over unencrypted HTTP to using the domain name: `http://example.com`.
 
- but simply add in an "A Record" for your domain that points to the IP address. Once this is done and propagated through the DNS system, you should be able to connect over unencrypted HTTP to using the domain name: `http://example.com`.
-
-If we have our domain `mydreamdomain.com`,
-
-### Get Certified
+**Get Certified**
 
 To enable HTTPS on the domain, you need to get a certificate. Fly does that for you automatically! 
-It starts with creating a certificate for *your* custom domain with `fly certs create example.com`:
+It starts with creating a certificate for *your* custom domain with `fly certs add`:
 
 ```cmd
-fly certs add mydreamdomain.com
+fly certs add example.com
 ```
 ```output
-  Hostname                    = mydreamdomain.com
+  Hostname                    = example.com
   Configured                  = true
   Issued                      =
   Certificate Authority       = lets_encrypt
   DNS Provider                = enom
   DNS Validation Instructions =
   DNS Validation Hostname     =
-  DNS Validation Target       = mydreamdomain.com.5xzw.flydns.net
+  DNS Validation Target       = example.com.5xzw.flydns.net
   Source                      = fly
   Created At                  = 0001-01-01T00:00:00Z
   Status                      =
@@ -129,17 +125,17 @@ fly certs add mydreamdomain.com
 This will start the process of getting a certificate. Run `fly certs show example.com` to get the details needed for your next step:
 
 ```cmd
-fly certs show mydreamdomain.com
+fly certs show example.com
 ```
 ```output
-  Hostname                    = mydreamdomain.com
+  Hostname                    = example.com
   Configured                  = true
   Issued                      = ecdsa, rsa
   Certificate Authority       = lets_encrypt
   DNS Provider                = enom
-  DNS Validation Instructions = CNAME _acme-challenge.mydreamdomain.com => mydreamdomain.com.5xzw.flydns.net.
-  DNS Validation Hostname     = _acme-challenge.mydreamdomain.com
-  DNS Validation Target       = mydreamdomain.com.5xzw.flydns.net
+  DNS Validation Instructions = CNAME _acme-challenge.example.com => example.com.5xzw.flydns.net.
+  DNS Validation Hostname     = _acme-challenge.example.com
+  DNS Validation Target       = example.com.5xzw.flydns.net
   Source                      = fly
   Created At                  = 1m24s ago
   Status                      = Ready
