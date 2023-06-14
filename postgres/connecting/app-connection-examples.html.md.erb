@@ -224,64 +224,68 @@ This will create the following folders:
 </details>
 
 
-After initializing you will need to show the CLI how to connect to the database inside of config/config.json
+After initializing you will need to show the CLI how to connect to the database inside of config/config.js
 
-```json
-{
-  "development": {
-    "username": "root",
-    "password": null,
-    "database": "database_development",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+```javascript
+const fs = require('fs');
+
+module.exports = {
+  development: {
+    username: 'database_dev',
+    password: 'database_dev',
+    database: 'database_dev',
+    host: '127.0.0.1',
+    port: 3306,
+    dialect: 'mysql',
+    dialectOptions: {
+      bigNumberStrings: true
+    }
   },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+  test: {
+    username: process.env.CI_DB_USERNAME,
+    password: process.env.CI_DB_PASSWORD,
+    database: process.env.CI_DB_NAME,
+    host: '127.0.0.1',
+    port: 3306,
+    dialect: 'postgres',
+    dialectOptions: {
+      bigNumberStrings: true
+    }
   },
-  "production": {
-    "use_env_variable": "DATABASE_URL",
-    "host": "0.0.0.0",
-    "dialect": "postgres"
+  production: {
+    database: process.env.DATABASE_URL,
+    host: process.env.PROD_DB_HOSTNAME,
+    dialect: 'postgres'
   }
-}
+};
 
 
 ```
 
-Next pass the `DATABASE_URL` into the Sequelize constructor in models/index.js to connect to fly-postgres on deployment
+Create a new file named `.sequelizerc` , this allows the CLI to be able to read your config.js file
 ```javascript
+const path = require('path');
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env.DATABASE_URL);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+module.exports = {
+  'config': path.resolve('config', 'config.js')
 }
 
 ```
 
-
-You can confirm your database connection as follows:
-
+Next pass the `DATABASE_URL` from the env into the Sequelize constructor in models/index.js to be able to connect to your fly postgres app and confirm the new seuqelize connection with the async function below
 ```javascript
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env.DATABASE_URL);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
-
-// Check database connection
-sequelize.authenticate()
-.then(() => {
+// Connect to fly postgres app
+let sequelize = new Sequelize(process.env.DATABASE_URL);
+  
+// Confirms the connection to the database
+(async () => {
+  try {
+    await sequelize.authenticate();
     console.log('Connected to the database!');
-  })
-  .catch(err => {
+  } catch (err) {
     console.error('Error connecting to the database:', err);
-  });
+  }
+})();
+
 ```
