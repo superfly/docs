@@ -224,7 +224,7 @@ This will create the following folders:
 </details>
 
 
-After initializing you will need to show the CLI how to connect to the database inside of config/config.js
+After initializing you will need to show the CLI how to connect to the database inside of `config/config.js`
 
 ```javascript
 const fs = require('fs');
@@ -262,7 +262,7 @@ module.exports = {
 
 ```
 
-Create a new file named `.sequelizerc` , this allows the CLI to be able to read your config.js file
+Create a new file named `.sequelizerc` , this allows the CLI to be able to read your `config.js` file
 ```javascript
 const path = require('path');
 
@@ -272,7 +272,7 @@ module.exports = {
 
 ```
 
-Next pass the `DATABASE_URL` from the env into the Sequelize constructor in models/index.js to be able to connect to your fly postgres app and confirm the new seuqelize connection with the async function below
+Next pass the `DATABASE_URL` from the env into the Sequelize constructor in `models/index.js` to be able to connect to your fly postgres app and confirm the new seuqelize connection with the async function below
 ```javascript
 
 // Connect to fly postgres app
