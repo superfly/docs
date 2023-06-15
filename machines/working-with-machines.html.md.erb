@@ -25,7 +25,7 @@ You can still access your Machines directly over a Wireguard VPN, and use the pr
 
 Follow the [instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io [IPv6 private network](/docs/reference/private-networking/). Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
 
-### Connecting via `flyctl proxy`
+### Connecting via flyctl 
 
 You can also proxy a local port to the internal API endpoint. This section is preserved mainly for the sake of interest, as the public Machines API endpoint is simpler and more performant.
 
@@ -66,8 +66,8 @@ A convenient way to set the `FLY_API_HOSTNAME` is to add it to your `Dockerfile`
 ENV FLY_API_HOSTNAME="https://api.machines.dev"
 ```
 
-
-You'll still need to replace the application name and Machine ID for commands to work.
+<section class="warning">The cURL examples in this document are for an app named `user-functions`. Replace `user-functions` with the name of your own app! Also replace any Machine IDs with those of Machines that belong to your app.
+</section>
 
 ### Authentication
 
@@ -77,15 +77,15 @@ All requests must include the Fly API Token in the HTTP Headers as follows:
 Authorization: Bearer <fly_api_token>
 ```
 
-### Create a Fly application
+### Create a Fly App
 
-Machines must be associated with a Fly application. App names must be unique.
+Machines must be associated with a Fly App. App names must be unique.
 
 <%= partial "/docs/reference/machines/create_app_req" %>
 
 ### Allocate an IP address for global request routing
 
-If you intend for Machines to be accessible to the internet, you'll need to allocate an IP address to the application. Currently
+If you intend for Machines to be accessible to the internet, you'll need to allocate an IP address to the app. Currently
 this is done using `flyctl` or the [Fly.io GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](https://fly.io/docs/reference/services/#anycast). Read more about this in [the Networking section](https://fly.io/docs/reference/services/#notes-on-networking).
 
 Example:
@@ -203,12 +203,12 @@ An example of two checks:
         }
 ```
 
-Example create Machine request and response:
+Example create Machine request and response on app `user-functions`:
 
 <%= partial "/docs/reference/machines/launch_req" %>
 <%= partial "/docs/reference/machines/launch_resp" %>
 
-### Wait for a Machine to reach a Specified State
+### Wait for a Machine to reach a specified state
 
 Wait for a Machine to reach a specific state. Specify the desired state with the `state` parameter.  See the [table below](#machine-states) for a list of possible states.  The default for this parameter is `started`.
 
@@ -227,7 +227,7 @@ Given a machine ID, fetch details about it.
 
 ### Update a Machine
 
-`region` and `name` are immutable and cannot be updated. **We don't support partial updates, you're required to specify the entire config**.
+`region` and `name` are immutable and cannot be updated. **We don't support partial updates. You're required to specify the entire config**.
 
 <%= partial "/docs/reference/machines/update_req" %>
 <%= partial "/docs/reference/machines/update_resp" %>
@@ -259,7 +259,7 @@ Delete a Machine, never to be seen again. This action cannot be undone!
 <%= partial "/docs/reference/machines/list_req" %>
 <%= partial "/docs/reference/machines/list_resp" %>
 
-### Delete a Fly application
+### Delete a Fly App
 
 Machines should be stopped before attempting deletion. Append `?force=true` to the URI to stop and delete immediately.
 
@@ -273,11 +273,11 @@ Machine leases can be used to obtain an exclusive lock on modifying a Machine.
 <%= partial "/docs/reference/machines/lease_resp" %>
 <%= partial "/docs/reference/machines/lease" %>
 
-## Notes on Networking
+## Notes on networking
 
 Machines are closed to the public internet by default. To make them accessible via the associated application, you need to:
 
-* Allocate an IP address to the application
+* Allocate an IP address to the Fly App
 * Adding one or more `services` to the Machine config with ports and handlers, as seen in the launch example here
 
 For an application with a single machine, all requests will be routed to that Machine. A Machine in the `stopped` state will be started up
@@ -291,9 +291,11 @@ For example, if 3 out of 6 Machines have service configurations set to listen on
 
 ### Reaching Machines
 
-Machines can be reached within the private network by hostname in the format `<id>.vm.<app-name>.internal`. For example: `3d8d413b29d089.vm.user-functions.internal`.
+Machines can be reached within the private network by hostname, in the format `<id>.vm.<app-name>.internal`. 
 
-## Machine States
+So, to reach a Machine with ID `3d8d413b29d089` on an app called `user-functions`, use hostname `3d8d413b29d089.vm.user-functions.internal`.
+
+## Machine states
 
 This table explains the possible Machine states. A Machine may only be in one state at a time.
 
