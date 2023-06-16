@@ -19,7 +19,7 @@ There are 2 parts to getting clustering quickly setup on Fly.
 - Installing and using `libcluster`
 - Scaling our application to multiple VMs
 
-## _Adding `libcluster`_
+## Adding `libcluster`
 
 The widely adopted library [libcluster](https://github.com/bitwalker/libcluster) helps here.
 
@@ -76,12 +76,12 @@ This assumes that your `rel/env.sh.eex` file is configured to name your Elixir n
 
 Before this app can be clustered, we need more than one VM. We'll do that next!
 
-## _Running Multiple VMs_
+## Running multiple VMs
 
 There are two ways to run multiple VMs.
 
-1. Scale our application to have multiple VMs in one region.
-2. Add a VM to another region (multiple regions).
+1. Scale our application to have multiple Fly Machines in one region.
+2. Add a Machine to another region (multiple regions).
 
 Both approaches are valid and our Elixir application doesn't change at all for the approach you choose!
 
@@ -92,9 +92,9 @@ fly status
 ```
 ```output
 ...
-VMs
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-f9014bf7 26      sea    run     running 1 total, 1 passing 0        1h8m ago
+Machines
+PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPDATED         
+app     6e82dd00f75687  20      sea     started 1 total, 1 passing      2023-03-16T22:01:45Z
 ```
 
 ### Scaling in a Single Region
@@ -104,9 +104,6 @@ Let's scale up to 2 VMs in our current region.
 ```cmd
 fly scale count 2
 ```
-```output
-Count changed to 2
-```
 
 Checking on the status we can see what happened.
 
@@ -115,10 +112,10 @@ fly status
 ```
 ```output
 ...
-VMs
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-eb4119d3 27      sea    run     running 1 total, 1 passing 0        39s ago
-f9014bf7 27      sea    run     running 1 total, 1 passing 0        1h13m ago
+Machines
+PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPDATED         
+app     5683d474b4658e  20      sea     started 1 total, 1 passing      2023-06-16T01:49:36Z
+app     6e82dd00f75687  20      sea     started 1 total, 1 passing      2023-03-16T22:01:45Z
 ```
 
 We now have two VMs in the same region! That was easy.
@@ -130,15 +127,14 @@ fly logs
 ```
 ```output
 ...
-app[eb4119d3] sea [info] 21:50:21.924 [info] [libcluster:fly6pn] connected to :"fly-elixir@fdaa:0:1da8:a7b:ac2:f901:4bf7:2"
+app[5683d474b4658e] sea [info] 21:50:21.924 [info] [libcluster:fly6pn] connected to :"fly-elixir@fdaa:0:1da8:a7b:ac2:f901:4bf7:2"
 ...
 ```
 
 But that's not as rewarding as seeing it from inside a node. From an IEx shell, we can ask the node we're connected to, what other nodes it can see.
 
-```
-fly ssh console
-/app/bin/hello_elixir remote
+```cmd
+fly ssh console --pty -C "/app/bin/hello_elixir remote"
 ```
 
 ```elixir
@@ -152,64 +148,31 @@ I included the IEx prompt because it shows the IP address of the node I'm connec
 
 Fly makes it super easy to run VMs of your applications physically closer to your users. Through the magic of DNS, users are directed to the nearest region where your application is located. You can read about [regions](/docs/reference/regions/#welcome-message) here and see the list of regions to choose from.
 
-Starting back from our baseline of a single VM running in `sea` which is Seattle, Washington (US), I'll add the region `ewr` which is Parsippany, NJ (US). This puts a VM on both coasts of the US.
+Starting back from our baseline of a single VM running in `sea` which is Seattle, Washington (US), I'll add the region `ewr` which is Parsippany, NJ (US). I can do this by cloning the existing Fly Machine into my desired region:
 
 ```cmd
-fly regions add ewr
-```
-```output
-Region Pool:
-ewr
-sea
-Backup Region:
-iad
-lax
-sjc
-vin
+fly machine clone 6e82dd00f75687 --region ewr
 ```
 
-Looking at the status right now shows that we're only in 1 region because our count is set to 1.
+Now our status shows we have two Machines spread across 2 regions! This puts a VM on both coasts of the US.
 
 ```cmd
 fly status
 ```
 ```output
 ...
-VMs
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-cdf6c422 29      sea    run     running 1 total, 1 passing 0        58s ago
-```
-
-Let's add a 2nd VM and see it deploy to `ewr`.
-
-```cmd
-fly scale count 2
-```
-```output
-Count changed to 2
-```
-
-Now our status shows we have two VMs spread across 2 regions!
-
-```cmd
-fly status
-```
-```output
-...
-VMs
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-0a8e6666 30      ewr    run     running 1 total, 1 passing 0        16s ago
-cdf6c422 30      sea    run     running 1 total, 1 passing 0        6m47s ago
+Machines
+PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPDATED         
+app     0e2869ea63d486  20      ewr     started 1 total, 1 passing      2023-06-16T01:56:19Z
+app     6e82dd00f75687  20      sea     started 1 total, 1 passing      2023-03-16T22:01:45Z
 ```
 
 Let's ensure they are clustered together.
 
+```cmd
+fly ssh console --pty -C "/app/bin/hello_elixir remote"
 ```
-fly ssh console
-/app/bin/hello_elixir remote
-```
-
-```elixir
+```out
 iex(fly-elixir@fdaa:0:1da8:a7b:ac2:cdf6:c422:2)1> Node.list
 [:"fly-elixir@fdaa:0:1da8:a7b:ab2:a8e:6666:2"]
 ```
