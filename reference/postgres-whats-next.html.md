@@ -7,7 +7,7 @@ nav: firecracker
 
 Congrats! Your Postgres app is up and running on Fly.io. Now there are a few things you should know before moving forward.
 
-`fly pg create` helped you setup a PostgresSQL database cluster, but you can bring your own; this is an automated Postgres application. This is not a managed database. If Postgres crashes because it ran out of memory or disk space, you'll need to do a little work to get it back.
+`fly pg create` helped you setup a PostgreSQL database cluster, but you can bring your own; this is an automated Postgres application. This is not a managed database. If Postgres crashes because it ran out of memory or disk space, you'll need to do a little work to get it back.
 
 Fly Postgres is a Fly app with flyctl sugar on top to help you bootstrap your much-needed database. It comes with most commonly used functionality (replication, failover, metrics, monitoring and daily snapshots), but you can extend it anytime if needed.
 

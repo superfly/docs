@@ -16,7 +16,7 @@ There is a lot of good docs out there.  A good place to start is with
 will walk you through the current Rails template.
 
 Fly Rails cookbooks are for those that wish to explore further.  In each, you
-will start with a minimal Dockerfile that focuses on one topic.  And you wil be
+will start with a minimal Dockerfile that focuses on one topic.  And you will be
 introduced to a small number of new alternatives, exploring different tradeoffs
 or use cases.
 
@@ -31,7 +31,7 @@ understading the rest easier.
 If you are comfortable skpping the first cookbook, all cookbooks start with an
 empty directory and a seed `Dockerfile`.  Run `fly launch` to create an
 application, and then proceed from there, running `fly deploy` after you make
-changes.  The recipies the follow contain fragments that can be added
+changes.  The recipes the follow contain fragments that can be added
 to multiple cookbooks.
 
 For best results, you are encouraged to try out each step.  To do so, you will need to [Log in to Fly](https://fly.io/docs/getting-started/log-in-to-fly/).  Nothing you do in this tutorial will exceed the [Free Allowances](https://fly.io/docs/about/pricing/#free-allowances) provided.
@@ -40,7 +40,7 @@ often better than experimenting in production when you want to make configuratio
 Starting a minimal application, using `flyctl ssh console` to shell into that machine and
 explore and make changes, rerunning `fly deploy` to reset the machine when those experiments
 fail and making changes to your `Dockerfile` and `fly.toml` when things work is an effective
-way to validate an aproach before making changes to your application.  
+way to validate an approach before making changes to your application.  
 
 Let's get started.
 

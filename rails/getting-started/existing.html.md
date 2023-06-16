@@ -188,7 +188,7 @@ $ yarn -v
 There also are files used by version managers to keep your development
 environment in sync: `.ruby-version`, and `.node-version`.
 
-Finally, `package.json` files may have verson numbers in `engines.node`
+Finally, `package.json` files may have version numbers in `engines.node`
 and `packageManager` values.
 
 Whenever you update your tools, run the following command to update your
@@ -221,7 +221,7 @@ Accordingly:
 ### Postgres database drivers
 
 If you didn't initially deploy with a postgres database but want to add one
-later, you can create a databae using [`fly postgres
+later, you can create a database using [`fly postgres
 create`](https://fly.io/docs/postgres/getting-started/create-pg-cluster/).
 Next, update your dockerfile to include the postgres libraries using:
 

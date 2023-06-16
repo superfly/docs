@@ -46,7 +46,7 @@ We add the following parameters to help you verify the authenticity of requests.
 
 ```
 timestamp: A UNIX epoch timestamp value
-nonce: A random unique string identifying the invididual request
+nonce: A random unique string identifying the individual request
 url: The full request target URL
 ```
 

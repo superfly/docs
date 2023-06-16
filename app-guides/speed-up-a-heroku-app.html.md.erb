@@ -156,7 +156,7 @@ flyctl certs check yourcustomdomainname -a yourappname
 
 The status shows that the process is now waiting on another configuration change, this time to the DNS information for 'yourcustomdomainname'. We need to create an "_acme-challenge" sub-domain (The DNS Validation Hostname) and point that at a particular flydns address (the DNS Validation Target).
 
-Once this is done, the certificate authority can see the owner of the domain has control of it. Ok, explanation over. What this all comes down to is you need to add a CNAME record to your domain's DNS information that points to your Fly IP address. The text file version of this is included in the DNS Validation Instructions. The process for adding this is dependant on your DNS provider's dashboard/admin, but adding a CNAME record should be obvious/well-documented with them.
+Once this is done, the certificate authority can see the owner of the domain has control of it. Ok, explanation over. What this all comes down to is you need to add a CNAME record to your domain's DNS information that points to your Fly IP address. The text file version of this is included in the DNS Validation Instructions. The process for adding this is dependent on your DNS provider's dashboard/admin, but adding a CNAME record should be obvious/well-documented with them.
 
 Once the new record has been added, give it some time to propagate through DNS. You can occasionally run `flyctl certs check` to get updates on the certificate being issued and when it is ready, you should see this:
 

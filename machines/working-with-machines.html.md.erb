@@ -286,7 +286,7 @@ automatically when a request arrives.
 For an application with multiple Machines *with the same configuration*, requests will be distributed across them. Warm-start behavior in this situation
 is not well-defined now, so should not be relied upon for apps with multiple Machines.
 
-Requests to Machines with *mixed* configurations will be distributed across Machines whos configurations match the request.
+Requests to Machines with *mixed* configurations will be distributed across Machines whose configurations match the request.
 For example, if 3 out of 6 Machines have service configurations set to listen on port 80, requests to port 80 will be distributed amongst those 3.
 
 ### Reaching Machines
