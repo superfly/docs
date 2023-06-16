@@ -10,11 +10,11 @@ objective: Cluster your erlang nodes into a single distributed network!
 ---
 
 Elixir and the BEAM have the incredible ability to be clustered together and
-processes can pass messages seamlessly to each other between nodes. Fly makes
+processes can pass messages seamlessly to each other between nodes. Fly.io makes
 clustering easy! This extra (and totally optional) portion of the guide walks
 you through clustering your Elixir application.
 
-There are 2 parts to getting clustering quickly setup on Fly.
+There are 2 parts to getting clustering quickly setup on Fly.io.
 
 - Installing and using `libcluster`
 - Scaling our application to multiple VMs
@@ -97,7 +97,7 @@ PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPD
 app     6e82dd00f75687  20      sea     started 1 total, 1 passing      2023-03-16T22:01:45Z
 ```
 
-### Scaling in a Single Region
+### Scaling in a single region
 
 Let's scale up to 2 VMs in our current region.
 
@@ -144,9 +144,9 @@ iex(fly-elixir@fdaa:0:1da8:a7b:ac2:f901:4bf7:2)1> Node.list
 
 I included the IEx prompt because it shows the IP address of the node I'm connected to. Then getting the `Node.list` returns the other node. Our two VMs are connected and clustered!
 
-### Scaling to Multiple Regions
+### Scaling to multiple regions
 
-Fly makes it super easy to run VMs of your applications physically closer to your users. Through the magic of DNS, users are directed to the nearest region where your application is located. You can read about [regions](/docs/reference/regions/#welcome-message) here and see the list of regions to choose from.
+Fly.io makes it super easy to run VMs of your applications physically closer to your users. Through the magic of DNS, users are directed to the nearest region where your application is located. You can read about [regions](/docs/reference/regions/#welcome-message) here and see the list of regions to choose from.
 
 Starting back from our baseline of a single VM running in `sea` which is Seattle, Washington (US), I'll add the region `ewr` which is Parsippany, NJ (US). I can do this by cloning the existing Fly Machine into my desired region:
 
@@ -172,28 +172,29 @@ Let's ensure they are clustered together.
 ```cmd
 fly ssh console --pty -C "/app/bin/hello_elixir remote"
 ```
-```out
+
+```elixir
 iex(fly-elixir@fdaa:0:1da8:a7b:ac2:cdf6:c422:2)1> Node.list
 [:"fly-elixir@fdaa:0:1da8:a7b:ab2:a8e:6666:2"]
 ```
 
 We have two VMs of our application deployed to the West and East coasts of the North American continent and they are clustered together! Our users will automatically be directed to the server nearest them. That is so cool!
 
-## _The Cookie Situation_
+## The cookie situation
 
 Before two Elixir nodes **can** cluster together, they must share a secret cookie. The cookie itself isn't meant to be a super secret encryption key or anything like that, it's designed to let us create multiple sets of small clusters on the same network that don't all just connect together. Different cookies means different clusters. For instance, only the nodes that all use the cookie "abc" will connect together.
 
 For us, this means that in order for `my_remote` node to connect to the cluster on Fly, we need to share the same cookie value used in production.
 
-### The Cookie Problem
+### The cookie problem
 
 When we build a `mix release`, it generates a long random string for the cookie value. When we **re-run** the `mix release` command, it keeps the same cookie value. That is, when we don't run it in Docker. The Dockerfile we're using is building a fresh release every time we run it. That's kind of the point of a Docker container. So **our cookie value is being randomly generated every time we deploy**. This means after every deploy, we would have to figure out what the new cookie value is so our local node can use it.
 
-### The Cookie Solution
+### The cookie solution
 
 The easiest solution here is to **specify** the value to use for our cookie. One that we will know outside of the build and that won't keep changing on us.
 
-## _Making the Cookie Changes_
+## Making the cookie changes
 
 If we read the [Mix.Tasks.Release docs](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-options), in the `:cookie` section we learn that if we provide an ENV named `RELEASE_COOKIE`, it will be used. If that ENV is not found, it falls back to the randomly generated one.
 
