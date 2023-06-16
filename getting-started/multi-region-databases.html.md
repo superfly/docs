@@ -216,7 +216,7 @@ psql postgres://postgres:<password>@<app-name>.fly.dev:10000
 ```
 
 
-## Restoring a PostgresSQL cluster
+## Restoring a PostgreSQL cluster
 
 Fly.io performs daily storage-based snapshots of each of your provisioned volumes. These snapshots can
 be used to restore your dataset into a new Postgres application.

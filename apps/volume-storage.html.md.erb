@@ -150,7 +150,7 @@ You need to create as many volumes as you have Machines per process in your app.
 If you configure [mounts] in `fly.toml` and then run `fly deploy` without first creating enough volumes, then you'll get an error similar to this one:
 
 ```out
-Error: Process group 'app' needs volumes with name 'myapp_data' to fullfill mounts defined in fly.toml; 
+Error: Process group 'app' needs volumes with name 'myapp_data' to fulfill mounts defined in fly.toml; 
 Run fly volume create myapp_data -r REGION for the following regions and counts: lhr=1.`
 ```
 

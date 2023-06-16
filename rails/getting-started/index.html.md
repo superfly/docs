@@ -22,7 +22,7 @@ demonstrates a trivial view, then scaffolds a database table, and finally makes
 use of [Turbo Streams](https://turbo.hotwired.dev/handbook/streams) to dynamically
 update pages.
 
-In order to start working with Fly.io, you will need `flyctl`, our CLI app for managing apps. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/hands-on/install-flyctl/). Once thats installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
+In order to start working with Fly.io, you will need `flyctl`, our CLI app for managing apps. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/hands-on/install-flyctl/). Once that's installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
 
 Once you have logged on, here are the three steps and a recap.
 

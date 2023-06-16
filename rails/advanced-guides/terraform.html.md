@@ -57,7 +57,7 @@ The terraform generator supports a number of options, for now it is worth lettin
 
   * `--name` - application name. If not specified, a name will be generated for you.
   * `--org` - the fly organization. Defaults to `personal`.
-  * `--region` - one or more regions to deploy this app.  If not specified, fly wil pick one for you based on your location.
+  * `--region` - one or more regions to deploy this app.  If not specified, fly will pick one for you based on your location.
 
   More options can and should be added.  See
   [Fly terraform provider documentation](https://registry.terraform.io/providers/fly-apps/fly/latest/docs/resources/machine#optional) for ideas.

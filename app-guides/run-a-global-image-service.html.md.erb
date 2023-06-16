@@ -264,7 +264,7 @@ This tells you all you need to know about your currently deployed application. I
 curl -O "http://flyimaginary.fly.dev/crop?width=500&height=400&url=https://raw.githubusercontent.com/h2non/imaginary/master/testdata/large.webp"
 ```
 
-Notice that we didn't need to specifiy port 8080 as we did with the local docker build. That's because port 80 on the host routes to port 8080. As an added bonus, we also got HTTPS support as port 443 also routes to port 8080, with Fly managing the TLS termination and the Let's Encrypt certificates. We can do the same query, over a secured connection, with:
+Notice that we didn't need to specify port 8080 as we did with the local docker build. That's because port 80 on the host routes to port 8080. As an added bonus, we also got HTTPS support as port 443 also routes to port 8080, with Fly managing the TLS termination and the Let's Encrypt certificates. We can do the same query, over a secured connection, with:
 
 ```cmd
 curl -O "https://flyimaginary.fly.dev/crop?width=500&height=400&url=https://raw.githubusercontent.com/h2non/imaginary/master/testdata/large.webp"
