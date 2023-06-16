@@ -5,3 +5,119 @@ sitemap: false
 nav: litefs
 toc: true
 ---
+
+## Overview
+
+This guide will walk you through the steps of getting a LiteFS cluster up and
+running using Docker. You can also use this guide as a reference for running
+LiteFS on a Linux server with minimal changes.
+
+For a full, working example of a LiteFS application, with a docker-compose setup
+that you can run locally, please see the [litefs-example][] repository.
+
+[litefs-example]: https://github.com/superfly/litefs-example
+
+## Creating a LiteFS Cloud Cluster (optional)
+
+<%= partial "/docs/reference/litefs/create_litefs_cloud_cluster" %>
+
+
+## Adding LiteFS to your Dockerfile
+
+<%= partial "/docs/reference/litefs/adding_litefs_to_your_dockerfile" %>
+
+## Configuring LiteFS
+
+Most configuration options for LiteFS are set via a YAML configuration file
+called `litefs.yml`. This file is typically placed in `/etc/litefs.yml` but
+you can change the path by using the `-config` flag.
+
+You can take a look at complete examples of what your `litefs.yml` file should
+look like for [the primary node][LiteFS primary yml] and [the replica nodes][LiteFS replica yml].
+
+[LiteFS primary yml]: https://github.com/superfly/litefs-example/blob/main/docker-config/etc/litefs.primary.yml
+[LiteFS replica yml]: https://github.com/superfly/litefs-example/blob/main/docker-config/etc/litefs.replica.yml
+
+### File system
+
+Let's first set two fields to tell LiteFS where to mount its file system and
+where to store its internal data.
+
+```yml
+# This directory is where your application will access the database.
+fuse:
+  dir: "/litefs"
+
+# This directory is where LiteFS will store internal data.
+# You must place this directory on a persistent volume.
+data:
+  dir: "/var/lib/litefs"
+```
+
+### Lease configuration
+
+LiteFS only allows a single node to be the _primary_ at any given time. The
+primary node is the only one that can write data to the database. The other
+nodes are called _replicas_ and they provide a read-only copy.
+
+The primary is determined by using a [_distributed lease_](https://martinfowler.com/articles/patterns-of-distributed-systems/time-bound-lease.html).
+In this guide, we'll be using a static lease, because it's simple to configure.
+
+You'll need two slightly different configurations for your primary and replica nodes.
+In particular, use `lease.candidate: true` in the primary node configuration,
+and `lease.candidate: false` in the replica node configuration.
+Here's an example of the primary node's `litefs.yml` file:
+
+```yml
+lease:
+  # Required. Must be either "consul" or "static".
+  type: "static"
+
+  # Required. The URL for the primary node's LiteFS API.
+  # Note: replace `primary` with the appropriate hostname for your primary node!
+  advertise-url: "http://primary:20202"
+
+  # Specifies whether the node can become the primary. If using
+  # "static" leasing, this should be set to true on the primary
+  # and false on the replicas.
+  # Note: update this to `false` on the replica nodes!
+  candidate: true
+```
+
+### LiteFS Cloud configuration
+
+If you're using LiteFS Cloud for backups, you'll need to provide a LiteFS Cloud
+API authentication token, which you got when you created the cluster (or you can
+create a new one from [the LiteFS Cloud section][LiteFS Cloud Dashboard] in Fly.io
+dashboard).
+
+This token should be made available to LiteFS via the `LITEFS_CLOUD_TOKEN` environment
+variable. This is a secret value, so configure it however you configure secrets
+for your application! This will depend on your platform.
+
+## Running LiteFS
+
+<%= partial "/docs/reference/litefs/running_litefs" %>
+
+## Importing your database
+
+<%= partial "/docs/reference/litefs/importing_your_database" %>
+
+## Configuring writes to primary node
+
+LiteFS has a few differences from regular SQLite since it is a distributed
+system. LiteFS requires that all writes occur on the primary node which means
+that applications need to redirect write requests to the current primary. It's
+also possible to issue a write to the primary and then read from a replica
+before the change is propagated to that replica.
+
+For most web applications, you can take advantage of load balancer configuration
+to route writes to the primary node, assuming your application follows the
+convention of avoiding write operations (`INSERT`, `UPDATE`, etc.) on `GET`
+requests.
+
+You can take a look at this [sample nginx config][nginx config] which routes writes to
+the primary node, and load balances between primary and replica node
+for other requests.
+
+[nginx config]: https://github.com/superfly/litefs-example/blob/main/docker-config/nginx/nginx.conf

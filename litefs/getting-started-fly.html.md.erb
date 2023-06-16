@@ -21,62 +21,11 @@ For a full, working example of a LiteFS application, please see the
 
 ## Creating a LiteFS Cloud Cluster (optional)
 
-You can choose to create a LiteFS Cloud cluster, which will provide automatic
-backups managed by Fly.io. With LiteFS Cloud, you'll have the ability to restore
-your LiteFS database to any point in time near instantaneously. You can use LiteFS Cloud
-to back up and restore your database running anywhere (whether you plan to run your
-application on Fly.io, or somewhere else).
-
-You can create your LiteFS Cloud cluster in the Fly.io dashboard. First,
-[sign up for an account][Sign up] if you haven't already. After you're signed in,
-navigate to the LiteFS Cloud section on the left navbar, and then use the Create button
-to create a new cluster.
-[Here's a handy link to the LiteFS Cloud dashboard][LiteFS Cloud Dashboard] if you prefer!
-
-When you create your LiteFS Cloud cluster, you'll be asked to save an auth token.
-Keep this handy - you'll use it below.
-
-Just a note: if you decide not to create a LiteFS Cloud cluster right now,
-you can always change your mind and add it later. Take a look at the
-[LiteFS Cloud backup][] docs for more details.
-
-[Sign up]: /docs/hands-on/sign-up
-[LiteFS Cloud backup]: /docs/litefs/cloud-backups
-[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
+<%= partial "/docs/reference/litefs/create_litefs_cloud_cluster" %>
 
 ## Installing LiteFS
 
-### Dependencies
-
-The `litefs` binary is self-contained but you'll need to install the `fuse3`
-library so LiteFS is able to mount a local file system. You'll also need
-`ca-certificates` if you're connecting to Consul. This installation
-depends on your package manager but some examples are:
-
-```sh
-# Install on Alpine
-$ apk add ca-certificates fuse3
-```
-
-```sh
-# Install on Debian/Ubuntu
-$ apt install ca-certificates fuse3
-```
-
-
-### With Docker
-
-LiteFS is meant to run inside your container along side your application. You
-can pull in the `litefs` binary by copying it from the official Docker image:
-
-```Docker
-COPY --from=flyio/litefs:0.4 /usr/local/bin/litefs /usr/local/bin/litefs
-```
-
-It's recommended that you run LiteFS as `root` in Docker instead of using the
-`USER` command to change users. If you need to run your application as another
-user, use the `su` command to run your application as a non-root user.
-
+<%= partial "/docs/reference/litefs/adding_litefs_to_your_dockerfile" %>
 
 ### Without Docker
 
@@ -197,65 +146,11 @@ fly secrets set LITEFS_CLOUD_TOKEN=$(litefs cloud auth token)
 
 ## Running LiteFS
 
-The main command used to start LiteFS is the `litefs mount` command. This mounts
-a FUSE file system and then starts an API server for LiteFS nodes to
-communicate with each other.
-
-```
-litefs mount
-```
-
-### Running as a supervisor
-
-LiteFS can either be run on its own or it can act as a simple supervisor process
-for your application. Running as a supervisor lets LiteFS wait to start the
-application until after it has connected to the cluster.
-
-You can specify one or more commands in the `exec` section of your config. If
-you set `lease.promote` to `true`, then you can specify to run your migration
-scripts only on candidate nodes. This means that candidates will automatically
-promote to the primary and run the migrations.
-
-```yml
-exec:
-  # Only run migrations on candidate nodes.
-  - cmd: "rails db:migrate"
-    if-candidate: true
-
-  # Then run the application server on all nodes.
-  - cmd: "rails server"
-```
-
-### Testing your LiteFS instance
-
-Once LiteFS is mounted, you can use SQLite clients or the `sqlite3` CLI to
-interact with databases on the mount directory:
-
-```
-sqlite3 /litefs/my.db
-```
-
-LiteFS only allows files in the root of the mount and it does not currently
-support subdirectories.
-
+<%= partial "/docs/reference/litefs/running_litefs" %>
 
 ## Importing your database
 
-If you have an existing database, you can import it using the `ltx import`
-command.
-
-```sh
-ltx import -name my.db /path/to/database
-```
-
-See the [`ltx import`](/docs/litefs/import) documentation for more details.
-
-<div class="callout">
-  ❗️ **You should only interact with SQLite databases on LiteFS through
-  a SQLite client or through the `litefs` tooling. Do not use `cp` to copy a
-  database into place.**
-</div>
-
+<%= partial "/docs/reference/litefs/importing_your_database" %>
 
 ## Configuring the proxy (Fly.io only)
 
