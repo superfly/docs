@@ -74,11 +74,21 @@ Save the notebook with your project. I suggest creating a "notebook" folder to h
 
 #### Connect to Your Project
 
-At this point, we haven't connected to your project yet so you can't access your code. Let's do that now. Click the "Runtime settings" button.
+At this point, we haven't connected Livebook to our project so we can't access the project's code yet. To do this, start the project with something similar to the following command:
 
-![Livebook runtime connection](/docs/images/livebook-data-analysis-runtime-click.webp?card&centered)
+```
+iex --sname my_app --cookie secret -S mix phx.server
+```
 
-Choose "Mix standalone" and click "Connect". If you started Livebook from your project's directory, it should already be in the right location for the mix project. Assuming your application compiles, it starts a runtime with your project's code available!
+This starts our local project with a short name of "my_app" and a cookie of "secret".
+
+Back in Livebook, click the "Runtime settings" button.
+
+![Livebook runtime connection](/docs/images/livebook-runtime-link.webp)
+
+From here, click "Configure" then "Attached Node". Now, enter the name "my_app" and the cookie "secret" (or whatever values were used when starting the server) and click "Connect". If everything went well, Livebook is connected to your locally running application!
+
+We can verify it's connected by typing a module from the project into a code cell in the notebook and getting auto-complete help that's specific to our project.
 
 #### Your First Analysis
 
