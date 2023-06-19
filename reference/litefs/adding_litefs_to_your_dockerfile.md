@@ -2,22 +2,17 @@
 
 The `litefs` binary is self-contained, but you'll need to install the `fuse3`
 library so LiteFS is able to mount a local file system. You'll also need
-`ca-certificates` if you're connecting to Consul. This installation
-depends on your package manager but some examples are:
+`ca-certificates` if you're connecting to Consul, and you'll almost certainly
+want to install `sqlite`. This installation  depends on your package manager but
+here is a line you can add to your Dockerfile for alpine-based images:
 
-```sh
-# Install on Alpine
-$ apk add ca-certificates fuse3
-```
-
-```sh
-# Install on Debian/Ubuntu
-$ apt install ca-certificates fuse3
+```Docker
+RUN apk add ca-certificates fuse3 sqlite
 ```
 
 ### Installing LiteFS
 
-LiteFS is meant to run inside your container along side your application. You
+LiteFS is meant to run inside your container alongside your application. You
 can pull in the `litefs` binary by copying it from the official Docker image:
 
 ```Docker
