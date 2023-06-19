@@ -132,10 +132,10 @@ The only required parameter is `image` in the `config` object. Other parameters:
 
 * `image`: The Docker image to run
 * `guest`: An object with the following options:
-  - `cpus`: Number of vCPUs (default 1)
-  - `memory_mb`: Memory in megabytes as multiples of 256 (default 256)
+  - `cpus`: Number of vCPUs (default `1`)
+  - `memory_mb`: Memory in megabytes as multiples of 256 (default `256`)
   - `kernel_args`: Optional array of strings. Arguments passed to the kernel
-* `auto_destroy`: Optional boolean telling the Machine to destroy itself once it's complete
+* `auto_destroy`: Optional boolean telling the Machine to destroy itself once it's complete (default `false`)
 
 * `size`: A [named size](/docs/about/pricing/#machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
 * `env`: An object filled with key/value pairs to be set as environment variables
@@ -143,7 +143,7 @@ The only required parameter is `image` in the `config` object. Other parameters:
 
   - `protocol`: `tcp` or `udp`. [Learn more about running raw TCP/UDP services](https://fly.io/docs/app-guides/udp-and-tcp/).
   - `concurrency`: load balancing concurrency settings
-      + `type`: `connections` (TCP) or `requests` (HTTP). Defaults to connections.
+      + `type`: `connections` (TCP) or `requests` (HTTP) - defaults to `connections`
       + `soft_limit`: "ideal" service concurrency. We will attempt to spread load to keep services at or below this limit
       + `hard_limit`: maximum allowed concurrency. We will queue or reject when a service is at this limit
   - `internal_port`: Port the Machines VM listens on
