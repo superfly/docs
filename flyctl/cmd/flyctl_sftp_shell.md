@@ -16,7 +16,7 @@ flyctl sftp shell [flags]
   -o, --org string       The target Fly organization
       --pty              Allocate a pseudo-terminal (default: on when no command is provided)
   -q, --quiet            Don't print progress indicators for WireGuard
-  -r, --region string    Region to create WireGuard connection in
+  -r, --region string    The target region (see 'flyctl platform regions')
   -s, --select           select available instances
   -u, --user string      Unix username to connect as (default "root")
 ~~~
