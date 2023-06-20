@@ -19,7 +19,7 @@ flyctl machine clone <machine_id> [flags]
       --name string            Optional name for the new machine
       --override-cmd string    Set CMD on the new machine to this value
       --process-group string   For machines that are part of Fly Apps v2 does a regular clone and changes the process group to what is specified here
-      --region string          Target region for the new machine
+  -r, --region string          The target region (see 'flyctl platform regions')
       --select                 Select from a list of machines
       --standby-for strings    Comma separated list of machine ids to watch for. You can use '--standby-for=source' to create a standby for the cloned machine
 ~~~
