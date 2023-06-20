@@ -10,8 +10,7 @@ redirect_from: /docs/litefs/example/
 ## Overview
 
 This guide will walk you through the steps of getting a LiteFS cluster up and
-running. Some of the steps may include Fly.io commands for convenience, however,
-you can run LiteFS anywhere that runs Linux.
+running on Fly.io.
 
 For a full, working example of a LiteFS application, please see the
 [litefs-example][] repository.
@@ -23,22 +22,24 @@ For a full, working example of a LiteFS application, please see the
 
 <%= partial "/docs/reference/litefs/create_litefs_cloud_cluster" %>
 
+
 ## Installing LiteFS
 
 <%= partial "/docs/reference/litefs/adding_litefs_to_your_dockerfile" %>
-
-### Without Docker
-
-If you're running on a Linux VPS without Docker, you can download the latest
-version from our [LiteFS releases page](https://github.com/superfly/litefs/releases).
-LiteFS can run on either `amd64` or `arm64` architectures.
 
 
 ## Configuring LiteFS
 
 Most configuration options for LiteFS are set via a YAML configuration file
-called `litefs.yml`. This file is typically placed in `/etc/litefs.yml` but
+called `litefs.yml`. This file is typically placed in `/etc/litefs.yml`, but
 you can change the path by using the `-config` flag.
+
+Take a look at
+[the litefs.yml file](https://github.com/superfly/litefs-example/blob/main/fly-io-config/etc/litefs.yml)
+in the `litefs-example` repo for a full example, or follow along with the
+rest of this section for a more detailed explanation!
+
+[litefs yml file]: https://github.com/superfly/litefs-example/blob/main/fly-io-config/etc/litefs.yml
 
 
 ### File system
@@ -80,9 +81,8 @@ nodes are called _replicas_ and they provide a read-only copy.
 
 The primary is determined by using a [_distributed lease_](https://martinfowler.com/articles/patterns-of-distributed-systems/time-bound-lease.html).
 In this guide, we'll be using a [Consul][] lease as it allows the primary to
-automatically failover in order to have high write availability.
-
-In you're running on Fly.io, you can add a Consul URL to your app with:
+automatically failover in order to have high write availability. You can add a
+Consul URL to your app with:
 
 ```
 fly consul attach
@@ -122,9 +122,7 @@ You can find more details in the [lease management][] section of the configurati
 guide.
 
 [Consul]: https://consul.io
-[Static Leasing guide]: /docs/litefs/static-lease
 [fly.io]: https://fly.io
-[GraphQL API page]: https://api.fly.io/graphql
 [lease management]: /docs/litefs/config#lease-management
 
 
@@ -135,14 +133,48 @@ API authentication token, which you got when you created the cluster (or you can
 create a new one from [the LiteFS Cloud section][LiteFS Cloud Dashboard] in Fly.io
 dashboard).
 
-This token should be made available to LiteFS via the `LITEFS_CLOUD_TOKEN` environment
-variable. If you're running on Fly.io, you can add a secret for it with:
+You should add this as a secret for your application named `LITEFS_CLOUD_TOKEN` with:
 
 ```cmd
 fly secrets set LITEFS_CLOUD_TOKEN=$(litefs cloud auth token)
 ```
 
 [LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs-cloud
+
+### Configuring the proxy
+
+LiteFS requires that all writes occur on the primary node, which means
+that applications need to redirect write requests to the current primary. It's
+also possible to issue a write to the primary and then read from a replica
+before the change is propagated to that replica.
+
+Most web applications can take advantage of a thin, built-in proxy
+inside LiteFS that automatically handles these write redirection and replica
+consistency issues. In order to make use of this proxy, your application needs
+to follow these rules:
+
+- `GET` requests never perform write operations (e.g. `INSERT`, `UPDATE`, etc).
+
+- Clients have cookies enabled.
+
+To configure the proxy, you'll need to set the `proxy` section in the config file:
+
+```yml
+proxy:
+  # Bind address for the proxy to listen on.
+  addr: ":8080"
+
+  # Hostport of your application - replace 8081 with whatever port
+  # your application is listening on!
+  target: "localhost:8081"
+
+  # Filename of the SQLite database you want to use for TXID tracking.
+  db: "my.db"
+```
+
+You can find more details on the [proxy configuration guide][].
+
+[proxy configuration guide]: /docs/litefs/proxy
 
 ## Running LiteFS
 
@@ -151,40 +183,3 @@ fly secrets set LITEFS_CLOUD_TOKEN=$(litefs cloud auth token)
 ## Importing your database
 
 <%= partial "/docs/reference/litefs/importing_your_database" %>
-
-## Configuring the proxy (Fly.io only)
-
-LiteFS has a few differences from regular SQLite since it is a distributed
-system. LiteFS requires that all writes occur on the primary node which means
-that applications need to redirect write requests to the current primary. It's
-also possible to issue a write to the primary and then read from a replica
-before the change is propagated to that replica.
-
-For most web applications, they can take advantage of a thin, built-in proxy
-inside LiteFS that automatically handles these write redirection and replica
-consistency issues if your application follows some simple rules:
-
-- `GET` requests should not perform write operations (e.g. `INSERT`, `UPDATE`, etc).
-
-- Clients must have cookies enabled.
-
-To configure the proxy, you'll need to set the `proxy` section in the config file: 
-
-```yml
-proxy:
-  # Bind address for the proxy to listen on.
-  addr: ":8080"
-
-  # Hostport of your application.
-  target: "localhost:8081"
-
-  # Filename of the SQLite database you want to use for TXID tracking.
-  db: "my.db"
-```
-
-Then you'll need to update your application server's port to what is specified
-in the `target` field (`8081`).
-
-You can find more details on the [proxy configuration guide][].
-
-[proxy configuration guide]: /docs/litefs/proxy
