@@ -315,10 +315,11 @@ Within your `Dockerfile`, you can install an updated version of the PostgreSQL c
 ```dockerfile
 # Install pgsql client for version 14
 RUN ...other stuff here... \
-    && apt-get install -y lsb-release wget \
+    && apt-get -q install -y lsb-release wget \
     && echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
     && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
-    && apt-get install -y postgresql-client-14
+    && apt-get -q update \
+    && apt-get -q install -y postgresql-client-14
 ```
 
 ### _Test Connection_
