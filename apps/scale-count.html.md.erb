@@ -48,7 +48,7 @@ other   3       shared          4       1024 MB ord(2),scl
 task    4       performance     1       2048 MB iad,mia,ord,scl
 ```
 
-This app has 10 Machines total. The `app` process group has two in scl (Santiago) and one in mia (Miami). `other` has two in ord (Chicago) and one in scl. `task` has one Machine in each of iad (Ashburn, Virginia), mia, ord, and scl. You can put your Machines wherever works best for your app!
+This app has 10 Machines total. The `app` process group has two in scl (Santiago) and one in mia (Miami). `other` has two in ord (Chicago) and one in scl. `task` has one Machine in each of iad (Ashburn, Virginia), mia, ord, and scl. You can put your Machines wherever works best for your app.
 
 ## Scale a simple app in a single region
 
@@ -69,7 +69,7 @@ NAME    COUNT   KIND    CPUS    MEMORY  REGIONS
 app     2       shared  1       256 MB  yyz(2) 
 ```
 
-The simplest way to scale up is simply `fly scale count <target-count>`. This just adds more Machines of the default process group in the app's existing region:
+The simplest way to scale up is by using `fly scale count <target-count>`. This command just adds more Machines to the default process group in the app's existing region:
 
 ```cmd
 fly scale count 4
@@ -87,19 +87,15 @@ Now there are four Machines in yyz.
 
 ## Scale an app's regions
 
-The `--region` option takes one or more [region codes](/docs/reference/regions/). `fly scale count` creates and/or destroys Machines to reach the specified target count across the regions you list in this option, and tries to balance its changes across these regions. 
+The `--region` option takes one or more [region codes](/docs/reference/regions/). `fly scale count` creates and/or destroys Machines to reach the specified target count across the regions you list in this option, and tries to balance its changes across these regions.
 
-If `--region` is not used, the target count is distributed across all regions in which the app already has platform Machines belonging to any process group.
-
-You can set the scale explicitly per region by specifying a single region per `fly scale` command.
-
-An example: to end up with a total of three Machines between the yyz and ewr (Secaucus, NJ) regions on an app:
+For example, to end up with a total of three Machines between the yyz and ewr regions on an app:
 
 ```cmd
 fly scale count 3 --region yyz,ewr
 ```
 
-In the above example, the resulting total Machine count seen with `fly scale show` will be more than 3 if it has Machines in regions other than yyz and ewr:
+In the above example, the resulting total Machine count seen with `fly scale show` will be more than 3 if the app has existing Machines in regions other than yyz and ewr:
 
 ```
 Groups
@@ -107,7 +103,13 @@ NAME    COUNT   KIND    CPUS    MEMORY  REGIONS
 web     4       shared  1       256 MB  ewr,mia,yyz(2)
 ```
 
-You can also set the scale explicitly per region by specifying a single region per `fly scale` command.
+You can also set the scale explicitly per region by specifying a single region per `fly scale` command. For example:
+
+```cmd
+fly scale count 4 --region ewr
+```
+
+If `--region` is not used, the target count is distributed across all regions in which the app already has platform Machines belonging to any process group.
 
 
 ## Change the number of Machines in a process group
@@ -157,7 +159,7 @@ web     10      shared  1       256 MB  nrt(5),yyz(5)
 worker  6       shared  1       256 MB  nrt(3),yyz(3)
 ```
 
-Say we've decided have more capacity than we'll need, for the foreseeable future, in Toronto. Scale both processes down by one Machine just in yyz:
+If an app has more capacity than required in a particular region, then you can also scale Machines by region. The following example scales both processes down by one Machine in only the yyz region:
 
 ```cmd
 fly scale count web=4 worker=2 --region yyz
@@ -175,11 +177,8 @@ worker  5       shared  1       256 MB  nrt(3),yyz(2)
 You can also specify a single process group to scale using the `--process-group` option:
 
 ```cmd
-fly scale count 4 --process-group web
+fly scale count 4 --process-group web --region nrt,yyz
 ```
-
-You can specify process groups to act on, and restrict the changes by region with the `--region` option in the same command.
-
 
 ## Add a new region
 
@@ -215,6 +214,7 @@ Use `--max-per-region` for added control over Machine placement by region if the
 
 
 You can also use `--max-per-region` to redistribute the Machine count more evenly among regions.
+
 For example, on an app with 8 machines in yyz, 2 in yul (Montreal) and only 1 in ewr:
 
 ```
@@ -254,7 +254,7 @@ NAME    COUNT   KIND    CPUS    MEMORY  REGIONS
 
 ```
 
-Now if there are no Machines in any process groups, we can't just scale up, because `fly scale count` relies on essentially cloning an existing Machine. But we can simply redeploy!
+Now if there are no Machines in any process groups, we can't just scale up, because `fly scale count` relies on essentially cloning an existing Machine. But we can simply redeploy:
 
 
 ```cmd
@@ -276,11 +276,9 @@ worker  2       shared  1       256 MB  yyz(2)
 
 We're back in business and can scale as desired!
 
-
-
 ## Scale up with `fly machine clone`
 
-You can add platform Machines to an app by cloning platform Machines. The new Machine will be, as you would expect, a copy of the specified Machine, and will belong to the same process group. If the original Machine has a [Fly Volume](https://file+.vscode-resource.vscode-cdn.net/docs/reference/volumes/) attached, an empty volume will be provisioned for the new Machine. It's up to you to decide what to put on the new volume; `fly machine clone` will not automatically copy the contents of the original Machine&#39;s volume.
+You can add Machines to an app by cloning Machines. The new Machine will be, as you would expect, a copy of the specified Machine, and will belong to the same process group. If the original Machine has a [Fly Volume](https://file+.vscode-resource.vscode-cdn.net/docs/reference/volumes/) attached, an empty volume will be provisioned for the new Machine. It's up to you to decide what to put on the new volume; `fly machine clone` will not automatically copy the contents of the original Machine&#39;s volume.
 
 ```
 $ fly machine clone 21781973f03e89
@@ -288,7 +286,7 @@ $ fly machine clone --region syd 21781973f03e89
 $ fly machine clone --region ams 21781973f03e89
 ```
 
-After running the above commands, there are four Machines running for this app: the original Machine plus three new ones
+After running the above commands, there are four Machines running for this app: the original Machine plus three new ones.
 
 ## Scale down with `fly machine destroy`
 
@@ -305,4 +303,4 @@ If a Machine is misbehaving (for instance, it's not `stop`ping successfully), yo
 fly machine destroy --force 0e286039f42e86
 ```
 
-<div class="callout"> If you `destroy` a Machine, don't forget that any volume that it had been using still exists until you either `fly volumes delete` it or `fly destroy` the Fly App it belongs to.</div>
+<div class="callout"> If you `destroy` a Machine, any volume that it had been using still exists until you either `fly volumes delete` it or `fly destroy` the Fly App it belongs to.</div>

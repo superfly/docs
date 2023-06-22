@@ -67,15 +67,27 @@ For more information about how many Machines are created by `fly launch` and `fl
 
 There are two ways to scale the number of Machines in an app. This section provides a summary of horizontal scaling. For more information, refer to [Scale the Number of Machines](/docs/apps/scale-count/#change-the-number-of-machines-in-a-process-group).
 
+### Scale a process group horizontally with `fly scale count`
+
 You can scale the number of Machines (up or down) per process group with the `fly scale count` command. The following example scales the `web` process group to 8 Machines, and the `cron` process group to 2 Machines:
 
 ```
 fly scale count web=8 cron=2
 ```
 
-Alternatively, you can also use the `fly machine clone` and `fly machine destroy` commands to scale the number of Machines individually within a process group. When you clone a Machine that belongs to a process group, the new Machine is created with the command, services, and checks that are configured on the app for that process. 
+You can scale by region with the `--region` option. Specify multiple regions and the Machines will be distributed as evenly as possible between them. The following command would create 2 Machines in `gru` and 2 Machines in `bog`:
 
-First, run `fly status` to get a list of Machines with IDs and process groups.
+```cmd
+fly scale count web=4 --region gru,bog
+```
+
+### Scale a process group horizontally with `fly machine clone`
+
+You can also use the `fly machine clone` and `fly machine destroy` commands to scale the number of Machines individually within a process group. When you clone a Machine that belongs to a process group, the new Machine is created with the command, services, and checks that are configured on the app for that process.
+
+You can add a region to your app by cloning a Machine into a new region.
+
+First, run `fly status` to get a list of Machines with IDs and process groups. 
 
 The following example clones a Machine into the `gru` (São Paulo) region:
 
@@ -83,7 +95,7 @@ The following example clones a Machine into the `gru` (São Paulo) region:
 fly machine clone --region gru e2865641be9786
 ```
 
-The following example destroys a Machine:
+Run the following commands to destroy a Machine:
 
 ```
 fly machine stop e2865641be9786
