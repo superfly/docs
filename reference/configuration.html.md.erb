@@ -175,18 +175,13 @@ The environment variable `RELEASE_COMMAND=1` is set within the temporary release
 
 The available strategies are:
 
-**rolling**: The default strategy for apps with or without volumes. One by one, each running VM is taken down and replaced by a new release VM.
+**rolling**: The default strategy for apps with or without volumes. One by one, each running Machine is taken down and replaced by a new release Machine.
 
-**immediate**: Replace all VMs with new releases immediately without waiting for health checks to pass. This is useful in emergency situations where you're confident about release health and can't wait for health checks.
+**immediate**: Replace all Machines with new releases immediately without waiting for health checks to pass. This is useful in emergency situations where you're confident about release health and can't wait for health checks.
 
-**canary**: Boots a single, new VM with the new release, verifies its health, and then proceeds with a `rolling` restart strategy.
+**canary**: Boots a single, new Machine with the new release, verifies its health, and then proceeds with a `rolling` restart strategy.
 
-
-#### For Nomad (Legacy) Apps Only
-
-Legacy Fly Apps orchestrated by Nomad can also be deployed with the `bluegreen` strategy.
-
-**bluegreen**: For every running VM, a new one is booted alongside it in the same region. Once all of the new VMs pass health checks, traffic gets migrated to new VMs. If your app is scaled to 2 or more VMs, this strategy can reduce deploy time by running tasks in parallel.
+**bluegreen**: For every running Machine, a new one is booted alongside it in the same region. Once all of the new Machines pass health checks, traffic gets migrated to the new Machines and the old Machines are destroyed. If your app is scaled to 2 or more Machines, this strategy can reduce deploy time by running tasks in parallel.
 
 Note: If `max-per-region` is set to 1, the default strategy is set to `rolling`. This happens because `canary` needs to temporarily run more than one VM to work correctly. The `bluegreen` strategy will behave similarly with `max-per-region` set to 1.
 
