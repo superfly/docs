@@ -69,7 +69,7 @@ You can specify one of the following deployment strategies:
 * `rolling` (default): wait for each Machine to be successfully deployed before starting the update of the next one
 * `immediate`: bring all Machines down for update at once
 * `canary`: boot a single new Machine, verify its health, and then proceed with a rolling restart strategy
-* `bluegreen`: boot a new Machine alongside each running Machine in the same region, and migrate traffic to the new Machines only once they pass health checks
+* `bluegreen`: boot a new Machine alongside each running Machine in the same region, and migrate traffic to the new Machines only once all the new Machines pass health checks
 
 Learn more about [setting a deployment strategy](/docs/reference/configuration/#picking-a-deployment-strategy).
 
