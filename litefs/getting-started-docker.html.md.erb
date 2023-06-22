@@ -99,6 +99,22 @@ for your application! This will depend on your platform.
 
 <%= partial "/docs/reference/litefs/running_litefs" %>
 
+### Docker container privileges
+
+LiteFS uses the FUSE filesystem, which requires some additional privileges to run.
+The easiest way to get this working quickly is to run with `--privileged`:
+
+```sh
+docker run --privileged ...
+```
+
+Depending on your security requirements, you should take a look at the
+[FUSE documentation][] and decide whether you can reduce privileges!
+
+<%= partial "/docs/reference/litefs/testing_your_litefs_instance" %>
+
+[FUSE documentation]: https://www.kernel.org/doc/html/next/filesystems/fuse.html
+
 ## Importing your database
 
 <%= partial "/docs/reference/litefs/importing_your_database" %>
