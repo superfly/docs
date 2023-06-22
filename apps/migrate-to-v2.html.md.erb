@@ -9,7 +9,7 @@ order: 20
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-## Migrate a V1 App with a flyctl Command
+## Migrate a V1 App with a flyctl command
 
 flyctl includes a command you can run yourself to migrate an existing V1 app to Apps V2. Find [more detail and discussion](https://community.fly.io/t/fly-migrate-to-v2-apps-with-volumes-support/12316) in our community forum.
 
@@ -24,7 +24,7 @@ If your app uses Fly Volumes for persistent storage, migration will cause a brie
 
 **`fly migrate-to-v2` does not delete the original volumes,** out of an abundance of caution. We leave this for you to do **once you are certain the migration has succeeded with the volume data intact.** The active volumes have the original volume names, but with `-machines` appended&mdash;keep those ones!
 
-## Migrate a V1 App Manually
+## Migrate a V1 App manually
 
 If you'd rather work through the process manually, here are some steps to convert a fairly simple existing "V1" (managed by Nomad) Fly App to [Apps V2](/docs/reference/apps/) (running on Fly Machines).
 
@@ -54,7 +54,7 @@ Still in `fly.toml`, add a `primary_region` option, which `fly deploy` in Apps V
 primary_region = "ord"
 ```
 
-**Note:** Apps V2 does **not** make use of region groups or `fly regions` commands. [Use `fly machine clone --region`](/docs/apps/scale-count/) to create Machines in specific regions.
+**Note:** Apps V2 does **not** make use of region groups or `fly regions` commands. Use `fly scale count --region` or `fly machine clone --region` to [create Machines in specific regions](/docs/apps/scale-count/).
 
 ### ​Copy any secrets you need from your existing app
 

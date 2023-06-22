@@ -16,9 +16,11 @@ Well, [we don't use Docker to run containers](https://fly.io/blog/docker-without
 
 There are a couple different ways to run multiple processes in a Fly.io app. All of them address the first rule of programs running in Fly VM: when your entrypoint program exits, our `init` kills the VM and we start a new one. So at the end of the day, *something* has to keep running "in the foreground".
 
+For more information about process groups, refer to [Run multiple process groups in an app](/docs/apps/processes/).
+
 <div class="callout">Fly.io <u>[Machines](/docs/machines)</u> can run multiple processes</u> natively, no need for extra configuration. <u>[Examples here](https://community.fly.io/t/multi-process-machines/8375)</u>.</div>
 
-### Setting The Scene
+### Setting the scene
 
 Let's use the world's dumbest Golang app as our test case. Here's a Dockerfile:
 
@@ -46,7 +48,7 @@ With a working Dockerfile, we can spin this up with `fly launch`. We'll edit `fl
 
 Now, some options to actually run this stuff:
 
-### Process Groups
+### Process groups
 
 This is the recommended way to run multiple processes. **This method runs each process in its own VM**. Examples of running multiple processes within a single VM are found below!
 
@@ -87,7 +89,7 @@ Note that under the `[[services]]` section of the `fly.toml` file, we define a s
 
 See the [announcement post](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) for more details on scaling with multiple processes. Also note that it's a bit finnicky - it's best to create *new* apps with multiple processes. Adding them on top of existing apps (or removing them from apps that are using them) may cause some confusion. We're working on it!
 
-### Just Use Bash
+### Just use Bash
 
 This is gross, but a suggestion Docker makes in its own documentation, so it must be OK. We boot our Docker container into a shell script. That shell script is:
 
@@ -209,11 +211,11 @@ root@30952b25:/# overmind connect foo
 
 If you're not a `tmux` person, `ctr-b d` detaches you from that window.
 
-### There Are So Many Other Process Managers
+### There are so many other process managers
 
 Use whichever you like! The only limitation you're going to run into is that Fly.io owns your `init` (sorry!); we have to be PID 1. There are a bunch of process managers that want to replace `init`, and those'll be tricky to get to work in a Fly.io app. 
 
-### Maybe You Want Multiple Apps, Though
+### Maybe you want multiple apps, though
 
 There are good reasons to run multiple programs in a single container, but sometimes when you're doing that you're actually working against the platform (which is why Docker keeps telling you not to do that). 
 
@@ -221,7 +223,7 @@ If you're running multiple heavy-weight things in a single container, you might 
 
 Fly.io apps can talk to each other over a [private network](https://fly.io/docs/reference/private-networking/) that's always available. They can find each other under the `.internal` top-level domain (if your apps are `foo` and `bar`, they'll be in the DNS as `foo.internal` and `bar.internal`). Because the network connection is private and encrypted, you can generally just talk back and forth without extra authentication until you know you need it; in other words, you can keep things simple.
 
-### Maybe You Don't Need Multiple Processes
+### Maybe you don't need multiple processes
 
 There are a bunch of reasons people want to run multiple things in a container that Fly.io already takes care of for you. For instance: [metrics are a built-in feature of the platform](https://fly.io/blog/hooking-up-fly-metrics/), as are logs. You might not need to run helper processes for this kind of stuff.
 
