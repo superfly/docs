@@ -198,6 +198,8 @@ This optional section allows setting non-sensitive information as environment va
 
 For sensitive information, such as credentials or passwords, use the [secrets CLI command](/docs/reference/secrets).
 
+If flyctl's heuristics believes that your environment variable may be potentially sensitive information, it'll emit a warning.
+
 Env variable names are strictly case-sensitive and cannot begin with `FLY_` (as this could clash with the [runtime environment](/docs/reference/runtime-environment)). Env values can only be strings.
 
 Secrets take precedence over env variables with the same name.
