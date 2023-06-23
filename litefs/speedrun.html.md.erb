@@ -68,6 +68,7 @@ ENTRYPOINT litefs mount
 
 * Run `fly volumes create litefs --size 10` to create a volume
 * Run `fly launch`, but don't deploy yet (it will ask you); this generates a `fly.toml` file
+* Run `consul attach`, which sets the `FLY_CONSUL_URL` secret for the app, required for LiteFS leases
 * Add the secret for LiteFS Cloud: `fly secrets set LITEFS_CLOUD_TOKEN=yoursecrettoken`
 (replace with actual token value!)
 * Update the fly.toml file to mount your volume:
