@@ -566,7 +566,7 @@ If all goes well here, you should be good to go!
 "[SQLite](https://www.sqlite.org/about.html)" is a file-based, lightweight, low-latency, and in-process library providing an embeddable SQL database engine. This guide walks through a single instance of your Laravel Fly App running with SQLite as its main database. 
 
 ### Setup SQLite in the Storage Folder
-Since SQLite is "embeddable", we no longer have to setup a separate Fly App for it. We simply configure our Laravel Fly App with one:
+Since SQLite is "embeddable", you no longer have to setup a separate Fly App for it. You simply configure your Laravel Fly App with one:
 
 1. Configure SQLite connection in your fly.toml file:
 
@@ -601,8 +601,6 @@ Since SQLite is "embeddable", we no longer have to setup a separate Fly App for 
 4. Finally, deploy your Laravel Fly App with `fly deploy`! 
 
 ### Multi-Node SQLite with LiteFS
-Do you have multiple machines setup for your Fly app? Data between those machine's SQLite databases will not automatically be in sync with each other.
-
-You'll have to configure data replication across those SQLite databases by yourself, *or*, try [LiteFS](/docs/litefs/) out instead! 
+Do you have multiple machines setup for your Fly app? Data between those machine's SQLite databases will not automatically be in sync with each other. You'll have to configure data replication across those SQLite databases by yourself. Or, maybe, try [LiteFS out instead!](/docs/litefs/)
 
 LiteFS provides data replication across different SQLite databases of your Fly app. All you’ll need is to set it up on your Fly app, and it will do the replication for you. You can read more about the [getting started guide here](/docs/laravel/advanced-guides/global-sqlite-litefs/), and also check out our Laravel section’s quick notes on setting LiteFS on a [Laravel Fly app here](/docs/laravel/advanced-guides/global-sqlite-litefs/).
