@@ -601,6 +601,6 @@ Since SQLite is "embeddable", you no longer have to setup a separate Fly App for
 4. Finally, deploy your Laravel Fly App with `fly deploy`! 
 
 ### Multi-Node SQLite with LiteFS
-Do you have multiple machines setup for your Fly app? Data between those machine's SQLite databases will not automatically be in sync with each other. You'll have to configure data replication across those SQLite databases by yourself. Or, maybe, try [LiteFS out instead!](/docs/litefs/)
+Do you have multiple instances setup for your Fly app? Data between those instances' SQLite databases will not automatically be in sync with each other. You'll have to configure data replication across those instances' SQLite databases by yourself. Or instead, why not, try out [LiteFS?](/docs/litefs/)
 
 LiteFS provides data replication across different SQLite databases of your Fly app. All you’ll need is to set it up on your Fly app, and it will do the replication for you. You can read more about the [getting started guide here](/docs/laravel/advanced-guides/global-sqlite-litefs/), and also check out our Laravel section’s quick notes on setting LiteFS on a [Laravel Fly app here](/docs/laravel/advanced-guides/global-sqlite-litefs/).
