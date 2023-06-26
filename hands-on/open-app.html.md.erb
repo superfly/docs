@@ -7,7 +7,9 @@ toc: false
 redirect_from: /docs/hands-on/connecting-to-an-app/
 ---
 
-The quickest way to connect to your deployed app is with the `fly open` command. This will open a browser on the http version of the site. That will automatically be upgraded to a https secured connection (when using the fly.dev domain) to connect to it securely. Add `/name` to `fly open` and it'll be appended to the apps path and you'll get an extra greeting from the hellofly application.
+The quickest way to connect to your deployed app is with the `fly open` command, which opens a browser on the http version of the site. That http connection will automatically be upgraded to an https secured connection (when using the fly.dev domain) to connect to it securely. 
+
+For fun, add `/<your-name>` to `fly open` and your name will be appended to the app's path to add an extra greeting from the hellofly application.
 
 ```cmd
 fly open /fred
@@ -18,7 +20,6 @@ Opening http://hellofly.fly.dev/fred
 
 <img src="/docs/hands-on/images/helloflyandfred.webp" alt="Hello from Fly Screenshot" class="rounded-xl shadow-lg">
 
-You have successfully deployed and visited your first Fly App.
+You've successfully launched your first Fly App.
 
-
-[Next: Further Reading](/docs/hands-on/next/)
+[Next: Learn more about what you can do with Fly.io](/docs/hands-on/next/)

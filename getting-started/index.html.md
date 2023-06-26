@@ -1,5 +1,5 @@
 ---
-title: "Getting Started"
+title: "Getting started"
 layout: docs
 sitemap: false
 nav: firecracker
@@ -11,10 +11,13 @@ nav: firecracker
 
 This section of the Fly.io docs is all about getting you up and running quickly.
 
-If you’re new to Fly.io, our [Hands-on](/docs/hands-on/) will take you through creating an account, installing `flyctl`, the Fly.io command-line tool, and launching a simple demo app.
+Follow [Hands-on](/docs/hands-on/) which takes you through creating an account, installing `flyctl`, the Fly.io command-line tool, and launching a simple demo app.
 
-Once that's done, you can dive straight in and check out our [Language & Frameworks Guides](/docs/languages-and-frameworks/) for a demonstration matching your project.
+If you'd rather jump right in, try [Speedrun] to launch your own app fast.
 
-Or get into the details you'll need to work with Fly Apps through their entire lifecycle in the [Fly Apps](/docs/apps/) section.
+Once that's done, check out our in-depth docs:
 
-We also have some [web-based launchers](https://fly.io/launch/), including [Turboku](https://fly.io/launch/heroku); a way to dip your toes in by cloning a Heroku app to Fly.io. Read about it in the [New Turboku launch post](https://fly.io/blog/new-turboku/).
+* [Language & Frameworks guides](/docs/languages-and-frameworks/) to learn about how we support your langauge or framework
+* [Fly Launch] to learn about the features that help you manage and run your apps on the Fly Platform
+* [Databases & Storage]
+* [Reference]
