@@ -15,7 +15,7 @@ date: 2020-06-20
 
 So you want your application continuously deployed to Fly.io from its GitHub repository. Let's work through setting up an application for just that.
 
-We'll start with an application from one of our other examples, [go-example](https://github.com/fly-apps/go-example). It's a simple lightweight app, built with a Dockerfile.
+We'll start with an application from one of our other examples, [go-example](https://github.com/fly-apps/go-example). It's a simple lightweight app that displays the Fly.io region that served the request.
 
 We'll speed-run through the steps needed to make the go-example app automatically deploy to Fly.io from GitHub and then we'll loop back for a longer look at some of the steps.
 
