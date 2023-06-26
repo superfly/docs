@@ -17,15 +17,8 @@ If you'd rather jump right in, try [Speedrun](/docs/speedrun/) to launch your ow
 
 Once that's done, check out our in-depth docs:
 
-* [Language & Frameworks guides](/docs/languages-and-frameworks/) to learn about how we support your favorite language or framework
-* [Fly Launch](/docs/apps) to use the features that help you manage and run your apps
-* [Databases & Storage](/docs/database-storage-guides/) to understand the persistent storage options
-* [Reference](/docs/reference) to explore the details of how the Fly Platform works
-
-
 * **[Languages & Frameworks Guides](/docs/languages-and-frameworks/)**: comprehensive and starter guides for your favorite languages and frameworks.
 * **[Fly Launch](/docs/apps)**: you've tried the `fly launch` command, now learn how to use all the Fly Launch features that help you manage and run your apps.
-* **[Databases & Storage](/docs/database-storage-guides/)**: options for persistent data storage on the FLy Platform
+* **[Databases & Storage](/docs/database-storage-guides/)**: options for persistent data storage on the FLy Platform.
 * **[Fly Machines](/docs/machines/)**: go deeper with our VMs, and use them to run your projects and tasks.
-* **[Reference](/docs/reference)**: the details of how the Fly Platform works
-
+* **[Reference](/docs/reference)**: the details of how the Fly Platform products and features work.
