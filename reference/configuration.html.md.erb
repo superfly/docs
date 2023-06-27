@@ -262,6 +262,33 @@ In the following example, `Example-Header` will be removed from the final respon
     Example-Multi-Value = ["value1", "value2"]
 ```
 
+### `http_service.checks`
+
+To configure healthchecks for your http service, you can use the `http_service.checks` section. These checks expect a successful HTTP status in response (i.e, 2xx). Here is an example of a `http_service.checks` section:
+
+```toml
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  timeout = "5s"
+  path = "/"
+```
+
+Roughly translated, this section says every thirty seconds, perform a HTTP GET on the root path (e.g. http://appname.fly.dev/) looking for it to return a HTTP 200 status within five seconds. The parameters of a `check` are listed below.
+
+Times are in milliseconds unless units are specified.
+
+* `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.
+* `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If it's long and your grace_period shorter than your app's startup time, health check will take too long adding you your deployment time.
+* `timeout`: The maximum time a connection can take before being reported as failing its healthcheck.
+* `restart_limit`: Only applicable to V1 (Nomad) apps. The number of consecutive HTTP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed HTTP health checks.
+* `method`: The HTTP method to be used for the check.
+* `path`: The path of the URL to be requested.
+* `protocol`: The protocol to be used (`http` or `https`).
+* `tls_skip_verify`: When `true` (and using HTTPS protocol) skip verifying the certificates sent by the server.
+* `http_service.checks.headers`: This is a sub-section of `http_service.checks`. It uses the key/value pairs as a specification of header and header values that will get passed with the check call.
+
 ## The `services` sections
 
 The `services` sections configure the mapping of ports on the application to ports and services on Fly.io. These mappings determine how connections to the application will be handled on their journey from the Fly.io edge network to running Fly Apps.
