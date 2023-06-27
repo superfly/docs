@@ -16,7 +16,7 @@ You define processes in your `fly.toml`, giving each process group a name and a 
 
 If you don't explicitly define any processes, then the Machines in a Fly App belong to the default `app` process group, and on boot they run whatever entrypoint process the app's Docker image has. (Apps are shipped to Fly.io in Docker images, even though [we run VMs, not containers](https://fly.io/blog/docker-without-docker/).)
 
-The `app` process is the process group for the `http_service` section in the default app configuration of your `fly.toml` file, even though there's no explicit `processes` value in that section.
+When the `fly launch` command creates a `fly.toml` file for your app, the default service defined in the `http_service` section applies to the `app` process group.
 
 ## Run multiple processes
 
