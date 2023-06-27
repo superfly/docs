@@ -24,7 +24,28 @@ that you can run locally, please see the [litefs-example][] repository.
 
 ## Adding LiteFS to your Dockerfile
 
-<%= partial "/docs/reference/litefs/adding_litefs_to_your_dockerfile" %>
+<%= partial "/docs/reference/litefs/adding_litefs_to_your_dockerfile_deps" %>
+
+### Installing LiteFS
+
+<!-- TODO: this section is duplicated in getting-started-fly, but something weird is going
+ on with formatting when we use a partial. -->
+
+LiteFS is meant to run inside your container alongside your application. You
+can pull in the `litefs` binary by copying it from the official Docker image:
+
+```dockerfile
+COPY --from=flyio/litefs:0.4 /usr/local/bin/litefs /usr/local/bin/litefs
+```
+
+It's recommended that you run LiteFS as `root` in Docker instead of using the
+`USER` command to change users. If you need to run your application as another
+user, use the `su` command to run your application as a non-root user.
+
+Take a look at [the example Dockerfile][Dockerfile] in the `litefs-example` repo
+for an example.
+
+[Dockerfile]: https://github.com/superfly/litefs-example/blob/main/Dockerfile
 
 ## Configuring LiteFS
 
@@ -32,9 +53,10 @@ Most configuration options for LiteFS are set via a YAML configuration file
 called `litefs.yml`. This file is typically placed in `/etc/litefs.yml` but
 you can change the path by using the `-config` flag.
 
-You can take a look at
-[a complete example](https://github.com/superfly/litefs-example/blob/main/docker-config/etc/litefs.static-lease.yml)
-of what your `litefs.yml` file should look like.
+You can take a look at [a complete example][LiteFS yml] of what your `litefs.yml` file
+should look like.
+
+[LiteFS yml]: https://github.com/superfly/litefs-example/blob/main/docker-config/etc/litefs.static-lease.yml
 
 ### File system
 
@@ -95,7 +117,38 @@ for your application! This will depend on your platform.
 
 ## Running LiteFS
 
-<%= partial "/docs/reference/litefs/running_litefs" %>
+<!-- TODO: this section is duplicated in getting-started-fly, but something weird is going
+ on with formatting when we use a partial. -->
+
+The main command used to start LiteFS is the `litefs mount` command. This mounts
+a FUSE file system and then starts an API server for LiteFS nodes to
+communicate with each other. You can use this as the `ENTRYPOINT` in your
+Dockerfile:
+
+```dockerfile
+ENTRYPOINT litefs mount
+```
+
+### Running as a supervisor
+
+LiteFS can either be run on its own or it can act as a simple supervisor process
+for your application. Running as a supervisor lets LiteFS wait to start the
+application until after it has connected to the cluster.
+
+You can specify one or more commands in the `exec` section of your config. If
+you set `lease.promote` to `true`, then you can specify to run your migration
+scripts only on candidate nodes. This means that candidates will automatically
+promote to the primary and run the migrations.
+
+```yml
+exec:
+  # Only run migrations on candidate nodes.
+  - cmd: "rails db:migrate"
+    if-candidate: true
+
+  # Then run the application server on all nodes.
+  - cmd: "rails server"
+```
 
 ### Docker container privileges
 
