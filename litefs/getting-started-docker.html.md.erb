@@ -17,11 +17,6 @@ that you can run locally, please see the [litefs-example][] repository.
 
 [litefs-example]: https://github.com/superfly/litefs-example
 
-## Creating a LiteFS Cloud Cluster (optional)
-
-<%= partial "/docs/reference/litefs/create_litefs_cloud_cluster" %>
-
-
 ## Adding LiteFS to your Dockerfile
 
 <%= partial "/docs/reference/litefs/adding_litefs_to_your_dockerfile_deps" %>
@@ -104,17 +99,6 @@ lease:
   candidate: true
 ```
 
-### LiteFS Cloud configuration
-
-If you're using LiteFS Cloud for backups, you'll need to provide a LiteFS Cloud
-API authentication token, which you got when you created the cluster (or you can
-create a new one from [the LiteFS Cloud section][LiteFS Cloud Dashboard] in Fly.io
-dashboard).
-
-This token should be made available to LiteFS via the `LITEFS_CLOUD_TOKEN` environment
-variable. This is a secret value, so configure it however you configure secrets
-for your application! This will depend on your platform.
-
 ## Running LiteFS
 
 <!-- TODO: this section is duplicated in getting-started-fly, but something weird is going
@@ -169,6 +153,23 @@ Depending on your security requirements, you should take a look at the
 ## Importing your database
 
 <%= partial "/docs/reference/litefs/importing_your_database" %>
+
+## LiteFS Cloud configuration (optional)
+
+### Creating a LiteFS Cloud Cluster
+
+<%= partial "/docs/reference/litefs/create_litefs_cloud_cluster" %>
+
+### Configuring LiteFS to use LiteFS Cloud
+
+If you're using LiteFS Cloud for backups, you'll need to provide a LiteFS Cloud
+API authentication token, which you got when you created the cluster (or you can
+create a new one from [the LiteFS Cloud section][LiteFS Cloud Dashboard] in Fly.io
+dashboard).
+
+This token should be made available to LiteFS via the `LITEFS_CLOUD_TOKEN` environment
+variable. This is a secret value, so configure it however you configure secrets
+for your application! This will depend on your platform.
 
 ## Configuring writes to primary node
 
