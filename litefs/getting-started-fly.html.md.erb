@@ -31,7 +31,7 @@ LiteFS is meant to run inside your container alongside your application. You
 can pull in the `litefs` binary by copying it from the official Docker image:
 
 ```Docker
-COPY --from=flyio/litefs:0.4 /usr/local/bin/litefs /usr/local/bin/litefs
+COPY --from=flyio/litefs:0.5 /usr/local/bin/litefs /usr/local/bin/litefs
 ```
 
 It's recommended that you run LiteFS as `root` in Docker instead of using the

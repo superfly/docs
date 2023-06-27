@@ -55,7 +55,7 @@ RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite
 * Copy in the LiteFS binary
 
 ```Docker
-COPY --from=flyio/litefs:0.4 /usr/local/bin/litefs /usr/local/bin/litefs
+COPY --from=flyio/litefs:0.5 /usr/local/bin/litefs /usr/local/bin/litefs
 ```
 
 * Update the `ENTRYPOINT` (or `CMD`)
