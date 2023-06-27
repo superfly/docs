@@ -32,11 +32,9 @@ Most configuration options for LiteFS are set via a YAML configuration file
 called `litefs.yml`. This file is typically placed in `/etc/litefs.yml` but
 you can change the path by using the `-config` flag.
 
-You can take a look at complete examples of what your `litefs.yml` file should
-look like for [the primary node][LiteFS primary yml] and [the replica nodes][LiteFS replica yml].
-
-[LiteFS primary yml]: https://github.com/superfly/litefs-example/blob/main/docker-config/etc/litefs.primary.yml
-[LiteFS replica yml]: https://github.com/superfly/litefs-example/blob/main/docker-config/etc/litefs.replica.yml
+You can take a look at
+[a complete example](https://github.com/superfly/litefs-example/blob/main/docker-config/etc/litefs.static-lease.yml)
+of what your `litefs.yml` file should look like.
 
 ### File system
 
@@ -111,9 +109,9 @@ docker run --privileged ...
 Depending on your security requirements, you should take a look at the
 [FUSE documentation][] and decide whether you can reduce privileges!
 
-<%= partial "/docs/reference/litefs/testing_your_litefs_instance" %>
-
 [FUSE documentation]: https://www.kernel.org/doc/html/next/filesystems/fuse.html
+
+<%= partial "/docs/reference/litefs/testing_your_litefs_instance" %>
 
 ## Importing your database
 
