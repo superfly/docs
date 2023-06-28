@@ -8,9 +8,9 @@ redirect_from:
   - /docs/getting-started/launch-app/
 ---
 
-The usual way to create a new Fly App is to write your project and then run `fly launch`. [`fly launch`](/docs/flyctl/launch/) is an all-in-one tool that automates as much as possible between writing the code and deploying on Fly.io, setting you up with a running app with good defaults.
+Fly Launch automates as much as possible between writing the code and deploying on Fly.io, setting you up with a running app with good defaults. The usual way to create a new Fly App is to write your project and then run [`fly launch`](/docs/flyctl/launch/).
 
-`fly launch` can perform several tasks, depending on the project:
+The `fly launch` command can perform several tasks, depending on the project:
 
 * initialization of a new App under your Fly.io organization
 * detection of known project types
@@ -20,7 +20,7 @@ The usual way to create a new Fly App is to write your project and then run `fly
 * the first deployment
 
 
-The language-specific launchers built into flyctl via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through `fly launch` or through a more manual process you might begin with `fly apps create`.
+The language-specific launchers built into flyctl via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through Fly Launch or through a more manual process you might begin with `fly apps create`.
 
 ## New App Creation
 
@@ -40,7 +40,7 @@ Reference: [Builders and Fly.io](/docs/reference/builders/)
 
 On creation, an app is given a default configuration that will work for most basic web apps.
 
-You can view an app's configuration at any time using `fly config display -a my-app`, or download it into a local `fly.toml` using `fly config save -a my-app`.  
+You can view an app's configuration at any time using `fly config show -a my-app`, or download it into a local `fly.toml` using `fly config save -a my-app`.  
 
 Manual configuration changes can be done by editing an app's `fly.toml` and running `fly deploy`.
 
@@ -50,7 +50,7 @@ Reference: [App Configuration (fly.toml)](/docs/reference/configuration/)
 
 ## Platform Resource Provisioning
 
-Before deployment, you may want to create and configure a [storage volume](/docs/reference/volumes/) or [Postgres database](/docs/reference/postgres/), or [set app secrets](/docs/reference/secrets/).
+Before deployment, you might want to create and configure a [storage volume](/docs/apps/volume-storage/) or [Postgres database](/docs/reference/postgres/), or [set app secrets](/docs/reference/secrets/).
 
 Some flyctl launchers will do some or all of this using the API.
 
@@ -98,4 +98,140 @@ The config specified in that `fly.toml` is used instead of the default config. B
 
 ## Tweaking Launch Behavior
 
-See all the [options](/docs/flyctl/launch/) available for use with `fly launch`.
+Check out all the [options](/docs/flyctl/launch/) available for use with `fly launch`.
+
+### An example of a custom launch
+
+Here's me launching my Flask app that I've written and tested using the local dev server:
+
+```cmd
+fly launch 
+```
+```out            
+Creating app in /Users/chris/FlyTests/hello-gunicorn-flask
+Scanning source code
+Detected a Python app
+Using the following build configuration:
+        Builder: paketobuildpacks/builder:base
+? Choose an app name (leave blank to generate one): 
+```
+
+If I carry on with this buildpack-based build, this story does not end with a working Flask app. Dockerfile-based deployments are much simpler and faster anyway, so I decide to use a Dockerfile. (I hit ctrl-C to stop the launch.)
+
+Conveniently, there's also already a [Dockerfile that works with this app](https://github.com/fly-apps/hello-gunicorn-flask/blob/main/Dockerfile).
+
+With a Dockerfile in my working directory, if I run `fly launch` again, the Dockerfile launcher takes over before the generic Python buildpack one has a chance to.
+
+```cmd
+fly launch
+```
+```out
+An existing fly.toml file was found for app testrun
+? Would you like to copy its configuration to the new app? No
+```
+I have a `fly.toml` in my working directory from cloning [the `fly-apps/hello-gunicorn-flask` repo](https://github.com/fly-apps/hello-gunicorn-flask) to my local machine, but I want to use whatever config `fly launch` gives me, so I answer `No` to that question.
+
+```
+Creating app in /Users/chris/FlyTests/hello-gunicorn-flask
+Scanning source code
+Detected a Dockerfile app
+```
+There's the Dockerfile scanner taking over. Now some general app configuration:
+
+```
+? Choose an app name (leave blank to generate one): testrun
+? Select Organization: Chris (personal)
+Some regions require a paid plan (fra, maa).
+See https://fly.io/plans to set up a plan.
+
+? Choose a region for deployment: Toronto, Canada (yyz)
+```
+
+This is the region where flyctl will start Machines for this app if not otherwise specified. The first deployment will put its Machine(s) in that region.
+
+```
+Created app 'testrun' in organization 'personal'
+Admin URL: https://fly.io/apps/testrun
+Hostname: testrun.fly.dev
+? Would you like to set up a Postgresql database now? No
+? Would you like to set up an Upstash Redis database now? No
+```
+
+`fly launch` offers to provision [Fly Postgres](/docs/postgres/) and [Redis by Upstash](/docs/reference/redis/) databases. I don't need them for my very simple web app.
+
+```
+Wrote config file fly.toml
+? Would you like to deploy now? Yes
+==> Building image
+Remote builder fly-builder-crimson-dew-6190 ready
+...
+```
+
+It's downloaded the new app's configuration into `fly.toml` and offered to deploy straight away. I accept. By default, the Docker build happens on one of Fly.io's remote builder Machines.
+
+`fly launch` always rewrites `fly.toml` even if it's just writing an identical config back into the file. 
+
+
+Aside: In the case of my Dockerfile app, I ended up with the default `fly.toml`, configured with an HTTP service suitable for a basic web app, but with one small tweak. My Dockerfile contains the line:
+
+```Dockerfile
+EXPOSE 4999
+```
+
+My Flask app listens on port 4999, not the more common (and default for `fly.toml`) port 8080.
+
+Fly.io doesn't care about EXPOSE statements in Dockerfiles directly, because we don't actually run containers, and services via our proxy are configured in `fly.toml`, not in the Dockerfile. But as a convenience, the Dockerfile `fly launch` scanner catches EXPOSE if it's there, and fills in `internal_port` on the [public HTTP `[[services]]` section](/docs/reference/configuration/#the-services-sections) accordingly.
+
+Coming back to the deployment, skipping some of the build output:
+
+```
+...
+--> Pushing image done
+image: registry.fly.io/testrun:deployment-01GWAPGQWQ5N1HY5651D5DX5B0
+image size: 141 MB
+Provisioning ips for testrun
+  Dedicated ipv6: 2a09:8280:1::5b:297
+  Shared ipv4: 66.241.125.144
+  Add a dedicated ipv4 with: fly ips allocate-v4
+
+```
+
+Because I had an HTTP service configured, and no [public IP addresses](/docs/reference/services/), these were [provisioned on deployment](/docs/apps/deploy/#ip-addresses).
+
+```
+Process groups have changed. This will:
+ * create 1 "app" machine
+No machines in group 'app', launching one new machine
+  Machine 17811122f5d089 [app] update finished: success
+  Finished deploying
+```
+
+The first deployment has finished!
+
+I haven't explicitly configured [process groups](/docs/apps/processes/), so my app gets a single Machine assigned to the default `app` process. With `fly status` I can see that this machine is running in `yyz` (Toronto), where I told `fly launch` I wanted my app to be deployed. 
+
+```cmd
+fly status
+```
+```out
+App
+  Name     = testrun                                        
+  Owner    = personal                                   
+  Hostname = testrun.fly.dev                                
+  Image    = testrun:deployment-01GWAPGQWQ5N1HY5651D5DX5B0  
+  Platform = machines                                   
+
+Machines
+ID              PROCESS VERSION REGION  STATE   HEALTH CHECKS   LAST UPDATED         
+17811122f5d089  app     1       yyz     started                 2023-03-24T20:56:45Z
+```
+
+I can [scale out](/docs/apps/scale-count/) by adding Machines in other regions if I want to get close to users in more corners of the world.
+
+To check that my new web app is actually working, I run
+
+```cmd
+fly open
+```
+
+to visit my app in the browser!
