@@ -3,7 +3,7 @@ Show details about a PlanetScale MySQL database
 
 ## Usage
 ~~~
-flyctl extensions planetscale status <name> [flags]
+flyctl planetscale status <name> [flags]
 ~~~
 
 ## Options
@@ -21,5 +21,5 @@ flyctl extensions planetscale status <name> [flags]
 
 ## See Also
 
-* [flyctl extensions planetscale](/docs/flyctl/extensions-planetscale/)	 - Provision and manage PlanetScale MySQL databases
+* [flyctl planetscale](/docs/flyctl/planetscale/)	 - Provision and manage PlanetScale MySQL databases
 

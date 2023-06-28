@@ -2,7 +2,7 @@ List your provisioned PlanetScale MySQL databases
 
 ## Usage
 ~~~
-flyctl extensions planetscale list [flags]
+flyctl planetscale list [flags]
 ~~~
 
 ## Options
@@ -21,5 +21,5 @@ flyctl extensions planetscale list [flags]
 
 ## See Also
 
-* [flyctl extensions planetscale](/docs/flyctl/extensions-planetscale/)	 - Provision and manage PlanetScale MySQL databases
+* [flyctl planetscale](/docs/flyctl/planetscale/)	 - Provision and manage PlanetScale MySQL databases
 
