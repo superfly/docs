@@ -2,7 +2,7 @@ Permanently destroy a PlanetScale MySQL database
 
 ## Usage
 ~~~
-flyctl extensions planetscale destroy <name> [flags]
+flyctl planetscale destroy <name> [flags]
 ~~~
 
 ## Options
@@ -21,5 +21,5 @@ flyctl extensions planetscale destroy <name> [flags]
 
 ## See Also
 
-* [flyctl extensions planetscale](/docs/flyctl/extensions-planetscale/)	 - Provision and manage PlanetScale MySQL databases
+* [flyctl planetscale](/docs/flyctl/planetscale/)	 - Provision and manage PlanetScale MySQL databases
 

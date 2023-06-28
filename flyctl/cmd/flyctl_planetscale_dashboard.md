@@ -2,7 +2,7 @@ Visit the PlanetScale database dashboard
 
 ## Usage
 ~~~
-flyctl extensions planetscale dashboard <database_name> [flags]
+flyctl planetscale dashboard <database_name> [flags]
 ~~~
 
 ## Options
@@ -20,5 +20,5 @@ flyctl extensions planetscale dashboard <database_name> [flags]
 
 ## See Also
 
-* [flyctl extensions planetscale](/docs/flyctl/extensions-planetscale/)	 - Provision and manage PlanetScale MySQL databases
+* [flyctl planetscale](/docs/flyctl/planetscale/)	 - Provision and manage PlanetScale MySQL databases
 

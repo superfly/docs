@@ -3,7 +3,7 @@ Provision a PlanetScale MySQL database
 
 ## Usage
 ~~~
-flyctl extensions planetscale create [flags]
+flyctl planetscale create [flags]
 ~~~
 
 ## Options
@@ -26,5 +26,5 @@ flyctl extensions planetscale create [flags]
 
 ## See Also
 
-* [flyctl extensions planetscale](/docs/flyctl/extensions-planetscale/)	 - Provision and manage PlanetScale MySQL databases
+* [flyctl planetscale](/docs/flyctl/planetscale/)	 - Provision and manage PlanetScale MySQL databases
 
