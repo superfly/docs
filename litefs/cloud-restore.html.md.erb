@@ -10,8 +10,8 @@ toc: true
 
 You can restore your LiteFS database to any point in time
 in the last 30 days, with 5 minute granularity.
-This means that you can select any time, and LiteFS Cloud will
-select the most recent snapshot from before that timestamp,
+This means that when you select a time, and LiteFS Cloud will
+find the most recent snapshot from before that timestamp,
 which is guaranteed to have been the state of the database
 no more than 5 minutes before the timestamp you selected.
 
@@ -23,16 +23,19 @@ did the first (erroneous) restore!
 ## Restoring your LiteFS database
 
 To restore your LiteFS database to a snapshot, navigate to
-the [Fly.io LiteFS dashboard][LiteFS Dashboard], select
+the [Fly.io LiteFS dashboard][LiteFS Dashboard], find
 the LiteFS Cloud cluster and database you would like to restore,
-and use the "Restore" button. You'll be asked to select a
-time and confirm that you want to restore.
+and click the "view backups" link. Then you can select a date and time
+to restore from. Since restore is a destructive function (you are likely
+to lose up to 5 minutes of data if you need to "revert" the restore),
+you'll need to type the name of the cluster and database to make sure
+you're restoring the database you intend.
 
-The restore takes just a few seconds. However, you won't
-see the new data until after you make a write to your database.
-For production applications (where writes are frequent), this
-is unlikely to be noticeable, but if you're testing it out,
-you may need to manually make a write to see changes!
+The restore normally takes just a few seconds, or up to a couple of minutes
+if your database is very large. However, you won't see the new data until
+after you make a write to your database. For production applications (where
+writes are frequent), this is unlikely to be noticeable, but if you're
+testing it out, you may need to manually make a write to see changes!
 
 [LiteFS Dashboard]: https://fly.io/dashboard/personal/litefs
 
