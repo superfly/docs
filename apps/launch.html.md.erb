@@ -14,7 +14,7 @@ With Fly Launch, you can create a brand new app on Fly.io by running this comman
 fly launch
 ``` 
 
-If you're in a hurry to try your first launch, we also have a condensed [Hands-on](/docs/hands-on/) that launches super simple demo app. You might also be interested in our [language- and framework-specific launch guides](/docs/languages-and-frameworks/).
+If you're in a hurry to try your first launch, we also have a condensed [Hands-on](/docs/hands-on/) that launches a super-simple demo app. You might also be interested in our [language- and framework-specific launch guides](/docs/languages-and-frameworks/).
 
 ## Ingredients for a successful Fly Launch
 
@@ -67,8 +67,14 @@ It's also possible to perform an entirely manual "launch", skipping all the laun
 
 ## After `fly launch`
 
-If you've run `fly launch` but haven't deployed yet, you can change your configuration, update your app source, or change or provision platform resources such as [public IP addresses](/docs/reference/services/), [Fly Volumes](/docs/reference/volumes), [app secrets](/docs/reference/secrets/), [Fly Postgres](/docs/postgres/) clusters, or integrated resources like [Redis by Upstash](/docs/reference/redis/), and then [(re)deploy with `fly deploy`](/docs/apps/deploy/).
+If you've run `fly launch` but haven't deployed yet, you can:
 
-Once your app is deployed you'll probably want to check up on it using one or more of the techniques in [Get Information About an App](/docs/apps/info/). When you're ready to [go to production](/docs/going-to-production/), [scale up](/docs/apps/scale-count/) to two or more Machines [for high availability](/docs/apps/).
+* change your configuration
+* update your app source
+* change or provision platform resources such as [public IP addresses](/docs/reference/services/), [Fly Volumes](/docs/reference/volumes), [app secrets](/docs/reference/secrets/), [Fly Postgres](/docs/postgres/) clusters, or integrated resources like [Redis by Upstash](/docs/reference/redis/)
 
-If you want to go deeper, you can do even more, at a lower level, with [Machines](/docs/machines/).
+And then (re)deploy with [`fly deploy`](/docs/apps/deploy/).
+
+Once your app is deployed you'll probably want to check up on it using one or more of the techniques in [Get Information About an App](/docs/apps/info/). When you're ready to [go to production](/docs/going-to-production/), read up on [app availability and resiliency features](/docs/reference/app-availability/), and learn how to [scale the number of Machines](/docs/apps/scale-count/) or [scale Machine CPU and RAM](/docs/apps/scale-machine/).
+
+If you want to go deeper, then you can do even more, at a lower level, with [Machines](/docs/machines/).

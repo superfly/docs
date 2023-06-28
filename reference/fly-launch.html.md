@@ -22,11 +22,11 @@ The `fly launch` command can perform several tasks, depending on the project:
 
 The language-specific launchers built into flyctl via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through Fly Launch or through a more manual process you might begin with `fly apps create`.
 
-## New App Creation
+## New app Creation
 
 When `fly launch` or `fly apps create` creates a new app, it gets a name, an organization, a preferred deployment region, and a default configuration that's good for simple apps that should be publicly available on the web. At this early stage there's nothing to deploy; you can create an app before you even decide what language to write it in.
 
-## Build Configuration
+## Build configuration
 
 An app deployed on Fly.io has to be packaged into a Docker image so we can turn it into a Firecracker VM.
 
@@ -36,7 +36,7 @@ This information can be specified in the `build section of fly.toml`. `fly lau
 
 Reference: [Builders and Fly.io](/docs/reference/builders/)
 
-## App Configuration
+## Fly Launch configuration
 
 On creation, an app is given a default configuration that will work for most basic web apps.
 
@@ -48,7 +48,7 @@ Flyctl language-specific launchers make changes to app configuration as part of 
 
 Reference: [App Configuration (fly.toml)](/docs/reference/configuration/)
 
-## Platform Resource Provisioning
+## Platform resource provisioning
 
 Before deployment, you might want to create and configure a [storage volume](/docs/apps/volume-storage/) or [Postgres database](/docs/reference/postgres/), or [set app secrets](/docs/reference/secrets/).
 
@@ -66,7 +66,7 @@ Use [`fly deploy`](/docs/flyctl/deploy/) to manually deploy an existing app. You
 
 Initial CPU and RAM specs default to the smallest available. Some projects will need beefier resources to run, in which case you'll need to do some [scaling](/docs/reference/scaling/) after your app is created.
 
-## Launch Outcomes
+## Launch outcomes
 
 If all goes well, one of several things will happen when you run `fly launch` in a project's working directory:
 
@@ -81,7 +81,7 @@ In all of these cases, `fly launch` downloads the final app config into a `fly.t
 
 Once an app is launched, you can make changes to it and provision further resources through `fly.toml` and flyctl commands.
 
-## More Things the Launchers Do
+## More things the launchers do
 
 The language- or framework- specific launchers incorporated into `fly launch` may also do fancy things like the following:
 
@@ -92,13 +92,15 @@ The language- or framework- specific launchers incorporated into `fly launch` ma
 - set build arguments
 - print messages with further information or instructions for the user
 
-## What Happens if I Say Yes to Importing an Existing Config?
+## What happens if I say yes to importing an existing config?
 
 The config specified in that `fly.toml` is used instead of the default config. But the scanners continue and may overwrite these imported settings.
 
-## Tweaking Launch Behavior
+## Tweaking Fly Launch
 
-Check out all the [options](/docs/flyctl/launch/) available for use with `fly launch`.
+You can tweak `fly launch` to better suit your project. The example that follows illustrates how this can work. 
+
+For more information about ways to customize your launch, refer to [Custom launch](/docs/apps/launch/#custom-launch) and check out all the [options](/docs/flyctl/launch/) available for use with `fly launch`.
 
 ### An example of a custom launch
 
