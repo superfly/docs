@@ -416,14 +416,14 @@ If you would like to use [Redis' official docker image](https://hub.docker.com/_
 
 2.  Before deploying, make sure to revise your `fly.toml` file to specify your Redis Fly App's password.
 
-    For apps on V2 of the Fly Apps platform, add the `[processes]` section for the default `app` process and add the following commands:
+    For apps on V2 of the Fly Platform, add the `[processes]` section for the default `app` process and add the following commands:
 
     ```toml
     [processes]
     app = "sh -c exec redis-server --requirepass \"$REDIS_PASSWORD\""
     ```
 
-    For apps on V1 of the Fly Apps platform, add the following commands under the [experimental] section:
+    For apps on V1 of the Fly Platform, add the following commands under the [experimental] section:
 
     ```toml
     [experimental]

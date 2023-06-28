@@ -11,7 +11,7 @@ On Fly.io, an App is an abstraction for a group of virtual machines running your
 
 Every customer VM on Fly.io lives in a Fly App. Anycast IPs, certificates, Fly Volumes, and custom domains belong to Apps as well.
 
-The `fly launch` and `fly deploy` commands create and update an app's VMs as a unit with a single [configuration](/docs/reference/configuration/) and code base. To learn more about configuring and deploying a Fly App, see the [Apps](/docs/apps/) docs.
+Fly Launch commands, `fly launch` and `fly deploy`, create and update an app's VMs as a unit with a single [configuration](/docs/reference/configuration/) and code base. Learn more about [Fly Launch](/docs/apps/).
 
 [Machines](/docs/reference/machines/) can also be created and configured independently of other Machines in their app, using `fly machine run` or the fast Machines HTTP API.
 
@@ -23,7 +23,7 @@ At the moment, there are two types of Fly App.
 
 ## Apps V2
 
-"Fly Apps V2" is the new version of the Fly Apps Platform, running on [flyd](https://fly.io/blog/carving-the-scheduler-out-of-our-orchestrator/) instead of Nomad. The Firecracker VM building blocks of Fly Apps V2 are [Machines](/docs/reference/machines/). 
+"Fly Apps V2" is the new version of the Fly Platform, running on [flyd](https://fly.io/blog/carving-the-scheduler-out-of-our-orchestrator/) instead of Nomad. The Firecracker VM building blocks of Fly Apps V2 are [Machines](/docs/reference/machines/). 
 
 Apps V2 doesn't behave identically to V1. You have more control over where your VMs run; the flip side is that flyd won't magically move a Machine from one host to another the way Nomad does. There's a lot more information about this in [Carving the Scheduler Out of Our Orchestrator](/blog/carving-the-scheduler-out-of-our-orchestrator/).
 

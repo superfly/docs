@@ -40,7 +40,7 @@ The features for redundancy and availability are:
 * [Health check-based routing](#health-check-based-routing)
 
 <div class="callout">
-These features require or depend on your app configuration in the `fly.toml` file, and this includes process groups. Every Fly App has at least one process group. An app with no extra process groups defined in `fly.toml` still uses the `app` process group by default. Learn more about [app configuration](/docs/reference/configuration/).
+These features require or depend on your app configuration in the `fly.toml` file, including process groups. Every Fly App has at least one process group. An app with no extra process groups defined in `fly.toml` still uses the `app` process group by default. Learn more about [app configuration](/docs/reference/configuration/).
 </div>
 
 You might also be interested in how we do [load balancing](/docs/reference/load-balancing/).
@@ -49,7 +49,7 @@ You might also be interested in how we do [load balancing](/docs/reference/load-
 
 The first time you deploy your app to the Fly.io platform, you get some default redundancy configurations. These settings help you to deploy a recommended setup without having to think about it. On the other hand, if the defaults aren't what you're looking for, then you can still configure your app and processes the way you want. Learn more about [scaling Machine CPU and RAM](/docs/apps/scale-machine/) and [scaling the number of Machines](/docs/apps/scale-count/).
 
-Here's what `fly launch` or `fly deploy` does, based on your app configuration:
+Here's what Fly Launch (the `fly launch` or `fly deploy` command) does, based on your app configuration:
 
 * creates and starts [two Machines](#two-machines-for-process-groups-with-services) for process groups with services, sets automatic start and stop to true and minimum machines running to zero
 * creates and starts one Machine and creates one stopped [standby Machine](#standby-machines-for-process-groups-without-services) for process groups without services
