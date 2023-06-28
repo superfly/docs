@@ -24,6 +24,17 @@ If your app uses Fly Volumes for persistent storage, migration will cause a brie
 
 **`fly migrate-to-v2` does not delete the original volumes,** out of an abundance of caution. We leave this for you to do **once you are certain the migration has succeeded with the volume data intact.** The active volumes have the original volume names, but with `-machines` appended&mdash;keep those ones!
 
+### Troubleshoot your app migration
+
+If your app is in an incorrect state post-migration, you can run the `troubleshoot` sub-command:
+
+`fly migrate-to-v2 troubleshoot`
+
+This command will try to automatically repair common issues with your app. If there is any ambiguity as to what to do (such as an app in the detached state), it will drop you into an interactive repair wizard that helps you make the right decisions. 
+
+Find out more about the [self-service troubleshooting tool](https://community.fly.io/t/fly-migrate-to-v2-troubleshoot-self-service-troubleshooting-for-migration-issues/13408) in our community forum.
+
+
 ## Migrate a V1 App manually
 
 If you'd rather work through the process manually, here are some steps to convert a fairly simple existing "V1" (managed by Nomad) Fly App to [Apps V2](/docs/reference/apps/) (running on Fly Machines).
@@ -211,4 +222,4 @@ $ fly deploy
 * run `fly machine update --metadata fly_platform_version=v2 <machine-id>` **only on any Machines that you want `fly deploy` to manage.**
 * `fly deploy`
 
-This deployment now updates the adopted Machines with the app-wide image and configuration. 
+This deployment now updates the adopted Machines with the app-wide image and configuration.
