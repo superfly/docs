@@ -45,7 +45,7 @@ from the `litefs-example` repo, and make the following updates:
 
 * Install LiteFS dependencies
 
-```Docker
+```dockerfile
 # for alpine-based images
 RUN apk add ca-certificates fuse3 sqlite
 # or for debian/ubuntu-based images
@@ -54,13 +54,13 @@ RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite
 
 * Copy in the LiteFS binary
 
-```Docker
+```dockerfile
 COPY --from=flyio/litefs:0.5 /usr/local/bin/litefs /usr/local/bin/litefs
 ```
 
 * Update the `ENTRYPOINT` (or `CMD`)
 
-```Docker
+```dockerfile
 ENTRYPOINT litefs mount
 ```
 
