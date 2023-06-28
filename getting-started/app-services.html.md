@@ -39,7 +39,7 @@ UDP services have to listen at a different specific address, `fly-global-service
 
 #### Public apps
 
-Define a [service](/docs/reference/configuration/#the-http_service-section) in `fly.toml` (or in the case of non-App-platform Machines, in individual Machine configs), making sure the `internal_port` on the service definition is the same port the process is bound to inside the VM. Without this config, Fly Proxy isn't aware of the service and can't route to it.
+Define a [service](/docs/reference/configuration/#the-http_service-section) in `fly.toml` (or in the case of standalone Machines that don't belong to Fly Launch, in individual Machine configs), making sure the `internal_port` on the service definition is the same port the process is bound to inside the VM. Without this config, Fly Proxy isn't aware of the service and can't route to it.
 
 #### Private (Flycast) apps
 

@@ -52,7 +52,7 @@ This app has 10 Machines total. The `app` process group has two in scl (Santiago
 
 ## Scale a simple app in a single region
 
-The default process name in a Fly App is `app`. If you don't define [process groups](docs/apps/processes/), all the app's platform Machines belong to the `app` group. 
+The default process name in a Fly App is `app`. If you don't define [process groups](docs/apps/processes/), all of the app's Machines belong to the `app` group, with the exception of any standalone Machines (created with `fly machine` commands).
 
 `fly scale count` applies changes to the default process group if it is not [passed explicit per-process target counts](#change-the-number-of-machines-in-a-process-group).
 
