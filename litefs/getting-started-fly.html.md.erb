@@ -1,5 +1,5 @@
 ---
-title: Getting Started with LiteFS
+title: Getting Started with LiteFS on Fly.io
 layout: docs
 sitemap: false
 nav: litefs
@@ -10,61 +10,52 @@ redirect_from: /docs/litefs/example/
 ## Overview
 
 This guide will walk you through the steps of getting a LiteFS cluster up and
-running. Some of the steps may include Fly.io commands for convenience, however,
-you can run LiteFS anywhere that runs Linux.
-
-For a full, working example of a LiteFS application, please see the
+running on Fly.io. For a full, working example of a LiteFS application, please see the
 [litefs-example][] repository.
 
 [litefs-example]: https://github.com/superfly/litefs-example
 
 
+## Creating a LiteFS Cloud Cluster (optional)
+
+<%= partial "/docs/reference/litefs/create_litefs_cloud_cluster" %>
+
+
 ## Installing LiteFS
 
-### Dependencies
+<%= partial "/docs/reference/litefs/adding_litefs_to_your_dockerfile_deps" %>
 
-The `litefs` binary is self-contained but you'll need to install the `fuse3`
-library so LiteFS is able to mount a local file system. You'll also need
-`ca-certificates` if you're connecting to Consul. This installation
-depends on your package manager but some examples are:
+### Installing LiteFS
 
-```sh
-# Install on Alpine
-$ apk add ca-certificates fuse3
-```
-
-```sh
-# Install on Debian/Ubuntu
-$ apt install ca-certificates fuse3
-```
-
-
-### With Docker
-
-LiteFS is meant to run inside your container along side your application. You
+LiteFS is meant to run inside your container alongside your application. You
 can pull in the `litefs` binary by copying it from the official Docker image:
 
 ```Docker
-COPY --from=flyio/litefs:0.4 /usr/local/bin/litefs /usr/local/bin/litefs
+COPY --from=flyio/litefs:0.5 /usr/local/bin/litefs /usr/local/bin/litefs
 ```
 
 It's recommended that you run LiteFS as `root` in Docker instead of using the
 `USER` command to change users. If you need to run your application as another
 user, use the `su` command to run your application as a non-root user.
 
+Take a look at [the example Dockerfile][Dockerfile] in the `litefs-example` repo
+for an example.
 
-### Without Docker
-
-If you're running on a Linux VPS without Docker, you can download the latest
-version from our [LiteFS releases page](https://github.com/superfly/litefs/releases).
-LiteFS can run on either `amd64` or `arm64` architectures.
+[Dockerfile]: https://github.com/superfly/litefs-example/blob/main/Dockerfile
 
 
 ## Configuring LiteFS
 
 Most configuration options for LiteFS are set via a YAML configuration file
-called `litefs.yml`. This file is typically placed in `/etc/litefs.yml` but
+called `litefs.yml`. This file is typically placed in `/etc/litefs.yml`, but
 you can change the path by using the `-config` flag.
+
+Take a look at
+[the litefs.yml file](https://github.com/superfly/litefs-example/blob/main/fly-io-config/etc/litefs.yml)
+in the `litefs-example` repo for a full example, or follow along with the
+rest of this section for a more detailed explanation!
+
+[litefs yml file]: https://github.com/superfly/litefs-example/blob/main/fly-io-config/etc/litefs.yml
 
 
 ### File system
@@ -106,9 +97,8 @@ nodes are called _replicas_ and they provide a read-only copy.
 
 The primary is determined by using a [_distributed lease_](https://martinfowler.com/articles/patterns-of-distributed-systems/time-bound-lease.html).
 In this guide, we'll be using a [Consul][] lease as it allows the primary to
-automatically failover in order to have high write availability.
-
-In you're running on Fly.io, you can add a Consul URL to your app with:
+automatically failover in order to have high write availability. You can add a
+Consul URL to your app with:
 
 ```
 fly consul attach
@@ -148,20 +138,69 @@ You can find more details in the [lease management][] section of the configurati
 guide.
 
 [Consul]: https://consul.io
-[Static Leasing guide]: /docs/litefs/static-lease
 [fly.io]: https://fly.io
-[GraphQL API page]: https://api.fly.io/graphql
 [lease management]: /docs/litefs/config#lease-management
 
+
+### LiteFS Cloud Configuration
+
+If you're using LiteFS Cloud for backups, you'll need to provide a LiteFS Cloud
+API authentication token, which you got when you created the cluster (or you can
+create a new one from [the LiteFS Cloud section][LiteFS Cloud Dashboard] in Fly.io
+dashboard).
+
+You should add this as a secret for your application named `LITEFS_CLOUD_TOKEN` with:
+
+```cmd
+fly secrets set LITEFS_CLOUD_TOKEN=$(litefs cloud auth token)
+```
+
+[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs-cloud
+
+### Configuring the proxy
+
+LiteFS requires that all writes occur on the primary node, which means
+that applications need to redirect write requests to the current primary. It's
+also possible to issue a write to the primary and then read from a replica
+before the change is propagated to that replica.
+
+Most web applications can take advantage of a thin, built-in proxy
+inside LiteFS that automatically handles these write redirection and replica
+consistency issues. In order to make use of this proxy, your application needs
+to follow these rules:
+
+- `GET` requests never perform write operations (e.g. `INSERT`, `UPDATE`, etc).
+
+- Clients have cookies enabled.
+
+To configure the proxy, you'll need to set the `proxy` section in the config file:
+
+```yml
+proxy:
+  # Bind address for the proxy to listen on.
+  addr: ":8080"
+
+  # Hostport of your application - replace 8081 with whatever port
+  # your application is listening on!
+  target: "localhost:8081"
+
+  # Filename of the SQLite database you want to use for TXID tracking.
+  db: "my.db"
+```
+
+You can find more details on the [proxy configuration guide][].
+
+[proxy configuration guide]: /docs/litefs/proxy
 
 ## Running LiteFS
 
 The main command used to start LiteFS is the `litefs mount` command. This mounts
 a FUSE file system and then starts an API server for LiteFS nodes to
-communicate with each other.
+communicate with each other. You can use this as the `ENTRYPOINT` in your
+Dockerfile:
 
-```
-litefs mount
+```dockerfile
+ENTRYPOINT litefs mount
 ```
 
 ### Running as a supervisor
@@ -185,70 +224,8 @@ exec:
   - cmd: "rails server"
 ```
 
-### Testing your LiteFS instance
-
-Once LiteFS is mounted, you can use SQLite clients or the `sqlite3` CLI to
-interact with databases on the mount directory:
-
-```
-sqlite3 /litefs/my.db
-```
-
-LiteFS only allows files in the root of the mount and it does not currently
-support subdirectories.
-
+<%= partial "/docs/reference/litefs/testing_your_litefs_instance" %>
 
 ## Importing your database
 
-If you have an existing database, you can import it using the `ltx import`
-command.
-
-```sh
-ltx import -name my.db /path/to/database
-```
-
-See the [`ltx import`](/docs/litefs/import) documentation for more details.
-
-<div class="callout">
-  ❗️ **You should only interact with SQLite databases on LiteFS through
-  a SQLite client or through the `litefs` tooling. Do not use `cp` to copy a
-  database into place.**
-</div>
-
-
-## Configuring the proxy (Fly.io only)
-
-LiteFS has a few differences from regular SQLite since it is a distributed
-system. LiteFS requires that all writes occur on the primary node which means
-that applications need to redirect write requests to the current primary. It's
-also possible to issue a write to the primary and then read from a replica
-before the change is propagated to that replica.
-
-For most web applications, they can take advantage of a thin, built-in proxy
-inside LiteFS that automatically handles these write redirection and replica
-consistency issues if your application follows some simple rules:
-
-- `GET` requests should not perform write operations (e.g. `INSERT`, `UPDATE`, etc).
-
-- Clients must have cookies enabled.
-
-To configure the proxy, you'll need to set the `proxy` section in the config file: 
-
-```yml
-proxy:
-  # Bind address for the proxy to listen on.
-  addr: ":8080"
-
-  # Hostport of your application.
-  target: "localhost:8081"
-
-  # Filename of the SQLite database you want to use for TXID tracking.
-  db: "my.db"
-```
-
-Then you'll need to update your application server's port to what is specified
-in the `target` field (`8081`).
-
-You can find more details on the [proxy configuration guide][].
-
-[proxy configuration guide]: /docs/litefs/proxy
+<%= partial "/docs/reference/litefs/importing_your_database" %>
