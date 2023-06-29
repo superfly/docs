@@ -1,0 +1,96 @@
+---
+title: "Speedrun: Add LiteFS to your app"
+layout: docs
+sitemap: false
+nav: litefs
+toc: true
+---
+
+This guide will get your app up and running with LiteFS on Fly.io as
+fast as possible. If you run into any issues with this guide, or you'd like
+some more details or a slower pace, check out the [Getting Started doc][] instead.
+
+You can also take a look at [the docs for your framework][Framework docs]
+to see if LiteFS is supported by `fly launch`.
+
+<div class="callout">
+This guide assumes you already have a working `Dockerfile` for
+your app. If not, get that working (with regular sqlite), and then come
+back here!
+</div>
+
+[Getting Started doc]: /docs/litefs/getting-started-fly
+[Framework docs]: /docs/languages-and-frameworks
+
+## Let's do this!
+
+### 1. Create a LiteFS Cloud cluster
+
+You can do this in [the LiteFS section][LiteFS Cloud Dashboard] of the fly.io dashboard.
+Take note of your auth token (you'll need it below).
+
+This is optional, but highly recommended if your data is important to you!
+
+[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
+
+### 2. Configure litefs.yml
+
+Copy [the sample `litefs.yml` file](https://github.com/superfly/litefs-example/blob/main/fly-io-config/etc/litefs.yml)
+from the `litefs-example` repo, and make the following updates:
+
+* Update from `8081` in `proxy.target` to whatever port your app listens on
+* Update `exec[0].cmd` to the command that runs your app
+
+### 3. Update your Dockerfile
+
+* Install LiteFS dependencies
+
+```dockerfile
+# for alpine-based images
+RUN apk add ca-certificates fuse3 sqlite
+# or for debian/ubuntu-based images
+RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite
+```
+
+* Copy in the LiteFS binary
+
+```dockerfile
+COPY --from=flyio/litefs:0.5 /usr/local/bin/litefs /usr/local/bin/litefs
+```
+
+* Update the `ENTRYPOINT` (or `CMD`)
+
+```dockerfile
+ENTRYPOINT litefs mount
+```
+
+### 4. Set up & deploy to Fly!
+
+* Run `fly volumes create litefs --size 10` to create a volume
+* Run `fly launch`, but don't deploy yet (it will ask you); this generates a `fly.toml` file
+* Run `consul attach`, which sets the `FLY_CONSUL_URL` secret for the app, required for LiteFS leases
+* Add the secret for LiteFS Cloud: `fly secrets set LITEFS_CLOUD_TOKEN=yoursecrettoken`
+(replace with actual token value!)
+* Update the fly.toml file to mount your volume:
+
+```yml
+[mounts]
+  source = "litefs"
+  destination = "/var/lib/litefs"
+```
+
+* Run `fly deploy`
+
+TADA! you (hopefully) now have an app running with LiteFS!
+
+### 5. Add some replicas in other regions
+
+LiteFS isn't *super* useful if you're running only one node. So, add some
+more nodes in more regions!
+
+```sh
+# Add a clone in London
+fly m clone --select --region lhr
+# Add a clone in Sydney
+fly m clone --select --region syd
+```
