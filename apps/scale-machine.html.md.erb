@@ -199,7 +199,7 @@ web     1       shared          1       512 MB  yyz
 
 ## Machines not belonging to Fly Launch
 
-If an app has Machines not belonging to Fly Launch&mdash;that is, created using `fly machine run` or the Machines API, or `fly machine clone`d from such a Machine, and not [assimilated during a migration to Apps V2](/docs/apps/migrate-to-v2#adopt-standalone-fly-machines-into-a-v2-app)&mdash;`fly status` will warn you of their existence.
+If an app has Machines not belonging to Fly Launch&mdash;that is, created using `fly machine run` or the Machines API, or `fly machine clone`d from such a Machine, and not [assimilated during a migration to a V2 App](/docs/apps/migrate-to-v2#adopt-standalone-fly-machines-into-a-v2-app)&mdash;`fly status` will warn you of their existence.
 
 The app-wide `fly scale` commands do not apply to these Machines, but you can scale any Machine individually with `fly machine update`:
 

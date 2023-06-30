@@ -8,7 +8,7 @@ redirect_from:
   - /docs/getting-started/launch-app/
 ---
 
-Fly Launch automates as much as possible between writing the code and deploying on Fly.io, setting you up with a running app with good defaults. The usual way to create a new Fly App is to write your project and then run [`fly launch`](/docs/flyctl/launch/).
+Fly Launch is our Platform-as-a-Service product that takes some of the work out of deploying and managing your Fly App. Two commands that you'll use often are [`fly launch`](/docs/flyctl/launch/) and [`fly deploy`](/docs/apps/deploy/). The usual way to create a new Fly App is to write your project and then run `fly launch`. The `fly launch` command automates as much as possible between writing the code and deploying on the Fly Platform, setting you up with a running app with good defaults.
 
 The `fly launch` command can perform several tasks, depending on the project:
 
@@ -20,11 +20,11 @@ The `fly launch` command can perform several tasks, depending on the project:
 * the first deployment
 
 
-The language-specific launchers built into flyctl via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through Fly Launch or through a more manual process you might begin with `fly apps create`.
+The language-specific scanners built into flyctl via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through Fly Launch or through a more manual process you might begin with `fly apps create`.
 
 ## New app Creation
 
-When `fly launch` or `fly apps create` creates a new app, it gets a name, an organization, a preferred deployment region, and a default configuration that's good for simple apps that should be publicly available on the web. At this early stage there's nothing to deploy; you can create an app before you even decide what language to write it in.
+When `fly launch` or `fly apps create` creates a new Fly App, the app gets a name, an organization, a preferred deployment region, and a default configuration that's good for simple apps that should be publicly available on the web. At this early stage there's nothing to deploy; you can create an app before you even decide what language to write it in.
 
 ## Build configuration
 
@@ -44,7 +44,7 @@ You can view an app's configuration at any time using `fly config show -a my-app
 
 Manual configuration changes can be done by editing an app's `fly.toml` and running `fly deploy`.
 
-Flyctl language-specific launchers make changes to app configuration as part of their work.
+Flyctl language-specific scanners make changes to app configuration as part of their work.
 
 Reference: [App Configuration (fly.toml)](/docs/reference/configuration/)
 
@@ -52,7 +52,7 @@ Reference: [App Configuration (fly.toml)](/docs/reference/configuration/)
 
 Before deployment, you might want to create and configure a [storage volume](/docs/apps/volume-storage/) or [Postgres database](/docs/reference/postgres/), or [set app secrets](/docs/reference/secrets/).
 
-Some flyctl launchers will do some or all of this using the API.
+Some flyctl scanners will do some or all of this using the API.
 
 ## Deployment
 
@@ -81,9 +81,9 @@ In all of these cases, `fly launch` downloads the final app config into a `fly.t
 
 Once an app is launched, you can make changes to it and provision further resources through `fly.toml` and flyctl commands.
 
-## More things the launchers do
+## More things the scanners do
 
-The language- or framework- specific launchers incorporated into `fly launch` may also do fancy things like the following:
+The language- or framework- specific scanners incorporated into `fly launch` may also do fancy things like the following:
 
 - download files (e.g. Dockerfile, config files) into your working directory. Existing local files will be overwritten only with confirmation.
 - run commands in your local development environment in order to prepare the project for deployment
@@ -170,9 +170,6 @@ Remote builder fly-builder-crimson-dew-6190 ready
 ```
 
 It's downloaded the new app's configuration into `fly.toml` and offered to deploy straight away. I accept. By default, the Docker build happens on one of Fly.io's remote builder Machines.
-
-`fly launch` always rewrites `fly.toml` even if it's just writing an identical config back into the file. 
-
 
 Aside: In the case of my Dockerfile app, I ended up with the default `fly.toml`, configured with an HTTP service suitable for a basic web app, but with one small tweak. My Dockerfile contains the line:
 

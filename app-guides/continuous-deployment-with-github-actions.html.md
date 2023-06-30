@@ -48,7 +48,7 @@ We'll speed-run through the steps needed to make the go-example app automaticall
 
     Note that the `go-example`’s default branch is currently `master`. If you’re using a different app, yours might be `main`. Change the `fly.yml` file accordingly.
 
-8.  Commit your changes and push them up to GitHub. You should be pushing two new files: `fly.toml`, the Fly Launch configuration file, and `fly.yml`, the GitHub action file.
+8.  Commit your changes and push them up to GitHub. You should be pushing two new files: `fly.toml`, the [Fly Launch](/docs/apps/) configuration file, and `fly.yml`, the GitHub action file.
   
 Then the magic happens - The push triggers a deploy, and from now on whenever you push a change, the app will automatically be redeployed.
 
