@@ -17,8 +17,8 @@ The regions around the world where we run servers so your apps can run close to 
 
 ## Creating and deploying applications
 
-* [**App Configuration (fly.toml)**](/docs/reference/configuration/):
-The settings for configuring your App in the `fly.toml` configuration file. The App configuration includes how the App is built, how its networking is configured, how it scales, and more.
+* [**Fly Launch Configuration (fly.toml)**](/docs/reference/configuration/):
+The settings for configuring your App in the `fly.toml` configuration file. The Fly Launch configuration includes how the App is built, how its networking is configured, how it scales, and more.
 
 * [**App Availability and Resiliency**](/docs/reference/app-availability):
 An overview of the features that can make your app more resistant to events like hardware failures or outages.
@@ -47,13 +47,13 @@ How to set and use Docker secrets to make secrets available at build time.
 * [**Secrets - Runtime**](/docs/reference/secrets/):
 How to set and use secrets, which are exported to the running App through environment variables, and find out how they work with deployments to help secure your App.
 
-## Learning about the Fly Apps Platform
+## Learning about the Fly Platform
 
-* [**Apps**](/docs/reference/apps):
+* [**Fly Apps**](/docs/reference/apps):
 The difference between V1 (Nomad) Apps and V2 Apps.
 
 * [**Machines**](/docs/machines):
-A brief overview of Fly Machines, the building blocks of the Fly Apps Platform, as well as the Machines API reference, examples, and guides.
+A brief overview of Fly Machines, the building blocks of the Fly Platform, as well as the Machines API reference, examples, and guides.
 
 * [**Metrics**](/docs/reference/metrics):
 The fully-managed metrics that you can access for your app on Fly.io.

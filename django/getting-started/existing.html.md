@@ -106,7 +106,7 @@ To deploy the application use the following command:
 fly deploy
 ```
 
-This will take a few seconds as it uploads your application, verifies the app configuration, builds the image, and then monitors to ensure it starts successfully. Once complete visit your app with the following command:
+This will take a few seconds as it uploads your application, verifies the app configuration, builds the image, and then monitors to ensure it starts successfully. Once complete, visit your app with the following command:
 
 ```cmd
 fly open

@@ -1,5 +1,5 @@
 ---
-title: Migrate an Existing Fly App to Apps V2
+title: Migrate an Existing Fly App to V2
 objective: 
 layout: docs
 nav: firecracker
@@ -11,7 +11,7 @@ order: 20
 
 ## Migrate a V1 App with a flyctl command
 
-flyctl includes a command you can run yourself to migrate an existing V1 app to Apps V2. Find [more detail and discussion](https://community.fly.io/t/fly-migrate-to-v2-apps-with-volumes-support/12316) in our community forum.
+flyctl includes a command you can run yourself to migrate an existing V1 App to a V2 App. Find [more detail and discussion](https://community.fly.io/t/fly-migrate-to-v2-apps-with-volumes-support/12316) in our community forum.
 
 1. Make sure you're running the latest flyctl, with `fly version upgrade` (or `brew update && brew upgrade flyctl` on macOS).
 2. Enter your Fly App's source directory. If you don't already have one for this app, create a new directory first; the migration command saves the updated configuration into `fly.toml` locally.
@@ -24,16 +24,27 @@ If your app uses Fly Volumes for persistent storage, migration will cause a brie
 
 **`fly migrate-to-v2` does not delete the original volumes,** out of an abundance of caution. We leave this for you to do **once you are certain the migration has succeeded with the volume data intact.** The active volumes have the original volume names, but with `-machines` appended&mdash;keep those ones!
 
+### Troubleshoot your app migration
+
+If your app is in an incorrect state post-migration, you can run the `troubleshoot` sub-command:
+
+`fly migrate-to-v2 troubleshoot`
+
+This command will try to automatically repair common issues with your app. If there is any ambiguity as to what to do (such as an app in the detached state), it will drop you into an interactive repair wizard that helps you make the right decisions. 
+
+Find out more about the [self-service troubleshooting tool](https://community.fly.io/t/fly-migrate-to-v2-troubleshoot-self-service-troubleshooting-for-migration-issues/13408) in our community forum.
+
+
 ## Migrate a V1 App manually
 
-If you'd rather work through the process manually, here are some steps to convert a fairly simple existing "V1" (managed by Nomad) Fly App to [Apps V2](/docs/reference/apps/) (running on Fly Machines).
+If you'd rather work through the process manually, here are some steps to convert a fairly simple existing legacy V1 App (managed by Nomad) to a [V2 App](/docs/reference/apps/) (running on Fly Machines).
 
 The idea is to get the new app up and running satisfactorily, keeping your old one running until you're comfortable to migrate DNS to the new Machines-based app.
 
-### Create a new app with the V2 (Machines) platform
+### Create a new V2 app
 
 ```cmd
-fly apps create --machines --name <my-app-v2> -o <my-org>
+fly apps create --name <my-app-v2> -o <my-org>
 ```
 
 ### Put the new app name into the `fly.toml` config file
@@ -48,13 +59,13 @@ app = "my-app-v2"
 
 ### Set the app's primary region
 
-Still in `fly.toml`, add a `primary_region` option, which `fly deploy` in Apps V2 uses to determine where to create new Machines, as well as to set the `PRIMARY_REGION` environment variable within the Machines it deploys. Replace `ord` with the three-letter code for your [Fly Region](/docs/reference/regions/) of choice.
+Still in `fly.toml`, add a `primary_region` option, which `fly deploy` in uses to determine where to create new Machines in V2 Apps, as well as to set the `PRIMARY_REGION` environment variable within the Machines it deploys. Replace `ord` with the three-letter code for your [Fly Region](/docs/reference/regions/) of choice.
 
 ```toml
 primary_region = "ord"
 ```
 
-**Note:** Apps V2 does **not** make use of region groups or `fly regions` commands. Use `fly scale count --region` or `fly machine clone --region` to [create Machines in specific regions](/docs/apps/scale-count/).
+**Note:** V2 Apps don't use region groups or `fly regions` commands. You can use `fly scale count --region` or `fly machine clone --region` to [create Machines in specific regions](/docs/apps/scale-count/).
 
 ### ​Copy any secrets you need from your existing app
 
@@ -110,9 +121,9 @@ If your app uses Fly Volumes, you'll have to [provision a volume](/docs/apps/vol
 fly deploy
 ```
 
-(If the app has HTTP/HTTPS services configured on standard ports, the first deployment will provision a dedicated public IPv6 and a shared public IPv4 address for it.)
+If the app has HTTP/HTTPS services configured on standard ports, the first deployment will provision a dedicated public IPv6 and a shared public IPv4 address for it.
 
-Check that your app is running correctly. You can see information about your deployment in 
+Check that your app is running correctly:
 
 ```cmd
 fly status
@@ -180,20 +191,20 @@ dig txt _acme-challenge.mydomain.com +short
 
 Finally, point your DNS to the new IP allocated for your app.
 
-### Delete the old V1 app
+### Delete the old V1 App
 
-Once you've switched over to the new V2 app and you're confident you don't need the V1 app anymore, [delete it](/docs/apps/delete/).
+Once you've switched over to the new V2 App and you're confident you don't need the V1 app anymore, [delete it](/docs/apps/delete/).
 
 
-## Adopt "non-platform" Fly Machines into the Apps V2 platform
+## Adopt standalone Fly Machines into a V2 App
 
-The Fly Apps V2 platform allows you to manage Fly Machines with app-wide configuration and coordinated releases, using `fly launch` and `fly deploy`. If you have a non-Apps-V2 Machine app&mdash;created using `fly create --machines` or `fly machine run`&mdash;you may or may not want to migrate it onto the Apps V2 platform in order to gain `fly deploy` functionality. 
+Fly Launch allows you to manage Fly Machines with app-wide configuration and coordinated releases, using `fly launch` and `fly deploy`. If you have a non-V2-Apps Machine app&mdash;created using `fly create --machines` or `fly machine run`&mdash;you may or may not want to migrate it to a V2 App in order to gain `fly deploy` functionality. 
 
 <div class="callout">
-**This is an important point: `fly deploy` unifies all the Machines it manages to use a single Docker image and a single configuration.** As an example, the services and environment variables will come from `fly.toml` on the next deployment, replacing whatever was present before.
+**This is an important point: Fly Launch (through the `fly launch` and `fly deploy` commands) unifies all the Machines it manages to use a single Docker image and a single configuration.** As an example, the services and environment variables will come from `fly.toml` on the next deployment, replacing whatever was present before.
 </div>
 
-Thus, migrating a Machines Fly App to the Apps V2 platform is fairly straightforward **if all the Machines belonging to the app are running the same image with the same configuration.**
+Thus, migrating an older "Machines" Fly App to Fly Launch is fairly straightforward **if all the Machines belonging to the app are running the same image with the same configuration.**
 
 From your project's root directory (where you'll be deploying it from, and where `fly.toml` should live):
 
@@ -207,8 +218,8 @@ $ fly deploy
 
 `fly config save` doesn't expect there to be a difference between Machines, so it's not currently possible to select a specific Machine to pull a new app config from. In this case, the process would look more like:
 
-* get or create a `fly.toml` to match the config you want `fly deploy` to apply to its Machines
+* get or create a `fly.toml` file to match the config you want `fly deploy` to apply to its Machines
 * run `fly machine update --metadata fly_platform_version=v2 <machine-id>` **only on any Machines that you want `fly deploy` to manage.**
 * `fly deploy`
 
-This deployment now updates the adopted Machines with the app-wide image and configuration. 
+This deployment now updates the adopted Machines with the app-wide image and configuration.

@@ -151,7 +151,7 @@ tmpfs             113224      0    113224   0% /sys/fs/cgroup
 
 ## Inspect the Current Configuration of a Deployed App or Machine
 
-Machines can be configured individually, but the app's config is applied on `fly deploy` to all Machines that are administered by the app. Display the app configuration in JSON format with `fly config show`, 
+Machines can be configured individually, but Fly Launch applies the app's config on `fly deploy` to all Machines that are administered by the app. Display the app configuration in JSON format with `fly config show`.
 
 
 ### Show the app config

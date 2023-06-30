@@ -43,11 +43,11 @@ Here's how `fly deploy` determines how to get the app's Docker image:
 
 If the app to be deployed is configured with an eligible HTTP `[[services]]` section, and it does not yet have [public IP addresses](/docs/reference/services/), `fly deploy` provisions a public IPv6 and a shared public IPv4 Anycast address. 
 
-## Standalone Machines that don't belong to Fly Launch
+## Machines not managed by Fly Launch
 
-Machines created using `fly launch` or `fly deploy`, or by `fly clone`ing such a Machine, carry a piece of metadata marking them as belonging to Fly Launch. These machines are updated as a group on all subsequent `fly deploy` commands, as are Machines that existed on a Machines App at the moment that it was migrated to Apps V2.
+Machines created using `fly deploy` (or as part of a deployment during `fly launch`), or by `fly clone`ing such a Machine, carry a piece of metadata marking them as belonging to Fly Launch. These machines are updated as a group on all subsequent `fly deploy` commands, as are Machines that existed on a Machines App at the moment that it was migrated to a V2 App.
 
-New Machines created within an App using `fly machine run` don't have the Apps V2 metadata, and are not automatically managed by `fly deploy`, so these Machines can have their own configuration different from that of the App, and can even be based on a different Docker image.
+New Machines created within a V2 App using `fly machine run` don't have the V2 Apps metadata, and are not automatically managed by Fly Launch (`fly deploy`), so these Machines can have their own configuration different from that of the App, and can even be based on a different Docker image.
 
 ## Volume mounts and `fly deploy`
 

@@ -7,7 +7,7 @@ order: 65
 ---
 
 <div class="callout">
-This feature only works for V2 apps running on Fly Machines. You might also be interested in learning about [scaling the number of machines](/docs/apps/scale-count/) for the V2 Apps Platform. For information about scaling V1 apps, refer to [Scale V1 Nomad Apps](/docs/apps/legacy-scaling/).
+This feature only works for V2 Apps running on Fly Machines. You might also be interested in learning about [scaling the number of machines](/docs/apps/scale-count/) for the V2 Apps Platform. For information about scaling V1 Apps, refer to [Scale V1 Nomad Apps](/docs/apps/legacy-scaling/).
 </div>
 
 Fly Machines are fast to start and stop, and you don't pay for their CPU and RAM when they're in the `stopped` state. For Fly Apps with a service configured, Fly Proxy can automatically start and stop existing Machines based on incoming requests, so that your app can meet demand without keeping extra Machines running. And if your app needs to have one or more Machines always running in your primary region, then you can set a minimum number of machines to keep running.
@@ -22,7 +22,7 @@ Concurrency limits for services affect [how automatic starts and stops work](#ho
 
 ### Default and recommended values
 
-Default settings in `fly.toml` for V2 apps created using the `fly launch` command:
+Default settings in `fly.toml` for V2 Apps created using the `fly launch` command:
 
 ```toml
 ...
@@ -47,7 +47,7 @@ Default settings in `fly.toml` for V2 apps created using the `fly launch` comman
 ```
 
 <div class="callout">
-Existing V2 apps&mdash;or any V2 apps that don't have these settings in `fly.toml`&mdash;have the default values `auto_start_machines = true` and `auto_stop_machines = false`.
+Existing V2 Apps&mdash;or any V2 Apps that don't have these settings in `fly.toml`&mdash;have the default values `auto_start_machines = true` and `auto_stop_machines = false`.
 </div>
 
 In general, we recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having Machines that either never start or never stop. 

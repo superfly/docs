@@ -48,7 +48,7 @@ We'll speed-run through the steps needed to make the go-example app automaticall
 
     Note that the `go-example`’s default branch is currently `master`. If you’re using a different app, yours might be `main`. Change the `fly.yml` file accordingly.
 
-8.  Commit your changes and push them up to GitHub. You should be pushing two new files: `fly.toml`, the Fly App configuration file, and `fly.yml`, the GitHub action file.
+8.  Commit your changes and push them up to GitHub. You should be pushing two new files: `fly.toml`, the [Fly Launch](/docs/apps/) configuration file, and `fly.yml`, the GitHub action file.
   
 Then the magic happens - The push triggers a deploy, and from now on whenever you push a change, the app will automatically be redeployed.
 
@@ -131,7 +131,7 @@ This step `uses` the superfly/flyctl-actions action. This is a GitHub action cre
 
 Here is where we pull the API token from GitHub's secrets engine and put it into the environmental variables passed to the action.
 
-**Step 8** pushes your two new files to the repository: `fly.toml`, the Fly App configuration file, and `fly.yml`, the GitHub action file. The push triggers your first automatic deploy. The GitHub action now triggers a redeploy each time you push changes to your repo.
+**Step 8** pushes your two new files to the repository: `fly.toml`, the Fly Launch configuration file, and `fly.yml`, the GitHub action file. The push triggers your first automatic deploy. The GitHub action now triggers a redeploy each time you push changes to your repo.
 
 ## Conclusion and further reading
 

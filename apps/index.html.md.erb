@@ -6,11 +6,18 @@ nav: firecracker
 ---
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-Learn how to use all the Fly Launch features that help you manage and run your apps.
+Fly Launch is our a Platform-as-a-Service product with features that help you serve up your app, including (but not limited to):
+
+- the `fly launch` command to get started
+- the `fly.toml` file for app configuration
+- the `fly deploy` command to deploy all your app's Machines
+- the `fly scale` command for horizontal and vertical scaling
+
+Learn how to use all the Fly Launch features that help you manage and run your apps:
 
 <ul class="outline-list">
     <li>
-    <%= nav_link "Launch a New App", "/docs/apps/launch/" %>
+    <%= nav_link "Launch a New Fly App", "/docs/apps/launch/" %>
     </li>
     <li>
     <%= nav_link "Deploy a Fly App", "/docs/apps/deploy/" %>
@@ -28,7 +35,7 @@ Learn how to use all the Fly Launch features that help you manage and run your a
     <%= nav_link "Add or Remove Machines", "/docs/apps/scale-count/" %>
     </li>
     <li>
-    <%= nav_link "Automatically Stop and Start App Fly Machines", "/docs/apps/autostart-stop/" %>
+    <%= nav_link "Automatically Stop and Start Machines", "/docs/apps/autostart-stop/" %>
     <li>
     <%= nav_link "Restart an App", "/docs/apps/restart/" %>
     </li>
@@ -42,10 +49,10 @@ Learn how to use all the Fly Launch features that help you manage and run your a
     <%= nav_link "Scale V1 (Nomad) Apps", "/docs/apps/legacy-scaling/" %>
     </li>
     <li>
-    <%= nav_link "Migrate an Existing Fly App to Apps V2", "/docs/apps/migrate-to-v2/" %>
+    <%= nav_link "Migrate an Existing Fly App to V2", "/docs/apps/migrate-to-v2/" %>
     </li>
     <li>
-    <%= nav_link "App Configuration Reference", "/docs/reference/configuration/" %>
+    <%= nav_link "Fly Launch Configuration Reference", "/docs/reference/configuration/" %>
     </li>
 </ul>
 
