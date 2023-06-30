@@ -49,7 +49,7 @@ from the `litefs-example` repo, and make the following updates:
 # for alpine-based images
 RUN apk add ca-certificates fuse3 sqlite
 # or for debian/ubuntu-based images
-RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite
+RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite3
 ```
 
 * Copy in the LiteFS binary

@@ -13,6 +13,6 @@ RUN apk add ca-certificates fuse3 sqlite
 
 ```dockerfile
 # for debian/ubuntu-based images
-RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite
+RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite3
 ```
 
