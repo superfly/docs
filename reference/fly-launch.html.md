@@ -22,7 +22,7 @@ The `fly launch` command can perform several tasks, depending on the project:
 
 The language-specific scanners built into flyctl via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through Fly Launch or through a more manual process you might begin with `fly apps create`.
 
-## New app Creation
+## New Fly App Creation
 
 When `fly launch` or `fly apps create` creates a new Fly App, the app gets a name, an organization, a preferred deployment region, and a default configuration that's good for simple apps that should be publicly available on the web. At this early stage there's nothing to deploy; you can create an app before you even decide what language to write it in.
 
