@@ -51,7 +51,7 @@ We set `type = "requests"` so Fly.io will use concurrent http requests to determ
 
 We choose to set our `soft_limit` to 20, so we have a little room for Fly.io to shift load to other instances before a single instance becomes overwhelmed.
 
-We deployed 10 VMs in four regions: `ams`, `maa`, `sea`, and `sin`, with three of those in `ams`.
+We deployed 10 VMs in four regions: `ams`, `bom`, `sea`, and `sin`, with three of those in `ams`.
 
 In this contrived example, all of the users are currently in Amsterdam (ams region) so their traffic is arriving at one of the Fly.io edges in Amsterdam. There are currently 3 instances of our web service running in Amsterdam.
 
