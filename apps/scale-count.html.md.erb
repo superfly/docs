@@ -48,7 +48,7 @@ other   3       shared          4       1024 MB ord(2),scl
 task    4       performance     1       2048 MB iad,mia,ord,scl
 ```
 
-This app has 10 Machines total. The `app` process group has two in scl (Santiago) and one in mia (Miami). `other` has two in ord (Chicago) and one in scl. `task` has one Machine in each of iad (Ashburn, Virginia), mia, ord, and scl. You can put your Machines wherever works best for your app.
+This app has 10 Machines total. The `app` process group has two in scl (Santiago) and one in mia (Miami). `other` has two in ord (Chicago) and one in scl. `task` has one Machine in each of iad (Ashburn), mia, ord, and scl. You can put your Machines wherever works best for your app.
 
 ## Scale a simple app in a single region
 
@@ -89,7 +89,7 @@ Now there are four Machines in yyz.
 
 The `--region` option takes one or more [region codes](/docs/reference/regions/). `fly scale count` creates and/or destroys Machines to reach the specified target count across the regions you list in this option, and tries to balance its changes across these regions.
 
-For example, to end up with a total of three Machines between the yyz and ewr regions on an app:
+For example, to end up with a total of three Machines between the yyz (Toronto) and ewr (Secaucus) regions on an app:
 
 ```cmd
 fly scale count 3 --region yyz,ewr
@@ -159,7 +159,7 @@ web     10      shared  1       256 MB  nrt(5),yyz(5)
 worker  6       shared  1       256 MB  nrt(3),yyz(3)
 ```
 
-If an app has more capacity than required in a particular region, then you can also scale Machines by region. The following example scales both processes down by one Machine in only the yyz region:
+If an app has more capacity than required in a particular region, then you can also scale Machines by region. The following example scales both processes down by one Machine in only the yyz (Toronto) region:
 
 ```cmd
 fly scale count web=4 worker=2 --region yyz
@@ -184,7 +184,7 @@ fly scale count 4 --process-group web --region nrt,yyz
 
 For a V2 App, adding a region to an app just means putting at least one Machine there. 
 
-For example, add syd (Sydney, Australia) to an app's regions by scaling up from 0 there:
+For example, add syd (Sydney) to an app's regions by scaling up from 0 there:
 
 ```cmd
 fly scale count 2 --region syd
@@ -215,7 +215,7 @@ Use `--max-per-region` for added control over Machine placement by region if the
 
 You can also use `--max-per-region` to redistribute the Machine count more evenly among regions.
 
-For example, on an app with 8 machines in yyz, 2 in yul (Montreal) and only 1 in ewr:
+For example, on an app with 8 machines in yyz (Toronto), 2 in yul (Montreal) and only 1 in ewr (Secaucus):
 
 ```
 NAME    COUNT   KIND    CPUS    MEMORY  REGIONS           
@@ -280,13 +280,13 @@ We're back in business and can scale as desired!
 
 You can add Machines to an app by cloning Machines. The new Machine will be, as you would expect, a copy of the specified Machine, and will belong to the same process group. If the original Machine has a [Fly Volume](https://file+.vscode-resource.vscode-cdn.net/docs/reference/volumes/) attached, an empty volume will be provisioned for the new Machine. It's up to you to decide what to put on the new volume; `fly machine clone` will not automatically copy the contents of the original Machine&#39;s volume.
 
+The following commands create three new Machines by cloning an existing Machine: 
+
 ```
 $ fly machine clone 21781973f03e89
 $ fly machine clone --region syd 21781973f03e89
-$ fly machine clone --region ams 21781973f03e89
+$ fly machine clone --region nrt 21781973f03e89
 ```
-
-After running the above commands, there are four Machines running for this app: the original Machine plus three new ones.
 
 ## Scale down with `fly machine destroy`
 
