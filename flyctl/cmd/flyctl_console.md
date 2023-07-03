@@ -15,6 +15,7 @@ flyctl console [flags]
   -c, --config string    Path to application configuration file
   -h, --help             help for console
       --machine string   Run the console in the existing machine with the specified ID
+  -r, --region string    The target region (see 'flyctl platform regions')
   -s, --select           Select the machine on which to execute the console from a list
   -u, --user string      Unix username to connect as (default "root")
       --vm-cpus int      How many CPUs to give the new machine
