@@ -13,17 +13,27 @@ The `fly launch` command detects your Dockerfile and builds it. If you have Dock
 fly launch
 ```
 ```output
-? App Name (leave blank to use an auto-generated name):
-? Select organization: Mark Ericksen (personal)
-? Select region: lax (Los Angeles, California (US))
-Created app weathered-wave-1020 in organization personal
+...
+Detected a Dockerfile app
+? Choose an app name (leave blank to generate one):
+? Select Organization: Mark Ericksen (personal)
+...
+
+? Choose a region for deployment: Los Angeles, California (US) (lax)
+App will use 'lax' region as primary
+
+Created app 'wispy-breeze-3322' in organization 'personal'
+Admin URL: https://fly.io/apps/wispy-breeze-3322
+Hostname: wispy-breeze-3322.fly.dev
+? Would you like to set up a Postgresql database now? No
+? Would you like to set up an Upstash Redis database now? No
 Wrote config file fly.toml
-? Would you like to deploy now? (y/N)
+? Would you like to deploy now?
 ```
 
 Let `fly launch` generate an app name for you or pick your own.
 
-Select the Fly.io [region](https://fly.io/docs/reference/regions/) to deploy to. It defaults to the one closest to you.
+Select the Fly.io [region](https://fly.io/docs/reference/regions/) to deploy to.
 
 The launch command generates a `fly.toml` file for your project with the settings. You can deploy right away, or add some config first.
 
@@ -37,7 +47,7 @@ Most Dockerfiles expect some configuration settings through `ENV`. The generated
   MAX_PLAYER_COUNT = "15"
 ```
 
-Add whatever values your Dockerfile or container requires.
+Add the values your Dockerfile or container requires.
 
 Sometimes you have secrets that shouldn't be checked in to `git` or shared publicly. For those settings, you can set them using [`fly secrets`](https://fly.io/docs/reference/secrets/#setting-secrets).
 
@@ -68,20 +78,25 @@ If you didn't previously deploy the app, you can do that now.
 fly deploy
 ```
 ```output
-==> Verifying app config
---> Verified app config
+Validating /Users/someone/project/fly.toml
+Platform: machines
+✓ Configuration is valid
 ==> Building image
+Remote builder fly-builder-restless-shadow-3063 ready
 ==> Creating build context
 --> Creating build context done
 ==> Building image with Docker
 --> docker host: 20.10.12 linux x86_64
-Sending build context to Docker daemon  13.98MB
+Sending build context to Docker daemon     346B
 ...
+  Finished deploying
+
+Visit your newly deployed app at https://wispy-breeze-3322.fly.dev/
 ```
 
-If you have Docker running locally, it builds it on your machine. If you don't have Docker running locally, it builds it on a Fly build machine. Once your container is built, it's deployed!
+By default, `fly deploy` builds the image using a remote builder. If you have Docker running locally and want to build locally, then run `fly deploy --local-only`. Once your container is built, it's deployed!
 
-## _See Your App_
+## _Open Your App_
 
 Run `fly open` to open your deployed app in a browser.
 
