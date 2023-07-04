@@ -212,7 +212,7 @@ Example create Machine request and response on app `user-functions`:
 
 Wait for a Machine to reach a specific state. Specify the desired state with the `state` parameter.  See the [table below](#machine-states) for a list of possible states.  The default for this parameter is `started`.
 
-This request will block for up to 60 seconds. Set a longer timeout with the `timeout` parameter.
+This request will block for up to 60 seconds. Set a shorter timeout with the `timeout` parameter.
 
 
 <%= partial "/docs/reference/machines/wait_req" %>
