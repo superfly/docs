@@ -17,7 +17,7 @@ fly deploy
 
 from the root directory of your project, where any app source code, project config, `fly.toml`, and Dockerfile are located.
 
-If you haven't deployed the app before, `fly deploy` creates one or two Machines for every [process group](/docs/apps/processes/) defined in the app's `fly.toml` file, depending on whether there are services and volumes configured. If you haven't explicitly defined any process groups, the first deployment gives you two Machines. For more information about when Fly Launch creates one Machines or two Machines for redundancy, refer to [Redundancy by default on first deploy](/docs/reference/app-availability/#redundancy-by-default-on-first-deploy).
+If you haven't deployed the app before, `fly deploy` creates one or two Machines for every [process group](/docs/apps/processes/) defined in the app's `fly.toml` file, depending on whether there are services and volumes configured. If you haven't explicitly defined any process groups, the first deployment gives you two Machines for redundancy. For more information about when Fly Launch creates one Machine or two Machines, refer to [Redundancy by default on first deploy](/docs/reference/app-availability/#redundancy-by-default-on-first-deploy).
 
 Subsequent deployments update the app's Machines as a group, with the latest local changes to the app's source and configuration. It's possible for a Fly App to have standalone Machines that aren't managed by `fly deploy`.
 
