@@ -5,10 +5,11 @@ command.
 ltx import -name my.db /path/to/database
 ```
 
-See the [`ltx import`](/docs/litefs/import) documentation for more details.
+Refer to the [`ltx import`](/docs/litefs/import) documentation for more details.
 
-<div class="callout">
-  ❗️ **You should only interact with SQLite databases on LiteFS through
-  a SQLite client or through the `litefs` tooling. Do not use `cp` to copy a
-  database into place.**
+<div class="warning icon">
+  You should only interact with SQLite databases on LiteFS through
+  a SQLite client or through the `litefs` tooling.
+  <br><br>
+  Do not use `cp` to copy a database into place.
 </div>

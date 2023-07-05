@@ -26,10 +26,10 @@ back here!
 
 ### 1. Create a LiteFS Cloud cluster
 
-You can do this in [the LiteFS section][LiteFS Cloud Dashboard] of the fly.io dashboard.
-Take note of your auth token (you'll need it below).
+Create a LiteFS Cloud cluster in [the LiteFS section][LiteFS Cloud Dashboard] of the fly.io dashboard.
+Take note of your auth token (you'll need it later).
 
-This is optional, but highly recommended if your data is important to you!
+LiteFS Cloud is optional, but highly recommended if your data is important to you!
 
 [LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
 
@@ -43,7 +43,7 @@ from the `litefs-example` repo, and make the following updates:
 
 ### 3. Update your Dockerfile
 
-* Install LiteFS dependencies
+Install LiteFS dependencies:
 
 ```dockerfile
 # for alpine-based images
@@ -52,26 +52,45 @@ RUN apk add ca-certificates fuse3 sqlite
 RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite3
 ```
 
-* Copy in the LiteFS binary
+Copy in the LiteFS binary:
 
 ```dockerfile
 COPY --from=flyio/litefs:0.5 /usr/local/bin/litefs /usr/local/bin/litefs
 ```
 
-* Update the `ENTRYPOINT` (or `CMD`)
+Update the `ENTRYPOINT` (or `CMD`):
 
 ```dockerfile
 ENTRYPOINT litefs mount
 ```
 
-### 4. Set up & deploy to Fly!
+### 4. Set up & deploy to the Fly Platform
 
-* Run `fly volumes create litefs --size 10` to create a volume
-* Run `fly launch`, but don't deploy yet (it will ask you); this generates a `fly.toml` file
-* Run `consul attach`, which sets the `FLY_CONSUL_URL` secret for the app, required for LiteFS leases
-* Add the secret for LiteFS Cloud: `fly secrets set LITEFS_CLOUD_TOKEN=yoursecrettoken`
-(replace with actual token value!)
-* Update the fly.toml file to mount your volume:
+Create a volume:
+
+```sh
+fly volumes create litefs --size 10
+```
+
+Create your app config, but don't deploy it (say no when it asks):
+
+```sh
+fly launch
+```
+
+Configure consul (this sets the `FLY_CONSUL_URL` secret for your app, which is required for LitefS leases):
+
+```sh
+consul attach
+```
+
+Add the LiteFS Cloud secret (replace `yoursecrettoken` with the actual token value):
+
+```sh
+fly secrets set LITEFS_CLOUD_TOKEN=yoursecrettoken
+```
+
+Update your `fly.toml` file to mount your volume:
 
 ```yml
 [mounts]
@@ -79,9 +98,14 @@ ENTRYPOINT litefs mount
   destination = "/var/lib/litefs"
 ```
 
-* Run `fly deploy`
+Deploy your app:
 
-TADA! you (hopefully) now have an app running with LiteFS!
+```sh
+fly deploy
+```
+
+TADA! You (hopefully) now have an app running with LiteFS! If you're having trouble, you can
+ask for help in [the Fly community](https://community.fly.io).
 
 ### 5. Add some replicas in other regions
 
