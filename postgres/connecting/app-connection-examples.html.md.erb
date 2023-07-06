@@ -307,7 +307,7 @@ if (config.use_env_variable) {
     sequelize = new Sequelize(process.env.DATABASE_URL);
 
     // Check Fly logs to confirm that your primary database is connected
-    console.log("Primary DB connected in Region: ", current)
+    console.log(`Primary DB connected in ${current}`)
   } else{
     const u = new URL(db_url);
     u.port = "5433";
