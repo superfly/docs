@@ -290,31 +290,11 @@ let sequelize = new Sequelize(process.env.DATABASE_URL);
 ```
 
 <details>
-<summary>Sequelize also supports conneting to read replicas</summary>
-[Docs: Read Replication](https://sequelize.org/docs/v6/other-topics/read-replication/)
+<summary>Configure Sequelize to connect to your read replica databases</summary>
+[Fly docs: How to add Read Replica database](https://fly.io/docs/postgres/advanced-guides/high-availability-and-global-replication/)
 
-Set a conditional statement for Production that determines the port value depending on the primary region. This example is set to use the 'sjs' region
-```javascript
 
-module.exports = {
-  development: {
-    username,
-    password,
-    database,
-    host,
-    dialect: 'postgres',
-    seederStorage: 'sequelize',
-  },
-  production: {
-    use_env_variable: 'DATABASE_URL',
-    dialect: 'postgres',
-    seederStorage: 'sequelize',
-    port: process.env.FLY_REGION === 'sjc' ? 5432 : 5433,
-  },
-};
-```
-
-Configure the Sequelize consturctor to conditionally connect to the primary or read replica database depending on which region is set to the primary
+Set the Sequelize consturctor in `model/index.js` to conditionally connect to the primary/read-replica database depending on the `primary region` value set in `fly.toml`.
 ```javascript
 
 let sequelize;
@@ -326,14 +306,13 @@ if (config.use_env_variable) {
   if (!primary || !current || primary === current) {
     sequelize = new Sequelize(process.env.DATABASE_URL);
 
-    //confirms that the primary database is connected when the primary region matches the current region
+    // Check Fly logs to confirm that your primary database is connected
     console.log("DB connected in Region: ", current)
   } else{
-
     const u = new URL(db_url);
     u.port = "5433";
 
-    // Confirms that the read replica database is connected when the primary region does not match the current region
+    // Check Fly logs to confirm that your relica database is connected
     console.log(`Read Rep DB connected in ${current}`)
 
     sequelize = new Sequelize(u.toString());
