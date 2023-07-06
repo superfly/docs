@@ -257,8 +257,6 @@ module.exports = {
     dialect: 'postgres'
   }
 };
-
-
 ```
 
 Create a new file named `.sequelizerc` , this allows the CLI to be able to read your `config.js` file
@@ -268,12 +266,10 @@ const path = require('path');
 module.exports = {
   'config': path.resolve('config', 'config.js')
 }
-
 ```
 
 Next pass the `DATABASE_URL` from the env into the Sequelize constructor in `models/index.js` to be able to connect to your fly postgres app and confirm the new seuqelize connection with the async function below
 ```javascript
-
 // Connect to fly postgres app
 let sequelize = new Sequelize(process.env.DATABASE_URL);
   
@@ -286,7 +282,6 @@ let sequelize = new Sequelize(process.env.DATABASE_URL);
     console.error('Error connecting to the database:', err);
   }
 })();
-
 ```
 
 <details>
@@ -296,7 +291,6 @@ let sequelize = new Sequelize(process.env.DATABASE_URL);
 
 Set the Sequelize consturctor in `model/index.js` to conditionally connect to the primary/read-replica database depending on the `primary region` value set in `fly.toml`.
 ```javascript
-
 let sequelize;
 if (config.use_env_variable) {
   const primary = process.env.PRIMARY_REGION;
@@ -307,7 +301,7 @@ if (config.use_env_variable) {
     sequelize = new Sequelize(process.env.DATABASE_URL);
 
     // Check Fly logs to confirm that your primary database is connected
-    console.log(`Primary DB connected in ${current}`)
+    console.log("DB connected in Region: ", current)
   } else{
     const u = new URL(db_url);
     u.port = "5433";
@@ -317,7 +311,5 @@ if (config.use_env_variable) {
 
     sequelize = new Sequelize(u.toString());
   }
-
 ```
-
 </details>
