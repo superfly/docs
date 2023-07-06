@@ -306,7 +306,7 @@ if (config.use_env_variable) {
     const u = new URL(db_url);
     u.port = "5433";
 
-    // Check Fly logs to confirm that your relica database is connected
+    // Check Fly logs to confirm that your read-replica database is connected
     console.log(`Read Rep DB connected in ${current}`)
 
     sequelize = new Sequelize(u.toString());
