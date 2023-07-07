@@ -59,8 +59,10 @@ This token should be made available to LiteFS via the `LITEFS_CLOUD_TOKEN` envir
 variable. If you're running on Fly.io, you can add a secret for it with:
 
 ```cmd
-fly secrets set LITEFS_CLOUD_TOKEN=$(litefs cloud auth token)
+fly secrets set LITEFS_CLOUD_TOKEN="litefs cloud auth token from dashboard"
 ```
+
+Previous non-cloud litefs databases will automatically be synched to the litefs cloud cluster.
 
 If you're not running on Fly.io, you need to set the `LITEFS_CLOUD_TOKEN` environment
 variable, and then restart LiteFS on each node. How you do this depends on how you have configured
