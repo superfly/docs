@@ -38,10 +38,10 @@ Pick a unique name and create the required application to group machines togethe
 
 Note the `network` field. This is necessary to isolate the app from other private networks on the organization.
 
-Allocate an IP address to the app. This makes our app accessible at the IP, and via `user-functions.fly.dev`.
+Allocate an IP address to the app. This makes our app accessible at the IP, and via `my-app-name.fly.dev`.
 
 ```cmd
-fly ips allocate-v4 -a user-functions
+fly ips allocate-v4 -a my-app-name
 ```
 
 ## Launch a new machine
@@ -54,7 +54,7 @@ Machines are permanent, so keep the ID from the response handy.
 
 Your users' service will boot immediately after this API call. Launch speed is a function of image size. Tiny images should boot in less than 2 seconds. Large, complex images are much slower to boot.
 
-Try accessing your new machine at `https://user-functions.fly.dev`. If no requests arrive within 120 seconds ([default](https://github.com/fly-apps/fastify-functions/blob/0f4ef94451/start.sh#L3) but configurable), the machine will exit, but a request will force it to start back up automatically.
+Try accessing your new machine at `https://my-app-name.fly.dev`. If no requests arrive within 120 seconds ([default](https://github.com/fly-apps/fastify-functions/blob/0f4ef94451/start.sh#L3) but configurable), the machine will exit, but a request will force it to start back up automatically.
 
 ## Launch a Machine in another region
 
@@ -84,17 +84,17 @@ Start operations clear filesystem changes. The user process comes up with a fres
 
 ## Get details about the deployment
 
-Now we have a couple machines running, we can use `fly logs -a user-functions` to see what's going on. Also, for an overview:
+Now we have a couple machines running, we can use `fly logs -a my-app-name` to see what's going on. Also, for an overview:
 
 ```cmd
-fly status -a user-functions
+fly status -a my-app-name
 ```
 
 ```out
 App
-  Name     = user-functions
+  Name     = my-app-name
   Owner    = personal
-  Hostname = user-functions.fly.dev
+  Hostname = my-app-name.fly.dev
 
 Machines
 ID            	NAME          	REGION	STATE    	CREATED
@@ -131,7 +131,7 @@ fly ssh console '[fdaa:0:6787:a7b:a15f:1a8c:2c01:2]'
 Or you can select a machine to connect to from a list using `fly ssh console -s`:
 
 ```cmd
-fly ssh console -a user-functions -s
+fly ssh console -a my-app-name -s
 ? Select instance:  [Use arrows to move, type to filter]
 > sjc (fdaa:0:6787:a7b:a15f:ee6a:3882:2)
   sjc (fdaa:0:6787:a7b:a15f:c306:4566:2)

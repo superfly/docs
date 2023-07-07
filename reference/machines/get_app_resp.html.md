@@ -1,7 +1,7 @@
 
 ```json
 {
-  "name": "user-functions",
+  "name": "my-app-name",
   "organization": {
     "name": "My Org",
     "slug": "personal"
