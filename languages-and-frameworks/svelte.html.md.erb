@@ -60,28 +60,22 @@ Now, let's run `npm install` to install the necessary dependencies and proceed w
 
 Before you can deploy your SvelteKit app, you need to _adapt_ it for your deployment target. Adapters are small plugins that take the built app as input and generate output for deployment.
 
-In this example, to deploy your app on Fly.io, we'll install the Node Adapter. You can install it by executing the command `npm i -D @sveltejs/adapter-node` and then adding it to our `svelte.config.js` file. Here's all the code:
+In this example, to deploy your app on Fly.io, we'll install the Node Adapter. You can install it by executing the command `npm i -D @sveltejs/adapter-node`. Then, replace the first line in your `svelte.config.js` file with the following:
 
 ```javascript
 import adapter from '@sveltejs/adapter-node';
-
-/** @type {import('@sveltejs/kit').Config} */
-const config = { 
-	kit: {
-		adapter: adapter()
-	}
-};
-
-export default config;
 ```
 
 ## _Configuring the `start` command_
 
-The `start` command is used to start your application, and you will need it before you deploy. Add the following line to your `package.json` file:
+The "start" command is used to initiate your application and should be included before deploying.
+
+To add the command, locate the `scripts` section within the `package.json` file and insert `"start": "node build",` at the beginning of the section. As a result, your `scripts` section in the `package.json` file should appear as follows:
 
 ```json
 "scripts": {
-    "start": "node build"
+    "start": "node build",
+    ...    
 }
 ```
 
