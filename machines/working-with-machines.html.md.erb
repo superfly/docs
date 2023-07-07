@@ -66,7 +66,7 @@ A convenient way to set the `FLY_API_HOSTNAME` is to add it to your `Dockerfile`
 ENV FLY_API_HOSTNAME="https://api.machines.dev"
 ```
 
-<section class="warning">The cURL examples in this document are for an app named `user-functions`. Replace `user-functions` with the name of your own app! Also replace any Machine IDs with those of Machines that belong to your app.
+<section class="warning">The cURL examples in this document are for an app named `my-app-name`. Replace `my-app-name` with the name of your app. Also replace any example Machine IDs with your app's Machine IDs.
 </section>
 
 ### Authentication
@@ -91,14 +91,14 @@ this is done using `flyctl` or the [Fly.io GraphQL API](https://api.fly.io/graph
 Example:
 
 ```cmd
-fly ips allocate-v4 -a user-functions
+fly ips allocate-v4 -a my-app-name
 ```
 ```out
 TYPE ADDRESS    REGION CREATED AT
 v4   37.16.9.52 global 7s ago
 ```
 
-The app will answer on this IP address, and after a small delay, at `user-functions.fly.dev`.
+The app will answer on this IP address, and after a small delay, at `my-app-name.fly.dev`.
 
 ### Get application details
 
@@ -110,7 +110,7 @@ Get details about an application, like its organization slug and name. Also, to 
 
 For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly Apps using `flyctl`:
 
-<%= partial "/docs/partials/set_secrets", locals: { app_name: "user-functions" } %>
+<%= partial "/docs/partials/set_secrets", locals: { app_name: "my-app-name" } %>
 
 Machines inherit secrets from the app. Existing Machines must be [updated](#update-a-machine) to pick up secrets set after the Machine was created.
 
@@ -203,7 +203,7 @@ An example of two checks:
         }
 ```
 
-Example create Machine request and response on app `user-functions`:
+Example create Machine request and response on app `my-app-name`:
 
 <%= partial "/docs/reference/machines/launch_req" %>
 <%= partial "/docs/reference/machines/launch_resp" %>
@@ -293,7 +293,7 @@ For example, if 3 out of 6 Machines have service configurations set to listen on
 
 Machines can be reached within the private network by hostname, in the format `<id>.vm.<app-name>.internal`. 
 
-So, to reach a Machine with ID `3d8d413b29d089` on an app called `user-functions`, use hostname `3d8d413b29d089.vm.user-functions.internal`.
+So, to reach a Machine with ID `3d8d413b29d089` on an app called `my-app-name`, use hostname `3d8d413b29d089.vm.my-app-name.internal`.
 
 ## Machine states
 

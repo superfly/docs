@@ -33,7 +33,7 @@ Here's what that looks like to launch a `performance-2x` machine (2 CPU, 4gb mem
 curl -i -X POST \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
   -H "Content-Type: application/json" \
-  "http://${FLY_API_HOSTNAME}/v1/apps/user-functions/machines" \
+  "http://${FLY_API_HOSTNAME}/v1/apps/my-app-name/machines" \
   -d '{
   "name": "savvy-machine",
   "config": {
@@ -47,7 +47,7 @@ If you're using `flyctl`, the equivalent command looks like this:
 
 ```bash
 fly machine run \
-    -a user-functions \
+    -a my-app-name \
     --name savvy-machine \
     --size performance-2x \
     some-savvy-image
@@ -63,7 +63,7 @@ Here we create a machine with a 2 CPUs but double the RAM you'd get if using siz
 curl -i -X POST \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
   -H "Content-Type: application/json" \
-  "http://${FLY_API_HOSTNAME}/v1/apps/user-functions/machines" \
+  "http://${FLY_API_HOSTNAME}/v1/apps/my-app-name/machines" \
   -d '{
   "name": "savvy-machine",
   "config": {
@@ -83,7 +83,7 @@ If you're using `flyctl`, the equivalent command looks like this:
 
 ```bash
 fly machine run \
-    -a user-functions \
+    -a my-app-name \
     --name savvy-machine \
     --cpus 2 \
     --memory 1024 \
@@ -104,7 +104,7 @@ If we create a machine with the same command as above (using 1024m memory), but 
 curl -i -X POST \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
   -H "Content-Type: application/json" \
-  "http://${FLY_API_HOSTNAME}/v1/apps/user-functions/machines/73d8d46dbee589" \
+  "http://${FLY_API_HOSTNAME}/v1/apps/my-app-name/machines/73d8d46dbee589" \
   -d '{
   "config": {
     "image": "some-savvy-image",
@@ -121,7 +121,7 @@ If you're using `flyctl`, the equivalent command looks like this:
 
 ```bash
 fly machine update \
-    -a user-functions \
+    -a my-app-name \
     -i some-savvy-image \
     --cpus 2 \
     --memory 512 \

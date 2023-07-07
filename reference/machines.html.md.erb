@@ -95,14 +95,14 @@ this is done using `flyctl` or the [Fly GraphQL API](https://api.fly.io/graphql)
 Example:
 
 ```cmd
-flyctl ips allocate-v4 -a user-functions
+flyctl ips allocate-v4 -a my-app-name
 ```
 ```out
 TYPE ADDRESS    REGION CREATED AT
 v4   37.16.9.52 global 7s ago
 ```
 
-The app will answer on this IP address, and after a small delay, at `user-functions.fly.dev`.
+The app will answer on this IP address, and after a small delay, at `my-app-name.fly.dev`.
 
 ### Get application details
 
@@ -114,7 +114,7 @@ Get details about an application, like its organization slug and name. Also, to 
 
 For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly apps using `flyctl`:
 
-<%= partial "docs/partials/set_secrets", locals: { app_name: "user-functions" } %>
+<%= partial "docs/partials/set_secrets", locals: { app_name: "my-app-name" } %>
 
 Machines inherit secrets from the app. Existing machines must be [updated](#update-a-machine) to pick up secrets set after the machine was created.
 
