@@ -82,7 +82,7 @@ Then update the `clusterid` file:
 echo LFSC25AD000F32ED02A9 > /var/lib/litefs/clusterid
 ```
 
-After this, you should restart litefs. If you're using the Fly Platform, close
+After this, you should restart LiteFS. If you're using the Fly Platform, close
 your ssh session, and then restart your app:
 
 ```sh
@@ -104,7 +104,7 @@ elsewhere), you may see the following errors in your logs:
 
 You have two options to resolve this:
 
-- change the Consul key value that LiteFS uses. This is easy, but somewhat hacky/ugly.
+- change the Consul key value that LiteFS uses. This is easy, but leaves extra Consul keys set.
 - remove the "wrong" key from Consul. This is more difficult but cleaner.
 
 ### Easy option: change the Consul key
@@ -135,6 +135,7 @@ or just connect to your primary node via ssh and install it there. Here's how to
 ```sh
 # For debian/ubuntu-based images
 apt-get install consul
+
 # For alpine-based images
 apk add consul
 ```
@@ -148,7 +149,7 @@ echo $FLY_CONSUL_URL
 This url is in the format `https://:{TOKEN}@{HOST}/{PREFIX}`. You'll need each of these values
 separately. You'll also need the value of `lease.consul.key` from your `litefs.yml` file.
 
-Then you can delete the key with:
+Then you can use the [Consul CLI][] to delete the key with:
 
 ```sh
 export TOKEN=(copy the token you found from your consul url)
@@ -161,6 +162,8 @@ consul kv delete -http-addr=https://$HOST -token=$TOKEN $PREFIX/$LITEFS_CONSUL_K
 ```
 
 After this is done, restart your app.
+
+[Consul CLI]: https://developer.hashicorp.com/consul/commands/kv
 
 ## Add your replicas back
 
