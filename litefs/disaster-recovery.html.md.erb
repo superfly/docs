@@ -10,19 +10,23 @@ to restore from in case of an unfortunate situation where you lose
 all the nodes in your cluster. In this doc, we'll show you how to restore
 your cluster from LiteFS Cloud if you've lost all the nodes.
 
-<div class="callout">
+<section class="warning icon">
 You should only follow the steps in this document if you've lost all
 nodes of your LiteFS cluster. Otherwise, you can
 [restore from a LiteFS Cloud backup](/docs/litefs/cloud-restore).
-</div>
+</section>
 
 ## Start your app up with only the primary node
 
 It's simpler to recover a single node, rather than several nodes, so to
 start out with, it's best to remove all replica nodes and run just a
-primary node. If your app has already restarted, you may need to temporarily
-remove some replicas. If you're running your app on the Fly Platform, you can
-see the machines running your app with:
+primary node. If your app hasn't already restarted before you got here,
+just restart it with only the primary node and move on to [the next step](#find-the-correct-cluster-id)!
+
+If your app has already restarted with multiple nodes running, you should temporarily
+remove all of the replicas.
+
+If you're running your app on the Fly Platform, you can see the machines running your app with:
 
 ```sh
 fly status
@@ -57,7 +61,7 @@ to this:
 level=INFO msg="backup stream failed, retrying: fetch position map: backup client error (422): cluster id mismatch, expecting \"LFSC25AD000F32ED02A9\""
 ```
 
-If you're running on the Fly platform, you can see the logs with:
+If you're running on the Fly Platform, you can see the logs with:
 
 ```sh
 fly logs
@@ -89,7 +93,7 @@ your ssh session, and then restart your app:
 fly app restart
 ```
 
-Check your logs again, and confirm you don't see the error message anymore!
+Check your logs again, and confirm you don't see the cluster id error message anymore!
 You should also take a look at your app and confirm you see the data you expect
 before you continue.
 
@@ -105,12 +109,16 @@ elsewhere), you may see the following errors in your logs:
 You have two options to resolve this:
 
 - change the Consul key value that LiteFS uses. This is easy, but leaves extra Consul keys set.
+
+or:
+
 - remove the "wrong" key from Consul. This is more difficult but cleaner.
 
 ### Easy option: change the Consul key
 
 You can simply update the `lease.consul.key` value in the `litefs.yml` file. The old one will
-still exist in Consul, but LiteFS won't care. Here's how to update your `litefs.yml`:
+still exist in Consul, but LiteFS won't care. For example, you can just add `-v2` to the end
+of the Consul key value:
 
 ```yml
 lease:
@@ -129,8 +137,8 @@ fly deploy
 
 ### Cleaner option: remove the wrong key from Consul
 
-First, you'll need to add `consul` in your image. You can do this in your `Dockerfile` and re-deploy,
-or just connect to your primary node via ssh and install it there. Here's how to install it:
+First, you'll need to add `consul` in your image. Connect to your primary node via ssh, and
+install it there. Here's how to install it:
 
 ```sh
 # For debian/ubuntu-based images
@@ -140,7 +148,7 @@ apt-get install consul
 apk add consul
 ```
 
-Then, take a look at your `FLY_CONSUL_URL`:
+Get your `FLY_CONSUL_URL`:
 
 ```sh
 echo $FLY_CONSUL_URL
@@ -149,7 +157,7 @@ echo $FLY_CONSUL_URL
 This url is in the format `https://:{TOKEN}@{HOST}/{PREFIX}`. You'll need each of these values
 separately. You'll also need the value of `lease.consul.key` from your `litefs.yml` file.
 
-Then you can use the [Consul CLI][] to delete the key with:
+Then use the [Consul CLI][] to delete the key with:
 
 ```sh
 export TOKEN=(copy the token you found from your consul url)
@@ -161,16 +169,22 @@ export LITEFS_CONSUL_KEY=(copy the key from your litefs.yml file)
 consul kv delete -http-addr=https://$HOST -token=$TOKEN $PREFIX/$LITEFS_CONSUL_KEY/clusterid
 ```
 
-After this is done, restart your app.
+After this is done, restart LiteFS. If your app is deployed on the Fly Platform, you can do this by
+restarting your app:
+
+```sh
+fly app restart
+```
 
 [Consul CLI]: https://developer.hashicorp.com/consul/commands/kv
 
 ## Add your replicas back
 
 Once your primary node is connected to LiteFS Cloud again and your data has
-been recovered, you should go ahead and scale back up. If you're using the Fly
-Platform, that probably looks something like this (replacing `ord` with the region
-you'd like to run your new replica in):
+been recovered, you should go ahead and scale back up.
+
+If you're using the Fly Platform, that probably looks something like this (replacing `ord`
+with the region you'd like to run your new replica in):
 
 ```sh
 fly machines clone --select --region ord
