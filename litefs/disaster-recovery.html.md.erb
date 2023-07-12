@@ -23,101 +23,111 @@ start out with, it's best to remove all replica nodes and run just a
 primary node. If your app hasn't already restarted before you got here,
 just restart it with only the primary node and move on to [the next step](#find-the-correct-cluster-id)!
 
-If your app has already restarted with multiple nodes running, you should temporarily
+If your app has already restarted with multiple nodes running, then you should temporarily
 remove all of the replicas.
 
-If you're running your app on the Fly Platform, you can see the machines running your app with:
+**For apps on the Fly Platform:**
 
-```sh
-fly status
-```
+1. List the machines running your app:
 
-You'll see something like this:
+    ```cmd
+    fly status
+    ```
+    ```output
+    Machines
+    PROCESS	ID            	VERSION	REGION	STATE  	ROLE   	CHECKS	LAST UPDATED
+    app    	784e900c2de378	1      	ams   	started	primary	      	2023-07-10T13:05:40Z
+    app    	e784e471b39208	1      	ord   	started	replica	      	2023-07-10T13:01:16Z
+    ```
 
-```
-Machines
-PROCESS	ID            	VERSION	REGION	STATE  	ROLE   	CHECKS	LAST UPDATED
-app    	784e900c2de378	1      	ams   	started	primary	      	2023-07-10T13:05:40Z
-app    	e784e471b39208	1      	ord   	started	replica	      	2023-07-10T13:01:16Z
-```
+2. Destroy each machine that's marked `replica`. For example:
 
-Then destroy each machine that's marked `replica`:
+    ```cmd
+    fly machines destroy e784e471b39208
+    ```
 
-```sh
-fly machines destroy e784e471b39208
-```
-
-You can re-run `fly status` after you're done, to confirm you only have the primary running.
+3. Run `fly status` again to confirm that you only have the primary running.
 
 ## Find the correct cluster id
 
 When your app restarted, LiteFS generated a new cluster id, which is different
 than the cluster id stored in LiteFS Cloud. This is a safety measure: we don't want
 to accidentally overwrite data in a cluster if you inadvertently set the wrong LiteFS
-Cloud token for the app. You'll see some error messages in the LiteFS logs, similar
-to this:
+Cloud token for the app. You'll see error messages in the LiteFS logs, similar
+to the following:
 
 ```
 level=INFO msg="backup stream failed, retrying: fetch position map: backup client error (422): cluster id mismatch, expecting \"LFSC25AD000F32ED02A9\""
 ```
 
-If you're running on the Fly Platform, you can see the logs with:
+Note the cluster id specified at the end of the log message: `LFSC25AD000F32ED02A9` in the example log. Copy the cluster id from your own logs to use later.
 
-```sh
-fly logs
-```
+**For apps on the Fly Platform:**
 
-Note the cluster id specified at the end of the log message: `LFSC25AD000F32ED02A9` in
-our example. Copy this value to use later.
+View the logs:
+
+  ```cmd
+  fly logs
+  ```
 
 ## Update the cluster id
 
 Now that you have the correct cluster id, you can connect to your primary node and
-update the cluster id file. If your app is deployed on the Fly Platform, you can
-connect with:
+update the cluster id file. After you update the cluster id, restart LiteFS.
 
-```sh
-fly ssh console
-```
+Check your logs again, and confirm you that don't see the cluster id error message anymore!
 
-Then update the `clusterid` file:
-
-```sh
-echo LFSC25AD000F32ED02A9 > /var/lib/litefs/clusterid
-```
-
-After this, you should restart LiteFS. If you're using the Fly Platform, close
-your ssh session, and then restart your app:
-
-```sh
-fly app restart
-```
-
-Check your logs again, and confirm you don't see the cluster id error message anymore!
-You should also take a look at your app and confirm you see the data you expect
+You should also take a look at your app and confirm that you see the data you expect
 before you continue.
+
+**For apps on the Fly Platform:**
+
+1. Connect to the primary node:
+
+    ```cmd
+    fly ssh console
+    ```
+
+1. Update the `clusterid` file. For example:
+
+    ```sh
+    echo LFSC25AD000F32ED02A9 > /var/lib/litefs/clusterid
+    ```
+
+1. Close your ssh session:
+    ```sh
+    <machine ID>:/myapp# exit
+    ```
+
+1. Restart the app:
+
+    ```cmd
+    fly app restart
+    ```
+
+1. Check the logs to make sure the cluster id error is gone, and make sure your app is working the way you expect it to.
 
 ## Resolve consul key error
 
-If you're running on the Fly Platform (or you're using Consul for lease management
-elsewhere), you may see the following errors in your logs:
+For apps on the Fly Platform (or you're using Consul for lease management
+elsewhere), you may see the consul errors in your logs. For example:
 
 ```
 2023-07-10T13:30:25Z app[784e900c2de378] ams [info]level=INFO msg="cannot connect, \"consul\" lease already initialized with different ID: LFSCA5E3680C1C2FCFFE"
 ```
 
-You have two options to resolve this:
+You have two options to resolve the Consul key error:
 
-- change the Consul key value that LiteFS uses. This is easy, but leaves extra Consul keys set.
+- Change the Consul key value that LiteFS uses. This is easy, but leaves extra Consul keys set.
 
-or:
+**or**
 
-- remove the "wrong" key from Consul. This is more difficult but cleaner.
+- Remove the "wrong" key from Consul. This is more difficult, but cleaner.
 
 ### Easy option: change the Consul key
 
 You can simply update the `lease.consul.key` value in the `litefs.yml` file. The old one will
-still exist in Consul, but LiteFS won't care. For example, you can just add `-v2` to the end
+still exist in Consul, but LiteFS won't care. For example, you can add `-v2` to the end
 of the Consul key value:
 
 ```yml
@@ -129,9 +139,11 @@ lease:
     key: "litefs/${FLY_APP_NAME}-v2" # added '-v2'
 ```
 
-If you're using the Fly Platform, redeploy your app:
+Then redeploy your app.
 
-```sh
+**For apps on the Fly Platform:**
+
+```cmd
 fly deploy
 ```
 
@@ -169,21 +181,24 @@ export LITEFS_CONSUL_KEY=(copy the key from your litefs.yml file)
 consul kv delete -http-addr=https://$HOST -token=$TOKEN $PREFIX/$LITEFS_CONSUL_KEY/clusterid
 ```
 
-After this is done, restart LiteFS. If your app is deployed on the Fly Platform, you can do this by
-restarting your app:
+[Consul CLI]: https://developer.hashicorp.com/consul/commands/kv
+
+After this is done, restart LiteFS. 
+
+**For apps on the Fly Platform:**
 
 ```sh
 fly app restart
 ```
-
-[Consul CLI]: https://developer.hashicorp.com/consul/commands/kv
 
 ## Add your replicas back
 
 Once your primary node is connected to LiteFS Cloud again and your data has
 been recovered, you should go ahead and scale back up.
 
-If you're using the Fly Platform, that probably looks something like this (replacing `ord`
+**For apps on the Fly Platform:**
+
+Scale back up by running something like this (replacing `ord`
 with the region you'd like to run your new replica in):
 
 ```sh
