@@ -255,8 +255,11 @@ or `config/credentials/production.yml.enc`, you'll need to provide the master ke
 fly secrets set RAILS_MASTER_KEY=$(cat config/master.key)
 ```
 
-Non bash, non WSL2, Windows developers need to replace the value after the =
-sign with the contents of `config\master.key`.
+Windows users can run the following command in PowerShell:
+
+```
+fly secrets set RAILS_MASTER_KEY=$(Get-Content config\master.key)
+```
 
 You can verify that your credentials are encoded using your current master key using:
 
