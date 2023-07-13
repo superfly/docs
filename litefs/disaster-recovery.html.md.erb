@@ -35,7 +35,7 @@ remove all of the replicas.
     ```
 
     You'll get output that shows the Machines and their Roles. For example:
-    
+
     ```
     ...
     Machines
@@ -69,7 +69,7 @@ Note the cluster id specified at the end of the log message: `LFSC25AD000F32ED02
 
 **For apps on the Fly Platform:**
 
-View the logs:
+View the logs with:
 
   ```cmd
   fly logs
@@ -144,9 +144,9 @@ lease:
     key: "litefs/${FLY_APP_NAME}-v2" # added '-v2'
 ```
 
-Then redeploy your app.
-
 **For apps on the Fly Platform:**
+
+After updating the `litefs.yml` file, redeploy your app:
 
 ```cmd
 fly deploy
@@ -191,6 +191,8 @@ consul kv delete -http-addr=https://$HOST -token=$TOKEN $PREFIX/$LITEFS_CONSUL_K
 After this is done, restart LiteFS. 
 
 **For apps on the Fly Platform:**
+
+After removing the wrong key from Consul, restart your app:
 
 ```sh
 fly app restart
