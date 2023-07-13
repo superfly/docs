@@ -33,11 +33,16 @@ remove all of the replicas.
     ```cmd
     fly status
     ```
-    ```output
+
+    You'll get output that shows the Machines and their Roles. For example:
+    
+    ```
+    ...
     Machines
     PROCESS	ID            	VERSION	REGION	STATE  	ROLE   	CHECKS	LAST UPDATED
     app    	784e900c2de378	1      	ams   	started	primary	      	2023-07-10T13:05:40Z
     app    	e784e471b39208	1      	ord   	started	replica	      	2023-07-10T13:01:16Z
+    ...
     ```
 
 2. Destroy each machine that's marked `replica`. For example:
