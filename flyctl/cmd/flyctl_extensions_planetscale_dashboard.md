@@ -1,14 +1,16 @@
-Visit the PlanetScale database dashboard
+Visit the PlanetScale MySQL database dashboard
 
 ## Usage
 ~~~
-flyctl extensions planetscale dashboard <database_name> [flags]
+flyctl extensions planetscale dashboard [database_name] [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -h, --help   help for dashboard
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+  -h, --help            help for dashboard
 ~~~
 
 ## Global Options

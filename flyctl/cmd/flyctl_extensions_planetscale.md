@@ -8,7 +8,7 @@ flyctl extensions planetscale [command] [flags]
 
 ## Available Commands
 * [create](/docs/flyctl/extensions-planetscale-create/)	 - Provision a PlanetScale MySQL database
-* [dashboard](/docs/flyctl/extensions-planetscale-dashboard/)	 - Visit the PlanetScale database dashboard
+* [dashboard](/docs/flyctl/extensions-planetscale-dashboard/)	 - Visit the PlanetScale MySQL database dashboard
 * [destroy](/docs/flyctl/extensions-planetscale-destroy/)	 - Permanently destroy a PlanetScale MySQL database
 * [list](/docs/flyctl/extensions-planetscale-list/)	 - List your provisioned PlanetScale MySQL databases
 * [status](/docs/flyctl/extensions-planetscale-status/)	 - Show details about a PlanetScale MySQL database
