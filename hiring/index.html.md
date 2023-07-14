@@ -1,5 +1,5 @@
 ---
-title: Join Our Engineering Team
+title: Join Our Team
 layout: docs
 sitemap: false
 toc: false
