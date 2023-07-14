@@ -8,6 +8,7 @@ flyctl extensions sentry [command] [flags]
 
 ## Available Commands
 * [create](/docs/flyctl/extensions-sentry-create/)	 - Provision a Sentry project for a Fly.io app
+* [dashboard](/docs/flyctl/extensions-sentry-dashboard/)	 - View Sentry issues for this application
 
 ## Options
 
