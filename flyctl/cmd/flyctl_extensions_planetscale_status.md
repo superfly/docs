@@ -3,13 +3,15 @@ Show details about a PlanetScale MySQL database
 
 ## Usage
 ~~~
-flyctl extensions planetscale status <name> [flags]
+flyctl extensions planetscale status [name] [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -h, --help   help for status
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+  -h, --help            help for status
 ~~~
 
 ## Global Options
