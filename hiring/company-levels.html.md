@@ -3,6 +3,7 @@ title: Our Levels
 layout: docs
 sitemap: false
 toc: false
+nav: devjobs
 ---
 
 We break out seniority into four levels, L1 to L4 (staff). 
