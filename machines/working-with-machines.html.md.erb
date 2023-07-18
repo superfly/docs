@@ -118,6 +118,12 @@ Machines inherit secrets from the app. Existing Machines must be [updated](#upda
 
 For non-sensitive information, you _can_ set different environment variables per Machine at creation time.
 
+### Delete a Fly App
+
+Machines should be stopped before attempting deletion. Append `?force=true` to the URI to stop and delete immediately.
+
+<%= partial "/docs/reference/machines/delete_app" %>
+
 ## Operations on Machines
 
 ### Create a machine
@@ -262,12 +268,6 @@ Delete a Machine, never to be seen again. This action cannot be undone!
 
 <%= partial "/docs/reference/machines/list_req" %>
 <%= partial "/docs/reference/machines/list_resp" %>
-
-### Delete a Fly App
-
-Machines should be stopped before attempting deletion. Append `?force=true` to the URI to stop and delete immediately.
-
-<%= partial "/docs/reference/machines/delete_app" %>
 
 ### Lease a Machine
 
