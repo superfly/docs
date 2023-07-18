@@ -62,7 +62,7 @@ fly secrets set FLY_API_TOKEN=$(fly auth token)
 
 A convenient way to set the `FLY_API_HOSTNAME` is to add it to your `Dockerfile`:
 
-```
+```dockerfile
 ENV FLY_API_HOSTNAME="https://api.machines.dev"
 ```
 
@@ -78,6 +78,8 @@ Authorization: Bearer <fly_api_token>
 ```
 
 ## Operations on Apps
+
+Here are some things you can do with apps:
 
 ### Create a Fly App
 
@@ -125,6 +127,8 @@ Machines should be stopped before attempting deletion. Append `?force=true` to t
 <%= partial "/docs/reference/machines/delete_app" %>
 
 ## Operations on Machines
+
+Here are some things you can do with machines:
 
 ### Create a machine
 
