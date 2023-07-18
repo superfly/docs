@@ -43,7 +43,7 @@ curl http://127.0.0.1:4280
 
 If you successfully reach the API, it should respond with a `404 page not found` error. That's because this was not a defined endpoint.
 
-### Setting up the environment
+## Setting up the environment
 
 Set these environment variables to make the following commands easier to use.
 
@@ -62,20 +62,24 @@ fly secrets set FLY_API_TOKEN=$(fly auth token)
 
 A convenient way to set the `FLY_API_HOSTNAME` is to add it to your `Dockerfile`:
 
-```
+```dockerfile
 ENV FLY_API_HOSTNAME="https://api.machines.dev"
 ```
 
 <section class="warning">The cURL examples in this document are for an app named `my-app-name`. Replace `my-app-name` with the name of your app. Also replace any example Machine IDs with your app's Machine IDs.
 </section>
 
-### Authentication
+## Authentication
 
 All requests must include the Fly API Token in the HTTP Headers as follows:
 
 ```
 Authorization: Bearer <fly_api_token>
 ```
+
+## Operations on Apps
+
+Here are some things you can do with apps:
 
 ### Create a Fly App
 
@@ -115,6 +119,16 @@ For sensitive environment variables, such as credentials, you can set [secrets](
 Machines inherit secrets from the app. Existing Machines must be [updated](#update-a-machine) to pick up secrets set after the Machine was created.
 
 For non-sensitive information, you _can_ set different environment variables per Machine at creation time.
+
+### Delete a Fly App
+
+Machines should be stopped before attempting deletion. Append `?force=true` to the URI to stop and delete immediately.
+
+<%= partial "/docs/reference/machines/delete_app" %>
+
+## Operations on Machines
+
+Here are some things you can do with machines:
 
 ### Create a machine
 
@@ -258,12 +272,6 @@ Delete a Machine, never to be seen again. This action cannot be undone!
 
 <%= partial "/docs/reference/machines/list_req" %>
 <%= partial "/docs/reference/machines/list_resp" %>
-
-### Delete a Fly App
-
-Machines should be stopped before attempting deletion. Append `?force=true` to the URI to stop and delete immediately.
-
-<%= partial "/docs/reference/machines/delete_app" %>
 
 ### Lease a Machine
 
