@@ -21,7 +21,6 @@ flyctl migrate-to-v2 [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
-      --verbose               Verbose output
 ~~~
 
 ## See Also

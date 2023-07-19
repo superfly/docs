@@ -16,13 +16,13 @@ flyctl doctor [flags]
   -c, --config string   Path to application configuration file
   -h, --help            help for doctor
   -j, --json            JSON output
+  -v, --verbose         Print extra diagnostic information.
 ~~~
 
 ## Global Options
 
 ~~~
   -t, --access-token string   Fly API Access Token
-      --verbose               Verbose output
 ~~~
 
 ## See Also
