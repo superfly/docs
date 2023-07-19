@@ -1,176 +1,219 @@
 ---
-title: Troubleshooting your Deployment
+title: Troubleshooting your deployment
 layout: docs
 sitemap: false
 nav: firecracker
 ---
 
-**So your deployment has failed. What now?**
+As a developer, you probably know that there are many reasons why an app deployment can fail. This section gives you some ideas of where to start, but it's not a comprehensive guide. If you're still stuck after reading, then visit our [community forum](https://community.fly.io/) for more help.
 
-The first thing to remember is that your application may well be running but be unable to give proof of life to the Fly health-checks. These happen as soon as your app is deployed and not passing them causes Fly to kill the latest version of your app that you just deployed and roll back to deploying an older version.
+## Try this first
 
-Unless you've not deployed successfully before. In which case it will just fail as there's nothing to roll back to.
+If the error you get isn’t obvious or specific, and the answer doesn’t appear right away, then try these basic steps first, to either fix the problem or to arm yourself with knowledge.
 
-## _Port Checking_
+### Update flyctl
 
-So the first thing to check is can your application see the world.
+By default, flyctl (the Fly CLI), [updates automatically](https://community.fly.io/t/flyctl-versions-autoupdating-and-the-cli-apocalypse/13794).
 
-Check to see how your services are configured with `fly services list`:
+But if you disabled automatic updates, then you should update flyctl:
 
 ```cmd
-fly services list -a <app-name>
-```
-```out
-Services
-PROTOCOL        PORTS                   
-TCP             80 => 8080 [HTTP]      
-                443 => 8080 [TLS, HTTP]
+fly version update
 ```
 
-This is the Fly services setting and comes from this part for the `fly.toml` file:
+We frequently add new features to flyctl, so you should keep it up-to-date to avoid breaking things. You can also turn automatic updates back on with:
 
-```
-[[services]]
-  internal_port = 8080
-  protocol = "tcp"
-
-  [[services.ports]]
-    handlers = ["http"]
-    port = "80"
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = "443"
+```cmd
+fly settings autoupdate enable
 ```
 
-The important part of this is the internal port, in this case, set to 8080.
+### Check connectivity with fly doctor
 
-Now, that means that there must be an open TCP port on port 8080. If you've opened port 80 or 443 on your application, that's likely to be the wrong port.
+Run some basic connectivity test for things like Wireguard, IP addresses, and local Docker instance:
 
-As for _external ports_, if you're running services over IPv4 on ports other than 80 or 443, you need to make sure your app has a [dedicated IPv4 address](https://fly.io/docs/reference/services/#dedicated-ipv4). The [shared IPv4 addresses](https://fly.io/docs/reference/services/#shared-ipv4) that comes bundled with new apps will only accept connections on those two ports.
+```
+fly doctor
+```
 
-So, first stop, check what port you have open on your application. Sometimes an app's logs will tell you which internal port it's listening on, which brings us to...
+Any failures in the `fly doctor`` output point to where you can start troubleshooting.
 
-## _Logs Have Knowledge_
+## Get more information about failures
 
-Still can't connect? Ok, the first thing to do is look at the logs of the app when it's running. `flyctl logs` will give you the most recent log entries.
+Logs have knowledge.
 
-The next question is do the logs say why it is failing?
+### Check the logs
 
-If you can see messages about the app just exiting, then there's likely a specific app issue, and you'll need to address that and redeploy, BUT...
+Check the logs of the app when it's running or when you run `fly deploy`. Run your command in one terminal window and open a second window to view the logs.
 
-## _Host Checking_
+To get the most recent log entries:
 
-If there are messages about being unable to bind to a network port or listening to localhost, your problem is different. A lot of frameworks will, in development mode or similar, open a port on the localhost so that the developer can talk to the app.
+```cmd
+fly logs
+```
 
-The problem is that no one else can talk to the localhost so although the app may have the right port, it's on the wrong network interface. The Rule of thumb to fix this is to get the app to open up port 8080 on the IP address 0.0.0.0. That's anyone outside the system. Done that? Time to redeploy and hopefully this time you are working.
+Look for error messages that indicate why the app or deploy is failing, and the logs that occurred just before the app crashed or the deploy failed.
 
-And how do you know if your app or framework is doing that? A quick check of the code and look for where the web service that listens is stated up - sometimes it'll be just `serve()` or `listen()` and what's missing is parameters for the port.
+If you can see messages about the app just exiting, then there's likely a specific app issue, and you'll need to address that before you can redeploy.
 
-As an example, here's a bit of a [Fastify](https://www.fastify.io/) node app - it's their hello world.
+### Activate debug logging
+
+Activate debug level logs on a command, like `fly deploy`:
+
+```cmd
+LOG_LEVEL=debug fly <command>
+```
+
+LOG_LEVEL=debug prints all the logs into the console as the command runs.
+
+### Inspect with SSH
+
+You can use `fly ssh console` to connect to a running instance of your application. Use `fly ssh console -s` to select a specific Machine.
+
+## WARNING The app is listening on the incorrect address (Host and port checking)
+
+To be reachable by Fly Proxy, an app needs to listen on 0.0.0.0 and bind to the `internal_port` defined in the `fly.toml` configuration file.
+
+If your app is not listening on the expected address and the configured port, you’ll get the following warning message when you deploy your app:
+
+```
+WARNING The app is listening on the incorrect address and will not be reachable by fly-proxy.
+```
+
+The message supplies:
+
+- The host address your app should be listening on, which is `0.0.0.0:<internal_port value>`.
+- A list of processes inside the Machine with TCP sockets in LISTEN state. This includes `/app`, which might show something like `[ :: ]:8080`; the host address your app is trying to listen on. (You can ignore hallpass on port 22, which is used for SSH on Machines.)
+
+### Fix the "app is listening on the incorrect address" error
+
+The default internal port when you launch a new Fly App is `8080`.
+
+You can either:
+- Configure your app to listen on host `0.0.0.0:8080`, or
+- Configure your app to listen on host `0.0.0.0:<framework default or other port>` and change the `internal_port` value in the `fly.toml` configuration file to match.
+
+### Why does my app listen on localhost with a different port number?
+
+A lot of frameworks will listen on the localhost/127.0.0.1 by default so that the developer can connect to the app. Different frameworks also define different default ports, like 3000, 8000, or 8080, for example. It can be easy to make a mistake and configure your app in a way that makes it impossible for the Fly Proxy to route requests to it. And it can be difficult to debug, especially if your framework doesn't print the listening address to logs and your image doesn't have `netstat` or `ss` tools.
+
+### Example - Configure port and host in a Fastify Node app
+
+How do you figure out where and how your app is listening to localhost or bound to a default port? Check the code for where the web service that listens is stated up - sometimes it'll be just `serve()` or` listen()` and what's missing is parameters for the address and/or port.
+
+For example, here’s a getting-started app for Fastify (Node.js):
 
 ```jsx
 // Require the framework and instantiate it
-const fastify = require('fastify')({ logger: true })
+
+// ESM
+import Fastify from 'fastify'
+const fastify = Fastify({
+  logger: true
+})
+// CommonJs
+const fastify = require('fastify')({
+  logger: true
+})
 
 // Declare a route
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' }
+fastify.get('/', function (request, reply) {
+  reply.send({ hello: 'world' })
 })
 
 // Run the server!
-const start = async () => {
-  try {
-    await fastify.listen({ port: 8080 })
-    fastify.log.info(`server listening on ${fastify.server.address().port}`)
-  } catch (err) {
+fastify.listen({ port: 3000 }, function (err, address) {
+  if (err) {
     fastify.log.error(err)
     process.exit(1)
   }
-}
-start()
+  // Server is now listening on ${address}
+})
 ```
 
-If we build this locally and run it, it works just fine. Deploy it to fly though and we get:
+This example will work locally, but when you run `fly deploy` you’ll get the “app is listening on the incorrect address” warning.
 
-```
-Monitoring Deployment
-You can detach the terminal anytime without stopping the deployment
-
-1 desired, 1 placed, 0 healthy, 1 unhealthy
-v1 failed - Failed due to unhealthy allocations - no stable job version to auto revert to
-***v1 failed - Failed due to unhealthy allocations - no stable job version to auto revert to
-```
-
-That's not good, and there's no obvious reference to a host there. Lucky for us the fastify listen function accepts an object for defining additional options like host. We can pass in "0.0.0.0" as the host to successfully run inside a Docker container like so:
+You can modify the example to listen on host `0.0.0.0` and to print a log with the listening address:
 
 ```jsx
 ...
-const start = async () => {
-  try {
-    await fastify.listen({ port: 8080, host: "0.0.0.0" })
-...
+
+fastify.listen({ port: 3000, host: '0.0.0.0' }, function (err, address) {
+  if (err) {
+    fastify.log.error(err)
+    process.exit(1)
+  }
+  fastify.log.info(`server listening on ${address}`)
+})
 ```
 
-And redeploy that, it will work.
+Then make sure that the `internal_port` value in `fly.toml` is set to `3000`. 
 
-## _Inspecting with SSH_
+## Health checks failing
 
-You can use `flyctl ssh console` to connect to a running instance of your application. Use `flyctl ssh console -s` to select a specific instance.
+We don't do health checks when you launch your app for the first time, even if you use a pre-configured `fly.toml` file with health checks. But on subsequent deploys, health checks can fail for a number of reasons.
 
-## _Health checks failing_
+A good first step can be to look at a failed Machine and see what you can figure out. To see the specific Machine status, run `fly status --all` to get a list of Machines in your app. Find one with state `failed` or `stopped`, then run `fly machine status <machine id>` . This will give you a lot more information. Make sure you check the exit code, if it’s 0 it means health check failures, if it’s not zero it’s some issue crashing the process.
 
-If your health checks keep failing during deployment...
+### Out-of-memory (OOM) or high CPU usage
 
-```
-[error] Health check status changed 'warning' => 'critical'
+If your Machine's resources are reaching their limits, then this could slow everything down, including accepting connections and responding to HTTP requests. Slow responses can trigger health check failures.
 
-```
+You might see out-of-memory errors in logs. Some apps (like Node.js apps that use Prisma) can be RAM-intensive. So your app may be killed for out-of-memory (OOM) reasons. The solution is to just [add more RAM](https://fly.io/docs/apps/scale-machine/#add-ram). 
 
-... the first step is to look at a failed VM and see what you can figure out. RAM increases are only useful if the VM had an out of memory error (which you might see in the logs). The health check grace period is only helpful if health checks took too long to pass.
+If you see high CPU usage in metrics you might need to select a new [preset CPU/RAM combination](/docs/apps/scale-machine/#select-a-preset-cpu-ram-combination), or even update only the [CPU on an individual Machine](/docs/apps/scale-machine/#machines-not-belonging-to-fly-launch).
 
-To see the specific VM status, run `fly status --all` to get a list of VMs. Find one with status `failed` , then run `fly vm status <id>` . This will give you a lot more information. Make sure you check the exit code, if it’s 0 it means health check failures, if it’s not zero it’s some issue crashing the process.
+### Grace period
 
-To increase the grace period for your app (ex: if it takes about 30 seconds for your application to boot), you would do so:
-```
-  # If you are using tcp_checks
+Grace period is the time to wait after a Machine starts up before checking its health.
+
+If your app takes a longer time to start up, then set a longer health check grace period.
+
+To increase the grace period for your app, update the `fly.toml` file. For example, if your app takes 4 seconds to start up, then you could set the grace period to 6 seconds:
+
+```toml
+  # If you're using tcp_checks
   [[services.tcp_checks]]
-    grace_period = "30s"
+    grace_period = "6s"
     ...
 
-  # If you are using http_checks
+  # If you're using http_checks
   [[services.http_checks]]
-    grace_period = "30s"
+    grace_period = "6s"
     ...
+  # or
+  [[http_service.checks]]
+    grace_period = "6s"
+  ...
 ```
 
-## _HTTPS in fly.toml_
+### More issues that cause health checks to fail
 
-If you specify in your `fly.toml` that `protocol = "https"`, this means your application must be serving TLS directly. If you have enabled this, try disabling for debugging.
+- Something is blocking your `accept` loop. This would prevent the health check from connecting.
+- You’re using an HTTP check and the response is not a 200 OK.
+- Your app is not catching all thrown errors. If your app panics before it can respond to an HTTP request, it will look like a broken request to the health checker.
 
-## _Are your variables set?_
+## Other common deployment issues
 
-For example if you notice in your logs that the database is failing to connect to `DATABASE_URL`, make sure that variable is set.
+A miscellaneous list of potential pitfalls.
 
-Use these two commands to see environment variables.
+### HTTPS in fly.toml
+
+If you specify in your `fly.toml` that `protocol = "https"`, this means that your application must be serving TLS directly. If you have enabled https, try disabling it for debugging.
+
+### Missing variables
+
+For example, if you notice in your logs that the database is failing to connect to `DATABASE_URL`, make sure that variable is set.
+
+To see your app's secrets and environment variables, run:
+
 ```
-flyctl secrets list
-flyctl config env
+fly config env
 ```
 
-## _Did your buildpack-based deploy stop working?_
+### Buildpack-based deploys
 
 First of all, we think using a [Dockerfile](https://fly.io/docs/languages-and-frameworks/dockerfile/) rather than buildpacks is more reliable and faster to deploy. If possible, making the switch is probably a good idea!
 
-That's because buildpacks come with lots of dependencies to build different stacks rather than just what you need. On top of that, we've seen buildpack providers upgrade the image on Docker Hub and things Stop Working (even with no code changes on your app). Running `fly launch` already generates Dockerfiles for [many](https://fly.io/ruby-dispatch/rails-on-docker/) [popular](https://fly.io/docs/elixir/getting-started/#generate-the-app-and-deploy-with-postgres) [frameworks](https://fly.io/docs/django/getting-started/#provision-django).
+That's because buildpacks come with lots of dependencies to build different stacks rather than just what you need. On top of that, we've seen buildpack providers upgrade the image on Docker Hub and things Stop Working (even with no code changes on your app). Running `fly launch` already generates Dockerfiles for many [popular frameworks](/docs/languages-and-frameworks/).
 
-That said, if the build used to work, then you can try using a previous, fixed buildpack version so it's back in a known good state. For example, `heroku/buildpacks:20` uses Github Actions for pushing new images and the SHA256 can be found on their [Build, Publish, Test action](https://github.com/heroku/builder/actions/workflows/build-test-publish.yml), under `publish`. After finding a working build, use `@sha256:{digest}` to pin your app to that version. Example:
-
-```
-[build]
-  builder = "heroku/buildpacks@sha256:4b3478410cb52c480c77f18a26a0c88cfc7e23c259df4ca833e0500215ab5535"
-```
-
-## _Do you have enough RAM?_
-
-Some apps (like NodeJS ones that use Prisma) can be RAM intensive. So your app may be killed for out-of-memory (OOM) reasons. The solution is just to [add more RAM](https://fly.io/docs/apps/scale-machine/#add-ram).
+That said, if the build used to work, then you can try using a previous, fixed buildpack version so it's back in a known good state.
