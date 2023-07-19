@@ -11,7 +11,6 @@ flyctl tokens list [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for list
-  -j, --json            JSON output
   -s, --scope string    either 'app' or 'org' (default "app")
 ~~~
 
