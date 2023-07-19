@@ -154,7 +154,7 @@ Then make sure that the `internal_port` value in `fly.toml` is set to `3000`.
 
 ## Health checks failing
 
-We don't do health checks when you launch your app for the first time, even if you use a pre-configured `fly.toml` file with health checks. But on subsequent deploys, health checks can fail for a number of reasons.
+We don't automatically add health checks to your `fly.toml` file when you cerate your app. The health checks that you subsequently add to your app can fail for a number of reasons.
 
 A good first step can be to look at a failed Machine and see what you can figure out. To see the specific Machine status, run `fly status --all` to get a list of Machines in your app. Find one with state `failed` or `stopped`, then run `fly machine status <machine id>` . This will give you a lot more information. Make sure you check the exit code, if it’s 0 it means health check failures, if it’s not zero it’s some issue crashing the process.
 
