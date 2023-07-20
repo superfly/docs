@@ -120,7 +120,7 @@ For sensitive environment variables, such as credentials, you can set [secrets](
 
 <%= partial "/docs/partials/set_secrets", locals: { app_name: "my-app-name" } %>
 
-Machines inherit secrets from the app. Existing Machines must be [updated](#update-a-machine) to pick up secrets set after the Machine was created.
+Machines inherit secrets from the app. Existing Machines must undergo a no-op [update](#update-a-machine) to make them pick up secrets that were set after the Machine was created.
 
 For non-sensitive information, you _can_ set different environment variables per Machine at creation time.
 
