@@ -5,23 +5,23 @@ sitemap: false
 nav: firecracker
 ---
 
-As a developer, you probably know that there are many reasons why an app deployment can fail. This section gives you some ideas of where to start, but it's not a comprehensive guide. If you're still stuck after reading, then visit our [community forum](https://community.fly.io/) for more help.
+This section gives you some ideas of how to start troubleshooting if your deployment doesn't work as expected. If you're still stuck after reading, then visit our [community forum](https://community.fly.io/) for more help.
 
 ## Try this first
 
-If the error you get isn’t obvious or specific, and the answer doesn’t appear right away, then try these basic steps first, to either fix the problem or to arm yourself with knowledge.
+If the error you get isn’t obvious or specific, then try these basic steps first, to either fix the problem or to arm yourself with knowledge.
 
 ### Update flyctl
 
 By default, flyctl (the Fly CLI), [updates automatically](https://community.fly.io/t/flyctl-versions-autoupdating-and-the-cli-apocalypse/13794).
 
-But if you disabled automatic updates, then you should update flyctl:
+But if you've disabled automatic updates, then you should update flyctl:
 
 ```cmd
 fly version update
 ```
 
-We frequently add new features to flyctl, so you should keep it up-to-date to avoid breaking things. You can also turn automatic updates back on with:
+We frequently add new features to flyctl, so you should keep it up to date to avoid breaking things. You can also turn automatic updates back on with:
 
 ```cmd
 fly settings autoupdate enable
@@ -35,7 +35,7 @@ Run some basic connectivity test for things like Wireguard, IP addresses, and lo
 fly doctor
 ```
 
-Any failures in the `fly doctor`` output point to where you can start troubleshooting.
+Any failures in the `fly doctor` output point to where you can start troubleshooting.
 
 ### Review your `fly.toml` configuration
 
@@ -57,7 +57,7 @@ fly logs
 
 Look for error messages that indicate why the app or deploy is failing, and the logs that occurred just before the app crashed or the deploy failed.
 
-If you can see messages about the app just exiting, then there's likely a specific app issue, and you'll need to address that before you can redeploy.
+If you can see messages about the app just exiting, then there's likely an issue with your project source, and you'll need to address that before you can deploy successfully.
 
 ### Activate debug logging
 
@@ -71,11 +71,11 @@ LOG_LEVEL=debug prints all the logs into the console as the command runs.
 
 ### Inspect with SSH
 
-You can use `fly ssh console` to connect to a running instance of your application. Use `fly ssh console -s` to select a specific Machine.
+You can use `fly ssh console` to get a shell on a running Machines in your app. Use `fly ssh console -s` to select a specific Machine.
 
 ## WARNING The app is listening on the incorrect address (Host and port checking)
 
-To be reachable by Fly Proxy, an app needs to listen on 0.0.0.0 and bind to the `internal_port` defined in the `fly.toml` configuration file.
+Check your app's host and port settings. To be reachable by Fly Proxy, an app needs to listen on `0.0.0.0` and bind to the `internal_port` defined in the `fly.toml` configuration file.
 
 If your app is not listening on the expected address and the configured port, you’ll get the following warning message when you deploy your app:
 
@@ -98,7 +98,9 @@ You can either:
 
 ### Why does my app listen on localhost with a different port number?
 
-A lot of frameworks will listen on the localhost/127.0.0.1 by default so that the developer can connect to the app. Different frameworks also define different default ports, like 3000, 8000, or 8080, for example. It can be easy to make a mistake and configure your app in a way that makes it impossible for the Fly Proxy to route requests to it. And it can be difficult to debug, especially if your framework doesn't print the listening address to logs and your image doesn't have `netstat` or `ss` tools.
+A lot of frameworks will listen on `localhost`/`127.0.0.1` by default so that the developer can connect to the app. Different frameworks also define different default ports, like 3000, 8000, or 8080, for example. It can be easy to make a mistake and configure your app in a way that makes it impossible for the Fly Proxy to route requests to it. And it can be difficult to debug, especially if your framework doesn't print the listening address to logs and your image doesn't have `netstat` or `ss` tools.
+
+Learn more about [connecting to an app service](/docs/getting-started/app-services/).
 
 ### Example - Configure port and host in a Fastify Node app
 
@@ -156,7 +158,7 @@ Then make sure that the `internal_port` value in `fly.toml` is set to `3000`.
 
 We don't automatically add health checks to your `fly.toml` file when you cerate your app. The health checks that you subsequently add to your app can fail for a number of reasons.
 
-A good first step can be to look at a failed Machine and see what you can figure out. To see the specific Machine status, run `fly status --all` to get a list of Machines in your app. Find one with state `failed` or `stopped`, then run `fly machine status <machine id>` . This will give you a lot more information. Make sure you check the exit code, if it’s 0 it means health check failures, if it’s not zero it’s some issue crashing the process.
+A good first step can be to look at a failed Machine and see what you can figure out. To see the specific Machine status, run `fly status --all` to get a list of Machines in your app. Then run `fly machine status <machine id>` . This will give you a lot more information. Make sure you check the exit code: if it’s non-zero, then your process crashed.
 
 ### Out-of-memory (OOM) or high CPU usage
 
