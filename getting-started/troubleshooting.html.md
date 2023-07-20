@@ -104,7 +104,7 @@ Learn more about [connecting to an app service](/docs/getting-started/app-servic
 
 ### Example - Configure port and host in a Fastify Node app
 
-How do you figure out where and how your app is listening to localhost or bound to a default port? Check the code for where the web service that listens is stated up - sometimes it'll be just `serve()` or` listen()` and what's missing is parameters for the address and/or port.
+How do you figure out which address port your app is listening on? Check your code for where the web service started up - sometimes it'll be just `serve()` or` listen()` and what's missing is parameters for the address and/or port.
 
 For example, here’s a getting-started app for Fastify (Node.js):
 
