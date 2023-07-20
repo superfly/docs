@@ -122,10 +122,10 @@ fly volumes extend vol_od56vjp5pzmvny30 -s 2
 
 where `<new-size>` is the extended size in GB. 
 
-You'll need to restart the Machine attached to the target volume to allow the file system to be resized. 
+For most Machines, the attached volume can be extended without a restart. For older Machines, you'll get a message that you need to manually restart the Machine to increase the size of the file system.
 
 <div class="callout">
-On Nomad (V1) Apps, the instance is automatically restarted, so this step isn't needed.
+On Nomad (V1) Apps, the instance is automatically restarted.
 </div>
 
 Get the `id` of the Machine that has the volume mounted (find it under `ATTACHED VM`).
@@ -138,7 +138,7 @@ ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       
 vol_od56vjp5pzmvny30    created data    2GB     yyz     acc6    true            4d891de2f66587  36 minutes ago
 ```
 
-Restart the Machine using `fly machine restart <machine-id>`:
+If prompted, restart the Machine using `fly machine restart <machine-id>`:
 
 ```cmd
 fly machine restart 4d891de2f66587
