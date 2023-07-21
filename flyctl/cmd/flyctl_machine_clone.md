@@ -14,6 +14,7 @@ flyctl machine clone <machine_id> [flags]
       --clear-auto-destroy     Disable auto destroy setting on new machine
       --clear-cmd              Set empty CMD on the new machine so it uses default CMD for the image
   -c, --config string          Path to application configuration file
+      --detach                 Return immediately instead of monitoring deployment progress
       --from-snapshot string   Clone attached volumes and restore from snapshot, use 'last' for most recent snapshot. The default is an empty volume
   -h, --help                   help for clone
       --name string            Optional name for the new machine

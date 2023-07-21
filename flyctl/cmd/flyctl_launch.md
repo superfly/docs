@@ -18,6 +18,9 @@ flyctl launch [flags]
       --dockerfile string                Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
       --dockerignore-from-gitignore      If a .dockerignore does not exist, create one from .gitignore files
   -e, --env stringArray                  Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
+      --file-literal stringArray         Set of literals in the form of /path/inside/machine=VALUE pairs where VALUE is the content. Can be specified multiple times.
+      --file-local stringArray           Set of files in the form of /path/inside/machine=<local/path> pairs. Can be specified multiple times.
+      --file-secret stringArray          Set of secrets in the form of /path/inside/machine=SECRET pairs where SECRET is the name of the secret. Can be specified multiple times.
       --generate-name                    Always generate a name for the app, without prompting
       --ha                               Create spare machines that increases app availability (default true)
   -h, --help                             help for launch
