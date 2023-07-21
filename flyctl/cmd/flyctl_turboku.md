@@ -16,6 +16,9 @@ flyctl turboku <heroku-app-name> <heroku-api-token> [flags]
       --detach                           Return immediately instead of monitoring deployment progress
       --dockerfile string                Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
   -e, --env stringArray                  Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
+      --file-literal stringArray         Set of literals in the form of /path/inside/machine=VALUE pairs where VALUE is the content. Can be specified multiple times.
+      --file-local stringArray           Set of files in the form of /path/inside/machine=<local/path> pairs. Can be specified multiple times.
+      --file-secret stringArray          Set of secrets in the form of /path/inside/machine=SECRET pairs where SECRET is the name of the secret. Can be specified multiple times.
       --ha                               Create spare machines that increases app availability (default true)
   -h, --help                             help for turboku
       --ignorefile string                Path to a Docker ignore file. Defaults to the .dockerignore file in the working directory.
