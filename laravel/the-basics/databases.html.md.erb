@@ -13,11 +13,10 @@ In this guide, you'll find references on how to connect your Laravel application
 
 ## _Laravel Database Migrations_
 
-<aside class="callout">
-Make sure you have a database connection with your Laravel Fly App. You can check out our various connection guides on [`MySQL`](/docs/laravel/the-basics/databases/#mysql-on-planetscale), [`Postgres`](/docs/laravel/the-basics/databases/#postgres-in-fly-io), [`Redis`](/docs/laravel/the-basics/databases/#redis-in-fly-io), and [`SQLite`](/docs/laravel/the-basics/databases/#sqlite-in-a-laravel-fly-app) below. 
-<br><br>
+Make sure you have a database connection with your Laravel Fly App. You can check out our various connection guides on [`MySQL`](/docs/laravel/the-basics/databases/#mysql-on-planetscale), [`Postgres`](/docs/laravel/the-basics/databases/#postgres-in-fly-io), [`Redis`](/docs/laravel/the-basics/databases/#redis-in-fly-io), and [`SQLite`](/docs/laravel/the-basics/databases/#sqlite-in-a-laravel-fly-app) below.
+
 Once you're set up with a database connection, there are several ways to run the Laravel classic: "`php artisan migrate`" command at Fly.io:
-</aside>
+
 #1 Through the `fly.toml` [deploy] configuration ( which will run in every deployment )
 
 ```toml
@@ -234,9 +233,7 @@ You can interact with your Postgres Fly App using `flyctl postgres connect`.
     (4 rows)
     ```
 
-<aside class="callout">
 There are tons of ways to interact with your Postgres Fly App! If you want to get a bird's eye view on your Postgres database list outside of the `flyctl postgres connect` command, simply run the command below instead.
-</aside>
 
 ```cmd 
 flyctl postgres db list -a <postgres-fly-app-name>
@@ -270,6 +267,7 @@ Once you have your running and <i>[database configured](/docs/laravel/the-basics
     ```
 
 ### _Connect From a Local Environment_
+
 1. You can check out various ways to connect with your Postgres Fly App from [here](/docs/postgres/connecting/).
 
 2.  Once you're locally connected to your Postgres Fly App, setup your Laravel .env file to connect with the Postgres database:
@@ -284,14 +282,8 @@ Once you have your running and <i>[database configured](/docs/laravel/the-basics
     ```
 
 #### _Laravel Possible PGSQL Errors_
-<aside class="callout">
-If you get an error similar to this: 
 
-
-<b>"ERROR: could not find driver pgsql"</b>
-
-Make sure that your environment is configured properly with a pgsql driver!
-</aside>
+If you get an error similar to, `"ERROR: could not find driver pgsql"`, make sure that your environment is configured properly with a pgsql driver.
 
 1.  First up, check your php.ini file and make sure the driver for Postgres is available and <i>uncommented</i>:
 
@@ -301,14 +293,7 @@ Make sure that your environment is configured properly with a pgsql driver!
 
 2. Next, make sure you have the correct <b>php-pgsql</b> installed for your PHP version. Let's assume you have a PHP 8.1 running locally, then you must also have the compatible php8.1-pgsql in your environment.
 
-<aside class="callout">
-If you get an error similar to this: 
-
-
-<b>"pg_dump: error: server version: 14.x; pg_dump version: 12.x"</b>
-
-The pgsql client running in the VM does not match the server version.
-</aside>
+If you get an error similar to, `"pg_dump: error: server version: 14.x; pg_dump version: 12.x"`, the pgsql client running in the VM does not match the server version.
 
 Within your `Dockerfile`, you can install an updated version of the PostgreSQL clients by adding the following commands:
 
@@ -346,6 +331,7 @@ You are now connected to database "<database_name_created>" as user "<user>".
 2. Setup using the Official Redis Docker Image
 
 ### _Setup using the Fly.io Redis Docker Image_
+
 1.  First create a new directory and initialize it with `fly launch`, using [Fly.io's Redis Image](https://hub.docker.com/r/flyio/redis/tags) for the build:
 
     ```cmd
@@ -358,8 +344,6 @@ You are now connected to database "<database_name_created>" as user "<user>".
     2. You can specify your Redis Fly App name through the `--name` argument
     3. You can specify your region code through the `--region` attribute
     4. You can opt not to immediately deploy by adding `--no-deploy` argument
-    <br />
-    <br />
 
 2.  Afterwards, add a [volume](/docs/reference/volumes/) that will persist your Redis data
 
@@ -368,8 +352,6 @@ You are now connected to database "<database_name_created>" as user "<user>".
     ```
     1. You can specify any volume name to replace redis_server above
     2. You can specify your preferred volume size in GB through the `--size` argument
-    <br />
-    <br />
 
 3. Then, attach your volume to your Redis Fly App by revising its `fly.toml` to include `[[mounts]]`:
 
@@ -411,8 +393,6 @@ If you would like to use [Redis' official docker image](https://hub.docker.com/_
     fly launch --image redis --name off-redis --region ams --no-deploy
     ```
     - Pull the <b>redis</b> image from the docker repository through the `--image` argument.
-    <br />
-    <br />
 
 2.  Before deploying, make sure to revise your `fly.toml` file to specify your Redis Fly App's password.
 
@@ -433,8 +413,6 @@ If you would like to use [Redis' official docker image](https://hub.docker.com/_
     ```
     - Use the `fly secret` <b>`REDIS_PASSWORD`</b> you've configured earlier
     - If this passphrase is not set and your Laravel configuration sends a REDIS_PASSWORD during its connection to your Redis Fly App, watch out! You'll get the infamous "ERR Client sent AUTH, but no password is set" error
-    <br />
-    <br />
 
 
 ### _Connect from a Laravel Fly App_
@@ -503,15 +481,13 @@ The simplest way to connect your local Laravel application to a Redis Fly App is
 
 ### Testing Connection
 
-<aside class="callout">
-  In both examples above, Redis was used as our Laravel application's Cache Driver. 
+In both examples above, Redis was used as our Laravel application's Cache Driver.
 
-  <p></p>
-  To test if this connection is working or not, a simple `php artisan cache:clear` should let you know.
-</aside>
+To test if this connection is working or not, a simple `php artisan cache:clear` should let you know.
 
 
 ## _Laravel with Upstash Managed Redis Fly App_
+
 Want a fully-managed Redis Fly App? Try [Upstash Redis](https://upstash.com/)! To set up, you can follow our-in-depth guide [here](/docs/reference/redis/) 
 
 Once you've configured the necessary details through the flyctl prompts, and the app deployment completes, you should get a summary of the Redis cluster you've just deployed, like so:
@@ -522,6 +498,7 @@ If you have redis-cli installed, use fly redis connect to connect to your databa
 ```
 
 ### _Connect From a Laravel Fly App_
+
 To test whether your Laravel Fly App can successfully connect with your Upstash Redis database, you can use your Upstash Redis Fly App as your Cache driver, then perform a quick cache:clear command.
 
 1.  Revise the `[env]` configuration in your Laravel Fly App's `fly.toml` file:
@@ -536,7 +513,6 @@ To test whether your Laravel Fly App can successfully connect with your Upstash 
     - Set the Laravel cache driver to redis
     - Using `REDIS_URL` should override `REDIS_HOST`, add here the `REDIS_URL` received during `fly redis create`
     - Upstash only supports "database 0", so update your `REDIS_CACHE_DB` config to 0. Otherwise, you will receive an error : `SELECT failed: ERR Only 0th database is supported! Selected DB: 1...`
-<br /><br />
 
 2.  Then deploy your `fly.toml` changes:
 
@@ -577,10 +553,9 @@ Since SQLite is "embeddable", you no longer have to setup a separate Fly App for
         DB_DATABASE="/var/www/html/storage/database/database.sqlite"
     ```
 
-2. As seen above, the SQLite database will be located in the storage directory. Make sure to mount a volume on the directory by following [this guide here](/docs/laravel/the-basics/laravel-volume-storage/). 
-<aside class="callout">
-[Mounting a volume](/docs/apps/volume-storage/) on the storage folder will ensure everything it contains gets persisted, including data on the SQLite database located inside.
-</aside>
+2.  As seen above, the SQLite database will be located in the storage directory. Make sure to mount a volume on the directory by following [this guide here](/docs/laravel/the-basics/laravel-volume-storage/).
+
+    [Mounting a volume](/docs/apps/volume-storage/) on the storage folder will ensure everything it contains gets persisted, including data on the SQLite database located inside.
 
 3. Once you've configured persisting the storage directory by following step 2 above, revise the start up script that will be created from it. Revise it to enable initializing the SQLite file:
     ```bash
@@ -594,13 +569,12 @@ Since SQLite is "embeddable", you no longer have to setup a separate Fly App for
         touch /var/www/html/storage/database/database.sqlite
     fi
     ```
-    <small>The condition statement checks if the database folder does not exist in the volumized storage folder. If it does not exist, it creates a database directory inside storage/ and creates a database.sqlite file in the storage/database folder.</small>
-<br/> <br/> 
-
+    The condition statement checks if the database folder does not exist in the volumized storage folder. If it does not exist, it creates a database directory inside storage/ and creates a database.sqlite file in the storage/database folder.
 
 4. Finally, deploy your Laravel Fly App with `fly deploy`! 
 
 ### Multi-Node SQLite with LiteFS
+
 Do you have multiple instances setup for your Fly app? Data between those instances' SQLite databases will not automatically be in sync with each other. You'll have to configure data replication across those instances' SQLite databases by yourself. Of course, manual set up is not a requirement&mdash;you can instead rely on the *power* of [LiteFS](/docs/litefs/).
 
 LiteFS provides data replication across different SQLite databases of your Fly app. All you’ll need is to set it up on your Fly app, and it will do the replication for you. You can read more about the [getting started guide here](/docs/laravel/advanced-guides/global-sqlite-litefs/), and also check out our Laravel section’s quick notes on setting LiteFS on a [Laravel Fly app here](/docs/laravel/advanced-guides/global-sqlite-litefs/).

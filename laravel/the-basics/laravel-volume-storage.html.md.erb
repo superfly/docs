@@ -24,40 +24,34 @@ It's the default burrow for session, cache, and file data amongst others. If you
     ```
 
 3.  Revise your Laravel Fly App's `fly.toml` file to mount the volume created for your storage directory:
-  ```
+
+    ```
     [mounts]
       source="storage_vol"
       destination="/var/www/html/storage"
-  ```
+    ```
 
-    <aside class="callout">
-    Caution! Mounting a Volume to a folder will initially erase any item it contains during the first time the Volume is mounted for the folder. 
-    <br/><br/>
+    Mounting a Volume to a folder will initially erase any item it contains during the first time the Volume is mounted for the folder.
     
     For example, Laravel's storage folder contains subfolders: app, framework, and logs. 
     Mounting the volume to the storage folder erases these directories, and leaves behind a sole item paradoxically named as "lost+found". 
     
     But, you wouldn't want to only be left with "lost+found" in your storage folder. You'd want to still have the necessary files and directories in there for successful session, views, caching, and file storage compliance with Laravel's default configuration.
-    </aside>
-  
 
 4.  To fix the little storage-content-erasure issue as stated in the callout above, please go ahead and make a copy of your storage folder in a "backup" folder. You can name this directory "storage_".
 
     ```cmd
     cp -r storage storage_
     ```
+
     You'll later use this folder to copy over its contents to the volumized storage folder.
-    <br />
-    <br />
 
 5.  Next create a [Startup Script](/docs/laravel/the-basics/customizing-deployments/) that will initialize the volumized storage folder's contents.
     ```cmd
     touch .fly/scripts/1\_storage\_init.sh
     ```
 
-    <small>
-    Side Note: Start up scripts are run in numeric-alphabetical order. Naming `1\_storage\_init.sh` makes sure it is the first script run. Otherwise, naming the file as `storage_init.sh` alone would've moved the `caches.sh` script above it, and would've executed before storage initialization happened. One of the commands in the `caches.sh` will not have worked properly, due to a lack of properly initialized storage directory.
-    </small>
+    Start up scripts are run in numeric-alphabetical order. Naming `1\_storage\_init.sh` makes sure it is the first script run. Otherwise, naming the file as `storage_init.sh` alone would've moved the `caches.sh` script above it, and would've executed before storage initialization happened. One of the commands in the `caches.sh` will not have worked properly, due to a lack of properly initialized storage directory.
 
     <b>On to the content of the Start Up script:</b>
 
@@ -71,12 +65,8 @@ It's the default burrow for session, cache, and file data amongst others. If you
     fi
     ```
 
-    <small>
     So what happened above?
     - The condition statement checks if the app folder does not exist in the volumized storage folder. If it does not exist, it copies over the contents of the storage_ folder to the volumized storage folder.
-    </small>
-    <br />
-    <br />
 
 6. <b>Finally, deploy your Laravel Fly App!</b>
 
