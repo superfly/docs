@@ -91,7 +91,7 @@ When the `fly scale count` command destroys Machines, the volumes become unattac
 The `fly scale count` command creates new empty volumes, or attaches existing volumes, and does not copy or move any data between volumes.
 </div>
 
-In this example, the app starts with 1 Machine with an attached volume in the `disk` process and 1 unattached volume, all in the `yul` region. The following command to scale the `disk` process to 3 Machines creates 2 new Machines and 1 new volume:
+In this example, the app starts with 1 Machine with an attached volume in the `disk` process and 1 unattached volume, all in the yul region. The following command to scale the `disk` process to 3 Machines creates 2 new Machines and 1 new volume:
 
 ```cmd
 fly scale count disk=3 --region yul
@@ -105,7 +105,7 @@ App 'my-example-app' is going to be scaled according to this plan:
 
 Note that the preceding example specifies:
 - The region where we have unattached volumes and want the Machines to live.
-- The process group, because our `my-example-app` app has volumes for Machines in the `disk` process group.
+- The process group, because our `my-example-app` app has volumes for Machines that belong to the `disk` process group.
 
 ## Scale an app's regions
 
@@ -131,7 +131,7 @@ You can also set the scale explicitly per region by specifying a single region p
 fly scale count 4 --region ewr
 ```
 
-If `--region` is not used, the target count is distributed across all regions in which the app already has Machines that belong to any process group.
+If `--region` is not used, then the target count is distributed across all the regions in which the app already has Machines that belong to any process group.
 
 ## Scale by process group
 
