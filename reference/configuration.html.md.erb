@@ -485,8 +485,9 @@ This section supports the Volumes feature for persistent storage. The section ha
 
 ```toml
 [mounts]
-source="myapp_data"
-destination="/data"
+  source = "myapp_data"
+  destination = "/data"
+  processes= ["disk"] # optional - attach volumes to Machines that belong to one or more process groups
 ```
 
 ### `source`
@@ -560,8 +561,8 @@ To run multiple processes, you'll need a `[processes]` block containing a map of
 
 ```toml
 [processes]
-web = "bundle exec rails server -b [::] -p 8080"
-worker = "bundle exec sidekiqswarm"
+  web = "bundle exec rails server -b [::] -p 8080"
+  worker = "bundle exec sidekiqswarm"
 ```
 
 Furthermore, you can "match" a specific process (or processes) to an [`[http_service]`](#the-http_service-section) or [`[[services]]`](#the-services-sections) configuration. For example:

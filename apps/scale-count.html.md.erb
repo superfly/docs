@@ -13,20 +13,16 @@ order: 60
 
 </div>
 
-There are two ways to scale the number of platform Machines&mdash;Machines managed by `fly deploy`&mdash;on a V2 Fly App after its first deployment: 
+There are two ways to scale the number of Machines managed by [Fly Launch](/docs/apps/) after deploying an app for the first time:
 
 1. with the `fly scale count` subcommand
 2. by explicitly [cloning](#scale-up-with-fly-machine-clone) or [destroying](#scale-down-with-fly-machine-destroy) existing Machines on the app
 
-<div class="callout">
-`fly scale count` does not yet support scaling Machines with [persistent storage volumes](/docs/apps/volume-storage/). Use [`fly machine clone`](#scale-up-with-fly-machine-clone) and [`fly machine destroy`](#scale-down-with-fly-machine-destroy) to scale any process groups with mounted volumes.
-</div>
+`fly scale count` uses internal rules to create or destroy Machines to reach the target scale that you specify. Machines get created when the target number of Machines is higher than the existing total, and Machines get destroyed when the target number of Machines is lower than the existing total.
 
-`fly scale count` uses internal rules to create or destroy Machines to reach the target scale that you specify. As you would expect, specifying a target number of Machines that's higher than the existing total results in the creation of Machines, while a lower target results in the destruction of Machines.
+When Machines are created or destroyed using `fly scale count` or `fly machine clone`/`fly machine destroy`, the resulting scale is preserved by `fly deploy`&mdash;except in the case that you scale right down to zero Machines. If there are no existing Machines, then `fly deploy` seeds the app with new Machines in the `primary_region` and according to the `[processes]` configured in your `fly.toml` file. For more information about how many Machines are created when you launch a new app or deploy from zero, refer to [Redundancy by default on first deploy](/docs/reference/app-availability/#redundancy-by-default-on-first-deploy).
 
-When Machines are created or destroyed using either of the above methods, the resulting scale is preserved by `fly deploy`&mdash;except in the case that you scale right down to zero Machines. In that case, `fly deploy` seeds the app with new Machines according to the `primary_region` and `[processes]` configured in `fly.toml`.
-
-Further adjustments to the capacity of the app can be made by starting and stopping its Machines. Stopped Machines cost less than running Machines because they don't consume any CPU or RAM resources. See [Automatically Stop and Start App Machines](/docs/apps/autostart-stop/) for ways to do this dynamically.
+You can also adjust the capacity of the app by starting and stopping its Machines. Stopped Machines cost less than running Machines because they don't consume any CPU or RAM resources. See [Automatically Stop and Start App Machines](/docs/apps/autostart-stop/) for ways to do this dynamically.
 
 
 ## View the app's current scale 
@@ -39,30 +35,30 @@ Here's an example to illustrate that:
 fly scale show
 ```
 ```out
-VM Resources for app: scalecmd
+VM Resources for app: my-example-app
 
 Groups
 NAME    COUNT   KIND            CPUS    MEMORY  REGIONS
 app     3       shared          4       1024 MB mia,scl(2)
-other   3       shared          4       1024 MB ord(2),scl
+disk   3       shared          4       1024 MB ord(2),scl
 task    4       performance     1       2048 MB iad,mia,ord,scl
 ```
 
-This app has 10 Machines total. The `app` process group has two in scl (Santiago) and one in mia (Miami). `other` has two in ord (Chicago) and one in scl. `task` has one Machine in each of iad (Ashburn), mia, ord, and scl. You can put your Machines wherever works best for your app.
+This app has 10 Machines total. The `app` process group has two in scl (Santiago) and one in mia (Miami). `disk` has two in ord (Chicago) and one in scl. `task` has one Machine in each of iad (Ashburn), mia, ord, and scl. You can put your Machines wherever works best for your app.
 
-## Scale a simple app in a single region
+## Scale the number of Machines in a single region
 
-The default process name in a Fly App is `app`. If you don't define [process groups](docs/apps/processes/), all of the app's Machines belong to the `app` process group, with the exception of any standalone Machines (created with `fly machine` commands).
+The following examples apply to a Fly App's default process group: the `app` process group. If you don't define [process groups](docs/apps/processes/), then all of the app's Machines belong to the `app` process group, with the exception of any Machines created with `fly machine` commands or the Machines API.
 
 `fly scale count` applies changes to the default process group if it is not [passed explicit per-process target counts](#change-the-number-of-machines-in-a-process-group).
 
-Here's the `fly scale show` output for a simple newly deployed web app, with two machines in yyz (Toronto):
+Here's the `fly scale show` output for a newly deployed web app, with two machines in yyz (Toronto):
 
 ```cmd
 fly scale show
 ```
 ```out
-VM Resources for app: scalecmd
+VM Resources for app: my-example-app
 
 Groups
 NAME    COUNT   KIND    CPUS    MEMORY  REGIONS 
@@ -84,6 +80,32 @@ app     4       shared  1       256 MB  yyz(4)
 ```
 
 Now there are four Machines in yyz.
+
+## Scale an app with volumes
+
+When you scale an app with volumes, the `fly scale count` command attaches volumes to the Machines it creates: first using unattached volumes that already exist in the Machine's region, and then creating new volumes if there are not enough&mdash;or any&mdash;existing volumes.
+
+When the `fly scale count` command destroys Machines, the volumes become unattached and can be used again when scaling up.
+
+<div class="warning icon">
+The `fly scale count` command creates new empty volumes, or attaches existing volumes, and does not copy or move any data between volumes.
+</div>
+
+In this example, the app starts with 1 Machine with an attached volume in the `disk` process and 1 unattached volume, all in the `yul` region. The following command to scale the `disk` process to 3 Machines creates 2 new Machines and 1 new volume:
+
+```cmd
+fly scale count disk=3 --region yul
+```
+```output
+App 'my-example-app' is going to be scaled according to this plan:
+  +2 machines for group 'disk' on region 'yul' with size 'shared-cpu-1x'
+  +1 new volumes and using 1 existing volumes for group 'disk' in region 'yul'
+? Scale app my-example-app? (y/N)
+```
+
+Note that the preceding example specifies:
+- The region where we have unattached volumes and want the Machines to live.
+- The process group, because our `my-example-app` app has volumes for Machines in the `disk` process group.
 
 ## Scale an app's regions
 
@@ -109,10 +131,9 @@ You can also set the scale explicitly per region by specifying a single region p
 fly scale count 4 --region ewr
 ```
 
-If `--region` is not used, the target count is distributed across all regions in which the app already has platform Machines belonging to any process group.
+If `--region` is not used, the target count is distributed across all regions in which the app already has Machines that belong to any process group.
 
-
-## Change the number of Machines in a process group
+## Scale by process group
 
 `fly scale count` takes explicit target counts per process group. 
 
@@ -122,7 +143,7 @@ Here's an app with two process groups running in two regions, nrt (Tokyo) and yy
 fly scale show
 ```
 ```out
-VM Resources for app: scalecmd
+VM Resources for app: my-example-app
 
 Groups
 NAME    COUNT   KIND    CPUS    MEMORY  REGIONS       
@@ -136,12 +157,12 @@ Scale it out to 10 `web` Machines and 6 `worker` Machines, without constraining 
 fly scale count web=10 worker=6
 ```
 ```out
-App 'scalecmd' is going to be scaled according to this plan:
+App 'my-example-app' is going to be scaled according to this plan:
   +3 machines for group 'web' on region 'yyz' with size 'shared-cpu-1x'
   +3 machines for group 'web' on region 'nrt' with size 'shared-cpu-1x'
   +1 machines for group 'worker' on region 'yyz' with size 'shared-cpu-1x'
   +1 machines for group 'worker' on region 'nrt' with size 'shared-cpu-1x'
-? Scale app scalecmd? Yes
+? Scale app my-example-app? Yes
 Executing scale plan
   Created 9080eeddc29387 group:web region:yyz size:shared-cpu-1x
   ...
@@ -247,7 +268,7 @@ Check that it worked:
 fly scale show
 ```
 ```out
-VM Resources for app: scalecmd
+VM Resources for app: my-example-app
 
 Groups
 NAME    COUNT   KIND    CPUS    MEMORY  REGIONS 
