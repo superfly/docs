@@ -35,7 +35,7 @@ Here's an example to illustrate that:
 fly scale show
 ```
 ```out
-VM Resources for app: my-example-app
+VM Resources for app: my-app-name
 
 Groups
 NAME    COUNT   KIND            CPUS    MEMORY  REGIONS
@@ -58,7 +58,7 @@ Here's the `fly scale show` output for a newly deployed web app, with two machin
 fly scale show
 ```
 ```out
-VM Resources for app: my-example-app
+VM Resources for app: my-app-name
 
 Groups
 NAME    COUNT   KIND    CPUS    MEMORY  REGIONS 
@@ -97,15 +97,15 @@ In this example, the app starts with 1 Machine with an attached volume in the `d
 fly scale count disk=3 --region yul
 ```
 ```output
-App 'my-example-app' is going to be scaled according to this plan:
+App 'my-app-name' is going to be scaled according to this plan:
   +2 machines for group 'disk' on region 'yul' with size 'shared-cpu-1x'
   +1 new volumes and using 1 existing volumes for group 'disk' in region 'yul'
-? Scale app my-example-app? (y/N)
+? Scale app my-app-name? (y/N)
 ```
 
 Note that the preceding example specifies:
 - The region where we have unattached volumes and want the Machines to live.
-- The process group, because our `my-example-app` app has volumes for Machines that belong to the `disk` process group.
+- The process group, because our `my-app-name` app has volumes for Machines that belong to the `disk` process group.
 
 ## Scale an app's regions
 
@@ -143,7 +143,7 @@ Here's an app with two process groups running in two regions, nrt (Tokyo) and yy
 fly scale show
 ```
 ```out
-VM Resources for app: my-example-app
+VM Resources for app: my-app-name
 
 Groups
 NAME    COUNT   KIND    CPUS    MEMORY  REGIONS       
@@ -157,12 +157,12 @@ Scale it out to 10 `web` Machines and 6 `worker` Machines, without constraining 
 fly scale count web=10 worker=6
 ```
 ```out
-App 'my-example-app' is going to be scaled according to this plan:
+App 'my-app-name' is going to be scaled according to this plan:
   +3 machines for group 'web' on region 'yyz' with size 'shared-cpu-1x'
   +3 machines for group 'web' on region 'nrt' with size 'shared-cpu-1x'
   +1 machines for group 'worker' on region 'yyz' with size 'shared-cpu-1x'
   +1 machines for group 'worker' on region 'nrt' with size 'shared-cpu-1x'
-? Scale app my-example-app? Yes
+? Scale app my-app-name? Yes
 Executing scale plan
   Created 9080eeddc29387 group:web region:yyz size:shared-cpu-1x
   ...
@@ -268,7 +268,7 @@ Check that it worked:
 fly scale show
 ```
 ```out
-VM Resources for app: my-example-app
+VM Resources for app: my-app-name
 
 Groups
 NAME    COUNT   KIND    CPUS    MEMORY  REGIONS 
