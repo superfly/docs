@@ -51,6 +51,7 @@ If you want a fully managed database or storage solution for your Fly Apps, ther
 - [PlanetScale Serverless MySQL](https://planetscale.com/) ([guide to use with Fly Apps](/docs/app-guides/planetscale/))
 - [Supabase Postgres](https://supabase.com/database)
 - [MinIO Hosted Object Storage](https://min.io/)
+- [Fauna](https://fauna.com/) ([guide to use with Fly Apps](/docs/app-guides/fauna/))
 
 ## Other Places
 
