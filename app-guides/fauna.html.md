@@ -11,7 +11,7 @@ categories:
 
 ## Starter kit
 
-We've provided [this starter kit](https://github.com/fauna-labs/express-ts-fly-io-starter) to help you launch, as quickly as possible, a Fly App that uses Fauna as the database backend. Before you start, read the short section below to learn how Fauna and Fly.io makes for a great combination when building low latency, dynamic global applications.  
+We've provided [starter kits](https://github.com/orgs/fauna-labs/repositories?q=fly-io-starter) to help you launch, as quickly as possible, a Fly App that uses Fauna as the database backend. Before you start, read the short section below to learn how Fauna and Fly.io makes for a great combination when building low latency, dynamic global applications.  
 
 ## Region Groups
 
@@ -30,4 +30,15 @@ Currently, Fauna provides 2 choices of Regions Groups, US and EU. The table belo
 | EU                 | lhr, arn, fra         |
 | US                 | sjc, ord, iad         |
 
-To take full advantage of Fauna's distributed footprint, you should deploy your app on 3 Fly.io regions as well, and as close as possible to the Region Groups' replicas. Follow the starter kit's [README](https://github.com/fauna-labs/express-ts-fly-io-starter#scale-your-deployment-to-match-the-fauna-footprint) for details on how that's easily configured.
+To take full advantage of Fauna's distributed footprint, you should deploy your app on 3 Fly.io regions as well, and as close as possible to the Region Groups' replicas. For example, if you created your database in the US region group, scale up or set your Fly regions using this command:
+
+```
+fly regions set sjc ord iad
+```
+
+followed by:
+
+```
+fly scale count 3 --max-per-region=1
+```
+
