@@ -6,7 +6,7 @@
         <%= nav_link "Speedrun: Launch on Fly.io", "/docs/speedrun/" %>
       </li>
       <li>
-        <%= nav_link "Hands-on with Fly.io", "/docs/hands-on/" %>
+        <%= nav_link "Hands-on with Fly.io", "/docs/hands-on/", :class => "has-children" %>
       </li>
       <li>
         <%= nav_link "Working with Fly Apps", "/docs/getting-started/working-with-fly-apps/" %>
@@ -28,19 +28,19 @@
     <%= nav_link "Language & Framework Guides", "/docs/languages-and-frameworks/" %>
     <ul role="region" aria-label="Language & Framework Guides">
       <li>
-        <%= nav_link "Run an Elixir App", "/docs/elixir/getting-started" %>
+        <%= nav_link "Run an Elixir App", "/docs/elixir/getting-started", :class => "has-children"  %>
       </li>
       <li>
-        <%= nav_link "Run a Rails App", "/docs/rails/getting-started/" %>
+        <%= nav_link "Run a Rails App", "/docs/rails/getting-started/", :class => "has-children"  %>
       </li>
       <li>
-        <%= nav_link "Run a Laravel App", "/docs/laravel/" %>
+        <%= nav_link "Run a Laravel App", "/docs/laravel/", :class => "has-children"  %>
       </li>
       <li>
-        <%= nav_link "Run a Django App", "/docs/django/getting-started/" %>
+        <%= nav_link "Run a Django App", "/docs/django/getting-started/", :class => "has-children"  %>
       </li>
       <li>
-        <%= nav_link "More...", "/docs/languages-and-frameworks/" %>
+        <%= nav_link "More...", "/docs/languages-and-frameworks/", :class => "has-children"  %>
       </li>
     </ul>
   </li>
@@ -99,10 +99,10 @@
         <%= nav_link "Volumes", "/docs/reference/volumes" %>
       </li>
       <li>
-        <%= nav_link "Fly Postgres", "/docs/postgres/" %>
+        <%= nav_link "Fly Postgres", "/docs/postgres/", :class => "has-children"  %>
       </li>
       <li>
-        <%= nav_link "SQLite & LiteFS", "/docs/litefs/" %>
+        <%= nav_link "SQLite & LiteFS", "/docs/litefs/", :class => "has-children"  %>
       </li>
       <li>
         <%= nav_link "Redis by Upstash", "/docs/reference/redis/" %>
@@ -119,19 +119,19 @@
     <%= nav_link "Fly Machines", "/docs/machines/" %>
     <ul role="region" aria-label="Fly Machines">
       <li>
-        <%= nav_link "Working with the Machines API", "/docs/machines/working-with-machines/" %>
+        <%= nav_link "Working with the Machines API", "/docs/machines/working-with-machines/", :class => "has-children"  %>
       </li>
       <li>
-        <%= nav_link "Run Machines with flyctl", "/docs/machines/guides-examples/machines-app-using-flyctl/" %>
+        <%= nav_link "Run Machines with flyctl", "/docs/machines/guides-examples/machines-app-using-flyctl/", :class => "has-children"  %>
       </li>
       <li>
-        <%= nav_link "Machine Sizing", "/docs/machines/guides-examples/machine-sizing/" %>
+        <%= nav_link "Machine Sizing", "/docs/machines/guides-examples/machine-sizing/", :class => "has-children"  %>
       </li>
       <li>
-        <%= nav_link "Run User Code on Fly Machines", "/docs/machines/guides-examples/functions-with-machines/" %>
+        <%= nav_link "Run User Code on Fly Machines", "/docs/machines/guides-examples/functions-with-machines/", :class => "has-children"  %>
       </li>
       <li>
-        <%= nav_link "Use Terraform with Fly Machines", "/docs/machines/guides-examples/terraform-machines/" %>
+        <%= nav_link "Use Terraform with Fly Machines", "/docs/machines/guides-examples/terraform-machines/", :class => "has-children"  %>
       </li>
     </ul>
   </li>
@@ -142,7 +142,7 @@
     <%= nav_link "Other Guides", "/docs/guides/" %>
     <ul role="region" aria-label="Other Guides">
       <li>
-        <%= nav_link "Going to Production", "/docs/going-to-production/" %>
+        <%= nav_link "Going to Production", "/docs/going-to-production/", :class => "has-children"  %>
       </li>
       <li>
         <%= nav_link "Custom Domains for SaaS", "/docs/app-guides/custom-domains-with-fly/" %>
@@ -167,7 +167,7 @@
     <%= nav_link "Fly.io Reference", "/docs/reference/" %>
     <ul role="region" aria-label="Fly.io Reference">
       <li>
-        <%= nav_link "flyctl", "/docs/flyctl/" %>
+        <%= nav_link "flyctl", "/docs/flyctl/", :class => "has-children" %>
       </li>
       <li>
         <%= nav_link "Fly Launch Configuration (fly.toml)", "/docs/reference/configuration/" %>
@@ -244,7 +244,7 @@
         <%= nav_link "How We Use Credit Cards", "/docs/about/credit-cards/" %>
       </li>
       <li>
-        <%= nav_link "Engineering Jobs", "/docs/hiring/" %>
+        <%= nav_link "Engineering Jobs", "/docs/hiring/", :class => "has-children" %>
       </li>
       <li>
         <%= nav_link "Healthcare on Fly.io", "/docs/about/healthcare/" %>
