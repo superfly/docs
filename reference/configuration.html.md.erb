@@ -286,7 +286,7 @@ Times are in milliseconds unless units are specified.
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
 * `protocol`: The protocol to be used (`http` or `https`).
-* `tls_server_name`: If the protocol is `https`, set this to verify the certificate provided is valid for that hostname.
+* `tls_server_name`: If the protocol is `https`, the hostname to use for TLS certificate validation
 * `tls_skip_verify`: When `true` (and using HTTPS protocol) skip verifying the certificates sent by the server.
 * `http_service.checks.headers`: This is a sub-section of `http_service.checks`. It uses the key/value pairs as a specification of header and header values that will get passed with the check call.
 
