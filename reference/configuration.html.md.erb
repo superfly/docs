@@ -291,15 +291,18 @@ Times are in milliseconds unless units are specified.
 
 ## The `services` sections
 
-The `services` sections configure the mapping of ports on the application to ports and services on Fly.io. These mappings determine how connections to the application will be handled on their journey from the Fly.io edge network to running Fly Apps.
+The `services` sections define how Fly Proxy connects requests to services running within Machines, via an app's public [Anycast](/docs/reference/services/) or private [Flycast](/docs/reference/private-networking/#flycast-private-load-balancing) address. They also configure additional settings tied to Fly Proxy behavior for a service. If a service only needs HTTP and HTTPS on standard ports, you can use the less verbose [`http_service`](#the-http_service-section).
 
-You can have:
+A `services` section itself is a table of tables in TOML, so it is delimited with double square brackets. Tables within `[[services]]` configure additional features and behaviors for the service, and are described in subsequent sections. **At least one [`services.ports`](#services-ports) entry is required for a complete service definition, to set a port and handler for incoming requests.**
 
-* No `services` section (and no [`http_service` section](#the-http_service-section)): The application has no mappings to the external internet - typically apps like databases that talk over [6PN private networking](/docs/reference/private-networking/) to other apps.
-* One `services` section (or an [`http_service` section](#the-http_service-section)): One internal port mapped to the one or more external ports on the internet.
+An app can have:
+
+* No `services` section (and no [`http_service` section](#the-http_service-section)): The application cannot be reached from the public internet, nor by a [Flycast](/docs/reference/private-networking/#flycast-private-load-balancing) address; this is typically apps like databases that talk over [6PN private networking](/docs/reference/private-networking/) to other apps.
+* One `services` section (or an [`http_service` section](#the-http_service-section)): One internal port mapped to one or more external ports.
 * Multiple `services` sections (or an [`http_service` section](#the-http_service-section) and one or more `services` sections): Mapping multiple internal ports to multiple external ports.
+  
 
-The `services` section itself is a table of tables in TOML, so the section is delimited with double square brackets, like this:
+Example (note the double square brackets):
 
 ```toml
 [[services]]
@@ -310,7 +313,9 @@ The `services` section itself is a table of tables in TOML, so the section is de
   min_machines_running = 0
 ```
 
-* `processes`: For apps with multiple processes. The process group that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
+Settings: 
+
+* `processes`: For apps with multiple process groups, the process group or groups that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
 * `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `protocol` : The protocol that this service will use to communicate. Typically `tcp` for most applications, but can also be `udp`.
 * `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs the checks to automatically stop machines every few minutes. The default is `true`.
@@ -320,28 +325,6 @@ The `services` section itself is a table of tables in TOML, so the section is de
 <div class="callout">
 We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having machines that either never start or never stop. Learn more about [automatically starting and stopping V2 app Fly machines](/docs/apps/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
 </div>
-
-### `services.concurrency`
-
-The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and, for legacy apps only, [scaling](/docs/reference/legacy-scaling).
-
-This section is a simple list of key/values, so the section is denoted with single square brackets like so:
-
-```toml
-  [services.concurrency]
-    type = "connections"
-    hard_limit = 25
-    soft_limit = 20
-```
-
-`type` specifies what metric is used to determine when a given instance has reached a concurrency limit. The two supported values are `connections` and `requests`.
-
-**connections**: Load balance based on the number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
-
-**requests**: Load balance based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
-
-* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. For Nomad apps only, the system will bring up another instance if the autoscaling policy supports doing so.
-* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. For Nomad apps only, the system will likely bring up another instance if the auto scaling policy for the application supports doing so.
 
 ### `services.ports`
 
@@ -427,6 +410,28 @@ One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS 
     port = "443"
     tls_options = { "alpn" = ["h2"] }
 ```
+
+### `services.concurrency`
+
+The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and, for legacy apps only, [scaling](/docs/reference/legacy-scaling).
+
+This section is a simple list of key/values, so the section is denoted with single square brackets like so:
+
+```toml
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
+```
+
+`type` specifies what metric is used to determine when a given instance has reached a concurrency limit. The two supported values are `connections` and `requests`.
+
+**connections**: Load balance based on the number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
+
+**requests**: Load balance based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
+
+* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. For Nomad apps only, the system will bring up another instance if the autoscaling policy supports doing so.
+* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. For Nomad apps only, the system will likely bring up another instance if the auto scaling policy for the application supports doing so.
 
 ### `services.tcp_checks`
 
