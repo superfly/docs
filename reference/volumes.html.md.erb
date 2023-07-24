@@ -38,13 +38,15 @@ Many developers use volumes for databases, so if possible, each volume you creat
 
 Volumes exist in a single region. For redundancy within a region, you can run multiple Machines with attached volumes by creating multiple volumes with the same name. For example, creating three volumes named `myapp_data` would let up to three instances of the app start up and run. Every volume has a unique ID to allow for multiple volumes with the same name. Remember that volumes don't automatically replicate data between them.
 
-## Volumes and Fly Apps
+## Using volumes with your Fly App
 
-Learn how to [add volume storage for your app](/docs/apps/volume-storage/), step-by-step.
+Learn more about using volumes:
 
-Learn about the [`mounts` section](/docs/reference/configuration/#the-mounts-section) for volumes in the `fly.toml` Fly Launch configuration file.
+- How to [add volume storage for your app](/docs/apps/volume-storage/), step-by-step.
+- How to configure the [`mounts` section](/docs/reference/configuration/#the-mounts-section) for volumes in the `fly.toml` Fly Launch configuration file.
+- How to [scale an app with volumes attached]()
 
-## Working with volumes using flyctl
+## Reference: Working with volumes using flyctl
 
 This section is a reference for working with volumes using the [`fly volumes`](/docs/flyctl/volumes/) command. To add a volume to an existing app or launch a new app with a volume refer to [Add Volume Storage](/docs/apps/volume-storage/).
 
