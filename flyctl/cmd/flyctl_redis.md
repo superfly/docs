@@ -12,6 +12,7 @@ flyctl redis [command] [flags]
 * [destroy](/docs/flyctl/redis-destroy/)	 - Permanently destroy an Upstash Redis database
 * [list](/docs/flyctl/redis-list/)	 - List Upstash Redis databases for an organization
 * [plans](/docs/flyctl/redis-plans/)	 - List available Redis plans
+* [proxy](/docs/flyctl/redis-proxy/)	 - Proxy to a Redis database
 * [reset](/docs/flyctl/redis-reset/)	 - Reset the password for an Upstash Redis database
 * [status](/docs/flyctl/redis-status/)	 - Show status of a Redis database
 * [update](/docs/flyctl/redis-update/)	 - Update an Upstash Redis database
