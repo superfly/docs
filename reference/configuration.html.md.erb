@@ -293,7 +293,7 @@ Times are in milliseconds unless units are specified.
 
 The `services` sections define how Fly Proxy connects requests to services running within Machines, via an app's public [Anycast](/docs/reference/services/) or private [Flycast](/docs/reference/private-networking/#flycast-private-load-balancing) address. They also configure additional settings tied to Fly Proxy behavior for a service. If a service only needs HTTP and HTTPS on standard ports, you can use the less verbose [`http_service`](#the-http_service-section).
 
-A `services` section itself is a table of tables in TOML, so it is delimited with double square brackets. Tables within `[[services]]` configure additional features and behaviors for the service, and are described in subsequent sections. **At least one [`services.ports`](#services-ports) entry is required for a complete service definition, to set a port and handler for incoming requests.**
+A `services` section itself is a table of tables in TOML, so it is delimited with double square brackets. Tables within `[[services]]` configure additional features and behaviors for the service, and are described in subsequent sections. At least one [`services.ports`](#services-ports) entry is required for a complete service definition, to set a port and handler for incoming requests.
 
 An app can have:
 
