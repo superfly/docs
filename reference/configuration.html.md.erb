@@ -296,7 +296,7 @@ The `services` sections define how Fly Proxy connects requests that hit an app's
 
 A `services` section itself is a table of tables in TOML, so it is delimited with double square brackets. Tables within `[[services]]` configure additional features and behaviors for the service, and are described in subsequent sections. 
 
-<section class="warning"> At least one [`services.ports`](#services-ports) entry is required for a complete service definition, to set a port and handler for incoming requests. </section>
+<section class="warning"> At least one [`services.ports`](#services-ports) entry is required for each `services` section, to set a port and handler for incoming requests. </section>
 
 An app can have:
 
