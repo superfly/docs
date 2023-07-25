@@ -196,6 +196,7 @@ The only required parameter is `image` in the `config` object. Other parameters:
       + `method`: For http checks, the HTTP method to use to when making the request
       + `path`: For http checks, the path to send the request to
       + `protocol`: For http checks, whether to use `http` or `https`
+      * `tls_server_name`: If the protocol is `https`, the hostname to use for TLS certificate validation
       + `tls_skip_verify`: For http checks with https protocol, whether or not to verify the TLS certificate
       + `headers`: For http checks, an array of objects with string field `name` and array of strings field `values`
 
