@@ -79,7 +79,7 @@ You can start with a relational-database classic: [MySQL](https://www.mysql.com/
 
 ### _Connect from a local environment_
 
-The MySQL instance you spun up in Fly.io &quot;[is closed to the public internet](/docs/reference/machines/#notes-on-networking)&quot;, and can only be accessed by another application found in your Fly.io organization's private network. You'll need a way to tunnel into the network, and finally connect to your MySQL instance.
+The MySQL instance you spun up in Fly.io "[is closed to the public internet](/docs/reference/machines/#notes-on-networking)", and can only be accessed by another application found in your Fly.io organization's private network. You'll need a way to tunnel into the network, and finally connect to your MySQL instance.
 
 <b>In this guide you'll tunnel to your MySQL instance through the use of `flyctl proxy`</b>
 
@@ -127,8 +127,8 @@ Once initialized, your database dashboard should have metrics and options like s
 ![PlanetScale initialize database dashboard](/docs/images/planetscale_laravel_new_database.webp)
 <ol>
 <li>Click on the Connect button at the top right, this should provide a box of information for connecting with your PlanetScale database.</li>
-<li>First though, make sure to add a password,  by clicking on the &quot;New Password&quot; button at the upper right corner. This should show you a new password afterwards.</li>
-<li>Next, select &quot;Laravel&quot; in the list labeled &quot;Connect with&quot;</li>
+<li>First though, make sure to add a password,  by clicking on the "New Password" button at the upper right corner. This should show you a new password afterwards.</li>
+<li>Next, select "Laravel" in the list labeled "Connect with"</li>
 </ol>
 
 ![PlanetScale Laravel connection string](/docs/images/planetscale_laravel_connection_string.webp)
