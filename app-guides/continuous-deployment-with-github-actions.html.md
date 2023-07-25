@@ -70,7 +70,7 @@ A note about `fly.toml` in repositories: Usually, when we ship examples, we avoi
 
 ### API Tokens
 
-**Step 4** is about getting an API token. You can generate a deploy token to use to authorize a specific application. That's what `flyctl tokens create deploy -x 9999999h` gives you. For a more powerful token that can manage multiple applications, run `flyctl auth token`.
+**Step 4** is about getting an API token. You can generate a deploy token to use to authorize a specific application. That's what `flyctl tokens create deploy -x 999999h` gives you. For a more powerful token that can manage multiple applications, run `flyctl auth token`.
 
 **Steps 5 and 6** make your new token available to GitHub Actions that run against your repository. You'll add the token as a secret in the repository's settings. Under the **Settings** tab, go to **Secrets and variables** and select **Actions**. Click on the green "New repository secret" button, enter the name as `FLY_API_TOKEN`, and copy the token as the secret.
 
