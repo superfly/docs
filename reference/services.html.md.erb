@@ -65,7 +65,7 @@ client can handle reconnects cleanly. For example, the `ioredis` Node.js client 
 Set the `handlers` config setting in the `services.ports` section of [`fly.toml`](/docs/reference/configuration/) to specify which middleware applies to incoming TCP connections for each port you accept external connections on. Use these to convert TCP connections into something your application can handle.
 
 Valid handler strings:
-* [`"http"`](#http): Convert TCP connection to HTTP
+* `"http"`(#http): Convert TCP connection to HTTP
 * [`"tls"`](#tls): Convert TLS connection to unencrypted TCP
 * `"pg_tls"`: Handle TLS for PostgreSQL connections
 * `"proxy_proto"`: Wrap TCP connection in PROXY protocol
