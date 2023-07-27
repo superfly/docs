@@ -630,6 +630,26 @@ This feature should not be compared directly with a CDN, for the following reaso
 
 * `statics` does not honor symlinks. So, if `/app/public` in your container is actually a symlink to something like `/app-39403/public`, you'll want to use the absolute original path in your statics configuration.
 
+## The `files` section
+
+When 'files' are set, the contents from one of `raw_value`, `local_path`, or `secret_name` will be written to the VM at the provided `guest_path`. The contents of both `raw_value` and `secret_name` must be base64 encoded.
+
+You can optionally restrict which machine(s) contain the file using the [processes](#the-processes-section) field.
+
+```toml
+[[files]]
+  guest_path = "/path/to/hello.txt"
+  raw_value = "aGVsbG8gd29ybGQK"
+
+[[files]]
+  guest_path = "/path/to/secret.txt"
+  secret_name = "SUPER_SECRET"
+
+[[files]]
+  guest_path = "/path/to/config.yaml"
+  local_path = "/local/path/config.yaml"
+  processes = ["web"]
+```
 
 ## The `experimental` section
 
