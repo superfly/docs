@@ -262,18 +262,6 @@ In the following example, `Example-Header` will be removed from the final respon
     Example-Multi-Value = ["value1", "value2"]
 ```
 
-### `http_service.proxy_proto_options`
-
-Configure the version of the PROXY protocol that your app accepts. Version 1 is the default.
-
-For example:
-```toml
-[http_service.proxy_proto_options]
-  version = "v2"
-```
-
-* `version` : A string to indicate that the TCP connection uses PROXY protocol version 2. The default when not set is version 1.
-
 ### `http_service.tls_options`
 
 Configure the TLS versions and ALPN protocols that Fly's edge will use to terminate TLS for your application with:
