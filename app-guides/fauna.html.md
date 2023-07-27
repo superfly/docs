@@ -11,7 +11,7 @@ categories:
 
 ## Starter kit
 
-We've provided [starter kits](https://github.com/orgs/fauna-labs/repositories?q=fly-io-starter) to help you launch, as quickly as possible, a Fly.io app that uses Fauna as the database backend. Before you start, read the short section below to learn how Fauna and Fly.io makes for a great combination when building low latency, dynamic global applications.  
+Fauna provides [starter kits](https://github.com/orgs/fauna-labs/repositories?q=fly-io-starter) to help you quickly launch an app on Fly.io, using Fauna as the database backend. Before you start, read the short section below to learn how Fauna and Fly.io makes for a great combination when building low latency, dynamic global applications.  
 
 ## Region Groups
 
