@@ -65,20 +65,17 @@ client can handle reconnects cleanly. For example, the `ioredis` Node.js client 
 Set the `handlers` config setting in the `services.ports` section of [`fly.toml`](/docs/reference/configuration/) to specify which middleware applies to incoming TCP connections for each port you accept external connections on. Use these to convert TCP connections into something your application can handle.
 
 Valid handler strings:
-* `"tls"`: Convert TLS connection to unencrypted TCP
-* `"pg_tls"`: Handle TLS for PostgreSQL connections
-* `"http"`: Convert TCP connection to HTTP
-* `"proxy_proto"`: Wrap TCP connection in PROXY protocol
+* [`"http"`:](#http) Convert TCP connection to HTTP
+* [`"tls"`](#tls): Convert TLS connection to unencrypted TCP
+* [`"pg_tls"`](#postgres-connections): Handle TLS for PostgreSQL connections
+* [`"proxy_proto"`](#proxy-protocol): Wrap TCP connection in PROXY protocol
 
+### TCP pass through
 
-### TLS
-The `TLS` middleware terminates TLS using Fly.io-managed application certificates, then forwards a plaintext connection to the application process. This is useful for running TCP services and offloading `TLS` to the Fly Proxy.
-
-For performance purposes, the Fly Proxy will terminate TLS on the host a client connects to, and then forward the connection to the nearest available application instance.
-
-_Note:_ the `TLS` handler includes ALPN negotiation for HTTP/2. When possible, applications will connect to these kinds of Fly.io services using HTTP/2, and we will forward an unencrypted HTTP/2 connection (`h2c`) to the application process.
+If you don't specify handlers, we just forward TCP to your application as-is. This is useful if you want to handle TLS termination yourself, for example.
 
 ### HTTP
+
 Many applications have limited HTTP support, the `HTTP` middleware normalizes HTTP connections and sends HTTP 1.1 requests to the application process. This is roughly how `nginx` and other reverse proxies work, and allows your application to globally accept modern HTTP protocols (like HTTP/2) without extra complexity.
 
 If your application stack has good HTTP/2 support (like Go), you will get better performance accepting TCP connections directly, and using the TLS handler to terminate SSL. Your application _does_ need to understand `h2c` for this to work, however.
@@ -101,17 +98,23 @@ You can set a preference on HTTP requests for which region you would like to con
 Fly-Prefer-Region: region-code
 ```
 
-### TCP pass through
+### TLS
 
-If you don't specify handlers, we just forward TCP to your application as is. This is useful if you want to handle TLS termination yourself, for example.
+The `TLS` middleware terminates TLS using Fly.io-managed application certificates, then forwards a plaintext connection to the application process. This is useful for running TCP services and offloading `TLS` to the Fly Proxy.
 
-### Proxy protocol
+For performance purposes, the Fly Proxy will terminate TLS on the host a client connects to, and then forward the connection to the nearest available application instance.
 
-The `proxy_proto` handler adds information about the original connection, including client IP + port and server IP + port (from the client's perspective). Most applications need additional logic to accept the proxy protocol, either using a prebuilt library or implementing the [proxy protocol](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt) directly.
+_Note:_ the `TLS` handler includes ALPN negotiation for HTTP/2. When possible, applications will connect to these kinds of Fly.io services using HTTP/2, and we will forward an unencrypted HTTP/2 connection (`h2c`) to the application process.
 
 ### Postgres connections
 
 The `pg_tls` handler manages Postgres connections, so that you can expose your Postgres databases over the proxy securely. Some interesting notes by @glebarez on why standard TLS termination won't work for Postgres: https://github.com/glebarez/pgssl#readme
+
+### PROXY protocol
+
+The `proxy_proto` handler adds information about the original connection, including client IP + port and server IP + port (from the client's perspective). Most applications need additional logic to accept the proxy protocol, either using a prebuilt library or implementing the [proxy protocol](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt) directly. 
+
+Fly.io supports version 1 (human-readable header format) of the PROXY protocol by default with the `proxy_proto` handler. You can configure the `proxy_proto` handler to use version 2 (binary header format) in the [`services.ports.proxy_proto_options`](/docs/reference/configuration/#services-ports-proxy_proto_options) section of your `fly.toml` file.
 
 ## HTTP to HTTPS redirects
 
