@@ -222,10 +222,10 @@ An example of two checks:
         }
 ```
 
-* `files`: An optional array of object defining files to be written within a VM, one of `raw_value` or `secret_name` must be provided.
-  - `guest_path`: The path in the machine where the file will be written and must be an absolute path
-  - `raw_value`: Containts the base64 encoded string of the file contents
-  - `secret_name`: The name of the secret containing the base64 encoded file contents
+* `files`: An optional array of objects defining files to be written within a Machine, one of `raw_value` or `secret_name` must be provided.
+  - `guest_path`: The path in the machine where the file will be written. Must be an absolute path.
+  - `raw_value`: Contains the base64 encoded string of the file contents.
+  - `secret_name`: The name of the secret containing the base64 encoded file contents.
 
 An example of two files:
 
