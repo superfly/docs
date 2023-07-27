@@ -73,14 +73,14 @@ LOG_LEVEL=debug prints all the logs into the console as the command runs.
 
 You can use `fly ssh console` to get a shell on a running Machines in your app. Use `fly ssh console -s` to select a specific Machine.
 
-## WARNING The app is listening on the incorrect address (Host and port checking)
+## WARNING The app is not listening on the expected address (Host and port checking)
 
 Check your app's host and port settings. To be reachable by Fly Proxy, an app needs to listen on `0.0.0.0` and bind to the `internal_port` defined in the `fly.toml` configuration file.
 
 If your app is not listening on the expected address and the configured port, you’ll get the following warning message when you deploy your app:
 
 ```
-WARNING The app is listening on the incorrect address and will not be reachable by fly-proxy.
+WARNING The app is not listening on the expected address and will not be reachable by fly-proxy.
 ```
 
 The message supplies:
@@ -88,7 +88,7 @@ The message supplies:
 - The host address your app should be listening on, which is `0.0.0.0:<internal_port value>`.
 - A list of processes inside the Machine with TCP sockets in LISTEN state. This includes `/app`, which might show something like `[ :: ]:8080`; the host address your app is trying to listen on. (You can ignore hallpass on port 22, which is used for SSH on Machines.)
 
-### Fix the "app is listening on the incorrect address" error
+### Fix the "app is not listening on the expected address" error
 
 The default internal port when you launch a new Fly App is `8080`.
 
@@ -136,7 +136,7 @@ fastify.listen({ port: 3000 }, function (err, address) {
 })
 ```
 
-This example will work locally, but when you run `fly deploy` you’ll get the “app is listening on the incorrect address” warning.
+This example will work locally, but when you run `fly deploy` you’ll get the “app is not listening on the expected address” warning.
 
 You can modify the example to listen on host `0.0.0.0` and to print a log with the listening address:
 
@@ -152,7 +152,7 @@ fastify.listen({ port: 3000, host: '0.0.0.0' }, function (err, address) {
 })
 ```
 
-Then make sure that the `internal_port` value in `fly.toml` is set to `3000`. 
+Then make sure that the `internal_port` value in `fly.toml` is set to `3000`.
 
 ## Health checks failing
 
