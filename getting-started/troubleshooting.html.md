@@ -71,7 +71,7 @@ LOG_LEVEL=debug prints all the logs into the console as the command runs.
 
 ### Inspect with SSH
 
-You can use `fly ssh console` to get a shell on a running Machines in your app. Use `fly ssh console -s` to select a specific Machine.
+You can use `fly ssh console` to get a shell on a running Machine in your app. Use `fly ssh console -s` to select a specific Machine.
 
 ## WARNING The app is not listening on the expected address (Host and port checking)
 
@@ -90,11 +90,13 @@ The message supplies:
 
 ### Fix the "app is not listening on the expected address" error
 
-The default internal port when you launch a new Fly App is `8080`.
+When you launch a new Fly App, the value of `internal_port` in the`fly.toml` file depends on the default port for your framework or the `EXPOSE` instruction in your Dockerfile. The default port when the `fly launch` command doesn't detect a framework or find ports set in a Dockerfile is `8080`.
 
-You can either:
-- Configure your app to listen on host `0.0.0.0:8080`, or
+To fix the error, you can either:
+- Configure your app to listen on host `0.0.0.0:<internal port value in fly.toml>`, or
 - Configure your app to listen on host `0.0.0.0:<framework default or other port>` and change the `internal_port` value in the `fly.toml` configuration file to match.
+
+For example, if your app listens on `0.0.0.0:3000`, then set `internal_port = 3000` in the `fly.toml`.
 
 ### Why does my app listen on localhost with a different port number?
 
@@ -156,7 +158,7 @@ Then make sure that the `internal_port` value in `fly.toml` is set to `3000`.
 
 ## Health checks failing
 
-We don't automatically add health checks to your `fly.toml` file when you cerate your app. The health checks that you subsequently add to your app can fail for a number of reasons.
+We don't automatically add health checks to your `fly.toml` file when you create your app. The health checks that you subsequently add to your app can fail for a number of reasons.
 
 A good first step can be to look at a failed Machine and see what you can figure out. To see the specific Machine status, run `fly status --all` to get a list of Machines in your app. Then run `fly machine status <machine id>` . This will give you a lot more information. Make sure you check the exit code: if it’s non-zero, then your process crashed.
 
