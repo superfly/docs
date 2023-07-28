@@ -181,9 +181,9 @@ The available strategies are:
 
 **canary**: Boots a single, new Machine with the new release, verifies its health, and then proceeds with a `rolling` restart strategy.
 
-**bluegreen**: For every running Machine, a new one is booted alongside it in the same region. Once all of the new Machines pass health checks, traffic gets migrated to the new Machines and the old Machines are destroyed. If your app is scaled to 2 or more Machines, this strategy can reduce deploy time by running tasks in parallel.
+**bluegreen**: For every running Machine, a new one is booted alongside it in the same region. Once all of the new Machines pass health checks, traffic gets migrated to the new Machines and the old Machines are destroyed. If your app is scaled to 2 or more Machines, this strategy can reduce deploy time by running tasks in parallel. The `bluegreen` strategy doesn't work if Machines have volumes attached. You need to configure at least one health check to use the `bluegreen` strategy. 
 
-Note: If `max-per-region` is set to 1, the default strategy is set to `rolling`. This happens because `canary` needs to temporarily run more than one VM to work correctly. The `bluegreen` strategy will behave similarly with `max-per-region` set to 1.
+Note: If `max-per-region` is set to 1, then the default strategy is set to `rolling`. This happens because `canary` needs to temporarily run more than one VM to work correctly. The `bluegreen` strategy will behave similarly with `max-per-region` set to 1.
 
 ## The `env` variables section
 
