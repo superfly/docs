@@ -10,9 +10,9 @@ There are various reasons and approaches to isolating different environments. Re
 
 ## Fly Organizations
 
-Read up on [Organizations in Fly.io](/docs/flyctl/orgs/). An org has members, separate billing controls, and separate private networks. For teams that want to separate production environments from staging and development, the &quot;org&quot; is a great starting point and draws a hard line separation.
+Read up on [Organizations in Fly.io](/docs/flyctl/orgs/). An org has members, separate billing controls, and separate private networks. For teams that want to separate production environments from staging and development, the "org" is a great starting point and draws a hard line separation.
 
-When setting up a Fly.io account, by default, applications are deployed to a &quot;personal&quot; account. That works great for individuals but when you are ready to share access to apps among multiple people, use orgs.
+When setting up a Fly.io account, by default, applications are deployed to a "personal" account. That works great for individuals but when you are ready to share access to apps among multiple people, use orgs.
 
 ## Production Fly Organization
 
@@ -37,7 +37,7 @@ Multiple apps can be deployed to an organization. Any applications deployed to t
 
 ## Staging Organization
 
-Create additional organizations for &quot;staging&quot; or &quot;testing&quot; environments to fully isolate them from the production environment.
+Create additional organizations for "staging" or "testing" environments to fully isolate them from the production environment.
 
 ```cmd
 fly orgs create <my-org-staging>
