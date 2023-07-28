@@ -111,7 +111,7 @@ Note that items marked with an explicit TTL will expire accurately, regardless o
 
 ## Pricing
 
-|&nbsp;| Free | 200MB | 3GB |
+| | Free | 200MB | 3GB |
 |------|------|-------|-------|
 |Max Data size|100MB|200MB|3GB|
 |Max Concurrent Connections|100|300|1000|
