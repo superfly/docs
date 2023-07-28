@@ -1,5 +1,5 @@
 ---
-title: Fauna and Fly
+title: Fauna and Fly.io
 layout: docs
 sitemap: false
 nav: firecracker
@@ -11,7 +11,7 @@ categories:
 
 ## Starter kit
 
-We've provided [starter kits](https://github.com/orgs/fauna-labs/repositories?q=fly-io-starter) to help you launch, as quickly as possible, a Fly App that uses Fauna as the database backend. Before you start, read the short section below to learn how Fauna and Fly.io makes for a great combination when building low latency, dynamic global applications.  
+Fauna provides [starter kits](https://github.com/orgs/fauna-labs/repositories?q=fly-io-starter) to help you quickly launch an app on Fly.io, using Fauna as the database backend. Before you start, read the short section below to learn how Fauna and Fly.io makes for a great combination when building low latency, dynamic global applications.  
 
 ## Region Groups
 
@@ -23,14 +23,14 @@ When you create a database in Fauna, you choose which Region Group you want the 
 
 ## Scale your deployment to match the Fauna footprint
 
-Currently, Fauna provides 2 choices of Regions Groups, US and EU. The table below lists the Fly regions that are closest to the Fauna replicas of each respective Region Group:
+Currently, Fauna provides 2 choices of Regions Groups, US and EU. The table below lists the Fly.io regions that are closest to the Fauna replicas of each respective Region Group:
 
 | Fauna Region Group | Deploy on Fly Regions |
 |--------------------|-----------------------|
 | EU                 | lhr, arn, fra         |
 | US                 | sjc, ord, iad         |
 
-To take full advantage of Fauna's distributed footprint, you should deploy your app on 3 Fly.io regions as well, and as close as possible to the Region Groups' replicas. For example, if you created your database in the US region group, scale up or set your Fly regions using this command:
+To take full advantage of Fauna's distributed footprint, you should deploy your app on 3 Fly.io regions as well, and as close as possible to the Region Groups' replicas. For example, if you created your database in the US region group, scale up or set your Fly.io regions using this command:
 
 ```
 fly regions set sjc ord iad
