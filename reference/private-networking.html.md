@@ -3,6 +3,7 @@ title: "Private Networking"
 layout: docs
 sitemap: false
 nav: firecracker
+redirect_from: /docs/reference/privatenetwork/
 ---
 
 Fly apps are connected by a mesh of Wireguard tunnels using IPV6.
