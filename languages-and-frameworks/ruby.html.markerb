@@ -6,7 +6,7 @@ redirect_from: /docs/getting-started/ruby/
 ---
 
 Deploying a Ruby application on Fly.io requires two essential ingredients:
-a [Gemfile](docs/languages-and-frameworks/ruby/) and a [config.ru](https://github.com/rack/rack/wiki/(tutorial)-rackup-howto) file.
+a [Gemfile](/docs/languages-and-frameworks/ruby/) and a [config.ru](https://github.com/rack/rack/wiki/(tutorial)-rackup-howto) file.
 Full-stack frameworks like Rails, Padrino, and Hanami provide both of these for you.
 Micro-frameworks like Sinatra, Camping, and Rack itself require you to create your own.
 
