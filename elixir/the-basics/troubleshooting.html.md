@@ -58,7 +58,7 @@ Setting the `hard_limit` and `soft_limit` closer to your needs will free up the 
 
 Here are some troubleshooting tips when working with [Clustering](/docs/elixir/the-basics/clustering/).
 
-When using [IEx to remote into a running application](./iex-into-running-app) to diagnose connection issues, note if you see this warning when connecting:
+When using [IEx to remote into a running application](/docs/elixir/the-basics/iex-into-running-app/) to diagnose connection issues, note if you see this warning when connecting:
 
 ```
 warning: the --remsh option will be ignored because IEx is running on limited shell
@@ -82,7 +82,7 @@ A working remote shell will return a node name more like this:
 
 Using `libcluster` is an easy way to [auto-cluster](./clustering) an Elixir application. However, going through the process manually can help diagnose issues.
 
-We can open two terminals locally on our machine. In terminal A, we get an [IEx terminal](./iex-into-running-app.html.md) to one node. Then in terminal B, we get an IEx terminal to a different node.
+We can open two terminals locally on our machine. In terminal A, we get an [IEx terminal](/docs/elixir/the-basics/iex-into-running-app/) to one node. Then in terminal B, we get an IEx terminal to a different node.
 
 In each terminal, we can ask the node for it's name:
 ```
