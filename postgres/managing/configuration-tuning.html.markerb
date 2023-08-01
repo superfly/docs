@@ -14,10 +14,9 @@ Before you start tuning, it's important to understand the tradeoffs that you're 
 
 ## View current configuration
 
-View your cluster's current configurable settings with [`fly postgres config view`](https://fly.io/docs/flyctl/postgres-config-view/):
-
+View your cluster's current configurable settings with [`fly postgres config show`](https://fly.io/docs/flyctl/postgres-config-show/):
 ```cmd
-fly postgres config view --app <pg-app-name>
+fly postgres config show --app <pg-app-name>
 ```
 
 ```output
@@ -50,7 +49,7 @@ Acquired lease f912530da158 on machine: 4d89649b460987
 Performing update...
 Update complete!
 Please note that some of your changes will require a cluster restart before they will be applied.
-To review the state of your changes, run: `fly postgres config view`
+To review the state of your changes, run: `fly postgres config show`
 ? Restart cluster now? Yes
 Identifying cluster role(s)
   Machine e286030f792186: replica
@@ -72,10 +71,10 @@ Postgres cluster has been successfully restarted!
 Each VM belonging to your Postgres app will be restarted to apply the changes. If you have a replica for high availability, this is updated and restarted first, and it becomes leader before the old leader gets updated.
 
 
-We can take one last look at our config view and see that our max-connections value has now officially been applied!
+We can take one last look at our config show and see that our max-connections value has now officially been applied!
 
 ```cmd
-fly postgres config view --app <pg-app-name>
+fly postgres config show --app <pg-app-name>
 ```
 
 ```out
