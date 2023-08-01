@@ -34,7 +34,7 @@ Your app is ready! Deploy with `flyctl deploy`
 
 ### Configure the app to mount the new volume
 
-Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`. The `fly deploy` command you'll run in the next step will create the Machine and the volume during the deploy process. The following configuration exposes data from a volume named `myapp_data` under the `/data` directory of the application.
+Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`. The `fly deploy` command you'll run in the next step will create the Machine and the volume during the deploy process. The following configuration exposes data from a volume named `myapp_data` under the `/data` directory in the Machine's file system.
 
 ```toml
 [mounts]
