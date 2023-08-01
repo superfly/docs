@@ -448,7 +448,7 @@ One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS 
 
 ### `services.concurrency`
 
-The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and, for legacy apps only, [scaling](/docs/reference/legacy-scaling).
+The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and, for legacy apps only, [scaling](/docs/apps/legacy-scaling/).
 
 This section is a simple list of key/values, so the section is denoted with single square brackets like so:
 
