@@ -56,7 +56,7 @@ Setting the `hard_limit` and `soft_limit` closer to your needs will free up the 
 
 ## _Clustering_
 
-Here are some troubleshooting tips when working with [Clustering](./clustering).
+Here are some troubleshooting tips when working with [Clustering](/docs/elixir/the-basics/clustering/).
 
 When using [IEx to remote into a running application](./iex-into-running-app) to diagnose connection issues, note if you see this warning when connecting:
 
