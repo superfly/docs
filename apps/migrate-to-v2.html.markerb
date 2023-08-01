@@ -113,7 +113,7 @@ grep $PATTERN $TEMPFILE | fly secrets import -a $2
 
 If your app uses Fly Volumes, you'll have to [provision a volume](/docs/apps/volume-storage) for the first Machine to be deployed. Volumes cannot be transferred between apps; you may need to copy data down from the old app, or create the new volume from a snapshot.
 
-[Horizontal scaling](docs/apps/scale-count) of Machines that have volumes is done using `fly m clone`, which will provision a new volume for the new Machine but will not copy any data into it; it's up to your app to do data replication between instances, if needed.
+[Horizontal scaling](/docs/apps/scale-count) of Machines that have volumes is done using `fly m clone`, which will provision a new volume for the new Machine but will not copy any data into it; it's up to your app to do data replication between instances, if needed.
 
 ### Deploy your new V2 app
 

@@ -9,7 +9,7 @@ order: 50
 <%= partial "/docs/partials/v2_transition_banner" %>
 
 <br>
-[**`fly scale`**](docs/flyctl/scale) commands apply VM memory and CPU settings to entire process groups in a Fly App. There are two subcommands for scaling these per-VM resources: `fly scale vm` applies a preset CPU/RAM combination; `fly scale memory` adjusts RAM relative to the preset's base RAM.
+[**`fly scale`**](/docs/flyctl/scale) commands apply VM memory and CPU settings to entire process groups in a Fly App. There are two subcommands for scaling these per-VM resources: `fly scale vm` applies a preset CPU/RAM combination; `fly scale memory` adjusts RAM relative to the preset's base RAM.
 
 You can scale an app even if it has crashed. Its VMs are restarted with the new specification.
 
