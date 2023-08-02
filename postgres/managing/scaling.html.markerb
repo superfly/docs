@@ -10,7 +10,7 @@ order: 50
 See [Monitoring](/docs/postgres/managing/monitoring/) for how to check the current sizes of the VMs in your Postgres cluster.
 
 <div class="warning icon">
-**Before scaling a Postgres VM:** Consider the [Postgres configuration parameters](/docs/postgres/managing/configuration-tuning.html) of your cluster, and adjust the resources accordingly. In particular, if the `shared-buffers` value is proportionally too high for the VM RAM, then a Postgres VM might fail its health checks.
+**Before scaling a Postgres VM:** Consider the [Postgres configuration parameters](/docs/postgres/managing/configuration-tuning/) of your cluster, and adjust the resources accordingly. In particular, if the `shared-buffers` value is proportionally too high for the VM RAM, then a Postgres VM might fail its health checks.
 <br><br>
 If you're scaling your VMs up, then scale the VMs first before adjusting the Postgres config to match. If you're scaling down, then adjust the cluster's Postgres parameters to match the reduced resources before scaling the VMs.
 </div>
