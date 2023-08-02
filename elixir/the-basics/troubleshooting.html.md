@@ -64,7 +64,7 @@ When using [IEx to remote into a running application](/docs/elixir/the-basics/ie
 warning: the --remsh option will be ignored because IEx is running on limited shell
 ```
 
-When that warning is present, the Elixir node we are connecting to is not the remote running node. A new node was launched when the remote shell request was ignored. Refer to the [docs here about the `--pty`](./iex-into-running-app) option.
+When that warning is present, the Elixir node we are connecting to is not the remote running node. A new node was launched when the remote shell request was ignored. Refer to the [docs here about the `--pty`](#iex-into-running-app) option.
 
 Another indication of this situation is when typing `Node.self()`, the name of the node is returned with a prefix similar to "rem-ea46-".
 Example:
@@ -80,7 +80,7 @@ A working remote shell will return a node name more like this:
 
 ### Testing Node Connectivity
 
-Using `libcluster` is an easy way to [auto-cluster](./clustering) an Elixir application. However, going through the process manually can help diagnose issues.
+Using `libcluster` is an easy way to [auto-cluster](#clustering) an Elixir application. However, going through the process manually can help diagnose issues.
 
 We can open two terminals locally on our machine. In terminal A, we get an [IEx terminal](/docs/elixir/the-basics/iex-into-running-app/) to one node. Then in terminal B, we get an IEx terminal to a different node.
 
