@@ -63,7 +63,7 @@ Here's an example of a console command for Django:
 console_command = "/code/manage.py shell"
 ```
 
-### `swap_size_mb` option
+## `swap_size_mb` option
 
 The size of Linux swap space to create and configure expressed in megabytes.
 
