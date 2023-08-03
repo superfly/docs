@@ -65,7 +65,9 @@ console_command = "/code/manage.py shell"
 
 ## `swap_size_mb` option
 
-The size of Linux swap space to create and configure expressed in megabytes.
+Setting this option enables Linux swap on Machines. A swap partition is created with size `swap_size_mb`, expressed in megabytes.
+
+Swapping to disk can help avoid out-of-memory crashes on brief spikes in memory use. Swap is much slower than RAM, so if performance is important, a better solution is to increase the Machine memory with [`fly scale memory`](/docs/flyctl/scale-memory/).
 
 ```toml
 swap_size_mb = 512
