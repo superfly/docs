@@ -35,6 +35,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
       --no-cache                         Do not use the build cache when building the image
       --no-public-ips                    Do not allocate any new public IP addresses
       --now                              Deploy now without confirmation
+      --provision-extensions             Provision any extensions assigned as a default to first deployments
       --push                             Push image to registry after build is complete
   -r, --region string                    The target region (see 'flyctl platform regions')
       --release-command-timeout string   Seconds to wait for a release command finish running, or 'none' to disable. (default "300")
