@@ -17,7 +17,7 @@ Fauna provides [starter kits](https://github.com/orgs/fauna-labs/repositories?q=
 
 A Fauna Region Group refers to the locality footprint of where the replicas are located, and allows you to control where your data resides, making it possible to comply with data locality legislation, such as the General Data Protection Regulation ([GDPR](https://gdpr-info.eu/)).
 
-![Fauna Region Group](docs/images/fauna_region_groups.png)
+![Fauna Region Group](/docs/images/fauna_region_groups.png)
 
 When you create a database in Fauna, you choose which Region Group you want the database created in. When you query the database, your request is automatically routed to the closest replica (within the Region Group) based on latency. This functionality comes out-of-the-box without any special configuration or deployment strategy.
 
