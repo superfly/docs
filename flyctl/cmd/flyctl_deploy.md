@@ -42,7 +42,6 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
       --remote-only                      Perform builds on a remote builder instance instead of using the local docker daemon
       --smoke-checks                     Perform smoke checks during deployment (default true)
       --strategy string                  The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. Default is canary, or rolling when max-per-region is set.
-      --strategy-batch                   For "rolling" and "canary": batch Machine updates into 3 groups when updating more than 4. (default true)
       --update-only                      Do not create Machines for new process groups
       --vm-cpukind string                The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                      Number of CPUs
