@@ -284,6 +284,9 @@ log can produce a lot of disk IO when enabled.
 # verbose and it can degrade performance. This is for debugging
 # only and should not typically be enabled in production.
 tracing:
+  # Toggles tracing if 'path' is also set. Defaults to true.
+  enabled: true
+
   # Output path on disk.
   path: "/var/log/lifefs/trace.log"
 
