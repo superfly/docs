@@ -21,6 +21,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
       --detach                           Return immediately instead of monitoring deployment progress
       --dockerfile string                Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
   -e, --env stringArray                  Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
+      --exclude-regions strings          Deploy to all machines except machines in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times. --exclude-regions iad,sea --exclude-regions syd will exclude all three iad, sea, and syd regions. Applied after --only-regions. V2 machines platform only.
       --file-literal stringArray         Set of literals in the form of /path/inside/machine=VALUE pairs where VALUE is the content. Can be specified multiple times.
       --file-local stringArray           Set of files in the form of /path/inside/machine=<local/path> pairs. Can be specified multiple times.
       --file-secret stringArray          Set of secrets in the form of /path/inside/machine=SECRET pairs where SECRET is the name of the secret. Can be specified multiple times.
@@ -31,10 +32,12 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
       --image-label string               Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
       --lease-timeout int                Seconds to lease individual machines while running deployment. All machines are leased at the beginning and released at the end. The lease is refreshed periodically for this same time, which is why it is short. flyctl releases leases in most cases. (default 13)
       --local-only                       Only perform builds locally using the local docker daemon
+      --max-unavailable float            Max number of unavailable machines during rolling updates. A number between 0 and 1 means percent of total machines (default 0.33)
       --nixpacks                         Deploy using nixpacks to build the image
       --no-cache                         Do not use the build cache when building the image
       --no-public-ips                    Do not allocate any new public IP addresses
       --now                              Deploy now without confirmation
+      --only-regions strings             Deploy to machines only in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times. --only-regions iad,sea --only-regions syd will deploy to all three iad, sea, and syd regions. Applied before --exclude-regions. V2 machines platform only.
       --provision-extensions             Provision any extensions assigned as a default to first deployments
       --push                             Push image to registry after build is complete
   -r, --region string                    The target region (see 'flyctl platform regions')
