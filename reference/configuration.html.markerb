@@ -302,7 +302,7 @@ To configure health checks for your http service, you can use the `http_service.
   path = "/"
 ```
 
-Roughly translated, this section says every thirty seconds, perform a HTTP GET on the root path (e.g. http://appname.fly.dev/) looking for it to return a HTTP 200 status within five seconds. The parameters of a `check` are listed below.
+Roughly translated, this section says every thirty seconds, perform an HTTP GET on the root path (e.g. http://appname.fly.dev/) looking for it to return an HTTP 200 status within five seconds. The parameters of a `check` are listed below.
 
 Times are in milliseconds unless units are specified.
 
@@ -507,13 +507,12 @@ Another way of checking a service is running is through HTTP checks as defined i
     method = "get"
     path = "/"
     protocol = "http"
-    restart_limit = 0
     timeout = 2000
     tls_skip_verify = false
     [services.http_checks.headers]
 ```
 
-Roughly translated, this section says every ten seconds, perform a HTTP GET on the root path (e.g. http://appname.fly.dev/) looking for it to return a HTTP 200 status within two seconds. The parameters of a `http_check` are listed below.
+Roughly translated, this section says every ten seconds, perform an HTTP GET on the root path (e.g. http://appname.fly.dev/) looking for it to return an HTTP 200 status within two seconds. The parameters of a `http_check` are listed below.
 
 Times are in milliseconds unless units are specified.
 
