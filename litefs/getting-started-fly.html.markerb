@@ -194,7 +194,7 @@ You should add this as a secret for your application named `LITEFS_CLOUD_TOKEN` 
 fly secrets set LITEFS_CLOUD_TOKEN=$(litefs cloud auth token)
 ```
 
-[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs-cloud
+[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
 
 ### Configuring the proxy
 
