@@ -64,7 +64,7 @@ If your app doesn't exit when idle, then we recommend setting `auto_stop_machine
 
 When `auto_stop_machines = true`, set `min_machines_running` to `1` or higher if you need to keep one or more Machines running all the time in your primary region. The `min_machines_running` value applies to the total number of Machines, not Machines per region. For example, if `min_machines_running = 1` and there's no traffic to your app, then Fly Proxy will stop Machines until eventually there is only one Machine running in your primary region.
 
-There's no "maximum machines running" setting, because the maximum number of Machines is just the total number of Machines you've created for your app. Learn more in the [How It Works](#how-it-works) section.
+There's no "maximum machines running" setting, because the maximum number of Machines is just the total number of Machines you've created for your app. Learn more in the [How it works](#how-it-works) section.
 
 ## How it works
 
