@@ -6,7 +6,7 @@ redirect_from: /docs/reference/postgres-on-nomad/
 order: 0
 ---
 
-<div class="callout">This document applies to all Fly Postgres clusters created using flyctl versions < v0.0.412. These run on our [Apps V1](https://fly.io/docs/reference/apps/) architecture (orchestrated by Nomad). Docs for newer Fly Postgres clusters live at **[Fly Postgres](/docs/postgres/)**</div>
+<div class="callout" data-render="markdown">This document applies to all Fly Postgres clusters created using flyctl versions < v0.0.412. These run on our [Apps V1](https://fly.io/docs/reference/apps/) architecture (orchestrated by Nomad). Docs for newer Fly Postgres clusters live at **[Fly Postgres](/docs/postgres/)**</div>
 
 [Postgres](https://www.postgresql.org/), or PostgreSQL, is a powerful open-source object relational database system.
 
@@ -315,12 +315,12 @@ await client.end()
 ### Connecting with Prisma – Node.js ([docs](https://www.prisma.io/))
 
 Prisma is an open-source object-relational mapper (ORM) for Node.js and works with both JavaScript and TypeScript. It consists of 3 components:
-- Prisma Client - a type-safe query builder 
+- Prisma Client - a type-safe query builder
 - Prisma Migrate - a data modeling and migration tool
 - Prisma Studio - a modern intuitive GUI for interacting with your database
 
 
-<details>
+<details data-render="markdown">
 <summary>Set up Prisma in your project</summary>
 
 Install the Prisma CLI and Prisma Client dependencies in your project

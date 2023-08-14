@@ -114,7 +114,7 @@ Prisma is an open-source object-relational mapper (ORM) for Node.js and works wi
 - Prisma Studio - a modern intuitive GUI for interacting with your database
 
 
-<details>
+<details data-render="markdown">
 <summary>Set up Prisma in your project</summary>
 
 Install the Prisma CLI and Prisma Client dependencies in your project
@@ -199,7 +199,7 @@ main()
 
 Sequelize is an open-source object-relational mapper (ORM) for Node.js and works with JavaScript and TypeScript.
 
-<details>
+<details data-render="markdown">
 <summary>Set up Sequelize inside your project</summary>
 
 Install the Sequelize dependencies and CLI into your project
@@ -272,7 +272,7 @@ Next pass the `DATABASE_URL` from the env into the Sequelize constructor in `mod
 ```javascript
 // Connect to fly postgres app
 let sequelize = new Sequelize(process.env.DATABASE_URL);
-  
+
 // Confirms the connection to the database
 (async () => {
   try {
@@ -284,7 +284,7 @@ let sequelize = new Sequelize(process.env.DATABASE_URL);
 })();
 ```
 
-<details>
+<details data-render="markdown">
 <summary>Configure Sequelize to connect with your read replica databases</summary>
 [Fly docs: How to add Read Replica database with flyctl](https://fly.io/docs/postgres/advanced-guides/high-availability-and-global-replication/)
 
