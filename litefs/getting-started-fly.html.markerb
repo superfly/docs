@@ -278,14 +278,14 @@ support subdirectories.
 
 ## Importing your database
 
-If you have an existing database, you can import it using the `ltx import`
+If you have an existing database, you can import it using the `litefs import`
 command.
 
 ```sh
-ltx import -name my.db /path/to/database
+litefs import -name my.db /path/to/database
 ```
 
-Refer to the [`ltx import`](/docs/litefs/import) documentation for more details.
+Refer to the [`litefs import`](/docs/litefs/import) documentation for more details.
 
 <div class="warning icon">
   You should only interact with SQLite databases on LiteFS through
