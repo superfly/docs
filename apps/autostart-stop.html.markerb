@@ -60,7 +60,7 @@ When you create an app using the `fly launch` command, the default settings in `
 
 If your app already [exits when idle](#stop-a-machine-by-terminating-its-main-process), then you can set `auto_start_machines = true` and `auto_stop_machines = false` to have Fly Proxy automatically restart the Machines stopped by your app. 
 
-If your app doesn't exit when idle, then we recommend setting `auto_stop_machines` and `auto_start_machines` to the same value (either both `true` or both `false`) so that Fly Proxy doesn't stop Machines and never restart them. For example, if `auto_start_machines = false` and `auto_stop_machines = true`, then Fly Proxy automatically stops your Machines when there's low traffic but doesn't start them again. When all or most of your Machines are stopped, requests to your app will start failing.
+If your app doesn't exit when idle, then we recommend setting `auto_stop_machines` and `auto_start_machines` to the same value (either both `true` or both `false`) so that Fly Proxy doesn't stop Machines and never restart them. For example, if `auto_start_machines = false` and `auto_stop_machines = true`, then Fly Proxy automatically stops your Machines when there's low traffic but doesn't start them again. When all or most of your Machines stop, requests to your app could start failing.
 
 When `auto_stop_machines = true`, set `min_machines_running` to `1` or higher if you need to keep one or more Machines running all the time in your primary region. The `min_machines_running` value applies to the total number of Machines, not Machines per region. For example, if `min_machines_running = 1` and there's no traffic to your app, then Fly Proxy will stop Machines until eventually there is only one Machine running in your primary region.
 
@@ -76,7 +76,7 @@ The automatic start and stop feature only works on existing Machines and never c
 
 ### Fly Proxy stops Machines
 
-When `auto_stop_machines = true` in your `fly.toml`, the proxy looks at Machines running in a single region and uses the concurrency [`soft_limit` setting](/docs/reference/configuration/#the-http_service-section) for each Machine to determine if there's excess capacity. If the proxy decides there's excess capacity, it stops exactly one machine. The proxy repeats this process every few minutes, stopping only one machine per region, if needed, each time.
+When `auto_stop_machines = true` in your `fly.toml`, the proxy looks at Machines running in a single region and uses the concurrency [`soft_limit` setting](/docs/reference/configuration/#the-http_service-section) for each Machine to determine if there's excess capacity. If the proxy decides there's excess capacity, it stops exactly one Machine. The proxy repeats this process every few minutes, stopping only one Machine per region, if needed, each time.
 
 If you have the [`kill_signal` and `kill_timeout` options](/docs/reference/configuration/#runtime-options) configured in your `fly.toml` file, then Fly Proxy uses those settings when it stops a Machine.
 
@@ -101,23 +101,23 @@ Fly Proxy determines when to start a Machine as follows:
 
 ## When to stop and start Fly Machines automatically, or not
 
-If your app has highly variable request workloads, then you can set `auto_stop_machines` and `auto_start_machines` to `true` to manage your Fly Machines as demand decreases and increases. This could reduce costs, because you'll never have to run excess Machines to handle peak load; you'll only run, and be charged for, the number of Machines that are needed at any given time.
+If your app has highly variable request workloads, then you can set `auto_stop_machines` and `auto_start_machines` to `true` to manage your Fly Machines as demand decreases and increases. This could reduce costs, because you'll never have to run excess Machines to handle peak load; you'll only run, and get charged for, the number of Machines that you need.
 
-The difference between this feature and what is typical in autoscaling, is that it doesn't create new Machines up to a specified maximum. It automatically starts only existing Machines. For example, if you want to have a maximum of 10 Machines available to service requests, then you need to create 10 Machines for your app.
+The difference between this feature and what's typical in autoscaling, is that it doesn't create new Machines up to a specified maximum. It automatically starts only existing Machines. For example, if you want to have a maximum of 10 Machines available to service requests, then you need to create 10 Machines for your app.
 
-If you need all of your app's Machines to run continuously, then you can set `auto_stop_machines` and `auto_start_machines` to `false`.
+If you need all your app's Machines to run continuously, then you can set `auto_stop_machines` and `auto_start_machines` to `false`.
 
 If you only need a certain number of your app's Machines to run continuously, then you can set `auto_stop_machines = true` and `min_machines_running` to `1` or higher.
 
 ## Stop a Machine by terminating its main process
 
-Setting your app to automatically stop when there's excess capacity using `auto_stop = true` is a substitute for when your app doesn't implement automatic shut down after a period of inactivity. If you want a custom shut-down process for your app, then you can code your app to exit from within when idle.
+Setting your app to automatically stop when there's excess capacity using `auto_stop = true` is a substitute for when your app doesn't shut itself down automatically after a period of inactivity. If you want a custom shut-down process for your app, then you can code your app to exit from within when idle.
 
 Here are some examples:
 
 * [Shutting Down a Phoenix App When Idle](https://fly.io/phoenix-files/shut-down-idle-phoenix-app/): a post by Chris McCord on adding a task to an Elixir app's supervision tree that shuts down the Erlang runtime when there are no active connections.
-* For Rails apps, dockerfile-rails provides a [--max-idle](https://github.com/rubys/dockerfile-rails#addremove-a-feature) option that will exit after _n_ seconds of inactivity.
+* For Rails apps, the `dockerfile-rails` generator provides a [--max-idle](https://github.com/rubys/dockerfile-rails#addremove-a-feature) option that exits after _n_ seconds of inactivity.
 * [A Tired Proxy in Go](https://github.com/superfly/tired-proxy) used in [Building an In-Browser IDE the Hard Way](https://fly.io/blog/remote-ide-machines/). [There's a community fork with more recent updates](https://community.fly.io/t/improved-tired-proxy-for-use-with-fly-machines/10584).
 * A minimal demo app in Typescript/Remix: [code](https://github.com/fly-apps/autoscale-to-zero-demo) & [demo](https://autoscale-to-zero-demo.fly.dev/).
 
-As of `flyctl` v0.0.520, Fly Postgres [supports this too](https://community.fly.io/t/scale-to-zero-postgres-for-hobby-projects/12212)!
+As of `flyctl` v0.0.520, Fly Postgres [supports this too](https://community.fly.io/t/scale-to-zero-postgres-for-hobby-projects/12212).
