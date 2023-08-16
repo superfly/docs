@@ -32,7 +32,7 @@ mkdir logshippper
 cd logshippper
 
 # Create the app but don't deploy just yet
-fly launch --no-deploy --image ghcr.io/superfly/fly-log-shipper:latest
+fly launch --no-deploy --no-public-ips --image ghcr.io/superfly/fly-log-shipper:latest
 
 # Set some secrets. The secret / env var you set
 # determines which "sinks" are configured
