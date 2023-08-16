@@ -7,31 +7,19 @@ redirect_from: /docs/getting-started/node/
 
 <%= partial "partials/intro", locals: { runtime: "Node" } %>
 
-## _The Hellonode Application_
+## _The node-demo Application_
 
-Our example will be a basic "hello world" example using Node and Express.
+Our example will be a visitor counter appliation that has no dependencies.
+You can obtain the source by running the following command in an empty directory:
 
-You can get the code for the example from [the hellonode GitHub repository](https://github.com/fly-apps/hellonode-builtin). Just `git clone https://github.com/fly-apps/hellonode-builtin` to get a local copy. Here's all the code:
-
-```javascript
-const express = require("express");
-const app = express();
-const port = process.env.PORT || 3000;
-
-app.get(["/", "/:name"], (req, res) => {
-  greeting = "<h1>Hello From Node on Fly!</h1>";
-  name = req.params["name"];
-  if (name) {
-    res.send(greeting + "</br>and hello to " + name);
-  } else {
-    res.send(greeting);
-  }
-});
-
-app.listen(port, () => console.log(`HelloNode app listening on port ${port}!`));
+```
+npx --yes @flydotio/node-demo@latest
 ```
 
-We'll call this file `server.js` and run `npm init` and `npm install express --save` so we've got the basic node setup.
+Those that prefer [bun](https://bun.sh/) can replace `npx --yes` with `bunx`, and
+all subsequent references to `node` with `bun`.
+
+The source for this demo can be found at https://github.com/fly-apps/node-demo/.
 
 ## _Running The Application_
 
@@ -41,7 +29,7 @@ Run `node server.js` to start the application
 node server.js
 ```
 ```output
-HelloNode app listening on port 3000!
+Server is listening on port 3000
 ```
 
 And connect to localhost:3000 to confirm that you have a working Node application. Now to package it up for Fly.
@@ -61,22 +49,41 @@ flyctl launch
 ```
 ```output
 Scanning source code
-Detected NodeJS app
-Using the following build configuration
-        Builder: heroku/buildpacks:20
-? Select organization: Demo (demo)
-? Select region: ord (Chicago, Illinois (US))
-? Would you like to deploy now? Yes
+Detected a NodeJS app
+? Choose an app name (leave blank to generate one): 
+? Select Organization: Sam Ruby (personal)
+Some regions require a paid plan (bom, fra, maa).
+See https://fly.io/plans to set up a plan.
 
-Deploying hellonode
+? Choose a region for deployment: Ashburn, Virginia (US) (iad)
+App will use 'iad' region as primary
+
+Created app 'restless-snow-5214' in organization 'personal'
+Admin URL: https://fly.io/apps/restless-snow-5214
+Hostname: restless-snow-5214.fly.dev
+installing: npx --yes @flydotio/dockerfile@latest
+     create  Dockerfile
+     create  .dockerignore
+Wrote config file fly.toml
+Validating /Users/rubys/tmp/demo/fly.toml
+Platform: machines
+✓ Configuration is valid
+
+If you need custom packages installed, or have problems with your deployment
+build, you may need to edit the Dockerfile for app-specific changes. If you
+need help, please post on https://community.fly.io.
+
+Now: run 'fly deploy' to deploy your Node.js app.
 ...
 ```
 
 First, this command scans your source code to determine how to build a deployment image as well as identify any other configuration your app needs, such as secrets and exposed ports.
 
-After your source code is scanned and the results are printed, you'll be prompted for an organization. Organizations are a way of sharing applications and resources between Fly users. Every fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
+After your source code is scanned and the results are printed, you'll be prompted for an application name.  You if you don't provide one, fly will generate a name for you.
 
-Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region.
+Next you'll be prompted for an organization. Organizations are a way of sharing applications and resources between Fly users. Every fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
+
+Finally, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region.
 
 At this point, `flyctl` creates an app for you and writes your configuration to a `fly.toml` file. You'll then be prompted to build and deploy your app. Once complete, your app will be running on fly.
 
@@ -85,16 +92,18 @@ At this point, `flyctl` creates an app for you and writes your configuration to 
 The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also created a Fly-side application slot of the same name, "hellonode". If we look at the `fly.toml` file we can see the name in there:
 
 ```toml
-app = "hellonode"
+app = "restless-snow-5214"
+primary_region = "iad"
 
 [build]
-  builder = "heroku/buildpacks:20"
 
-[[services]]
-  internal_port = 8080
-  protocol = "tcp"
-
-...
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
 ```
 
 The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly platform. The rest of the file contains settings to be applied to the application when it deploys.
@@ -109,7 +118,7 @@ To deploy changes to your app, just run:
 flyctl deploy
 ```
 
-This will lookup our `fly.toml` file, and get the app name `hellonode` from there. Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl will return you to the command line when it's done.
+This will lookup our `fly.toml` file, and get the app name from there. Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl will return you to the command line when it's done.
 
 ## _Viewing the Deployed App_
 
@@ -120,15 +129,16 @@ flyctl status
 ```
 ```output
 App
-  Name     = hellonode
-  Owner    = dj
-  Version  = 0
-  Status   = running
-  Hostname = hellonode.fly.dev
+  Name     = restless-snow-5214                                        
+  Owner    = personal                                                  
+  Hostname = restless-snow-5214.fly.dev                                
+  Image    = restless-snow-5214:deployment-01H7ZTDQAPHN6AGK7HE76KMSFZ  
+  Platform = machines                                                  
 
-Allocations
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-ada41989 0       fra    run     running 1 total, 1 passing 0        33s ago
+Machines
+PROCESS	ID            	VERSION	REGION	STATE  	ROLE	CHECKS	LAST UPDATED         
+app    	17811e91aed728	1      	iad   	started	    	      	2023-08-16T18:42:01Z	
+app    	48ed0d4f71ee28	1      	iad   	started	    	      	2023-08-16T18:42:11Z
 ```
 
 ## _Connecting to the App_
@@ -139,24 +149,25 @@ The quickest way to browse your newly deployed application is with the `flyctl o
 flyctl open
 ```
 ```output
-Opening http://hellonode.fly.dev/
+opening https://restless-snow-5214.fly.dev/ ...
 ```
 
 Your browser will be sent to the displayed URL. Fly will auto-upgrade this URL to an HTTPS secured URL.
 
 ## _Bonus Points_
 
-* When our Dockerfile is run, it copies everything from the directory over to the Docker image. For Node applications, some directories like `node_modules` are going to be rebuilt anyway so there's no need to copy them. Create a `.dockerignore` file and add `node_modules` to it to do this.
-* You can also use the `.dockerignore` to skip unused project assets and any other files which aren't needed at runtime.
+* Review the `Dockerfile` and `.dockerignore` files that have been provided for you.
+* Check out our [blog post](https://fly.io/blog/vanilla-candy-sprinkles/) to see how to
+add templates, databases and more to the application.
 * If you want to know what IP addresses the app is using, try `flyctl ips list`:
 
 ```cmd
 flyctl ips list
 ```
 ```out
-TYPE ADDRESS                              CREATED AT
-v4   50.31.246.73                         23m42s ago
-v6   2a09:8280:1:3949:7ac8:fe55:d8ad:6b6f 23m42s ago
+VERSION	IP                  	TYPE           	REGION	CREATED AT 
+v6     	2a09:8280:1::37:5a22	public         	global	2m16s ago 	
+v4     	66.241.125.61       	public (shared)	
 ```
 
 ## _Arrived at Destination_
