@@ -8,7 +8,7 @@ order: 10
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-With Fly Launch, you can create a brand new app on Fly.io by running this command from the root directory of your project:
+With Fly Launch, you can create a brand new app on Fly.io by running this command from the source directory of your project:
 
 ```cmd
 fly launch
@@ -51,7 +51,7 @@ You can nudge `fly launch` to better suit your project.
 
 ### Choose how the Docker image is built
 
-Tell `fly launch` how you want to get the Docker image for your app, using either the `--image` or `--dockerfile` option, or by catching the Dockerfile launch scanner's attention with the presence of a [Dockerfile](/docs/languages-and-frameworks/dockerfile/) in your app's root directory. The Dockerfile scanner doesn't do a lot of configuration, but it prevents other scanners from taking over.
+Tell `fly launch` how you want to get the Docker image for your app, using either the `--image` or `--dockerfile` option, or by catching the Dockerfile launch scanner's attention with the presence of a [Dockerfile](/docs/languages-and-frameworks/dockerfile/) in your project source directory. The Dockerfile scanner doesn't do a lot of configuration, but it prevents other scanners from taking over.
 
 The actual Docker image build (or image pull) for a Fly App takes place during deployment. `fly launch` sets the stage by recording how to build, or get, the image, and both the first and all later deploys use that information.
 
