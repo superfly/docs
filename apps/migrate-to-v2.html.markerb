@@ -206,7 +206,7 @@ Fly Launch allows you to manage Fly Machines with app-wide configuration and coo
 
 Thus, migrating an older "Machines" Fly App to Fly Launch is fairly straightforward **if all the Machines belonging to the app are running the same image with the same configuration.**
 
-From your project's root directory (where you'll be deploying it from, and where `fly.toml` should live):
+From your project's source directory (where you'll be deploying it from, and where `fly.toml` should live):
 
 ```
 $ fly config save -a appname # to get a fly.toml from a machine's config
