@@ -125,7 +125,7 @@ Standard `flyctl` operations like `deploy`, `scale`, `autoscaling` aren't curren
 `ssh` is supported. You can SSH to a machine using its IPv6 address (from `fly machines list`):
 
 ```cmd
-fly ssh console 'fdaa:0:6787:a7b:a15f:1a8c:2c01:2'
+fly ssh console 'your:machines:ipv6:address:0:0:0:0'
 ```
 
 Or you can select a machine to connect to from a list using `fly ssh console -s`:
