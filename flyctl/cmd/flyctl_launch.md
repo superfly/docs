@@ -36,6 +36,7 @@ flyctl launch [flags]
       --nixpacks                         Deploy using nixpacks to build the image
       --no-cache                         Do not use the build cache when building the image
       --no-deploy                        Do not prompt for deployment
+      --no-extensions                    Do not provision Sentry nor other auto-provisioned extensions
       --no-public-ips                    Do not allocate any new public IP addresses
       --now                              Deploy now without confirmation
       --only-regions strings             Deploy to machines only in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times. --only-regions iad,sea --only-regions syd will deploy to all three iad, sea, and syd regions. Applied before --exclude-regions. V2 machines platform only.
@@ -60,6 +61,7 @@ flyctl launch [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
       --verbose               Verbose output
 ~~~
 

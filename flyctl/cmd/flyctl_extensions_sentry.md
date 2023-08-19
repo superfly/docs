@@ -8,7 +8,7 @@ flyctl extensions sentry [command] [flags]
 
 ## Available Commands
 * [create](/docs/flyctl/extensions-sentry-create/)	 - Provision a Sentry project for a Fly.io app
-* [dashboard](/docs/flyctl/extensions-sentry-dashboard/)	 - View Sentry issues for this application
+* [dashboard](/docs/flyctl/extensions-sentry-dashboard/)	 - View application errors in the Sentry dashboard
 
 ## Options
 
@@ -20,6 +20,7 @@ flyctl extensions sentry [command] [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
       --verbose               Verbose output
 ~~~
 

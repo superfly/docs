@@ -1,8 +1,8 @@
-Request for a VM to be asynchronously restarted.
+View application errors on Sentry.io
 
 ## Usage
 ~~~
-flyctl vm restart <vm-id> [flags]
+flyctl apps errors [flags]
 ~~~
 
 ## Options
@@ -10,7 +10,7 @@ flyctl vm restart <vm-id> [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for restart
+  -h, --help            help for errors
 ~~~
 
 ## Global Options
@@ -23,5 +23,5 @@ flyctl vm restart <vm-id> [flags]
 
 ## See Also
 
-* [flyctl vm](/docs/flyctl/vm/)	 - Commands that manage VM instances
+* [flyctl apps](/docs/flyctl/apps/)	 - Manage apps
 
