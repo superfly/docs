@@ -19,6 +19,7 @@ flyctl apps open [RELATIVE_URI] [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
       --verbose               Verbose output
 ~~~
 

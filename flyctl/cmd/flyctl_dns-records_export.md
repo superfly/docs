@@ -15,6 +15,7 @@ flyctl dns-records export <domain> [filename] [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
       --verbose               Verbose output
 ~~~
 

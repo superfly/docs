@@ -28,6 +28,7 @@ authenticated and in use.
 
 ~~~
   -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
       --verbose               Verbose output
 ~~~
 

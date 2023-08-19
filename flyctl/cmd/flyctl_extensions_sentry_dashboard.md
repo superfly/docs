@@ -1,4 +1,4 @@
-View Sentry issues for this application
+View application errors in the Sentry dashboard
 
 ## Usage
 ~~~
@@ -17,6 +17,7 @@ flyctl extensions sentry dashboard [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
       --verbose               Verbose output
 ~~~
 

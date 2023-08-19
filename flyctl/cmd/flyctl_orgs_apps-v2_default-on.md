@@ -15,6 +15,7 @@ flyctl orgs apps-v2 default-on <org-slug> [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
       --verbose               Verbose output
 ~~~
 

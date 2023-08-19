@@ -76,6 +76,7 @@ flyctl [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
   -h, --help                  help for flyctl
       --verbose               Verbose output
 ~~~

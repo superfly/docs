@@ -11,6 +11,7 @@ flyctl apps [command] [flags]
 ## Available Commands
 * [create](/docs/flyctl/apps-create/)	 - Create a new application
 * [destroy](/docs/flyctl/apps-destroy/)	 - Permanently destroys an app
+* [errors](/docs/flyctl/apps-errors/)	 - View application errors on Sentry.io
 * [list](/docs/flyctl/apps-list/)	 - List applications
 * [move](/docs/flyctl/apps-move/)	 - Move an app to another organization
 * [open](/docs/flyctl/apps-open/)	 - Open browser to current deployed application
@@ -27,6 +28,7 @@ flyctl apps [command] [flags]
 
 ~~~
   -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
       --verbose               Verbose output
 ~~~
 
