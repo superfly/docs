@@ -18,9 +18,62 @@ If you just want to see how Fly deployment works, follow these steps.
 
 Now let's launch your NextJS app.
 
-<%= partial "partials/launch", locals: { detected: "NextJS", app_name: app_name } %>
+```cmd
+cd nextjs-blog
+fly launch
+```
+```output
+Creating app in /Users/me/nextjs-blog
+Scanning source code
+Detected a Next.js app
+? Choose an app name (leave blank to generate one): nextjs-blog
+? Select Organization: flyio (flyio)
+Some regions require a paid plan (bom, fra, maa).
+See https://fly.io/plans to set up a plan.
+
+? Choose a region for deployment: Ashburn, Virginia (US) (iad)
+App will use 'iad' region as primary
+
+Created app 'nextjs-blog' in organization 'personal'
+Admin URL: https://fly.io/apps/nextjs-blog
+Hostname: nextjs-blog.fly.dev
+     create  Dockerfile
+Wrote config file fly.toml
+Validating /Users/rubys/tmp/nextjs-blog/fly.toml
+Platform: machines
+✓ Configuration is valid
+
+If you need custom packages installed, or have problems with your deployment
+build, you may need to edit the Dockerfile for app-specific changes. If you
+need help, please post on https://community.fly.io.
+
+Now: run 'fly deploy' to deploy your Next.js app.
+```
 
 <%= partial "partials/launched" %>
+
+## _fetch errrors processing images_
+
+If your application uses the `<Image>` element and your images aren't showing and you are seeing the following in your logs:
+
+```
+TypeError: fetch failed
+```
+
+Scan backwards in your logs for the following:
+
+```
+Warning: For production Image Optimization with Next.js, the optional 'sharp' package is strongly recommended. Run 'npm i sharp', and Next.js will use it automatically for Image Optimization.
+
+Read more: https://nextjs.org/docs/messages/sharp-missing-in-production
+```
+
+Follow the instructions in the message, and then redeploy:
+
+```
+npm i sharp
+fly deploy
+```
 
 ## _What about build time environment variables?_
 
@@ -36,11 +89,20 @@ Search for `[build.args]` on your `fly.toml` and add the variables you need ther
   NEXT_PUBLIC_OTHER="Other value"
 ```
 
-Then go to your `Dockerfile` and add `ARG` instructions before your `yarn build` like this:
+Then go to your `Dockerfile` and add `ARG` instructions before your `FROM base as build` line like this:
 
 ```Dockerfile
-ARG NEXT_PUBLIC_EXAMPLE
-ARG NEXT_PUBLIC_OTHER
+# Throw-away build stage to reduce size of final image
+FROM base as build
 
-# Your yarn build should come after those ARGs
+# Build arguments
+ARG NEXT_PUBLIC_EXAMPLE="value"
+ARG NEXT_PUBLIC_OTHER="Other value"
+```
+
+The dockerfile-node application can be used to help with this.  Update your dockerfile using the following command:
+
+```cmd
+npx dockerfile "--arg-build=NEXT_PUBLIC_EXAMPLE:value" \
+  "--arg-build=NEXT_PUBLIC_OTHER=Other value"
 ```
