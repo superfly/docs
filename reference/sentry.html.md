@@ -30,11 +30,21 @@ Finally, `SENTRY_DSN` will be set as a secret available in your application runt
 
 ## Instrumenting your application with the Sentry SDK
 
+For the following frameworks/runtimes, we'll auto-instrument your app at launch time. Auto-instrumentation is helpful to catch boot errors right out of the gate, when you first deploy your application.
+
+### Ruby on Rails
+
+If `flyctl launch` detects you app as a Rails app, we will:
+
+* Install the [Ruby Sentry SDK](https://github.com/getsentry/sentry-ruby) rubygem
+* Add an initializer for automatic exception handling and performance tracing
+
+
+Sentry can also instrument specific libraries like Sidekiq, Delayed Job, Resque, and more. Check the [Sentry Ruby documentation](https://docs.sentry.io/platforms/ruby/) for more information.
+
+### Other runtimes and frameworks
+
 Learn how to setup your application with the Sentry SDK for your runtime in their extensive [documentation](https://docs.sentry.io/).
-
-For the following frameworks/runtimes, we'll auto-instrument your app at launch time:
-
-* Ruby on Rails
 
 ## Open the Sentry project dashboard for an application
 
