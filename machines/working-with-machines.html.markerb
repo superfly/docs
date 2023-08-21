@@ -11,7 +11,7 @@ See all possible Machine states [in the table below](#machine-states).
 
 ## API Spec
 
-We have a Swagger 2.0 specification [available](https://machines-api-spec.fly.dev/) for the Machines API, so that you can autogenerate clients in your preferred language.
+We have a Swagger 2.0 specification available at [docs.machines.dev](https://docs.machines.dev) for the Machines API, so that you can autogenerate clients in your preferred language.
 
 ## Connecting to the API
 
