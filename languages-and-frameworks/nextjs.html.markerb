@@ -52,7 +52,25 @@ Now: run 'fly deploy' to deploy your Next.js app.
 
 <%= partial "partials/launched" %>
 
-## _fetch errrors processing images_
+## Disabling telemetry in production
+
+During server startup the following messages may appear in your log:
+
+```
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+```
+
+The following command can be used to modify your Dockerfile to disable telemetry:
+
+```
+npx dockerfile --env-base=NEXT_TELEMETRY_DISABLED:1
+```
+
+
+## _Fetch failure when optimizing images_
 
 If your application uses the `<Image>` element and your images aren't showing and you are seeing the following in your logs:
 
