@@ -40,6 +40,7 @@ flyctl machine update <machine_id> [flags]
       --vm-cpus int                Number of CPUs
       --vm-memory int              Memory (in megabytes) to attribute to the machine
   -s, --vm-size string             Preset guest cpu and memory for a machine, defaults to shared-cpu-1x
+      --wait-timeout int           Seconds to wait for individual machines to transition states and become healthy. (default 300) (default 300)
   -y, --yes                        Accept all confirmations
 ~~~
 

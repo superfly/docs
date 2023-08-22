@@ -1,6 +1,6 @@
 Extends a target volume to the size specified. The instance is automatically restarted for Nomad (V1) apps.
-		Most Machines (V2 apps) don't require a restart. Older Machines get a message to manually restart the Machine
-		to increase the size of the FS.
+Most Machines (V2 apps) don't require a restart. Older Machines get a message to manually restart the Machine
+to increase the size of the FS.
 
 ## Usage
 ~~~
