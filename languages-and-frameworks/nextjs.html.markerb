@@ -52,6 +52,100 @@ Now: run 'fly deploy' to deploy your Next.js app.
 
 <%= partial "partials/launched" %>
 
+## Connecting to databases
+
+Unlike some other frameworks, Next.js does not bundle a database adapter,
+instead you are free to chose the ORM or node module you wish.
+
+Fly.io will provide a `DATABASE_URL` that you can use at runtime to
+connect to your database.  How you will use this will depend on the
+database module you chose.  [Prisma](https://www.prisma.io/nextjs) is
+a popular choice, and connecting to your database using prisma is done
+through your `prisma/schema.prisma' file.  An example:
+
+```
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+```
+
+If you are unsure how to connect using your favorite adaptor, check out
+our [Vanilla with Candy Sprinkles](https://fly.io/blog/vanilla-candy-sprinkles/)
+blog entry and select the configuration that most closely matches your
+application and see how it works.  If you still have questions, post
+the on our [community forum](https://community.fly.io/).
+
+
+
+## Static site generation with Databases
+
+By default, the build machine does not have access to your production
+database.  This means you won't be able to access your database from
+inside methods like `getStaticProps`.
+
+Should this be something your application requires,
+there are two approaches for addressing this: build time secrets and
+deferring the generation to deploy.
+
+### Build time secrets
+
+This approach won't work for SQLite3 as the build machine still won't have
+access to your [volume](https://fly.io/docs/reference/volumes/), but can
+be used with PostgreSQL, MySQL and other such databases.
+
+First you need to obtain the secrets you will need to deploy.  Often this
+is only the value of `DATABASE_URL`.  If you don't know the value of this
+secret, `fly console` and `printenv DATABASE_URL` can obtain this value
+for you.
+
+Next you need to modify your Dockerfile to mount a secret.  You can
+follow the instructions for
+[Mounting secrets](https://fly.io/docs/reference/build-secrets/#mounting-secrets)
+or you can let the dockerfile generator make the changes for you:
+
+```
+npx dockerfile --mount-secret=DATABASE_URL
+```
+
+Finally you need to pass the secret on each deploy:
+
+```
+fly deploy --build-secret DATABASE_URL=value
+```
+
+Replace _value_ above with the actual secret.
+
+It might be worth putting this command into a shell script or batch file.
+
+### Deferring static site generation
+
+An alternate approach, one that works with sqlite3 too, is to defer
+the running of the build step to just after before your web server is
+started.  The upside is that your build has full access to all of
+your deployment secrets.
+
+This involves replacing your entrypoint in your Dockerfile with a script,
+and having that script run `npm build` (or equivalent) prior to starting
+your server.  You can let the dockerfile generator take care of these
+changes for you:
+
+```
+npx dockerfile --build=defer
+```
+
+Downsides of this approach:
+
+* Your deployment machines will need enough memory to run a build.  See:
+  [`fly scale memory`](https://fly.io/docs/flyctl/scale-memory/) and
+  [`swap_size_mb`](https://fly.io/docs/reference/configuration/#swap_size_mb-option) for two options.
+* You may need to adjust the [grace_period](https://fly.io/docs/reference/configuration/#http_service-checks) for any http service checks.
+* If you are only running one machine there will be a period of time where
+  your server is inaccessible while the site is being statically generated.
+* If you run multiple machines, the statis site generation will be run on
+  each increasing the total time before any changes are fully deployed.
+
+
 ## Disabling telemetry in production
 
 During server startup the following messages may appear in your log:
