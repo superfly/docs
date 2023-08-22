@@ -1,0 +1,129 @@
+---
+title: Manage volumes
+layout: docs
+nav: firecracker
+order: 30
+---
+
+How to manage volumes using the [`fly volumes`](/docs/flyctl/volumes/) command. 
+
+<div class="callout">**Tip**: `fly volumes` is aliased to `fly volume` and `fly vol`.</div>
+
+## Create a volume
+
+Run:
+
+```cmd
+fly vol create <my_volume_name>
+```
+
+Use `-r` to set a region or choose a region when prompted.
+
+For options, refer to [`fly vol create` docs](/docs/flyctl/volumes-create/) or run `fly vol create -h`.
+
+## Access a volume
+
+You can access and write to a volume on a Machine just like a regular directory. 
+
+For Machines managed with Fly Launch, the `destination` under `[mounts]` in `fly.toml` is the path for the mounted volumes. 
+
+For Machines managed separately, you specify the mount path in the `fly machine clone` command, when you [clone a Machine and add a volume](/docs/apps/volume-storage/#add-a-volume-to-a-machine-clone).
+
+## Extend a volume
+
+You can extend (increase) a volume's size, but you can't make a volume smaller.
+
+1. Run `fly volumes list` and copy the volume ID.
+
+2. Extend the volume size:
+
+    ```cmd
+    `fly vol extend <volume id> -s <new size in GB>`
+    ```
+
+3. (Optional) Check that the new volume size in the Machine's file system:
+
+    ```cmd
+    fly ssh console -s -C df
+    ```
+
+    Example output:
+    ```out 
+    ? Select VM:  [Use arrows to move, type to filter]
+    > yyz: 4d891de2f66587 fdaa:0:3b99:a7b:ef:8cc4:dc49:2 withered-shadow-4027           
+    Connecting to fdaa:0:3b99:a7b:ef:8cc4:dc49:2... complete
+    Filesystem     1K-blocks   Used Available Use% Mounted on
+    devtmpfs          103068      0    103068   0% /dev
+    /dev/vda         8191416 172752   7582852   3% /
+    shm               113224      0    113224   0% /dev/shm
+    tmpfs             113224      0    113224   0% /sys/fs/cgroup
+    /dev/vdb         2043856   3072   1930400   1% /storage
+    ```
+
+    In the preceding example, the volume is mounted under `/storage` and has been resized to 2GB. The `df` command shows disk space in 1K blocks by default. You can use the `-h` flag to return a more human-readable format.
+
+For options, refer to the [`fly vol extend` docs](/docs/flyctl/volumes-extend/) or run `fly vol extend -h`.
+
+## Restore a volume from a snapshot
+
+Refer to [`fly volumes snapshots list`](https://fly.io/docs/flyctl/volumes-snapshots-list/) in the [flyctl reference](/docs/flyctl) for usage and options.
+
+1. Run `fly volumes list` and copy the volume ID.
+
+2. List the volume's snapshots:
+
+    ```cmd
+    `fly vol snapshots <volume id>`
+    ```
+
+    Example output:
+    ```out
+    Snapshots
+    ID                 	SIZE    	CREATED AT
+    vs_MgLAggLZkYx89fLy	17638389	1 hour ago
+    vs_1KRgwpDqZ2ll5tx 	17649006	1 day ago
+    vs_nymJyYMwXpjxqTzJ	17677766	2 days ago
+    vs_R3OPAz5jBqzogF16	17689473	3 days ago
+    vs_pZlGZvq3gkAlAcaZ	17655830	4 days ago
+    vs_A9k6age3bQov6twj	17631880	5 days ago
+    ```
+
+3. Restore from the volume snapshot into a new volume of equal or greater size:
+
+    ```cmd
+    fly volumes create <volume name> --snapshot-id <snapshot id> -s <volume size in GB>
+    ```
+
+    Example output:  
+    ```out
+    ? Select region: Sydney, Australia (syd)
+            ID: vol_mjn924o9l3q403lq
+          Name: pg_data
+          App: my-app-name
+        Region: syd
+          Zone: 180d
+      Size GB: 3
+    Encrypted: true
+    Created at: 02 Aug 22 21:27 UTC
+    ```
+
+For options, refer to [`fly vol snapshots` docs](/docs/flyctl/volumes-snapshots/) or run `fly vol snapshots -h`.
+
+## Destroy a volume
+
+When you destroy a volume, you delete all its data.
+
+Run:
+
+```cmd
+fly vol destroy <volume id>
+```
+
+For options, refer to [`fly vol destroy` docs](/docs/flyctl/volumes-destroy/) or run `fly vol destroy -h`.
+
+## Related topics
+
+- [How Fly Volumes work](/docs/apps/volumesfly/volumes/)
+- [Add volume storage](/docs/apps/volume-storage/)
+- [`mounts` section](/docs/reference/configuration/#the-mounts-section) in `fly.toml` Fly Launch configuration file
+- [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)

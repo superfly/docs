@@ -1,0 +1,56 @@
+---
+title: How Fly Volumes work
+layout: docs
+nav: firecracker
+order: 10
+---
+
+Apps can store only ephemeral data on the root file systems of their Machines, because a Machine's file system is rebuilt from scratch each time you deploy your app, or the Machine is restarted. Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can use volumes to store your database files, to save your app's state, such as configuration and session or user data, or for any information that needs to persist after deploy or restart.
+
+A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware. Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
+
+## Volume considerations
+
+* **A volume belongs to one app**: Every Fly Volume belongs to a [Fly App](/docs/reference/apps/) and you can't share a volume between apps.
+* **A volume exists in one region**: A volume exists in only one region. Only an instance of the app running in the same region can access it.
+* **A volume can attach to one Machine**: You need to run as many volumes as there are Machines. There's a one-to-one mapping between Machines and volumes. A Machine can only mount one volume at a time and a volume can be attached to only one Machine.
+* **Develop your app to handle replication**: Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app, so if you need the volumes to sync up, then your app has to make that happen.
+* **Create redundancy in your primary region**: If your app needs a volume to function, and the NVMe drive hosting your volume fails, then that instance of your app goes down. There's no way around that. You can run multiple Machines with volumes in your app's primary region to mitigate hardware failures.
+* **Create and store backups**: If you only have a single copy of your data on a single volume, and that drive fails, then the data is lost. Fly.io takes daily snapshots and retains them for 5 days, but the snapshots shouldn't be your primary backup method.
+
+If volumes don't work for your use case, then explore other options for data storage in [Databases & Storage](/docs/database-storage-guides/).
+
+## Volume redundancy
+
+<div class="warning">
+<b>Always run at least two volumes per app.</b> We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each machine should have an attached volume. If you only have one Machine and volume, you'll have downtime if there's a host or network failure, and whenever you deploy your app. Also remember that volumes don't have built-in replication between them.
+</div>
+
+In a few cases, you can run a single Machine with an attached volume. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not yet worried about downtime.
+
+Many developers use volumes for databases, so if possible, each volume you create for your app is placed in a separate hardware zone by default. Note that having each volume in a separate hardware zone limits the number of volumes your app can have in a region. You can configure this setting with the `--require-unique-zone` option when you run [`fly volumes create`](/docs/flyctl/volumes-create/).
+
+## Volumes and regions
+
+Volumes exist in a single region. For redundancy within a region, you can run multiple Machines with attached volumes by creating multiple volumes with the same name. For example, creating three volumes named `myapp_data` would let up to three instances of the app start up and run. Every volume has a unique ID to allow for multiple volumes with the same name. Remember that volumes don't automatically replicate data between them.
+
+## Volume encryption
+
+Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--no-encryption` to instead create an unencrypted volume for improved performance at deployment and runtime.
+
+## Volume size
+
+The default volume size is 3GB. The maximum size is 500GB.
+
+## Volume snapshots
+
+Fly.io takes daily block-level snapshots of volumes. Snapshots are kept for five days. You can restore a volume snapshot into a new volume of equal or greater size.
+
+Snapshots may not have your latest data. You should still implement your own backup plan for important data.
+
+## Related topics
+
+- [Add volume storage to your app](/docs/apps/volumesfly/volume-storage/)
+- [Manage volumes](/docs/apps/volumesfly/volume-manage/)
+- [`mounts` section](/docs/reference/configuration/#the-mounts-section) in the `fly.toml` Fly Launch configuration file
+- [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)
