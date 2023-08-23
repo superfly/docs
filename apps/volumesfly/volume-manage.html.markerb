@@ -21,6 +21,8 @@ Use the `-r` option to set a region, or select a region when prompted.
 
 For options, refer to [`fly vol create` docs](/docs/flyctl/volumes-create/) or run `fly vol create -h`.
 
+For steps to add a volume to your app, refer to [Add volume storage](/docs/apps/volume-storage/).
+
 ## Access a volume
 
 You can access and write to a volume on a Machine just like a regular directory. 
