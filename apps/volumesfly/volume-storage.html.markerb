@@ -25,7 +25,7 @@ Launch a new app with one Machine and an attached volume, and then clone the Mac
     Your app is ready! Deploy with `flyctl deploy`
     ```
 
-1. Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`. For example:
+1. Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`, where `source` is the volume name and `destination` is the directory where the volume should be mounted on the Machine file system. For example:
 
     ```toml
     [mounts]
@@ -39,20 +39,20 @@ Launch a new app with one Machine and an attached volume, and then clone the Mac
     fly deploy 
     ```
 
-1. [Confirm that the volume is attached to a Machine.](#confirm-the-volume-is-attached-to-a-machine)
+1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
 
-1. (Recommended) Clone the first Machine to scale out to two Machines. For example:
+1. (Recommended) Clone the first Machine to scale out to two Machines with volumes:
 
     ```cmd
-    fly machine clone 5683606c41098e
+    fly machine clone <machine id>
     ```
 
-    Check what that did:
+    List volumes to check the result:
 
     ```cmd
     fly volumes list
     ```
-    Example output:
+    Example output showing two volumes with attached Machines:
     ```out
     ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT     
     vol_ez1nvxkwl3jrmxl7    created data    1GB     lhr     4de2    true            91851edb6ee983  39 seconds ago
@@ -65,7 +65,7 @@ Launch a new app with one Machine and an attached volume, and then clone the Mac
 
 ## Add volumes to an existing app
 
-1. Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`. For example:
+1. Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`, where `source` is the volume name and `destination` is the directory where the volume should be mounted on the Machine file system. For example:
 
     ```toml
     [mounts]
@@ -73,10 +73,10 @@ Launch a new app with one Machine and an attached volume, and then clone the Mac
       destination="/data"
     ```
 
-1. Create the volume in the same region as your app:
+1. Create the volume in the same region as your app. For example:
 
     ```cmd
-    fly volumes create myapp_data -r lhr
+    fly volumes create <volume name> -r <region code>
     ```
 
 1. Repeat step 2 for each Machine in the process group. If you create an app using the `fly launch` command, then the app will usually have two Machines in the `app` process by default.
@@ -87,7 +87,7 @@ Launch a new app with one Machine and an attached volume, and then clone the Mac
     fly deploy 
     ```
 
-1. [Confirm that the volume is attached to a Machine.](#confirm-the-volume-is-attached-to-a-machine)
+1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
 
 ## Add a volume to a Machine clone
 
@@ -96,13 +96,13 @@ For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`).
 1. Create the volume in the same region as your app. For example:
 
     ```cmd
-    fly volumes create myapp_data -r lhr
+    fly volumes create <volume name> -r <region code>
     ```
 
 1. Clone one of your app's Machines (with no volume) and attach the volume you just created:
 
     ```cmd
-    fly machine clone <machine-id> --attach-volume <vol-id>:<destination-mount-path>
+    fly machine clone <machine id> --attach-volume <volume id>:<destination mount path>
     ```
 
     `destination-mount-path` is the directory where the volume should be mounted on the file system.
@@ -115,7 +115,7 @@ For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`).
 
 1. Repeat the preceding steps as needed to create more Machines with volumes.
 
-1. [Confirm that the volume is attached to a Machine.](#confirm-the-volume-is-attached-to-a-machine)
+1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
 
 1. (Optional) Destroy the Machine used to create the clone:
 
@@ -125,7 +125,7 @@ For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`).
 
 ## Confirm the volume is attached to a Machine
 
-Some different ways to check on the status of volumes and Machines.
+Some different ways to check the status of volumes and Machines.
 
 ### List the Machines
 
