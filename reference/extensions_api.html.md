@@ -176,7 +176,11 @@ The JSON response:
 }
  ```
 
-Finally, use this access token to issue an inline request to our [token introspection endpoint](https://www.oauth.com/oauth2-servers/token-introspection-endpoint/). The response gives you enough information, for example, to authorize the user if they belong the correct parent organization in your system, or to provision the user and add them to these organizations.
+Finally, use this access token to issue an inline request to our [token introspection endpoint](https://www.oauth.com/oauth2-servers/token-introspection-endpoint/). The response gives you enough information to:
+*  Authorize the user if they belong the correct parent organization in your system
+*  Provision the user and add them to these organization
+*  Assign a role that maps to the Fly.io `admin` or `member` roles
+*  Send emails to the user through an email alias
 
 ```
 GET https://api.fly.io/oauth/token/info
@@ -189,7 +193,18 @@ The JSON response:
 {
   "resource_owner_id"=>"rzjkdw3g0ypx061q",
   "user_id"=>"rzjkdw3g0ypx061q",
-  "organization_ids"=>["zd3e5wvkjel6pgqw", "zgyep87w1m4q06d4"],
+  "user_name": "Gabriella Fern",
+  "email": "5mrgw4xzkxoz02yk@customer.fly.io",
+  "organizations"=> [
+      {
+        id: "zd3e5wvkjel6pgqw",
+        role: "admin"
+      },
+      {
+        id: "zgyep87w1m4q06d4",
+        role: "member"
+      }
+    ],
   "scope"=>["read"],
   "expires_in"=>7200,
   "application"=>{"uid"=>"logjam"},
