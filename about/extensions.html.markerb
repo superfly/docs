@@ -13,15 +13,16 @@ Services such as managed databases, exception handlers, CI runners or log aggreg
 
 [Check out our documentation](https://fly.io/docs) to see what our platform has to offer. Contact us at [extensions@fly.io](mailto:extensions@fly.io) to discuss your case!
 
+
 ## Provider Requirements
 
 As an extension provider, you should give us a way to:
 
 * Provision resources, user accounts and organizations
 * Allow single sign-on login into your UI
-* Fetch billing details on a daily basis so we may bill customers
+* Fetch billing details on a daily basis so customers can stay up-to-date with metered costs
 
-Read on for more details.
+Our [Extensions API documentation](/reference/extensions_api/) outlines our API and SSO requirements in detail.
 
 ## Account provisioning
 
