@@ -52,5 +52,4 @@ Snapshots may not have your latest data. You should still implement your own bac
 
 - [Add volume storage to your app](/docs/apps/volumesfly/volume-storage/)
 - [Manage volumes](/docs/apps/volumesfly/volume-manage/)
-- [`mounts` section](/docs/reference/configuration/#the-mounts-section) in the `fly.toml` Fly Launch configuration file
 - [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)
