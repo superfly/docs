@@ -498,7 +498,7 @@ Times are in milliseconds unless units are specified.
 
 ### `services.http_checks`
 
-Another way of checking a service is running is through HTTP checks as defined in the `services.http_checks` section. These checks are more thorough than tcp\_checks as they require not just a connection but a successful HTTP status in response (i.e, 2xx). Here is an example of a `services.http_checks` section:
+Another way of checking a service is running is through HTTP checks as defined in the `services.http_checks` section. These checks are more thorough than `services.tcp_checks` as they require not just a connection but a successful HTTP status in response (i.e, 2xx). Here is an example of a `services.http_checks` section:
 
 ```toml
   [[services.http_checks]]
