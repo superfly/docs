@@ -30,7 +30,7 @@ You should provision, at least:
 * An organization/team, where applicable, to match the Fly.io organization
 * One or more administrative users as account owners and SSO targets
 
-We recommend provisioning organizations and usedrs idempotently along with the resource provisioning request, or SSO sign-in, as described below. This avoid having to implement a separate account provisioning API.
+We recommend provisioning organizations and users idempotently along with the resource provisioning request, or along with SSO sign-in, as described below. This avoid having to implement a separate account provisioning API.
 
 ## Resource Provisioning API
 
@@ -135,15 +135,15 @@ If you're deploying on Fly.io, your service should be accessible to customers wi
 
 Our [Flycast](https://fly.io/docs/reference/private-networking/#flycast-private-load-balancing) internal load balancing feature allow you to route traffic from an IPv6 address on a customer network to one of your Fly.io applications.
 
-The `ip_address` field above refers to this feature. At provisioning time, we'll assign an address on the customer network to one of your Fly.io apps. Your reply should include the target Fly.io application where you wish traffic to be routed to.
+The `ip_address` field above refers to this feature. At provisioning time, we'll allocate an address on the customer network for you. Then, your reply should include the target Fly.io application where you wish that IP's traffic to be routed to.
 
-By default, no traffic is routed to your app until its machines have services configured on them. See the [Machines API](https://fly.io/docs/machines/working-with-machines/#create-a-machine) for details.
+By default, no traffic is routed to your app until it has services configured. See the [Machines API](https://fly.io/docs/machines/working-with-machines/#create-a-machine) and [fly.toml docs](https://fly.io/docs/reference/configuration/#the-services-sections) for details.
 
-Optionally, you can add the [proxy protocol handler](https://fly.io/docs/reference/services/#connection-handlers) to a service. The destination IP in the proxy protocol header will be the `ip_address` assigned on the customer network. This is useful as an additional security check beyond user/password credentials or tokens.
+Optionally, you can add the [proxy protocol handler](https://fly.io/docs/reference/services/#connection-handlers) to a service. We co-opt the [proxy protocol](https://github.com/haproxy/haproxy/blob/master/doc/proxy-protocol.txt) as a way to give your service knowledge of the IP address assigned on the customer network, at client connection time. This IP is useful for performing an additional security check beyond user/password credentials or tokens.
 
 ### DNS records
 
-For a good developer experience, you should create a DNS record for your internal service that resolves to the Flycast IP address mentioned in the previous section. This address hould be used in the configuration variables in the provisioning response, i.e.:
+For a good developer experience, you should create a public DNS record for your internal service that resolves to the Flycast IP address mentioned in the previous section. This address should be used in the configuration variables in the provisioning response, i.e.:
 
 
 ```javascript
@@ -193,7 +193,7 @@ If the user is already logged in, you should redirect them to the extension deta
 GET https://api.fly.io/oauth/authorize?client_id=123&response_type=code&redirect_uri=https://logjam.io/flyio/callback&scope=read
 ```
 
-You should pass the organization ID and desired permissions scope. Currently, only the 'read' scope is supported.
+You should pass the organization ID and desired permissions scope. Currently, only the `read` scope is supported.
 
 Once we authenticate the user, we'll redirect to your OAUth `redirect_uri` with an authorization code you may exchange for an access token via a POST request.
 
