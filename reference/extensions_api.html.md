@@ -5,8 +5,6 @@ sitemap: false
 nav: firecracker
 ---
 
-*This document is a mere proposal - not set in stone. Please give us feedback!*
-
 Read our [Extensions Program overview](https://fly.io/docs/about/extensions) before digging into this doc.
 
 ## Provisioning Flow
@@ -14,6 +12,8 @@ Read our [Extensions Program overview](https://fly.io/docs/about/extensions) bef
 Fly.io is a CLI-first platform. So provisioning extensions starts there. Either when launching an app, or when a customer explicitly asks to provision an extension.
 
 We'll forward this request on to you, along with details about the provisioning Fly.io organization. You should reply synchronously with details about your provisioned extension. We'll attach these details to a target application, where applicable, as secrets exposed as environment variables in VMs.
+
+Note: If resources take more than 5 seconds to provision, `flyctl` can poll your API for resource readiness.
 
 ## Provisioning Accounts and Organizations
 
@@ -30,7 +30,7 @@ You should provision, at least:
 * An organization/team, where applicable, to match the Fly.io organization
 * One or more administrative users as account owners and SSO targets
 
-We recommend that for each resource provisioning or SSO request, you provision the above inline, idempotently. This avoid the need for a separate account provisioning API.
+We recommend provisioning organizations and usedrs idempotently along with the resource provisioning request, or SSO sign-in, as described below. This avoid having to implement a separate account provisioning API.
 
 ## Resource Provisioning API
 
@@ -105,25 +105,69 @@ These parameters are sent with every provisioning request.
 | **read_regions** | array | An array of Fly.io region codes where read replicas should be provisioned | `["mad", "ord"]` |
 | **ip_address** | string | An IPv6 address on the customer network assigned to this extension | `fdaa:0:47fb:0:1::1d` |
 
+Your response should must contain a list of key/value pairs of secrets that that should be set on the associated Fly.io application. These secrets are available as environment variables. They aren't visible outside of an application VM.
 
-Your response should contain, at least, a list of key/value pairs of secrets that that should be set on the associated Fly.io application. These secrets are available as environment variables. They aren't visible outside of an application VM.
+If your service is deployed on Fly, the response should also contain details about the target Fly.io application for the private IP address. See the following section for details about this.
+
+**Provisioning Response**
+
+| Name | Type | Description | Example |
+| --- | --- | --- | --- |
+| **id** | string | A unique identifier for the resource on the provider platform | `432cb1c9-4d06-4a91-95dc-bc7aa27b896d` |
+| **fly_app_name** | string | The target Fly application for internal traffic | `432cb1c9-4d06-4a91-95dc-bc7aa27b896d` |
+
 
 ```javascript
 {
-  "LOGJAM_URL": "https://user:password@test.logjam.io",
+  "config": {
+    "LOGJAM_URL": "https://user:password@test.logjam.io"
+  },
+  "fly_app_name": "logjam-production",
+  "id": "432cb1c9-4d06-4a91-95dc-bc7aa27b896d"
+}
+
+```
+### Giving customers private access to your service
+
+If you're deploying on Fly.io, your service should be accessible to customers without exposing it to the public internet.
+
+### Routing private traffic with Flycast
+
+Our [Flycast](https://fly.io/docs/reference/private-networking/#flycast-private-load-balancing) internal load balancing feature allow you to route traffic from an IPv6 address on a customer network to one of your Fly.io applications.
+
+The `ip_address` field above refers to this feature. At provisioning time, we'll assign an address on the customer network to one of your Fly.io apps. Your reply should include the target Fly.io application where you wish traffic to be routed to.
+
+By default, no traffic is routed to your app until its machines have services configured on them. See the [Machines API](https://fly.io/docs/machines/working-with-machines/#create-a-machine) for details.
+
+Optionally, you can add the [proxy protocol handler](https://fly.io/docs/reference/services/#connection-handlers) to a service. The destination IP in the proxy protocol header will be the `ip_address` assigned on the customer network. This is useful as an additional security check beyond user/password credentials or tokens.
+
+### DNS records
+
+For a good developer experience, you should create a DNS record for your internal service that resolves to the Flycast IP address mentioned in the previous section. This address hould be used in the configuration variables in the provisioning response, i.e.:
+
+
+```javascript
+{
+  "config": {
+    "LOGJAM_URL": "https://user:password@logjam-instance-01.logjam.io"
+  },
+  "fly_app_name": "logjam-instance-01",
+  "id": "432cb1c9-4d06-4a91-95dc-bc7aa27b896d"
 }
 
 ```
 
-### Fetching extension data
+### Providing extension status after provisioning
 
 Im some cases, we'll want to be able to fetch data about your extension. For example, when displaying credentials to users directly via the CLI, we won't store these credentials in our database. We'll pass this request directly to your API.
+
+Also, if your resource cannot be provisioned synchronously, we'll need such an endpoint to poll readiness status.
 
 This endpoint should be discussed on a case-by-base basis.
 
 ### Updating Extensions
 
-Customers should be able to update some extensions directly from `flyctl`. For example, adding/removing read replica regions, or switching payment plans.
+Customers should be able to update some extensions directly from `flyctl`. For example, adding/removing read replicas on a database.
 
 Your API should support updates using the same parameters as the `POST` request above at:
 
@@ -212,6 +256,49 @@ The JSON response:
 }
 ```
 
+## Email communication with customers
+
+The automatic signup process happening through Fly.io is less intentional than the signup one makes through a provider's website. In light of that, we want to avoid overwhelming users with messaging unrelated to their intended goal - provisioning a service.
+
+The following are guidelines, open for discussion on a case-by-case basis.
+
+Providers should discuss their desired email cadence with Fly.io customers early in the process to avoid surprises down the line.
+
+Providers shouldn't ask new users to confirm their email. Email confirmation is a requirement to use our platform, so emails can be assumed to be confirmed ahead of time.
+
+Providers should mostly send transactional messages about the resource itself, or about billing. For example: database idling, system maintenance or alerts about passing free tier limits.
+
+Providers should take care that developers do not receive duplicate emails. For example, if a user is placed on an opt-out email campaign, you should ensure the following:
+
+The same user should not receive multiple, indentical emails because they happen to provision resources on more than one Fly.io organization. This is quite common, as organizations are used for separating production and staging environments, for example.
+
+Once a single user in an organization has been placed on an email campaign, other users in the same organization should not be placed on a similar campaign merely for having used SSO sign-in.
+
 ## Deploying your service on Fly.io
 
+If you run a latency-sensitive service like a database, we require you run your service on Fly.io to be considered an official extension.
+
 Contact us at [extensions@fly.io](mailto:extensions@fly.io) about deploying your service on the Fly.io platform.
+
+## Billing customers through Fly.io
+
+Your service should offer a minimal billing API for fetching costs and passing them on to customers. We'd want to query this API at least once per day. Fly.io will bill customers for your service and pay you what's owed after deducting the revenue share.
+
+We prefer services that can provide a simple, pay-as-you-go pricing model.
+
+We also prefer that making changes to billing, support plans, etc happen inside the provider UI.
+
+## Support
+
+The support process for Extensions is evolving and should be discussed on a case-by-case basis.
+
+## Limitations
+
+Keep the following in mind when considering running an extension on Fly.io.
+
+The Extensions Program does *not*:
+
+* Run billing logic for your extension - we pass billing data through our invoice for conveninence
+* Manage your service beyond the underlying Fly.io services
+* Run support for your service - but we will pass support requests on to you
+* Run workflows to deploy your service automatically - you need a control plane

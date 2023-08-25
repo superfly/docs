@@ -22,7 +22,7 @@ As an extension provider, you should give us a way to:
 * Allow single sign-on login into your UI
 * Fetch billing details on a daily basis so customers can stay up-to-date with metered costs
 
-Our [Extensions API documentation](/reference/extensions_api/) outlines our API and SSO requirements in detail.
+Our [Extensions API documentation](/docs/reference/extensions_api/) outlines our API and SSO requirements in detail.
 
 ## Account provisioning
 
