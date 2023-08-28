@@ -137,7 +137,7 @@ Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in
 
 ### Create the volume
 
-Create the volume (or volumes) in the same region as your app.
+Create the volume (or volumes) in the same regions as your app's Machines. Run `fly status` to check the regions of the Machines.
 
 ```cmd
 fly volumes create myapp_data -r lhr
