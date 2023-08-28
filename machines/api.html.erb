@@ -1,0 +1,26 @@
+---
+title: API
+objective: Get familiar with the Fly Machines API.
+layout: framework_docs
+order: 1
+---
+
+<% Machine.api.paths.each do |path| %>
+  <%- path.operations.each do |operation| %>
+    <h2><code><%= operation.request_method %> <%= path.path %></code></h2>
+    <p><%= operation.description %></p>
+    <pre><%= path.inspect %></pre>
+
+    <h3>Parameters</h3>
+    <% operation.parameters.each do |param| %>
+      <h4><%= param.description %></h4>
+      <pre><%= param.inspect %></pre>
+    <% end %>
+
+    <h3>Responses</h3>
+    <% operation.responses.each do |resp| %>
+      <h4><%= resp.description %></h4>
+      <pre><%= resp.inspect %></pre>
+    <% end %>
+  <% end %>
+<% end %>
