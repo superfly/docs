@@ -47,7 +47,9 @@ kill_signal = "SIGTERM"
 
 ### `kill_timeout` option
 
-When shutting down a Fly app instance, by default, after sending a signal, Fly gives an app instance five seconds to close down before being killed. Depending on the type of VM, this timeout can be adjusted. Shared VMs can extend it to 300 seconds (five minutes). Dedicated VMs can extend the timeout to 86400 seconds (twenty-four hours). To set the timeout to two minutes, you would add:
+The time to wait, in seconds, before stopping a Machine after sending the `SIGINT` signal or the signal set by `kill_signal`. Set `kill_timeout` to a value that gives your app enough time to exit gracefully. The default setting is 5 seconds. The maximum `kill_timeout` is 300 seconds (five minutes). 
+
+For example, to set the timeout to two minutes:
 
 ```toml
 kill_timeout = 120
