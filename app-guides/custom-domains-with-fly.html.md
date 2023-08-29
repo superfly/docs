@@ -399,26 +399,32 @@ The GraphQL mutation returns the app name and the hostname and certificate id th
 ```
 
 ## Troubleshooting
+### Certificate creation or validation seems to hang, stall or fail
 
-### I use Cloudflare, and my Fly.io SSL certificate doesn't seem to issue
+Let's Encrypt is a free, automated, and open certificate authority that Fly.io uses to issue TLS certificates for custom domains. However, Let's Encrypt imposes certain rate limits to ensure fair usage. If you encounter issues when creating or validating a certificate for a custom domain on Fly.io, it's possible that you've hit these rate limits.
 
-If you're using Cloudflare, you might be using their Universal SSL feature which inserts a TXT record for `_acme_challenge.mydomain` that interferes with our cert validation. You should disable this feature, and verify by running `dig txt _acme-challenge.mydomain.com +short` to see if it returns with a fly address.
-
-### Certificate creation/validation seems to hang, stall or fail
-
-Let's Encrypt is a free, automated, and open certificate authority that Fly.io uses to issue SSL certificates for custom domains. However, Let's Encrypt imposes certain rate limits to ensure fair usage. If you encounter issues when creating or validating a certificate for a custom domain on Fly.io, it's possible that you've hit these rate limits.
-
-The following primary [rate limits](https://letsencrypt.org/docs/rate-limits/) from Let's Encrypt apply:
+The following [rate limits](https://letsencrypt.org/docs/rate-limits/) from Let's Encrypt apply:
 
 * **Certificates per Registered Domain**: 50 per week
 * **Duplicate Certificate limit**: 5 per week
+* **Failed Validation limit**: 5 failures per hostname, per hour
 
-If you encounter issues when creating or validating a certificate for a custom domain on Fly.io, you can use the following methods to troubleshoot:
+Note that certficate renewals don’t count against your **Certificates per Registered Domain** limit.
+
+If you encounter issues when adding or validating a certificate for a custom domain on Fly.io, you can use the following methods to troubleshoot:
 
 * **Use Let's Debug**: Visit [Let's Debug](https://letsdebug.net/) to diagnose the issue. Let's Debug is a tool that tests for issues with your domain's configuration or issues related to Let's Encrypt's service. Enter your domain name and run the test. The tool will provide a detailed report of any problems it finds and suggest possible solutions.
 * **Wait and Retry**: If you've hit a rate limit, you'll need to wait until the rate limit window passes before you can successfully create or validate a certificate again. We don’t have a way to reset it. 
 
-Remember, the best way to avoid hitting rate limits is to use staging environments for testing and development, and to carefully plan your certificate issuance to stay within the limits. If you're building a platform on top of Fly.io, and you expect that your users will frequently delete and then recreate the same resources within a short window, consider implementing "soft delete" logic into your platform that retains the Fly.io resources for a period of time, negating the need to recreate certs frequently.
+Remember, the best way to avoid hitting rate limits is to use staging environments and domains for testing and development, and to carefully plan your certificate issuance to stay within the limits. Avoid failed validation by ensuring that your DNS records are correctly configured, with no conflicting records.
+
+If you're building a platform on top of Fly.io, and you expect that your users will frequently delete and then recreate the same resources within a short window, consider implementing "soft delete" logic into your platform that retains the Fly.io resources for a period of time, negating the need to recreate certs frequently.
+
+### I use Cloudflare, and there seems to be a problem issuing or validating my Fly.io TLS certificate
+
+If you're using Cloudflare, you might be using their Universal SSL feature which inserts a TXT record of `_acme_challenge.mydomain.com` for your domain. This can interfere with our certificate validation/challenge and you should [disable](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/disable-universal-ssl/#disable-universal-ssl-certificate) this feature.
+
+You can then verify that the change has propagated and the TXT record is no longer present by running `dig txt _acme-challenge.mydomain.com +short`.
 
 ## Wrapping up
 
