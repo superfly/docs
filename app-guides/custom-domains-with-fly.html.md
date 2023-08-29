@@ -3,7 +3,6 @@ title: Custom Domains and SSL Certificates
 layout: docs
 sitemap: false
 nav: firecracker
-author: dj
 categories:
   - ssl
   - custom domains
@@ -13,17 +12,17 @@ date: 2020-07-20
 
 An application's brand is often encapsulated in its domain name and that in turn is wrapped with value. So being able to configure secure custom domains is essential.
 
-Fly offers a simple command-line process for manual configuration of custom domains and a GraphQL API for people integrating Fly custom domains into their automated workflows. Here, we'll be looking at both - and answering the question, which one should you use?
+Fly.io offers a simple command-line process for manual configuration of custom domains and a GraphQL API for people integrating Fly custom domains into their automated workflows. Here, we'll be looking at both - and answering the question, which one should you use?
 
 ## Teaching your app about custom domains
 
 Your application code needs to know how to accept custom domains and adjust the responses accordingly. If you're hosting content on behalf of your users, this typically means mapping the incoming hostname to a particular ID in your application database.
 
-When users make requests, their browser sends a `Host` header you can use to alter the behavior of your application. When you run your app server on Fly directly, just get the contents of the `Host` header to identify a request.
+When users make requests, their browser sends a `Host` header you can use to alter the behavior of your application. When you run your app server on Fly.io directly, just get the contents of the `Host` header to identify a request.
 
 If you're running your application on another provider, you will need to create a proxy application (like [NGINX](/docs/app-guides/global-nginx-proxy/)) to route traffic through Fly. Your application can then use the `X-Forwarded-Host` header to determine how to handle requests.
 
-## Creating a custom domain on Fly manually
+## Creating a custom domain on Fly.io manually
 
 There's a question to ask and answer. Do you want to start accepting traffic immediately on your custom domain or do you want to have your domain ready with certificates when you set it to start accepting traffic, for example when you want to cut over from another platform to Fly.
 
@@ -89,7 +88,7 @@ Configured should be true and Status will show ready when the certificates are a
 
 ### Configuring certificates before accepting traffic
 
-This process allows certificates to be issued before the domain is live and accepting traffic. Using a particular CNAME entry in the DNS allows Fly to validate the domain before issuing a certificate. 
+This process allows certificates to be issued before the domain is live and accepting traffic. Using a particular CNAME entry in the DNS allows Fly.io to validate the domain before issuing a certificate. 
 
 The process starts with adding the certificate to the application like so:
 
@@ -401,32 +400,29 @@ The GraphQL mutation returns the app name and the hostname and certificate id th
 
 ## Troubleshooting
 
-**I use Cloudflare, and my fly.io SSL certificate doesn't seem to issue**
+### I use Cloudflare, and my Fly.io SSL certificate doesn't seem to issue
 
 If you're using Cloudflare, you might be using their Universal SSL feature which inserts a TXT record for `_acme_challenge.mydomain` that interferes with our cert validation. You should disable this feature, and verify by running `dig txt _acme-challenge.mydomain.com +short` to see if it returns with a fly address.
 
-**Certificate creation/validation seems to hang, stall or fail**
+### Certificate creation/validation seems to hang, stall or fail
 
-Let's Encrypt is a free, automated, and open certificate authority that Fly uses to issue SSL certificates for custom domains. However, Let's Encrypt imposes certain rate limits to ensure fair usage. If you encounter issues such as stalling, hanging, or failure when creating or validating a certificate for a custom domain on Fly, it's possible that you've hit these rate limits.
+Let's Encrypt is a free, automated, and open certificate authority that Fly.io uses to issue SSL certificates for custom domains. However, Let's Encrypt imposes certain rate limits to ensure fair usage. If you encounter issues such as stalling, hanging, or other failures when creating or validating a certificate for a custom domain on Fly.io, it's possible that you've hit these rate limits.
 
-Let's Encrypt applies the following primary [rate limits](https://letsencrypt.org/docs/rate-limits/):
+The following primary [rate limits](https://letsencrypt.org/docs/rate-limits/) Let's Encrypt apply:
 
-1. **Certificates per Registered Domain (50 per week)**
-2. **Duplicate Certificate limit (5 per week)**
-3. **Failed Validation limit (5 failures per account, per hostname, per hour)**
-4. **Accounts per IP Address (10 accounts per 3 hours)**
-5. **New Orders per Account (300 new orders per account per 3 hours)**
+1. Certificates per Registered Domain (50 per week)
+2. Duplicate Certificate limit (5 per week)
+3. Failed Validation limit (5 failures per account, per hostname, per hour)
 
-
-If you encounter issues when creating or validating a certificate for a custom domain on Fly, you can use the following steps to troubleshoot:
+If you encounter issues when creating or validating a certificate for a custom domain on Fly.io, you can use the following steps to troubleshoot:
 
 1. **Use Let's Debug**: Visit [Let's Debug](https://letsdebug.net/) to diagnose the issue. Let's Debug is a tool that tests for issues with your domain's configuration or issues related to Let's Encrypt's service. Enter your domain name and run the test. The tool will provide a detailed report of any problems it finds and suggest possible solutions.
 
 2. **Wait and Retry**: If you've hit a rate limit, you'll need to wait until the rate limit window passes before you can successfully create or validate a certificate again. The length of the wait depends on the specific rate limit you've hit.
 
-Remember, the best way to avoid hitting rate limits is to use staging environments for testing and development, and to carefully plan your certificate issuance to stay within the limits. If you're building a platform on top of Fly, and you expect that your users will frequently delte and then recreate the same resources within a short timefram, consodere implementing a "soft delete" logic into your platform that retains the Fly resources for a period of time, negating the need to recreate certs frequently.
+Remember, the best way to avoid hitting rate limits is to use staging environments for testing and development, and to carefully plan your certificate issuance to stay within the limits. If you're building a platform on top of Fly.io, and you expect that your users will frequently delte and then recreate the same resources within a short timefram, consodere implementing a "soft delete" logic into your platform that retains the Fly.io resources for a period of time, negating the need to recreate certs frequently.
 
 ## Wrapping up
 
-You have everything you need to either hand assign a custom domain to your Fly application or to create your own automated multi-domain proxy. Let your ideas take flight with Fly.
+You have everything you need to either hand assign a custom domain to your Fly.io application or to create your own automated multi-domain proxy. Let your ideas take flight with Fly.io.
 
