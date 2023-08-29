@@ -56,7 +56,7 @@ This section is a reference for working with volumes using the [`fly volumes`](/
 
 Create a volume for an app using `fly volumes create`. The default volume size is 3GB. The maximum size is 500GB. Refer to [`fly volumes create`](/docs/flyctl/volumes-create/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
-The following example command creates a new volume named "myapp_data" with 1GB of storage in the yyz (Toronto) region, for the application whose `fly.toml` file is in the working directory. To specify a different app, use the `-a` or `--app` flag.
+The following example command creates a new volume named "myapp_data" with 1GB of storage in the yyz (Toronto) [region](/docs/reference/regions/), for the application whose `fly.toml` file is in the working directory. To specify a different app, use the `-a` or `--app` flag.
 
 ```cmd
 fly volumes create myapp_data --region yyz --size 1

@@ -34,7 +34,9 @@ Your app is ready! Deploy with `flyctl deploy`
 
 ### Configure the app to mount the new volume
 
-Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`. The `fly deploy` command you'll run in the next step will create the Machine and the volume during the deploy process. The following configuration exposes data from a volume named `myapp_data` under the `/data` directory in the Machine's file system.
+Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`. The `fly deploy` command you'll run in the next step will create the Machine and the volume during the deploy process. 
+
+The following example configuration exposes data from a volume named `myapp_data` under the `/data` directory in the Machine's file system:
 
 ```toml
 [mounts]
@@ -48,12 +50,13 @@ Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in
 fly deploy 
 ```
 
-On the first deployment, you'll get one Machine. You can confirm this with `fly status`.
+On the first deployment, you'll get one Machine. Confirm this with `fly status`:
 
 ```cmd
 fly status
 ```
 
+Example output:
 ```out
 App
   Name     = myapp
@@ -71,15 +74,19 @@ app    	5683606c41098e	1      	lhr   	started	1 total	2023-04-26T20:40:48Z
 
 You can check on all the volumes in your app using `fly volumes list`. The `ATTACHED VM` column lets you know which Machine, if any, the volume is mounted on.
 
+List the volumes:
+
 ```cmd
 fly volumes list
 ```
+
+Example output:
 ```out
 ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
 vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  3 minutes ago
 ```
 
-You can also see the volume in the Machine's file system (there's only one Machine so far):
+You can also see the volume in the Machine's file system (there's only one Machine so far). For example:
 ```cmd
 fly ssh console -s -C df
 ```
@@ -107,6 +114,9 @@ Check what that did:
 ```cmd
 fly volumes list
 ```
+
+Example output:
+
 ```
 ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT     
 vol_ez1nvxkwl3jrmxl7    created data    1GB     lhr     4de2    true            91851edb6ee983  39 seconds ago
@@ -127,7 +137,9 @@ You can add a volume, or volumes, to an existing app by adding `[mounts]` to the
 
 ### Configure the app to mount the new volume
 
-Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`. The following example configures the app to expose data from a volume named `myapp_data` under the `/data` directory of the application.
+Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`. The `fly deploy` command you'll run in the next step will create the Machine and the volume during the deploy process. 
+
+The following example configuration exposes data from a volume named `myapp_data` under the `/data` directory in the Machine's file system:
 
 ```toml
 [mounts]
@@ -137,14 +149,16 @@ Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in
 
 ### Create the volume
 
-Create the volume (or volumes) in the same regions as your app's Machines. Run `fly status` to check the regions of the Machines.
+Create the volumes in the same [regions](/docs/reference/regions/) as your app's Machines. Run `fly status` to check the regions of the Machines.
+
+For example:
 
 ```cmd
 fly volumes create myapp_data -r lhr
 ```
 
 <div class="callout">
-You need to create as many volumes as you have Machines per process in your app. New apps deployed using the `fly launch` command might have two Machines in the `app` process by default.
+You need to create as many volumes as you have Machines per process in your app. Apps deployed using the `fly launch` command have two Machines in the `app` process by default.
 </div>
 
 If you configure [mounts] in `fly.toml` and then run `fly deploy` without first creating enough volumes, then you'll get an error similar to this one:
@@ -162,11 +176,14 @@ The error indicates that the app needs one more volume in the `lhr` region.
 fly deploy 
 ```
 
-Run `fly volumes list` to verify that your volumes now have `ATTACHED VM` populated.
+Run `fly volumes list` to verify that your volumes now have `ATTACHED VM` populated:
 
 ```cmd
 fly volumes list
 ```
+
+Example output:
+
 ```out
 ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
 vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  3 minutes ago
@@ -178,18 +195,18 @@ If you're not using the `fly.toml` with `fly deploy` workflow for some Machines,
 
 ### Create the volume
 
-Create the volume in the same region as your app.
+Create the volume in the [region](/docs/reference/regions/) where you want to clone a Machine:
 
 ```cmd
-fly volumes create myapp_data -r lhr
+fly volumes create <volume name> -r <region code>
 ```
 
 ### Clone the Machine
 
-Clone one of your app's Machines (with no volume) and attach the volume you just created:
+Clone one of your app's Machines (with no volume) and attach the volume you just created
 
 ```
-fly machine clone <machine-id> --attach-volume <vol-id>:<destination-mount-path>
+fly machine clone <machine-id> -r <region code> --attach-volume <vol-id>:<destination-mount-path>
 ```
 
 `destination-mount-path` is the directory where the volume should be mounted on the file system.
@@ -197,13 +214,14 @@ fly machine clone <machine-id> --attach-volume <vol-id>:<destination-mount-path>
 For example:
 
 ```cmd
-fly machine clone 148eddeef09789 --attach-volume vol_8l524yj0ko347zmp:/data
+fly machine clone 148eddeef09789 -r yyz --attach-volume vol_8l524yj0ko347zmp:/data
 ```
 
 ### Destroy the Machine used to create the clone
 
+Destroy the Machine:
 ```cmd
-fly machine destroy 148eddeef09789
+fly machine destroy <machine id>
 ```
 
 Run `fly volumes list` to verify that the volume you just created has the newly-cloned Machine's ID listed under `ATTACHED VM`.
@@ -211,6 +229,9 @@ Run `fly volumes list` to verify that the volume you just created has the newly-
 ```cmd
 fly volumes list
 ```
+
+Example output:
+
 ```out
 ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
 vol_8l524yj0ko347zmp    created data    1GB     lhr     b6a7    true            5683606c41098e  3 minutes ago
