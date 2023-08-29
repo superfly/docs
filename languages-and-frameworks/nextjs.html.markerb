@@ -164,6 +164,20 @@ npx dockerfile --env-base=NEXT_TELEMETRY_DISABLED:1
 ```
 
 
+## _Out of memory: Killed process_
+
+If you should happen to see lines like the following in your logs:
+
+```
+Out of memory: Killed process
+```
+
+Two links that may be of help:
+
+  * [fly scale memory](https://fly.io/docs/flyctl/scale-memory/)
+  * [swap_size_mb](https://fly.io/docs/reference/configuration/#swap_size_mb-option)
+
+
 ## _Fetch failure when optimizing images_
 
 If your application uses the `<Image>` element and your images aren't showing and you are seeing the following in your logs:
