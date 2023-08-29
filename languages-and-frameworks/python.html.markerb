@@ -7,7 +7,7 @@ redirect_from: /docs/getting-started/python/
 
 <%= partial "partials/intro", locals: { runtime: "Python" } %>
 
-- [Run a Flask App](docs/languages-and-frameworks/python/#run-a-flask-app)
+- [Run a Flask App](#run-a-flask-app)
 
 ## Initial Local Setup
 
@@ -15,7 +15,9 @@ Make sure that [Python](https://www.python.org/) is already installed on your co
 
 This allows you to run your project locally, and test that it works, before deploying it to Fly.io.
 
-> We recommend the latest [supported versions](https://devguide.python.org/versions/#supported-versions) of Python.
+<section class="callout">
+We recommend the latest [supported versions](https://devguide.python.org/versions/#supported-versions) of Python.
+</section>
 
 ### Virtual Environment
 
@@ -44,9 +46,11 @@ $ source .venv/bin/activate
 
 In this guide we recreate and deploy this [minimal Flask application](https://github.com/fly-apps/hello-flask) to demonstrate how quickly Flask apps can be deployed to Fly.io!
 
-> You can follow the guide to recreate the app or just `git clone https://github.com/fly-apps/hello-flask` to get a local copy.
+<section class="callout">
+You can follow the guide to recreate the app or just `git clone https://github.com/fly-apps/hello-flask` to get a local copy.
+</section>
 
-We assume you already have [Python installed](docs/languages-and-frameworks/python/#initial-local-setup) and your [virtual environment is activated](docs/languages-and-frameworks/python/#virtual-environment).
+We assume you already have [Python installed](#initial-local-setup) and your [virtual environment is activated](#virtual-environment).
 
 ### Install Flask
 
@@ -71,9 +75,13 @@ MarkupSafe==2.1.2
 Werkzeug==2.3.3
 ```
 
+<section class="callout">
+If you have a local copy of `hello-flask`, you can install all the dependencies using `python -m pip install -r requirements.txt`
+</section>
+
 ### Create the Flask App
 
-The `hello-flask` application is, as you'd expect for an example, very minimal.
+The [`hello-flask`](https://github.com/fly-apps/hello-flask) application is, as you'd expect for an example, very minimal.
 
 Inside the `hello-flask` folder, create an `app.py` file and add the code:
 
@@ -92,17 +100,22 @@ def hello(name=None):
 
 ### Create the Template
 
-Flask is set up to route request to a `hello` function which in turn passes a `name` variable  (taken from the requests path) to a function to render the `hello.html` template. The template resides in the `templates/` directory under the name `hello.html`:
+Flask is set up to route request to a `hello` function which in turn passes a `name` variable  (taken from the requests path) to a function to render the `hello.html` template. Create a directory named `templates/` and inside, create the `hello.html`:
 
 ```html
 <!-- templates/hello.html -->
 <!DOCTYPE html>
+<html>
 <title>Hello from Fly.io</title>
-{% if name %}
-    <h1>Hello, {{ name | capitalize }}!</h1>
-{% else %}
-    <h1>Hello, World!</h1>
-{% endif %}
+<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+<body>
+    {% if name %}
+        <h1>Hello, {{ name | capitalize }}!</h1>
+    {% else %}
+        <h1>Hello, World!</h1>
+    {% endif %}
+</body>
+</html>
 ```
 
 We're using a template as it makes it easier to show what you should do with assets that aren't the actual application.
@@ -121,15 +134,37 @@ WARNING: This is a development server. Do not use it in a production deployment.
 Press CTRL+C to quit
 ```
 
-<section class="callout">
-Note that `flask run` command works since our file is named `app.py`. It also works for `wsgi.py`, so you don't have to use [`--app`](https://flask.palletsprojects.com/en/latest/cli/) to tell Flask where your app is.
+or
 
-For example, if your file is saved as `hello.py` instead of `app.py`, you would need to use the `--app` option: `flask --app hello run`.
-</section>
+```cmd
+flask --app app run
+```
+```out
+ * Serving Flask app 'app'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+```
 
-If you open `http://127.0.0.1:5000/` in your web browser and it displays `Hello, World!`.
+Note that `flask run` command works since our file is named `app.py`. It also works if your file is named `wsgi.py`, so you don't have to use [`--app`](https://flask.palletsprojects.com/en/latest/cli/) to tell Flask where your app is. More details [here](https://flask.palletsprojects.com/en/latest/quickstart/#a-minimal-application).
 
-If you open, for example, `http://127.0.0.1:5000/fly` , it displays `Hello, Fly!`.
+If your file is saved as `hello.py` instead of `app.py`, you would need to use the `--app` option to point to Flask where your app is: 
+
+```cmd
+flask --app hello run
+```
+```out
+ * Serving Flask app 'hello'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+```
+
+If you open http://127.0.0.1:5000/ in your web browser and it displays `Hello, World!`.
+
+If you open, for example, http://127.0.0.1:5000/fly , it displays `Hello, Fly!`.
 
 ### Before Deployment
 
@@ -190,7 +225,7 @@ Platform: machines
 We have generated a simple Procfile for you. Modify it to fit your needs and run "fly deploy" to deploy your application.
 ```
 
-You can set a name for the app and choose your primary region. You can also choose to launch and attach a [PostgreSQL database](/docs/postgres/) and/or a [Redis database](/docs/reference/redis/) though we are not using either in this example.
+You can set a unique name for the app and choose your primary region. You can also choose to launch and attach a [PostgreSQL database](/docs/postgres/) and/or an [Upstash Redis database](/docs/reference/redis/) though we are not using either in this example.
 
 Organizations are a way of sharing applications between Fly users. When you are asked to select an organization, there should be one with your account name, this is your personal organization. Select that.
 
@@ -199,7 +234,6 @@ One thing to know about the built-in Python builder (`paketobuildpacks/builder:b
 The other thing to know is that it uses a `Procfile` to run the application. `Procfile`s are used on other platforms to deploy Python applications so we keep it simple. The Procfile contains instructions for starting the application. The minimal generated `Procfile` starts the Gunicorn server with our WSGI application:
 
 ```Procfile
-# Procfile
 # Modify this Procfile to fit your needs
 web: gunicorn app:app
 ```
@@ -213,7 +247,6 @@ web: gunicorn app:app
 **Important**: If your Flask object is created, for example, in `hello.py` instead of `app.py`, you should update your `Procfile` like this:
 
 ```Procfile
-# Procfile
 web: gunicorn hello:app
 ```
 
@@ -244,21 +277,26 @@ primary_region = "ams"
   min_machines_running = 0
 ```
 
-The `fly` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly service. The rest of the file contains settings to be applied to the application when it deploys.
+The `fly` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly service. The rest of the file contains settings to be applied to the application when it deploys:
 
-We'll have more details about these properties as we progress, but for now, it's enough to say that they mostly configure which ports the application will be visible on.
+- `primary_region`: it configures where the primary region is, used to create new Machines;
+- `internal_port`: it configures which port the application will use to communicate with clients;
+- `force_https = true`: it enforces HTTP to HTTPS redirects;
+- `auto_start_machines = true`: it enables starting Machines automatically based on requests and capacity;
+- `auto_stop_machines = true`: it enables stopping Machines automatically when the app is idle for several minutes;
+- `min_machines_running = 0`: it sets the number of Machines to keep running, in the primary region only, when `auto_stop_machines = true`.
 
-### Deploy to Fly App
+### Deploy to Fly.io
 
-We are now ready to deploy our app to the Fly platform. At the command line, just run:
+We are now ready to deploy our app to Fly.io. At the command line, run:
 
 ```cmd
 fly deploy
 ```
 
-This will lookup our `fly.toml` file, and get the app name `hello-fly-flask` from there. Then `flyctl` will start the process of deploying our application to the Fly platform. `flyctl` will return you to the command line when it's done.
+This will lookup our `fly.toml` file, and get the app name `hello-fly-flask` from there. Then `flyctl` will start the process of deploying our application to Fly.io. `flyctl` will return you to the command line when it's done.
 
-Once complete visit your app with the following command:
+Once complete, visit your app with the following command:
 
 ```cmd
 fly open
@@ -281,11 +319,11 @@ App
 
 Machines
 PROCESS ID              VERSION REGION  STATE   CHECKS  LAST UPDATED
-app     1781903a919e98  1       ams     started         2023-06-12T15:50:17Z
-app     e28673dfd42186  1       ams     started         2023-06-12T15:49:57Z
+app     1781903a919e98  1       ams     started         2023-08-31T03:50:27Z
+app     e28673dfd42186  1       ams     started         2023-08-29T14:14:34Z
 ```
 
-As you can see, the application has been assigned with a DNS hostname of `hello-fly-flask.fly.dev`, and an instance is running in Amsterdam. Your deployment's name will, of course, be different.
+The application has been assigned with a DNS hostname of `hello-fly-flask.fly.dev`, and two instances are running in Amsterdam. Your deployment's name will, of course, be different.
 
 ### Connecting to the App
 
@@ -295,19 +333,6 @@ To specify a path, add `/name` to `fly open` and it'll be appended to the URL as
 
 ```cmd
 fly open /fly
-```
-
-### Bonus Points
-
-If you want to know what IP addresses the app is using, try:
-
-```cmd
-fly ips list
-```
-```out
-VERSION IP                      TYPE            REGION  CREATED AT
-v6      2a09:8280:1::1c:2a7d    public          global  4m37s ago
-v4      66.241.124.169          public (shared)
 ```
 
 Congrats! You have successfully built, deployed, and connected to your first Flask application on Fly.io.
