@@ -410,14 +410,12 @@ Let's Encrypt is a free, automated, and open certificate authority that Fly.io u
 
 The following primary [rate limits](https://letsencrypt.org/docs/rate-limits/) from Let's Encrypt apply:
 
-1. Certificates per Registered Domain (50 per week)
-2. Duplicate Certificate limit (5 per week)
-3. Failed Validation limit (5 failures per account, per hostname, per hour)
+* **Certificates per Registered Domain**: 50 per week
+* **Duplicate Certificate limit**: 5 per week
 
 If you encounter issues when creating or validating a certificate for a custom domain on Fly.io, you can use the following steps to troubleshoot:
 
 1. **Use Let's Debug**: Visit [Let's Debug](https://letsdebug.net/) to diagnose the issue. Let's Debug is a tool that tests for issues with your domain's configuration or issues related to Let's Encrypt's service. Enter your domain name and run the test. The tool will provide a detailed report of any problems it finds and suggest possible solutions.
-
 2. **Wait and Retry**: If you've hit a rate limit, you'll need to wait until the rate limit window passes before you can successfully create or validate a certificate again. The length of the wait depends on the specific rate limit you've hit.
 
 Remember, the best way to avoid hitting rate limits is to use staging environments for testing and development, and to carefully plan your certificate issuance to stay within the limits. If you're building a platform on top of Fly.io, and you expect that your users will frequently delete and then recreate the same resources within a short window, consider implementing "soft delete" logic into your platform that retains the Fly.io resources for a period of time, negating the need to recreate certs frequently.
