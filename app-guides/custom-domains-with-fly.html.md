@@ -406,9 +406,9 @@ If you're using Cloudflare, you might be using their Universal SSL feature which
 
 ### Certificate creation/validation seems to hang, stall or fail
 
-Let's Encrypt is a free, automated, and open certificate authority that Fly.io uses to issue SSL certificates for custom domains. However, Let's Encrypt imposes certain rate limits to ensure fair usage. If you encounter issues such as stalling, hanging, or other failures when creating or validating a certificate for a custom domain on Fly.io, it's possible that you've hit these rate limits.
+Let's Encrypt is a free, automated, and open certificate authority that Fly.io uses to issue SSL certificates for custom domains. However, Let's Encrypt imposes certain rate limits to ensure fair usage. If you encounter issues when creating or validating a certificate for a custom domain on Fly.io, it's possible that you've hit these rate limits.
 
-The following primary [rate limits](https://letsencrypt.org/docs/rate-limits/) Let's Encrypt apply:
+The following primary [rate limits](https://letsencrypt.org/docs/rate-limits/) from Let's Encrypt apply:
 
 1. Certificates per Registered Domain (50 per week)
 2. Duplicate Certificate limit (5 per week)
@@ -420,7 +420,7 @@ If you encounter issues when creating or validating a certificate for a custom d
 
 2. **Wait and Retry**: If you've hit a rate limit, you'll need to wait until the rate limit window passes before you can successfully create or validate a certificate again. The length of the wait depends on the specific rate limit you've hit.
 
-Remember, the best way to avoid hitting rate limits is to use staging environments for testing and development, and to carefully plan your certificate issuance to stay within the limits. If you're building a platform on top of Fly.io, and you expect that your users will frequently delte and then recreate the same resources within a short timefram, consodere implementing a "soft delete" logic into your platform that retains the Fly.io resources for a period of time, negating the need to recreate certs frequently.
+Remember, the best way to avoid hitting rate limits is to use staging environments for testing and development, and to carefully plan your certificate issuance to stay within the limits. If you're building a platform on top of Fly.io, and you expect that your users will frequently delete and then recreate the same resources within a short window, consider implementing "soft delete" logic into your platform that retains the Fly.io resources for a period of time, negating the need to recreate certs frequently.
 
 ## Wrapping up
 
