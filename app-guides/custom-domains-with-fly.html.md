@@ -405,6 +405,27 @@ The GraphQL mutation returns the app name and the hostname and certificate id th
 
 If you're using Cloudflare, you might be using their Universal SSL feature which inserts a TXT record for `_acme_challenge.mydomain` that interferes with our cert validation. You should disable this feature, and verify by running `dig txt _acme-challenge.mydomain.com +short` to see if it returns with a fly address.
 
+**Certificate creation/validation seems to hang, stall or fail**
+
+Let's Encrypt is a free, automated, and open certificate authority that Fly uses to issue SSL certificates for custom domains. However, Let's Encrypt imposes certain rate limits to ensure fair usage. If you encounter issues such as stalling, hanging, or failure when creating or validating a certificate for a custom domain on Fly, it's possible that you've hit these rate limits.
+
+Let's Encrypt applies the following primary [rate limits](https://letsencrypt.org/docs/rate-limits/):
+
+1. **Certificates per Registered Domain (50 per week)**
+2. **Duplicate Certificate limit (5 per week)**
+3. **Failed Validation limit (5 failures per account, per hostname, per hour)**
+4. **Accounts per IP Address (10 accounts per 3 hours)**
+5. **New Orders per Account (300 new orders per account per 3 hours)**
+
+
+If you encounter issues when creating or validating a certificate for a custom domain on Fly, you can use the following steps to troubleshoot:
+
+1. **Use Let's Debug**: Visit [Let's Debug](https://letsdebug.net/) to diagnose the issue. Let's Debug is a tool that tests for issues with your domain's configuration or issues related to Let's Encrypt's service. Enter your domain name and run the test. The tool will provide a detailed report of any problems it finds and suggest possible solutions.
+
+2. **Wait and Retry**: If you've hit a rate limit, you'll need to wait until the rate limit window passes before you can successfully create or validate a certificate again. The length of the wait depends on the specific rate limit you've hit.
+
+Remember, the best way to avoid hitting rate limits is to use staging environments for testing and development, and to carefully plan your certificate issuance to stay within the limits. If you're building a platform on top of Fly, and you expect that your users will frequently delte and then recreate the same resources within a short timefram, consodere implementing a "soft delete" logic into your platform that retains the Fly resources for a period of time, negating the need to recreate certs frequently.
+
 ## Wrapping up
 
 You have everything you need to either hand assign a custom domain to your Fly application or to create your own automated multi-domain proxy. Let your ideas take flight with Fly.
