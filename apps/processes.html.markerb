@@ -75,7 +75,7 @@ You can scale the number of Machines (up or down) per process group with the `fl
 fly scale count web=8 cron=2
 ```
 
-You can scale by region with the `--region` option. Specify multiple regions and the Machines will be distributed as evenly as possible between them. The following command would create 2 Machines in `gru` and 2 Machines in `bog`:
+You can scale by [region](/docs/reference/regions/) with the `--region` option. Specify multiple regions and the Machines will be distributed as evenly as possible between them. The following command would create 2 Machines in `gru` and 2 Machines in `bog`:
 
 ```cmd
 fly scale count web=4 --region gru,bog
@@ -85,7 +85,7 @@ fly scale count web=4 --region gru,bog
 
 You can also use the `fly machine clone` and `fly machine destroy` commands to scale the number of Machines individually within a process group. When you clone a Machine that belongs to a process group, the new Machine is created with the command, services, and checks that are configured on the app for that process.
 
-You can add a region to your app by cloning a Machine into a new region.
+You can add a [region](/docs/reference/regions/) to your app by cloning a Machine into a new region.
 
 First, run `fly status` to get a list of Machines with IDs and process groups. 
 

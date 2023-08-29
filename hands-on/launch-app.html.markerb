@@ -37,7 +37,7 @@ Here you can enter the name of the app. App names can include only numbers, lowe
     If you didn't add another organization to your account, the `personal` organization is selected automatically.  
 </div>
 
-Next, you'll be prompted to select a region to deploy in.
+Next, you'll be prompted to select a [region](/docs/reference/regions/) to deploy in.
 
 ```output
 ? Choose a region for deployment: Chicago, Illinois (US) (ord)

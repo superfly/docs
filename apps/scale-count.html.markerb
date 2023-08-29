@@ -27,7 +27,7 @@ You can also adjust the capacity of the app by starting and stopping its Machine
 
 ## View the app's current scale 
 
-`fly scale show` outputs all the scale information about an app's Machines: how many Machines of each VM specification, in each of the app's process groups, in each region.
+`fly scale show` outputs all the scale information about an app's Machines: how many Machines of each VM specification, in each of the app's process groups, in each [region](/docs/reference/regions/).
 
 Here's an example to illustrate that:
 
