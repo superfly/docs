@@ -401,9 +401,9 @@ The GraphQL mutation returns the app name and the hostname and certificate id th
 ## Troubleshooting
 ### Certificate creation or validation seems to hang, stall or fail
 
-Let's Encrypt is a free, automated, and open certificate authority that Fly.io uses to issue TLS certificates for custom domains. However, Let's Encrypt imposes certain rate limits to ensure fair usage. If you encounter issues when creating or validating a certificate for a custom domain on Fly.io, it's possible that you've hit these rate limits.
+Let's Encrypt™ is a free, automated, and open certificate authority that Fly.io uses to issue TLS certificates for custom domains. However, Let's Encrypt™ imposes certain rate limits to ensure fair usage. If you encounter issues when creating or validating a certificate for a custom domain on Fly.io, it's possible that you've hit these rate limits.
 
-The following [rate limits](https://letsencrypt.org/docs/rate-limits/) from Let's Encrypt apply:
+The following [rate limits](https://letsencrypt.org/docs/rate-limits/) from Let's Encrypt™ apply:
 
 * **Certificates per Registered Domain**: 50 per week
 * **Duplicate Certificate limit**: 5 per week
@@ -413,7 +413,7 @@ Note that certficate renewals don’t count against your **Certificates per Regi
 
 If you encounter issues when adding or validating a certificate for a custom domain on Fly.io, you can use the following methods to troubleshoot:
 
-* **Use Let's Debug**: Visit [Let's Debug](https://letsdebug.net/) to diagnose the issue. Let's Debug is a tool that tests for issues with your domain's configuration or issues related to Let's Encrypt's service. Enter your domain name and run the test. The tool will provide a detailed report of any problems it finds and suggest possible solutions.
+* **Use Let's Debug**: Visit [Let's Debug](https://letsdebug.net/) to diagnose the issue. Let's Debug is a diagnostic tool/website to help figure out why you might not be able to issue a certificate for Let's Encrypt™. Using a set of tests, it can identify a variety of issues, including: problems with basic DNS setup, problems with nameservers, rate limiting, networking issues, CA policy issues and common website misconfigurations.
 * **Wait and Retry**: If you've hit a rate limit, you'll need to wait until the rate limit window passes before you can successfully create or validate a certificate again. We don’t have a way to reset it. 
 
 Remember, the best way to avoid hitting rate limits is to use staging environments and domains for testing and development, and to carefully plan your certificate issuance to stay within the limits. Avoid failed validation by ensuring that your DNS records are correctly configured, with no conflicting records.
