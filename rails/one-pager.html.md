@@ -2,6 +2,7 @@
 title: Rails One Pager
 layout: one-pager
 status: alpha
+toc: false
 paths:
   - docs/rails/getting-started
   - docs/rails/the-basics
