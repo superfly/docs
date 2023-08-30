@@ -9,6 +9,7 @@ flyctl secrets [command] [flags]
 ~~~
 
 ## Available Commands
+* [deploy](/docs/flyctl/secrets-deploy/)	 - Deploy staged secrets for an application
 * [import](/docs/flyctl/secrets-import/)	 - Set secrets as NAME=VALUE pairs from stdin
 * [list](/docs/flyctl/secrets-list/)	 - List application secret names, digests and creation times
 * [set](/docs/flyctl/secrets-set/)	 - Set one or more encrypted secrets for an application

@@ -10,11 +10,6 @@ to all instances running in a specific region using the --region/-r flag.
 flyctl logs [flags]
 ~~~
 
-## Available Commands
-* [dashboard](/docs/flyctl/logs-dashboard/)	 - View and analyze logs in a web browser
-* [ship](/docs/flyctl/logs-ship/)	 - Ship application logs to Logtail
-* [unship](/docs/flyctl/logs-unship/)	 - Stop shipping application logs to Logtail
-
 ## Options
 
 ~~~

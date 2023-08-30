@@ -1,9 +1,8 @@
-Stop shipping application logs to Logtail
-
+Deploy staged secrets for an application
 
 ## Usage
 ~~~
-flyctl logs unship [flags]
+flyctl secrets deploy [flags]
 ~~~
 
 ## Options
@@ -11,7 +10,8 @@ flyctl logs unship [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for unship
+      --detach          Return immediately instead of monitoring deployment progress
+  -h, --help            help for deploy
 ~~~
 
 ## Global Options
@@ -24,5 +24,5 @@ flyctl logs unship [flags]
 
 ## See Also
 
-* [flyctl logs](/docs/flyctl/logs/)	 - View app logs
+* [flyctl secrets](/docs/flyctl/secrets/)	 - Manage application secrets with the set and unset commands.
 

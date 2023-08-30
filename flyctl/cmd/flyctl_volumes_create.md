@@ -12,6 +12,7 @@ flyctl volumes create <volumename> [flags]
 ~~~
   -a, --app string            Application name
   -c, --config string         Path to application configuration file
+  -n, --count int             Number of volumes to create (default 1)
   -h, --help                  help for create
   -j, --json                  JSON output
       --no-encryption         Do not encrypt the volume contents

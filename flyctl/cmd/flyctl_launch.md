@@ -8,7 +8,6 @@ flyctl launch [flags]
 ## Options
 
 ~~~
-      --auto-confirm                     Will automatically confirm changes when running non-interactively.
       --build-arg stringArray            Set of build time variables in the form of NAME=VALUE pairs. Can be specified multiple times.
       --build-only                       Build but do not deploy
       --build-secret stringArray         Set of build secrets of NAME=VALUE pairs. Can be specified multiple times. See https://docs.docker.com/develop/develop-images/build_enhancements/#new-docker-build-secret-information
@@ -55,6 +54,7 @@ flyctl launch [flags]
       --vm-memory int                    Memory (in megabytes) to attribute to the VM
       --vm-size string                   The VM size to use when deploying for the first time. See "fly platform vm-sizes" for valid values
       --wait-timeout int                 Seconds to wait for individual machines to transition states and become healthy. (default 120)
+  -y, --yes                              Accept all confirmations
 ~~~
 
 ## Global Options
