@@ -59,9 +59,9 @@ Some npm modules are _native_ modules which may require additional libraries to 
 installed, either at build time, or at deploy time, or both.
 
 ```
-npx dockerfile --add:base=libxml2
-npx dockerfile --add:build=babel
-npx dockerfile --add:deploy=fontconfig
+npx dockerfile --add-base=libxml2
+npx dockerfile --add-build=babel
+npx dockerfile --add-deploy=fontconfig
 ```
 
 If you find yourself needing to do this, and your need is a consequence of using a
