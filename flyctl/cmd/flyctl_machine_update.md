@@ -30,8 +30,8 @@ flyctl machine update <machine_id> [flags]
   -p, --port strings               Publish ports, format: port[:machinePort][/protocol[:handler[:handler...]]])
                                    	i.e.: --port 80/tcp --port 443:80/tcp:http:tls --port 5432/tcp:pg_tls
                                    	To remove a port mapping use '-' as handler, i.e.: --port 80/tcp:-
-      --restart string             Configure restart policy, for a machine. Options include 'no', 'always' and 'on-fail'.
-                                   	Default is set to always for ordinary machines and on-fail for machines with a schedule
+      --restart string             Set the restart policy for a Machine. Options include 'no', 'always', and 'on-fail'.
+                                   	Default is 'on-fail' for Machines created by 'fly deploy' and Machines with a schedule. Default is 'always' for Machines created by 'fly m run'.
       --schedule string            Schedule a machine run at hourly, daily and monthly intervals
       --select                     Select from a list of machines
       --skip-dns-registration      Do not register the machine's 6PN IP with the internal DNS system
