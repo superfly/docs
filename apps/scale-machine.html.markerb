@@ -113,7 +113,7 @@ Looks good!
 
 If you are happy with the provisioned CPU resources, but want more memory, use `fly scale memory` to top up the RAM.
 
-If your app crashes with an an out-of-memory error, scale up its RAM and its Machines are restarted to use the new setting.
+If your app crashes with an out-of-memory error, scale up its RAM and its Machines are restarted to use the new setting.
 
 ```cmd
 fly scale memory 4096
