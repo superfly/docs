@@ -19,7 +19,7 @@ Run through the [Starter Node.js App](https://fly.io/blog/vanilla-candy-sprinkle
 
 ## [The Basics](./the-basics)
 
-Covers everything you need to setup, run, and manage production Node.js apps on Fly. These documents should give you an idea of what's actually like day-to-day using Fly.
+Covers everything you need to setup, run, and manage production Node.js apps on Fly. These documents also identify some common problems you may encounter and provides some pointers on how to resolve them.
 
 <!--
 ## [Advanced Guides](./advanced-guides)
