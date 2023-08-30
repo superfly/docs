@@ -409,7 +409,7 @@ The following [rate limits](https://letsencrypt.org/docs/rate-limits/) from Let'
 * **Duplicate Certificate limit**: 5 per week
 * **Failed Validation limit**: 5 failures per hostname, per hour
 
-Note that certficate renewals don’t count against your **Certificates per Registered Domain** limit.
+Note that certificate renewals don’t count against your **Certificates per Registered Domain** limit.
 
 If you encounter issues when adding or validating a certificate for a custom domain on Fly.io, you can use the following methods to troubleshoot:
 
