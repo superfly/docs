@@ -687,9 +687,11 @@ Examples:
 [[files]]
   guest_path = "/path/to/secret.txt"
   secret_name = "SUPER_SECRET"
+```
 
 You can optionally restrict which Machine(s) contain the file using the [processes](#the-processes-section) field. For example:
 
+```toml
 [[files]]
   guest_path = "/path/to/config.yaml"
   local_path = "/local/path/config.yaml"
