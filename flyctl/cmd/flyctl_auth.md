@@ -34,5 +34,5 @@ authenticated and in use.
 
 ## See Also
 
-* [flyctl](/docs/flyctl/help/)	 - The Fly CLI
+* [flyctl](/docs/flyctl/help/)	 - The Fly.io command line interface
 

@@ -10,17 +10,18 @@ flyctl volumes create <volumename> [flags]
 ## Options
 
 ~~~
-  -a, --app string            Application name
-  -c, --config string         Path to application configuration file
-  -n, --count int             Number of volumes to create (default 1)
-  -h, --help                  help for create
-  -j, --json                  JSON output
-      --no-encryption         Do not encrypt the volume contents
-  -r, --region string         The target region (see 'flyctl platform regions')
-      --require-unique-zone   Require volume to be placed in separate hardware zone from existing volumes (default true)
-  -s, --size int              Size of volume in gigabytes (default 3)
-      --snapshot-id string    Create volume from a specified snapshot
-  -y, --yes                   Accept all confirmations
+  -a, --app string                  Application name
+  -c, --config string               Path to application configuration file
+  -n, --count int                   Number of volumes to create (default 1)
+  -h, --help                        help for create
+      --host-dedication-id string   
+  -j, --json                        JSON output
+      --no-encryption               Do not encrypt the volume contents
+  -r, --region string               The target region (see 'flyctl platform regions')
+      --require-unique-zone         Require volume to be placed in separate hardware zone from existing volumes (default true)
+  -s, --size int                    Size of volume in gigabytes (default 3)
+      --snapshot-id string          Create volume from a specified snapshot
+  -y, --yes                         Accept all confirmations
 ~~~
 
 ## Global Options

@@ -1,7 +1,7 @@
 Deploy Fly applications from source or an image using a local or remote builder.
 
-To disable colorized output and show full Docker build output, set the environment variable NO_COLOR=1.
-
+		To disable colorized output and show full Docker build output, set the environment variable NO_COLOR=1.
+	
 
 ## Usage
 ~~~
@@ -14,7 +14,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
   -a, --app string                       Application name
       --build-arg stringArray            Set of build time variables in the form of NAME=VALUE pairs. Can be specified multiple times.
       --build-only                       Build but do not deploy
-      --build-secret stringArray         Set of build secrets of NAME=VALUE pairs. Can be specified multiple times. See https://docs.docker.com/develop/develop-images/build_enhancements/#new-docker-build-secret-information
+      --build-secret stringArray         Set of build secrets of NAME=VALUE pairs. Can be specified multiple times. See https://docs.docker.com/engine/reference/commandline/buildx_build/#secret
       --build-target string              Set the target build stage to build if the Dockerfile has more than one stage
   -c, --config string                    Path to application configuration file
       --detach                           Return immediately instead of monitoring deployment progress
@@ -49,7 +49,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
       --vm-cpukind string                The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                      Number of CPUs
       --vm-memory int                    Memory (in megabytes) to attribute to the VM
-      --vm-size string                   The VM size to use when deploying for the first time. See "fly platform vm-sizes" for valid values
+      --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --wait-timeout int                 Seconds to wait for individual machines to transition states and become healthy. (default 120)
   -y, --yes                              Accept all confirmations
 ~~~
@@ -64,5 +64,5 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
 
 ## See Also
 
-* [flyctl](/docs/flyctl/help/)	 - The Fly CLI
+* [flyctl](/docs/flyctl/help/)	 - The Fly.io command line interface
 

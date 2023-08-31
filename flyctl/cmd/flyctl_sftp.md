@@ -26,5 +26,5 @@ flyctl sftp [command] [flags]
 
 ## See Also
 
-* [flyctl](/docs/flyctl/help/)	 - The Fly CLI
+* [flyctl](/docs/flyctl/help/)	 - The Fly.io command line interface
 

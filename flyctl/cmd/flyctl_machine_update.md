@@ -37,9 +37,10 @@ flyctl machine update <machine_id> [flags]
       --skip-dns-registration      Do not register the machine's 6PN IP with the internal DNS system
       --skip-health-checks         Updates machine without waiting for health checks.
       --standby-for strings        Comma separated list of machine ids to watch for
+      --vm-cpukind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                Number of CPUs
-      --vm-memory int              Memory (in megabytes) to attribute to the machine
-  -s, --vm-size string             Preset guest cpu and memory for a machine, defaults to shared-cpu-1x
+      --vm-memory int              Memory (in megabytes) to attribute to the VM
+      --vm-size string             The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --wait-timeout int           Seconds to wait for individual machines to transition states and become healthy. (default 300) (default 300)
   -y, --yes                        Accept all confirmations
 ~~~

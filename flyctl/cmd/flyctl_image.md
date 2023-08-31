@@ -8,7 +8,6 @@ flyctl image [command] [flags]
 
 ## Available Commands
 * [show](/docs/flyctl/image-show/)	 - Show image details.
-
 * [update](/docs/flyctl/image-update/)	 - Updates the app's image to the latest available version. (Fly Postgres only)
 
 ## Options
@@ -27,5 +26,5 @@ flyctl image [command] [flags]
 
 ## See Also
 
-* [flyctl](/docs/flyctl/help/)	 - The Fly CLI
+* [flyctl](/docs/flyctl/help/)	 - The Fly.io command line interface
 

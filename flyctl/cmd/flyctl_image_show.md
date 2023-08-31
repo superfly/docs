@@ -1,5 +1,6 @@
 Show image details.
 
+
 ## Usage
 ~~~
 flyctl image show [flags]
