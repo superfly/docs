@@ -7,6 +7,16 @@ nav: firecracker
 
 Read our [Extensions Program overview](https://fly.io/docs/about/extensions) before digging into this doc.
 
+## Requirements
+
+To implement the following, we need to provide you with:
+
+* A shared secret for [signing provisioning requests](/docs/reference/extensions_api/#authentication-and-request-signing)
+* A shared secret for [signing webhooks](/docs/reference/extensions_api/#webhook-authentication-and-request-signing)
+* OAuth application client and secret values
+
+You'll need to give us an OAuth redirect URL for your production environment.
+
 ## Provisioning Flow
 
 Fly.io is a CLI-first platform. So provisioning extensions starts there. Either when launching an app, or when a customer explicitly asks to provision an extension.
@@ -255,6 +265,51 @@ The JSON response:
   "created_at"=>1683740928
 }
 ```
+
+## Webhooks: Notify Fly.io about changes to extension resources
+
+Providers should send webhooks to Fly.io when changes happen to resources, such as:
+
+* A database transitioning from `ready` to `sleeping`
+* A database is removed via the provider UI
+* A customer changes their payment plan of a resource or an organization
+
+### Webhook URL and format
+
+Each extension provider gets their own webhook URL, like so:
+
+`https://api.fly.io/api/hooks/extensions/logjam`
+
+This endpoint will accept `POST` requests of the `application/json` type.
+
+### Webhook Authentication and Request Signing
+
+Webhook requests should be signed the same way as we [sign provisioning requests](/docs/reference/extensions_api/#authentication-and-request-signing) but with a different shared secret.
+
+### The webhook request body
+
+The request must include a UNIX `timestamp`, `action` string  and `resource` objevt. Here's an example:
+
+```
+{
+  "timestamp": "1693513586",
+  "action": "resource.updated",
+  "resource": {
+    "plan": "scaler_pro",
+    "id": "5lgmabb3y30",
+    "status": "ready"
+  }
+}
+```
+
+Supported actions are:
+
+```
+resource.updated
+resource.deleted
+```
+
+Note: the shape of `resource` should be the same as that provided by any `GET` endpoints for invidividual resources.
 
 ## Email communication with customers
 
