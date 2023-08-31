@@ -2,11 +2,12 @@
 title: JavaScript on Fly.io
 layout: framework_docs
 toc: false
+redirect_from: /docs/languages-and-frameworks/node/
 ---
 
-<!-- div>
-  <img src="/static/images/js-intro.webp" srcset="/static/images/js-intro@2x.webp 2x" alt="Picture of a JavaScript book on a bookshelf with other books">
-</div -->
+<div>
+  <img src="/static/images/js-bookshelf.webp" srcset="/static/images/js-bookshelf@2x.webp 2x" alt="Picture of a JavaScript book on a bookshelf with other books">
+</div>
 
 Fly is a great place to run JavaScript applications, especially if you plan on running them on multiple servers around the world so your users have a fast, snappy, low-latency experience. This becomes particularly important with applications that make use of Server-Side Rendering
 or React Server Components.
