@@ -716,3 +716,7 @@ This overrides the `CMD` set by the Dockerfile. It should be specified as an arr
 ### `entrypoint`
 
 This overrides the `ENTRYPOINT` set by the Dockerfile. It should be specified as an array of strings, as seen in the example above.
+
+### `exec`
+
+This overrides both the `CMD` and the `ENTRYPOINT` set by the Dockerfile. It should be specified as an array of strings, as seen in the example above.
