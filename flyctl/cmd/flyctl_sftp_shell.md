@@ -12,6 +12,7 @@ flyctl sftp shell [flags]
   -a, --app string       Application name
   -C, --command string   command to run on SSH session
   -c, --config string    Path to application configuration file
+      --group string     The target process group
   -h, --help             help for shell
   -o, --org string       The target Fly organization
       --pty              Allocate a pseudo-terminal (default: on when no command is provided)
