@@ -45,7 +45,7 @@ replication position.
 
 The proxy handles requests a bit differently on replicas since they cannot write
 data and they may lag slightly behind the primary. First, write requests
-(`POST`, `PUT`, etc) are forwarded to primary node using [`fly-replay` header][].
+(`POST`, `PUT`, etc) are forwarded to primary node using [`fly-replay` header](/docs/reference/dynamic-request-routing/).
 This ensures that all writes occur on the primary.
 
 For read requests (`GET`), the replica will wait for the replication position on
@@ -53,13 +53,11 @@ the database to catch up to the position stored in the cookie set by the primary
 server. This ensures that any writes forwarded to the primary are visible by the
 replicas before processing the request.
 
-[`fly-replay` header]: /docs/reference/dynamic-request-routing/
-
 
 ## Configuring the proxy
 
 By default, the proxy is disabled. You can enable it by setting fields in the
-[proxy section][] of the config:
+[proxy section](/docs/litefs/config#http-proxy-server) of the config:
 
 ```yml
 proxy:
@@ -74,7 +72,7 @@ proxy:
 ```
 
 You'll also need to ensure that your application is running on the target port,
-which is `8081` in this example. Additionally, make sure your [internal port][]
+which is `8081` in this example. Additionally, make sure your [internal port](/docs/reference/configuration/#the-services-sections)
 is configured to the proxy's bind port in your `fly.toml`:
 
 ```toml
@@ -82,7 +80,4 @@ is configured to the proxy's bind port in your `fly.toml`:
   internal_port = 8080
   protocol = "tcp"
 ```
-
-[proxy section]: /docs/litefs/config#http-proxy-server
-[internal port]: /docs/reference/configuration/#the-services-sections
 
