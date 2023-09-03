@@ -222,7 +222,7 @@ you can always change your mind and add it later. Check out the
 
 [Sign up]: /docs/hands-on/sign-up
 [LiteFS Cloud backup]: /docs/litefs/cloud-backups
-[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
+[LiteFS Cloud Dashboard]: /dashboard/personal/litefs
 
 
 ### Configuring LiteFS to use LiteFS Cloud
