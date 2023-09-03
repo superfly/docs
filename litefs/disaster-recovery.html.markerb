@@ -157,7 +157,7 @@ echo $FLY_CONSUL_URL
 This url is in the format `https://:{TOKEN}@{HOST}/{PREFIX}`. You'll need each of these values
 separately. You'll also need the value of `lease.consul.key` from your `litefs.yml` file.
 
-Then use the [Consul CLI][] to delete the key with:
+Then use the [Consul CLI](https://developer.hashicorp.com/consul/commands/kv) to delete the key with:
 
 ```sh
 export TOKEN=(copy the token you found from your consul url)
@@ -176,7 +176,6 @@ restarting your app:
 fly app restart
 ```
 
-[Consul CLI]: https://developer.hashicorp.com/consul/commands/kv
 
 ## Add your replicas back
 

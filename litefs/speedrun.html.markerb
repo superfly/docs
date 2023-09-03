@@ -26,12 +26,11 @@ back here!
 
 ### 1. Create a LiteFS Cloud cluster
 
-Create a LiteFS Cloud cluster in [the LiteFS section][LiteFS Cloud Dashboard] of the fly.io dashboard.
+Create a LiteFS Cloud cluster in [the LiteFS section](https://fly.io/dashboard/personal/litefs) of the fly.io dashboard.
 Take note of your auth token (you'll need it later).
 
 LiteFS Cloud is optional, but highly recommended if your data is important to you!
 
-[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
 
 ### 2. Configure litefs.yml
 
