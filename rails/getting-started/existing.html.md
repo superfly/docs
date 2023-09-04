@@ -72,7 +72,7 @@ deploys the images, and then monitors to ensure it starts successfully. Once com
 visit your app with the following command:
 
 ```cmd
-fly open
+fly apps open
 ```
 
 If all went well, you'll see your Rails application homepage.

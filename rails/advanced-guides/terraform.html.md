@@ -82,7 +82,7 @@ rerun `terraform` commands directly.  You can even `terraform destroy` and
 `rm terraform.tfstate` and start over.  What's important is `main.tf` already
 reflects the name of the latest image.
 
-Also, because a `fly.toml` file was generated, you can use commands like `fly open`,
+Also, because a `fly.toml` file was generated, you can use commands like `fly apps open`,
 `fly ssh console` and `fly logs`.
 
 ## Open issues

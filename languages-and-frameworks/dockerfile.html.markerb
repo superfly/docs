@@ -98,7 +98,7 @@ By default, `fly deploy` builds the image using a remote builder. If you have Do
 
 ## _Open Your App_
 
-Run `fly open` to open your deployed app in a browser.
+Run `fly apps open` to open your deployed app in a browser.
 
 You're off and running!
 

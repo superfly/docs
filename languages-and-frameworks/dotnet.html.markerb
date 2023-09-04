@@ -76,7 +76,7 @@ Deploying hellodotnet
 ...
 ```
 
-That's it! Run `fly open` to see your deployed app in action.
+That's it! Run `fly apps open` to see your deployed app in action.
 
 Try a few other commands:
 

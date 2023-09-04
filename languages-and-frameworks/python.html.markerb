@@ -299,7 +299,7 @@ This will lookup our `fly.toml` file, and get the app name `hello-fly-flask` fro
 Once complete, visit your app with the following command:
 
 ```cmd
-fly open
+fly apps open
 ```
 
 ### View the Deployed App
@@ -327,12 +327,12 @@ The application has been assigned with a DNS hostname of `hello-fly-flask.fly.de
 
 ### Connecting to the App
 
-The quickest way to connect to your deployed app is with the `fly open` command. This will open a browser on the HTTP version of the site. That will automatically be upgraded to an HTTPS secured connection (for the fly.dev domain).
+The quickest way to connect to your deployed app is with the `fly apps open` command. This will open a browser on the HTTP version of the site. That will automatically be upgraded to an HTTPS secured connection (for the fly.dev domain).
 
-To specify a path, add `/name` to `fly open` and it'll be appended to the URL as the path and you'll get an extra greeting from the `hello-fly-flask` app:
+To specify a path, add `/name` to `fly apps open` and it'll be appended to the URL as the path and you'll get an extra greeting from the `hello-fly-flask` app:
 
 ```cmd
-fly open /fly
+fly apps open /fly
 ```
 
 Congrats! You have successfully built, deployed, and connected to your first Flask application on Fly.io.

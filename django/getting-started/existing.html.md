@@ -109,7 +109,7 @@ fly deploy
 This will take a few seconds as it uploads your application, verifies the app configuration, builds the image, and then monitors to ensure it starts successfully. Once complete, visit your app with the following command:
 
 ```cmd
-fly open
+fly apps open
 ```
 
 If everything went as planned you will see your Django application homepage.

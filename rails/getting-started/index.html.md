@@ -134,7 +134,7 @@ deploys the images, and then monitors to ensure it starts successfully. Once com
 visit your app with the following command:
 
 ```cmd
-fly open
+fly apps open
 ```
 
 That's it!  You are up and running!  Wasn't that easy?
@@ -203,7 +203,7 @@ you need to do is the following:
 
 ``` shell
 $ fly deploy
-$ fly open
+$ fly apps open
 ```
 
 Subsequent deploys are quicker than the first one as substantial portions of you
@@ -306,7 +306,7 @@ There is only one step left, and that is to modify `app/controllers/names_contro
 ### Deployment and testing
 
 By now it should be no surprise that deployment is as easy as `fly deploy` and
-`fly open`. Once that is done, copy the browser URL, open a second browser
+`fly apps open`. Once that is done, copy the browser URL, open a second browser
 window (it can even be a different browser or even on a different machine), and
 paste the URL into the new window.
 

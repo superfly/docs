@@ -168,7 +168,7 @@ This will lookup our `fly.toml` file, and get the app name from there. Then `fly
 The quickest way to browse your newly deployed application is with the `flyctl open` command.
 
 ```cmd
-fly open
+fly apps open
 ```
 ```output
 Opening http://helloruby.fly.dev/

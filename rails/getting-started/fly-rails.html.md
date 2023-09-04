@@ -34,7 +34,7 @@ bin/rails fly:launch
 If the deployment is successful, you can view your app by running:
 
 ```cmd
-fly open
+fly apps open
 ```
 
 You should see your application!

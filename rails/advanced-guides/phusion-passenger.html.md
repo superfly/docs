@@ -141,7 +141,7 @@ exit 0
 ## Deployment
 
 That's it.  As always you deploy your application via `fly deploy` and
-can open it via `fly open`.  Everything else remains the same.  You
+can open it via `fly apps open`.  Everything else remains the same.  You
 can use your same Postgre database, redis data store, and any other
 secrets you may have set.
 

@@ -306,7 +306,7 @@ If you try deploying the app to Fly and that fails, the most _likely_ reason is 
 
 ## View your application on Fly
 
-Use `fly open` as a shortcut to open the app's URL in your browser.
+Use `fly apps open` as a shortcut to open the app's URL in your browser.
 
 Use `fly logs` to see its log files.
 
@@ -336,7 +336,7 @@ abcdefgh	app    	1     	lhr   	run    	running	2 total, 2 passing	0       	0h1m 
 
 To avoid charges you might want to delete the app and the PlanetScale database:
 
-- To delete the sample Fly app (this is irreversible), run `fly destroy the-app-name-here`
+- To delete the sample Fly app (this is irreversible), run `fly apps destroy the-app-name-here`
 - To delete the PlanetScale database, click the red delete button within the database's _Settings_ tab:
 
 ![Screenshot](/docs/images/planetscale_misc_delete.webp)

@@ -29,7 +29,7 @@ Refer to [Launch a new app](/docs/apps/launch/) to learn more about what `fly la
 ## Next steps
 
 1. Run `fly status` - show the status of the application instances.
-2. Run `fly open` - open your browser and direct it to your app.
+2. Run `fly apps open` - open your browser and direct it to your app.
 
 
 If things don't go as smoothly as you'd like, visit our [community forum](https://community.fly.io) and get help.

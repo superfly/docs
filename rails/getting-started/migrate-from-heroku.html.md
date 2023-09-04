@@ -82,7 +82,7 @@ fly deploy
 When that's done, view your app in a browser:
 
 ```cmd
-fly open
+fly apps open
 ```
 
 There's still work to be done to move more Heroku stuff over, so don't worry if the app doesn't boot right away. There's a few commands that you'll find useful to configure your environment:
@@ -151,7 +151,7 @@ fly secrets unset HEROKU_DATABASE_URL
 Then launch your Heroku app to see if its running.
 
 ```
-fly open
+fly apps open
 ```
 
 If you have a Redis server, there's a good chance you need to set that up.
