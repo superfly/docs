@@ -349,10 +349,10 @@ f617e72a 3       sea    run     running 1 total, 1 passing 0        1m34s ago
 
 ## _Connecting to the App_
 
-The quickest way to browse your newly deployed application is with the `fly open` command.
+The quickest way to browse your newly deployed application is with the `fly apps open` command.
 
 ```cmd
-fly open
+fly apps open
 ```
 ```output
 Opening https://fly-elixir.fly.dev/

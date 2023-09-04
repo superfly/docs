@@ -324,4 +324,4 @@ If a Machine is misbehaving (for instance, it's not `stop`ping successfully), yo
 fly machine destroy --force 0e286039f42e86
 ```
 
-<div class="callout"> If you `destroy` a Machine, any volume that it had been using still exists until you either `fly volumes delete` it or `fly destroy` the Fly App it belongs to.</div>
+<div class="callout"> If you destroy a Machine with a volume attached, the volume remains intact until you either explicitly destroy the volume or destroy the Fly App it belongs to.</div>

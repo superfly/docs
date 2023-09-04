@@ -20,7 +20,7 @@ If you are doing anything with Fly.io, you'll need it. We have [flyctl installat
 * Create An App: [fly launch](/docs/flyctl/launch/)
 * Deploy An App: [fly deploy](/docs/flyctl/deploy/)
 * Manage App Secrets: [fly secrets](/docs/flyctl/secrets/)
-* View your App: [fly open](/docs/flyctl/open/)
+* View your App: [fly apps open](/docs/flyctl/open/)
 
 ## Viewing and Monitoring an App
 

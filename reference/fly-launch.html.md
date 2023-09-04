@@ -230,7 +230,7 @@ I can [scale out](/docs/apps/scale-count/) by adding Machines in other regions i
 To check that my new web app is actually working, I run
 
 ```cmd
-fly open
+fly apps open
 ```
 
 to visit my app in the browser!

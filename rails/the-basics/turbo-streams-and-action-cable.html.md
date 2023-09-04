@@ -120,7 +120,7 @@ There is only one step left, and that is to modify `app/controllers/names_contro
 ## Deployment and testing
 
 By now it should be no surprise that deployment is as easy as `fly deploy` and
-`fly open`. Once that is done, copy the browser URL, open a second browser
+`fly apps open`. Once that is done, copy the browser URL, open a second browser
 window (it can even be a different browser or even on a different machine), and
 paste the URL into the new window.
 

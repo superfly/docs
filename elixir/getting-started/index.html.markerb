@@ -99,7 +99,7 @@ fly logs
 If everything looks good, open your app on Fly.io!
 
 ```cmd
-fly open
+fly apps open
 ```
 
 ### Important IPv6 settings

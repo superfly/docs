@@ -47,7 +47,7 @@ Now we can deploy normally:
 fly deploy
 ```
 
-Once the application has been deployed, running `fly open` will open a
+Once the application has been deployed, running `fly apps open` will open a
 browser. Add one name.
 
 Return back to your terminal window and run:

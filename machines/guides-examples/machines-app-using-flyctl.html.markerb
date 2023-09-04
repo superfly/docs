@@ -102,7 +102,7 @@ Machine started, you can connect via the following private ip
 I can check on my app!
 
 ```
-fly open -a testrun
+fly apps open -a testrun
 ```
 
 …and, I get nothing. (Note that I'm appending `-a` to most of my flyctl commands, because we're not using a `fly.toml` for configuration, and a `fly.toml` in the working directory is where flyctl usually gets the app name that it thinks you're implying when you don't specify one.)
@@ -219,7 +219,7 @@ https://fly.io/apps/testrun/machines/21781160b41d89
 
 The VM is restarted with the updated configuration.
 
-Now I try `fly open -a testrun` again, and voilà:
+Now I try `fly apps open -a testrun` again, and voilà:
 
 ![The web app running in the browser. It says 'Hello from a Flask app on Fly.io; Or goodbye'. The word 'goodbye' is a hyperlink.](images/testrun-hello.webp)
 

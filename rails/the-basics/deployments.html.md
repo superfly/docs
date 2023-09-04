@@ -14,7 +14,7 @@ fly deploy
 When the application successfully deploys, you can quickly open it in the browser by running:
 
 ```cmd
-fly open
+fly apps open
 ```
 
 If all goes well, you should see a running application in your web browser. You can also view a history of deployments by running:
