@@ -52,14 +52,6 @@ when needed; for example, if you want your app to handle TCP directly.
 
 IPv6 addresses are free. Global IPv4 addresses are [billed](/docs/about/pricing/#anycast-ip-addresses) monthly.
 
-## Idle Connection Timeouts
-
-To reduce strain on the Fly.io public proxy, idle TCP connections are closed automatically after 60 seconds. This limitation applies to all types of public services.
-Idle connection timeouts usually surface as `ECONNRESET` errors on the client.
-
-If you're connecting to a database on Fly.io -- like Redis or Postgres -- over the internet, ensure that your database
-client can handle reconnects cleanly. For example, the `ioredis` Node.js client [handles reconnects automatically](https://ioredis.readthedocs.io/en/stable/README/#auto-reconnect).
-
 ## Connection handlers
 
 Set the `handlers` config setting in the `services.ports` section of [`fly.toml`](/docs/reference/configuration/) to specify which middleware applies to incoming TCP connections for each port you accept external connections on. Use these to convert TCP connections into something your application can handle.
