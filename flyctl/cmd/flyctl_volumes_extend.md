@@ -14,7 +14,7 @@ flyctl volumes extend <id> [flags]
   -c, --config string   Path to application configuration file
   -h, --help            help for extend
   -j, --json            JSON output
-  -s, --size int        Target volume size in gigabytes
+  -s, --size string     Target volume size in gigabytes
   -y, --yes             Accept all confirmations
 ~~~
 
