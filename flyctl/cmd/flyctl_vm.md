@@ -7,9 +7,9 @@ flyctl vm [command] [flags]
 ~~~
 
 ## Available Commands
-* [restart](/docs/flyctl/vm-restart/)	 - Restart a VM
-* [status](/docs/flyctl/vm-status/)	 - Show a VM's status
-* [stop](/docs/flyctl/vm-stop/)	 - Stop a VM
+* [restart](/docs/flyctl/vm-restart/)	 - V1 APPS ONLY: Restart a VM
+* [status](/docs/flyctl/vm-status/)	 - V1 APPS ONLY: Show a VM's status
+* [stop](/docs/flyctl/vm-stop/)	 - V1 APPS ONLY: Stop a VM
 
 ## Options
 

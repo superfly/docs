@@ -1,4 +1,4 @@
-Request for a VM to be asynchronously restarted.
+V1 APPS ONLY: Request for a VM to be asynchronously restarted.
 
 ## Usage
 ~~~

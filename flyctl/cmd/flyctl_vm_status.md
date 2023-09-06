@@ -1,4 +1,4 @@
-Show a VM's status	including logs, checks, and events.
+V1 APPS ONLY: Show a VM's status	including logs, checks, and events.
 
 
 ## Usage
