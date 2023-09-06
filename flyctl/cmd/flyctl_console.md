@@ -20,6 +20,7 @@ flyctl console [flags]
   -u, --user string         Unix username to connect as (default "root")
       --vm-cpukind string   The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int         Number of CPUs
+      --vm-gpus int         Number of GPUs
       --vm-memory int       Memory (in megabytes) to attribute to the VM
       --vm-size string      The VM size to set machines to. See "fly platform vm-sizes" for valid values
 ~~~

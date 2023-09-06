@@ -1,8 +1,9 @@
-V1 APPS ONLY: Request for a VM to be asynchronously stopped
+Reactive all services on a machine
+
 
 ## Usage
 ~~~
-flyctl vm stop <vm-id> [flags]
+flyctl machine cordon <id> [<id>...] [flags]
 ~~~
 
 ## Options
@@ -10,7 +11,8 @@ flyctl vm stop <vm-id> [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for stop
+  -h, --help            help for cordon
+      --select          Select from a list of machines
 ~~~
 
 ## Global Options
@@ -23,5 +25,5 @@ flyctl vm stop <vm-id> [flags]
 
 ## See Also
 
-* [flyctl vm](/docs/flyctl/vm/)	 - Commands that manage VM instances
+* [flyctl machine](/docs/flyctl/machine/)	 - Commands that manage machines
 
