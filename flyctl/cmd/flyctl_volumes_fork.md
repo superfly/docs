@@ -2,7 +2,7 @@ Volume forking creates an independent copy of a storage volume for backup, testi
 
 ## Usage
 ~~~
-flyctl volumes fork <id> [flags]
+flyctl volumes fork [id] [flags]
 ~~~
 
 ## Options

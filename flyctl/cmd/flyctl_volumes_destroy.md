@@ -1,16 +1,17 @@
-Destroy a volume Requires the volume's ID
-number to operate. This can be found through the volumes list command
+Destroy a volume
 
 ## Usage
 ~~~
-flyctl volumes destroy <id> [flags]
+flyctl volumes destroy [id] [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -h, --help   help for destroy
-  -y, --yes    Accept all confirmations
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+  -h, --help            help for destroy
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options
