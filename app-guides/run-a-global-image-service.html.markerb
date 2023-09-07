@@ -51,7 +51,7 @@ CMD ["-enable-url-source","-http-read-timeout" ,"3"]
 
 If you aren't familiar with Docker, the first `FROM` line selects the image of the application and version we want to use. The Imaginary image is configured to run the `imaginary` command.
 
-Imaginary, running in a Docker container, normally opens a port on port 9000, but for this exercise, we want to to open its port on 8080, Fly's default port for external communications. The simplest way to do that is to set the PORT environment value to 8080.
+Imaginary, running in a Docker container, normally opens a port on port 9000, but for this exercise, we want to open its port on 8080, Fly's default port for external communications. The simplest way to do that is to set the PORT environment value to 8080.
 
 The third  `CMD` line contains the parameters we pass to the `imaginary` command that are going to configure how Imaginary runs. The `-enable-url-source` tells Imaginary it is allowed to retrieve images from around the internet and, just so it's well-behaved, we set the `-http-read-timeout` to 3 seconds (the default is 60 which is a long time to wait for an image).
 

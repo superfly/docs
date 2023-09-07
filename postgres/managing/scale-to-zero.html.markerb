@@ -21,7 +21,7 @@ You might need to configure any apps that connect to your Postgres app to scale 
 
 The scale to zero feature is controlled by the `FLY_SCALE_TO_ZERO` environment variable.
 
-To turn off scale to zero, you first need to get and save the `fly.toml` file locally, since the the automated Postgres creation process doesn't generate a `fly.toml` file in the working directory.
+To turn off scale to zero, you first need to get and save the `fly.toml` file locally, since the automated Postgres creation process doesn't generate a `fly.toml` file in the working directory.
 
 ```
 fly config save --app <app-name>

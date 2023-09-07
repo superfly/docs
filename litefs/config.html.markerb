@@ -80,7 +80,7 @@ be stored internally on a regular file system. This internal data directory
 should be saved on a persistent volume so you don't lose your data between restarts.
 
 LiteFS also stores transaction files (called _LTX files_) in this directory.
-These files are are periodically removed through an internal process called
+These files are periodically removed through an internal process called
 _retention enforcement_.
 
 ```yml

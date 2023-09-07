@@ -36,7 +36,7 @@ None of this is special for Machines; if we haven't built a bells-and-whistles l
 
 The big difference here is that instead of putting an app-wide configuration into a `fly.toml` file and running `fly deploy`, we'll incorporate per-VM config into the `fly m run` (AKA `fly machine run`) command that creates the VM.
 
-Imagine you have a Dockerfile in the current working directory, along with maybe some source code that that Dockerfile draws on; and when you build it, you get an image for something that listens on internal port 8080. You want that to be reachable from the world on port 443, where browsers send HTTPS connections.
+Imagine you have a Dockerfile in the current working directory, along with maybe some source code that Dockerfile draws on; and when you build it, you get an image for something that listens on internal port 8080. You want that to be reachable from the world on port 443, where browsers send HTTPS connections.
 
 If you like to do things in an orderly fashion, you might want the App to have public IP addresses before you boot the Machine:
 
