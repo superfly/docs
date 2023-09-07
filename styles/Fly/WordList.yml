@@ -11,14 +11,14 @@ swap:
   "(?:ok|Okay)": OK|okay
   "(?:WiFi|wifi)": Wi-Fi
   "un(?:check|select)": clear
-  above: preceding
+  # above: preceding
   account name: username
   admin: administrator
   Ajax: AJAX
   a\.k\.a|aka: or|also known as
   # application: app
   approx\.: approximately
-  below: later|in the following steps
+  # below: later|in the following steps
   check box: checkbox
   click on: click|click in
   data are: data is
@@ -29,14 +29,14 @@ swap:
   healthchecks: health checks
   HTTPs: HTTPS
   in order to: to
-  instance: Machine
+  # instance: Machine
   k8s: Kubernetes
   open-source: open source
   SHA1: SHA-1|HAS-SHA1
   sign into: sign in to
   sign-?on: single sign-on
   synch: sync
-  url: URL
+  # url: URL
   utilize: use
   vs\.: versus
   World Wide Web: web
