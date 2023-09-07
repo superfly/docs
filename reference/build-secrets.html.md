@@ -14,9 +14,9 @@ It's a 2-step process:
 1. Mount a secret into your `Dockerfile`
 1. Provide the value for that secret when running `fly deploy`
 
-## Mounting Secrets
+## Mounting secrets
 
-Mounting a secret into your `Dockerfile` is done within a `RUN` statement:
+Mount a secret into your `Dockerfile` within a `RUN` statement:
 
 ```dockerfile
 # Note: You can mount multiple secrets
@@ -29,7 +29,7 @@ This creates a new file when running `docker build`. Secrets are stored in the `
 
 The `--mount` directive is not a shell command, so there's no need to add `&&` after it as you commonly see when chaining commands.
 
-## Secret Values
+## Secret values
 
 You need to provide the values of the mounted secrets when running `fly deploy`:
 
@@ -39,7 +39,7 @@ fly deploy \
     --build-secret MY_SUPER_SECRET=some_value
 ```
 
-## Testing Build Secrets Locally
+## Testing build secrets locally
 
 If you want to test your Docker build locally (before deploying to Fly.io), the commands to do so would look something like this:
 

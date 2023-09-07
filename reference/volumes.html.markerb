@@ -7,16 +7,16 @@ nav: firecracker
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-Apps can store only ephemeral data on the root file systems of their Machines, because a Machine's file system is rebuilt from scratch each time you deploy your app, or the Machine is restarted. Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can use volumes to store your database files, to save your app's state, such as configuration and session or user data, or for any information that needs to persist after deploy or restart.
+Apps can store only ephemeral data on the root file systems of their Machines, because a Machine's file system gets rebuilt from scratch each time you deploy your app or the Machine is restarted. Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can use volumes to store your database files, to save your app's state, such as configuration and session or user data, or for any information that needs to persist after deploy or restart.
 
-A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It is tied to that hardware. Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
+A Fly Volume is a slice of an NVMe drive on the physical server your Fly App runs on. It's tied to that hardware. Fly Volumes are a lot like the disk inside your laptop, with the speed and simplicity advantage of being attached to your motherboard and accessible from a mount point in your file system. And the disadvantages that come with being tied to that hardware, too.
 
 If you already know how volumes work, and you're ready to get started, then learn how to [add volume storage for your app](/docs/apps/volume-storage/), step-by-step.
 
 ## Volume considerations
 
 * **A volume belongs to one app**: Every Fly Volume belongs to a [Fly App](/docs/reference/apps/) and you can't share a volume between apps.
-* **A volume exists in one region**: A volume exists in only one region. Only an instance of the app running in the same region can access it.
+* **A volume exists in one region**: A volume exists in only one region. Only a Machine running in the same region can access it.
 * **A volume can attach to one Machine**: You need to run as many volumes as there are Machines. There's a one-to-one mapping between Machines and volumes. A Machine can only mount one volume at a time and a volume can be attached to only one Machine.
 * **Develop your app to handle replication**: Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app, so if you need the volumes to sync up, then your app has to make that happen.
 * **Create redundancy in your primary region**: If your app needs a volume to function, and the NVMe drive hosting your volume fails, then that instance of your app goes down. There's no way around that. You can run multiple Machines with volumes in your app's primary region to mitigate hardware failures.
@@ -30,9 +30,9 @@ If volumes don't work for your use case, then you can explore other options for 
 <b>Always run at least two volumes per app.</b> We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each machine should have an attached volume. If you only have one Machine and volume, you'll have downtime if there's a host or network failure, and whenever you deploy your app. Also remember that volumes don't have built-in replication between them.
 </div>
 
-There are a few cases where you can run a single Machine with an attached volume. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not yet worried about downtime.
+In a few cases, you can run a single Machine with an attached volume. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not yet worried about downtime.
 
-Many developers use volumes for databases, so if possible, each volume you create for your app is placed in a separate hardware zone by default. Note that having each volume in a separate hardware zone limits the number of volumes your app can have in a region. You can configure this setting with the `--require-unique-zone` option when you run [`fly volumes create`](/docs/flyctl/volumes-create/).
+Many developers use volumes for databases, so if possible, we place each volume you create for your app in a separate hardware zone by default. Note that having each volume in a separate hardware zone limits the number of volumes your app can have in a region. You can configure this setting with the `--require-unique-zone` option when you run [`fly volumes create`](/docs/flyctl/volumes-create/).
 
 ## Volumes and regions
 
@@ -92,7 +92,7 @@ vol_od56vjpp95mvny30    created myapp_data    1GB     lhr     79f0    true      
 vol_kgj54500d3qry2wz    created myapp_data    1GB     yyz     acc6    true                            9 minutes ago
 ```
 
-The unique volume ID can be used in commands that reference a specific volume, such as the `show` or `delete` sub-commands. For example, the `fly volumes show` command can display the details for a particular volume:
+Use the unique volume ID in commands that reference a specific volume, such as the `show` or `delete` sub-commands. For example, the `fly volumes show` command can display the details for a particular volume:
 
 ```cmd
 fly vol show vol_kgj54500d3qry2wz
@@ -110,7 +110,7 @@ Created at: 04 Mar 23 03:32 UTC
 
 ### Access a volume
 
-You can access and write to a volume on a Machine just like a regular directory. For Fly Apps, the `destination` under `[mounts]` in `fly.toml` is the path for the mounted volumes. For Machines that are managed separately from the Fly App, you specify the mount path in the `fly machine clone` command, when you [clone a Machine and add a volume](/docs/apps/volume-storage/#add-a-volume-to-a-machine-clone).
+You can access and write to a volume on a Machine just like a regular directory. For Fly Apps, the `destination` under `[mounts]` in `fly.toml` is the path for the mounted volumes. For Machines that are managed separately, you specify the mount path in the `fly machine clone` command when you [clone a Machine and add a volume](/docs/apps/volume-storage/#add-a-volume-to-a-machine-clone).
 
 ### Extend a volume
 
@@ -146,7 +146,7 @@ If prompted, restart the Machine using `fly machine restart <machine-id>`:
 fly machine restart 4d891de2f66587
 ```
 
-You can check that the new volume size is reflected in the Machine's file system by running `df` via `fly ssh console`. If there's more than one Machine on the app, `fly ssh console -s` allows you to select the correct one:
+You can check the new volume size in the Machine's file system by running `df` via `fly ssh console`. If there's more than one Machine on the app, `fly ssh console -s` allows you to select the correct one:
 
 ```cmd
 fly ssh console -s -C df
@@ -167,7 +167,7 @@ Here, the volume is mounted under `/storage` in the Machine's root file system a
 
 ### Restore from a snapshot
 
-List the snapshots that belong to your target volume using the `fly volumes snapshots list` command. We take daily block-level snapshots of volumes. Snapshots are kept for five days. These may not have your latest data. You should implement your own backup plan for important data. Refer to [`fly volumes snapshots list`](https://fly.io/docs/flyctl/volumes-snapshots-list/) in the [flyctl reference](/docs/flyctl) for usage and options.
+List the snapshots that belong to your target volume using the `fly volumes snapshots list` command. We take daily block-level snapshots of volumes and keep them for five days. These snapshots may not have your latest data. You should implement your own backup plan for important data. Refer to [`fly volumes snapshots list`](https://fly.io/docs/flyctl/volumes-snapshots-list/) in the [flyctl reference](/docs/flyctl) for usage and options.
 
 To list a volume's snapshots, find the volume ID with `fly volumes list`, then use `fly volumes snapshots list <volume-id>`:
 
@@ -185,7 +185,7 @@ vs_pZlGZvq3gkAlAcaZ	17655830	4 days ago
 vs_A9k6age3bQov6twj	17631880	5 days ago
 ```
 
-A volume snapshot can be restored into a volume that's the same size as, or larger than, the source volume, but not into a smaller one. If you don't specify a size with the `-s` flag, then `fly volumes create` requests a 3GB volume.
+You can restore a volume snapshot into a volume that's the same size as, or larger than, the source volume, but not into a smaller one. If you don't specify a size with the `-s` flag, then `fly volumes create` requests a 3GB volume.
 
 To restore from the snapshot to a new volume, use `fly volumes create <volume-name> --snapshot-id <snapshot-id> -s <volume-size> [-a <app-name>]`:
 

@@ -22,7 +22,7 @@ The `fly launch` command can perform several tasks, depending on the project:
 
 The language-specific scanners built into flyctl via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through Fly Launch or through a more manual process you might begin with `fly apps create`.
 
-## New Fly App Creation
+## New Fly App creation
 
 When `fly launch` or `fly apps create` creates a new Fly App, the app gets a name, an organization, a preferred deployment region, and a default configuration that's good for simple apps that should be publicly available on the web. At this early stage there's nothing to deploy; you can create an app before you even decide what language to write it in.
 
@@ -32,7 +32,7 @@ An app deployed on Fly.io has to be packaged into a Docker image so we can turn 
 
 This image can be pre-built, or it can be built during the deploy process, based on a Dockerfile. a Buildpack, [or a Nixpack](https://community.fly.io/t/build-images-with-nixpacks/6169).
 
-This information can be specified in the `build section of fly.toml`. `fly launch` will fill this in automatically if it can. It can be overridden at deployment time using flags with `fly deploy`.
+Specify the build information in the `build` section of `fly.toml`. `fly launch` will fill this in automatically if it can. You can override build information at deployment time using flags with `fly deploy`.
 
 Reference: [Builders and Fly.io](/docs/reference/builders/)
 

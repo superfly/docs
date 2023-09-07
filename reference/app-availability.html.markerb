@@ -7,7 +7,7 @@ nav: firecracker
 
 A resilient app is resistant to events like hardware failures or outages. Redundancy, supported by monitoring and scaling, is one of the ways to make your app more resilient, and we provide some built-in features to make this easier.
 
-But first, it's important to understand what your app needs to take care of.
+First, it's important to understand what your app needs to take care of.
 
 ## What your app needs to do
 
@@ -43,11 +43,9 @@ The features for redundancy and availability are:
 These features require or depend on your app configuration in the `fly.toml` file, including process groups. Every Fly App has at least one process group. An app with no extra process groups defined in `fly.toml` still uses the `app` process group by default. Learn more about [app configuration](/docs/reference/configuration/).
 </div>
 
-You might also be interested in how we do [load balancing](/docs/reference/load-balancing/).
-
 ## Redundancy by default on first deploy
 
-Technically, the title of this section should be "Redundancy by default on first deploy or after scaling down to zero Machines". When you deploy your app for the first time (or after scaling down to zero Machines), you get some default redundancy configurations. These settings help you to deploy a recommended setup without having to think about it. On the other hand, if the defaults aren't what you're looking for, then you can still configure your app and processes the way you want. Learn more about [scaling Machine CPU and RAM](/docs/apps/scale-machine/) and [scaling the number of Machines](/docs/apps/scale-count/).
+Technically, the title of this section should be "Redundancy by default on first deploy or after scaling down to zero Machines". When you deploy your app for the first time (or after scaling down to zero Machines), you get some default redundancy configurations. These settings help you to deploy a recommended setup without having to think about it. If the defaults aren't what you're looking for, then you can still configure your app and processes the way you want. Learn more about [scaling Machine CPU and RAM](/docs/apps/scale-machine/) and [scaling the number of Machines](/docs/apps/scale-count/).
 
 Here's what Fly Launch (the `fly launch` or `fly deploy` command) does, based on your app configuration:
 
@@ -57,7 +55,7 @@ Here's what Fly Launch (the `fly launch` or `fly deploy` command) does, based on
 
 ### Two Machines for process groups with services
 
-The most basic way to improve resiliency is to create more than one Machine per process group, and we do this by default for process groups with services. A process group with services has mappings to the external internet or to a private (Flycast) network, so its connections and operation can be managed by Fly Proxy.
+The most basic way to improve resiliency is to create more than one Machine per process group, and the `fly launch` and `fly deploy` commands do this by default for process groups with services. A process group with services has mappings to the external internet or to a private (Flycast) network, so that Fly Proxy can manage its connections and operation.
 
 If a process group has services defined, two Machines are automatically created and started when:
 
@@ -67,9 +65,9 @@ If a process group has services defined, two Machines are automatically created 
 
 ### Standby Machines for process groups without services
 
-Standby Machines provide low-effort redundancy for process groups with no services defined. A process group with no services has no mappings to the external internet or to a private (Flycast) network, so its connections and operation can't be managed by Fly Proxy.
+Standby Machines provide low-effort redundancy for process groups with no services defined. A process group with no services has no mappings to the external internet or to a private (Flycast) network, so Fly Proxy can't manage its connections and operation.
 
-A standby Machine is a stopped Machine that's essentially paired to and watching a running Machine. The standby will only be started if the paired Machine becomes unavailable.
+A standby Machine is a stopped Machine that's essentially paired to and watching a running Machine. The standby starts only if the paired Machine becomes unavailable.
 
 If a process group doesn't have services defined, then a standby Machine is automatically created, along with a running Machine, when:
 
@@ -95,7 +93,7 @@ At a lower level, you can also use the `fly machines update` command with the `-
 
 What if you don't want to keep Machines running all the time for an app with a small or variable workload? The [automatic start and stop feature](#automatically-start-and-stop-machines) is enabled by default for Machines and makes it possible to run at least two Machines without wasting resources.
 
-But if you still don't want `fly deploy` to create two Machines, then you can use the `--ha` option to turn off this feature:
+If you still don't want `fly deploy` to create two Machines, then you can use the `--ha` option to turn off this feature:
 
 ```cmd
 fly deploy --ha=false
@@ -105,7 +103,8 @@ fly deploy --ha=false
 
 Automatic start and stop works for process groups with services defined. This feature enables you to have multiple Machines that only run when needed.
 
-Fly Proxy can start and stop existing Machines based on incoming requests, so that your app can accommodate bursts in demand without keeping extra Machines running constantly. And if your app needs to have one or more Machines always running in your primary region, then you can set a minimum number of machines to keep running.
+Fly Proxy can start and stop existing Machines based on incoming requests, so that your app can accommodate bursts in demand without keeping extra Machines running constantly. And if your app needs to have one or more Machines always running in your primary region, then you can set a minimum number of machines to keep running. Fly Proxy is also responsible for [load balancing](/docs/reference/load-balancing/).
+
 
 Default settings for new V2 apps created using the `fly launch` command: automatically start and automatically stop Fly Machines, and minimum machines running is zero.
 
