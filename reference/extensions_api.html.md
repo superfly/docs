@@ -353,7 +353,7 @@ Keep the following in mind when considering running an extension on Fly.io.
 
 The Extensions Program does *not*:
 
-* Run billing logic for your extension - we pass billing data through our invoice for conveninence
+* Run billing logic for your extension - we pass billing data through our invoice for convenience
 * Manage your service beyond the underlying Fly.io services
 * Run support for your service - but we will pass support requests on to you
 * Run workflows to deploy your service automatically - you need a control plane

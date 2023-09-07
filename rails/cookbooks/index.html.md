@@ -26,9 +26,9 @@ fly.io, the concepts apply to other frameworks and other cloud providers.
 While you are welcome to explore these cookbooks in any
 order, if the concept of multi-stage docker builds is
 new to you starting with the first cookbook will make
-understading the rest easier. 
+understanding the rest easier. 
 
-If you are comfortable skpping the first cookbook, all cookbooks start with an
+If you are comfortable skipping the first cookbook, all cookbooks start with an
 empty directory and a seed `Dockerfile`.  Run `fly launch` to create an
 application, and then proceed from there, running `fly deploy` after you make
 changes.  The recipes the follow contain fragments that can be added

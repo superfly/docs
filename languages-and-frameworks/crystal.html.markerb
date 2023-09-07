@@ -205,7 +205,7 @@ To deploy to multiple regions, first [Create a PostgreSQL Cluster](/docs/postgre
   PRIMARY_REGION = "ord"
   ```
 
-1. Add the [superfly/fly.cr shard](https://github.com/superfly/fly.cr) shard to your project
+1. Add the [superfly/fly.cr shard](https://github.com/superfly/fly.cr) to your project
   ```yaml
   dependencies:
   fly:

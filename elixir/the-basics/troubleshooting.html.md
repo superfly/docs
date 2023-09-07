@@ -105,4 +105,4 @@ Node.list()
 
 An empty list means is has no connections.
 
-During the process, make note of any logged messages that that might help explain why the two nodes can't connect.
+During the process, make note of any logged messages that might help explain why the two nodes can't connect.
