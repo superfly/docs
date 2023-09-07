@@ -15,7 +15,7 @@ We make a best-effort attempt to dedicate hardware resources to only one microVM
 
 The virtualized applications run on dedicated physical servers with 8-32 physical CPU cores and 32-256GB of RAM.
 
-## Fly.io Networking
+## Fly.io networking
 
 ### BGP Anycast
 
