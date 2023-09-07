@@ -1,16 +1,17 @@
-Show details of an app's volume. Requires the volume's ID
-number to operate. This can be found through the volumes list command
+Show details of an app's volume
 
 ## Usage
 ~~~
-flyctl volumes show <id> [flags]
+flyctl volumes show [id] [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -h, --help   help for show
-  -j, --json   JSON output
+  -a, --app string      Application name
+  -c, --config string   Path to application configuration file
+  -h, --help            help for show
+  -j, --json            JSON output
 ~~~
 
 ## Global Options

@@ -8,10 +8,10 @@ flyctl scale memory [memoryMB] [flags]
 ## Options
 
 ~~~
-  -a, --app string      Application name
-  -c, --config string   Path to application configuration file
-      --group string    The process group to apply the VM size to
-  -h, --help            help for memory
+  -a, --app string             Application name
+  -c, --config string          Path to application configuration file
+  -h, --help                   help for memory
+      --process-group string   The process group to apply the VM size to
 ~~~
 
 ## Global Options

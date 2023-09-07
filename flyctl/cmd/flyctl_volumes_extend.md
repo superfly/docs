@@ -4,7 +4,7 @@ Extends a target volume to the size specified. The instance is automatically res
 
 ## Usage
 ~~~
-flyctl volumes extend <id> [flags]
+flyctl volumes extend [id] [flags]
 ~~~
 
 ## Options
