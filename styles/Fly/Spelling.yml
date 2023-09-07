@@ -1,6 +1,6 @@
 extends: spelling
 message: "Is '%s' a typo?"
-level: warning
+level: suggestion
 
 # This disables the built-in filters. If you omit this
 # key or set it to false, custom filters (see below) are

@@ -1,7 +1,7 @@
 extends: existence
 message: "'%s' is too wordy."
 ignorecase: true
-level: warning
+level: suggestion
 tokens:
   - a number of
   - abundance

@@ -1,7 +1,7 @@
 extends: existence
 message: "'%s' is an oxymoron."
 ignorecase: true
-level: warning
+level: suggestion
 tokens:
   - amateur expert
   - increasingly less

@@ -1,6 +1,6 @@
 extends: existence
 message: "Do not start a paragraph with a 'but'."
-level: warning
+level: suggestion
 scope: paragraph
 action:
   name: remove

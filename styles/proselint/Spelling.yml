@@ -1,6 +1,6 @@
 extends: consistency
 message: "Inconsistent spelling of '%s'."
-level: warning
+level: suggestion
 ignorecase: true
 either:
   advisor: adviser

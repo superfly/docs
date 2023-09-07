@@ -1,7 +1,7 @@
 extends: existence
 message: "Use 'midnight' or 'noon'."
 ignorecase: true
-level: warning
+level: suggestion
 nonword: true
 tokens:
   - '12 ?[ap]\.?m\.?'

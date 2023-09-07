@@ -1,6 +1,6 @@
 extends: existence
 message: "Consider replacing '%s'."
-level: warning
+level: suggestion
 ignorecase: true
 tokens:
   - shit

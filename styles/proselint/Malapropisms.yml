@@ -1,7 +1,7 @@
 extends: existence
 message: "'%s' is a malapropism."
 ignorecase: true
-level: warning
+level: suggestion
 tokens:
   - the infinitesimal universe
   - a serial experience

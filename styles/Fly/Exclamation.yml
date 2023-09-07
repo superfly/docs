@@ -1,7 +1,7 @@
 extends: existence
 message: "Use exclamation points sparingly."
 nonword: true
-level: warning
+level: suggestion
 action:
   name: remove
 tokens:

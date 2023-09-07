@@ -1,6 +1,6 @@
 extends: existence
 message: "'%s' is redundant."
-level: warning
+level: suggestion
 action:
   name: edit
   params:

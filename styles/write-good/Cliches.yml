@@ -1,7 +1,7 @@
 extends: existence
 message: "Try to avoid using clichés like '%s'."
 ignorecase: true
-level: warning
+level: suggestion
 tokens:
   - a chip off the old block
   - a clean slate

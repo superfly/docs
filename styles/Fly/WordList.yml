@@ -1,6 +1,6 @@
 extends: substitution
 message: "Use '%s' instead of '%s'."
-level: warning
+level: suggestion
 ignorecase: false
 action:
   name: replace
@@ -16,14 +16,12 @@ swap:
   admin: administrator
   Ajax: AJAX
   a\.k\.a|aka: or|also known as
-  application: app
+  # application: app
   approx\.: approximately
   below: later|in the following steps
   check box: checkbox
   click on: click|click in
   data are: data is
-  disabled?: turn off|off
-  file name: filename
   filesystem: file system
   firewalls: firewall rules
   functionality: capability|feature

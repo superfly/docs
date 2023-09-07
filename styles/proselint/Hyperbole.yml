@@ -1,6 +1,6 @@
 extends: existence
 message: "'%s' is hyperbolic."
-level: warning
+level: suggestion
 nonword: true
 tokens:
   - '[a-z]+[!?]{2,}'

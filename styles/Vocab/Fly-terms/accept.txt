@@ -1,15 +1,32 @@
 Anycast
+backhaul
 bluegreen
 buildpacks?\b
+datacenters?\b
+Debian
 (?i)Dockerfile
 Fly.io
+Flycast
 flyctl
 flyd
 fly.toml
 Fly Proxy
 Gemfile
+heredoc
+hostname
+LiteFS
+microVMs?\b
+Nixpack
 Nomad
+NVMe
+PostgreSQL
+precompile
+(?i)procfiles?\b
+runtimes?\b
+Sidekiq
 SSH
+tracebacks?/b
+virtualized
 
 ams
 iad

@@ -23,6 +23,7 @@ end
 
 This Dockerfile contains a number of small changes from the minimal
 one:
+`redis`
 
   * For Active Record (or more precisely, sqlite3) to work, we need to add
     `pkg-config` to the list of packages installed via `apt-get`.

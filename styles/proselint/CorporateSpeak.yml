@@ -1,7 +1,7 @@
 extends: existence
 message: "'%s' is corporate speak."
 ignorecase: true
-level: warning
+level: suggestion
 tokens:
   - at the end of the day
   - back to the drawing board

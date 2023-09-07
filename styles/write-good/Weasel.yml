@@ -1,7 +1,7 @@
 extends: existence
 message: "'%s' is a weasel word!"
 ignorecase: true
-level: warning
+level: suggestion
 tokens:
   - absolutely
   - accidentally

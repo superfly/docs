@@ -1,7 +1,7 @@
 extends: existence
 message: "'%s' is hedging."
 ignorecase: true
-level: warning
+level: suggestion
 tokens:
   - I would argue that
   - ', so to speak'

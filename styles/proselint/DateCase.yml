@@ -1,7 +1,7 @@
 extends: existence
 message: With lowercase letters, the periods are standard.
 ignorecase: false
-level: warning
+level: suggestion
 nonword: true
 tokens:
   - '\d{1,2} ?[ap]m\b'

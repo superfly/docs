@@ -3,7 +3,7 @@ extends: substitution
 
 message: "Use '%s' instead of '%s'."
 
-level: warning
+level: suggestion
 
 swap:
   '(?<!local|virtual) machine': Machine

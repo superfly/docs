@@ -1,6 +1,6 @@
 extends: existence
 message: "'%s' is a cliche."
-level: warning
+level: suggestion
 ignorecase: true
 tokens:
   - a chip off the old block
