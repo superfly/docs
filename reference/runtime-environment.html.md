@@ -30,7 +30,7 @@ Not to be confused with the [HTTP header](/docs/reference/runtime-environment/#f
 **IPV6 Public IP**: The full public IPV6 for this instance. Read more in the [Network Services](/docs/reference/services/) section.
 
 ### `FLY_IMAGE_REF`
-**Docker Image Reference**: The name of the Docker image running this container. Useful if your application needs to launch Machine instances of itself to scale up-or-down. Read about an example of [a Rails app that runs Machines for background workers](https://fly.io/ruby-dispatch/rails-background-jobs-with-fly-machines/). `registry.fly.io/tinyzap:deployment-01H9RK9EYH9PGNBYAKGXSHV0PH` is an example of the Docker Image Reference's format.
+**Docker Image Reference**: The name of the Docker image running this container. Useful if your application needs to launch Machine instances of itself to scale up-or-down. Read about how [a Rails app runs Machines for scale-to-zero background workers](https://fly.io/ruby-dispatch/rails-background-jobs-with-fly-machines/). `registry.fly.io/tinyzap:deployment-01H9RK9EYH9PGNBYAKGXSHV0PH` is an example of the Docker Image Reference's format.
 
 ## _Request Headers_
 
