@@ -1,0 +1,7 @@
+# another experiment. sentences should probably be no more than about 30-35 words, but this rule counts underscored options as multiple words.
+extends: occurrence
+message: "Try to keep sentences short (< 40 words)."
+scope: sentence
+level: suggestion
+max: 40
+token: \b(\w+)\b

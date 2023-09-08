@@ -1,0 +1,28 @@
+extends: capitalization
+message: "'%s' should use sentence-style capitalization."
+level: suggestion
+scope: heading
+match: $sentence
+indicators:
+  - ':'
+exceptions:
+  - CLI
+  - Docker
+  - Elixir
+  - Fly
+  - Fly Proxy
+  - gRPC
+  - I
+  - Kubernetes
+  - Linux
+  - Machine
+  - Machines
+  - macOS
+  - MongoDB
+  - Nomad
+  - Rails
+  - Ruby
+  - REPL
+  - TypeScript
+  - URLs
+  - Windows
