@@ -98,7 +98,7 @@ You can contribute to (or, you know, fork) this repository to add providers (sin
 
 ## Avoiding Duplicate Log Messages In High Availability Apps
 
-If you would like to run multiple VM's for high availability, the [NATS](https://docs.nats.io/) endpoint supports [subscription queues](https://docs.nats.io/nats-concepts/core-nats/queue) to ensure messages are only sent to one subscriber of the named queue. The `QUEUE` secret can be set to configure an arbitrary queue name if you want to run multiple log processes for HA and avoid duplicate messages being shipped.
+If you would like to run more than one Machine for high availability, the [NATS](https://docs.nats.io/) endpoint supports [subscription queues](https://docs.nats.io/nats-concepts/core-nats/queue) to ensure messages are only sent to one subscriber of the named queue. The `QUEUE` secret can be set to configure an arbitrary queue name if you want to run multiple log processes for HA and avoid duplicate messages being shipped.
 
 ```toml
 [env]
