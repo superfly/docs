@@ -30,5 +30,16 @@ Customers on [Launch, Scale, and Enterprise plans](https://fly.io/plans) have ac
 
 Your support address is in the [Fly.io dashboard](https://fly.io/dashboard). Select your organization, and look for your Support email address in the Billing section.
 
+## Working with support
+We understand that describing software issues can sometimes be challenging. Providing a clear and detailed description of the problem, including any noticeable symptoms and relevant artifacts, can greatly assist us in identifying similar cases and expediting the resolution process. If we can quickly find a similar issue, we'll work to resolve it promptly. Conversely, if the problem is more complex, we'll involve specialized resources to address it.
+
+Additionally, when assessing the severity of an issue, we consider not only technical aspects but also how it impacts your business. We aim to understand the broader context to prioritize our response appropriately.
+
+Here are some things that would be good to incude in your ticket:
+- App name
+- Specific errors in your app logs or browser
+- Timestamps for when the issue occured
+- Prepending `LOG_LEVEL=debug` to any flyctl command will give us a great level of insight into the lower-level API calls being made
+
 ## Other questions?
 For questions about a specific invoice or  account management issues, email us at [billing@fly.io](mailto:billing@fly.io).
