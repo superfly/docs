@@ -3,7 +3,7 @@ Start one or more Fly machines
 
 ## Usage
 ~~~
-flyctl machine start <id> [<id>...] [flags]
+flyctl machine start [<id>...] [flags]
 ~~~
 
 ## Options
@@ -12,7 +12,6 @@ flyctl machine start <id> [<id>...] [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for start
-      --select          Select from a list of machines
 ~~~
 
 ## Global Options

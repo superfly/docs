@@ -3,7 +3,7 @@ Stop one or more Fly machines
 
 ## Usage
 ~~~
-flyctl machine stop <id> [<id>...] [flags]
+flyctl machine stop [<id>...] [flags]
 ~~~
 
 ## Options
@@ -12,7 +12,6 @@ flyctl machine stop <id> [<id>...] [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for stop
-      --select          Select from a list of machines
   -s, --signal string   Signal to stop the machine with (default: SIGINT)
       --timeout int     Seconds to wait before sending SIGKILL to the machine
 ~~~

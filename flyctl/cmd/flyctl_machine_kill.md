@@ -3,7 +3,7 @@ Kill (SIGKILL) a Fly machine
 
 ## Usage
 ~~~
-flyctl machine kill <id> [flags]
+flyctl machine kill [id] [flags]
 ~~~
 
 ## Options
@@ -12,7 +12,6 @@ flyctl machine kill <id> [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for kill
-      --select          Select from a list of machines
 ~~~
 
 ## Global Options

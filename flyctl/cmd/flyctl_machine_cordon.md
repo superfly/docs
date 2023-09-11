@@ -1,9 +1,9 @@
-Reactive all services on a machine
+Deactivate all services on a machine
 
 
 ## Usage
 ~~~
-flyctl machine cordon <id> [<id>...] [flags]
+flyctl machine cordon [<id>...] [flags]
 ~~~
 
 ## Options
@@ -12,7 +12,6 @@ flyctl machine cordon <id> [<id>...] [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for cordon
-      --select          Select from a list of machines
 ~~~
 
 ## Global Options
