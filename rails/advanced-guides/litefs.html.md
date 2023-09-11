@@ -1,12 +1,12 @@
 ---
-title: Litefs
+title: LiteFS
 layout: framework_docs
 objective: This guide shows use LiteFS with Rails
 status: beta
 ---
 
-This is a technology preview.  It shows how to do multi-region deployments
-using Sqlite3 and Litefs.  See [LiteFS - Distributed
+This is a technology preview. It shows how to do multi-region deployments
+using Sqlite3 and Litefs. See [LiteFS - Distributed
 SQLite](https://fly.io/docs/litefs/) for background.
 
 In order to run this demo, you need `flyctl` to be version `0.1.9` or later.
