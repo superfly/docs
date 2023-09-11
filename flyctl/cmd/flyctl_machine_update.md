@@ -3,7 +3,7 @@ Update a machine
 
 ## Usage
 ~~~
-flyctl machine update <machine_id> [flags]
+flyctl machine update [machine_id] [flags]
 ~~~
 
 ## Options
@@ -33,13 +33,12 @@ flyctl machine update <machine_id> [flags]
       --restart string             Set the restart policy for a Machine. Options include 'no', 'always', and 'on-fail'.
                                    	Default is 'on-fail' for Machines created by 'fly deploy' and Machines with a schedule. Default is 'always' for Machines created by 'fly m run'.
       --schedule string            Schedule a machine run at hourly, daily and monthly intervals
-      --select                     Select from a list of machines
       --skip-dns-registration      Do not register the machine's 6PN IP with the internal DNS system
       --skip-health-checks         Updates machine without waiting for health checks.
       --standby-for strings        Comma separated list of machine ids to watch for
-      --vm-cpukind string          The kind of CPU to use ('shared' or 'performance')
+      --vm-cpu-kind string         The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                Number of CPUs
-      --vm-gpus int                Number of GPUs
+      --vm-gpu-kind string         If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb)
       --vm-memory int              Memory (in megabytes) to attribute to the VM
       --vm-size string             The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --wait-timeout int           Seconds to wait for individual machines to transition states and become healthy. (default 300) (default 300)

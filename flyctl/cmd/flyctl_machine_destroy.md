@@ -4,7 +4,7 @@ This command requires a machine to be in a stopped state unless the force flag i
 
 ## Usage
 ~~~
-flyctl machine destroy <id> [flags]
+flyctl machine destroy [id] [flags]
 ~~~
 
 ## Options
@@ -14,7 +14,6 @@ flyctl machine destroy <id> [flags]
   -c, --config string   Path to application configuration file
   -f, --force           force kill machine regardless of current state
   -h, --help            help for destroy
-      --select          Select from a list of machines
 ~~~
 
 ## Global Options

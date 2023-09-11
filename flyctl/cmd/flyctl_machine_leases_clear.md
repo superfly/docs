@@ -3,7 +3,7 @@ Clear machine leases
 
 ## Usage
 ~~~
-flyctl machine leases clear <machine-id> [flags]
+flyctl machine leases clear [machine-id] [flags]
 ~~~
 
 ## Options
@@ -12,7 +12,6 @@ flyctl machine leases clear <machine-id> [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for clear
-      --select          Select from a list of machines
 ~~~
 
 ## Global Options

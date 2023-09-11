@@ -9,7 +9,7 @@ flyctl machine [command] [flags]
 ## Available Commands
 * [api-proxy](/docs/flyctl/machine-api-proxy/)	 - Establish a proxy to the Machine API through a Wireguard tunnel for local connections
 * [clone](/docs/flyctl/machine-clone/)	 - Clone a Fly machine
-* [cordon](/docs/flyctl/machine-cordon/)	 - Reactive all services on a machine
+* [cordon](/docs/flyctl/machine-cordon/)	 - Deactivate all services on a machine
 * [destroy](/docs/flyctl/machine-destroy/)	 - Destroy a Fly machine.
 * [exec](/docs/flyctl/machine-exec/)	 - Execute a command on a machine
 * [kill](/docs/flyctl/machine-kill/)	 - Kill (SIGKILL) a Fly machine
@@ -20,7 +20,7 @@ flyctl machine [command] [flags]
 * [start](/docs/flyctl/machine-start/)	 - Start one or more Fly machines
 * [status](/docs/flyctl/machine-status/)	 - Show current status of a running machine
 * [stop](/docs/flyctl/machine-stop/)	 - Stop one or more Fly machines
-* [uncordon](/docs/flyctl/machine-uncordon/)	 - Deactivate all services on a machine
+* [uncordon](/docs/flyctl/machine-uncordon/)	 - Reactivate all services on a machine
 * [update](/docs/flyctl/machine-update/)	 - Update a machine
 
 ## Options

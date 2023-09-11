@@ -11,18 +11,18 @@ flyctl console [flags]
 ## Options
 
 ~~~
-  -a, --app string          Application name
-  -c, --config string       Path to application configuration file
-  -h, --help                help for console
-      --machine string      Run the console in the existing machine with the specified ID
-  -r, --region string       The target region (see 'flyctl platform regions')
-  -s, --select              Select the machine on which to execute the console from a list
-  -u, --user string         Unix username to connect as (default "root")
-      --vm-cpukind string   The kind of CPU to use ('shared' or 'performance')
-      --vm-cpus int         Number of CPUs
-      --vm-gpus int         Number of GPUs
-      --vm-memory int       Memory (in megabytes) to attribute to the VM
-      --vm-size string      The VM size to set machines to. See "fly platform vm-sizes" for valid values
+  -a, --app string           Application name
+  -c, --config string        Path to application configuration file
+  -h, --help                 help for console
+      --machine string       Run the console in the existing machine with the specified ID
+  -r, --region string        The target region (see 'flyctl platform regions')
+  -s, --select               Select the machine on which to execute the console from a list
+  -u, --user string          Unix username to connect as (default "root")
+      --vm-cpu-kind string   The kind of CPU to use ('shared' or 'performance')
+      --vm-cpus int          Number of CPUs
+      --vm-gpu-kind string   If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb)
+      --vm-memory int        Memory (in megabytes) to attribute to the VM
+      --vm-size string       The VM size to set machines to. See "fly platform vm-sizes" for valid values
 ~~~
 
 ## Global Options

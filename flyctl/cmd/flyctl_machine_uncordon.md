@@ -1,9 +1,9 @@
-Deactivate all services on a machine
+Reactivate all services on a machine
 
 
 ## Usage
 ~~~
-flyctl machine uncordon <id> [<id>...] [flags]
+flyctl machine uncordon [<id>...] [flags]
 ~~~
 
 ## Options
@@ -12,7 +12,6 @@ flyctl machine uncordon <id> [<id>...] [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for uncordon
-      --select          Select from a list of machines
 ~~~
 
 ## Global Options
