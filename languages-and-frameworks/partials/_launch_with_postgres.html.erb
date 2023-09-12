@@ -1,5 +1,3 @@
-<% app_name = app_name&.gsub("_", "\\_") %>
-
 When we run `fly launch` from the newly-created project directory, the launcher will:
 
 * Ask you to select a deployment region
@@ -20,7 +18,7 @@ Detected a <%= detected %> app
 ? Select organization: flyio (flyio)
 ? Select region: mad (Madrid, Spain)
 Created app <%= app_name %> in organization soupedup
-Set secrets on <%= app_name %>: SECRET\\_KEY\\_BASE
+Set secrets on <%= app_name %>: SECRET_KEY_BASE
 Installing dependencies
 Running Docker release generator
 Wrote config file fly.toml
@@ -40,7 +38,7 @@ Monitoring Deployment
 
 Connect to postgres
 Any app within the flyio organization can connect to postgres using the above credentials and the hostname "<%= app_name %>-db.internal."
-For example: postgres\\://postgres\\:password@<%= app_name %>-db.internal\\:5432
+For example: postgres://postgres:password@<%= app_name %>-db.internal:5432
 
 See the postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
 Postgres cluster <%= app_name %>-db is now attached to <%= app_name %>
