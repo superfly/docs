@@ -372,7 +372,7 @@ For each `services` section in your `fly.toml`, i.e. for each external port you 
 This example defines an HTTP handler on port 80.
 
 * `handlers` : An array of strings, each string selecting a handler process to terminate the connection with at the edge. Here, the `http` handler will accept HTTP traffic and pass it on to the `internal_port` of the application, which we defined in the `services` section above.
-  For the list of available handlers, and how they manage network traffic, see the [Public Network Services documentation](/docs/reference/services/).
+  For the list of available handlers, and how they manage network traffic, see the [Public Network Services documentation](/docs/reference/services/#connection-handlers ).
 * `port` : An integer representing the external port to listen on (ports 1-65535).
 * `start_port` : For a port range, the first port to listen on.
 * `end_port` : For a port range, the last port to listen on.
