@@ -704,19 +704,12 @@ This section is for flags and feature settings which have yet to be promoted int
 
 ```toml
 [experimental]
+# Overrides the `CMD` set by the Dockerfile.
 cmd = ["path/to/command", "arg1", "arg2"]
+
+# Overrides the `ENTRYPOINT set by the Dockerfile.
 entrypoint = ["path/to/command", "arg1", "arg2"]
+
+# Overrides the `EXEC` set by the Dockerfile.
 exec = ["path/to/command", "arg1", "arg2"]
 ```
-
-### `cmd`
-
-This overrides the `CMD` set by the Dockerfile. It should be specified as an array of strings, as seen in the example above.
-
-### `entrypoint`
-
-This overrides the `ENTRYPOINT` set by the Dockerfile. It should be specified as an array of strings, as seen in the example above.
-
-### `exec`
-
-This overrides both the `CMD` and the `ENTRYPOINT` set by the Dockerfile. It should be specified as an array of strings, as seen in the example above.
