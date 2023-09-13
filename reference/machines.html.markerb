@@ -20,9 +20,9 @@ See all possible machine states [in the table below](#machine-states).
 
 ## Connecting to the API
 
-The Machines API endpoint requires a connection to your Fly private network - either by running on a VM inside the network, or via a WireGuard VPN, or using `flyctl proxy`.
+The Machines API endpoint requires a connection to your Fly private network - either by running on a VM inside the network, or via a WireGuard VPN, or using `fly proxy`.
 
-This guide assumes that you have `flyctl` and `curl` installed, and have authenticated to the Fly.io platform.
+This guide assumes that you have flyctl and cURL installed, and have authenticated to the Fly.io platform.
 
 ### Connecting via WireGuard
 
@@ -32,12 +32,12 @@ First, follow the [instructions](/docs/reference/private-networking/#private-net
 
 Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
 
-### Connecting via `flyctl proxy`
+### Connecting via `fly proxy`
 
 For quick testing of this API, you can proxy a local port to the internal API endpoint. Pick any organization when asked.
 
 ```cmd
-flyctl machines api-proxy
+fly machines api-proxy
 ```
 
 With the above command running, in a separate terminal, try this to confirm you can access the API:
@@ -50,18 +50,18 @@ If you successfully reach the API, it should respond with a `404 page not found`
 
 ### Setting up the environment
 
-If you are using a Wireguard VPN or a `flyctl` proxy,
+If you are using a Wireguard VPN or `fly proxy`,
 set these environment variables to make the following commands easier to use.
 
 ```bash
-$ export FLY_API_HOSTNAME="_api.internal:4280" # or set to `127.0.0.1:4280` when using 'flyctl proxy'
+$ export FLY_API_HOSTNAME="_api.internal:4280" # or set to `127.0.0.1:4280` when using 'fly proxy'
 $ export FLY_API_TOKEN=$(fly auth token)
 ```
 
-In order to access this API on a fly VM, make the token available as a secret:
+In order to access this API from a Fly Machine, make the token available as a secret:
 
 ```cmd
-flyctl secrets set FLY_API_TOKEN=$(fly auth token)
+fly secrets set FLY_API_TOKEN=$(fly auth token)
 ```
 
 A convenient way to set the FLY_API_HOSTNAME is to add it to your `Dockerfile`:
@@ -75,27 +75,27 @@ You'll still need to replace the application name and machine ID for commands to
 
 ### Authentication
 
-All requests must include the fly API Token in the HTTP Headers as follows:
+All requests must include the Fly API Token in the HTTP Headers as follows:
 
 ```
 Authorization: Bearer <fly_api_token>
 ```
 
-### Create a Fly application
+### Create a Fly App
 
-Machines must be associated with a Fly application. App names must be unique.
+Machines must be associated with an app. App names must be unique.
 
 <%= partial "machines/create_app_req" %>
 
 ### Allocate an IP address for global request routing
 
 If you intend for machines to be accessible to the internet, you'll need to allocate an IP address to the application. Currently
-this is done using `flyctl` or the [Fly GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](https://fly.io/docs/reference/services/#anycast). Read more about this in [the Networking section](https://fly.io/docs/reference/services/#notes-on-networking).
+this is done using flyctl or the [Fly.io GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](https://fly.io/docs/reference/services/#anycast). Read more about this in [the Networking section](https://fly.io/docs/reference/services/#notes-on-networking).
 
 Example:
 
 ```cmd
-flyctl ips allocate-v4 -a my-app-name
+fly ips allocate-v4 -a my-app-name
 ```
 ```out
 TYPE ADDRESS    REGION CREATED AT
@@ -112,7 +112,7 @@ Get details about an application, like its organization slug and name. Also, to 
 
 ### Set application secrets
 
-For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly apps using `flyctl`:
+For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly apps using flyctl:
 
 <%= partial "docs/partials/set_secrets", locals: { app_name: "my-app-name" } %>
 
