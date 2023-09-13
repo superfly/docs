@@ -41,7 +41,7 @@ Concurrency limits for services affect [how automatic starts and stops work](#ho
 
 ### Default values
 
-The default settings for apps that don't specify any auto start and stop settings in `fly.toml` are `auto_start_machines = true` and `auto_stop_machines = true`.
+The default settings for apps that don't specify any auto start and stop settings in `fly.toml` are `auto_start_machines = true` and `auto_stop_machines = false`.
 
 When you create an app using the `fly launch` command, the default settings in `fly.toml` are:
 
@@ -111,7 +111,7 @@ If you only need a certain number of your app's Machines to run continuously, th
 
 ## Stop a Machine by terminating its main process
 
-Setting your app to automatically stop when there's excess capacity using `auto_stop = true` is a substitute for when your app doesn't shut itself down automatically after a period of inactivity. If you want a custom shut-down process for your app, then you can code your app to exit from within when idle.
+Setting your app to automatically stop when there's excess capacity using `auto_stop_machines = true` is a substitute for when your app doesn't shut itself down automatically after a period of inactivity. If you want a custom shutdown process for your app, then you can code your app to exit from within when idle.
 
 Here are some examples:
 
