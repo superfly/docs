@@ -43,9 +43,14 @@ The features for redundancy and availability are:
 These features require or depend on your app configuration in the `fly.toml` file, including process groups. Every Fly App has at least one process group. An app with no extra process groups defined in `fly.toml` still uses the `app` process group by default. Learn more about [app configuration](/docs/reference/configuration/).
 </div>
 
-## Redundancy by default on first deploy
+## Redundancy by default on deploy
 
-Technically, the title of this section should be "Redundancy by default on first deploy or after scaling down to zero Machines". When you deploy your app for the first time (or after scaling down to zero Machines), you get some default redundancy configurations. These settings help you to deploy a recommended setup without having to think about it. If the defaults aren't what you're looking for, then you can still configure your app and processes the way you want. Learn more about [scaling Machine CPU and RAM](/docs/apps/scale-machine/) and [scaling the number of Machines](/docs/apps/scale-count/).
+You get some default redundancy configurations:
+
+* when you deploy your app for the first time
+* after scaling down to zero Machines
+
+These settings help you to deploy a recommended setup without having to think about it. If the defaults aren't what you're looking for, then you can still configure your app and processes the way you want. Learn more about [scaling Machine CPU and RAM](/docs/apps/scale-machine/) and [scaling the number of Machines](/docs/apps/scale-count/).
 
 Here's what Fly Launch (the `fly launch` or `fly deploy` command) does, based on your app configuration:
 
