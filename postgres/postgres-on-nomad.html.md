@@ -6,21 +6,21 @@ redirect_from: /docs/reference/postgres-on-nomad/
 order: 0
 ---
 
-<div class="callout" data-render="markdown">This document applies to all Fly Postgres clusters created using flyctl versions < v0.0.412. These run on our [Apps V1](https://fly.io/docs/reference/apps/) architecture (orchestrated by Nomad). Docs for newer Fly Postgres clusters live at **[Fly Postgres](/docs/postgres/)**</div>
+<div class="callout" data-render="markdown">This document applies to all Fly Postgres clusters created using flyctl versions < [v0.0.412](https://github.com/superfly/flyctl/releases/tag/v0.0.412). These run on our [Apps V1](https://fly.io/docs/reference/apps/) architecture (orchestrated by Nomad). Docs for newer Fly Postgres clusters live at **[Fly Postgres](/docs/postgres/)**.</div>
 
 [Postgres](https://www.postgresql.org/), or PostgreSQL, is a powerful open-source object relational database system.
 
 ## About Fly Postgres
 
-Fly Postgres is a regular Fly.io app, with an automated creation process and some extensions to simplify management. It relies on building blocks available to all Fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
+Fly Postgres is a regular Fly App, with an automated creation process and some extensions to simplify management. It relies on building blocks available to all Fly apps, like `flyctl`, volumes, private networking, health checks, logs, metrics, and more. The source code is available on [GitHub](https://github.com/fly-apps/postgres-ha) to view and fork.
 
 ### About **Free** Fly Postgres
 
 You can use Fly.io's [free resource allowance](https://fly.io/docs/about/pricing/#free-allowances) in one place, or split it up. The following Postgres configurations fit within the free volume usage limit:
 
-* single node, 3gb volume (single database)
-* 2 x 1gb volumes (database in two regions, or a primary and replica in the same region)
-* 3 x 1gb volumes (database in three regions)
+* single node, 3GB volume (single database)
+* 2 x 1GB volumes (database in two regions, or a primary and replica in the same region)
+* 3 x 1GB volumes (database in three regions)
 
 If you want to keep your whole project free, save some compute allowance for your other apps.
 
@@ -96,7 +96,7 @@ flyctl <command> -a <postgres-app-name>
 
 ## Connecting to Postgres
 
-How you connect to Postgres depends on the tools you're using. Connection string URIs are a common way to describe a connection to a postgres server.
+How you connect to Postgres depends on the tools you're using. Connection string URIs are a common way to describe a connection to a Postgres server.
 
 Connection strings have the following format:
 
@@ -127,7 +127,7 @@ You can also forward the server port to your local system with [`flyctl proxy`](
 flyctl proxy 5432 -a <postgres-app-name>
 ```
 
-Then connect to your Postgres server at localhost:5432. Using `psql` again, as a trivial example, it would look like this:
+Then connect to your Postgres server at `localhost:5432`. Using `psql` again, as a trivial example, it would look like this:
 
 ```cmd
 psql postgres://postgres:<password>@localhost:5432
@@ -139,13 +139,13 @@ If you already have something else listening on port 5432, you can run this inst
 flyctl proxy 15432:5432 -a <postgres-app-name>
 ```
 
-Then connect to localhost:15432.
+Then connect to `localhost:15432`.
 
 As with all your Fly.io apps, you can get a root console on your app's VM using [flyctl ssh](/docs/flyctl/ssh/).
 
 #### With your own WireGuard tunnel
 
-If you have an active [WireGuard tunnel](/docs/reference/private-networking/#private-network-vpn) to your organization on our private network, you can connect to your Postgres cluster the same way you would from a Fly app within the same organization. For example, the following command would start an interactive terminal session on the cluster leader with `psql`:
+If you have an active [WireGuard tunnel](/docs/reference/private-networking/#private-network-vpn) to your organization on our private network, you can connect to your Postgres cluster the same way you would from a Fly App within the same organization. For example, the following command would start an interactive terminal session on the cluster leader with `psql`:
 
 ```
 psql postgres://postgres:secret123@appname.internal:5432
@@ -161,7 +161,7 @@ flyctl postgres attach --app <app-name> <postgres-app-name>
 
 When you attach an app to Postgres, a number of things happen:
 
-* A database and user are created in the Postgres App. If the attached app is named "myapp", both the database and the user are named "myapp" too.
+* A database and user are created in the Postgres App. If the attached app is named `myapp`, both the database and the user are named `myapp` too.
 * The user is allocated a generated password.
 
 When the Attached app starts it will find an environment variable `DATABASE_URL` set to a Postgres connection URI with the username, password, host, port and dbname filled in.
@@ -178,11 +178,11 @@ This will revoke access to the attachment's role, remove the role, and remove th
 
 ## High Availability
 
-Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ postgres servers. It provides a number of things, including a “keeper” that controls the postgres process, a "sentinel" that builds the cluster view, and a “proxy” that always routes connections to the current leader.
+Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ Postgres servers. It provides a number of things, including a “keeper” that controls the postgres process, a "sentinel" that builds the cluster view, and a “proxy” that always routes connections to the current leader.
 
 5433 is the port the keeper tells postgres to listen on. Connecting there goes straight to Postgres, though it might be the leader or the replica. Since clients need writes, the proxy is listening on the default 5432 port so clients are connected to the current leader.
 
-If the leader becomes unhealthy (eg network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previous leader's VM will be replaced by another VM which will rejoin the cluster as a replica.
+If the leader becomes unhealthy (e.g. network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previous leader's VM will be replaced by another VM which will rejoin the cluster as a replica.
 
 **In general, your clients should connect to port 5432.**
 
@@ -190,11 +190,11 @@ If the leader becomes unhealthy (eg network or hardware issues), the proxy drops
 
 A Postgres cluster is configured with three users when created:
 
-- `postgres` - a role with superuser and login privileges that was created for you along with the cluster. Since the `postgres` role has superuser rights, it's recommended that you only use it for admin tasks and create new users with access restricted to the minimum necessary for applications
-- `flypgadmin` - this role is used internally by Fly.io to configure and query the postgres cluster
+- `postgres` - a role with superuser and login privileges that was created for you along with the cluster. Since the `postgres` role has superuser rights, it's recommended that you only use it for admin tasks and create new users with access restricted to the minimum necessary for applications.
+- `flypgadmin` - this role is used internally by Fly.io to configure and query the Postgres cluster
 - `repluser` - this is the user replica servers use for replication from the leader
 
-You can view a list of users using `flyctl`
+You can view a list of users using `flyctl`:
 
 ```cmd
 flyctl postgres users list c-pg-test
@@ -210,7 +210,7 @@ repluser   false     postgres
 
 ## Databases
 
-One Postgres cluster can host multiple databases
+One Postgres cluster can host multiple databases.
 
 ### Listing Databases
 
@@ -230,7 +230,7 @@ postgres flypgadmin,postgres,repluser
 
 ### Connecting with Ruby ([docs](https://github.com/ged/ruby-pg))
 
-Ruby apps use the `pg` gem to connect to postgres.
+Ruby apps use the `pg` gem to connect to Postgres.
 
 ```ruby
 require 'pg'
@@ -250,17 +250,17 @@ end
 
 Rails apps automatically connect to the database specified in the `DATABASE_URL` environment variable.
 
-You can set this variable manually with `flyctl secrets set`
+You can set this variable manually with `flyctl secrets set`:
 ```bash
 flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.internal:5432/yourdb
 ```
 
-or by attaching the postgres database to your Fly app.
+or by attaching the Postgres database to your Fly App.
 
 
 ### Connecting with Go ([docs](https://github.com/jackc/pgx/wiki/Getting-started-with-pgx-through-database-sql))
 
-`pgx` is the recommended driver for connecting to postgres. It supports the standard `database/sql` interface as well as directly exposing low level / high performance APIs.
+`pgx` is the recommended driver for connecting to Postgres. It supports the standard `database/sql` interface as well as directly exposing low-level / high-performance APIs.
 
 First, add `github.com/jackc/pgx/v4` as a module dependency.
 ```bash
@@ -300,7 +300,7 @@ func main() {
 
 ### Connecting with Node.js ([docs](https://node-postgres.com))
 
-You'll use the `pg` npm module to connect to postgres from a node.js app.
+You'll use the `pg` npm module to connect to Postgres from a Node.js app.
 
 ```javascript
 const { Client } = require('pg')
@@ -314,7 +314,7 @@ await client.end()
 
 ### Connecting with Prisma – Node.js ([docs](https://www.prisma.io/))
 
-Prisma is an open-source object-relational mapper (ORM) for Node.js and works with both JavaScript and TypeScript. It consists of 3 components:
+[Prisma](https://www.prisma.io/) is an open-source object-relational mapper (ORM) for Node.js and works with both JavaScript and TypeScript. It consists of 3 components:
 - Prisma Client - a type-safe query builder
 - Prisma Migrate - a data modeling and migration tool
 - Prisma Studio - a modern intuitive GUI for interacting with your database
@@ -509,9 +509,9 @@ Fly Postgres apps run several processes inside each VM, including postgres, stol
 
 ### Metrics
 
-Fly Postgres apps export metrics to prometheus which can be seen in the Metrics UI or queried from grafana.
+Fly Postgres apps export metrics to Prometheus which can be seen in the Metrics UI or queried from Grafana.
 
-The available metrics are
+The available metrics are:
 ```
 pg_stat_activity_count
 pg_stat_activity_max_tx_duration
