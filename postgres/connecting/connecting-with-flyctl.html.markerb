@@ -5,7 +5,7 @@ layout: framework_docs
 order: 1
 ---
 
-To connect to your Postgres database from outside your Fly organization, you need a WireGuard connection. However, flyctl on your local machine can connect using [user-mode WireGuard](/blog/our-user-mode-wireguard-year/) magic, without you having to set up your own WireGuard tunnel.
+To connect to your Postgres database from outside your Fly organization, you need a WireGuard connection. However, `flyctl` on your local machine can connect using [user-mode WireGuard](/blog/our-user-mode-wireguard-year/) magic, without you having to set up your own WireGuard tunnel.
 
 For a `psql` shell, you can just use the [`fly postgres connect`](/docs/flyctl/postgres-connect/) command:
 
@@ -19,7 +19,7 @@ You can also forward the server port to your local system with [`fly proxy`](/do
 fly proxy 5432 -a <postgres-app-name>
 ```
 
-Then connect to your Postgres server at localhost:5432. Using `psql` again, as a trivial example, it would look like this:
+Then connect to your Postgres server at `localhost:5432`. Using `psql` again, as a trivial example, it would look like this:
 
 ```cmd
 psql postgres://postgres:<password>@localhost:5432
@@ -31,6 +31,6 @@ If you already have something else listening on port 5432, you can run this inst
 fly proxy 15432:5432 -a <postgres-app-name>
 ```
 
-Then connect to localhost:15432.
+Then connect to `localhost:15432`.
 
 As with all your Fly apps, you can get a root console on your app's VM using [fly ssh](/docs/flyctl/ssh/).
