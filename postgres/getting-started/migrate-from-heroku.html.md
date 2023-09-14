@@ -11,11 +11,11 @@ First and foremost, if you deploy your Postgres database to Fly.io you'll be res
 
 Fly.io ships a set of tools that makes it easier to setup Postgres database instances, connect to their console, perform Postgres version upgrades, and create and restore snapshots of the volume where Postgres data is stored.
 
-The good news is that if you're not comfortable managing your own Postgres database, you can still deploy a Fly app that connects to your managed Heroku Postgres database.
+The good news is that if you're not comfortable managing your own Postgres database, you can still deploy a Fly App that connects to your managed Heroku Postgres database.
 
 ## Provision and deploy a Postgres app to Fly
 
-Let's create a Postgres database on Fly.io. First we run a command to provision a database.
+Let's create a Postgres database on Fly.io. First, we run a command to provision a database:
 
 ```cmd
 fly pg create --name myapp-db
@@ -50,7 +50,7 @@ Any app within the Brad Gessler organization can connect to this Postgres using 
 Now that you've set up Postgres, here's what you need to understand: https://fly.io/docs/postgres/getting-started/what-you-should-know/
 ```
 
-Now we have a Fly application called `myapp-db` that's running. It's important to understand that this is "just another Fly app" since we'll be passing `myapp-db` into `flyctl` for the remainder of this documentation.
+Now we have a Fly application called `myapp-db` that's running. It's important to understand that this is "just another Fly App" since we'll be passing `myapp-db` into `flyctl` for the remainder of this documentation.
 
 ## Importing your Database
 
@@ -78,7 +78,7 @@ Waiting for machine 6e82946c0dd0e8 to stop...
 
 ## Confirm your data has been imported correctly
 
-Then connect to your database instance and run a few queries to see if its there.
+Then connect to your database instance and run a few queries to see if it's there.
 
 ```cmd
 fly pg connect -a myapp-db -d myapp
