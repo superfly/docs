@@ -14,7 +14,7 @@ Fly Postgres clusters created with flyctl [v0.0.412](https://github.com/superfly
 
 [Postgres](https://www.postgresql.org/), formally known as PostgreSQL, is a powerful open source object relational database system that's used by many popular web frameworks to persist application data.
 
-Fly Postgres is a Fly app with flyctl sugar on top to help you bootstrap and manage a database cluster for your apps. It comes with most commonly used functionality (replication, failover, metrics, monitoring and daily snapshots).
+Fly Postgres is a Fly app with `flyctl` sugar on top to help you bootstrap and manage a database cluster for your apps. It comes with most commonly used functionality (replication, failover, metrics, monitoring and daily snapshots).
 
 **[Read about why Fly Postgres is not the same thing as a managed database service](/docs/postgres/getting-started/what-you-should-know).**
 
