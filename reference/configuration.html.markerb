@@ -383,7 +383,7 @@ You can have more than one `services.ports` section. The default configuration, 
 ```toml
   [[services.ports]]
     handlers = ["tls", "http"]
-    port = "443"
+    port = 443
 ```
 
 For UDP applications, make sure to bind the application to the same port as defined in the relevant `services.ports` section. For example, the configuration below will listen on port 5000 and the application will need to bind to `fly-global-services:5000` to receive traffic. Leave `handlers` unset for UDP services.
@@ -426,7 +426,7 @@ For example:
 ```toml
 [[services.ports]]
   handlers = ["proxy_proto"]
-  port = "5000"
+  port = 5000
   proxy_proto_options = { version = "v2" }
 ```
 
@@ -439,7 +439,7 @@ Configure the TLS versions and ALPN protocols that Fly's edge will use to termin
 ```toml
   [[services.ports]]
     handlers = ["tls", "http"]
-    port = "443"
+    port = 443
     tls_options = { "alpn" = ["h2", "http/1.1"], "versions" = ["TLSv1.2", "TLSv1.3"] }
 ```
 
@@ -454,7 +454,7 @@ One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS 
 ```toml
   [[services.ports]]
     handlers = ["tls"]
-    port = "443"
+    port = 443
     tls_options = { "alpn" = ["h2"] }
 ```
 
