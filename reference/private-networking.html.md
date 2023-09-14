@@ -6,7 +6,7 @@ nav: firecracker
 redirect_from: /docs/reference/privatenetwork/
 ---
 
-Fly apps are connected by a mesh of Wireguard tunnels using IPV6.
+Fly apps are connected by a mesh of WireGuard tunnels using IPv6.
 
 Applications within the same organization are assigned special addresses ("6PN addresses") tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly platform won't forward between different 6PN networks.
 
@@ -98,7 +98,7 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 |`_instances.internal`|none|IDs, apps, addresses, and regions<br>of all running instances<br>comma separated|
 |`<value>.<key>.kv._metadata.<appname>.internal`|IPv6 of machines with matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
 
-Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
+Examples of retrieving this information are in the [fly-apps/privatenet](https://github.com/fly-apps/privatenet) repository.
 
 ## Flycast - Private Load Balancing
 
@@ -118,7 +118,7 @@ The general flow for setting this up is:
 3. Deploy your app
 4. Access the services on the private IP from the target organization network
 
-**Note: If you have a public IP address assigned to your app, services in fly.toml will be exposed to the public internet. Verify this with `fly ips list`.**
+**Note: If you have a public IP address assigned to your app, services in `fly.toml` will be exposed to the public internet. Verify this with `fly ips list`.**
 
 ### Assigning a Flycast address
 
