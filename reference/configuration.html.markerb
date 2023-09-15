@@ -636,12 +636,25 @@ Volumes can also be assigned to specific processes; use double brackets to inclu
 
 ## The `metrics` section
 
-Fly apps can be configured to export custom metrics to the Fly.io-hosted Prometheus service. Add this section to fly.toml.
+Fly apps can be configured to export custom metrics to the Fly.io-hosted Prometheus service.
 
 ```toml
 [metrics]
-port = 9091       # default for most prometheus clients
-path = "/metrics" # default for most prometheus clients
+  port = 9091
+  path = "/metrics" # default for most prometheus exporters
+```
+
+Custom metrics can be also configured for specific `processes`, using double brackets to define multiple `[[metrics]]` tables:
+```toml
+[[metrics]]
+  port = 9394
+  path = "/metrics"
+  processes = ["web"]
+
+[[metrics]]
+  port = 9113
+  path = "/metrics"
+  processes = ["proxy"]
 ```
 
 Check out [Metrics on Fly.io](/docs/reference/metrics/) for more information about collecting metrics for your apps.
