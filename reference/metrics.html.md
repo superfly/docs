@@ -361,15 +361,27 @@ send the results to Prometheus.
 Add a `[metrics]` section to your application's `fly.toml`:
 
 ```toml
-app = "your-app-name"
-
 [metrics]
-port = 9091 # default for most prometheus clients
-path = "/metrics" # default for most prometheus clients
+port = 9091
+path = "/metrics" # default for most prometheus exporters
+```
+
+If your app uses [multiple processes](/docs/apps/processes/), you can add multiple `[[metrics]]` sections, each with its own set of `processes`:
+
+```toml
+[[metrics]]
+port = 9394
+path = "/metrics"
+processes = ["web"]
+
+[[metrics]]
+port = 9113
+path = "/metrics"
+processes = ["proxy"]
 ```
 
 ### Instrumentation
 
 Instrument your app and expose your metrics on `0.0.0.0`.
 
-There are many supported [client libraries](https://prometheus.io/docs/instrumenting/clientlibs/) as well as 3rd party libraries able to return Prometheus-formatted metrics.
+There are many supported [client libraries](https://prometheus.io/docs/instrumenting/clientlibs/) as well as off-the-shelf [exporters](https://prometheus.io/docs/instrumenting/exporters/) able to return Prometheus-formatted metrics.
