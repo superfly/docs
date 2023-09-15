@@ -8,7 +8,7 @@ order: 60
 
 When you created your Fly Postgres cluster, Postgres configuration parameters were set to reasonable defaults for your VM resources. 
 
-flyctl exposes some of these parameters so you can tune them to your application's needs, or to match any VM scaling you do.
+`flyctl` exposes some of these parameters so you can tune them to your application's needs, or to match any VM scaling you do.
 
 Before you start tuning, it's important to understand the tradeoffs that you're making. Choose values for these parameters with the guidance of the [Postgres docs](https://www.postgresql.org/docs/current/runtime-config-resource.html).
 
