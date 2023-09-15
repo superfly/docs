@@ -5,22 +5,22 @@ layout: framework_docs
 order: 4
 ---
 
-These examples demonstrate connections from within the same Fly.io internal IPv6 private network . To adapt them for external connections, substitute the internal hostname for one that's reachable over the public Internet.
+These examples demonstrate connections from within the same Fly.io internal IPv6 private network. To adapt them for external connections, substitute the internal hostname for one that's reachable over the public Internet.
 
 ## psql
 
-If you have an active [WireGuard tunnel](/docs/reference/private-networking/#private-network-vpn) to your organization's private network, you can connect from a local machine to your Postgres cluster the same way you would from a Fly app within the same private network. For example, the following command would start an interactive terminal session on the cluster leader with `psql`:
+If you have an active [WireGuard tunnel](/docs/reference/private-networking/#private-network-vpn) to your organization's private network, you can connect from a local machine to your Postgres cluster the same way you would from a Fly App within the same private network. For example, the following command would start an interactive terminal session on the cluster leader with `psql`:
 
 ```cmd
 psql postgres://postgres:secret123@appname.internal:5432
 ```
 
-You can, of course, run psql from a shell on a Fly app as well (as long as that app has psql installed).
+You can, of course, run `psql` from a shell on a Fly App as well (as long as that app has `psql` installed).
 
-### Connecting with Ruby
+## Connecting with Ruby
 [docs](https://github.com/ged/ruby-pg)
 
-Ruby apps use the `pg` gem to connect to postgres.
+Ruby apps use the `pg` gem to connect to Postgres.
 
 ```ruby
 require 'pg'
@@ -36,23 +36,23 @@ conn.exec( "SELECT * FROM pg_stat_activity" ) do |result|
 end
 ```
 
-### Connecting with Rails
+## Connecting with Rails
 [docs](https://guides.rubyonrails.org/configuring.html#configuring-a-database)
 
 Rails apps automatically connect to the database specified in the `DATABASE_URL` environment variable.
 
-You can set this variable manually with `flyctl secrets set`
+You can set this variable manually with `flyctl secrets set`:
 ```bash
 flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.internal:5432/yourdb
 ```
 
-or by attaching the Postgres database to your Fly app.
+or by attaching the Postgres database to your Fly App.
 
 
-### Connecting with Go
+## Connecting with Go
 [docs](https://github.com/jackc/pgx/wiki/Getting-started-with-pgx-through-database-sql)
 
-`pgx` is the recommended driver for connecting to postgres. It supports the standard `database/sql` interface as well as directly exposing low level / high performance APIs.
+`pgx` is the recommended driver for connecting to Postgres. It supports the standard `database/sql` interface as well as directly exposing low-level / high-performance APIs.
 
 First, add `github.com/jackc/pgx/v4` as a module dependency.
 ```bash
@@ -90,7 +90,7 @@ func main() {
 }
 ```
 
-### Connecting with Node.js
+## Connecting with Node.js
 [docs](https://node-postgres.com)
 
 You'll use the `pg` npm module to connect to Postgres from a Node.js app.
@@ -105,7 +105,7 @@ console.log(res.rows[0].message) // Hello world!
 await client.end()
 ```
 
-### Connecting with Prisma – Node.js
+## Connecting with Prisma – Node.js
 [docs](https://www.prisma.io/)
 
 Prisma is an open-source object-relational mapper (ORM) for Node.js and works with both JavaScript and TypeScript. It consists of 3 components:
@@ -194,7 +194,7 @@ main()
   })
 ```
 
-### Connecting with Sequelize – Node.js
+## Connecting with Sequelize – Node.js
 [docs](https://sequelize.org)
 
 Sequelize is an open-source object-relational mapper (ORM) for Node.js and works with JavaScript and TypeScript.
@@ -202,7 +202,7 @@ Sequelize is an open-source object-relational mapper (ORM) for Node.js and works
 <details data-render="markdown">
 <summary>Set up Sequelize inside your project</summary>
 
-Install the Sequelize dependencies and CLI into your project
+Install the Sequelize dependencies and CLI into your project:
 ```
 npm install --save sequelize
 npm install --save-dev sequelize-cli
@@ -223,7 +223,7 @@ This will create the following folders:
 </details>
 
 
-After initializing you will need to show the CLI how to connect to the database inside of `config/config.js`
+After initializing, you will need to show the CLI how to connect to the database inside of `config/config.js`.
 
 ```javascript
 const fs = require('fs');
@@ -259,7 +259,7 @@ module.exports = {
 };
 ```
 
-Create a new file named `.sequelizerc` , this allows the CLI to be able to read your `config.js` file
+Create a new file named `.sequelizerc`, this allows the CLI to be able to read your `config.js` file.
 ```javascript
 const path = require('path');
 
@@ -268,7 +268,7 @@ module.exports = {
 }
 ```
 
-Next pass the `DATABASE_URL` from the env into the Sequelize constructor in `models/index.js` to be able to connect to your fly postgres app and confirm the new seuqelize connection with the async function below
+Next pass the `DATABASE_URL` from the env into the Sequelize constructor in `models/index.js` to be able to connect to your Fly Postgres app and confirm the new Sequelize connection with the async function below:
 ```javascript
 // Connect to fly postgres app
 let sequelize = new Sequelize(process.env.DATABASE_URL);
@@ -289,7 +289,7 @@ let sequelize = new Sequelize(process.env.DATABASE_URL);
 [Fly docs: How to add Read Replica database with flyctl](https://fly.io/docs/postgres/advanced-guides/high-availability-and-global-replication/)
 
 
-Set the Sequelize consturctor in `model/index.js` to conditionally connect to the primary/read-replica database depending on the `primary region` value set in `fly.toml`.
+Set the Sequelize constructor in `model/index.js` to conditionally connect to the primary/read-replica database depending on the `primary_region` value set in `fly.toml`.
 ```javascript
 let sequelize;
 if (config.use_env_variable) {
