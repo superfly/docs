@@ -11,7 +11,7 @@ objective: "`fly pg attach`: Conveniently create a new database in a Fly Postgre
 
 ## Attach a Fly App
 
-`fly postgres attach` is a convenience command to quickly associate a Fly app with your Fly Postgres cluster. 
+`fly postgres attach` is a convenience command to quickly associate a Fly App with your Fly Postgres cluster. 
 
 ```
 flyctl postgres attach --app <app-name> <postgres-app-name>
@@ -19,11 +19,11 @@ flyctl postgres attach --app <app-name> <postgres-app-name>
 
 When you attach an app to Postgres, a number of things happen:
 
-* A new database and user are created in the Postgres App. If the attached app is named "myapp", both the database and the user are named "myapp" too.
+* A new database and user are created in the Postgres App. If the attached app is named `myapp`, both the database and the user are named `myapp` too.
 * The user is allocated a generated password.
 * The consuming app and the Postgres app are marked as attached in the great floating ledger in the Fly.io cloud. The main value of this is in order to be able to use `fly pg detach` later.
 
-When the `attach`ed app starts it will have access to an environment variable `DATABASE_URL` set to a Postgres connection URI with the username, password, host, port and dbname filled in.
+When the `attach`ed app starts, it will have access to an environment variable `DATABASE_URL` set to a Postgres connection URI with the username, password, host, port and dbname filled in.
 
 ## Detach a Fly App
 
