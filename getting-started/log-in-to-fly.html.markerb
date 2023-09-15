@@ -1,0 +1,15 @@
+---
+title: Sign up and log in to Fly.io
+layout: docs
+sitemap: false
+nav: firecracker
+toc: false
+---
+
+## No account? Sign up for Fly.io
+
+<%= partial "/docs/partials/sign_up" %>
+
+## Already have a Fly.io account? Log in
+
+<%= partial "/docs/partials/sign_in" %>
