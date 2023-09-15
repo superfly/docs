@@ -95,7 +95,7 @@ TCP             5432 => 5432 [PG_TLS]   False
 TCP             5433 => 5433 [PG_TLS]   False
 ```
 
-You should then be able to access your Postgres cluster via psql like:
+You should then be able to access your Postgres cluster via `psql` like:
 
 ```cmd
 psql "sslmode=require host=<pg-app-name>.fly.dev dbname=<db name> user=<username>"
