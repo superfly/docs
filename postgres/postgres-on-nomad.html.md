@@ -190,7 +190,7 @@ If the leader becomes unhealthy (e.g. network or hardware issues), the proxy dro
 
 A Postgres cluster is configured with three users when created:
 
-- `postgres` - a role with superuser and login privileges that was created for you along with the cluster. Since the `postgres` role has superuser rights, it's recommended that you only use it for admin tasks and create new users with access restricted to the minimum necessary for applications
+- `postgres` - a role with superuser and login privileges that was created for you along with the cluster. Since the `postgres` role has superuser rights, it's recommended that you only use it for admin tasks and create new users with access restricted to the minimum necessary for applications.
 - `flypgadmin` - this role is used internally by Fly.io to configure and query the postgres cluster
 - `repluser` - this is the user replica servers use for replication from the leader
 
