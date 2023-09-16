@@ -29,7 +29,7 @@ fly settings autoupdate enable
 
 ### Check connectivity with fly doctor
 
-Run some basic connectivity test for things like Wireguard, IP addresses, and local Docker instance:
+Run some basic connectivity test for things like WireGuard, IP addresses, and local Docker instance:
 
 ```
 fly doctor
