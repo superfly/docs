@@ -100,7 +100,7 @@ _Note:_ the `TLS` handler includes ALPN negotiation for HTTP/2. When possible, a
 
 ### Postgres connections
 
-The `pg_tls` handler manages Postgres connections, so that you can expose your Postgres databases over the proxy securely. Some interesting notes by @glebarez on why standard TLS termination won't work for Postgres: https://github.com/glebarez/pgssl#readme
+The `pg_tls` handler manages Postgres connections, so that you can expose your Postgres databases over the proxy securely. Some interesting notes by [@glebarez](https://github.com/glebarez) on why standard TLS termination won't work for Postgres: https://github.com/glebarez/pgssl#readme
 
 ### PROXY protocol
 
