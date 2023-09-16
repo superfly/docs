@@ -5,7 +5,7 @@ order: 2
 objective: Create a new Fly Postgres cluster.
 ---
 <div class="callout">
-If you have flyctl [**v0.0.412**](https://github.com/superfly/flyctl/releases/tag/v0.0.412) or newer installed, new Fly Postgres clusters you create will use our next-gen Apps V2 architecture, built on [**Fly Machines**](/docs/reference/machines/).
+If you have flyctl [**v0.0.412**](https://github.com/superfly/flyctl/releases/tag/v0.0.412) or newer installed, new Fly Postgres clusters you create will use our next-gen [Apps V2](/docs/reference/apps/) architecture, built on [**Fly Machines**](/docs/reference/machines/).
 </div>
 
 To create a Postgres cluster, use the `fly postgres create` command. The command will walk you through the creation with prompts for name, region, and VM resources.
