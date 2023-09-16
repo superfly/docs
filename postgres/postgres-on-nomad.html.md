@@ -194,7 +194,7 @@ A Postgres cluster is configured with three users when created:
 - `flypgadmin` - this role is used internally by Fly.io to configure and query the postgres cluster
 - `repluser` - this is the user replica servers use for replication from the leader
 
-You can view a list of users using `flyctl`
+You can view a list of users using `flyctl`:
 
 ```cmd
 flyctl postgres users list c-pg-test
