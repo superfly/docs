@@ -258,8 +258,8 @@ The `[http_service.concurrency]` section has the same settings as `[services.con
 
 **requests**: Load balance and scale based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
 
-* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
-* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application supports doing so.
+* `hard_limit`: When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
+* `soft_limit`: When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application supports doing so.
 
 ### `http_service.http_options.response.headers`
 
@@ -348,8 +348,8 @@ Example (note the double square brackets):
 Settings: 
 
 * `processes`: For apps with multiple process groups, the process group or groups that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
-* `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
-* `protocol` : The protocol that this service will use to communicate. Typically `tcp` for most applications, but can also be `udp`.
+* `internal_port`: The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
+* `protocol`: The protocol that this service will use to communicate. Typically `tcp` for most applications, but can also be `udp`.
 * `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs the checks to automatically stop machines every few minutes. The default is `true`.
 * `auto_start_machines`: Whether to automatically start an application's machines when a new request is made to the application and there's no excess capacity, per region. If there's only one machine in a region, then it's started whenever a request is made to the application. The default is `true`.
 * `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines = true`.
@@ -371,11 +371,11 @@ For each `services` section in your `fly.toml`, i.e. for each external port you 
 
 This example defines an HTTP handler on port 80.
 
-* `handlers` : An array of strings, each string selecting a handler process to terminate the connection with at the edge. Here, the `http` handler will accept HTTP traffic and pass it on to the `internal_port` of the application, which we defined in the `services` section above.
+* `handlers`: An array of strings, each string selecting a handler process to terminate the connection with at the edge. Here, the `http` handler will accept HTTP traffic and pass it on to the `internal_port` of the application, which we defined in the `services` section above.
   For the list of available handlers, and how they manage network traffic, see the [Public Network Services documentation](/docs/reference/services/).
-* `port` : An integer representing the external port to listen on (ports 1-65535).
-* `start_port` : For a port range, the first port to listen on.
-* `end_port` : For a port range, the last port to listen on.
+* `port`: An integer representing the external port to listen on (ports 1-65535).
+* `start_port`: For a port range, the first port to listen on.
+* `end_port`: For a port range, the last port to listen on.
 * `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
 
 You can have more than one `services.ports` section. The default configuration, for example, contains two. We've already seen one above. The second one defines an external port 443 for secure connections, using the `tls` handler.
@@ -430,7 +430,7 @@ For example:
   proxy_proto_options = { version = "v2" }
 ```
 
-* `version` : A string to indicate that the TCP connection uses PROXY protocol version 2. The default when not set is version 1.
+* `version`: A string to indicate that the TCP connection uses PROXY protocol version 2. The default when not set is version 1.
 
 #### `services.ports.tls_options`
 
@@ -443,8 +443,8 @@ Configure the TLS versions and ALPN protocols that Fly's edge will use to termin
     tls_options = { "alpn" = ["h2", "http/1.1"], "versions" = ["TLSv1.2", "TLSv1.3"] }
 ```
 
-* `alpn` : Array of strings indicating how to handle ALPN negotiations with clients.
-* `versions` : Array of strings indicating which TLS versions are allowed.
+* `alpn`: Array of strings indicating how to handle ALPN negotiations with clients.
+* `versions`: Array of strings indicating which TLS versions are allowed.
 * `default_self_signed`: When `true`, serve a self-signed certificate if no certificate exists. Default is `false`.
 
 Fly.io can also terminate TLS only and pass through directly to your service. This works for a variety of applications that can benefit from offloading TLS termination and accept the unencrypted connection.
@@ -477,8 +477,8 @@ This section is a simple list of key/values, so the section is denoted with sing
 
 **requests**: Load balance based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
 
-* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. For Nomad apps only, the system will bring up another instance if the autoscaling policy supports doing so.
-* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. For Nomad apps only, the system will likely bring up another instance if the auto scaling policy for the application supports doing so.
+* `hard_limit`: When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. For Nomad apps only, the system will bring up another instance if the autoscaling policy supports doing so.
+* `soft_limit`: When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. For Nomad apps only, the system will likely bring up another instance if the auto scaling policy for the application supports doing so.
 
 ### `services.tcp_checks`
 
