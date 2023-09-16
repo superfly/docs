@@ -6,7 +6,7 @@ nav: firecracker
 ---
 <%= partial "/docs/partials/v2_transition_banner" %>
 
-Fly Launch is our a Platform-as-a-Service product with features that help you serve up your app, including (but not limited to):
+Fly Launch is our Platform-as-a-Service product with features that help you serve up your app, including (but not limited to):
 
 - the `fly launch` command to get started
 - the `fly.toml` file for app configuration
