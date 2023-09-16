@@ -120,4 +120,4 @@ Here are some examples:
 * [A Tired Proxy in Go](https://github.com/superfly/tired-proxy) used in [Building an In-Browser IDE the Hard Way](https://fly.io/blog/remote-ide-machines/). [There's a community fork with more recent updates](https://community.fly.io/t/improved-tired-proxy-for-use-with-fly-machines/10584).
 * A minimal demo app in Typescript/Remix: [code](https://github.com/fly-apps/autoscale-to-zero-demo) & [demo](https://autoscale-to-zero-demo.fly.dev/).
 
-As of `flyctl` v0.0.520, Fly Postgres [supports this too](https://community.fly.io/t/scale-to-zero-postgres-for-hobby-projects/12212).
+As of flyctl [v0.0.520](https://github.com/superfly/flyctl/releases/tag/v0.0.520), Fly Postgres [supports this too](https://community.fly.io/t/scale-to-zero-postgres-for-hobby-projects/12212).
