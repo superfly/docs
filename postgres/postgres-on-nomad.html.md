@@ -210,7 +210,7 @@ repluser   false     postgres
 
 ## Databases
 
-One Postgres cluster can host multiple databases
+One Postgres cluster can host multiple databases.
 
 ### Listing Databases
 
