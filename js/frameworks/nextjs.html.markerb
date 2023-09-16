@@ -142,7 +142,7 @@ Downsides of this approach:
 * Your deployment machines will need enough memory to run a build.  See:
   [`fly scale memory`](https://fly.io/docs/flyctl/scale-memory/) and
   [`swap_size_mb`](https://fly.io/docs/reference/configuration/#swap_size_mb-option) for two options.
-* You may need to adjust the [grace_period](https://fly.io/docs/reference/configuration/#http_service-checks) for any http service checks.
+* You may need to adjust the [grace_period](https://fly.io/docs/reference/configuration/#http_service-checks) for any HTTP service checks.
 * If you are only running one machine there will be a period of time where
   your server is inaccessible while the site is being statically generated.
 * If you run multiple machines, the statis site generation will be run on

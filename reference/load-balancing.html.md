@@ -47,7 +47,7 @@ We have a web service that we know can handle 25 concurrent requests with the cu
     soft_limit = 20
 ```
 
-We set `type = "requests"` so Fly.io will use concurrent http requests to determine when to adjust load. We prefer this to `type = "connections"`, because our web service does work for each request and our users may make multiple requests over a single connection (e.g., with HTTP/2).
+We set `type = "requests"` so Fly.io will use concurrent HTTP requests to determine when to adjust load. We prefer this to `type = "connections"`, because our web service does work for each request and our users may make multiple requests over a single connection (e.g., with HTTP/2).
 
 We choose to set our `soft_limit` to 20, so we have a little room for Fly.io to shift load to other instances before a single instance becomes overwhelmed.
 
@@ -55,7 +55,7 @@ We deployed 10 VMs in four regions: `ams`, `bom`, `sea`, and `sin`, with three o
 
 In this contrived example, all of the users are currently in Amsterdam (ams region) so their traffic is arriving at one of the Fly.io edges in Amsterdam. There are currently 3 instances of our web service running in Amsterdam.
 
-When users in Amsterdam generate up to 60 concurrent http requests, those requests are divided evenly between the three application instances in the ams region. Closeness of the worker and edge will determine which of the 3 instances each request goes to.
+When users in Amsterdam generate up to 60 concurrent HTTP requests, those requests are divided evenly between the three application instances in the ams region. Closeness of the worker and edge will determine which of the 3 instances each request goes to.
 
 When users generate 61+ concurrent requests from Amsterdam, 60 of those requests will be sent to the 3 instances in the ams region and then the rest will be sent to instances in other regions based on which ones are closest.
 

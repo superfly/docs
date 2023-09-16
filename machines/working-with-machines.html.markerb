@@ -193,12 +193,12 @@ The only required parameter is `image` in the `config` object. Other parameters:
       + `port`: The port to connect to, likely should be the same as `internal_port`
       + `interval`: The time between connectivity checks
       + `timeout`: The maximum time a connection can take before being reported as failing its health check
-      + `method`: For http checks, the HTTP method to use to when making the request
-      + `path`: For http checks, the path to send the request to
-      + `protocol`: For http checks, whether to use `http` or `https`
+      + `method`: For HTTP checks, the HTTP method to use to when making the request
+      + `path`: For HTTP checks, the path to send the request to
+      + `protocol`: For HTTP checks, whether to use `http` or `https`
       * `tls_server_name`: If the protocol is `https`, the hostname to use for TLS certificate validation
-      + `tls_skip_verify`: For http checks with https protocol, whether or not to verify the TLS certificate
-      + `headers`: For http checks, an array of objects with string field `name` and array of strings field `values`
+      + `tls_skip_verify`: For HTTP checks with https protocol, whether or not to verify the TLS certificate
+      + `headers`: For HTTP checks, an array of objects with string field `name` and array of strings field `values`
 
 An example of two checks:
 
