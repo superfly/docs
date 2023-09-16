@@ -258,7 +258,7 @@ Automatically selected personal organization: Mark Ericksen
 ? Select region: sea (Seattle, Washington (US))
 ? Select VM size: shared-cpu-1x - 256
 ? Volume size (GB): 10
-Creating postgres cluster hello-elixir-db in organization personal
+Creating Postgres cluster hello-elixir-db in organization personal
 Postgres cluster hello-elixir-db created
   Username:    <USER>
   Password:    <PASSWORD>
@@ -273,10 +273,10 @@ Monitoring Deployment
 --> v0 deployed successfully
 
 Connect to postgres
-Any app within the personal organization can connect to postgres using the above credentials and the hostname "hello-elixir-db.internal."
+Any app within the personal organization can connect to Postgres using the above credentials and the hostname "hello-elixir-db.internal."
 For example: postgres://<USER>:<PASSWORD>@hello-elixir-db.internal:5432
 
-See the postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
+See the Postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
 ```
 
 We can take the defaults which select the lowest values for CPU, size, etc. This is perfect for getting started.

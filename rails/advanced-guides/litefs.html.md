@@ -31,7 +31,7 @@ fly launch
 bin/rails generate dockerfile --litefs
 ```
 
-`fly launch` will prompt you for a name, region, and whether or not you want postgres or redis databases.  Say no to the databases, you won't need them for this demo.
+`fly launch` will prompt you for a name, region, and whether or not you want Postgres or redis databases.  Say no to the databases, you won't need them for this demo.
 
 `generate dockerfile` will prompt you whether or not you want to accept the changes.  Feel free to peruse the diffs, but ultimately accept the changes.  If you would rather not even be prompted to see the diffs, you can add a `--force` option the command.
 

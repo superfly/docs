@@ -1,4 +1,4 @@
-List postgres clusters
+List Postgres clusters
 
 
 ## Usage

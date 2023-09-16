@@ -13,7 +13,7 @@ flyctl postgres events list [flags]
   -a, --app string         Application name
   -d, --compact            Omit the 'Details' column
   -c, --config string      Path to application configuration file
-  -e, --event string       Event type in a postgres cluster
+  -e, --event string       Event type in a Postgres cluster
   -h, --help               help for list
   -l, --limit string       Set the maximum number of entries to output (default: 20)
   -i, --node-id string     Restrict entries to node with this ID

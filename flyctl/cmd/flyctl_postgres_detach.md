@@ -1,4 +1,4 @@
-Detach a postgres cluster from an app
+Detach a Postgres cluster from an app
 
 
 ## Usage

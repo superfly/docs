@@ -28,7 +28,7 @@ Set secrets on list: RAILS_MASTER_KEY
 ? Would you like to set up a Postgresql database now? Yes
 For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clu
 ? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
-Creating postgres cluster in organization personal
+Creating Postgres cluster in organization personal
 
 . . .
 
@@ -220,10 +220,10 @@ Accordingly:
 
 ### Postgres database drivers
 
-If you didn't initially deploy with a postgres database but want to add one
+If you didn't initially deploy with a Postgres database but want to add one
 later, you can create a database using [`fly postgres
 create`](https://fly.io/docs/postgres/getting-started/create-pg-cluster/).
-Next, update your dockerfile to include the postgres libraries using:
+Next, update your dockerfile to include the Postgres libraries using:
 
 ```shell
 $ bin/rails generate dockerfile --postgresql

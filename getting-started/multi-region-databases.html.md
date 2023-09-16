@@ -14,7 +14,7 @@ Most read-heavy, PostgreSQL-backed applications work natively across regions on 
 
 With regional read replicas configured, the `fly-replay` header lets you specify exactly which requests need to be serviced by the primary, writable database. When we detect this header, we will replay the entire request to the region you specify. It looks something like this:
 
-<img src="/static/images/fly-global-postgres.webp"  alt="Diagram of app + global postgres on Fly.io">
+<img src="/static/images/fly-global-postgres.webp"  alt="Diagram of app + global Postgres on Fly.io">
 
 In most runtimes, it's straightforward to catch a read-only database error in a replica region and serve a response with the appropriate replay header.
 
@@ -30,7 +30,7 @@ The following libraries help applications when working with globally replicated 
 
 ### Elixir/Phoenix
 
-[`fly_postgres`](https://github.com/superfly/fly_postgres_elixir) - Library for working with local read-replica postgres databases and performing writes through RPC calls to other nodes in the primary Fly.io region.
+[`fly_postgres`](https://github.com/superfly/fly_postgres_elixir) - Library for working with local read-replica Postgres databases and performing writes through RPC calls to other nodes in the primary Fly.io region.
 
 This does not use the `fly-replay` header approach outlined here, but instead uses Elixir clustering to RPC write database operations to a node running in the primary region. This is Postgres specific.
 

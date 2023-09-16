@@ -47,7 +47,7 @@ You might need to configure any apps that connect to your Postgres app to scale 
 </div>
 
 ```
-Creating postgres cluster in organization TestOrg
+Creating Postgres cluster in organization TestOrg
 Creating app...
 Setting secrets on pg-test...
 Provisioning 1 of 1 machines with image flyio/postgres-flex:15.2

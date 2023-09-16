@@ -22,7 +22,7 @@ fly pg create --image-ref flyio/postgres-flex-timescaledb:15
 
 ## Create the extension
 
-Connect to your postgres database:
+Connect to your Postgres database:
 ```cmd
 # Connect to your target database
 fly pg connect --app <app-name> --database <db-name>

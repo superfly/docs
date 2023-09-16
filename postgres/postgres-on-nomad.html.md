@@ -63,7 +63,7 @@ During this process, you get to choose from several preset resource configuratio
 The "Production" options give you a two-node cluster in a leader-replica configuration. A single-node "Development" instance can readily be scaled and [expanded to more regions](https://fly.io/docs/getting-started/multi-region-databases/).
 
 ```
-Creating postgres cluster c-pg-test in organization personal
+Creating Postgres cluster c-pg-test in organization personal
 Postgres cluster c-pg-test created
   Username:    postgres
   Password:    8a93cbc09798f3805056333072bd2b35be7eb634b13a05c3
@@ -78,10 +78,10 @@ Monitoring Deployment
 --> v0 deployed successfully
 
 Connect to postgres
-Any app within the personal organization can connect to postgres using the above credentials and the hostname "c-pg-test.internal."
+Any app within the personal organization can connect to Postgres using the above credentials and the hostname "c-pg-test.internal."
 For example: postgres://postgres:8a93cbc09798f3805056333072bd2b35be7eb634b13a05c3@c-pg-test.internal:5432
 
-See the postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
+See the Postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
 ```
 
 After answering all the prompts, you'll see a message saying that the cluster is being created, followed by a deployment monitor watching as the app is launched. Take heed of the reminder to save your password in a safe place!
@@ -96,7 +96,7 @@ flyctl <command> -a <postgres-app-name>
 
 ## Connecting to Postgres
 
-How you connect to Postgres depends on the tools you're using. Connection string URIs are a common way to describe a connection to a postgres server.
+How you connect to Postgres depends on the tools you're using. Connection string URIs are a common way to describe a connection to a Postgres server.
 
 Connection strings have the following format:
 
@@ -168,7 +168,7 @@ When the Attached app starts it will find an environment variable `DATABASE_URL`
 
 ### Detaching an App from Postgres
 
-Use `flyctl postgres detach` to remove postgres from the app.
+Use `flyctl postgres detach` to remove Postgres from the app.
 
 ```
 flyctl postgres detach --app <app-name> <postgres-app-name>
@@ -178,9 +178,9 @@ This will revoke access to the attachment's role, remove the role, and remove th
 
 ## High Availability
 
-Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ postgres servers. It provides a number of things, including a “keeper” that controls the postgres process, a "sentinel" that builds the cluster view, and a “proxy” that always routes connections to the current leader.
+Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ Postgres servers. It provides a number of things, including a “keeper” that controls the postgres process, a "sentinel" that builds the cluster view, and a “proxy” that always routes connections to the current leader.
 
-5433 is the port the keeper tells postgres to listen on. Connecting there goes straight to Postgres, though it might be the leader or the replica. Since clients need writes, the proxy is listening on the default 5432 port so clients are connected to the current leader.
+5433 is the port the keeper tells Postgres to listen on. Connecting there goes straight to Postgres, though it might be the leader or the replica. Since clients need writes, the proxy is listening on the default 5432 port so clients are connected to the current leader.
 
 If the leader becomes unhealthy (eg network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previous leader's VM will be replaced by another VM which will rejoin the cluster as a replica.
 
@@ -191,7 +191,7 @@ If the leader becomes unhealthy (eg network or hardware issues), the proxy drops
 A Postgres cluster is configured with three users when created:
 
 - `postgres` - a role with superuser and login privileges that was created for you along with the cluster. Since the `postgres` role has superuser rights, it's recommended that you only use it for admin tasks and create new users with access restricted to the minimum necessary for applications
-- `flypgadmin` - this role is used internally by Fly.io to configure and query the postgres cluster
+- `flypgadmin` - this role is used internally by Fly.io to configure and query the Postgres cluster
 - `repluser` - this is the user replica servers use for replication from the leader
 
 You can view a list of users using `flyctl`
@@ -255,7 +255,7 @@ You can set this variable manually with `flyctl secrets set`
 flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.internal:5432/yourdb
 ```
 
-or by attaching the postgres database to your Fly app.
+or by attaching the Postgres database to your Fly app.
 
 
 ### Connecting with Go ([docs](https://github.com/jackc/pgx/wiki/Getting-started-with-pgx-through-database-sql))
@@ -300,7 +300,7 @@ func main() {
 
 ### Connecting with Node.js ([docs](https://node-postgres.com))
 
-You'll use the `pg` npm module to connect to postgres from a node.js app.
+You'll use the `pg` npm module to connect to Postgres from a Node.js app.
 
 ```javascript
 const { Client } = require('pg')

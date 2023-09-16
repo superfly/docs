@@ -13,8 +13,8 @@ flyctl postgres connect [flags]
   -c, --config string     Path to application configuration file
   -d, --database string   The name of the database you would like to connect to (default "postgres")
   -h, --help              help for connect
-  -p, --password string   The postgres user password
-  -u, --user string       The postgres user to connect with (default "postgres")
+  -p, --password string   The Postgres user password
+  -u, --user string       The Postgres user to connect with (default "postgres")
 ~~~
 
 ## Global Options
