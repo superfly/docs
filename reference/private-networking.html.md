@@ -93,7 +93,7 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 |`regions.<appname>.internal`|none|region names<br/> where app is deployed|
 |`<appname>.internal`|app instances<br/> in any region|none
 |`_apps.internal`|none|names of all 6PN<br/> private networking apps<br/> in the same organization|
-|`_peer.internal`|none|names of all wireguard peers|
+|`_peer.internal`|none|names of all WireGuard peers|
 |`<peername>._peer.internal`|IPv6 of peer|none|
 |`_instances.internal`|none|IDs, apps, addresses, and regions<br>of all running instances<br>comma separated|
 |`<value>.<key>.kv._metadata.<appname>.internal`|IPv6 of machines with matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
@@ -161,7 +161,7 @@ Fly's command line  can generate you a tunnel configuration file with private ke
 
 #### Install your WireGuard App
 
-There are many options for installing WireGuard on your system, detailed on the [WireGuard](https://www.wireguard.com/install/) site. Install the software that is appropriate for your system. Windows and macOS have apps available to install. Linux systems have packages, typically named wireguard and wireguard-tools, you should install both.
+There are many options for installing WireGuard on your system, detailed on the [WireGuard](https://www.wireguard.com/install/) site. Install the software that is appropriate for your system. Windows and macOS have apps available to install. Linux systems have packages, typically named WireGuard and wireguard-tools, you should install both.
 
 #### Creating your tunnel configuration
 

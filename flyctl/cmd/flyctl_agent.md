@@ -1,4 +1,4 @@
-The Fly agent is a background process that manages wireguard connections started by flyctl.
+The Fly agent is a background process that manages WireGuard connections started by flyctl.
 Commands such as 'fly ssh' and 'fly proxy' use this agent.
 Generally, the agent starts and stops automatically. These commands are useful for debugging.
 
