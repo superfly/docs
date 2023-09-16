@@ -78,7 +78,7 @@ Waiting for machine 6e82946c0dd0e8 to stop...
 
 ## Confirm your data has been imported correctly
 
-Then connect to your database instance and run a few queries to see if its there.
+Then connect to your database instance and run a few queries to see if it's there.
 
 ```cmd
 fly pg connect -a myapp-db -d myapp
