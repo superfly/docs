@@ -182,7 +182,7 @@ Fly Postgres uses [stolon](https://github.com/sorintlab/stolon) for leader elect
 
 5433 is the port the keeper tells postgres to listen on. Connecting there goes straight to Postgres, though it might be the leader or the replica. Since clients need writes, the proxy is listening on the default 5432 port so clients are connected to the current leader.
 
-If the leader becomes unhealthy (eg network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previous leader's VM will be replaced by another VM which will rejoin the cluster as a replica.
+If the leader becomes unhealthy (e.g. network or hardware issues), the proxy drops all connections until a new leader is elected. Once it’s ready, new connections go to the new leader automatically. The previous leader's VM will be replaced by another VM which will rejoin the cluster as a replica.
 
 **In general, your clients should connect to port 5432.**
 
