@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-<div class="callout">This document applies to legacy Fly Postgres on Apps V1 (orchestrated by Nomad). Docs for newer Fly Postgres clusters live at **[Fly Postgres](/docs/postgres/)**</div>
+<div class="callout">This document applies to legacy Fly Postgres on Apps V1 (orchestrated by Nomad). Docs for newer Fly Postgres clusters live at **[Fly Postgres](/docs/postgres/)**.</div>
 
 Most read-heavy, PostgreSQL-backed applications work natively across regions on Fly.io, no architectural changes required. Deploying an app and database in multiple regions takes advantage of two Fly features:
 
