@@ -640,8 +640,8 @@ Fly apps can be configured to export custom metrics to the Fly.io-hosted Prometh
 
 ```toml
 [metrics]
-port = 9091       # default for most prometheus clients
-path = "/metrics" # default for most prometheus clients
+port = 9091       # default for most Prometheus clients
+path = "/metrics" # default for most Prometheus clients
 ```
 
 Check out [Metrics on Fly.io](/docs/reference/metrics/) for more information about collecting metrics for your apps.

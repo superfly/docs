@@ -24,7 +24,7 @@ More things you need to know:
 * We won't upgrade your Postgres cluster to a new version automatically. You can run `fly image update` to get the latest available point release
 * We won't apply security patches to running clusters
 * We automatically take snapshots every 24hs but you have to restore from them when needed
-* We collect and expose relevant prometheus metrics but you have to setup Grafana or the likes to get monitoring dashboards and alerts.
+* We collect and expose relevant Prometheus metrics but you have to setup Grafana or the likes to get monitoring dashboards and alerts.
 
 Now, when you created your Postgres app, `flyctl` offered you the chance to create a single node cluster. That's good for development but a really bad idea on 99% production setups (unless you know what you are doing). So let me tell that again: Don't store your production data on a single node database! It will fail, badly, and your app has no chance of surviving a simple powerline failure.
 

@@ -364,8 +364,8 @@ Add a `[metrics]` section to your application's `fly.toml`:
 app = "your-app-name"
 
 [metrics]
-port = 9091 # default for most prometheus clients
-path = "/metrics" # default for most prometheus clients
+port = 9091 # default for most Prometheus clients
+path = "/metrics" # default for most Prometheus clients
 ```
 
 ### Instrumentation

@@ -509,7 +509,7 @@ Fly Postgres apps run several processes inside each VM, including postgres, stol
 
 ### Metrics
 
-Fly Postgres apps export metrics to prometheus which can be seen in the Metrics UI or queried from grafana.
+Fly Postgres apps export metrics to Prometheus which can be seen in the Metrics UI or queried from grafana.
 
 The available metrics are
 ```
