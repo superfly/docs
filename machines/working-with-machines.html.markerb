@@ -58,7 +58,7 @@ $ export FLY_API_TOKEN=$(fly auth token)
 
 For local development, you can see the token used by `flyctl` with `fly auth token`. You can also create a new auth token in the [personal access token section of the fly.io dashboard](https://fly.io/user/personal_access_tokens).
 
-In order to access this API on a fly VM, make the token available as a secret:
+In order to access this API on a Fly VM, make the token available as a secret:
 
 ```cmd
 fly secrets set FLY_API_TOKEN=$(fly auth token)

@@ -268,7 +268,7 @@ module.exports = {
 }
 ```
 
-Next pass the `DATABASE_URL` from the env into the Sequelize constructor in `models/index.js` to be able to connect to your fly postgres app and confirm the new seuqelize connection with the async function below
+Next pass the `DATABASE_URL` from the env into the Sequelize constructor in `models/index.js` to be able to connect to your Fly postgres app and confirm the new seuqelize connection with the async function below
 ```javascript
 // Connect to fly postgres app
 let sequelize = new Sequelize(process.env.DATABASE_URL);

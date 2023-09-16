@@ -1,5 +1,5 @@
 Adds registry.fly.io to the docker daemon's authenticated
-registries. This allows you to push images directly to fly from
+registries. This allows you to push images directly to Fly from
 the docker cli.
 
 

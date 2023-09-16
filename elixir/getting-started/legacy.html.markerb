@@ -101,7 +101,7 @@ This ensures we keep any natively compiled Elixir or Node packages from our deve
 
 ## _Launch the App on Fly_
 
-To launch an app on fly, run `fly launch` in the directory with your source code. This creates and configures a fly app for you by inspecting your source code, then prompts you to deploy.
+To launch an app on Fly, run `fly launch` in the directory with your source code. This creates and configures a Fly App for you by inspecting your source code, then prompts you to deploy.
 
 ```cmd
 fly launch

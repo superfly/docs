@@ -78,7 +78,7 @@ We are ready to start working with Fly and that means we need `flyctl`, our CLI 
 
 ## _Launch the app on Fly_
 
-To launch an app on fly, run `flyctl launch` in the directory with your source code. This will create and configure a fly app for you by inspecting your source code, then prompt you to deploy.
+To launch an app on Fly, run `flyctl launch` in the directory with your source code. This will create and configure a Fly App for you by inspecting your source code, then prompt you to deploy.
 
 ```cmd
 flyctl launch
@@ -112,7 +112,7 @@ Now: run 'fly deploy' to deploy your Ruby app.
 
 First, this command scans your source code to determine if it meets the requirements for a deployable Ruby app.
 
-After your source code is scanned and the results are printed, you'll be prompted for an organization. Organizations are a way of sharing application and resources between Fly users. Every fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
+After your source code is scanned and the results are printed, you'll be prompted for an organization. Organizations are a way of sharing application and resources between Fly users. Every Fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
 
 Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region.
 

@@ -67,7 +67,7 @@ flyctl deploy --dockerfile ./Dockerfile.staging
 flyctl deploy ./apps/api
 ```
 
-**Share a multi-stage Dockerfile with several fly apps**
+**Share a multi-stage Dockerfile with several Fly Apps**
 
 ```cmd
 flyctl deploy --config fly.api.toml --build-target api

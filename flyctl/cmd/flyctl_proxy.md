@@ -1,4 +1,4 @@
-Proxies connections to a fly VM through a WireGuard tunnel The current application DNS is the default remote host
+Proxies connections to a Fly VM through a WireGuard tunnel The current application DNS is the default remote host
 
 ## Usage
 ~~~

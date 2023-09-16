@@ -78,7 +78,7 @@ Note: On Apple Silicon (M1) computers, docker runs cross platform builds using q
  => => # qemu: uncaught target signal 11 (Segmentation fault) - core dumped
 ```
 
-You can use fly's remote builder by adding the `--remote-only` flag:
+You can use Fly's remote builder by adding the `--remote-only` flag:
 
 ```cmd
 fly deploy --remote-only

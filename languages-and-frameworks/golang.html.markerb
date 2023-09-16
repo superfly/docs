@@ -48,7 +48,7 @@ func main() {
 }
 ```
 
-The `main` function starts a server that responds with a html page showing the fly region that served the request. The template lives in `./templates/` and is embedded into the binary using the [embed](https://golang.org/pkg/embed/) package in go 1.16+.
+The `main` function starts a server that responds with a html page showing the Fly region that served the request. The template lives in `./templates/` and is embedded into the binary using the [embed](https://golang.org/pkg/embed/) package in go 1.16+.
 
 The template itself, `index.html.tmpl`, is very simple too:
 
@@ -76,7 +76,7 @@ We are ready to start working with Fly and that means we need `flyctl`, our CLI 
 
 ## _Launch the app on Fly_
 
-To launch an app on fly, run `flyctl launch` in the directory with your source code. This will create and configure a fly app for you by inspecting your source code, then prompt you to deploy.
+To launch an app on fly, run `flyctl launch` in the directory with your source code. This will create and configure a Fly app for you by inspecting your source code, then prompt you to deploy.
 
 ```cmd
 flyctl launch
@@ -100,7 +100,7 @@ Deploying hellofly
 
 First, this command scans your source code to determine how to build a deployment image as well as identify any other configuration your app needs, such as secrets and exposed ports.
 
-After your source code is scanned and the results are printed, you'll be prompted for an organization. Organizations are a way of sharing application and resources between Fly users. Every fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
+After your source code is scanned and the results are printed, you'll be prompted for an organization. Organizations are a way of sharing application and resources between Fly users. Every Fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
 
 Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region.
 

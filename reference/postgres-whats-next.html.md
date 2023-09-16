@@ -13,7 +13,7 @@ Fly Postgres is a Fly app with flyctl sugar on top to help you bootstrap your mu
 
 The app template is fully open source. Just fork [fly-apps/postgres-ha](https://github.com/fly-apps/postgres-ha) and add whatever meets your needs. Feel free to contribute it back too. One caveat, though, is that once you fork you won't be able to use `fly pg create` to bootstrap a cluster from your image. You can update your app with your new image using `fly deploy --image` right after, though.
 
-Usual reasons to fork the fly app:
+Usual reasons to fork the Fly App:
 
 * Configuration tuning (pool sizes, connection limits, …)
 * Adding Postgres extensions like Timescale and so on
