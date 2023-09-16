@@ -21,6 +21,6 @@ And upgrade with:
 fly image update -a <postgres-app-name>
 ```
 
-The update won't go ahead if the major Postgres version in your existing Postgres app does not match that in the newest postgres-ha release.
+The update won't go ahead if the major Postgres version in your existing Postgres app does not match that in the [newest postgres-ha release](https://github.com/fly-apps/postgres-ha/releases).
 
 Upgrading Postgres across major versions is more complicated, and right now the way to do this is to provision a new cluster and restore a backup of your database data into it.
