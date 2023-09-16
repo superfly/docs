@@ -13,4 +13,4 @@ postgres://{username}:{password}@{hostname}:{port}/{database}?options
 
 Fly Postgres is an app that belongs to your Fly organization. The `hostname` in this string resolves to an internal IPv6 address that can be reached by any of your apps that live in the same [IPv6 private network](/docs/reference/private-networking/).
 
-You can give this connection string to another Fly app by passing it as a secret, or by [Attaching](/docs/postgres/managing/attach-detach) it.
+To connect this Postgres app to your Fly App, you can give it this connection string [as a secret](/docs/reference/secrets/#setting-secrets) or [attach](docs/postgres/managing/attach-detach) the Postgres app to it.
