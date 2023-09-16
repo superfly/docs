@@ -43,7 +43,7 @@ Detected a Django app
 ...
 ```
 
-The flyctl Django scanner has taken ownership of my launch. Visit our [Django guide](/docs/django/getting-started/) to see how that story will end. (Spoiler: it has a happy ending.)
+The `flyctl` Django scanner has taken ownership of my launch. Visit our [Django guide](/docs/django/getting-started/) to see how that story will end. (Spoiler: it has a happy ending.)
 
 ## Custom launch
 

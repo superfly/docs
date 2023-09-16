@@ -5,7 +5,7 @@ layout: framework_docs
 order: 1
 ---
 
-To connect to your Postgres database from outside your Fly organization, you need a WireGuard connection. However, flyctl on your local machine can connect using [user-mode WireGuard](/blog/our-user-mode-wireguard-year/) magic, without you having to set up your own WireGuard tunnel.
+To connect to your Postgres database from outside your Fly organization, you need a WireGuard connection. However, `flyctl` on your local machine can connect using [user-mode WireGuard](/blog/our-user-mode-wireguard-year/) magic, without you having to set up your own WireGuard tunnel.
 
 For a `psql` shell, you can just use the [`fly postgres connect`](/docs/flyctl/postgres-connect/) command:
 

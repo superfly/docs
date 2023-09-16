@@ -30,7 +30,7 @@ Define a [`processes` section](https://fly.io/docs/reference/configuration/#the-
   cron = "supercronic /app/crontab"
 ```
 
-Once there's a `[processes]` section in your config, flyctl assumes this is a complete list of your processes. If you want an `app` process group alongside others, add it to the config explicitly.
+Once there's a `[processes]` section in your config, `flyctl` assumes this is a complete list of your processes. If you want an `app` process group alongside others, add it to the config explicitly.
 
 Process group commands in a Fly App correspond to CMD in Docker; they don't replace the ENTRYPOINT of your app image, but will supersede CMD.
 
@@ -55,7 +55,7 @@ You can define distinct services for each process that needs to accept connectio
 
 `fly deploy` creates at least one Machine for each process group, and destroys all the Machines that belong to any process group that isn't defined, in your app's `fly.toml` file. It also updates the command, services, and health checks for each `fly deploy`-managed Machine on the app; and creates a new app release.
 
-So on the first deployment (either at the end of `fly launch` or at the first explicit `fly deploy`), flyctl creates and starts at least one Machine for each process group in `fly.toml`. 
+So on the first deployment (either at the end of `fly launch` or at the first explicit `fly deploy`), `flyctl` creates and starts at least one Machine for each process group in `fly.toml`. 
 
 If you add new process groups in an app's `[processes]` block, then the next `fly deploy` spins up at least one new Machine to run each new process.
 

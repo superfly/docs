@@ -11,9 +11,9 @@ order: 20
 
 ## Migrate a V1 App with a flyctl command
 
-flyctl includes a command you can run yourself to migrate an existing V1 App to a V2 App. Find [more detail and discussion](https://community.fly.io/t/fly-migrate-to-v2-apps-with-volumes-support/12316) in our community forum.
+`flyctl` includes a command you can run yourself to migrate an existing V1 App to a V2 App. Find [more detail and discussion](https://community.fly.io/t/fly-migrate-to-v2-apps-with-volumes-support/12316) in our community forum.
 
-1. Make sure you're running the latest flyctl, with `fly version upgrade` (or `brew update && brew upgrade flyctl` on macOS).
+1. Make sure you're running the latest `flyctl`, with `fly version upgrade` (or `brew update && brew upgrade flyctl` on macOS).
 2. Enter your Fly App's source directory. If you don't already have one for this app, create a new directory first; the migration command saves the updated configuration into `fly.toml` locally.
 3. Save a backup copy of the app's old `fly.toml` if there is one.
 4. Run `fly migrate-to-v2 -c ./fly.toml`.

@@ -105,7 +105,7 @@ I can check on my app!
 fly apps open -a testrun
 ```
 
-…and, I get nothing. (Note that I'm appending `-a` to most of my flyctl commands, because we're not using a `fly.toml` for configuration, and a `fly.toml` in the working directory is where flyctl usually gets the app name that it thinks you're implying when you don't specify one.)
+…and, I get nothing. (Note that I'm appending `-a` to most of my `flyctl` commands, because we're not using a `fly.toml` for configuration, and a `fly.toml` in the working directory is where `flyctl` usually gets the app name that it thinks you're implying when you don't specify one.)
 
 ![Browser screenshot saying 'This page isn't working; testrun.fly.dev didn't send any data. ERR_EMPTY_RESPONSE'](images/testrun-err-empty-response.webp)
 
@@ -311,7 +311,7 @@ At this point I've deployed my app, fixed the mistakes I made while deploying it
 
 ## Open a shell on a Machine
 
-We can do this using just flyctl and [user-mode WireGuard](https://fly.io/blog/our-user-mode-wireguard-year/), thanks to a program called [Hallpass](https://fly.io/blog/ssh-and-user-mode-ip-wireguard/) that runs on each Fly.io App VM.
+We can do this using just `flyctl` and [user-mode WireGuard](https://fly.io/blog/our-user-mode-wireguard-year/), thanks to a program called [Hallpass](https://fly.io/blog/ssh-and-user-mode-ip-wireguard/) that runs on each Fly.io App VM.
 
 You can ssh into a specific Machine with `fly ssh console -s`:
 

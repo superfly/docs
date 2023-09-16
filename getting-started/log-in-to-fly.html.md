@@ -6,11 +6,11 @@ nav: firecracker
 toc: false
 ---
 
-If you haven't installed flyctl yet, you'll need it to work with Fly.io. Details on how to do that are available in [Install flyctl](/docs/hands-on/install-flyctl/).
+If you haven't installed `flyctl` yet, you'll need it to work with Fly.io. Details on how to do that are available in [Install flyctl](/docs/hands-on/install-flyctl/).
 
 ## Already got a Fly.io account? Log in.
 
-If you already have a Fly.io account, you can log in with flyctl by running:
+If you already have a Fly.io account, you can log in with `flyctl` by running:
 
 ```cmd
 fly auth login

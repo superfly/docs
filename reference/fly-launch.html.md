@@ -20,7 +20,7 @@ The `fly launch` command can perform several tasks, depending on the project:
 * the first deployment
 
 
-The language-specific scanners built into flyctl via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through Fly Launch or through a more manual process you might begin with `fly apps create`.
+The language-specific scanners built into `flyctl` via `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through Fly Launch or through a more manual process you might begin with `fly apps create`.
 
 ## New Fly App creation
 
@@ -52,7 +52,7 @@ Reference: [App Configuration (fly.toml)](/docs/reference/configuration/)
 
 Before deployment, you might want to create and configure a [storage volume](/docs/apps/volume-storage/) or [Postgres database](/docs/reference/postgres/), or [set app secrets](/docs/reference/secrets/).
 
-Some flyctl scanners will do some or all of this using the API.
+Some `flyctl` scanners will do some or all of this using the API.
 
 ## Deployment
 
@@ -72,14 +72,14 @@ If all goes well, one of several things will happen when you run `fly launch` in
 
 1. If the `--image` flag was used, the app will be configured to use a preexisting Docker image on deployment and no further configuration will be done.
 1. If the `--dockerfile` flag was used, the app will be configured to use the specified Dockerfile to build the image and no further configuration will be done.
-2. Otherwise, flyctl scans the local working directory.
+2. Otherwise, `flyctl` scans the local working directory.
    1. If it detects a project of a kind it has a full-service launcher for, it will automatically configure and (if you want) deploy the app.
-   2. If flyctl doesn't have a launcher that can configure the whole app, but does find a Dockerfile, it will offer to deploy it using that Dockerfile for the build.
-3. If none of the above happens, flyctl will register a new app with a name and organization, and download you a default `fly.toml` to work with. Deployment can't happen without further configuration.
+   2. If `flyctl` doesn't have a launcher that can configure the whole app, but does find a Dockerfile, it will offer to deploy it using that Dockerfile for the build.
+3. If none of the above happens, `flyctl` will register a new app with a name and organization, and download you a default `fly.toml` to work with. Deployment can't happen without further configuration.
 
 In all of these cases, `fly launch` downloads the final app config into a `fly.toml` in the working directory. Flyctl will look for a `fly.toml` from which to set the app's configuration on each new deployment.
 
-Once an app is launched, you can make changes to it and provision further resources through `fly.toml` and flyctl commands.
+Once an app is launched, you can make changes to it and provision further resources through `fly.toml` and `flyctl` commands.
 
 ## More things the scanners do
 
@@ -149,7 +149,7 @@ See https://fly.io/plans to set up a plan.
 ? Choose a region for deployment: Toronto, Canada (yyz)
 ```
 
-This is the region where flyctl will start Machines for this app if not otherwise specified. The first deployment will put its Machine(s) in that region.
+This is the region where `flyctl` will start Machines for this app if not otherwise specified. The first deployment will put its Machine(s) in that region.
 
 ```
 Created app 'testrun' in organization 'personal'

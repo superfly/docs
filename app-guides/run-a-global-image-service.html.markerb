@@ -138,7 +138,7 @@ Whichever route you take you will be signed-up, signed-in and returned to your c
 
 ### Creating a `fly.toml` File
 
-The flyctl app helps you handle the entire lifecycle of your Fly Global application. That all starts with creating the `fly.toml` file which will control how your application is configured when deployed. To do so, run:
+The `flyctl` app helps you handle the entire lifecycle of your Fly Global application. That all starts with creating the `fly.toml` file which will control how your application is configured when deployed. To do so, run:
 
 ```cmd
 flyctl apps create
@@ -215,7 +215,7 @@ For deployment, we go back to flyctl.
 flyctl deploy
 ```
 
-Flyctl will find the application name from the `fly.toml` file automatically and start the deployment process. There'll be a fair amount of output as flyctl gets Docker to assemble the image, create a release of the image and then deploy and check it's running. When it is complete you'll see something like:
+Flyctl will find the application name from the `fly.toml` file automatically and start the deployment process. There'll be a fair amount of output as `flyctl` gets Docker to assemble the image, create a release of the image and then deploy and check it's running. When it is complete you'll see something like:
 
 ```output
 ...

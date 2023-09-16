@@ -13,7 +13,7 @@ If the error you get isn’t obvious or specific, then try these basic steps fir
 
 ### Update flyctl
 
-By default, flyctl (the Fly CLI), [updates automatically](https://community.fly.io/t/flyctl-versions-autoupdating-and-the-cli-apocalypse/13794).
+By default, `flyctl` (the Fly CLI), [updates automatically](https://community.fly.io/t/flyctl-versions-autoupdating-and-the-cli-apocalypse/13794).
 
 But if you've disabled automatic updates, then you should update flyctl:
 
