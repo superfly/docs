@@ -440,7 +440,7 @@ Configure the TLS versions and ALPN protocols that Fly's edge will use to termin
   [[services.ports]]
     handlers = ["tls", "http"]
     port = "443"
-    tls_options = { "alpn" = ["h2", "http/1.1"], "versions" = ["TLSv1.2", "TLSv1.3"] }
+    tls_options = { alpn = ["h2", "http/1.1"], versions = ["TLSv1.2", "TLSv1.3"] }
 ```
 
 * `alpn`: Array of strings indicating how to handle ALPN negotiations with clients.
@@ -455,7 +455,7 @@ One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS 
   [[services.ports]]
     handlers = ["tls"]
     port = "443"
-    tls_options = { "alpn" = ["h2"] }
+    tls_options = { alpn = ["h2"] }
 ```
 
 ### `services.concurrency`
