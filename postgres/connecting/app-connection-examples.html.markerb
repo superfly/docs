@@ -5,7 +5,7 @@ layout: framework_docs
 order: 4
 ---
 
-These examples demonstrate connections from within the same Fly.io internal IPv6 private network . To adapt them for external connections, substitute the internal hostname for one that's reachable over the public Internet.
+These examples demonstrate connections from within the same Fly.io internal IPv6 private network. To adapt them for external connections, substitute the internal hostname for one that's reachable over the public Internet.
 
 ## psql
 
