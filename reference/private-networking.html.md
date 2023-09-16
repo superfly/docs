@@ -6,7 +6,7 @@ nav: firecracker
 redirect_from: /docs/reference/privatenetwork/
 ---
 
-Fly apps are connected by a mesh of WireGuard tunnels using IPV6.
+Fly apps are connected by a mesh of WireGuard tunnels using IPv6.
 
 Applications within the same organization are assigned special addresses ("6PN addresses") tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly platform won't forward between different 6PN networks.
 
