@@ -9,7 +9,7 @@ nav: firecracker
   <img src="/static/images/celebrate.webp" srcset="/static/images/celebrate@2x.webp 2x" alt="The Fly Balloon celebrating with confetti" class="w:11">
 </figure>
 
-Welcome to Fly.io! Thanks for joining us.
+Thanks for signing up for Fly.io!
 
 ## Where to start
 

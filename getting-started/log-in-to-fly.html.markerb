@@ -1,5 +1,5 @@
 ---
-title: Sign up and log in to Fly.io
+title: Sign up and sign in to Fly.io
 layout: docs
 sitemap: false
 nav: firecracker
@@ -10,6 +10,6 @@ toc: false
 
 <%= partial "/docs/partials/sign_up" %>
 
-## Already have a Fly.io account? Log in
+## Already have a Fly.io account? Sign in
 
 <%= partial "/docs/partials/sign_in" %>
