@@ -48,7 +48,7 @@ Learn more about using volumes:
 
 ## Reference: Working with volumes using flyctl
 
-This section is a reference for working with volumes using the [`fly volumes`](/docs/flyctl/volumes/) command. To add a volume to an existing app or launch a new app with a volume refer to [Add Volume Storage](/docs/apps/volume-storage/).
+This section is a reference for working with volumes using the [`fly volumes`](/docs/flyctl/volumes/) command. To add a volume to an existing app or launch a new app with a volume, refer to [Add Volume Storage](/docs/apps/volume-storage/).
 
 <div class="callout">`fly volumes` is aliased to `fly volume` and `fly vol`.</div>
 
