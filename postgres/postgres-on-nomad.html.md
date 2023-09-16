@@ -250,7 +250,7 @@ end
 
 Rails apps automatically connect to the database specified in the `DATABASE_URL` environment variable.
 
-You can set this variable manually with `flyctl secrets set`
+You can set this variable manually with `flyctl secrets set`:
 ```bash
 flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.internal:5432/yourdb
 ```
@@ -511,7 +511,7 @@ Fly Postgres apps run several processes inside each VM, including postgres, stol
 
 Fly Postgres apps export metrics to prometheus which can be seen in the Metrics UI or queried from grafana.
 
-The available metrics are
+The available metrics are:
 ```
 pg_stat_activity_count
 pg_stat_activity_max_tx_duration
