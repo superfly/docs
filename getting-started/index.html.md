@@ -11,7 +11,7 @@ nav: firecracker
 
 This section of the Fly.io docs is all about getting you up and running quickly.
 
-Follow [Hands-on](/docs/hands-on/) which takes you through creating an account, installing `flyctl`, the Fly.io command-line tool, and launching a simple demo app.
+Follow [Hands-on](/docs/hands-on/) which takes you through creating an account, installing `flyctl`, the Fly.io CLI, and launching a simple demo app.
 
 If you'd rather jump right in, try [Speedrun](/docs/speedrun/) to launch your own app fast.
 
