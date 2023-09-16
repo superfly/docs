@@ -6,7 +6,7 @@ redirect_from: /docs/reference/postgres-on-nomad/
 order: 0
 ---
 
-<div class="callout" data-render="markdown">This document applies to all Fly Postgres clusters created using flyctl versions < v0.0.412. These run on our [Apps V1](https://fly.io/docs/reference/apps/) architecture (orchestrated by Nomad). Docs for newer Fly Postgres clusters live at **[Fly Postgres](/docs/postgres/)**</div>
+<div class="callout" data-render="markdown">This document applies to all Fly Postgres clusters created using flyctl versions < `v0.0.412`. These run on our [Apps V1](https://fly.io/docs/reference/apps/) architecture (orchestrated by Nomad). Docs for newer Fly Postgres clusters live at **[Fly Postgres](/docs/postgres/)**</div>
 
 [Postgres](https://www.postgresql.org/), or PostgreSQL, is a powerful open-source object relational database system.
 

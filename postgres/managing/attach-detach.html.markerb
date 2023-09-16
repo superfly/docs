@@ -19,7 +19,7 @@ flyctl postgres attach --app <app-name> <postgres-app-name>
 
 When you attach an app to Postgres, a number of things happen:
 
-* A new database and user are created in the Postgres App. If the attached app is named "myapp", both the database and the user are named "myapp" too.
+* A new database and user are created in the Postgres App. If the attached app is named `myapp`, both the database and the user are named `myapp` too.
 * The user is allocated a generated password.
 * The consuming app and the Postgres app are marked as attached in the great floating ledger in the Fly.io cloud. The main value of this is in order to be able to use `fly pg detach` later.
 

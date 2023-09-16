@@ -490,7 +490,7 @@ To test if this connection is working or not, a simple `php artisan cache:clear`
 
 Want a fully-managed Redis Fly App? Try [Upstash Redis](https://upstash.com/)! To set up, you can follow our-in-depth guide [here](/docs/reference/redis/) 
 
-Once you've configured the necessary details through the flyctl prompts, and the app deployment completes, you should get a summary of the Redis cluster you've just deployed, like so:
+Once you've configured the necessary details through the `flyctl` prompts, and the app deployment completes, you should get a summary of the Redis cluster you've just deployed, like so:
 ```output
 Your Upstash Redis database blue-brook-3843 is ready.
 Apps in the personal org can connect to at redis://default:<redacted>@fly-blue-brook-3843.upstash.io
@@ -544,7 +544,7 @@ If all goes well here, you should be good to go!
 ### Setup SQLite in the Storage Folder
 Since SQLite is "embeddable", you no longer have to setup a separate Fly App for it. You simply configure your Laravel Fly App with one:
 
-1. Configure SQLite connection in your fly.toml file:
+1. Configure SQLite connection in your `fly.toml` file:
 
     ```toml
     [env]

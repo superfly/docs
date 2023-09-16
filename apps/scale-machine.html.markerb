@@ -145,7 +145,7 @@ app     3       shared  2       4096 MB nrt,yyz(2)
 ```
 
 
-If you try to set an incompatible CPU/RAM combination through `fly scale memory`, flyctl will let you know. There's a list of allowed CPU/RAM combinations and their prices on [our Pricing page](/docs/about/pricing/). 
+If you try to set an incompatible CPU/RAM combination through `fly scale memory`, `flyctl` will let you know. There's a list of allowed CPU/RAM combinations and their prices on [our Pricing page](/docs/about/pricing/). 
 
 
 ## Scale by process group
@@ -209,4 +209,4 @@ fly machine update --memory 1024 21781973f03e89
 fly machine update --cpus 2 21781973f03e89
 ```
 
-Again, if you try to set an incompatible CPU/RAM combination through `fly machine update --memory` or `fly machine update --cpus`, flyctl will let you know.
+Again, if you try to set an incompatible CPU/RAM combination through `fly machine update --memory` or `fly machine update --cpus`, `flyctl` will let you know.

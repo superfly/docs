@@ -5,7 +5,7 @@ sitemap: false
 nav: flyctl
 ---
 
-The flyctl command has a number of features that enable it to be seamlessly integrated with scripted and automated environments such as CI.
+The `flyctl` command has a number of features that enable it to be seamlessly integrated with scripted and automated environments such as CI.
 
 ## Environment Variables
 
@@ -14,5 +14,5 @@ The flyctl command has a number of features that enable it to be seamlessly inte
 
 ## JSON output
 
-Most flyctl commands can produce JSON output using the `--json` or `-j` flag. The JSON may be streamed messages in JSON-NL format or a single JSON object, depending on what is being requested.
+Most `flyctl` commands can produce JSON output using the `--json` or `-j` flag. The JSON may be streamed messages in JSON-NL format or a single JSON object, depending on what is being requested.
 

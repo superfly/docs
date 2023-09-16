@@ -43,7 +43,7 @@ Next, you'll be prompted to select a [region](/docs/reference/regions/) to deplo
 ? Choose a region for deployment: Chicago, Illinois (US) (ord)
 ```
 
-At this point, flyctl creates a shell of an app for you and writes a starter configuration to a `fly.toml` file. 
+At this point, `flyctl` creates a shell of an app for you and writes a starter configuration to a `fly.toml` file. 
 
 <div class="callout">
 If you've just signed up, then you'll also be prompted for credit card payment information. Refer to [How We Use Credit Cards](/docs/about/credit-cards/) and [Pricing](/docs/about/pricing) for more details.
@@ -56,7 +56,7 @@ flyctl will ask if you need a Postgres or Redis database. You can enter "No" for
 ? Would you like to set up an Upstash Redis database now? No
 ```
 
-Finally, flyctl will ask you if you would like to deploy.
+Finally, `flyctl` will ask you if you would like to deploy.
 
 <div class="callout">
 If you're deploying an app that doesn't use `internal_port = 8080`, then enter "No", and edit the `fly.toml` file.
@@ -69,7 +69,7 @@ If you're deploying an app that doesn't use `internal_port = 8080`, then enter "
 ...
 ```
 
-Whether you deploy right away or not, flyctl will download a `fly.toml` configuration file to the working directory, for use on the next deployment.
+Whether you deploy right away or not, `flyctl` will download a `fly.toml` configuration file to the working directory, for use on the next deployment.
 
 ```toml
 
@@ -84,7 +84,7 @@ primary_region = "ord"
   ...
 ```
 
-When you run a command, flyctl always checks to see if `fly.toml` exists in the current directory, and then checks the `app` value at the start of the file. Many commands use this app name to determine which Fly App to apply to by default. You can also see how the app will be built (from a pre-built Docker image, in this case), that internal port setting, and further configuration to be applied to the app when it deploys.
+When you run a command, `flyctl` always checks to see if `fly.toml` exists in the current directory, and then checks the `app` value at the start of the file. Many commands use this app name to determine which Fly App to apply to by default. You can also see how the app will be built (from a pre-built Docker image, in this case), that internal port setting, and further configuration to be applied to the app when it deploys.
 
 If you stopped to customize your `fly.toml`, you'll want to deploy your app now. At the command line, just run:
 
@@ -92,6 +92,6 @@ If you stopped to customize your `fly.toml`, you'll want to deploy your app now.
 fly deploy
 ```
 
-The `fly deploy` command gets the app name from the `fly.toml` file. Then flyctl will start the process of deploying your application to the Fly Platform and return you to the command line when it's done.
+The `fly deploy` command gets the app name from the `fly.toml` file. Then `flyctl` will start the process of deploying your application to the Fly Platform and return you to the command line when it's done.
 
 [Next: Check your app's status](/docs/hands-on/check-app-status/)

@@ -22,7 +22,7 @@ See all possible machine states [in the table below](#machine-states).
 
 The Machines API endpoint requires a connection to your Fly private network - either by running on a VM inside the network, or via a WireGuard VPN, or using `fly proxy`.
 
-This guide assumes that you have flyctl and cURL installed, and have authenticated to the Fly.io platform.
+This guide assumes that you have `flyctl` and cURL installed, and have authenticated to the Fly.io platform.
 
 ### Connecting via WireGuard
 
@@ -90,7 +90,7 @@ Machines must be associated with an app. App names must be unique.
 ### Allocate an IP address for global request routing
 
 If you intend for machines to be accessible to the internet, you'll need to allocate an IP address to the application. Currently
-this is done using flyctl or the [Fly.io GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](https://fly.io/docs/reference/services/#anycast). Read more about this in [the Networking section](https://fly.io/docs/reference/services/#notes-on-networking).
+this is done using `flyctl` or the [Fly.io GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](https://fly.io/docs/reference/services/#anycast). Read more about this in [the Networking section](https://fly.io/docs/reference/services/#notes-on-networking).
 
 Example:
 

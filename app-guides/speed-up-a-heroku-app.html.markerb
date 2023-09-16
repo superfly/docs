@@ -35,7 +35,7 @@ Your three step journey starts at [https://fly.io/heroku](https://fly.io/heroku)
 
 ## _Install Flyctl_
 
-You'll need flyctl to interact with Fly. It's a command-line application which is quick to install.
+You'll need `flyctl` to interact with Fly. It's a command-line application which is quick to install.
 
 If you are on a Mac and have Homebrew installed, run:
 

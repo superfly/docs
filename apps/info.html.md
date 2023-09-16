@@ -39,7 +39,7 @@ ID              STATE   REGION  HEALTH CHECKS           IMAGE                   
 06e82d43ad1587  started yyz     1 total, 1 passing      testrun:deployment-01GQ0HKV6TDT7DX0G50MT50FZD   2023-01-17T17:54:04Z    2023-01-17T21:42:33Z
 ```
 
-As with many flyctl commands, if you leave off the `-a` flag, `fly status` will infer the app name from the `fly.toml` file in the working directory, if there is one.
+As with many `flyctl` commands, if you leave off the `-a` flag, `fly status` will infer the app name from the `fly.toml` file in the working directory, if there is one.
 
 `fly machine list` yields a different set of information for each Machine on a [V2 App](/docs/reference/apps/), including the Machine's [internal IPv6 address](/docs/reference/private-networking/):
 

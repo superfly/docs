@@ -73,7 +73,7 @@ If a process group doesn't have services defined, then a standby Machine is auto
 
 * you deploy an app for the first time using `fly launch` or `fly deploy`,
 * you redeploy an app using `fly deploy` after scaling down to zero, or
-* you add a new process group in fly.toml and then run `fly deploy`
+* you add a new process group in `fly.toml` and then run `fly deploy`
 
 The standby Machine doesn't consume resources or start up until it's needed.
 
