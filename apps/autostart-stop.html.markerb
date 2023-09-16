@@ -111,7 +111,7 @@ If you only need a certain number of your app's Machines to run continuously, th
 
 ## Stop a Machine by terminating its main process
 
-Setting your app to automatically stop when there's excess capacity using `auto_stop = true` is a substitute for when your app doesn't shut itself down automatically after a period of inactivity. If you want a custom shut-down process for your app, then you can code your app to exit from within when idle.
+Setting your app to automatically stop when there's excess capacity using `auto_stop_machines = true` is a substitute for when your app doesn't shut itself down automatically after a period of inactivity. If you want a custom shutdown process for your app, then you can code your app to exit from within when idle.
 
 Here are some examples:
 

@@ -34,7 +34,7 @@ For the following frameworks/runtimes, we'll auto-instrument your app at launch 
 
 ### Ruby on Rails
 
-If `flyctl launch` detects you app as a Rails app, we will:
+If `flyctl launch` detects your app as a Rails app, we will:
 
 * Install the [Ruby Sentry SDK](https://github.com/getsentry/sentry-ruby) rubygem
 * Add an initializer for automatic exception handling and performance tracing
@@ -44,7 +44,7 @@ Sentry can also instrument specific libraries like Sidekiq, Delayed Job, Resque,
 
 ### Other runtimes and frameworks
 
-Learn how to setup your application with the Sentry SDK for your runtime in their extensive [documentation](https://docs.sentry.io/).
+Learn how to set up your application with the Sentry SDK for your runtime in their extensive [documentation](https://docs.sentry.io/).
 
 ## Open the Sentry project dashboard for an application
 

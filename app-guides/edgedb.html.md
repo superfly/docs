@@ -17,7 +17,7 @@ Create a Postgres app. You'll need to replace `mypostgres` with a unique name of
 ```cmd
 flyctl postgres create \
   --name mypostgres \
-  --vm-size dedicated-cpu-1x \
+  --vm-size performance-1x \
   --volume-size 10 \
   --initial-cluster-size 1
 ```
