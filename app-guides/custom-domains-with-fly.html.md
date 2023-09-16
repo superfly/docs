@@ -143,7 +143,7 @@ Finally, we should point out the other `flyctl certs` commands which you will wa
 
 ## Automating the certificate process
 
-To illustrate how to automate the certificates API, we are going to show the `flyctl` command line and the equivalent GraphQL request, wrapped in a compact easy-to-read Node application from our [fly-examples/hostnamesapi](https://github.com/fly-apps/hostnamesapi) repository.
+To illustrate how to automate the certificates API, we are going to show the `flyctl` command line and the equivalent GraphQL request, wrapped in a compact easy-to-read Node application from our [fly-apps/hostnamesapi](https://github.com/fly-apps/hostnamesapi) repository.
 
 ### GraphQL API Notes
 

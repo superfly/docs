@@ -98,7 +98,7 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 |`_instances.internal`|none|IDs, apps, addresses, and regions<br>of all running instances<br>comma separated|
 |`<value>.<key>.kv._metadata.<appname>.internal`|IPv6 of machines with matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
 
-Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
+Examples of retrieving this information are in the [fly-apps/privatenet](https://github.com/fly-apps/privatenet) repository.
 
 ## Flycast - Private Load Balancing
 
