@@ -27,7 +27,7 @@ From this information you can get the scale of the VM (both `Memory` and `CPUs`)
 
 ## Provisioned Volume Size
 
-You can check the sizes of all the storage volumes provisioned for your Postgres App with
+You can check the sizes of all the storage volumes provisioned for your Postgres App with:
 
 ```cmd
 fly vol list --app <pg-app-name>
@@ -35,7 +35,7 @@ fly vol list --app <pg-app-name>
 
 ## Public Anycast IP Addresses
 
-If you've configured your Postgres cluster to be reachable by external services, you'll have provisioned at least one public anycast IP address. You can check these with
+If you've configured your Postgres cluster to be reachable by external services, you'll have provisioned at least one public anycast IP address. You can check these with:
 
 ```cmd
 fly ips list --app <pg-app-name>
