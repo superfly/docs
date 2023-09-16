@@ -15,7 +15,7 @@ The good news is that if you're not comfortable managing your own Postgres datab
 
 ## Provision and deploy a Postgres app to Fly
 
-Let's create a Postgres database on Fly.io. First we run a command to provision a database.
+Let's create a Postgres database on Fly.io. First, we run a command to provision a database:
 
 ```cmd
 fly pg create --name myapp-db
