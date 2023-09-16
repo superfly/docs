@@ -278,7 +278,7 @@ end
 
 ## Library support
 
-We would like to build libraries to make this seamless for most application frameworks and runtimes. If you have a particular app you'd like to distribute with PostgreSQL, [post in our community forums](https://community.fly.io/t/multi-region-database-guide/1600) and we'll write some code for you.
+We would like to build libraries to make this seamless for most application frameworks and runtimes. If you have a particular app you'd like to distribute with PostgreSQL, [post in our community forum](https://community.fly.io/t/multi-region-database-guide/1600) and we'll write some code for you.
 
 ## Consistency model
 
@@ -292,7 +292,7 @@ Requests to the primary region are strongly consistent. When you use the replay 
 
 Most apps accept a `POST` or `PUT`, do a bunch of writes, and then redirect the user to a `GET` request. In most cases, the database will replicate the changes before the user makes the second request. But not always!
 
-Most read heavy applications aren't especially sensitive to stale data on subsequent requests. A lagging read replica might result in an out of date view for users, but this might be reasonable for your use case.
+Most read heavy applications aren't especially sensitive to stale data on subsequent requests. A lagging read replica might result in an out-of-date view for users, but this might be reasonable for your use case.
 
 If your app is sensitive to this (meaning, you never, under any circumstances want to show users stale data), you should be careful using read replicas.
 
