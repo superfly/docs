@@ -225,7 +225,7 @@ you can always change your mind and add it later. Check out the
 
 If you're using LiteFS Cloud for backups, you'll need to provide a LiteFS Cloud
 API authentication token, which you got when you created the cluster (or you can
-create a new one from [the LiteFS Cloud section](https://fly.io/dashboard/personal/litefs-cloud) in Fly.io
+create a new one from [the LiteFS Cloud section](https://fly.io/dashboard/personal/litefs) in Fly.io
 dashboard).
 
 This token should be made available to LiteFS via the `LITEFS_CLOUD_TOKEN` environment
