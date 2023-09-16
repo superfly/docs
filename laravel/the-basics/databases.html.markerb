@@ -544,7 +544,7 @@ If all goes well here, you should be good to go!
 ### Setup SQLite in the Storage Folder
 Since SQLite is "embeddable", you no longer have to setup a separate Fly App for it. You simply configure your Laravel Fly App with one:
 
-1. Configure SQLite connection in your fly.toml file:
+1. Configure SQLite connection in your `fly.toml` file:
 
     ```toml
     [env]

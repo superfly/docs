@@ -118,7 +118,7 @@ The general flow for setting this up is:
 3. Deploy your app
 4. Access the services on the private IP from the target organization network
 
-**Note: If you have a public IP address assigned to your app, services in fly.toml will be exposed to the public internet. Verify this with `fly ips list`.**
+**Note: If you have a public IP address assigned to your app, services in `fly.toml` will be exposed to the public internet. Verify this with `fly ips list`.**
 
 ### Assigning a Flycast address
 
