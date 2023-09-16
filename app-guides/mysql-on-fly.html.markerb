@@ -42,7 +42,7 @@ Let's create a volume straight-away. If you don't create a volume, you'll lose a
 
 ```bash
 # Create a volume named "mysqldata" within our app "my-mysql"
-fly volumes create mysqldata --size 10 # gb
+fly volumes create mysqldata --size 10 # GB
 ```
 
 We also need to set some secrets required by the [MySQL container](https://hub.docker.com/_/mysql):

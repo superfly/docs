@@ -18,9 +18,9 @@ Fly Postgres is a regular Fly.io app, with an automated creation process and som
 
 You can use Fly.io's [free resource allowance](https://fly.io/docs/about/pricing/#free-allowances) in one place, or split it up. The following Postgres configurations fit within the free volume usage limit:
 
-* single node, 3gb volume (single database)
-* 2 x 1gb volumes (database in two regions, or a primary and replica in the same region)
-* 3 x 1gb volumes (database in three regions)
+* single node, 3GB volume (single database)
+* 2 x 1GB volumes (database in two regions, or a primary and replica in the same region)
+* 3 x 1GB volumes (database in three regions)
 
 If you want to keep your whole project free, save some compute allowance for your other apps.
 
