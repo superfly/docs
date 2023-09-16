@@ -657,7 +657,7 @@ When `statics` are set, requests under `url_prefix` that are present as files in
 ```
 Each `[[statics]]` block maps a URL prefix to a path inside your container. You can have up to 10 mappings in an application.
 
-The "guest path" --- the path inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
+The `guest_path` --- the path inside your container where the files to serve are located --- can overlap with other static mappings; the `url_prefix` should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
 
 ### Caveats
 
