@@ -38,11 +38,21 @@ and deploy the application.
 
 ### Create an application
 
-Start by verifying that you have Rails version 7 installed, and then by
-creating a new application:
+You will need Ruby and Rails installed on your machine. If you do not have them
+installed, you can follow the instructions at
+[https://www.ruby-lang.org/en/documentation/installation/](https://www.ruby-lang.org/en/documentation/installation/)
+and
+[https://guides.rubyonrails.org/getting_started.html](https://guides.rubyonrails.org/getting_started.html).
+
+To verify that Rails was installed correctly, run the following command:
 
 ``` shell
 $ rails --version
+```
+
+Then create a new application and change into its directory:
+
+``` shell
 $ rails new list
 $ cd list
 ```
