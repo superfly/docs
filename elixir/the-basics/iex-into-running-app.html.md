@@ -39,7 +39,7 @@ You have a live IEx shell into your application!
 </div>
 
 <div class="callout">
-The `--pty` flag tells the SSH server to run the command in a pseudo-terminal. You will generally need this only when running interactive commands, like IEx.
+The `--pty` flag tells the SSH server to run the command in a [pseudo-terminal](https://en.wikipedia.org/wiki/Pseudoterminal). You will generally need this only when running interactive commands, like IEx.
 </div>
 
 ## Creating a Shell Script for Convenience
