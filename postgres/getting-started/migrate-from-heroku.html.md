@@ -24,7 +24,7 @@ fly pg create --name myapp-db
 ? Select Organization: Brad Gessler (personal)
 ? Select regions: San Jose, California (US) (sjc)
 ? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
-Creating Postgres cluster myapp-db in organization personal
+Creating postgres cluster myapp-db in organization personal
 Creating app...
 Setting secrets...
 Provisioning 1 of 1 machines with image flyio/postgres-flex:15.2
