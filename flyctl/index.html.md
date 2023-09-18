@@ -1,5 +1,5 @@
 ---
-title: Introducing Flyctl - The Fly CLI
+title: Introducing flyctl - The Fly.io CLI
 layout: docs
 sitemap: false
 edit: false
@@ -22,14 +22,14 @@ If you are doing anything with Fly.io, you'll need it. We have [flyctl installat
 * Manage App Secrets: [fly secrets](/docs/flyctl/secrets/)
 * View your App: [fly apps open](/docs/flyctl/open/)
 
-## Viewing and Monitoring an App
+## Viewing and monitoring an App
 
 * Show App Logs: [fly logs](/docs/flyctl/logs/)
 * Show App Deployment Status: [fly status](/docs/flyctl/status/)
 * Show App History: [fly history](/docs/flyctl/history/)
 * Show App Releases: [fly releases](/docs/flyctl/releases/)
 
-## Configuring Networking and Certificates
+## Configuring networking and certificates
 
 * Assign IP Addresses: [fly ips](/docs/flyctl/ips/)
 * Create Certificates: [fly certs](/docs/flyctl/certs/)
