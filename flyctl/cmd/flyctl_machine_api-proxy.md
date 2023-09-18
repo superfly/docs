@@ -1,4 +1,4 @@
-Establish a proxy to the Machine API through a WireGuard tunnel for local connections
+Establish a proxy to the Machine API through a Wireguard tunnel for local connections
 
 
 ## Usage

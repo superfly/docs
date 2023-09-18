@@ -22,5 +22,5 @@ flyctl agent stop [flags]
 
 ## See Also
 
-* [flyctl agent](/docs/flyctl/agent/)	 - Commands that manage the Fly agent, a background process that manages flyctl WireGuard connections
+* [flyctl agent](/docs/flyctl/agent/)	 - Commands that manage the Fly agent, a background process that manages flyctl wireguard connections
 

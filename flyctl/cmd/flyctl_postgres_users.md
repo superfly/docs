@@ -1,4 +1,4 @@
-Manage users in a Postgres cluster
+Manage users in a postgres cluster
 
 
 ## Usage

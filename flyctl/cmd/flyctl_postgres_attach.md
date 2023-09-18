@@ -1,4 +1,4 @@
-Attach a Postgres cluster to an app
+Attach a postgres cluster to an app
 
 
 ## Usage
