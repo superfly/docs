@@ -5,11 +5,11 @@ objective: Notes and configurations on connecting with the "in-memory data store
 order: 3
 --- 
 
-[Redis](https://redis.io/) is a NoSQL database popularly used for cache storage, as a message broker, and even as primary database. You can run your own Redis Fly App, or get one running and managed through Upstash Redis.
+[Redis](https://redis.io/) is a NoSQL database popularly used for cache storage, as a message broker, and even as a primary database. You can run your own Redis Fly App, or get one running and managed through Upstash Redis.
 
 ## _Laravel and Redis Fly App_
 
-You can setup your own Redis Fly App either through Fly.io's Redis Docker Image, or through Redis' Official Docker Image.
+You can set up your own Redis Fly App either through Fly.io's Redis Docker Image, or through Redis' Official Docker Image.
 
 ### _Fly.io Redis Docker Image_
 
@@ -63,7 +63,7 @@ You can setup your own Redis Fly App either through Fly.io's Redis Docker Image,
     ```
 
 ### _Redis Official Docker Image_
-If you would like to use [Redis' official docker image](https://hub.docker.com/_/redis) to setup your Redis Fly App, the steps to get up and running are almost identical to the previous guide. There is just one minor revision on the image pulled and an additional step to set the Redis Fly App's password.
+If you would like to use [Redis' official docker image](https://hub.docker.com/_/redis) to set up your Redis Fly App, the steps to get up and running are almost identical to the previous guide. There is just one minor revision on the image pulled and an additional step to set the Redis Fly App's password.
 
 1.  Follow the steps [above](/docs/laravel/the-basics/databases#setup-using-the-fly-io-redis-docker-image), with a revision to the value passed for `--image`
 
@@ -117,7 +117,7 @@ Now that you have your Redis Fly App running, the next step is to connect it wit
       CACHE_DRIVER= "redis"
     ```
 
-4.  Make sure you set your Laravel Fly App's `REDIS_PASSWORD` through the `flyctl secrets` command:
+4.  Make sure you set your Laravel Fly App's `REDIS_PASSWORD` through the `fly secrets` command:
 
     ```cmd
     fly secrets set REDIS_PASSWORD=<redacted>
@@ -133,7 +133,7 @@ That's it! Your Laravel and Redis Fly Apps should now be connected.
 
 
 ### _Connect from a local environment_
-The simplest way to connect your local Laravel application to a Redis Fly App is to use `flyctl proxy`:
+The simplest way to connect your local Laravel application to a Redis Fly App is to use `fly proxy`:
 
 1.  Open your Redis Fly App's local directory
 
@@ -141,7 +141,7 @@ The simplest way to connect your local Laravel application to a Redis Fly App is
     cd off-redis
     ```
 
-2. Then run the `flyctl proxy` for port 6379 or whichever REDIS_PORT you have configured:
+2. Then run the `fly proxy` for port 6379 or whichever REDIS_PORT you have configured:
 
     ```cmd
     fly proxy 6379
@@ -155,7 +155,7 @@ The simplest way to connect your local Laravel application to a Redis Fly App is
     REDIS_PASSWORD=<redacted>
     REDIS_PORT=6379
     ```
-    Make sure the REDIS_PORT in your .env configuration matches the port used in `flyctl proxy`
+    Make sure the REDIS_PORT in your .env configuration matches the port used in `fly proxy`
 
     That's it! Your local Laravel application should now be connected with your Redis Fly App.
 
