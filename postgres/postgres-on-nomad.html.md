@@ -63,7 +63,7 @@ During this process, you get to choose from several preset resource configuratio
 The "Production" options give you a two-node cluster in a leader-replica configuration. A single-node "Development" instance can readily be scaled and [expanded to more regions](https://fly.io/docs/getting-started/multi-region-databases/).
 
 ```
-Creating Postgres cluster c-pg-test in organization personal
+Creating postgres cluster c-pg-test in organization personal
 Postgres cluster c-pg-test created
   Username:    postgres
   Password:    8a93cbc09798f3805056333072bd2b35be7eb634b13a05c3

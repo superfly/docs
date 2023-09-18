@@ -24,7 +24,7 @@ flyctl postgres create \
 ```output
 Automatically selected personal organization: <Your Name>
 ? Select region: sea (Seattle, Washington (US))
-Creating Postgres cluster mypostgres in organization personal
+Creating postgres cluster mypostgres in organization personal
 Postgres cluster mypostgres created
   Username:    postgres
   Password:    <generated passworD>

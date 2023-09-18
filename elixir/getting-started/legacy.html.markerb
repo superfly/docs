@@ -258,7 +258,7 @@ Automatically selected personal organization: Mark Ericksen
 ? Select region: sea (Seattle, Washington (US))
 ? Select VM size: shared-cpu-1x - 256
 ? Volume size (GB): 10
-Creating Postgres cluster hello-elixir-db in organization personal
+Creating postgres cluster hello-elixir-db in organization personal
 Postgres cluster hello-elixir-db created
   Username:    <USER>
   Password:    <PASSWORD>

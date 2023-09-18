@@ -6,7 +6,7 @@ flyctl [flags]
 ~~~
 
 ## Available Commands
-* [agent](/docs/flyctl/agent/)	 - Commands that manage the Fly agent, a background process that manages flyctl Wireguard connections
+* [agent](/docs/flyctl/agent/)	 - Commands that manage the Fly agent, a background process that manages flyctl wireguard connections
 * [apps](/docs/flyctl/apps/)	 - Manage apps
 * [auth](/docs/flyctl/auth/)	 - Manage authentication
 * [autoscale](/docs/flyctl/autoscale/)	 - V1 APPS ONLY: Autoscaling app resources
@@ -50,7 +50,7 @@ flyctl [flags]
 * [version](/docs/flyctl/version/)	 - Show version information for the flyctl command
 * [vm](/docs/flyctl/vm/)	 - Commands that manage VM instances
 * [volumes](/docs/flyctl/volumes/)	 - Volume management commands
-* [wireguard](/docs/flyctl/wireguard/)	 - Commands that manage wireguard peer connections
+* [wireguard](/docs/flyctl/wireguard/)	 - Commands that manage WireGuard peer connections
 
 ## Options
 

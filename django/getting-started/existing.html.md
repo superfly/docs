@@ -48,7 +48,7 @@ Creating database migrations
 Wrote config file fly.toml
 ? Would you like to set up a Postgresql database now? Yes
 ? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
-Creating Postgres cluster in organization personal
+Creating postgres cluster in organization personal
 Creating app...
 Setting secrets on app django-existing-app-db...Provisioning 1 of 1 machines with image flyio/postgres:14.4
 Waiting for machine to start...

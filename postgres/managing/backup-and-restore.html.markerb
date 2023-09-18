@@ -100,7 +100,7 @@ Automatically selected personal organization: Awesome Person
 ? Select region: sjc (San Jose, California (US))
 ? Specify the initial cluster size: 2
 ? Select VM size: shared-cpu-1x - 256
-Creating Postgres cluster my-app-db-restored in organization personal
+Creating postgres cluster my-app-db-restored in organization personal
 Postgres cluster my-app-db-restored created
   Username:    postgres
   Password:    <redacted>

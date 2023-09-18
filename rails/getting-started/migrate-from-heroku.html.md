@@ -43,7 +43,7 @@ Set secrets on list: RAILS_MASTER_KEY
 ? Would you like to set up a Postgresql database now? Yes
 For pricing information visit: https://fly.io/docs/about/pricing/#postgresql-clu
 ? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
-Creating Postgres cluster in organization personal
+Creating postgres cluster in organization personal
 
 . . .
 
