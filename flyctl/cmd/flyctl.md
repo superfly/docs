@@ -6,7 +6,7 @@ flyctl [flags]
 ~~~
 
 ## Available Commands
-* [agent](/docs/flyctl/agent/)	 - Commands that manage the Fly agent, a background process that manages flyctl WireGuard connections
+* [agent](/docs/flyctl/agent/)	 - Commands that manage the Fly agent, a background process that manages flyctl Wireguard connections
 * [apps](/docs/flyctl/apps/)	 - Manage apps
 * [auth](/docs/flyctl/auth/)	 - Manage authentication
 * [autoscale](/docs/flyctl/autoscale/)	 - V1 APPS ONLY: Autoscaling app resources
@@ -34,7 +34,7 @@ flyctl [flags]
 * [planetscale](/docs/flyctl/planetscale/)	 - Provision and manage PlanetScale MySQL databases
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
 * [postgres](/docs/flyctl/postgres/)	 - Manage Postgres clusters.
-* [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a Fly VM
+* [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a fly VM
 * [redis](/docs/flyctl/redis/)	 - Launch and manage Redis databases managed by Upstash.com
 * [regions](/docs/flyctl/regions/)	 - V1 APPS ONLY: Manage regions
 * [releases](/docs/flyctl/releases/)	 - List app releases

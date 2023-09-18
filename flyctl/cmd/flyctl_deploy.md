@@ -28,7 +28,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
   -h, --help                             help for deploy
       --ignorefile string                Path to a Docker ignore file. Defaults to the .dockerignore file in the working directory.
   -i, --image string                     The Docker image to deploy
-      --image-label string               Image label to use when tagging and pushing to the Fly registry. Defaults to "deployment-{timestamp}".
+      --image-label string               Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
       --lease-timeout int                Seconds to lease individual machines while running deployment. All machines are leased at the beginning and released at the end. The lease is refreshed periodically for this same time, which is why it is short. flyctl releases leases in most cases. (default 13)
       --local-only                       Only perform builds locally using the local docker daemon
       --max-unavailable float            Max number of unavailable machines during rolling updates. A number between 0 and 1 means percent of total machines (default 0.33)
