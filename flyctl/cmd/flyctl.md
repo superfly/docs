@@ -50,7 +50,7 @@ flyctl [flags]
 * [version](/docs/flyctl/version/)	 - Show version information for the flyctl command
 * [vm](/docs/flyctl/vm/)	 - Commands that manage VM instances
 * [volumes](/docs/flyctl/volumes/)	 - Volume management commands
-* [wireguard](/docs/flyctl/wireguard/)	 - Commands that manage WireGuard peer connections
+* [wireguard](/docs/flyctl/wireguard/)	 - Commands that manage wireguard peer connections
 
 ## Options
 
