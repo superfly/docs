@@ -19,13 +19,15 @@ For an overview of how to configure your application with services like caching,
 
 Bring your own Laravel app, or create a new one!
 
-If you want to start fresh, here's how to set up a new application. You'll need PHP 8+ and [composer](https://getcomposer.org/) installed locally. You can check your PHP version using `php --version`.
+If you want to start fresh, here's how to set up a new application. You'll need [PHP 8+](https://www.php.net/manual/en/install.php) and [composer](https://getcomposer.org/) installed locally. You can check your PHP version using `php --version`.
 
 ```cmd
 composer create-project laravel/laravel fly-laravel
 cd fly-laravel
 php artisan serve
 ```
+
+(Windows) If you get an error saying that ext-fileinfo is missing from your system while running the first command, you can enable the extension by uncommenting the line `extension=fileinfo` in your `php.ini` file. Then run `composer install` inside the `fly-laravel` directory.
 
 You should be able to visit `http://localhost:8000` and see the home page.
 
