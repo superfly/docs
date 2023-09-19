@@ -8,6 +8,8 @@ order: 90
 
 <%= partial "/docs/partials/v2_transition_banner" %>
 
+There are a couple different ways to run multiple processes in a Fly.io app. All of them address the first rule of programs running in Fly VM: when your entrypoint program exits, our init kills the VM and we start a new one. So at the end of the day, something has to keep running “in the foreground”.
+
 Process groups are a way to configure a single Fly App to run multiple different programs.
 
 You define processes in your `fly.toml`, giving each process group a name and a command to run at boot. Every defined process runs in its own Fly Machine(s) within the app, which means they don't compete with each other for VM resources, and they can be scaled individually.

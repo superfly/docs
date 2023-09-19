@@ -1,0 +1,7 @@
+---
+title: Test file
+nav: firecracker
+layout: docs
+---
+
+There are a couple different ways to run multiple processes in a Fly.io app. All of them address the first rule of programs running in Fly VM: when your entrypoint program exits, our init kills the VM and we start a new one. So at the end of the day, something has to keep running “in the foreground”.
