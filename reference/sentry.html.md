@@ -1,16 +1,16 @@
 ---
-title: Error Tracking by Sentry
+title: Application Monitoring by Sentry
 layout: docs
 sitemap: false
 nav: firecracker
 ---
 
-[Sentry](https://sentry.io) is an [open-source](https://github.com/getsentry) hosted service for real-time error tracking and performance monitoring for almost every runtime or framework out there. Beyond these core features, Sentry offers alerting, release tracking, source code integration and much more.
+[Sentry](https://sentry.io) is a developer-first application monitoring platform that helps you identify and fix software problems before they impact your users. Get real time alerts on production errors and performance issues, capture video-like reproductions of user interactions, and avoid regressions with test coverage insights in your stack trace. 
 
-We've partnered with Sentry to give your Fly.io organization a year's worth of [Team Plan](https://sentry.io/pricing) credits. This plan includes, monthly:
+We partnered with Sentry to give your Fly.io organization a year's worth of [Team Plan](https://sentry.io/pricing) credits. This plan includes, monthly:
 
-* 50,000 errors
-* 100k [performance transactions](https://docs.sentry.io/product/performance/transaction-summary/?original_referrer=https%3A%2F%2Fduckduckgo.com%2F#what-is-a-transaction)
+* 50k errors
+* 100k [performance units](https://docs.sentry.io/product/performance/transaction-summary/?original_referrer=https%3A%2F%2Fduckduckgo.com%2F#what-is-a-transaction)
 * 500 [session replays](https://docs.sentry.io/product/session-replay)
 * 1GB [attachments](https://docs.sentry.io/platforms/native/guides/minidumps/enriching-events/attachments/)
 
