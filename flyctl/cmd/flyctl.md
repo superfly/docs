@@ -24,7 +24,7 @@ flyctl [flags]
 * [image](/docs/flyctl/image/)	 - Manage app image
 * [ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
 * [jobs](/docs/flyctl/jobs/)	 - Show jobs at Fly.io
-* [launch](/docs/flyctl/launch/)	 - Create and configure a new app from source code or a Docker image.
+* [launch](/docs/flyctl/launch/)	 - Create and configure a new app from source code or a Docker image
 * [logs](/docs/flyctl/logs/)	 - View app logs
 * [machine](/docs/flyctl/machine/)	 - Commands that manage machines
 * [migrate-to-v2](/docs/flyctl/migrate-to-v2/)	 - Migrate a v1 app to v2
