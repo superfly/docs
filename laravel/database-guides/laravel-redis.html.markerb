@@ -21,7 +21,7 @@ You can set up your own Redis Fly App either through Fly.io's Redis Docker Image
 
     fly launch --image flyio/redis:6.2.6 --name fly-redis --region ams --no-deploy
     ```
-    - Pull the <b>flyio/redis:6.2.6</b> image from the docker repository through `--image` argument.
+    - Pull the <b>flyio/redis:6.2.6</b> image from the Docker repository through `--image` argument.
     - You can specify your Redis Fly App name through the `--name` argument
     - You can specify your region code through the `--region` attribute
     - You can opt not to immediately deploy by adding `--no-deploy` argument
@@ -73,7 +73,7 @@ If you would like to use [Redis' official docker image](https://hub.docker.com/_
 
     fly launch --image redis --name off-redis --region ams --no-deploy
     ```
-    - Pull the <b>redis</b> image from the docker repository through the `--image` argument.
+    - Pull the <b>redis</b> image from the Docker repository through the `--image` argument.
 
 2.  Before deploying, make sure to revise your `fly.toml` file to specify your Redis Fly App's password.
 

@@ -108,7 +108,7 @@ Take note of the connection string provided and let's move on!
       DB_DATABASE= "<DB_DATABASE>"
       MYSQL_ATTR_SSL_CA="/etc/ssl/certs/ca-certificates.crt"
     ```
-    Take note that the value for `MYSQL_ATTR_SSL_CA` varies depending on the Docker container used. For the default docker container used by Fly.io, the above value is the path
+    Take note that the value for `MYSQL_ATTR_SSL_CA` varies depending on the Docker container used. For the default Docker container used by Fly.io, the above value is the path
 
 2.  Next, set up the database username and password through [fly secrets](/docs/flyctl/secrets/):
     
