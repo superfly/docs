@@ -24,7 +24,8 @@ jobs:
       - name: run reviewdog and linter
         uses: errata-ai/vale-action@reviewdog
         with:
-          files: '["${{ steps.changed-files.outputs.any_changed }}", "${{ steps.changed-files.outputs.added_files }}"]'
+          files: ${{ steps.changed-files.outputs.any_changed }}, ${{ steps.changed-files.outputs.added_files }}
+          separator: ","
           # added, diff_context, file, nofilter
           filter_mode: nofilter
           # github-pr-check, github-pr-review, github-check
