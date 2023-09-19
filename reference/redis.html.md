@@ -122,4 +122,4 @@ Note that items marked with an explicit TTL will expire accurately, regardless o
 
 More plans may be added in the future. [Get in touch](https://community.fly.io) on our community forum with feedback and suggestions for improvements.
 
-** Redis is a registered trademark of Redis Ltd. Any rights therein are reserved to Redis Ltd. Any use by Render Inc is for referential purposes only and does not indicate any sponsorship, endorsement or affiliation between Redis and Render Inc.
+** Redis is a registered trademark of Redis Ltd. Any rights therein are reserved to Redis Ltd. Any use by Fly is for referential purposes only and does not indicate any sponsorship, endorsement or affiliation between Redis and Fly.
