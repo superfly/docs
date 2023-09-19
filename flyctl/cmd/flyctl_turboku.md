@@ -25,6 +25,7 @@ flyctl turboku <heroku-app-name> <heroku-api-token> [flags]
   -i, --image string                     The Docker image to deploy
       --image-label string               Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
       --keep                             keep the app directory after deployment
+      --label stringArray                Add custom metadata to an image via docker labels
       --lease-timeout int                Seconds to lease individual machines while running deployment. All machines are leased at the beginning and released at the end. The lease is refreshed periodically for this same time, which is why it is short. flyctl releases leases in most cases. (default 13)
       --local-only                       Only perform builds locally using the local docker daemon
       --max-unavailable float            Max number of unavailable machines during rolling updates. A number between 0 and 1 means percent of total machines (default 0.33)
@@ -46,7 +47,6 @@ flyctl turboku <heroku-app-name> <heroku-api-token> [flags]
       --strategy string                  The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. Default is canary, or rolling when max-per-region is set.
       --vm-cpu-kind string               The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                      Number of CPUs
-      --vm-gpu-kind string               If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb)
       --vm-memory int                    Memory (in megabytes) to attribute to the VM
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --wait-timeout int                 Seconds to wait for individual machines to transition states and become healthy. (default 120)
