@@ -24,10 +24,10 @@ jobs:
       - name: run reviewdog and linter
         uses: errata-ai/vale-action@reviewdog
         with:
-          files: ${{ steps.changed-files.outputs.any_changed }}
+          files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
           separator: ","
           # added, diff_context, file, nofilter
-          filter_mode: nofilter
+          # filter_mode: nofilter
           # github-pr-check, github-pr-review, github-check
           reporter: github-pr-check
           fail_on_error: false
