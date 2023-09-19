@@ -1,5 +1,5 @@
 ---
-title: Redis by Upstash
+title: Redis** by Upstash
 layout: docs
 sitemap: false
 nav: firecracker
@@ -121,3 +121,5 @@ Note that items marked with an explicit TTL will expire accurately, regardless o
 |Price per month, per region|$0|$10|$90|
 
 More plans may be added in the future. [Get in touch](https://community.fly.io) on our community forum with feedback and suggestions for improvements.
+
+** Redis is a registered trademark of Redis Ltd. Any rights therein are reserved to Redis Ltd. Any use by Render Inc is for referential purposes only and does not indicate any sponsorship, endorsement or affiliation between Redis and Render Inc.
