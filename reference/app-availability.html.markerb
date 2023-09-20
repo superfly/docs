@@ -93,11 +93,27 @@ At a lower level, you can also use the `fly machines update` command with the `-
 
 What if you don't want to keep Machines running all the time for an app with a small or variable workload? The [automatic start and stop feature](#automatically-start-and-stop-machines) is enabled by default for Machines and makes it possible to run at least two Machines without wasting resources.
 
-If you still don't want `fly deploy` to create two Machines, then you can use the `--ha` option to turn off this feature:
+If you still don't want `fly launch` or `fly deploy` to create two Machines, then you can use the `--ha` option to turn off this feature.
+
+Create one Machine for a new app:
+
+```cmd
+fly launch --ha=false
+```
+
+Create one Machine on first deploy or when your app is scaled down to zero Machines:
 
 ```cmd
 fly deploy --ha=false
 ```
+
+Scale down an app to one Machine:
+
+```cmd
+fly scale count 1
+```
+
+For apps with more than one process, refer to [Scale a process group horizontally](/docs/apps/processes/#scale-a-process-group-horizontally).
 
 ## Automatically start and stop Machines
 
