@@ -1,12 +1,12 @@
 ---
-title: Redis™ by Upstash
+title: Redis®* by Upstash
 layout: docs
 sitemap: false
 nav: firecracker
 ---
 
 <aside class="callout">
-  Redis is a registered trademark of Redis Ltd. and the Redis box logo is a mark of Redis Ltd. Any rights therein are reserved to Redis Ltd. Any use by Fly.io is for referential purposes only and does not indicate any sponsorship, endorsement or affiliation between Redis and Fly.io. All product and service names used in this website are for identification purposes only and do not imply endorsement.
+  &#42;Redis is a registered trademark of Redis Ltd. Any rights therein are reserved to Redis Ltd. Any use by Fly.io is for referential purposes only and does not indicate any sponsorship, endorsement or affiliation between Redis and Fly.io.
 </aside>
 
 [Redis by Upstash](https://docs.upstash.com/redis) is a fully-managed, Redis-compatible database service offering global read replicas for reduced latency in distant regions. Upstash databases are provisioned inside your Fly organization, ensuring private, low-latency connections to your Fly applications.
