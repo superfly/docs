@@ -1,0 +1,79 @@
+---
+title: Machine restart policy
+layout: framework_docs
+sitemap: false
+order: 35
+nav: firecracker
+---
+
+The Machine restart policy defines whether and how flyd restarts a Machine after its main process exits. The restart policy applies per Machine, and is not an app-wide setting.
+
+The restart policies are:
+
+- **`no`**: Never try to restart a Machine automatically when its main process exits, whether that’s on purpose or on a crash.
+
+- **`always`**: Always restart a Machine automatically and never let it enter a `stopped` state, even when the main process exits cleanly. `always` is the default when you create a Machine with `fly m run` and for Fly Postgres app Machines. Recommended for "always-on" apps with no services configured, since the Machine restarts regardless of the exit code.
+
+- **`on-fail`**: Try up to 10 times to automatically restart the Machine if it exits with a non-zero exit code, before letting it stop. Recommended for most Machines with services configured, since Fly Proxy can wake them request. `on-fail` lets Machines be restarted if they crash, and allows your app Machines to effectively scale down by exiting cleanly. `on-fail` is the default when there's no explicit restart policy in a Machine's config, such as Machines created by `fly launch` and `fly deploy`. Machines with a schedule also default to the `on-fail` restart policy.
+
+## Check a Machine's restart policy
+
+Display a Machine's status and its config in `json` format:
+
+```cmd
+fly m status -d <machine id> 
+```
+
+Example output with a restart policy of `always`:
+
+```out
+...
+Config:
+{
+  "init": {},
+  "image": "registry-1.docker.io/flyio/hellofly:latest",
+  "restart": {
+    "policy": "always"
+  },
+  "guest": {
+    "cpu_kind": "shared",
+    "cpus": 1,
+    "memory_mb": 256
+  },
+  "dns": {}
+}
+```
+
+## Change a Machine's restart policy with flyctl
+
+Update the Machine config:
+
+```cmd
+fly m update <machine id> --restart <no | always | on-fail>
+```
+
+The following example updates a Machine's restart policy to `on-fail`:
+
+```cmd
+fly m update 3908032c794088 --restart on-fail
+```
+```out
+Configuration changes to be applied to machine: 3908032c794088 (my-app-name)
+
+  	... // 2 identical lines
+  	  "image": "registry-1.docker.io/flyio/hellofly:latest",
+  	  "restart": {
+- 	    "policy": "always"
++ 	    "policy": "on-failure"
+  	  },
+  	  "guest": {
+  	... // 6 identical lines
+
+? Apply changes? (y/N)
+```
+
+Enter 'y' to apply the changes.
+
+## Change a Machine's restart policy with the Machines API
+
+With the Machines API, you can set the restart policy, and the maximum number of retries when the policy is `on-fail`.
