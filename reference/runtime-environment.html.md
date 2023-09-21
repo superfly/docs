@@ -36,16 +36,16 @@ Not to be confused with the [HTTP header](/docs/reference/runtime-environment/#f
 **Machine ID**: Each Fly Machine is identified by a unique Machine ID. This is the ID that `flyctl` and the `Machines API` use to identify that Machine, and you'll see it in the [logs](/docs/flyctl/logs/).
 
 ### `FLY_MACHINE_VERSION`
-**Machine configuration version**: Every Machine configuration has an associated version. Whenever you update a Machine's configuration (including when you update its Docker image), it gets a new `FLY_MACHINE_VERSION`. The exception to this is that changing only the Machine's metadata doesn't trigger a new version.
+**Machine Configuration Version**: Every Machine configuration has an associated version. Whenever you update a Machine's configuration (including when you update its Docker image), it gets a new `FLY_MACHINE_VERSION`. The exception to this is that changing only the Machine's metadata doesn't trigger a new version.
 
 ### `FLY_PRIVATE_IP`
-**Private IPv6 address**: This is the `IPv6 address` of the Machine on its [6PN private network](/docs/reference/private-networking/).
+**Private IPv6 Address**: This is the `IPv6 address` of the Machine on its [6PN private network](/docs/reference/private-networking/).
 
 ### `FLY_PROCESS_GROUP`
-**Process group**: This is [the process group](/docs/apps/processes) associated with the machine. 
+**Process Group**: This is [the process group](/docs/apps/processes) associated with the machine. 
 
 ### `FLY_VM_MEMORY_MB`
-**Machine memory**: This is the memory allocated to the Machine, in MBs. It's the same value you'll find under https://fly.io/dashboard/personal/machines and VM Memory in the output of `fly machine status`. More information on sizing [here](/docs/machines/guides-examples/machine-sizing/)!
+**Machine Memory**: This is the memory allocated to the Machine, in MBs. It's the same value you'll find under https://fly.io/dashboard/personal/machines and VM Memory in the output of `fly machine status`. More information on sizing [here](/docs/machines/guides-examples/machine-sizing/)!
  
 ## _Request Headers_
 
