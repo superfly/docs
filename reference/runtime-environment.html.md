@@ -42,7 +42,7 @@ Not to be confused with the [HTTP header](/docs/reference/runtime-environment/#f
 **Private IPv6 Address**: This is the `IPv6 address` of the Machine on its [6PN private network](/docs/reference/private-networking/).
 
 ### `FLY_PROCESS_GROUP`
-**Process Group**: This is [the process group](/docs/apps/processes) associated with the machine. 
+**Process Group**: This is [the process group](/docs/apps/processes) associated with the Machine. 
 
 ### `FLY_VM_MEMORY_MB`
 **Machine Memory**: This is the memory allocated to the Machine, in MBs. It's the same value you'll find under https://fly.io/dashboard/personal/machines and VM Memory in the output of `fly machine status`. More information on sizing [here](/docs/machines/guides-examples/machine-sizing/)!
