@@ -53,8 +53,10 @@ However we name the file will be our "command" for opening the IEx shell into th
 
 set -e
 
-fly ssh console --select -C "/app/bin/hello_elixir remote"
+fly ssh console --pty --select -C "/app/bin/hello_elixir remote"
 ```
+
+The `--pty` flag supports our interactive terminal and is needed to support the `--remsh` option used when we call `remote`.
 
 The `--select` flag will prompt for which instance to connect to. This is handy when deployed to multiple regions and we want to be explicit about where we connect.
 
