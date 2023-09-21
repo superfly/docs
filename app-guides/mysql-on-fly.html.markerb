@@ -70,10 +70,10 @@ kill_timeout = 5
 primary_region = "bos"
 
 [processes]
-app = "--datadir /data/mysql 
-  --default-authentication-plugin mysql_native_password 
-  --performance-schema=OFF 
-  --innodb-buffer-pool-size 64M"
+app = """--datadir /data/mysql \
+  --default-authentication-plugin mysql_native_password \
+  --performance-schema=OFF \
+  --innodb-buffer-pool-size 64M"""
 
 [mounts]
   source="mysqldata"
