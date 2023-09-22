@@ -1,8 +1,6 @@
 name: Check docs with Vale linter
 
-on: 
-  pull_request:
-    types: [opened, synchronize]
+on: [pull_request]
 
 jobs:
   vale:
@@ -27,7 +25,7 @@ jobs:
           files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
           separator: ","
           # added, diff_context, file, nofilter
-          filter_mode: nofilter
+          filter_mode: file
           # github-pr-check, github-pr-review, github-check
           reporter: github-pr-check
           fail_on_error: false
