@@ -5,9 +5,9 @@ nav: firecracker
 order: 30
 ---
 
-How to manage volumes using the [`fly volumes`](/docs/flyctl/volumes/) command. 
+How to manage volumes using the [`fly volumes`](/docs/flyctl/volumes/) command.
 
-<div class="callout">**Tip**: `fly volumes` is aliased to `fly volume` and `fly vol`.</div>
+<div class="callout">**Note**: `fly volumes` is aliased to `fly volume` and `fly vol`.</div>
 
 ## Create a volume
 
