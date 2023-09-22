@@ -1,7 +1,6 @@
 ---
 title: Machine restart policy
 layout: framework_docs
-sitemap: false
 order: 35
 nav: firecracker
 ---
