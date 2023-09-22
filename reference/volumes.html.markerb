@@ -5,7 +5,7 @@ nav: firecracker
 order: 10
 ---
 
-Apps can store only ephemeral data on the root file systems of their Machines, because a Machine’s file system gets rebuilt from scratch each time you deploy your app, or when the Machine is restarted. 
+Apps can store only ephmeral data on the root file systems of their Machines, because a Machine’s file system gets rebuilt from scratch each time you deploy your app, or when the Machine is restarted. 
 
 Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can access and write to a volume on a Machine just like a regular directory. Use volumes to store your database files, to save your app's state, such as configuration and session or user data, or for any information that needs to persist after deploy or restart.
 
@@ -25,7 +25,7 @@ If volumes don't work for your use case, then explore other options for data sto
 ## Volume redundancy
 
 <div class="warning">
-<b>Always run at least two volumes per app.</b> We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each machine should have an attached volume. If you only have one Machine and volume, you'll have downtime if there's a host or network failure, and whenever you deploy your app. Also remember that volumes don't have built-in replication between them.
+<b>Always run at least two volumes per app.</b> We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each machine should have an attached volume. If you only have one Machine and volume, then you'll have downtime if there's a host or network failure, and whenever you deploy your app. Also remember that volumes don't have built-in replication between them.
 </div>
 
 In a few cases, you can run a single Machine with an attached volume. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not yet worried about downtime.
