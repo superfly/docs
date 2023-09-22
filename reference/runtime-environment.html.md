@@ -36,7 +36,7 @@ Not to be confused with the [HTTP header](/docs/reference/runtime-environment/#f
 **Machine ID**: The unique ID that flyctl commands and the Machines API use to identify a Machine. You can find it in the [logs](/docs/flyctl/logs/).
 
 ### `FLY_MACHINE_VERSION`
-**Machine Configuration Version**: The version associated to a specific Machine configuration. When you update a Machine's configuration (including when you update its Docker image), it gets a new `FLY_MACHINE_VERSION`. You can see this change by running `fly machine status`. Changing the Machine's metadata however doesn't trigger a new version.
+**Machine Configuration Version**: The version associated to a specific Machine configuration. When you update a Machine's configuration (including when you update its Docker image), it gets a new `FLY_MACHINE_VERSION`. You can also find this value under the name `Instance ID` in the output of `fly machine status`. Changing the Machine's metadata however doesn't trigger a new version.
 
 ### `FLY_PRIVATE_IP`
 **Private IPv6 Address**: The IPv6 address of the Machine on its [6PN private network](/docs/reference/private-networking/).
