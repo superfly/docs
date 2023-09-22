@@ -1,95 +1,177 @@
 ---
-title: Add Volume Storage
+title: Add Volume storage
 layout: docs
 nav: firecracker
-order: 30
+order: 20
 ---
 
-<%= partial "/docs/partials/v2_transition_banner" %>
-
-Volumes are local persistent storage for [Fly Machines](/docs/machines/). Volumes allow an app to save its state&mdash;to preserve configuration, session or user data&mdash;and then be restarted with that information in place. You can access and write to a volume on a Machine just like a regular directory.
-
-<div class="warning">
-<b>Always run at least two volumes per app.</b> We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each Machine should have an attached volume. Also note that volumes don't sync up by themselves; your app needs to take care of that. Refer to [Fly Volumes](/docs/reference/volumes/) for details about how volumes work.
-</div>
+Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). Learn [how Fly Volumes work](/docs/reference/volumes/).
 
 ## Launch a new app with a Fly Volume
 
 Launch a new app with one Machine and an attached volume, and then clone the Machine to scale out.
 
-### Launch the app, but don't deploy it yet
+1. Launch a new app, and type `N` at the "deploy now?" prompt:
 
-The app has to exist for the volume to be created. The volume has to exist before you can mount it to a Machine. The shortest path to a Machine with a mounted volume begins by launching the app, and saying `N` to "deploy now?":
+    ```cmd
+    fly launch 
+    ```
+
+    ```out
+    ...
+    Wrote config file fly.toml
+    ? Would you like to deploy now? No
+    ...
+    Your app is ready! Deploy with `flyctl deploy`
+    ```
+
+1. Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`, where `source` is the volume name and `destination` is the directory where the volume should be mounted on the Machine file system. For example:
+
+    ```toml
+    [mounts]
+      source="myapp_data"
+      destination="/data"
+    ```
+
+1. Deploy the app:
+
+    ```cmd
+    fly deploy 
+    ```
+
+1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
+
+1. (Recommended) Clone the first Machine to scale out to two Machines with volumes:
+
+    ```cmd
+    fly machine clone <machine id>
+    ```
+
+    List volumes to check the result:
+
+    ```cmd
+    fly volumes list
+    ```
+
+    Example output showing two volumes with attached Machines:
+    ```out
+    ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT     
+    vol_ez1nvxkwl3jrmxl7    created data    1GB     lhr     4de2    true            91851edb6ee983  39 seconds ago
+    vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  7 minutes ago
+    ```
+
+<div class="warning">
+<b>Warning</b><br>`fly machine clone` doesn't write data into the new volume.
+</div>
+
+## Add volumes to an existing app
+
+1. Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`, where `source` is the volume name and `destination` is the directory where the volume should be mounted on the Machine file system. For example:
+
+    ```toml
+    [mounts]
+      source="myapp_data"
+      destination="/data"
+    ```
+
+1. Run `fly status` to check the [regions](/docs/reference/regions/) of the Machines and then create the volume in the same regions as your app's Machines. For example:
+
+    ```cmd
+    fly volumes create <volume name> -r <region code>
+    ```
+
+1. Repeat step 2 for each Machine in the process group. If you create an app using the `fly launch` command, then the app will usually have two Machines in the `app` process by default.
+
+1. Deploy the app:
+
+    ```cmd
+    fly deploy 
+    ```
+
+1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
+
+## Add a volume to a Machine clone
+
+For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`).
+
+1. Create the volume in the same region as your app. For example:
+
+    ```cmd
+    fly volumes create <volume name> -r <region code>
+    ```
+
+1. Clone one of your app's Machines (with no volume) and attach the volume you just created:
+
+    ```cmd
+    fly machine clone <machine id> -r <region code> --attach-volume <volume id>:<destination mount path>
+    ```
+
+    `destination-mount-path` is the directory where the volume should be mounted on the file system.
+
+    For example:
+
+    ```cmd
+    fly machine clone 148eddeef09789 -r yyz --attach-volume vol_8l524yj0ko347zmp:/data
+    ```
+
+1. Repeat the preceding steps as needed to create more Machines with volumes.
+
+1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
+
+1. (Optional) Destroy the Machine used to create the clone:
+
+    ```cmd
+    fly machine destroy <machine id>
+    ```
+
+## Confirm the volume is attached to a Machine
+
+Use flyctl to check the status of volumes and Machines.
+
+### List the Machines
+
+List Machines to check attached volumes:
 
 ```cmd
-fly launch 
-```
-```out
-...
-Wrote config file fly.toml
-? Would you like to deploy now? No
-...
-Your app is ready! Deploy with `flyctl deploy`
-```
-
-### Configure the app to mount the new volume
-
-Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`. The `fly deploy` command you'll run in the next step will create the Machine and the volume during the deploy process. 
-
-The following example configuration exposes data from a volume named `myapp_data` under the `/data` directory in the Machine's file system:
-
-```toml
-[mounts]
-  source="myapp_data"
-  destination="/data"
-```
-
-### Deploy the app
-
-```cmd
-fly deploy 
-```
-
-On the first deployment, you'll get one Machine. Confirm this with `fly status`:
-
-```cmd
-fly status
+fly machine list
 ```
 
 Example output:
-```out
-App
-  Name     = myapp
-  Owner    = personal
-  Hostname = myapp.fly.dev
-  Image    = image:latest
-  Platform = machines
 
-Machines
-PROCESS	ID            	VERSION	REGION	STATE  	CHECKS 	LAST UPDATED
-app    	5683606c41098e	1      	lhr   	started	1 total	2023-04-26T20:40:48Z
+```out
+1 machines have been retrieved from app my-app-name.
+View them in the UI here
+
+my-app-name
+ID            	NAME        STATE   REGION	 IMAGE                	IP ADDRESS                    	VOLUME              	CREATED             	LAST UPDATED        	APP PLATFORM	PROCESS GROUP	SIZE
+328773d3c47d85	my-app-name	stopped	yul   	flyio/myimageex:latest	fdaa:2:45b:a7b:19c:bbd4:95bb:2	vol_6vjywx86ym8mq3xv	2023-08-20T23:09:24Z	2023-08-20T23:16:15Z	v2          	app          	shared-cpu-1x:256MB
 ```
 
-### Confirm the volume is mounted
+### List the volumes
 
-You can check on all the volumes in your app using `fly volumes list`. The `ATTACHED VM` column lets you know which Machine, if any, the volume is mounted on.
-
-List the volumes:
+List volumes to check attached Machines:
 
 ```cmd
 fly volumes list
 ```
 
 Example output:
+
 ```out
 ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
 vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  3 minutes ago
 ```
 
-You can also see the volume in the Machine's file system (there's only one Machine so far). For example:
+### SSH into the Machine
+
+View the volume in the Machine file system:
+
 ```cmd
 fly ssh console -s -C df
 ```
+
+Example output showing a 1GB volume mounted at `/data`:
+
 ```out
 ? Select VM: lhr: 5683606c41098e fdaa:0:3b99:a7b:7e:3155:9844:2 nameless-feather-6339
 Connecting to fdaa:0:3b99:a7b:7e:3155:9844:2... complete
@@ -101,148 +183,9 @@ tmpfs             113224      0    113224   0% /sys/fs/cgroup
 /dev/vdb         1011672   2564    940500   1% /data
 ```
 
-Voilà: our 1GB volume is mounted at `/data`. You can access and write to a volume on a Machine just like a regular directory.
+## Related topics
 
-### Clone the first Machine to scale out to two VMs
-
-```cmd
-fly machine clone 5683606c41098e
-```
-
-Check what that did:
-
-```cmd
-fly volumes list
-```
-
-Example output:
-
-```
-ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT     
-vol_ez1nvxkwl3jrmxl7    created data    1GB     lhr     4de2    true            91851edb6ee983  39 seconds ago
-vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  7 minutes ago
-```
-
-`fly machine clone` creates an additional Machine with the same configuration as the source, and creates and mounts a volume for the new Machine, if the source Machine has one. **`fly machine clone` doesn't write data into the new volume.**
-
-At this point there are two identically configured Machines on the app, each with a volume of the same size. You take it from here, setting up whatever data replication you need. 
-
-### On a V1 (Nomad) app
-
-Create an additional volume in a region, then [use `fly scale count`](/docs/apps/legacy-scaling/) to add a VM to use it.
-
-## Add volumes to an existing app
-
-You can add a volume, or volumes, to an existing app by adding `[mounts]` to the app's `fly.toml` file and creating the volumes using flyctl.
-
-### Configure the app to mount the new volume
-
-Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`. The `fly deploy` command you'll run in the next step will create the Machine and the volume during the deploy process. 
-
-The following example configuration exposes data from a volume named `myapp_data` under the `/data` directory in the Machine's file system:
-
-```toml
-[mounts]
-  source="myapp_data"
-  destination="/data"
-```
-
-### Create the volume
-
-Create the volumes in the same [regions](/docs/reference/regions/) as your app's Machines. Run `fly status` to check the regions of the Machines.
-
-For example:
-
-```cmd
-fly volumes create myapp_data -r lhr
-```
-
-<div class="callout">
-You need to create as many volumes as you have Machines per process in your app. Apps deployed using the `fly launch` command have two Machines in the `app` process by default.
-</div>
-
-If you configure [mounts] in `fly.toml` and then run `fly deploy` without first creating enough volumes, then you'll get an error similar to this one:
-
-```out
-Error: Process group 'app' needs volumes with name 'myapp_data' to fulfill mounts defined in fly.toml; 
-Run fly volume create myapp_data -r REGION for the following regions and counts: lhr=1.`
-```
-
-The error indicates that the app needs one more volume in the `lhr` region.
-
-### Deploy the app
-
-```cmd
-fly deploy 
-```
-
-Run `fly volumes list` to verify that your volumes now have `ATTACHED VM` populated:
-
-```cmd
-fly volumes list
-```
-
-Example output:
-
-```out
-ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
-vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  3 minutes ago
-```
-
-## Add a volume to a Machine clone
-
-If you're not using the `fly.toml` with `fly deploy` workflow for some Machines, you can still add a volume by cloning a Machine with no volume and attaching a new volume to it. You can also clone a Machine with a volume already attached, which gives you a new Machine with a new, empty, volume attached.
-
-### Create the volume
-
-Create the volume in the [region](/docs/reference/regions/) where you want to clone a Machine:
-
-```cmd
-fly volumes create <volume name> -r <region code>
-```
-
-### Clone the Machine
-
-Clone one of your app's Machines (with no volume) and attach the volume you just created
-
-```
-fly machine clone <machine-id> -r <region code> --attach-volume <vol-id>:<destination-mount-path>
-```
-
-`destination-mount-path` is the directory where the volume should be mounted on the file system.
-
-For example:
-
-```cmd
-fly machine clone 148eddeef09789 -r yyz --attach-volume vol_8l524yj0ko347zmp:/data
-```
-
-### Destroy the Machine used to create the clone
-
-Destroy the Machine:
-```cmd
-fly machine destroy <machine id>
-```
-
-Run `fly volumes list` to verify that the volume you just created has the newly-cloned Machine's ID listed under `ATTACHED VM`.
-
-```cmd
-fly volumes list
-```
-
-Example output:
-
-```out
-ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT    
-vol_8l524yj0ko347zmp    created data    1GB     lhr     b6a7    true            5683606c41098e  3 minutes ago
-```
-
-Repeat the process for each machine that you want to add a volume to.
-
-## Remove a volume from an app
-
-You can't currently unmount a volume from an existing Machine. If you need to remove volumes from your app, you can [scale it](/docs/apps/scale-count/) down to zero Machines, [destroy all the volumes](/docs/reference/volumes#destroy-a-volume), remove the `mounts` section from `fly.toml`, and redeploy. **Only destroy a volume whose data you no longer need access to.**
-
-### On a V1 (Nomad) app
-
-Remove the `mounts` section from `fly.toml` and redeploy. This will create a new Machine without a volume. [Destroy any unused volumes](/docs/reference/volumes#destroy-a-volume), **only if you no longer need their data**.
+- [How Fly Volumes work](/docs/reference/volumes/)
+- [Manage volumes](/docs/apps/volume-manage/)
+- [`mounts` section](/docs/reference/configuration/#the-mounts-section) in the `fly.toml` Fly Launch configuration file
+- [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)
