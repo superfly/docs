@@ -147,7 +147,7 @@ We recommend updating such Machines to use the `always` restart policy, to ensur
 fly machine update --restart always <machine-id>
 ```
 
-See [more about restart policies here](https://community.fly.io/t/issues-with-machines-restart-policy/11943/25).
+Learn more about [Machine restart policies](/docs/machines/guides-examples/machine-restart-policy/).
 
 
 ### Scale your deployed Machine(s)
