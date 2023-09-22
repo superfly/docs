@@ -38,13 +38,9 @@ and deploy the application.
 
 ### Create an application
 
-You will need Ruby and Rails installed on your machine. If you do not have them
-installed, you can follow the instructions at
-[https://www.ruby-lang.org/en/documentation/installation/](https://www.ruby-lang.org/en/documentation/installation/)
-and
-[https://guides.rubyonrails.org/getting_started.html](https://guides.rubyonrails.org/getting_started.html).
+Start by installing Ruby and Rails. For instructions, refer to the [Rails Getting Started docs](https://guides.rubyonrails.org/getting_started.html).
 
-To verify that Rails was installed correctly, run the following command:
+Verify that Rails version 7 was installed correctly:
 
 ``` shell
 $ rails --version
