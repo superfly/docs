@@ -1,5 +1,5 @@
 ---
-title: Manage volumes
+title: Manage volume storage
 layout: docs
 nav: firecracker
 order: 30
@@ -19,7 +19,7 @@ fly vol create <my_volume_name>
 
 Use the `-r` option to set a [region](/docs/reference/regions/), or select a region when prompted.
 
-For options, refer to [`fly vol create` docs](/docs/flyctl/volumes-create/) or run `fly vol create -h`.
+For options, refer to [`fly volumes create` docs](/docs/flyctl/volumes-create/) or run `fly vol create -h`.
 
 To add a volume to your app, refer to [Add volume storage](/docs/apps/volume-storage/).
 
