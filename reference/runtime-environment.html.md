@@ -33,19 +33,19 @@ Not to be confused with the [HTTP header](/docs/reference/runtime-environment/#f
 **Docker Image Reference**: The name of the Docker image running this container. Useful if your application needs to launch Machine instances of itself to scale up-or-down. Read about how [a Rails app runs Machines for scale-to-zero background workers](https://fly.io/ruby-dispatch/rails-background-jobs-with-fly-machines/). `registry.fly.io/my-app-name:deployment-01H9RK9EYO9PGNBYAKGXSHV0PH` is an example of the Docker Image Reference's format.
 
 ### `FLY_MACHINE_ID`
-**Machine ID**: Each Fly Machine is identified by a unique Machine ID. This is the ID that `flyctl` and the `Machines API` use to identify that Machine, and you'll see it in the [logs](/docs/flyctl/logs/).
+**Machine ID**: The unique ID that flyctl commands and the Machines API use to identify a Machine. You can find it in the [logs](/docs/flyctl/logs/).
 
 ### `FLY_MACHINE_VERSION`
-**Machine Configuration Version**: Every Machine configuration has an associated version. Whenever you update a Machine's configuration (including when you update its Docker image), it gets a new `FLY_MACHINE_VERSION`. The exception to this is that changing only the Machine's metadata doesn't trigger a new version.
+**Machine Configuration Version**: The version associated to a specific Machine configuration. When you update a Machine's configuration (including when you update its Docker image), it gets a new `FLY_MACHINE_VERSION`. You can see this change by running `fly machine status`. Changing the Machine's metadata however doesn't trigger a new version.
 
 ### `FLY_PRIVATE_IP`
-**Private IPv6 Address**: This is the `IPv6 address` of the Machine on its [6PN private network](/docs/reference/private-networking/).
+**Private IPv6 Address**: The IPv6 address of the Machine on its [6PN private network](/docs/reference/private-networking/).
 
 ### `FLY_PROCESS_GROUP`
-**Process Group**: This is [the process group](/docs/apps/processes) associated with the Machine. 
+**Process Group**: The [process group](/docs/apps/processes) associated with the Machine. 
 
 ### `FLY_VM_MEMORY_MB`
-**Machine Memory**: This is the memory allocated to the Machine, in MBs. It's the same value you'll find under https://fly.io/dashboard/personal/machines and VM Memory in the output of `fly machine status`. More information on sizing [here](/docs/machines/guides-examples/machine-sizing/)!
+**Machine Memory**: The memory allocated to the Machine, in MB. It's the same value you'll find under https://fly.io/dashboard/personal/machines and VM Memory in the output of `fly machine status`. Learn more about [Machine sizing](/docs/machines/guides-examples/machine-sizing/).
  
 ## _Request Headers_
 
