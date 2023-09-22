@@ -186,6 +186,6 @@ tmpfs             113224      0    113224   0% /sys/fs/cgroup
 ## Related topics
 
 - [How Fly Volumes work](/docs/reference/volumes/)
-- [Manage volumes](/docs/apps/volume-manage/)
+- [Manage volume storage](/docs/apps/volume-manage/)
 - [`mounts` section](/docs/reference/configuration/#the-mounts-section) in the `fly.toml` Fly Launch configuration file
 - [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)

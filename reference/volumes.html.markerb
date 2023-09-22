@@ -52,6 +52,6 @@ Snapshots may not have your latest data. You should still implement your own bac
 
 ## Related topics
 
-- [Add volume storage to your app](/docs/apps/volume-storage/)
-- [Manage volumes](/docs/apps/volume-manage/)
+- [Add volume storage](/docs/apps/volume-storage/)
+- [Manage volume storage](/docs/apps/volume-manage/)
 - [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)
