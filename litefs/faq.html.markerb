@@ -1,5 +1,5 @@
 ---
-title: LiteFS FAQ (Frequently Asked Questions)
+title: LiteFS FAQ
 layout: docs
 sitemap: false
 nav: litefs
@@ -72,6 +72,22 @@ write has not been replicated to a replica yet. We will be supporting
 synchronous replication in the future.
 
 
+## Are LiteFS deploys zero downtime?
+
+Rolling deploys of a LiteFS cluster will not experience any read availability
+loss but may have a short window of a few milliseconds of write availability
+loss. LiteFS can handoff the role of primary to another candidate node
+automatically but the primary changes can take a few milliseconds to propagate
+to replica nodes so they may redirect to the old primary during this short
+window.
+
+In the event of a sudden failure of the primary node, a different candidate node
+will acquire primary status via a distributed lease from Consul. By default,
+the lease has a time-to-live (TTL) of 10 seconds so you could lose write
+availability for up to that amount of time. Your database will still be readable
+by all LiteFS nodes during this time though.
+
+
 ## What's the difference between LiteFS & Litestream?
 
 [Litestream](https://litestream.io/) is intended as a single-node, disaster
@@ -86,3 +102,4 @@ replication to replica servers and it provides failover by using
 
 When making a decision between the two tools, you'll typically choose Litestream
 for single-server deployments and LiteFS for multi-server deployments.
+
