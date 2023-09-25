@@ -19,7 +19,7 @@ fly vol create <my_volume_name>
 
 Use the `-r` option to set a [region](/docs/reference/regions/), or select a region when prompted.
 
-For options, refer to [`fly volumes create` docs](/docs/flyctl/volumes-create/) or run `fly vol create -h`.
+For options, refer to the [`fly volumes create` docs](/docs/flyctl/volumes-create/) or run `fly vol create -h`.
 
 To add a volume to your app, refer to [Add volume storage](/docs/apps/volume-storage/).
 
@@ -37,13 +37,13 @@ You can extend (increase) a volume's size, but you can't make a volume smaller.
 
 1. Run `fly volumes list` and copy the volume ID.
 
-2. Extend the volume size:
+1. Extend the volume size:
 
     ```cmd
     `fly vol extend <volume id> -s <new size in GB>`
     ```
 
-3. (Optional) Check the new volume size in the Machine's file system:
+1. (Optional) Check the new volume size in the Machine's file system:
 
     ```cmd
     fly ssh console -s -C df
@@ -64,7 +64,7 @@ You can extend (increase) a volume's size, but you can't make a volume smaller.
 
     In the preceding example, the volume is mounted under `/storage` and has been resized to 2GB. The `df` command shows disk space in 1K blocks by default. Use the `-h` flag to return a more human-readable format.
 
-For options, refer to the [`fly vol extend` docs](/docs/flyctl/volumes-extend/) or run `fly vol extend -h`.
+For options, refer to the [`fly volumes extend` docs](/docs/flyctl/volumes-extend/) or run `fly vol extend -h`.
 
 ## Restore a volume from a snapshot
 
@@ -72,7 +72,7 @@ We take daily snapshots and keep them for five days.
 
 1. Run `fly volumes list` and copy the volume ID.
 
-2. List the volume's snapshots:
+1. List the volume's snapshots:
 
     ```cmd
     fly vol snapshots <volume id>
@@ -90,7 +90,7 @@ We take daily snapshots and keep them for five days.
     vs_A9k6age3bQov6twj	17631880	5 days ago
     ```
 
-3. Restore from the volume snapshot into a new volume of equal or greater size:
+1. Restore from the volume snapshot into a new volume of equal or greater size:
 
     ```cmd
     fly volumes create <volume name> --snapshot-id <snapshot id> -s <volume size in GB>
@@ -109,7 +109,38 @@ We take daily snapshots and keep them for five days.
     Created at: 02 Aug 22 21:27 UTC
     ```
 
-For options, refer to [`fly vol snapshots` docs](/docs/flyctl/volumes-snapshots/) or run `fly vol snapshots -h`.
+For options, refer to the [`fly volumes snapshots` docs](/docs/flyctl/volumes-snapshots/) or run `fly vol snapshots -h`.
+
+## Clone a Machine with a volume
+
+Clone a Machine with a volume to create a new Machine in the same region with an empty volume. Use the `-r` option to clone the Machine into a different [region](/docs/reference/regions/).
+
+1. Run `fly status` and copy the Machine ID of the Machine to clone.
+
+1. Clone the Machine:
+
+    ```cmd
+    fly m clone <machine id>
+    ```
+
+1. List volumes to check the result:
+
+    ```cmd
+    fly volumes list
+    ```
+
+    Example output showing two volumes with attached Machines:
+    ```out
+    ID                      STATE   NAME    SIZE    REGION  ZONE    ENCRYPTED       ATTACHED VM     CREATED AT     
+    vol_ez1nvxkwl3jrmxl7    created data    1GB     lhr     4de2    true            91851edb6ee983  39 seconds ago
+    vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  7 minutes ago
+    ```
+
+<div class="warning icon">
+<b>Warning:</b> `fly machine clone` doesn't write data into the new volume.
+</div>
+
+For options, refer to the [`fly machine clone` docs](/docs/flyctl/machine-clone/) or run `fly m clone -h`.
 
 ## Destroy a volume
 
@@ -121,11 +152,11 @@ Run:
 fly vol destroy <volume id>
 ```
 
-For options, refer to [`fly vol destroy` docs](/docs/flyctl/volumes-destroy/) or run `fly vol destroy -h`.
+For options, refer to the [`fly vol destroy` docs](/docs/flyctl/volumes-destroy/) or run `fly vol destroy -h`.
 
 ## Related topics
 
 - [How Fly Volumes work](/docs/reference/volumes/)
 - [Add volume storage](/docs/apps/volume-storage/)
-- [`mounts` section](/docs/reference/configuration/#the-mounts-section) in `fly.toml` Fly Launch configuration file
+- [`mounts` section](/docs/reference/configuration/#the-mounts-section) in the `fly.toml` Fly Launch configuration file
 - [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)

@@ -60,8 +60,8 @@ Launch a new app with one Machine and an attached volume, and then clone the Mac
     vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  7 minutes ago
     ```
 
-<div class="warning">
-<b>Warning</b><br>`fly machine clone` doesn't write data into the new volume.
+<div class="warning icon">
+<b>Warning:</b> `fly machine clone` doesn't write data into the new volume.
 </div>
 
 ## Add volumes to an existing app
@@ -90,9 +90,9 @@ Launch a new app with one Machine and an attached volume, and then clone the Mac
 
 1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
 
-## Add a volume to a Machine clone
+## Add a volume to an unmanaged Machine
 
-For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`).
+For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`), you can create a volume and attach it when you clone a Machine. You can also [clone a Machine with a volume](/docs/apps/volume-manage/#clone-a-machine-with-a-volume) to get a new Machine with an empty volume.
 
 1. Create the volume in the same region as your app. For example:
 
@@ -182,6 +182,8 @@ shm               113224      0    113224   0% /dev/shm
 tmpfs             113224      0    113224   0% /sys/fs/cgroup
 /dev/vdb         1011672   2564    940500   1% /data
 ```
+
+The volume is mounted in the directory specified by the `destination` field in the `[mounts]` section of the `fly.toml` file, or the `attach-volume` option for cloned Machines.
 
 ## Related topics
 
