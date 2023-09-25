@@ -2,7 +2,7 @@
 title: Add volume storage
 layout: docs
 nav: firecracker
-order: 20
+order: 30
 ---
 
 Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). Learn [how Fly Volumes work](/docs/reference/volumes/).
@@ -187,7 +187,7 @@ The volume is mounted in the directory specified by the `destination` field in t
 
 ## Related topics
 
-- [How Fly Volumes work](/docs/reference/volumes/)
+- [Volumes overview](/docs/reference/volumes/)
 - [Manage volume storage](/docs/apps/volume-manage/)
 - [`mounts` section](/docs/reference/configuration/#the-mounts-section) in the `fly.toml` Fly Launch configuration file
 - [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)

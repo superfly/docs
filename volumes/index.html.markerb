@@ -1,17 +1,18 @@
 ---
 title: "Fly Volumes"
 layout: docs
-toc: false
 nav: firecracker
+toc: false
+order: 10
 ---
 
 Volumes are local persistent storage for [Fly Machines](/docs/machines/).
 
 ## Learn
 
-Get the details and concepts behind volumes.
+Understand how volumes work and whether they're right for your use case.
 
-[How Fly Volumes work](/docs/reference/volumes/)
+[Volumes overview](/docs/reference/volumes/)
 
 ## How-Tos
 

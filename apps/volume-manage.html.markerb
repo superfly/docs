@@ -1,8 +1,8 @@
 ---
 title: Manage volume storage
-layout: docs
+layout: framework_docs
 nav: firecracker
-order: 30
+order: 40
 ---
 
 How to manage volumes using the [`fly volumes`](/docs/flyctl/volumes/) command.
@@ -156,7 +156,6 @@ For options, refer to the [`fly vol destroy` docs](/docs/flyctl/volumes-destroy/
 
 ## Related topics
 
-- [How Fly Volumes work](/docs/reference/volumes/)
+- [Volumes overview](/docs/reference/volumes/)
 - [Add volume storage](/docs/apps/volume-storage/)
-- [`mounts` section](/docs/reference/configuration/#the-mounts-section) in the `fly.toml` Fly Launch configuration file
 - [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)

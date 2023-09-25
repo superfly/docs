@@ -1,8 +1,8 @@
 ---
-title: How Fly Volumes work
-layout: docs
+title: Volumes overview
+layout: framework_docs
 nav: firecracker
-order: 10
+order: 20
 ---
 
 Apps can store only ephemeral data on the root file systems of their Machines, because a Machine’s file system gets rebuilt from scratch each time you deploy your app, or when the Machine is restarted. 
