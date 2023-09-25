@@ -1,13 +1,10 @@
 ---
 title: Working with Fly Apps
-layout: docs
+layout: navigable_docs
+order: 4
 sitemap: false
 nav: firecracker
 ---
-
-<div>
-  <img src="/static/images/fly-apps-intro.webp" srcset="/static/images/fly-apps-intro@2x.webp 2x" alt="">
-</div>
 
 Once you have deployed an application to Fly.io, you can view information about it, give the system secrets to share with it, associate it with a custom domain, and more. 
 

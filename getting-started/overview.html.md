@@ -1,8 +1,7 @@
 ---
-title: "Getting started"
-layout: docs
+title: "Multi-tenant PaaS"
+layout: framework_docs
 sitemap: false
-nav: firecracker
 ---
 
 <figure>

@@ -1,6 +1,7 @@
 ---
-title: Troubleshooting your deployment
-layout: docs
+title: Troubleshooting Deployments
+layout: navigable_docs
+order: 4
 sitemap: false
 nav: firecracker
 ---
