@@ -711,6 +711,14 @@ You can optionally restrict which Machine(s) contain the file using the [process
   processes = ["web"]
 ```
 
+To remove a previously configured file on the next deployment, set its source to an empty string. For example:
+
+```toml
+[[files]]
+  guest_path = "/path/to/config.yaml"
+  local_path = ""
+```
+
 ## The `experimental` section
 
 This section is for flags and feature settings which have yet to be promoted into the main configuration.

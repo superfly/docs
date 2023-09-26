@@ -24,10 +24,11 @@ flyctl turboku <heroku-app-name> <heroku-api-token> [flags]
       --ignorefile string                Path to a Docker ignore file. Defaults to the .dockerignore file in the working directory.
   -i, --image string                     The Docker image to deploy
       --image-label string               Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
+      --immediate-max-concurrent int     Maximum number of machines to update concurrently when using the immediate deployment strategy. (default 16)
       --keep                             keep the app directory after deployment
       --label stringArray                Add custom metadata to an image via docker labels
       --lease-timeout int                Seconds to lease individual machines while running deployment. All machines are leased at the beginning and released at the end. The lease is refreshed periodically for this same time, which is why it is short. flyctl releases leases in most cases. (default 13)
-      --local-only                       Only perform builds locally using the local docker daemon
+      --local-only                       Perform builds locally using the local docker daemon. The default is --remote-only.
       --max-unavailable float            Max number of unavailable machines during rolling updates. A number between 0 and 1 means percent of total machines (default 0.33)
       --name string                      the name of the new app
       --nixpacks                         Deploy using nixpacks to build the image
@@ -42,7 +43,7 @@ flyctl turboku <heroku-app-name> <heroku-api-token> [flags]
       --push                             Push image to registry after build is complete
   -r, --region string                    The target region (see 'flyctl platform regions')
       --release-command-timeout string   Seconds to wait for a release command finish running, or 'none' to disable. (default "300")
-      --remote-only                      Perform builds on a remote builder instance instead of using the local docker daemon
+      --remote-only                      Perform builds on a remote builder instance instead of using the local docker daemon. This is the default. Use --local-only to build locally.
       --smoke-checks                     Perform smoke checks during deployment (default true)
       --strategy string                  The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. Default is canary, or rolling when max-per-region is set.
       --vm-cpu-kind string               The kind of CPU to use ('shared' or 'performance')

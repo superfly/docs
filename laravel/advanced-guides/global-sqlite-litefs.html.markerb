@@ -47,5 +47,5 @@ exec: "supervisord -c /etc/supervisor/supervisord.conf"
 
 7) Create a [middleware](https://github.com/fly-apps/fly-laravel-litefs/blob/main/app/Http/Middleware/FlyReplayLiteFSWrite.php) to forward write requests to the [primary node](/docs/litefs/primary/) using [fly-replay](/docs/reference/fly-replay/#fly-replay)
 
-8) Use a none-file session driver to [allow fly-replay to work](https://github.com/fly-apps/fly-laravel-litefs#fly-replay-and-csrf-tokens) on Laravel CSRF protection. 
+8) Use a non-file session driver to [allow fly-replay to work](https://github.com/fly-apps/fly-laravel-litefs#fly-replay-and-csrf-tokens) on Laravel CSRF protection. 
 
