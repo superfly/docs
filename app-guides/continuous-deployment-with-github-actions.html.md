@@ -33,7 +33,7 @@ The first section is a speed-run through the steps to make the go-example app au
     on:
       push:
         branches:
-          - master
+          - main
     jobs:
       deploy:
         name: Deploy app
