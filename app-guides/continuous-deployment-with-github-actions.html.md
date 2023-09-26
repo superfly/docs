@@ -24,7 +24,7 @@ The first section is a speed-run through the steps to make the go-example app au
 1.  Fork the [go-example](https://github.com/fly-apps/go-example) repository to your GitHub account.
 2.  Clone the new repository to your local machine.
 3.  Run `fly launch` from within the project source directory to create a new app and a `fly.toml` configuration file. Type `N` when `fly launch` asks if you want to set up databases and `N` when it asks if you want to deploy.
-4.  Still in the project source directory, get a Fly API deploy token by running `fly tokens create deploy -x 999999h`. Copy the output.
+4.  Still in the project source directory, get a Fly API deploy token by running `fly tokens create deploy -x “custom access token”`. The access token can be generated at https://fly.io/user/personal_access_tokens. Copy the output.
 5.  Go to your newly-created repository on GitHub and select **Settings**.
 6.  Under **Secrets and variables**, select **Actions**, and then create a new repository secret called `FLY_API_TOKEN` with the value of the token from step 4.
 7.  Back in your project source directory, create `.github/workflows/fly.yml` with these contents:
