@@ -1,7 +1,7 @@
 ---
 title: "Fly Volumes"
 layout: docs
-nav: firecracker
+nav: volumes
 toc: false
 order: 10
 ---
@@ -22,11 +22,13 @@ Get things done with volumes.
 
 [Manage volume storage](/docs/apps/volume-manage/)
 
+More volume how-tos:
+
 [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)
 
 ## Reference
 
 Commands and APIs for volumes.
 
-- [flyctl `fly volumes` commands](/docs/flyctl/volumes/)
+- [flyctl commands - `fly volumes`](/docs/flyctl/volumes/)
 - [Machines API - Volumes](https://docs.machines.dev/swagger/index.html#/Volumes)
