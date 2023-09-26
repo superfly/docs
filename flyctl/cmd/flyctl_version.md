@@ -12,9 +12,8 @@ flyctl version [flags]
 ## Options
 
 ~~~
-  -h, --help                 help for version
-  -j, --json                 JSON output
-  -s, --saveinstall string   Save parameter in config
+  -h, --help   help for version
+  -j, --json   JSON output
 ~~~
 
 ## Global Options
