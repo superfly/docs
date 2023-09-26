@@ -5,7 +5,7 @@ nav: volumes
 order: 40
 ---
 
-How to manage volumes using the [`fly volumes`](/docs/flyctl/volumes/) command.
+Manage Fly Volumes using the [`fly volumes`](/docs/flyctl/volumes/) command.
 
 <div class="callout">**Note**: `fly volumes` is aliased to `fly volume` and `fly vol`.</div>
 
@@ -156,6 +156,6 @@ For options, refer to the [`fly vol destroy` docs](/docs/flyctl/volumes-destroy/
 
 ## Related topics
 
-- [Volumes overview](/docs/reference/volumes/)
+- [Fly Volumes overview](/docs/reference/volumes/)
 - [Add volume storage](/docs/apps/volume-storage/)
 - [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)

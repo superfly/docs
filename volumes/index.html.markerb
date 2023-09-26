@@ -6,13 +6,13 @@ toc: false
 order: 10
 ---
 
-Volumes are local persistent storage for [Fly Machines](/docs/machines/).
+Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/).
 
 ## Learn
 
 Understand how volumes work and whether they're right for your use case.
 
-[Volumes overview](/docs/reference/volumes/)
+[Fly Volumes overview](/docs/reference/volumes/)
 
 ## How-Tos
 
