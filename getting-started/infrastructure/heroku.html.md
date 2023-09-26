@@ -2,7 +2,8 @@
 title: Migrate from Heroku
 objective: Move your application server, database, Redis cache, and background workers from Heroku and run it entirely on Fly.io infrastructure.
 layout: navigable_docs
-order: 2
+status: beta
+order: 3
 ---
 
 This guide runs you through how to migrate a basic Rails application off of Heroku and onto Fly. It assumes you're running the following services on Heroku:

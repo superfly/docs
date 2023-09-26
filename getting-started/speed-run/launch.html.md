@@ -5,10 +5,11 @@ layout: navigable_docs
 redirect_from: 
   - /docs/hands-on/create-app/
   - /docs/hands-on/deploy-app/
-
 ---
 
 Fly Launch helps you quickly deploy almost any kind of app using a Docker image. To learn more about the different ways to get your app ready to deploy, refer to [Fly Launch](/docs/apps/launch/).
+
+## Launch Docker app
 
 For this example, you can use our pre-built Docker image, `flyio/hellofly:latest`, to create and deploy an app. 
 
@@ -46,6 +47,8 @@ At this point, flyctl creates a shell of an app for you and writes a starter con
 <div class="callout">
 If you've just signed up, then you'll also be prompted for credit card payment information. Refer to [How We Use Credit Cards](/docs/about/credit-cards/) and [Pricing](/docs/about/pricing) for more details.
 </div>
+
+## Provision additional resources
 
 flyctl will ask if you need a Postgres or Redis database. You can enter "No" for this example.
 
@@ -91,5 +94,25 @@ fly deploy
 ```
 
 The `fly deploy` command gets the app name from the `fly.toml` file. Then flyctl will start the process of deploying your application to the Fly Platform and return you to the command line when it's done.
+
+## View App in Browser
+
+The quickest way to connect to your deployed app is with the `fly apps open` command, which opens a browser on the http version of the site. That http connection will automatically be upgraded to an https secured connection (when using the fly.dev domain) to connect to it securely.
+
+For fun, add `/<your-name>` to `fly apps open` and your name will be appended to the app's path to add an extra greeting from the hellofly application.
+
+```cmd
+fly apps open /fred
+```
+```out
+Opening http://hellofly.fly.dev/fred
+```
+
+<img src="/docs/hands-on/images/helloflyandfred.webp" alt="Hello from Fly Screenshot" class="rounded-xl shadow-lg">
+
+You've successfully launched your first Fly App.
+
+[Next: Learn more about what you can do with Fly.io](/docs/hands-on/next/)
+
 
 [Next: Check your app's status](/docs/hands-on/check-app-status/)

@@ -1,6 +1,8 @@
 ---
-title: Amazon Web Services
+title: Connect to Microsoft Azure
 layout: navigable_docs
+status: beta
+order: 2
 ---
 
 There are two basic ways to talk to a process running in your Fly.io VM: 

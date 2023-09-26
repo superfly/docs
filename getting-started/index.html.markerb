@@ -5,11 +5,11 @@ layout: navigable_docs
 navigation:
   - title: Getting Started
     href: /docs/getting-started
-    children: docs/getting-started/launch/*.html.*
-  - href: /docs/getting-started/migrate
-    children: docs/getting-started/migrate/*.html.*
-  - href: /docs/getting-started/connect
-    children: docs/getting-started/connect/*.html.*
+    children: docs/getting-started/speed-run/*.html.*
+  - href: /docs/getting-started/infrastructure
+    children: docs/getting-started/infrastructure/*.html.*
+  - href: /docs/getting-started/platform
+    children: docs/getting-started/platform/*.html.*
 ---
 
 <figure class="w:full mt:6">
@@ -18,7 +18,7 @@ navigation:
 
 You have an application you want to deploy on Fly.io as quickly as possible? You're in the right place. You'll have your app up and running in just three steps:
 
-## [1. Install the `flyctl` Command Line Tool](launch/install)
+## [1. Install the `flyctl` Command Line Tool](getting-started/launch/install)
 
 Fly applications are deployed and managed with the `flyctl` command line tool, which you can install on any of these operating systems.
 
@@ -47,14 +47,14 @@ Fly applications are deployed and managed with the `flyctl` command line tool, w
     </table>
 </div>
 
-## [2. Create a Fly.io Account](launch/log-in-to-fly)
+## [2. Create a Fly.io Account](getting-started/launch/log-in-to-fly)
 
 You will create or login to your Fly.io account from the `flyctl` command line tool:
 
 1. Create an account with `fly auth signup` or login with `fly auth login`.
 2. Run `fly launch` from inside your project source directory - create, configure, and deploy a new application.
 
-## [3. Launch the App](launch/launch)
+## [3. Launch the App](getting-started/launch/launch)
 
 `fly launch` can configure and deploy the following kinds of apps automatically:
 
@@ -78,7 +78,7 @@ You're not limited to these kinds of projects, though! `fly launch` also knows w
 
 Refer to [Launch a new app](/docs/apps/launch/) to learn more about what `fly launch` does.
 
-## [Working with Fly Apps](launch/working-with-fly-apps)
+## [Working with Fly Apps](getting-started/launch/working-with-fly-apps)
 
 Once you deploy your app you'll want to see its status and open it so you can mange it.
 
@@ -97,7 +97,7 @@ It's also easy to [bring your Heroku app to Fly.io](/launch/turboku). Read more 
 
 Check out our other [Web Launchers](/launch), too.
 
-## Troubleshooting Deployments
+## [Troubleshooting Deployments](getting-started/launch/troubleshooting)
 
 If you run into trouble deploying your app, check out the [Troubleshooting Deployments](/docs/getting-started/troubleshooting-deployments/) guide.
 
