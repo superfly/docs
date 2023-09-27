@@ -63,6 +63,6 @@ You can see the list of Fly.io regions any time with [`fly platform regions`](ht
 
 You can see which regions your app is running in with [`fly status`](https://fly.io/docs/flyctl/status/).
 
-[Fly volumes](/docs/reference/volumes/) and [Fly Machines](/docs/machines/) are tied to the region they're created in.
+[Fly Volumes](/docs/reference/volumes/) and [Fly Machines](/docs/machines/) are tied to the region they're created in.
 
 When an application instance is started, the three-letter name for the region it's running in is stored in the VM's `FLY_REGION`  environment variable. This, along with other [Runtime Environment](/docs/reference/runtime-environment/) information, is visible to your app running on that instance.

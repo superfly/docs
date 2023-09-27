@@ -1,0 +1,34 @@
+---
+title: "Fly Volumes"
+layout: docs
+nav: firecracker
+toc: false
+order: 10
+---
+
+Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/).
+
+## Learn
+
+Understand how volumes work and whether they're right for your use case.
+
+[Fly Volumes overview](/docs/reference/volumes/)
+
+## How-Tos
+
+Get things done with volumes.
+
+[Add volume storage](/docs/apps/volume-storage/)
+
+[Manage volume storage](/docs/apps/volume-manage/)
+
+Related how-tos:
+
+[Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)
+
+## Reference
+
+Commands and APIs for volumes.
+
+- [flyctl commands - `fly volumes`](/docs/flyctl/volumes/)
+- [Machines API - Volumes](https://docs.machines.dev/swagger/index.html#/Volumes)
