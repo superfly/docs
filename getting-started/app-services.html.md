@@ -53,7 +53,7 @@ To have Fly Proxy route requests to an app from the public internet, provision a
 
 #### Private (Flycast) apps
 
-To have Fly Proxy load-balance among VMs on a non-public app, [allocate a _private_ (Flycast) IPv6 address](/docs/reference/private-networking/#assigning-a-flycast-address) using `fly ips allocate-v6 --private`, and **remove any public IPs from the app** using `fly ips release`. A Flycast IP can only be reached from within the private network it's allocated on, which must belong to the same Fly Organization as the Fly App it points to. 
+To have Fly Proxy load-balance among VMs on a non-public app, [allocate a _private_ (Flycast) IPv6 address](/docs/reference/private-networking/#assigning-a-flycast-address) using `fly ips allocate-v6 --private`, and **remove any public IPs from the app** using `fly ips release <address>`. A Flycast IP can only be reached from within the private network it's allocated on, which must belong to the same Fly Organization as the Fly App it points to. 
 
 <section class="warning icon">
 If your configuration includes any services for Fly Proxy to route to, and the app has a public IP, that service is exposed to the whole internet.</section>

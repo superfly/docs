@@ -37,7 +37,7 @@ If you want to allocate a shared IPv4 to an app without a public IPv4 address, t
 fly ips allocate-v4 --shared
 ```
 
-This command will fail if the app has a dedicated IPv4 address. You can release an IP with `fly ips release`.
+This command will fail if the app has a dedicated IPv4 address. You can release an IP with `fly ips release <address>`.
 
 ### Dedicated IPv4
 
