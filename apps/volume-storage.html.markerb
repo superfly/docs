@@ -1,7 +1,7 @@
 ---
 title: Add volume storage
 layout: docs
-nav: volumes
+nav: firecracker
 order: 30
 ---
 
@@ -9,9 +9,9 @@ Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). Le
 
 ## Launch a new app with a Fly Volume
 
-Launch a new app with one Machine and an attached volume, and then clone the Machine to scale out.
+Use [Fly Launch](/docs/apps/) to create a new app with one Machine and an attached volume, and then clone the Machine to scale out.
 
-1. Launch a new app, and type `N` at the "deploy now?" prompt:
+1. Launch a new app from your project source directory, and type `N` at the "deploy now?" prompt:
 
     ```cmd
     fly launch 
@@ -41,7 +41,7 @@ Launch a new app with one Machine and an attached volume, and then clone the Mac
 
 1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
 
-1. (Recommended) Clone the first Machine to scale out to two Machines with volumes:
+1. (Recommended if your app handles replication) Clone the first Machine to scale out to two Machines with volumes:
 
     ```cmd
     fly machine clone <machine id>
@@ -65,6 +65,8 @@ Launch a new app with one Machine and an attached volume, and then clone the Mac
 </div>
 
 ## Add volumes to an existing app
+
+Add a volume to an app created with [Fly Launch](/docs/apps/).
 
 1. Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`, where `source` is the volume name and `destination` is the directory where the volume should be mounted on the Machine file system. For example:
 

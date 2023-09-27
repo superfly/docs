@@ -1,13 +1,13 @@
 ---
 title: Manage volume storage
 layout: docs
-nav: volumes
+nav: firecracker
 order: 40
 ---
 
 Manage Fly Volumes using the [`fly volumes`](/docs/flyctl/volumes/) command.
 
-<div class="callout">**Note**: `fly volumes` is aliased to `fly volume` and `fly vol`.</div>
+<div class="note icon">**Note**: `fly volumes` is aliased to `fly volume` and `fly vol`.</div>
 
 ## Create a volume
 

@@ -1,7 +1,7 @@
 ---
 title: Fly Volumes overview
 layout: docs
-nav: volumes
+nav: firecracker
 order: 20
 ---
 
@@ -24,8 +24,8 @@ If volumes don't work for your use case, then explore other options for data sto
 
 ## Volume redundancy
 
-<div class="warning">
-<b>Always run at least two volumes per app.</b> We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each machine should have an attached volume. If you only have one Machine and volume, then you'll have downtime if there's a host or network failure, and whenever you deploy your app. Also remember that volumes don't have built-in replication between them.
+<div class="important icon">
+<b>Important: Always run at least two volumes per app.</b> We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each machine should have an attached volume. If you only have one Machine and volume, then you'll have downtime if there's a host or network failure, and whenever you deploy your app. Also remember that volumes don't have built-in replication between them.
 </div>
 
 In a few cases, you can run a single Machine with an attached volume. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not yet worried about downtime.

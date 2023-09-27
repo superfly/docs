@@ -1,7 +1,7 @@
 ---
 title: "Fly Volumes"
 layout: docs
-nav: volumes
+nav: firecracker
 toc: false
 order: 10
 ---
@@ -22,7 +22,7 @@ Get things done with volumes.
 
 [Manage volume storage](/docs/apps/volume-manage/)
 
-More volume how-tos:
+Related how-tos:
 
 [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)
 
