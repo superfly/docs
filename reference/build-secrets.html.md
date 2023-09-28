@@ -48,3 +48,56 @@ echo -n "secret_value" > mysecret.txt
 
 docker build --secret id=MY_SUPER_SECRET,src=mysecret.txt .
 ```
+
+## Automate the inclusion of build secrets using an ephemeral machine
+
+The above requires you to have access to the values of secrets and to
+provide those values on the command line. If this poses a problem, an
+alternative may be to create an ephemeral machine using the `fly console`
+command to do the deployment.
+
+An example Dockerfile you can use for that purpose:
+
+```dockerfile
+# syntax = docker/dockerfile:1
+
+FROM flyio/flyctl:latest as flyio
+FROM debian:bullseye-slim
+
+RUN apt-get update; apt-get install -y ca-certificates jq
+
+COPY <<"EOF" /srv/deploy.sh
+#!/bin/bash
+deploy=(flyctl deploy)
+touch /srv/.secrets
+
+while read -r secret; do
+  echo "export ${secret}=${!secret}" >> /srv/.secrets
+  deploy+=(--build-secret "${secret}=${!secret}")
+done < <(flyctl secrets list --json | jq -r ".[].Name")
+
+deploy+=(--build-secret "ALL_SECRETS=$(base64 --wrap=0 /srv/.secrets)")
+${deploy[@]}
+EOF
+
+RUN chmod +x /srv/deploy.sh
+
+COPY --from=flyio /flyctl /usr/bin
+
+WORKDIR /build
+COPY . .
+```
+
+The `deploy.sh` script contained within this Dockerfile will provide each secret individually as well as package up a script to set all secrets at once.  You can set all build secrets at once in your Dockerfile using:
+
+```dockerfile
+RUN --mount=type=secret,id=ALL_SECRETS \
+    eval "$(base64 -d /run/secrets/ALL_SECRETS)" && \
+    some_command
+```
+
+Assuming your builder Dockerfile is named `Dockerfile.builder`, you can launch the emphemeral machine using the following command:
+
+```cmd
+flyctl console --dockerfile Dockerfile.builder -C "/srv/deploy.sh" --env=FLY_API_TOKEN=$(fly auth token)
+```
