@@ -21,10 +21,14 @@ order: 1
                 <b><%= param.name%></b> <i><%= param.type %></i>- <%= param.description %>
                 <% if param.schema %>
                   <ul>
-                    <% Machine.api.definition(param.schema).properties.each do |prop| %>
+                    <% Machine.api.definition(param.schema).properties.map{ |prop| Machine::Property.new(*prop) }.each do |prop| %>
                       <li>
-                        <b><%= prop[0] %></b> - <i><%= handle_type(prop[1]) %></i>
-                        <%= prop[1]["description"] %>
+                        <b><%= prop.name %></b> - <i><%= prop.type %></i>
+                        <p><%= prop.cardinality %></p>
+                        <p><%= prop.description %></p>
+                        <% if prop.ref %>
+                          <%= link_to prop.ref.name, anchor: normalize_type_name(prop.ref.name) %>
+                        <% end %>
                       </li>
                     <% end %>
                   </ul>
@@ -40,10 +44,14 @@ order: 1
         <% if resp.schema %>
           <% if Machine.api.definition(resp.schema) %>
             <ul>
-              <% Machine.api.definition(resp.schema).properties.each do |prop| %>
+              <% Machine.api.definition(resp.schema).properties.map{ |prop| Machine::Property.new(*prop) }.each do |prop| %>
                 <li>
-                  <b><%= prop[0] %></b> - <i><%= handle_type(prop[1]) %></i>
-                  <%= prop[1]["description"] %>
+                  <b><%= prop.name %></b> - <i><%= prop.type %></i>
+                  <p><%= prop.cardinality %></p>
+                  <p><%= prop.description %></p>
+                  <% if prop.ref %>
+                    <%= link_to prop.ref.name, anchor: normalize_type_name(prop.ref.name) %>
+                  <% end %>
                 </li>
               <% end %>
             </ul>
