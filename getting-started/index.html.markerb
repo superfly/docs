@@ -8,8 +8,6 @@ navigation:
     children: docs/getting-started/speed-run/*.html.*
   - href: /docs/getting-started/infrastructure
     children: docs/getting-started/infrastructure/*.html.*
-  - href: /docs/getting-started/platform
-    children: docs/getting-started/platform/*.html.*
 ---
 
 <figure class="w:full mt:6">
