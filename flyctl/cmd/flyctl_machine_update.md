@@ -38,7 +38,7 @@ flyctl machine update [machine_id] [flags]
       --standby-for strings        Comma separated list of machine ids to watch for
       --vm-cpu-kind string         The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                Number of CPUs
-      --vm-memory int              Memory (in megabytes) to attribute to the VM
+      --vm-memory string           Memory (in megabytes) to attribute to the VM
       --vm-size string             The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --wait-timeout int           Seconds to wait for individual machines to transition states and become healthy. (default 300) (default 300)
   -y, --yes                        Accept all confirmations

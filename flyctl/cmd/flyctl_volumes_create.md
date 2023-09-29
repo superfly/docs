@@ -23,7 +23,7 @@ flyctl volumes create <volumename> [flags]
       --snapshot-id string          Create volume from a specified snapshot
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
-      --vm-memory int               Memory (in megabytes) to attribute to the VM
+      --vm-memory string            Memory (in megabytes) to attribute to the VM
       --vm-size string              The VM size to set machines to. See "fly platform vm-sizes" for valid values
   -y, --yes                         Accept all confirmations
 ~~~
