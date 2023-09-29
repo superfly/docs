@@ -1,0 +1,54 @@
+---
+title: Troubleshoot apps when a host is unavailable
+objective: 
+layout: docs
+nav: firecracker
+---
+
+A host on Fly.io could be unavailable because of a hardware failure, connectivity issues, or other reasons. A host issue might mean a complete or intermittent outage, or generally degraded performance. A host could be down for an hour or a day. We understand that this can be frustrating if your app doesn't have extra Machines or replicated databases available for redundancy, and we want you to be able to recover from a host issue as quickly as possible.
+
+<div class="important icon">
+<b>Important:</b> The steps for recovery in this document don't guarantee that you'll be able to access your app if you have a single Machine, or a single Machine with an attached volume, on an a host that's affected by an ongoing issue.
+</div>
+
+## Notification of host issues
+
+You'll get a notification in your dashboard when there's a host issue that affects one or more of your apps. We don't post individual host issues to our main status page because host issue usually affect a small number of users.
+
+## Remote builder app is on an unavailable host
+
+(Could this still happen or does it get moved automagically?) 
+
+You can destroy the fly builder app and you'll get a new builder app on your next deploy.
+
+1. In your dashboard, find the builder app in the list of apps. The app name is always `fly-builder-<some name>`.
+2. Click the app name, go to Settings, and delete the app. Or run `fly apps destroy fly-builder-<some name>` in your terminal to delete the app.
+
+## Can;t deploy an app with one Machine and no volumes
+
+1. Scale the app to zero Machines:
+
+```cmd
+fly scale count 0
+```
+
+2. Deploy the app:
+
+```cmd
+fly deploy
+```
+
+## Can't deploy an app with one Machine and an attached volume
+
+(Not sure about this one. Create a volume from a snapshot or fork the volume, destroy the Machine and then deploy?)
+
+## Database apps
+
+If your database is located on an unavailable host, and you don’t have any replicas to fail over to then you won’t be able to connect. 
+
+## Prevent downtime when there's a host issue
+
+Fly.io recommends running at least two Machines per app in your primary region and we have features that can help make [app availability and resiliency](docs/reference/app-availability/) more affordable.
+
+(Is this Postgres only?) For databases we run each instance on a separate physical host in the primary region. If one host goes down, we’ll fail over to the healthy host.
+
