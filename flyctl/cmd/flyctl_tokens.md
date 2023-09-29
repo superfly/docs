@@ -6,7 +6,9 @@ flyctl tokens [command] [flags]
 ~~~
 
 ## Available Commands
+* [attenuate](/docs/flyctl/tokens-attenuate/)	 - Attenuate Fly.io API tokens
 * [create](/docs/flyctl/tokens-create/)	 - Create Fly.io API tokens
+* [debug](/docs/flyctl/tokens-debug/)	 - Debug Fly.io API tokens
 * [list](/docs/flyctl/tokens-list/)	 - List tokens
 * [revoke](/docs/flyctl/tokens-revoke/)	 - Revoke tokens
 
