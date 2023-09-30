@@ -20,9 +20,9 @@ more information.
 
 If your application works locally but doesn't work when deployed this may be due to
 dependencies which are installed globally rather than being enumerated in the
-package.json file.  In order to deploy an application, it needs to be self contained.
+package.json file.  In order to deploy an application, it needs to be self-contained.
 
-You can resolve this by adding the dependency to your package.json, typically by
+You can resolve this by adding the dependency to your `package.json`, typically by
 using a command such as `yarn add` or `npm install`.
 
 ## Mis-categorized dependencies
