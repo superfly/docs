@@ -7,7 +7,7 @@ order: 0
 
 The recommended way to deploy Bun, Deno, and Node.js applications is via
 [Dockerfiles](https://docs.docker.com/engine/reference/builder/).  You can
-provide your own Dockerfile or you can let fly.io's
+provide your own Dockerfile or you can let Fly.io's
 [dockerfile generator](https://github.com/fly-apps/dockerfile-node#overview)
 produce one for you.
 
