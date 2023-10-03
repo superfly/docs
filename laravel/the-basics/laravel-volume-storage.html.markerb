@@ -17,13 +17,32 @@ It's the default burrow for session, cache, and file data amongst others. If you
     ```cmd
     cd <laravel-fly-configured-app>
     ```
-2.  [Create a volume](/docs/flyctl/volumes-create/), you'll be attaching this later to your Laravel Fly App's storage directory 
+2.  Then, check the number of machines currently available for your Fly App:
 
     ```cmd
-    fly volumes create storage_vol --region ams --size 20 
+    fly status
     ```
 
-3.  Revise your Laravel Fly App's `fly.toml` file to mount the volume created for your storage directory:
+    In this example today, the app is deployed in the AMS region, and has the [default number of two machines](https://fly.io/docs/reference/app-availability/#two-machines-for-process-groups-with-services) created for it:
+    ```cmd
+
+    Machines
+    PROCESS ID              VERSION REGION  STATE   ROLE    CHECKS  LAST UPDATED         
+    app     5683945bd46448  1       ams     started                 2023-10-03T09:54:04Z
+    app     e82d922f010908  1       ams     started                 2023-10-03T09:54:25Z
+    ```
+
+    
+2.  There's [a bunch of considerations](https://fly.io/docs/reference/volumes/#volume-considerations) to take note of when attaching a volume to a Fly App. A very important combination of notes is that&mdash;1) a specific volume can only be attached to one Fly App, and&mdash;2) that volume must have the same number of instances available as the number of machines for the Fly App.
+
+    Since you have two machines in the AMS region, you'd have to create two instances of a volume in the AMS region. This way, each volume instance will attach to each machine. You can easily create a number of specific volume instances in a region through the `fly volumes create` [command](https://fly.io/docs/flyctl/volumes-create/): 
+
+    ```cmd
+    fly volumes create storage_vol --region ams --count 2 
+    ```
+    The above will create two instances of a "storage_vol" volume in the AMS region.
+
+3.  Now that you have an applicable volume to attach to your Laravel Fly App, it's time to mount that volume to the Fly App. Revise your Laravel Fly App's `fly.toml` file to mount the volume created for your storage directory:
 
     ```
     [mounts]
@@ -73,6 +92,10 @@ It's the default burrow for session, cache, and file data amongst others. If you
     ```cmd
     fly deploy
     ```
+
+<div class="callout">
+Fly Volume instances do not automatically sync their data with each other. Please remember to create the appropriate data-replication logic if your Fly App will be using more than one volume instance, and if your app requires data available across the volume instances.
+</div>
 
 #### **_Possible Errors_**
 
