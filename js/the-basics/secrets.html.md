@@ -24,3 +24,8 @@ fly secrets import < .dotenv
 ```
 
 Both commands will restart your application if it has previously been deployed.  Pass the `--stage` option if you would rather deploy these changes later.
+
+Once deployed, your application can access secrets using
+[process.env](https://nodejs.org/dist/latest-v8.x/docs/api/process.html#process_process_env),
+[Deno.env](https://docs.deno.com/runtime/manual/basics/env_variables), or
+[Bun.env](https://bun.sh/guides/runtime/read-env).
