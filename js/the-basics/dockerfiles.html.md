@@ -17,7 +17,7 @@ Launching applications on Fly can be as simple as running:
 fly launch
 ```
 
-In most cases you won't ever need to edit this Dockerfile directly.  Instead you will be
+In most cases you won't ever need to edit the Dockerfile `fly launch` provides for you directly.  Instead you will be
 able to use one or more of the many [options](https://github.com/fly-apps/dockerfile-node#options)
 to make changes.  For example:
 
