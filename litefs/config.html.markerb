@@ -75,7 +75,7 @@ fuse:
 
 ## Internal data directory
 
-LiteFS acts as a passthrough filesystem so all your database files still need to
+LiteFS acts as a passthrough file system so all your database files still need to
 be stored internally on a regular file system. This internal data directory
 should be saved on a persistent volume so you don't lose your data between restarts.
 
@@ -171,6 +171,11 @@ proxy:
   # the only available wildcard. These requests are passed
   # through to the target as-is.
   passthrough: ["/debug/*", "*.png"]
+
+  # The duration to hold write requests when no primary is available.
+  # This is helpful when a primary switches over and there is a small window
+  # where the new primary is unknown to the replica.
+  primary-redirect-timeout: "5s"
 ```
 
 
@@ -202,6 +207,11 @@ lease:
   # "static" leasing, this should be set to true on the primary
   # and false on the replicas.
   candidate: true
+
+  # Filtered list of databases to replicate from the primary to this node.
+  # If no databases are specified, all databases are replicated. You may only
+  # filter databases on non-candidate nodes.
+  databases: [ "my.db", "myother.db" ]
 ```
 
 
