@@ -17,6 +17,7 @@ It's the default burrow for session, cache, and file data amongst others. If you
     ```cmd
     cd <laravel-fly-configured-app>
     ```
+
 2.  Then, check the number of machines currently available for your Fly App:
 
     ```cmd
@@ -33,16 +34,13 @@ It's the default burrow for session, cache, and file data amongst others. If you
     ```
 
     
-2.  There's [a bunch of considerations](https://fly.io/docs/reference/volumes/#volume-considerations) to take note of when attaching a volume to a Fly App. A very important combination of notes is that&mdash;1) a specific volume can only be attached to one Fly App, and&mdash;2) that volume must have the same number of instances available as the number of machines for the Fly App.
-
-    Since you have two machines in the AMS region, you'd have to create two instances of a volume in the AMS region. This way, each volume instance will attach to each machine. You can easily create a number of specific volume instances in a region through the `fly volumes create` [command](https://fly.io/docs/flyctl/volumes-create/): 
-
+3.  To mount a volume named `"storage_vol"` to this Fly App, you'll have to create two `"storage_vol"` volumes in the AMS region, [one for each machine](https://fly.io/docs/reference/volumes/#volume-considerations):
     ```cmd
     fly volumes create storage_vol --region ams --count 2 
     ```
-    The above will create two instances of a "storage_vol" volume in the AMS region.
-
-3.  Now that you have an applicable volume to attach to your Laravel Fly App, it's time to mount that volume to the Fly App. Revise your Laravel Fly App's `fly.toml` file to mount the volume created for your storage directory:
+    Running the command above should create two separate volumes with the name "storage_vol", in the AMS region for your Laravel Fly App.
+   
+4.  Next, revise your Laravel Fly App's `fly.toml` file to mount the Volumes above to each machine's storage folder:
 
     ```
     [mounts]
@@ -50,14 +48,17 @@ It's the default burrow for session, cache, and file data amongst others. If you
       destination="/var/www/html/storage"
     ```
 
-    Mounting a Volume to a folder will initially erase any item it contains during the first time the Volume is mounted for the folder.
-    
-    For example, Laravel's storage folder contains subfolders: app, framework, and logs. 
-    Mounting the volume to the storage folder erases these directories, and leaves behind a sole item paradoxically named as "lost+found". 
-    
-    But, you wouldn't want to only be left with "lost+found" in your storage folder. You'd want to still have the necessary files and directories in there for successful session, views, caching, and file storage compliance with Laravel's default configuration.
+      <div class="callout">
+      Mounting a Volume to a folder will initially erase any item the folder contains during the first time the Volume is mounted for the folder.
+      <br><br>
+      For example, Laravel's storage folder contains subfolders: app, framework, and logs. 
+      Mounting a volume to the storage folder erases these directories, and leaves behind a sole item paradoxically named as "lost+found". 
+      <br><br>
+      But, you wouldn't want to only be left with "lost+found" in your storage folder. You'd want to still have the necessary files and directories in there for successful session, views, caching, and file storage compliance with Laravel's default configuration.
+      </div>
 
-4.  To fix the little storage-content-erasure issue as stated in the callout above, please go ahead and make a copy of your storage folder in a "backup" folder. You can name this directory "storage_".
+
+5.  To fix the little storage-content-erasure issue as stated in the callout above, please go ahead and make a copy of your storage folder in a "backup" folder. You can name this directory "storage_".
 
     ```cmd
     cp -r storage storage_
@@ -65,7 +66,7 @@ It's the default burrow for session, cache, and file data amongst others. If you
 
     You'll later use this folder to copy over its contents to the volumized storage folder.
 
-5.  Next create a [Startup Script](/docs/laravel/the-basics/customizing-deployments/) that will initialize the volumized storage folder's contents.
+6.  Next create a [Startup Script](/docs/laravel/the-basics/customizing-deployments/) that will initialize the volumized storage folder's contents.
     ```cmd
     touch .fly/scripts/1_storage_init.sh
     ```
@@ -87,7 +88,7 @@ It's the default burrow for session, cache, and file data amongst others. If you
     So what happened above?
     - The condition statement checks if the app folder does not exist in the volumized storage folder. If it does not exist, it copies over the contents of the storage_ folder to the volumized storage folder.
 
-6. <b>Finally, deploy your Laravel Fly App!</b>
+7. <b>Finally, deploy your Laravel Fly App!</b>
 
     ```cmd
     fly deploy
