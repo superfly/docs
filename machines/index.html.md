@@ -6,22 +6,14 @@ toc: false
 redirect_from: /docs/reference/machines/
 ---
 
-Fly Machines are [Firecracker VMs](https://firecracker-microvm.github.io/) with a fast REST API that can boot instances in about 300ms, in any region supported by [Fly.io](https://fly.io/docs/reference/regions/).
+Fly Machines are fast-booting VMs that Fly Launch uses to orchestrate Fly apps. You also get low-level control of Machines through the Machines API and the flyctl command line tool.
 
-Machines are the VM building blocks for the [Fly Apps](/docs/apps/) Platform, but you can also configure, start and stop individual Machines directly. 
+## Learn
 
-The [Machines API](/docs/machines/working-with-machines/) gives you efficient, low-level control over VM provisioning, supported by Fly.io infrastructure and networking features.
+[Fly Machines overview](/docs/machines/machines-overview)
 
-Machines are also the spawning ground for new platform features like *wake-on-request* (also known as *scale-to-zero*). You can
-stop a running machine to save on compute costs. It then may be started automatically when a request arrives at the Fly proxy.
+## How-Tos
 
-[Read the Fly Machines announcement post.](https://fly.io/blog/fly-machines/)
+## Reference
 
-## Machine Features
-
-1. They can be managed by API
-1. They turn off automatically when a program exits
-1. They can be started very quickly
-1. Restarted machines are a blank slate - they are ephemeral
-1. They can be started manually, but can also wake on network access
-1. You can run multiple machines within an application
+- [Machines API](/docs/machines/working-with-machines/)
