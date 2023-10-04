@@ -89,7 +89,7 @@ It's the default burrow for session, cache, and file data amongst others. If you
     - The condition statement checks if the app folder does not exist in the volumized storage folder. If it does not exist, it copies over the contents of the storage_ folder to the volumized storage folder.
 
 7. <b>Finally, deploy your Laravel Fly App!</b>
-
+ 
     ```cmd
     fly deploy
     ```
