@@ -24,7 +24,6 @@ Flycast
 flyctl
 flyd
 fly.toml
-Fly Proxy
 Gemfile
 Grafana
 Gunicorn
