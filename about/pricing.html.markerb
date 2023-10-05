@@ -85,6 +85,17 @@ We bill for outbound data transfer from the region a VM is running in, inbound t
 
 <%= partial("shared/network_pricing") %>
 
+
+## LiteFS Cloud
+
+[LiteFS Cloud](http://localhost:4567/docs/litefs/cloud-backups) is a service
+that provides streaming backups and point-in-time restore for your SQLite-based
+applications that use [LiteFS](/docs/litefs).
+
+- $5 per month for up to 10GB of database storage.
+- Additional $0.50/GB per month for database storage above 10GB.
+
+
 ## _Support_
 
 [Community support](https://community.fly.io) is included for all customers, regardless of usage level.
