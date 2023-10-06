@@ -12,7 +12,7 @@ If you have an existing Elixir app that you want to move over to Fly, this guide
 
 To configure and launch your Elixir app, you can use `fly launch` and follow the wizard.
 
-<%= partial "docs/languages-and-frameworks/partials/launch_with_postgres", locals: { detected: "Phoenix", app_name: "<app_name>" } %>
+<%= partial "docs/languages-and-frameworks/partials/launch_with_postgres", locals: { detected: "Phoenix", app_name: "app_name" } %>
 
 You can set a name for the app, choose a default region, and choose to launch and attach a PostgreSQL database.
 
