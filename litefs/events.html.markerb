@@ -82,7 +82,7 @@ primary status, connects to a primary, or loses its connection to the primary.
 
 ```
 {
-    "type": "init",
+    "type": "primaryChange",
     "data": {
         "isPrimary": false,
         "hostname": "myPrimaryHost:20202"
