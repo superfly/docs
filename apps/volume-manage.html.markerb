@@ -62,7 +62,7 @@ You can extend (increase) a volume's size, but you can't make a volume smaller.
     /dev/vdb         2043856   3072   1930400   1% /storage
     ```
 
-    In the preceding example, the volume is mounted under `/storage` and has been resized to 2GB. The `df` command shows disk space in 1K blocks by default. Use the `-h` flag to return a more human-readable format.
+    In the preceding example, the volume is mounted under `/storage` and has been resized to from 1GB to 2GB. The `df` command shows disk space in 1K blocks by default. Use the `-h` flag to return a more human-readable format.
 
 For options, refer to the [`fly volumes extend` docs](/docs/flyctl/volumes-extend/) or run `fly vol extend -h`.
 
