@@ -14,10 +14,37 @@ processes can pass messages seamlessly to each other between nodes. Fly.io makes
 clustering easy! This extra (and totally optional) portion of the guide walks
 you through clustering your Elixir application.
 
-There are 2 parts to getting clustering quickly setup on Fly.io.
+There are 3 parts to getting clustering quickly setup on Fly.io.
 
+- Naming the Node(s)
 - Installing and using `libcluster`
 - Scaling our application to multiple VMs
+
+## Naming the Node(s)
+
+To make clustering easier, we want our Elixir nodes to be named using our Fly application name and the IPv6 address assigned to the node. Then later, our cluster can form up using DNS settings based on this naming scheme.
+
+If you've run `fly launch` already then you should have a `rel` folder with a `rel/env.sh.eex` file already.
+
+If not, run this command from your Elixir application:
+
+```cmd
+mix release.init
+```
+
+Then edit the generated `rel/env.sh.eex` file and add the following lines:
+
+```shell
+ip=$(grep fly-local-6pn /etc/hosts | cut -f 1)
+export RELEASE_DISTRIBUTION=name
+export RELEASE_NODE=$FLY_APP_NAME@$ip
+```
+
+This names our Elixir node using the Fly application name and the internal IPv6 address. Make sure to deploy after making this change!
+
+```cmd
+fly deploy
+```
 
 ## Adding `libcluster`
 
