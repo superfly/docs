@@ -11,11 +11,12 @@ flyctl migrate-to-v2 [flags]
 ## Options
 
 ~~~
-  -c, --config string           Path to application configuration file
-  -h, --help                    help for migrate-to-v2
-      --primary-region string   Specify primary region if one is not set in fly.toml
-      --use-local-config        Use local fly.toml. Do not attempt to remotely fetch the app configuration from the latest deployed release
-  -y, --yes                     Accept all confirmations
+  -c, --config string              Path to application configuration file
+      --force-standard-migration   Use the standard volume fork-based migration, even for apps using the Postgres image
+  -h, --help                       help for migrate-to-v2
+      --primary-region string      Specify primary region if one is not set in fly.toml
+      --use-local-config           Use local fly.toml. Do not attempt to remotely fetch the app configuration from the latest deployed release
+  -y, --yes                        Accept all confirmations
 ~~~
 
 ## Global Options
