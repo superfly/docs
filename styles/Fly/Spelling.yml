@@ -12,6 +12,7 @@ custom: false
 
 # A "filter" is a regular expression specifying words
 # to ignore during spell checking.
+# custom Fly.io filters:
 filters:
 
   - '\w+_\w+' # ignore config option names
