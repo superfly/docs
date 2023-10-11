@@ -49,6 +49,7 @@ flyctl turboku <heroku-app-name> <heroku-api-token> [flags]
       --vm-cpus int                      Number of CPUs
       --vm-memory string                 Memory (in megabytes) to attribute to the VM
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
+      --volume-initial-size int          The initial size in GB for volumes created on first deploy (default 1)
       --wait-timeout int                 Seconds to wait for individual machines to transition states and become healthy. (default 120)
   -y, --yes                              Accept all confirmations
 ~~~
