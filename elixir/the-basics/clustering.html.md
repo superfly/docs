@@ -17,7 +17,7 @@ you through clustering your Elixir application.
 There are 3 parts to getting clustering quickly setup on Fly.io.
 
 - Naming the Node(s)
-- Installing and using `libcluster`
+- Installing and using `dns_cluster`
 - Scaling our application to multiple VMs
 
 ## Naming the Node(s)
@@ -46,25 +46,25 @@ This names our Elixir node using the Fly application name and the internal IPv6 
 fly deploy
 ```
 
-## Adding `libcluster`
+## Adding `dns_cluster`
 
-The widely adopted library [libcluster](https://github.com/bitwalker/libcluster) helps here.
+The Phoenix library [dns_cluster](https://github.com/phoenixframework/dns_cluster) helps here.
 
-Libcluster supports multiple strategies for finding and connecting with other nodes. The strategy we'll use is `DNSPoll` which was added in version 3.2.2 of `libcluster`, so make sure you're using that version or newer.
+The `dns_cluster` library lets you easily setup Erlang Clustering using DNS, and Fly.io has built in DNS support!
 
-After installing `libcluster`, add it to the application like this:
+After installing `dns_cluser`, add it to the application like this:
 
 ```elixir
 defmodule HelloElixir.Application do
   use Application
 
   def start(_type, _args) do
-    topologies = Application.get_env(:libcluster, :topologies) || []
-
     children = [
       # ...
       # setup for clustering
-      {Cluster.Supervisor, [topologies, [name: HelloElixir.ClusterSupervisor]]}
+      {Phoenix.PubSub, ...},
+      {DNSCluster, query: Application.get_env(:hello_elixir, :dns_cluster_query) || :ignore},
+      HelloElixirWeb.Endpoint
     ]
 
     # ...
@@ -74,30 +74,22 @@ defmodule HelloElixir.Application do
 end
 ```
 
-Our next step is to add the `topologies` configuration to the file `config/runtime.exs`.
+Our next step is to add the `dns_cluster_query` configuration to the file `config/runtime.exs`.
 
 ```elixir
-  app_name =
-    System.get_env("FLY_APP_NAME") ||
-      raise "FLY_APP_NAME not available"
+  config :hello_elixir, dns_cluster_query: System.get_env("DNS_CLUSTER_QUERY")
+```
 
-  config :libcluster,
-    debug: true,
-    topologies: [
-      fly6pn: [
-        strategy: Cluster.Strategy.DNSPoll,
-        config: [
-          polling_interval: 5_000,
-          query: "#{app_name}.internal",
-          node_basename: app_name
-        ]
-      ]
-    ]
+And finally add a key to our `fly.toml` file:
+
+```toml
+[env]
+  DNS_CLUSTER_QUERY = "hello-elixir.internal"
 ```
 
 **REMEMBER:** Deploy your updated app so the clustering code is available, with `fly deploy`.
 
-This configures `libcluster` to use the `DNSPoll` strategy and look for other deployed apps using the same `$FLY_APP_NAME` on the `.internal` private network.
+This configures `dns_cluster` to look for other deployed apps using the same `$FLY_APP_NAME` on the `.internal` private network.
 
 This assumes that your `rel/env.sh.eex` file is configured to name your Elixir node using the `$FLY_APP_NAME`. We did this earlier in the "Naming Your Elixir Node" section.
 
@@ -120,7 +112,7 @@ fly status
 ```output
 ...
 Machines
-PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPDATED         
+PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPDATED
 app     6e82dd00f75687  20      sea     started 1 total, 1 passing      2023-03-16T22:01:45Z
 ```
 
@@ -140,7 +132,7 @@ fly status
 ```output
 ...
 Machines
-PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPDATED         
+PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPDATED
 app     5683d474b4658e  20      sea     started 1 total, 1 passing      2023-06-16T01:49:36Z
 app     6e82dd00f75687  20      sea     started 1 total, 1 passing      2023-03-16T22:01:45Z
 ```
@@ -189,7 +181,7 @@ fly status
 ```output
 ...
 Machines
-PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPDATED         
+PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPDATED
 app     0e2869ea63d486  20      ewr     started 1 total, 1 passing      2023-06-16T01:56:19Z
 app     6e82dd00f75687  20      sea     started 1 total, 1 passing      2023-03-16T22:01:45Z
 ```
