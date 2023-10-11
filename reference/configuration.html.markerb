@@ -715,7 +715,7 @@ You can optionally restrict which Machine(s) contain the file using the [process
   processes = ["web"]
 ```
 
-To remove a previously configured file on the next deployment, set its source to an empty string. For example:
+To remove a previously configured file on the next deployment, either delete the `files` entry entirely, or set its source to an empty string like this:
 
 ```toml
 [[files]]
