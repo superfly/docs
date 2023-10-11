@@ -136,7 +136,7 @@ cURL is a useful tool for checking that a service is reachable where it should b
 |Reachable on the app<br>via internal DNS | within the app's 6PN | `curl -I http://<app-name>.internal:<port>` |
 |Reachable on a<br>particular VM | within the app's 6PN | `curl -I 'http://[<vm-6pn-address>]:<port>'`|
 
-[1] If this fails (i.e. you don't get the expected response from the service), then either (a) the service isn't functioning the way you expect (b) it's not bound to the port you pointed cURL at, or (c) it's not bound to the IPv4 address Fly Proxy uses to reach the VM, and so Fly Proxy won't be able to route to it.
+[1] If this fails (i.e. you don't get the expected response from the service), then either (a) the service isn't functioning the way you expect (b) it's not bound to the port you pointed cURL at, or (&#99;) it's not bound to the IPv4 address Fly Proxy uses to reach the VM, and so Fly Proxy won't be able to route to it.
 
 [2] Pull up an interactive shell on a VM that should be running this service, with `fly ssh console`. Don't use the `fly console` command; this brings up an ephemeral VM from the app's Docker image, but doesn't start up the same process(es), so your service won't be running there.
 
@@ -150,5 +150,5 @@ cURL is a useful tool for checking that a service is reachable where it should b
 
 [7] A Flycast IP [can be allocated](/docs/reference/private-networking/#assigning-a-flycast-address) on a different private network from the app it points to, if both networks belong to the same org. This lets your apps reach your service in a different 6PN, if the service is configured to be available over Flycast.
 
-[8] If this fails (i.e. you don't get the expected response from the service), then either (a) the service isn't functioning the way you expect, (b) it's not bound to the port you pointed cURL at, or (c) it's not bound to its 6PN address, and won't be reachable via the private WireGuard network (including at `.internal` addresses).
+[8] If this fails (i.e. you don't get the expected response from the service), then either (a) the service isn't functioning the way you expect, (b) it's not bound to the port you pointed cURL at, or (&#99;) it's not bound to its 6PN address, and won't be reachable via the private WireGuard network (including at `.internal` addresses).
 
