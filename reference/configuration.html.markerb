@@ -168,9 +168,9 @@ To run a command in a temporary VM&mdash;using the app's successfully built Dock
 
 The `release_command` value replaces `CMD` in the temporary VM. This is useful for running database migrations before app VMs are created or updated with the new release. Note that the Docker image's `ENTRYPOINT` is not overridden by the `release_command`; `ENTRYPOINT` always runs.
 
-The temporary VM has full access to the network, environment variables and secrets, but *not* to persistent volumes. Changes made to the filesystem on the temporary VM will not be retained or deployed. The building/compiling of your project should be done in your Dockerfile. If you need to modify persistent volumes or configure your application, consider making use of `CMD` or `ENTRYPOINT` in your Dockerfile, or of a [process group command](#the-processes-section).
+The temporary VM has full access to the network, environment variables and secrets, but *not* to persistent volumes. Changes made to the file system on the temporary VM will not be retained or deployed. The building/compiling of your project should be done in your Dockerfile. If you need to modify persistent volumes or configure your application, consider making use of `CMD` or `ENTRYPOINT` in your Dockerfile, or of a [process group command](#the-processes-section).
 
-The temporary VM inherits the size from the largest machine in the default process group of the app as of flyctl v0.0.508 (they also default larger on empty/new apps, using the machine `shared-cpu-2x` preset).
+The temporary VM inherits the size from the largest Machine in the default process group of the app as of flyctl v0.0.508 (they also default larger on empty/new apps, using the Machine `shared-cpu-2x` preset).
 
 A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
 
@@ -243,13 +243,13 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
 
 * `processes`: For apps with multiple processes. The process group that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
 * `internal_port`: The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
-* `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
-* `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs a process to automatically stop machines every few minutes. The default is `true`.
-* `auto_start_machines`: Whether to automatically start an application's machines when a new request is made to the application and there's no excess capacity, per region. If there's only one machine in a region, then it's started whenever a request is made to the application. The default is `true`.
+* `force_https`: A Boolean which determines whether to enforce HTTP to HTTPS redirects.
+* `auto_stop_machines`: Whether to automatically stop an application's Machines when there's excess capacity, per region. If there's only one Machine in a region, then the Machine is stopped if it has no traffic. The Fly Proxy runs a process to automatically stop Machines every few minutes. The default is `true`.
+* `auto_start_machines`: Whether to automatically start an application's Machines when a new request is made to the application and there's no excess capacity, per region. If there's only one Machine in a region, then it's started whenever a request is made to the application. The default is `true`.
 * `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines = true`.
 
 <div class="callout">
-We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having machines that either never start or never stop. Learn more about [automatically starting and stopping V2 app Fly machines](/docs/apps/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
+We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having Machines that either never start or never stop. Learn more about [automatically starting and stopping Machines](/docs/apps/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
 </div>
 
 ### `http_service.concurrency`
@@ -258,9 +258,9 @@ The `[http_service.concurrency]` section has the same settings as `[services.con
 
 * `type` specifies what metric is used to determine when to scale up and down, or when a given instance should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
 
-**connections**: Load balance and scale based on the number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
+**connections**: Load balance and scale based on the number of concurrent TCP connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
 
-**requests**: Load balance and scale based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
+**requests**: Load balance and scale based on the number of HTTP requests. This is recommended for web services, since multiple requests can be sent over a single TCP connection.
 
 * `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
 * `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application supports doing so.
@@ -297,7 +297,7 @@ Fly.io can also terminate TLS only and pass through directly to your service. Fo
 
 ### `http_service.checks`
 
-To configure health checks for your http service, you can use the `http_service.checks` section. These checks expect a successful HTTP status in response (i.e, 2xx). Here is an example of a `http_service.checks` section:
+To configure health checks for your HTTP service, you can use the `http_service.checks` section. These checks expect a successful HTTP status in response (i.e, 2xx). Here is an example of a `http_service.checks` section:
 
 ```toml
 [[http_service.checks]]
@@ -354,12 +354,12 @@ Settings:
 * `processes`: For apps with multiple process groups, the process group or groups that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
 * `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `protocol` : The protocol that this service will use to communicate. Typically `tcp` for most applications, but can also be `udp`.
-* `auto_stop_machines`: Whether to automatically stop an application's machines when there's excess capacity, per region. If there's only one machine in a region, then the machine is stopped if it has no traffic. The Fly Proxy runs the checks to automatically stop machines every few minutes. The default is `true`.
-* `auto_start_machines`: Whether to automatically start an application's machines when a new request is made to the application and there's no excess capacity, per region. If there's only one machine in a region, then it's started whenever a request is made to the application. The default is `true`.
+* `auto_stop_machines`: Whether to automatically stop an application's Machines when there's excess capacity, per region. If there's only one Machine in a region, then the Machine is stopped if it has no traffic. The Fly Proxy runs the checks to automatically stop Machines every few minutes. The default is `true`.
+* `auto_start_machines`: Whether to automatically start an application's Machines when a new request is made to the application and there's no excess capacity, per region. If there's only one Machine in a region, then it's started whenever a request is made to the application. The default is `true`.
 * `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines = true`.
 
 <div class="callout">
-We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having machines that either never start or never stop. Learn more about [automatically starting and stopping V2 app Fly machines](/docs/apps/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
+We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having Machines that either never start or never stop. Learn more about [automatically starting and stopping Machines](/docs/apps/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
 </div>
 
 ### `services.ports`
@@ -380,7 +380,7 @@ This example defines an HTTP handler on port 80.
 * `port` : An integer representing the external port to listen on (ports 1-65535).
 * `start_port` : For a port range, the first port to listen on.
 * `end_port` : For a port range, the last port to listen on.
-* `force_https`: A boolean which determines whether to enforce HTTP to HTTPS redirects.
+* `force_https`: A Boolean which determines whether to enforce HTTP to HTTPS redirects.
 
 You can have more than one `services.ports` section. The default configuration, for example, contains two. We've already seen one above. The second one defines an external port 443 for secure connections, using the `tls` handler.
 
@@ -477,9 +477,9 @@ This section is a simple list of key/values, so the section is denoted with sing
 
 `type` specifies what metric is used to determine when a given instance has reached a concurrency limit. The two supported values are `connections` and `requests`.
 
-**connections**: Load balance based on the number of concurrent tcp connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
+**connections**: Load balance based on the number of concurrent TCP connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
 
-**requests**: Load balance based on the number of http requests. This is recommended for web services, since multiple requests can be sent over a single tcp connection.
+**requests**: Load balance based on the number of HTTP requests. This is recommended for web services, since multiple requests can be sent over a single TCP connection.
 
 * `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. For Nomad apps only, the system will bring up another instance if the autoscaling policy supports doing so.
 * `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. For Nomad apps only, the system will likely bring up another instance if the auto scaling policy for the application supports doing so.
@@ -597,7 +597,7 @@ Fields are very similar to `[[services.checks]]`:
 * `interval`: The time between check runs. If your `grace_period` is shorter than your app's startup time, and `interval` is too long, checks will increase deployment times.
 * `processes`: For apps with multiple processes. The process group to apply the health checks to. Define process groups in the [processes](#the-processes-section) section.
 
-For http checks only:
+For HTTP checks only:
 
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
@@ -610,7 +610,7 @@ Again, times are in milliseconds unless units are specified.
 
 The `processes` section allows you to define process groups to be run on separate VMs within a single app. Learn more about [running multiple process groups in an app](/docs/apps/processes/).
 
-**Each machine can run a different command on start**, allowing you to re-use your code base for different tasks (web server, queue worker, etc).
+**Each Machine can run a different command on start**, allowing you to re-use your code base for different tasks (web server, queue worker, etc).
 
 To run multiple processes, you'll need a `[processes]` block containing a map of a name and command to start the application.
 
@@ -715,7 +715,7 @@ You can optionally restrict which Machine(s) contain the file using the [process
   processes = ["web"]
 ```
 
-To remove a previously configured file on the next deployment, set its source to an empty string. For example:
+To remove a previously configured file on the next deployment, either delete the `files` entry entirely, or set its source to an empty string like this:
 
 ```toml
 [[files]]
