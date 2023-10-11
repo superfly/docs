@@ -75,6 +75,7 @@ repo
 Resque
 RTT
 runtimes?\b
+Ruygt
 (?i)sequelize
 (?i)serverless
 Sidekiq
