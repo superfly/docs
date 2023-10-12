@@ -10,17 +10,22 @@ Machines are the VM building blocks for [Fly Launch](/docs/launch/), but you can
 - The [Machines API](/docs/machines/working-with-machines/) gives you efficient, low-level control over VM provisioning, supported by Fly.io infrastructure and networking features. 
 - The [Fly.io CLI](/docs/flyctl), flyctl, gives you full-featured `fly machines` commands to manage and access Machines. 
 
-Machines are also the spawning ground for features like *wake-on-request* (also known as *scale-to-zero*). Machines can be started and stopped automatically, based on traffic, to save on compute costs.
+Machines spawn features like *wake-on-request* (also known as *scale-to-zero*). Machines can be started and stopped automatically, based on traffic, to save on compute costs.
 
 ## Fly Machine features
 
-Some key features of Machines:
+Some key features of Fly Machines:
 
-- managed by the Machines API or flyctl commands
-- stop automatically when a program exits
-- fast to start up
-- ephemeral storage, but can also attach a volume for persistent storage
-- stop or start Machines manually, or configure them to stop and start automatically based on traffic
-- run multiple machines within an application for redundancy
+- Managed by the Machines API or flyctl commands
+- Stop automatically when a program exits
+- Stop or start Machines manually, or configure them to stop and start automatically based on traffic
+- Fast to start up
+- Ephemeral storage; or attach a volume for persistent storage
+
+## Fly Machine patterns
+
+TBD but this could be am overview of more detailed content we add later?
+
+## Learn more
 
 Read the [Fly Machines announcement post](https://fly.io/blog/fly-machines/) to learn more about why we built Machines.
