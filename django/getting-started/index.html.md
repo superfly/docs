@@ -42,14 +42,14 @@ $ python3 -m venv .venv
 $ source .venv/bin/activate
 (.venv) $
 ```
-```shell
-# Windows
-$ python -m venv .venv
-$ .venv\Scripts\activate
-(.venv) $
+```powershell
+# Windows (PowerShell)
+> python -m venv .venv
+> .venv\Scripts\Activate.ps1
+(.venv) ...>
 ```
 
-<section class="callout">From this point on, the commands won't be displayed with `(.venv) $` but we assume you have your Python virtual environment activated.</section>
+<section class="callout">From this point on, the commands won't be displayed with `(.venv)` but we assume you have your Python virtual environment activated.</section>
 
 ### Install Django
 
