@@ -151,9 +151,9 @@ and personal preference.
 
 ## Downloads
 
- * [nodesource setup](./node/Dockerfile1)
- * [copy from node:slim docker image](./node/Dockerfile2)
- * [volta](./node/Dockerfile3)
- * [node as base](./node/Dockerfile4)
- * [node plus rbenv/ruby-build](./node/Dockerfile5)
- * [node plus rvm](./node/Dockerfile6)
+ * [nodesource setup](Dockerfile1)
+ * [copy from node:slim docker image](Dockerfile2)
+ * [volta](Dockerfile3)
+ * [node as base](Dockerfile4)
+ * [node plus rbenv/ruby-build](Dockerfile5)
+ * [node plus rvm](Dockerfile6)

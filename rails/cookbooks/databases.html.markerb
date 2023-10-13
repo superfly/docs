@@ -257,6 +257,6 @@ the same as with postgresql, with the following modifications:
 
 ## Downloads
 
- * [sqlite3](./databases/Dockerfile1)
- * [postgres](./databases/Dockerfile2)
- * [mysql](./databases/Dockerfile3)
+ * [sqlite3](Dockerfile1)
+ * [postgres](Dockerfile2)
+ * [mysql](Dockerfile3)
