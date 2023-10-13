@@ -191,7 +191,9 @@ The environment variable `RELEASE_COMMAND=1` is set within the temporary release
 
 The available strategies are:
 
-**rolling**: The default strategy for apps with or without volumes. One by one, each running Machine is taken down and replaced by a new release Machine.
+**rolling**: The default strategy for apps with or without volumes. Updates the first machine individually, then updates every remaining Machine in successive batches. By default, rolling splits machines into three batches.
+
+**rolling_one**: One by one, each running Machine is taken down and replaced by a new release Machine.
 
 **immediate**: Replace all Machines with new releases immediately without waiting for health checks to pass. This is useful in emergency situations where you're confident about release health and can't wait for health checks.
 
