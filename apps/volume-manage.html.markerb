@@ -170,11 +170,6 @@ Clone a Machine with a volume to create a new Machine in the same region with an
 
 For options, refer to the [`fly machine clone` docs](/docs/flyctl/machine-clone/) or run `fly m clone -h`.
 
-## Attach a volume to a Machine
-
-There are a few ways to create a volume that's not attached to a Machine yet, such as `fly vol create`, `fly vol snapshots`, or `fly vol fork`. One way to attach the volume to a Machine is by cloning. You can also add volumes to an app when you deploy, or 
-
-
 ## Destroy a volume
 
 When you destroy a volume, you delete all its data.
