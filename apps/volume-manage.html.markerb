@@ -5,7 +5,9 @@ nav: firecracker
 order: 40
 ---
 
-Manage Fly Volumes using the [`fly volumes`](/docs/flyctl/volumes/) command.
+Manage Fly Volumes using the [`fly volumes`](/docs/flyctl/volumes/) command. 
+
+Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). Learn [how Fly Volumes work](/docs/reference/volumes/).
 
 <div class="note icon">**Note**: `fly volumes` is aliased to `fly volume` and `fly vol`.</div>
 
@@ -21,7 +23,7 @@ Use the `-r` option to set a [region](/docs/reference/regions/), or select a reg
 
 For options, refer to the [`fly volumes create` docs](/docs/flyctl/volumes-create/) or run `fly vol create -h`.
 
-To add a volume to your app, refer to [Add volume storage](/docs/apps/volume-storage/).
+To add a volume to your app, see [Add volume storage](/docs/apps/volume-storage/).
 
 ## Access a volume
 
@@ -69,6 +71,10 @@ For options, refer to the [`fly volumes extend` docs](/docs/flyctl/volumes-exten
 ## Create a copy of a volume (Fork a volume)
 
 Create an exact copy of a volume, including its data. By default, we place the new volume on a separate physical host in the same region.
+
+<div class="important icon">
+**Important:** When you fork a volume, the source volume and the new volume are not synced.
+</div>
 
 1. Run `fly volumes list` and copy the ID of the volume to fork.
 
