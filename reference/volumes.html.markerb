@@ -20,7 +20,7 @@ A Fly Volume is a slice of an NVMe drive on the physical server your Fly App run
 * **Create redundancy in your primary region**: If your app needs a volume to function, and the NVMe drive hosting your volume fails, then that instance of your app goes down. There's no way around that. You can run multiple Machines with volumes in your app's primary region to mitigate hardware failures.
 * **Create and store backups**: If you only have a single copy of your data on a single volume, and that drive fails, then the data is lost. Fly.io takes daily snapshots and retains them for 5 days, but the snapshots shouldn't be your primary backup method.
 
-If volumes don't work for your use case, then explore other options for data storage in [Databases & Storage](/docs/database-storage-guides/).
+Explore other options for data storage in [Databases & Storage](/docs/database-storage-guides/).
 
 ## Volume redundancy
 
@@ -34,7 +34,7 @@ Many developers use volumes for databases, so if possible, each volume you creat
 
 ## Volumes and regions
 
-Volumes exist in a single region. For redundancy within a region, you can run multiple Machines with attached volumes by creating multiple volumes with the same name. For example, creating three volumes named `myapp_data` would let up to three instances of the app start up and run. Every volume has a unique ID to allow for multiple volumes with the same name. Remember that volumes don't automatically replicate data between them.
+Volumes exist in a single[region](/docs/reference/regions/). For redundancy within a region, you can run multiple Machines with attached volumes by creating multiple volumes with the same name. For example, creating three volumes named `myapp_data` would let up to three instances of the app start up and run. Every volume has a unique ID to allow for multiple volumes with the same name. Remember that volumes don't automatically replicate data between them.
 
 ## Volume encryption
 
@@ -44,11 +44,11 @@ Volumes are, by default, created with encryption-at-rest enabled for additional 
 
 The default volume size is 3GB when you create a volume with the `fly volumes create` command. The default volume size is 1GB when you use the `fly launch` command to [launch an app with a volume](/docs/apps/volume-storage/#launch-a-new-app-with-a-fly-volume). The maximum volume size is 500GB.
 
-## Volume snapshots
+## Volume snapshots and forks
 
-Fly.io takes daily block-level snapshots of volumes. Snapshots are kept for five days. You can restore a volume snapshot into a new volume of equal or greater size.
+Fly.io takes daily block-level snapshots of volumes. We keep snapshots for five days. You can [restore a volume snapshot](/docs/apps/volume-manage/#restore-a-volume-from-a-snapshot) into a new volume of equal or greater size. Snapshots may not have your latest data. You should still implement your own backup plan for important data.
 
-Snapshots may not have your latest data. You should still implement your own backup plan for important data.
+When you [fork a volume](/docs/apps/volume-manage/#create-a-copy-of-a-volume-fork-a-volume), you create an exact copy to use for testing, backups, or whatever you like. The new volume is in the same region, but on a different physical host, and is not attached to a Machine.
 
 ## Related topics
 

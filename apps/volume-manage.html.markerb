@@ -35,7 +35,7 @@ For Machines managed individually, specify the mount path in the `fly machine cl
 
 You can extend (increase) a volume's size, but you can't make a volume smaller.
 
-1. Run `fly volumes list` and copy the volume ID.
+1. Run `fly volumes list` and copy the ID of the volume to extend.
 
 1. Extend the volume size:
 
@@ -65,6 +65,34 @@ You can extend (increase) a volume's size, but you can't make a volume smaller.
     In the preceding example, the volume is mounted under `/storage` and has been resized to from 1GB to 2GB. The `df` command shows disk space in 1K blocks by default. Use the `-h` flag to return a more human-readable format.
 
 For options, refer to the [`fly volumes extend` docs](/docs/flyctl/volumes-extend/) or run `fly vol extend -h`.
+
+## Create a copy of a volume (Fork a volume)
+
+Create an exact copy of a volume, including its data. By default, we place the new volume on a separate physical host in the same region.
+
+1. Run `fly volumes list` and copy the ID of the volume to fork.
+
+2. Fork the volume:
+
+    ```cmd
+    fly volumes fork <volume ID>
+    ```
+
+    Example output:
+    ```out
+           ID: vol_grnoq5796wwj0dkv
+         Name: my_volume_name
+          App: my-app-name
+       Region: yyz
+         Zone: 511d
+      Size GB: 3
+   Encrypted: true
+  Created at: 12 Oct 23 18:57 UTC
+    ```
+
+3. (Optional) Attach the volume to a new Machine by cloning with `fly machine clone <machine id> -r <region code> --attach-volume <volume id>:<destination mount path>` or [use `fly scale count`](/docs/apps/scale-count/#scale-an-app-with-volumes) to create a new Machine that picks up the unattached volume.
+
+For options, refer to the [`fly volumes fork` docs](/docs/flyctl/volumes-fork/) or run `fly vol fork -h`.
 
 ## Restore a volume from a snapshot
 
@@ -141,6 +169,11 @@ Clone a Machine with a volume to create a new Machine in the same region with an
 </div>
 
 For options, refer to the [`fly machine clone` docs](/docs/flyctl/machine-clone/) or run `fly m clone -h`.
+
+## Attach a volume to a Machine
+
+There are a few ways to create a volume that's not attached to a Machine yet, such as `fly vol create`, `fly vol snapshots`, or `fly vol fork`. One way to attach the volume to a Machine is by cloning. You can also add volumes to an app when you deploy, or 
+
 
 ## Destroy a volume
 
