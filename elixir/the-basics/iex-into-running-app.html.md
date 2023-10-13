@@ -68,4 +68,4 @@ Using a terminal from the app directory, type `./fiex` to quickly jump into an I
 
 With another quick update we can prepare our application for clustering by naming our nodes differently.
 
-Next up, [Naming Your Elixir Node](/docs/elixir/the-basics/naming-your-elixir-node/)!
+Next up, [Clustering Your Application](/docs/elixir/the-basics/clustering/)!
