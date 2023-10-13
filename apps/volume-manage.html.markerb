@@ -98,7 +98,7 @@ For options, refer to the [`fly volumes fork` docs](/docs/flyctl/volumes-fork/) 
 
 We take daily snapshots and keep them for five days. 
 
-1. Run `fly volumes list` and copy the volume ID.
+1. Run `fly volumes list` and copy ID of volume to restore.
 
 1. List the volume's snapshots:
 
@@ -164,17 +164,21 @@ Clone a Machine with a volume to create a new Machine in the same region with an
     vol_zmjnv8m81p5rywgx    created data    1GB     lhr     b6a7    true            5683606c41098e  7 minutes ago
     ```
 
-<div class="warning icon">
-<b>Warning:</b> `fly machine clone` doesn't write data into the new volume.
+<div class="note icon">
+<b>Note:</b> `fly machine clone` doesn't write data into the new volume.
 </div>
 
 For options, refer to the [`fly machine clone` docs](/docs/flyctl/machine-clone/) or run `fly m clone -h`.
 
 ## Destroy a volume
 
-When you destroy a volume, you delete all its data.
+<div class="warning icon">
+<b>Warning:</b> When you destroy a volume, you permanently delete all its data.
+</div>
 
-Run:
+1. Run `fly volumes list` and copy ID of volume to restore.
+
+2. Destroy the volume:
 
 ```cmd
 fly vol destroy <volume id>
