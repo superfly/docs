@@ -98,7 +98,7 @@ For options, refer to the [`fly volumes fork` docs](/docs/flyctl/volumes-fork/) 
 
 We take daily snapshots and keep them for five days. 
 
-1. Run `fly volumes list` and copy ID of volume to restore.
+1. Run `fly volumes list` and copy ID of the volume to restore.
 
 1. List the volume's snapshots:
 
@@ -176,7 +176,7 @@ For options, refer to the [`fly machine clone` docs](/docs/flyctl/machine-clone/
 <b>Warning:</b> When you destroy a volume, you permanently delete all its data.
 </div>
 
-1. Run `fly volumes list` and copy ID of volume to restore.
+1. Run `fly volumes list` and copy ID of volume to destroy.
 
 2. Destroy the volume:
 
