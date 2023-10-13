@@ -168,6 +168,6 @@ continue to be true.
 
 ## Downloads
 
- * [ruby-full](./minimal/Dockerfile1)
- * [ruby-slim](./minimal/Dockerfile2)
- * [multi-stage](./minimal/Dockerfile3)
+ * [ruby-full](Dockerfile1)
+ * [ruby-slim](Dockerfile2)
+ * [multi-stage](Dockerfile3)
