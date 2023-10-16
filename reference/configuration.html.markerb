@@ -201,6 +201,21 @@ The available strategies are:
 
 Note: If `max-per-region` is set to 1, then the default strategy is set to `rolling`. This happens because `canary` needs to temporarily run more than one VM to work correctly. The `bluegreen` strategy will behave similarly with `max-per-region` set to 1.
 
+#### Rolling deploy configuration
+
+```toml
+[deploy]
+  strategy = "rolling"
+  max_unavailable = 1
+```
+
+For rolling deploys, you can use `max_unavailable` to control how many Machines can be down at a time.
+
+Whole number values, greater than or equal to one, specify exactly how many machines can be down at a time. For example, a value of "1" would update one-at-a-time.
+
+Fractional values, between zero and one, provide a percentage of machines that can be down at a time. For example, the default value of 0.33 means that a maximum of one third
+of your machines can be down during a deploy.
+
 ## The `env` variables section
 
 ```toml
