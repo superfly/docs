@@ -33,7 +33,7 @@ You can fix this by configuring your app to listen on the following addresses:
 
 ## Correcting the port
 
-If you look for a file named 'fly.toml', you will see something like the following:
+If you look for a file named `fly.toml`, you will see something like the following:
 
 ```toml
 [http_service]
@@ -59,3 +59,12 @@ Other frameworks may require you to change command used to start your applicatio
 
   * Fastify applications can be started using `fastify start --address 0.0.0.0`
   * Gatsby applications can be started using `npx gatsby server -H 0.0.0.0`.
+
+## Exposing multiple ports
+
+If you need to expose additional ports, you will need to add a
+[`services` section](https://fly.io/docs/reference/configuration/#the-services-sections) for each additional port.  Be sure to review our
+[Public Network Services](https://fly.io/docs/reference/services/) page before proceeding, in particular:
+
+  * If you want your port other than 80/443 to be available on IPv4 you will need to [allocate a dedicated IPv4 address](https://fly.io/docs/flyctl/ips-allocate-v4/).
+  * If you want to take advantage of our TLS services, you will want to add _"tls"_ to the list of connection handlers.
