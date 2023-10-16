@@ -24,6 +24,7 @@ flyctl launch [flags]
       --generate-name                    Always generate a name for the app, without prompting
       --ha                               Create spare machines that increases app availability (default true)
   -h, --help                             help for launch
+      --host-dedication-id string        The dedication id of the reserved hosts for your organization (if any)
       --ignorefile string                Path to a Docker ignore file. Defaults to the .dockerignore file in the working directory.
   -i, --image string                     The Docker image to deploy
       --image-label string               Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
