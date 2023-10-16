@@ -7,7 +7,7 @@ order: 1
 
 <% Machine.api.paths.each do |path| %>
   <%- path.operations.each do |operation| %>
-    <div id="<%= "#{operation.request_method}" %>" class="mb-3" >
+    <div id="<%= "#{operation.request_method}" %>" class="mb-3">
       <div class="mb-1">
         <h2><code><%= operation.request_method %> <%= path.path %></code></h2>
         <p><%= operation.description %></p>
@@ -15,48 +15,64 @@ order: 1
 
       <div class="mb-2">
         <h3>Parameters</h3>
-          <ul>
-            <% operation.parameters.each do |param| %>
-              <li class="mb-1">
-                <b><%= param.name%></b> <i><%= param.type %></i>- <%= param.description %>
-                <% if param.schema %>
-                  <ul>
-                    <% Machine.api.definition(param.schema).properties.map{ |prop| Machine::Property.new(*prop) }.each do |prop| %>
-                      <li>
-                        <b><%= prop.name %></b> - <i><%= prop.type %></i>
-                        <p><%= prop.cardinality %></p>
-                        <p><%= prop.description %></p>
+        <ul>
+          <% operation.parameters.each do |param| %>
+            <li class="mb-1">
+              <b><%= param.name %></b> <i><%= param.type %></i>- <%= param.description %>
+              <% if param.schema %>
+                <ul>
+                  <% Machine.api.definition(param.schema).properties.map { |prop| Machine::Property.new(*prop) }.each do |prop| %>
+                    <li>
+                      <b><%= prop.name %></b> -
+                      <i>
+                        <% if prop.cardinality == :collection %>array[<% end %>
                         <% if prop.ref %>
                           <%= link_to prop.ref.name, anchor: normalize_type_name(prop.ref.name) %>
+                        <% else %>
+                          <%= prop.type %>
                         <% end %>
-                      </li>
-                    <% end %>
-                  </ul>
-                <% end %>
+                        <% if prop.cardinality == :collection %>]<% end %>
+                      </i>
+                      <% unless prop.description.nil? %>
+                        <p><%= prop.description %></p>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              <% end %>
               <li>
-            <% end %>
-          </ul>
+          <% end %>
+        </ul>
       </div>
 
       <h3>Responses</h3>
       <% operation.responses.each do |resp| %>
-        <b><%= resp.status%></b> - <%= resp.description %>
-        <% if resp.schema %>
-          <% if Machine.api.definition(resp.schema) %>
-            <ul>
-              <% Machine.api.definition(resp.schema).properties.map{ |prop| Machine::Property.new(*prop) }.each do |prop| %>
-                <li>
-                  <b><%= prop.name %></b> - <i><%= prop.type %></i>
-                  <p><%= prop.cardinality %></p>
-                  <p><%= prop.description %></p>
-                  <% if prop.ref %>
-                    <%= link_to prop.ref.name, anchor: normalize_type_name(prop.ref.name) %>
-                  <% end %>
-                </li>
-              <% end %>
-            </ul>
+        <div>
+          <b><%= resp.status %></b> - <%= resp.description %>
+          <% if resp.schema %>
+            <% if Machine.api.definition(resp.schema) %>
+              <ul>
+                <% Machine.api.definition(resp.schema).properties.map { |prop| Machine::Property.new(*prop) }.each do |prop| %>
+                  <li>
+                    <b><%= prop.name %></b> -
+                    <i>
+                      <% if prop.cardinality == :collection %>array[<% end %>
+                      <% if prop.ref %>
+                        <%= link_to prop.ref.name, anchor: normalize_type_name(prop.ref.name) %>
+                      <% else %>
+                        <%= prop.type %>
+                      <% end %>
+                      <% if prop.cardinality == :collection %>]<% end %>
+                    </i>
+                    <% unless prop.description.nil? %>
+                      <p><%= prop.description %></p>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
       <% end %>
     </div>
   <% end %>
