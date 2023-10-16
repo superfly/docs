@@ -22,7 +22,7 @@ flyctl machine run <image> [command] [flags]
       --file-local stringArray      Set of files in the form of /path/inside/machine=<local/path> pairs. Can be specified multiple times.
       --file-secret stringArray     Set of secrets in the form of /path/inside/machine=SECRET pairs where SECRET is the name of the secret. Can be specified multiple times.
   -h, --help                        help for run
-      --host-dedication-id string   
+      --host-dedication-id string   The dedication id of the reserved hosts for your organization (if any)
       --id string                   Machine ID, if previously known
       --kernel-arg stringArray      List of kernel arguments to be provided to the init. Can be specified multiple times.
   -m, --metadata stringArray        Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.

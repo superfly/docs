@@ -21,6 +21,7 @@ flyctl turboku <heroku-app-name> <heroku-api-token> [flags]
       --file-secret stringArray          Set of secrets in the form of /path/inside/machine=SECRET pairs where SECRET is the name of the secret. Can be specified multiple times.
       --ha                               Create spare machines that increases app availability (default true)
   -h, --help                             help for turboku
+      --host-dedication-id string        The dedication id of the reserved hosts for your organization (if any)
       --ignorefile string                Path to a Docker ignore file. Defaults to the .dockerignore file in the working directory.
   -i, --image string                     The Docker image to deploy
       --image-label string               Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".

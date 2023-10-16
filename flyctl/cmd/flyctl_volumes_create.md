@@ -14,7 +14,7 @@ flyctl volumes create <volumename> [flags]
   -c, --config string               Path to application configuration file
   -n, --count int                   Number of volumes to create (default 1)
   -h, --help                        help for create
-      --host-dedication-id string   
+      --host-dedication-id string   The dedication id of the reserved hosts for your organization (if any)
   -j, --json                        JSON output
       --no-encryption               Do not encrypt the volume contents
   -r, --region string               The target region (see 'flyctl platform regions')
