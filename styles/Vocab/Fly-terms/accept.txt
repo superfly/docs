@@ -25,6 +25,7 @@ flyctl
 flyd
 fly.toml
 Gemfile
+GPUs?\b
 Grafana
 Gunicorn
 Hallpass
@@ -41,6 +42,7 @@ initializer
 IPs
 IPSec
 Laravel
+libs
 LiteFS
 Livebook
 Logtail
@@ -54,6 +56,7 @@ NodeSource
 Nomad
 npm
 Nuxt
+NVIDIA
 NVMe
 OAuth
 orgs?\b
