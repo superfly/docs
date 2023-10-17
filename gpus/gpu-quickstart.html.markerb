@@ -1,0 +1,80 @@
+---
+title: Fly GPUs quickstart
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+<div class="important icon">
+Fly GPUs are only available on GPU-enabled accounts. You can join the waitlist [here](https://fly.io/gpu).
+</div>
+
+1. You can use any base image for your Dockerfile, but it is convenient to base it on `ubuntu:22.04` and install libraries from NVIDIA's official apt repository: `RUN apt install -y cuda-nvcc-12-2 libcublas-12-2 libcudnn8` is usually enough.
+
+    <div class = "note icon">
+    **Notes**:
+    - Do not install meta packages like: `cuda-runtime-*`
+    - `cuda-libraries-12-2` is good, but a bulky start. Once you know what libs are needed at build and runtime, please pick accordingly to optimize final image size.
+    - Use multi-stage docker builds as much as possible.
+    </div>
+
+1. From flyctl, create an app using either `fly launch` or `fly apps create`.
+
+1. Create or modify the `fly.toml` config file in the project source directory, replacing values with your own:
+
+    ```toml
+    app = "my-gpu-app"
+    primary_region = "ord"
+
+    # Use a volume to store LLMs or any big file that
+    # doesn't fit in a Docker image
+    [[mounts]]
+    source = "data"
+    destination = "/data"
+
+    [http_service]
+    internal_port = 8080
+    auto_stop_machines = false
+    ```
+
+    <div class="note icon">
+    **Notes**:
+    - Make sure to include a `[mounts]` section in `fly.toml`.
+    - The volume gets created automatically.
+    - Use the volume to store the models and large files that can't be shipped as a docker image.
+    </div>
+
+
+1. Deploy your app:
+
+    ```cmd
+    fly deploy --vm-gpu-kind a100-pcie-40gb --volume-initial-size 100
+    ```
+
+That's pretty much it to get an app running with a Machine on a GPU.
+
+Example Dockerfile:
+
+```
+FROM ubuntu:22.04 as base
+RUN apt update -q && apt install -y ca-certificates wget && \
+    wget -qO /cuda-keyring.deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && \
+    dpkg -i /cuda-keyring.deb && apt update -q
+
+FROM base as builder
+RUN apt install -y --no-install-recommends git cuda-nvcc-12-2
+RUN git clone --depth=1 https://github.com/nvidia/cuda-samples.git /cuda-samples
+RUN cd /cuda-samples/Samples/1_Utilities/deviceQuery && \
+    make && install -m 755 deviceQuery /usr/local/bin
+
+FROM base as runtime
+#RUN apt install -y --no-install-recommends libcudnn8 libcublas-12-2
+COPY --from=builder /usr/local/bin/deviceQuery /usr/local/bin/deviceQuery
+CMD ["sleep", "inf"]
+```
+
+## Examples
+
+- Elixir Llama2-13b on Fly.io GPUs: https://gist.github.com/chrismccord/59a5e81f144a4dfb4bf0a8c3f2673131
+- Deploying CLIP on Fly: https://gist.github.com/simonw/52c7734e34cac2b26ea1378845674edc
+- Fly.io CUDA example: https://gist.github.com/dangra/f8123001fe0f2453a8cd638b89738465
