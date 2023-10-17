@@ -211,10 +211,10 @@ Note: If `max-per-region` is set to 1, then the default strategy is set to `roll
 
 For rolling deploys, you can use `max_unavailable` to control how many Machines can be down at a time.
 
-Whole number values, greater than or equal to one, specify exactly how many machines can be down at a time. For example, a value of "1" would update one-at-a-time.
+Whole number values, greater than or equal to one, specify exactly how many Machines can be down at a time. For example, a value of "1" would update one-at-a-time.
 
-Fractional values, between zero and one, provide a percentage of machines that can be down at a time. For example, the default value of 0.33 means that a maximum of one third
-of your machines can be down during a deploy.
+Fractional values, between zero and one, provide a percentage of Machines that can be down at a time. For example, the default value of 0.33 means that a maximum of one third
+of your Machines can be down during a deploy.
 
 ## The `env` variables section
 
