@@ -73,7 +73,7 @@ For options, refer to the [`fly volumes extend` docs](/docs/flyctl/volumes-exten
 Create an exact copy of a volume, including its data. By default, we place the new volume on a separate physical host in the same region.
 
 <div class="important icon">
-**Important:** When you fork a volume, the source volume and the new volume are not synced.
+**Important:** After you fork a volume, the new volume is independent of the source volume. The new volume and the source volume do not continue to sync.
 </div>
 
 1. Run `fly volumes list` and copy the ID of the volume to fork.
