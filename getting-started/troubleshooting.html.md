@@ -90,7 +90,7 @@ The message supplies:
 
 ### Fix the "app is not listening on the expected address" error
 
-When you launch a new Fly App, the value of `internal_port` in the`fly.toml` file depends on the default port for your framework or the `EXPOSE` instruction in your Dockerfile. The default port when the `fly launch` command doesn't detect a framework or find ports set in a Dockerfile is `8080`.
+When you launch a new Fly App, the value of `internal_port` in the `fly.toml` file depends on the default port for your framework or the `EXPOSE` instruction in your Dockerfile. The default port when the `fly launch` command doesn't detect a framework or find ports set in a Dockerfile is `8080`.
 
 To fix the error, you can either:
 - Configure your app to listen on host `0.0.0.0:<internal port value in fly.toml>`, or
