@@ -25,5 +25,5 @@ flyctl volumes snapshots [command] [flags]
 
 ## See Also
 
-* [flyctl volumes](/docs/flyctl/volumes/)	 - Volume management commands
+* [flyctl volumes](/docs/flyctl/volumes/)	 - Manage Fly Volumes.
 

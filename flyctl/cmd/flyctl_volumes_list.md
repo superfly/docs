@@ -1,4 +1,4 @@
-List all the volumes associated with this application.
+List the volumes associated with an app.
 
 ## Usage
 ~~~
@@ -24,5 +24,5 @@ flyctl volumes list [flags]
 
 ## See Also
 
-* [flyctl volumes](/docs/flyctl/volumes/)	 - Volume management commands
+* [flyctl volumes](/docs/flyctl/volumes/)	 - Manage Fly Volumes.
 
