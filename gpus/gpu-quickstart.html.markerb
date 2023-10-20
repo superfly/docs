@@ -78,3 +78,4 @@ CMD ["sleep", "inf"]
 - Elixir Llama2-13b on Fly.io GPUs: https://gist.github.com/chrismccord/59a5e81f144a4dfb4bf0a8c3f2673131
 - Deploying CLIP on Fly: https://gist.github.com/simonw/52c7734e34cac2b26ea1378845674edc
 - Fly.io CUDA example: https://gist.github.com/dangra/f8123001fe0f2453a8cd638b89738465
+- Github fly-apps repos with the `gpu` topic: https://github.com/orgs/fly-apps/repositories?q=topic%3Agpu
