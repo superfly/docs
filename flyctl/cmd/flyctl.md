@@ -25,6 +25,7 @@ flyctl [flags]
 * [ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
 * [jobs](/docs/flyctl/jobs/)	 - Show jobs at Fly.io
 * [launch](/docs/flyctl/launch/)	 - Create and configure a new app from source code or a Docker image
+* [litefs-cloud](/docs/flyctl/litefs-cloud/)	 - LiteFS Cloud management commands
 * [logs](/docs/flyctl/logs/)	 - View app logs
 * [machine](/docs/flyctl/machine/)	 - Commands that manage machines
 * [migrate-to-v2](/docs/flyctl/migrate-to-v2/)	 - Migrate a v1 app to v2
@@ -49,7 +50,7 @@ flyctl [flags]
 * [turboku](/docs/flyctl/turboku/)	 - Launch a Heroku app on Fly.io
 * [version](/docs/flyctl/version/)	 - Show version information for the flyctl command
 * [vm](/docs/flyctl/vm/)	 - Commands that manage VM instances
-* [volumes](/docs/flyctl/volumes/)	 - Volume management commands
+* [volumes](/docs/flyctl/volumes/)	 - Manage Fly Volumes.
 * [wireguard](/docs/flyctl/wireguard/)	 - Commands that manage WireGuard peer connections
 
 ## Options
