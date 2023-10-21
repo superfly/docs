@@ -197,7 +197,7 @@ gem install pg
 Next all we need to do is run the Sequel Copy command, where the first database is the source and the second database is the destination:
 
 ```cmd
-sequel -C postgres://localhost/database sqlite3://name.db
+sequel -C postgres://localhost/database sqlite://name.db
 ```
 
 And that's it! If you open up your SQLite database using the command line it should have your tables and data all moved over. If you get an error here about connecting you will need to figure out which ruby gem handles your adapter and install it like we did for pg. 
