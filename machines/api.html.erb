@@ -6,15 +6,16 @@ order: 1
 ---
 
 <% Machine.api.paths.each do |path| %>
+  <h2><code><%= path.path %></code></h2>
   <%- path.operations.each do |operation| %>
     <div id="<%= "#{operation.request_method}" %>" class="mb-3">
       <div class="mb-1">
-        <h2><code><%= operation.request_method %> <%= path.path %></code></h2>
+        <h3><code><%= operation.request_method %></code></h3>
         <p><%= operation.description %></p>
       </div>
 
       <div class="mb-2">
-        <h3>Parameters</h3>
+        <h4>Parameters</h4>
         <ul>
           <% operation.parameters.each do |param| %>
             <li class="mb-1">
@@ -45,7 +46,7 @@ order: 1
         </ul>
       </div>
 
-      <h3>Responses</h3>
+      <h4>Responses</h4>
       <% operation.responses.each do |resp| %>
         <div>
           <b><%= resp.status %></b> - <%= resp.description %>
