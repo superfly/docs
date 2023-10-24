@@ -79,9 +79,9 @@ Since this isn't a Rails tutorial, an overview of the contents will suffice:
 
 ## Setting up Redis
 
-Before we deploy this application, we need to 
+Before we deploy this application, we need to
 create the redis database.  We will be using
-[Redis by Upstash](https://fly.io/docs/reference/redis/), and creating
+[Upstash for Redis](https://fly.io/docs/reference/redis/), and creating
 the database and connecting it to the demo application is a matter
 of issuing two commands:
 
@@ -96,7 +96,7 @@ Replace the secret with the private URL provided by the `redis create` command.
 And you don't need to split the `secrets set` line, that was merely done to
 fit in your browser window.
 
-If you have deployed the minimal application previously, 
+If you have deployed the minimal application previously,
 at this point, your application has been redeployed, and you can visit the
 page to see a counter.  If you open multiple windows, each will be updated
 simultaneously.  If you haven't launched and deployed the application previously
@@ -202,7 +202,7 @@ Find that name and then run:
 flyctl postgres attach happy-store-1234
 ```
 
-... replacing the name with the one assigned or selected by you. 
+... replacing the name with the one assigned or selected by you.
 
 Before proceeding, there is one more change that might be worth making.
 If you ever plan to scale up to multiple application machines it would
@@ -230,7 +230,7 @@ Once you have it up and running, the instructions are roughly
 the same as with postgresql, with the following modifications:
 
   * On the rails new line, specify `--database mysql` instead of `--database postgresql`
-  * [default-libmysqlclient-dev](https://packages.debian.org/bullseye/default-libmysqlclient-dev) 
+  * [default-libmysqlclient-dev](https://packages.debian.org/bullseye/default-libmysqlclient-dev)
     is the package containing the mysql libraries.
   * [default-mysql-client](https://packages.debian.org/bullseye/default-mysql-client)
     is the package containing the mysql client.

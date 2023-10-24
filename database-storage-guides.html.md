@@ -30,17 +30,17 @@ These are projects that we develop and support. They're not managed services; yo
 
 ## Partner Integrations Running on Fly.io
 
-- **[Redis by Upstash](/docs/reference/redis/)** - [Redis](https://redis.io/) is an in-memory database commonly used for caching. A managed service by [Upstash](https://upstash.com/).
+- **[Upstash for Redis](/docs/reference/redis/)** - [Redis](https://redis.io/) is an in-memory database commonly used for caching. A managed service by [Upstash](https://upstash.com/).
 
 ## Other Storage Apps
 
 If your application calls for a different solution, you can deploy it yourself as an App on Fly.io. These examples can help you get started with other popular storage options.
 
-- **[MySQL and MariaDB](/docs/app-guides/mysql-on-fly/)** - [MySQL](https://www.mysql.com/) is a popular relational database. [MariaDB](https://mariadb.org/) is a community fork of MySQL and is compatible with MySQL. 
+- **[MySQL and MariaDB](/docs/app-guides/mysql-on-fly/)** - [MySQL](https://www.mysql.com/) is a popular relational database. [MariaDB](https://mariadb.org/) is a community fork of MySQL and is compatible with MySQL.
 
 - **[EdgeDB](/docs/app-guides/edgedb/)** - [EdgeDB](https://www.edgedb.com/) is a graph-relational database that runs on top of Postgres.
 
-- **[MinIO Object Storage](/docs/app-guides/minio/)** - [MinIO](https://min.io/) is software that allows you to self-host S3-compatible storage. 
+- **[MinIO Object Storage](/docs/app-guides/minio/)** - [MinIO](https://min.io/) is software that allows you to self-host S3-compatible storage.
 
 ## Recommended External Providers
 

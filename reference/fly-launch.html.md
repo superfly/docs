@@ -40,7 +40,7 @@ Reference: [Builders and Fly.io](/docs/reference/builders/)
 
 On creation, an app is given a default configuration that will work for most basic web apps.
 
-You can view an app's configuration at any time using `fly config show -a my-app`, or download it into a local `fly.toml` using `fly config save -a my-app`.  
+You can view an app's configuration at any time using `fly config show -a my-app`, or download it into a local `fly.toml` using `fly config save -a my-app`.
 
 Manual configuration changes can be done by editing an app's `fly.toml` and running `fly deploy`.
 
@@ -98,7 +98,7 @@ The config specified in that `fly.toml` is used instead of the default config. B
 
 ## Tweaking Fly Launch
 
-You can tweak `fly launch` to better suit your project. The example that follows illustrates how this can work. 
+You can tweak `fly launch` to better suit your project. The example that follows illustrates how this can work.
 
 For more information about ways to customize your launch, refer to [Custom launch](/docs/apps/launch/#custom-launch) and check out all the [options](/docs/flyctl/launch/) available for use with `fly launch`.
 
@@ -107,15 +107,15 @@ For more information about ways to customize your launch, refer to [Custom launc
 Here's me launching my Flask app that I've written and tested using the local dev server:
 
 ```cmd
-fly launch 
+fly launch
 ```
-```out            
+```out
 Creating app in /Users/chris/FlyTests/hello-gunicorn-flask
 Scanning source code
 Detected a Python app
 Using the following build configuration:
         Builder: paketobuildpacks/builder:base
-? Choose an app name (leave blank to generate one): 
+? Choose an app name (leave blank to generate one):
 ```
 
 If I carry on with this buildpack-based build, this story does not end with a working Flask app. Dockerfile-based deployments are much simpler and faster anyway, so I decide to use a Dockerfile. (I hit ctrl-C to stop the launch.)
@@ -159,7 +159,7 @@ Hostname: testrun.fly.dev
 ? Would you like to set up an Upstash Redis database now? No
 ```
 
-`fly launch` offers to provision [Fly Postgres](/docs/postgres/) and [Redis by Upstash](/docs/reference/redis/) databases. I don't need them for my very simple web app.
+`fly launch` offers to provision [Fly Postgres](/docs/postgres/) and [Upstash for Redis](/docs/reference/redis/) databases. I don't need them for my very simple web app.
 
 ```
 Wrote config file fly.toml
@@ -207,21 +207,21 @@ No machines in group 'app', launching one new machine
 
 The first deployment has finished!
 
-I haven't explicitly configured [process groups](/docs/apps/processes/), so my app gets a single Machine assigned to the default `app` process. With `fly status` I can see that this machine is running in `yyz` (Toronto), where I told `fly launch` I wanted my app to be deployed. 
+I haven't explicitly configured [process groups](/docs/apps/processes/), so my app gets a single Machine assigned to the default `app` process. With `fly status` I can see that this machine is running in `yyz` (Toronto), where I told `fly launch` I wanted my app to be deployed.
 
 ```cmd
 fly status
 ```
 ```out
 App
-  Name     = testrun                                        
-  Owner    = personal                                   
-  Hostname = testrun.fly.dev                                
-  Image    = testrun:deployment-01GWAPGQWQ5N1HY5651D5DX5B0  
-  Platform = machines                                   
+  Name     = testrun
+  Owner    = personal
+  Hostname = testrun.fly.dev
+  Image    = testrun:deployment-01GWAPGQWQ5N1HY5651D5DX5B0
+  Platform = machines
 
 Machines
-ID              PROCESS VERSION REGION  STATE   HEALTH CHECKS   LAST UPDATED         
+ID              PROCESS VERSION REGION  STATE   HEALTH CHECKS   LAST UPDATED
 17811122f5d089  app     1       yyz     started                 2023-03-24T20:56:45Z
 ```
 
