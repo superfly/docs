@@ -9,7 +9,7 @@ In the Fly.io Reference Section, you will find the definitive documentation for 
 
 ## About Fly.io
 
-* [**Architecture**](/docs/reference/architecture/): 
+* [**Architecture**](/docs/reference/architecture/):
 The details about our implementation of Firecracker VMs, Anycast networking, Fly Proxy, and the backhaul network, all of which come together to create Fly.io's infrastructure.
 
 * [**Regions**](/docs/reference/regions/):
@@ -23,7 +23,7 @@ The settings for configuring your App in the `fly.toml` configuration file. The 
 * [**App Availability and Resiliency**](/docs/reference/app-availability):
 An overview of the features that can make your app more resistant to events like hardware failures or outages.
 
-* [**Builders**](/docs/reference/builders/): 
+* [**Builders**](/docs/reference/builders/):
 The different ways you can assemble applications into deployable images for Fly.io.
 
 * [**fly launch**](/docs/reference/fly-launch/):
@@ -72,7 +72,7 @@ Learn about Fly.io networking and its support for IPv4 and IPv6 addresses via An
 * [**Private Networking**](/docs/reference/private-networking/):
 How Fly.io Private Networking provides secure connections between your applications and a VPN option that allows you to connect into your Fly organization and do the same from your desktop or mobile device. It uses WireGuard and DNS to provide connectivity and discoverability. Find out how to use it in your applications, and how to install and configure the VPN.
 
-* [**Redis by Upstash**](/docs/reference/redis/):
+* [**Upstash for Redis**](/docs/reference/redis/):
 The fully-managed, Redis-compatible database service that offers global read replicas for reduced latency in distant regions.
 
 ## Security
