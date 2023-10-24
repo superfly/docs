@@ -141,16 +141,16 @@ app     e2865100000086  1       ord     stopped         2023-07-06T01:50:04Z
 
 ## _Connecting to the App_
 
-The quickest way to browse your newly deployed application is with the `flyctl open` command.
+The quickest way to browse your newly deployed application is with the `flyctl apps open` command.
 
 ```cmd
-flyctl open
+flyctl apps open
 ```
 ```output
-Opening http://hellodotnet.fly.dev/
+Opening https://hellodotnet.fly.dev/
 ```
 
-Your browser will be sent to the displayed URL. Fly will auto-upgrade this URL to a HTTPS secured URL.
+Your browser will be sent to the displayed URL.
 
 ## _Bonus Points_
 

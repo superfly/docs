@@ -186,11 +186,16 @@ As you can see, the application has been deployed with a DNS hostname of hellofl
 
 ## _Connecting to the App_
 
-The quickest way to connect to your deployed app is with the `flyctl open` command. This will open a browser on the HTTP version of the site. That will automatically be upgraded to an HTTPS secured connection (for the fly.dev domain).
+The quickest way to browse your newly deployed application is with the `flyctl apps open` command.
 
+```cmd
+flyctl apps open
+```
+```output
+opening https://golang-example.fly.dev ...
+```
 
-To connect to it securely, add `/name` to `flyctl open` and it'll be appended to the URL as the path and you'll get an extra greeting from the hellofly application.
-
+Your browser will be sent to the displayed URL.
 
 ## _Bonus Points_
 

@@ -181,16 +181,16 @@ v6   2a09:8280:1::3:23f4 global 3m20s ago
 
 ## _Connecting to the App_
 
-The quickest way to browse your newly deployed application is with the `flyctl open` command.
+The quickest way to browse your newly deployed application is with the `flyctl apps open` command.
 
 ```cmd
-flyctl open
+flyctl apps open
 ```
 ```output
-Opening http://hello-lucky.fly.dev/
+Opening https://hello-lucky.fly.dev/
 ```
 
-Your browser will be sent to the displayed URL. Fly will auto-upgrade this URL to a HTTPS secured URL.
+Your browser will be sent to the displayed URL.
 
 ## Multi-Region Deployment with Postgres (Optional)
 
