@@ -142,15 +142,15 @@ The output should end something like this, if everything has gone well:
 
 ## _Viewing your static site_
 
-The quickest way to browse your newly deployed application is with the `flyctl open` command.
+The quickest way to browse your newly deployed application is with the `flyctl apps open` command.
 
 ```cmd
-flyctl open
+flyctl apps open
 ```
 ```output
-opening http://gostatic-example.fly.dev ...
+opening https://gostatic-example.fly.dev ...
 ```
 
-Your browser will be sent to the displayed URL. Fly will auto-upgrade this URL to an HTTPS secured URL.
+Your browser will be sent to the displayed URL.
 
 
