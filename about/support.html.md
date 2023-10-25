@@ -19,7 +19,7 @@ For host-level issues that might affect your apps, see your [dashboard](https://
 
 **Who can use this:** Everyone
 
-**Use this for:** General questions, troubleshooting advice, best practices, and sharing tips with other Fly users.
+**Use this for:** General questions, troubleshooting advice, best practices, and sharing tips with other Fly.io users.
 
 All customers have access to our active [community forum](https://community.fly.io). We're in the forums regularly to help out with customer issues and post new feature announcements.
 
