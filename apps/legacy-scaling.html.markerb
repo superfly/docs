@@ -12,18 +12,15 @@ This document applies to legacy V1 Fly Apps, which use Hashicorp Nomad for orche
 
 There are multiple dimensions of scaling on Fly.io.
 
-* [Ensuring the application has instances running in one or more regions](#count-scaling)
+* [Ensuring the app has instances running in one or more regions](#count-scaling)
 * [Increasing the CPU cores and memory size of application instances](#scaling-virtual-machines)
 * [Alternate scaling models with autoscaling](#autoscaling)
 
 ## Regions and Scaling
 
-Your Fly application runs on servers in a pool of regions, selected from our [available regions](/docs/reference/regions).  That pool, which [you can configure](/docs/flyctl/regions/), represents the regions your app _can_ be deployed in.
+Your Fly app runs on servers in a pool of regions, selected from our [available regions](/docs/reference/regions).  That pool, which [you can configure](/docs/flyctl/regions/), represents the regions your app _can_ be deployed in.
 
-When you deploy an application for the first time, we pick a first region to deploy in. Our selections are simple:
-
-* If you’re [turbo-charging a Heroku application](https://fly.io/heroku), we pick regions close to the Heroku application (currently, this means `iad` for US Heroku applications (howdy!), and `ams` for European applications (hallo!).
-* Otherwise, you're prompted to select an initial region when you run `fly launch`
+When you launch an app for the first time, you're prompted to select an initial deployment region.
 
 You can confirm this by running `fly regions list`.
 
@@ -57,11 +54,11 @@ Both commands simply take a space-separated list of regions to add or remove.
 
 ## Count Scaling
 
-Now that we have control over where our application runs, we can talk about how many instances of your app are running.
+Now that we have control over where our app runs, we can talk about how many instances of your app are running.
 
-Your application has a “scale count”. The scale count defaults to 1, meaning 1 instance of your application runs on Fly, in one of the regions in your pool.
+Your application has a “scale count”. The scale count defaults to 1, meaning 1 instance of your app runs on Fly, in one of the regions in your pool.
 
-If you want to run more than 1 instance, change your scale count with the `fly scale count` command. `fly scale count 3` tells us to run 3 instances of your application.
+If you want to run more than 1 instance, change your scale count with the `fly scale count` command. `fly scale count 3` tells us to run 3 instances of your app.
 
 When you bump up your scale count, we’ll place your app in different regions (based on your region pool). If there are three regions in the pool and the count is set to six, there will be two app instances in each region.
 
