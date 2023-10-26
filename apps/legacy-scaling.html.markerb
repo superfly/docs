@@ -18,7 +18,7 @@ There are multiple dimensions of scaling on Fly.io.
 
 ## Regions and Scaling
 
-Your Fly appn runs on servers in a pool of regions, selected from our [available regions](/docs/reference/regions).  That pool, which [you can configure](/docs/flyctl/regions/), represents the regions your app _can_ be deployed in.
+Your Fly app runs on servers in a pool of regions, selected from our [available regions](/docs/reference/regions).  That pool, which [you can configure](/docs/flyctl/regions/), represents the regions your app _can_ be deployed in.
 
 When you launch an app for the first time, you're prompted to select an initial deployment region.
 
