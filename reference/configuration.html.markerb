@@ -239,7 +239,7 @@ Secrets take precedence over env variables with the same name.
 
 #### Dealing with timeout errors while deploying a new version
 
-Everytime `fly deploy` runs, it builds a new docker image, push it to an internal registry and only then goes to update or create machines for the app. Sometimes the image is too large, or the platform is slower than usual pulling the new image layers, triggering the default 2 minutes wait for machine started timeout.
+Every time `fly deploy` runs, it builds a new docker image, pushes it to an internal registry, and then updates or creates machines for the app. Sometimes the image is too large, or the platform is slower than usual pulling the new image layers, triggering the default 2 minute timeout waiting for the Machine to be in a started state.
 
 The good thing is that this timeout can be controlled in two ways, with the `--wait-timeout` option, for example `fly deplopy --wait-timeout=10m`, or as a more permanent `fly.toml` setting:
 
