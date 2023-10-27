@@ -178,6 +178,8 @@ To ensure the command runs in a specific region, such as `dfw`, set `PRIMARY_REG
 
 The environment variable `RELEASE_COMMAND=1` is set within the temporary release VM. You can use this to define behavior in your Dockerfile's `ENTRYPOINT`  that's conditional on being run on a release VM.
 
+By default, the release command has 5 minutes to complete before it is killed. It is possible to increase or decrease the timeout with `fly deploy --release-command-timeout=10m` or by setting `release_command_timeout = "10m"` in `[deploy]` section of `fly.toml`.
+
 ### Picking a deployment strategy
 
 ```toml
@@ -234,6 +236,17 @@ Env variable names are strictly case-sensitive and cannot begin with `FLY_` (as 
 Secrets take precedence over env variables with the same name.
 
 **Note:** In Apps V2, the [`primary_region` option](#primary-region) sets the `PRIMARY_REGION` environment variable within a Machine and overrides any value set in the `[env]` section.
+
+#### Dealing with timeout errors while deploying a new version
+
+Every time `fly deploy` runs, it builds a new docker image, pushes it to an internal registry, and then updates or creates machines for the app. Sometimes the image is too large, or the platform is slower than usual pulling the new image layers, triggering the default 2 minute timeout waiting for the Machine to be in a started state.
+
+The good thing is that this timeout can be controlled in two ways, with the `--wait-timeout` option, for example `fly deplopy --wait-timeout=10m`, or as a more permanent `fly.toml` setting:
+
+```toml
+[deploy]
+wait_timeout = "10m"
+```
 
 ## The `http_service` section
 
