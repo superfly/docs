@@ -4,6 +4,7 @@ objective:
 layout: docs
 nav: firecracker
 order: 10
+redirect_from: /launch/
 ---
 
 <%= partial "/docs/partials/v2_transition_banner" %>
