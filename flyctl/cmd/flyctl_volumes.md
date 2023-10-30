@@ -13,6 +13,7 @@ flyctl volumes [command] [flags]
 * [list](/docs/flyctl/volumes-list/)	 - List the volumes associated with an app.
 * [show](/docs/flyctl/volumes-show/)	 - Show the details of the specified volume.
 * [snapshots](/docs/flyctl/volumes-snapshots/)	 - Manage volume snapshots
+* [update](/docs/flyctl/volumes-update/)	 - Update a volume for an app.
 
 ## Options
 

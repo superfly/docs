@@ -13,6 +13,7 @@ flyctl machine run <image> [command] [flags]
       --autostart                   Automatically start a stopped machine when a network request is received (default true)
       --autostop                    Automatically stop a machine when there aren't network requests for it (default true)
       --build-nixpacks              Build your image with nixpacks
+      --command string              Command to run, if we're shelling into the machine now (in case you don't have bash). (default "/bin/bash")
   -c, --config string               Path to application configuration file
       --detach                      Return immediately instead of monitoring deployment progress
       --dockerfile string           Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
@@ -36,8 +37,10 @@ flyctl machine run <image> [command] [flags]
                                     	Default is 'on-fail' for Machines created by 'fly deploy' and Machines with a schedule. Default is 'always' for Machines created by 'fly m run'.
       --rm                          Automatically remove the machine when it exits
       --schedule string             Schedule a machine run at hourly, daily and monthly intervals
+      --shell                       Open a shell on the machine once created (implies --it --rm)
       --skip-dns-registration       Do not register the machine's 6PN IP with the internal DNS system
       --standby-for strings         Comma separated list of machine ids to watch for
+      --user string                 Username, if we're shelling into the machine now. (default "root")
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
       --vm-memory string            Memory (in megabytes) to attribute to the VM
