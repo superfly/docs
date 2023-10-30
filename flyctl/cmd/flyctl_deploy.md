@@ -32,7 +32,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
       --image-label string               Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
       --immediate-max-concurrent int     Maximum number of machines to update concurrently when using the immediate deployment strategy. (default 16)
       --label stringArray                Add custom metadata to an image via docker labels
-      --lease-timeout int                Seconds to lease individual machines while running deployment. All machines are leased at the beginning and released at the end. The lease is refreshed periodically for this same time, which is why it is short. flyctl releases leases in most cases. (default 13)
+      --lease-timeout string             Time duration to lease individual machines while running deployment. All machines are leased at the beginning and released at the end.The lease is refreshed periodically for this same time, which is why it is short.flyctl releases leases in most cases. (default "13s")
       --local-only                       Perform builds locally using the local docker daemon. The default is --remote-only.
       --max-unavailable float            Max number of unavailable machines during rolling updates. A number between 0 and 1 means percent of total machines (default 0.33)
       --nixpacks                         Deploy using nixpacks to build the image
@@ -43,7 +43,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
       --provision-extensions             Provision any extensions assigned as a default to first deployments
       --push                             Push image to registry after build is complete
   -r, --region string                    The target region (see 'flyctl platform regions')
-      --release-command-timeout string   Seconds to wait for a release command finish running, or 'none' to disable. (default "300")
+      --release-command-timeout string   Time duration to wait for a release command finish running, or 'none' to disable. (default "5m0s")
       --remote-only                      Perform builds on a remote builder instance instead of using the local docker daemon. This is the default. Use --local-only to build locally.
       --smoke-checks                     Perform smoke checks during deployment (default true)
       --strategy string                  The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. Default is canary, or rolling when max-per-region is set.
@@ -53,7 +53,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
       --vm-memory string                 Memory (in megabytes) to attribute to the VM
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --volume-initial-size int          The initial size in GB for volumes created on first deploy (default 1)
-      --wait-timeout int                 Seconds to wait for individual machines to transition states and become healthy. (default 120)
+      --wait-timeout string              Time duration to wait for individual machines to transition states and become healthy. (default "5m0s")
   -y, --yes                              Accept all confirmations
 ~~~
 

@@ -21,6 +21,7 @@ flyctl volumes create <volumename> [flags]
       --require-unique-zone         Place the volume in a separate hardware zone from existing volumes. This is the default. (default true)
   -s, --size int                    The size of volume in gigabytes. The default is 3. (default 3)
       --snapshot-id string          Create the volume from the specified snapshot
+      --snapshot-retention int      Snapshot retention in days (min 5) (default 5)
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
       --vm-memory string            Memory (in megabytes) to attribute to the VM
