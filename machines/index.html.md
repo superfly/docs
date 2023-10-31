@@ -102,7 +102,7 @@ Machine has been successfully cloned!
 You can clone a specific machine as many times as you like, into specific regions; you can manage each of those machines
 individually with `flyctl machines stop` and `flyctl machines start`.
 
-Scale a machine up vertically with `flyctl machines update`:
+Scale a Machine up vertically with `fly machine update`:
 
 ```cmd
 $ flyctl m update -a my-app --vm-memory 512M 7811373c095228
