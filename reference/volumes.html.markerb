@@ -34,7 +34,7 @@ Many developers use volumes for databases, so if possible, each volume you creat
 
 ## Volumes and regions
 
-Volumes exist in a single[region](/docs/reference/regions/). For redundancy within a region, you can run multiple Machines with attached volumes by creating multiple volumes with the same name. For example, creating three volumes named `myapp_data` would let up to three instances of the app start up and run. Every volume has a unique ID to allow for multiple volumes with the same name. Remember that volumes don't automatically replicate data between them.
+Volumes exist in a single [region](/docs/reference/regions/). For redundancy within a region, you can run multiple Machines with attached volumes by creating multiple volumes with the same name. For example, creating three volumes named `myapp_data` would let up to three instances of the app start up and run. Every volume has a unique ID to allow for multiple volumes with the same name. Remember that volumes don't automatically replicate data between them.
 
 ## Volume encryption
 
