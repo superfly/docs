@@ -88,7 +88,7 @@ you can do it directly.
 Scale a workload out horizontally with `fly machine clone`:
 
 ```cmd
-$ flyctl machines clone -a my-app --region ord 7811373c095228
+$ fly machine clone -a my-app --region ord 7811373c095228
 ```
 
 ```output
