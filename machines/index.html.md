@@ -99,7 +99,7 @@ Provisioning a new machine with image registry-1.docker.io/my-app/sleep:latest@s
 Machine has been successfully cloned!
 ```
    
-You can clone a specific machine as many times as you like, into specific regions; you can manage each of those machines
+You can clone a specific Machine as many times as you like, into specific regions; you can manage each of those Machines
 individually with `flyctl machines stop` and `flyctl machines start`.
 
 Scale a Machine up vertically with `fly machine update`:
