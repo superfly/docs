@@ -90,6 +90,7 @@ stdin
 stdout
 subcommands?\b
 subfolders?\b
+subsecond
 Supabase
 swapfile
 Symfony
