@@ -141,9 +141,11 @@ You don't get to pick particular servers (there are ways to cheat and do it anyw
 
 If you pick a particular region, like `ord` or `yyz`, we will _only_ create the Machine in that region. 
 
-Placement can fail! It shouldn't happen often, but we can run out of capacity in particular regions. Both `flyctl` and the Fly Machines 
+<section class="warning icon">
+**Placement can fail!** It shouldn't happen often, but we can run out of capacity in particular regions. Both `flyctl` and the Fly Machines 
 API are best-effort. If you're working with us at this level of control, it's on you to retry requests and ensure they go through. In exchange for
 that burden, we try to make sure the Fly Machines API is responsive, so you get quick answers.
+</section>
 
 ## Recapping Machine Features
 
