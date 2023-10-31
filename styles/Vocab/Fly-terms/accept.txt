@@ -5,6 +5,7 @@ automagically
 backhaul
 bluegreen
 buildpacks?\b
+bursty
 callouts?\b
 cron
 datacenters?\b
@@ -76,6 +77,7 @@ proxying
 psql
 repo
 Resque
+rootfs
 RTT
 runtimes?\b
 Ruygt
@@ -86,7 +88,9 @@ Sidekiq
 SSH
 stdin
 stdout
+subcommands?\b
 subfolders?\b
+subsecond
 Supabase
 swapfile
 Symfony
