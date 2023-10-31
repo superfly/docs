@@ -69,7 +69,7 @@ To get your head around that trick, start by understanding the lifecycle of a Fl
    you want to do that, `GOTO 2`. 
    
 4. You're tired of the Fly Machine, and want it to go away. Send a [Delete Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_delete), or 
-   use `flyctl machines destroy`. We clear the resources we were holding for the machine off our server. You can easily create and start
+   use `fly machine destroy`. We clear the resources we were holding for the Machine off our server. You can easily create and start
    a new Machine from the same image, but it'll be slower than stopping and starting an existing machine. 
 
 Here's [more detail on using `flyctl` to manage individual machines](/docs/machines/guides-examples/machines-app-using-flyctl/).
