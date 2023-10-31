@@ -1,12 +1,12 @@
 ---
 title: Machine Sizing
-layout: framework_docs
+layout: docs
 sitemap: false
 author: fideloper
 order: 30
 categories:
   - machines
-nav: firecracker
+nav: machines
 date: 2022-12-08
 ---
 

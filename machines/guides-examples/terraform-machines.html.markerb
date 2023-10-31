@@ -1,8 +1,8 @@
 ---
 title: Getting Started with Terraform and Machines
-layout: framework_docs
+layout: docs
 sitemap: false
-nav: firecracker
+nav: machines
 order: 40
 author: dov
 categories:

@@ -1,12 +1,12 @@
 ---
 title: Run User Code on Fly Machines
-layout: framework_docs
+layout: docs
 sitemap: false
 author: joshua
 order: 10
 categories:
   - machines
-nav: firecracker
+nav: machines
 date: 2022-05-20
 redirect_from: /docs/app-guides/functions-with-machines/
 ---

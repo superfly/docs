@@ -1,7 +1,8 @@
 ---
 title: Working with the Machines API
 objective: Get familiar with the Fly Machines API.
-layout: framework_docs
+layout: docs
+nav: machines
 order: 1
 ---
 

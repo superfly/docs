@@ -1,8 +1,8 @@
 ---
 title: Machine restart policy
-layout: framework_docs
+layout: docs
 order: 35
-nav: firecracker
+nav: machines
 ---
 
 The Machine restart policy defines whether and how flyd restarts a Machine after its main process exits. The restart policy applies per Machine, and is not an app-wide setting.
