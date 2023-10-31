@@ -32,7 +32,7 @@ A Machine is the configuration and state for a single VM running on our platform
 can have more than one Machine. You can start a Machine right now, without configuring anything: 
 
 ```cmd
-$ flyctl machines run --shell
+$ fly machine run --shell
 ```
 
 ```output
