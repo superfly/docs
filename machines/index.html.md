@@ -1,7 +1,7 @@
 ---
 title: "Fly Machines"
-layout: framework_docs_overview
-toc: false
+layout: docs
+nav: machines
 redirect_from: /docs/reference/machines/
 ---
 

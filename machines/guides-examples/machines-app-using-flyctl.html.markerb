@@ -1,11 +1,11 @@
 ---
 title: Run Machines with flyctl
-layout: framework_docs
+layout: docs
 sitemap: false
 order: 20
 categories:
   - machines
-nav: firecracker
+nav: machines
 date: 2022-12-20
 ---
 
