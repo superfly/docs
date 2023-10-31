@@ -1,6 +1,7 @@
 ---
 title: "Fly Machines"
-layout: framework_docs
+layout: framework_docs_overview
+toc: false
 redirect_from: /docs/reference/machines/
 ---
 
@@ -48,7 +49,7 @@ Linux d8d9510a295118 5.15.98-fly #gf0950f1d7c SMP Sun Sep 17 02:33:12 UTC 2023 x
 
 Go ahead and try it! When you `run` a Machine with `--shell`, we'll make a small one, and we'll tear it down when you're done poking around.
 
-### Machine State
+### Machine state
 
 The big Fly Machine trick is: starting up super fast; like, "in response to an HTTP request from a user" fast. Doing things like 
 that is why you'd use Fly Machines directly, rather than a [Fly App](https://fly.io/docs/apps/deploy/). 
@@ -75,10 +76,10 @@ Here's [more detail on using flyctl to manage individual Machines](/docs/machine
 
 ### Scaling Machines
 
-<div class="border border-blue-600 bg-blue-50 rounded-l p-4 my-4 text-base text-navy">
+<div class="important icon">
 Remember, the ordinary way to scale an application on Fly.io is to use [Fly Launch](/docs/apps), which offers convenient
 commands to scale instances out or up. Here, we're going to scale Machines directly, in a fiddly way.
-<br><br>
+
 Whether or not you use `fly launch` to boot up a Fly App, every Machine belongs to an "App" (an "App" is ultimately just a named 
 collection of resources, configuration, and routing rules). But you don't have to use the `fly apps` commands to manage Machines;
 you can do it directly.
@@ -146,11 +147,11 @@ API are best-effort. If you're working with us at this level of control, it's on
 that burden, we try to make sure the Fly Machines API is responsive, so you get quick answers.
 </section>
 
-## Recapping Machine Features
+## Recapping Fly Machine features
 
-1. They can be managed by API
-1. They turn off automatically when a program exits
-1. They can be started very quickly
-1. Restarted machines are a blank slate - they are ephemeral
-1. They can be started manually, but can also wake on network access
-1. You can run multiple machines within an application
+* Manage with the Machines API or flyctl commands
+* Stop automatically when a program exits
+* Stop or start quickly, either manually or automatically based on traffic
+* Provide ephemeral storage, a blank slate on every startup 
+* Attach a volume for persistent storage
+* Place in any region
