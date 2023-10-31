@@ -80,7 +80,7 @@ Here's [more detail on using flyctl to manage individual Machines](/docs/machine
 Remember, the ordinary way to scale an application on Fly.io is to use [Fly Apps](/docs/apps), which offer convenient
 commands to scale instances out or up. Here, we're going to scale Machines directly, in a fiddly way.
 <br><br>
-Whether or not you use `flyctl launch` to boot up a Fly App, every Machine belongs to an "App" (an "App" is ultimately just a named 
+Whether or not you use `fly launch` to boot up a Fly App, every Machine belongs to an "App" (an "App" is ultimately just a named 
 collection of resources, configuration, and routing rules). But you don't have to use the `flyctl apps` commands to manage Machines;
 you can do it directly.
 </div>
