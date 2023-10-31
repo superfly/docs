@@ -6,7 +6,7 @@ nav: firecracker
 order: 60
 ---
 
-(There's also a doc on [scaling legacy V1 apps](/docs/apps/legacy-scaling/).)
+For Nomad apps see [scaling legacy V1 apps](/docs/apps/legacy-scaling/).
 
 An app's horizontal scale, or the number of Fly Machines belonging to it, sets its maximum capacity. This is done by creating or destroying Machines.
 
