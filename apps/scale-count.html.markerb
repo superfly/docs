@@ -13,7 +13,7 @@ An app's horizontal scale, or the number of Fly Machines belonging to it, sets i
 <div class="important icon">
 Starting and stopping existing Machines is much faster than creating and destroying them. Stopped Machines are cheaper than running ones. Machines release their CPU and RAM when they stop, and their rootfs is rebuilt fresh from their Docker image, ready to start.
 
-For bursty workloads, we recommend scaling up to enough Machines to handle your peak load, and adjusting the active capacity of the app by stopping and starting Machines as needed. 
+For bursty workloads, we recommend creating enough Machines to handle your peak load, and adjusting the active capacity of the app by stopping and starting Machines as needed. 
 
 For more information, see:
 * [Automatically Stop and Start App Machines](/docs/apps/autostart-stop/), for adjusting active capacity based on traffic.
