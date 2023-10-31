@@ -57,7 +57,7 @@ that is why you'd use Fly Machines directly, rather than a [Fly App](https://fly
 To get your head around that trick, start by understanding the lifecycle of a Fly Machine:
 
 1. You create a Fly Machine with a [Create Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_create), or 
-   with `flyctl machines create`. The machine is `created` state. This step can take some time: you're asking us to reserve space
+   with `fly machine create`. The Machine is in `created` state. This step can take some time: you're asking us to reserve space
    for your Machine, and then fetch your container from our global registry, and build a root filesystem; low double digit seconds, maybe. 
    
 2. Now that the Fly Machine exists, you can start it with a [Start Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_start), or 
