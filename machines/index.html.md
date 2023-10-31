@@ -85,7 +85,7 @@ collection of resources, configuration, and routing rules). But you don't have t
 you can do it directly.
 </div>
 
-Scale a workload out horizontally with `flyctl machines clone`:
+Scale a workload out horizontally with `fly machine clone`:
 
 ```cmd
 $ flyctl machines clone -a my-app --region ord 7811373c095228
