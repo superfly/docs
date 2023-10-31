@@ -100,7 +100,7 @@ Machine has been successfully cloned!
 ```
    
 You can clone a specific Machine as many times as you like, into specific regions; you can manage each of those Machines
-individually with `flyctl machines stop` and `flyctl machines start`.
+individually with `fly machine stop` and `fly machine start`.
 
 Scale a Machine up vertically with `fly machine update`:
 
