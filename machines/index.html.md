@@ -65,7 +65,7 @@ To get your head around that trick, start by understanding the lifecycle of a Fl
    already assembled; we're just booting. Usually this takes _well under a second_.
    
 3. You're done with the Fly Machine, so you stop it with a [Stop Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_stop), or
-  `flyctl machines stop`. The VM shuts down. The Machine is in `stopped` state. Its components are still assembled on our worker host, ready to start back up; if
+  `fly machine stop`. The VM shuts down. The Machine is in `stopped` state. Its components are still assembled on our worker host, ready to start back up; if
    you want to do that, `GOTO 2`. 
    
 4. You're tired of the Fly Machine, and want it to go away. Send a [Delete Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_delete), or 
