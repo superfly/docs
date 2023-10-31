@@ -72,7 +72,7 @@ To get your head around that trick, start by understanding the lifecycle of a Fl
    use `fly machine destroy`. We clear the resources we were holding for the Machine off our server. You can easily create and start
    a new Machine from the same image, but it'll be slower than stopping and starting an existing Machine. 
 
-Here's [more detail on using `flyctl` to manage individual machines](/docs/machines/guides-examples/machines-app-using-flyctl/).
+Here's [more detail on using flyctl to manage individual Machines](/docs/machines/guides-examples/machines-app-using-flyctl/).
 
 ### Scaling Machines
 
