@@ -5,15 +5,26 @@ layout: docs
 nav: firecracker
 order: 60
 ---
-<%= partial "/docs/partials/v2_transition_banner" %>
 
-<div class="callout">This document describes horizontal scaling of [V2 apps](/docs/reference/apps/#apps-v2), running on Fly Machines. 
+(There's also a doc on [scaling legacy V1 apps](/docs/apps/legacy-scaling/).)
 
-**For existing Nomad/V1 Fly Apps:** There's a whole doc on [scaling legacy V1 apps](/docs/apps/legacy-scaling/).
+An app's horizontal scale, or the number of Fly Machines belonging to it, sets its maximum capacity. This is done by creating or destroying Machines.
 
+<div class="important icon">
+Starting and stopping existing Machines is much faster than creating and destroying them. Stopped Machines are cheaper than running ones. Machines release their CPU and RAM when they stop, and their rootfs is rebuilt fresh from their Docker image, ready to start.
+
+For bursty workloads, we recommend scaling up to enough Machines to handle your peak load, and adjusting the active capacity of the app by stopping and starting Machines as needed. 
+
+For more information, see:
+* [Automatically Stop and Start App Machines](/docs/apps/autostart-stop/), for adjusting active capacity based on traffic.
+* [`fly machine` commands](/docs/flyctl/machine/), including [`start`](/docs/flyctl/machine-start/) and [`stop`](/docs/flyctl/machine-start/) subcommands to target individual Machines with flyctl.
+* Machines API [stop](/docs/machines/working-with-machines/#stop-a-machine) and [start](/docs/machines/working-with-machines/#start-a-machine) endpoints.
 </div>
 
-There are two ways to scale the number of Machines managed by [Fly Launch](/docs/apps/) after deploying an app for the first time:
+
+
+
+There are two ways to change the number of Machines managed by [Fly Launch](/docs/apps/) after deploying an app for the first time:
 
 1. with the `fly scale count` subcommand
 2. by explicitly [cloning](#scale-up-with-fly-machine-clone) or [destroying](#scale-down-with-fly-machine-destroy) existing Machines on the app
@@ -21,9 +32,6 @@ There are two ways to scale the number of Machines managed by [Fly Launch](/docs
 `fly scale count` uses internal rules to create or destroy Machines to reach the target scale that you specify. Machines get created when the target number of Machines is higher than the existing total, and Machines get destroyed when the target number of Machines is lower than the existing total.
 
 When Machines are created or destroyed using `fly scale count` or `fly machine clone`/`fly machine destroy`, the resulting scale is preserved by `fly deploy`&mdash;except in the case that you scale right down to zero Machines. If there are no existing Machines, then `fly deploy` seeds the app with new Machines in the `primary_region` and according to the `[processes]` configured in your `fly.toml` file. For more information about how many Machines are created when you launch a new app or deploy from zero, refer to [Redundancy by default on first deploy](/docs/reference/app-availability/#redundancy-by-default-on-first-deploy).
-
-You can also adjust the capacity of the app by starting and stopping its Machines. Stopped Machines cost less than running Machines because they don't consume any CPU or RAM resources. See [Automatically Stop and Start App Machines](/docs/apps/autostart-stop/) for ways to do this dynamically.
-
 
 ## View the app's current scale 
 
@@ -324,4 +332,4 @@ If a Machine is misbehaving (for instance, it's not `stop`ping successfully), yo
 fly machine destroy --force 0e286039f42e86
 ```
 
-<div class="callout"> If you destroy a Machine with a volume attached, the volume remains intact until you either explicitly destroy the volume or destroy the Fly App it belongs to.</div>
+<div class="important"> If you destroy a Machine with a volume attached, the volume remains intact until you either explicitly destroy the volume or destroy the app it belongs to.</div>
