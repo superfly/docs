@@ -21,9 +21,6 @@ For more information, see:
 * Machines API [stop](/docs/machines/working-with-machines/#stop-a-machine) and [start](/docs/machines/working-with-machines/#start-a-machine) endpoints.
 </div>
 
-
-
-
 There are two ways to change the number of Machines managed by [Fly Launch](/docs/apps/) after deploying an app for the first time:
 
 1. with the `fly scale count` subcommand
