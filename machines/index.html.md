@@ -8,10 +8,30 @@ redirect_from: /docs/reference/machines/
 
 Fly Machines are fast-booting VMs that you control directly through the Machines API. The flyctl CLI also gives you that same low-level control through the command line. Oh yeah, and Fly Launch uses Machines to orchestrate Fly Apps too.
 
-**Learn about Fly Machines:** [Fly Machines overview](/docs/machines/machines-overview)
+## Learn about Fly Machines 
 
-**Spin up a simple Debian workstation:** Run Debian on a Machine (TBD)
+[Fly Machines overview](/docs/machines/machines-overview)
 
-**Try out the Machines API:** [Machines API](/docs/machines/working-with-machines/)
+[Fly Machines video series: The building block of Fly.io](https://www.youtube.com/playlist?list=PLochXUj858lvBPV0WK8G8-HeBkODLCBAA)
 
-**More Machines:** Machines patterns (TBD)
+[Fly Machines video series: Running user code](https://www.youtube.com/playlist?list=PLochXUj858lvbCdmtrAF-tefo0GX3Ypu-)
+
+
+## Run a Machine
+
+When you run a Machine with --shell, we'll make a small one, and we'll tear it down when you're done poking around.
+
+```cmd
+flyctl machines run --shell
+```
+
+Learn more. (TBD link)
+
+## The Machines API
+
+[Machines API](/docs/machines/working-with-machines/)
+TBD more links
+
+## Do more with Machines
+
+Machines patterns (TBD link)
