@@ -61,7 +61,7 @@ To get your head around that trick, start by understanding the lifecycle of a Fl
    for your Machine, and then fetch your container from our global registry, and build a root file system; low double digit seconds, maybe. 
    
 2. Now that the Fly Machine exists, you can start it with a [Start Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_start), or 
-   with `flyctl machines start`. We boot a VM. The Machine is in `started` state. It's running. You can talk to it. This happens fast! Everything's
+   with `fly machine start`. We boot a VM. The Machine is in `started` state. It's running. You can talk to it. This happens fast! Everything's
    already assembled; we're just booting. Usually this takes _well under a second_.
    
 3. You're done with the Fly Machine, so you stop it with a [Stop Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_stop), or
