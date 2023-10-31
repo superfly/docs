@@ -105,7 +105,7 @@ individually with `flyctl machines stop` and `flyctl machines start`.
 Scale a Machine up vertically with `fly machine update`:
 
 ```cmd
-$ flyctl m update -a my-app --vm-memory 512M 7811373c095228
+$ fly machine update -a my-app --vm-memory 512M 7811373c095228
 ```
 
 ```output
