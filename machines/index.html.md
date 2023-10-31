@@ -58,7 +58,7 @@ To get your head around that trick, start by understanding the lifecycle of a Fl
 
 1. You create a Fly Machine with a [Create Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_create), or 
    with `fly machine create`. The Machine is in `created` state. This step can take some time: you're asking us to reserve space
-   for your Machine, and then fetch your container from our global registry, and build a root filesystem; low double digit seconds, maybe. 
+   for your Machine, and then fetch your container from our global registry, and build a root file system; low double digit seconds, maybe. 
    
 2. Now that the Fly Machine exists, you can start it with a [Start Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_start), or 
    with `flyctl machines start`. We boot a VM. The Machine is in `started` state. It's running. You can talk to it. This happens fast! Everything's
