@@ -126,7 +126,7 @@ No health checks found
 Machine 7811373c095228 updated successfully!
 ```
 
-Updating a machine takes it down (like with `flyctl machines stop`), applies configuration changes, and brings it back up. If you're
+Updating a Machine takes it down (like with `fly machine stop`), applies configuration changes, and brings it back up. If you're
 not changing the image, so we don't have to go fetch it from the global registry, this is fast, for the same reason `stop` and `start`
 are; we've already done the heavy lifting. 
 
