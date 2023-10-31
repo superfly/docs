@@ -21,7 +21,7 @@ applications, most of the time, you don't need to be picky! You scale things up 
 out to more regions and more VM counts. [Fly Apps](/docs/apps) does all that for you with simple syntax. 
 
 🌶️ **But some applications get spicy.**🌶️ This is our spicy interface! We use it to build the orchestration
-for `flyctl launch`, but you can use it however you'd like. 
+for `fly launch`, but you can use it however you'd like. 
 </section>
 
 ## Concepts
