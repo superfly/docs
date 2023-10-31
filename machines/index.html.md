@@ -10,7 +10,7 @@ Fly Machines are:
 * [The engine](https://fly.io/blog/fly-machines/) behind the Fly.io platform: super-fast lightweight VMs that,
   once created, can be started and stopped at subsecond speeds. 
 
-* [A REST API](chines/working-with-machines/) you can use for precise control over groups of machines to deploy
+* [A REST API](/docs/machines/working-with-machines/) you can use for precise control over groups of Machines to deploy
   and scale out applications. 
 
 <section class="warning icon">
