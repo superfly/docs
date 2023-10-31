@@ -17,7 +17,7 @@ Fly Machines are:
 
 Use Fly Machines directly when you need to be picky about how, where, and when to start VMs on Fly.io. For most
 applications, most of the time, you don't need to be picky! You scale things up to more cores or more memory, and
-out to more regions and more VM counts. [Fly Apps](/docs/apps) does all that for you with simple syntax. 
+out to more regions and more VM counts. [Fly Launch](/docs/apps) does all that for you with simple syntax. 
 
 🌶️ **But some applications get spicy.**🌶️ This is our spicy interface! We use it to build the orchestration
 for `fly launch`, but you can use it however you'd like. 
