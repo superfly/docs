@@ -60,7 +60,7 @@ Learn more about [using Fly Volumes with Fly Apps](/docs/apps/volume-storage/).
 Configure the following deployment behavior in the [`[deploy]` section](/docs/reference/configuration/#the-deploy-section) of `fly.toml`.
 
 ### Release commands
-You can run a one-off [release command](/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment) in a temporary VM&mdash;using the successfully built release&mdash;before that release is deployed. This is good for, e.g., running database migrations.
+You can run a one-off [release command](/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment) in a temporary VM&mdash;using the successfully built release&mdash;before that release is deployed. This is good for, e.g., running database migrations. Keep in mind that these temporary VMs do not have access to any volumes you may have mounted in your apps.
 
 ### Deployment strategy
 

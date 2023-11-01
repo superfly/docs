@@ -19,7 +19,7 @@ You can enable or disable those as you see fit, as well as add your own `.sh` sc
 
 ## Release Command
 
-You may want to use the [`release_command`](/docs/reference/configuration/#the-deploy-section) to perform database migrations or other tasks. The release command is run in a temporary VM that is created just before your application is deployed and released. This potentially helps with zero-downtime deploys.
+You may want to use the [`release_command`](/docs/reference/configuration/#the-deploy-section) to perform database migrations or other tasks. The release command is run in a temporary VM that is created just before your application is deployed and released. Keep in mind that this temporary VM doesn't have access to volumes. This potentially helps with zero-downtime deploys.
 
 Note, however, that any Startup Script in `.fly/scripts` will also be run when a `release_command` is used.
 
