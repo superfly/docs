@@ -215,8 +215,7 @@ For rolling deploys, you can use `max_unavailable` to control how many Machines 
 
 Whole number values, greater than or equal to one, specify exactly how many Machines can be down at a time. For example, a value of "1" would update one-at-a-time.
 
-Fractional values, between zero and one, provide a percentage of Machines that can be down at a time. For example, the default value of 0.33 means that a maximum of one third
-of your Machines can be down during a deploy.
+Fractional values, between zero and one, provide a percentage of Machines that can be down at a time. For example, the default value of 0.33 means that a maximum of one third of your Machines can be down during a deploy.
 
 ## The `env` variables section
 
@@ -239,9 +238,9 @@ Secrets take precedence over env variables with the same name.
 
 ### Dealing with timeout errors while deploying a new version
 
-Every time `fly deploy` runs, it builds a new docker image, pushes it to an internal registry, and then updates or creates machines for the app. Sometimes the image is too large, or the platform is slower than usual pulling the new image layers, triggering the default 5 minute timeout waiting for the Machine to be in a started state.
+Every time `fly deploy` runs, it builds a new docker image, pushes it to an internal registry, and then updates or creates Machines for the app. Sometimes the image is too large, or the platform is slower than usual pulling the new image layers, triggering the default 5 minute timeout waiting for the Machine to be in a started state.
 
-The good thing is that this timeout can be controlled in two ways, with the `--wait-timeout` option, for example `fly deplopy --wait-timeout=10m`, or as a more permanent `fly.toml` setting:
+The good thing is that this timeout can be controlled in two ways, with the `--wait-timeout` option, for example `fly deploy --wait-timeout=10m`, or as a more permanent `fly.toml` setting:
 
 ```toml
 [deploy]
