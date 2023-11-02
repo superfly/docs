@@ -11,19 +11,21 @@ nav: firecracker
 
 Our pricing is designed to let you launch a small application for free, and scale costs affordably as your needs grow.
 
-Fly.io services are billed per organization. Billing is based on the resources provisioned for your apps, pro-rated for the time they are provisioned.
+Fly.io services are billed per organization. Organizations are administrative entities on Fly.io that enable you to add members, share app development environments, and manage billing separately. Billing is based on the resources provisioned for your apps, pro-rated for the time they are provisioned.
 
 ## _Plans_
 
-All plans require a [credit card](/docs/about/credit-cards/). Each organization starts on the Hobby plan, which is a straightforward pay-as-you-go option. 
+All plans require a [credit card](/docs/about/credit-cards/). Your first organization starts on a a free Hobby plan (subject to change), and any subsequent new organizations you create are on the $5/month Hobby Plan. Hobby plans are a straightforward pay-as-you-go option.
 
 We don't offer a "free tier." Instead, we offer some free resource allowances that apply to all plans, including the Hobby plan, and includes enough usage per month to run a small full-stack app, full-time, for free. 
 
 If you want to scale beyond the included free resources, you can pay for just what you need at the usage-based pricing listed below.
 
-Your organization might be limited to prevent abuse or help with capacity planning. 
+<div class="note icon">
+Your organization might be limited to prevent abuse or help with capacity planning.
+</div>
 
-If you need more support or compliance options, you can choose one of our [paid plans](https://fly.io/plans). These come with usage included and additional support options. In some circumstances, you may need an organization and a paid plan to get full access.
+If you need more support or compliance options, you can upgrade to our [Launch, Scale, or Enterprise plan](https://fly.io/plans). These come with usage included and additional support options.
 
 For details and to select a different plan, see: [Plan Pricing](https://fly.io/plans)
 
@@ -55,7 +57,7 @@ Pricing for virtual machines running in [Fly Apps V1](/docs/reference/apps/#lega
 
 ## _Persistent Storage Volumes_
 
-You can add one or more persistent volumes to your apps with `flyctl volumes create ...`:
+[Volumes](/docs/volumes/) are local persistent storage for VMs.
 
 * Free: 3GB of total provisioned capacity per organization
 * $0.15/GB per month of provisioned capacity
