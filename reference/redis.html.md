@@ -12,6 +12,16 @@ nav: firecracker
 [Upstash for Redis](https://docs.upstash.com/redis) is a fully-managed, Redis-compatible database service offering global read replicas for reduced latency in distant regions. Upstash databases are provisioned inside your Fly organization, ensuring private, low-latency connections to your Fly applications.
 
 See the [What you Should Know](#what-you-should-know) section for more details about this service.
+
+## Pricing
+
+Upstash offers one free, resource-limited database per Fly organization. After that, all databases are billed by request count on a pay-as-you-go basis. Check the official [Upstash Pricing](https://upstash.com/pricing) page for details.
+
+Note that empty responses are not counted towards your bill. This prevents billing for standard polling behavior of tools like [Sidekiq](https://sidekiq.org/) or [BullMQ](https://bullmq.io/).
+
+Your database charges will show up on your monthly Fly.io bill. You can track database usage details in the [Upstash web console](#the-upstash-web-console).
+
+
 ## Create and manage a Redis database
 
 Creating and managing databases happens exclusively via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/).
@@ -25,10 +35,21 @@ flyctl redis create
 ? Select Organization: fly-apps (fly-apps)
 ? Choose a primary region (can't be changed later) Madrid, Spain (mad)
 ? Optionally, choose one or more replica regions (can be changed later): Amsterdam, Netherlands (ams)
-? Select an Upstash Redis plan Free: 100 MB Max Data Size
+? Select an Upstash Redis plan:
+> Pay-as-you-go
+  Free
 ```
 
-Once created, check the list of Redis databases.
+### The Upstash web console
+
+To view more details about database usage, connection strings, and more, use:
+
+```cmd
+flyctl redis dashboard <org_name>
+```
+
+### List your databases and view status
+Get a list of all of your Redis databases.
 
 ```cmd
 flyctl redis list
@@ -38,10 +59,10 @@ ID             	NAME               	ORG          	PLAN	PRIMARY REGION	READ REGIO
 aaV829vaMVQGbi5	late-waterfall-1133	fly-apps     	Free	mad           	ams
 ```
 
-Note the database ID, then fetch its status.
+Note the database name, then fetch its status.
 
 ```cmd
-fly redis status aaV829vaMVDGbi5
+fly redis status late-waterfall-1133
 ```
 ```output
 Redis
@@ -50,10 +71,13 @@ Redis
   Plan           = Free
   Primary Region = mad
   Read Regions   = ams
-  Private URL     = redis://password@fly-magical-javelin-30042.upstash.io
+  Private URL     = redis://password@fly-late-waterfall-1133.upstash.io
 ```
 
 ### Connect to a Redis database
+
+If you have `redis-cli` installed, you can connect directly to your Redis database and run commands.
+
 ```cmd
 fly redis connect
 ? Select a database to connect to empty-water-3291 (sjc) 200M
@@ -65,8 +89,6 @@ OK
 127.0.0.1:16379>
 ```
 
-By connecting a database, you can run Redis commands on redis-cli.
-
 ### Update a Redis database
 
 Upstash Redis instances can't change their primary region or name, but the following may change:
@@ -75,14 +97,14 @@ Upstash Redis instances can't change their primary region or name, but the follo
 * Pricing plan
 * Eviction settings
 
-Use `flyctl redis update` and follow the prompts. Changing region settings should not cause downtime.
+Use `flyctl redis update` and follow the prompts. Changing region settings doesn't cause downtime.
 
 ### Delete a Redis database
 
 Deleting a Redis database can't be undone. Be careful!
 
 ```cmd
-fly redis delete my-redis-db
+fly redis destroy my-redis-db
 ```
 ```output
 Your Redis database my-redis-db was deleted
@@ -111,16 +133,3 @@ By default, Upstash Redis will disallow writes when the max data size limit has 
 First, keys marked with a TTL will be evicted at random. In the absence of volatile keys, keys will be chosen randomly for eviction. This is roughly the combination of the `volatile-random` and `allkeys-random` [eviction policies available in standard Redis](https://redis.io/docs/manual/eviction/).
 
 Note that items marked with an explicit TTL will expire accurately, regardless of whether eviction is enabled.
-
-## Pricing
-
-| | Free | 200MB | 3GB |
-|------|------|-------|-------|
-|Max Data size|100MB|200MB|3GB|
-|Max Concurrent Connections|100|300|1000|
-|Max Commands/sec|300|300|1000|
-|Max Daily Bandwidth|100MB|10GB|50GB|
-|Max Request Size|1MB|1MB|10MB|
-|Price per month, per region|$0|$10|$90|
-
-More plans may be added in the future. [Get in touch](https://community.fly.io) on our community forum with feedback and suggestions for improvements.
