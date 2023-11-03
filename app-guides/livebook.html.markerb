@@ -97,7 +97,7 @@ At the time of writing, you may see this error message as the first deployment f
 
 <code>WARNING The app is not listening on the expected address and will not be reachable by fly-proxy.</code>
 
-If you can reach your Livebook in the browser, then you can ignore this message. Occasionally, provisioning the storage volume can delay startup of the Livebook process later than flyctl expects.
+If you can reach your Livebook in the browser, then you can ignore this message. Occasionally, provisioning the storage volume can delay startup of the Livebook process later than flyctl expects, causing a false alarm.
 </div>
 
 ## Visit your Livebook app
