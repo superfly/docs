@@ -18,7 +18,7 @@ If you're scaling your VMs up, then scale the VMs first before adjusting the Pos
 Scale VM resources for each Machine in the cluster with the [`flyctl machine update`](https://fly.io/docs/flyctl/machine-update/) command. Here's an example of scaling RAM to 1GB on a machine:
 
 ```cmd
-fly machine update e784079b449483 --memory 1024 --app pg-test
+fly machine update e784079b449483 --vm-memory 1024 --app pg-test
 ```  
 
 You can use [`fly machine status`](/docs/flyctl/machine-status/) again to confirm the new scale of the Machine.

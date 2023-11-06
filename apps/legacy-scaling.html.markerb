@@ -145,7 +145,7 @@ Scaled VM Memory size to 1 GB
 You can also change the VM type and memory size at the same time. The `fly scale vm` command can take an additional memory flag which specifies the megabytes of RAM to be allocated to the VM. For example, if we wanted to allocate 4GB of RAM to our application and switch to a dedicated CPU option, we'd run:
 
 ```cmd
-fly scale vm dedicated-cpu-1x --memory 4096
+fly scale vm dedicated-cpu-1x --vm-memory 4096
 ```
 ```output
 Scaled VM size to dedicated-cpu-1x
