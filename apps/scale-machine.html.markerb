@@ -204,9 +204,9 @@ If an app has Machines not belonging to Fly Launch&mdash;that is, created using 
 The app-wide `fly scale` commands do not apply to these Machines, but you can scale any Machine individually with `fly machine update`:
 
 ```
-fly machine update --size shared-cpu-2x 21781973f03e89
-fly machine update --memory 1024 21781973f03e89
-fly machine update --cpus 2 21781973f03e89
+fly machine update --vm-size shared-cpu-2x 21781973f03e89
+fly machine update --vm-memory 1024 21781973f03e89
+fly machine update --vm-cpus 2 21781973f03e89
 ```
 
 Again, if you try to set an incompatible CPU/RAM combination through `fly machine update --memory` or `fly machine update --cpus`, flyctl will let you know.
