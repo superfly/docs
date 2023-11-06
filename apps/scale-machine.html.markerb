@@ -209,4 +209,4 @@ fly machine update --vm-memory 1024 21781973f03e89
 fly machine update --vm-cpus 2 21781973f03e89
 ```
 
-Again, if you try to set an incompatible CPU/RAM combination through `fly machine update --memory` or `fly machine update --cpus`, flyctl will let you know.
+Again, if you try to set an incompatible CPU/RAM combination through `fly machine update --vm-memory` or `fly machine update --vm-cpus`, flyctl will let you know.
