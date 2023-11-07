@@ -20,18 +20,17 @@ Fly GPUs are only available on GPU-enabled accounts. You can join the waitlist [
 
 1. From flyctl, create an app using either `fly launch` or `fly apps create`.
 
-   <div class="note icon">
-   **Notes**: GPUs are not available in all regions. Currently GPUs are available in the following regions:
+    <div class="note icon">
+    **Note**: GPUs are not available in all regions. Currently GPUs are available in the following regions:
+    - `ams`
+    - `ord`
+    - `iad`
+    - `mia`
+    - `sjc`
+    - `syd`
 
-   - `ams`
-   - `ord`
-   - `iad`
-   - `mia`
-   - `sjc`
-   - `syd`
-
-   Follow [this thread](https://community.fly.io/t/fly-gpus-are-here/16110) for updates.
-   </div>
+    <br>Follow [this thread](https://community.fly.io/t/fly-gpus-are-here/16110) for updates.
+    </div>
 
 1. Create or modify the `fly.toml` config file in the project source directory, replacing values with your own:
 
@@ -66,13 +65,12 @@ Fly GPUs are only available on GPU-enabled accounts. You can join the waitlist [
 
 That's pretty much it to get an app running with a Machine on a GPU.
 
-<div class="note icon">
-If you create any additional volumes, they will have to be created with the same constraints as your Machine. For example, here is how to create a one hundred gigabyte volume for storing ML models:
+<div class="important icon">
+**Important**: If you create any additional volumes, they will have to be created with the same constraints as your Machine. For example, here is how to create a one hundred gigabyte volume for storing ML models:
 
-```cmd
-fly volumes create -s 100 models --vm-gpu-kind a100-pcie-40gb --region ord
-```
-
+    ```cmd
+    fly volumes create -s 100 models --vm-gpu-kind a100-pcie-40gb --region ord
+    ```
 </div>
 
 Example Dockerfile:
