@@ -43,17 +43,29 @@ Additional resources are billed at the usage-based pricing detailed below.
 
 ## _Compute_
 
-### Apps V2 and Machines
+### Fly Machines
 
 Pricing for [Fly Machines](/docs/machines/) VMs, which are also the virtual-machine building blocks of the [Fly Apps V2 platform](/docs/reference/apps/#apps-v2) and [Fly Postgres](/docs/postgres/) apps.
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
 
-### Apps V1
+### GPUs and Fly Machines
 
-Pricing for virtual machines running in [Fly Apps V1](/docs/reference/apps/#legacy-apps-fly-apps-v1) (Nomad-orchestrated) apps.
+Pricing for Fly Machines attached to GPUs. GPU access requires a [Launch, Scale, or Enterprise plan](https://fly.io/plans).
 
-<%= partial("shared/cpu_mem_pricing") %>
+On-demand GPU pricing:
+
+* A100 40G PCIe: $2.50/hr per GPU
+* A100 80G SXM: $3.50/hr per GPU
+
+Usage terms:
+
+* No minimum usage requirements.
+* Customizable CPU, RAM, and storage options.
+
+Reserved and dedicated options:
+
+* Discounted rates for reserved GPU machines and dedicated hosts.
 
 ## _Persistent Storage Volumes_
 
