@@ -38,6 +38,7 @@ The first section is a speed-run through the steps to make the go-example app au
       deploy:
         name: Deploy app
         runs-on: ubuntu-latest
+        concurrency: deploy-prod
         steps:
           - uses: actions/checkout@v3
           - uses: superfly/flyctl-actions/setup-flyctl@master
@@ -109,9 +110,10 @@ jobs:
   deploy:
       name: Deploy app
       runs-on: ubuntu-latest
+      concurrency: deploy-prod
 ```
 
-So an action is made up of named jobs, in this case one to deploy the application. The jobs run on a virtual machine. This section gives the "deploy" job the name "Deploy app" and tells GitHub Actions to run it on a virtual machine with the latest version of Ubuntu on it. The next part is to set up the steps needed to complete this job.
+So an action is made up of named jobs, in this case one to deploy the application. The jobs run on a virtual machine. This section gives the "deploy" job the name "Deploy app" and tells GitHub Actions to run it on a virtual machine with the latest version of Ubuntu on it. The `deploy` key ensures that only a single deploy will run at one time. The next part is to set up the steps needed to complete this job.
 
 ```yaml
       steps:
