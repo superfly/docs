@@ -363,7 +363,7 @@ Add a `[metrics]` section to your application's `fly.toml`:
 ```toml
 [metrics]
 port = 9091
-path = "/metrics" # default for most prometheus exporters
+path = "/metrics" # default for most Prometheus exporters
 ```
 
 If your app uses [multiple processes](/docs/apps/processes/), you can add multiple `[[metrics]]` sections, each with its own set of `processes`:

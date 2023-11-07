@@ -101,7 +101,7 @@ This ensures we keep any natively compiled Elixir or Node packages from our deve
 
 ## _Launch the App on Fly_
 
-To launch an app on fly, run `fly launch` in the directory with your source code. This creates and configures a fly app for you by inspecting your source code, then prompts you to deploy.
+To launch an app on Fly, run `fly launch` in the directory with your source code. This creates and configures a Fly App for you by inspecting your source code, then prompts you to deploy.
 
 ```cmd
 fly launch
@@ -273,10 +273,10 @@ Monitoring Deployment
 --> v0 deployed successfully
 
 Connect to postgres
-Any app within the personal organization can connect to postgres using the above credentials and the hostname "hello-elixir-db.internal."
+Any app within the personal organization can connect to Postgres using the above credentials and the hostname "hello-elixir-db.internal."
 For example: postgres://<USER>:<PASSWORD>@hello-elixir-db.internal:5432
 
-See the postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
+See the Postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
 ```
 
 We can take the defaults which select the lowest values for CPU, size, etc. This is perfect for getting started.

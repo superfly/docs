@@ -152,7 +152,7 @@ The script is a simple tool to make it easy to launch observer and connect to th
 
 In order for everything to work, here's the checklist overview:
 
-- Your wireguard connection must be up.
+- Your WireGuard connection must be up.
 - Your application defines a release that specifies the cookie value to use.
 - The local COOKIE value must be the same as the cookie value used in production.
 - Observer needs to be working in your local environment. That requires WxWidget support in your Erlang install.

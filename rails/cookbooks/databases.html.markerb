@@ -48,7 +48,7 @@ one:
         ```
 
 In general, requests that never make it to Rails are served fastest, so
-the second approach where fly serves the static files is the better approach.
+the second approach where Fly serves the static files is the better approach.
 
 ---
 
@@ -184,7 +184,7 @@ RUN apt-get update -qq && \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 ```
 
-Now you are ready to create a postgres cluster:
+Now you are ready to create a Postgres cluster:
 
 ```
 flyctl postgres create
@@ -195,7 +195,7 @@ When done, you will find a link to
 bookmark the link (or return back to this page), but Fly Postgres is
 fine for this demo.
 
-Your postgres app will be assigned a name if you didn't provide one.
+Your Postgres app will be assigned a name if you didn't provide one.
 Find that name and then run:
 
 ```

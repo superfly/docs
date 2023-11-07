@@ -220,10 +220,10 @@ Accordingly:
 
 ### Postgres database drivers
 
-If you didn't initially deploy with a postgres database but want to add one
+If you didn't initially deploy with a Postgres database but want to add one
 later, you can create a database using [`fly postgres
 create`](https://fly.io/docs/postgres/getting-started/create-pg-cluster/).
-Next, update your dockerfile to include the postgres libraries using:
+Next, update your dockerfile to include the Postgres libraries using:
 
 ```shell
 $ bin/rails generate dockerfile --postgresql

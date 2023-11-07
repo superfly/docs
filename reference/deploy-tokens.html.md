@@ -17,4 +17,4 @@ To get started, generate a deploy token on the Tokens tab of your app dashboard.
 FLY_API_TOKEN=$(flyctl tokens create deploy) flyctl deploy
 ```
 
-Whereas API tokens (`fly auth token`) can manage all of your organizations' apps, deploy tokens are limited to a single application. Some organization-wide features like managing Wireguard tunnels are integral to deployments and are also accessible to deploy tokens.
+Whereas API tokens (`fly auth token`) can manage all of your organizations' apps, deploy tokens are limited to a single application. Some organization-wide features like managing WireGuard tunnels are integral to deployments and are also accessible to deploy tokens.

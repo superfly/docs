@@ -6,7 +6,7 @@ nav: firecracker
 redirect_from: /docs/reference/privatenetwork/
 ---
 
-Fly apps are connected by a mesh of Wireguard tunnels using IPV6.
+Fly apps are connected by a mesh of WireGuard tunnels using IPv6.
 
 Applications within the same organization are assigned special addresses ("6PN addresses") tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly platform won't forward between different 6PN networks.
 
@@ -93,7 +93,7 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 |`regions.<appname>.internal`|none|region names<br/> where app is deployed|
 |`<appname>.internal`|app instances<br/> in any region|none
 |`_apps.internal`|none|names of all 6PN<br/> private networking apps<br/> in the same organization|
-|`_peer.internal`|none|names of all wireguard peers|
+|`_peer.internal`|none|names of all WireGuard peers|
 |`<peername>._peer.internal`|IPv6 of peer|none|
 |`_instances.internal`|none|IDs, apps, addresses, and regions<br>of all running instances<br>comma separated|
 |`<value>.<key>.kv._metadata.<appname>.internal`|IPv6 of machines with matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
@@ -161,7 +161,7 @@ Fly's command line  can generate you a tunnel configuration file with private ke
 
 #### Install your WireGuard App
 
-There are many options for installing WireGuard on your system, detailed on the [WireGuard](https://www.wireguard.com/install/) site. Install the software that is appropriate for your system. Windows and macOS have apps available to install. Linux systems have packages, typically named wireguard and wireguard-tools, you should install both.
+There are many options for installing WireGuard on your system, detailed on the [WireGuard](https://www.wireguard.com/install/) site. Install the software that is appropriate for your system. Windows and macOS have apps available to install. Linux systems have packages, typically named WireGuard and wireguard-tools, you should install both.
 
 #### Creating your tunnel configuration
 
@@ -179,7 +179,7 @@ You'll be asked to select which organization you want the WireGuard tunnel to wo
   Demo Sandbox (demo-sandbox)
 ```
 
-As well as configuring the Wireguard service, the create command also generates a tunnel configuration file, complete with private keys which cannot be recovered. This configuration file will be used in the next step. First it has to be saved:
+As well as configuring the WireGuard service, the create command also generates a tunnel configuration file, complete with private keys which cannot be recovered. This configuration file will be used in the next step. First it has to be saved:
 
 ```output
 !!!! WARNING: Output includes private key. Private keys cannot be recovered !!!!
@@ -222,11 +222,11 @@ fdaa:0:18:a7b:7d:f066:b83b:102
 
 ##### Windows
 
-Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select your configuration file. The Wireguard app will display the details of your tunnel. Click `Activate` to bring the tunnel online.
+Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select your configuration file. The WireGuard app will display the details of your tunnel. Click `Activate` to bring the tunnel online.
 
 ##### macOS
 
-Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select your configuration file and click Ok. You will be prompted by the OS that WireGuard would like to add VPN configurations; click `Allow`. The Wireguard app will display the details of your tunnel. Click `Activate` to bring the tunnel online.
+Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select your configuration file and click Ok. You will be prompted by the OS that WireGuard would like to add VPN configurations; click `Allow`. The WireGuard app will display the details of your tunnel. Click `Activate` to bring the tunnel online.
 
 ##### Ubuntu Linux
 
@@ -268,7 +268,7 @@ dig +noall +answer _apps.internal txt
 _apps.internal.		5	IN	TXT	"datasette-apache-proxy-demo,datasette-demo"
 ```
 
-### Managing Wireguard on Fly
+### Managing WireGuard on Fly
 
 #### Listing the tunnels
 

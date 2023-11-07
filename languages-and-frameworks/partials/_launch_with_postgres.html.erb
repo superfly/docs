@@ -36,11 +36,11 @@ Monitoring Deployment
 1 desired, 1 placed, 1 healthy, 0 unhealthy [health checks: 2 total, 2 passing]
 --> v0 deployed successfully
 
-Connect to postgres
-Any app within the flyio organization can connect to postgres using the above credentials and the hostname "<%= app_name %>-db.internal."
+Connect to Postgres
+Any app within the flyio organization can connect to Postgres using the above credentials and the hostname "<%= app_name %>-db.internal."
 For example: postgres://postgres:password@<%= app_name %>-db.internal:5432
 
-See the postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
+See the Postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
 Postgres cluster <%= app_name %>-db is now attached to <%= app_name %>
 
 Would you like to deploy now? Yes

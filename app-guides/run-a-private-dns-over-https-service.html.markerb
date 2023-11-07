@@ -265,7 +265,7 @@ flyctl secrets set RESOLVER=8.8.8.8:53
 
 Fly apps support an unlimited number of hostnames and SSL certificates. To set one up:
 
-1. Add a certificate to your fly app:
+1. Add a certificate to your Fly App:
   ```cmd
   flyctl certs create example.com -a doh-proxy
   ```

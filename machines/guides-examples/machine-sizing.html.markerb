@@ -16,7 +16,7 @@ Here are a few ways to set the size (CPU and memory) of your Machine VMs.
 
 We have some [preset sizes](/docs/about/pricing/#machines) for you to choose from. Each CPU selection defaults to a specific amount of memory.
 
-You can, however, scale your machine's CPU and memory separately. Memory limits are `2gb * shared CPU size` or `8gb * performance CPU size`. Minimum memory is `256m * shared CPU size` or `2048m * performance CPU size`.
+You can, however, scale your machine's CPU and memory separately. Memory limits are `2GB * shared CPU size` or `8GB * performance CPU size`. Minimum memory is `256m * shared CPU size` or `2048m * performance CPU size`.
 
 **Examples:**
 
@@ -27,7 +27,7 @@ You can, however, scale your machine's CPU and memory separately. Memory limits 
 
 Any size listed for Machines on the [pricing page](/docs/about/pricing/#machines) can be used when creating a Machine.
 
-Here's what that looks like to launch a `performance-2x` machine (2 CPU, 4gb memory):
+Here's what that looks like to launch a `performance-2x` machine (2 CPU, 4GB memory):
 
 ```bash
 curl -i -X POST \

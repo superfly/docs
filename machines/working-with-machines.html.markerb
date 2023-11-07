@@ -26,7 +26,7 @@ Simply skip down to [setting up the environment](#setting-up-the-environment), a
 
 ### Using the private Machines API endpoint
 
-You can still access your Machines directly over a Wireguard VPN, and use the private Machines API endpoint: `http://_api.internal:4280`. This method requires more setup.
+You can still access your Machines directly over a WireGuard VPN, and use the private Machines API endpoint: `http://_api.internal:4280`. This method requires more setup.
 
 Follow the [instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io [IPv6 private network](/docs/reference/private-networking/). Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
 
@@ -53,13 +53,13 @@ If you successfully reach the API, it should respond with a `404 page not found`
 Set these environment variables to make the following commands easier to use.
 
 ```bash
-$ export FLY_API_HOSTNAME="https://api.machines.dev" # set to http://_api.internal:4280 when using Wireguard or `http://127.0.0.1:4280` when using 'flyctl proxy'
+$ export FLY_API_HOSTNAME="https://api.machines.dev" # set to http://_api.internal:4280 when using WireGuard or `http://127.0.0.1:4280` when using 'flyctl proxy'
 $ export FLY_API_TOKEN=$(fly auth token)
 ```
 
 For local development, you can see the token used by `flyctl` with `fly auth token`. You can also create a new auth token in the [personal access token section of the fly.io dashboard](https://fly.io/user/personal_access_tokens).
 
-In order to access this API on a fly VM, make the token available as a secret:
+In order to access this API on a Fly VM, make the token available as a secret:
 
 ```cmd
 fly secrets set FLY_API_TOKEN=$(fly auth token)

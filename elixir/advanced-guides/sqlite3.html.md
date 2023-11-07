@@ -15,7 +15,7 @@ and configured Phoenix Application using [ecto_sqlite3](https://github.com/elixi
 To make this work, you will need to place your databases on persistent [Volumes](https://www.sqlite.org/index.html)
 as your deployment image will get overwritten the next time you deploy.
 
-Volumes are limited to one host, this currently means that fly.io hosted Elixir applications that use
+Volumes are limited to one host, this currently means that Fly.io hosted Elixir applications that use
 SQLite3 for their database can't be deployed to multiple regions.
 
 But if you are okay using beta software, [LiteFS](/docs/litefs) could work for multi-region sync, check it out! But this guide is going to assume you have one node and one volume.
@@ -210,7 +210,7 @@ sqlite3 name.db
 
 SQLite doesn't have official support for Postgres Arrays or Hstores, and most special datatypes! These will be copied into strings in the resulting SQLite table, so for Arrays the data will look like `{item1, item2, item3}` if you want to still use this as an array you need to use [string manipulation](https://www.sqlitetutorial.net/sqlite-replace-function/) to convert them to json and then it should work just fine. This is just one example, but the positive is that it's all just strings in SQLite, so if you can make the string look like json you are set! 
 
-### Copying an existing database to a fly volume
+### Copying an existing database to a Fly volume
 
 If you've exported or copied your database to SQLite you will need to get your database file up to Fly.io. To do this we will use the [fly sftp](/docs/flyctl/sftp/) command. 
 

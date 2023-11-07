@@ -154,7 +154,7 @@ our routes so that the main page is the index page for our new table.
 
 ### Scaffold and style a list of names
 
-Since we are focusing on fly deployment rather than Rails features, we will keep it simple and create a single table with exactly one column:
+Since we are focusing on Fly deployment rather than Rails features, we will keep it simple and create a single table with exactly one column:
 
 ```cmd
 bin/rails generate scaffold Name name

@@ -71,7 +71,7 @@ Now lets make that application launch more machines.
 
 ## Installing `fly` on the Rails Machine
 
-Since we will be using fly services from within our Rails application, we will need to install the fly executable.  We do that by adding the following lines to our `Dockerfile`:
+Since we will be using Fly services from within our Rails application, we will need to install the fly executable.  We do that by adding the following lines to our `Dockerfile`:
 
 ```
 RUN curl -L https://fly.io/install.sh | sh
