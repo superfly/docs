@@ -305,6 +305,17 @@ In the following example, `Example-Header` will be removed from the final respon
     Example-Multi-Value = ["value1", "value2"]
 ```
 
+### `http_service.http_options.h2_backend`
+
+Indicates whether the app supports HTTP/2 cleartext (H2C) with prior knowledge or not.
+
+In the following example, `h2_backend` is set to `true`, which allows the app to expose HTTP/2-only service, like gRPC, via `http` handler.
+
+```toml
+  [http_service.http_options]
+    h2_backend = true
+```
+
 ### `http_service.tls_options`
 
 Configure the TLS versions and ALPN protocols that Fly's edge will use to terminate TLS for your application with:
@@ -447,6 +458,17 @@ In the following example, `Example-Header` will be removed from the final respon
     Example-Header = false
     Example-Header-1 = "value"
     Example-Multi-Value = ["value1", "value2"]
+```
+
+### `services.ports.http_options.h2_backend`
+
+Indicates whether the app supports HTTP/2 cleartext (H2C) with prior knowledge or not.
+
+In the following example, `h2_backend` is set to `true`, which allows the app to expose HTTP/2-only service, like gRPC, via `http` handler.
+
+```toml
+  [services.ports.http_options]
+    h2_backend = true
 ```
 
 #### `services.ports.proxy_proto_options`
