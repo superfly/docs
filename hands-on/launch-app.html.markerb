@@ -46,7 +46,7 @@ Next, you'll be prompted to select a [region](/docs/reference/regions/) to deplo
 At this point, flyctl creates a shell of an app for you and writes a starter configuration to a `fly.toml` file. 
 
 <div class="callout">
-If you've just signed up, then you'll also be prompted for credit card payment information. Refer to [How We Use Credit Cards](/docs/about/credit-cards/) and [Pricing](/docs/about/pricing) for more details.
+If you've just signed up, then you'll also be prompted for credit card payment information. Refer to [Billing](/docs/about/billing/) and [Pricing](/docs/about/pricing) for more details.
 </div>
 
 flyctl will ask if you need a Postgres or Redis database. You can enter "No" for this example.
