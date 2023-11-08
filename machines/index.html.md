@@ -32,7 +32,7 @@ A Machine is the configuration and state for a single VM running on our platform
 can have more than one Machine. You can start a Machine right now, without configuring anything: 
 
 ```cmd
-$ fly machine run --shell
+fly machine run --shell
 ```
 
 ```output
@@ -88,7 +88,7 @@ you can do it directly.
 Scale a workload out horizontally with `fly machine clone`:
 
 ```cmd
-$ fly machine clone -a my-app --region ord 7811373c095228
+fly machine clone -a my-app --region ord 7811373c095228
 ```
 
 ```output
@@ -105,7 +105,7 @@ individually with `fly machine stop` and `fly machine start`.
 Scale a Machine up vertically with `fly machine update`:
 
 ```cmd
-$ fly machine update -a my-app --vm-memory 512M 7811373c095228
+fly machine update -a my-app --vm-memory 512M 7811373c095228
 ```
 
 ```output
