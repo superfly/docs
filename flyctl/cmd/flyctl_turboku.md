@@ -39,6 +39,7 @@ flyctl turboku <heroku-app-name> <heroku-api-token> [flags]
       --now                              Deploy now without confirmation
       --only-regions strings             Deploy to machines only in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times. --only-regions iad,sea --only-regions syd will deploy to all three iad, sea, and syd regions. Applied before --exclude-regions. V2 machines platform only.
   -o, --org string                       The target Fly organization
+      --process-groups strings           Deploy to machines only in these process groups
       --provision-extensions             Provision any extensions assigned as a default to first deployments
       --push                             Push image to registry after build is complete
   -r, --region string                    The target region (see 'flyctl platform regions')
@@ -48,6 +49,7 @@ flyctl turboku <heroku-app-name> <heroku-api-token> [flags]
       --strategy string                  The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. Default is canary, or rolling when max-per-region is set.
       --vm-cpu-kind string               The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                      Number of CPUs
+      --vm-gpu-kind string               If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb)
       --vm-memory string                 Memory (in megabytes) to attribute to the VM
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --volume-initial-size int          The initial size in GB for volumes created on first deploy (default 1)

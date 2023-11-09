@@ -17,11 +17,17 @@ flyctl machine clone [machine_id] [flags]
       --detach                        Return immediately instead of monitoring deployment progress
       --from-snapshot string          Clone attached volumes and restore from snapshot, use 'last' for most recent snapshot. The default is an empty volume
   -h, --help                          help for clone
+      --host-dedication-id string     The dedication id of the reserved hosts for your organization (if any)
       --name string                   Optional name for the new machine
       --override-cmd string           Set CMD on the new machine to this value
       --process-group string          For machines that are part of Fly Apps v2 does a regular clone and changes the process group to what is specified here
   -r, --region string                 The target region (see 'flyctl platform regions')
       --standby-for strings           Comma separated list of machine ids to watch for. You can use '--standby-for=source' to create a standby for the cloned machine
+      --vm-cpu-kind string            The kind of CPU to use ('shared' or 'performance')
+      --vm-cpus int                   Number of CPUs
+      --vm-gpu-kind string            If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb)
+      --vm-memory string              Memory (in megabytes) to attribute to the VM
+      --vm-size string                The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --volume-requires-unique-zone   Require volume to be placed in separate hardware zone from existing volumes. Default false
 ~~~
 
