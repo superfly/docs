@@ -11,11 +11,11 @@ nav: firecracker
 
 Our pricing is designed to let you launch a small application for free, and scale costs affordably as your needs grow.
 
-Fly.io services are billed per organization. Organizations are administrative entities on Fly.io that enable you to add members, share app development environments, and manage billing separately. Billing is based on the resources provisioned for your apps, pro-rated for the time they are provisioned.
+Fly.io services are billed per organization. Organizations are administrative entities on Fly.io that enable you to add members, share app development environments, and manage billing separately. Billing is based on the resources provisioned for your apps, pro-rated for the time they are provisioned. Learn more about [billing](/docs/about/billing/).
 
 ## _Plans_
 
-All plans require a [credit card](/docs/about/credit-cards/). Your first organization starts on a free Hobby plan (subject to change), and any subsequent new organizations you create are on the $5/month Hobby Plan. Hobby plans are a straightforward pay-as-you-go option.
+All plans require a [credit card](/docs/about/billing/#payment-options). Your first organization starts on a free Hobby plan (subject to change), and any subsequent new organizations you create are on the $5/month Hobby Plan. Hobby plans are a straightforward pay-as-you-go option.
 
 We don't offer a "free tier." Instead, we offer some free resource allowances that apply to all plans, including the Hobby plan, and includes enough usage per month to run a small full-stack app, full-time, for free. 
 
