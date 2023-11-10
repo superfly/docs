@@ -11,11 +11,11 @@ nav: firecracker
 
 Our pricing is designed to let you launch a small application for free, and scale costs affordably as your needs grow.
 
-Fly.io services are billed per organization. Organizations are administrative entities on Fly.io that enable you to add members, share app development environments, and manage billing separately. Billing is based on the resources provisioned for your apps, pro-rated for the time they are provisioned.
+Fly.io services are billed per organization. Organizations are administrative entities on Fly.io that enable you to add members, share app development environments, and manage billing separately. Billing is based on the resources provisioned for your apps, pro-rated for the time they are provisioned. Learn more about [billing](/docs/about/billing/).
 
 ## _Plans_
 
-All plans require a [credit card](/docs/about/credit-cards/). Your first organization starts on a free Hobby plan (subject to change), and any subsequent new organizations you create are on the $5/month Hobby Plan. Hobby plans are a straightforward pay-as-you-go option.
+All plans require a [credit card](/docs/about/billing/#payment-options). Your first organization starts on a free Hobby plan (subject to change), and any subsequent new organizations you create are on the $5/month Hobby Plan. Hobby plans are a straightforward pay-as-you-go option.
 
 We don't offer a "free tier." Instead, we offer some free resource allowances that apply to all plans, including the Hobby plan, and includes enough usage per month to run a small full-stack app, full-time, for free. 
 
@@ -43,17 +43,29 @@ Additional resources are billed at the usage-based pricing detailed below.
 
 ## _Compute_
 
-### Apps V2 and Machines
+### Fly Machines
 
 Pricing for [Fly Machines](/docs/machines/) VMs, which are also the virtual-machine building blocks of the [Fly Apps V2 platform](/docs/reference/apps/#apps-v2) and [Fly Postgres](/docs/postgres/) apps.
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
 
-### Apps V1
+### GPUs and Fly Machines
 
-Pricing for virtual machines running in [Fly Apps V1](/docs/reference/apps/#legacy-apps-fly-apps-v1) (Nomad-orchestrated) apps.
+Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see [Fly Machines pricing](#fly-machines)) plus the price of the attached GPU. GPU access requires a [Launch, Scale, or Enterprise plan](https://fly.io/plans).
 
-<%= partial("shared/cpu_mem_pricing") %>
+On-demand GPU pricing:
+
+* A100 40G PCIe: $2.50/hr per GPU
+* A100 80G SXM: $3.50/hr per GPU
+
+Usage terms:
+
+* No minimum usage requirements.
+* Customizable CPU, RAM, and storage options.
+
+Reserved and dedicated options:
+
+* Discounted rates for reserved GPU Machines and dedicated hosts.
 
 ## _Persistent Storage Volumes_
 
