@@ -51,7 +51,7 @@ Pricing for [Fly Machines](/docs/machines/) VMs, which are also the virtual-mach
 
 ### GPUs and Fly Machines
 
-Pricing for Fly Machines attached to GPUs. GPU access requires a [Launch, Scale, or Enterprise plan](https://fly.io/plans).
+Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see [Fly Machines pricing](#fly-machines)) plus the price of the attached GPU. GPU access requires a [Launch, Scale, or Enterprise plan](https://fly.io/plans).
 
 On-demand GPU pricing:
 
@@ -65,7 +65,7 @@ Usage terms:
 
 Reserved and dedicated options:
 
-* Discounted rates for reserved GPU machines and dedicated hosts.
+* Discounted rates for reserved GPU Machines and dedicated hosts.
 
 ## _Persistent Storage Volumes_
 
