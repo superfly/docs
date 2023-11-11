@@ -82,7 +82,7 @@ bin/rails generate dockerfile --fullstaq --jemalloc
 
 At some point you may find that you need more memory.  There are two types:
 real and virtual.  Real is faster, but more expensive.  Virtual is slower
-and often times free.
+but free.
 
 To scale your app to 1GB of real memory, use:
 
@@ -90,10 +90,10 @@ To scale your app to 1GB of real memory, use:
 fly scale memory 1024
 ```
 
-To allocate 512MB of swap space for use as virtual memory, use:
+To allocate 1GB of swap space for use as virtual memory, add the following to your [`fly.toml`](https://fly.io/docs/reference/configuration/#swap_size_mb-option):
 
 ```cmd
-bin/rails generate dockerfile --swap=512M
+swap_size_mb = 1024
 ```
 
 ## Scaling
