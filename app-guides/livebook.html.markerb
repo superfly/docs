@@ -90,7 +90,7 @@ The `fly deploy` command accepts some options to tune the initial resource provi
 
 Livebook seems to want something a bit heftier than the default `shared-cpu-1x` Machine with 256MB RAM, so for the purpose of demonstration we chose a `shared-cpu-2x` size, which comes with 512MB. You can experiment with CPU and memory to see what you need for your project.
 
-We explicitly set the size of the volume to be created, although 1GB happens to be the default size for a new volume.
+We explicitly set the size of the volume to be created, although 1GB happens to be the default size for a new volume created on `fly deploy`.
 
 <div class="note icon">
 At the time of writing, you may see this error message as the first deployment finishes: 
