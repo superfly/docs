@@ -9,6 +9,8 @@ order: 5
 
 The [`fly machine run` command](/docs/flyctl/machine-run/) is a tool to configure, build, and run a new Machine in a single guided interaction.
 
+Use `fly machine run` to include Machines built from more than one single Docker image in a Fly App, or to run a one-off or temporary Machine.
+
 Fly Launch features like `fly deploy`, `fly status`, and `fly scale` will ignore Machines created with `fly machine run`, unless you [add metadata to indicate otherwise](/docs/machines/run#add-metadata-to-the-machine).
 
 Here's what `fly machine run` does for you:
@@ -20,6 +22,10 @@ Here's what `fly machine run` does for you:
 * Waits for the Machine to start before declaring success (or failure)
 
 To create a Machine, but not start it, use [`fly machine create`](/docs/flyctl/machine-create/).
+
+To make changes to a Machine once it's created or run, use [`fly machine update`](/docs/flyctl/machine-create/).
+
+## Usage
 
 Here's the usage of `fly machine run`:
 
@@ -135,9 +141,9 @@ Specify environment variables to be available on the Machine with the `--env` fl
 Example:
 
 ```cmd
-fly m run . --env MY_VAR=MY_VALUE \
-            --env MY_OTHER_VAR="my spacey value" \
-            --app my-app-name
+fly machine run . --env MY_VAR=MY_VALUE \
+                  --env MY_OTHER_VAR="my spacey value" \
+                  --app my-app-name
 ```
 
 Use quotes around the value if it has spaces in it.
@@ -183,7 +189,7 @@ When the `autostart` setting is absent, if the Machine is stopped the proxy may 
 The `--autostart` and `--autostop` flags set the value of `autostart` or `autostop` to `true` by default; to set the value to `false`, set the value explicitly. For example, the following runs a new Machine that may be stopped by the Fly Proxy, but will never be restarted by it.
 
 ```cmd
-fly m run nginx --port 80:80/tcp:http \
+fly machine run nginx --port 80:80/tcp:http \
                 --port 443:80/tcp:http:tls \
                 --autostop \
                 --autostart=false
@@ -211,13 +217,13 @@ fly volume create --size 1 data_volume --region arn
 Create the new Machine in the same region, using the volume name: `--volume <vol_name>:<mount_point>`.
 
 ```cmd
-fly m run . --volume data_volume:data --region arn
+fly machine run . --volume data_volume:data --region arn
 ```
 
 Or by id: `--volume <vol_id>:<mount_point>`.
 
 ```cmd
-fly m run . --volume vol_d42652p88kdw9l7r:data --region arn
+fly machine run . --volume vol_d42652p88kdw9l7r:data --region arn
 ```
 
 A Machine can only mount one volume, and each volume can only be mounted on one Machine. To release a volume that is attached to a Machine, destroy the Machine.
@@ -283,13 +289,16 @@ The file's contents are stored as a Base64-encoded string as part of the Machine
 You can configure a Machine to store secret values in the form of a file, rather than an environment variable. Encode the data in Base64 format and put it into an app secret with `fly secrets set`. Use the `--stage` flag to prevent flyctl from initiating a deployment once the secret is registered.
 
 ```cmd
-fly secrets set -a my-app-name MY_BASE64_SECRET=SGVsbG8hIEknbSBGcmFua2llIHRoZSBiYWxsb29uIQo= --stage
+fly secrets set \
+  MY_BASE64_SECRET=SGVsbG8hIEknbSBGcmFua2llIHRoZSBiYWxsb29uIQo= \
+  --stage
 ```
 
-Use the `--file-secret` flag on `fly machine run`:
+Use the `--file-secret` flag on `fly machine run`. In this example I'm putting the contents of the secret called `MY_BASE64_SECRET` into a file `/secret-file` on my new Machine:
 
 ```cmd
-fly m run . --file-secret=/secret-file=MY_BASE64_SECRET 
+fly machine run . \
+  --file-secret=/secret-file=MY_BASE64_SECRET 
 ```
 
 The secret will be available in the specified file, and not in an environment variable, on that Machine. It's decoded from Base64 into plain text.
@@ -310,7 +319,7 @@ This is not a way to hide secret values from members of an app's organization wh
 You can place data directly into the Machine through its config as a Base64-encoded string:
 
 ```cmd
-fly m run . --file-literal=/b64file=SGVsbG8hIEknbSBGcmFua2llIHRoZSBiYWxsb29uIQo=
+fly machine run . --file-literal=/b64file=SGVsbG8hIEknbSBGcmFua2llIHRoZSBiYWxsb29uIQo=
 ```
 
 The Base64 encoding is preserved in a file created using the `--file-literal` flag.
@@ -325,7 +334,7 @@ Hello! I'm Frankie the balloon!
 The Machine can be a stopped [standby](/docs/reference/app-availability/#standby-machines-for-process-groups-without-services) for others, for resilience purposes.
 
 ```
-fly m run . --standby-for 287444ec026748,148ed726c54768
+fly machine run . --standby-for 287444ec026748,148ed726c54768
 ```
 
 ## Run a Machine on a schedule
