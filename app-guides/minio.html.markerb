@@ -170,6 +170,151 @@ At this point `<NEW-USER>` can log in and read the contents of your buckets. Mak
 mc admin policy set miniotest readwrite user=<NEW-USER>
 ```
 
+## Multi-node deployment
+
+What if you want high availability? You can deploy MinIO in a multi-node configuration!
+
+Each node needs to know where to find the other nodes in the configuration. This can be done using either hostnames or IP addresses, but MinIO requires that they're sequential. We'll use hostnames since we can modify `/etc/hosts` to ensure their "sequential-ness". Ensuring sequential IP addresses is much more tricky!
+
+There's going to be a bit of back-and-forth here since we don't have any private IPs to put into `/etc/hosts` until we create the machines, but we need a Dockerfile to create them in the first place. Bear with me!
+
+### Dockerfile
+
+We need to change the `CMD` in the Dockerfile to declare that we intend to run a multi-node deployment:
+
+```docker
+FROM minio/minio
+
+ENV MINIO_SERVER_URL="http://minio1.local:9000"
+
+CMD [ "server", "http://minio{1...3}.local:9000/data", "--console-address", ":9001"]
+```
+
+We're using [expansion notation](https://min.io/docs/minio/linux/operations/install-deploy-manage/deploy-minio-multi-node-multi-drive.html#sequential-hostnames) to tell MinIO that there will be 3 nodes in the cluster.
+
+### Disk Storage
+
+Create 3 volumes, one for each node:
+
+```cmd
+fly vol create miniodata --count 3 --region lhr
+```
+```output
+                ID: vol_8r6kj28xq7e7qw14
+              Name: miniodata
+               App: my-minio
+            Region: lhr
+              Zone: 81b8
+           Size GB: 3
+         Encrypted: true
+        Created at: 13 Nov 23 12:38 UTC
+Snapshot retention: 5
+                ID: vol_9vle38y30eog2p8r
+              Name: miniodata
+               App: my-minio
+            Region: lhr
+              Zone: d88f
+           Size GB: 3
+         Encrypted: true
+        Created at: 13 Nov 23 12:38 UTC
+Snapshot retention: 5
+                ID: vol_7r11e3jk1p8g17pr
+              Name: miniodata
+               App: my-minio
+            Region: lhr
+              Zone: cbfa
+           Size GB: 3
+         Encrypted: true
+        Created at: 13 Nov 23 12:38 UTC
+Snapshot retention: 5
+```
+
+### Initial deployment
+
+You need to deploy and scale the app in order for private IPs to be assigned. First, deploy:
+
+```cmd
+fly deploy
+```
+
+...then scale up to 3 machines:
+
+```cmd
+fly scale count 3
+```
+
+### Private networking
+
+One of the great things about Fly.io is the [private networking](https://fly.io/docs/reference/private-networking/) we get for free. We'll use our machines' private IPs to define hostnames in `/etc/hosts` which our nodes will use to communicate with each other.
+
+Get the private IPs of your machines:
+
+```cmd
+fly ip private ls
+```
+```out
+ID              REGION  IP
+4d89703f427258  lhr     fdaa:3:7c6d:a7b:8f:143c:79a5:2
+080e475b1d2758  lhr     fdaa:3:7c6d:a7b:172:ac21:8674:2
+683d479cde4368  lhr     fdaa:3:7c6d:a7b:172:21da:b0bc:2
+```
+
+Ideally we'd update `/etc/hosts` directly in the Dockerfile, but Docker won't let us do this at build time. Instead, we'll create a script called `run.sh` that will add our host definitions at runtime:
+
+```sh
+#!/bin/sh
+
+cat <<EOF >> /etc/hosts
+fdaa:3:7c6d:a7b:8f:143c:79a5:2  minio1.local
+fdaa:3:7c6d:a7b:172:ac21:8674:2 minio2.local
+fdaa:3:7c6d:a7b:172:21da:b0bc:2 minio3.local
+EOF
+
+# This script comes with the minio/minio image
+/usr/bin/docker-entrypoint.sh server http://minio{1...3}.local:9000/data --console-address :9001
+```
+
+### Final deployment
+
+Now update your Dockerfile to execute `run.sh`:
+
+```docker
+FROM minio/minio
+
+ENV MINIO_SERVER_URL="http://minio1.local:9000"
+
+COPY run.sh run.sh
+ENTRYPOINT [ "/bin/sh" ]
+
+CMD [ "run.sh" ]
+```
+
+When we `fly deploy`, we should have a working multi-node MinIO deployment!
+
+If you want to see it in action, try proxying to two different machines. In one terminal:
+
+```cmd
+fly proxy 9001:9001 -s
+```
+```out
+? Select instance: lhr.my-minio.internal (fdaa:3:7c6d:a7b:172:21da:b0bc:2)
+Proxying local port 9001 to remote [fdaa:3:7c6d:a7b:172:21da:b0bc:2]:9001
+```
+
+...and in a different terminal:
+
+```cmd
+fly proxy 9002:9001 -s
+```
+```out
+? Select instance: lhr.my-minio.internal (fdaa:3:7c6d:a7b:172:ac21:8674:2)
+Proxying local port 9002 to remote [fdaa:3:7c6d:a7b:172:ac21:8674:2]:9001
+```
+
+Visit `http://localhost:9001` and `http://localhost:9002` in separate browser tabs, and log in to both with your `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD`.
+
+Create a bucket in one tab and then refresh the other tab. If everything is working, you should see the bucket in both!
+
 ## What's next?
 
 This was a basic guide for getting an instance of MinIO deployed on Fly.io, scratching the surface of what you might want to do with an S3-compatible object store. You can use your MinIO bucket storage right from the web interface. Your apps can talk to it from within the same private network. [MinIO docs](https://min.io/docs/minio/linux/index.html) cover more advanced usage. 
