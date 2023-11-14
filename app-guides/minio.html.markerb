@@ -176,7 +176,7 @@ What if you want high availability? You can deploy MinIO in a multi-node configu
 
 Each node needs to know where to find the other nodes in the configuration. This can be done using either hostnames or IP addresses, but MinIO requires that they're sequential. We'll use hostnames since we can modify `/etc/hosts` to ensure their "sequential-ness". Ensuring sequential IP addresses is much more tricky!
 
-There's going to be a bit of back-and-forth here since we don't have any private IPs to put into `/etc/hosts` until we create the machines, but we need a Dockerfile to create them in the first place. Bear with me!
+There's going to be a bit of back-and-forth here since we don't have any private IPs to put into `/etc/hosts` until we create the Machines, but we need a Dockerfile to create them in the first place. Bear with me!
 
 ### Dockerfile
 
@@ -237,7 +237,7 @@ You need to deploy and scale the app in order for private IPs to be assigned. Fi
 fly deploy
 ```
 
-...then scale up to 3 machines:
+...then scale up to 3 Machines:
 
 ```cmd
 fly scale count 3
@@ -245,9 +245,9 @@ fly scale count 3
 
 ### Private networking
 
-One of the great things about Fly.io is the [private networking](https://fly.io/docs/reference/private-networking/) we get for free. We'll use our machines' private IPs to define hostnames in `/etc/hosts` which our nodes will use to communicate with each other.
+One of the great things about Fly.io is the [private networking](https://fly.io/docs/reference/private-networking/) we get for free. We'll use our Machines' private IPs to define hostnames in `/etc/hosts` which our nodes will use to communicate with each other.
 
-Get the private IPs of your machines:
+Get the private IPs of your Machines:
 
 ```cmd
 fly ip private ls
