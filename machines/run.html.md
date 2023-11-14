@@ -6,7 +6,6 @@ nav: machines
 order: 5
 ---
 
-
 The [`fly machine run` command](/docs/flyctl/machine-run/) is a tool to configure, build, and run a new Machine in a single guided interaction.
 
 Use `fly machine run` to include Machines built from more than one single Docker image in a Fly App, or to run a one-off or temporary Machine.
@@ -321,7 +320,7 @@ Use the `--file-secret` flag on `fly machine run`. In this example I'm putting t
 
 ```cmd
 fly machine run . \
-  --file-secret=/secret-file=MY_BASE64_SECRET 
+  --file-secret /secret-file=MY_BASE64_SECRET 
 ```
 
 The secret will be available in the specified file, and not in an environment variable, on that Machine. It's decoded from Base64 into plain text.
@@ -342,7 +341,7 @@ This is not a way to hide secret values from members of an app's organization wh
 You can place data directly into the Machine through its config as a Base64-encoded string:
 
 ```cmd
-fly machine run . --file-literal=/b64file=SGVsbG8hIEknbSBGcmFua2llIHRoZSBiYWxsb29uIQo=
+fly machine run . --file-literal /b64file=SGVsbG8hIEknbSBGcmFua2llIHRoZSBiYWxsb29uIQo=
 ```
 
 The Base64 encoding is preserved in a file created using the `--file-literal` flag.
