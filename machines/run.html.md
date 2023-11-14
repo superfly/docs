@@ -269,17 +269,21 @@ fly machine run . --name my-special-Machine
 
 ## Place data into files on the Machine
 
-Configuration can be used to place data into files on a Machine's file system. The `fly machine run` command has three ways to make use of this. There's a limit to how large a file you can create in this way.
+Configuration can be used to place a limited quantity of data into files on a Machine's file system. The `fly machine run` command has three ways to make use of this. 
+
+<div class="important icon">
+This won't work for large files, as there's a limit to how much data can be stored in an app secret or a Machine's configuration.
+</div>
 
 ### Copy a local file into the Machine file system
 
 If it's not convenient to build a file into the Machine's Docker image, use the `--file-local` flag to store the contents of a local file in its configuration instead. 
 
 ```
---file-local=/path/inside/machine=<local/path>
+--file-local /path/inside/machine=local/path
 ```
 
-The file's contents are stored as a Base64-encoded string as part of the Machine configuraton, and decoded to the original text on the Machine.
+The file's contents are stored as a Base64-encoded string as part of the Machine configuraton, and decoded to the original text on the Machine. There's a limit to how large a file you can create in this way.
 
 ### Make a secret into a file instead of an env var
 
