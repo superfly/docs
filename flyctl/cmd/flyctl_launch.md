@@ -57,7 +57,7 @@ flyctl launch [flags]
       --vm-gpu-kind string               If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb)
       --vm-memory string                 Memory (in megabytes) to attribute to the VM
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
-      --volume-initial-size int          The initial size in GB for volumes created on first deploy (default 1)
+      --volume-initial-size int          The initial size in GB for volumes created on first deploy
       --wait-timeout string              Time duration to wait for individual machines to transition states and become healthy. (default "5m0s")
   -y, --yes                              Accept all confirmations
 ~~~
