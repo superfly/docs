@@ -82,6 +82,25 @@ fly machine run . --dockerfile Dockerfile-dev
 ```cmd
 fly machine run ghcr.io/livebook-dev/livebook:0.11.4     
 ```
+
+## Get a shell on a temporary Machine
+
+The following command creates a temporary Machine using the Dockerfile in the working directory, and logs you into an interactive shell on it: 
+
+```cmd
+fly machine run . --shell
+```
+
+If you don't specify an app, a temporary app is created for the Machine. When you log out of the shell, the Machine, and if applicable, the temporary app, is deleted.
+
+The default shell is Bash. The `--command` flag allows you to specify a different shell if Bash isn't present in the Machine's Docker image. Log in as a non-`root` user using the `--user` flag.
+
+If you just want a shell on a temporary Ubuntu Machine that's in your org's private network, omit the `<image>` argument:
+
+```cmd
+fly machine --shell
+```
+
 ## Run with a custom ENTRYPOINT or CMD
 
 You can have the Fly Platform init override the ENTRYPOINT and CMD (if any) of the Machine's Docker image at startup.
