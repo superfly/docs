@@ -195,12 +195,13 @@ fly machine run nginx --port 80:80/tcp:http \
 
 If you define more than one service on the Machine, and also use one or both of these flags, it applies to both the services in the Machine config.
 
-## Set the Machine restart policy
+## Set a restart policy on process exit
 
-A Machine's [restart policy](/docs/machines/guides-examples/machine-restart-policy/]) defines whether and how flyd restarts a Machine after its main process exits.
+A Machine's [restart policy](/docs/machines/guides-examples/machine-restart-policy/]) defines whether and how flyd restarts a Machine after its main process exits, before allowing it to reach the `stopped` state. You may want a Machine to try to restart after a crash, for example.
+
+This policy does not apply when a Machine is stopped from outside, such as when you use the [fly machine stop](/docs/flyctl/machine-stop) command.
 
 Set it using the `--restart` option. Options are `no`, `always`, and `on-fail`; the default for a Machine created using `fly machine run` is `always`.
-
 
 ## Remove the Machine when it exits
 
@@ -332,7 +333,7 @@ root@1857779a44d108:/# cat b64file | base64 --decode
 Hello! I'm Frankie the balloon!
 ```
 
-## Create a Machine that's a standby for other Machines
+## Create a standby Machine
 
 For the sake of resilience, you can create a stopped [standby](/docs/reference/app-availability/#standby-machines-for-process-groups-without-services) for Machines that don't have Fly Proxy services and therefore can't be supplemented by Fly Proxy "autostart" in case of a host failure.
 
@@ -340,7 +341,7 @@ For the sake of resilience, you can create a stopped [standby](/docs/reference/a
 fly machine run . --standby-for 287444ec026748,148ed726c54768
 ```
 
-## Run a Machine on a schedule
+## Start a Machine on a schedule
 
 Use the `--schedule` flag to start the Machine on a fuzzy `hourly`, `daily`, `weekly`, or `monthly` cycle. This is useful for running Machines that do a finite job, then exit. The Machine is started the first time when you run `fly machine run`, and again once, each (approximate) hour, day, week, or month.
 
