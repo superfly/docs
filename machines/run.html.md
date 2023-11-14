@@ -11,7 +11,7 @@ The [`fly machine run` command](/docs/flyctl/machine-run/) is a tool to configur
 
 Use `fly machine run` to include Machines built from more than one single Docker image in a Fly App, or to run a one-off or temporary Machine.
 
-Fly Launch features like `fly deploy`, `fly status`, and `fly scale` will ignore Machines created with `fly machine run`, unless you [add metadata to indicate otherwise](/docs/machines/run#add-metadata-to-the-machine).
+Fly Launch features like `fly deploy`, `fly status`, and `fly scale` don't apply to Machines created with `fly machine run`, unless you [add metadata to indicate otherwise](/docs/machines/run#add-metadata-to-the-machine).
 
 Here's what `fly machine run` does for you:
 * Checks with the platform for the org and app you've specified, if any, and if needed, guides you through naming a new app
@@ -33,7 +33,7 @@ Here's the usage of `fly machine run`:
 fly machine run <image> [command] [flags]
 ```
  
-Here, `<image>` can point to a pre-built image or to the location of a Dockerfile.
+Here, `<image>` can point to a pre-built image, or to the current directory (`.`) to build from a Dockerfile.
 
 Many, but not all, Machine configuration options are available to the `fly machine run` command through flags. Flags are listed in the flyctl help and on the [`fly machine run` documentation page](/docs/flyctl/machine-run/).
 
@@ -49,8 +49,8 @@ If the app name doesn't belong to an existing app in one of your orgs, flyctl as
 Even if you're not using `fly deploy` to configure and run any of your app's Machines, it may be worth creating a `fly.toml` file with just an app name in it, to save using the `--app` option repeatedly:
 
 ```toml
-# a fly.toml just to provide an app name to 
-# flyctl commands run fro the same directory
+# a fly.toml just to provide an app name to commands 
+# run from the same directory
 
 app = <app-name>
 ```
@@ -65,16 +65,16 @@ All Fly Machines are made from Docker images. When you `fly launch` an app, a Fl
 We're working more directly with Machines here, so your choices with `fly machine run` are "point to an image" or "point to a Dockerfile."
 
 ### Build from a Dockerfile
-Indicate the current working directory in the `<image>` parameter, to tell `fly machine run` to use a Dockerfile named `Dockerfile`:
+To build the image from a Dockerfile named `Dockerfile`, indicate the current working directory using the `<image>` argument.
 
 ```cmd
 fly machine run .
 ```
 
-If the Dockerfile has a different name, give the name:
+Use the `--dockerfile` option to specify a Dockerfile with a different name. 
 
 ```cmd
-fly machine run ./Dockerfile-dev
+fly machine run . --dockerfile Dockerfile-dev
 ```
 
 ### Use an existing image
@@ -116,8 +116,7 @@ exec "$@"
 
 ## Choose the region
 
-You tell the Fly Platform which [region](/docs/reference/regions/) to create the Machine in, with the `--region` flag; if for some reason it can't start a new Machine in that region, you'll get an error.
-
+Tell the Fly Platform which [region](/docs/reference/regions/) to create the Machine in with the `--region` flag; if for some reason it can't start a new Machine in that region, you'll get an error. If the `--region` flag is omitted, the platform chooses the nearest region to you.
 
 
 ## Set hardware specs
@@ -174,7 +173,6 @@ If Machines within the same Fly App host different services, use different exter
 </div>
 
 
-
 ## Set autostart and autostop
 
 [Read more about Fly Proxy autostart and autostop](/docs/apps/autostart-stop/#how-it-works).
@@ -194,6 +192,8 @@ fly machine run nginx --port 80:80/tcp:http \
                 --autostop \
                 --autostart=false
 ```
+
+If you define more than one service on the Machine, and also use one or both of these flags, it applies to both the services in the Machine config.
 
 ## Set the Machine restart policy
 
@@ -271,7 +271,6 @@ fly machine run . --name my-special-Machine
 
 Configuration can be used to place data into files on a Machine's file system. The `fly machine run` command has three ways to make use of this. There's a limit to how large a file you can create in this way.
 
-
 ### Copy a local file into the Machine file system
 
 If it's not convenient to build a file into the Machine's Docker image, use the `--file-local` flag to store the contents of a local file in its configuration instead. 
@@ -331,7 +330,7 @@ Hello! I'm Frankie the balloon!
 
 ## Create a Machine that's a standby for other Machines
 
-The Machine can be a stopped [standby](/docs/reference/app-availability/#standby-machines-for-process-groups-without-services) for others, for resilience purposes.
+For the sake of resilience, you can create a stopped [standby](/docs/reference/app-availability/#standby-machines-for-process-groups-without-services) for Machines that don't have Fly Proxy services and therefore can't be supplemented by Fly Proxy "autostart" in case of a host failure.
 
 ```
 fly machine run . --standby-for 287444ec026748,148ed726c54768
@@ -339,7 +338,7 @@ fly machine run . --standby-for 287444ec026748,148ed726c54768
 
 ## Run a Machine on a schedule
 
-Use the `--schedule` flag to start the Machine on an `hourly`, `daily`, `weekly`, or `monthly` cycle. This is useful for running Machines that do a finite job, then exit. The Machine is started the first time when you run `fly machine run`, and again once each hour, day, week, or month.
+Use the `--schedule` flag to start the Machine on a fuzzy `hourly`, `daily`, `weekly`, or `monthly` cycle. This is useful for running Machines that do a finite job, then exit. The Machine is started the first time when you run `fly machine run`, and again once, each (approximate) hour, day, week, or month.
 
 <div class="important icon">
 If the host on which a stopped Machine resides doesn't have the resources to start it when its scheduled time comes, you'll get an error back. It's up to you to build the appropriate level of redundancy into your apps.
