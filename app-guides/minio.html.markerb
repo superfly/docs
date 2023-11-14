@@ -291,7 +291,7 @@ CMD [ "run.sh" ]
 
 When we `fly deploy`, we should have a working multi-node MinIO deployment!
 
-If you want to see it in action, try proxying to two different machines. In one terminal:
+If you want to see it in action, try proxying to two different Machines. In one terminal:
 
 ```cmd
 fly proxy 9001:9001 -s
