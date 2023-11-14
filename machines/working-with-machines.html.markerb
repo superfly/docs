@@ -10,7 +10,7 @@ This document covers usage of the Machines REST API to start, stop, update and i
 
 See all possible Machine states [in the table below](#machine-states).
 
-## API Spec
+## API spec
 
 We have a Swagger 2.0 specification available at [docs.machines.dev](https://docs.machines.dev) for the Machines API, so that you can autogenerate clients in your preferred language.
 
@@ -30,7 +30,7 @@ You can still access your Machines directly over a Wireguard VPN, and use the pr
 
 Follow the [instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io [IPv6 private network](/docs/reference/private-networking/). Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
 
-### Connecting via flyctl 
+### Connecting through flyctl 
 
 You can also proxy a local port to the internal API endpoint. This section is preserved mainly for the sake of interest, as the public Machines API endpoint is simpler and more performant.
 
@@ -82,9 +82,9 @@ All requests must include the Fly API Token in the HTTP Headers as follows:
 Authorization: Bearer <fly_api_token>
 ```
 
-## Operations on Apps
+## Apps
 
-Here are some things you can do with apps:
+You can use the Apps resource to create and manage Fly Apps. A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines.
 
 ### Create a Fly App
 
@@ -133,25 +133,89 @@ Machines should be stopped before attempting deletion. Append `?force=true` to t
 
 <%= partial "/docs/reference/machines/delete_app" %>
 
-## Operations on Machines
+## Machines
 
-Here are some things you can do with machines:
+A Fly Machine is the configuration and state for a single VM running on Fly.io. With the Machines resource, you can create, stop, start, update, and delete Machines.
+
+### Machine properties
+
+| Property | Description |
+| --------- | ----------- |
+| `id` | A stable identifier for the Machine. |
+| `name` | Unique name for the Machine. If omitted, one is generated for you. |
+| `state` | The current state of the Machine. See the [Machine states table](#machine-states). |
+| `region` | The region where the Machine resides, or the the target region for the Machine on create. If omitted, the Machine is placed in the same region as your WireGuard peer connection (somewhere near you). |
+| `instance_id` | An identifier for the current running/ready version of the Machine. Every Update request potentially changes the `instance_id`. |
+| `private_ip` | The [6PN IPv6 address](/docs/reference/private-networking/) of the Machine, which is where it's reachable to other Machines in the same organization and `network_id`. |
+| `config` | Object that defines the Machine configuration. |
+| `image_ref` | Object that defines the image details. |
+| `created_at` | Date and time the Machine was created. |
+| `updated_at` | Date and time the Machine was last updated. |
+| `events` | Array of objects that provide log of what's happened with this Machine. |
+| `checks` | todo |
+| `nonce` | The Machines lease nonce, if this Machine is currently leased. Also returned on Machine create if `lease_ttl` is provided. (TODO confirm) |
+
+### List all Machines for an app
+
+`GET /apps/{app_name}/machines`
+
+#### Query parameters for list Machines
+
+Append parameters to filter the response.
+
+**`state`**: Filter by the state of the Machines in the app. For example, to return only machines in the `started` state: `GET /apps/my-app-name/machines?started`
+
+**`include_deleted`**: If true, include deleted Machines in the response.
+
+**`region`**: Filter by region. For example, to return only Machines in the `yyz` region: `GET /v1/apps/my-app-name/machines?region=yyz`
+
+#### Example list Machines request
+
+<%= partial "/docs/reference/machines/list_req" %>
+
+#### Example list Machines response
+
+<%= partial "/docs/reference/machines/list_resp" %>
 
 ### Create a machine
 
-Create a Machine, which starts running immediately. This is where you configure the Machine characteristics, like its CPU and memory. You can also allow connections from the internet through the Fly Proxy. Learn more about this behavior in the [networking section](#networking).
+`POST /apps/{app_name}/machines`
 
-Following this call, you can make a [blocking API request](#wait-for-a-machine-to-reach-a-specified-state) to wait for a Machine to start.
+Given the name of a Fly App, create a Fly Machine, given the URI of a container image, in some region (or, by default, the region closest to you) on Fly.io’s platform. If successful, that Machine will boot up by default. Create a machine without booting it by setting `skip_launch`.
 
-The only required parameter is `image` in the `config` object. Other parameters:
+You can configure the Machine characteristics, like its CPU and memory. You can also allow connections from the internet through the Fly Proxy by [creating a Machine with services](#create-a-machine-with-services). Learn more about this behavior in the [networking section](#networking).
 
-`name`: Unique name for this Machine. If omitted, one is generated for you.
+<div class="important icon">
+**Important:** This request can fail, and you're responsible for handling that failure. If you ask for a large Machine, or a Machine in a region we happen to be at capacity for, you might need to retry the request, or to fall back to another region. If you're working directly with the Machines API, you're taking some responsibility for your own orchestration!
+</div>
 
-`region`: The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you).
+The only required parameter is `image` in the `config` object.
+
+#### Example create Machine request
+
+<%= partial "/docs/reference/machines/create_req" %>
+
+#### Example create Machine response
+
+<%= partial "/docs/reference/machines/create_resp" %>
+
+#### Request body parameters
+
+`name`: Unique name for this Machine. If omitted, one is generated for you. String.
+
+`region`: The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you). String.
+
+`lease_ttl`: Acquire a lease on the newly created Machine, waiting this many seconds before failing the request; use to create a Machine that can’t be updated by any other external process while waiting for it to come up and pass health checks. Integer.
+
+`skip_launch`: Create a Fly Machine, but don’t boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as “warming the caches” on our hardware. Boolean (default: false)
+
+`lsvd`: Enable Log Structured Virtual Disks for this Machine. Boolean (default: false)
+
+`skip_service_registration`: Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a machine up, test it healthy, and only then let user requests hit it. Boolean (default: false)
 
 `config`: An object defining the Machine configuration. Options:
 
-* `image`: The Docker image to run
+* `image`: The Docker image to run (required)
 * `guest`: An object with the following options:
   - `cpus`: Number of vCPUs (default `1`)
   - `memory_mb`: Memory in megabytes as multiples of 256 (default `256`)
@@ -245,26 +309,41 @@ An example of two files:
         ]
 ```
 
-Example create Machine request and response on app `my-app-name`:
+### Create a Machine with services
+
+`POST /apps/{app_name}/machines`
+
+Create a Machine with services defined on app `my-app-name`. Learn more about [services and networking](#notes-on-networking).
+
+#### Example create Machine with services request
 
 <%= partial "/docs/reference/machines/launch_req" %>
+
+#### Example create Machine with services response
+
 <%= partial "/docs/reference/machines/launch_resp" %>
 
 ### Wait for a Machine to reach a specified state
 
-Wait for a Machine to reach a specific state. Specify the desired state with the `state` parameter.  See the [table below](#machine-states) for a list of possible states.  The default for this parameter is `started`.
+Wait for a Machine to reach a specific state. Specify the desired state with the `state` parameter.  See the [Machines states table](#machine-states) for a list of possible states.  The default for this parameter is `started`.
 
 This request will block for up to 60 seconds. Set a shorter timeout with the `timeout` parameter.
-
 
 <%= partial "/docs/reference/machines/wait_req" %>
 <%= partial "/docs/reference/machines/wait_resp" %>
 
 ### Get a Machine
 
-Given a machine ID, fetch details about it.
+`GET /apps/{app_name}/machines/{machine_id}`
+
+Given the name of a Fly App and a Fly Machine ID, retrieve the details of that Machine.
+
+#### Example get Machine request
 
 <%= partial "/docs/reference/machines/get_req" %>
+
+#### Example get Machine response
+
 <%= partial "/docs/reference/machines/get_resp" %>
 
 ### Update a Machine
@@ -295,11 +374,6 @@ Delete a Machine, never to be seen again. This action cannot be undone!
 
 <%= partial "/docs/reference/machines/delete_req" %>
 <%= partial "/docs/reference/machines/delete_resp" %>
-
-### List Machines for an app
-
-<%= partial "/docs/reference/machines/list_req" %>
-<%= partial "/docs/reference/machines/list_resp" %>
 
 ### Lease a Machine
 
@@ -371,6 +445,5 @@ This table explains the possible Machine states. A Machine may only be in one st
     </tr>
     </tbody>
   </table>
-
 
 Internal note: the replaced state is only possible when requesting a specific `instance_id`.
