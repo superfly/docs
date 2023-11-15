@@ -11,6 +11,7 @@ flyctl planetscale dashboard [database_name] [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for dashboard
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options

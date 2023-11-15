@@ -12,6 +12,7 @@ flyctl extensions supabase dashboard [database_name] [flags]
   -c, --config string   Path to application configuration file
   -h, --help            help for dashboard
   -o, --org string      The target Fly organization
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options
