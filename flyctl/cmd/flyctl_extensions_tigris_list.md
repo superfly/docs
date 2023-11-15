@@ -10,6 +10,7 @@ flyctl extensions tigris list [flags]
 ~~~
   -h, --help         help for list
   -o, --org string   The target Fly organization
+  -y, --yes          Accept all confirmations
 ~~~
 
 ## Global Options

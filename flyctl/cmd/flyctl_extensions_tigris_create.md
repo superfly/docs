@@ -14,6 +14,7 @@ flyctl extensions tigris create [flags]
   -h, --help            help for create
   -n, --name string     The name of your bucket
   -o, --org string      The target Fly organization
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options

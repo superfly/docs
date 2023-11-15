@@ -15,6 +15,7 @@ flyctl extensions planetscale create [flags]
   -n, --name string     The name of your database
   -o, --org string      The target Fly organization
   -r, --region string   The target region (see 'flyctl platform regions')
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options
