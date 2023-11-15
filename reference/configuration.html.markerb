@@ -612,7 +612,7 @@ Optionally, you can specify a list of [processes](#the-processes-section) to lim
 
 Optionally, you can specify the size of the volume to be created when launching an app for the first time.
 
-This value is only used by `fly launch` and `fly deploy` commands in case they need to create a new volume, it is ignored by `fly volume create` command.
+This value is only used by `fly launch` and `fly deploy` commands in case they need to create a new volume; it is ignored by the `fly volume create` command.
 
 The value can be a string with units like in `initial_size = "30GB"` or an integer like in `initial_size = 30`, in which case GB is assumed as unit.
 
