@@ -225,3 +225,7 @@ First of all, we think using a [Dockerfile](https://fly.io/docs/languages-and-fr
 That's because buildpacks come with lots of dependencies to build different stacks rather than just what you need. On top of that, we've seen buildpack providers upgrade the image on Docker Hub and things Stop Working (even with no code changes on your app). Running `fly launch` already generates Dockerfiles for many [popular frameworks](/docs/languages-and-frameworks/).
 
 That said, if the build used to work, then you can try using a previous, fixed buildpack version so it's back in a known good state.
+
+## Related topics
+
+- [Troubleshoot apps when a host is unavailable](/docs/apps/trouble-host-unavailable/)

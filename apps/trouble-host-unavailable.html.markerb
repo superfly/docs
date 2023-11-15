@@ -77,3 +77,7 @@ However, if your database is running on a single Machine, and you don’t have a
 Fly.io strongly recommends running at least two Machines per app in your primary region and we have features that can help make [app availability and resiliency](/docs/reference/app-availability/) more affordable.
 
 When possible, we place volumes on different hosts in the primary region. If one host goes down, we’ll fail over to the healthy host.
+
+## Related topics
+
+- [Troubleshooting your deployment](/docs/getting-started/troubleshooting/)
