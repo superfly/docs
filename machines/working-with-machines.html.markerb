@@ -199,7 +199,7 @@ The only required parameter is `image` in the `config` object.
 
 <%= partial "/docs/reference/machines/create_resp" %>
 
-#### Request body parameters
+#### Create Machine request body parameters
 
 `name`: Unique name for this Machine. If omitted, one is generated for you. String.
 
@@ -348,14 +348,35 @@ Given the name of a Fly App and a Fly Machine ID, retrieve the details of that M
 
 ### Update a Machine
 
-`region` and `name` are immutable and cannot be updated. **We don't support partial updates. You're required to specify the entire config**.
+`POST /apps/{app_name}/machines/{machine_id}`
+
+Given the name of a Fly App and a Fly Machine ID, update the configuration of the Machine. If the Machine is running and the request is successful, it will reboot; if the Machine isn't running, and you don't want it to start up, set `skip_launch`.
+
+This is, in particular, how you would update the running image of a Machine (when you need to deploy new code), or roll back to a previous Machine release. It's also how you'd vertically scale an application.
+
+`region` and `name` are immutable and cannot be updated. 
+
+<div class="note icon">
+**Note:** You need to specify the entire Machine config to update a Machine; we don't support partial updates.
+</div>
+
+#### Example Machine update request
 
 <%= partial "/docs/reference/machines/update_req" %>
+
+#### Example Machine update response
+
 <%= partial "/docs/reference/machines/update_resp" %>
+
+#### Machine update request body parameters
+
+`current_version`: The latest `instance_id` value of the Machine. (todo: verify)
+
+For the rest of the parameters, see the [create Machine request body parameters](#create-machine-request-body-parameters).
 
 ### Stop a Machine
 
-Stopping a Machine will shut down the VM, but not destroy it. The VM may be started again with `machines/<id>/start`.
+Stopping a Machine will shut down the Machine, but not destroy it. The Machine may be started again with `machines/<id>/start`.
 
 <%= partial "/docs/reference/machines/stop_req" %>
 <%= partial "/docs/reference/machines/stop_resp" %>
@@ -370,31 +391,71 @@ reset to their original state so that they start clean on the next run.
 
 ### Delete a Machine permanently
 
-Delete a Machine, never to be seen again. This action cannot be undone!
+`DELETE /apps/{app_name}/machines/{machine_id}`
+
+Delete a Machine. This action cannot be undone.
+
+Given the name of a Fly App and the Machine ID of a Fly Machine, delete the Machine.
+
+#### Example Machine delete request
+
+Optionally append `?force=true` to the URI to stop a running Machine before deleting it.
 
 <%= partial "/docs/reference/machines/delete_req" %>
+
+#### Example Machine delete response
+
 <%= partial "/docs/reference/machines/delete_resp" %>
 
 ### Lease a Machine
 
 Machine leases can be used to obtain an exclusive lock on modifying a Machine.
 
+#### Example lease Machine request
+
 <%= partial "/docs/reference/machines/lease_req" %>
+
+#### Example lease Machine response
+
 <%= partial "/docs/reference/machines/lease_resp" %>
+
+#### Lease Machine request body parameters
+
+`ttl`: * (optional) How long the lease should be held for.
+
 <%= partial "/docs/reference/machines/lease" %>
+
+### Route requests away from a Machine
+
+`POST /apps/{app_name}/machines/{machine_id}/cordon`
+
+Given the name of a Fly App and the Machine ID of a Fly Machine, instruct the Fly Proxy not to send requests to the Machine.
+
+This is useful for bluegreen deployments: cordon off a "green" Machine, update it, make sure it comes up health, and then uncordon it to make it the new "blue". You can also do this with a fresh machine, all in one shot, using the `skip_service_registration` request field of a Machine Create request.
+
+Returns **Status: 200 OK** on success.
+
+### Resume request routing to a Machine
+
+`POST /apps/{app_name}/machines/{machine_id}/cordon`
+
+Given the name of a Fly App and the Machine ID of a Fly Machine, instruct the Fly Proxy to again send requests to the Machine.
+
+This is useful for bluegreen deployments: cordon off a "green" Machine, update it, make sure it comes up health, and then uncordon it to make it the new "blue". This is also how you register services for a Fly Machine created with the `skip_service_registration` request field.
+
+Returns **Status: 200 OK** on success.
 
 ## Notes on networking
 
 Machines are closed to the public internet by default. To make them accessible via the associated application, you need to:
 
 * Allocate an IP address to the Fly App
-* Adding one or more `services` to the Machine config with ports and handlers, as seen in the launch example here
+* Add one or more `services` to the Machine config with ports and handlers, as shown in [Create a Machine with services](#create-a-machine-with-services).
 
 For an application with a single machine, all requests will be routed to that Machine. A Machine in the `stopped` state will be started up
 automatically when a request arrives.
 
-For an application with multiple Machines *with the same configuration*, requests will be distributed across them. Warm-start behavior in this situation
-is not well-defined now, so should not be relied upon for apps with multiple Machines.
+For an application with multiple Machines *with the same configuration*, requests will be distributed across them. Warm-start behavior in this situation is not well-defined now, so should not be relied upon for apps with multiple Machines.
 
 Requests to Machines with *mixed* configurations will be distributed across Machines whose configurations match the request.
 For example, if 3 out of 6 Machines have service configurations set to listen on port 80, requests to port 80 will be distributed amongst those 3.
@@ -403,7 +464,7 @@ For example, if 3 out of 6 Machines have service configurations set to listen on
 
 Machines can be reached within the private network by hostname, in the format `<id>.vm.<app-name>.internal`. 
 
-So, to reach a Machine with ID `3d8d413b29d089` on an app called `my-app-name`, use hostname `3d8d413b29d089.vm.my-app-name.internal`.
+For example, to reach a Machine with ID `3d8d413b29d089` on an app called `my-app-name`, use hostname `3d8d413b29d089.vm.my-app-name.internal`.
 
 ## Machine states
 
@@ -446,4 +507,9 @@ This table explains the possible Machine states. A Machine may only be in one st
     </tbody>
   </table>
 
+TODO: why is this an "internal note"?
+
 Internal note: the replaced state is only possible when requesting a specific `instance_id`.
+
+
+
