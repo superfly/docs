@@ -592,7 +592,8 @@ This section supports the Volumes feature for persistent storage. The section ha
 [mounts]
   source = "myapp_data"
   destination = "/data"
-  processes= ["disk"] # optional - attach volumes to Machines that belong to one or more process groups
+  processes = ["disk"] # optional - attach volumes to Machines that belong to one or more process groups
+  initial_size = "20gb" # optional - the size of the volume created on first deploy
 ```
 
 ### `source`
@@ -606,6 +607,12 @@ The `destination` is the directory where the `source` volume should be mounted o
 ### `processes`
 
 Optionally, you can specify a list of [processes](#the-processes-section) to limit volume mounts by process group. You can even specify two different `[[mounts]]` sections to mount different source volumes to VMs in different process groups. Note the need to use double brackets if there are multiple `[[mounts]]` defined.
+
+### `initial_size`
+
+Optionally, you can specify the size of the volume to be created when launching an app for the first time.
+
+This value is only used by `fly launch` and `fly deploy` commands in case they need to create a new volume, it is ignored by `fly volume create` command.
 
 ## The `checks` section
 
