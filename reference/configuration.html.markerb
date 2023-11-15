@@ -614,7 +614,7 @@ Optionally, you can specify the size of the volume to be created when launching 
 
 This value is only used by `fly launch` and `fly deploy` commands in case they need to create a new volume; it is ignored by the `fly volume create` command.
 
-The value can be a string with units like in `initial_size = "30GB"` or an integer like in `initial_size = 30`, in which case GB is assumed as unit.
+The value can be a string with units, like `initial_size = "30GB"` for example. The value can also be an integer, like `initial_size = 30` for example, with GB as the default unit.
 
 ## The `checks` section
 
