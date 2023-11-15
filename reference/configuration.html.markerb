@@ -614,6 +614,8 @@ Optionally, you can specify the size of the volume to be created when launching 
 
 This value is only used by `fly launch` and `fly deploy` commands in case they need to create a new volume, it is ignored by `fly volume create` command.
 
+The value can be a string with units like in `initial_size = "30GB"` or an integer like in `initial_size = 30`, in which case GB is assumed as unit.
+
 ## The `checks` section
 
 If your app doesn't have public-facing services, or you want independent health checks that don't affect request routing,
