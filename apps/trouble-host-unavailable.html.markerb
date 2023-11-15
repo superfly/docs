@@ -46,7 +46,7 @@ For apps without volumes, you can bring up a new Machine by scaling to zero and 
 
 ### Deploy the app to get new Machines
 
-In most cases, deploying a new version of your app with `fly deploy` should also work for an app without volumes, as the new Machines will be deployed to healthy hosts.
+In most cases, deploying a new version of your app with `fly deploy` should also work for an app without volumes, because the new Machines will be deployed to healthy hosts.
 
 <div class="important icon">
 <b>Important:</b> Running `fly deploy` during a host outage generally won't destroy the existing Machine. When the impacted host returns, the Machine that was on it may return as well. In the case of deploying during an outage, this can result in one Machine running an older version of your code. In that case you should destroy the outdated Machine if it comes back.
