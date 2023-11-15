@@ -115,11 +115,11 @@ fly deploy
 
 ## Accessing the web-based MinIO admin panel
 
-MinIO has a web interface. It's served on the port specified by `--console-address` in the Dockerfile, which we set to `9001`. Fly restricts access to non-standard ports, so to access this panel we need to connect to our private WireGuard network.
+MinIO has a web interface. It's served on the port specified by `--console-address` in the Dockerfile, which we set to `9001`. We can access this panel over our private WireGuard network.
 
 One way to do this is to set up a [regular WireGuard tunnel](https://fly.io/docs/reference/private-networking/), and visit `http://my-minio.internal:9001` in the browser.
 
-A simpler way is to use flyctl's user-mode WireGuard to proxy the port to our local machine:
+A simpler way is to use flyctl's user-mode WireGuard to proxy a local port to the app:
 
 ```cmd
 fly proxy 9001 
