@@ -5,19 +5,21 @@ layout: docs
 nav: firecracker
 ---
 
-Fly.io has multiple hosts (physical hardware) in every supported region. A host could be unavailable because of a hardware failure, connectivity issues, or other reasons. A host issue might result in a complete or intermittent outage, or generally degraded performance for apps and databases without redundancy. A host could be down for an hour or a day, or sometimes longer. We understand that this can be frustrating if your app doesn’t have extra Machines or replicated databases for redundancy.
+Fly.io has multiple hosts (physical hardware) in every supported [region](/docs/reference/regions/). From time to time, a hardware failure, connectivity issues, or other factors will make a host unavailable. A single-host issue may cause a sustained or intermittent outage, or generally degraded performance, and this will disproportionately affect apps that run on a single Machine.
 
-For production apps, or any apps that require high availability, we strongly recommend running multiple machines and volumes for redundancy in the case of a single host failure. This goes double for apps with volumes, as volumes are pinned to specific hosts.
+A host can be down for an hour, or a day, or sometimes longer. 
+
+For production apps, or any apps that require high availability, we strongly recommend redundancy to protect against single-host failure. This means running multiple Machines, and for stateful apps it means having a clustering mechanism (such as those built into LiteFS and Postgres, for example) to replicate data between multiple volumes, because volumes are pinned to specific hosts.
 
 <div class="important icon">
-**Important:** The steps for recovery in this document don’t guarantee that you’ll be able to access your app if you have a single Machine&mdash;or a single Machine with an attached volume&mdash;on an a host that’s affected by an ongoing issue.
+**Important:** The steps for recovery in this document don’t guarantee that you’ll be able to access your app if you have a single Machine on a host that’s affected by an ongoing issue.
 </div>
 
 ## Notification of host issues
 
 You’ll get a notification on the Status page in your [dashboard](https://fly.io/dashboard/) when there’s a host issue that affects one or more of your apps. We don’t post individual host issues to our main status page because a host issue usually affects a small number of users in a single region.
 
-## For apps with one Machine and no volumes
+## Apps with one Machine and no volumes
 
 You can usually restore an app with one Machine and no volumes by scaling down and back up, or by deploying a new version of the app.
 
@@ -44,13 +46,13 @@ For apps without volumes, you can bring up a new Machine by scaling to zero and 
 
 ### Deploy the app to get new Machines
 
-In most cases deploying a new version of your app with `fly deploy` should also work for an app without volumes, as the new machines will be deployed to healthy hosts.
+In most cases, deploying a new version of your app with `fly deploy` should also work for an app without volumes, as the new Machines will be deployed to healthy hosts.
 
 <div class="important icon">
-<b>Important:</b> Running a new deploy during a host outage generally won't destroy the existing Machine. When the impacted host returns, the Machine that was on it may return as well. In the case of a deploy during an outage, this can result in one Machine running an older version of your code. In that case you should destroy the outdated Machine if it comes back.
+<b>Important:</b> Running `fly deploy` during a host outage generally won't destroy the existing Machine. When the impacted host returns, the Machine that was on it may return as well. In the case of deploying during an outage, this can result in one Machine running an older version of your code. In that case you should destroy the outdated Machine if it comes back.
 </div>
 
-## For apps with one Machine and an attached volume
+## Apps with one Machine and an attached volume
 
 Volumes are pinned to physical hosts, so when there's a host outage the volume is unreachable. In most cases, you should be able to get your app running again by restoring from a snapshot into a new volume.
 
@@ -74,9 +76,7 @@ However, if your database is running on a single Machine, and you don’t have a
 
 ## Prevent downtime when there's a single host issue
 
-Fly.io strongly recommends running at least two Machines per app in your primary region and we have features that can help make [app availability and resiliency](/docs/reference/app-availability/) more affordable.
-
-When possible, we place volumes on different hosts in the primary region. If one host goes down, we’ll fail over to the healthy host.
+Fly.io strongly recommends running at least two Machines per app in your primary region and we have features that can help make [app availability and resiliency](/docs/reference/app-availability/) more affordable. When possible, we place volumes on different hosts in the primary region. If one host goes down, then your app will still have a Machine and volume on a healthy host.
 
 ## Related topics
 
