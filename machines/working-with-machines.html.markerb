@@ -88,6 +88,8 @@ You can use the Apps resource to create and manage Fly Apps. A Fly App is an abs
 
 ### Create a Fly App
 
+`POST /apps`
+
 Machines must be associated with a Fly App. App names must be unique.
 
 <%= partial "/docs/reference/machines/create_app_req" %>
@@ -113,6 +115,8 @@ The app will answer on this IP address, and after a small delay, at `my-app-name
 
 ### Get application details
 
+`GET /apps/{app_name}`
+
 Get details about an application, like its organization slug and name. Also, to check if the app exists!
 <%= partial "/docs/reference/machines/get_app_req" %>
 <%= partial "/docs/reference/machines/get_app_resp" %>
@@ -128,6 +132,8 @@ Machines inherit secrets from the app. Existing Machines must be [updated](#upda
 For non-sensitive information, you _can_ set different environment variables per Machine at creation time.
 
 ### Delete a Fly App
+
+`DELETE /apps/{app_name}`
 
 Machines should be stopped before attempting deletion. Append `?force=true` to the URI to stop and delete immediately.
 
