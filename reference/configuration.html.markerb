@@ -665,7 +665,7 @@ In case of having a host dedication, this is the value to set so machines are la
 
 ### `processes`
 
-Optionally, you can specify a list of [processes](#the-processes-section) to limit by process group. You can even specify two different `[[vm]]` sections to have different compute requirements per process group. Note the need to use double brackets if there are multiple `[[vm]]` defined.
+Optionally, you can specify a list of [processes](#the-processes-section) to limit by process group. You can even specify two different `[[vm]]` sections to have different compute requirements per process group. Note the need to use double brackets if there are multiple `[[vm]]` sections defined.
 
 A `[[vm]]` section without `processes` key applies to all process groups, except when another `[[vm]]` section targets a specific process group. For example the following snippets uses `shared-cpu-4x` for `app` and `other` process groups but `performance-1x` for `worker` group.
 
