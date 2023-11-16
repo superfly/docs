@@ -661,7 +661,7 @@ The kind of GPU to request. Valid values are `a100-pcie-40gb` and `a100-pcie-80g
 
 ### `host_dedication_id`
 
-In case of having a host dedication, this is the value to set so machines are launched on dedicated hardware.
+In the case of having a dedicated host, this is the value to set so machines are launched on dedicated hardware.
 
 ### `processes`
 
