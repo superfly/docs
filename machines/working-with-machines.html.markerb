@@ -10,7 +10,7 @@ This document covers usage of the Machines REST API to start, stop, update and i
 
 See all possible Machine states [in the table below](#machine-states).
 
-## API Spec
+## API spec
 
 We have a Swagger 2.0 specification available at [docs.machines.dev](https://docs.machines.dev) for the Machines API, so that you can autogenerate clients in your preferred language.
 
@@ -30,7 +30,7 @@ You can still access your Machines directly over a Wireguard VPN, and use the pr
 
 Follow the [instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io [IPv6 private network](/docs/reference/private-networking/). Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
 
-### Connecting via flyctl 
+### Connecting through flyctl 
 
 You can also proxy a local port to the internal API endpoint. This section is preserved mainly for the sake of interest, as the public Machines API endpoint is simpler and more performant.
 
@@ -82,17 +82,19 @@ All requests must include the Fly API Token in the HTTP Headers as follows:
 Authorization: Bearer <fly_api_token>
 ```
 
-## Operations on Apps
+## Apps
 
-Here are some things you can do with apps:
+You can use the Apps resource to create and manage Fly Apps. A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines.
 
 ### Create a Fly App
+
+`POST /apps`
 
 Machines must be associated with a Fly App. App names must be unique.
 
 <%= partial "/docs/reference/machines/create_app_req" %>
 
-To segment the app into its own network, you can pass a `network` argument in the JSON body, e.g. `"network": "some-arbitrary-name"`. Any machine started in such an app will **not** be able to access other apps within their organization over the private network. However, machines within such an app can communicate to each other, and the [`fly-replay`](/docs/reference/dynamic-request-routing/) header can still be used to route requests to machines within a segmented app.
+To segment the app into its own network, you can pass a `network` argument in the JSON body, e.g. `"network": "some-arbitrary-name"`. Any Machine started in such an app will not be able to access other apps within their organization over the private network. However, Machines within such an app can communicate to each other, and the [`fly-replay`](/docs/reference/dynamic-request-routing/) header can still be used to route requests to Machines within a segmented app.
 
 ### Allocate an IP address for global request routing
 
@@ -113,6 +115,8 @@ The app will answer on this IP address, and after a small delay, at `my-app-name
 
 ### Get application details
 
+`GET /apps/{app_name}`
+
 Get details about an application, like its organization slug and name. Also, to check if the app exists!
 <%= partial "/docs/reference/machines/get_app_req" %>
 <%= partial "/docs/reference/machines/get_app_resp" %>
@@ -129,79 +133,261 @@ For non-sensitive information, you _can_ set different environment variables per
 
 ### Delete a Fly App
 
+`DELETE /apps/{app_name}`
+
 Machines should be stopped before attempting deletion. Append `?force=true` to the URI to stop and delete immediately.
 
 <%= partial "/docs/reference/machines/delete_app" %>
 
-## Operations on Machines
+## Machines
 
-Here are some things you can do with machines:
+A Fly Machine is the configuration and state for a single VM running on Fly.io. With the Machines resource, you can create, stop, start, update, and delete Machines.
 
-### Create a machine
+### Machine properties
 
-Create a Machine, which starts running immediately. This is where you configure the Machine characteristics, like its CPU and memory. You can also allow connections from the internet through the Fly Proxy. Learn more about this behavior in the [networking section](#networking).
+| Property | Description |
+| --------- | ----------- |
+| `id` | A stable identifier for the Machine. |
+| `name` | Unique name for the Machine. If omitted, one is generated for you. |
+| `state` | The current state of the Machine. See the [Machine states table](#machine-states). |
+| `region` | The region where the Machine resides, or the the target region for the Machine on create. If omitted, the Machine is placed in the same region as your WireGuard peer connection (somewhere near you). |
+| `instance_id` | An identifier for the current running/ready version of the Machine. Every Update request potentially changes the `instance_id`. |
+| `private_ip` | The [6PN IPv6 address](/docs/reference/private-networking/) of the Machine, which is where it's reachable to other Machines in the same organization and `network_id`. |
+| `config` | Object that defines the Machine configuration. See [The `config` object properties](#the-config-object-properties). |
+| `checks` | Object that provides the status of any checks. |
+| `image_ref` | Object that defines the image details. |
+| `created_at` | Date and time the Machine was created. |
+| `updated_at` | Date and time the Machine was last updated. |
+| `events` | Array of objects that provide log of what's happened with this Machine. |
+| `nonce` | The Machines lease nonce, if this Machine is currently leased. Also returned on Machine create if `lease_ttl` is provided. (TODO confirm) |
 
-Following this call, you can make a [blocking API request](#wait-for-a-machine-to-reach-a-specified-state) to wait for a Machine to start.
+### List all Machines for an app
 
-The only required parameter is `image` in the `config` object. Other parameters:
+`GET /apps/{app_name}/machines`
 
-`name`: Unique name for this Machine. If omitted, one is generated for you.
+#### Query parameters for list Machines
 
-`region`: The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you).
+Append parameters to filter the response.
 
-`config`: An object defining the Machine configuration. Options:
+**`state`**: Filter by the state of the Machines in the app. For example, to return only Machines in the `started` state: `GET /apps/my-app-name/machines?started`
 
-* `image`: The Docker image to run
-* `guest`: An object with the following options:
-  - `cpus`: Number of vCPUs (default `1`)
-  - `memory_mb`: Memory in megabytes as multiples of 256 (default `256`)
-  - `kernel_args`: Optional array of strings. Arguments passed to the kernel
-* `auto_destroy`: Optional boolean telling the Machine to destroy itself once it's complete (default `false`)
+**`include_deleted`**: If true, include deleted Machines in the response.
 
-* `size`: A [named size](/docs/about/pricing/#machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
-* `env`: An object filled with key/value pairs to be set as environment variables
-* `services`: An array of objects that define a single network service. Check the [Machines networking section](#networking) for more information. Options:
+**`region`**: Filter by region. For example, to return only Machines in the `yyz` region: `GET /v1/apps/my-app-name/machines?region=yyz`
 
-  - `protocol`: `tcp` or `udp`. [Learn more about running raw TCP/UDP services](https://fly.io/docs/app-guides/udp-and-tcp/).
-  - `concurrency`: load balancing concurrency settings
-      + `type`: `connections` (TCP) or `requests` (HTTP) - defaults to `connections`
-      + `soft_limit`: "ideal" service concurrency. We will attempt to spread load to keep services at or below this limit
-      + `hard_limit`: maximum allowed concurrency. We will queue or reject when a service is at this limit
-  - `internal_port`: Port the Machines VM listens on
-  - `ports`: An array of objects defining the service's ports and associated handlers. Options:
-      + `port`: Public-facing port number
-      + `handlers`: Array of [connection handlers](https://fly.io/docs/reference/services/#connection-handlers) for TCP-based services.
+#### Example list Machines request
 
-* `processes`: An optional array of objects defining multiple processes to run within a VM. The Machine will stop if *any* process exits without error.
-  - `name`: Process name
-  - `entrypoint`: An array of strings. The process that will run
-  - `cmd`: An array of strings. The arguments passed to the entrypoint
-  - `env`: An object filled with key/value pairs to be set as environment variables
-  - `user`: An optional user that the process runs under
+<%= partial "/docs/reference/machines/list_req" %>
 
-* `schedule`: Optionally one of `hourly`, `daily`, `weekly`, `monthly`. Runs Machine at the given interval. Interval starts at time of Machine creation
+#### Example list Machines response
 
-* `mounts`: An array of objects that reference previously created [persistent volumes](https://fly.io/docs/reference/volumes/). Currently, you may only mount *one volume* per VM.
-  - `volume`: The volume ID, visible in `fly volumes list`, i.e. `vol_2n0l3vl60qpv635d`
-  - `path`: Absolute path on the VM where the volume should be mounted. i.e. `/data`
+<%= partial "/docs/reference/machines/list_resp" %>
 
-* `metrics`: An optional object defining a metrics endpoint that [Prometheus on Fly.io](https://fly.io/docs/reference/metrics/#prometheus-on-fly-io) will scrape
-  - `port`: The port that Prometheus will connect to
-  - `path`: The path that Prometheus will scrape (e.g. `/metrics`)
+### Create a Machine
 
-* `checks`: An optional object that defines one or more named checks
-  - the key for each check is the check name
-  - the value for each check supports:
-      + `type`: `tcp` or `http`
-      + `port`: The port to connect to, likely should be the same as `internal_port`
-      + `interval`: The time between connectivity checks
-      + `timeout`: The maximum time a connection can take before being reported as failing its health check
-      + `method`: For http checks, the HTTP method to use to when making the request
-      + `path`: For http checks, the path to send the request to
-      + `protocol`: For http checks, whether to use `http` or `https`
-      * `tls_server_name`: If the protocol is `https`, the hostname to use for TLS certificate validation
-      + `tls_skip_verify`: For http checks with https protocol, whether or not to verify the TLS certificate
-      + `headers`: For http checks, an array of objects with string field `name` and array of strings field `values`
+`POST /apps/{app_name}/machines`
+
+Given the name of a Fly App, create a Fly Machine, given the URI of a container image, in some region (or, by default, the region closest to you) on Fly.io’s platform. If successful, that Machine will boot up by default. Create a Machine without booting it by setting `skip_launch`.
+
+You can configure the Machine characteristics, like its CPU and memory. You can also allow connections from the internet through the Fly Proxy by [creating a Machine with services](#create-a-machine-with-services). Learn more about this behavior in the [networking section](#networking).
+
+<div class="important icon">
+**Important:** This request can fail, and you're responsible for handling that failure. If you ask for a large Machine, or a Machine in a region we happen to be at capacity for, you might need to retry the request, or to fall back to another region. If you're working directly with the Machines API, you're taking some responsibility for your own orchestration!
+</div>
+
+The only required parameter is `image` in the `config` object.
+
+#### Example create Machine request
+
+<%= partial "/docs/reference/machines/create_req" %>
+
+#### Example create Machine response
+
+<%= partial "/docs/reference/machines/create_resp" %>
+
+#### Create Machine request body parameters
+
+`name`: Unique name for this Machine. If omitted, one is generated for you. String.
+
+`region`: The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you). String.
+
+`lease_ttl`: Acquire a lease on the newly created Machine, waiting this many seconds before failing the request; use to create a Machine that can’t be updated by any other external process while waiting for it to come up and pass health checks. Integer.
+
+`skip_launch`: Create a Fly Machine, but don’t boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as “warming the caches” on our hardware. Boolean (default: false)
+
+`lsvd`: Enable Log Structured Virtual Disks for this Machine. Boolean (default: false)
+
+`skip_service_registration`: Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. Boolean (default: false)
+
+`config`: An object defining the Machine configuration. See the [`config` object properties](#the-config-object-properties).
+
+### Create a Machine with services
+
+`POST /apps/{app_name}/machines`
+
+Create a Machine with services defined on app `my-app-name`. Learn more about [services and networking](#notes-on-networking).
+
+#### Example create Machine with services request
+
+<%= partial "/docs/reference/machines/launch_req" %>
+
+#### Example create Machine with services response
+
+<%= partial "/docs/reference/machines/launch_resp" %>
+
+### Wait for a Machine to reach a specified state
+
+Wait for a Machine to reach a specific state. Specify the desired state with the `state` parameter.  See the [Machines states table](#machine-states) for a list of possible states.  The default for this parameter is `started`.
+
+This request will block for up to 60 seconds. Set a shorter timeout with the `timeout` parameter.
+
+<%= partial "/docs/reference/machines/wait_req" %>
+<%= partial "/docs/reference/machines/wait_resp" %>
+
+### Get a Machine
+
+`GET /apps/{app_name}/machines/{machine_id}`
+
+Given the name of a Fly App and a Fly Machine ID, retrieve the details of that Machine.
+
+#### Example get Machine request
+
+<%= partial "/docs/reference/machines/get_req" %>
+
+#### Example get Machine response
+
+<%= partial "/docs/reference/machines/get_resp" %>
+
+### Update a Machine
+
+`POST /apps/{app_name}/machines/{machine_id}`
+
+Given the name of a Fly App and a Fly Machine ID, update the configuration of the Machine. If the Machine is running and the request is successful, it will reboot; if the Machine isn't running, and you don't want it to start up, set `skip_launch`.
+
+This is, in particular, how you would update the running image of a Machine (when you need to deploy new code), or roll back to a previous Machine release. It's also how you'd vertically scale an application.
+
+`region` and `name` are immutable and cannot be updated. 
+
+<div class="note icon">
+**Note:** You need to specify the entire Machine config to update a Machine; we don't support partial updates.
+</div>
+
+#### Example Machine update request
+
+<%= partial "/docs/reference/machines/update_req" %>
+
+#### Example Machine update response
+
+<%= partial "/docs/reference/machines/update_resp" %>
+
+#### Machine update request body parameters
+
+`current_version`: The latest `instance_id` value of the Machine.
+
+For the rest of the parameters, see the [create Machine request body parameters](#create-machine-request-body-parameters).
+
+### Stop a Machine
+
+`POST /apps/{app_name}/machines/{machine_id}/stop`
+
+Stopping a Machine will shut down the Machine, but not destroy it. The Machine may be started again with `machines/<id>/start`.
+
+<%= partial "/docs/reference/machines/stop_req" %>
+<%= partial "/docs/reference/machines/stop_resp" %>
+
+### Start a Machine
+
+`POST /apps/{app_name}/machines/{machine_id}/start`
+
+Start a previously stopped Machine.  Machines that are restarted are completely
+reset to their original state so that they start clean on the next run.
+
+<%= partial "/docs/reference/machines/start_req" %>
+<%= partial "/docs/reference/machines/start_resp" %>
+
+### Delete a Machine permanently
+
+`DELETE /apps/{app_name}/machines/{machine_id}`
+
+Delete a Machine. This action cannot be undone.
+
+Given the name of a Fly App and the Machine ID of a Fly Machine, delete the Machine.
+
+#### Example Machine delete request
+
+Optionally append `?force=true` to the URI to stop a running Machine before deleting it.
+
+<%= partial "/docs/reference/machines/delete_req" %>
+
+#### Example Machine delete response
+
+<%= partial "/docs/reference/machines/delete_resp" %>
+
+### Lease a Machine
+
+`GET /apps/{app_name}/machines/{machine_id}/lease`
+
+`POST /apps/{app_name}/machines/{machine_id}/lease`
+
+`DELETE /apps/{app_name}/machines/{machine_id}/lease`
+
+Machine leases can be used to obtain an exclusive lock on modifying a Machine.
+
+#### Example lease Machine request
+
+<%= partial "/docs/reference/machines/lease_req" %>
+
+#### Example lease Machine response
+
+<%= partial "/docs/reference/machines/lease_resp" %>
+
+#### Lease Machine request body parameters
+
+`ttl`: int (nil) - How long the lease should be held for. Optional.
+
+<%= partial "/docs/reference/machines/lease" %>
+
+### Route requests away from a Machine
+
+`POST /apps/{app_name}/machines/{machine_id}/cordon`
+
+Given the name of a Fly App and the Machine ID of a Fly Machine, instruct the Fly Proxy not to send requests to the Machine.
+
+This is useful for bluegreen deployments: cordon off a "green" Machine, update it, make sure it comes up health, and then uncordon it to make it the new "blue". You can also do this with a fresh Machine, all in one shot, using the `skip_service_registration` request field of a Machine Create request.
+
+Returns **Status: 200 OK** on success.
+
+### Resume request routing to a Machine
+
+`POST /apps/{app_name}/machines/{machine_id}/cordon`
+
+Given the name of a Fly App and the Machine ID of a Fly Machine, instruct the Fly Proxy to again send requests to the Machine.
+
+This is useful for bluegreen deployments: cordon off a "green" Machine, update it, make sure it comes up health, and then uncordon it to make it the new "blue". This is also how you register services for a Fly Machine created with the `skip_service_registration` request field.
+
+Returns **Status: 200 OK** on success.
+
+### The `config` object properties
+
+Properties of the `config` object for Machine configuration. Learn about all the [Machine properties](#machine-properties).
+
+`image`: string - Required. The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
+
+`auto_destroy`: bool (false) - If true, the Machine destroys itself once it's complete.
+
+`checks`: An optional object that defines one or more named checks. The key for each check is the check name. The value for each check supports:
+
++ `type`: string (nil) - `tcp` or `http`.
++ `port`: int (nil) - The TCP port to connect to, likely should be the same as `internal_port`.
++ `interval`: int (nil) - The interval, in nanoseconds, between connectivity checks
++ `timeout`: int (nil) - The maximum time, in nanoseconds, a connection can take before being reported as failing its health check.
++ `grace_period`: int (nil) - How long to wait, in nanoseconds, before we start running health checks.
++ `method`: string (nil) - For http checks, the HTTP method to use to when making the request.
++ `path`: string (nil) - For http checks, the path to send the request to.
++ `protocol`: string (nil) - For http checks, whether to use `http` or `https`
+* `tls_server_name`: string (nil) - If the protocol is `https`, the hostname to use for TLS certificate validation
++ `tls_skip_verify`: bool (false) - For http checks with https protocol, whether or not to verify the TLS certificate
++ `headers`: {string: [string, string]} ({}) - For http checks, an array of objects with string field `name` and array of strings field `values`.
 
 An example of two checks:
 
@@ -225,10 +411,15 @@ An example of two checks:
         }
 ```
 
-* `files`: An optional array of objects defining files to be written within a Machine, one of `raw_value` or `secret_name` must be provided.
-  - `guest_path`: The path in the machine where the file will be written. Must be an absolute path.
-  - `raw_value`: Contains the base64 encoded string of the file contents.
-  - `secret_name`: The name of the secret containing the base64 encoded file contents.
+`dns`
+  - `skip_registration`: If true, do not register the machine's 6PN IP with the internal DNS system.
+
+`env`: {string:string} ({}) - An object filled with key/value pairs to be set as environment variables.
+
+`files`: An optional array of objects defining files to be written within a Machine, one of `raw_value` or `secret_name` must be provided.
+  - `guest_path`: string - The path in the Machine where the file will be written. Must be an absolute path.
+  - `raw_value`: string - Contains the base64 encoded string of the file contents.
+  - `secret_name`: string - The name of the secret containing the base64 encoded file contents.
 
 An example of two files:
 
@@ -245,82 +436,94 @@ An example of two files:
         ]
 ```
 
-Example create Machine request and response on app `my-app-name`:
+`guest`: Configure the resources allocated for this Machine. An object with the following options:
+  - `cpu_kind`: string (nil) - The type of CPU reservation to make (”shared”, ”performance", and so on).
+  - `gpu_kind`: string (nil) - The type of GPU reservation to make.
+  - `host_dedication_id`: The ID of the host dedication (group of dedicated hosts) on which to create this Machine. (beta)
+  - `cpus`: int (nil) - The number of CPU cores this Machine should occupy when it runs. (default `1`)
+  - `kernel_args`: Optional array of strings. Arguments passed to the kernel.
+  - `memory_mb`: int (nil) - Memory in megabytes as multiples of 256 (default `256`)
 
-<%= partial "/docs/reference/machines/launch_req" %>
-<%= partial "/docs/reference/machines/launch_resp" %>
+`init`: Arguments for `init`, which is Fly.io's footprint inside your Machine, and controls how your own code gets run.
+  - `exec`: [string, string] ([]) - The command line for the program to run once the Machine boots up. This overrides any other startup command line, either in our API or in your Docker container definition.
+  - `entrypoint`: [string, string] ([]) - A command line to override the ENTRYPOINT of your Docker container; another way to define the program that is going to start up when your Machine boots up.
+  - `cmd`: [string, string] ([]) - A command line to override the CMD of your Docker container; still another way to define the program that is going to start up when your machine boots up.
+  - `tty`: bool (false) - Allocate a TTY for the process we start up.
+  - `swap_size_mb`: int (nil) -Swap space to reserve for the Fly Machine in, you guessed it, megabytes.
 
-### Wait for a Machine to reach a specified state
+`metadata`: {string:string} ({}) - An object filled with key/value pairs for the Machine metadata. We use metadata internally for routing, process groups, and clusters.
 
-Wait for a Machine to reach a specific state. Specify the desired state with the `state` parameter.  See the [table below](#machine-states) for a list of possible states.  The default for this parameter is `started`.
+`metrics`: An optional object defining a metrics endpoint that [Prometheus on Fly.io](https://fly.io/docs/reference/metrics/#prometheus-on-fly-io) will scrape.
+  - `port`: int - Required. The port that Prometheus will connect to.
+  - `path`: string - Required. The path that Prometheus will scrape (e.g. `/metrics`).
 
-This request will block for up to 60 seconds. Set a shorter timeout with the `timeout` parameter.
+`mounts`: An array of objects that reference previously created [persistent volumes](https://fly.io/docs/reference/volumes/). Currently, you may only mount one volume per Machine.
+  - `name`: string - Required. The name of the Volume to attach.
+  - `path`: string - Required. Absolute path on the VM where the volume should be mounted. For example,  `/data`.
+  - `volume`: int (nil) - The volume ID, visible in `fly volumes list`, i.e. `vol_2n0l3vl60qpv635d`.
 
 
-<%= partial "/docs/reference/machines/wait_req" %>
-<%= partial "/docs/reference/machines/wait_resp" %>
+`processes`: An optional array of objects defining multiple processes to run within a Machine. The Machine will stop if any process exits without error.
+  - `entrypoint`: An array of strings. The process that will run.
+  - `cmd`: An array of strings. The arguments passed to the entrypoint.
+  - `env`: An object filled with key/value pairs to be set as environment variables.
+  - `exec`: An array of strings. The command to run for Machines in this process group on startup.
+  - `user`: string (nil) - An optional user that the process runs under.
 
-### Get a Machine
+`restart`: Defines whether and how flyd restarts a Machine after its main process exits. Learn more about [Machine restart policies](/docs/machines/guides-examples/machine-restart-policy/). This object has the following options:
+  - `policy`: string - Required. One of "no", "on-failure", or "always".
+  - `max_retries`: int (nil) - The maximum number of retries when the policy is "on-failure".
 
-Given a machine ID, fetch details about it.
+`schedule`: string (nil) - Optionally one of `hourly`, `daily`, `weekly`, `monthly`. Runs Machine at the given interval. Interval starts at time of Machine creation
 
-<%= partial "/docs/reference/machines/get_req" %>
-<%= partial "/docs/reference/machines/get_resp" %>
+`services`contains an array of objects that define a single network service. Check the [Machines networking section](#networking) for more information.
 
-### Update a Machine
+  - `protocol`: string - Required. `tcp` or `udp`. [Learn more about running raw TCP/UDP services](https://fly.io/docs/app-guides/udp-and-tcp/).
+  - `internal_port`: int - Required. Port the Machine listens on.
+  - `concurrency`: Control Fly Proxy’s load balancing for this service.
+      + `type`: string - `connections` (TCP) or `requests` (HTTP). Default is `connections`. Determines which kind of event we count for load balancing.
+      + `soft_limit`: int (nil) - Ideal service concurrency. We will attempt to spread load to keep services at or below this limit. We’ll deprioritize a Machine to give other Machines a chance to absorb traffic.
+      + `hard_limit`: int (nil) - Maximum allowed concurrency. The limit of events at which we’ll stop routing to a Machine altogether, and, if configured to do so, potentially start up existing Machines to handle the load.
+  - `ports`: MachinePort - An array of objects defining the service's ports and associated handlers. Options:
+      + `port`: int (nil) - The internet-exposed port to receive traffic on; if you want HTTP traffic routed to 8080/tcp on your Machine, this would be 80.
+      + `start_port`, `end-port`: int (nil) - Like `port``, but allocate a range of ports to route internally, for applications that want to occupy whole port ranges.
+      + `handlers`: Array of protocol [handlers](https://fly.io/docs/reference/services/#connection-handlers) for this port. How should the Fly Proxy handle and terminate this connection. Options include `http`, `tcp`, `tls`.
+      + `force_https`: bool (false) - If true, force HTTP to HTTPS redirects.
+      + `http_options`: Fiddly HTTP options (if you don’t know you need them, you don’t), including:
+        - `compress`: bool (false) to enable HTTP compression
+        - `response`: ({"headers": {string:string}} (nil)) for HTTP headers to set on responses.
+      + `tls_options`:  Fiddly TLS options (if you don’t know you need to mess with these, you don’t need to), including:
+        - `alpn`: [string, string] ([]) : ALPN protocols to present TLS clients (for instance, [“h2”, “http/1.1”]).
+        - `versions`: [string, string] ([]) : TLS versions to allow (for instance, [“TLSv1.2”, “TLSv1.3”]).
+      + `proxy_proto_options`: Configure the version of the PROXY protocol that your app accepts. Version 1 is the default.
+        - `version`: A string to indicate that the TCP connection uses PROXY protocol version 2. The default when not set is version 1.
+  - `auto_start`: bool (false) - If true, Fly Proxy starts Machines when requests for this service arrive.
+  - `auto_stop`: bool (false) - If true, Fly Proxy stops Machines when this service goes idle.
+  - `min_machines_running`: int (nil) - When `auto_start` is true, the minimum number of Machines to keep running at all times in the primary region.
 
-`region` and `name` are immutable and cannot be updated. **We don't support partial updates. You're required to specify the entire config**.
+`size`: A [named size](/docs/about/pricing/#machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
 
-<%= partial "/docs/reference/machines/update_req" %>
-<%= partial "/docs/reference/machines/update_resp" %>
+`standbys`: Standbys enable a Machine to be a standby for another. In the event of a hardware failure, the standby machine will be started. Only for Machines without `services`. Array of strings representing the Machine IDs of Machines watch (act as standby for).
 
-### Stop a Machine
+`statics`: Optionally serve static files.
+  - `guest_path`: string - Required. The path inside the Machines where the files to serve are located.
+  - `url_prefix`: string - Required. The URL prefix under which to serve the static files.
 
-Stopping a Machine will shut down the VM, but not destroy it. The VM may be started again with `machines/<id>/start`.
-
-<%= partial "/docs/reference/machines/stop_req" %>
-<%= partial "/docs/reference/machines/stop_resp" %>
-
-### Start a Machine
-
-Start a previously stopped Machine.  Machines that are restarted are completely
-reset to their original state so that they start clean on the next run.
-
-<%= partial "/docs/reference/machines/start_req" %>
-<%= partial "/docs/reference/machines/start_resp" %>
-
-### Delete a Machine permanently
-
-Delete a Machine, never to be seen again. This action cannot be undone!
-
-<%= partial "/docs/reference/machines/delete_req" %>
-<%= partial "/docs/reference/machines/delete_resp" %>
-
-### List Machines for an app
-
-<%= partial "/docs/reference/machines/list_req" %>
-<%= partial "/docs/reference/machines/list_resp" %>
-
-### Lease a Machine
-
-Machine leases can be used to obtain an exclusive lock on modifying a Machine.
-
-<%= partial "/docs/reference/machines/lease_req" %>
-<%= partial "/docs/reference/machines/lease_resp" %>
-<%= partial "/docs/reference/machines/lease" %>
+`stop_config`: MachineStopConfig (nil) - Configure graceful shutdown of the Machine.
+  - `signal`: string (nil) - the name of the signal to send to the entrypoint process on the Machine to initiate shutdown.
+  - `timeout`: int (nil) - how long in nanoseconds to wait, after signaling the entrypoint process, before hard-shutdown of the Machine.
 
 ## Notes on networking
 
 Machines are closed to the public internet by default. To make them accessible via the associated application, you need to:
 
 * Allocate an IP address to the Fly App
-* Adding one or more `services` to the Machine config with ports and handlers, as seen in the launch example here
+* Add one or more `services` to the Machine config with ports and handlers, as shown in [Create a Machine with services](#create-a-machine-with-services).
 
-For an application with a single machine, all requests will be routed to that Machine. A Machine in the `stopped` state will be started up
+For an application with a single Machine, all requests will be routed to that Machine. A Machine in the `stopped` state will be started up
 automatically when a request arrives.
 
-For an application with multiple Machines *with the same configuration*, requests will be distributed across them. Warm-start behavior in this situation
-is not well-defined now, so should not be relied upon for apps with multiple Machines.
+For an application with multiple Machines *with the same configuration*, requests will be distributed across them. Warm-start behavior in this situation is not well-defined now, so should not be relied upon for apps with multiple Machines.
 
 Requests to Machines with *mixed* configurations will be distributed across Machines whose configurations match the request.
 For example, if 3 out of 6 Machines have service configurations set to listen on port 80, requests to port 80 will be distributed amongst those 3.
@@ -329,7 +532,7 @@ For example, if 3 out of 6 Machines have service configurations set to listen on
 
 Machines can be reached within the private network by hostname, in the format `<id>.vm.<app-name>.internal`. 
 
-So, to reach a Machine with ID `3d8d413b29d089` on an app called `my-app-name`, use hostname `3d8d413b29d089.vm.my-app-name.internal`.
+For example, to reach a Machine with ID `3d8d413b29d089` on an app called `my-app-name`, use hostname `3d8d413b29d089.vm.my-app-name.internal`.
 
 ## Machine states
 
@@ -363,7 +566,7 @@ This table explains the possible Machine states. A Machine may only be in one st
     </tr>
     <tr>
       <td class="font-bold">destroying</td>
-      <td>User asked for the machine to be completely removed</td>
+      <td>User asked for the Machine to be completely removed</td>
     </tr>
     <tr>
       <td class="font-bold">destroyed</td>
@@ -371,6 +574,3 @@ This table explains the possible Machine states. A Machine may only be in one st
     </tr>
     </tbody>
   </table>
-
-
-Internal note: the replaced state is only possible when requesting a specific `instance_id`.
