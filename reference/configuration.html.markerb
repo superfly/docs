@@ -641,7 +641,7 @@ All keys are optional and `size` has lower precedence than all other keys.
 
 The preset size to use as base, like `size = "shared-cpu-1x"` for example.
 
-To get the full list run `fly platform vm-sizes` or check the [pricing page](/docs/about/pricing/#compute)
+To get the full list, run `fly platform vm-sizes` or check the [pricing page](/docs/about/pricing/#compute).
 
 ### `memory`
 
