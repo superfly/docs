@@ -88,6 +88,16 @@ Another example:
 
 This `SUBJECT` says to grab logs from all instances of any applications hosted in the `dfw` region.
 
+## Configuring Vector
+
+Based on your provider (or preferences), it may be necessary to customize the [Vector configuration](https://vector.dev/docs/reference/configuration/). This is done with a `vector.toml` configuration file and, thanks to [Machine files](https://fly.io/docs/reference/configuration/#the-files-section), it's as simple as copying the [source](https://github.com/superfly/fly-log-shipper/blob/3b780b3a3c68fdbbbb55430d7d9ff1eb377fdbf0/vector-configs/vector.toml) `vector.toml` to a local directory, modifying it according to your requirements, then saving it and redeploying:
+
+```sh
+fly deploy --file-local="/etc/vector/vector.toml=/path/to/local/vector.toml"
+```
+
+That's it! The baked in config file is overwritten and Vector will use your modified config.
+
 ## Internals
 
 Fly.io ships logs through a [NATS](https://nats.io) stream. This is available to all of your applications via `nats://[fdaa::3]:4223`, which is where the Log Shipper grabs the logs.
