@@ -24,6 +24,8 @@ To create a Machine, but not start it, use [`fly machine create`](/docs/flyctl/m
 
 To make changes to a Machine once it's created or run, use [`fly machine update`](/docs/flyctl/machine-create/).
 
+To create and run a new Machine with the same configuration as an existing Machine, use [`fly machine clone`](/docs/flyctl/machine-clone/).
+
 ## Usage
 
 Here's the usage of `fly machine run`:
@@ -32,7 +34,7 @@ Here's the usage of `fly machine run`:
 fly machine run <image> [command] [flags]
 ```
  
-Here, `<image>` can point to a pre-built image, or to the current directory (`.`) to build from a Dockerfile.
+Here, `<image>` can point to a prebuilt image, or to the current directory (`.`) to build from a Dockerfile.
 
 Many, but not all, Machine configuration options are available to the `fly machine run` command through flags. Flags are listed in the flyctl help and on the [`fly machine run` documentation page](/docs/flyctl/machine-run/).
 
@@ -45,13 +47,13 @@ The default behavior of `fly machine run` is to create a new Fly App for the new
 
 If the app name doesn't belong to an existing app in one of your orgs, flyctl asks if you want to create it. 
 
-Even if you're not using `fly deploy` to configure and run any of your app's Machines, it may be worth creating a `fly.toml` file with just an app name in it, to save using the `--app` option repeatedly:
+Even if you're not using `fly deploy` to configure and run any of your app's Machines, it may be worth creating a `fly.toml` file with just an app name in it, to save using the `--app` option repeatedly. For example:
 
 ```toml
 # a fly.toml just to provide an app name to commands 
 # run from the same directory
 
-app = <app-name>
+app = my-app-name
 ```
  
 Use `--org <org-name>` to specify which organization a newly created app should belong to. The `--org` flag is ignored when creating the new Machine in an existing app.
@@ -59,25 +61,29 @@ Use `--org <org-name>` to specify which organization a newly created app should 
 
 ## Get or build the Docker image
 
-All Fly Machines are made from Docker images. When you work directly with Machines using `fly machine` commands, you can point to an prebuilt image, or build an image from your hand-crafted Dockerfile and source code.
+All Fly Machines are made from Docker images. When you `fly launch` an app, this may be invisible; a Fly Launch scanner may generate one for you based on your source code.
 
-When you `fly launch` an app, you can still point to image or point to Dockerfile, or a Fly Launch scanner may generate an image for you based on your source code.
-
+With `fly machine run`, there are two options: point to a prebuilt image, or point to a Dockerfile, which flyctl will use to build an image.
 
 ### Build from a Dockerfile
+
 To build the image from a Dockerfile named `Dockerfile`, indicate the current working directory using the `<image>` argument.
 
 ```cmd
 fly machine run .
 ```
 
-Use the `--dockerfile` option to specify a Dockerfile with a different name. 
+Use the `--dockerfile` option to specify a Dockerfile with a different name. For example:
 
 ```cmd
 fly machine run . --dockerfile Dockerfile-dev
 ```
 
+Any source files the Dockerfile uses should be present in the working directory. Once built, the image is pushed to the Fly.io Docker registry where your organization's remote builders can access it.
+
 ### Use an existing image
+
+For example:
 
 ```cmd
 fly machine run ghcr.io/livebook-dev/livebook:0.11.4     
@@ -138,9 +144,9 @@ exec "$@"
 Tell the Fly Platform which [region](/docs/reference/regions/) to create the Machine in with the `--region` flag; if for some reason it can't start a new Machine in that region, you'll get an error. If the `--region` flag is omitted, the platform chooses the nearest region to you.
 
 
-## Set hardware specs
+## Set Machine resources
 
-Include one or more of the following options to use non-default hardware specifications for the Machine to be run:
+Include one or more of the following options to use non-default specifications for the Machine to be run:
 
 ```
 --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
@@ -231,7 +237,7 @@ By default, when a Machine is `stopped`, its file system is reset using its conf
 A Fly Volume is a slice of an NVMe drive attached to the hardware that runs the Machine. Create a volume before creating the Machine.
 
 ```cmd
-fly volume create --size 1 data_volume --region arn
+fly volume create --size 10 data_volume --region arn
 ```
 
 Create the new Machine in the same region, using the volume name: `--volume <vol_name>:<mount_point>`.
