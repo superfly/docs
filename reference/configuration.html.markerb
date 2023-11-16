@@ -618,7 +618,7 @@ The value can be a string with units, like `initial_size = "30GB"` for example. 
 
 ## The `vm` section
 
-This section defines the compute requirements required by the virtual machines used for the application.
+This section defines the compute requirements for the Machines used for the application.
 
 The default virtual machine size is `shared-cpu-1x` but it is not enforced if not specified in fly.toml. It means commands like `fly deploy` won't attempt to update the compute requirements (or size) for a machine. `fly scale` commands will use existing machine to infer new machine sizes and in the event that there are no machines, they will fallback to `shared-cpu-1x`.
 
