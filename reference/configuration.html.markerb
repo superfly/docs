@@ -622,7 +622,7 @@ This section defines the compute requirements for the Machines used for the appl
 
 The default Machine size is `shared-cpu-1x` but it is not enforced if not specified in `fly.toml`. It means commands like `fly deploy` won't attempt to update the compute requirements (or size) for a Machine. `fly scale` commands will use existing Machines to infer new Machine sizes, and in the event that there are no Machines, they will use `shared-cpu-1x`.
 
-If you care about a predictable _scaling up from zero_ case, or if you have different compute requirements for different process groups, then it is highly recommended to add this section to `fly.toml`. Once compute requirements are set in `fly.toml`, `fly deploy` and `fly scale count` will commands will enforce them. If you change the size of the Machines using `fly scale vm` (or its sibling `fly scale memory`) then it will be reset on next `fly deploy` unless `fly.toml` is updated accordingly.
+If you care about a predictable _scaling up from zero_ case, or if you have different compute requirements for different process groups, then it is highly recommended to add this section to `fly.toml`. Once compute requirements are set, `fly deploy` and `fly scale count` commands will enforce them. If you change the size of the Machines using `fly scale vm` (or its sibling `fly scale memory`) then it will be reset on next `fly deploy` unless `fly.toml` is updated accordingly.
 
 All keys are optional and `size` has lower precedence than all other keys.
 
