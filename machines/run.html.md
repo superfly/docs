@@ -26,6 +26,11 @@ To make changes to a Machine once it's created or run, use [`fly machine update`
 
 To create and run a new Machine with the same configuration as an existing Machine, use [`fly machine clone`](/docs/flyctl/machine-clone/).
 
+<div class="note icon">
+**Note:** Creating a new Machine is not the fastest way to scale an app's capacity; for quick changes in the number of running Machines, prefer [`fly machine start`](/docs/flyctl/machine-start/) and [`fly machine stop`](/docs/flyctl/machine-stop/).
+</div>
+
+
 ## Usage
 
 Here's the usage of `fly machine run`:
@@ -190,11 +195,11 @@ fly machine run . --port 80/tcp:http \
 ```
 
 <div class="important icon">
-Even with a service defined, a Machine is not publicly accessible unless it has an Anycast IP address.
+**Important:** Even with a service defined, a Machine is not publicly accessible unless it has an Anycast IP address.
 </div>
 
 <div class="important icon">
-If Machines within the same Fly App host different services, use different external ports so that they don't receive requests meant for another Machine.
+**Important:** If Machines within the same Fly App host different services, use different external ports so that they don't receive requests meant for another Machine.
 </div>
 
 
@@ -298,7 +303,7 @@ fly machine run . --name my-special-Machine
 Configuration can be used to place a limited quantity of data into files on a Machine's file system. The `fly machine run` command has three ways to make use of this. 
 
 <div class="important icon">
-This won't work for large files, as there's a limit to how much data can be stored in an app secret or a Machine's configuration.
+**Important:** This won't work for large files, as there's a limit to how much data can be stored in an app secret or a Machine's configuration.
 </div>
 
 ### Copy a local file into the Machine file system
@@ -340,7 +345,7 @@ Hello! I'm Frankie the balloon!
 If a process or user on the Machine should not have access to the secret, you can use an entrypoint script to change permissions on the secret file.
 
 <div class="important icon">
-This is not a way to hide secret values from members of an app's organization who have deployment privileges. Access via `fly ssh` commands is root access. In addition, all secrets that are set on an app are available as env vars in any Machine that gets updated after the secret is set, except for Machines configured with `--file-secret` to put the secret into a file instead.
+**Important:** This is not a way to hide secret values from members of an app's organization who have deployment privileges. Access via `fly ssh` commands is root access. In addition, all secrets that are set on an app are available as env vars in any Machine that gets updated after the secret is set, except for Machines configured with `--file-secret` to put the secret into a file instead.
 </div>
 
 ### Make a file out of a Base64-encoded string
@@ -371,5 +376,5 @@ fly machine run . --standby-for 287444ec026748,148ed726c54768
 Use the `--schedule` flag to start the Machine on a fuzzy `hourly`, `daily`, `weekly`, or `monthly` cycle. This is useful for running Machines that do a finite job, then exit. The Machine is started the first time when you run `fly machine run`, and again once, each (approximate) hour, day, week, or month.
 
 <div class="important icon">
-If the host on which a stopped Machine resides doesn't have the resources to start it when its scheduled time comes, you'll get an error back. It's up to you to build the appropriate level of redundancy into your apps.
+**Important:** If the host on which a stopped Machine resides doesn't have the resources to start it when its scheduled time comes, you'll get an error back. It's up to you to build the appropriate level of redundancy into your apps.
 </div>
