@@ -59,9 +59,10 @@ Use `--org <org-name>` to specify which organization a newly created app should 
 
 ## Get or build the Docker image
 
-All Fly Machines are made from Docker images. When you `fly launch` an app, a Fly Launch scanner may generate one for you based on your source code, or it may be a prebuilt image you point to, or it may be built from your hand-crafted Dockerfile and source code.
+All Fly Machines are made from Docker images. When you work directly with Machines using `fly machine` commands, you can point to an prebuilt image, or build an image from your hand-crafted Dockerfile and source code.
 
-We're working more directly with Machines here, so your choices with `fly machine run` are "point to an image" or "point to a Dockerfile."
+When you `fly launch` an app, you can still point to image or point to Dockerfile, or a Fly Launch scanner may generate an image for you based on your source code.
+
 
 ### Build from a Dockerfile
 To build the image from a Dockerfile named `Dockerfile`, indicate the current working directory using the `<image>` argument.
