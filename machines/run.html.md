@@ -22,7 +22,7 @@ Here's what `fly machine run` does for you:
 
 To create a Machine, but not start it, use [`fly machine create`](/docs/flyctl/machine-create/).
 
-To make changes to a Machine once it's created or run, use [`fly machine update`](/docs/flyctl/machine-create/).
+To make changes to a Machine once it's created or run, use [`fly machine update`](/docs/flyctl/machine-update/).
 
 To create and run a new Machine with the same configuration as an existing Machine, use [`fly machine clone`](/docs/flyctl/machine-clone/).
 
