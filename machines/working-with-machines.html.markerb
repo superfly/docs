@@ -147,7 +147,7 @@ A Fly Machine is the configuration and state for a single VM running on Fly.io. 
 | `region` | The region where the Machine resides, or the the target region for the Machine on create. If omitted, the Machine is placed in the same region as your WireGuard peer connection (somewhere near you). |
 | `instance_id` | An identifier for the current running/ready version of the Machine. Every Update request potentially changes the `instance_id`. |
 | `private_ip` | The [6PN IPv6 address](/docs/reference/private-networking/) of the Machine, which is where it's reachable to other Machines in the same organization and `network_id`. |
-| `config` | Object that defines the Machine configuration. |
+| `config` | Object that defines the Machine configuration. See [The `config` object properties](#the-config-object-properties). |
 | `image_ref` | Object that defines the image details. |
 | `created_at` | Date and time the Machine was created. |
 | `updated_at` | Date and time the Machine was last updated. |
@@ -353,7 +353,7 @@ Returns **Status: 200 OK** on success.
 
 ### The `config` object properties
 
-Properties of the `config` object for Machine configuration.
+Properties of the `config` object for Machine configuration. Learn about [Machine properties](#machine-properties).
 
 `image`: Required. The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
 
@@ -438,12 +438,10 @@ An example of two files:
 `metadata`: An object filled with key/value pairs for the Machine metadata.
 
 `metrics`: An optional object defining a metrics endpoint that [Prometheus on Fly.io](https://fly.io/docs/reference/metrics/#prometheus-on-fly-io) will scrape.
-
   - `port`: The port that Prometheus will connect to
   - `path`: The path that Prometheus will scrape (e.g. `/metrics`)
 
 `mounts`: An array of objects that reference previously created [persistent volumes](https://fly.io/docs/reference/volumes/). Currently, you may only mount *one volume* per VM.
-
   - `volume`: The volume ID, visible in `fly volumes list`, i.e. `vol_2n0l3vl60qpv635d`
   - `path`: Absolute path on the VM where the volume should be mounted. i.e. `/data`
 
@@ -459,15 +457,7 @@ An example of two files:
   - `policy`: Required. One of "no", "on-failure", or "always".
   - `max_retries`: The maximum number of retries when the policy is "on-failure".
 
-`size`: A [named size](/docs/about/pricing/#machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
-
-
 `schedule`: Optionally one of `hourly`, `daily`, `weekly`, `monthly`. Runs Machine at the given interval. Interval starts at time of Machine creation
-
-
-
-
-
 
 `services`contains an array of objects that define a single network service. Check the [Machines networking section](#networking) for more information.
 
@@ -476,13 +466,30 @@ An example of two files:
       + `type`: `connections` (TCP) or `requests` (HTTP) - defaults to `connections`. Determines which kind of event we count for load balancing.
       + `soft_limit`: Ideal service concurrency. We will attempt to spread load to keep services at or below this limit. We’ll deprioritize a Machine to give other Machines a chance to absorb traffic.
       + `hard_limit`: Maximum allowed concurrency. The limit of events at which we’ll stop routing to a Machine altogether, and, if configured to do so, potentially start up existing Machines to handle the load.
-  - `internal_port`: Port the Machines VM listens on
+  - `internal_port`: Port the Machine listens on.
   - `ports`: An array of objects defining the service's ports and associated handlers. Options:
-      + `port`: Public-facing port number
-      + `handlers`: Array of [connection handlers](https://fly.io/docs/reference/services/#connection-handlers) for TCP-based services.
+      + `port`: The internet-exposed port to receive traffic on; if you want HTTP traffic routed to 8080/tcp on your Machine, this would be 80.
+      + `start_port`, `end-port`: Like `port``, but allocate a range of ports to route internally, for applications that want to occupy whole port ranges.
+      + `handlers`: Array of protocol [handlers](https://fly.io/docs/reference/services/#connection-handlers) for this port. How should the Fly Proxy handle and terminate this connection. Options include `http`, `tcp`, `tls`.
+      + `force_https`: 
+      + `http_options`: todo
+      + `tls_options`: todo
+      + `proxy_proto_options`: todo
   - `auto_start`: If true, Fly Proxy starts Machines when requests for this service arrive.
   - `auto_stop`: If true, Fly Proxy stops Machines when this service goes idle.
   - `min_machines_running`: When `auto_start` is true, the minimum number of Machines to keep running at all times in the primary region.
+
+`size`: A [named size](/docs/about/pricing/#machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
+
+`standys`: todo
+
+`statics`: todo
+  - `guest_path`: todo
+  - `url_prefix`: todo
+
+`stop_config`: todo
+  - `signal`: todo
+  - `timeout`: todo
 
 ## Notes on networking
 
