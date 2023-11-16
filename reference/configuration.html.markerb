@@ -616,6 +616,73 @@ This value is only used by `fly launch` and `fly deploy` commands in case they n
 
 The value can be a string with units, like `initial_size = "30GB"` for example. The value can also be an integer, like `initial_size = 30` for example, with GB as the default unit.
 
+## The `vm` section
+
+This section defines the compute requirements for the Machines used for the application.
+
+The default Machine size is `shared-cpu-1x` but it is not enforced if not specified in `fly.toml`. It means commands like `fly deploy` won't attempt to update the compute requirements (or size) for a Machine. `fly scale` commands will use existing Machines to infer new Machine sizes, and in the event that there are no Machines, they will use `shared-cpu-1x`.
+
+If you care about a predictable _scaling up from zero_ case, or if you have different compute requirements for different process groups, then it is highly recommended to add this section to `fly.toml`. Once compute requirements are set, `fly deploy` and `fly scale count` commands will enforce them. If you change the size of the Machines using `fly scale vm` (or its sibling `fly scale memory`) then it will be reset on next `fly deploy` unless `fly.toml` is updated accordingly.
+
+All keys are optional and `size` has lower precedence than all other keys.
+
+```toml
+[[vm]]
+  size = "shared-cpu-2x"
+  memory = "2gb"
+  cpus = 4
+  cpu_kind = "performance"
+  gpu_kind = "a100-pcie-40gb"
+  host_dedication_id = "customer-id"
+  processes = ["app"]
+```
+
+### `size`
+
+The Machine preset size to use as base, like `size = "shared-cpu-1x"` for example.
+
+To get the full list, run `fly platform vm-sizes` or check the [pricing page](/docs/about/pricing/#compute).
+
+### `memory`
+
+The memory to request. It can be expressed with units, like `memory = "2GB"` or `memory = "512mb"` for example. The value can also be an integer, like `memory = 1024` for example, with MB as the default unit.
+
+### `cpus`
+
+The number of vCPUs to request. Valid values are `1`, `2`, `4`, `8`, or `16`, but depends on `gpu_kind`. 
+
+### `cpu_kind`
+
+The kind of CPU to request. Valid values are `shared` and `performance`.
+
+### `gpu_kind`
+
+The kind of GPU to request. Valid values are `a100-pcie-40gb` and `a100-pcie-80gb`.
+
+### `host_dedication_id`
+
+In the case of having a dedicated host, this is the value to set so Machines are launched on dedicated hardware.
+
+### `processes`
+
+Optionally, you can specify a list of [processes](#the-processes-section) to limit by process group. You can even specify two different `[[vm]]` sections to have different compute requirements per process group. Note the need to use double brackets if there are multiple `[[vm]]` sections defined.
+
+A `[[vm]]` section without a `processes` key applies to all process groups, except when another `[[vm]]` section targets a specific process group. For example the following snippets uses `shared-cpu-4x` for `app` and `other` process groups but `performance-1x` for `worker` group.
+
+```
+[processes]
+app = "/start-app"
+worker = "/start-worker"
+other = "/start-other"
+
+[[vm]]
+size = "shared-cpu-4x"
+
+[[vm]]
+size = "performance-1x"
+processes = ["worker"]
+```
+
 ## The `checks` section
 
 If your app doesn't have public-facing services, or you want independent health checks that don't affect request routing,
