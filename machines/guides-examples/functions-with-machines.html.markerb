@@ -50,6 +50,8 @@ Launch a user machine by supplying a Docker image and a networking configuration
 
 <%= partial "/docs/reference/machines/launch_req" %>
 
+**Status: 200**
+
 Machines are permanent, so keep the ID from the response handy.
 
 Your users' service will boot immediately after this API call. Launch speed is a function of image size. Tiny images should boot in less than 2 seconds. Large, complex images are much slower to boot.
@@ -103,9 +105,11 @@ ID            	NAME          	REGION	STATE    	CREATED
 ```
 Here we see that one of the machine exited itself.
 
-The equivalent API call for such an overview:
+The closest equivalent API call lists all Machines in an app:
 
 <%= partial "/docs/reference/machines/list_req" %>
+
+**Status: 200**
 
 ## Delete a machine
 
