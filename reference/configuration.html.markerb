@@ -649,7 +649,7 @@ The memory to request. It can be expressed with units, like `memory = "2GB"` or 
 
 ### `cpus`
 
-The number of vCPUs to request. Valid values are `1`, `2`, `4`, `8`, `16` but depends on `gpu_kind`. 
+The number of vCPUs to request. Valid values are `1`, `2`, `4`, `8`, or `16`, but depends on `gpu_kind`. 
 
 ### `cpu_kind`
 
