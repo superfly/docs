@@ -652,7 +652,7 @@ The kind of CPU to request. Valid values are `shared` and `performance`.
 
 ### `gpu_kind`
 
-The kind of GPU to request. Valid values are `a100-pcie-40gb` and `a100-pcie-80gb`.
+The kind of GPU to request. Valid values are `a100-pcie-40gb` and `a100-sxm4-80gb`.
 
 ### `host_dedication_id`
 
