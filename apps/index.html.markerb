@@ -4,7 +4,6 @@ layout: docs
 toc: false
 nav: firecracker
 ---
-<%= partial "/docs/partials/v2_transition_banner" %>
 
 Fly Launch is a collection of opinionated Fly.io platform features that help you configure and orchestrate your app as a unit. The following are some Fly Launch features:
 
@@ -46,12 +45,6 @@ Learn how to use Fly Launch:
     </li>
     <li>
     <%= nav_link "Delete an App", "/docs/apps/delete/" %>
-    </li>
-    <li>
-    <%= nav_link "Scale V1 (Nomad) Apps", "/docs/apps/legacy-scaling/" %>
-    </li>
-    <li>
-    <%= nav_link "Migrate an Existing Fly App to V2", "/docs/apps/migrate-to-v2/" %>
     </li>
     <li>
     <%= nav_link "Fly Launch Configuration Reference", "/docs/reference/configuration/" %>

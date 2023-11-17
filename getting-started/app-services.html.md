@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-There are two basic ways to talk to a process running in your Fly.io VM: 
+There are two basic ways to talk to a process running in your Fly Machine: 
 
 1. Via Fly Proxy, the Fly.io component that handles load balancing&mdash;this is what you'll need for any public web service
 2. Over the WireGuard [IPv6 private network ("6PN")](/docs/reference/private-networking/) that the app belongs to&mdash;this can be useful for, e.g., providing private supporting services to your Fly Apps

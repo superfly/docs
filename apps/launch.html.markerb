@@ -7,8 +7,6 @@ order: 10
 redirect_from: /launch/
 ---
 
-<%= partial "/docs/partials/v2_transition_banner" %>
-
 With Fly Launch, you can create a brand new app on Fly.io by running this command from the source directory of your project:
 
 ```cmd
