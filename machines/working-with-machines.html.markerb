@@ -59,7 +59,7 @@ $ export FLY_API_TOKEN=$(fly auth token)
 
 For local development, you can see the token used by `flyctl` with `fly auth token`. You can also create a new auth token in the [personal access token section of the fly.io dashboard](https://fly.io/user/personal_access_tokens).
 
-In order to access this API on a fly VM, make the token available as a secret:
+In order to access this API on a Fly Machine, make the token available as a secret:
 
 ```cmd
 fly secrets set FLY_API_TOKEN=$(fly auth token)
@@ -153,7 +153,7 @@ A Fly Machine is the configuration and state for a single VM running on Fly.io. 
 | `region` | The region where the Machine resides, or the the target region for the Machine on create. If omitted, the Machine is placed in the same region as your WireGuard peer connection (somewhere near you). |
 | `instance_id` | An identifier for the current running/ready version of the Machine. Every Update request potentially changes the `instance_id`. |
 | `private_ip` | The [6PN IPv6 address](/docs/reference/private-networking/) of the Machine, which is where it's reachable to other Machines in the same organization and `network_id`. |
-| `config` | Object that defines the Machine configuration. See [The `config` object properties](#the-config-object-properties). |
+| `config` | Object that defines the Machine configuration. Refer to [The `config` object properties](#the-machine-config-object-properties) section for details.|
 | `checks` | Object that provides the status of any checks. |
 | `image_ref` | Object that defines the image details. |
 | `created_at` | Date and time the Machine was created. |
@@ -219,7 +219,7 @@ The only required parameter is `image` in the `config` object.
 
 `skip_service_registration`: Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. Boolean (default: false)
 
-`config`: An object defining the Machine configuration. See the [`config` object properties](#the-config-object-properties).
+`config`: An object defining the Machine configuration. See the [`config` object properties](#the-machine-config-object-properties) section.
 
 ### Create a Machine with services
 
@@ -237,9 +237,21 @@ Create a Machine with services defined on app `my-app-name`. Learn more about [s
 
 ### Wait for a Machine to reach a specified state
 
+`GET /apps/{app_name}/machines/{machine_id}/wait`
+
 Wait for a Machine to reach a specific state. Specify the desired state with the `state` parameter.  See the [Machines states table](#machine-states) for a list of possible states.  The default for this parameter is `started`.
 
 This request will block for up to 60 seconds. Set a shorter timeout with the `timeout` parameter.
+
+#### Query parameters for wait for Machine
+
+Append parameters to filter the response.
+
+**`instance_id`**: Filter by Machine `instance_id`.
+
+**`timeout`**: Set the wait timeout. Default is 60 seconds.
+
+**`state`**: Filter by the state of the Machines in the app.
 
 <%= partial "/docs/reference/machines/wait_req" %>
 <%= partial "/docs/reference/machines/wait_resp" %>
@@ -266,11 +278,19 @@ Given the name of a Fly App and a Fly Machine ID, update the configuration of th
 
 This is, in particular, how you would update the running image of a Machine (when you need to deploy new code), or roll back to a previous Machine release. It's also how you'd vertically scale an application.
 
+<div class="important icon">
+**Important:** This request can fail, and you're responsible for handling that failure. If you ask for a large Machine, or a Machine in a region we happen to be at capacity for, you might need to retry the request, or to fall back to another region. If you're working directly with the Machines API, you're taking some responsibility for your own orchestration!
+</div>
+
 `region` and `name` are immutable and cannot be updated. 
 
 <div class="note icon">
-**Note:** You need to specify the entire Machine config to update a Machine; we don't support partial updates.
+**Note:** You need to specify the entire Machine config to update a Machine; we don't support partial updates. Refer to the [Machine `config` object properties](#the-machine-config-object-properties) section for descriptions.
 </div>
+
+#### Machine update request headers
+
+`fly-machine-lease-nonce`: string (nil) - The Machine lease nonce, a random value we provide that indicates that you currently hold the lease on this Machine. If the Machine is leased, and you don't provide this header, the request to update the Machine will fail.
 
 #### Example Machine update request
 
@@ -367,7 +387,7 @@ This is useful for bluegreen deployments: cordon off a "green" Machine, update i
 
 Returns **Status: 200 OK** on success.
 
-### The `config` object properties
+### The Machine `config` object properties
 
 Properties of the `config` object for Machine configuration. Learn about all the [Machine properties](#machine-properties).
 
@@ -459,7 +479,7 @@ An example of two files:
 
 `mounts`: An array of objects that reference previously created [persistent volumes](https://fly.io/docs/reference/volumes/). Currently, you may only mount one volume per Machine.
   - `name`: string - Required. The name of the Volume to attach.
-  - `path`: string - Required. Absolute path on the VM where the volume should be mounted. For example,  `/data`.
+  - `path`: string - Required. Absolute path on the Machine where the volume should be mounted. For example,  `/data`.
   - `volume`: int (nil) - The volume ID, visible in `fly volumes list`, i.e. `vol_2n0l3vl60qpv635d`.
 
 
