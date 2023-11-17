@@ -26,7 +26,7 @@ Simply skip down to [setting up the environment](#setting-up-the-environment), a
 
 ### Using the private Machines API endpoint
 
-You can still access your Machines directly over a Wireguard VPN, and use the private Machines API endpoint: `http://_api.internal:4280`. This method requires more setup.
+You can still access your Machines directly over a WireGuard VPN, and use the private Machines API endpoint: `http://_api.internal:4280`. This method requires more setup.
 
 Follow the [instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io [IPv6 private network](/docs/reference/private-networking/). Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
 
@@ -150,7 +150,7 @@ A Fly Machine is the configuration and state for a single VM running on Fly.io. 
 | `id` | A stable identifier for the Machine. |
 | `name` | Unique name for the Machine. If omitted, one is generated for you. |
 | `state` | The current state of the Machine. See the [Machine states table](#machine-states). |
-| `region` | The region where the Machine resides, or the the target region for the Machine on create. If omitted, the Machine is placed in the same region as your WireGuard peer connection (somewhere near you). |
+| `region` | The region where the Machine resides, or the target region for the Machine on create. If omitted, the Machine is placed in the same region as your WireGuard peer connection (somewhere near you). |
 | `instance_id` | An identifier for the current running/ready version of the Machine. Every Update request potentially changes the `instance_id`. |
 | `private_ip` | The [6PN IPv6 address](/docs/reference/private-networking/) of the Machine, which is where it's reachable to other Machines in the same organization and `network_id`. |
 | `config` | Object that defines the Machine configuration. Refer to [The `config` object properties](#the-machine-config-object-properties) section for details.|
@@ -159,7 +159,7 @@ A Fly Machine is the configuration and state for a single VM running on Fly.io. 
 | `created_at` | Date and time the Machine was created. |
 | `updated_at` | Date and time the Machine was last updated. |
 | `events` | Array of objects that provide log of what's happened with this Machine. |
-| `nonce` | The Machines lease nonce, if this Machine is currently leased. Also returned on Machine create if `lease_ttl` is provided. (TODO confirm) |
+| `nonce` | The Machines lease nonce, if this Machine is currently leased. Also returned on Machine create if `lease_ttl` is provided. |
 
 ### List all Machines for an app
 
@@ -402,12 +402,12 @@ Properties of the `config` object for Machine configuration. Learn about all the
 + `interval`: int (nil) - The interval, in nanoseconds, between connectivity checks
 + `timeout`: int (nil) - The maximum time, in nanoseconds, a connection can take before being reported as failing its health check.
 + `grace_period`: int (nil) - How long to wait, in nanoseconds, before we start running health checks.
-+ `method`: string (nil) - For http checks, the HTTP method to use to when making the request.
-+ `path`: string (nil) - For http checks, the path to send the request to.
-+ `protocol`: string (nil) - For http checks, whether to use `http` or `https`
++ `method`: string (nil) - For `http` checks, the HTTP method to use to when making the request.
++ `path`: string (nil) - For `http` checks, the path to send the request to.
++ `protocol`: string (nil) - For `http` checks, whether to use `http` or `https`
 * `tls_server_name`: string (nil) - If the protocol is `https`, the hostname to use for TLS certificate validation
-+ `tls_skip_verify`: bool (false) - For http checks with https protocol, whether or not to verify the TLS certificate
-+ `headers`: {string: [string, string]} ({}) - For http checks, an array of objects with string field `name` and array of strings field `values`.
++ `tls_skip_verify`: bool (false) - For `http` checks with https protocol, whether or not to verify the TLS certificate
++ `headers`: {string: [string, string]} ({}) - For `http` checks, an array of objects with string field `name` and array of strings field `values`.
 
 An example of two checks:
 
@@ -432,7 +432,7 @@ An example of two checks:
 ```
 
 `dns`
-  - `skip_registration`: If true, do not register the machine's 6PN IP with the internal DNS system.
+  - `skip_registration`: If true, do not register the Machine's 6PN IP with the internal DNS system.
 
 `env`: {string:string} ({}) - An object filled with key/value pairs to be set as environment variables.
 
@@ -467,7 +467,7 @@ An example of two files:
 `init`: Arguments for `init`, which is Fly.io's footprint inside your Machine, and controls how your own code gets run.
   - `exec`: [string, string] ([]) - The command line for the program to run once the Machine boots up. This overrides any other startup command line, either in our API or in your Docker container definition.
   - `entrypoint`: [string, string] ([]) - A command line to override the ENTRYPOINT of your Docker container; another way to define the program that is going to start up when your Machine boots up.
-  - `cmd`: [string, string] ([]) - A command line to override the CMD of your Docker container; still another way to define the program that is going to start up when your machine boots up.
+  - `cmd`: [string, string] ([]) - A command line to override the CMD of your Docker container; still another way to define the program that is going to start up when your Machine boots up.
   - `tty`: bool (false) - Allocate a TTY for the process we start up.
   - `swap_size_mb`: int (nil) -Swap space to reserve for the Fly Machine in, you guessed it, megabytes.
 
@@ -523,7 +523,7 @@ An example of two files:
 
 `size`: A [named size](/docs/about/pricing/#machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
 
-`standbys`: Standbys enable a Machine to be a standby for another. In the event of a hardware failure, the standby machine will be started. Only for Machines without `services`. Array of strings representing the Machine IDs of Machines watch (act as standby for).
+`standbys`: Standbys enable a Machine to be a standby for another. In the event of a hardware failure, the standby Machine will be started. Only for Machines without `services`. Array of strings representing the Machine IDs of Machines watch (act as standby for).
 
 `statics`: Optionally serve static files.
   - `guest_path`: string - Required. The path inside the Machines where the files to serve are located.
