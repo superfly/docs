@@ -77,20 +77,11 @@ If you would like to use [Redis' official docker image](https://hub.docker.com/_
 
 2.  Before deploying, make sure to revise your `fly.toml` file to specify your Redis Fly App's password.
 
-    For V2 Apps, add the `[processes]` section for the default `app` process and add the following commands:
+    Add the `[processes]` section for the default `app` process and add the following commands:
 
     ```toml
     [processes]
     app = "sh -c exec redis-server --requirepass \"$REDIS_PASSWORD\""
-    ```
-
-    For V1 Apps, add the following commands under the [experimental] section:
-
-    ```toml
-    [experimental]
-      allowed_public_ports = []
-      auto_rollback = true
-      cmd = ["sh", "-c", "exec redis-server --requirepass \"$REDIS_PASSWORD\""]
     ```
     - Use the `fly secret` <b>`REDIS_PASSWORD`</b> you've configured earlier
     - If this passphrase is not set and your Laravel configuration sends a REDIS_PASSWORD during its connection to your Redis Fly App, watch out! You'll get the infamous "ERR Client sent AUTH, but no password is set" error

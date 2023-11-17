@@ -4,4 +4,3 @@ layout: framework_docs_overview
 toc: false
 order: 3
 ---
-<%= partial "docs/postgres/partials/for-machines" %>

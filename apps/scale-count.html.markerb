@@ -206,7 +206,7 @@ fly scale count 4 --process-group web --region nrt,yyz
 
 ## Add a new region
 
-For a V2 App, adding a region to an app just means putting at least one Machine there. 
+Adding a region to an app just means putting at least one Machine there. 
 
 For example, add syd (Sydney) to an app's regions by scaling up from 0 there:
 

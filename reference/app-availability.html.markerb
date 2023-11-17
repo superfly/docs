@@ -122,9 +122,9 @@ Automatic start and stop works for process groups with services defined. This fe
 Fly Proxy can start and stop existing Machines based on incoming requests, so that your app can accommodate bursts in demand without keeping extra Machines running constantly. And if your app needs to have one or more Machines always running in your primary region, then you can set a minimum number of machines to keep running. Fly Proxy is also responsible for [load balancing](/docs/reference/load-balancing/).
 
 
-Default settings for new V2 apps created using the `fly launch` command: automatically start and automatically stop Fly Machines, and minimum machines running is zero.
+Default settings for new apps created using the `fly launch` command: automatically start and automatically stop Fly Machines, and minimum machines running is zero.
 
-Default settings for some existing V2 apps (or any V2 apps that don't have these settings in `fly.toml`): automatically start but don't automatically stop Fly Machines.
+Default settings for some existing apps (or any apps that don't have these settings in `fly.toml`): automatically start but don't automatically stop Fly Machines.
 
 Get all the details about [automatically stopping and starting Machines](/docs/apps/autostart-stop/).
 
