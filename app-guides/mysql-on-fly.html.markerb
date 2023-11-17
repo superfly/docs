@@ -56,7 +56,7 @@ Save these secrets somewhere, because they're not accessible after you set them.
 
 Finally, edit the `fly.toml` file that `fly launch` generated.
 
-For V2 Apps (if you're new to Fly.io, this is you) using MySQL 8+:
+For apps using MySQL 8+:
 
 ```toml
 app = "my-mysql"

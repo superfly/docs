@@ -5,8 +5,6 @@ layout: framework_docs
 order: 30
 ---
 
-<%= partial "docs/postgres/partials/for-machines" %>
-
 A volume fork is a new volume that contains an exact copy of the data from a source volume. For Postgres apps, you use the `--fork-from` flag to specify a source Postgres app when you create a new Postgres app. The new Postgres app has a new volume that contains a block-level snapshot of the data from the source app's volume.
 
 Use volume forking to create identical staging or test environments, troubleshoot issues, analyze data, or test database performance without impacting your production database. You can also use volume forks for PR review environments. A PR review environment is especially useful when a PR contains database migrations that you don’t want to run against your production database.

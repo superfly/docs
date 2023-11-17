@@ -130,27 +130,3 @@ Then deploy the app to apply the configuration for that process group to the Mac
 ```cmd
 fly deploy
 ```
-
-## Process groups and legacy (Nomad) apps
-
-<div class="callout">
-Known issues with process groups and Nomad apps:
-* Running multiple processes in this way is not compatible with autoscaling.
-* Unexpected behavior with regions may arise if you use a `[processes]` block and then delete it.
-</div>
-
-In a "V1" Fly App, you don't need to specify which machines are assigned to which processes; Nomad does this for you. After adding process groups to your app's `fly.toml` and deploying, scale them up with per-process commands. For example:
-
-```
-$ fly scale count web=2 worker=2
-```
-
-### Per-process commands (Nomad)
-
-Some Nomad-only `fly` commands accept a process name as an argument. The following examples shows which:
-
-* Change VM counts: `fly scale count web=2 worker=1`
-* Change VM size: `fly scale vm shared-cpu-1x --group worker`
-* Change regions: `fly regions set iad --group worker`
-
-For a bit more context on the original `processes` feature, you can read our [community announcement](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/).
