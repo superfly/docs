@@ -56,7 +56,7 @@ Save these secrets somewhere, because they're not accessible after you set them.
 
 Finally, edit the `fly.toml` file that `fly launch` generated.
 
-For V2 Apps (if you're new to Fly.io, this is you) using MySQL 8+:
+For apps using MySQL 8+:
 
 ```toml
 app = "my-mysql"
@@ -107,49 +107,6 @@ app = "--datadir /data/mysql"
 ```
 
 <div class="callout">⚠️ Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. Therefore, we use a subdirectory of the mounted location: `/data/mysql`.</div>
-
-### On a Nomad (V1) App
-
-For V1 Apps, edit the `fly.toml` file to look something like this:
-
-```toml
-app = "my-mysql"
-kill_signal = "SIGINT"
-kill_timeout = 5
-
-[mounts]
-  source="mysqldata"
-  destination="/data"
-
-[env]
-  MYSQL_DATABASE = "some_db"
-  MYSQL_USER = "non_root_user"
-
-[build]
-  image = "mysql:8"
-
-[experimental]
-  cmd = [
-    "--default-authentication-plugin", 
-    "mysql_native_password", 
-    "--datadir", 
-    "/data/mysql"
-  ]
-```
-
-There's a few important things to note:
-
-1. We deleted the `[[services]]` block and everything under it. We don't need it!
-1. We added the `[build]` section to specify an existing Docker image. We don't need to create a `Dockerfile` of our own.
-1. The `[env]` section contains two not-so-secret environment variables that MySQL will need to initialize itself.
-    * The `MYSQL_USER` here should be any user but `root`, which already exists.
-1. We added the `[experimental]` section, which lets us pass a custom command (overriding Docker's `CMD`).
-    * For MySQL 8, you'll want to use the `mysql_native_password` password plugin.
-    * Also for MySQL 8, to reduce memory usage, add the performance schema and buffer pool size flags. Note that `--performance-schema=OFF` is all one string.
-    * **More importantly**, we set MySQL's data directory to a **subdirectory** of our mounted volume.
-
-<div class="callout">⚠️ Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. Therefore, we use a subdirectory of the mounted location: `/data/mysql`.</div>
-
 
 ## Scale the App
 

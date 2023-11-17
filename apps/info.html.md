@@ -17,8 +17,8 @@ fly apps list
 ```
 ```out
 NAME          OWNER           STATUS          PLATFORM        LATEST DEPLOY        
-testrun       personal        deployed        machines                            
-olddeadapp    personal        dead            nomad           2022-12-27T23:33:07Z
+testrun       personal        deployed        machines        21h17m ago                    
+my-app        personal        suspended       machines        2023-11-15T23:33:07Z
 ```
 
 ## App Overviews
@@ -41,7 +41,7 @@ ID              STATE   REGION  HEALTH CHECKS           IMAGE                   
 
 As with many flyctl commands, if you leave off the `-a` flag, `fly status` will infer the app name from the `fly.toml` file in the working directory, if there is one.
 
-`fly machine list` yields a different set of information for each Machine on a [V2 App](/docs/reference/apps/), including the Machine's [internal IPv6 address](/docs/reference/private-networking/):
+`fly machine list` yields a different set of information for each Machine, including the Machine's [internal IPv6 address](/docs/reference/private-networking/):
 
 ```cmd
 fly machine list -a testrun
@@ -55,7 +55,7 @@ ID              NAME                    STATE   REGION  IMAGE                   
 178115db494e18  holy-waterfall-9884     started lhr     testrun:deployment-01GTYFV11PM7D7B30AWZSH1FZE       fdaa:0:3b99:a7b:a98:6c48:67c5:2              2023-03-07T16:52:59Z    2023-03-07T16:53:06Z    v2              app    
 ```
 
-## Examine a specific Machine (V2 only)
+## Examine a specific Machine
 
 You can drill down and get an overview of a particular Machine with `fly machine status`.  This is where you'll find the Machine's CPU size and RAM settings.
 

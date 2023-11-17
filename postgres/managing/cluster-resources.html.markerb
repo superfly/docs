@@ -5,8 +5,6 @@ layout: framework_docs
 order: 100
 ---
 
-<%= partial "docs/postgres/partials/for-machines" %>
-
 ## Instances
 
 Get an overview of the app, including a list of its VM instances with Machine IDs: 

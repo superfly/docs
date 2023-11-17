@@ -23,11 +23,3 @@ fly machine restart <machine-id>
 ```
 
 You can provide multiple `<machine-id>`s to restart several Machines in one command.
-
-### On a Nomad app
-
-On Nomad apps the equivalent is `fly vm restart`:
-
-```cmd
-fly vm restart <instance-id> -a <app-name>
-```

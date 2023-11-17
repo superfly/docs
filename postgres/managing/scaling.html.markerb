@@ -5,8 +5,6 @@ layout: framework_docs
 order: 50
 ---
 
-<%= partial "docs/postgres/partials/for-machines" %>
-
 See [Monitoring](/docs/postgres/managing/monitoring/) for how to check the current sizes of the VMs in your Postgres cluster.
 
 <div class="warning icon">
