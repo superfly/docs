@@ -5,8 +5,6 @@ sitemap: false
 nav: firecracker
 ---
 
-<%= partial "/docs/partials/v2_transition_banner" %>
-
 You can configure an app for deployment on Fly.io using a `fly.toml` file. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here.
 
 TOML is a [simple configuration file format](https://github.com/toml-lang/toml). Here's a [useful introduction](https://npf.io/2014/08/intro-to-toml/) on its syntax.
@@ -281,7 +279,7 @@ We recommend setting `auto_stop_machines` and `auto_start_machines` to the same 
 
 ### `http_service.concurrency`
 
-The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
+The `http_service` concurrency section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and (auto start and stop)[/docs/apps/autostart-stop/]. The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
 
 * `type` specifies what metric is used to determine when to scale up and down, or when a given instance should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
 
@@ -513,7 +511,7 @@ One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS 
 
 ### `services.concurrency`
 
-The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and, for legacy apps only, [scaling](/docs/apps/legacy-scaling/).
+The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and (auto start and stop)[/docs/apps/autostart-stop/].
 
 This section is a simple list of key/values, so the section is denoted with single square brackets like so:
 

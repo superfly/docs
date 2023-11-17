@@ -6,13 +6,11 @@ nav: firecracker
 order: 65
 ---
 
-<div class="callout">
-The auto start and stop feature only works for V2 Apps running on Fly Machines. You might also be interested in learning about [scaling the number of machines](/docs/apps/scale-count/) for V2 Apps. For information about scaling V1 Apps, refer to [Scale V1 Nomad Apps](/docs/apps/legacy-scaling/).
-</div>
-
 Fly Machines are fast to start and stop, and you don't pay for their CPU and RAM when they're in the `stopped` state. For Fly Apps with a service configured, Fly Proxy can automatically start and stop existing Machines based on incoming requests, so that your app can meet demand without keeping extra Machines running. And if your app needs to have one or more Machines always running in your primary region, then you can set a minimum number of machines to keep running.
 
 The auto start and stop feature also plays well with apps whose Machines [exit from within](#stop-a-machine-by-terminating-its-main-process) when idle. If your app already shuts down when idle, then the proxy can restart it when there's traffic.
+
+You might also be interested in learning about [scaling the number of machines](/docs/apps/scale-count/).
 
 ## Configure automatic start and stop
 

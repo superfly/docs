@@ -6,15 +6,9 @@ nav: firecracker
 order: 50
 ---
 
-<%= partial "/docs/partials/v2_transition_banner" %>
-
-<br>
 [**`fly scale`**](/docs/flyctl/scale) commands apply VM memory and CPU settings to entire process groups in a Fly App. There are two subcommands for scaling these per-VM resources: `fly scale vm` applies a preset CPU/RAM combination; `fly scale memory` adjusts RAM relative to the preset's base RAM.
 
 You can scale an app even if it has crashed. Its VMs are restarted with the new specification.
-
-**For existing Nomad/V1 Fly Apps:** There's a whole doc on [scaling V1 (Nomad) apps](/docs/apps/legacy-scaling/).
-
 
 ## Check the VM resources on an app
 Here's a simple web app with two Machines running in different regions: two in Toronto and one in Tokyo. All the app's Machines belong to the default process group, `app`, since I didn't explicitly configure any [processes](/docs/apps/processes/). 

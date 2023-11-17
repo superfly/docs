@@ -5,8 +5,6 @@ toc: false
 nav: firecracker
 ---
 
-<%= partial "/docs/partials/v2_transition_banner" %>
-
 On the Fly Platform a Fly App is an abstraction for a group of virtual machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your VMs. 
 
 Every customer VM on the Fly Platform lives in a Fly App. Anycast IPs, certificates, Fly Volumes, and custom domains belong to apps as well.
