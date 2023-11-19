@@ -191,7 +191,7 @@ dashboard).
 You should add this as a secret for your application named `LITEFS_CLOUD_TOKEN` with:
 
 ```cmd
-fly secrets set LITEFS_CLOUD_TOKEN=$(litefs cloud auth token)
+fly secrets set LITEFS_CLOUD_TOKEN=$(fly litefs-cloud auth token)
 ```
 
 [LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
