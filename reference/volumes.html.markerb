@@ -44,6 +44,8 @@ Volumes are, by default, created with encryption-at-rest enabled for additional 
 
 The default volume size is 3GB when you create a volume with the `fly volumes create` command, and when you use the `fly launch` command to [launch an app with a volume](/docs/apps/volume-storage/#launch-a-new-app-with-a-fly-volume). The maximum volume size is 500GB.
 
+You can extend a volume's size&mdash;either [manually](/docs/apps/volume-manage/#extend-a-volume) or [automatically](/docs/reference/configuration/#the-mounts-section)&mdash;to make it larger, but you can't shrink a volume.
+
 ## Volume forks
 
 When you [fork a volume](/docs/apps/volume-manage/#create-a-copy-of-a-volume-fork-a-volume), you create a new volume with an exact copy of the data from the source volume to use for testing, backups, or whatever you like. The new volume is in the same region, but on a different physical host, and is not attached to a Machine. The new volume and the source volume are independent, and changes to their contents are not synchronized.

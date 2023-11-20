@@ -611,6 +611,33 @@ This value is only used by `fly launch` and `fly deploy` commands in case they n
 
 The value can be a string with units, like `initial_size = "30GB"` for example. The value can also be an integer, like `initial_size = 30` for example, with GB as the default unit.
 
+### `auto_extend_size_threshold`
+
+Optional. The threshold of storage used on a volume, by percentage, that triggers extending the volume's size by the value of `auto_extend_size_increment`.
+
+### `auto_extend_size_increment`
+
+The increment, in GB, by which to extend the volume after reaching the `auto_extend_size_threshold`. Required with `auto_extend_size_increment`.
+
+### `auto_extend_size_limit`
+
+The total amount, in GB, to extend a volume. Optional with `auto_extend_size_increment`.
+
+### Auto extend volume size configuration
+
+You can optionally configure volumes to automatically extend when they reache a usage threshold.
+
+For example, the following config extends the size of the volume by 1GB when it reaches 80% capacity. The volume extensions are limited to 5GB in total. `auto_extend_size_limit` is optional.
+
+```toml
+[[mounts]]
+  source = "data"
+  destination = "/data"
+  auto_extend_size_threshold = 80
+  auto_extend_size_increment = "1GB"
+  auto_extend_size_limit = "5GB"
+  ```
+
 ## The `vm` section
 
 This section defines the compute requirements for the Machines used for the application.
