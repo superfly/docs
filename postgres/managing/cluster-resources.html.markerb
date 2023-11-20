@@ -21,7 +21,7 @@ List more details about an individual Machine:
 fly machine status <machine-id> --app <pg-app-name>
 ``` 
 
-From this information you can get the scale of the VM (both `Memory` and `CPUs`), and the ID of its attached [Fly Volume](/docs/reference/volumes/).
+From this information you can get the scale of the VM (both `Memory` and `CPUs`), and the ID of its attached [Fly Volume](/docs/volumes/).
 
 ## Provisioned Volume Size
 

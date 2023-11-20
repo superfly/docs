@@ -94,7 +94,7 @@ Note: You can even add `"stderr"` in the stack's channels list to view your logs
 
 #### Adding Volume
 
-Deployment wipes out all log files! In order to persist your Laravel log files, you'll need to add a [volume](/docs/reference/volumes/) to persist your log folder's state.
+Deployment wipes out all log files! In order to persist your Laravel log files, you'll need to add a [volume](/docs/volumes/) to persist your log folder's state.
 
 
 1) First let's create a Volume:

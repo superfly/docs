@@ -53,7 +53,7 @@ bin/rails generate dockerfile --add procps net-tools traceroute iputils-ping
 
 Every time you deploy you will start out with a fresh image.  If your database is on that image, it too will start fresh which undoubtedly is not what you want.
 
-The solution is to create a [Fly Volume](https://fly.io/docs/reference/volumes/).
+The solution is to create a [Fly Volume](https://fly.io/docs/volumes/).
 
 Once you have created a volume, you will need to set the `DATABASE_URL` environment variable to cause Rails to put your database on that volume.  The result will be the following lines in your `fly.toml` file:
 

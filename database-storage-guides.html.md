@@ -11,7 +11,7 @@ Often the solution to persistent data storage is to connect your Fly App to a se
 
 Fly.io offers a [deploy-it-yourself Postgres app](/docs/postgres/) with some tools to make it easier to manage yourself.
 
-If you need hardware-local disk storage on your Machines&mdash;for example, if your Fly App _is_ a database (or if you want to use [LiteFS](/docs/litefs))&mdash;then you'll want to use [Fly Volumes](/docs/reference/volumes/).
+If you need hardware-local disk storage on your Machines&mdash;for example, if your Fly App _is_ a database (or if you want to use [LiteFS](/docs/litefs))&mdash;then you'll want to use [Fly Volumes](/docs/volumes/).
 
 Explore these, and further options, for data storage in the following sections.
 
