@@ -302,7 +302,7 @@ We're back in business and can scale as desired!
 
 ## Scale up with `fly machine clone`
 
-You can add Machines to an app by cloning Machines. The new Machine will be, as you would expect, a copy of the specified Machine, and will belong to the same process group. If the original Machine has a [Fly Volume](https://file+.vscode-resource.vscode-cdn.net/docs/reference/volumes/) attached, an empty volume will be provisioned for the new Machine. It's up to you to decide what to put on the new volume; `fly machine clone` will not automatically copy the contents of the original Machine&#39;s volume.
+You can add Machines to an app by cloning Machines. The new Machine will be, as you would expect, a copy of the specified Machine, and will belong to the same process group. If the original Machine has a [Fly Volume](/docs/reference/volumes/) attached, an empty volume will be provisioned for the new Machine. It's up to you to decide what to put on the new volume; `fly machine clone` will not automatically copy the contents of the original Machine&#39;s volume.
 
 The following commands create three new Machines by cloning an existing Machine: 
 
