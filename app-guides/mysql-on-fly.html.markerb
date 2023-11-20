@@ -11,7 +11,7 @@ categories:
 date: 2022-07-29
 ---
 
-If you just want to run a quick, self-managed MySQL instance on Fly.io, here's how to do it. It's pretty basic, with one caveat around using a [Volume](/docs/reference/volumes/) to persist data.
+If you just want to run a quick, self-managed MySQL instance on Fly.io, here's how to do it. It's pretty basic, with one caveat around using a [Fly Volume](/docs/volumes/) to persist data.
 
 Most Fly apps use a `Dockerfile` to define an application and its dependencies. However, in this case we can use MySQL's official container directly - no need for a custom `Dockerfile`!
 

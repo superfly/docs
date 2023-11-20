@@ -294,7 +294,7 @@ fly_instance_filesystem_blocks_avail
 Labels:
 - `id`: Volume ID
 
-If you're using [Volumes](https://fly.io/docs/reference/volumes/) for any of your organization's apps, you'll be able to query these series,
+If you're using [Volumes](https://fly.io/docs/volumes/) for any of your organization's apps, you'll be able to query these series,
 derived from the `LSize` and `Data%` of the volume's [thin LV](https://man7.org/linux/man-pages/man7/lvmthin.7.html).
 
 ```

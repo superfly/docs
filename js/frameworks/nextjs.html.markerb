@@ -94,7 +94,7 @@ deferring the generation to deploy.
 ### Build time secrets
 
 This approach won't work for SQLite3 as the build machine still won't have
-access to your [volume](https://fly.io/docs/reference/volumes/), but can
+access to your [volume](https://fly.io/docs/volumes/), but can
 be used with PostgreSQL, MySQL and other such databases.
 
 First you need to obtain the secrets you will need to deploy.  Often this

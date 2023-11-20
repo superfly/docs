@@ -49,9 +49,9 @@ New Machines created using `fly machine run` don't have the V2 Apps metadata, an
 
 ## Volume mounts and `fly deploy`
 
-If a Machine has a mounted [volume](/docs/reference/volumes/), `fly deploy` can't be used to mount a different one. You can change the mount point at which the volume's data is available in the Machine's file system, though. This is configured in the [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) of `fly.toml`.
+If a Machine has a mounted [volume](/docs/volumes/), `fly deploy` can't be used to mount a different one. You can change the mount point at which the volume's data is available in the Machine's file system, though. This is configured in the [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) of `fly.toml`.
 
-Learn more about [using Fly Volumes with Fly Apps](/docs/apps/volume-storage/).
+Learn more about [using Fly Volumes](/docs/volumes/).
 
 ## `fly deploy` configuration in `fly.toml`
 

@@ -7,7 +7,7 @@ order: 7
 
 The [storage folder](https://laravel.com/docs/9.x/filesystem#the-local-driver) by default, holds several "generated" essentials of your Laravel application. 
 
-It's the default burrow for session, cache, and file data amongst others. If you'd opt to persist data on this folder, you'll have to mount a [volume](/docs/reference/volumes/) to it.
+It's the default burrow for session, cache, and file data amongst others. If you'd opt to persist data on this folder, you'll have to mount a [volume](/docs/volumes/) to it.
 
 
 ## The Steps
