@@ -64,7 +64,7 @@ Every time an app is deployed, its configuration is updated in the app database,
 
 Use [`fly deploy`](/docs/flyctl/deploy/) to manually deploy an existing app. You can use `fly deploy` options to change certain elements of the app's configuration; e.g. adding an environment variable. The local `fly.toml` file, if any, won't be altered by this, but you can overwrite it with the currently-deployed configuration using `fly config save`, if you want to keep the changes for a future deployment.
 
-Initial CPU and RAM specs default to the smallest available. Some projects will need beefier resources to run, in which case you'll need to do some [scaling](/docs/reference/scaling/) after your app is created.
+Initial CPU and RAM specs default to the smallest available. Some projects will need beefier resources to run, in which case you'll need to do some [scaling](/docs/apps/scale-machine/) after your app is created.
 
 ## Launch outcomes
 

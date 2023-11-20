@@ -6,7 +6,7 @@ order: 12
 
 Before proceeding, you are encouraged to read (or at least skim) the excellent
 docs Fly.io provides for
-[Scaling and Autoscaling](https://fly.io/docs/reference/scaling/).  Getting
+[Scaling Machine CPU and RAM](/docs/apps/scale-machine/).  Getting
 the right sized machine close to your users may be enough.
 
 Once you have settled on a machine configuration, there are a number of things

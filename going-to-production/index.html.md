@@ -22,7 +22,7 @@ additional resources.
 Any application intended for production use should do the following things first.
 
 1. Setup a [High Availability DB server](/docs/postgres/advanced-guides/high-availability-and-global-replication/) - Prevents interruption of service when machines or VMs are restarted.
-2. Run [2+ app servers](/docs/reference/scaling/) - Prevents interruption of service when machines or VMs are restarted.
-3. Sign up for a [Plan](/plans) to get email support
+2. Run [2+ app servers](/docs/apps/scale-count/) - Prevents interruption of service when machines or VMs are restarted.
+3. Sign up for a [Plan](/plans) to get email support.
 
 With the foundation pieces in place, there are additional things to consider.
