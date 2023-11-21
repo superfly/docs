@@ -33,7 +33,7 @@ For details and to select a different plan, see [Plan Pricing](https://fly.io/pl
 
 Resources included for free on all plans:
 
-* Up to 3 shared-cpu-1x 256mb VMs<sup><strong><small>†</small></strong></sup>
+* Up to 3 shared-cpu-1x 256mb VMs
 * 3GB persistent volume storage (total)
 * 160GB outbound data transfer
 
