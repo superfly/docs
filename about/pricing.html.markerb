@@ -43,7 +43,7 @@ Additional resources are billed at the usage-based pricing detailed below.
 
 ### Fly Machines
 
-Pricing for [Fly Machines](/docs/machines/) VMs, which are also the virtual-machine building blocks of [Fly Launch](/docs/apps/) and [Fly Postgres](/docs/postgres/) apps. 
+Pricing for [Fly Machines](/docs/machines/) VMs, which are also the virtual-machine building blocks of [Fly Launch](/docs/apps/) and [Fly Postgres](/docs/postgres/) apps.
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
 
