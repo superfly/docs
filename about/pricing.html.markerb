@@ -47,7 +47,7 @@ Pricing for [Fly Machines](/docs/machines/) VMs, which are also the virtual-mach
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
 
-For more detail about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
+For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
 
 ### GPUs and Fly Machines
 
