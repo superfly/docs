@@ -47,6 +47,8 @@ Pricing for [Fly Machines](/docs/machines/) VMs, which are also the virtual-mach
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
 
+For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
+
 ### GPUs and Fly Machines
 
 Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see [Fly Machines pricing](#fly-machines)) plus the price of the attached GPU. GPU access requires a [Launch, Scale, or Enterprise plan](https://fly.io/plans).
@@ -72,7 +74,7 @@ Reserved and dedicated options:
 * Free: 3GB of total provisioned capacity per organization
 * $0.15/GB per month of provisioned capacity
 
-Volume billing is pro-rated to the hour.
+[Volume billing](/docs/about/billing/#volume-billing) is pro-rated to the hour.
 
 You'll be charged for volumes that you create, whether they are attached to a Machine or not, including when an attached Machine is stopped.
 
