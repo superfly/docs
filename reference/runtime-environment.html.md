@@ -46,6 +46,9 @@ Not to be confused with the [HTTP header](/docs/reference/runtime-environment/#f
 
 ### `FLY_VM_MEMORY_MB`
 **Machine Memory**: The memory allocated to the Machine, in MB. It's the same value you'll find under https://fly.io/dashboard/personal/machines and VM Memory in the output of `fly machine status`. Learn more about [Machine sizing](/docs/machines/guides-examples/machine-sizing/).
+
+### `PRIMARY_REGION`
+**Primary Region**: This is set in your `fly.toml` or with the `--region` flag during deploys. Learn more about [configuring the primary region](/docs/reference/configuration/#primary-region).
  
 ## _Request Headers_
 
