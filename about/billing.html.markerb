@@ -22,6 +22,8 @@ To download a past invoice, click View for the relevant cycle. You'll be sent to
 
 Volume billing is pro-rated to the hour and we subtract the free allowances first. For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).
 
+If you create a volume, you will be charged for it. You’re billed for volumes that aren’t attached to Machines, and for volumes that are attached to Machines in any state, including stopped Machines.
+
 You aren't billed for the 5 days worth of [daily volume snapshots](/docs/apps/volume-manage/#restore-a-volume-from-a-snapshot) that we store for you by default.
 
 ## Machine billing

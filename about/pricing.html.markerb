@@ -67,12 +67,14 @@ Reserved and dedicated options:
 
 ## _Persistent Storage Volumes_
 
-[Volumes](/docs/volumes/) are local persistent storage for VMs.
+[Fly Volumes](/docs/volumes/) are local persistent storage for Machines.
 
 * Free: 3GB of total provisioned capacity per organization
 * $0.15/GB per month of provisioned capacity
 
 Volume billing is pro-rated to the hour.
+
+You'll be charged for volumes that you create, whether they are attached to a Machine or not, including when an attached Machine is stopped.
 
 ## _Network prices_
 
