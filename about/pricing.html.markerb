@@ -43,9 +43,11 @@ Additional resources are billed at the usage-based pricing detailed below.
 
 ### Fly Machines
 
-Pricing for [Fly Machines](/docs/machines/) VMs, which are also the virtual-machine building blocks of [Fly Launch](/docs/apps/) and [Fly Postgres](/docs/postgres/) apps.
+Pricing for [Fly Machines](/docs/machines/) VMs, which are also the virtual-machine building blocks of [Fly Launch](/docs/apps/) and [Fly Postgres](/docs/postgres/) apps. 
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
+
+For more detail about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
 
 ### GPUs and Fly Machines
 
@@ -72,7 +74,7 @@ Reserved and dedicated options:
 * Free: 3GB of total provisioned capacity per organization
 * $0.15/GB per month of provisioned capacity
 
-Volume billing is pro-rated to the hour.
+[Volume billing](/docs/about/billing/#volume-billing) is pro-rated to the hour.
 
 You'll be charged for volumes that you create, whether they are attached to a Machine or not, including when an attached Machine is stopped.
 
