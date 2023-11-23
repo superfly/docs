@@ -21,14 +21,14 @@ The first section is a speed-run through the steps to make the go-example app au
 
 ## Speed-run your way to continuous deployment
 
-1.  Fork the [go-example](https://github.com/fly-apps/go-example) repository to your GitHub account.
-2.  Clone the new repository to your local machine.
-3.  Run `fly launch --no-deploy` from within the project source directory to create a new app and a `fly.toml` configuration file. 
+1. Fork the [go-example](https://github.com/fly-apps/go-example) repository to your GitHub account.
+2. Clone the new repository to your local machine.
+3. Run `fly launch --no-deploy` from within the project source directory to create a new app and a `fly.toml` configuration file. 
 4. Type `y` to when prompted to tweak settings and enter a name for the app. Adjust other settings, such as region, as needed. Then click **Confirm Settings**.
-5.  Still in the project source directory, get a Fly API deploy token by running `fly tokens create deploy -x 999999h`. Copy the output.
-6.  Go to your newly-created repository on GitHub and select **Settings**.
-7.  Under **Secrets and variables**, select **Actions**, and then create a new repository secret called `FLY_API_TOKEN` with the value of the token from step 4.
-8.  Back in your project source directory, create `.github/workflows/fly.yml` with these contents:
+5. Still in the project source directory, get a Fly API deploy token by running `fly tokens create deploy -x 999999h`. Copy the output.
+6. Go to your newly-created repository on GitHub and select **Settings**.
+7. Under **Secrets and variables**, select **Actions**, and then create a new repository secret called `FLY_API_TOKEN` with the value of the token from step 4.
+8. Back in your project source directory, create `.github/workflows/fly.yml` with these contents:
     
     ```yaml
     name: Fly Deploy
@@ -52,7 +52,7 @@ The first section is a speed-run through the steps to make the go-example app au
       **Note:** The `go-example`’s default branch is currently `master`. If you’re using a different app, yours might be `main`. Change the `fly.yml` file accordingly.
       </div>
 
-9.  Commit your changes and push them up to GitHub. You should be pushing two new files: `fly.toml`, the [Fly Launch](/docs/apps/) configuration file, and `fly.yml`, the GitHub action file.
+9. Commit your changes and push them up to GitHub. You should be pushing two new files: `fly.toml`, the [Fly Launch](/docs/apps/) configuration file, and `fly.yml`, the GitHub action file.
   
 Then the magic happens - The push triggers a deploy, and from now on whenever you push a change, the app will automatically be redeployed.
 
