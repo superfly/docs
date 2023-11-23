@@ -625,7 +625,7 @@ The total amount, in GB, to extend a volume. Optional with `auto_extend_size_inc
 
 ### Auto extend volume size configuration
 
-You can optionally configure volumes to automatically extend when they reache a usage threshold.
+You can optionally configure volumes to automatically extend when they reach a usage threshold.
 
 For example, the following config extends the size of the volume by 1GB when it reaches 80% capacity. The volume extensions are limited to 5GB in total. `auto_extend_size_limit` is optional.
 
