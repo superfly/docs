@@ -16,7 +16,7 @@ related_pages:
   <img src="/static/images/django-intro.webp" srcset="/static/images/django-intro@2x.webp 2x" alt="">
 </div>
 
-In this guide we recreate and deploy [this Django application](https://github.com/fly-apps/hello-django) to demonstrate how quickly Django apps can be deployed to Fly.io!
+In this guide we recreate and deploy [this Django application](https://github.com/fly-apps/hello-django-fly) to demonstrate how quickly Django apps can be deployed to Fly.io!
 
 ## Initial Local Setup
 
@@ -82,7 +82,7 @@ Now create a new app called `hello`:
 python manage.py startapp hello
 ```
 
-Add the new `hello` app to the `INSTALLED_APPS` configuration in the [`hello_django/settings.py`](https://github.com/fly-apps/hello-django/blob/main/hello_django/settings.py) file:
+Add the new `hello` app to the `INSTALLED_APPS` configuration in the [`hello_django/settings.py`](https://github.com/fly-apps/hello-django-fly/blob/main/hello_django/settings.py) file:
 
 ```python
 # hello_django/settings.py
@@ -122,7 +122,7 @@ hello-django/
 
 ### Create and Map a URL to a View
 
-Now let's configure a basic view that returns the text, `Hello, Fly!` by updating the [`hello/views.py`](https://github.com/fly-apps/hello-django/blob/main/hello/views.py) file:
+Now let's configure a basic view that returns the text, `Hello, Fly!` by updating the [`hello/views.py`](https://github.com/fly-apps/hello-django-fly/blob/main/hello/views.py) file:
 
 ```python
 # hello/views.py
@@ -133,7 +133,7 @@ def hello(request):
     return HttpResponse('Hello, Fly!')
 ```
 
-Inside the `hello/` app folder, create a new file called [`urls.py`](https://github.com/fly-apps/hello-django/blob/main/hello/urls.py) for our app-level URL configuration:
+Inside the `hello/` app folder, create a new file called [`urls.py`](https://github.com/fly-apps/hello-django-fly/blob/main/hello/urls.py) for our app-level URL configuration:
 
 ```python
 # hello/urls.py
@@ -146,7 +146,7 @@ urlpatterns = [
 ]
 ```
 
-And update the existing [`hello_django/urls.py`](https://github.com/fly-apps/hello-django/blob/main/hello_django/urls.py) file for project-level URL configuration:
+And update the existing [`hello_django/urls.py`](https://github.com/fly-apps/hello-django/blob/main/hello_django-fly/urls.py) file for project-level URL configuration:
 
 ```python
 # hello_django/urls.py
@@ -187,7 +187,7 @@ By default, Django is configured for local development. The [How to Deploy Djang
 
 However, for demonstration purposes, we can take some shortcuts.
 
-First, in the [`hello_django/settings.py`](https://github.com/fly-apps/hello-django/blob/main/hello_django/settings.py) file update the `ALLOWED_HOSTS` configuration to accept all hosts:
+First, in the [`hello_django/settings.py`](https://github.com/fly-apps/hello-django-fly/blob/main/hello_django/settings.py) file update the `ALLOWED_HOSTS` configuration to accept all hosts:
 
 ```python
 # hello_django/settings.py
@@ -200,7 +200,7 @@ Second, install [Gunicorn](https://gunicorn.org/) as our [production server](htt
 python -m pip install gunicorn
 ```
 
-Third, create a [`requirements.txt`](https://github.com/fly-apps/hello-django/blob/main/requirements.txt) file listing all the packages in the current Python virtual environment:
+Third, create a [`requirements.txt`](https://github.com/fly-apps/hello-django-fly/blob/main/requirements.txt) file listing all the packages in the current Python virtual environment:
 
 ```cmd
 pip freeze > requirements.txt
@@ -221,7 +221,7 @@ To configure and launch the app, run the `fly launch` command and follow the wiz
 fly launch
 ```
 ```output
-Creating app in ../flyio//hello-django
+Creating app in ../flyio/hello-django
 Scanning source code
 Detected a Django app
 ? Choose an app name (leave blank to generate one): hello-django
@@ -241,7 +241,7 @@ Platform: machines
 Your app is ready! Deploy with `flyctl deploy`
 ```
 
-This creates two new files in the project that are automatically configured: a [`Dockerfile`](https://github.com/fly-apps/hello-django/blob/main/Dockerfile) and [`fly.toml`](https://github.com/fly-apps/hello-django/blob/main/fly.toml) file to configure applications for deployment.
+This creates two new files in the project that are automatically configured: a [`Dockerfile`](https://github.com/fly-apps/hello-django-fly/blob/main/Dockerfile) and [`fly.toml`](https://github.com/fly-apps/hello-django-fly/blob/main/fly.toml) file to configure applications for deployment.
 
 
 To deploy the application use the following command:
