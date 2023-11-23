@@ -13,7 +13,7 @@ Postgres databases on Fly.io are treated as Fly Apps, which you can [read more a
 
 ## Finding the database app instance
 
-If you set up your application using `fly launch`, the name of your database defaults to `<app-name>-db`. To figure that out for sure, run the following from the root of the project:
+If you set up your application using `fly launch`, the name of your database app might be `<app-name>-db`, or you might have given it a name during the initial configuration. To figure that out for sure, run the following from the root of the project:
 
 ```cmd
 fly info

@@ -27,12 +27,12 @@ mkdir my-mysql
 cd my-mysql
 
 # Run `fly launch` to create an app
-fly launch
+fly launch --no-deploy
 ```
 
 You can name the app whatever you'd like. The name will become a hostname our application uses to connect to the database, such as `my-mysql.internal`.
 
-*Don't deploy the application just yet* - we have some work to do first.
+We used the `--no-deploy` option because we have some work to do before we deploy the app.
 
 ## Configure the App
 

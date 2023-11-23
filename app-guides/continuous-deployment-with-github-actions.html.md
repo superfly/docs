@@ -21,13 +21,15 @@ The first section is a speed-run through the steps to make the go-example app au
 
 ## Speed-run your way to continuous deployment
 
-1.  Fork the [go-example](https://github.com/fly-apps/go-example) repository to your GitHub account.
-2.  Clone the new repository to your local machine.
-3.  Run `fly launch` from within the project source directory to create a new app and a `fly.toml` configuration file. Type `N` when `fly launch` asks if you want to set up databases and `N` when it asks if you want to deploy.
-4.  Still in the project source directory, get a Fly API deploy token by running `fly tokens create deploy -x 999999h`. Copy the output.
-5.  Go to your newly-created repository on GitHub and select **Settings**.
-6.  Under **Secrets and variables**, select **Actions**, and then create a new repository secret called `FLY_API_TOKEN` with the value of the token from step 4.
-7.  Back in your project source directory, create `.github/workflows/fly.yml` with these contents:
+1. Fork the [go-example](https://github.com/fly-apps/go-example) repository to your GitHub account.
+2. Clone the new repository to your local machine.
+3. Run `fly launch --no-deploy` from within the project source directory to create a new app and a `fly.toml` configuration file. 
+4. Type `y` to when prompted to tweak settings and enter a name for the app. Adjust other settings, such as region, as needed. Then click **Confirm Settings**.
+5. Still in the project source directory, get a Fly API deploy token by running `fly tokens create deploy -x 999999h`. Copy the output.
+6. Go to your newly-created repository on GitHub and select **Settings**.
+7. Under **Secrets and variables**, select **Actions**, and then create a new repository secret called `FLY_API_TOKEN` with the value of the token from step 4.
+8. Back in your project source directory, create `.github/workflows/fly.yml` with these contents:
+    
     ```yaml
     name: Fly Deploy
     on:
@@ -46,9 +48,11 @@ The first section is a speed-run through the steps to make the go-example app au
               FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
     ```
 
-    Note that the `go-example`’s default branch is currently `master`. If you’re using a different app, yours might be `main`. Change the `fly.yml` file accordingly.
+      <div class="note icon">
+      **Note:** The `go-example`’s default branch is currently `master`. If you’re using a different app, yours might be `main`. Change the `fly.yml` file accordingly.
+      </div>
 
-8.  Commit your changes and push them up to GitHub. You should be pushing two new files: `fly.toml`, the [Fly Launch](/docs/apps/) configuration file, and `fly.yml`, the GitHub action file.
+9. Commit your changes and push them up to GitHub. You should be pushing two new files: `fly.toml`, the [Fly Launch](/docs/apps/) configuration file, and `fly.yml`, the GitHub action file.
   
 Then the magic happens - The push triggers a deploy, and from now on whenever you push a change, the app will automatically be redeployed.
 
@@ -56,23 +60,23 @@ If you want to watch the process take place, head to the repository and select t
 
 ## A longer look at the deployment process
 
-### fly.toml and the Repository
+### `fly.toml` and the repository
 
 **Step 1** is a simple GitHub Fork; there's not a lot to say about that except that you need to do it, because you want control of the repository that you're deploying from.
 
 **Step 2** is just cloning the repository to your local system so that you can edit and push changes to it.
 
-**Step 3** creates a `fly.toml` file to go into the repository.
+**Steps 3 and 4** create a new app on Fly.io and a `fly.toml` configuration file to go into the repository.
 
 <div class="callout">
 A note about `fly.toml` in repositories: Usually, when Fly.io ships examples, we avoid putting the `fly.toml` file in the repository by including `fly.toml` in the `.gitignore` file. And users should be creating their own `fly.toml` with the `fly launch` command. When using GitHub Actions though, you want your `fly.toml` in the repository so that the action can use it in the deployment process.
 </div>
 
-### API Tokens
+### API tokens
 
-**Step 4** is about getting an API token. You can generate a deploy token to use to authorize a specific application. That's what `flyctl tokens create deploy -x 999999h` gives you. For a more powerful token that can manage multiple applications, run `flyctl auth token`.
+**Step 5** is about getting an API token. You can generate a deploy token to use to authorize a specific application. That's what `flyctl tokens create deploy -x 999999h` gives you. For a more powerful token that can manage multiple applications, run `flyctl auth token`.
 
-**Steps 5 and 6** make your new token available to GitHub Actions that run against your repository. You'll add the token as a secret in the repository's settings. Under the **Settings** tab, go to **Secrets and variables** and select **Actions**. Click on the green "New repository secret" button, enter the name as `FLY_API_TOKEN`, and copy the token as the secret.
+**Steps 6 and 7** make your new token available to GitHub Actions that run against your repository. You'll add the token as a secret in the repository's settings. Under the **Settings** tab, go to **Secrets and variables** and select **Actions**. Click on the green "New repository secret" button, enter the name as `FLY_API_TOKEN`, and copy the token as the secret.
 
 If you'd prefer an environment secret instead, then you need to list the environment you selected in your deploy step.  For example:
 
@@ -83,9 +87,9 @@ deploy:
     environment: production
 ```
 
-### Building the workflow and Deployment
+### Building the workflow and deployment
 
-**Step 7** is the heart of the process, where you put in place a workflow. Now, GitHub has a UI which allows you to select and edit workflows, but you can also modify them as part of the repository. So you create `.github/workflows/fly.yml` - you'll likely want to `mkdir -p .github/workflows` to quickly create the directories - and load up the file with a GitHub Action recipe.
+**Step 8** is the heart of the process, where you put in place a workflow. Now, GitHub has a UI which allows you to select and edit workflows, but you can also modify them as part of the repository. So you create `.github/workflows/fly.yml` - you'll likely want to `mkdir -p .github/workflows` to quickly create the directories - and load up the file with a GitHub Action recipe.
 
 Github Action recipe, line by line:
 
@@ -134,7 +138,7 @@ This step `uses` the superfly/flyctl-actions action. This is a GitHub action cre
 
 This pulls the API token from GitHub's secrets engine and puts it into the environmental variables passed to the action.
 
-**Step 8** pushes your two new files to the repository: `fly.toml`, the Fly Launch configuration file, and `fly.yml`, the GitHub action file. The push triggers your first automatic deploy. The GitHub action now triggers a redeploy each time you push changes to your repo.
+**Step 9** pushes your two new files to the repository: `fly.toml`, the Fly Launch configuration file, and `fly.yml`, the GitHub action file. The push triggers your first automatic deploy. The GitHub action now triggers a redeploy each time you push changes to your repo.
 
 ## Conclusion and further reading
 
