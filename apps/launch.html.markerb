@@ -29,20 +29,29 @@ Depending on your project, `fly launch` may be able to look at your app's source
 
 Our best scanners furnish a Dockerfile from which your app's image will be built. Some of our terrible older scanners may invoke [buildpacks](/docs/reference/builders/#buildpacks), which tend to be slow and brittle.
 
-Running `fly launch` in a directory containing a working Django app (it happens to be the one from [our Django getting-started example](https://fly.io/docs/django/getting-started/)):
+Running `fly launch` in a directory containing a working Django app (it happens to be the one from [our Django getting-started example](/docs/django/getting-started/)):
 
 ```cmd
 fly launch
 ```
 ```out
-Creating app in /Users/chris/FlyTests/django
 Scanning source code
 Detected a Django app
-? Choose an app name (leave blank to generate one): 
+Creating app in /flyio/hello-django
+We're about to launch your Django app on Fly.io. Here's what you're getting:
+
+Organization: MyName                 (fly launch defaults to the personal org)
+Name:         hello-django           (derived from your directory name)
+Region:       Amsterdam, Netherlands (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+
+? Do you want to tweak these settings before proceeding? Yes
 ...
 ```
 
-The flyctl Django scanner has taken ownership of my launch. Visit our [Django guide](/docs/django/getting-started/) to see how that story will end. (Spoiler: it has a happy ending.)
+The flyctl Django scanner has taken ownership of the launch. You can tweak the basic settings on the Fly Launch web page and then run 'fly deploy' to deploy the new app. Visit our [Django guide](/docs/django/getting-started/) to see how that story will end. (Spoiler: it has a happy ending.)
 
 ## Custom launch
 
