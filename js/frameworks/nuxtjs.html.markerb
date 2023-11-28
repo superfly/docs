@@ -11,15 +11,15 @@ order: 6
 <% app_name = "hello-nuxt" %>
 <%= partial "partials/intro", locals: { runtime: "Nuxt", link: "https://nuxt.com" } %>
 
-You can deploy your [Nuxt](https://nuxt.com) app on Fly with minimal effort, our CLI will do the heavy lifting. You can use your existing Nuxt app or you can [create one using the tutorial](https://nuxt.com/docs/getting-started/installation) then come back here to deploy your app.
+You can deploy your [Nuxt](https://nuxt.com) app on Fly with minimal effort, our CLI will do the heavy lifting. You can use your existing Nuxt app or you can [create one using the tutorial](https://nuxt.com/docs/getting-started/installation) and then come back here to deploy your app.
 
-## _Generate the Nuxt app_
+## _Deploy an existing Nuxt app_
 
 If you just want to see how Fly deployment works, follow these steps.
 
 <%= partial "partials/flyctl" %>
 
-Now let's launch your Nuxt app.
+Now let's launch your Nuxt app from the root of your application.
 
 <%= partial "partials/launch", locals: { detected: "Nuxt", app_name: app_name } %>
 
