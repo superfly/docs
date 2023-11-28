@@ -11,7 +11,7 @@ flyctl extensions supabase dashboard [database_name] [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for dashboard
-  -o, --org string      The target Fly organization
+  -o, --org string      The target Fly.io organization
   -y, --yes             Accept all confirmations
 ~~~
 

@@ -10,7 +10,7 @@ flyctl machine api-proxy [flags]
 
 ~~~
   -h, --help         help for api-proxy
-  -o, --org string   The target Fly organization
+  -o, --org string   The target Fly.io organization
   -q, --quiet        Don't print progress indicators for WireGuard
 ~~~
 

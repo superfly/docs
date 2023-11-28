@@ -13,7 +13,7 @@ flyctl litefs-cloud import [flags]
   -h, --help              help for import
       --input string      Input filename
   -j, --json              JSON output
-  -o, --org string        The target Fly organization
+  -o, --org string        The target Fly.io organization
 ~~~
 
 ## Global Options

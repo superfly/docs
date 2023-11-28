@@ -12,7 +12,7 @@ flyctl litefs-cloud restore [flags]
   -d, --database string    LiteFS Cloud database name
   -h, --help               help for restore
   -j, --json               JSON output
-  -o, --org string         The target Fly organization
+  -o, --org string         The target Fly.io organization
       --timestamp string   Time to restore to (ISO 8601)
 ~~~
 

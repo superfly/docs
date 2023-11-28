@@ -13,7 +13,7 @@ flyctl litefs-cloud export [flags]
   -f, --force             Overwrite output file if it already exists
   -h, --help              help for export
   -j, --json              JSON output
-  -o, --org string        The target Fly organization
+  -o, --org string        The target Fly.io organization
       --output string     Output filename
 ~~~
 
