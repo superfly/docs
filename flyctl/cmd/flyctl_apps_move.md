@@ -11,7 +11,7 @@ flyctl apps move <APPNAME> [flags]
 
 ~~~
   -h, --help                 help for move
-  -o, --org string           The target Fly organization
+  -o, --org string           The target Fly.io organization
       --skip-health-checks   Update machines without waiting for health checks. (Machines only)
   -y, --yes                  Accept all confirmations
 ~~~

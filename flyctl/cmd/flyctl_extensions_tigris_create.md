@@ -13,7 +13,7 @@ flyctl extensions tigris create [flags]
   -c, --config string   Path to application configuration file
   -h, --help            help for create
   -n, --name string     The name of your bucket
-  -o, --org string      The target Fly organization
+  -o, --org string      The target Fly.io organization
   -y, --yes             Accept all confirmations
 ~~~
 

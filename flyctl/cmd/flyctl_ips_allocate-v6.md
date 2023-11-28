@@ -12,7 +12,7 @@ flyctl ips allocate-v6 [flags]
   -c, --config string    Path to application configuration file
   -h, --help             help for allocate-v6
       --network string   Target network name for a Flycast private IPv6 address
-  -o, --org string       The target Fly organization
+  -o, --org string       The target Fly.io organization
       --private          Allocate a private IPv6 address
   -r, --region string    The target region (see 'flyctl platform regions')
 ~~~

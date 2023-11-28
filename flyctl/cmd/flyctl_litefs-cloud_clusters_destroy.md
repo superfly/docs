@@ -10,7 +10,7 @@ flyctl litefs-cloud clusters destroy [flags]
 ~~~
   -h, --help         help for destroy
   -j, --json         JSON output
-  -o, --org string   The target Fly organization
+  -o, --org string   The target Fly.io organization
 ~~~
 
 ## Global Options

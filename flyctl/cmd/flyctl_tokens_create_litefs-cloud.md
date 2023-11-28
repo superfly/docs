@@ -13,7 +13,7 @@ flyctl tokens create litefs-cloud [flags]
   -h, --help              help for litefs-cloud
   -j, --json              JSON output
   -n, --name string       Token name (default "LiteFS Cloud token")
-  -o, --org string        The target Fly organization
+  -o, --org string        The target Fly.io organization
 ~~~
 
 ## Global Options

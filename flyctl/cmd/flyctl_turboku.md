@@ -34,11 +34,11 @@ flyctl turboku <heroku-app-name> <heroku-api-token> [flags]
       --name string                      the name of the new app
       --nixpacks                         Deploy using nixpacks to build the image
       --no-cache                         Do not use the build cache when building the image
-      --no-deploy                        Do not prompt for deployment
+      --no-deploy                        Do not immediately deploy the new app after fly launch creates and configures it
       --no-public-ips                    Do not allocate any new public IP addresses
       --now                              Deploy now without confirmation
       --only-regions strings             Deploy to machines only in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times. --only-regions iad,sea --only-regions syd will deploy to all three iad, sea, and syd regions. Applied before --exclude-regions. V2 machines platform only.
-  -o, --org string                       The target Fly organization
+  -o, --org string                       The target Fly.io organization
       --process-groups strings           Deploy to machines only in these process groups
       --provision-extensions             Provision any extensions assigned as a default to first deployments
       --push                             Push image to registry after build is complete

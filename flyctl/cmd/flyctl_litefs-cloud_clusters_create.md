@@ -10,7 +10,7 @@ flyctl litefs-cloud clusters create CLUSTERNAME [flags]
 ~~~
   -h, --help            help for create
   -j, --json            JSON output
-  -o, --org string      The target Fly organization
+  -o, --org string      The target Fly.io organization
   -r, --region string   The target region (see 'flyctl litefs-cloud regions')
 ~~~
 

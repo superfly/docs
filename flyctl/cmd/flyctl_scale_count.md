@@ -16,7 +16,7 @@ flyctl scale count [count] [flags]
   -h, --help                        help for count
       --host-dedication-id string   The dedication id of the reserved hosts for your organization (if any)
       --max-per-region int          Max number of VMs per region (default -1)
-      --process-group string        The process group to scale
+  -g, --process-group string        The process group to scale
       --region string               Comma separated list of regions to act on. Defaults to all regions where there is at least one machine running for the app
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs

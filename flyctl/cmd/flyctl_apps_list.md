@@ -14,7 +14,7 @@ flyctl apps list [flags]
 ~~~
   -h, --help         help for list
   -j, --json         JSON output
-  -o, --org string   The target Fly organization
+  -o, --org string   The target Fly.io organization
 ~~~
 
 ## Global Options

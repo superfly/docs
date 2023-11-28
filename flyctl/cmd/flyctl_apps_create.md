@@ -15,7 +15,7 @@ flyctl apps create [APPNAME] [flags]
   -j, --json             JSON output
       --name string      The app name to use
       --network string   Specify custom network id
-  -o, --org string       The target Fly organization
+  -o, --org string       The target Fly.io organization
 ~~~
 
 ## Global Options

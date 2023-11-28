@@ -18,7 +18,7 @@ flyctl postgres create [flags]
       --image-ref string           Specify a non-default base image for the Postgres app
       --initial-cluster-size int   Initial cluster size
   -n, --name string                The name of your Postgres app
-  -o, --org string                 The target Fly organization
+  -o, --org string                 The target Fly.io organization
   -p, --password string            The superuser password. The password will be generated for you if you leave this blank
   -r, --region string              The target region (see 'flyctl platform regions')
       --snapshot-id string         Creates the volume with the contents of the snapshot

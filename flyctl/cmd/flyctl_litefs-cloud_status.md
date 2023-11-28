@@ -11,7 +11,7 @@ flyctl litefs-cloud status [flags]
   -c, --cluster string   LiteFS Cloud cluster name
   -h, --help             help for status
   -j, --json             JSON output
-  -o, --org string       The target Fly organization
+  -o, --org string       The target Fly.io organization
 ~~~
 
 ## Global Options
