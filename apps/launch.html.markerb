@@ -21,13 +21,13 @@ If you're in a hurry to try your first launch, we have a condensed [Hands-on](/d
 
 Here are the components of a successful launch, ready for the first deployment:
 
-* A Docker image that Fly Launch can use to boot up a Machine for your app to run on.
-* A `fly.toml` file for your app's Fly.io-specific [configuration](/docs/reference/configuration/).
+* A way to get a Docker image that we can use to get your app running on a Machine.
+* A `fly.toml` file, created by `fly launch` or provided by you, for your app's Fly.io-specific [configuration](/docs/reference/configuration/).
 * Optional platform resources such as [public IP addresses](/docs/reference/services/), [Fly Volumes](/docs/reference/volumes), [app secrets](/docs/reference/secrets/), [Fly Postgres](/docs/postgres/) clusters, and integrated resources like [Upstash for Redis](/docs/reference/redis/).
 
 ## Framework launch scanners
 
-Depending on your project, `fly launch` may be able to look at your app's source code and go straight to a ready-to-deploy Fly App. This is most likely to work for frameworks on which Fly.io has people specializing full time. Right now that's [Elixir/Phoenix](/docs/elixir/), [Laravel](/docs/laravel/), [Rails](/docs/rails/), and [Django](/docs/django/), but we also have launch guides for other [languages and frameworks](/docs/languages-and-frameworks/).
+Depending on your project, `fly launch` may be able to look at your app's source code and get through that [ingredient list](#ingredients-for-a-successful-fly-launch), straight to a ready-to-deploy Fly App. This is most likely to work for frameworks on which Fly.io has people specializing full time. Right now that's [Elixir/Phoenix](/docs/elixir/), [Laravel](/docs/laravel/), [Rails](/docs/rails/), and [Django](/docs/django/), but we also have launch guides for other [languages and frameworks](/docs/languages-and-frameworks/).
 
 Our best scanners furnish a Dockerfile from which your app's image will be built. Some of our terrible older scanners may invoke [buildpacks](/docs/reference/builders/#buildpacks), which tend to be slow and brittle.
 
@@ -77,7 +77,7 @@ You can also perform an entirely manual "launch", skipping all the launch scanne
 
 ## After `fly launch`
 
-If ran `fly launch` but didn't deploy yet (hint: you can do this with `fly launch --no-deploy`), or you deployed but want to make changes, then you can:
+If you've run `fly launch` but haven't deploy yet (hint: you can do this with `fly launch --no-deploy`), or you deployed but want to make changes, then you can:
 
 * change your configuration
 * update your app source
