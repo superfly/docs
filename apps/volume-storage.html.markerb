@@ -17,14 +17,7 @@ Use [Fly Launch](/docs/apps/) to create a new app with one Machine and an attach
     fly launch --no-deploy
     ```
 
-    ```out
-    ...
-    Wrote config file fly.toml
-    ...
-    Your app is ready! Deploy with `flyctl deploy`
-    ```
-
-1. Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`, where `source` is the volume name and `destination` is the directory where the volume should be mounted on the Machine file system. For example:
+1. After the app is created, add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`, where `source` is the volume name and `destination` is the directory where the volume should be mounted on the Machine file system. For example:
 
     ```toml
     [mounts]
