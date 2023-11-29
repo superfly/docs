@@ -45,7 +45,7 @@ You can view an app's configuration by opening the `fly.toml` file in your proje
 
 You can make configuration changes by editing an app's `fly.toml` and then running `fly deploy`.
 
-Flyctl language-specific scanners make changes to app configuration as part of their work.
+The flyctl language-specific scanners make changes to app configuration as part of their work.
 
 Reference: [Fly Launch configuration (fly.toml)](/docs/reference/configuration/)
 
@@ -76,7 +76,7 @@ If all goes well, one of several things will happen when you run `fly launch` in
    1. If flyctl doesn't have a launcher that can configure the whole app, but does find a Dockerfile, it will offer to deploy it using that Dockerfile for the build.
 1. If none of the above happens, flyctl will register a new app with a name and organization, and download you a default `fly.toml` to work with. Deployment can't happen without further configuration.
 
-In all of these cases, `fly launch` downloads the final app config into a `fly.toml` in the working directory. Flyctl will look for a `fly.toml` from which to set the app's configuration on each new deployment.
+In all of these cases, `fly launch` downloads the final app config into a `fly.toml` in the working directory. `fly deploy` will look for a `fly.toml` from which to set the app's configuration on each new deployment.
 
 Once an app is launched, you can make changes to it and provision further resources through `fly.toml` and flyctl commands.
 
