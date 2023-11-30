@@ -77,7 +77,9 @@ Enter 'y' to apply the changes.
 
 With the Machines API, you can set the restart policy, and the maximum number of retries when the policy is `on-failure`. 
 
-Note that the API and the Machine config use `on-failure` instead of `on-fail`.
+<div class="important icon">
+**Important:** The API and the returned Machine config use `on-failure` instead of `on-fail`.
+</div>
 
 Endpoint: `POST /apps/{app_name}/machines/{machine_id}`
 
