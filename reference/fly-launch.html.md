@@ -59,9 +59,9 @@ Some flyctl scanners will do some or all of this using the API.
 
 The `fly launch` command might deploy your new app for the first time if you accept the defaults or after you tweak the app's settings. You can stop `fly launch` from deploying the new app right away with `fly launch --no deploy`.
 
-Whenever you want to update your app, you'll run [`fly deploy`](/docs/flyctl/deploy/). Every time an app is deployed, its configuration is updated in the app database. An image is built, if needed, and deposited in the Fly.io registry. Public IP addresses are provisioned if the app listens on public ports and doesn't already have them. Finally, some hardware is allocated and at least one Machine is booted up.
+Whenever you want to update your app, you'll run [`fly deploy`](/docs/flyctl/deploy/). `fly deploy` creates a new release of the app with the updated configuration, and builds and deposits the image in the Fly.io registry, if needed. Public IP addresses are provisioned if the app listens on public ports and doesn't already have them. Finally, some hardware is allocated and at least one Machine is booted up.
 
-You can use `fly deploy` options to change certain elements of the app's configuration; for example, adding an environment variable. The local `fly.toml` file, if any, won't be altered by this, but you can overwrite it with the currently-deployed configuration using `fly config save`, if you want to keep the changes for a future deployment.
+You can use `fly deploy` options to change certain elements of the app's configuration, such as adding an environment variable. The local `fly.toml` file, if any, won't be altered by this, but you can overwrite it with the currently-deployed configuration using `fly config save`, if you want to keep the changes for a future deployment.
 
 Initial CPU and RAM specs default to the smallest available. Some projects will need beefier resources to run. You can set a default Machine size and memory in the [`vm` section](/docs/reference/configuration/#the-vm-section) of the `fly.toml` file. You can also [scale](/docs/apps/scale-machine/) the app's Machines using flyctl.
 
@@ -126,7 +126,7 @@ Redis:        <none>                 (not requested)
 ? Do you want to tweak these settings before proceeding? (y/N)
 ```
 
-If I carry on with a buildpack-based build, this story might not end with a working Flask app. Dockerfile-based deployments are much simpler and faster anyway, so I decide to use a Dockerfile. (I hit ctrl-C to stop the launch.)
+I decide I'd rather use a Dockerfile-based deployment than a buildpack, for faster deployments and more control. I hit ctrl-C to stop the launch.
 
 Conveniently, there's also already a [Dockerfile that works with this app](https://github.com/fly-apps/hello-gunicorn-flask/blob/main/Dockerfile).
 
@@ -158,17 +158,17 @@ Redis:        <none>                 (not requested)
 ```
 There's the Dockerfile scanner taking over. I'll enter `y` to have a look at the other settings the scanner picked up from my source code. The Fly Launch web page opens and I can change some basic settings like my app name or region if I want to:
 
-* The region is where flyctl will start Machines for this app if not otherwise specified. The first deployment will put the app's Machines in that region. I'll keep `ewr` to start.
+* The region is where Fly Launch will create the app's Machines on first deployment; this region is the `primary_region` in the `fly.toml` file. The primary region is where flyctl will add Machines for new process groups as well. I'll keep the `ewr` region to start.
 
-* Next, I check the port for services. My Flask app listens on port 4999, not the more common (and default for `fly.toml`) port 8080, so my Dockerfile contains the line:
+* Next, I check the port for services; this port is the `internal_port` in the [`[[http_service]]` section](/docs/reference/configuration/#the-services-sections) of the `flytoml` file. My Flask app listens on port 4999, not the more common port 8080 (the `fly.toml` default), so my Dockerfile contains the line:
 
     ```Dockerfile
     EXPOSE 4999
     ```
 
-    Fly.io doesn't care about EXPOSE statements in Dockerfiles directly, because we don't actually run containers, and services via our proxy are configured in `fly.toml`, not in the Dockerfile. But as a convenience, the Dockerfile `fly launch` scanner catches EXPOSE if it's there, and fills in `internal_port` on the [`[[http_service]]` section](/docs/reference/configuration/#the-services-sections) accordingly. I confirm that the port is set to 4999 via the Fly Launch the web page.
+    Fly.io doesn't care about EXPOSE statements in Dockerfiles directly, because we don't actually run containers, and services via our proxy are configured in `fly.toml`, not in the Dockerfile. But the Dockerfile `fly launch` scanner catches EXPOSE if it's there, and fills in accordingly. I confirm that the port is set to 4999 via the Fly Launch the web page.
     
-* Everything else looks good so I click **Confirm Settings**.
+* Everything else looks good, so I click **Confirm Settings**.
 
 Returning to the terminal, I can see the app getting created and the image getting built in the output (edited for brevity):
 
@@ -219,7 +219,7 @@ Visit your newly deployed app at https://hello-gunicorn-flask.fly.dev/
 
 The first deployment has finished!
 
-I haven't explicitly configured [process groups](/docs/apps/processes/), so my app gets two Machine assigned to the default `app` process. With `fly status`, I can see the Machines:
+I haven't explicitly configured [process groups](/docs/apps/processes/), so my app gets two Machines assigned to the default `app` process. With `fly status`, I can see the Machines:
 
 ```cmd
 fly status
