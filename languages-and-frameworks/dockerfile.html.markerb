@@ -123,7 +123,7 @@ You're off and running!
 
 ## _Taking it Further_
 
-Lots of applications deployed in a container have some state that they want to keep. Here are a couple resources to check out for ways to do that.
+Lots of apps have some state that they want to keep. Here are a couple resources to check out for ways to do that.
 
 - **[Persistent Volumes:](https://fly.io/docs/volumes/)** You can create [persistent volumes](https://fly.io/docs/volumes/) for reading and writing data that changes but isn't blown away when you deploy again.
 - **[Postgres Database:](https://fly.io/docs/reference/postgres/#about-postgres-on-fly)** Deploy a [Fly Postgres Database](https://fly.io/docs/reference/postgres/#about-postgres-on-fly). It automatically creates a `DATABASE_URL` ENV when you attach it to your app.
