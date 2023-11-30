@@ -24,5 +24,5 @@ flyctl extensions supabase destroy [name] [flags]
 
 ## See Also
 
-* [flyctl extensions supabase](/docs/flyctl/extensions-supabase/)	 - Provision and manage Supabase Postgresql databases
+* [flyctl extensions supabase](/docs/flyctl/extensions-supabase/)	 - Provision and manage Supabase PostgreSQL databases
 

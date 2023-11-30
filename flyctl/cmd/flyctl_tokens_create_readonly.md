@@ -12,6 +12,7 @@ flyctl tokens create readonly [flags]
       --from-existing     Use an existing token as the basis for the read-only token
   -h, --help              help for readonly
   -j, --json              JSON output
+  -n, --name string       Token name (default "Read-only org token")
 ~~~
 
 ## Global Options
