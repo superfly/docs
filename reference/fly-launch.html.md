@@ -21,11 +21,11 @@ The `fly launch` command performs several tasks, depending on the project:
 * provisions resources like Postgres clusters, Redis databases, and IP addresses
 * deploys the app for the first time
 
-The language-specific scanners built into `fly launch` perform different tasks as needed, but in broad strokes, here are the things that generally happen between writing your source code and it going live on Fly.io, whether this happens through Fly Launch or through a more manual process you might begin with `fly apps create`.
+The language-specific scanners built into `fly launch` perform different tasks as needed. The following sections describe what generally happens between writing your source code and it going live on Fly.io through Fly Launch.
 
 ## New Fly App creation
 
-When `fly launch` creates a new Fly App, the app gets a name, an organization, a preferred deployment region, and a default configuration that's good for simple apps that should be publicly available on the web. At this early stage there's nothing to deploy; you can create an app before you even decide what language to write it in.
+When `fly launch` creates a new Fly App, the app gets a name, an organization, a preferred deployment region, and a default configuration that's good for simple apps that should be publicly available on the web.
 
 ## Build configuration
 
@@ -78,13 +78,13 @@ If all goes well, one of several things will happen when you run `fly launch` in
 
 In all of these cases, `fly launch` downloads the final app config into a `fly.toml` in the working directory. `fly deploy` will look for a `fly.toml` from which to set the app's configuration on each new deployment.
 
-Once an app is launched, you can make changes to it and provision further resources through `fly.toml` and flyctl commands.
+Once you create an app, you can make changes to it and provision further resources through `fly.toml` and flyctl commands.
 
 ## More things the scanners do
 
 The language- or framework- specific scanners incorporated into `fly launch` may also do fancy things like the following:
 
-- Download files (e.g. Dockerfile, config files) into your working directory. Existing local files will be overwritten only with confirmation.
+- Download files (such as Dockerfile, config files) into your working directory. Existing local files will be overwritten only with confirmation.
 - Run commands in your local development environment to prepare the project for deployment.
 - Add commands to the Dockerfile.
 - Set a release command.
@@ -93,7 +93,7 @@ The language- or framework- specific scanners incorporated into `fly launch` may
 
 ## What happens if I say yes to importing an existing config?
 
-The config specified in that `fly.toml` is used instead of the default config. But the scanners continue and may overwrite these imported settings.
+Fly Launch uses the config specified in that `fly.toml` instead of the default config. But the scanners continue and may overwrite these imported settings.
 
 ## Customizing Fly Launch
 
@@ -158,9 +158,9 @@ Redis:        <none>                 (not requested)
 ```
 There's the Dockerfile scanner taking over. I'll enter `y` to have a look at the other settings the scanner picked up from my source code. The Fly Launch web page opens and I can change some basic settings like my app name or region if I want to:
 
-* The region is where Fly Launch will create the app's Machines on first deployment; this region is the `primary_region` in the `fly.toml` file. The primary region is where flyctl will add Machines for new process groups as well. I'll keep the `ewr` region to start.
+* The region is where Fly Launch will create the app's Machines on first deployment; this region is the `primary_region` in the `fly.toml` file. The primary region is where flyctl will add Machines for new process groups as well. I'll keep the Secaucus, NJ (ewr) region to start.
 
-* Next, I check the port for services; this port is the `internal_port` in the [`[[http_service]]` section](/docs/reference/configuration/#the-services-sections) of the `flytoml` file. My Flask app listens on port 4999, not the more common port 8080 (the `fly.toml` default), so my Dockerfile contains the line:
+* Next, I check the port for services; this port is the `internal_port` in the [`[[http_service]]` section](/docs/reference/configuration/#the-services-sections) of the `fly.toml` file. My Flask app listens on port 4999, not the more common port 8080 (the `fly.toml` default), so my Dockerfile contains the line:
 
     ```Dockerfile
     EXPOSE 4999
@@ -200,7 +200,7 @@ Provisioning ips for hello-gunicorn-flask
   Add a dedicated ipv4 with: fly ips allocate-v4
 ```
 
-Because I had an HTTP service configured, and no [public IP addresses](/docs/reference/services/), these were [provisioned on deployment](/docs/apps/deploy/#ip-addresses).
+Because I had an HTTP service configured, and no [public IP addresses](/docs/reference/services/), Fly Launch [provisioned the IPs on deployment](/docs/apps/deploy/#ip-addresses).
 
 ```
 This deployment will:
@@ -239,7 +239,7 @@ app    	e28697ce6d3986	1      	ewr   	stopped	    	      	2023-11-29T20:55:33Z
 ```
 
 <div class="note icon">
-**Note:** Both Machines are in a stopped state, because they were idle for a few minutes and the [auto start and stop feature](/docs/apps/autostart-stop/) is enabled by default.
+**Note:** Both Machines are in a stopped state, because they were idle for a few minutes and we enable the [auto start and stop feature](/docs/apps/autostart-stop/) by default.
 </div>
 
 I can [scale out](/docs/apps/scale-count/) by adding Machines in other regions if I want to get close to users in more corners of the world.
