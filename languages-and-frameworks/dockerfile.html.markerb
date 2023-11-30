@@ -7,7 +7,7 @@ redirect_from: /docs/getting-started/dockerfile/
 
 You already have a project wrapped up in a [docker container](https://docs.docker.com/engine/reference/builder/)? Great! Just deploy that!
 
-The `fly launch` command detects your Dockerfile, builds it, and then deploys your app.  Need some extra config? No sweat, we've got you covered. Let's take a look.
+The `fly launch` command detects your Dockerfile, builds it, and then deploys your app.  Need some extra config? No sweat, we've got you covered.
 
 <div class="important icon">
 If you want to configure more than the basic settings, things like secrets or environment variables for example, then run `fly launch --no-deploy` so that you can [edit the `fly.toml` file](#config-first) before the first deployment.
@@ -75,11 +75,11 @@ NAME      DIGEST                           DATE
 MY_SECRET b9e37b7b239ee4aefc75352fe3fa6dc6 1m20s ago
 ```
 
-The values aren't displayed since they are secret!
+The values aren't displayed, since they're secret!
 
-## _Deploy Your App_
+## _Deploy your app_
 
-If you didn't previously deploy the app, or you've made changes and want to redeploy, then you can do that now.
+If you didn't deploy the new app, or you've made changes and want to redeploy, then you can do that now.
 
 ```cmd
 fly deploy
@@ -115,13 +115,13 @@ Visit your newly deployed app at https://my-app.fly.dev/
 
 By default, `fly deploy` builds the image using a remote builder. If you have Docker running locally and want to build locally, then run `fly deploy --local-only`. After the image is built, the app gets deployed.
 
-## _Open Your App_
+## _Open your app_
 
 Run `fly apps open`, or just go to the URL specified in the output, to open your deployed app in a browser.
 
 You're off and running!
 
-## _Taking it Further_
+## _Taking it further_
 
 Lots of apps have some state that they want to keep. Here are a couple resources to check out for ways to do that.
 
