@@ -1,4 +1,4 @@
-Use SSH to login to or run commands on VMs
+Use SSH to log into or run commands on Machines
 
 ## Usage
 ~~~

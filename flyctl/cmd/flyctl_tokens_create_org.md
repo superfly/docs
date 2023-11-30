@@ -11,6 +11,7 @@ flyctl tokens create org [flags]
   -x, --expiry duration   The duration that the token will be valid (default 175200h0m0s)
   -h, --help              help for org
   -j, --json              JSON output
+  -n, --name string       Token name (default "Org deploy token")
 ~~~
 
 ## Global Options

@@ -25,5 +25,5 @@ flyctl machine status [id] [flags]
 
 ## See Also
 
-* [flyctl machine](/docs/flyctl/machine/)	 - Commands that manage machines
+* [flyctl machine](/docs/flyctl/machine/)	 - Manage Fly Machines.
 

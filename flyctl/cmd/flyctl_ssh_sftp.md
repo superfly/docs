@@ -26,5 +26,5 @@ flyctl ssh sftp [command] [flags]
 
 ## See Also
 
-* [flyctl ssh](/docs/flyctl/ssh/)	 - Use SSH to login to or run commands on VMs
+* [flyctl ssh](/docs/flyctl/ssh/)	 - Use SSH to log into or run commands on Machines
 

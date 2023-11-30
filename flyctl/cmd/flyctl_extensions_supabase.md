@@ -1,4 +1,4 @@
-Provision and manage Supabase Postgresql databases
+Provision and manage Supabase PostgreSQL databases
 
 
 ## Usage

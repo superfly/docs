@@ -27,7 +27,7 @@ flyctl [flags]
 * [launch](/docs/flyctl/launch/)	 - Create and configure a new app from source code or a Docker image
 * [litefs-cloud](/docs/flyctl/litefs-cloud/)	 - LiteFS Cloud management commands
 * [logs](/docs/flyctl/logs/)	 - View app logs
-* [machine](/docs/flyctl/machine/)	 - Commands that manage machines
+* [machine](/docs/flyctl/machine/)	 - Manage Fly Machines.
 * [migrate-to-v2](/docs/flyctl/migrate-to-v2/)	 - Migrate a v1 app to v2
 * [monitor](/docs/flyctl/monitor/)	 - Monitor currently running application deployments
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
@@ -35,7 +35,7 @@ flyctl [flags]
 * [planetscale](/docs/flyctl/planetscale/)	 - Provision and manage PlanetScale MySQL databases
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
 * [postgres](/docs/flyctl/postgres/)	 - Manage Postgres clusters.
-* [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a fly VM
+* [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a Fly Machine.
 * [redis](/docs/flyctl/redis/)	 - Launch and manage Redis databases managed by Upstash.com
 * [regions](/docs/flyctl/regions/)	 - V1 APPS ONLY: Manage regions
 * [releases](/docs/flyctl/releases/)	 - List app releases
@@ -44,7 +44,7 @@ flyctl [flags]
 * [services](/docs/flyctl/services/)	 - Show the application's services
 * [settings](/docs/flyctl/settings/)	 - Manage flyctl settings
 * [sftp](/docs/flyctl/sftp/)	 - Get or put files from a remote VM.
-* [ssh](/docs/flyctl/ssh/)	 - Use SSH to login to or run commands on VMs
+* [ssh](/docs/flyctl/ssh/)	 - Use SSH to log into or run commands on Machines
 * [status](/docs/flyctl/status/)	 - Show app status
 * [tokens](/docs/flyctl/tokens/)	 - Manage Fly.io API tokens
 * [turboku](/docs/flyctl/turboku/)	 - Launch a Heroku app on Fly.io
