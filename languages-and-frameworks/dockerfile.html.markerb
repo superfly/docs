@@ -7,37 +7,44 @@ redirect_from: /docs/getting-started/dockerfile/
 
 You already have a project wrapped up in a [docker container](https://docs.docker.com/engine/reference/builder/)? Great! Just deploy that!
 
-The `fly launch` command detects your Dockerfile and builds it. If you have Docker running locally, it builds it on your machine. If not, it builds it on a Fly build machine. Once your container is built, it's deployed! Need some extra config? No sweat, we've got you covered. Let's take a look.
+The `fly launch` command detects your Dockerfile, builds it, and then deploys your app.  Need some extra config? No sweat, we've got you covered.
+
+<div class="important icon">
+If you want to configure more than the basic settings, things like secrets or environment variables for example, then run `fly launch --no-deploy` so that you can [edit the `fly.toml` file](#more-config) before the first deployment.
+</div>
 
 ```cmd
 fly launch
 ```
 ```output
-...
+Scanning source code
 Detected a Dockerfile app
-? Choose an app name (leave blank to generate one):
-? Select Organization: Mark Ericksen (personal)
-...
+Creating app in /Users/name/test/my-app-name
+We're about to launch your app on Fly.io. Here's what you're getting:
 
-? Choose a region for deployment: Los Angeles, California (US) (lax)
-App will use 'lax' region as primary
+Organization: MyOrg                  (fly launch defaults to the personal org)
+Name:         my-app-name            (derived from your directory name)
+Region:       Secaucus, NJ (US)      (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
 
-Created app 'wispy-breeze-3322' in organization 'personal'
-Admin URL: https://fly.io/apps/wispy-breeze-3322
-Hostname: wispy-breeze-3322.fly.dev
-? Would you like to set up a Postgresql database now? No
-? Would you like to set up an Upstash Redis database now? No
-Wrote config file fly.toml
-? Would you like to deploy now?
+? Do you want to tweak these settings before proceeding? Yes
 ```
 
-Let `fly launch` generate an app name for you or pick your own.
+Type `n` if you're happy with the defaults listed, otherwise type `y` to open the Fly Launch web page and edit your settings, including:
 
-Select the Fly.io [region](https://fly.io/docs/reference/regions/) to deploy to.
+* Name: Keep the default app name or enter your own.
 
-The launch command generates a `fly.toml` file for your project with the settings. You can deploy right away, or add some config first.
+* Region: Keep the fastest [region](/docs/reference/regions/) (the value of `primary_region` in the `fly.toml` file) as chosen by Fly Launch, or select a different region to deploy to.
 
-## _Config First!_
+* Services: The port for services (the value of `internal_port` in the `fly.toml` file) depends on the `EXPOSE` instruction in your Dockerfile. The default port when the `fly launch` command doesn't find ports set in a Dockerfile is `8080`.
+
+* You can also set a default Machine size and memory, and add and configure Postgres or Redis.
+
+After you click **Confirm Settings**, Fly Launch creates your app, generates a `fly.toml` file for your project with the settings, and then deploys the app.
+
+## _More config!_
 
 Most Dockerfiles expect some configuration settings through `ENV`. The generated `fly.toml` file has a place for you to add your custom `ENV` settings. It's the `[env]` block.
 
@@ -47,7 +54,7 @@ Most Dockerfiles expect some configuration settings through `ENV`. The generated
   MAX_PLAYER_COUNT = "15"
 ```
 
-Add the values your Dockerfile or container requires.
+Add the values your Dockerfile requires.
 
 Sometimes you have secrets that shouldn't be checked in to `git` or shared publicly. For those settings, you can set them using [`fly secrets`](https://fly.io/docs/reference/secrets/#setting-secrets).
 
@@ -68,43 +75,55 @@ NAME      DIGEST                           DATE
 MY_SECRET b9e37b7b239ee4aefc75352fe3fa6dc6 1m20s ago
 ```
 
-The values aren't displayed since they are secret!
+The values aren't displayed, since they're secret!
 
-## _Deploy Your App_
+## _Deploy your app_
 
-If you didn't previously deploy the app, you can do that now.
+If you didn't deploy the new app, or you've made changes and want to redeploy, then you can do that now.
 
 ```cmd
 fly deploy
 ```
 ```output
-Validating /Users/someone/project/fly.toml
+==> Verifying app config
+Validating /Users/name/test/my-app-name/fly.toml
 Platform: machines
 ✓ Configuration is valid
+--> Verified app config
 ==> Building image
-Remote builder fly-builder-restless-shadow-3063 ready
-==> Creating build context
---> Creating build context done
+Remote builder fly-builder-long-glitter-7257 ready
 ==> Building image with Docker
---> docker host: 20.10.12 linux x86_64
-Sending build context to Docker daemon     346B
-...
-  Finished deploying
 
-Visit your newly deployed app at https://wispy-breeze-3322.fly.dev/
+...
+
+--> Pushing image done
+image: registry.fly.io/my-app-name:deployment-01HGEQ1Z1DPMJ4NMPNHTA09T6T
+image size: 141 MB
+
+Watch your deployment at https://fly.io/apps/my-app-name/monitoring
+
+-------
+Updating existing machines in 'my-app-name' with rolling strategy
+
+-------
+ ✔ [1/2] Machine 918543b477de83 [app] update succeeded
+ ✔ [2/2] Machine e28697ce6d3986 [app] update succeeded
+-------
+
+Visit your newly deployed app at https://my-app-name.fly.dev/
 ```
 
-By default, `fly deploy` builds the image using a remote builder. If you have Docker running locally and want to build locally, then run `fly deploy --local-only`. Once your container is built, it's deployed!
+By default, `fly deploy` builds the image using a remote builder. If you have Docker running locally and want to build locally, then run `fly deploy --local-only`. After the image is built, the app gets deployed.
 
-## _Open Your App_
+## _Open your app_
 
-Run `fly apps open` to open your deployed app in a browser.
+Run `fly apps open`, or just go to the URL specified in the output, to open your deployed app in a browser.
 
 You're off and running!
 
-## _Taking it Further_
+## _Taking it further_
 
-Lots of applications deployed in a container have some state that they want to keep. Here are a couple resources to check out for ways to do that.
+Lots of apps have some state that they want to keep. Here are a couple resources to check out for ways to do that.
 
-- **[Persistent Volumes:](https://fly.io/docs/volumes/)** You can create [persistent volumes](https://fly.io/docs/volumes/) that you can mount into your container for reading and writing data that changes but isn't blown away when you deploy again.
+- **[Persistent Volumes:](https://fly.io/docs/volumes/)** You can create [persistent volumes](https://fly.io/docs/volumes/) for reading and writing data that changes but isn't blown away when you deploy again.
 - **[Postgres Database:](https://fly.io/docs/reference/postgres/#about-postgres-on-fly)** Deploy a [Fly Postgres Database](https://fly.io/docs/reference/postgres/#about-postgres-on-fly). It automatically creates a `DATABASE_URL` ENV when you attach it to your app.
