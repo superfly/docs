@@ -36,11 +36,11 @@ Type `n` if you're happy with the defaults listed, otherwise type `y` to open th
 
 * Name: Keep the default app name or enter your own.
 
-* Region: Keep the "fastest" [region](/docs/reference/regions/) as chosen by Fly Launch, or select a different to deploy to.
+* Region: Keep the fastest [region](/docs/reference/regions/) as chosen by Fly Launch, or select a different region to deploy to.
 
 * Services: The port for services (the value of `internal_port` in the`fly.toml` file) depends on the `EXPOSE` instruction in your Dockerfile. The default port when the `fly launch` command doesn't find ports set in a Dockerfile is `8080`.
 
-* You can also set a default Machine size and add and configure Postgres or Redis.
+* You can also set a default Machine size and memory, and add and configure Postgres or Redis.
 
 After you click **Confirm Settings**, Fly Launch creates your app, generates a `fly.toml` file for your project with the settings, and then deploys the app.
 
@@ -113,7 +113,7 @@ Updating existing machines in 'my-app' with rolling strategy
 Visit your newly deployed app at https://my-app.fly.dev/
 ```
 
-By default, `fly deploy` builds the image using a remote builder. If you have Docker running locally and want to build locally, then run `fly deploy --local-only`. After the image is built, then the app gets deployed.
+By default, `fly deploy` builds the image using a remote builder. If you have Docker running locally and want to build locally, then run `fly deploy --local-only`. After the image is built, the app gets deployed.
 
 ## _Open Your App_
 
