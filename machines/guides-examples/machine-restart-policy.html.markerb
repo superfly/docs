@@ -71,7 +71,7 @@ Configuration changes to be applied to machine: 3908032c794088 (my-app-name)
 ? Apply changes? (y/N)
 ```
 
-Enter 'y' to apply the changes.
+Enter `y` to apply the changes.
 
 ## Change a Machine's restart policy with the Machines API
 
