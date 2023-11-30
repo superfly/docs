@@ -373,17 +373,19 @@ Machine leases can be used to obtain an exclusive lock on modifying a Machine.
 
 Given the name of a Fly App and the Machine ID of a Fly Machine, instruct the Fly Proxy not to send requests to the Machine.
 
-This is useful for bluegreen deployments: cordon off a "green" Machine, update it, make sure it comes up health, and then uncordon it to make it the new "blue". You can also do this with a fresh Machine, all in one shot, using the `skip_service_registration` request field of a Machine Create request.
+You can also do this with a fresh Machine, all in one shot, using the `skip_service_registration` request field of a Machine Create request.
+
+This is useful for bluegreen deployments: boot up a new, "green", cordoned Machine running the new release (using `skip_service_registration`), make sure it's healthy, then uncordon it and tear down the old, "blue" Machine.
 
 Returns **Status: 200 OK** on success.
 
 ### Resume request routing to a Machine
 
-`POST /apps/{app_name}/machines/{machine_id}/cordon`
+`POST /apps/{app_name}/machines/{machine_id}/uncordon`
 
 Given the name of a Fly App and the Machine ID of a Fly Machine, instruct the Fly Proxy to again send requests to the Machine.
 
-This is useful for bluegreen deployments: cordon off a "green" Machine, update it, make sure it comes up health, and then uncordon it to make it the new "blue". This is also how you register services for a Fly Machine created with the `skip_service_registration` request field.
+This is useful for bluegreen deployments: boot up a new, "green", cordoned Machine running the new release, make sure it's healthy, then uncordon it and tear down the old, "blue" Machine. This is also how you register services for a Fly Machine created with the `skip_service_registration` request field.
 
 Returns **Status: 200 OK** on success.
 
