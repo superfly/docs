@@ -104,10 +104,14 @@ fly machine destroy e2865641be9786
 
 You can scale Machine CPU and memory settings for an entire process group using the `fly scale vm` and `fly scale memory` commands. This section provides a summary of vertical scaling. For more information, refer to [Scale Machine CPU and RAM](/docs/apps/scale-machine/#scale-by-process-group).
 
+<div class="note icon">
+**Note**: The `--process-group` option is aliased to `-g` to make things a bit quicker.
+</div>
+
 The following example changes the CPU/RAM of Machines in the `web` process group to a different preset combination:
 
 ```
-fly scale vm performance-2x --group web
+fly scale vm performance-2x --process-group web
 ```
 
 Run `fly platform vm-sizes` for a list of the valid CPU/RAM preset combinations.
@@ -115,7 +119,7 @@ Run `fly platform vm-sizes` for a list of the valid CPU/RAM preset combinations.
 This example changes only the RAM of Machines in the `web` process group:
 
 ```
-fly scale memory 4096 --group web
+fly scale memory 4096 --process-group web
 ```
 
 ## Move a Machine between process groups
