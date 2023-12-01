@@ -617,7 +617,7 @@ Optional. The threshold of storage used on a volume, by percentage, that trigger
 
 ### `auto_extend_size_increment`
 
-The increment, in GB, by which to extend the volume after reaching the `auto_extend_size_threshold`. Required with `auto_extend_size_increment`.
+The increment, in GB, by which to extend the volume after reaching the `auto_extend_size_threshold`. Required with `auto_extend_size_threshold`.
 
 ### `auto_extend_size_limit`
 
