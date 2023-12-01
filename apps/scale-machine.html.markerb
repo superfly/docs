@@ -144,7 +144,11 @@ If you try to set an incompatible CPU/RAM combination through `fly scale memory`
 
 ## Scale by process group
 
-Use the `--group` option to specify the process group to scale, with either `fly scale vm` or `fly scale memory`.
+Use the `--process-group` option to specify the process group to scale, with either `fly scale vm` or `fly scale memory`.
+
+<div class="note icon">
+**Note**: The `--process-group` option is aliased to `-g` for faster command entry.
+</div>
 
 Here's an app with two process groups defined:
 
@@ -160,10 +164,10 @@ worker  2       shared  1       512 MB  ams,yyz
 web     1       shared  1       512 MB  yyz   
 ```
 
-Say the workers are constantly crunching data and need to be bigger. You can scale a single process group using the `--group` option:
+Say the workers are constantly crunching data and need to be bigger. You can scale a single process group using the `--process-group` option:
 
 ```cmd
-fly scale vm performance-2x --group worker
+fly scale vm performance-2x --process-group worker
 ```
 ```out
 Updating machine 0e286561f35586
