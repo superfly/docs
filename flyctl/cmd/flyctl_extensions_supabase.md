@@ -11,7 +11,7 @@ flyctl extensions supabase [command] [flags]
 * [dashboard](/docs/flyctl/extensions-supabase-dashboard/)	 - Visit the Supabase database dashboard
 * [destroy](/docs/flyctl/extensions-supabase-destroy/)	 - Permanently destroy a Supabase database
 * [list](/docs/flyctl/extensions-supabase-list/)	 - List your Supabase databases
-* [status](/docs/flyctl/extensions-supabase-status/)	 - Show details about a Supabase database
+* [status](/docs/flyctl/extensions-supabase-status/)	 - Show details about a Supabase Postgres database
 
 ## Options
 

@@ -1,4 +1,4 @@
-Show details about a Supabase database
+Show details about a Supabase Postgres database
 
 
 ## Usage
