@@ -147,7 +147,7 @@ If you try to set an incompatible CPU/RAM combination through `fly scale memory`
 Use the `--process-group` option to specify the process group to scale, with either `fly scale vm` or `fly scale memory`.
 
 <div class="note icon">
-**Note**: The `--process-group` option is aliased to `-g` to make things a bit quicker.
+**Note**: The `--process-group` option is aliased to `-g` for faster command entry.
 </div>
 
 Here's an app with two process groups defined:
