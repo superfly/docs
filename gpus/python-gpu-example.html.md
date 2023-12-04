@@ -4,14 +4,14 @@ layout: docs
 nav: firecracker
 ---
 
-The goal: a CUDA-enabled Python template environment on a Fly GPU Machine, for working with ML models.
+This is a worked example for a CUDA-enabled Python template environment on a Fly GPU Machine, for working with ML models.
 
 We'll start with a minimal Ubuntu Linux, add a non-root user, and set up a Python virtual environment for a project, with Jupyter Notebook installed. NVIDIA libraries needed for the project can be installed to the persistent disk as needed, using pip.
 
 ## Deployment to Fly.io
 ### Create a Fly App
 ```cmd
- fly apps create <app-name>
+fly apps create <app-name>
 ```
 
 ### Clone the example repo
