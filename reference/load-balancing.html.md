@@ -61,6 +61,6 @@ When users generate 61+ concurrent requests from Amsterdam, 60 of those requests
 
 That keeps going until we get to 200+ concurrent requests. At 200 concurrent requests all application instances are at their `soft_limit`, so Fly.io will start routing requests to the ams instances again. E.g., the 201st concurrent request will go to an application instance in the ams region that is currently at its `soft_limit`.
 
-When users generate 250 concurrent requests, all instances will be at their `hard_limit`. The 251st concurrent request will get delayed by the Fly.io proxy until an instance is below its `hard_limit`.
+When users generate 250 concurrent requests, all instances will be at their `hard_limit`. The 251st concurrent request will get delayed by the Fly Proxy until an instance is below its `hard_limit`.
 
 If traffic is far above the `hard_limit` for a long period of time, Fly.io may start returning 503 Service Unavailable responses for requests that are not able to be routed to an instance.
