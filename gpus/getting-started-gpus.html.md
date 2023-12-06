@@ -6,7 +6,7 @@ nav: firecracker
 
 ## How do I run a GPU Machine on Fly.io?
 
-A Fly GPU Machine works very similarly to a CPU-only (or "normal") Fly Machine, and has access to the same platform features by default. It boots up with GPU drivers installed and you can run `nvidia-smi` right away. So to run a Fly App that uses CUDA compute is a slight variation on running any Fly App. In a nutshell:
+A Fly GPU Machine works very similarly to a CPU-only (or "normal") Fly Machine, and has access to the same platform features by default. It boots up with GPU drivers installed and you can run `nvidia-smi` right away. So running a Fly App that uses CUDA compute is a slight variation on running any Fly App. In a nutshell:
 
 1. Make sure GPUs are enabled on your Fly Organization.
 1. Tell the Fly Platform to provision your Machines on Fly GPU hosts.
@@ -31,9 +31,9 @@ Assuming that you're going the [Fly Launch](/docs/apps/) way and configuring you
 vm.size = "a100-40gb"
 ```
 
-The `a100-40gb` preset is the `a100-pcie-40gb` GPU with the `performance-8x` CPU config and 32GB RAM. You can tailor your resources using the [`[[vm]]` table](https:///docs/reference/configuration/#the-vm-section) in `fly.toml`.
+The `a100-40gb` preset is the `a100-pcie-40gb` GPU with the `performance-8x` CPU config and 32GB RAM. You can exert more granular control over resources using the [`[[vm]]` table](https:///docs/reference/configuration/#the-vm-section) in `fly.toml`.
 
-Run `fly platform vm-sizes` to get the list of presets, and [check out the pricing](https:///docs/about/pricing/#gpus-and-fly-machines) to help you plan ahead.
+Run `fly platform vm-sizes` to get the list of presets, and [check out the pricing page](https:///docs/about/pricing/#gpus-and-fly-machines) to help you plan ahead.
 
 ### Specify the region
 But you're not done! For `fly deploy` to succeed in provisioning your Machine(s), the app's `primary_region` must match a region that hosts the kind of GPU you're asking for. At the time of writing, `a100-pcie-40gb` GPUs are only available in `ord`. Set the initial region in `fly.toml`:
@@ -64,12 +64,12 @@ From there, install whatever packages your project needs. This will include some
 
 You don't need to install any `cuda-drivers` packages in the Docker image, but you'll want some subset of [NVIDIA's GPU-accelerated libraries](https://developer.nvidia.com/gpu-accelerated-libraries)—`libcublas-12-2` (linear algebra) and `libcudnn8` (deep-learning primitives) are a common combination, along with [`cuda-nvcc`](https://developer.nvidia.com/cuda-llvm-compiler)  for compiling stuff with CUDA support.
 
-In general, you'll install NVIDIA libs using your Linux package manager. In a Python environment it's possible to skip system-wide installation and use pip packages instead.
+In general, you'll install NVIDIA libs using your Linux package manager. In a Python environment, it's possible to skip system-wide installation and use pip packages instead.
 
 Tips:
 
 -  Be deliberate about how much cruft you put in your Docker image. Avoid meta-packages like `cuda-runtime-*`.
-- `cuda-libraries-12-2` is a convenient, but bulky, start. Once you know what libs are needed at build and runtime, please pick accordingly to optimize final image size.
+- `cuda-libraries-12-2` is a convenient, but bulky, start. Once you know what libs are needed at build and runtime, pick accordingly to optimize final image size.
 - Use multi-stage docker builds as much as possible.
 
 To install packages from NVIDIA repos, you'll need the `ca-certificates` and `cuda-keyring` packages first.
@@ -82,7 +82,7 @@ Machine learning tends to involve large quantities of data. We're working with a
 - The root file system of a Fly Machine is ephemeral -- it's reset from its Docker image on every restart. It's also limited to 50GB on GPU-enabled Machines.
 - Fly Volumes are limited to 500GB, and are attached to a physical server. The Machine must run on the same hardware as the volume it mounts.
 
-Unless you've got a constant workload, you'll likely want to shut down GPU Machines when they're not needed&mdash;either manually with `fly machine stop`, or using the Fly Proxy autostop and autostart features&mdash;to save money. Saving data on a persistent Fly Volume saves having to download large amounts of data, or reconstitute a large Docker image into a rootfs, whenever the Machine restarts. You'll probably want to store models, at least, on a volume.
+Unless you've got a constant workload, you'll likely want to shut down GPU Machines when they're not needed&mdash;either manually with `fly machine stop`, or using the Fly Proxy autostop and autostart features&mdash;to save money. Saving data on a persistent Fly Volume means you don't have to download large amounts of data, or reconstitute a large Docker image into a rootfs, whenever the Machine restarts. You'll probably want to store models, at least, on a volume.
 
 ## Using swap
 

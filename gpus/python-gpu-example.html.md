@@ -6,7 +6,7 @@ nav: firecracker
 
 This is a worked example for a CUDA-enabled Python template environment on a Fly GPU Machine, for working with ML models.
 
-We'll start with a minimal Ubuntu Linux, add a non-root user, and set up a Python virtual environment for a project, with Jupyter Notebook installed. NVIDIA libraries needed for the project can be installed to the persistent disk as needed, using pip.
+We'll start with a minimal Ubuntu Linux, add a non-root user, and set up a Python virtual environment for a project, with Jupyter Notebook installed. NVIDIA libraries that the project uses can be installed to the persistent disk as needed, using pip.
 
 ## Deployment to Fly.io
 ### Create a Fly App
@@ -20,9 +20,9 @@ git clone git@github.com:fly-apps/python_gpu_example.git && cd python_gpu_exampl
 ```
 
 ### Edit app configuration in `fly.toml`
-* At the least, change `app` to match the name of the app you just created.
-* Edit `primary_region` if wanted -- make sure to choose a region in which GPU Machines are available. Check the [docs](https://fly.io/docs/gpus/gpu-quickstart/) for GPU regions.
-* Optionally, change the NONROOT_USER `build.arg` -- if you do, also edit the `destination` of the volume mount in `mounts` to match.
+* Change `app` to match the name of the app you just created.
+* Optionally, `primary_region`&mdash;make sure to choose a region in which GPU Machines are available. Check the [docs](https://fly.io/docs/gpus/gpu-quickstart/) for GPU regions.
+* Optionally, change the NONROOT_USER `build.arg`&mdash;if you do, also edit the `destination` of the volume mount in `mounts` to match.
 * Optionally, tweak `swap_size_mb`.
 
 ### Deploy
@@ -62,10 +62,10 @@ Then you can install new pip packages to the persistent volume, download models,
 
 To deactivate the venv, type `deactivate`. To drop back to the root user, hit <kbd>CTRL-D</kbd>.
 
-As the root user, you can use apt to manage system-wide software. Anything you install with apt is installed to the Machine's root file system, which means it disappears when the Machine next shuts down, so if you find yourself doing this, remember to add them to the Dockerfile, ready to be built into the image on the next deployment.
+As the root user, you can use apt to manage system-wide software. Anything you install with apt is installed to the Machine's root file system, which means it disappears when the Machine next shuts down, so if you find yourself doing this, remember to add any new packages to the Dockerfile, ready to be built into the image on the next deployment.
 
 ## Fly.io-specific things
-Fly Launch doesn't have a scanner that will set this up just how we want, so the prep looks a lot like preparing a Docker container. We're configuring and running a Fly Machine instead, of course
+Fly Launch doesn't have a scanner that will set this up just how we want, so the prep looks a lot like preparing a Docker container. We're configuring and running a Fly Machine instead, of course.
 * We'll use `fly deploy` to launch the Machine using configuration stored in the Fly Launch app config file, `fly.toml`
 * Persistent storage is provided by a Fly Volume attached to the Machine
 * Fly GPU Machines come configured to use their GPU hardware, with NVIDIA drivers installed. You can launch a vanilla Ubuntu image and run nvidia-smi with no further setup
@@ -82,7 +82,7 @@ Machine learning tends to involve large quantities of data. We're working with a
 
 We want to shut down GPU Machines when they're not needed, either manually with `fly machine stop`, or using the Fly Proxy autostop and autostart features, so it's not desirable to download many GB of models or libraries whenever the Machine restarts. 
 
-The compromise we use here is to generate a sub-1GB Docker image and store the project's pip packages and any downloaded data on the Fly Volume. This keeps all pip dependencies together in one venv for easy coordination and flexibility. With a well-established workload, you might make a different calculation; maybe all the projects deps actually fit in a manageable Docker image, and you can dispense with the volume storage, or some packages can we installed system-wide with apt, leaving less to manage with pip.
+The compromise we use here is to generate a sub-1GB Docker image and store the project's pip packages and any downloaded data on the Fly Volume. This keeps all pip dependencies together in one venv for easy coordination and flexibility. With a well-established workload, you might make a different calculation; maybe all the projects deps actually fit in a manageable Docker image, and you can dispense with the volume storage, or some packages can be installed system-wide with apt, leaving less to manage with pip.
 
 ### Compute
 The GPUs available at this time are `a100-sxm4-80gb` and `a100-pcie-40gb`, and you can use one GPU per Machine. We're not currently looking at model training on a massive scale; with careful design we can certainly do some reasonable inference on a single one of these cards. Here we're looking at running models manually so we'll stick with a single Machine, but an obvious use for Fly GPU Machines is as a "stateless" service for an app whose front end and any other components run on cheaper CPU-only Machines. This allows for independent horizontal scaling of front and back ends, as well as traffic-based capacity scaling by starting and stopping Machines.
@@ -158,7 +158,7 @@ CMD ["/bin/bash", "-c", "./entrypoint.sh $PYTHON_USER"]
 ### Entrypoint script
 When this Machine boots, it runs the script `entrypoint.sh` as root. 
 
-This script gives the non-root user (whose username is set to `pythonuser` via a build argument in `fly.toml`) ownership of the non-root user's home directory to that user. This is necessary, because we're mounting a Fly Volume over that point in the Machine file system.
+This script gives the non-root user (whose username is set to `pythonuser` via a build argument in `fly.toml`) ownership of the non-root user's home directory. This is necessary, because we're mounting a Fly Volume over that point in the Machine file system.
 
 Then it runs `nvidia-smi` to make sure the GPU drivers are loaded and the device is ready for the non-root user to use.
 
@@ -173,7 +173,7 @@ USERNAME=$1
 
 echo "Inside entrypoint script."
 chown $USERNAME:$USERNAME /home/$USERNAME
-nvidia-smi # This seems to initialize the driver so that non-root user can use the GPU
+nvidia-smi # This ensures the driver is initialized so that non-root user can use the GPU
 
 echo "About to run post-initialization script as $USERNAME."
 su -c "bash ./post-initialization.sh" $USERNAME
@@ -185,7 +185,7 @@ This script, `post-initialization.sh`, runs as the non-root user. It activates a
 * Ensures there's a dir called `~/project` with a Python virtual environment created
 * Activates this venv
 * Uses the presence or absence of the `jupyter` pip package as a proxy for whether it's the first run or not (if there was a venv, then it's not the first run, but it checks anyway). If Jupyter isn't installed, it installs it. Tailor this to whatever pip packages you want. If you want to run Jupyter on boot, `jupyter` is the only package you absolutely need here. You can install more pip packages persistently straight from the Jupyter notebook interface.
-* Starts a Jupyter server on the Machine's private IPv6 address so it's only accessible using Fly.io private networking--i.e. over a WireGuard connection (including user-mode WireGuard with the `fly proxy` command)
+* Starts a Jupyter server on the Machine's private IPv6 address so it's only accessible using Fly.io private networking; that is, over a WireGuard connection (including user-mode WireGuard with the `fly proxy` command)
   
 ```bash
 #!/bin/bash
