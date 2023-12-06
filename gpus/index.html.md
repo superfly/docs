@@ -2,6 +2,7 @@
 title: Fly GPUs
 layout: docs
 nav: firecracker
+toc: false
 ---
 
 Fly.io has GPUs! If you have workloads that would benefit from GPU acceleration, Fly GPU Machines may be for you.
@@ -12,11 +13,13 @@ Fly GPUs are only available to vetted orgs right now. Sign up [here](https://fly
 
 ## What can I use Fly GPUs for?
 
-Fly GPUs are the NVIDIA A100 40G PCIe and A100 80G SXM ([datasheet](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-nvidia-us-2188504-web.pdf)). These units are positioned for inference, model training, and intensive high-precision computation tasks like scientific simulations. As their names suggest, they have 40GB and 80GB of GPU memory.
+Fly GPUs are currently either the NVIDIA A100 40G PCIe or A100 80G SXM ([datasheet](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-nvidia-us-2188504-web.pdf)). A100 units are positioned for inference, model training, and intensive high-precision computation tasks like scientific simulations. As their names suggest, they have 40GB and 80GB of GPU memory.
 
-Right now each Fly GPU Machine uses a single full GPU. A single GPU is well suited to inference and maybe a smidgen of fine tuning. Training large models from scratch requires much, much beefier resources.
+The A100 is heavy on the tensor cores and has [no RT cores for ray tracing, and no NVENC video encoder](https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf).
 
-Fly GPUs can be used for rendering, but are not optimized for it the way desktop GPUs are. The A100 is heavy on the tensor cores and has [no RT cores for ray tracing, and no NVENC video encoder](https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf).
+We have some all-rounder L40S cards coming ([datasheet](https://resources.nvidia.com/en-us-l40s/l40s-datasheet-28413)), still good for your AI workloads but equipped with both RT cores and NVENC.
+
+Right now each Fly GPU Machine uses a single full GPU. A single GPU is well suited to rendering, encoding, inference, and maybe a smidgen of fine tuning. Training large models from scratch requires much, much beefier resources.
 
 Go to the [GPU Quickstart](https://fly.io/docs/gpus/gpu-quickstart/) to get off the ground fast, or read more practicalities in [Getting started with Fly GPUs](/docs/gpus/getting-started-gpus/).
 
