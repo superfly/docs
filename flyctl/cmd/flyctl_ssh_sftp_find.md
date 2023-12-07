@@ -13,6 +13,7 @@ flyctl ssh sftp find [path] [flags]
   -C, --command string         command to run on SSH session
   -c, --config string          Path to application configuration file
   -h, --help                   help for find
+      --machine string         Run the console in the existing machine with the specified ID
   -o, --org string             The target Fly.io organization
   -g, --process-group string   The target process group
       --pty                    Allocate a pseudo-terminal (default: on when no command is provided)

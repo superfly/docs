@@ -8,7 +8,7 @@ flyctl extensions [command] [flags]
 ## Available Commands
 * [planetscale](/docs/flyctl/extensions-planetscale/)	 - Provision and manage PlanetScale MySQL databases
 * [sentry](/docs/flyctl/extensions-sentry/)	 - Setup a Sentry project for this app
-* [supabase](/docs/flyctl/extensions-supabase/)	 - Provision and manage Supabase PostgreSQL databases
+* [supabase](/docs/flyctl/extensions-supabase/)	 - Provision and manage Supabase Postgres databases
 * [tigris](/docs/flyctl/extensions-tigris/)	 - Provision and manage Tigris object storage buckets
 
 ## Options
