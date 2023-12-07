@@ -25,7 +25,7 @@ flyctl machine clone [machine_id] [flags]
       --standby-for strings           Comma separated list of Machine IDs to watch for. You can use '--standby-for=source' to create a standby for the cloned Machine.
       --vm-cpu-kind string            The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                   Number of CPUs
-      --vm-gpu-kind string            If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb)
+      --vm-gpu-kind string            If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s)
       --vm-memory string              Memory (in megabytes) to attribute to the VM
       --vm-size string                The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --volume-requires-unique-zone   Require volume to be placed in separate hardware zone from existing volumes. Default false.

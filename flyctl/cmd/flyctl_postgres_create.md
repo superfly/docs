@@ -1,4 +1,4 @@
-Create a new PostgreSQL cluster
+Create a new Postgres cluster
 
 
 ## Usage

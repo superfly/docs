@@ -34,13 +34,13 @@ flyctl machine create <image> [command] [flags]
   -r, --region string               The target region (see 'flyctl platform regions')
       --restart string              Set the restart policy for a Machine. Options include 'no', 'always', and 'on-fail'.
                                     	Default is 'on-fail' for Machines created by 'fly deploy' and Machines with a schedule. Default is 'always' for Machines created by 'fly m run'.
-      --rm                          Automatically remove the Machine when it exits
+      --rm                          Automatically remove the Machine when it exits. Sets the restart-policy to 'never' if not otherwise specified.
       --schedule string             Schedule a Machine run at hourly, daily and monthly intervals
       --skip-dns-registration       Do not register the machine's 6PN IP with the internal DNS system
       --standby-for strings         For Machines without services, a comma separated list of Machine IDs to act as standby for.
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
-      --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb)
+      --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s)
       --vm-memory string            Memory (in megabytes) to attribute to the VM
       --vm-size string              The VM size to set machines to. See "fly platform vm-sizes" for valid values
   -v, --volume strings              Volume to mount, in the form of <volume_id_or_name>:/path/inside/machine[:<options>]
