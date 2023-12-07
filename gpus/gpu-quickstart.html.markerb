@@ -23,9 +23,10 @@ Fly GPUs are only available on GPU-enabled accounts. You can join the waitlist [
     <div class="note icon">
     **Note**: GPUs are not available in all regions. 
 
-    There are two GPU types available: Nvidia A100-PCIe-40GB and A100-SXM4-80GB ([datasheet](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-nvidia-us-2188504-web.pdf)). And we offer two Machine size presets `a100-40gb` and `a100-80gb` available in the following regions:
+    There are three GPU types available: Nvidia L40S, A100-PCIe-40GB and A100-SXM4-80GB ([datasheet](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-nvidia-us-2188504-web.pdf)). And we offer two Machine size presets `a100-40gb` and `a100-80gb` available in the following regions:
 
     Currently GPUs are available in the following regions:
+    - `l40s`: `ord`
     - `a100-40gb`: `ord`
     - `a100-80gb`: `ams`, `iad`, `mia`, `sjc`, `syd`
 
@@ -51,7 +52,7 @@ Fly GPUs are only available on GPU-enabled accounts. You can join the waitlist [
 
     <div class="note icon">
     **Notes**:
-    - Make sure `vm.size` is set in `fly.toml`, valid values are `a100-40gb` and `a100-80gb`.
+    - Make sure `vm.size` is set in `fly.toml`, valid values are `a100-40gb`, `a100-80gb` and `l40s`.
     - Make sure to include a `[[mounts]]` section in `fly.toml`.
     - The volume gets created automatically by `fly deploy`.
     - Use the volume to store the models and large files that can't be shipped as a docker image.
