@@ -12,7 +12,7 @@ Applications within the same organization are assigned special addresses ("6PN a
 
 This connectivity is always available to applications; you don't have to do anything special to get it.
 
-You can connect applications running outside of Fly to your 6PN network using WireGuard; for that matter, you can connect your dev laptop to your 6PN network. To do that, you'll use `flyctl` to generate a WireGuard configuration that is addressed with a 6PN address.
+You can connect applications running outside of Fly.io to your 6PN network using WireGuard; for that matter, you can connect your dev laptop to your 6PN network. To do that, you'll use flyctl, the Fly.io CLI, to generate a WireGuard configuration that is addressed with a 6PN address.
 
 ## Discovering Apps through DNS on an instance
 
@@ -33,7 +33,7 @@ fdaa:0:18:a7b:7d:f066:b83b:2
 
 **The DNS server address is different on WireGuard connections than on instances**. That's because you can run multiple WireGuard connections; your dev laptop could be WireGuard-connected to multiple organizations, but an instance can't be. So DNS is just a little more complicated over WireGuard.
 
-Your DNS server address for a WireGuard connection is a part of the WireGuard connection `flyctl` generates. Your platform WireGuard tools might read and automatically configure DNS from that configuration, or it might not. Here's how to find it:
+Your DNS server address for a WireGuard connection is a part of the WireGuard connection flyctl generates. Your platform WireGuard tools might read and automatically configure DNS from that configuration, or it might not. Here's how to find it:
 
 ```
 [Interface]
@@ -65,10 +65,10 @@ fdaa:0:18:a7b:7d:f066:b83b:2
 
 ## Connecting to a running service via its 6PN address
 In the `/etc/hosts` of a deployed Fly App, we alias the 6PN address of the app to `fly-local-6pn`.  
-So, in order for a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, you need to bind it to `fly-local-6pn:8080` for it to be accessible at "[6PN_Address:8080]".  
+For a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, you need to bind it to `fly-local-6pn:8080` for it to be accessible at "[6PN_Address:8080]".  
 (`fly-local-6pn` is to 6pn-addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine)
 
-## Fly `.internal` addresses
+## Fly.io `.internal` addresses
 
 A typical .internal address is composed of a region qualifier, followed by the app name followed by `.internal`.
 
@@ -80,9 +80,9 @@ The regional qualifier `global` will return the IPv6 internal addresses for all 
 
 As well, as being able to query and lookup addresses, there's a TXT record associated with `regions.appname.internal` which will list the regions that `appname` is deployed in.
 
-Finally, You can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will contain a comma-separated list of the application names.
+Finally, you can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will contain a comma-separated list of the application names.
 
-| name | aaaa | txt |
+| Name | AAAA | TXT |
 | -- | --- | -- |
 |`top<number>.nearest.of.<appname>.internal`| top _number_ closest app instances|none
 |`<alloc_id>.vm.<appname>.internal`|specific app instance<br/>|none
@@ -96,7 +96,7 @@ Finally, You can discover all the apps in the organization by requesting the TXT
 |`_peer.internal`|none|names of all wireguard peers|
 |`<peername>._peer.internal`|IPv6 of peer|none|
 |`_instances.internal`|none|IDs, apps, addresses, and regions<br>of all running instances<br>comma separated|
-|`<value>.<key>.kv._metadata.<appname>.internal`|IPv6 of machines with matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
+|`<value>.<key>.kv._metadata.<appname>.internal`|IPv6 of Machines with matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
 
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
@@ -155,13 +155,13 @@ You can use the [WireGuard](https://wireguard.com/) VPN to connect to our [6PN p
 
 ### TL:DR;
 
-Fly's command line  can generate you a tunnel configuration file with private keys already embedded. You can load that file into your local WireGuard application to create a tunnel. Activate the tunnel and you'll be using the internal Fly DNS service which resolves `.internal` addresses - and passes on other requests to Google's DNS for resolution.
+Fly's command line  can generate you a tunnel configuration file with private keys already embedded. You can load that file into your local WireGuard application to create a tunnel. Activate the tunnel and you'll be using the internal Fly.io DNS service which resolves `.internal` addresses - and passes on other requests to Google's DNS for resolution.
 
 ### Step by Step
 
 #### Install your WireGuard App
 
-There are many options for installing WireGuard on your system, detailed on the [WireGuard](https://www.wireguard.com/install/) site. Install the software that is appropriate for your system. Windows and macOS have apps available to install. Linux systems have packages, typically named wireguard and wireguard-tools, you should install both.
+Visit the [WireGuard](https://www.wireguard.com/install/) site for installation options. Install the software that is appropriate for your system. Windows and macOS have apps available to install. Linux systems have packages, typically named wireguard and wireguard-tools, you should install both.
 
 #### Creating your tunnel configuration
 
@@ -193,7 +193,7 @@ We suggest you name your saved configuration with the same name as the peer you 
 
 ##### Dealing with Defaults
 
-A default `region` and `name` will be used if they are not provided to the create command. In most cases, this is fine. However, the default generated name will start with `interactive-*` which are filtered out of DNS (because of the sheer volume of them) and subsequently can't be queried with `_peer.internal` or `<peername>._peer.internal`. If you wish to interact with your peer via it's name, be sure to specify it when creating.
+A default `region` and `name` will be used if they are not provided to the create command. In most cases, this is fine. However, the default generated name will start with `interactive-*` which are filtered out of DNS (because of the sheer volume of them) and subsequently can't be queried with `_peer.internal` or `<peername>._peer.internal`. If you want to interact with your peer via it's name, then you need to specify a name when you create the tunnel.
 
 First, look up available regions by running `fly platform regions`. Select a region with a check mark in the Gateway column.
 
