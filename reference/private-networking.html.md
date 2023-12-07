@@ -6,7 +6,7 @@ nav: firecracker
 redirect_from: /docs/reference/privatenetwork/
 ---
 
-Fly apps are connected by a mesh of Wireguard tunnels using IPV6.
+Fly apps are connected by a mesh of WireGuard tunnels using IPV6.
 
 Applications within the same organization are assigned special addresses ("6PN addresses") tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly platform won't forward between different 6PN networks.
 
@@ -155,7 +155,7 @@ You can use the [WireGuard](https://wireguard.com/) VPN to connect to our [6PN p
 
 ### TL:DR;
 
-Fly's command line  can generate you a tunnel configuration file with private keys already embedded. You can load that file into your local WireGuard application to create a tunnel. Activate the tunnel and you'll be using the internal Fly.io DNS service which resolves `.internal` addresses - and passes on other requests to Google's DNS for resolution.
+The flyctl command line  can generate you a tunnel configuration file with private keys already embedded. You can load that file into your local WireGuard application to create a tunnel. Activate the tunnel and you'll be using the internal Fly.io DNS service which resolves `.internal` addresses - and passes on other requests to Google's DNS for resolution.
 
 ### Step by Step
 
@@ -179,7 +179,7 @@ You'll be asked to select which organization you want the WireGuard tunnel to wo
   Demo Sandbox (demo-sandbox)
 ```
 
-As well as configuring the Wireguard service, the create command also generates a tunnel configuration file, complete with private keys which cannot be recovered. This configuration file will be used in the next step. First it has to be saved:
+As well as configuring the WireGuard service, the create command also generates a tunnel configuration file, complete with private keys which cannot be recovered. This configuration file will be used in the next step. First it has to be saved:
 
 ```output
 !!!! WARNING: Output includes private key. Private keys cannot be recovered !!!!
@@ -222,11 +222,11 @@ fdaa:0:18:a7b:7d:f066:b83b:102
 
 ##### Windows
 
-Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select your configuration file. The Wireguard app will display the details of your tunnel. Click `Activate` to bring the tunnel online.
+Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select your configuration file. The WireGuard app will display the details of your tunnel. Click `Activate` to bring the tunnel online.
 
 ##### macOS
 
-Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select your configuration file and click Ok. You will be prompted by the OS that WireGuard would like to add VPN configurations; click `Allow`. The Wireguard app will display the details of your tunnel. Click `Activate` to bring the tunnel online.
+Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select your configuration file and click Ok. You will be prompted by the OS that WireGuard would like to add VPN configurations; click `Allow`. The WireGuard app will display the details of your tunnel. Click `Activate` to bring the tunnel online.
 
 ##### Ubuntu Linux
 
@@ -268,7 +268,7 @@ dig +noall +answer _apps.internal txt
 _apps.internal.		5	IN	TXT	"datasette-apache-proxy-demo,datasette-demo"
 ```
 
-### Managing Wireguard on Fly
+### Managing WireGuard on Fly.io
 
 #### Listing the tunnels
 
