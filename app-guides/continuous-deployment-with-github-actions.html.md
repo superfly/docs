@@ -27,7 +27,7 @@ The first section is a speed-run through the steps to make the go-example app au
 4. Type `y` to when prompted to tweak settings and enter a name for the app. Adjust other settings, such as region, as needed. Then click **Confirm Settings**.
 5. Still in the project source directory, get a Fly API deploy token by running `fly tokens create deploy -x 999999h`. Copy the output.
 6. Go to your newly-created repository on GitHub and select **Settings**.
-7. Under **Secrets and variables**, select **Actions**, and then create a new repository secret called `FLY_API_TOKEN` with the value of the token from step 4.
+7. Under **Secrets and variables**, select **Actions**, and then create a new repository secret called `FLY_API_TOKEN` with the value of the token from step 5.
 8. Back in your project source directory, create `.github/workflows/fly.yml` with these contents:
     
     ```yaml
