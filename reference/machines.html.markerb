@@ -26,7 +26,7 @@ This guide assumes that you have flyctl and cURL installed, and have authenticat
 
 ### Connecting via WireGuard
 
-This method requires more setup but gives you direct access to machines over the Wireguard VPN.
+This method requires more setup but gives you direct access to machines over the WireGuard VPN.
 
 First, follow the [instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly network. We recommend WireGuard because you can directly test your machines from your local machine.
 
@@ -50,7 +50,7 @@ If you successfully reach the API, it should respond with a `404 page not found`
 
 ### Setting up the environment
 
-If you are using a Wireguard VPN or `fly proxy`,
+If you are using a WireGuard VPN or `fly proxy`,
 set these environment variables to make the following commands easier to use.
 
 ```bash

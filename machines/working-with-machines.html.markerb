@@ -53,7 +53,7 @@ If you successfully reach the API, it should respond with a `404 page not found`
 Set these environment variables to make the following commands easier to use.
 
 ```bash
-$ export FLY_API_HOSTNAME="https://api.machines.dev" # set to http://_api.internal:4280 when using Wireguard or `http://127.0.0.1:4280` when using 'flyctl proxy'
+$ export FLY_API_HOSTNAME="https://api.machines.dev" # set to http://_api.internal:4280 when using WireGuard or `http://127.0.0.1:4280` when using 'flyctl proxy'
 $ export FLY_API_TOKEN=$(fly auth token)
 ```
 
