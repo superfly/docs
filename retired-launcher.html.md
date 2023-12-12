@@ -5,9 +5,9 @@ nav: firecracker
 toc: false
 ---
 
-We've retired our web-based launchers for individual apps like Jupyter and code-server. If the app you'd like to launch has an official Docker image, it's pretty easy to launch it yourself. Here are a couple of places to start:
-
+We've retired our web-based launchers for individual apps like Jupyter and code-server. You can launch these apps yourself, with the `fly launch` command. Apps that have their own official Docker images are especially convenient. Here are a couple of places to start:
 
 [Speedrun: Launch on Fly.io](/docs/speedrun/)
 
 [Deploy via Dockerfile](/docs/languages-and-frameworks/dockerfile/)
+
