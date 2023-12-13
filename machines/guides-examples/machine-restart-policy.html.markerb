@@ -9,7 +9,7 @@ The Machine restart policy defines whether and how flyd restarts a Machine after
 
 The restart policies are:
 
-- **`no`**: Never try to restart a Machine automatically when its main process exits, whether that’s on purpose or on a crash.
+- **`no`**: Never try to restart a Machine automatically when its main process exits, whether that’s on purpose or on a crash. `no` is the default when you use the `--rm` option to create a Machine with `fly m run` that auto-destroys on exit.
 
 - **`always`**: Always restart a Machine automatically and never let it enter a `stopped` state, even when the main process exits cleanly. `always` is the default when you create a Machine with `fly m run` and for Fly Postgres app Machines. Recommended for "always-on" apps with no services configured, since the Machine restarts regardless of the exit code.
 

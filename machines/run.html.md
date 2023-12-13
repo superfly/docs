@@ -231,11 +231,15 @@ A Machine's [restart policy](/docs/machines/guides-examples/machine-restart-poli
 
 This policy does not apply when a Machine is stopped from outside, such as when you use the [fly machine stop](/docs/flyctl/machine-stop) command.
 
-Set it using the `--restart` option. Options are `no`, `always`, and `on-fail`; the default for a Machine created using `fly machine run` is `always`.
+Set it using the `--restart` option. Options are `no`, `always`, and `on-fail`. 
 
-## Remove the Machine when it exits
+The default restart policy for a Machine created using `fly machine run` is `always`, unless you use the [`--rm` option](#automatically-destroy-the-machine-when-it-exits), in which case the default is `no`.
 
-By default, when a Machine is `stopped`, its file system is reset using its config and Docker image, and it sits ready to be `started` again. Use the `--rm` flag to cause the Machine to instead be removed.
+## Automatically destroy the Machine when it exits
+
+By default, when a Machine is `stopped`, its file system is reset using its config and Docker image, and it sits ready to be `started` again. Use the `--rm` flag to cause the Machine to instead be destroyed when it stops.
+
+The default [restart policy](#set-a-restart-policy-on-process-exit) for a Machine created with `fly machine run --rm` is `no`, to ensure that flyd doesn't ignore the exit code and restart the Machine.
 
 ## Mount a Fly Volume
 
