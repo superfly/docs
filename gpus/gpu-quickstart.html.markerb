@@ -21,7 +21,7 @@ Fly GPUs are only available on GPU-enabled accounts. You can join the waitlist [
 1. From flyctl, create an app using either `fly launch` or `fly apps create`.
 
     <div class="note icon">
-    **Note**: GPUs are not available in all regions. 
+    **Note**: GPUs are not available in all regions.
 
     There are two GPU types available: Nvidia A100-PCIe-40GB and A100-SXM4-80GB ([datasheet](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-nvidia-us-2188504-web.pdf)). And we offer two Machine size presets `a100-40gb` and `a100-80gb` available in the following regions:
 
@@ -67,12 +67,17 @@ Fly GPUs are only available on GPU-enabled accounts. You can join the waitlist [
 That's pretty much it to get an app running with a Machine on a GPU.
 
 <div class="important icon">
-**Important**: If you create any additional volumes, they will have to be created with the same constraints as your Machine. For example, here is how to create a one hundred gigabyte volume for storing ML models:
-
-    ```cmd
-    fly volumes create models --size 100 --vm-gpu-kind a100-pcie-40gb --region ord
-    ```
+**Important**: If you create any additional volumes, they need to be created with the same constraints as your Machine. See the following example.
 </div>
+
+A volume needs to be created with the same constraints as your Machine. Here's an example of creating a one hundred gigabyte volume for storing ML models in the `ord` region, on a machine with a GPU:
+
+```cmd
+fly volumes create models \
+  --size 100 \
+  --vm-gpu-kind a100-pcie-40gb \
+  --region ord
+```
 
 Example Dockerfile:
 
