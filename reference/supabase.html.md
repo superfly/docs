@@ -2,6 +2,7 @@
 title: Supabase Postgres
 layout: docs
 sitemap: false
+status: beta
 nav: firecracker
 ---
 
