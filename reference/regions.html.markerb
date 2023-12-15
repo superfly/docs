@@ -15,7 +15,7 @@ Run <code>fly platform regions</code> to get a list of regions.
 
 ## Fly.io Regions
 
-|Region ID| Region Location | Gateway&#42; | [Paid Plan](https://fly.io/plans) Only&#42;&#42; |
+|Region ID| Region Location | Gateway&#42; | [Launch Plan or Higher](https://fly.io/plans) Only&#42;&#42; |
 |---------|-----------------|---------|---------|
 ams |    Amsterdam, Netherlands         | ✓
 arn |    Stockholm, Sweden              |
@@ -55,7 +55,7 @@ yyz |    Toronto, Canada                | ✓
 
 &#42; You can host your apps in any region; "Gateway" regions also have WireGuard gateways, through which you connect to your organization's private network.
 
-&#42;&#42; For some higher-demand regions we restrict scaling up VMs to organizations with [paid plans](https://fly.io/plans).
+&#42;&#42; For some higher-demand regions we restrict scaling up Machines to organizations with the [Launch, Scale, or Enterprise plans](https://fly.io/plans).
 
 ## _Discovering your Application's Region_
 
