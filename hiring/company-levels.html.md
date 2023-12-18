@@ -16,6 +16,8 @@ We break out seniority into four levels, L1 to L4 (staff).
   
 * **L4's** are our staff level. An L4 is a leader across multiple different parts of our platform, product, or function. They influence work on lots of teams, not just one. They're independently responsible for making big new things happen; an L3 leads a team, an L4 might create new teams. 
 
+In order to optimize for pay equity, Fly.io doesn't negotiate salaries. Instead, we have a standardized salary for each of these levels.
+
 You can go from L1 to L2, or from L2 to L3, etc. In fact, the most important job that managers at Fly.io have is leveling people up. [We prefer small teams and bottom-up product decisions](https://fly.io/docs/hiring/working/#we-prefer-small-teams-and-bottom-up-decisions), which incentivizes us to get people as autonomous as we can.
 
 Going down a level is more problematic, and as a rule of thumb we don't do it. So we're particularly careful about leveling people in the door.
