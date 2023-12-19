@@ -5,7 +5,7 @@ order: 3
 ---
 
 If your application is based on Rails 5.2 through 6.1, or is a Rails 7 app
-selecting one of the javascript options or many of the css options, you will
+selecting one of the JavaScript options or many of the css options, you will
 require Node.js to be included in your deployment image.
 
 While it is unsurprising that the slim ruby image doesn't include Nodejs by
