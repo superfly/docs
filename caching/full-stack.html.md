@@ -11,7 +11,7 @@ Users prefer fast applications regardless of scale. The standard caching APIs in
 
 Responsiveness is usually a function of latency. When a user requests data, applications typically deal with:
 
-* Input lag, how long it takes something they type/clip/tap/say to appear on the screen. If your app is simple you hopefully don't have to worry about this. If you put in a load of third party javascript, it might be a problem.
+* Input lag, how long it takes something they type/clip/tap/say to appear on the screen. If your app is simple you hopefully don't have to worry about this. If you put in a load of third party JavaScript, it might be a problem.
 * The "slow" speed of light: when a user sends data to your backend, they have to wait for a light to go from their device, through their ISP (which can be frightfully slow), across the world, and into your server.
 * Data processing time: you probably have to do some computering to handle a user's request and then generate a response.
 * The speed of light again! Your server sends data, it traverses the internet, arrives at the users (frightfully slow) ISP and lands on their device.
