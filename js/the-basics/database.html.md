@@ -88,7 +88,7 @@ want to connect with SSL/TLS connection options.
 In order to use a database we need to load and evolve a schema.  This often
 involves running a tool like Prisma's [migrate](https://www.prisma.io/docs/concepts/components/prisma-migrate) tool.
 
-For databases other than Sqlite3, this is best done as a one-off command run in a temporary VM.  This can be accomplisedh by adding a
+For databases other than Sqlite3, this is best done as a one-off command run in a temporary VM.  This can be accomplished by adding a
 [`release_command`](https://fly.io/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment) in your `fly.toml` file.
 
 For sqlite3, a different approach is required as the migration will need to be run on each machine that has a volume mounted.  This can be accomplished by creating a small script that first runs the migrate command then run the web server start script.  You can place this script in your source tree, and then use the following command to replace the CMD in the Dockerfile:
