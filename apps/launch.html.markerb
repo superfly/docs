@@ -77,7 +77,7 @@ You can also perform an entirely manual "launch", skipping all the launch scanne
 
 ## After `fly launch`
 
-If you've run `fly launch` but haven't deploy yet (hint: you can do this with `fly launch --no-deploy`), or you deployed but want to make changes, then you can:
+If you've run `fly launch` but haven't deployed yet (hint: you can do this with `fly launch --no-deploy`), or you deployed but want to make changes, then you can:
 
 * change your configuration
 * update your app source
