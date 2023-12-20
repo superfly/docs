@@ -13,13 +13,13 @@ Fly GPUs are only available to vetted orgs right now. Sign up [here](https://fly
 
 ## What can I use Fly GPUs for?
 
-Fly GPUs are currently either the NVIDIA A100 40G PCIe or A100 80G SXM ([datasheet](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-nvidia-us-2188504-web.pdf)). A100 units are positioned for inference, model training, and intensive high-precision computation tasks like scientific simulations. As their names suggest, they have 40GB and 80GB of GPU memory.
+Three models of GPU are available: NVIDIA A100 40G PCIe, A100 80G SXM, and L40S. 
 
-The A100 is heavy on the tensor cores and has [no RT cores for ray tracing, and no NVENC video encoder](https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf).
+A100 units are all about the tensor cores, and are positioned for inference, model training, and intensive high-precision computation tasks like scientific simulations. As their names suggest, they have 40GB and 80GB of GPU memory. ([A100 datasheet](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-nvidia-us-2188504-web.pdf))
 
-We have some all-rounder L40S cards coming ([datasheet](https://resources.nvidia.com/en-us-l40s/l40s-datasheet-28413)), still good for your AI workloads but equipped with both RT cores and NVENC.
+The L40S cards are all-rounders; they've got tensor cores, RT cores, and NVENC/NVDEC, and have 48GB of GPU RAM. Choose the L40S to accelerate graphics or video workloads, as well as for inference. ([L40S datasheet](https://resources.nvidia.com/en-us-l40s/l40s-datasheet-28413))
 
-Right now each Fly GPU Machine uses a single full GPU. A single GPU is well suited to rendering, encoding, inference, and maybe a smidgen of fine tuning. Training large models from scratch requires much, much beefier resources.
+Right now each Fly GPU Machine uses a single full GPU. A single GPU is well suited to rendering, encoding/decoding, inference, and a smidgen of fine tuning. Training large models from scratch requires much, much beefier resources.
 
 Go to the [GPU Quickstart](https://fly.io/docs/gpus/gpu-quickstart/) to get off the ground fast, or read more practicalities in [Getting started with Fly GPUs](/docs/gpus/getting-started-gpus/).
 
