@@ -2,7 +2,7 @@ List your Tigris object storage buckets
 
 ## Usage
 ~~~
-flyctl extensions tigris list [flags]
+flyctl extensions storage list [flags]
 ~~~
 
 ## Options
@@ -23,5 +23,5 @@ flyctl extensions tigris list [flags]
 
 ## See Also
 
-* [flyctl extensions tigris](/docs/flyctl/extensions-tigris/)	 - Provision and manage Tigris object storage buckets
+* [flyctl extensions storage](/docs/flyctl/extensions-storage/)	 - Provision and manage Tigris object storage buckets
 

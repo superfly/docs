@@ -7,7 +7,7 @@ flyctl volumes [command] [flags]
 
 ## Available Commands
 * [create](/docs/flyctl/volumes-create/)	 - Create a new volume for an app.
-* [destroy](/docs/flyctl/volumes-destroy/)	 - Destroy a volume.
+* [destroy](/docs/flyctl/volumes-destroy/)	 - Destroy one or more volumes.
 * [extend](/docs/flyctl/volumes-extend/)	 - Extend a volume to the specified size.
 * [fork](/docs/flyctl/volumes-fork/)	 - Fork the specified volume.
 * [list](/docs/flyctl/volumes-list/)	 - List the volumes associated with an app.

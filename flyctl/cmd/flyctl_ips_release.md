@@ -1,8 +1,8 @@
-Releases an IP address from the application
+Releases one or more IP addresses from the application
 
 ## Usage
 ~~~
-flyctl ips release [ADDRESS] [flags]
+flyctl ips release [flags] ADDRESS ADDRESS ...
 ~~~
 
 ## Options

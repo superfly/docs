@@ -1,9 +1,8 @@
-Provision a Tigris object storage bucket
-
+Permanently destroy a Tigris object storage bucket
 
 ## Usage
 ~~~
-flyctl extensions tigris create [flags]
+flyctl extensions storage destroy [name] [flags]
 ~~~
 
 ## Options
@@ -11,9 +10,7 @@ flyctl extensions tigris create [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for create
-  -n, --name string     The name of your bucket
-  -o, --org string      The target Fly.io organization
+  -h, --help            help for destroy
   -y, --yes             Accept all confirmations
 ~~~
 
@@ -27,5 +24,5 @@ flyctl extensions tigris create [flags]
 
 ## See Also
 
-* [flyctl extensions tigris](/docs/flyctl/extensions-tigris/)	 - Provision and manage Tigris object storage buckets
+* [flyctl extensions storage](/docs/flyctl/extensions-storage/)	 - Provision and manage Tigris object storage buckets
 

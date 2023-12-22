@@ -10,7 +10,7 @@ flyctl ips [command] [flags]
 * [allocate-v6](/docs/flyctl/ips-allocate-v6/)	 - Allocate an IPv6 address
 * [list](/docs/flyctl/ips-list/)	 - List allocated IP addresses
 * [private](/docs/flyctl/ips-private/)	 - List instances private IP addresses
-* [release](/docs/flyctl/ips-release/)	 - Release an IP address
+* [release](/docs/flyctl/ips-release/)	 - Release IP addresses
 
 ## Options
 
