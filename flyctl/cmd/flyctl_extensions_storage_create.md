@@ -1,8 +1,9 @@
-Destroy one or more volumes. When you destroy a volume, you permanently delete all its data.
+Provision a Tigris object storage bucket
+
 
 ## Usage
 ~~~
-flyctl volumes destroy [flags] ID ID ...
+flyctl extensions storage create [flags]
 ~~~
 
 ## Options
@@ -10,7 +11,9 @@ flyctl volumes destroy [flags] ID ID ...
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for destroy
+  -h, --help            help for create
+  -n, --name string     The name of your bucket
+  -o, --org string      The target Fly.io organization
   -y, --yes             Accept all confirmations
 ~~~
 
@@ -24,5 +27,5 @@ flyctl volumes destroy [flags] ID ID ...
 
 ## See Also
 
-* [flyctl volumes](/docs/flyctl/volumes/)	 - Manage Fly Volumes.
+* [flyctl extensions storage](/docs/flyctl/extensions-storage/)	 - Provision and manage Tigris object storage buckets
 

@@ -12,6 +12,20 @@ flyctl turboku <heroku-app-name> <heroku-api-token> [flags]
       --build-only                       Build but do not deploy
       --build-secret stringArray         Set of build secrets of NAME=VALUE pairs. Can be specified multiple times. See https://docs.docker.com/engine/reference/commandline/buildx_build/#secret
       --build-target string              Set the target build stage to build if the Dockerfile has more than one stage
+      --buildpacks-docker-host string    Address to docker daemon that will be exposed to the build container.
+                                         If not set (or set to empty string) the standard socket location will be used.
+                                         Special value 'inherit' may be used in which case DOCKER_HOST environment variable will be used.
+                                         This option may set DOCKER_HOST environment variable for the build container if needed.
+                                         
+      --buildpacks-volume strings        Mount host volume into the build container, in the form '<host path>:<target path>[:<options>]'.
+                                         - 'host path': Name of the volume or absolute directory path to mount.
+                                         - 'target path': The path where the file or directory is available in the container.
+                                         - 'options' (default "ro"): An optional comma separated list of mount options.
+                                             - "ro", volume contents are read-only.
+                                             - "rw", volume contents are readable and writeable.
+                                             - "volume-opt=<key>=<value>", can be specified more than once, takes a key-value pair consisting of the option name and its value.
+                                         Repeat for each volume in order (comma-separated lists not accepted)
+                                         
       --detach                           Return immediately instead of monitoring deployment progress
       --dockerfile string                Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
   -e, --env stringArray                  Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.

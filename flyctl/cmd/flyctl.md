@@ -42,6 +42,7 @@ flyctl [flags]
 * [sftp](/docs/flyctl/sftp/)	 - Get or put files from a remote VM.
 * [ssh](/docs/flyctl/ssh/)	 - Use SSH to log into or run commands on Machines
 * [status](/docs/flyctl/status/)	 - Show app status
+* [storage](/docs/flyctl/storage/)	 - Provision and manage Tigris object storage buckets
 * [tokens](/docs/flyctl/tokens/)	 - Manage Fly.io API tokens
 * [turboku](/docs/flyctl/turboku/)	 - Launch a Heroku app on Fly.io
 * [version](/docs/flyctl/version/)	 - Show version information for the flyctl command

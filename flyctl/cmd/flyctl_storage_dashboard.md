@@ -1,8 +1,8 @@
-Permanently destroy a Tigris object storage bucket
+Visit the Tigris dashboard
 
 ## Usage
 ~~~
-flyctl extensions tigris destroy [name] [flags]
+flyctl storage dashboard [bucket_name] [flags]
 ~~~
 
 ## Options
@@ -10,7 +10,7 @@ flyctl extensions tigris destroy [name] [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for destroy
+  -h, --help            help for dashboard
   -y, --yes             Accept all confirmations
 ~~~
 
@@ -24,5 +24,5 @@ flyctl extensions tigris destroy [name] [flags]
 
 ## See Also
 
-* [flyctl extensions tigris](/docs/flyctl/extensions-tigris/)	 - Provision and manage Tigris object storage buckets
+* [flyctl storage](/docs/flyctl/storage/)	 - Provision and manage Tigris object storage buckets
 
