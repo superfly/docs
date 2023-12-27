@@ -6,7 +6,11 @@ status: beta
 nav: firecracker
 ---
 
-[Supabase](https://supabase.com) partnered with Fly.io to offer fully managed Postgres databases hosted on Fly.io infrastructure. Using Supabase Postgres ensures low latency database access in all Fly.io regions.
+<div class="callout">
+Supabase Postgres on Fly.io is in private alpha. [Sign up for access](https://forms.supabase.com/fly-postgres) after [creating](https://fly.io/docs/getting-started/log-in-to-fly/) your Fly.io account.
+</div>
+
+[Supabase](https://supabase.com) operates a fully managed Postgres service hosted on Fly.io infrastructure. This is the best option low latency database access in all Fly.io regions.
 
 ## Pricing and Billing
 
