@@ -71,7 +71,9 @@ You can provide your own `fly.toml` and `fly launch` will offer to copy that con
 
 There are also [a number of other options](/docs/flyctl/launch/) you can use to exert control over `fly launch`.
 
-If `fly launch` doesn't have a scanner that can set up your app automatically, it will still initialize a new Fly App in your Fly.io organization and provide you with a default app configuration that's a reasonable starting point for a simple web app. 
+If `fly launch` doesn't have a scanner that can set up your app automatically, it will still initialize a new Fly App in your Fly.io organization and provide you with a default app configuration that's a reasonable starting point for a simple web app.
+
+You'll need to ensure that your Fly App's name is unique across all of Fly.io. By default, Fly Launch will derive an app name from the current directory name. If this is something common like "hello-world", then there's a good chance your launch will fail. You can use the `--name` flag to specify a unique name up front.
 
 You can also perform an entirely manual "launch", skipping all the launch scanners and full-service resource provisioning, using `fly apps create`, a hand-crafted (or copied) `fly.toml`, and step-by-step resource provisioning, followed by `fly deploy`.
 
