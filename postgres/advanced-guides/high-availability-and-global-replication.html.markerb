@@ -31,7 +31,7 @@ Provisioning a new machine with image registry-1.docker.io/flyio/postgres-flex:1
 Machine has been successfully cloned!
 ```
 
-This will clone the spec from the source Machine and use it to create the new replica in the specified region.
+The `fly macine clone` command clones the spec from the source Machine and uses it to create the new replica in the specified region.
 
 
 ## Performing a failover
@@ -139,14 +139,14 @@ That's it! You should now run `fly status` to verify your changes.
 
 The generated connection string uses port `5432` to connect to PostgreSQL. This port always forwards you to a writable instance. Port `5433` is direct to the PostgreSQL member, and used to connect to read replicas directly.
 
-You can use the proxy port (`5432`) to connect from every region, but it will be quite slow. Especially because we put our PostgreSQL cluster in Santiago. Connecting to "local" replicas is much quicker, but does take some app logic.
+You can use the proxy port (`5432`) to connect from every region, but it will be quite slow. Connecting to "local" replicas is much quicker, but does take some app logic.
 
 The basic logic to connect is:
 
-1. Set a `PRIMARY_REGION` environment variable on your app, `scl` for our `chaos-postgres` cluster.
-2. Check the `FLY_REGION` environment variable at connect time, use `DATABASE_URL` as is when `FLY_REGION=scl`
+1. Set a `PRIMARY_REGION` environment variable on your app.
+2. Check the `FLY_REGION` environment variable at connect time, use `DATABASE_URL` as is when `FLY_REGION` is the same as `PRIMARY_REGION`.
 3. Modify the `DATABASE_URL` when running in other regions:
-   1. Change the port to `5433`
+   * Change the port to `5433`
 
 This is what it looks like in Ruby:
 
@@ -169,16 +169,16 @@ class Fly
 end
 ```
 
-Running this in `scl` will use the built-in `DATABASE_URL` and connect to port `5432`:
+Running this in the primary region will use the built-in `DATABASE_URL` and connect to port `5432`:
 
 ```
-postgres://<user>:<password>@top1.nearest.of.chaos-postgres.internal:5432/rails_on_fly?sslmode=disable
+postgres://<user>:<password>@top1.nearest.of.<postgres cluster app name>.internal:5432/rails_on_fly?sslmode=disable
 ```
 
 In the other regions, the app will connect to port `5433`:
 
 ```
-postgres://<user>:<password>@top1.nearest.of.chaos-postgres.internal:5433/rails_on_fly?sslmode=disable
+postgres://<user>:<password>@top1.nearest.of.<postgres cluster app name>.internal:5433/rails_on_fly?sslmode=disable
 ```
 
 ## Detecting write requests
@@ -189,7 +189,7 @@ PostgreSQL conveniently sends a "read only transaction" error when you attempt t
 
 ### Replay the request
 
-Once caught, just send a `fly-replay` header specifying the primary region. For `chaos-postgres`, send `fly-replay: region=scl`, and we'll take care of the rest.
+Once caught, just send a `fly-replay` header specifying the primary region, for example `fly-replay: region=scl`, and we'll take care of the rest.
 
 If you're working in Rails, just add this to your `ApplicationController`:
 
@@ -210,7 +210,7 @@ end
 
 ## Library support
 
-We would like to build libraries to make this seamless for most application frameworks and runtimes. If you have a particular app you'd like to distribute with PostgreSQL, [post in our community forums](https://community.fly.io/t/multi-region-database-guide/1600) and we'll write some code for you.
+We would like to build libraries to make this seamless for most application frameworks and runtimes. If you have a particular app you'd like to distribute with PostgreSQL, [post in our community forums](https://community.fly.io/t/multi-region-database-guide/1600).
 
 ## Consistency model
 
@@ -224,19 +224,19 @@ Requests to the primary region are strongly consistent. When you use the replay 
 
 Most apps accept a `POST` or `PUT`, do a bunch of writes, and then redirect the user to a `GET` request. In most cases, the database will replicate the changes before the user makes the second request. But not always!
 
-Most read heavy applications aren't especially sensitive to stale data on subsequent requests. A lagging read replica might result in an out of date view for users, but this might be reasonable for your use case.
+Most read-heavy applications aren't especially sensitive to stale data on subsequent requests. A lagging read replica might result in an out-of-date view for users, but this might be reasonable for your use case.
 
-If your app is sensitive to this (meaning, you never, under any circumstances want to show users stale data), you should be careful using read replicas.
+If your app is sensitive to stale data (meaning, you never, under any circumstances want to show users stale data), you should be careful using read replicas.
 
 ### Managing eventual consistency
 
 For apps that are sensitive to consistency issues, you can add a counter or timestamp to user sessions that indicates what "version" of the database a particular user is expecting. When the user makes a request and the session's data version differs from the replica, you can use the same `fly-replay` header to redirect their request to the primary region – and then you'll know it's not stale.
 
-In theory, you _could_ run PostgreSQL with synchronous replication and block until replicas receive writes. This probably won't work well for far flung read replicas.
+In theory, you could run PostgreSQL with synchronous replication and block until replicas receive writes. This probably won't work well for far flung read replicas.
 
 ## This is wrong for some apps
 
-We built this set of features for read heavy apps that are primary HTTP request based. That is, most requests only perform reads and only some requests include writes.
+We built this set of features for read-heavy apps that are primarily HTTP request based. That is, most requests only perform reads and only some requests include writes.
 
 ### Write-heavy workloads
 
@@ -248,4 +248,4 @@ Truly write-heavy apps require latency aware data partitioning, either at the ap
 
 ### Long lived connections
 
-If your app makes heavy use of long lived connections with interpolated writes, like websockets, this will not work for you. This technique is specific to HTTP request/response based apps that bundle writes up into specific requests.
+If your app makes heavy use of long lived connections with interpolated writes, like WebSockets, this will not work for you. This technique is specific to HTTP request/response based apps that bundle writes up into specific requests.
