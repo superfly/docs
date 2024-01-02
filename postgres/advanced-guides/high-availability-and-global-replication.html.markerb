@@ -6,26 +6,24 @@ order: 1
 redirect_from: /docs/postgres/high-availability-and-global-replication/
 ---
 
-FLy Postgres uses repmgr to manage clusters of 3+ Postgres servers. 
-
-<div class="important icon">
-Older Fly Postgres apps use [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ Postgres servers.
-</div>
-
+Fly Postgres uses [repmgr](https://www.repmgr.org/) to manage clusters of 3+ Postgres servers. Older Fly Postgres apps use [stolon](https://github.com/sorintlab/stolon) for leader election and streaming replication between 2+ Postgres servers. Newer apps that use repmgr, and require at least 3 Postgres servers for quorum, use a postgres-flex image. Run `fly status --app <app name>` or `fly image show --app <app name>` to view the image name and version.
 
 ## Adding replicas
 
-The easiest way to add additional replicas at this time is through the `fly machine clone` command:
+The easiest way to add additional replicas is with the `fly machine clone` command:
 
 ```cmd
-fly machine clone <machine ID> --region <region> --app <app-name>
+fly machine clone <machine ID> --region <region> --app <app name>
 ```
+
 For example:
+
 ```cmd
 fly machine clone 148e306c77e089 --region lax --app my-app-name
 ```
 ```output
 Cloning machine 148e306c77e089 into region lax
+Volume 'pg_data' will start empty
 Provisioning a new machine with image registry-1.docker.io/flyio/postgres-flex:15...
   Machine 17814e3b990389 has been created...
   Waiting for machine 17814e3b990389 to start...
@@ -33,25 +31,46 @@ Provisioning a new machine with image registry-1.docker.io/flyio/postgres-flex:1
 Machine has been successfully cloned!
 ```
 
-This will clone the spec from the source machine and use it to create the new replica in the specified region.
+This will clone the spec from the source Machine and use it to create the new replica in the specified region.
 
 
 ## Performing a failover
 
-To perform a manual failover against your HA Postgres app of 3+ servers, run the following command:
+To perform a failover, you need to have 3 or more servers. Run the following command:
 
 ```cmd
-fly postgres failover --app <app-name>
+fly postgres failover --app <app name>
+```
+
+For example:
+```cmd
+fly postgres failover --app my-app-name
 ```
 ```output
 Performing a failover
-  Waiting for e784927ad23583 to become healthy (started, 3/3)
-  Waiting for 148e306c77e089 to become healthy (started, 3/3)
+Connecting to fdaa:2:45b:a7b:174:f553:db80:2... complete
+Stopping current leader...  17811073b07918
+Starting new leader
+Promoting new leader...  4d891247b0d698
+Connecting to fdaa:2:45b:a7b:174:f553:db80:2... complete
+NOTICE: promoting standby to primary
+DETAIL: promoting server "fdaa:2:45b:a7b:174:f553:db80:2" (ID: 665772506) using pg_promote()
+NOTICE: waiting up to 60 seconds (parameter "promote_check_timeout") for promotion to complete
+NOTICE: STANDBY PROMOTE successful
+DETAIL: server "fdaa:2:45b:a7b:174:f553:db80:2" (ID: 665772506) was successfully promoted to primary
+NOTICE: executing STANDBY FOLLOW on 1 of 1 siblings
+INFO: STANDBY FOLLOW successfully executed on all reachable sibling nodes
+Waiting 30 seconds for the old leader to stop...
+Restarting old leader... 17811073b07918
+Waiting for leadership to swap to 4d891247b0d698...
+  Waiting for 17811073b07918 to become healthy (started, 3/3)
+  Waiting for 4d891247b0d698 to become healthy (started, 3/3)
+  Waiting for 3d8d9e15c9de58 to become healthy (started, 3/3)
 Failover complete
 ```
 
 <div class="note icon">
-**Note:** Only healthy members residing in your primary region will be considered for leadership.
+**Note:** Only healthy servers residing in your primary region will be considered for leadership.
 </div>
 
 ## Performing a regional failover
@@ -64,7 +83,7 @@ If you haven't already pulled down your `fly.toml` configuration file, you can d
 fly config save --app <app-name>
 ```
 
-Now, let's open up the `fly.toml` file and set the [`primary_region`](https://fly.io/docs/reference/configuration/#primary-region) and the `PRIMARY_REGION` environment variable to our target region. In this example, we are looking to move leadership into the `lax` region.
+Open the `fly.toml` file and set the [`primary_region`](https://fly.io/docs/reference/configuration/#primary-region) and the `PRIMARY_REGION` environment variable to your target region. For example, to move leadership into the `lax` region:
 
 ```toml
 primary_region = "lax"
@@ -73,7 +92,7 @@ primary_region = "lax"
 PRIMARY_REGION = "lax"
 ```
 
-Before we can deploy this change, we must first identify which Postgres version we are currently running. Use `fly image show` to get the image and version info.
+Before deploying this change, identify which Postgres version you are currently running. Use `fly image show` to get the image and version info.
 
 For example:
 
@@ -88,17 +107,21 @@ MACHINE ID    	REGISTRY            	REPOSITORY         	TAG 	VERSION	DIGEST     
 3d8d9e15c9de58	registry-1.docker.io	flyio/postgres-flex	15.3	v0.0.46	sha256:44b6...	fly.pg-manager=repmgrfly.pg-version=15.3-1.pgdg120...
 ```
 
-Take note of the version specified in the `Tag` column, we will be using this in our next command.
+Take note of the version specified in the `Tag` column, you'll use it for the next command.
 
 <div class="warning icon">
-**Warning:** This deploy process will result in a small amount of downtime.  Once the PRIMARY_REGION change has been deployed, your cluster will become read-only until the failover process completes.
+**Warning:** This deploy process will result in a small amount of downtime. Once the primary region change has been deployed, your cluster will become read-only until the failover process completes.
 </div>
 
 ```cmd
 fly deploy . --image flyio/postgres-flex:<tag> --strategy=immediate
 ```
 
-Once the deploy process has completed, we can now work to transfer leadership into our new region. Ensure the new region has at least three healthy servers to maintain quorum (see above on how to add more replicas), then:
+Once the deploy process has completed, you can transfer leadership into the new region. 
+
+<div class="important icon">
+Ensure the new region has at least three healthy servers to maintain quorum (see above on how to [add more replicas](#adding-replicas)).
+</div>
 
 ```cmd
 fly pg failover
@@ -153,14 +176,15 @@ postgres://<user>:<password>@top1.nearest.of.chaos-postgres.internal:5432/rails_
 ```
 
 In the other regions, the app will connect to port `5433`:
+
 ```
 postgres://<user>:<password>@top1.nearest.of.chaos-postgres.internal:5433/rails_on_fly?sslmode=disable
 ```
 
-
-## Detect write requests
+## Detecting write requests
 
 ### Catch read-only errors
+
 PostgreSQL conveniently sends a "read only transaction" error when you attempt to write to a read replica. All you need to do to detect write requests is catch this error.
 
 ### Replay the request
@@ -190,7 +214,7 @@ We would like to build libraries to make this seamless for most application fram
 
 ## Consistency model
 
-This is a fairly typical read replica model. Read replicas are usually eventually consistent, and can fall behind the leader. Running read replicas across the world _can_ exacerbate this effect and make read replicas stale more frequently.
+This is a fairly typical read replica model. Read replicas are usually eventually consistent, and can fall behind the leader. Running read replicas across the world can exacerbate this effect and make read replicas stale more frequently.
 
 ### Request with writes
 
