@@ -21,10 +21,10 @@ fly machine clone <machine ID> --region <region> --app <app name>
 For example:
 
 ```cmd
-fly machine clone 148e306c77e089 --region lax --app my-app-name
+fly machine clone 148e306c77e089 --region iad --app my-app-name
 ```
 ```output
-Cloning machine 148e306c77e089 into region lax
+Cloning machine 148e306c77e089 into region iad
 Volume 'pg_data' will start empty
 Provisioning a new machine with image registry-1.docker.io/flyio/postgres-flex:15...
   Machine 17814e3b990389 has been created...
@@ -104,7 +104,7 @@ There may be situations where you want to move leadership into a completely new 
     fly config save --app <app name>
     ```
 
-4. Open the `fly.toml` file and set the [`primary_region`](https://fly.io/docs/reference/configuration/#primary-region) and the `PRIMARY_REGION` environment variable to your new target region. For example, to move leadership into the `iad` region:
+4. Open the `fly.toml` file and set the [`primary_region`](https://fly.io/docs/reference/configuration/#primary-region) and the `PRIMARY_REGION` environment variable to your new target region. For example, to move leadership into the iad region:
 
     ```toml
     primary_region = "iad"
@@ -136,45 +136,45 @@ There may be situations where you want to move leadership into a completely new 
     ```
 
       <div class="warning icon">
-      **Warning:** The deploy process will result in a small amount of downtime.
+      **Warning:** The deploy process will result in a small amount of downtime. Once the `fly.toml` file change has been deployed, your cluster will become read-only until the failover process completes.
       </div>
 
     Once the deploy process has completed, you might need to wait a moment for all the servers to become healthy.
 
 8. Run the `fly pg failover` command to move the primary server to the new region:
 
-```cmd
-fly pg failover
-```
-Example output for a successful failover:
+    ```cmd
+    fly pg failover
+    ```
+    Example output for a successful failover:
 
-```output
-Performing a failover
-Connecting to fdaa:2:45b:a7b:22b:ea40:9fed:2... complete
-Stopping current leader...  d891116b6505e8
-Starting new leader
-Promoting new leader...  e2866756a37148
-Connecting to fdaa:2:45b:a7b:22b:ea40:9fed:2... complete
-NOTICE: promoting standby to primary
-DETAIL: promoting server "fdaa:2:45b:a7b:22b:ea40:9fed:2" (ID: 453196900) using pg_promote()
-NOTICE: waiting up to 60 seconds (parameter "promote_check_timeout") for promotion to complete
-NOTICE: STANDBY PROMOTE successful
-DETAIL: server "fdaa:2:45b:a7b:22b:ea40:9fed:2" (ID: 453196900) was successfully promoted to primary
-NOTICE: executing STANDBY FOLLOW on 4 of 4 siblings
-INFO: STANDBY FOLLOW successfully executed on all reachable sibling nodes
-Waiting 30 seconds for the old leader to stop...
-Restarting old leader... d891116b6505e8
-Waiting for leadership to swap to e2866756a37148...
-  Waiting for 784eee9a216118 to become healthy (started, 3/3)
-  Waiting for d891116b6505e8 to become healthy (started, 3/3)
-  Waiting for e2866756a37148 to become healthy (started, 3/3)
-  Waiting for 2874443f054548 to become healthy (started, 3/3)
-  Waiting for 784e2edc425348 to become healthy (started, 3/3)
-  Waiting for e78423d1a33148 to become healthy (started, 3/3)
-Failover complete
-```
+    ```output
+    Performing a failover
+    Connecting to fdaa:2:45b:a7b:22b:ea40:9fed:2... complete
+    Stopping current leader...  d891116b6505e8
+    Starting new leader
+    Promoting new leader...  e2866756a37148
+    Connecting to fdaa:2:45b:a7b:22b:ea40:9fed:2... complete
+    NOTICE: promoting standby to primary
+    DETAIL: promoting server "fdaa:2:45b:a7b:22b:ea40:9fed:2" (ID: 453196900) using pg_promote()
+    NOTICE: waiting up to 60 seconds (parameter "promote_check_timeout") for promotion to complete
+    NOTICE: STANDBY PROMOTE successful
+    DETAIL: server "fdaa:2:45b:a7b:22b:ea40:9fed:2" (ID: 453196900) was successfully promoted to primary
+    NOTICE: executing STANDBY FOLLOW on 4 of 4 siblings
+    INFO: STANDBY FOLLOW successfully executed on all reachable sibling nodes
+    Waiting 30 seconds for the old leader to stop...
+    Restarting old leader... d891116b6505e8
+    Waiting for leadership to swap to e2866756a37148...
+      Waiting for 784eee9a216118 to become healthy (started, 3/3)
+      Waiting for d891116b6505e8 to become healthy (started, 3/3)
+      Waiting for e2866756a37148 to become healthy (started, 3/3)
+      Waiting for 2874443f054548 to become healthy (started, 3/3)
+      Waiting for 784e2edc425348 to become healthy (started, 3/3)
+      Waiting for e78423d1a33148 to become healthy (started, 3/3)
+    Failover complete
+    ```
 
-That's it! Run `fly status` to verify your changes. Continuing the example, the primary server has switched from ewr to iad:
+That's it! Run `fly status` to verify your changes. Continuing the example, the output shows that the primary server has switched from ewr to iad:
 
 ```cmd
 fly status -a my-app-name
