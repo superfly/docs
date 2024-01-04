@@ -45,6 +45,8 @@ incentivizes?\b
 initializer
 IPs
 IPSec
+kubeconfig
+kubectl
 Laravel
 libs
 LiteFS
@@ -80,12 +82,15 @@ Prisma
 Prometheus
 proxying
 psql
+repmgr
 repo
 Resque
+Rio de Janeiro
 rootfs
 RTT
 runtimes?\b
 Ruygt
+São Paulo
 (?i)sequelize
 (?i)serverless
 Sidekiq
@@ -99,11 +104,13 @@ subsecond
 Supabase
 swapfile
 Symfony
+Tigris
 toolkits?\b
 tracebacks?\b
 Turboku
 uncomment
 unencrypted
+unmanaged
 unmount
 Upstash
 vCPUs?\b
@@ -118,7 +125,9 @@ WireGuard
 ams
 iad
 atl
+bhs
 bog
+bos
 otp
 maa
 ord
@@ -127,6 +136,7 @@ den
 eze
 fra
 gdl
+dev
 hkg
 jnb
 lhr
@@ -149,6 +159,7 @@ arn
 syd
 nrt
 yyz
+vin
 waw
 
 Ashburn
