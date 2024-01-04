@@ -73,7 +73,7 @@ spec:
         - containerPort: 80
 ```
 
-This creates a `ReplicaSet` with 3 nginx pods. Using the `kubectl` command, we can apply this:
+This creates a `ReplicaSet` with 3 nginx pods. Using kubectl, we can apply this:
 
 ```cmd
 kubectl apply -f https://k8s.io/examples/controllers/nginx-deployment.yaml
