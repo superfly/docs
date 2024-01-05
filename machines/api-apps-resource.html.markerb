@@ -1,0 +1,60 @@
+---
+title: Machines API - Apps
+layout: docs
+nav: machines
+---
+
+A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. You can use the Apps resource to create and manage Fly Apps. 
+
+## Create a Fly App
+
+`POST /apps`
+
+Machines must be associated with a Fly App. App names must be unique.
+
+<%= partial "/docs/reference/machines/create_app_req" %>
+
+To segment the app into its own network, you can pass a `network` argument in the JSON body, e.g. `"network": "some-arbitrary-name"`. Any Machine started in such an app will not be able to access other apps within their organization over the private network. However, Machines within such an app can communicate to each other, and the [`fly-replay`](/docs/reference/dynamic-request-routing/) header can still be used to route requests to Machines within a segmented app.
+
+## Allocate an IP address for global request routing
+
+If you intend for Machines to be accessible to the internet, you'll need to allocate an IP address to the app. Currently
+this is done using `flyctl` or the [Fly.io GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](https://fly.io/docs/reference/services/#anycast). Read more about this in [the Networking section](https://fly.io/docs/reference/services/#notes-on-networking).
+
+Example:
+
+```cmd
+fly ips allocate-v4 -a my-app-name
+```
+```out
+TYPE ADDRESS    REGION CREATED AT
+v4   37.16.9.52 global 7s ago
+```
+
+The app will answer on this IP address, and after a small delay, at `my-app-name.fly.dev`.
+
+## Get application details
+
+`GET /apps/{app_name}`
+
+Get details about an application, like its organization slug and name. Also, to check if the app exists!
+<%= partial "/docs/reference/machines/get_app_req" %>
+<%= partial "/docs/reference/machines/get_app_resp" %>
+
+## Set application secrets
+
+For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly Apps using `flyctl`:
+
+<%= partial "/docs/partials/set_secrets", locals: { app_name: "my-app-name" } %>
+
+Machines inherit secrets from the app. Existing Machines must be [updated](#update-a-machine) to pick up secrets set after the Machine was created.
+
+For non-sensitive information, you _can_ set different environment variables per Machine at creation time.
+
+## Delete a Fly App
+
+`DELETE /apps/{app_name}`
+
+Machines should be stopped before attempting deletion. Append `?force=true` to the URI to stop and delete immediately.
+
+<%= partial "/docs/reference/machines/delete_app" %>

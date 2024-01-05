@@ -1,0 +1,9 @@
+---
+title: Machines API - Volumes
+layout: docs
+nav: machines
+---
+
+A Fly Volume is persistent storage for a fly Machine. You can use the Volumes resource to create and delete volumes.
+
+TBD
