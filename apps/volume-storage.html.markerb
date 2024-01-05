@@ -25,6 +25,10 @@ Use [Fly Launch](/docs/apps/) to create a new app with one Machine and an attach
       destination="/data"
     ```
 
+<aside class="callout">
+<b>Note:</b> You can't mount a volume with `destination="/"` since `/` is used for the root file system.
+</aside>
+
 1. Deploy the app:
 
     ```cmd

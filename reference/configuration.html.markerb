@@ -598,7 +598,7 @@ The `source` is a volume name that this app should mount. Any volume with this n
 
 ### `destination`
 
-The `destination` is the directory where the `source` volume should be mounted on the running app.
+The `destination` is the directory where the `source` volume should be mounted on the running app. This cannot be `/` since that's where the root file system is mounted.
 
 ### `processes`
 
