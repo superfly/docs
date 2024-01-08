@@ -19,7 +19,7 @@ Your application code needs to know how to accept custom domains and adjust the 
 
 When users make requests, their browser sends a `Host` header you can use to alter the behavior of your application. When you run your app server on Fly.io directly, just get the contents of the `Host` header to identify a request.
 
-If you're running your application on another provider, you will need to create a proxy application (like [NGINX](/docs/app-guides/global-nginx-proxy/)) to route traffic through Fly. Your application can then use the `X-Forwarded-Host` header to determine how to handle requests.
+If you're running your application on another provider, you will need to create a proxy application (like [NGINX](/docs/app-guides/global-nginx-proxy/)) to route traffic through Fly.io. Your application can then use the `X-Forwarded-Host` header to determine how to handle requests.
 
 ## Creating a custom domain on Fly.io manually
 
@@ -83,7 +83,7 @@ fly certs show example.com
   Status                      = Ready
 ```
 
-Configured should be true and Status will show ready when the certificates are available. The Issued field will show which types of certificates are available - RSA and/or ECDSA. Once they are issued, you'll be ready to run with your custom domain.
+`Configured` should be true and `Status` will show `Ready` when the certificates are available. The `Issued` field shows which types of certificates are available: RSA and/or ECDSA. Once they are issued, you'll be ready to run with your custom domain.
 
 ### Configuring certificates before accepting traffic
 
@@ -120,7 +120,7 @@ fly certs show example.com
   Status                      = 
 ```
 
-The specific part to focus in here are the DNS Validation fields:
+The specific part to focus on here are the `DNS Validation` fields:
 
 ```
 DNS Validation Instructions = CNAME _acme-challenge.example.com => example.com.o055.flydns.net.
@@ -128,13 +128,13 @@ DNS Validation Instructions = CNAME _acme-challenge.example.com => example.com.o
   DNS Validation Target       = example.com.o055.flydns.net
 ```
 
-Basically, the Validation Hostname, when looked up, should send requests to the Validation Target, a Fly-generated validation service. To do this, add the contents of the Validation Instructions to your DNS records; that is create a CNAME record which points the _acme-challenge subdomain to the Validation target.
+Basically, the `Validation Hostname`, when looked up, should send requests to the `Validation Target`, a Fly.io-generated validation service. To do this, add the contents of the `Validation Instructions` to your DNS records; that is create a CNAME record which points the `_acme-challenge` subdomain to the `Validation Target`.
 
 Once you have done that, wait as the validation and certificate issuing happens (check in with `fly certs check`). When complete, you'll be able to turn on the traffic whenever you are ready. You'll be able to do that either by setting the CNAME or by setting the A and AAAA records as described previously.
 
 ### Other commands
 
-Finally, we should point out the other `fly certs` commands which you will want to use.
+Finally, we should point out the other `fly certs` commands.
 
 * `fly certs list` - Lists the hostnames which have been added to an application and for which certificates may have been obtained.
 * `fly certs check hostname` - Triggers a check on the domain validation and DNS configuration for the given host and return results in the same format as `fly certs show`.
