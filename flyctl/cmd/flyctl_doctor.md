@@ -16,6 +16,7 @@ flyctl doctor [flags]
   -c, --config string   Path to application configuration file
   -h, --help            help for doctor
   -j, --json            JSON output
+  -o, --org string      The name of the organization to use for WireGuard tests. (default "personal")
   -v, --verbose         Print extra diagnostic information.
 ~~~
 
