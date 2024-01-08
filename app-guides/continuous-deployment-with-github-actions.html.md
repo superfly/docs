@@ -7,8 +7,6 @@ categories:
   - ci
   - github
   - guide
-priority: 10
-date: 2020-06-20
 ---
 
 <img src="/static/images/continuous-deployment.webp" alt="A man writing code on a vintage desktop computer" class="rounded-xl">
@@ -25,7 +23,7 @@ The first section is a speed-run through the steps to make the go-example app au
 2. Clone the new repository to your local machine.
 3. Run `fly launch --no-deploy` from within the project source directory to create a new app and a `fly.toml` configuration file. 
 4. Type `y` to when prompted to tweak settings and enter a name for the app. Adjust other settings, such as region, as needed. Then click **Confirm Settings**.
-5. Still in the project source directory, get a Fly API deploy token by running `fly tokens create deploy -x 999999h`. Copy the output.
+5. Still in the project source directory, get a Fly API deploy token by running `fly tokens create deploy -x 999999h`. Copy the output, including the `FlyV1` and space at the beginning.
 6. Go to your newly-created repository on GitHub and select **Settings**.
 7. Under **Secrets and variables**, select **Actions**, and then create a new repository secret called `FLY_API_TOKEN` with the value of the token from step 5.
 8. Back in your project source directory, create `.github/workflows/fly.yml` with these contents:
@@ -35,11 +33,12 @@ The first section is a speed-run through the steps to make the go-example app au
     on:
       push:
         branches:
-          - master
+          - master    # change to main if needed
     jobs:
       deploy:
         name: Deploy app
         runs-on: ubuntu-latest
+        concurrency: deploy-group    # optional: ensure only one action runs at a time
         steps:
           - uses: actions/checkout@v3
           - uses: superfly/flyctl-actions/setup-flyctl@master
@@ -49,7 +48,7 @@ The first section is a speed-run through the steps to make the go-example app au
     ```
 
       <div class="note icon">
-      **Note:** The `go-example`’s default branch is currently `master`. If you’re using a different app, yours might be `main`. Change the `fly.yml` file accordingly.
+      **Note:** The `go-example`’s default branch is `master`. If you’re using a different app, yours might be `main`. Change the `branches` value in the `fly.yml` file accordingly.
       </div>
 
 9. Commit your changes and push them up to GitHub. You should be pushing two new files: `fly.toml`, the [Fly Launch](/docs/apps/) configuration file, and `fly.yml`, the GitHub action file.
@@ -74,7 +73,8 @@ A note about `fly.toml` in repositories: Usually, when Fly.io ships examples, we
 
 ### API tokens
 
-**Step 5** is about getting an API token. You can generate a deploy token to use to authorize a specific application. That's what `flyctl tokens create deploy -x 999999h` gives you. For a more powerful token that can manage multiple applications, run `flyctl auth token`.
+**Step 5** is about getting an API token. You can generate a deploy token to use to authorize a specific application. That's what `flyctl tokens create deploy -x 999999h` gives you. Remember to copy the whole token from the output, including the `FlyV1` and space at the beginning.
+For a more powerful token that can manage multiple applications, run `flyctl auth token`.
 
 **Steps 6 and 7** make your new token available to GitHub Actions that run against your repository. You'll add the token as a secret in the repository's settings. Under the **Settings** tab, go to **Secrets and variables** and select **Actions**. Click on the green "New repository secret" button, enter the name as `FLY_API_TOKEN`, and copy the token as the secret.
 
@@ -113,9 +113,12 @@ jobs:
   deploy:
       name: Deploy app
       runs-on: ubuntu-latest
+      concurrency: deploy-group
 ```
 
-So an action is made up of named jobs, in this case one to deploy the application. The jobs run on a virtual machine. This section gives the "deploy" job the name "Deploy app" and tells GitHub Actions to run it on a virtual machine with the latest version of Ubuntu on it. The next part is to set up the steps needed to complete this job.
+An action is made up of named jobs, in this case one job to deploy the application. The jobs run on a virtual machine. This section gives the "deploy" job the name "Deploy app" and tells GitHub Actions to run it on a virtual machine with the latest version of Ubuntu on it. Optionally, use the `concurrency` key with a custom group name to ensure that only one action runs at a time for that group. 
+
+The next part is to set up the steps needed to complete this job.
 
 ```yaml
       steps:
@@ -152,8 +155,3 @@ And that's the deployment process. You can, of course, leverage the GitHub Actio
 **See:**
 
 * [GitHub Actions for flyctl](https://github.com/superfly/flyctl-actions)
-
-
-
-
-
