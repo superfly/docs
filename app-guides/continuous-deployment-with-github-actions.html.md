@@ -91,7 +91,7 @@ deploy:
 
 **Step 8** is the heart of the process, where you put in place a workflow. Now, GitHub has a UI which allows you to select and edit workflows, but you can also modify them as part of the repository. So you create `.github/workflows/fly.yml` - you'll likely want to `mkdir -p .github/workflows` to quickly create the directories - and load up the file with a GitHub Action recipe.
 
-Github Action recipe, line by line:
+GitHub Action recipe, line by line:
 
 ```yaml
 name: Fly Deploy
