@@ -47,10 +47,6 @@ Machines created using `fly deploy` (or as part of a deployment during `fly laun
 
 New Machines created using `fly machine run` don't have the V2 Apps metadata, and are not automatically managed by Fly Launch (`fly deploy`), so these Machines can have their own configuration different from that of the App, and can even be based on a different Docker image.
 
-<div class="important icon">
-**Important:** We don't recommend adding unmanaged Machines to a Fly Launch app if you ever plan to scale the app to zero Machines. If you scale your Fly Launch Machines to zero, and have unmanaged Machines created with `fly machine run`, then you won't be able to deploy your app with `fly deploy` until you delete the unmanaged Machines.
-</div>
-
 ## Volume mounts and `fly deploy`
 
 If a Machine has a mounted [volume](/docs/volumes/), `fly deploy` can't be used to mount a different one. You can change the mount point at which the volume's data is available in the Machine's file system, though. This is configured in the [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) of `fly.toml`.
