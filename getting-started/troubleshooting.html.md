@@ -156,6 +156,10 @@ fastify.listen({ port: 3000, host: '0.0.0.0' }, function (err, address) {
 
 Then make sure that the `internal_port` value in `fly.toml` is set to `3000`.
 
+## Smoke checks failing
+
+Smoke checks run during deployment to make sure that a crashing app doesn't get successfully deployed to all your app's Machines. If possible, the smoke check failure output includes an excerpt of the logs to help you diagnose the issue with your app. Common issues with new apps might include [Machine size](#out-of-memory-oom-or-high-cpu-usage), missing environment variables, or other problems with the app's configuration.
+
 ## Health checks failing
 
 We don't automatically add health checks to your `fly.toml` file when you create your app. The health checks that you subsequently add to your app can fail for a number of reasons.
