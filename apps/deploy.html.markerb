@@ -43,7 +43,7 @@ If the app to be deployed is configured with an eligible HTTP `[[services]]` sec
 
 ## Machines not managed by Fly Launch
 
-Machines created using `fly deploy` (or as part of a deployment during `fly launch`), or by `fly clone`ing such a Machine, carry a piece of metadata marking them as belonging to Fly Launch (`"fly_platform_version": "v2"`). These machines are updated as a group on all subsequent `fly deploy` commands.
+Machines created using `fly deploy` (or as part of a deployment during `fly launch`), or by `fly clone`ing such a Machine, carry a piece of metadata marking them as belonging to Fly Launch (`"fly_platform_version": "v2"`). These Machines are updated as a group on all subsequent `fly deploy` commands.
 
 New Machines created using `fly machine run`, also known as unmanaged Machines, don't have the `fly_platform_version` metadata, and are not automatically managed by Fly Launch. These unmanaged Machines can have their own configuration different from that of the App, and can even be based on a different Docker image.
 
