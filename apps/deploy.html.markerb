@@ -71,7 +71,6 @@ You can specify one of the following deployment strategies:
 
 Learn more about [setting a deployment strategy](/docs/reference/configuration/#picking-a-deployment-strategy).
 
-
 ```cmd
 fly deploy --strategy canary
 ```
@@ -99,3 +98,12 @@ Updating existing machines in 'example-app-8803' with canary strategy
 You can [add an IP address](/docs/reference/services/#ip-addresses) to an App, for example, without redeploying.
 
 Adding a [secret](/docs/reference/secrets/) to the App does require a restart, so `fly secrets set` triggers a new deployment.
+
+## Smoke checks
+
+Smoke checks monitor Machines during deployment, for about 10 seconds after a Machine enters the started state, to make sure the Machine stays running. If a Machine is constantly restarting with a non-zero exit code during this time, then the smoke check fails and the deployment is stopped. If possible, the smoke check failure output includes an excerpt of the logs to help you diagnose the issue with your app. 
+
+## Related topics
+
+- [Fly Launch](/docs/apps/launch/)
+- [Troubleshooting your deployment](/docs/getting-started/troubleshooting/)
