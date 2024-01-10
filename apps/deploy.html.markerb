@@ -34,7 +34,7 @@ Here's how `fly deploy` determines how to get the app's Docker image:
 
 1. If an image is specified, either with the `--image` option or in the `[build]` section of `fly.toml`, use that image, regardless of the presence of a Dockerfile in the working directory or the use of the `--dockerfile` option.
 2. Otherwise, check the [`[build]` section of `fly.toml`](/docs/reference/configuration/#the-build-section) and use the method specified there, whether it's a Dockerfile or a buildpack (but don't use buildpacks if you don't have to; they're brittle, bloated, and prone to change).
-3. Otherwise, if the `--dockerfile` flag supplies a path to a Dockerfile, use that Dockerfile to build the image. You read that right. The `--dockerfile` flag is looked at _after_ the `[build]` section of the config file. This will hopefully change soon.
+3. Otherwise, if the `--dockerfile` flag supplies a path to a Dockerfile, use that Dockerfile to build the image. You read that right. The `--dockerfile` flag is looked at _after_ the `[build]` section of the config file.
 4. Otherwise, if there's a `Dockerfile` (named exactly `Dockerfile` or `dockerfile`) in the local working directory, use that Dockerfile for the build.
 
 ## IP addresses
