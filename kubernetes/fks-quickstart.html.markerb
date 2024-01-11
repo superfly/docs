@@ -1,0 +1,139 @@
+---
+title: Fly Kubernetes quickstart
+layout: docs
+toc: false
+nav: firecracker
+---
+
+To create a Kubernetes cluster, run:
+
+```cmd
+fly ext k8s create
+```
+This will start the provisioning process. You'll be asked for a cluster name, the organization, and the region in which to create the cluster.
+
+Once a cluster is provisioned, it will return a kubeconfig that can be used to connect to your cluster's Kubernetes API server using kubectl.
+
+For example:
+
+```yaml
+apiVersion: v1
+clusters:
+  - cluster:
+      certificate-authority-data: xxxxxxxx
+      server: https://fks-senyeezus-972-morning-cherry-7280.flycast:6443
+    name: fks-senyeezus-972-morning-cherry-7280
+contexts:
+  - context:
+      cluster: fks-senyeezus-972-morning-cherry-7280
+      user: default
+    name: default
+current-context: default
+kind: Config
+preferences: {}
+users:
+  - name: default
+    user:
+      token: xxxxxx
+```
+
+We're going to save the output into a file named `kubeconfig` and create an environment variable `KUBECONFIG` that points to the file:
+
+```cmd
+export KUBECONFIG=/home/fly/fks/kubeconfig
+```
+
+Our cluster is accessible over our organization's [private WireGuard network](/docs/reference/private-networking). To connect to our cluster, we need a WireGuard configuration. 
+
+Follow the [Private Network VPN instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io IPv6 private network.
+
+From there, you can use standard YAML configuration to drive Kubernetes. Here's a simple deployment example from the [Kubernetes official documentation](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#creating-a-deployment):
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+```
+
+This creates a `ReplicaSet` with 3 nginx pods. Using kubectl, we can apply this:
+
+```cmd
+kubectl apply -f https://k8s.io/examples/controllers/nginx-deployment.yaml
+```
+```output
+deployment.apps/nginx-deployment created
+```
+
+We can see our deployment:
+
+```cmd
+kubectl get deployments
+```
+```output
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+nginx-deployment   3/3     3            3           7s
+```
+
+We can view the logs of all the pods in the deployment:
+
+```cmd
+kubectl logs -l app=nginx
+```
+```output
+Pulling container image registry-1.docker.io/library/nginx:1.14.2
+Pulling container image registry-1.docker.io/library/nginx:1.14.2
+Pulling container image registry-1.docker.io/library/nginx:1.14.2
+Successfully prepared image registry-1.docker.io/library/nginx:1.14.2 (1.597714717s)
+Successfully prepared image registry-1.docker.io/library/nginx:1.14.2 (1.493016957s)
+Successfully prepared image registry-1.docker.io/library/nginx:1.14.2 (1.604003393s)
+Configuring firecracker
+Configuring firecracker
+Configuring firecracker
+...
+```
+
+## What we don't support
+
+- Services (coming soon)
+- Multi-container pods (coming soon)
+- Autoscaling
+
+On container specs, we don't support the following fields:
+
+- `workingDir`
+- `ports`
+- `livenessProbe`
+- `readinessProbe`
+- `startupProbe`
+- `resizePolicy`
+- `stdin`
+- `stdinOnce`
+- `tty`
+- `EnvFromSource.secretRef`
+- `EnvVarSource.fieldRef`
+- `EnvVarSource.resourceFieldRef`
+- `EnvVarSource.secretKeyRef`
+- `volumeDevices`
+- `lifecycle`
+- `terminationMessagePath`
+- `terminationMessagePolicy`
+- `imagePullPolicy`
+- `securityContext`
