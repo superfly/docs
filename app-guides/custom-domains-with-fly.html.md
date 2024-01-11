@@ -31,7 +31,7 @@ In this scenario, we want the custom domain to point to the `nginxproxy` server 
 
 #### Option I: CNAME records
 
-CNAME records in DNS act like a pointer. If we add a CNAME record to our custom domain that points to our proxy name `nginxproxy.fly.dev` then requests for the custom domain's IP address would return the proxy's address and clients would then lookup the IP addresses for the proxy. 
+CNAME records in DNS act like a pointer. If we add a CNAME record to our custom domain that points to our proxy name `nginxproxy.fly.dev` then requests for the custom domain's IP address would return the proxy's address and clients would then lookup the IP addresses for the proxy.
 
 It's the quickest way to get set up, but there are catches. First, it is ever so slightly slower with that second look up. Second, it limits what you can do with the domain, especially if it's an "Apex domain" - CNAMEs are, according to DNS standards, meant to be the only record in a host's DNS records and so you can't add MX and other essential records to the DNS entry. If you aren't setting up an Apex domain, the CNAME is the quickest way to get going.
 
@@ -58,7 +58,7 @@ Once these settings are in place, you can add the custom domain to the applicati
 fly certs create example.com
 ```
 
-If you are using [dedicated IPs](https://fly.io/docs/reference/services/#dedicated-ipv4) and want to add a wildcard domain, remember to place quotes around the hostname to avoid inadvertent shell expansion:
+If you need a wildcard domain, remember to place quotes around the hostname to avoid shell expansion:
 
 ```cmd
 fly certs create "*.example.com"
@@ -87,7 +87,7 @@ fly certs show example.com
 
 ### Configuring certificates before accepting traffic
 
-This process allows certificates to be issued before the domain is live and accepting traffic. Using a particular CNAME entry in the DNS allows Fly.io to validate the domain before issuing a certificate. 
+This process allows certificates to be issued before the domain is live and accepting traffic. Using a particular CNAME entry in the DNS allows Fly.io to validate the domain before issuing a certificate.
 
 The process starts with adding the certificate to the application like so:
 
@@ -95,7 +95,7 @@ The process starts with adding the certificate to the application like so:
 fly certs create example.com
 ```
 
-Again, if you are creating a wildcard domain, remember to place quotes around the hostname to avoid inadvertent shell expansion:
+Again, if you are creating a wildcard domain, remember to place quotes around the hostname to avoid shell expansion:
 
 ```cmd
 fly certs create "*.example.com"
@@ -109,7 +109,7 @@ fly certs show example.com
 ```output
   Hostname                    = example.com
   Configured                  = false
-  Issued                      = 
+  Issued                      =
   Certificate Authority       =
   DNS Provider                = dnsimple
   DNS Validation Instructions = CNAME _acme-challenge.example.com => example.com.o055.flydns.net.
@@ -117,7 +117,7 @@ fly certs show example.com
   DNS Validation Target       = example.com.o055.flydns.net
   Source                      = fly
   Created At                  = 0m9s ago
-  Status                      = 
+  Status                      =
 ```
 
 The specific part to focus on here are the `DNS Validation` fields:
@@ -146,7 +146,7 @@ To illustrate how to automate the certificates API, we are going to show the fly
 
 ### GraphQL API Notes
 
-**Endpoints**: The Endpoint for the Fly.io GraphQL API is `https://api.fly.io/graphql`. 
+**Endpoints**: The Endpoint for the Fly.io GraphQL API is `https://api.fly.io/graphql`.
 
 **Authentication**: All queries require an API token which be obtained by signing into the [Fly.io web dashboard](https://fly.io/dashboard/apps/), selecting **Account** ➡︎ **Settings** ➡︎ **Access Tokens** ➡︎ **Create Access Token**. Create a new token and carefully note the value; we suggest placing it in an environment variable such as `FLY_API_TOKEN` so it can be passed to applications. When used with the API, the token should be passed in an `Authorization` header with the value `Bearer <token value>`.
 
@@ -411,7 +411,7 @@ Note that certificate renewals don’t count against your **Certificates per Reg
 If you encounter issues when adding or validating a certificate for a custom domain on Fly.io, you can use the following methods to troubleshoot:
 
 * **Use [Let's Debug](https://letsdebug.net/)**: A diagnostic tool/website to help figure out why you might not be able to issue a certificate for Let's Encrypt™. Using a set of tests, it can identify a variety of issues, including: problems with basic DNS setup, problems with nameservers, rate limiting, networking issues, CA policy issues and common website misconfigurations.
-* **Wait and Retry**: If you've hit a rate limit, you'll need to wait until the rate limit window passes before you can successfully create or validate a certificate again. We don’t have a way to reset it. 
+* **Wait and Retry**: If you've hit a rate limit, you'll need to wait until the rate limit window passes before you can successfully create or validate a certificate again. We don’t have a way to reset it.
 
 Remember, the best way to avoid hitting rate limits is to use staging environments and domains for testing and development, and to carefully plan your certificate issuance to stay within the limits. Avoid failed validation by ensuring that your DNS records are correctly configured, with no conflicting records.
 
