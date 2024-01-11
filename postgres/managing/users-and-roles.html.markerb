@@ -13,7 +13,7 @@ A Postgres cluster is configured with three users when created:
 
 If you [attached a Fly App](/docs/postgres/managing/attach-detach/) to your Postgres cluster app with `fly postgres attach`, then you'll have a an additional database and user with the same name as the consuming app.
 
-You can list users with flyctl:
+You can list users with flyctl. For example, for a Postgres cluster app named `pg-test`:
 
 ```cmd
 fly postgres users list --app pg-test
@@ -26,3 +26,5 @@ flypgadmin    	yes      	my_app_name, postgres, repmgr
 postgres      	yes      	my_app_name, postgres, repmgr
 repmgr        	yes      	my_app_name, postgres, repmgr
 ```
+
+In this example, there's an attached Fly App in the list of users.
