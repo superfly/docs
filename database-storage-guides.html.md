@@ -46,11 +46,22 @@ If your application calls for a different solution, you can deploy it yourself a
 
 If you want a fully managed database or storage solution for your Fly Apps, there are many great options, including:
 
+### MySQL
+
+- [PlanetScale Serverless MySQL](https://planetscale.com/) ([guide to use with Fly Apps](/docs/app-guides/planetscale/))
+
+### Object Storage
+
+- [MinIO Hosted Object Storage](https://min.io/)
+
+### Postgres
+
 - [Crunchy Bridge Managed Postgres](https://www.crunchydata.com/products/crunchy-bridge) (on AWS, Azure, GCP, or Heroku)
 - [Neon Serverless Postgres](https://neon.tech/)
-- [PlanetScale Serverless MySQL](https://planetscale.com/) ([guide to use with Fly Apps](/docs/app-guides/planetscale/))
 - [Supabase Postgres](https://supabase.com/database)
-- [MinIO Hosted Object Storage](https://min.io/)
+
+### Other
+
 - [Fauna](https://fauna.com/) ([guide to use with Fly Apps](/docs/app-guides/fauna/))
 
 ## Other Places
