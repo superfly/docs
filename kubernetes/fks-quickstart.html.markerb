@@ -1,14 +1,14 @@
 ---
 title: Fly Kubernetes quickstart
 layout: docs
-sitemap: false
+toc: false
 nav: firecracker
 ---
 
 To create a Kubernetes cluster, run:
 
 ```cmd
-flyctl ext k8s create
+fly ext k8s create
 ```
 This will start the provisioning process. You'll be asked for a cluster name, the organization, and the region in which to create the cluster.
 
@@ -47,7 +47,7 @@ Our cluster is accessible over our organization's [private WireGuard network](/d
 
 Follow the [Private Network VPN instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io IPv6 private network.
 
-From there, you can use standard YAML configuration to drive Kubernetes. For example, to make a simple deployment taken from the Kubernetes official documentation:
+From there, you can use standard YAML configuration to drive Kubernetes. Here's a simple deployment example from the [Kubernetes official documentation](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#creating-a-deployment):
 
 ```yaml
 apiVersion: apps/v1
@@ -118,22 +118,22 @@ Configuring firecracker
 
 On container specs, we don't support the following fields:
 
-- WorkingDir
-- Ports
-- LivenessProbe
-- ReadinessProbe
-- StartupProbe
-- ResizePolicy
-- Stdin
-- StdinOnce
-- TTY
-- EnvFrom.SecretRef
-- EnvVarSource.FieldRef
-- EnvVarSource.ResourceFieldRef
-- EnvVarSource.SecretKeyRef
-- VolumeDevices
-- Lifecycle
-- TerminationMessagePath
-- TerminationMessagePolicy
-- ImagePullPolicy
-- SecurityContext
+- `workingDir`
+- `ports`
+- `livenessProbe`
+- `readinessProbe`
+- `startupProbe`
+- `resizePolicy`
+- `stdin`
+- `stdinOnce`
+- `tty`
+- `EnvFromSource.secretRef`
+- `EnvVarSource.fieldRef`
+- `EnvVarSource.resourceFieldRef`
+- `EnvVarSource.secretKeyRef`
+- `volumeDevices`
+- `lifecycle`
+- `terminationMessagePath`
+- `terminationMessagePolicy`
+- `imagePullPolicy`
+- `securityContext`
