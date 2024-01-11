@@ -14,6 +14,7 @@ flyctl storage create [flags]
   -h, --help            help for create
   -n, --name string     The name of your bucket
   -o, --org string      The target Fly.io organization
+  -p, --public          Objects in the bucket should be publicly accessible
   -y, --yes             Accept all confirmations
 ~~~
 
