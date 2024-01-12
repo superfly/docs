@@ -1,5 +1,6 @@
-Commands that manage machines
-
+Manage Fly Machines. Fly Machines are super-fast, lightweight VMs that can be created,
+and then quickly started and stopped as needed with flyctl commands or with the
+Machines REST API.
 
 ## Usage
 ~~~
@@ -8,9 +9,10 @@ flyctl machine [command] [flags]
 
 ## Available Commands
 * [api-proxy](/docs/flyctl/machine-api-proxy/)	 - Establish a proxy to the Machine API through a Wireguard tunnel for local connections
-* [clone](/docs/flyctl/machine-clone/)	 - Clone a Fly machine
+* [clone](/docs/flyctl/machine-clone/)	 - Clone a Fly Machine.
 * [cordon](/docs/flyctl/machine-cordon/)	 - Deactivate all services on a machine
-* [destroy](/docs/flyctl/machine-destroy/)	 - Destroy a Fly machine.
+* [create](/docs/flyctl/machine-create/)	 - Create, but don't start, a machine
+* [destroy](/docs/flyctl/machine-destroy/)	 - Destroy Fly machines
 * [exec](/docs/flyctl/machine-exec/)	 - Execute a command on a machine
 * [kill](/docs/flyctl/machine-kill/)	 - Kill (SIGKILL) a Fly machine
 * [leases](/docs/flyctl/machine-leases/)	 - Manage machine leases

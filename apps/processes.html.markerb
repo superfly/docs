@@ -6,8 +6,6 @@ nav: firecracker
 order: 90
 ---
 
-<%= partial "/docs/partials/v2_transition_banner" %>
-
 Process groups are a way to configure a single Fly App to run multiple different programs.
 
 You define processes in your `fly.toml`, giving each process group a name and a command to run at boot. Every defined process runs in its own Fly Machine(s) within the app, which means they don't compete with each other for VM resources, and they can be scaled individually.
@@ -106,10 +104,14 @@ fly machine destroy e2865641be9786
 
 You can scale Machine CPU and memory settings for an entire process group using the `fly scale vm` and `fly scale memory` commands. This section provides a summary of vertical scaling. For more information, refer to [Scale Machine CPU and RAM](/docs/apps/scale-machine/#scale-by-process-group).
 
+<div class="note icon">
+**Note**: The `--process-group` option is aliased to `-g` for faster command entry.
+</div>
+
 The following example changes the CPU/RAM of Machines in the `web` process group to a different preset combination:
 
 ```
-fly scale vm performance-2x --group web
+fly scale vm performance-2x --process-group web
 ```
 
 Run `fly platform vm-sizes` for a list of the valid CPU/RAM preset combinations.
@@ -117,7 +119,7 @@ Run `fly platform vm-sizes` for a list of the valid CPU/RAM preset combinations.
 This example changes only the RAM of Machines in the `web` process group:
 
 ```
-fly scale memory 4096 --group web
+fly scale memory 4096 --process-group web
 ```
 
 ## Move a Machine between process groups
@@ -132,27 +134,3 @@ Then deploy the app to apply the configuration for that process group to the Mac
 ```cmd
 fly deploy
 ```
-
-## Process groups and legacy (Nomad) apps
-
-<div class="callout">
-Known issues with process groups and Nomad apps:
-* Running multiple processes in this way is not compatible with autoscaling.
-* Unexpected behavior with regions may arise if you use a `[processes]` block and then delete it.
-</div>
-
-In a "V1" Fly App, you don't need to specify which machines are assigned to which processes; Nomad does this for you. After adding process groups to your app's `fly.toml` and deploying, scale them up with per-process commands. For example:
-
-```
-$ fly scale count web=2 worker=2
-```
-
-### Per-process commands (Nomad)
-
-Some Nomad-only `fly` commands accept a process name as an argument. The following examples shows which:
-
-* Change VM counts: `fly scale count web=2 worker=1`
-* Change VM size: `fly scale vm shared-cpu-1x --group worker`
-* Change regions: `fly regions set iad --group worker`
-
-For a bit more context on the original `processes` feature, you can read our [community announcement](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316/).

@@ -9,7 +9,8 @@ flyctl planetscale list [flags]
 
 ~~~
   -h, --help         help for list
-  -o, --org string   The target Fly organization
+  -o, --org string   The target Fly.io organization
+  -y, --yes          Accept all confirmations
 ~~~
 
 ## Global Options

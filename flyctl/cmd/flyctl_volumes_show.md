@@ -1,4 +1,4 @@
-Show details of an app's volume
+Show the details of the specified volume.
 
 ## Usage
 ~~~
@@ -24,5 +24,5 @@ flyctl volumes show [id] [flags]
 
 ## See Also
 
-* [flyctl volumes](/docs/flyctl/volumes/)	 - Volume management commands
+* [flyctl volumes](/docs/flyctl/volumes/)	 - Manage Fly Volumes.
 

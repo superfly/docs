@@ -1,6 +1,4 @@
-Extends a target volume to the size specified. The instance is automatically restarted for Nomad (V1) apps.
-		Most Machines (V2 apps) don't require a restart. Older Machines get a message to manually restart the Machine
-		to increase the size of the FS.
+Extend a volume to the specified size. Most Machines don't require a restart. Some older Machines get a message to manually restart the Machine to increase the size of the file system.
 
 ## Usage
 ~~~
@@ -28,5 +26,5 @@ flyctl volumes extend [id] [flags]
 
 ## See Also
 
-* [flyctl volumes](/docs/flyctl/volumes/)	 - Volume management commands
+* [flyctl volumes](/docs/flyctl/volumes/)	 - Manage Fly Volumes.
 

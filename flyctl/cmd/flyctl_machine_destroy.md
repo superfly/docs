@@ -1,10 +1,10 @@
-Destroy a Fly machine.
+Destroy one or more Fly machines.
 This command requires a machine to be in a stopped state unless the force flag is used.
 
 
 ## Usage
 ~~~
-flyctl machine destroy [id] [flags]
+flyctl machine destroy [flags] ID ID ...
 ~~~
 
 ## Options
@@ -26,5 +26,5 @@ flyctl machine destroy [id] [flags]
 
 ## See Also
 
-* [flyctl machine](/docs/flyctl/machine/)	 - Commands that manage machines
+* [flyctl machine](/docs/flyctl/machine/)	 - Manage Fly Machines.
 

@@ -79,6 +79,7 @@ POST https://logjam.io/flyio/extensions
   organization_email: "04La2mblTaz@customer.fly.io",
   user_email: "v9WvKokd@customer.fly.io",
   user_id: "NeBO2G0l0yJ6",
+  user_role: "admin",
   primary_region: "mad",
   ip_address: "fdaa:0:47fb:0:1::1d",
   read_regions: ["syd", "scl"],
@@ -102,6 +103,7 @@ These parameters are sent with every provisioning request.
 | **organization_email** | string | Obfuscated email that routes to all organization admins (does not change) | `n1l330mao@customer.fly.io` |
 | **user_id** | string | Unique ID representing an organization | `M03FclA4m` |
 | **user_email** | string | Obfuscated email that routes to the provisioning user (does not change) | `n1l330mao@customer.fly.io` |
+| **user_role** | string | Provisioning user's role | `admin, member` |
 
 **Optional parameters**
 
@@ -121,25 +123,35 @@ If your service is deployed on Fly, the response should also contain details abo
 
 **Provisioning Response**
 
-| Name | Type | Description | Example |
-| --- | --- | --- | --- |
-| **id** | string | A unique identifier for the resource on the provider platform | `432cb1c9-4d06-4a91-95dc-bc7aa27b896d` |
-| **fly_app_name** | string | The target Fly application for internal traffic | `432cb1c9-4d06-4a91-95dc-bc7aa27b896d` |
-
-
 ```javascript
 {
+  "id": "432cb1c9-4d06-4a91-95dc-bc7aa27b896d",
   "config": {
     "LOGJAM_URL": "https://user:password@test.logjam.io"
   },
-  "fly_app_name": "logjam-production",
-  "id": "432cb1c9-4d06-4a91-95dc-bc7aa27b896d"
+  "name": "logjam-1bd03ba",
+  "fly_app_name": "logjam-production"
 }
 
 ```
+
+Your response must return a unique ID, which could be yours or the same the one we sent you. We'll always use this ID to make requests to your API. You must also return a `config` object containing the environment variables that the provisioning should set.
+
+Optionally, you can send:
+
+* a `fly_app_name` as the target for Flycast traffic on the IP address provisioned to your extension.
+* an updated `name` for the extension resource, should you need to change the name we supplied due to uniqueness constraints or other reasons
+
+| Name | Type | Description | Example |
+| --- | --- | --- | --- |
+| **id** | string | A unique identifier for the resource on the provider platform | `432cb1c9-4d06-4a91-95dc-bc7aa27b896d` |
+| **fly_app_name** | string | Fly.io application name target for internal traffic | `logjam-production` |
+| **name** | string | Fly.io application name target for internal traffic | `logjam-1bd03ba` |
+
+
 ### Giving customers private access to your service
 
-If you're deploying on Fly.io, your service should be accessible to customers without exposing it to the public internet.
+If you're deploying on Fly.io, your service should be accessible to customers without exposing it to the public internet. In cases where this isn't possible or desirable, your service allow setting network restrictions to prevent internet access by default.
 
 ### Routing private traffic with Flycast
 
@@ -167,13 +179,12 @@ For a good developer experience, you should create a public DNS record for your 
 
 ```
 
-### Providing extension status after provisioning
+### Fetching extension status
 
-Im some cases, we'll want to be able to fetch data about your extension. For example, when displaying credentials to users directly via the CLI, we won't store these credentials in our database. We'll pass this request directly to your API.
+In most cases, we'll need to fetch information about a specific extension resource. For example, to get its current `status`, display usage information, etc.
 
-Also, if your resource cannot be provisioned synchronously, we'll need such an endpoint to poll readiness status.
+Also, if your resource cannot be provisioned synchronously, we'll need such this endpoint to poll readiness status.
 
-This endpoint should be discussed on a case-by-base basis.
 
 ### Updating Extensions
 
@@ -310,6 +321,35 @@ resource.deleted
 ```
 
 Note: the shape of `resource` should be the same as that provided by any `GET` endpoints for invidividual resources.
+
+## Webhooks: Get notified about changes to provisioned accounts and resources
+
+We intend to inform your service about system changes such as:
+* Addition or removal of provisioned users from an organization
+* Provisioned user role changes
+* Issues with hosts that affect your deployment
+* Individual machine events (stops, starts, crashes, etc)
+
+**Currently, we only send machine events from a single Fly.io organization.**
+
+If your service deploys on Fly.io, we can send you webhooks for machine events, such as stops and starts, with some details about the source and cause of each. Here's a sample payload:
+
+```
+POST https://logjam.io/flyio/extensions/events
+{
+  "id": "01HJQ3SZ1Z0JHDGAF7FDKQV3WE",
+  "machine_id": "5683977ad31768",
+  "type": "launch",
+  "timestamp": 1703729230,
+  "status": "failed",
+  "data": {
+    "Error": "image not found",
+    "Transition": "prepareImage"
+  }
+}
+```
+
+The contents of `data` varies depending on the event. These will be documented eventually. For now, consult us on a case-by-case basis if the contents are not self-explanatory.
 
 ## Email communication with customers
 

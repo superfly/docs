@@ -6,15 +6,9 @@ nav: firecracker
 order: 50
 ---
 
-<%= partial "/docs/partials/v2_transition_banner" %>
-
-<br>
 [**`fly scale`**](/docs/flyctl/scale) commands apply VM memory and CPU settings to entire process groups in a Fly App. There are two subcommands for scaling these per-VM resources: `fly scale vm` applies a preset CPU/RAM combination; `fly scale memory` adjusts RAM relative to the preset's base RAM.
 
 You can scale an app even if it has crashed. Its VMs are restarted with the new specification.
-
-**For existing Nomad/V1 Fly Apps:** There's a whole doc on [scaling V1 (Nomad) apps](/docs/apps/legacy-scaling/).
-
 
 ## Check the VM resources on an app
 Here's a simple web app with two Machines running in different regions: two in Toronto and one in Tokyo. All the app's Machines belong to the default process group, `app`, since I didn't explicitly configure any [processes](/docs/apps/processes/). 
@@ -88,7 +82,7 @@ NAME    COUNT   KIND    CPUS    MEMORY  REGIONS
 app     3       shared  2       512 MB  nrt,yyz(2)
 ```
 
-(V2 only) You can also confirm that an individual Machine's config matches this, using `fly machine status`:
+You can also confirm that an individual Machine's config matches this, using `fly machine status`:
 
 ```cmd
 fly machine status 148ed599c14189
@@ -150,7 +144,11 @@ If you try to set an incompatible CPU/RAM combination through `fly scale memory`
 
 ## Scale by process group
 
-Use the `--group` option to specify the process group to scale, with either `fly scale vm` or `fly scale memory`.
+Use the `--process-group` option to specify the process group to scale, with either `fly scale vm` or `fly scale memory`.
+
+<div class="note icon">
+**Note**: The `--process-group` option is aliased to `-g` for faster command entry.
+</div>
 
 Here's an app with two process groups defined:
 
@@ -166,10 +164,10 @@ worker  2       shared  1       512 MB  ams,yyz
 web     1       shared  1       512 MB  yyz   
 ```
 
-Say the workers are constantly crunching data and need to be bigger. You can scale a single process group using the `--group` option:
+Say the workers are constantly crunching data and need to be bigger. You can scale a single process group using the `--process-group` option:
 
 ```cmd
-fly scale vm performance-2x --group worker
+fly scale vm performance-2x --process-group worker
 ```
 ```out
 Updating machine 0e286561f35586
@@ -199,14 +197,14 @@ web     1       shared          1       512 MB  yyz
 
 ## Machines not belonging to Fly Launch
 
-If an app has Machines not belonging to Fly Launch&mdash;that is, created using `fly machine run` or the Machines API, or `fly machine clone`d from such a Machine, and not [assimilated during a migration to a V2 App](/docs/apps/migrate-to-v2#adopt-standalone-fly-machines-into-a-v2-app)&mdash;`fly status` will warn you of their existence.
+If an app has Machines not belonging to Fly Launch&mdash;that is, created using `fly machine run` or the Machines API, or `fly machine clone`d from such a Machine&mdash;`fly status` will warn you of their existence.
 
 The app-wide `fly scale` commands do not apply to these Machines, but you can scale any Machine individually with `fly machine update`:
 
 ```
-fly machine update --size shared-cpu-2x 21781973f03e89
-fly machine update --memory 1024 21781973f03e89
-fly machine update --cpus 2 21781973f03e89
+fly machine update --vm-size shared-cpu-2x 21781973f03e89
+fly machine update --vm-memory 1024 21781973f03e89
+fly machine update --vm-cpus 2 21781973f03e89
 ```
 
-Again, if you try to set an incompatible CPU/RAM combination through `fly machine update --memory` or `fly machine update --cpus`, flyctl will let you know.
+Again, if you try to set an incompatible CPU/RAM combination through `fly machine update --vm-memory` or `fly machine update --vm-cpus`, flyctl will let you know.

@@ -1,12 +1,12 @@
 ---
 title: Machine Sizing
-layout: framework_docs
+layout: docs
 sitemap: false
 author: fideloper
 order: 30
 categories:
   - machines
-nav: firecracker
+nav: machines
 date: 2022-12-08
 ---
 
@@ -49,7 +49,7 @@ If you're using `flyctl`, the equivalent command looks like this:
 fly machine run \
     -a my-app-name \
     --name savvy-machine \
-    --size performance-2x \
+    --vm-size performance-2x \
     some-savvy-image
 ```
 
@@ -85,8 +85,8 @@ If you're using `flyctl`, the equivalent command looks like this:
 fly machine run \
     -a my-app-name \
     --name savvy-machine \
-    --cpus 2 \
-    --memory 1024 \
+    --vm-cpus 2 \
+    --vm-memory 1024 \
     some-savvy-image
 ```
 
@@ -123,7 +123,7 @@ If you're using `flyctl`, the equivalent command looks like this:
 fly machine update \
     -a my-app-name \
     -i some-savvy-image \
-    --cpus 2 \
-    --memory 512 \
+    --vm-cpus 2 \
+    --vm-memory 512 \
     73d8d46dbee589
 ```

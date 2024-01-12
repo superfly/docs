@@ -5,8 +5,6 @@ sitemap: false
 nav: firecracker
 ---
 
-<%= partial "/docs/partials/v2_transition_banner" %>
-
 You can configure an app for deployment on Fly.io using a `fly.toml` file. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here.
 
 TOML is a [simple configuration file format](https://github.com/toml-lang/toml). Here's a [useful introduction](https://npf.io/2014/08/intro-to-toml/) on its syntax.
@@ -27,7 +25,7 @@ Whenever `flyctl` is run, it will look for a `fly.toml` file in the current dire
 
 ## Primary Region
 
-**Apps V2 only:**  `fly deploy` under Apps V2 uses the `primary_region` option to determine where to create new Machines, as well as to set the `PRIMARY_REGION` environment variable within the Machines it deploys. Replace `ord` with the three-letter code for your [Fly Region](/docs/reference/regions/) of choice.
+`fly deploy` uses the `primary_region` option to determine where to create new Machines, as well as to set the `PRIMARY_REGION` environment variable within the Machines it deploys. Replace `ord` with the three-letter code for your [Fly Region](/docs/reference/regions/) of choice.
 
 ```toml
 primary_region = "ord"
@@ -178,6 +176,8 @@ To ensure the command runs in a specific region, such as `dfw`, set `PRIMARY_REG
 
 The environment variable `RELEASE_COMMAND=1` is set within the temporary release VM. You can use this to define behavior in your Dockerfile's `ENTRYPOINT`  that's conditional on being run on a release VM.
 
+By default, the release command has 5 minutes to complete before it is killed. It is possible to increase or decrease the timeout with `fly deploy --release-command-timeout=10m` or by setting `release_command_timeout = "10m"` in `[deploy]` section of `fly.toml`.
+
 ### Picking a deployment strategy
 
 ```toml
@@ -201,6 +201,31 @@ The available strategies are:
 
 Note: If `max-per-region` is set to 1, then the default strategy is set to `rolling`. This happens because `canary` needs to temporarily run more than one VM to work correctly. The `bluegreen` strategy will behave similarly with `max-per-region` set to 1.
 
+#### Rolling deploy configuration
+
+```toml
+[deploy]
+  strategy = "rolling"
+  max_unavailable = 1
+```
+
+For rolling deploys, you can use `max_unavailable` to control how many Machines can be down at a time.
+
+Whole number values, greater than or equal to one, specify exactly how many Machines can be down at a time. For example, a value of "1" would update one-at-a-time.
+
+Fractional values, between zero and one, provide a percentage of Machines that can be down at a time. For example, the default value of 0.33 means that a maximum of one third of your Machines can be down during a deploy.
+
+### Dealing with timeout errors while deploying a new version
+
+Every time `fly deploy` runs, it builds a new docker image, pushes it to an internal registry, and then updates or creates Machines for the app. Sometimes the image is too large, or the platform is slower than usual pulling the new image layers, triggering the default 5 minute timeout waiting for the Machine to be in a started state.
+
+The good thing is that this timeout can be controlled in two ways, with the `--wait-timeout` option, for example `fly deploy --wait-timeout=10m`, or as a more permanent `fly.toml` setting:
+
+```toml
+[deploy]
+wait_timeout = "10m"
+```
+
 ## The `env` variables section
 
 ```toml
@@ -220,9 +245,10 @@ Secrets take precedence over env variables with the same name.
 
 **Note:** In Apps V2, the [`primary_region` option](#primary-region) sets the `PRIMARY_REGION` environment variable within a Machine and overrides any value set in the `[env]` section.
 
+
 ## The `http_service` section
 
-[**Apps V2**](/docs/reference/apps/#apps-v2) **only:** For apps that only need HTTP and HTTPS services, you can replace the `[[services]]` section with this simpler alternative.
+For apps that only need HTTP and HTTPS services, you can replace the `[[services]]` section with this simpler alternative.
 
 An `[http_service]` section defines a service that listens on ports 80 and 443. Port 80 will have an HTTP handler. Port 443 will have a TLS and HTTP handler. You can configure additional services on different ports by adding `[[services]]` sections.
 
@@ -254,7 +280,7 @@ We recommend setting `auto_stop_machines` and `auto_start_machines` to the same 
 
 ### `http_service.concurrency`
 
-The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
+The `http_service` concurrency section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and [auto start and stop](/docs/apps/autostart-stop/). The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
 
 * `type` specifies what metric is used to determine when to scale up and down, or when a given instance should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
 
@@ -276,6 +302,17 @@ In the following example, `Example-Header` will be removed from the final respon
     Example-Header = false
     Example-Header-1 = "value"
     Example-Multi-Value = ["value1", "value2"]
+```
+
+### `http_service.http_options.h2_backend`
+
+Indicates whether the app supports HTTP/2 cleartext (H2C) with prior knowledge or not.
+
+In the following example, `h2_backend` is set to `true`, which allows the app to expose HTTP/2-only service, like gRPC, via `http` handler.
+
+```toml
+  [http_service.http_options]
+    h2_backend = true
 ```
 
 ### `http_service.tls_options`
@@ -315,7 +352,6 @@ Times are in milliseconds unless units are specified.
 * `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.
 * `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If it's long and your grace_period shorter than your app's startup time, health check will take too long adding you your deployment time.
 * `timeout`: The maximum time a connection can take before being reported as failing its health check.
-* `restart_limit`: Only applicable to V1 (Nomad) apps. The number of consecutive HTTP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed HTTP health checks.
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
 * `protocol`: The protocol to be used (`http` or `https`).
@@ -422,6 +458,17 @@ In the following example, `Example-Header` will be removed from the final respon
     Example-Multi-Value = ["value1", "value2"]
 ```
 
+### `services.ports.http_options.h2_backend`
+
+Indicates whether the app supports HTTP/2 cleartext (H2C) with prior knowledge or not.
+
+In the following example, `h2_backend` is set to `true`, which allows the app to expose HTTP/2-only service, like gRPC, via `http` handler.
+
+```toml
+  [services.ports.http_options]
+    h2_backend = true
+```
+
 #### `services.ports.proxy_proto_options`
 
 Configure the version of the PROXY protocol that your app accepts. Version 1 is the default.
@@ -464,7 +511,7 @@ One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS 
 
 ### `services.concurrency`
 
-The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and, for legacy apps only, [scaling](/docs/apps/legacy-scaling/).
+The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and [auto start and stop](/docs/apps/autostart-stop/).
 
 This section is a simple list of key/values, so the section is denoted with single square brackets like so:
 
@@ -481,8 +528,8 @@ This section is a simple list of key/values, so the section is denoted with sing
 
 **requests**: Load balance based on the number of HTTP requests. This is recommended for web services, since multiple requests can be sent over a single TCP connection.
 
-* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. For Nomad apps only, the system will bring up another instance if the autoscaling policy supports doing so.
-* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. For Nomad apps only, the system will likely bring up another instance if the auto scaling policy for the application supports doing so.
+* `hard_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that Machine.
+* `soft_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that Machine and only send it to that Machine if all other Machines are also at or above their `soft_limit`.
 
 ### `services.tcp_checks`
 
@@ -499,7 +546,6 @@ Times are in milliseconds unless units are specified.
 
 * `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your application to start up. For example if your app takes 2 seconds to start up, give it some runway by setting this to at least 3 seconds.
 * `interval`: The time between connectivity checks. If the interval is long, and the `grace_period` is shorter than your app's startup time, then the health check will take longer and will add to your deployment time.
-* `restart_limit`: Only applicable to V1 (Nomad) apps. The number of consecutive TCP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed TCP health checks.
 * `timeout`: The maximum time a connection can take before being reported as failing its health check.
 
 ### `services.http_checks`
@@ -525,7 +571,6 @@ Times are in milliseconds unless units are specified.
 * `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.
 * `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If it's long and your grace_period shorter than your app's startup time, health check will take too long adding you your deployment time.
 * `timeout`: The maximum time a connection can take before being reported as failing its health check.
-* `restart_limit`: Only applicable to V1 (Nomad) apps. The number of consecutive HTTP check failures to allow before attempting to restart the VM. The default is `0`, which disables restarts based on failed HTTP health checks.
 * `method`: The HTTP method to be used for the check.
 * `path`: The path of the URL to be requested.
 * `protocol`: The protocol to be used (`http` or `https`).
@@ -543,7 +588,8 @@ This section supports the Volumes feature for persistent storage. The section ha
 [mounts]
   source = "myapp_data"
   destination = "/data"
-  processes= ["disk"] # optional - attach volumes to Machines that belong to one or more process groups
+  processes = ["disk"] # optional - attach volumes to Machines that belong to one or more process groups
+  initial_size = "20gb" # optional - the size of the volume created on first deploy
 ```
 
 ### `source`
@@ -552,11 +598,113 @@ The `source` is a volume name that this app should mount. Any volume with this n
 
 ### `destination`
 
-The `destination` is the directory where the `source` volume should be mounted on the running app.
+The `destination` is the directory where the `source` volume should be mounted on the running app. This cannot be `/` since that's where the root file system is mounted.
 
 ### `processes`
 
 Optionally, you can specify a list of [processes](#the-processes-section) to limit volume mounts by process group. You can even specify two different `[[mounts]]` sections to mount different source volumes to VMs in different process groups. Note the need to use double brackets if there are multiple `[[mounts]]` defined.
+
+### `initial_size`
+
+Optionally, you can specify the size of the volume to be created when launching an app for the first time.
+
+This value is only used by `fly launch` and `fly deploy` commands in case they need to create a new volume; it is ignored by the `fly volume create` command.
+
+The value can be a string with units, like `initial_size = "30GB"` for example. The value can also be an integer, like `initial_size = 30` for example, with GB as the default unit.
+
+### `auto_extend_size_threshold`
+
+Optional. The threshold of storage used on a volume, by percentage, that triggers extending the volume's size by the value of `auto_extend_size_increment`.
+
+### `auto_extend_size_increment`
+
+The increment, in GB, by which to extend the volume after reaching the `auto_extend_size_threshold`. Required with `auto_extend_size_threshold`.
+
+### `auto_extend_size_limit`
+
+The total amount, in GB, to extend a volume. Optional with `auto_extend_size_increment`.
+
+### Auto extend volume size configuration
+
+You can optionally configure volumes to automatically extend when they reach a usage threshold.
+
+For example, the following config extends the size of the volume by 1GB when it reaches 80% capacity. The volume extensions are limited to 5GB in total. `auto_extend_size_limit` is optional.
+
+```toml
+[[mounts]]
+  source = "data"
+  destination = "/data"
+  auto_extend_size_threshold = 80
+  auto_extend_size_increment = "1GB"
+  auto_extend_size_limit = "5GB"
+  ```
+
+## The `vm` section
+
+This section defines the compute requirements for the Machines used for the application.
+
+The default Machine size is `shared-cpu-1x` but it is not enforced if not specified in `fly.toml`. It means commands like `fly deploy` won't attempt to update the compute requirements (or size) for a Machine. `fly scale` commands will use existing Machines to infer new Machine sizes, and in the event that there are no Machines, they will use `shared-cpu-1x`.
+
+If you care about a predictable _scaling up from zero_ case, or if you have different compute requirements for different process groups, then it is highly recommended to add this section to `fly.toml`. Once compute requirements are set, `fly deploy` and `fly scale count` commands will enforce them. If you change the size of the Machines using `fly scale vm` (or its sibling `fly scale memory`) then it will be reset on next `fly deploy` unless `fly.toml` is updated accordingly.
+
+All keys are optional and `size` has lower precedence than all other keys.
+
+```toml
+[[vm]]
+  size = "shared-cpu-2x"
+  memory = "2gb"
+  cpus = 4
+  cpu_kind = "performance"
+  gpu_kind = "a100-pcie-40gb"
+  host_dedication_id = "customer-id"
+  processes = ["app"]
+```
+
+### `size`
+
+The Machine preset size to use as base, like `size = "shared-cpu-1x"` for example.
+
+To get the full list, run `fly platform vm-sizes` or check the [pricing page](/docs/about/pricing/#compute).
+
+### `memory`
+
+The memory to request. It can be expressed with units, like `memory = "2GB"` or `memory = "512mb"` for example. The value can also be an integer, like `memory = 1024` for example, with MB as the default unit.
+
+### `cpus`
+
+The number of vCPUs to request. Valid values are `1`, `2`, `4`, `8`, or `16`, but depends on `gpu_kind`. 
+
+### `cpu_kind`
+
+The kind of CPU to request. Valid values are `shared` and `performance`.
+
+### `gpu_kind`
+
+The kind of GPU to request. Valid values are `a100-pcie-40gb`, `a100-sxm4-80gb` and `l40s`.
+
+### `host_dedication_id`
+
+In the case of having a dedicated host, this is the value to set so Machines are launched on dedicated hardware.
+
+### `processes`
+
+Optionally, you can specify a list of [processes](#the-processes-section) to limit by process group. You can even specify two different `[[vm]]` sections to have different compute requirements per process group. Note the need to use double brackets if there are multiple `[[vm]]` sections defined.
+
+A `[[vm]]` section without a `processes` key applies to all process groups, except when another `[[vm]]` section targets a specific process group. For example the following snippets uses `shared-cpu-4x` for `app` and `other` process groups but `performance-1x` for `worker` group.
+
+```
+[processes]
+app = "/start-app"
+worker = "/start-worker"
+other = "/start-other"
+
+[[vm]]
+size = "shared-cpu-4x"
+
+[[vm]]
+size = "performance-1x"
+processes = ["worker"]
+```
 
 ## The `checks` section
 

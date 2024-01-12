@@ -11,15 +11,15 @@ order: 4
 <% app_name = "hello-next" %>
 <%= partial "partials/intro", locals: { runtime: "NextJS", link: "https://NextJS.org" } %>
 
-You can deploy your [NextJS](https://nextjs.org/) app on Fly with minimal effort, our CLI will do the heavy lifting. You can use your existing NextJS app or you can [create one using the tutorial](https://nextjs.org/learn/basics/create-nextjs-app) then come back here to deploy your app.
+You can deploy your [NextJS](https://nextjs.org/) app on Fly with minimal effort, our CLI will do the heavy lifting. You can use your existing NextJS app or you can [create one using the tutorial](https://nextjs.org/learn/basics/create-nextjs-app) and then come back here to deploy your app.
 
-## _Generate the NextJS app_
+## _Deploy an existing NextJS app_
 
 If you just want to see how Fly deployment works, follow these steps.
 
 <%= partial "partials/flyctl" %>
 
-Now let's launch your NextJS app.
+Now let's launch your NextJS app from the root of your application.
 
 ```cmd
 cd nextjs-blog
@@ -55,16 +55,20 @@ Now: run 'fly deploy' to deploy your Next.js app.
 
 <%= partial "partials/launched" %>
 
+## Generating your NextJS Dockerfile
+
+While you're welcome to write your own Dockerfile, the easiest way to get started with this is to use the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile). Once installed, it can be run using `npx dockerfile` for Node applications or `bunx dockerfile` for Bun applications. You'll see it referenced throughout this article for various use cases.
+
 ## Connecting to databases
 
-Unlike some other frameworks, Next.js does not bundle a database adapter,
-instead you are free to chose the ORM or node module you wish.
+Unlike some other frameworks, Next.js does not bundle a database adapter.
+Instead, you are free to choose the ORM or node module you wish.
 
 Fly.io will provide a `DATABASE_URL` that you can use at runtime to
 connect to your database.  How you will use this will depend on the
-database module you chose.  [Prisma](https://www.prisma.io/nextjs) is
-a popular choice, and connecting to your database using prisma is done
-through your `prisma/schema.prisma' file.  An example:
+database module you choose.  [Prisma](https://www.prisma.io/nextjs) is
+a popular choice, and connecting to your database using Prisma is done
+through your `prisma/schema.prisma` file.  An example:
 
 ```
 datasource db {
@@ -73,64 +77,63 @@ datasource db {
 }
 ```
 
-If you are unsure how to connect using your favorite adaptor, check out
+If you are unsure how to connect using your favorite adapter, check out
 our [Vanilla with Candy Sprinkles](https://fly.io/blog/vanilla-candy-sprinkles/)
 blog entry and select the configuration that most closely matches your
-application and see how it works.  If you still have questions, post
-the on our [community forum](https://community.fly.io/).
+application.  If you still have questions, post on our [community forum](https://community.fly.io/).
 
 
 
-## Static site generation with Databases
+## Static site generation with databases
 
-By default, the build machine does not have access to your production
+Some applications may require database access at build time. By default, the build machine on Fly.io does not have access to your production
 database.  This means you won't be able to access your database from
 inside methods like `getStaticProps`.
 
-Should this be something your application requires,
-there are two approaches for addressing this: build time secrets and
-deferring the generation to deploy.
+Should this be something your application requires, there are two approaches for addressing this: **build time secrets** and
+**deferring the static site generation** until after deployment.
 
 ### Build time secrets
 
-This approach won't work for SQLite3 as the build machine still won't have
-access to your [volume](https://fly.io/docs/reference/volumes/), but can
-be used with PostgreSQL, MySQL and other such databases.
+This approach allows you to inject secrets (such as database URLs) that are only available at build time.
 
-First you need to obtain the secrets you will need to deploy.  Often this
+<div class="note icon">
+**This approach will not work for SQLite3,** as the build machine still won’t have access to your volume. However, it can be used with PostgreSQL, MySQL and other such databases.
+</div>
+
+First, you need to obtain the secrets you will need to deploy.  Often this
 is only the value of `DATABASE_URL`.  If you don't know the value of this
 secret, `fly console` and `printenv DATABASE_URL` can obtain this value
 for you.
 
-Next you need to modify your Dockerfile to mount a secret.  You can
-follow the instructions for
-[Mounting secrets](https://fly.io/docs/reference/build-secrets/#mounting-secrets)
-or you can let the dockerfile generator make the changes for you:
+Next, you need to modify your Dockerfile to mount a secret. The easiest way to do this is using the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile), like so:
 
-```
+```cmd
 npx dockerfile --mount-secret=DATABASE_URL
 ```
 
-Finally you need to pass the secret on each deploy:
+It is possible to mount multiple secrets, and you can read more about [mounting secrets](https://fly.io/docs/reference/build-secrets/#mounting-secrets) for further details. 
 
-```
+Finally, you need to pass the secret on each deploy:
+
+```cmd
 fly deploy --build-secret DATABASE_URL=value
 ```
 
-Replace _value_ above with the actual secret.
-
-It might be worth putting this command into a shell script or batch file.
+Replace _value_ above with the actual secret. It might be worth putting this command into a shell script or batch file.
 
 ### Deferring static site generation
 
-An alternate approach, one that works with sqlite3 too, is to defer
-the running of the build step to just after before your web server is
+An alternate approach, one that works with SQLite3 too, is to defer
+the running of the build step to just after deployment before your web server is
 started.  The upside is that your build has full access to all of
-your deployment secrets.
+your deployment secrets and environment variables.
 
-This involves replacing your entrypoint in your Dockerfile with a script,
+This involves replacing the entry point in your Dockerfile (typically your `CMD`) with a script
 and having that script run `npm build` (or equivalent) prior to starting
-your server.  You can let the dockerfile generator take care of these
+your server.  
+
+You can let the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile) take care of these
 changes for you:
 
 ```
@@ -142,16 +145,34 @@ Downsides of this approach:
 * Your deployment machines will need enough memory to run a build.  See:
   [`fly scale memory`](https://fly.io/docs/flyctl/scale-memory/) and
   [`swap_size_mb`](https://fly.io/docs/reference/configuration/#swap_size_mb-option) for two options.
-* You may need to adjust the [grace_period](https://fly.io/docs/reference/configuration/#http_service-checks) for any http service checks.
+* You may need to adjust the [grace_period](https://fly.io/docs/reference/configuration/#http_service-checks) for any HTTP service checks.
 * If you are only running one machine there will be a period of time where
   your server is inaccessible while the site is being statically generated.
-* If you run multiple machines, the statis site generation will be run on
+* If you run multiple machines, the static site generation will be run on
   each increasing the total time before any changes are fully deployed.
 
+## Exposing environment variables to the browser
+
+If you're a NextJS user you might know that it supports [exposing environment variables to the browser](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser) using variables with names starting with `NEXT_PUBLIC_`. **These variables are fixed at build time**, and unlike runtime environment variables (which are only available on the server), they can't be changed unless the application is built again.
+
+In order to make these `NEXT_PUBLIC_` variables available, you can add them as `ARG` variables in your Dockerfile, as seen in the example below. **This should come after any actual build steps** (if you've used the Dockerfile generator or the Dockerfile created from `fly launch`, this would be after the line `FROM base as build`).
+
+```dockerfile
+# Build arguments
+ARG NEXT_PUBLIC_EXAMPLE="value"
+ARG NEXT_PUBLIC_OTHER="Other value"
+```
+
+Alternatively, if you'd prefer to use the Dockerfile generator, you can do so by running the following:
+
+```cmd
+npx dockerfile "--arg-build=NEXT_PUBLIC_EXAMPLE:value" \
+  "--arg-build=NEXT_PUBLIC_OTHER=Other value"
+```
 
 ## Disabling telemetry in production
 
-During server startup the following messages may appear in your log:
+During server startup, the following messages may appear in your log:
 
 ```
 Attention: Next.js now collects completely anonymous telemetry regarding usage.
@@ -162,12 +183,14 @@ https://nextjs.org/telemetry
 
 The following command can be used to modify your Dockerfile to disable telemetry:
 
-```
+```cmd
 npx dockerfile --env-base=NEXT_TELEMETRY_DISABLED:1
 ```
 
 
-## _Out of memory: Killed process_
+## _Common pitfalls_
+
+### Out of memory: Killed process
 
 If you should happen to see lines like the following in your logs:
 
@@ -181,7 +204,7 @@ Two links that may be of help:
   * [swap_size_mb](https://fly.io/docs/reference/configuration/#swap_size_mb-option)
 
 
-## _Fetch failure when optimizing images_
+### Fetch failure when optimizing images
 
 If your application uses the `<Image>` element and your images aren't showing and you are seeing the following in your logs:
 
@@ -189,7 +212,7 @@ If your application uses the `<Image>` element and your images aren't showing an
 TypeError: fetch failed
 ```
 
-Scan backwards in your logs for the following:
+Scan backward in your logs for the following:
 
 ```
 Warning: For production Image Optimization with Next.js, the optional 'sharp' package is strongly recommended. Run 'npm i sharp', and Next.js will use it automatically for Image Optimization.
@@ -199,39 +222,7 @@ Read more: https://nextjs.org/docs/messages/sharp-missing-in-production
 
 Follow the instructions in the message, and then redeploy:
 
-```
+```cmd
 npm i sharp
 fly deploy
-```
-
-## _What about build time environment variables?_
-
-If you're an NextJS user you might know that it supports [exposing environment variables to the browser](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser) using variables with name starting with `NEXT_PUBLIC_`.
-
-For our build system to understand that you need to tweak two sections we generate for you, `fly.toml` and our `Dockerfile`. 
-
-Search for `[build.args]` on your `fly.toml` and add the variables you need there.
-
-```toml
-[build.args]
-  NEXT_PUBLIC_EXAMPLE="This is the value"
-  NEXT_PUBLIC_OTHER="Other value"
-```
-
-Then go to your `Dockerfile` and add `ARG` instructions before your `FROM base as build` line like this:
-
-```Dockerfile
-# Throw-away build stage to reduce size of final image
-FROM base as build
-
-# Build arguments
-ARG NEXT_PUBLIC_EXAMPLE="value"
-ARG NEXT_PUBLIC_OTHER="Other value"
-```
-
-The dockerfile-node application can be used to help with this.  Update your dockerfile using the following command:
-
-```cmd
-npx dockerfile "--arg-build=NEXT_PUBLIC_EXAMPLE:value" \
-  "--arg-build=NEXT_PUBLIC_OTHER=Other value"
 ```

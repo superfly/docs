@@ -5,8 +5,6 @@ layout: framework_docs
 order: 100
 ---
 
-<%= partial "docs/postgres/partials/for-machines" %>
-
 ## Instances
 
 Get an overview of the app, including a list of its VM instances with Machine IDs: 
@@ -23,7 +21,7 @@ List more details about an individual Machine:
 fly machine status <machine-id> --app <pg-app-name>
 ``` 
 
-From this information you can get the scale of the VM (both `Memory` and `CPUs`), and the ID of its attached [Fly Volume](/docs/reference/volumes/).
+From this information you can get the scale of the VM (both `Memory` and `CPUs`), and the ID of its attached [Fly Volume](/docs/volumes/).
 
 ## Provisioned Volume Size
 

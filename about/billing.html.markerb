@@ -1,0 +1,65 @@
+---
+title: Fly.io Billing
+layout: docs
+sitemap: true
+nav: firecracker
+redirect_from: /docs/about/credit-cards/
+---
+
+Billing for Fly.io is monthly per organization. Organizations are administrative entities that enable you to add members, share app development environments, and manage billing separately.
+
+If you provision services beyond the [free allowances](/docs/about/pricing/#free-allowances), we will charge you actual money at the end of each month.
+
+Refer to our [Pricing page](/docs/about/pricing/) for resource cost details.
+
+## View invoices
+
+You can view and download invoices from the Billing section of your [dashboard](https://fly.io/dashboard/personal/billing) for each organization.
+
+To download a past invoice, click View for the relevant cycle. You'll be sent to the Stripe billing portal where you'll have the option to download the invoice.
+
+## Volume billing
+
+Volume billing is pro-rated to the hour and we subtract the free allowances first. For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).
+
+If you create a volume, you will be charged for it. You’re billed for volumes that aren’t attached to Machines, and for volumes that are attached to Machines in any state, including stopped Machines.
+
+You aren't billed for the 5 days worth of [daily volume snapshots](/docs/apps/volume-manage/#restore-a-volume-from-a-snapshot) that we store for you by default.
+
+## Machine billing
+
+Machines are billed based on the number of CPUs and the RAM used, according to the Machine state and the time they are running (started). 
+
+For example, “1x Shared 1024MB” is one CPU and 1024 MB RAM. To estimate costs, multiply the the price of “shared-cpu-1x” by the number of CPUs used and the number of seconds the Machine was running (price x cpu count x seconds). Then add charges for any extra RAM. Note that we subtract the free allowances first and that pricing is tiered based on usage. For details, see [Compute pricing](/docs/about/pricing/#compute).
+
+## Payment options
+
+We process payments through Stripe. Paid plans and monthly invoicing require a credit card or credits.
+
+### How we use credit cards
+
+We require an active, valid credit card on file for most Fly.io accounts to do things like deploying multiple apps and deploying public images. This is primarily a means to prevent abuse and ensure that we can collect payment at the end of the month.
+
+### Preauthorization Requests
+
+We may send a preauthorization request to the issuing bank to verify a bank will authorize charges. Some credit card companies present these as real charges, which may surprise you.
+
+A preauth is really just a hold on a credit card; it is not a real charge. We’ll typically preauthorize a small amount (usually less than $5) after signup, then cancel the authorization immediately. Banks may show the preauth for up to 7 days, even though we have not collected any money.
+
+### If you don't have a credit card
+
+While a credit card is the preferred payment method, if you don't have one, then you can add credits to your account. You can purchase credits from the Billing section of the [dashboard](https://fly.io/dashboard/personal/billing) in various amounts (minimum purchase $25). Your usage cost is subtracted from the credit balance each month.
+
+### Prepaid cards
+
+You can't use a prepaid card as a default (or saved) payment method. You can, however, use a prepaid card to add credits to your account.
+
+## Understand charges beyond the free allowances
+
+The prices of provisioned services are mostly fixed. If you provision Machines and leave them running all month, we’ll charge you a predictable amount for that machine.
+
+A common reason for additional charges is extra RAM usage.
+
+For a breakdown of charges, check out your invoice in the Billing section of the [dashboard](https://fly.io/dashboard/personal/billing).
+
+We’re happy to discuss a refund if you do create compute resources by mistake, or if your app receives unexpected traffic due to an attack and generates a surprisingly large bill. Just send an email to billing@fly.io.

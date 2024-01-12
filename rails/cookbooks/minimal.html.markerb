@@ -15,7 +15,7 @@ Create an empty directory, and place the following Dockerfile in there:
 
 If you've ever seen a Dockerfile before, the above seems too good to be true.  But try it.
 In your new directory run `flyctl launch`.
-Accept all the defaults, then run `flyctl deploy`, followed by `flyctl open`.
+Accept all the defaults, then run `flyctl deploy`, followed by `flyctl apps open`.
 
 Congratulations, you've deployed a Rails app.  True, it doesn't do much, but we will
 add more later.

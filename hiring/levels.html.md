@@ -29,6 +29,8 @@ We break out engineering seniority into four levels, L1 to L4 (staff).
   our platform. They influence work on lots of teams, not just one. They're independently responsible for
   making big new things happen; an L3 leads a team, an L4 might create new teams. 
 
+In order to optimize for pay equity, Fly.io doesn't negotiate salaries. Instead, we have a standardized salary for each of these levels.
+
 You can go from L1 to L2, or from L2 to L3. In fact, the most important job that engineering management at Fly.io has is leveling people up. [We prefer small teams and bottom-up product decisions](https://fly.io/docs/hiring/working/#we-prefer-small-teams-and-bottom-up-decisions), which incentivizes
 us to get people as autonomous as we can.
 

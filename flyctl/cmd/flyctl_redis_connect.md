@@ -9,7 +9,7 @@ flyctl redis connect [flags]
 
 ~~~
   -h, --help            help for connect
-  -o, --org string      The target Fly organization
+  -o, --org string      The target Fly.io organization
   -r, --region string   The target region (see 'flyctl platform regions')
 ~~~
 

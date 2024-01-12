@@ -1,8 +1,8 @@
-Destroy a volume
+Destroy one or more volumes. When you destroy a volume, you permanently delete all its data.
 
 ## Usage
 ~~~
-flyctl volumes destroy [id] [flags]
+flyctl volumes destroy [flags] ID ID ...
 ~~~
 
 ## Options
@@ -24,5 +24,5 @@ flyctl volumes destroy [id] [flags]
 
 ## See Also
 
-* [flyctl volumes](/docs/flyctl/volumes/)	 - Volume management commands
+* [flyctl volumes](/docs/flyctl/volumes/)	 - Manage Fly Volumes.
 

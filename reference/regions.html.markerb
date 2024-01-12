@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-Fly.io runs applications physically close to users: in datacenters around the world, on servers we run ourselves. You can currently deploy your apps in 34 regions, connected to a global Anycast network that makes sure your users hit our nearest server, whether they’re in Tokyo, São Paolo, or Frankfurt.
+Fly.io runs applications physically close to users: in datacenters around the world, on servers we run ourselves. You can currently deploy your apps in 35 regions, connected to a global Anycast network that makes sure your users hit our nearest server, whether they’re in Tokyo, São Paolo, or Amsterdam.
 
 <div class="callout">
 Run <code>fly platform regions</code> to get a list of regions.
@@ -15,7 +15,7 @@ Run <code>fly platform regions</code> to get a list of regions.
 
 ## Fly.io Regions
 
-|Region ID| Region Location | Gateway&#42; | [Paid Plan](https://fly.io/plans) Only&#42;&#42; |
+|Region ID| Region Location | Gateway&#42; | [Launch Plan or Higher](https://fly.io/plans) Only&#42;&#42; |
 |---------|-----------------|---------|---------|
 ams |    Amsterdam, Netherlands         | ✓
 arn |    Stockholm, Sweden              |
@@ -55,7 +55,7 @@ yyz |    Toronto, Canada                | ✓
 
 &#42; You can host your apps in any region; "Gateway" regions also have WireGuard gateways, through which you connect to your organization's private network.
 
-&#42;&#42; For some higher-demand regions we restrict scaling up VMs to organizations with [paid plans](https://fly.io/plans).
+&#42;&#42; For some higher-demand regions we restrict scaling up Machines to organizations with the [Launch, Scale, or Enterprise plans](https://fly.io/plans).
 
 ## _Discovering your Application's Region_
 
@@ -63,6 +63,6 @@ You can see the list of Fly.io regions any time with [`fly platform regions`](ht
 
 You can see which regions your app is running in with [`fly status`](https://fly.io/docs/flyctl/status/).
 
-[Fly Volumes](/docs/reference/volumes/) and [Fly Machines](/docs/machines/) are tied to the region they're created in.
+[Fly Volumes](/docs/volumes/) and [Fly Machines](/docs/machines/) are tied to the region they're created in.
 
-When an application instance is started, the three-letter name for the region it's running in is stored in the VM's `FLY_REGION`  environment variable. This, along with other [Runtime Environment](/docs/reference/runtime-environment/) information, is visible to your app running on that instance.
+When an application instance is started, the three-letter name for the region it's running in is stored in the Machine's `FLY_REGION`  environment variable. This, along with other [Runtime Environment](/docs/reference/runtime-environment/) information, is visible to your app running on that instance.

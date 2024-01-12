@@ -29,7 +29,7 @@ fly settings autoupdate enable
 
 ### Check connectivity with fly doctor
 
-Run some basic connectivity test for things like Wireguard, IP addresses, and local Docker instance:
+Run some basic connectivity test for things like WireGuard, IP addresses, and local Docker instance:
 
 ```
 fly doctor
@@ -90,7 +90,7 @@ The message supplies:
 
 ### Fix the "app is not listening on the expected address" error
 
-When you launch a new Fly App, the value of `internal_port` in the`fly.toml` file depends on the default port for your framework or the `EXPOSE` instruction in your Dockerfile. The default port when the `fly launch` command doesn't detect a framework or find ports set in a Dockerfile is `8080`.
+When you launch a new Fly App, the value of `internal_port` in the `fly.toml` file depends on the default port for your framework or the `EXPOSE` instruction in your Dockerfile. The default port when the `fly launch` command doesn't detect a framework or find ports set in a Dockerfile is `8080`.
 
 To fix the error, you can either:
 - Configure your app to listen on host `0.0.0.0:<internal port value in fly.toml>`, or
@@ -155,6 +155,10 @@ fastify.listen({ port: 3000, host: '0.0.0.0' }, function (err, address) {
 ```
 
 Then make sure that the `internal_port` value in `fly.toml` is set to `3000`.
+
+## Smoke checks failing
+
+Smoke checks run during deployment to make sure that a crashing app doesn't get successfully deployed to all your app's Machines. If possible, the smoke check failure output includes an excerpt of the logs to help you diagnose the issue with your app. Common issues with new apps might include [Machine size](#out-of-memory-oom-or-high-cpu-usage), missing environment variables, or other problems with the app's configuration.
 
 ## Health checks failing
 
@@ -225,3 +229,7 @@ First of all, we think using a [Dockerfile](https://fly.io/docs/languages-and-fr
 That's because buildpacks come with lots of dependencies to build different stacks rather than just what you need. On top of that, we've seen buildpack providers upgrade the image on Docker Hub and things Stop Working (even with no code changes on your app). Running `fly launch` already generates Dockerfiles for many [popular frameworks](/docs/languages-and-frameworks/).
 
 That said, if the build used to work, then you can try using a previous, fixed buildpack version so it's back in a known good state.
+
+## Related topics
+
+- [Troubleshoot apps when a host is unavailable](/docs/apps/trouble-host-unavailable/)

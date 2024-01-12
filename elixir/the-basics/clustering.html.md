@@ -32,15 +32,18 @@ If not, run this command from your Elixir application:
 mix release.init
 ```
 
-Then edit the generated `rel/env.sh.eex` file and add the following lines:
+Then check the generated `rel/env.sh.eex` file and add ensure the lines looks similar:
 
 ```shell
-ip=$(grep fly-local-6pn /etc/hosts | cut -f 1)
-export RELEASE_DISTRIBUTION=name
-export RELEASE_NODE=$FLY_APP_NAME@$ip
+# configure node for distributed erlang with IPV6 support
+export ERL_AFLAGS="-proto_dist inet6_tcp"
+export ECTO_IPV6="true"
+export DNS_CLUSTER_QUERY="${FLY_APP_NAME}.internal"
+export RELEASE_DISTRIBUTION="name"
+export RELEASE_NODE="${FLY_APP_NAME}-${FLY_IMAGE_REF##*-}@${FLY_PRIVATE_IP}"
 ```
 
-This names our Elixir node using the Fly application name and the internal IPv6 address. Make sure to deploy after making this change!
+This names our Elixir node's name (aka RELEASE_NODE) using the Fly application name, the Docker image reference value, and the internal IPv6 address. Make sure to deploy after making this change!
 
 ```cmd
 fly deploy

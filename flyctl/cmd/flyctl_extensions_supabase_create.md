@@ -1,4 +1,4 @@
-Provision a Supabase PostgreSQL database
+Provision a Supabase Postgres database
 
 
 ## Usage
@@ -13,8 +13,9 @@ flyctl extensions supabase create [flags]
   -c, --config string   Path to application configuration file
   -h, --help            help for create
   -n, --name string     The name of your database
-  -o, --org string      The target Fly organization
+  -o, --org string      The target Fly.io organization
   -r, --region string   The target region (see 'flyctl platform regions')
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options
@@ -27,5 +28,5 @@ flyctl extensions supabase create [flags]
 
 ## See Also
 
-* [flyctl extensions supabase](/docs/flyctl/extensions-supabase/)	 - Provision and manage Supabase Postgresql databases
+* [flyctl extensions supabase](/docs/flyctl/extensions-supabase/)	 - Provision and manage Supabase Postgres databases
 

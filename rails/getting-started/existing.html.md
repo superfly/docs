@@ -98,7 +98,14 @@ in the left hand column.
 
 ### Open a Rails console
 
-It can be helpful to open a Rails console to run commands and diagnose production issues.
+It can be helpful to open a Rails console to run commands and diagnose production issues.  If you are not running with a sqlite3 or a volume, the recommended way to do this is to run a [console](../../../reference/configuration/#console-command) in an emphemeral machine:
+
+```cmd
+fly console
+```
+
+If you are running with sqlite3 or a volume, you will need to ssh into an existing machine.  You may need to first make sure that you have enough
+[memory](../dockerfiles/#out-of-memory) to accomodate the additional session.
 
 ```cmd
 fly ssh console --pty -C "/rails/bin/rails console"

@@ -9,7 +9,8 @@ flyctl extensions supabase list [flags]
 
 ~~~
   -h, --help         help for list
-  -o, --org string   The target Fly organization
+  -o, --org string   The target Fly.io organization
+  -y, --yes          Accept all confirmations
 ~~~
 
 ## Global Options
@@ -22,5 +23,5 @@ flyctl extensions supabase list [flags]
 
 ## See Also
 
-* [flyctl extensions supabase](/docs/flyctl/extensions-supabase/)	 - Provision and manage Supabase Postgresql databases
+* [flyctl extensions supabase](/docs/flyctl/extensions-supabase/)	 - Provision and manage Supabase Postgres databases
 

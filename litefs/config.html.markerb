@@ -22,7 +22,9 @@ LiteFS will search the following paths to find the config file:
 You can also explicitly set the config path using a command line flag:
 
 ```sh
-litefs -config /path/to/litefs.yml
+litefs mount -config /path/to/litefs.yml
+
+litefs run -config /path/to/litefs.yml
 ```
 
 ## Environment Variables

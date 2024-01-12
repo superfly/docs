@@ -9,7 +9,7 @@ flyctl redis update <name> [flags]
 
 ~~~
   -h, --help                     help for update
-  -o, --org string               The target Fly organization
+  -o, --org string               The target Fly.io organization
   -r, --region string            The target region (see 'flyctl platform regions')
       --replica-regions string   Comma-separated list of regions to deploy read replicas (see 'flyctl platform regions')
 ~~~

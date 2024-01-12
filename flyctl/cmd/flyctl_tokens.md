@@ -6,6 +6,7 @@ flyctl tokens [command] [flags]
 ~~~
 
 ## Available Commands
+* [3p](/docs/flyctl/tokens-3p/)	 - Manage third-party (3P) caveats for Fly.io API tokens
 * [attenuate](/docs/flyctl/tokens-attenuate/)	 - Attenuate Fly.io API tokens
 * [create](/docs/flyctl/tokens-create/)	 - Create Fly.io API tokens
 * [debug](/docs/flyctl/tokens-debug/)	 - Debug Fly.io API tokens

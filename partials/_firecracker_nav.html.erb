@@ -1,3 +1,4 @@
+<%= partial "/docs/partials/back_to_docs" unless current_page?('/docs') %>
 <ul class="outline-list">
   <li>
     <%= nav_link "Getting Started", "/docs/getting-started" %>
@@ -7,9 +8,6 @@
       </li>
       <li>
         <%= nav_link "Hands-on with Fly.io", "/docs/hands-on/" %>
-      </li>
-      <li>
-        <%= nav_link "Working with Fly Apps", "/docs/getting-started/working-with-fly-apps/" %>
       </li>
       <li>
         <%= nav_link "Troubleshooting Deployments", "/docs/getting-started/troubleshooting/" %>
@@ -35,7 +33,7 @@
         <%= nav_link "Run a Django App", "/docs/django/getting-started/" %>
       </li>
       <li>
-        <%= nav_link "Run a Javascript App", "/docs/js/" %>
+        <%= nav_link "Run a JavaScript App", "/docs/js/" %>
       </li>
       <li>
         <%= nav_link "More...", "/docs/languages-and-frameworks/" %>
@@ -123,7 +121,10 @@
         <%= nav_link "SQLite & LiteFS", "/docs/litefs/" %>
       </li>
       <li>
-        <%= nav_link "Redis® by Upstash", "/docs/reference/redis/" %>
+        <%= nav_link "Supabase Postgres", "/docs/reference/supabase/" %>
+      </li>
+      <li>
+        <%= nav_link "Upstash for Redis®", "/docs/reference/redis/" %>
       </li>
       <li>
         <%= nav_link "More...", "/docs/database-storage-guides/#other-storage-apps" %>
@@ -260,7 +261,7 @@
         <%= nav_link "Pricing", "/docs/about/pricing/" %>
       </li>
       <li>
-        <%= nav_link "How We Use Credit Cards", "/docs/about/credit-cards/" %>
+        <%= nav_link "Billing", "/docs/about/billing/" %>
       </li>
       <li>
         <%= nav_link "Engineering Jobs", "/docs/hiring/" %>

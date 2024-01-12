@@ -1,12 +1,12 @@
 ---
 title: Run User Code on Fly Machines
-layout: framework_docs
+layout: docs
 sitemap: false
 author: joshua
 order: 10
 categories:
   - machines
-nav: firecracker
+nav: machines
 date: 2022-05-20
 redirect_from: /docs/app-guides/functions-with-machines/
 ---
@@ -49,6 +49,8 @@ fly ips allocate-v4 -a my-app-name
 Launch a user machine by supplying a Docker image and a networking configuration. We can also [configure the machine's memory/CPU](https://fly.io/docs/reference/machines/#create-and-start-a-machine).
 
 <%= partial "/docs/reference/machines/launch_req" %>
+
+**Status: 200**
 
 Machines are permanent, so keep the ID from the response handy.
 
@@ -103,9 +105,11 @@ ID            	NAME          	REGION	STATE    	CREATED
 ```
 Here we see that one of the machine exited itself.
 
-The equivalent API call for such an overview:
+The closest equivalent API call lists all Machines in an app:
 
 <%= partial "/docs/reference/machines/list_req" %>
+
+**Status: 200**
 
 ## Delete a machine
 

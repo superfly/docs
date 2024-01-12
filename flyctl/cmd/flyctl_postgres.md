@@ -11,7 +11,7 @@ flyctl postgres [command] [flags]
 * [barman](/docs/flyctl/postgres-barman/)	 - Manage databases in a cluster
 * [config](/docs/flyctl/postgres-config/)	 - Show and manage Postgres configuration.
 * [connect](/docs/flyctl/postgres-connect/)	 - Connect to the Postgres console
-* [create](/docs/flyctl/postgres-create/)	 - Create a new PostgreSQL cluster
+* [create](/docs/flyctl/postgres-create/)	 - Create a new Postgres cluster
 * [db](/docs/flyctl/postgres-db/)	 - Manage databases in a cluster
 * [detach](/docs/flyctl/postgres-detach/)	 - Detach a postgres cluster from an app
 * [events](/docs/flyctl/postgres-events/)	 - Track major cluster events

@@ -53,7 +53,7 @@ bin/rails generate dockerfile --add procps net-tools traceroute iputils-ping
 
 Every time you deploy you will start out with a fresh image.  If your database is on that image, it too will start fresh which undoubtedly is not what you want.
 
-The solution is to create a [Fly Volume](https://fly.io/docs/reference/volumes/).
+The solution is to create a [Fly Volume](https://fly.io/docs/volumes/).
 
 Once you have created a volume, you will need to set the `DATABASE_URL` environment variable to cause Rails to put your database on that volume.  The result will be the following lines in your `fly.toml` file:
 
@@ -82,7 +82,7 @@ bin/rails generate dockerfile --fullstaq --jemalloc
 
 At some point you may find that you need more memory.  There are two types:
 real and virtual.  Real is faster, but more expensive.  Virtual is slower
-and often times free.
+but free.
 
 To scale your app to 1GB of real memory, use:
 
@@ -90,10 +90,10 @@ To scale your app to 1GB of real memory, use:
 fly scale memory 1024
 ```
 
-To allocate 512MB of swap space for use as virtual memory, use:
+To allocate 1GB of swap space for use as virtual memory, add the following to your [`fly.toml`](https://fly.io/docs/reference/configuration/#swap_size_mb-option):
 
 ```cmd
-bin/rails generate dockerfile --swap=512M
+swap_size_mb = 1024
 ```
 
 ## Scaling

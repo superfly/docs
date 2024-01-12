@@ -6,13 +6,13 @@ nav: litefs
 toc: true
 ---
 
-LiteFS provides mechanisms for reading the [replication position](position) and
-[current primary status](primary) through the FUSE file system mount. However,
+LiteFS provides mechanisms for reading the [replication position](/docs/litefs/position/) and
+[current primary status](/docs/litefs/primary) through the FUSE file system mount. However,
 this involves polling the file system which has overhead and some delay.
 
 If you need real-time updates of replication or primary changes, you can also 
 use the LiteFS event stream. The event stream is an HTTP endpoint that sends
-a [newline-delimited JSON stream](http://ndjson.org/) of events to the client.
+a newline-delimited JSON stream of events to the client.
 
 ## Usage
 
@@ -51,7 +51,7 @@ if the transaction was received by a replica.
 
 The `txID` field is a hex-formatted transaction ID. The `postApplyChecksum` is 
 a checksum of the entire database after the transaction has been applied. These
-two fields form the [replication position](position).
+two fields form the [replication position](/docs/litefs/position).
 
 The `commit` field is the size of the database in pages and can be multiplied by
 the `pageSize` field to give you the total size of the database file in bytes.

@@ -1,4 +1,4 @@
-Show details about a Supabase database
+Show details about a Supabase Postgres database
 
 
 ## Usage
@@ -12,6 +12,7 @@ flyctl extensions supabase status [name] [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for status
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options
@@ -24,5 +25,5 @@ flyctl extensions supabase status [name] [flags]
 
 ## See Also
 
-* [flyctl extensions supabase](/docs/flyctl/extensions-supabase/)	 - Provision and manage Supabase Postgresql databases
+* [flyctl extensions supabase](/docs/flyctl/extensions-supabase/)	 - Provision and manage Supabase Postgres databases
 

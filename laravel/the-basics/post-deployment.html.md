@@ -45,11 +45,11 @@ By default, Fly.io updates Laravel's logging channel to `"stderr"` through the `
   LOG_LEVEL = "info"
   LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
 ```
-This `"stderr"` configuration prints your application logs into the console, where the [Fly.io service](/docs/getting-started/working-with-fly-apps/#viewing-logs) is able to listen and capture logs from. 
+This `"stderr"` configuration prints your application logs into the console, where the Fly.io service is able to listen and capture logs from. 
 
 In order to **view your logs** captured by the Fly.io service, you can either:
 
-1. Visit your application's monitoring section from your Fly.io dashboard likeso: `"https://fly.io/apps/<app-name>/monitoring"`
+1. Visit your application's monitoring section from your Fly.io dashboard like so: `"https://fly.io/apps/<app-name>/monitoring"`
 2. Or run the [flyctl logs](/docs/flyctl/logs/) command:
 
 ```cmd
@@ -94,7 +94,7 @@ Note: You can even add `"stderr"` in the stack's channels list to view your logs
 
 #### Adding Volume
 
-Deployment wipes out all log files! In order to persist your Laravel log files, you'll need to add a [volume](/docs/reference/volumes/) to persist your log folder's state.
+Deployment wipes out all log files! In order to persist your Laravel log files, you'll need to add a [volume](/docs/volumes/) to persist your log folder's state.
 
 
 1) First let's create a Volume:

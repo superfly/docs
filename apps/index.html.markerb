@@ -4,16 +4,17 @@ layout: docs
 toc: false
 nav: firecracker
 ---
-<%= partial "/docs/partials/v2_transition_banner" %>
 
-Fly Launch is our a Platform-as-a-Service product with features that help you serve up your app, including (but not limited to):
+Fly Launch is a collection of opinionated Fly.io platform features that help you configure and orchestrate your app as a unit. The following are some Fly Launch features:
 
 - the `fly launch` command to get started
 - the `fly.toml` file for app configuration
 - the `fly deploy` command to deploy all your app's Machines
 - the `fly scale` command for horizontal and vertical scaling
 
-Learn how to use all the Fly Launch features that help you manage and run your apps:
+You can also configure and manage Fly Machines individually; see the [Fly Machines](/docs/machines/) docs.
+
+Learn how to use Fly Launch:
 
 <ul class="outline-list">
     <li>
@@ -46,15 +47,6 @@ Learn how to use all the Fly Launch features that help you manage and run your a
     <%= nav_link "Delete an App", "/docs/apps/delete/" %>
     </li>
     <li>
-    <%= nav_link "Scale V1 (Nomad) Apps", "/docs/apps/legacy-scaling/" %>
-    </li>
-    <li>
-    <%= nav_link "Migrate an Existing Fly App to V2", "/docs/apps/migrate-to-v2/" %>
-    </li>
-    <li>
     <%= nav_link "Fly Launch Configuration Reference", "/docs/reference/configuration/" %>
     </li>
 </ul>
-
-<br>
-You can also configure and manage Machines individually; see the [Fly Machines](/docs/machines/) docs.

@@ -14,7 +14,7 @@ flyctl ssh issue [org] [path] [flags]
   -d, --dotssh             Store keys in ~/.ssh, like normal keys
   -h, --help               help for issue
       --hours int          Expiration, in hours (<72) (default 24)
-  -o, --org string         The target Fly organization
+  -o, --org string         The target Fly.io organization
       --overwrite          Overwrite existing SSH keys in same location, if we generated them
   -u, --username strings   Unix usernames the SSH cert can authenticate as (default [root,fly])
 ~~~
@@ -29,5 +29,5 @@ flyctl ssh issue [org] [path] [flags]
 
 ## See Also
 
-* [flyctl ssh](/docs/flyctl/ssh/)	 - Use SSH to login to or run commands on VMs
+* [flyctl ssh](/docs/flyctl/ssh/)	 - Use SSH to log into or run commands on Machines
 

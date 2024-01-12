@@ -13,6 +13,10 @@ For information on costs, see [Fly App Pricing](https://fly.io/docs/about/pricin
 
 ## Memory
 
+RAM is a precious commodity - both to those on Hobby plans who want to remain within or near the free allowances, and to apps that want to scale to be able to handle a large number of concurrent connections.
+
+At some point you may find that you need more memory. There are two types: real and virtual. Real is faster, but more expensive. Virtual (swap) is slower and generally free.
+
 Some starting point recommendations:
 
  * 256MB is enough to run small applications with few users

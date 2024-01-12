@@ -27,4 +27,4 @@ Every server in our infrastructure runs a Rust-based proxy named `fly-proxy`. Th
 
 ### Backhaul
 
-If you have users in Dallas, and an available MicroVM in Chicago, we will accept traffic in Dallas, terminate TLS (unless you've disabled that handler), and then connect to your MicroVM over a Wireguard tunnel between datacenters. Wireguard allows us to pass along almost any kind of network connection with very little additional latency.
+If you have users in Dallas, and an available MicroVM in Chicago, we will accept traffic in Dallas, terminate TLS (unless you've disabled that handler), and then connect to your MicroVM over a WireGuard tunnel between datacenters. WireGuard allows us to pass along almost any kind of network connection with very little additional latency.

@@ -83,3 +83,7 @@ much continuously, the economy can get spooky. We can't make promises about
 openings several months out from now. An offer is a commitment, and that's 
 the one thing we can't do if you're looking to start several months from
 now. We'll do our best to stay up-front about this stuff!
+
+## What About Compensation?
+
+At Fly.io, we're focused on getting pay equity (the fairness kind) embedded as close to the core of our philosophy as possible. We want to eliminate as much bias in the hiring process as we can, and we don't want anyone who works here to second-guess themselves on how hard they negotiated their offer. So, we designed our salaries to be intentionally simple and straightforward: everyone at a given level is offered the same salary and options, regardless of their role, geography, and previous experience.
