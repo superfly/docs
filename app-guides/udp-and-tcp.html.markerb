@@ -177,7 +177,7 @@ Another thing that won't impact your code that you'll need to know about is that
 Every Fly.io app gets an IPv6 address, and that address will work fine for the TCP side of your app, for whatever that's worth.
 
 <div class="note icon">
-This does not apply to 6PN; UDP over 6PN works just as you would expect.
+**Note:** UDP does work over [Fly.io IPv6 private networking](/docs/reference/private-networking/).
 </div>
 
 ### You Might Need To Be Mindful Of MTUs
