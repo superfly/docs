@@ -258,3 +258,15 @@ fly deploy
 ```
 
 Next time it boots it should use your new database! 
+
+### Download a local copy of your production database 
+
+You can use the [fly sftp get](https://fly.io/docs/flyctl/sftp-get/) command to download your database locally. 
+
+```elixir
+fly sftp get /mnt/name/name-prod.db prod.db
+```
+
+Replace `/mnt/name/name-prod.db` with the path to your database (DATABASE_PATH).
+
+
