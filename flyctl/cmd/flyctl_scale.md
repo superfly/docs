@@ -9,7 +9,7 @@ flyctl scale [command] [flags]
 * [count](/docs/flyctl/scale-count/)	 - Change an app's VM count to the given value
 * [memory](/docs/flyctl/scale-memory/)	 - Set VM memory
 * [show](/docs/flyctl/scale-show/)	 - Show current resources
-* [vm](/docs/flyctl/scale-vm/)	 - Change an app's VM to a named size (eg. shared-cpu-1x, dedicated-cpu-1x, dedicated-cpu-2x...)
+* [vm](/docs/flyctl/scale-vm/)	 - Change an app's VM to a named size (eg. shared-cpu-1x, performance-1x, performance-2x...)
 
 ## Options
 
