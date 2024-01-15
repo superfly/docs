@@ -182,7 +182,7 @@ Notes:
 Your full dnsname may be a mouthful, the user the application runs under may be different than the one you use on your laptop.
 the port you expose may be non-standard, or you may have multiple machines and a desire to be able to ssh into a specific one.
 
-If any of these apply to you, you can create or update a file named []`config`](https://www.ssh.com/academy/ssh/config) in your `.ssh` directory.
+If any of these apply to you, you can create or update a file named [`config`](https://www.ssh.com/academy/ssh/config) in your `.ssh` directory.
 Following is an example that illustrates addressing a number of the above cases: 
 
 ```config
