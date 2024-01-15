@@ -7,7 +7,7 @@ order: 4
 
 When you run your application locally you typically test it in your browser by navigating
 to a page like `http://localhost:3000/`.  The number after the colon is called a _port_.
-For most Node.js application this port is 3000, for some it is 8080, but it can be any number between 1024 and 65535.
+For most Node.js applications this port is 3000, for some it is 8080, but it can be any number between 1024 and 65535.
 
 If you are using a high level framework, it will generally take care of this for you.
 For lower level frameworks, you likely have code such as the following, typically in
