@@ -14,7 +14,7 @@ date: 2021-06-22
 
 Livebook ends up being very flexible and powerful. Because Elixir nodes can easily be clustered together, you can run Livebook on your local machine, connect it to your Elixir servers, and do some really interesting things.
 
-Once you have [Livebook connected to your app on Fly](), you are ready to start playing!
+Once you have [Livebook connected to your app on Fly](/docs/elixir/advanced-guides/connect-livebook-to-your-app/), you are ready to start playing!
 
 ## Getting Started with Livebook
 
