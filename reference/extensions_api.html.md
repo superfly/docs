@@ -76,7 +76,6 @@ POST https://logjam.io/flyio/extensions
   id: "test",
   organization_id: "04La2mblTaz",
   organization_name: "High Flyers",
-  organization_email: "04La2mblTaz@customer.fly.io",
   user_email: "v9WvKokd@customer.fly.io",
   user_id: "NeBO2G0l0yJ6",
   user_role: "admin",
@@ -100,8 +99,7 @@ These parameters are sent with every provisioning request.
 | **id** | string | Unique ID representing the extension | `30bqn49y2jh` |
 | **organization_id** | string | Unique ID representing an organization | `M03FclA4m` |
 | **organization_name** | string | Display name for an organization | `Supercollider Inc` |
-| **organization_email** | string | Obfuscated email that routes to all organization admins (does not change) | `n1l330mao@customer.fly.io` |
-| **user_id** | string | Unique ID representing an organization | `M03FclA4m` |
+| **user_id** | string | Unique ID representing the provisioning user | `M03FclA4m` |
 | **user_email** | string | Obfuscated email that routes to the provisioning user (does not change) | `n1l330mao@customer.fly.io` |
 | **user_role** | string | Provisioning user's role | `admin, member` |
 
