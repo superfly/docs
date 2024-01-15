@@ -26,7 +26,6 @@ If you are doing anything with Fly.io, you'll need it. We have [flyctl installat
 
 * Show App Logs: [fly logs](/docs/flyctl/logs/)
 * Show App Deployment Status: [fly status](/docs/flyctl/status/)
-* Show App History: [fly history](/docs/flyctl/history/)
 * Show App Releases: [fly releases](/docs/flyctl/releases/)
 
 ## Configuring networking and certificates
