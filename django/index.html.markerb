@@ -20,3 +20,5 @@ Run through the [Starter Django App](./getting-started/) guide to get a feel for
 ## [Existing Django Apps](./getting-started/existing/)
 
 The [Existing Django Apps](./getting-started/existing/) guide walks through deploying a production-ready project to Fly.io. If you are coming from another hosting platform like Heroku there are additional tips for managing the migration.
+
+## [Advanced Guides](./advanced-guides)
