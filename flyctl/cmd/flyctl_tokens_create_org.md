@@ -12,6 +12,7 @@ flyctl tokens create org [flags]
   -h, --help              help for org
   -j, --json              JSON output
   -n, --name string       Token name (default "Org deploy token")
+  -o, --org string        The target Fly.io organization
 ~~~
 
 ## Global Options
