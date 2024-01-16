@@ -69,7 +69,7 @@ The different response headers you can use to dynamically route requests to othe
 * [**Public Networking**](/docs/reference/services/):
 Learn about Fly.io networking and its support for IPv4 and IPv6 addresses via Anycast, automated TLS and HTTP middleware, proxies, and TCP passthrough.
 
-* [**Private Networking**](/docs/reference/private-networking/):
+* [**Private Networking**](/docs/networking/private-networking/):
 How Fly.io Private Networking provides secure connections between your applications and a VPN option that allows you to connect into your Fly organization and do the same from your desktop or mobile device. It uses WireGuard and DNS to provide connectivity and discoverability. Find out how to use it in your applications, and how to install and configure the VPN.
 
 * [**Upstash for Redis**](/docs/reference/redis/):

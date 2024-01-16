@@ -155,7 +155,7 @@ If you're deploying on Fly.io, your service should be accessible to customers wi
 
 ### Routing private traffic with Flycast
 
-Our [Flycast](https://fly.io/docs/reference/private-networking/#flycast-private-load-balancing) internal load balancing feature allow you to route traffic from an IPv6 address on a customer network to one of your Fly.io applications.
+Our [Flycast](https://fly.io/docs/networking/private-networking/#flycast-private-load-balancing) internal load balancing feature allow you to route traffic from an IPv6 address on a customer network to one of your Fly.io applications.
 
 The `ip_address` field above refers to this feature. At provisioning time, we'll allocate an address on the customer network for you. Then, your reply should include the target Fly.io application where you wish that IP's traffic to be routed to.
 

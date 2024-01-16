@@ -45,7 +45,7 @@ export KUBECONFIG=/home/fly/fks/kubeconfig
 
 Our cluster is accessible over our organization's [private WireGuard network](/docs/reference/private-networking). To connect to our cluster, we need a WireGuard configuration. 
 
-Follow the [Private Network VPN instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io IPv6 private network.
+Follow the [Private Network VPN instructions](/docs/networking/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io IPv6 private network.
 
 From there, you can use standard YAML configuration to drive Kubernetes. Here's a simple deployment example from the [Kubernetes official documentation](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#creating-a-deployment):
 

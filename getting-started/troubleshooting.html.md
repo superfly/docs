@@ -102,7 +102,7 @@ For example, if your app listens on `0.0.0.0:3000`, then set `internal_port = 30
 
 A lot of frameworks will listen on `localhost`/`127.0.0.1` by default so that the developer can connect to the app. Different frameworks also define different default ports, like 3000, 8000, or 8080, for example. It can be easy to make a mistake and configure your app in a way that makes it impossible for the Fly Proxy to route requests to it. And it can be difficult to debug, especially if your framework doesn't print the listening address to logs and your image doesn't have `netstat` or `ss` tools.
 
-Learn more about [connecting to an app service](/docs/getting-started/app-services/).
+Learn more about [connecting to an app service](/docs/networking/app-services/).
 
 ### Example - Configure port and host in a Fastify Node app
 

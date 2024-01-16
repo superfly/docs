@@ -8,7 +8,7 @@ order: 10
 
 Networking on Fly.io.
 
-- **[Connect to an App Service](/docs/getting-started/app-services/):** An overview of how to connect to your app over the private WireGuard network (6PN), and how to make your app reachable from the internet.
+- **[Connect to an App Service](/docs/networking/app-services/):** An overview of how to connect to your app over the private WireGuard network (6PN), and how to make your app reachable from the internet.
  
 - **[Private networking](/docs/reference/private-networking):** Learn about Fly.io's IPv6 private network (6PN), DNS on Fly Machines, and how to use Flycast for load balancing and other Fly Proxy features on a private network.
 

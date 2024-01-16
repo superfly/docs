@@ -28,7 +28,7 @@ This guide assumes that you have flyctl and cURL installed, and have authenticat
 
 This method requires more setup but gives you direct access to machines over the WireGuard VPN.
 
-First, follow the [instructions](/docs/reference/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly network. We recommend WireGuard because you can directly test your machines from your local machine.
+First, follow the [instructions](/docs/networking/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly network. We recommend WireGuard because you can directly test your machines from your local machine.
 
 Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
 
