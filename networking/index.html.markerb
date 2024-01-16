@@ -12,7 +12,7 @@ Networking on Fly.io.
  
 - **[Private networking](/docs/networking/private-networking):** Learn about Fly.io's IPv6 private network (6PN), DNS on Fly Machines, and how to use Flycast for load balancing and other Fly Proxy features on a private network.
 
-- **[Public networking](/docs/networking/services)**, connection handlers, and redirects.
+- **[Public networking](/docs/networking/services):** Details about public network services on Fly.io, including allocating IP addresses finding a Machines outbound IP, connection handlers, and redirects.
 
 - **[Dynamic request routing](/docs/networking/dynamic-request-routing/):** Use the `fly-replay` response header to route requests to other apps and regions.
 
