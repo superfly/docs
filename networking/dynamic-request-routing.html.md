@@ -53,7 +53,7 @@ The proxy will get the request to an instance in that region and let the instanc
 
 ### Replay requests to other apps
 
-`fly-replay` can replay requests across apps in the same organization. Think of a router app for a FaaS that wants to spin up a customer [VM](/docs/reference/machines/) on demand.
+`fly-replay` can replay requests across apps in the same organization. Think of a router app for a FaaS that wants to spin up a customer [Machine](/docs/machines/) on demand.
 
 To send the request to an instance of a different app in the same organization, in the nearest region that has one:
 ```
