@@ -7,9 +7,11 @@ categories:
   - ssl
   - custom domains
   - guide
+redirect_from:
+  - /docs/app-guides/custom-domains-with-fly/
 ---
 
-In a hurry and just need a quick how-to for a simple custom domain configuration? See [Use a custom domain](/docs/apps/custom-domain/).
+In a hurry and just need a quick how-to for a simple custom domain configuration? See [Use a custom domain](/docs/networking/custom-domain/).
 
 An application's brand is often encapsulated in its domain name, and that in turn is wrapped with value. So being able to configure secure custom domains is essential.
 

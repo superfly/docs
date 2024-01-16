@@ -115,7 +115,7 @@ v6      2a09:8280:1::d285       public          global  2023-01-25T21:35:29Z
 v4      66.241.125.211          public (shared)           
 ```
 
-Read more about [Public Network Services](/docs/reference/services/) and [Private Networking](/docs/networking/private-networking/).
+Read more about [Public Network Services](/docs/networking/services/) and [Private Networking](/docs/networking/private-networking/).
 
 
 ## Check on it from inside

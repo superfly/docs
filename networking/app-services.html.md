@@ -62,7 +62,7 @@ If your configuration includes any services for Fly Proxy to route to, and the a
 
 ### A note on Fly App IPs and Fly-Replay routing
 
-App-wide IP addresses (public and private) tell Fly Proxy which app to deliver a request to. If a service _only_ needs to be reachable by Fly Proxy in its handling of the [Fly-Replay](/docs/reference/dynamic-request-routing/) response header, its app does not need an IP; app information is incorporated directly in the header.
+App-wide IP addresses (public and private) tell Fly Proxy which app to deliver a request to. If a service _only_ needs to be reachable by Fly Proxy in its handling of the [Fly-Replay](/docs/networking/dynamic-request-routing/) response header, its app does not need an IP; app information is incorporated directly in the header.
 
 ## Private services on 6PN (direct WireGuard connections)
 

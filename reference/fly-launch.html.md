@@ -200,7 +200,7 @@ Provisioning ips for hello-gunicorn-flask
   Add a dedicated ipv4 with: fly ips allocate-v4
 ```
 
-Because I had an HTTP service configured, and no [public IP addresses](/docs/reference/services/), Fly Launch [provisioned the IPs on deployment](/docs/apps/deploy/#ip-addresses).
+Because I had an HTTP service configured, and no [public IP addresses](/docs/networking/services/), Fly Launch [provisioned the IPs on deployment](/docs/apps/deploy/#ip-addresses).
 
 ```
 This deployment will:

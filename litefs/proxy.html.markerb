@@ -45,7 +45,7 @@ replication position.
 
 The proxy handles requests a bit differently on replicas since they cannot write
 data and they may lag slightly behind the primary. First, write requests
-(`POST`, `PUT`, etc) are forwarded to primary node using [`fly-replay` header](/docs/reference/dynamic-request-routing/).
+(`POST`, `PUT`, etc) are forwarded to primary node using [`fly-replay` header](/docs/networking/dynamic-request-routing/).
 This ensures that all writes occur on the primary.
 
 For read requests (`GET`), the replica will wait for the replication position on

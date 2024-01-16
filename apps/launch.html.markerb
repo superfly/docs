@@ -23,7 +23,7 @@ Here are the components of a successful launch, ready for the first deployment:
 
 * A way to get a Docker image that we can use to get your app running on a Machine.
 * A `fly.toml` file, created by `fly launch` or provided by you, for your app's Fly.io-specific [configuration](/docs/reference/configuration/).
-* Optional platform resources such as [public IP addresses](/docs/reference/services/), [Fly Volumes](/docs/reference/volumes), [app secrets](/docs/reference/secrets/), [Fly Postgres](/docs/postgres/) clusters, and integrated resources like [Upstash for Redis](/docs/reference/redis/).
+* Optional platform resources such as [public IP addresses](/docs/networking/services/), [Fly Volumes](/docs/reference/volumes), [app secrets](/docs/reference/secrets/), [Fly Postgres](/docs/postgres/) clusters, and integrated resources like [Upstash for Redis](/docs/reference/redis/).
 
 ## Framework launch scanners
 
@@ -83,7 +83,7 @@ If you've run `fly launch` but haven't deployed yet (hint: you can do this with 
 
 * change your configuration
 * update your app source
-* change or provision platform resources such as [public IP addresses](/docs/reference/services/), [Fly Volumes](/docs/reference/volumes), [app secrets](/docs/reference/secrets/), [Fly Postgres](/docs/postgres/) clusters, or integrated resources like [Upstash for Redis](/docs/reference/redis/)
+* change or provision platform resources such as [public IP addresses](/docs/networking/services/), [Fly Volumes](/docs/reference/volumes), [app secrets](/docs/reference/secrets/), [Fly Postgres](/docs/postgres/) clusters, or integrated resources like [Upstash for Redis](/docs/reference/redis/)
 
 And then deploy (or redeploy) with [`fly deploy`](/docs/apps/deploy/).
 

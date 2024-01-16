@@ -51,7 +51,7 @@ This may come with a default `services` section for `internal_port` 8080. Replac
   port = 5432
 ```
 
-Note the use of the `pg_tls` [handler](/docs/reference/services/#connection-handlers) to manage the specific requirements of Postgres connections.
+Note the use of the `pg_tls` [handler](/docs/networking/services/#connection-handlers) to manage the specific requirements of Postgres connections.
 
 For additional information on services and service ports:
 [The services sections](https://fly.io/docs/reference/configuration/#the-services-sections)

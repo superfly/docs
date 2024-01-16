@@ -23,7 +23,7 @@ We broadcast and accept traffic from ranges of IP addresses (both IPv4 and IPv6)
 
 ### Proxy
 
-Every server in our infrastructure runs a Rust-based proxy named `fly-proxy`. The proxy is responsible for accepting client connections, matching them to customer applications, applying [handlers](/docs/reference/services/#connection-handlers) (eg: TLS termination), and [backhaul](#backhaul) between servers.
+Every server in our infrastructure runs a Rust-based proxy named `fly-proxy`. The proxy is responsible for accepting client connections, matching them to customer applications, applying [handlers](/docs/networking/services/#connection-handlers) (eg: TLS termination), and [backhaul](#backhaul) between servers.
 
 ### Backhaul
 

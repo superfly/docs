@@ -161,7 +161,7 @@ The `ip_address` field above refers to this feature. At provisioning time, we'll
 
 By default, no traffic is routed to your app until it has services configured. See the [Machines API](https://fly.io/docs/machines/working-with-machines/#create-a-machine) and [fly.toml docs](https://fly.io/docs/reference/configuration/#the-services-sections) for details.
 
-Optionally, you can add the [proxy protocol handler](https://fly.io/docs/reference/services/#connection-handlers) to a service. We co-opt the [proxy protocol](https://github.com/haproxy/haproxy/blob/master/doc/proxy-protocol.txt) as a way to give your service knowledge of the IP address assigned on the customer network, at client connection time. This IP is useful for performing an additional security check beyond user/password credentials or tokens.
+Optionally, you can add the [proxy protocol handler](https://fly.io/docs/networking/services/#connection-handlers) to a service. We co-opt the [proxy protocol](https://github.com/haproxy/haproxy/blob/master/doc/proxy-protocol.txt) as a way to give your service knowledge of the IP address assigned on the customer network, at client connection time. This IP is useful for performing an additional security check beyond user/password credentials or tokens.
 
 ### DNS records
 
