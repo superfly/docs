@@ -15,7 +15,7 @@ To run MySQL as a [Fly App](/docs/app-guides/mysql-on-fly/), follow our guide [h
 
 ### _Connect from a Laravel Fly App_
 
-1.  Revise the `[env]` configuration in your Laravel application's `fly.toml` file to connect with your MySQL Fly App's [Fly .internal address](/docs/reference/private-networking/#fly-internal-addresses):
+1.  Revise the `[env]` configuration in your Laravel application's `fly.toml` file to connect with your MySQL Fly App's [Fly .internal address](/docs/networking/private-networking/#fly-io-internal-addresses):
 
     ```toml
     [env]

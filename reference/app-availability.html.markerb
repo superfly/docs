@@ -18,7 +18,7 @@ Since Fly Proxy does load balancing by default, you need to consider how your ap
 
 <div class="callout">
 <p><b>A note about Fly Proxy</b>: 
-Fly Proxy does a lot of work in the background, applying handlers, managing traffic and load balancing, and managing connections to services. Fly Proxy also automatically starts and stops Machines based on traffic to your app. The proxy works for [process groups with services defined](/docs/getting-started/app-services/#services-routed-with-fly-proxy).
+Fly Proxy does a lot of work in the background, applying handlers, managing traffic and load balancing, and managing connections to services. Fly Proxy also automatically starts and stops Machines based on traffic to your app. The proxy works for [process groups with services defined](/docs/networking/app-services/#services-routed-with-fly-proxy).
 </div>
 
 For databases, you'll need to follow the specific recommendations for the database you're using, including how to set up clusters for replication and failover.

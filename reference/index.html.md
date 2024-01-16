@@ -63,13 +63,13 @@ The Fly.io implementation of volumes for persistent storage attached to Machines
 
 ## Network services
 
-* [**Dynamic request routing**](/docs/reference/dynamic-request-routing/):
+* [**Dynamic request routing**](/docs/networking/dynamic-request-routing/):
 The different response headers you can use to dynamically route requests to other regions or apps.
 
-* [**Public Networking**](/docs/reference/services/):
+* [**Public Networking**](/docs/networking/services/):
 Learn about Fly.io networking and its support for IPv4 and IPv6 addresses via Anycast, automated TLS and HTTP middleware, proxies, and TCP passthrough.
 
-* [**Private Networking**](/docs/reference/private-networking/):
+* [**Private Networking**](/docs/networking/private-networking/):
 How Fly.io Private Networking provides secure connections between your applications and a VPN option that allows you to connect into your Fly organization and do the same from your desktop or mobile device. It uses WireGuard and DNS to provide connectivity and discoverability. Find out how to use it in your applications, and how to install and configure the VPN.
 
 * [**Upstash for Redis**](/docs/reference/redis/):
@@ -82,7 +82,7 @@ For more general information about security, refer to [Security at Fly.io](/docs
 * [**Deploy Tokens**](/docs/reference/deploy-tokens/):
 An experimental feature to use in place of standard API tokens.
 
-* [**TLS support**](/docs/reference/tls/):
+* [**TLS support**](/docs/networking/tls/):
 A list of supported cipher suites.
 
 

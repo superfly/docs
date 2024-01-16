@@ -39,7 +39,7 @@ Here's how `fly deploy` determines how to get the app's Docker image:
 
 ## IP addresses
 
-If the app to be deployed is configured with an eligible HTTP `[[services]]` section, and it does not yet have [public IP addresses](/docs/reference/services/), `fly deploy` provisions a public IPv6 and a shared public IPv4 Anycast address. 
+If the app to be deployed is configured with an eligible HTTP `[[services]]` section, and it does not yet have [public IP addresses](/docs/networking/services/), `fly deploy` provisions a public IPv6 and a shared public IPv4 Anycast address. 
 
 ## Machines not managed by Fly Launch
 
@@ -99,7 +99,7 @@ Updating existing machines in 'example-app-8803' with canary strategy
 
 ## Not all changes require a new App release
 
-You can [add an IP address](/docs/reference/services/#ip-addresses) to an App, for example, without redeploying.
+You can [add an IP address](/docs/networking/services/#ip-addresses) to an App, for example, without redeploying.
 
 Adding a [secret](/docs/reference/secrets/) to the App does require a restart, so `fly secrets set` triggers a new deployment.
 

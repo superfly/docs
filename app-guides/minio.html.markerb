@@ -61,7 +61,7 @@ Your app is ready! Deploy with `flyctl deploy`
 
 ## (Un)configure networking
 
-There's no need for this app to be accessible from the public internet, if you run your object storage within the same [Fly IPV6 private network](https://fly.io/docs/reference/private-networking/) as the app(s) that want to connect to it.
+There's no need for this app to be accessible from the public internet, if you run your object storage within the same [Fly IPV6 private network](https://fly.io/docs/networking/private-networking/) as the app(s) that want to connect to it.
 
 Delete the `[http_service]` block in `fly.toml`. Now the Fly proxy won't pass any requests to the app from outside your private network.
 
@@ -117,7 +117,7 @@ fly deploy
 
 MinIO has a web interface. It's served on the port specified by `--console-address` in the Dockerfile, which we set to `9001`. We can access this panel over our private WireGuard network.
 
-One way to do this is to set up a [regular WireGuard tunnel](https://fly.io/docs/reference/private-networking/), and visit `http://my-minio.internal:9001` in the browser.
+One way to do this is to set up a [regular WireGuard tunnel](https://fly.io/docs/networking/private-networking/), and visit `http://my-minio.internal:9001` in the browser.
 
 A simpler way is to use flyctl's user-mode WireGuard to proxy a local port to the app:
 
@@ -245,7 +245,7 @@ fly scale count 3
 
 ### Private networking
 
-One of the great things about Fly.io is the [private networking](https://fly.io/docs/reference/private-networking/) we get for free. We'll use our Machines' private IPs to define hostnames in `/etc/hosts` which our nodes will use to communicate with each other.
+One of the great things about Fly.io is the [private networking](https://fly.io/docs/networking/private-networking/) we get for free. We'll use our Machines' private IPs to define hostnames in `/etc/hosts` which our nodes will use to communicate with each other.
 
 Get the private IPs of your Machines:
 

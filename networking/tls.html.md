@@ -2,6 +2,8 @@
 title: TLS Support
 layout: docs
 nav: firecracker
+redirect_from:
+  - /docs/reference/tls/
 ---
 
 The Fly proxy only supports TLSv1.2 and TLSv1.3 with strong ciphers.

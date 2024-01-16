@@ -33,7 +33,7 @@ fly orgs invite …
 
 ## Networks in an Organization
 
-Multiple apps can be deployed to an organization. Any applications deployed to the same organization are [accessible to each other in the private network](/docs/reference/private-networking/).
+Multiple apps can be deployed to an organization. Any applications deployed to the same organization are [accessible to each other in the private network](/docs/networking/private-networking/).
 
 ## Staging Organization
 

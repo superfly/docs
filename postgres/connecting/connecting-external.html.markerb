@@ -5,7 +5,7 @@ layout: framework_docs
 order: 2
 ---
 
-Fly Postgres databases can be used by applications outside their Fly.io [internal private network](/docs/reference/private-networking/); this means in a different private network belonging to your organization, in another Fly organization, or outside Fly.io altogether.
+Fly Postgres databases can be used by applications outside their Fly.io [internal private network](/docs/networking/private-networking/); this means in a different private network belonging to your organization, in another Fly organization, or outside Fly.io altogether.
 
 We don't expose Postgres apps to the internet by default. To get this working, you'll need to make two adaptations: configuring your Postgres app to accept connections from the Fly proxy, and providing a publicly-resolvable hostname to your app.
 
@@ -51,7 +51,7 @@ This may come with a default `services` section for `internal_port` 8080. Replac
   port = 5432
 ```
 
-Note the use of the `pg_tls` [handler](/docs/reference/services/#connection-handlers) to manage the specific requirements of Postgres connections.
+Note the use of the `pg_tls` [handler](/docs/networking/services/#connection-handlers) to manage the specific requirements of Postgres connections.
 
 For additional information on services and service ports:
 [The services sections](https://fly.io/docs/reference/configuration/#the-services-sections)

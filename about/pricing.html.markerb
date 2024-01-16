@@ -83,7 +83,7 @@ You'll be charged for volumes that you create, whether they are attached to a Ma
 
 ### Anycast IP addresses
 
-Each application receives a [shared IPv4 address](/docs/reference/services/#shared-ipv4) and unlimited [Anycast IPv6](/docs/reference/services/#ipv6) addresses for global load balancing.
+Each application receives a [shared IPv4 address](/docs/networking/services/#shared-ipv4) and unlimited [Anycast IPv6](/docs/networking/services/#ipv6) addresses for global load balancing.
 
 Dedicated IPv4 addresses are $2/mo.
 

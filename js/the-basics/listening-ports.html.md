@@ -64,7 +64,7 @@ Other frameworks may require you to change command used to start your applicatio
 
 If you need to expose additional ports, you will need to add a
 [`services` section](https://fly.io/docs/reference/configuration/#the-services-sections) for each additional port.  Be sure to review our
-[Public Network Services](https://fly.io/docs/reference/services/) page before proceeding, in particular:
+[Public Network Services](https://fly.io/docs/networking/services/) page before proceeding, in particular:
 
   * If you want your port other than 80/443 to be available on IPv4 you will need to [allocate a dedicated IPv4 address](https://fly.io/docs/flyctl/ips-allocate-v4/).
   * If you want to take advantage of our TLS services, you will want to add _"tls"_ to the list of connection handlers.

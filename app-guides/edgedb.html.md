@@ -137,7 +137,7 @@ flyctl secrets set \
   --app my-other-app
 ```
 
-If you've [configured a Wireguard tunnel](https://fly.io/docs/reference/private-networking/) on your local machine, you'll be able to open a REPL to your new EdgeDB instance with the `edgedb` CLI.
+If you've [configured a Wireguard tunnel](https://fly.io/docs/networking/private-networking/) on your local machine, you'll be able to open a REPL to your new EdgeDB instance with the `edgedb` CLI.
 
 ```cmd
 edgedb --dsn edgedb://edgedb:mysecretpassword@myedgedb.internal:8080 --tls-security insecure
