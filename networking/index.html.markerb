@@ -16,9 +16,9 @@ Networking on Fly.io.
 
 - **[Dynamic request routing networking](/docs/reference/dynamic-request-routing/):** Use the `fly-replay` response header to route requests to other apps and regions.
 
-- **[Use a custom domain](/docs/apps/custom-domain/):** A quick how-to on setting a custom domain for your app.
+- **[Custom domains - Use a custom domain](/docs/apps/custom-domain/):** A quick how-to on setting a custom domain for your app.
 
-- **[More about custom domains and SSL certificates](/docs/app-guides/custom-domains-with-fly/):** A deeper dive into custom domains and SSL certificates, including automating the certificate process with the GraphQL API and troubleshooting tips.
+- **[Custom domains - More about custom domains and SSL certificates](/docs/app-guides/custom-domains-with-fly/):** A deeper dive into custom domains and SSL certificates, including automating the certificate process with the GraphQL API and troubleshooting tips.
 
 - **[Run UDP services](/docs/app-guides/udp-and-tcp/):** Understand the gotchas of running Fly Apps on UDP.
 
