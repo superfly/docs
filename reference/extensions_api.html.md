@@ -100,7 +100,7 @@ These parameters are sent with every provisioning request.
 | **organization_id** | string | Unique ID representing an organization | `M03FclA4m` |
 | **organization_name** | string | Display name for an organization | `Supercollider Inc` |
 | **user_id** | string | Unique ID representing the provisioning user | `M03FclA4m` |
-| **user_email** | string | Obfuscated email that routes to the provisioning user (does not change) | `n1l330mao@customer.fly.io` |
+| **user_email** | string | Obfuscated email that routes to the **provisioning** user (does not change) | `n1l330mao@customer.fly.io` |
 | **user_role** | string | Provisioning user's role | `admin, member` |
 
 **Optional parameters**
@@ -275,7 +275,7 @@ The JSON response:
 }
 ```
 
-## Webhooks: Notify Fly.io about changes to extension resources
+## Incoming Webhooks: Notify Fly.io about changes to extension resources
 
 Providers should send webhooks to Fly.io when changes happen to resources, such as:
 
@@ -320,7 +320,7 @@ resource.deleted
 
 Note: the shape of `resource` should be the same as that provided by any `GET` endpoints for invidividual resources.
 
-## Webhooks: Get notified about changes to provisioned accounts and resources
+## Outbound Webhooks: Get notified about changes to provisioned accounts and resources
 
 We intend to inform your service about system changes such as:
 * Addition or removal of provisioned users from an organization
@@ -330,15 +330,18 @@ We intend to inform your service about system changes such as:
 
 **Currently, we only send machine events from a single Fly.io organization.**
 
-If your service deploys on Fly.io, we can send you webhooks for machine events, such as stops and starts, with some details about the source and cause of each. Here's a sample payload:
+If your service deploys on Fly.io, we can send you webhooks for machine events, such as stops and starts, with some details about the source and cause of each.
+
+These webhooks conform to the [CloudEvents spec](https://github.com/cloudevents/spec). The spec encodes common attributes like `ID`, `source`, `type` and `timestamp` in HTTP headers. Find your [SDK of choice here](https://github.com/cloudevents/).
+
+*Type* will be encoded in this format: `io.fly.machine.starting`. The contents of `data` varies depending on the event. These types and data will be documented, eventually. For now, consult us on a case-by-case basis if the contents are not self-explanatory.
+
+Here's a sample payload, minus the fields mentioned above.
 
 ```
 POST https://logjam.io/flyio/extensions/events
 {
-  "id": "01HJQ3SZ1Z0JHDGAF7FDKQV3WE",
   "machine_id": "5683977ad31768",
-  "type": "launch",
-  "timestamp": 1703729230,
   "status": "failed",
   "data": {
     "Error": "image not found",
@@ -346,8 +349,6 @@ POST https://logjam.io/flyio/extensions/events
   }
 }
 ```
-
-The contents of `data` varies depending on the event. These will be documented eventually. For now, consult us on a case-by-case basis if the contents are not self-explanatory.
 
 ## Email communication with customers
 
