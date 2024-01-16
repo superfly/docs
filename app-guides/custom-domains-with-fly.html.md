@@ -9,6 +9,8 @@ categories:
   - guide
 ---
 
+In a hurry and just need a quick how-to for a simple custom domain configuration? See [Use a custom domain](/docs/apps/custom-domain/).
+
 An application's brand is often encapsulated in its domain name, and that in turn is wrapped with value. So being able to configure secure custom domains is essential.
 
 Fly.io offers a simple command-line process for manual configuration of custom domains and a GraphQL API for people integrating Fly.io custom domains into their automated workflows. Here, we'll be looking at both - and answering the question, which one should you use?
