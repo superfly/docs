@@ -5,6 +5,10 @@ layout: docs
 nav: firecracker
 ---
 
+<figure>
+  <img src="/static/images/docs-magnify.webp" alt="">
+</figure>
+
 Fly.io has multiple hosts (physical hardware) in every supported [region](/docs/reference/regions/). From time to time, a hardware failure, connectivity issues, or other factors will make a host unavailable. A single-host issue may cause a sustained or intermittent outage, or generally degraded performance, and this will disproportionately affect apps that run on a single Machine.
 
 A host can be down for an hour, or a day, or sometimes longer. 

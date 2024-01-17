@@ -6,6 +6,10 @@ redirect_from:
   - /docs/apps/custom-domain/
 ---
 
+<figure>
+  <img src="/static/images/docs-ui.webp" alt="">
+</figure>
+
 When you create a Fly App, it is automatically given a `fly.dev` sub-domain, based on the app's name. This is great for testing, but when you want to go to full production you'll want your application to appear on your own domain and have HTTPS set up for you as it is with your `.fly.dev` domain. That's where the `fly certs` command comes in. But let's step back before we set up the TLS certificate, to the first step: directing traffic to your site.
 
 ## Set a CNAME record

@@ -6,6 +6,10 @@ nav: firecracker
 order: 15
 ---
 
+<figure>
+  <img src="/static/images/docs-books.webp" alt="">
+</figure>
+
 Once your Fly App is launched, `flyctl` has various tools for getting information about it. You can also find a lot of information on your Fly.io [web dashboard](https://fly.io/dashboard).
 
 ## Find all your Apps

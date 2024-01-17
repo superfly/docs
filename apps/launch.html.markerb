@@ -7,6 +7,10 @@ order: 10
 redirect_from: /launch/
 ---
 
+<figure>
+  <img src="/static/images/docs-island.webp" alt="">
+</figure>
+
 Fly Launch helps you configure and orchestrate your app. 
 
 To create a brand new app on Fly.io, run this command from the source directory of your project:

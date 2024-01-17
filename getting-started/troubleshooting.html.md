@@ -5,6 +5,10 @@ sitemap: false
 nav: firecracker
 ---
 
+<figure>
+  <img src="/static/images/docs-magnify.webp" alt="">
+</figure>
+
 This section gives you some ideas of how to start troubleshooting if your deployment doesn't work as expected. If you're still stuck after reading, then visit our [community forum](https://community.fly.io/) for more help.
 
 ## Try this first

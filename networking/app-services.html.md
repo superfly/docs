@@ -7,6 +7,10 @@ redirect_from:
   - /docs/getting-started/app-services/
 ---
 
+<figure>
+  <img src="/static/images/docs-servers.webp" alt="">
+</figure>
+
 There are two basic ways to talk to a process running in your Fly Machine: 
 
 1. Via Fly Proxy, the Fly.io component that handles load balancing&mdash;this is what you'll need for any public web service
