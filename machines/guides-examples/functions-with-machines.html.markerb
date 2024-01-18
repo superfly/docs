@@ -46,7 +46,7 @@ fly ips allocate-v4 -a my-app-name
 
 ## Launch a new machine
 
-Launch a user machine by supplying a Docker image and a networking configuration. We can also [configure the machine's memory/CPU](https://fly.io/docs/reference/machines/#create-and-start-a-machine).
+Launch a user machine by supplying a Docker image and a networking configuration.
 
 <%= partial "/docs/reference/machines/launch_req" %>
 
