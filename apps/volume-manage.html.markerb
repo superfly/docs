@@ -223,7 +223,7 @@ For options, refer to the [`fly machine clone` docs](/docs/flyctl/machine-clone/
 <b>Warning:</b> When you destroy a volume, you permanently delete all its data.
 </div>
 
-1. Run `fly volumes list` and copy ID of volume to destroy.
+1. Run `fly volumes list` and copy the ID of volume to destroy.
 
 2. Destroy the volume:
 
