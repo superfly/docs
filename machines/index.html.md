@@ -2,7 +2,6 @@
 title: "Fly Machines"
 layout: docs
 nav: machines
-redirect_from: /docs/reference/machines/
 ---
 
 Fly Machines are the engine of the Fly.io platform: fast-launching VMs that can be started and stopped at subsecond speeds. Control them with their fast REST API or the flyctl CLI. Or use [Fly Launch](/docs/reference/fly-launch/) for opinionated app-wide configuration and deployment.
