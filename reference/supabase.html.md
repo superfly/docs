@@ -6,11 +6,20 @@ status: beta
 nav: firecracker
 ---
 
-[Supabase](https://supabase.com) partnered with Fly.io to offer fully managed Postgres databases hosted on Fly.io infrastructure. Using Supabase Postgres ensures low latency database access in all Fly.io regions.
+<aside class="callout">
+This service is in private beta. Do not run production workloads yet! [Sign up here](https://forms.supabase.com/fly-postgres) for beta access.
+</aside>
+
+[Supabase](https://supabase.com) now offers their excellent managed Postgres service on Fly.io infrastructure. Provisioning Supabase via `flyctl` ensures low-latency database access from applications hosted Fly.io regions.
 
 ## Pricing and Billing
 
-Supabase offers one free, resource-limited database per Fly.io organization. After that, all databases are billed on pay-as-you-go basis under the [Supabase Pro plan](https://supabase.com/pricing#compare-plans). Check the official [Supabase Pricing](https://supabase.com/pricing) page for details.
+<aside class="callout">
+During the Supabase beta, we recommend you upgrade your organization to the Supabase Pro Plan to test without limitations. Your beta credits will cover plenty of usage. Use `flyctl ext supabase dashboard --org yourorg` to sign in and upgrade.
+</aside>
+
+Supabase offers one free, resource-limited database per Fly.io user. After that, all databases are billed on pay-as-you-go basis under the [Supabase Pro plan](https://supabase.com/pricing#compare-plans). Check the official [Supabase Pricing](https://supabase.com/pricing) page for details.
+
 
 Your database usage charges and plan fees will show up on your monthly Fly.io bill. You can track database usage details in the [Supabase web console](#the-supabase-web-console).
 
@@ -30,7 +39,8 @@ flyctl ext supabase create
 Your Supabase database (icy-wind-1879) in mia is ready. See details and next steps with:
 
 Set one or more of the following secrets on your target app.
-POSTGRES_URL: postgres://postgres:password@db.kworhjwenfroqhegh.supabase.co:5432/postgres?sslmode=disable
+DATABASE_URL: postgres://postgres:password@db.kworhjwentroqhegh.supabase.co:5432/postgres?sslmode=disable
+DATABASE_POOLER_URL: postgres://postgres.kworhjwentroqhegh@password@fly-0-mia.pooler.supabase.com:6543/postgres
 ```
 
 ### The Supabase web console
