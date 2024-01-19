@@ -28,11 +28,13 @@ You aren't billed for the 5 days worth of [daily volume snapshots](/docs/apps/vo
 
 ## Machine billing
 
-Machines are billed based on the type and number of CPU slices and the RAM used, according to the amount of time they are running (the time they spend in the `started` state) over the month. There are several CPU/RAM preset combinations, and for each preset there are additional RAM options.
+Machines are billed based on the type and number of CPU slices and the RAM used, according to the amount of time the Machine is running (the time it spends in the `started` state) over the month. There are several CPU/RAM preset combinations, and for each preset there are options for additional RAM.
 
-For example, a Machine described in your dashboard as "shared-1x-cpu@1024MB" is one shared vCPU and 1024MB RAM. The price of this Machine is the price of a “shared-cpu-1x” Machine preset, which comes with 256MB RAM, plus the price of the additional RAM (1024MB - 256MB).
+For example, a Machine described in your dashboard as "shared-1x-cpu@1024MB" is one shared vCPU and 1024MB RAM. The price of this Machine is the price of a “shared-cpu-1x” Machine preset, which comes with 256MB RAM, plus the price of the additional RAM (1024MB - 256MB = 768MB). For details see [Compute pricing](/docs/about/pricing/#compute).
 
-We subtract the free allowances before starting to count usage for billing purposes. For pricing details see [Compute pricing](/docs/about/pricing/#compute).
+## Free resource allowances
+
+We subtract [free allowances](https://fly.io/docs/about/pricing/#free-allowances) off the top of your usage total. Once your usage exceeds the free allowance on any given resource, we start metering usage of that resource for billing purposes.
 
 ## Payment options
 
