@@ -7,13 +7,13 @@ nav: firecracker
 
 <img src="/static/images/app-pricing.webp" srcset="/static/images/app-pricing@2x.webp 2x" alt="A landscape painting with hot air balloons flying over a mountain range.">
 
-## _How it works_
+## How it works
 
 Our pricing is designed to let you launch a small application for free, and scale costs affordably as your needs grow.
 
 Fly.io services are billed per organization. Organizations are administrative entities on Fly.io that enable you to add members, share app development environments, and manage billing separately. Billing is based on the resources provisioned for your apps, pro-rated for the time they are provisioned. Learn more about [billing](/docs/about/billing/).
 
-## _Plans_
+## Plans
 
 All plans require a [credit card](/docs/about/billing/#payment-options). Your first organization starts on a free Hobby plan (subject to change), and any subsequent new organizations you create are on the $5/month Hobby Plan. Hobby plans are a straightforward pay-as-you-go option.
 
@@ -29,7 +29,7 @@ If you need more support or compliance options, you can upgrade to a [Launch, Sc
 
 For details and to select a different plan, see [Plan Pricing](https://fly.io/plans).
 
-## _Free allowances_
+## Free allowances
 
 Resources included for free on all plans:
 
@@ -39,11 +39,13 @@ Resources included for free on all plans:
 
 Additional resources are billed at the usage-based pricing detailed below.
 
-## _Compute_
+## Compute
 
 ### Fly Machines
 
-Pricing for [Fly Machines](/docs/machines/) VMs.
+The price of a [Fly Machine](/docs/machines/) VM is the price of a preset CPU/RAM combination, plus about $5 per 30 days per GB of additional RAM.
+
+The available CPU/RAM combinations and their pricing are as follows:
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
 
@@ -68,8 +70,7 @@ Reserved and dedicated options:
 
 * Discounted rates for reserved GPU Machines and dedicated hosts.
 
-## _Persistent Storage Volumes_
-
+## Persistent Storage Volumes
 [Fly Volumes](/docs/volumes/) are local persistent storage for Machines.
 
 * Free: 3GB of total provisioned capacity per organization
@@ -79,7 +80,7 @@ Reserved and dedicated options:
 
 You'll be charged for volumes that you create, whether they are attached to a Machine or not, including when an attached Machine is stopped.
 
-## _Network prices_
+## Network prices
 
 ### Anycast IP addresses
 
@@ -113,7 +114,7 @@ backups and point-in-time restore for your SQLite-based applications that use
 - Additional $0.50/GB per month for database storage above 10GB.
 
 
-## _Support_
+## Support
 
 [Community support](https://community.fly.io) is included for all customers, regardless of usage level.
 
