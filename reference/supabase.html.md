@@ -6,11 +6,11 @@ status: beta
 nav: firecracker
 ---
 
+[Supabase](https://supabase.com) now offers their excellent managed Postgres service on Fly.io infrastructure. Provisioning Supabase via `flyctl` ensures secure, low-latency database access from applications hosted on Fly.io.
+
 <aside class="callout">
 This service is in private beta. Do not run production workloads yet! [Sign up here](https://forms.supabase.com/fly-postgres) for beta access.
 </aside>
-
-[Supabase](https://supabase.com) now offers their excellent managed Postgres service on Fly.io infrastructure. Provisioning Supabase via `flyctl` ensures low-latency database access from applications hosted Fly.io regions.
 
 ## Pricing and Billing
 
@@ -27,7 +27,7 @@ Your database usage charges and plan fees will show up on your monthly Fly.io bi
 
 Creating and managing databases happens exclusively via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/).
 
-Once provisioned, the database primary region cannot be changed.
+<aside class="callout">Running the following command in a Fly.io app context -- inside an app directory or specifying `-a yourapp` -- will automatically pick a region and set secrets on your app.</aside>
 
 ```cmd
 flyctl ext supabase create
@@ -36,12 +36,16 @@ flyctl ext supabase create
 ? Select Organization: soupedup (soupedup)
 ? Choose a name, use the default, or leave blank to generate one:
 ? Choose the primary region (can't be changed later) Miami, Florida (US) (mia)
-Your Supabase database (icy-wind-1879) in mia is ready. See details and next steps with:
+Your Supabase database (icy-wind-1879) in mia is ready.
 
 Set one or more of the following secrets on your target app.
 DATABASE_URL: postgres://postgres:password@db.kworhjwentroqhegh.supabase.co:5432/postgres?sslmode=disable
 DATABASE_POOLER_URL: postgres://postgres.kworhjwentroqhegh@password@fly-0-mia.pooler.supabase.com:6543/postgres
 ```
+
+`DATABASE_URL` offers a direct IPv6 connection to your database. Use this URL from your Fly.io applications.
+
+`DATABASE_POOLER_URL` runs connections through a connection pooler. Currently, the connection pooler runs outside of Fly.io and may introduce connection latency. Use this URL to test connection pooling behavior, or to connect from locations that don't support IPv6, like many household ISPs.
 
 ### The Supabase web console
 
