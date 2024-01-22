@@ -137,7 +137,7 @@ for your application. Running as a supervisor lets LiteFS wait to start the
 application until after it has connected to the cluster.
 
 You can specify one or more commands in the `exec` section of your config. If
-you set `lease.promote` to `true`, then you can specify to run your migration
+you set `lease.candidate` to `true`, then you can specify to run your migration
 scripts only on candidate nodes. This means that candidates will automatically
 promote to the primary and run the migrations.
 
