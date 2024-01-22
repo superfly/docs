@@ -63,3 +63,14 @@ A common reason for additional charges is extra RAM usage.
 For a breakdown of charges, check out your invoice in the Billing section of the [dashboard](https://fly.io/dashboard/personal/billing).
 
 We’re happy to discuss a refund if you do create compute resources by mistake, or if your app receives unexpected traffic due to an attack and generates a surprisingly large bill. Just send an email to billing@fly.io.
+
+## Delete your account
+
+To delete your Fly.io account, go to Account > Settings > [Delete Account](https://fly.io/user/deactivate) in your dashboard. You'll see a list of clean-up tasks that need to be done before you can delete the account, including:
+
+- Delete or remove yourself from organizations to avoid leaving behind inaccessible orgs. This does not include your personal organization.
+- Delete apps (or remove yourself from the associated organizations).
+- Remove certificates so that any custom domains are released.
+- Remove extensions to ensure that you don't get billed by partners when you can no longer access your account.
+
+When you've completed the clean-up tasks, click **Delete** to permanently delete your Fly.io account.
