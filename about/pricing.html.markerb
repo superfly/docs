@@ -43,9 +43,9 @@ Additional resources are billed at the usage-based pricing detailed below.
 
 ### Fly Machines
 
-The price of a [Fly Machine](/docs/machines/) VM is the price of a preset CPU/RAM combination, plus about $5 per 30 days per GB of additional RAM.
+The price of a [Fly Machine](/docs/machines/) VM is the price of a named CPU/RAM preset, plus about $5 per 30 days per GB of additional RAM.
 
-The available CPU/RAM combinations and their pricing are as follows:
+Here's the pricing for named presets and the allowed additional RAM configurations:
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
 
