@@ -14,7 +14,7 @@ This is not a managed database. If Postgres crashes because it ran out of memory
 ### Here's what Fly.io manages
 
 - **Basic provisioning & upgrade tools** - `fly pg` provides a set of commands and building blocks that automates the provisioning of databases, connecting them to your applications, and accessing remote Postgres shells.
-- **Daily volume snapshots** - Fly.io takes daily snapshots of Postgres volumes and saves them for 7 days.
+- **Daily volume snapshots** - Fly.io takes daily snapshots of Postgres volumes and saves them for 5 days.
 - **Global networking & server infrastructure** - Fly.io provides the Firecracker VMs and interconnecting WireGuard network to run your Postgres database cluster.
 - **Prometheus metrics** - Fly.io collects and exposes various metrics via Prometheus, but you have to set up a tool, like Grafana, for aggregation and alerting.
 - **Open Source templates** - Templates and documentation are available at [https://github.com/fly-apps/postgres-ha](https://github.com/fly-apps/postgres-ha) in the event that you need to work the Fly Postgres app to fine-tune it for your specific application.
