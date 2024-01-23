@@ -43,11 +43,15 @@ Additional resources are billed at the usage-based pricing detailed below.
 
 ### Fly Machines
 
-The price of a [Fly Machine](/docs/machines/) VM is the price of a named CPU/RAM preset, plus about $5 per 30 days per GB of additional RAM.
+We charge for running and stopped machines differently.
+
+The price of a running [Fly Machine](/docs/machines/) VM is the price of a named CPU/RAM preset, plus about $5 per 30 days per GB of additional RAM.
 
 Here's the pricing for named presets and the allowed additional RAM configurations:
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
+
+For stopped machines we only charge for the RootFS needed for each machine. Each 1GB of RootFS for a machine stopped for 30 days is $0.15. The amount of RootFS needed is defined by your OCI image generated on your app plus a few [containerd](https://containerd.io/) tweaks on the underlying file system.
 
 For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
 
