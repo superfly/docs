@@ -15,9 +15,9 @@ Fly.io services are billed per organization. Organizations are administrative en
 
 ## Plans
 
-Every organization belongs to a [plan](https://fly.io/plans). New organizations start on the Hobby plan. If you need more support or compliance options, you can upgrade to a Launch, Scale, or Enterprise plan.
+Every organization belongs to a [plan](https://fly.io/plans). New organizations start on the [Hobby plan](https://fly.io/plans). If you need more support or compliance options, you can upgrade to a Launch, Scale, or Enterprise plan.
 
-All plans come with some usage included and require a [credit card](/docs/about/billing/#payment-options) on file. For details, or to select a different plan, see [Plan Pricing](https://fly.io/plans).
+All plans (except the [Legacy Hobby plan](#legacy-hobby-plan)) come with some usage included. All plans require a [credit card](/docs/about/billing/#payment-options) on file. For details, or to select a different plan, see [Plan Pricing](https://fly.io/plans).
 
 <div class="note icon">
 Regardless of which plan you're on, your organization may be subject to scaling limits to prevent abuse or to help with capacity planning. Email the address in the error message if you run into such a limit and it's getting in your way.
@@ -31,7 +31,7 @@ Once this credit is exhausted, the organization is automatically migrated to the
 
 ### Legacy Hobby plan
 
-If you were on the free Hobby plan at the time that the paid Hobby plan was introduced, you are on a legacy Hobby plan and your costs will remain the same as they were, with no monthly subscription fee and no included usage beyond the free resource allowances that apply to all plans. If you upgrade to a different plan and downgrade back to Hobby, you'll be on the current (paid) Hobby plan.
+If you were on the free Hobby plan at the time that the paid Hobby plan was introduced, you remain on a Legacy Hobby plan and your costs will remain the same as they were, with no monthly subscription fee and no included usage beyond the free resource allowances that apply to all plans. If you upgrade to a different plan and downgrade back to Hobby, you'll be on the current (paid) Hobby plan.
 
 ## Free allowances
 
