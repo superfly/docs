@@ -17,21 +17,25 @@ Fly.io services are billed per organization. Organizations are administrative en
 
 Every organization belongs to a [plan](https://fly.io/plans). New organizations start on the [Hobby plan](https://fly.io/plans). If you need more support or compliance options, you can upgrade to a Launch, Scale, or Enterprise plan.
 
-All plans (except the [Legacy Hobby plan](#legacy-hobby-plan)) come with some usage included. All plans require a [credit card](/docs/about/billing/#payment-options) on file. For details, or to select a different plan, see [Plan Pricing](https://fly.io/plans).
+All plans (except the [Legacy Hobby plan](#legacy-hobby-plan)) come with some usage included; if you want to scale beyond this, you pay for just what you need at the usage-based pricing listed below. 
 
 <div class="note icon">
-Regardless of which plan you're on, your organization may be subject to scaling limits to prevent abuse or to help with capacity planning. Email the address in the error message if you run into such a limit and it's getting in your way.
+Regardless of which plan you're on, your organization may be subject to automated scaling limits to prevent abuse or to help with capacity planning. Email the address in the error message if you run into such a limit and it's getting in your way.
 </div>
+
+All plans require a [credit card](/docs/about/billing/#payment-options) on file. For details, or to select a different plan, see [Plan Pricing](https://fly.io/plans).
 
 ### New customers
 
-When you sign up for a Fly.io account, we create a default ("personal") organization for you, which receives a one-time $5 sign-up credit to let you test-drive Fly.io at no cost, within a modified Hobby plan. Usage that falls outside of our free resource allowances consumes your sign-up credit. 
+When you sign up for a Fly.io account, we create a default (“personal”) organization for you, which receives a one-time $5 sign-up credit to let you test-drive Fly.io at no cost. This organization's $5/month Hobby plan subscription does not start until the credit has been used up. Usage that falls outside of our free resource allowances consumes your sign-up credit.
 
-Once this credit is exhausted, the organization is automatically migrated to the $5/month [Hobby plan](https://fly.io/plans) (we'll send you an email when it happens). There's no time limit to use up the sign-up credit and move to the paid subscription. 
+Once this credit is exhausted, the organization is automatically migrated to the $5/month [Hobby plan](https://fly.io/plans) (we’ll send you an email when it happens). There’s no time limit to use up the sign-up credit and move to the paid subscription.
 
 ### Legacy Hobby plan
 
-If you were on the free Hobby plan at the time that the paid Hobby plan was introduced, you remain on a Legacy Hobby plan and your costs will remain the same as they were, with no monthly subscription fee and no included usage beyond the free resource allowances that apply to all plans. If you upgrade to a different plan and downgrade back to Hobby, you'll be on the current (paid) Hobby plan.
+If you were on the free Hobby plan at the time that the paid Hobby plan became the default for new users, your plan is now called the Legacy Hobby plan. Your costs stay the same as they were, with no monthly subscription fee, and no included usage beyond the free resource allowances that apply to all plans.
+
+If you upgrade to a different plan and downgrade back to Hobby, you’ll be on the current (paid) Hobby plan.
 
 ## Free allowances
 
