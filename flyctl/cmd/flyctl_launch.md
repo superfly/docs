@@ -28,6 +28,7 @@ flyctl launch [flags]
                                          
       --copy-config                      Use the configuration file if present without prompting
       --detach                           Return immediately instead of monitoring deployment progress
+      --dns-checks                       Perform DNS checks during deployment (default true)
       --dockerfile string                Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
       --dockerignore-from-gitignore      If a .dockerignore does not exist, create one from .gitignore files
   -e, --env stringArray                  Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
@@ -68,6 +69,7 @@ flyctl launch [flags]
       --vm-cpu-kind string               The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                      Number of CPUs
       --vm-gpu-kind string               If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s)
+      --vm-gpus int                      Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
       --vm-memory string                 Memory (in megabytes) to attribute to the VM
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --volume-initial-size int          The initial size in GB for volumes created on first deploy
