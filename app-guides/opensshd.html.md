@@ -106,6 +106,8 @@ sudo /usr/sbin/sshd
 sudo sed -i "/^%rails/d" /etc/sudoers
 ```
 
+The above commands will start `sshd` as root, then remove sudo access from your unpriviledged userid.
+
 ## Upload your ssh key
 
 First, locate your ssh key.  You can create a new key using [`ssh-keygen`](https://www.ssh.com/academy/ssh/keygen),
