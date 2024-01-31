@@ -16,10 +16,15 @@ We partnered with Sentry to give your Fly.io organization a year's worth of [Tea
 
 If you need more than this, sign in to your account and review upgrade options in the [billing section](https://flyio.sentry.io/settings/billing/overview/).
 
+## Create a Sentry project
+
+For applications that don't have a Sentry project setup, use the following command to create one.
+
+```cmd
+flyctl ext sentry create
+```
+
 ## Account and project provisioning
-
-
-Newly-deployed applications provision a new Sentry project automatically. You can also provision Sentry projects for existing apps.
 
 The first time a Sentry project is provisioned in your Fly.io organization, we will:
 
@@ -53,13 +58,3 @@ Use this command to open the dashboard for the Sentry project associated with th
 ```cmd
 flyctl apps errors
 ```
-
-## Create a Sentry project for an existing app
-
-For applications that don't have a Sentry project setup, use the following command to create one manually.
-
-```cmd
-flyctl ext sentry create
-```
-
-
