@@ -54,19 +54,19 @@ that is why you'd use Fly Machines directly, rather than a [Fly App](https://fly
 
 To get your head around that trick, start by understanding the lifecycle of a Fly Machine:
 
-1. You create a Fly Machine with a [Create Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_create), or 
+1. You create a Fly Machine with a [Create Machine request](https://docs.machines.dev/#tag/machines/post/apps/{app_name}/machines), or 
    with `fly machine create`. The Machine is in `created` state. This step can take some time: you're asking us to reserve space
    for your Machine, and then fetch your container from our global registry, and build a root file system; low double digit seconds, maybe. 
    
-2. Now that the Fly Machine exists, you can start it with a [Start Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_start), or 
+2. Now that the Fly Machine exists, you can start it with a [Start Machine request](https://docs.machines.dev/#tag/machines/post/apps/{app_name}/machines/{machine_id}/start), or 
    with `fly machine start`. We boot a VM. The Machine is in `started` state. It's running. You can talk to it. This happens fast! Everything's
    already assembled; we're just booting. Usually this takes _well under a second_.
    
-3. You're done with the Fly Machine, so you stop it with a [Stop Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_stop), or
+3. You're done with the Fly Machine, so you stop it with a [Stop Machine request](https://docs.machines.dev/#tag/machines/post/apps/{app_name}/machines/{machine_id}/stop), or
   `fly machine stop`. The VM shuts down. The Machine is in `stopped` state. Its components are still assembled on our worker host, ready to start back up; if
    you want to do that, `GOTO 2`. 
    
-4. You're tired of the Fly Machine, and want it to go away. Send a [Delete Machine request](https://docs.machines.dev/swagger/index.html#/Machines/Machines_delete), or 
+4. You're tired of the Fly Machine, and want it to go away. Send a [Delete Machine request](https://docs.machines.dev/#tag/machines/delete/apps/{app_name}/machines/{machine_id}), or 
    use `fly machine destroy`. We clear the resources we were holding for the Machine off our server. You can easily create and start
    a new Machine from the same image, but it'll be slower than stopping and starting an existing Machine. 
 

@@ -30,6 +30,6 @@ Using Machines.
 
 Commands and APIs for Machines.
 
-[Machines API Spec](https://docs.machines.dev/swagger/index.html/)
+[Machines API Spec](https://docs.machines.dev/)
 
 [flyctl commands - `fly machine`](/docs/flyctl/machine/)
