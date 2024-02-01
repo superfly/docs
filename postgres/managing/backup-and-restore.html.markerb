@@ -111,7 +111,7 @@ Save your credentials in a secure place, you won't be able to see them again!
 This provisions and launches a new Fly Postgres database server with the specified snapshot.
 
 <div class="important icon">
-  <b>Important:</b> The volume provisioned for the new Fly Postgres application must be equal or greater size than the volume from where the snapshot was taken.
+  <b>Important:</b> The size of the volume provisioned for the new Fly Postgres application must be equal to or greater than the volume from where the snapshot was taken.
 </div>
 
 ## Connect the Restored Database
