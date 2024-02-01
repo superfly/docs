@@ -28,7 +28,7 @@ cd my-mysql
 
 # Run `fly launch` to create an app
 # Use the --no-deploy option since we'll make changes before first deploy
-# Use the --image option to specify a MySQL docker image
+# Use the --image option to specify a MySQL Docker image
 ly launch --no-deploy --image mysql:8
 ```
 
