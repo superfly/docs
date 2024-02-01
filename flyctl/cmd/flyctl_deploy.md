@@ -32,6 +32,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
                                          
   -c, --config string                    Path to application configuration file
       --detach                           Return immediately instead of monitoring deployment progress
+      --dns-checks                       Perform DNS checks during deployment (default true)
       --dockerfile string                Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
   -e, --env stringArray                  Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
       --exclude-regions strings          Deploy to all machines except machines in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times. --exclude-regions iad,sea --exclude-regions syd will exclude all three iad, sea, and syd regions. Applied after --only-regions. V2 machines platform only.
@@ -66,6 +67,7 @@ flyctl deploy [WORKING_DIRECTORY] [flags]
       --vm-cpu-kind string               The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                      Number of CPUs
       --vm-gpu-kind string               If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s)
+      --vm-gpus int                      Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
       --vm-memory string                 Memory (in megabytes) to attribute to the VM
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --volume-initial-size int          The initial size in GB for volumes created on first deploy

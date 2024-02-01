@@ -11,6 +11,8 @@ flyctl storage [command] [flags]
 * [dashboard](/docs/flyctl/storage-dashboard/)	 - Visit the Tigris dashboard
 * [destroy](/docs/flyctl/storage-destroy/)	 - Permanently destroy a Tigris object storage bucket
 * [list](/docs/flyctl/storage-list/)	 - List your Tigris object storage buckets
+* [status](/docs/flyctl/storage-status/)	 - Show details about a Tigris storage bucket
+* [update](/docs/flyctl/storage-update/)	 - Update an existing Tigris object storage bucket
 
 ## Options
 
