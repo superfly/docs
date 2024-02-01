@@ -297,7 +297,7 @@ Webhook requests should be signed the same way as we [sign provisioning requests
 
 ### The webhook request body
 
-The request must include a UNIX `timestamp`, `action` string  and `resource` objevt. Here's an example:
+The request must include a UNIX `timestamp`, `action` string  and `resource` object. Here's an example:
 
 ```
 {
@@ -316,9 +316,27 @@ Supported actions are:
 ```
 resource.updated
 resource.deleted
+resource.created
 ```
 
-Note: the shape of `resource` should be the same as that provided by any `GET` endpoints for invidividual resources.
+For `resource.created`, the request body should include the Fly.io `organization_id` and `user_id` that provisioned the resource.
+
+```
+{
+  "timestamp": "1693513586",
+  "action": "resource.created",
+  "resource": {
+    "plan": "scaler_pro",
+    "name": "myprod-db"
+    "organization_id": "kg032ljbmqs0j",
+    "user_id": "nh0kweyt23jyhl",
+    "id": "5lgmabb3y30",
+    "status": "ready"
+  }
+}
+```
+
+Note: `resource` should contain the same parameters provided by `GET` endpoints for invdividual resources.
 
 ## Outbound Webhooks: Get notified about changes to provisioned accounts and resources
 
