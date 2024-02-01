@@ -27,12 +27,17 @@ mkdir my-mysql
 cd my-mysql
 
 # Run `fly launch` to create an app
-fly launch --no-deploy
+# Use the --no-deploy option since we'll make changes before first deploy
+# Use the --image option to specify a MySQL docker image
+ly launch --no-deploy --image mysql:8
 ```
 
-You can name the app whatever you'd like. The name will become a hostname our application uses to connect to the database, such as `my-mysql.internal`.
+Type `y` when prompted to tweak the default app settings. Then, on the Fly Launch page:
 
-We used the `--no-deploy` option because we have some work to do before we deploy the app.
+- Name the app whatever you'd like. The name will become a hostname our application uses to connect to the database, such as `my-mysql.internal`.
+- If you're using MySQL 8, it's best to add some additional RAM to the VM: select 2GB for VM Memory.
+
+Confirm the settings and return to your terminal.
 
 ## Configure the App
 
@@ -59,39 +64,38 @@ Finally, edit the `fly.toml` file that `fly launch` generated.
 For apps using MySQL 8+:
 
 ```toml
-app = "my-mysql"
-kill_signal = "SIGINT"
-kill_timeout = 5
-
-# If copy/paste'ing, adjust this
-# to the region you're deploying to
+# Keep your own app name
+app = 'my-mysql'
+# Keep your own primary region
 primary_region = "bos"
 
+[build]
+  image = 'mysql:8'
+
+[[vm]]
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 2048
+
+# Add the following sections
 [processes]
-app = """--datadir /data/mysql \
-  --default-authentication-plugin mysql_native_password \
-  --performance-schema=OFF \
-  --innodb-buffer-pool-size 64M"""
+  app = """--datadir /data/mysql \
+    --default-authentication-plugin mysql_native_password \
+    --performance-schema=OFF \
+    --innodb-buffer-pool-size 64M"""
 
 [mounts]
-  source="mysqldata"
-  destination="/data"
+  source = "mysqldata"
+  destination = "/data"
 
 [env]
   MYSQL_DATABASE = "some_db"
   MYSQL_USER = "non_root_user"
-
-# As of 04/25/2023:
-# MySQL 8.0.33 has a bug in it
-# so avoid that specific version
-[build]
-  image = "mysql:8.0.32"
 ```
 
-There's a few important things to note:
+There are a few important things to note:
 
-1. We deleted the `[[services]]` or the `[[http_service]]` block and everything under it. We don't need it!
-1. We added the `[build]` section to specify an existing Docker image. We don't need to create a `Dockerfile` of our own.
+1. We deleted the `[[http_service]]` block and everything under it. We don't need it!
 1. In the `[env]` section, we added two not-so-secret environment variables that MySQL will need to initialize itself.
     * The `MYSQL_USER` here should be any user but `root`, which already exists.
 1. We added the `[processes]` section for the default `app` process, which lets us pass custom commands (overriding Docker's `CMD`).
@@ -106,20 +110,9 @@ If you're using MySQL 5.7, your `app` process can be simplified:
 app = "--datadir /data/mysql"
 ```
 
-<div class="callout">⚠️ Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. Therefore, we use a subdirectory of the mounted location: `/data/mysql`.</div>
-
-## Scale the App
-
-There's one more detail. MySQL 8+ has higher baseline resource demands than MySQL 5.7.
-
-If you're using MySQL 8, it's best to add some additional RAM to the VM:
-
-```bash
-# Give the vm 2GB of ram
-fly scale memory 2048
-```
-
-This isn't necessary with MySQL 5.7.
+<div class="important icon">
+Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. Therefore, we use a subdirectory of the mounted location: `/data/mysql`.
+</div>
 
 ## Deploy the App
 
@@ -159,7 +152,7 @@ mysql -h localhost -P 3306 -u non_root_user -ppassword some_db
 
 We'll take a snapshot of the created volume every day. We retain 5 days of snapshots.
 
-To restore a snapshot, make sure you have the latest version of the `fly` command, and then create a new volume using the `--snapshot-id` flag.
+To restore a snapshot, make sure you have the latest version of the flyctl, and then create a new volume using the `--snapshot-id` flag.
 
 ```bash
 # Get a volume ID
