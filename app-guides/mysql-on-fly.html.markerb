@@ -35,7 +35,7 @@ ly launch --no-deploy --image mysql:8
 Type `y` when prompted to tweak the default app settings. Then, on the Fly Launch page:
 
 - Name the app whatever you'd like. The name will become a hostname our application uses to connect to the database, such as `my-mysql.internal`.
-- If you're using MySQL 8, it's best to add some additional RAM to the VM: select 2GB for VM Memory.
+- If you're using MySQL 8, it's a good idea to add some additional RAM to the VM: we recommend selecting 2GB of VM Memory.
 
 Confirm the settings and return to your terminal.
 
@@ -80,9 +80,7 @@ primary_region = "bos"
 # Add the following sections
 [processes]
   app = """--datadir /data/mysql \
-    --default-authentication-plugin mysql_native_password \
-    --performance-schema=OFF \
-    --innodb-buffer-pool-size 64M"""
+    --default-authentication-plugin mysql_native_password"""
 
 [mounts]
   source = "mysqldata"
@@ -100,7 +98,6 @@ There are a few important things to note:
     * The `MYSQL_USER` here should be any user but `root`, which already exists.
 1. We added the `[processes]` section for the default `app` process, which lets us pass custom commands (overriding Docker's `CMD`).
     * For MySQL 8+, you'll want to use the `mysql_native_password` password plugin.
-    * Also for MySQL 8+, to reduce memory usage, add the performance schema and buffer pool size flags. Note that `--performance-schema=OFF` is all one string.
     * **Important**: For MySQL 5.7 and MySQL 8+, we set MySQL's data directory to a subdirectory of our mounted volume.
 
 If you're using MySQL 5.7, your `app` process can be simplified:
