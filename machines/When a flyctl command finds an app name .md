@@ -1,0 +1,1 @@
+When a flyctl command finds an app name in the command context (either through a `fly.toml` or from the `--app` flag), it will act only on Machines within that app, even if you specify a Machine from a different app using a `machine_id`.
