@@ -109,7 +109,7 @@ The default shell is Bash. The `--command` flag allows you to specify a differen
 If you just want a shell on a temporary Ubuntu Machine that's in your org's private network, omit the `<image>` argument:
 
 ```cmd
-fly machine --shell
+fly machine run --shell
 ```
 
 ## Run with a custom ENTRYPOINT or CMD
