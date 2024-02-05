@@ -60,9 +60,9 @@ You can [restore a volume snapshot](/docs/apps/volume-manage/#restore-a-volume-f
 
 ## When Volumes are Not Available
 
-There are some actions taken within Fly.io where volumes are not available.
+There are some instances where volumes are not available.
 
-* **Build Time**: When building a Docker image for deploying to a Fly.io app, volumes are not accessible.
+* **Build Time**: When building a Docker image for deploying an application (e.g. `flyctl deploy`), volumes are not accessible.
 * **Release Command**: Volumes are also not mounted to the temporary VM's created when using a [release_command](/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment).
 
 ## Related topics
