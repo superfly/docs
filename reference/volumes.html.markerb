@@ -25,7 +25,7 @@ Explore other options for data storage in [Databases & Storage](/docs/database-s
 ## Volume redundancy
 
 <div class="important icon">
-<b>Important: Always run at least two volumes per app.</b> We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each machine should have an attached volume. If you only have one Machine and volume, then you'll have downtime if there's a host or network failure, and whenever you deploy your app. Also remember that volumes don't have built-in replication between them.
+<b>Important: Always run at least two volumes per app.</b> We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each Machine should have an attached volume. If you only have one Machine and volume, then you'll have downtime if there's a host or network failure, and whenever you deploy your app. Also remember that volumes don't have built-in replication between them.
 </div>
 
 In a few cases, you can run a single Machine with an attached volume. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not yet worried about downtime.
@@ -57,6 +57,13 @@ Fly.io takes daily block-level snapshots of volumes. We keep snapshots for five 
 You can also [create a snapshot of a volume](docs/apps/volume-manage/#create-a-volume-snapshot) on demand.
 
 You can [restore a volume snapshot](/docs/apps/volume-manage/#restore-a-volume-from-a-snapshot) into a new volume of equal or greater size.
+
+## When Volumes are Not Available
+
+There are some instances where volumes are not available.
+
+* **Build Time**: When building a Docker image for deploying an application (e.g. `flyctl deploy`), volumes are not accessible.
+* **Release Command**: Volumes are also not mounted to the temporary Machine created when using a [release_command](/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment).
 
 ## Related topics
 
