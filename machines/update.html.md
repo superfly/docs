@@ -35,110 +35,45 @@ You can get the `machine_id` with [`fly machine list`](/docs/flyctl/machine-list
  
 Many, but not all, Machine configuration options are available to the `fly machine update` command through flags. Flags are listed in the flyctl help and on the [`fly machine update` documentation page](/docs/flyctl/machine-update/).
 
-```
- 
-      --autostart                   Automatically start a stopped Machine when a network request is received
-                                    (default true)
-      --autostop                    Automatically stop a Machine when there are no network requests for it
-                                    (default true)
-      --build-nixpacks              Build your image with nixpacks
-  -C, --command string              Command to run
-  -c, --config string               Path to application configuration file
-      --detach                      Return immediately instead of monitoring deployment progress
-      --dockerfile string           The path to a Dockerfile. Defaults to the Dockerfile in the working directory.
-      --entrypoint string           The command to override the Docker ENTRYPOINT.
-  -e, --env stringArray             Set of environment variables in the form of NAME=VALUE pairs. Can be
-                                    specified multiple times.
-      --file-literal stringArray    Set of literals to write to the Machine, in the form of
-                                    /path/inside/machine=VALUE pairs, where VALUE is the base64-encoded raw
-                                    content. Can be specified multiple times.
-      --file-local stringArray      Set of files to write to the Machine, in the form of
-                                    /path/inside/machine=<local/path> pairs. Can be specified multiple times.
-      --file-secret stringArray     Set of secrets to write to the Machine, in the form of
-                                    /path/inside/machine=SECRET pairs, where SECRET is the name of the secret.
-                                    The content of the secret must be base64 encoded. Can be specified multiple times.
-  -i, --image string                The Docker image to deploy
-  -m, --metadata stringArray        Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
-
-  ## Change the mount point of an attached volume
-  You can't detach a volume or attach a new one 
-      --mount-point string          New volume mount point
-  -p, --port strings                The external ports and handlers for services, in the format:
-                                    port[:machinePort][/protocol[:handler[:handler...]]])
-                                        For example: --port 80/tcp --port 443:80/tcp:http:tls --port 5432/tcp:pg_tls
-                                        To remove a port mapping use '-' as handler. For example: --port 80/tcp:-
-      --restart string              Set the restart policy for a Machine. Options include 'no', 'always', and
-                                    'on-fail'.
-                                        Default is 'on-fail' for Machines created by 'fly deploy' and Machines with
-                                    a schedule. Default is 'always' for Machines created by 'fly m run'.
-      --schedule string             Schedule a Machine run at hourly, daily and monthly intervals
-      --skip-dns-registration       Do not register the machine's 6PN IP with the internal DNS system
-      --skip-health-checks          Updates machine without waiting for health checks.
-      --skip-start                  Updates machine without starting it.
-      --standby-for strings         For Machines without services, a comma separated list of Machine IDs to act
-                                    as standby for.
-      --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
-      --vm-cpus int                 Number of CPUs
-      --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s)
-      --vm-gpus int                 Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
-      --vm-memory string            Memory (in megabytes) to attribute to the VM
-      --vm-size string              The VM size to set machines to. See "fly platform vm-sizes" for valid values
-      --wait-timeout int            Seconds to wait for individual machines to transition states and become
-                                    healthy. (default 300) (default 300)
-  -y, --yes                         Accept all confirmations
-
 ### Build from a Dockerfile
 
-To build the image from a Dockerfile named `Dockerfile`, indicate the current working directory using the `<image>` argument.
+Use the `--dockerfile` option to build the image for the Machine from a Dockerfile. For example:
 
 ```cmd
-fly machine update .
-```
-
-Use the `--dockerfile` option to specify a Dockerfile with a different name. For example:
-
-```cmd
-fly machine update . --dockerfile Dockerfile-dev
+fly machine update --dockerfile Dockerfile
 ```
 
 Any source files the Dockerfile uses should be present in the working directory. Once built, the image is pushed to the Fly.io Docker registry where your organization's remote builders can access it.
 
 ### Use an existing image
 
-For example:
+Usse the `--image` flag to specify an existing container image. For example:
 
 ```cmd
-fly machine update ghcr.io/livebook-dev/livebook:0.11.4     
+fly machine update --image ghcr.io/livebook-dev/livebook:0.11.4     
 ```
+## Don't start the Machine
 
-## Get a shell on a temporary Machine
+      --skip-start                  Updates machine without starting it.
 
-The following command creates a temporary Machine using the Dockerfile in the working directory, and logs you into an interactive shell on it: 
+## Set the timeout to wait for the machine to become healthy before ...
+      --wait-timeout int            Seconds to wait for individual machines to transition states and become
+                                    healthy. (default 300) (default 300)
 
-```cmd
-fly machine update . --shell
-```
+## Accept all confirmations
+  -y, --yes                         Accept all confirmations
 
-If you don't specify an app, a temporary app is created for the Machine. When you log out of the shell, the Machine, and if applicable, the temporary app, is deleted.
 
-The default shell is Bash. The `--command` flag allows you to specify a different shell if Bash isn't present in the Machine's Docker image. Log in as a non-`root` user using the `--user` flag.
-
-If you just want a shell on a temporary Ubuntu Machine that's in your org's private network, omit the `<image>` argument:
-
-```cmd
-fly machine --shell
-```
-
-## Run with a custom ENTRYPOINT or CMD
+## Use a custom ENTRYPOINT or CMD
 
 You can have the Fly Platform init override the ENTRYPOINT and CMD (if any) of the Machine's Docker image at startup.
 
 ### Custom CMD
 
-Override CMD by including the command to run at the end of the `fly machine update` invocation. This example simply spins up a Debian Linux Machine with a `sleep` task to keep it awake; you can shell into it or whatever:
+Override CMD with the `--command` flag. This example simply spins up a Debian Linux Machine with a `sleep` task to keep it awake; you can shell into it or whatever:
 
 ```cmd
-fly machine update debian sleep inf
+??fly machine update --command debian sleep inf
 ```
 
 ### Custom ENTRYPOINT
@@ -161,11 +96,6 @@ echo "Hello from my Fly Machine"
 exec "$@"
 ```
 
-## Choose the region
-
-Tell the Fly Platform which [region](/docs/reference/regions/) to create the Machine in with the `--region` flag; if for some reason it can't start a new Machine in that region, you'll get an error. If the `--region` flag is omitted, the platform chooses the nearest region to you.
-
-
 ## Set Machine resources
 
 Include one or more of the following options to use non-default specifications for the Machine to be run:
@@ -187,7 +117,7 @@ Specify environment variables to be available on the Machine with the `--env` fl
 Example:
 
 ```cmd
-fly machine update . --env MY_VAR=MY_VALUE \
+fly machine update --env MY_VAR=MY_VALUE \
                   --env MY_OTHER_VAR="my spacey value" \
                   --app my-app-name
 ```
@@ -196,33 +126,28 @@ Use quotes around the value if it has spaces in it.
 
 For sensitive environmment variables, [set secrets on the app](https://fly.io/docs/flyctl/secrets/) instead.
 
-## Define a network service
+## Configure a network service
 
-Define a service when the Machine should be reachable by the Fly Proxy, either via an [Anycast](https://fly.io/docs/networking/services/#ip-addresses) or [Flycast](/docs/networking/private-networking/#flycast-private-load-balancing) IP address or through [`fly-replay` dynamic routing](/docs/networking/dynamic-request-routing/).
+The `--port` flag on `fly machine update` allows you to configure a Fly Proxy service for the Machine. Not all the service config options are available through `fly machine update`.
 
-
-To make an internal service on the Machine reachable via the Fly Proxy, use the `--port` option. Map any "external" ports, where the Fly Proxy accepts requests directed at the app, to the internal port where the service is listening on IPv6, and for each port, specify the protocol and [connection handler(s)](/docs/networking/services/#connection-handlers), using this format: `port[:machinePort][/protocol[:handler[:handler...]]]`.
+Map any "external" ports, where the Fly Proxy accepts requests directed at the app, to the internal port where the service is listening on IPv4, and for each port, specify the protocol and [connection handler(s)](/docs/networking/services/#connection-handlers), using this format: `port[:machinePort][/protocol[:handler[:handler...]]]`.
 
 For example, if your Machine runs a server on port 80, and the Fly Proxy should handle HTTP connections on port 80 and HTTPS connections on port 443, the port configuration would look like this: 
 
 ```cmd
-fly machine update . --port 80/tcp:http \
-                  --port 443:80/tcp:http:tls \
-                  --app my-app-name      
+fly machine update --port 80/tcp:http \
+                  --port 443:80/tcp:http:tls 
 ```
 
 <div class="important icon">
-**Important:** Even with a service defined, a Machine is not publicly accessible unless it has an Anycast IP address.
+**Important:** Even with a service defined, a Machine must have an Anycast IP address to be publicly accessible.
 </div>
 
-<div class="important icon">
-**Important:** If Machines within the same Fly App host different services, use different external ports so that they don't receive requests meant for another Machine.
-</div>
-
-
-## Set autostart and autostop
+## Configure starting and stopping by the Fly Proxy
 
 [Read more about Fly Proxy autostart and autostop](/docs/apps/autostart-stop/#how-it-works).
+
+Test what's default when you run the Machine, and what's default when you start via API. Put some of this into the Machine config doc instead.
 
 In a Machine service's configuration, `autostop` and `autostart` settings are optional. 
 
@@ -230,17 +155,14 @@ When the `autostop` setting is absent, the Fly Proxy never shuts down the Machin
 
 When the `autostart` setting is absent, if the Machine is stopped the proxy may start it according to its load-balancing rules. 
 
-
-The `--autostart` and `--autostop` flags set the value of `autostart` or `autostop` to `true` by default; to set the value to `false`, set the value explicitly. For example, the following runs a new Machine that may be stopped by the Fly Proxy, but will never be restarted by it.
+The `--autostart` and `--autostop` flags set the value of `machine.auto_start` or `machine.auto_stop` to `true` by unless you provide the value `false`. For example, the following configures a Machine to be stopped by the Fly Proxy, but not to be restarted by it.
 
 ```cmd
-fly machine update nginx --port 80:80/tcp:http \
-                --port 443:80/tcp:http:tls \
-                --autostop \
-                --autostart=false
+fly machine update  --autostop \
+                    --autostart=false
 ```
 
-If you define more than one service on the Machine, and also use one or both of these flags, it applies to both the services in the Machine config.
+If you define more than one service on the Machine, and also use one or both of these flags, it applies to both the services in the Machine config. For more control over configuration of an individual Machine, use the API.
 
 ## Set a restart policy on process exit
 
@@ -265,7 +187,7 @@ The Fly Platform uses specific metadata, stored in a Machine's config, for its o
 The following starts a Machine that the `fly deploy` command will try to manage as part of the `app` process group, replacing its image and config with what, if anything, you have set up in the working directory for that app. 
 
 ```
-fly machine update . --metadata fly_platform_version=v2 \
+fly machine update --metadata fly_platform_version=v2 \
                   --metadata fly_process_group=app \
                   --metadata my_metadata=mineallmine
 ```
@@ -284,17 +206,9 @@ fly machine status -d -a my-app-name
   },
 ...
 ```
-
-
-## Name the Machine
-
-The Fly Platform gives human-friendly names, like `ancient-glitter-2128`, that show up alongside their `id` in the output of commands like `fly machine list`.
-
-You may want to give the Machine a custom name, so you can easily recognize it. Use the `--name` flag:
-
-```cmd
-fly machine update . --name my-special-Machine
-```
+## Change the mount point of an attached volume
+  You can't detach a volume or attach a new one but you can change the mount point of an attached one.
+      --mount-point string          New volume mount point
 
 ## Place data into files on the Machine
 
@@ -329,8 +243,7 @@ fly secrets set \
 Use the `--file-secret` flag on `fly machine update`. In this example I'm putting the contents of the secret called `MY_BASE64_SECRET` into a file `/secret-file` on my new Machine:
 
 ```cmd
-fly machine update . \
-  --file-secret /secret-file=MY_BASE64_SECRET 
+fly machine update --file-secret /secret-file=MY_BASE64_SECRET 
 ```
 
 The secret will be available in the specified file, and not in an environment variable, on that Machine. It's decoded from Base64 into plain text.
@@ -351,7 +264,7 @@ If a process or user on the Machine should not have access to the secret, you ca
 You can place data directly into the Machine through its config as a Base64-encoded string:
 
 ```cmd
-fly machine update . --file-literal /b64file=SGVsbG8hIEknbSBGcmFua2llIHRoZSBiYWxsb29uIQo=
+fly machine update --file-literal /b64file=SGVsbG8hIEknbSBGcmFua2llIHRoZSBiYWxsb29uIQo=
 ```
 
 The Base64 encoding is preserved in a file created using the `--file-literal` flag.
@@ -361,17 +274,17 @@ root@1857779a44d108:/# cat b64file | base64 --decode
 Hello! I'm Frankie the balloon!
 ```
 
-## Create a standby Machine
+## Make the Machine a stopped standby
 
 For the sake of resilience, you can create a stopped [standby](/docs/reference/app-availability/#standby-machines-for-process-groups-without-services) for Machines that don't have Fly Proxy services and therefore can't be supplemented by Fly Proxy "autostart" in case of a host failure.
 
 ```
-fly machine update . --standby-for 287444ec026748,148ed726c54768
+fly machine update --standby-for 287444ec026748,148ed726c54768
 ```
 
-## Start a Machine on a schedule
+## Start the Machine on a schedule
 
-Use the `--schedule` flag to start the Machine on a fuzzy `hourly`, `daily`, `weekly`, or `monthly` cycle. This is useful for running Machines that do a finite job, then exit. The Machine is started the first time when you run `fly machine update`, and again once, each (approximate) hour, day, week, or month.
+Use the `--schedule` flag to configure the Machine to start on a fuzzy `hourly`, `daily`, `weekly`, or `monthly` cycle. This is useful for running Machines that do a finite job, then exit. The Machine is started the first time when you run `fly machine update`, and again once, each (approximate) hour, day, week, or month.
 
 <div class="important icon">
 **Important:** If the host on which a stopped Machine resides doesn't have the resources to start it when its scheduled time comes, you'll get an error back. It's up to you to build the appropriate level of redundancy into your apps.
