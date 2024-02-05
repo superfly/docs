@@ -58,6 +58,13 @@ You can also [create a snapshot of a volume](docs/apps/volume-manage/#create-a-v
 
 You can [restore a volume snapshot](/docs/apps/volume-manage/#restore-a-volume-from-a-snapshot) into a new volume of equal or greater size.
 
+## When Volumes are Not Available
+
+There are some actions taken within Fly.io where volumes are not available.
+
+* **Build Time**: When building a Docker image for deploying to a Fly.io app, volumes are not accessible.
+* **Release Command**: Volumes are also not mounted to the temporary VM's created when using a [release_command](/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment).
+
 ## Related topics
 
 - [Add volume storage](/docs/apps/volume-storage/)
