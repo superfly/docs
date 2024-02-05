@@ -1,9 +1,15 @@
 ---
-title: Machine configuration
-objective: The properties in the Fly Machine config object
+title: Machine config properties
+objective: The properties in the machine.config object
 layout: docs
 nav: machines
 ---
+
+You have direct control over the `machine.config` of your Machines using the Machines API. 
+
+The `fly machine run` and `fly machine update` commands also give access to some configuration properties of individual Machines.
+
+For apps managed with `fly deploy`, the `fly.toml` configuration file and the `fly deploy` command determine the configurations of Machines in an app.
 
 ## `image`
 `string` - Required  
