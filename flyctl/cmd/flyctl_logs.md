@@ -4,6 +4,9 @@ the Fly platform.
 Logs can be filtered to a specific instance using the --instance/-i flag or
 to all instances running in a specific region using the --region/-r flag.
 
+By default logs are continually streamed until the command is aborted.
+Use --no-tail to only fetch the logs in the buffer.
+
 
 ## Usage
 ~~~
@@ -18,6 +21,7 @@ flyctl logs [flags]
   -h, --help              help for logs
   -i, --instance string   Filter by instance ID
   -j, --json              JSON output
+  -n, --no-tail           Do not continually stream logs
   -r, --region string     The target region (see 'flyctl platform regions')
 ~~~
 

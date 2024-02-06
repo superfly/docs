@@ -1,19 +1,20 @@
-Provision a Tigris object storage bucket
+Update an existing Tigris object storage bucket
 
 
 ## Usage
 ~~~
-flyctl extensions storage create [flags]
+flyctl extensions storage update <bucket_name> [flags]
 ~~~
 
 ## Options
 
 ~~~
   -a, --app string                 Application name
+      --clear-shadow               Remove an existing shadow bucket
   -c, --config string              Path to application configuration file
-  -h, --help                       help for create
-  -n, --name string                The name of your bucket
+  -h, --help                       help for update
   -o, --org string                 The target Fly.io organization
+      --private                    Set a public bucket to be private
   -p, --public                     Objects in the bucket should be publicly accessible
       --shadow-access-key string   Shadow bucket access key
       --shadow-endpoint string     Shadow bucket endpoint
