@@ -6,6 +6,10 @@ nav: firecracker
 order: 65
 ---
 
+<figure>
+  <img src="/static/images/docs-stop-start.webp" alt="">
+</figure>
+
 Fly Machines are fast to start and stop, and you don't pay for their CPU and RAM when they're in the `stopped` state. For Fly Apps with a service configured, Fly Proxy can automatically start and stop existing Machines based on incoming requests, so that your app can meet demand without keeping extra Machines running. And if your app needs to have one or more Machines always running in your primary region, then you can set a minimum number of machines to keep running.
 
 The auto start and stop feature also plays well with apps whose Machines [exit from within](#stop-a-machine-by-terminating-its-main-process) when idle. If your app already shuts down when idle, then the proxy can restart it when there's traffic.
@@ -56,11 +60,13 @@ When you create an app using the `fly launch` command, the default settings in `
 
 ### Recommended settings
 
-If your app already [exits when idle](#stop-a-machine-by-terminating-its-main-process), then you can set `auto_start_machines = true` and `auto_stop_machines = false` to have Fly Proxy automatically restart the Machines stopped by your app. 
+If your app already [exits when idle](#stop-a-machine-by-terminating-its-main-process), then you can set `auto_start_machines = true` and `auto_stop_machines = false` to have Fly Proxy automatically restart the Machines stopped by your app.
 
 If your app doesn't exit when idle, then we recommend setting `auto_stop_machines` and `auto_start_machines` to the same value (either both `true` or both `false`) so that Fly Proxy doesn't stop Machines and never restart them. For example, if `auto_start_machines = false` and `auto_stop_machines = true`, then Fly Proxy automatically stops your Machines when there's low traffic but doesn't start them again. When all or most of your Machines stop, requests to your app could start failing.
 
-When `auto_stop_machines = true`, set `min_machines_running` to `1` or higher if you need to keep one or more Machines running all the time in your primary region. The `min_machines_running` value applies to the total number of Machines, not Machines per region. For example, if `min_machines_running = 1` and there's no traffic to your app, then Fly Proxy will stop Machines until eventually there is only one Machine running in your primary region.
+To keep one or more Machines running all the time in your primary region, set `min_machines_running` to `1` or higher. `min_machines_running` has no effect unless you set `auto_stop_machines = true`.
+
+`min_machines_running` does not apply to Machines running in non-primary regions. For example, if `min_machines_running = 1` and there's no traffic to your app, then Fly Proxy will stop Machines until eventually there is only one Machine running in your primary region.
 
 There's no "maximum machines running" setting, because the maximum number of Machines is just the total number of Machines you've created for your app. Learn more in the [How it works](#how-it-works) section.
 
@@ -69,7 +75,7 @@ There's no "maximum machines running" setting, because the maximum number of Mac
 The Fly Proxy runs a process to automatically stop and start existing Fly Machines every few minutes.
 
 <div class="callout">
-The automatic start and stop feature only works on existing Machines and never creates or destroys Machines for you. The maximum number of running Machines is the number of Machines you've created for your app using `fly scale count` or `fly machine clone`. Learn more about [scaling the number of Machines](/docs/apps/scale-count/). 
+The automatic start and stop feature only works on existing Machines and never creates or destroys Machines for you. The maximum number of running Machines is the number of Machines you've created for your app using `fly scale count` or `fly machine clone`. Learn more about [scaling the number of Machines](/docs/apps/scale-count/).
 </div>
 
 ### Fly Proxy stops Machines

@@ -109,7 +109,7 @@ The default shell is Bash. The `--command` flag allows you to specify a differen
 If you just want a shell on a temporary Ubuntu Machine that's in your org's private network, omit the `<image>` argument:
 
 ```cmd
-fly machine --shell
+fly machine run --shell
 ```
 
 ## Run with a custom ENTRYPOINT or CMD
@@ -181,10 +181,10 @@ For sensitive environmment variables, [set secrets on the app](https://fly.io/do
 
 ## Define a network service
 
-Define a service when the Machine should be reachable by the Fly Proxy, either via an [Anycast](https://fly.io/docs/reference/services/#ip-addresses) or [Flycast](/docs/reference/private-networking/#flycast-private-load-balancing) IP address or through [`fly-replay` dynamic routing](/docs/reference/dynamic-request-routing/).
+Define a service when the Machine should be reachable by the Fly Proxy, either via an [Anycast](https://fly.io/docs/networking/services/#ip-addresses) or [Flycast](/docs/networking/private-networking/#flycast-private-load-balancing) IP address or through [`fly-replay` dynamic routing](/docs/networking/dynamic-request-routing/).
 
 
-To make an internal service on the Machine reachable via the Fly Proxy, use the `--port` option. Map any "external" ports, where the Fly Proxy accepts requests directed at the app, to the internal port where the service is listening on IPv6, and for each port, specify the protocol and [connection handler(s)](/docs/reference/services/#connection-handlers), using this format: `port[:machinePort][/protocol[:handler[:handler...]]]`.
+To make an internal service on the Machine reachable via the Fly Proxy, use the `--port` option. Map any "external" ports, where the Fly Proxy accepts requests directed at the app, to the internal port where the service is listening on IPv4, and for each port, specify the protocol and [connection handler(s)](/docs/networking/services/#connection-handlers), using this format: `port[:machinePort][/protocol[:handler[:handler...]]]`.
 
 For example, if your Machine runs a server on port 80, and the Fly Proxy should handle HTTP connections on port 80 and HTTPS connections on port 443, the port configuration would look like this: 
 

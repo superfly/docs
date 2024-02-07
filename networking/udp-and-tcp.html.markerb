@@ -1,5 +1,5 @@
 ---
-title: "Running Fly.io Apps On UDP and TCP"
+title: "Running Fly Apps On UDP and TCP"
 layout: docs
 sitemap: false
 nav: firecracker
@@ -7,7 +7,8 @@ author: thomas
 categories:
   - networking
 date: 2021-12-07
-
+redirect_from:
+  - /docs/app-guides/udp-and-tcp/
 ---
 
 Fly.io tries to make it easy to run any containerized app on our platform, regardless of what protocols it talks over. That includes apps that rely on UDP in addition to TCP.
@@ -175,6 +176,10 @@ This is super annoying. You probably want to use the same configuration value fo
 Another thing that won't impact your code that you'll need to know about is that we don't currently support UDP over IPv6. The kernel forwarding code we run to make UDP work isn't IPv6 aware. This is not OK, and we're working on it, but it's a limitation you'll run into today.
 
 Every Fly.io app gets an IPv6 address, and that address will work fine for the TCP side of your app, for whatever that's worth.
+
+<div class="note icon">
+**Note:** UDP does work over [Fly.io IPv6 private networking](/docs/reference/private-networking/).
+</div>
 
 ### You Might Need To Be Mindful Of MTUs
 

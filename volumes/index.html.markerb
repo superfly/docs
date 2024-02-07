@@ -30,5 +30,6 @@ Related how-tos:
 
 Commands and APIs for volumes.
 
-- [flyctl commands - `fly volumes`](/docs/flyctl/volumes/)
-- [Machines API - Volumes](https://docs.machines.dev/swagger/index.html#/Volumes)
+[flyctl commands - `fly volumes`](/docs/flyctl/volumes/)
+
+[Machines API - Volumes](https://docs.machines.dev/#tag/volumes)

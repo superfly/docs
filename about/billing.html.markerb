@@ -8,15 +8,33 @@ redirect_from: /docs/about/credit-cards/
 
 Billing for Fly.io is monthly per organization. Organizations are administrative entities that enable you to add members, share app development environments, and manage billing separately.
 
-If you provision services beyond the [free allowances](/docs/about/pricing/#free-allowances), we will charge you actual money at the end of each month.
+The amount you're charged depends on your plan, and your resource usage beyond the included plan usage and [free allowances](/docs/about/pricing/#free-allowances).
 
-Refer to our [Pricing page](/docs/about/pricing/) for resource cost details.
+Refer to our [Plans page](https://fly.io/plans) and our resource [Pricing page](/docs/about/pricing/) for details.
 
 ## View invoices
 
 You can view and download invoices from the Billing section of your [dashboard](https://fly.io/dashboard/personal/billing) for each organization.
 
 To download a past invoice, click View for the relevant cycle. You'll be sent to the Stripe billing portal where you'll have the option to download the invoice.
+
+## Plan billing
+
+You're charged for a plan as soon as you sign up for that plan. The exception is [new customers](/docs/about/pricing/#new-customers), who have a $5 sign-up credit for usage, and are only charged after that credit is used up. For existing Fly.io accounts, when you create a new organization, you are signing up for the Hobby plan. 
+
+Plan billing, and any included usage, is pro-rated over the month. For example, if you sign up for a Hobby plan on September 15th, then you'll be charged $2.50 (half of the $5/mo plan cost) right away and you'll have $2.50 of usage included up to September 30th. Then you'll be charged $5 at the start of October and have $5/mo of usage included for that billing cycle.
+
+When you upgrade to a higher plan, your billing is pro-rated and adjusted accordingly.
+
+## Machine billing
+
+Running Machines are billed per second that they're running (the time they spend in the `started` state), based on the price of a named CPU/RAM combination, plus the price of any additional RAM you specify.
+
+For example, a Machine described in your dashboard as "shared-1x-cpu@1024MB" is the “shared-cpu-1x” Machine size preset, which comes with 256MB RAM, plus additional RAM (1024MB - 256MB = 768MB). For pricing and available CPU/RAM combinations, see [Compute pricing](/docs/about/pricing/#compute).
+
+Stopped Machines are billed based on their root file system (rootfs) usage per second (the time they spend in the `stopped` state) by $0.15 per GB per month.
+
+For example, a Machine described in your dashboard as having 1GB of rootfs stopped for 10 days in the entire month will cost $0.05. If you have 3 stopped Machines of 1GB rootfs each stopped for 30 days it will cost $0.45 ($0.15 x 3).
 
 ## Volume billing
 
@@ -26,11 +44,9 @@ If you create a volume, you will be charged for it. You’re billed for volumes 
 
 You aren't billed for the 5 days worth of [daily volume snapshots](/docs/apps/volume-manage/#restore-a-volume-from-a-snapshot) that we store for you by default.
 
-## Machine billing
+## Free resource allowances
 
-Machines are billed based on the number of CPUs and the RAM used, according to the Machine state and the time they are running (started). 
-
-For example, “1x Shared 1024MB” is one CPU and 1024 MB RAM. To estimate costs, multiply the the price of “shared-cpu-1x” by the number of CPUs used and the number of seconds the Machine was running (price x cpu count x seconds). Then add charges for any extra RAM. Note that we subtract the free allowances first and that pricing is tiered based on usage. For details, see [Compute pricing](/docs/about/pricing/#compute).
+We subtract [free allowances](https://fly.io/docs/about/pricing/#free-allowances) off the top of your usage total. Once your usage exceeds the free allowance on any given resource, we start metering usage of that resource for billing purposes.
 
 ## Payment options
 
@@ -56,10 +72,21 @@ You can't use a prepaid card as a default (or saved) payment method. You can, ho
 
 ## Understand charges beyond the free allowances
 
-The prices of provisioned services are mostly fixed. If you provision Machines and leave them running all month, we’ll charge you a predictable amount for that machine.
+The prices of provisioned services are mostly fixed. If you provision Machines and leave them running all month, we’ll charge you a predictable amount for that Machine.
 
 A common reason for additional charges is extra RAM usage.
 
 For a breakdown of charges, check out your invoice in the Billing section of the [dashboard](https://fly.io/dashboard/personal/billing).
 
 We’re happy to discuss a refund if you do create compute resources by mistake, or if your app receives unexpected traffic due to an attack and generates a surprisingly large bill. Just send an email to billing@fly.io.
+
+## Delete your account
+
+To delete your Fly.io account, go to Account > Settings > [Delete Account](https://fly.io/user/deactivate) in your dashboard. You'll see a list of clean-up tasks that need to be done before you can delete the account, including:
+
+- Delete or remove yourself from organizations to avoid leaving behind inaccessible orgs. This does not include your personal organization.
+- Delete apps (or remove yourself from the associated organizations).
+- Remove certificates so that any custom domains are released.
+- Remove extensions to ensure that you don't get billed by partners when you can no longer access your account.
+
+When you've completed the clean-up tasks, click **Delete** to permanently delete your Fly.io account.

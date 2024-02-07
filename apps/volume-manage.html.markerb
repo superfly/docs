@@ -100,16 +100,57 @@ Create an exact copy of a volume, including its data. By default, we place the n
 
 For options, refer to the [`fly volumes fork` docs](/docs/flyctl/volumes-fork/) or run `fly vol fork -h`.
 
-## Restore a volume from a snapshot
+## Create a volume snapshot
 
-We take daily snapshots and keep them for five days. 
+We take daily snapshots of your volume and keep them for five days. You can also create a snapshot of a volume on demand.
 
-1. Run `fly volumes list` and copy ID of the volume to restore.
+1. Run `fly volumes list` and copy the ID of the volume to create a snapshot from.
+
+1. Create a snapshot of the volume:
+
+    ```cmd
+    fly volumes snapshots create <volume id>
+    ```
+    ```out
+    Scheduled to snapshot volume <volume id>
+    ```
+
+    The snapshot might take a few seconds or longer to complete, depending on the volume size.
 
 1. List the volume's snapshots:
 
     ```cmd
-    fly vol snapshots <volume id>
+    fly vol snapshots list <volume id>
+    ```
+
+    Example output:
+    ```out
+    Snapshots
+    ID                          	STATUS 	SIZE    	CREATED AT
+    vs_yAJylAAN83ZFna0A2yRA3J   	created	76082175	3 hours ago
+    vs_3NlZ9NNmpvoSP4yv3Om1gPm  	created	76082175	1 day ago
+    vs_Y49bw44Z6OocN8j4oXq6ww   	created	76082175	2 days ago
+    vs_gwMAXwwLjOVu1vPQVMN2w3N  	created	76082175	3 days ago
+    vs_Ql8xbllZOYDSmlKB0jxYVpg  	created	76082175	4 days ago
+    vs_plNk4llRGexSL22MOJYRpp   	created	76082175	5 days ago
+    vs_O9jqw997yvOuzyg1NVmmmjxhJ	running	0
+    ```
+
+The state of the new snapshot will go from `waiting` to `running` to `created`. Once the snapshot is created, you can use it to [restore the volume's data](#restore-a-volume-from-a-snapshot) if needed.
+
+
+## Restore a volume from a snapshot
+
+We take daily snapshots of your volume and keep them for five days. You can also [create a snapshot on demand](#create-an-on-demand-volume-snapshot). 
+
+You can restore the data from a volume by creating a new volume from a snapshot.
+
+1. Run `fly volumes list` and copy the ID of the volume to restore.
+
+1. List the volume's snapshots:
+
+    ```cmd
+    fly vol snapshots list <volume id>
     ```
 
     Example output:
@@ -182,7 +223,7 @@ For options, refer to the [`fly machine clone` docs](/docs/flyctl/machine-clone/
 <b>Warning:</b> When you destroy a volume, you permanently delete all its data.
 </div>
 
-1. Run `fly volumes list` and copy ID of volume to destroy.
+1. Run `fly volumes list` and copy the ID of volume to destroy.
 
 2. Destroy the volume:
 

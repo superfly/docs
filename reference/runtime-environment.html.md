@@ -16,7 +16,7 @@ Request headers carry information that is specific to the incoming request and i
 ## _Environment Variables_
 
 ### `FLY_APP_NAME`
-**Application Name**: Each application running on Fly has a unique Application Name. This identifies the application for the user and can also identify instances of the application running on Fly's 6PN networking. For example, `syd.$FLY_APP_NAME.internal` can refer to an instance of the app running. Read more about [6PN Naming](/docs/reference/private-networking/#fly-io-internal-addresses) in the [Private Networking](/docs/reference/private-networking/) docs.
+**Application Name**: Each application running on Fly has a unique Application Name. This identifies the application for the user and can also identify instances of the application running on Fly's 6PN networking. For example, `syd.$FLY_APP_NAME.internal` can refer to an instance of the app running. Read more about [6PN Naming](/docs/networking/private-networking/#fly-io-internal-addresses) in the [Private Networking](/docs/networking/private-networking/) docs.
 
 ### `FLY_ALLOC_ID`
 **Allocation ID**: Each instance of an application running on Fly has a unique Allocation ID. This can be used, for example, to distinguish between instances running in the same region. `b996131a-5bae-215b-d0f1-2d75d1a8812b` is an example of the Allocation ID's format.
@@ -27,7 +27,7 @@ Request headers carry information that is specific to the incoming request and i
 Not to be confused with the [HTTP header](/docs/reference/runtime-environment/#fly-region) `Fly-Region`, which is where the connection was accepted from.
 
 ### `FLY_PUBLIC_IP`
-**IPV6 Public IP**: The full public IPV6 for this instance. Read more in the [Network Services](/docs/reference/services/) section.
+**IPV6 Public IP**: The full public IPV6 for this instance. Read more in the [Network Services](/docs/networking/services/) section.
 
 ### `FLY_IMAGE_REF`
 **Docker Image Reference**: The name of the Docker image running this container. Useful if your application needs to launch Machine instances of itself to scale up-or-down. Read about how [a Rails app runs Machines for scale-to-zero background workers](https://fly.io/ruby-dispatch/rails-background-jobs-with-fly-machines/). `registry.fly.io/my-app-name:deployment-01H9RK9EYO9PGNBYAKGXSHV0PH` is an example of the Docker Image Reference's format.
@@ -39,7 +39,7 @@ Not to be confused with the [HTTP header](/docs/reference/runtime-environment/#f
 **Machine Configuration Version**: The version associated to a specific Machine configuration. When you update a Machine's configuration (including when you update its Docker image), it gets a new `FLY_MACHINE_VERSION`. You can also find this value under the name `Instance ID` in the output of `fly machine status`. Changing the Machine's metadata however doesn't trigger a new version.
 
 ### `FLY_PRIVATE_IP`
-**Private IPv6 Address**: The IPv6 address of the Machine on its [6PN private network](/docs/reference/private-networking/).
+**Private IPv6 Address**: The IPv6 address of the Machine on its [6PN private network](/docs/networking/private-networking/).
 
 ### `FLY_PROCESS_GROUP`
 **Process Group**: The [process group](/docs/apps/processes) associated with the Machine. 

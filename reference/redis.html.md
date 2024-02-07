@@ -116,7 +116,7 @@ Once provisioned, the database primary region cannot be changed.
 
 ### Traffic routing
 
-Upstash Redis is available in all Fly regions via a [private IPv6 address](/docs/reference/private-networking/#flycast-private-load-balancing) restricted to your Fly organization. Traffic is automatically routed to the nearest replica, or in the absence of nearby replicas, to the primary instance.
+Upstash Redis is available in all Fly regions via a [private IPv6 address](/docs/networking/private-networking/#flycast-private-load-balancing) restricted to your Fly organization. Traffic is automatically routed to the nearest replica, or in the absence of nearby replicas, to the primary instance.
 
 **If you plan to deploy in a single region, ensure that your database is deployed in the same region as your application.**
 

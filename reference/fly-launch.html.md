@@ -57,7 +57,7 @@ Some flyctl scanners will do some or all of this using the API.
 
 ## Deployment
 
-The `fly launch` command might deploy your new app for the first time if you accept the defaults or after you tweak the app's settings. You can stop `fly launch` from deploying the new app right away with `fly launch --no deploy`.
+The `fly launch` command might deploy your new app for the first time if you accept the defaults or after you tweak the app's settings. You can stop `fly launch` from deploying the new app right away with `fly launch --no-deploy`.
 
 Whenever you want to update your app, you'll run [`fly deploy`](/docs/flyctl/deploy/). `fly deploy` creates a new release of the app with the updated configuration, and builds and deposits the image in the Fly.io registry, if needed. Public IP addresses are provisioned if the app listens on public ports and doesn't already have them. Finally, some hardware is allocated and at least one Machine is booted up.
 
@@ -200,7 +200,7 @@ Provisioning ips for hello-gunicorn-flask
   Add a dedicated ipv4 with: fly ips allocate-v4
 ```
 
-Because I had an HTTP service configured, and no [public IP addresses](/docs/reference/services/), Fly Launch [provisioned the IPs on deployment](/docs/apps/deploy/#ip-addresses).
+Because I had an HTTP service configured, and no [public IP addresses](/docs/networking/services/), Fly Launch [provisioned the IPs on deployment](/docs/apps/deploy/#ip-addresses).
 
 ```
 This deployment will:

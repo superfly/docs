@@ -6,6 +6,10 @@ nav: firecracker
 order: 15
 ---
 
+<figure>
+  <img src="/static/images/docs-books.webp" alt="">
+</figure>
+
 Once your Fly App is launched, `flyctl` has various tools for getting information about it. You can also find a lot of information on your Fly.io [web dashboard](https://fly.io/dashboard).
 
 ## Find all your Apps
@@ -41,7 +45,7 @@ ID              STATE   REGION  HEALTH CHECKS           IMAGE                   
 
 As with many flyctl commands, if you leave off the `-a` flag, `fly status` will infer the app name from the `fly.toml` file in the working directory, if there is one.
 
-`fly machine list` yields a different set of information for each Machine, including the Machine's [internal IPv6 address](/docs/reference/private-networking/):
+`fly machine list` yields a different set of information for each Machine, including the Machine's [internal IPv6 address](/docs/networking/private-networking/):
 
 ```cmd
 fly machine list -a testrun
@@ -115,7 +119,7 @@ v6      2a09:8280:1::d285       public          global  2023-01-25T21:35:29Z
 v4      66.241.125.211          public (shared)           
 ```
 
-Read more about [Public Network Services](/docs/reference/services/) and [Private Networking](/docs/reference/private-networking/).
+Read more about [Public Network Services](/docs/networking/services/) and [Private Networking](/docs/networking/private-networking/).
 
 
 ## Check on it from inside

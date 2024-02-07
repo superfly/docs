@@ -9,7 +9,7 @@ These examples demonstrate connections from within the same Fly.io internal IPv6
 
 ## psql
 
-If you have an active [WireGuard tunnel](/docs/reference/private-networking/#private-network-vpn) to your organization's private network, you can connect from a local machine to your Postgres cluster the same way you would from a Fly app within the same private network. For example, the following command would start an interactive terminal session on the cluster leader with `psql`:
+If you have an active [WireGuard tunnel](/docs/networking/private-networking/#private-network-vpn) to your organization's private network, you can connect from a local machine to your Postgres cluster the same way you would from a Fly app within the same private network. For example, the following command would start an interactive terminal session on the cluster leader with `psql`:
 
 ```cmd
 psql postgres://postgres:secret123@appname.internal:5432

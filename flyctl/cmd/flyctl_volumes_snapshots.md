@@ -7,6 +7,7 @@ flyctl volumes snapshots [command] [flags]
 ~~~
 
 ## Available Commands
+* [create](/docs/flyctl/volumes-snapshots-create/)	 - Snapshot a volume
 * [list](/docs/flyctl/volumes-snapshots-list/)	 - List snapshots
 
 ## Options

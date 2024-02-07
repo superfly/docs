@@ -80,7 +80,7 @@ it securely.  The way to do so varies by database and adapter.  An example for
 postgres can be found at [node-postgres features > ssl](https://node-postgres.com/features/ssl).
 
 Equally importantly, if your database is hosted within the
-[fly.io private network](https://fly.io/docs/reference/private-networking/), you will _not_
+[Fly.io private network](https://fly.io/docs/networking/private-networking/), you will _not_
 want to connect with SSL/TLS connection options.
 
 ## Migrations

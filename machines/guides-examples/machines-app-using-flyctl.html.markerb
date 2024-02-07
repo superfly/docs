@@ -49,7 +49,7 @@ fly m run . -p 443:8080/tcp:tls:http -p 80:8080/tcp:http --region yyz -a testrun
 
 The last command configures and deploys the VM. See the `.` in there? That, in this case, is the path to the Dockerfile. Such a diminutive, easy-to-miss representation of _everything you want to supply for the VM to run_. Don't leave it out.
 
-Note the allocation of a [shared IPv4 address](/docs/reference/services/#shared-ipv4) above. For regular HTTP(S) web apps, shared IPv4 works fine, and helps conserve the world's dwindling IPv4 supply (and can [save you money](/docs/about/pricing/#anycast-ip-addresses)). If your app runs other services and you need a dedicated IPv4, you can provision one by leaving out the `--shared` flag.
+Note the allocation of a [shared IPv4 address](/docs/networking/services/#shared-ipv4) above. For regular HTTP(S) web apps, shared IPv4 works fine, and helps conserve the world's dwindling IPv4 supply (and can [save you money](/docs/about/pricing/#anycast-ip-addresses)). If your app runs other services and you need a dedicated IPv4, you can provision one by leaving out the `--shared` flag.
 
 If your app doesn't exist yet, `fly m run` will prompt you to create it, so you can actually do this instead:
 

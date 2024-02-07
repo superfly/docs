@@ -14,7 +14,7 @@ This is not a managed database. If Postgres crashes because it ran out of memory
 ### Here's what Fly.io manages
 
 - **Basic provisioning & upgrade tools** - `fly pg` provides a set of commands and building blocks that automates the provisioning of databases, connecting them to your applications, and accessing remote Postgres shells.
-- **Daily volume snapshots** - Fly.io takes daily snapshots of Postgres volumes and saves them for 7 days.
+- **Daily volume snapshots** - Fly.io takes daily snapshots of Postgres volumes and saves them for 5 days.
 - **Global networking & server infrastructure** - Fly.io provides the Firecracker VMs and interconnecting WireGuard network to run your Postgres database cluster.
 - **Prometheus metrics** - Fly.io collects and exposes various metrics via Prometheus, but you have to set up a tool, like Grafana, for aggregation and alerting.
 - **Open Source templates** - Templates and documentation are available at [https://github.com/fly-apps/postgres-ha](https://github.com/fly-apps/postgres-ha) in the event that you need to work the Fly Postgres app to fine-tune it for your specific application.
@@ -26,7 +26,7 @@ Deploying a Fly Postgres database means you may need to manage the following:
 - **Provisioning the right cluster config for you** - Consider what your availability needs are. If you run only a single instance, then anything that happens to that disk, that server or the network in that region can cause your database to be unavailable.
 - **Scaling storage and memory resources** - If your database runs out of disk space or memory, you'll have to scale it up, or down if you don't need the resources.
 - **Upgrading Postgres versions & security patches** - Fly.io provides tools like `fly image update` to upgrade your database instances to new minor versions of Postgres, but you'll have to run the upgrades yourself. Same for security patches: you'll have to apply those to running Postgres clusters.
-- **Developing a database backup & restoration plan** - Fly.io's self-managed Postgres ships with a basic daily volume snapshot tool that keeps snapshots around for 7 days. It does not manage off-site backups, etc.
+- **Developing a database backup & restoration plan** - Fly.io's self-managed Postgres ships with a basic daily volume snapshot tool that keeps snapshots around for 5 days. It does not manage off-site backups, etc.
 - **Monitoring & alerts** - Fly.io collects and exposes relevant Prometheus metrics, but you'll have to configure your own monitoring and alerts to keep tabs on the performance and resource utilization of your database instances.
 - **Recovering from outages** - If the volume in your database fills up, a replica fails, etc. you'll have to do a little bit of work to bring your database back to health.
 - **Global replication** - You can add read-only replicas outside the primary region to [speed up read-heavy globally distributed apps](https://fly.io/blog/globally-distributed-postgres/),  by scaling your Fly Postgres app. It's up to you to tweak your application to get writes to the leader instance, but the [Fly-Replay header](https://fly.io/docs/reference/fly-replay/) simplifies that.

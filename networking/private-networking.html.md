@@ -3,7 +3,9 @@ title: "Private Networking"
 layout: docs
 sitemap: false
 nav: firecracker
-redirect_from: /docs/reference/privatenetwork/
+redirect_from:
+  - /docs/reference/privatenetwork/
+  - /docs/reference/private-networking/
 ---
 
 Fly apps are connected by a mesh of WireGuard tunnels using IPV6.
@@ -150,7 +152,7 @@ The original motivation for this is accommodating PostgreSQL clients that don’
 
 ## Private Network VPN
 
-You can use the [WireGuard](https://wireguard.com/) VPN to connect to our [6PN private network](/docs/reference/private-networking/). This is a flexible and secure way to plug into each one of your Fly organizations and connect to any and all apps within that organization.
+You can use the [WireGuard](https://wireguard.com/) VPN to connect to our [6PN private network](/docs/networking/private-networking/). This is a flexible and secure way to plug into each one of your Fly organizations and connect to any and all apps within that organization.
 
 
 ### TL:DR;

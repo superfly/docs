@@ -7,29 +7,37 @@ nav: firecracker
 
 <img src="/static/images/app-pricing.webp" srcset="/static/images/app-pricing@2x.webp 2x" alt="A landscape painting with hot air balloons flying over a mountain range.">
 
-## _How it works_
+## How it works
 
-Our pricing is designed to let you launch a small application for free, and scale costs affordably as your needs grow.
+Our pricing is designed to let you test us out for free, and scale costs affordably as your needs grow.
 
 Fly.io services are billed per organization. Organizations are administrative entities on Fly.io that enable you to add members, share app development environments, and manage billing separately. Billing is based on the resources provisioned for your apps, pro-rated for the time they are provisioned. Learn more about [billing](/docs/about/billing/).
 
-## _Plans_
+## Plans
 
-All plans require a [credit card](/docs/about/billing/#payment-options). Your first organization starts on a free Hobby plan (subject to change), and any subsequent new organizations you create are on the $5/month Hobby Plan. Hobby plans are a straightforward pay-as-you-go option.
+Every organization belongs to a [plan](https://fly.io/plans). New organizations start on the [Hobby plan](https://fly.io/plans). If you need more support or compliance options, you can upgrade to a Launch, Scale, or Enterprise plan.
 
-We don't offer a "free tier." Instead, we offer some free resource allowances that apply to all plans, including the Hobby plan, and includes enough usage per month to run a small full-stack app, full-time, for free. 
-
-If you want to scale beyond the included free resources, you can pay for just what you need at the usage-based pricing listed below.
+All plans (except the [Legacy Hobby plan](#legacy-hobby-plan)) come with some usage included; if you want to scale beyond this, you pay for just what you need at the usage-based pricing listed below. 
 
 <div class="note icon">
-Your organization might be limited to prevent abuse or help with capacity planning.
+Regardless of which plan you're on, your organization may be subject to automated scaling limits to prevent abuse or to help with capacity planning. Email the address in the error message if you run into such a limit and it's getting in your way.
 </div>
 
-If you need more support or compliance options, you can upgrade to a [Launch, Scale, or Enterprise plan](https://fly.io/plans). These come with usage included and additional support options.
+All plans require a [credit card](/docs/about/billing/#payment-options) on file. For details, or to select a different plan, see [Plan Pricing](https://fly.io/plans).
 
-For details and to select a different plan, see [Plan Pricing](https://fly.io/plans).
+### New customers
 
-## _Free allowances_
+When you sign up for a Fly.io account, we create a default (“personal”) organization for you, which receives a one-time $5 sign-up credit to let you test-drive Fly.io at no cost. This organization's $5/month Hobby plan subscription does not start until the credit has been used up. Usage that falls outside of our free resource allowances consumes your sign-up credit.
+
+Once this credit is exhausted, the organization is automatically migrated to the $5/month [Hobby plan](https://fly.io/plans) (we’ll send you an email when it happens). There’s no time limit to use up the sign-up credit and move to the paid subscription.
+
+### Legacy Hobby plan
+
+If you were on the free Hobby plan at the time that the paid Hobby plan became the default for new users, your plan is now called the Legacy Hobby plan. Your costs stay the same as they were, with no monthly subscription fee, and no included usage beyond the free resource allowances that apply to all plans.
+
+If you upgrade to a different plan and downgrade back to Hobby, you’ll be on the current (paid) Hobby plan.
+
+## Free allowances
 
 Resources included for free on all plans:
 
@@ -39,13 +47,19 @@ Resources included for free on all plans:
 
 Additional resources are billed at the usage-based pricing detailed below.
 
-## _Compute_
+## Compute
 
 ### Fly Machines
 
-Pricing for [Fly Machines](/docs/machines/) VMs, which are also the virtual-machine building blocks of [Fly Launch](/docs/apps/) and [Fly Postgres](/docs/postgres/) apps.
+We charge for running and stopped machines differently.
+
+The price of a running [Fly Machine](/docs/machines/) VM is the price of a named CPU/RAM preset, plus about $5 per 30 days per GB of additional RAM.
+
+Here's the pricing for named presets and the allowed additional RAM configurations:
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
+
+For stopped machines we only charge for the root file system (rootfs) needed for each machine. Each 1GB of rootfs for a machine stopped for 30 days is $0.15. The amount of rootfs needed is defined by your OCI image generated on your app plus a few [containerd](https://containerd.io/) tweaks on the underlying file system.
 
 For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
 
@@ -68,8 +82,7 @@ Reserved and dedicated options:
 
 * Discounted rates for reserved GPU Machines and dedicated hosts.
 
-## _Persistent Storage Volumes_
-
+## Persistent Storage Volumes
 [Fly Volumes](/docs/volumes/) are local persistent storage for Machines.
 
 * Free: 3GB of total provisioned capacity per organization
@@ -79,11 +92,11 @@ Reserved and dedicated options:
 
 You'll be charged for volumes that you create, whether they are attached to a Machine or not, including when an attached Machine is stopped.
 
-## _Network prices_
+## Network prices
 
 ### Anycast IP addresses
 
-Each application receives a [shared IPv4 address](/docs/reference/services/#shared-ipv4) and unlimited [Anycast IPv6](/docs/reference/services/#ipv6) addresses for global load balancing.
+Each application receives a [shared IPv4 address](/docs/networking/services/#shared-ipv4) and unlimited [Anycast IPv6](/docs/networking/services/#ipv6) addresses for global load balancing.
 
 Dedicated IPv4 addresses are $2/mo.
 
@@ -113,7 +126,7 @@ backups and point-in-time restore for your SQLite-based applications that use
 - Additional $0.50/GB per month for database storage above 10GB.
 
 
-## _Support_
+## Support
 
 [Community support](https://community.fly.io) is included for all customers, regardless of usage level.
 

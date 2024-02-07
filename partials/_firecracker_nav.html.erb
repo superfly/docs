@@ -12,15 +12,13 @@
       <li>
         <%= nav_link "Troubleshooting Deployments", "/docs/getting-started/troubleshooting/" %>
       </li>
-      <li>
-        <%= nav_link "Connect to an App Service", "/docs/getting-started/app-services/" %>
-      </li>
     </ul>
   </li>
 </ul>
+
 <ul class="outline-list">
   <li>
-    <%= nav_link "Language & Framework Guides", "/docs/languages-and-frameworks/" %>
+    <%= nav_link "Languages & Frameworks", "/docs/languages-and-frameworks/" %>
     <ul role="region" aria-label="Language & Framework Guides">
       <li>
         <%= nav_link "Run an Elixir App", "/docs/elixir/getting-started" %>
@@ -43,6 +41,7 @@
     </ul>
   </li>
 </ul>
+
 <ul class="outline-list">
   <li>
     <%= nav_link "Fly Launch", "/docs/apps/" %>
@@ -55,9 +54,6 @@
       </li>
       <li>
         <%= nav_link "Get Information about an App", "/docs/apps/info/" %>
-      </li>
-      <li>
-        <%= nav_link "Use a Custom Domain", "/docs/apps/custom-domain/" %>
       </li>
       <li>
         <%= nav_link "Scale Machine CPU and RAM", "/docs/apps/scale-machine/" %>
@@ -79,6 +75,9 @@
       </li>
       <li>
         <%= nav_link "Run Multiple Processes in an App", "/docs/apps/processes/" %>
+      </li>
+      <li>
+        <%= nav_link "Deploy with GitHub Actions", "/docs/app-guides/continuous-deployment-with-github-actions/" %>
       </li>
       <li>
         <%= nav_link "Delete an App", "/docs/apps/delete/" %>
@@ -108,12 +107,17 @@
     </ul>
   </li>
 </ul>
+
 <ul class="outline-list">
   <li>
     <%= nav_link "Databases & Storage", "/docs/database-storage-guides/" %>
     <ul role="region" aria-label="Databases & Storage">
       <li>
         <%= nav_link "Volumes", "/docs/volumes" %>
+      </li>
+      <li>
+        <%= nav_link "Tigris Object Storage", "/docs/reference/tigris/" %>
+      </li>
       <li>
         <%= nav_link "Fly Postgres", "/docs/postgres/" %>
       </li>
@@ -138,13 +142,16 @@
     <%= nav_link "Fly Machines", "/docs/machines/" %>
     <ul role="region" aria-label="Fly Machines">
       <li>
+        <%= nav_link "Fly Machines overview", "/docs/machines/overview/" %>
+      </li>
+      <li>
         <%= nav_link "Run a new Machine", "/docs/machines/run/" %>
       </li>
       <li>
         <%= nav_link "Working with the Machines API", "/docs/machines/working-with-machines/" %>
       </li>
       <li>
-        <%= nav_link "Machines API Spec", "https://docs.machines.dev/swagger/index.html" %>
+        <%= nav_link "Machines API Spec", "https://docs.machines.dev/" %>
       </li>
       <li>
         <%= nav_link "Run User Code on Fly Machines", "/docs/machines/guides-examples/functions-with-machines/" %>
@@ -161,33 +168,57 @@
 
 <ul class="outline-list">
   <li>
+    <%= nav_link "Networking", "/docs/networking/" %>
+    <ul role="region" aria-label="Networking">
+      <li>
+        <%= nav_link "Connect to an App Service", "/docs/networking/app-services/" %>
+      </li>
+      <li>
+        <%= nav_link "Private Networking", "/docs/networking/private-networking/" %>
+      </li>
+      <li>
+        <%= nav_link "Public Networking", "/docs/networking/services/" %>
+      </li>
+      <li>
+        <%= nav_link "Dynamic Request Routing", "/docs/networking/dynamic-request-routing/" %>
+      </li>
+      <li>
+        <%= nav_link "Use a Custom Domain", "/docs/networking/custom-domain/" %>
+      </li>
+      <li>
+        <%= nav_link "More About Custom Domains and SSL Certificates", "/docs/networking/custom-domains-with-fly/" %>
+      </li>
+      <li>
+        <%= nav_link "Run UDP Services", "/docs/networking/udp-and-tcp/" %>
+      </li>
+      <li>
+        <%= nav_link "TLS Support", "/docs/networking/tls/" %>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<ul class="outline-list">
+  <li>
     <%= nav_link "Other Guides", "/docs/guides/" %>
     <ul role="region" aria-label="Other Guides">
       <li>
         <%= nav_link "Going to Production", "/docs/going-to-production/" %>
       </li>
       <li>
-        <%= nav_link "Custom Domains for SaaS", "/docs/app-guides/custom-domains-with-fly/" %>
-      </li>
-      <li>
-        <%= nav_link "Deploy with GitHub Actions", "/docs/app-guides/continuous-deployment-with-github-actions/" %>
-      </li>
-      <li>
-        <%= nav_link "Run Multiple Processes", "/docs/app-guides/multiple-processes/" %>
-      </li>
-      <li>
-        <%= nav_link "Run UDP Services", "/docs/app-guides/udp-and-tcp/" %>
-      </li>
-      <li>
         <%= nav_link "Crontab with Supercronic", "/docs/app-guides/supercronic/" %>
+      </li>
+      <li>
+        <%= nav_link "Run an ssh server", "/docs/app-guides/opensshd/" %>
       </li>
     </ul>
   </li>
 </ul>
+
 <ul class="outline-list">
   <li>
-    <%= nav_link "Fly.io Reference", "/docs/reference/" %>
-    <ul role="region" aria-label="Fly.io Reference">
+    <%= nav_link "Reference", "/docs/reference/" %>
+    <ul role="region" aria-label="Reference">
       <li>
         <%= nav_link "flyctl", "/docs/flyctl/" %>
       </li>
@@ -210,9 +241,6 @@
         <%= nav_link "Deploy Tokens", "/docs/reference/deploy-tokens/" %>
       </li>
       <li>
-        <%= nav_link "Dynamic Request Routing", "/docs/reference/dynamic-request-routing/" %>
-      </li>
-      <li>
         <%= nav_link "Sentry Error Tracking", "/docs/reference/sentry/" %>
       </li>
       <li>
@@ -222,7 +250,7 @@
         <%= nav_link "Load Balancing", "/docs/reference/load-balancing/" %>
       </li>
       <li>
-        <%= nav_link "Machines", "/docs/reference/machines/" %>
+        <%= nav_link "Machines", "/docs/machines/overview/" %>
       </li>
       <li>
         <%= nav_link "Metrics", "/docs/reference/metrics/" %>
@@ -231,10 +259,7 @@
         <%= nav_link "Monorepo Apps", "/docs/reference/monorepo/" %>
       </li>
       <li>
-        <%= nav_link "Private Networking", "/docs/reference/private-networking/" %>
-      </li>
-      <li>
-        <%= nav_link "Public Networking", "/docs/reference/services/" %>
+        <%= nav_link "Multiple Processes in Apps", "/docs/app-guides/multiple-processes/" %>
       </li>
       <li>
         <%= nav_link "Regions", "/docs/reference/regions/" %>
@@ -247,9 +272,6 @@
       </li>
       <li>
         <%= nav_link "Runtime Secrets", "/docs/reference/secrets/" %>
-      </li>
-      <li>
-        <%= nav_link "TLS Support", "/docs/reference/tls/" %>
       </li>
       <li>
         <%= nav_link "Volumes", "/docs/reference/volumes" %>

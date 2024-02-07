@@ -2,8 +2,13 @@
 title: Use a custom domain 
 layout: docs
 nav: firecracker
-order: 35
+redirect_from:
+  - /docs/apps/custom-domain/
 ---
+
+<figure>
+  <img src="/static/images/docs-ui.webp" alt="">
+</figure>
 
 When you create a Fly App, it is automatically given a `fly.dev` sub-domain, based on the app's name. This is great for testing, but when you want to go to full production you'll want your application to appear on your own domain and have HTTPS set up for you as it is with your `.fly.dev` domain. That's where the `fly certs` command comes in. But let's step back before we set up the TLS certificate, to the first step: directing traffic to your site.
 
@@ -29,9 +34,12 @@ You'll need to configure the A record with your DNS provider. You need to add in
 
 ## Get certified
 
-To enable HTTPS on the domain, you need to get a certificate. Fly.io does that for you automatically.
+You'll need an SSL certificate for your domain if your app:
 
-It starts with creating a certificate for your custom domain with the `fly certs add` command. For example:
+1. should accept HTTPS connections, or
+1. uses a shared IPv4 [anycast address](https://fly.io/docs/networking/services/#ip-addresses). The Fly Proxy uses the cert to associate the custom domain name with your app for routing purposes.
+
+Create a certificate for your custom domain with the `fly certs add` command. For example:
 
 ```cmd
 fly certs add example.com
@@ -80,4 +88,4 @@ and point it at the DNS Validation Target. The process will depend on your DNS p
 
 ## Related topics
 
-For a more detailed example of configuring custom domains, see the [Custom domains and SSL certificates](/docs/app-guides/custom-domains-with-fly/) guide.
+For a more detailed example of configuring custom domains, see the [Custom domains and SSL certificates](/docs/networking/custom-domains-with-fly/) guide.

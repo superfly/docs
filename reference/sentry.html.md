@@ -34,7 +34,7 @@ For the following frameworks/runtimes, we'll auto-instrument your app at launch 
 
 ### Ruby on Rails
 
-If `flyctl launch` detects your app as a Rails app, we will:
+Running `bin/rails generate dockerfile --sentry` will:
 
 * Install the [Ruby Sentry SDK](https://github.com/getsentry/sentry-ruby) rubygem
 * Add an initializer for automatic exception handling and performance tracing

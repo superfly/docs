@@ -6,6 +6,10 @@ nav: firecracker
 order: 60
 ---
 
+<figure>
+  <img src="/static/images/docs-drones.webp" alt="">
+</figure>
+
 The maximum capacity of an app is determined by the number of Fly Machines belonging to it.  You scale an app horizontally by creating or destroying Machines.
 
 <div class="important icon">

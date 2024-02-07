@@ -7,7 +7,7 @@ order: 4
 
 When you run your application locally you typically test it in your browser by navigating
 to a page like `http://localhost:3000/`.  The number after the colon is called a _port_.
-For most Node.js application this port is 3000, for some it is 8080, but it can be any number between 1024 an 65535.
+For most Node.js applications this port is 3000, for some it is 8080, but it can be any number between 1024 and 65535.
 
 If you are using a high level framework, it will generally take care of this for you.
 For lower level frameworks, you likely have code such as the following, typically in
@@ -64,7 +64,7 @@ Other frameworks may require you to change command used to start your applicatio
 
 If you need to expose additional ports, you will need to add a
 [`services` section](https://fly.io/docs/reference/configuration/#the-services-sections) for each additional port.  Be sure to review our
-[Public Network Services](https://fly.io/docs/reference/services/) page before proceeding, in particular:
+[Public Network Services](https://fly.io/docs/networking/services/) page before proceeding, in particular:
 
   * If you want your port other than 80/443 to be available on IPv4 you will need to [allocate a dedicated IPv4 address](https://fly.io/docs/flyctl/ips-allocate-v4/).
   * If you want to take advantage of our TLS services, you will want to add _"tls"_ to the list of connection handlers.

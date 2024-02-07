@@ -5,6 +5,10 @@ sitemap: false
 nav: firecracker
 ---
 
+<figure>
+  <img src="/static/images/docs-magnify.webp" alt="">
+</figure>
+
 This section gives you some ideas of how to start troubleshooting if your deployment doesn't work as expected. If you're still stuck after reading, then visit our [community forum](https://community.fly.io/) for more help.
 
 ## Try this first
@@ -102,7 +106,7 @@ For example, if your app listens on `0.0.0.0:3000`, then set `internal_port = 30
 
 A lot of frameworks will listen on `localhost`/`127.0.0.1` by default so that the developer can connect to the app. Different frameworks also define different default ports, like 3000, 8000, or 8080, for example. It can be easy to make a mistake and configure your app in a way that makes it impossible for the Fly Proxy to route requests to it. And it can be difficult to debug, especially if your framework doesn't print the listening address to logs and your image doesn't have `netstat` or `ss` tools.
 
-Learn more about [connecting to an app service](/docs/getting-started/app-services/).
+Learn more about [connecting to an app service](/docs/networking/app-services/).
 
 ### Example - Configure port and host in a Fastify Node app
 
@@ -155,6 +159,10 @@ fastify.listen({ port: 3000, host: '0.0.0.0' }, function (err, address) {
 ```
 
 Then make sure that the `internal_port` value in `fly.toml` is set to `3000`.
+
+## Smoke checks failing
+
+Smoke checks run during deployment to make sure that a crashing app doesn't get successfully deployed to all your app's Machines. If possible, the smoke check failure output includes an excerpt of the logs to help you diagnose the issue with your app. Common issues with new apps might include [Machine size](#out-of-memory-oom-or-high-cpu-usage), missing environment variables, or other problems with the app's configuration.
 
 ## Health checks failing
 
