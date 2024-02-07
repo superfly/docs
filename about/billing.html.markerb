@@ -20,7 +20,7 @@ To download a past invoice, click View for the relevant cycle. You'll be sent to
 
 ## Plan billing
 
-You're charged for a plan as soon as you sign up for that plan. When you create a new organization, you are signing up for the Hobby plan. 
+You're charged for a plan as soon as you sign up for that plan. The exception is [new customers](/docs/about/pricing/#new-customers), who have a $5 sign-up credit for usage, and are only charged after that credit is used up. For existing Fly.io accounts, when you create a new organization, you are signing up for the Hobby plan. 
 
 Plan billing, and any included usage, is pro-rated over the month. For example, if you sign up for a Hobby plan on September 15th, then you'll be charged $2.50 (half of the $5/mo plan cost) right away and you'll have $2.50 of usage included up to September 30th. Then you'll be charged $5 at the start of October and have $5/mo of usage included for that billing cycle.
 
@@ -32,9 +32,9 @@ Running Machines are billed per second that they're running (the time they spend
 
 For example, a Machine described in your dashboard as "shared-1x-cpu@1024MB" is the “shared-cpu-1x” Machine size preset, which comes with 256MB RAM, plus additional RAM (1024MB - 256MB = 768MB). For pricing and available CPU/RAM combinations, see [Compute pricing](/docs/about/pricing/#compute).
 
-Stopped machines are billed based on their RootFS usage per second (the time they spend in the `stopped` state) by $0.15 per GB per month.
+Stopped Machines are billed based on their RootFS usage per second (the time they spend in the `stopped` state) by $0.15 per GB per month.
 
-For example, a Machine described in your dashboard as having 1GB of RootFS stopped for 10 days in the entire month will cost $0.05. If you have 3 stopped machines of 1GB RootFS each stopped for 30 days it will cost $0.45 ($0.15 x 3).
+For example, a Machine described in your dashboard as having 1GB of RootFS stopped for 10 days in the entire month will cost $0.05. If you have 3 stopped Machines of 1GB RootFS each stopped for 30 days it will cost $0.45 ($0.15 x 3).
 
 ## Volume billing
 
@@ -72,7 +72,7 @@ You can't use a prepaid card as a default (or saved) payment method. You can, ho
 
 ## Understand charges beyond the free allowances
 
-The prices of provisioned services are mostly fixed. If you provision Machines and leave them running all month, we’ll charge you a predictable amount for that machine.
+The prices of provisioned services are mostly fixed. If you provision Machines and leave them running all month, we’ll charge you a predictable amount for that Machine.
 
 A common reason for additional charges is extra RAM usage.
 
