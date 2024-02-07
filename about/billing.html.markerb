@@ -8,9 +8,9 @@ redirect_from: /docs/about/credit-cards/
 
 Billing for Fly.io is monthly per organization. Organizations are administrative entities that enable you to add members, share app development environments, and manage billing separately.
 
-If you provision services beyond the [free allowances](/docs/about/pricing/#free-allowances), we will charge you actual money at the end of each month.
+The amount you're charged depends on your plan, and your resource usage beyond the included plan usage and [free allowances](/docs/about/pricing/#free-allowances).
 
-Refer to our [Pricing page](/docs/about/pricing/) for resource cost details.
+Refer to our [Plans page](https://fly.io/plans) and our resource [Pricing page](/docs/about/pricing/) for details.
 
 ## View invoices
 
@@ -18,13 +18,13 @@ You can view and download invoices from the Billing section of your [dashboard]
 
 To download a past invoice, click View for the relevant cycle. You'll be sent to the Stripe billing portal where you'll have the option to download the invoice.
 
-## Volume billing
+## Plan billing
 
-Volume billing is pro-rated to the hour and we subtract the free allowances first. For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).
+You're charged for a plan as soon as you sign up for that plan. When you create a new organization, you are signing up for the Hobby plan. 
 
-If you create a volume, you will be charged for it. You’re billed for volumes that aren’t attached to Machines, and for volumes that are attached to Machines in any state, including stopped Machines.
+Plan billing, and any included usage, is pro-rated over the month. For example, if you sign up for a Hobby plan on September 15th, then you'll be charged $2.50 (half of the $5/mo plan cost) right away and you'll have $2.50 of usage included up to September 30th. Then you'll be charged $5 at the start of October and have $5/mo of usage included for that billing cycle.
 
-You aren't billed for the 5 days worth of [daily volume snapshots](/docs/apps/volume-manage/#restore-a-volume-from-a-snapshot) that we store for you by default.
+When you upgrade to a higher plan, your billing is pro-rated and adjusted accordingly.
 
 ## Machine billing
 
@@ -35,6 +35,14 @@ For example, a Machine described in your dashboard as "shared-1x-cpu@1024MB" is 
 Stopped machines are billed based on their RootFS usage per second (the time they spend in the `stopped` state) by $0.15 per GB per month.
 
 For example, a Machine described in your dashboard as having 1GB of RootFS stopped for 10 days in the entire month will cost $0.05. If you have 3 stopped machines of 1GB RootFS each stopped for 30 days it will cost $0.45 ($0.15 x 3).
+
+## Volume billing
+
+Volume billing is pro-rated to the hour and we subtract the free allowances first. For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).
+
+If you create a volume, you will be charged for it. You’re billed for volumes that aren’t attached to Machines, and for volumes that are attached to Machines in any state, including stopped Machines.
+
+You aren't billed for the 5 days worth of [daily volume snapshots](/docs/apps/volume-manage/#restore-a-volume-from-a-snapshot) that we store for you by default.
 
 ## Free resource allowances
 
