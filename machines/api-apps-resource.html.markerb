@@ -1,10 +1,10 @@
 ---
-title: Machines API - Apps
+title: Apps
 layout: docs
 nav: machines
 ---
 
-A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. You can use the Apps resource to create and manage Fly Apps. 
+You can use the Apps resource to create and manage Fly Apps. A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. 
 
 ## Create a Fly App
 

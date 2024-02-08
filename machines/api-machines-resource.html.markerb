@@ -1,10 +1,10 @@
 ---
-title: Machines API - Machines
+title: Machines
 layout: docs
 nav: machines
 ---
 
-A Fly Machine is the configuration and state for a single VM running on Fly.io. You can use the Machines resource to create, stop, start, update, and delete Machines.
+You can use the Machines resource to create, stop, start, update, and delete Fly Machines. Fly Machines are fast-launching VMs on Fly.io. The Machine resource is the configuration and state for a Machine.
 
 ## Machine properties
 
