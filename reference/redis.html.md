@@ -44,7 +44,7 @@ flyctl redis list
 ```
 ```output
 ID             	NAME               	ORG          	PLAN	PRIMARY REGION	READ REGIONS
-aaV829vaMVQGbi5	late-waterfall-1133	fly-apps     	Free	mad           	ams
+aaV829vaMVQGbi5	late-waterfall-1133	fly-apps     	payg	mad           	ams
 ```
 
 Note the database name, then fetch its status.
