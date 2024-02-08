@@ -11,16 +11,7 @@ nav: firecracker
 
 [Upstash for Redis](https://docs.upstash.com/redis) is a fully-managed, Redis-compatible database service offering global read replicas for reduced latency in distant regions. Upstash databases are provisioned inside your Fly organization, ensuring private, low-latency connections to your Fly applications.
 
-See the [What you Should Know](#what-you-should-know) section for more details about this service.
-
-## Pricing
-
-Upstash offers one free, resource-limited database per Fly organization. After that, all databases are billed by request count on a pay-as-you-go basis. Check the official [Upstash Pricing](https://upstash.com/pricing) page for details.
-
-Note that empty responses are not counted towards your bill. This prevents billing for standard polling behavior of tools like [Sidekiq](https://sidekiq.org/) or [BullMQ](https://bullmq.io/).
-
-Your database charges will show up on your monthly Fly.io bill. You can track database usage details in the [Upstash web console](#the-upstash-web-console).
-
+See the [What you Should Know](#what-you-should-know) section for more details about how Upstash Redis operates on Fly.io.
 
 ## Create and manage a Redis database
 
@@ -35,9 +26,6 @@ flyctl redis create
 ? Select Organization: fly-apps (fly-apps)
 ? Choose a primary region (can't be changed later) Madrid, Spain (mad)
 ? Optionally, choose one or more replica regions (can be changed later): Amsterdam, Netherlands (ams)
-? Select an Upstash Redis plan:
-> Pay-as-you-go
-  Free
 ```
 
 ### The Upstash web console
@@ -56,7 +44,7 @@ flyctl redis list
 ```
 ```output
 ID             	NAME               	ORG          	PLAN	PRIMARY REGION	READ REGIONS
-aaV829vaMVQGbi5	late-waterfall-1133	fly-apps     	Free	mad           	ams
+aaV829vaMVQGbi5	late-waterfall-1133	fly-apps     	payg	mad           	ams
 ```
 
 Note the database name, then fetch its status.
@@ -68,7 +56,7 @@ fly redis status late-waterfall-1133
 Redis
   ID             = aaV829vaMVDGbi5
   Name           = late-waterfall-1133
-  Plan           = Free
+  Plan           = Pay-as-you-go
   Primary Region = mad
   Read Regions   = ams
   Private URL     = redis://password@fly-late-waterfall-1133.upstash.io
@@ -133,3 +121,15 @@ By default, Upstash Redis will disallow writes when the max data size limit has 
 First, keys marked with a TTL will be evicted at random. In the absence of volatile keys, keys will be chosen randomly for eviction. This is roughly the combination of the `volatile-random` and `allkeys-random` [eviction policies available in standard Redis](https://redis.io/docs/manual/eviction/).
 
 Note that items marked with an explicit TTL will expire accurately, regardless of whether eviction is enabled.
+
+## Pricing
+
+Upstash Redis databases are billed by usage on a pay-as-you-go basis, with a free allowance of 10,000 commands per day. Check the official [Upstash Pricing](https://upstash.com/pricing) page for details.
+
+Your usage is updated hourly on your monthly Fly.io bill. You can track database usage details in the [Upstash web console](#the-upstash-web-console) as well.
+
+### Usage from Sidekiq, BullMQ and other prepackaged software
+
+Tools like [Sidekiq](https://sidekiq.org/) or [BullMQ](https://bullmq.io/) make heavy use of Redis through polling, even when completely idle. Many of their polling commands return empty responses.
+
+While Upstash won't count these responses against your usage, they tend to exceed 10,000 requests per day. You'll be notified if you pass this limit.
