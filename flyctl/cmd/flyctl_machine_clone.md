@@ -20,7 +20,6 @@ flyctl machine clone [machine_id] [flags]
       --host-dedication-id string     The dedication id of the reserved hosts for your organization (if any)
       --name string                   Optional name for the new Machine
       --override-cmd string           Set CMD on the new Machine to this value
-  -g, --process-group string          Change the cloned Machine process group to what is specified here
   -r, --region string                 The target region (see 'flyctl platform regions')
       --standby-for strings           Comma separated list of Machine IDs to watch for. You can use '--standby-for=source' to create a standby for the cloned Machine.
       --vm-cpu-kind string            The kind of CPU to use ('shared' or 'performance')
