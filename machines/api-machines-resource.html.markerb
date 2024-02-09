@@ -12,7 +12,6 @@ You can use the Machines resource to create, stop, start, update, and delete Fly
 | --------- | ----------- |
 | `id` | A stable identifier for the Machine. |
 | `name` | Unique name for the Machine. If omitted, one is generated for you. |
-| `state` | The current state of the Machine. See the [Machine states table](#machine-states). |
 | `region` | The region where the Machine resides, or the target region for the Machine on create. If omitted, the Machine is placed in the same region as your WireGuard peer connection (somewhere near you). |
 | `instance_id` | An identifier for the current running/ready version of the Machine. Every Update request potentially changes the `instance_id`. |
 | `private_ip` | The [6PN IPv6 address](/docs/reference/private-networking/) of the Machine, which is where it's reachable to other Machines in the same organization and `network_id`. |
@@ -428,35 +427,35 @@ This table explains the possible Machine states. A Machine may only be in one st
 <table class="table-stripe table-stretch table-pad text-lg whitespace-nowrap m-0">
   <tbody>
     <tr>
-      <td class="font-bold">created</td>
+      <th>created</th>
       <td>Initial status</td>
     </tr>
     <tr>
-      <td class="font-bold">starting</td>
+      <th>starting</th>
       <td>Transitioning from `stopped` to `started`</td>
     </tr>
     <tr>
-      <td class="font-bold">started</td>
+      <th>started</th>
       <td>Running and network-accessible</td>
     </tr>
     <tr>
-      <td class="font-bold">stopping</td>
+      <th>stopping</th>
       <td>Transitioning from `started` to `stopped`</td>
     </tr>
     <tr>
-      <td class="font-bold">stopped</td>
+      <th>stopped</th>
       <td>Exited, either on its own or explicitly stopped</td>
     </tr>
     <tr>
-      <td class="font-bold">replacing</td>
+      <th>replacing</th>
       <td>User-initiated configuration change (image, VM size, etc.) in progress</td>
     </tr>
     <tr>
-      <td class="font-bold">destroying</td>
+      <th>destroying</th>
       <td>User asked for the Machine to be completely removed</td>
     </tr>
     <tr>
-      <td class="font-bold">destroyed</td>
+      <th>destroyed</th>
       <td>No longer exists</td>
     </tr>
     </tbody>
