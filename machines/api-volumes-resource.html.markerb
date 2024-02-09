@@ -16,7 +16,7 @@ You can use the Volumes resource to create and delete volumes. A Fly Volume is p
 | blocks | int |  |
 | blocks _avail | int |  |
 | blocks_free | int |  |
-| created_at | string |  |
+| created_at | string | The date and time the volume was created. |
 | encrypted | boolean | Whether the volume is encrypted. Default true. |
 | fstype | string | n/a |
 | id | string | The volume ID. |
