@@ -1,0 +1,44 @@
+---
+title: Machine states
+layout: docs
+nav: machines
+---
+
+This table explains the possible Machine states. A Machine may only be in one state at a time.
+
+<table class="table-stripe table-stretch table-pad whitespace-nowrap m-0">
+  <tbody>
+    <tr>
+      <th>created</th>
+      <td>Initial status</td>
+    </tr>
+    <tr>
+      <th>starting</th>
+      <td>Transitioning from `stopped` to `started`</td>
+    </tr>
+    <tr>
+      <th>started</th>
+      <td>Running and network-accessible</td>
+    </tr>
+    <tr>
+      <th>stopping</th>
+      <td>Transitioning from `started` to `stopped`</td>
+    </tr>
+    <tr>
+      <th>stopped</th>
+      <td>Exited, either on its own or explicitly stopped</td>
+    </tr>
+    <tr>
+      <th>replacing</th>
+      <td>User-initiated configuration change (image, VM size, etc.) in progress</td>
+    </tr>
+    <tr>
+      <th>destroying</th>
+      <td>User asked for the Machine to be completely removed</td>
+    </tr>
+    <tr>
+      <th>destroyed</th>
+      <td>No longer exists</td>
+    </tr>
+    </tbody>
+  </table>

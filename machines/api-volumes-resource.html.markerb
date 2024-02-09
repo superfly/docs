@@ -1,0 +1,375 @@
+---
+title: Volumes
+layout: docs
+nav: machines
+---
+
+You can use the Volumes resource to create and delete volumes. A Fly Volume is persistent storage for a Fly Machine. Learn more about [volumes](/docs/reference/volumes/).
+
+## Volume properties
+
+| **Property** | **Type** | **Description** |
+| --- | --- | --- |
+| `attached_alloc_id` | string | n/a |
+| `attached_machine_id` | string | The ID of the Machine that’s attached to the volume. |
+| `block_size` | int | The size of each memory block in bytes. |
+| `blocks` | int | The total number of blocks in the volume. |
+| `blocks _avail` | int | The number of blocks available for data in the volume. |
+| `blocks_free` | int | The total number of blocks free for data and root user ops. |
+| `created_at` | string | The date and time the volume was created. |
+| `encrypted` | boolean | Whether the volume is encrypted. Default true. |
+| `fstype` | string | The file system type. |
+| `id` | string | The volume ID. |
+| `name` | string | The volume name. |
+| `region` | string | The region where the volume resides, or the target region for volume create. |
+| `size_gb` | int | The size of the volume in GB. |
+| `snapshot_retention` | int | Not yet configurable. The number of days to retain daily snapshots. |
+| `state` | string | The state of the volume. |
+| `zone` | string | The hardware zone on which the volume resides. |
+
+## List all the volumes in an app
+
+`GET /apps/{app_name}/volumes`
+
+Given the name of a Fly app, list all the Fly Volumes associated with it.
+
+### Example list volumes
+
+```xml
+curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes" 
+
+```
+
+### Example list volumes response
+
+Status: 200 OK
+
+```xml
+[
+    {
+        "id": "vol_9vw681egy1jj5xm4",
+        "name": "disk",
+        "state": "created",
+        "size_gb": 1,
+        "region": "yul",
+        "zone": "09cd",
+        "encrypted": true,
+        "attached_machine_id": "6e8297dc244287",
+        "attached_alloc_id": null,
+        "created_at": "2023-09-01T19:47:14.774Z",
+        "blocks": 252283,
+        "block_size": 4096,
+        "blocks_free": 252277,
+        "blocks_avail": 235125,
+        "fstype": "ext4",
+        "snapshot_retention": 5,
+        "host_dedication_key": ""
+    }
+]
+```
+
+## Create a volume
+
+`POST /apps/{app_name}/volumes`
+
+Create a volume for an app. 
+
+### Example create volume request
+
+After you create a volume, you can use the `mounts` property in the [Machine `config` object](/docs/machines/api-machines-resource/#the-machine-config-object-properties) to attach the volume to a Machine.
+
+```xml
+curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes" \\
+  -d '{
+  "name": "my_app_vol",
+  "region": "ord",
+  "size_gb": 10
+}
+```
+
+### Example create Volume response
+
+Status: 200 OK
+
+```xml
+{
+    "id": "vol_340088w293z35lp4",
+    "name": "new_1028_vol",
+    "state": "created",
+    "size_gb": 1,
+    "region": "ord",
+    "zone": "84d3",
+    "encrypted": true,
+    "attached_machine_id": null,
+    "attached_alloc_id": null,
+    "created_at": "2023-11-27T21:47:06.837Z",
+    "blocks": 0,
+    "block_size": 0,
+    "blocks_free": 0,
+    "blocks_avail": 0,
+    "fstype": "",
+    "snapshot_retention": 5,
+    "host_dedication_key": ""
+}
+```
+
+### Create volume request body parameters
+
+`encrypted`: (boolean) Whether to encrypt the volume. Default true.
+
+`name`: (string) Required? The name for the new volume.
+
+`region`: (string) Required? The target region. Must be in the same region as the Machine you want to attach it to.
+
+`size_gb`: (int) The size of the volume in GB. Default 3.
+
+`snapshot_id`: (string) The ID of the volume snapshot to use to create the new volume.
+
+`source_volume_id`: (string) The ID of the source volume for the volume fork.
+
+`require_unique_zone`: (boolean) If true, we will provision this volume on hardware that doesn't have another volume with the same name on it. The typical pattern is to create as many volumes as you need, all with the same name and `require_unique_zone: true`. This will keep your app available in case a host goes down. This flag can also cause volume creation to fail, in case we have used up all unique zones, in which case you probably want to set it to false.
+
+## Create a volume from a snapshot
+
+`POST /apps/{app_name}/volumes`
+
+Create a volume from a snapshot backup.
+
+### Example create volume from snapshot request
+
+```xml
+curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes" \\
+  -d '{
+  "name": "my-app-vol",
+  "region": "yyz",
+  "size_gb": 10,
+  "snapshot_id": "vs_evl65mZQ937tQ16xGGDX8BN",
+  "source_volume_id": "vol_6r7ye90k98ynwk1r"
+}
+```
+
+### Example create volume from snapshot response
+
+Status: 200 OK
+
+```xml
+{
+    "id": "vol_grnejj355dqdj9kr",
+    "name": "new_1028_vol",
+    "state": "restoring",
+    "size_gb": 3,
+    "region": "yyz",
+    "zone": "aeee",
+    "encrypted": true,
+    "attached_machine_id": null,
+    "attached_alloc_id": null,
+    "created_at": "2023-12-07T21:35:57.42Z",
+    "blocks": 0,
+    "block_size": 0,
+    "blocks_free": 0,
+    "blocks_avail": 0,
+    "fstype": "",
+    "snapshot_retention": 5,
+    "host_dedication_key": ""
+}
+```
+
+Then get it again: the state should be “created”.
+
+## Get a specific volume
+
+`GET /apps/{app_name}/volumes/{volume_id}`
+
+### Example get volume request
+
+```xml
+curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r" 
+```
+
+### Example get volume response
+
+Status: 200 OK
+
+```xml
+{
+    "id": "vol_9vw681egy1jj5xm4",
+    "name": "disk",
+    "state": "created",
+    "size_gb": 3,
+    "region": "yul",
+    "zone": "09cd",
+    "encrypted": true,
+    "attached_machine_id": "6e8297dc244287",
+    "attached_alloc_id": null,
+    "created_at": "2023-09-01T19:47:14.774Z",
+    "blocks": 768250,
+    "block_size": 4096,
+    "blocks_free": 768244,
+    "blocks_avail": 730163,
+    "fstype": "ext4",
+    "snapshot_retention": 5,
+    "host_dedication_key": ""
+}
+```
+
+## Delete a volume permanently
+
+`DELETE /apps/{app_name}/volumes/{volume_id}`
+
+Delete a volume. This action cannot be undone.
+
+Given the name of a Fly App and the volume ID of a Fly volume, delete the volume.
+
+### Example Volume delete request
+
+```xml
+curl -i -X DELETE \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r" 
+```
+
+**Example Machine delete response**
+
+Status: 200 OK
+
+```xml
+{
+    "id": "vol_grnejj355dqdj9kr",
+    "name": "new_1028_vol",
+    "state": "destroyed",
+    "size_gb": 3,
+    "region": "yyz",
+    "zone": "aeee",
+    "encrypted": true,
+    "attached_machine_id": null,
+    "attached_alloc_id": null,
+    "created_at": "2023-12-07T21:35:57.42Z",
+    "blocks": 0,
+    "block_size": 0,
+    "blocks_free": 0,
+    "blocks_avail": 0,
+    "fstype": "",
+    "snapshot_retention": 0,
+    "host_dedication_key": ""
+}
+```
+
+## Extend a volume
+
+`PUT /apps/{app_name}/volumes/{volume_id}/extend`
+
+Given the name of a Fly App and a volume ID, you can make a volume bigger by extending it.
+
+### Example extend volume request
+
+```xml
+curl -i -X PUT \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/extend" \\
+  -d '{
+  "size_gb": 10,
+}
+```
+
+### Example extend volume response
+
+Status: 200 OK
+
+```xml
+{
+    "volume": {
+        "id": "vol_9vw681egy1jj5xm4",
+        "name": "disk",
+        "state": "created",
+        "size_gb": 3,
+        "region": "yul",
+        "zone": "09cd",
+        "encrypted": true,
+        "attached_machine_id": "6e8297dc244287",
+        "attached_alloc_id": null,
+        "created_at": "2023-09-01T19:47:14.774Z",
+        "blocks": 0,
+        "block_size": 0,
+        "blocks_free": 0,
+        "blocks_avail": 0,
+        "fstype": "",
+        "snapshot_retention": 5,
+        "host_dedication_key": ""
+    },
+    "needs_restart": false
+}
+```
+
+If `needs_restart`  is true, your machine needs to be restarted to make use of the added space.
+
+## Get a list of snapshots for a volume
+
+Given the name of a Fly app and a volume ID, list the available snapshots for that volume.
+
+### Example list volume snapshots request
+
+```xml
+curl -i -X PUT \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/snapshots" \\
+
+```
+
+### Example list volume snapshots response
+
+Status: 200 OK
+
+```xml
+[
+    {
+        "id": "vs_4LNvXLLK0P6tk6KgqoexaBw",
+        "size": 36007729,
+        "digest": "76d64a69199766d1600d46f0fd48ad9c-1",
+        "created_at": "2023-12-02T20:59:35+00:00"
+    },
+    {
+        "id": "vs_3NlZ9NNmpvoSPqG6DO8BkDy",
+        "size": 36007729,
+        "digest": "e06b15e5467de62c5d505fa57923db93-1",
+        "created_at": "2023-12-03T21:00:35+00:00"
+    },
+    {
+        "id": "vs_Ql8xbllZOYDSDgo2D7NYGj",
+        "size": 36007729,
+        "digest": "c37d2a590a351fa561fdb1ffd2f53d62-1",
+        "created_at": "2023-12-04T21:01:35+00:00"
+    },
+    {
+        "id": "vs_x4AxX44lmpbcpap7vwX5x8e",
+        "size": 36007729,
+        "digest": "91fac554e5261d8f4eb6f7b69e88c8f9-1",
+        "created_at": "2023-12-05T21:01:55+00:00"
+    },
+    {
+        "id": "vs_DkV2wkk7av1c9Kmlv79PL4o",
+        "size": 36007729,
+        "digest": "d78b5ff73a87b2bdfecb4a87c89c312b-1",
+        "created_at": "2023-12-06T21:02:55+00:00"
+    },
+    {
+        "id": "vs_K8z1w88ZBOys22zqKGZ36R",
+        "size": 36007729,
+        "digest": "95dfe85046c67834566ccff2a29b18ec-1",
+        "created_at": "2023-12-07T21:03:25+00:00"
+    }
+]
+```
+
+## Related topics
+
+- [Working with the Machines API](/docs/machines/working-with-machines/)
+- [Apps resource](/docs/machines/api-apps-resource/) reference
+- [Machines resource](/docs/machines/api-machines-resource/) reference
