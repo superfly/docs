@@ -19,7 +19,6 @@ You can use the Volumes resource to create and delete volumes. A Fly Volume is p
 | created_at | string |  |
 | encrypted | boolean | Whether the volume is encrypted. Default true. |
 | fstype | string | n/a |
-| host_dedication_key |  | n/a |
 | id | string | The volume ID. |
 | name | string | The volume name. |
 | region | string | The region where the volume resides, or the target region for volume create. |

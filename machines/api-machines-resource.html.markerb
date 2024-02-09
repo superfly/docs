@@ -101,7 +101,7 @@ Create a Machine with services defined on app `my-app-name`. Learn more about [s
 
 `GET /apps/{app_name}/machines/{machine_id}/wait`
 
-Wait for a Machine to reach a specific state. Specify the desired state with the `state` parameter.  See the [Machines states table](#machine-states) for a list of possible states.  The default for this parameter is `started`.
+Wait for a Machine to reach a specific state. Specify the desired state with the `state` parameter.  See the [Machines states table](/docs/machines/machine-states/) for a list of possible states.  The default for this parameter is `started`.
 
 This request will block for up to 60 seconds. Set a shorter timeout with the `timeout` parameter.
 
@@ -419,44 +419,3 @@ For example, if 3 out of 6 Machines have service configurations set to listen on
 Machines can be reached within the private network by hostname, in the format `<id>.vm.<app-name>.internal`. 
 
 For example, to reach a Machine with ID `3d8d413b29d089` on an app called `my-app-name`, use hostname `3d8d413b29d089.vm.my-app-name.internal`.
-
-## Machine states
-
-This table explains the possible Machine states. A Machine may only be in one state at a time.
-
-<table class="table-stripe table-stretch table-pad text-lg whitespace-nowrap m-0">
-  <tbody>
-    <tr>
-      <th>created</th>
-      <td>Initial status</td>
-    </tr>
-    <tr>
-      <th>starting</th>
-      <td>Transitioning from `stopped` to `started`</td>
-    </tr>
-    <tr>
-      <th>started</th>
-      <td>Running and network-accessible</td>
-    </tr>
-    <tr>
-      <th>stopping</th>
-      <td>Transitioning from `started` to `stopped`</td>
-    </tr>
-    <tr>
-      <th>stopped</th>
-      <td>Exited, either on its own or explicitly stopped</td>
-    </tr>
-    <tr>
-      <th>replacing</th>
-      <td>User-initiated configuration change (image, VM size, etc.) in progress</td>
-    </tr>
-    <tr>
-      <th>destroying</th>
-      <td>User asked for the Machine to be completely removed</td>
-    </tr>
-    <tr>
-      <th>destroyed</th>
-      <td>No longer exists</td>
-    </tr>
-    </tbody>
-  </table>
