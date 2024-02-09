@@ -419,3 +419,9 @@ For example, if 3 out of 6 Machines have service configurations set to listen on
 Machines can be reached within the private network by hostname, in the format `<id>.vm.<app-name>.internal`. 
 
 For example, to reach a Machine with ID `3d8d413b29d089` on an app called `my-app-name`, use hostname `3d8d413b29d089.vm.my-app-name.internal`.
+
+## Related topics
+
+- [Working with the Machines API](/docs/machines/working-with-machines/)
+- [Apps resource](/docs/machines/api-apps-resource/) reference
+- [Volumes resource](/docs/machines/api-volumes-resource/) reference

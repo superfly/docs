@@ -58,3 +58,9 @@ For non-sensitive information, you _can_ set different environment variables per
 Machines should be stopped before attempting deletion. Append `?force=true` to the URI to stop and delete immediately.
 
 <%= partial "/docs/reference/machines/delete_app" %>
+
+## Related topics
+
+- [Working with the Machines API](/docs/machines/working-with-machines/)
+- [Machines resource](/docs/machines/api-machines-resource/) reference
+- [Volumes resource](/docs/machines/api-volumes-resource/) reference

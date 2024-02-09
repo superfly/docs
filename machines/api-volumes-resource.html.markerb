@@ -10,22 +10,22 @@ You can use the Volumes resource to create and delete volumes. A Fly Volume is p
 
 | **Property** | **Type** | **Description** |
 | --- | --- | --- |
-| attached_alloc_id | string | n/a |
-| attached_machine_id | string | The ID of the Machine that’s attached to the volume. |
-| block_size | int |  |
-| blocks | int |  |
-| blocks _avail | int |  |
-| blocks_free | int |  |
-| created_at | string | The date and time the volume was created. |
-| encrypted | boolean | Whether the volume is encrypted. Default true. |
-| fstype | string | n/a |
-| id | string | The volume ID. |
-| name | string | The volume name. |
-| region | string | The region where the volume resides, or the target region for volume create. |
-| size_gb | int | The size of the volume in GB. |
-| snapshot_retention | int | Not yet configurable. The number of days to retain daily snapshots. |
-| state | string | The state of the volume. |
-| zone | string | The hardware zone on which the volume resides. |
+| `attached_alloc_id` | string | n/a |
+| `attached_machine_id` | string | The ID of the Machine that’s attached to the volume. |
+| `block_size` | int |  |
+| `blocks` | int |  |
+| `blocks _avail` | int |  |
+| `blocks_free` | int |  |
+| `created_at` | string | The date and time the volume was created. |
+| `encrypted` | boolean | Whether the volume is encrypted. Default true. |
+| `fstype` | string | n/a |
+| `id` | string | The volume ID. |
+| `name` | string | The volume name. |
+| `region` | string | The region where the volume resides, or the target region for volume create. |
+| `size_gb` | int | The size of the volume in GB. |
+| `snapshot_retention` | int | Not yet configurable. The number of days to retain daily snapshots. |
+| `state` | string | The state of the volume. |
+| `zone` | string | The hardware zone on which the volume resides. |
 
 ## List all the volumes in an app
 
@@ -367,3 +367,9 @@ Status: 200 OK
     }
 ]
 ```
+
+## Related topics
+
+- [Working with the Machines API](/docs/machines/working-with-machines/)
+- [Apps resource](/docs/machines/api-apps-resource/) reference
+- [Machines resource](/docs/machines/api-machines-resource/) reference
