@@ -12,13 +12,13 @@ You can use the Volumes resource to create and delete volumes. A Fly Volume is p
 | --- | --- | --- |
 | `attached_alloc_id` | string | n/a |
 | `attached_machine_id` | string | The ID of the Machine that’s attached to the volume. |
-| `block_size` | int |  |
-| `blocks` | int |  |
-| `blocks _avail` | int |  |
-| `blocks_free` | int |  |
+| `block_size` | int | The size of each memory block in bytes. |
+| `blocks` | int | The total number of blocks in the volume. |
+| `blocks _avail` | int | The number of blocks available for data in the volume. |
+| `blocks_free` | int | The total number of blocks free for data and root user ops. |
 | `created_at` | string | The date and time the volume was created. |
 | `encrypted` | boolean | Whether the volume is encrypted. Default true. |
-| `fstype` | string | n/a |
+| `fstype` | string | File system type. |
 | `id` | string | The volume ID. |
 | `name` | string | The volume name. |
 | `region` | string | The region where the volume resides, or the target region for volume create. |
