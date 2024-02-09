@@ -18,7 +18,7 @@ You can use the Volumes resource to create and delete volumes. A Fly Volume is p
 | `blocks_free` | int | The total number of blocks free for data and root user ops. |
 | `created_at` | string | The date and time the volume was created. |
 | `encrypted` | boolean | Whether the volume is encrypted. Default true. |
-| `fstype` | string | File system type. |
+| `fstype` | string | The file system type. |
 | `id` | string | The volume ID. |
 | `name` | string | The volume name. |
 | `region` | string | The region where the volume resides, or the target region for volume create. |
@@ -78,7 +78,7 @@ Create a volume for an app.
 
 ### Example create volume request
 
-TBD description of example request. You can use the `mounts` property in the [Machine `config` object](/docs/machines/api-machines-resource/#the-machine-config-object-properties) to attach the volume to a Machine.
+After you create a volume, you can use the `mounts` property in the [Machine `config` object](/docs/machines/api-machines-resource/#the-machine-config-object-properties) to attach the volume to a Machine.
 
 ```xml
 curl -i -X POST \\
