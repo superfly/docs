@@ -74,11 +74,11 @@ Status: 200 OK
 
 `POST /apps/{app_name}/volumes`
 
-TBD text
+Create a volume for an app. 
 
 ### Example create volume request
 
-TBD description of example request
+TBD description of example request. You can use the `mounts` property in the [Machine `config` object](/docs/machines/api-machines-resource/#the-machine-config-object-properties) to attach the volume to a Machine.
 
 ```xml
 curl -i -X POST \\
@@ -140,8 +140,6 @@ Status: 200 OK
 Create a volume from a snapshot backup.
 
 ### Example create volume from snapshot request
-
-TBD description of example request
 
 ```xml
 curl -i -X POST \\
