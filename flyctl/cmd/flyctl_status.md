@@ -8,9 +8,6 @@ currently allocated.
 flyctl status [flags]
 ~~~
 
-## Available Commands
-* [instance](/docs/flyctl/status-instance/)	 - Show instance status
-
 ## Options
 
 ~~~

@@ -12,8 +12,6 @@ flyctl config validate [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for validate
-      --machines        Forces apps v2 config validation
-      --nomad           Forces apps v1 config validation
 ~~~
 
 ## Global Options

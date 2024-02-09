@@ -1,4 +1,4 @@
-Update an Upstash Redis database
+Update an Upstash Redis database settings, payment plan or replica regions
 
 ## Usage
 ~~~

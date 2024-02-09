@@ -15,7 +15,7 @@ flyctl redis [command] [flags]
 * [proxy](/docs/flyctl/redis-proxy/)	 - Proxy to a Redis database
 * [reset](/docs/flyctl/redis-reset/)	 - Reset the password for an Upstash Redis database
 * [status](/docs/flyctl/redis-status/)	 - Show status of a Redis database
-* [update](/docs/flyctl/redis-update/)	 - Update an Upstash Redis database
+* [update](/docs/flyctl/redis-update/)	 - Update an Upstash Redis database settings, payment plan or replica regions
 
 ## Options
 

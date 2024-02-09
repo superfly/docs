@@ -8,9 +8,9 @@ flyctl apps restart [APPNAME] [flags]
 ## Options
 
 ~~~
-      --force-stop           Performs a force stop against the target Machine. ( Machines only )
+      --force-stop           Performs a force stop against the target Machine
   -h, --help                 help for restart
-      --skip-health-checks   Restarts app without waiting for health checks. ( Machines only )
+      --skip-health-checks   Restarts app without waiting for health checks
 ~~~
 
 ## Global Options
