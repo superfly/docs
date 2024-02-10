@@ -5,10 +5,6 @@ toc: false
 nav: firecracker
 ---
 
-<div class="important icon">
-Fly GPUs are only available on GPU-enabled accounts. You can join the waitlist [here](https://fly.io/gpu).
-</div>
-
 1. You can use any base image for your Dockerfile, but it is convenient to base it on `ubuntu:22.04` and install libraries from NVIDIA's official apt repository: `RUN apt install -y cuda-nvcc-12-2 libcublas-12-2 libcudnn8` is usually enough.
 
     <div class = "note icon">
