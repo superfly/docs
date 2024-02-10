@@ -93,4 +93,4 @@ For example:
 ...
 ```
 
-Refer to the Machines API docs for more information about [updating a Machine](/docs/machines/working-with-machines/#update-a-machine).
+Refer to the Machines API docs for more information about [updating a Machine](/docs/machines/api-machines-resource/#update-a-machine).
