@@ -27,7 +27,7 @@ Scale locally, or put your app next to your users in ten more cities. Either way
 
 ## Control individual VMs
 
-The Fly Launch platform-as-a-service is there to make your apps easy to launch and manage. When you outgrow its opinions, micromanage your app VMs with `fly machines` commands, or drop down a level of abstraction to the [Machines](/docs/machines/working-with-machines/) API. Launch [tiny, fast-booting VMs](/docs/machines/) from your app! The perfect way to run user code, or try that sketchy TypeScript snippet ChatGPT suggested.
+The Fly Launch platform-as-a-service is there to make your apps easy to launch and manage. When you outgrow its opinions, micromanage your app VMs with `fly machines` commands, or drop down a level of abstraction to the [Machines API](/docs/machines/working-with-machines/). Launch [tiny, fast-booting VMs](/docs/machines/) from your app! The perfect way to run user code, or try that sketchy TypeScript snippet ChatGPT suggested.
 
 [Learn more about Fly Machines](/docs/machines/)
 

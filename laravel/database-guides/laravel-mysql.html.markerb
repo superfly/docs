@@ -41,7 +41,7 @@ To run MySQL as a [Fly App](/docs/app-guides/mysql-on-fly/), follow our guide [h
 
 ### _Connect from a local environment_
 
-The MySQL instance you spun up in Fly.io "[is closed to the public internet](/docs/machines/working-with-machines/#notes-on-networking)", and can only be accessed by another application found in your Fly.io organization's private network. You'll need a way to tunnel into the network and finally connect to your MySQL instance.
+The MySQL instance you spun up in Fly.io "[is closed to the public internet](/docs/machines/api-machines-resource#notes-on-networking)", and can only be accessed by another application found in your Fly.io organization's private network. You'll need a way to tunnel into the network and finally connect to your MySQL instance.
 
 <b>In this guide you'll tunnel to your MySQL instance through the use of `fly proxy`</b>
 

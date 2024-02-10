@@ -362,7 +362,7 @@ An example of two files:
 
 `schedule`: string (nil) - Optionally one of `hourly`, `daily`, `weekly`, `monthly`. Runs Machine at the given interval. Interval starts at time of Machine creation
 
-`services`contains an array of objects that define a single network service. Check the [Machines networking section](#networking) for more information.
+`services`contains an array of objects that define a single network service. Check the [Machines networking section](#notes-on-networking) for more information.
 
   - `protocol`: string - Required. `tcp` or `udp`. [Learn more about running raw TCP/UDP services](https://fly.io/docs/app-guides/udp-and-tcp/).
   - `internal_port`: int - Required. Port the Machine listens on.
