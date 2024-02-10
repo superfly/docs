@@ -7,13 +7,9 @@ toc: false
 
 Fly.io has GPUs! If you have workloads that would benefit from GPU acceleration, Fly GPU Machines may be for you.
 
-<div class="important icon">
-Fly GPUs are only available to vetted orgs right now. Sign up [here](https://fly.io/gpu)! If you leave a good explanation on the waitlist of who you are and what you want to build with GPUs, you'll hear from us pretty quickly.
-</div>
-
 ## What can I use Fly GPUs for?
 
-Three models of GPU are available: NVIDIA A100 40G PCIe, A100 80G SXM, and L40S. 
+Three models of GPU are available: NVIDIA A100 40G PCIe, A100 80G SXM, and L40S.
 
 A100 units are all about the tensor cores, and are positioned for inference, model training, and intensive high-precision computation tasks like scientific simulations. As their names suggest, they have 40GB and 80GB of GPU memory. ([A100 datasheet](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-nvidia-us-2188504-web.pdf))
 
