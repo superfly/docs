@@ -17,17 +17,20 @@ The regions around the world where we run servers so your apps can run close to 
 
 ## Creating and deploying applications
 
+* [**Machines**](/docs/machines/):
+Fly Machines are the compute behind the Fly.io platform. Learn about Machines and their fast REST API.
+
+* [**Fly Launch**](/docs/apps/):
+Configure, launch, and orchestrate your app's Machines as a unit, with a single config file and opinionated flyctl commands.
+
 * [**Fly Launch Configuration (fly.toml)**](/docs/reference/configuration/):
-The settings for configuring your App in the `fly.toml` configuration file. The Fly Launch configuration includes how the App is built, how its networking is configured, how it scales, and more.
+The settings for configuring your app in the `fly.toml` configuration file. The Fly Launch configuration includes how the app is built, its volume mounts, network services, and more.
 
 * [**App Availability and Resiliency**](/docs/reference/app-availability):
 An overview of the features that can make your app more resistant to events like hardware failures or outages.
 
 * [**Builders**](/docs/reference/builders/):
 The different ways you can assemble applications into deployable images for Fly.io.
-
-* [**fly launch**](/docs/reference/fly-launch/):
-The command that creates an app and does a lot of the work for you.
 
 * [**flyctl**](/docs/flyctl/):
 The Fly CLI reference documentation.
@@ -47,13 +50,8 @@ How to set and use Docker secrets to make secrets available at build time.
 * [**Secrets - Runtime**](/docs/reference/secrets/):
 How to set and use secrets, which are exported to the running App through environment variables, and find out how they work with deployments to help secure your App.
 
-## Learning about the Fly Platform
-
 * [**Fly Apps**](/docs/reference/apps):
-Details about our user-friendly development platform.
-
-* [**Machines**](/docs/machines):
-A brief overview of Fly Machines, the building blocks of the Fly Platform, as well as the Machines API reference, examples, and guides.
+The abstraction grouping Machines with the other Fly.io resources needed to run and route to them.
 
 * [**Metrics**](/docs/reference/metrics):
 The fully-managed metrics that you can access for your app on Fly.io.
