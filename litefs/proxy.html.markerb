@@ -81,3 +81,9 @@ is configured to the proxy's bind port in your `fly.toml`:
   protocol = "tcp"
 ```
 
+
+## Websockets
+
+At this time, the proxy does not work with WebSockets. You can still use LiteFS
+with WebSocket applications but you will need to internally proxy the write
+requests to the [current primary in the cluster](primary).
