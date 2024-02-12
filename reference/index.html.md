@@ -50,7 +50,7 @@ How to set and use secrets, which are exported to the running App through enviro
 ## Learning about the Fly Platform
 
 * [**Fly Apps**](/docs/reference/apps):
-The difference between V1 (Nomad) Apps and V2 Apps.
+Details about our user-friendly development platform.
 
 * [**Machines**](/docs/machines):
 A brief overview of Fly Machines, the building blocks of the Fly Platform, as well as the Machines API reference, examples, and guides.
