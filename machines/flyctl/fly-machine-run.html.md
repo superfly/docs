@@ -3,7 +3,7 @@ title: Run a new Machine
 objective: Run a new Fly Machine with flyctl
 layout: docs
 nav: machines
-redirect_from: /docs/machines/flyctl/fly-machine-run/
+redirect_from: /docs/machines/run/
 ---
 
 The [`fly machine run`](/docs/flyctl/machine-run/) command is a tool to configure, build, and start a new Machine in one line.
