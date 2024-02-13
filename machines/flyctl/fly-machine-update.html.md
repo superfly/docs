@@ -5,7 +5,7 @@ layout: docs
 nav: machines
 ---
 
-The [`fly machine update` command](/docs/flyctl/machine-update/) updates the configuration of an individual, existing Fly Machine.
+The [`fly machine update`](/docs/flyctl/machine-update/) command updates the configuration of an individual, existing Fly Machine.
 
 Many, but not all, [Machine configuration](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) options are available to the `fly machine update` command through flags. The available flags are listed in the flyctl help and on the [`fly machine update` reference page](/docs/flyctl/machine-update/).
 
