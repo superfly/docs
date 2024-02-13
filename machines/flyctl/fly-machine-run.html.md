@@ -8,7 +8,7 @@ redirect_from: /docs/machines/flyctl/fly-machine-run/
 
 The [`fly machine run`](/docs/flyctl/machine-run/) command is a tool to configure, build, and start a new Machine in one line.
 
-Many, but not all, [Machine configuration](/docs/machines/config/) options are available to the `fly machine run` command through flags. The available flags are listed in the flyctl help and on the [`fly machine run` reference page](/docs/flyctl/machine-run/).
+Many, but not all, [Machine configuration](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) options are available to the `fly machine run` command through flags. The available flags are listed in the flyctl help and on the [`fly machine run` reference page](/docs/flyctl/machine-run/).
 
 <div class="note icon">
 To create a Machine, but not start it, use [`fly machine create`](/docs/flyctl/machine-create/).
@@ -81,7 +81,7 @@ This sets the `region` [property](/docs/machines/api-machines-resource/#machine-
 
 All Fly Machines are made from Docker images. When you `fly launch` an app, this may be invisible: a Fly Launch scanner may generate one for you based on your source code.
 
-Once the Machine is created, you can see this image reflected in its [`image_ref`](/docs/machines/api-machines-resource/#machine-properties) and [`config.image`](/docs/machines/config/#image) properties.
+Once the Machine is created, you can see this image reflected in its [`image_ref`](/docs/machines/api-machines-resource/#machine-properties) and [`config.image`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) properties.
 
 With `fly machine run`, there are two options: point to a prebuilt image, or point to a Dockerfile, which flyctl will use to build an image.
 
@@ -133,7 +133,7 @@ You can have the Fly.io `init` override the ENTRYPOINT and CMD (if any) of the M
 
 ### Custom CMD
 
-Set the [`config.init.cmd`](/docs/machines/config/#cmd) property by including the command to run at the end of the `fly machine run` invocation. This example simply spins up a Debian Linux Machine with a `sleep` task to keep it awake; you can shell into it or whatever:
+Set the [`config.init.cmd`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property by including the command to run at the end of the `fly machine run` invocation. This example simply spins up a Debian Linux Machine with a `sleep` task to keep it awake; you can shell into it or whatever:
 
 ```cmd
 fly machine run debian sleep inf
@@ -141,7 +141,7 @@ fly machine run debian sleep inf
 
 ### Custom ENTRYPOINT
 
-Set the [`config.init.entrypoint`](/docs/machines/config/#entrypoint) property with the `--entrypoint` option. 
+Set the [`config.init.entrypoint`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property with the `--entrypoint` option. 
 
 In this example we use the [`--file-local` option](/docs/machines/flyctl/fly-machine-run#copy-a-local-file-into-the-machine-file-system) to send an entrypoint script to the Machine and `--entrypoint` to run the script before continuing to the custom CMD `sleep inf`:
 
@@ -175,13 +175,13 @@ Include one or more of the following options to use non-default specifications f
 --vm-size string              The VM size to set machines to. See "fly platform vm-sizes" for valid values
 ```
 
-These flags set [`config.guest`](/docs/machines/config/#guest) properties.
+These flags set [`config.guest`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) properties.
 
 ## Set environment variables
 
 Specify environment variables to be available on the Machine with the `--env` flag, using NAME=VALUE pairs.
 
-This flag sets the [`config.env`](/docs/machines/config/#env) property on the Machine.
+This flag sets the [`config.env`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property on the Machine.
 
 Example:
 
@@ -197,7 +197,7 @@ For sensitive environmment variables, [set secrets on the app](https://fly.io/do
 
 ## Define a Fly Proxy network service
 
-The `--port` option defines a network service to allow the Fly Proxy to reach a local service on the Machine. This option gives you access to basic service configuration; the [Machines API](/docs/machines/api-machines-resource/) and [Fly Launch](/docs/apps/) both offer more complete control over the Machine's [`config.services`](/docs/machines/config/#services) properties.
+The `--port` option defines a network service to allow the Fly Proxy to reach a local service on the Machine. This option gives you access to basic service configuration; the [Machines API](/docs/machines/api-machines-resource/) and [Fly Launch](/docs/apps/) both offer more complete control over the Machine's [`config.services`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) properties.
 
 Map any "external" ports, where the proxy accepts requests directed at the app, to the internal port where the service is listening on IPv4. For each port combination, specify the protocol and [connection handler(s)](/docs/networking/services/#connection-handlers), using this format: `port[:machinePort][/protocol[:handler[:handler...]]]`.
 
@@ -220,9 +220,9 @@ fly machine run . --port 80/tcp:http \
 
 In a Machine service's configuration, `auto_stop` and `auto_start` settings are optional. 
 
-If the `--autostop` flag is absent in a `fly machine run` command, the Machine's [`config.services.auto_stop`](/docs/machines/config/#auto_stop) value doesn't get set, and the Fly Proxy does not shut the Machine down, even when there is no traffic to it.
+If the `--autostop` flag is absent in a `fly machine run` command, the Machine's [`config.services.auto_stop`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) value doesn't get set, and the Fly Proxy does not shut the Machine down, even when there is no traffic to it.
 
-If the `--autostart` flag is absent in a `fly machine run` command, the Machine's [`config.services.auto_start`](/docs/machines/config/#auto_start) value doesn't get set, and the Fly Proxy does not start it in response to requests.
+If the `--autostart` flag is absent in a `fly machine run` command, the Machine's [`config.services.auto_start`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) value doesn't get set, and the Fly Proxy does not start it in response to requests.
 
 The `--autostart` and `--autostop` flags set the value of `autostart` or `autostop` to `true` by default; you can explicitly set the value to `false`. For example, the following runs a new Machine that may be stopped by the Fly Proxy, but will never be restarted by it:
 
@@ -237,7 +237,7 @@ If you define more than one service on the Machine, and also use one or both of 
 
 ## Stop or restart the machine on process exit
 
-Set the Machine's [restart policy](/docs/machines/guides-examples/machine-restart-policy/) using the `--restart` option. Options are `no`, `always`, and `on-fail`, which correspond to `no`, `always`, and `on-failure` values for the Machine [`config.restart.policy`](/docs/machines/config/#policy) property.
+Set the Machine's [restart policy](/docs/machines/guides-examples/machine-restart-policy/) using the `--restart` option. Options are `no`, `always`, and `on-fail`, which correspond to `no`, `always`, and `on-failure` values for the Machine [`config.restart.policy`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property.
 
 
 The default restart policy for a Machine created using `fly machine run` is `always`, unless you use the [`--rm` option](#destroy-the-machine-when-it-exits), in which case the default is `no`.
@@ -270,7 +270,7 @@ fly machine run . --volume vol_d42652p88kdw9l7r:data --region arn
 
 A Machine can only mount one volume, and each volume can only be mounted on one Machine. To release a volume that is attached to a Machine, destroy the Machine.
 
-The `--volume` flag on the `fly machine run` command sets a subset of the properties of the Machine's [`config.mounts`](/docs/machines/config/#mounts) object.
+The `--volume` flag on the `fly machine run` command sets a subset of the properties of the Machine's [`config.mounts`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) object.
 
 ## Add metadata to the Machine
 
@@ -284,7 +284,7 @@ fly machine run . --metadata fly_platform_version=v2 \
                   --metadata my_metadata=mineallmine
 ```
 
-You can see the [metadata in the Machine config](/docs/machines/config/#metadata): 
+You can see the [metadata in the Machine config](/docs/machines/api-machines-resource/#the-machine-config-object-properties/): 
 
 ```cmd
 fly machine status -d -a my-app-name
@@ -301,7 +301,7 @@ fly machine status -d -a my-app-name
 
 ## Place data into files on the Machine
 
-The [`files` property](/docs/machines/config/#files) of a Machine's configuration can be used to place a small amount of data into files on its file system. The `fly machine run` command has three ways to make use of this. 
+The [`files` property](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) of a Machine's configuration can be used to place a small amount of data into files on its file system. The `fly machine run` command has three ways to make use of this. 
 
 <div class="important icon">
 **Important:** This won't work for large files. There's a limit to how much data can be stored in an app secret or a Machine's configuration.
@@ -372,11 +372,11 @@ For the sake of resilience, you can create a stopped [standby](/docs/reference/a
 fly machine run . --standby-for 287444ec026748,148ed726c54768
 ```
 
-The `--standby-for` flag sets the [`config.standbys`](/docs/machines/config/#standbys) Machine property.
+The `--standby-for` flag sets the [`config.standbys`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) Machine property.
 
 ## Start a Machine on a schedule
 
-Use the `--schedule` flag to set the Machine's [`config.schedule`](/docs/machines/config/#schedule) property, which starts the Machine on a fuzzy `hourly`, `daily`, `weekly`, or `monthly` cycle. This is useful for running Machines that do a finite job, then exit. The Machine is started the first time when you run `fly machine run`, and again once per (approximate) hour, day, week, or month.
+Use the `--schedule` flag to set the Machine's [`config.schedule`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property, which starts the Machine on a fuzzy `hourly`, `daily`, `weekly`, or `monthly` cycle. This is useful for running Machines that do a finite job, then exit. The Machine is started the first time when you run `fly machine run`, and again once per (approximate) hour, day, week, or month.
 
 <div class="important icon">
 **Important:** If the host on which a stopped Machine resides doesn't have the resources to start it when its scheduled time comes, you'll get an error back. It's up to you to build the appropriate level of redundancy into your apps.
