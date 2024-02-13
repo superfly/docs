@@ -60,10 +60,6 @@ Use the `--skip-start` flag to update the Machine config without restarting it.
 
 The `--wait-timeout` flag tells the `fly machine update` command how many seconds to wait for individual machines to transition states and for any health checks to pass. The default is 300.
 
-## Accept all confirmations
-
-If you don't want to interact with the command, use the `--yes` flag to accept all confirmations.
-
 ## Use a custom ENTRYPOINT or CMD
 
 You can have the Fly.io `init` override the ENTRYPOINT and CMD (if any) of the Machine's Docker image.
