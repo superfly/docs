@@ -1,0 +1,26 @@
+<% 
+  def section_open?(section)
+    !section[:open].nil? && section[:open] || section[:links].any? { |page| current_page?(page[:path]) }
+  end
+
+  nav.each { |nav| nav[:open] = section_open?(nav) unless nav[:title].nil? }
+  
+  nav.each do |nav| 
+%>
+  <% if nav[:text] %>
+    <%= nav_link nav[:text], nav[:path], class: "#{nav[:type]}-link" %>
+  <% else %>
+    <dl class="accordion<%= nav[:open] ? " open" : "" %>">
+      <dt class="accordion-trigger">
+        <%= nav[:title] %>
+      </dt>
+      <dd class="accordion-target">
+        <ul class="accordion-content" role="region" aria-label="<%= nav[:title] %>">
+          <% nav[:links].each do |page| %>
+            <li><%= nav_link page[:text], page[:path] %></li>
+          <% end %>
+        </ul>
+      </dd>
+    </dl>
+  <% end %>
+<% end %>

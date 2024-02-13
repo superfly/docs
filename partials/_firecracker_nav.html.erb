@@ -1,192 +1,161 @@
-<dl class="accordion open">
-  <dt class="accordion-trigger">
-    Getting Started
-  </dt>
-  <dd class="accordion-target">
-    <ul class="accordion-content">
-      <li><%= nav_link "Getting Started Overview", "/docs/getting-started" %></li>
-      <li><%= nav_link "Speedrun: Launch on Fly.io", "/docs/speedrun/" %></li>
-      <li><%= nav_link "Hands-on with Fly.io", "/docs/hands-on/" %></li>
-      <li><%= nav_link "Troubleshooting Deployments", "/docs/getting-started/troubleshooting/" %></li>
-    </ul>
-  </dd>
-</dl>
+<% 
+  @nav = [
+    {
+      title: "Getting Started",
+      open: current_page?("/docs"),
+      links: [
+        { text: "Getting Started Overview", path: "/docs/getting-started/" },
+        { text: "Speedrun: Launch on Fly.io", path: "/docs/speedrun/" },
+        { text: "Hands-on with Fly.io", path: "/docs/hands-on/" },
+        { text: "Troubleshooting Deployments", path: "/docs/getting-started/troubleshooting/" }
+      ]
+    },
+    {
+      title: "Languages & Frameworks",
+      open: false,
+      links: [
+        { text: "Run an Elixir App", path: "/docs/elixir/getting-started/" },
+        { text: "Run a Rails App", path: "/docs/rails/getting-started/" },
+        { text: "Run a Laravel App", path: "/docs/laravel/" },
+        { text: "Run a Django App", path: "/docs/django/getting-started/" },
+        { text: "Run a JavaScript App", path: "/docs/js/" },
+        { text: "More...", path: "/docs/languages-and-frameworks/" }
+      ]
+      
+    },
+    {
+      title: "Fly Launch",
+      open: false,
+      links: [
+        { text: "Fly Launch Overview", path: "/docs/apps/" },
+        { text: "Launch a New App", path: "/docs/apps/launch/" },
+        { text: "Deploy a Fly App", path: "/docs/apps/deploy/" },
+        { text: "Get Information about an App", path: "/docs/apps/info/" },
+        { text: "Scale Machine CPU and RAM", path: "/docs/apps/scale-machine/" },
+        { text: "Scale the Number of Machines", path: "/docs/apps/scale-count/" },
+        { text: "Auto Stop and Start Machines", path: "/docs/apps/autostart-stop/" },
+        { text: "Add volume storage", path: "/docs/apps/volume-storage/" },
+        { text: "Manage volume storage", path: "/docs/apps/volume-manage/" },
+        { text: "Restart an App", path: "/docs/apps/restart/" },
+        { text: "Run Multiple Processes in an App", path: "/docs/apps/processes/" },
+        { text: "Deploy with GitHub Actions", path: "/docs/app-guides/continuous-deployment-with-github-actions/" },
+        { text: "Delete an App", path: "/docs/apps/delete/" },
+        { text: "Troubleshoot apps when a host is unavailable", path: "/docs/apps/trouble-host-unavailable/" },
+        { text: "Fly Launch Configuration Reference", path: "/docs/reference/configuration/" }
+      ]
+    },
+    {
+      title: "Fly GPUs",
+      open: false,
+      links: [
+        { text: "Fly GPUs Overview", path: "/docs/gpus/overview/" },
+        { text: "GPU Quickstart", path: "/docs/gpus/gpu-quickstart/" },
+        { text: "Getting Started with GPU Machines", path: "/docs/gpus/getting-started-gpus/" },
+        { text: "Python GPU Dev Machine", path: "/docs/gpus/python-gpu-example/" }
+      ]
+    },
+    {
+      title: "Databases & Storage",
+      open: false,
+      links: [
+        { text: "Volumes", path: "/docs/volumes/" },
+        { text: "Tigris Object Storage", path: "/docs/reference/tigris/" },
+        { text: "Fly Postgres", path: "/docs/postgres/" },
+        { text: "SQLite & LiteFS", path: "/docs/litefs/" },
+        { text: "Supabase Postgres", path: "/docs/reference/supabase/" },
+        { text: "Upstash for Redis®", path: "/docs/reference/redis/" },
+        { text: "More…", path: "/docs/database-storage-guides/" }
+      ]
+    },
+    {
+      title: "Fly Machines",
+      open: false,
+      links: [
+        { text: "Getting Started with Fly Machines", path: "/docs/machines/" },
+        { text: "Fly Machines Overview", path: "/docs/machines/overview/" },
+        { text: "Run a new Machine", path: "/docs/machines/run/" },
+        { text: "Working with the Machines API", path: "/docs/machines/working-with-machines/" },
+        { text: "Machines API Spec", path: "https://docs.machines.dev/swagger/index.html" },
+        { text: "Run User Code on Fly Machines", path: "/docs/machines/guides-examples/functions-with-machines/" },
+        { text: "Machine Sizing", path: "/docs/machines/guides-examples/machine-sizing/" },
+        { text: "Machine restart policy", path: "/docs/machines/guides-examples/machine-restart-policy/" }
+      ]
+    },
+    {
+      title: "Networking",
+      open: false,
+      links: [
+        { text: "Networking Overview", path: "/docs/networking/" },
+        { text: "Connect to an App Service", path: "/docs/networking/app-services/" },
+        { text: "Private Networking", path: "/docs/networking/private-networking/" },
+        { text: "Public Networking", path: "/docs/networking/services/" },
+        { text: "Dynamic Request Routing", path: "/docs/networking/dynamic-request-routing/" },
+        { text: "Use a Custom Domain", path: "/docs/networking/custom-domain/" },
+        { text: "More About Custom Domains and SSL Certificates", path: "/docs/networking/custom-domains-with-fly/" },
+        { text: "Run UDP Services", path: "/docs/networking/udp-and-tcp/" },
+        { text: "TLS Support", path: "/docs/networking/tls/" }
+      ]
+    },
+    {
+      title: "Other Guides",
+      open: false,
+      links: [
+        { text: "Going to Production", path: "/docs/going-to-production/" },
+        { text: "Custom domains for SaaS", path: "/docs/networking/custom-domains-with-fly/" },
+        { text: "Deploy with GitHub Actions", path: "/docs/app-guides/continuous-deployment-with-github-actions/" },
+        { text: "Run multiple processes", path: "/docs/app-guides/multiple-processes/" },
+        { text: "Run UDP services", path: "/docs/networking/udp-and-tcp/" },
+        { text: "Crontab with Supercronic", path: "/docs/app-guides/supercronic/" },
+        { text: "Run an ssh server", path: "/docs/app-guides/opensshd/" }
+      ]
+    },
+    {
+      title: "Reference",
+      open: false,
+      links: [
+        { text: "Reference Guide", path: "/docs/reference/" },
+        { text: "flyctl", path: "/docs/flyctl/" },
+        { text: "Fly Launch Configuration (fly.toml)", path: "/docs/reference/configuration/" },
+        { text: "Apps", path: "/docs/reference/apps/" },
+        { text: "Architecture", path: "/docs/reference/architecture/" },
+        { text: "Availability and Resiliency", path: "/docs/reference/app-availability/" },
+        { text: "Builders", path: "/docs/reference/builders/" },
+        { text: "Deploy Tokens", path: "/docs/reference/deploy-tokens/" },
+        { text: "Sentry Error Tracking", path: "/docs/reference/sentry/" },
+        { text: "Fly Launch", path: "/docs/reference/fly-launch/" },
+        { text: "Load Balancing", path: "/docs/reference/load-balancing/" },
+        { text: "Machines", path: "/docs/machines/overview/" },
+        { text: "Metrics", path: "/docs/reference/metrics/" },
+        { text: "Monorepo Apps", path: "/docs/reference/monorepo/" },
+        { text: "Multiple Processes in Apps", path: "/docs/app-guides/multiple-processes/" },
+        { text: "Regions", path: "/docs/reference/regions/" },
+        { text: "Runtime Environment", path: "/docs/reference/runtime-environment/" },
+        { text: "Build Secrets", path: "/docs/reference/build-secrets/" },
+        { text: "Runtime Secrets", path: "/docs/reference/secrets/" },
+        { text: "Volumes", path: "/docs/reference/volumes/" }
+      ]
+    },
+    {
+      title: "About",
+      open: false,
+      links: [
+        { text: "Overview", path: "/docs/about/" },
+        { text: "Pricing", path: "/docs/about/pricing/" },
+        { text: "Billing", path: "/docs/about/billing/" },
+        { text: "Engineering Jobs", path: "/docs/hiring/" },
+        { text: "Healthcare on Fly.io", path: "/docs/about/healthcare/" },
+        { text: "Support", path: "/docs/about/support/" },
+        { text: "Security", path: "/docs/about/security/" },
+        { text: "Extensions Program", path: "/docs/about/extensions/" },
+        { text: "Extensions API", path: "/docs/reference/extensions_api/" },
+        { text: "Open Source", path: "/docs/about/open-source/" },
+        { text: "Using Our Brand", path: "/docs/about/brand/" },
+        { text: "Privacy Policy", path: "/legal/privacy-policy/" },
+        { text: "Terms of Service", path: "/legal/terms-of-service/" }
+      ]
+    }
+  ]
+  
+%>
 
-<dl class="accordion">
-  <dt class="accordion-trigger">
-    Languages & Frameworks
-  </dt>
-  <dd class="accordion-target">
-    <ul class="accordion-content">
-      <li><%= nav_link "Run an Elixir App", "/docs/elixir/getting-started" %></li>
-      <li><%= nav_link "Run a Rails App", "/docs/rails/getting-started/" %></li>
-      <li><%= nav_link "Run a Laravel App", "/docs/laravel/" %></li>
-      <li><%= nav_link "Run a Django App", "/docs/django/getting-started/" %></li>
-      <li><%= nav_link "Run a JavaScript App", "/docs/js/" %></li>
-      <li><%= nav_link "More...", "/docs/languages-and-frameworks/" %></li>
-    </ul>
-  </dd>
-</dl>
-
-<dl class="accordion">
-  <dt class="accordion-trigger">
-    Fly Launch
-  </dt>
-  <dd class="accordion-target">
-    <ul class="accordion-content">
-      <li><%= nav_link "Fly Launch Overview", "/docs/apps/" %></li>
-      <li><%= nav_link "Launch a New App", "/docs/apps/launch/" %></li>
-      <li><%= nav_link "Deploy a Fly App", "/docs/apps/deploy/" %></li>
-      <li><%= nav_link "Get Information about an App", "/docs/apps/info/" %></li>
-      <li><%= nav_link "Scale Machine CPU and RAM", "/docs/apps/scale-machine/" %></li>
-      <li><%= nav_link "Scale the Number of Machines", "/docs/apps/scale-count/" %></li>
-      <li><%= nav_link "Auto Stop and Start Machines", "/docs/apps/autostart-stop/" %></li>
-      <li><%= nav_link "Add volume storage", "/docs/apps/volume-storage/" %></li>
-      <li><%= nav_link "Manage volume storage", "/docs/apps/volume-manage/" %></li>
-      <li><%= nav_link "Restart an App", "/docs/apps/restart/" %></li>
-      <li><%= nav_link "Run Multiple Processes in an App", "/docs/apps/processes/" %></li>
-      <li><%= nav_link "Deploy with GitHub Actions", "/docs/app-guides/continuous-deployment-with-github-actions/" %></li>
-      <li><%= nav_link "Delete an App", "/docs/apps/delete/" %></li>
-      <li><%= nav_link "Troubleshoot apps when a host is unavailable", "/docs/apps/trouble-host-unavailable/" %></li>
-      <li><%= nav_link "Fly Launch Configuration Reference", "/docs/reference/configuration/" %></li>
-    </ul>
-  </dd>
-</dl>
-
-<dl class="accordion">
-  <dt class="accordion-trigger">
-    Fly GPUs
-  </dt>
-  <dd class="accordion-target">
-    <ul class="accordion-content">
-      <li><%= nav_link "Fly GPUs Overview", "/docs/gpus/overview/" %></li>
-      <li><%= nav_link "GPU Quickstart", "/docs/gpus/gpu-quickstart/" %></li>
-      <li><%= nav_link "Getting Started with GPU Machines", "/docs/gpus/getting-started-gpus/" %></li>
-      <li><%= nav_link "Python GPU Dev Machine", "/docs/gpus/python-gpu-example/" %></li>
-    </ul>
-  </dd>
-</dl>
-
-<dl class="accordion">
-  <dt class="accordion-trigger">
-    Databases & Storage
-  </dt>
-  <dd class="accordion-target">
-    <ul class="accordion-content">
-      <li><%= nav_link "Volumes", "/docs/volumes" %></li>
-      <li><%= nav_link "Tigris Object Storage", "/docs/reference/tigris/" %></li>
-      <li><%= nav_link "Fly Postgres", "/docs/postgres/" %></li>
-      <li><%= nav_link "SQLite & LiteFS", "/docs/litefs/" %></li>
-      <li><%= nav_link "Supabase Postgres", "/docs/reference/supabase/" %></li>
-      <li><%= nav_link "Upstash for Redis®", "/docs/reference/redis/" %></li>
-      <li><%= nav_link "More…", "/docs/database-storage-guides/#other-storage-apps" %></li>
-    </ul>
-  </dd
-</dl>
-
-<dl class="accordion">
-  <dt class="accordion-trigger">
-    Fly Machines
-  </dt>
-  <dd class="accordion-target">
-    <ul class="accordion-content">
-      <li><%= nav_link "Getting Started with Fly Machines", "/docs/machines/" %></li>
-      <li><%= nav_link "Fly Machines Overview", "/docs/machines/overview/" %></li>
-      <li><%= nav_link "Run a new Machine", "/docs/machines/run/" %></li>
-      <li><%= nav_link "Working with the Machines API", "/docs/machines/working-with-machines/" %></li>
-      <li><%= nav_link "Machines API Spec", "https://docs.machines.dev/swagger/index.html" %></li>
-      <li><%= nav_link "Run User Code on Fly Machines", "/docs/machines/guides-examples/functions-with-machines/" %></li>
-      <li><%= nav_link "Machine Sizing", "/docs/machines/guides-examples/machine-sizing/" %></li>
-      <li><%= nav_link "Machine restart policy", "/docs/machines/guides-examples/machine-restart-policy/" %></li>
-    </ul>
-  </dd>
-</dl>
-
-<dl class="accordion">
-  <dt class="accordion-trigger">
-    Networking
-  </dt>
-  <dd class="accordion-target">
-    <ul class="accordion-content">
-      <li><%= nav_link "Networking Overview", "/docs/networking/" %></li>
-      <li><%= nav_link "Connect to an App Service", "/docs/networking/app-services/" %></li>
-      <li><%= nav_link "Private Networking", "/docs/networking/private-networking/" %></li>
-      <li><%= nav_link "Public Networking", "/docs/networking/services/" %></li>
-      <li><%= nav_link "Dynamic Request Routing", "/docs/networking/dynamic-request-routing/" %></li>
-      <li><%= nav_link "Use a Custom Domain", "/docs/networking/custom-domain/" %></li>
-      <li><%= nav_link "More About Custom Domains and SSL Certificates", "/docs/networking/custom-domains-with-fly/" %></li>
-      <li><%= nav_link "Run UDP Services", "/docs/networking/udp-and-tcp/" %></li>
-      <li><%= nav_link "TLS Support", "/docs/networking/tls/" %></li>
-    </ul>
-  </dd>
-</dl>
-
-<dl class="accordion">
-  <dt class="accordion-trigger">
-    Other Guides
-  </dt>
-  <dd class="accordion-target">
-    <ul class="accordion-content">
-      <li><%= nav_link "Going to Production", "/docs/going-to-production/" %></li>
-      <li><%= nav_link "Custom domains for SaaS", "/docs/networking/custom-domains-with-fly/" %></li>
-      <li><%= nav_link "Deploy with GitHub Actions", "/docs/app-guides/continuous-deployment-with-github-actions/" %></li>
-      <li><%= nav_link "Run multiple processes", "/docs/app-guides/multiple-processes/" %></li>
-      <li><%= nav_link "Run UDP services", "/docs/networking/udp-and-tcp/" %></li>
-      <li><%= nav_link "Crontab with Supercronic", "/docs/app-guides/supercronic/" %></li>
-      <li><%= nav_link "Run an ssh server", "/docs/app-guides/opensshd/" %></li>
-    </ul>
-  </dd>
-</dl>
-
-<dl class="accordion">
-  <dt class="accordion-trigger">
-    Reference
-  </dt>
-  <dd class="accordion-target">
-    <ul class="accordion-content">
-      <li><%= nav_link "Reference Guide", "/docs/reference/" %></li>
-      <li><%= nav_link "flyctl", "/docs/flyctl/" %></li>
-      <li><%= nav_link "Fly Launch Configuration (fly.toml)", "/docs/reference/configuration/" %></li>
-      <li><%= nav_link "Apps", "/docs/reference/apps/" %></li>
-      <li><%= nav_link "Architecture", "/docs/reference/architecture/" %></li>
-      <li><%= nav_link "Availability and Resiliency", "/docs/reference/app-availability/" %></li>
-      <li><%= nav_link "Builders", "/docs/reference/builders/" %></li>
-      <li><%= nav_link "Deploy Tokens", "/docs/reference/deploy-tokens/" %></li>
-      <li><%= nav_link "Sentry Error Tracking", "/docs/reference/sentry/" %></li>
-      <li><%= nav_link "Fly Launch", "/docs/reference/fly-launch/" %></li>
-      <li><%= nav_link "Load Balancing", "/docs/reference/load-balancing/" %></li>
-      <li><%= nav_link "Machines", "/docs/machines/overview/" %></li>
-      <li><%= nav_link "Metrics", "/docs/reference/metrics/" %></li>
-      <li><%= nav_link "Monorepo Apps", "/docs/reference/monorepo/" %></li>
-      <li><%= nav_link "Multiple Processes in Apps", "/docs/app-guides/multiple-processes/" %></li>
-      <li><%= nav_link "Regions", "/docs/reference/regions/" %></li>
-      <li><%= nav_link "Runtime Environment", "/docs/reference/runtime-environment/" %></li>
-      <li><%= nav_link "Build Secrets", "/docs/reference/build-secrets/" %></li>
-      <li><%= nav_link "Runtime Secrets", "/docs/reference/secrets/" %></li>
-      <li><%= nav_link "Volumes", "/docs/reference/volumes" %></li>
-    </ul>
-  </dd>
-</dl>
-
-<dl class="accordion">
-  <dt class="accordion-trigger">
-    About
-  </dt>
-  <dd class="accordion-target">
-    <ul class="accordion-content">
-      <li><%= nav_link "Overview", "/docs/about/" %></li>
-      <li><%= nav_link "Pricing", "/docs/about/pricing/" %></li>
-      <li><%= nav_link "Billing", "/docs/about/billing/" %></li>
-      <li><%= nav_link "Engineering Jobs", "/docs/hiring/" %></li>
-      <li><%= nav_link "Healthcare on Fly.io", "/docs/about/healthcare/" %></li>
-      <li><%= nav_link "Support", "/docs/about/support/" %></li>
-      <li><%= nav_link "Security", "/docs/about/security/" %></li>
-      <li><%= nav_link "Extensions Program", "/docs/about/extensions/" %></li>
-      <li><%= nav_link "Extensions API", "/docs/reference/extensions_api/" %></li>
-      <li><%= nav_link "Open Source", "/docs/about/open-source/" %></li>
-      <li><%= nav_link "Using Our Brand", "/docs/about/brand/" %></li>
-      <li><%= nav_link "Privacy Policy", "/legal/privacy-policy/" %></li>
-      <li><%= nav_link "Terms of Service", "/legal/terms-of-service/" %></li>
-    </ul>
-  </dd>
-</dl>
+<%= partial "/docs/partials/accordion_nav", locals: { nav: @nav } %>
