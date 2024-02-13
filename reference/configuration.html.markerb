@@ -655,6 +655,7 @@ All keys are optional and `size` has lower precedence than all other keys.
   memory = "2gb"
   cpus = 4
   cpu_kind = "performance"
+  gpus = 1
   gpu_kind = "a100-pcie-40gb"
   host_dedication_id = "customer-id"
   processes = ["app"]
@@ -672,11 +673,15 @@ The memory to request. It can be expressed with units, like `memory = "2GB"` or 
 
 ### `cpus`
 
-The number of vCPUs to request. Valid values are `1`, `2`, `4`, `8`, or `16`, but depends on `gpu_kind`. 
+The number of vCPUs to request. Valid values are `1`, `2`, `4`, `8`, or `16`, but depends on `cpu_kind`. 
 
 ### `cpu_kind`
 
 The kind of CPU to request. Valid values are `shared` and `performance`.
+
+### `gpus`
+
+The number of GPUs to request. Valid values are `1`, `2`, `4`, `8`, but depends on `gpu_kind`. 
 
 ### `gpu_kind`
 
