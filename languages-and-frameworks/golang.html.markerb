@@ -68,7 +68,7 @@ The template itself, `index.html.tmpl`, is very simple too:
 
 ## _Building the Application_
 
-As with most Go applications, a simple `go build` will create a hellofly binary which we can run. It'll default to using port 8080 and you can view it on localhost:8080 with your browser. So, the raw application works. Now to package it up for Fly.
+As with most Go applications, a simple `go build` will create a `hellofly` binary which we can run. It'll default to using port 8080 and you can view it on localhost:8080 with your browser. So, the raw application works. Now to package it up for Fly.
 
 ## _Install Flyctl and Login_
 
@@ -83,73 +83,63 @@ flyctl launch
 ```
 ```output
 Scanning source code
- Detected Go app
- Using the following build configuration
-         Builder: paketobuildpacks/builder:base
-         Buildpacks: gcr.io/paketo-buildpacks/go
- ? Select organization: Demo (demo)
- ? Select region: ord (Chicago, Illinois (US))
-Created app hellofly in organization personal
-Wrote config file fly.toml
-Your app is ready. Deploy with `flyctl deploy`
-? Would you like to deploy now? Yes
+WARN no go.sum file found, please adjust your Dockerfile to remove references to go.sum
+Detected a Go app
+Creating app in /path/to/your/app
+We're about to launch your Go app on Fly.io. Here's what you're getting:
 
-Deploying hellofly
+Organization: Your                   (fly launch defaults to the personal org)
+Name:         hellofly               (derived from your directory name)
+Region:       Ashburn, Virginia (US) (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+
+? Do you want to tweak these settings before proceeding? n
 ...
+Your app is ready! Deploy with `flyctl deploy`
 ```
 
 First, this command scans your source code to determine how to build a deployment image as well as identify any other configuration your app needs, such as secrets and exposed ports.
 
-After your source code is scanned and the results are printed, you'll be prompted for an organization. Organizations are a way of sharing application and resources between Fly users. Every fly account has a personal organization, called `personal`, which is only visible to your account. Let's select that for this guide.
+After your source code is scanned and the results are printed, you'll be prompted to ask if you want to change any of the defaults `flyctl` has set. 
 
-Next, you'll be prompted to select a region to deploy in. The closest region to you is selected by default. You can use this or change to another region.
+Choosing yes will bring you to a page in your browser where you can change any configuration, such as the region to deploy into or the size of the VM created.
 
-At this point, `flyctl` creates an app for you and writes your configuration to a `fly.toml` file. You'll then be prompted to build and deploy your app. Once complete, your app will be running on fly.
+Once that is complete, `flyctl` will create a `fly.toml` file containing the configuration selected. It might then begin a deployment, or let you know you should start a deployment yourself via `flyctl deploy`.
 
 ## _Inside `fly.toml`_
 
 The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also created a Fly-side application slot of the same name, "hellofly". If we look at the `fly.toml` file we can see the name in there:
 
 ```toml
-app = "hellofly"
+app = 'hellofly'
+primary_region = 'iad'
 
 [build]
-  builder = "paketobuildpacks/builder:base"
-  buildpacks = ["gcr.io/paketo-buildpacks/go"]
+  [build.args]
+    GO_VERSION = '1.21.5'
 
-[[services]]
+[env]
+  PORT = '8080'
+
+[http_service]
   internal_port = 8080
-  protocol = "tcp"
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
 
-  [services.concurrency]
-    hard_limit = 25
-    soft_limit = 20
-
-  [[services.ports]]
-    handlers = ["http"]
-    port = "80"
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = "443"
-
-  [[services.tcp_checks]]
-    interval = 10000
-    timeout = 2000
+[[vm]]
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 1024
 ```
 
 The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name value at the start. That name will be used to identify the application to the Fly service. The rest of the file contains settings to be applied to the application when it deploys.
 
-You can see in the `[build]` section the builder image and the list of buildpacks that will be used to build the app for deployment. You can also add build arguments to configure the build process using the `[build.args]` section.
-
-For example, the following will instruct the Go buildpack to include files in the `resources` directory in the final image:
-
-```toml
-[build.args]
-  BP_KEEP_FILES = "assets/*:resources/*"
-```
-
-See the [Paketo Go Buildpack documentation](https://paketo.io/docs/buildpacks/language-family-buildpacks/go/) for more options.
+You can see in the `[build]` section the builder image and the version of Go that was detected in your `go.mod` file. You can change or add build arguments to configure the build process using the `[build.args]` section.
 
 ## _Deploying to Fly_
 
@@ -172,17 +162,17 @@ flyctl status
 App
   Name     = hellofly
   Owner    = demo
-  Version  = 0
-  Status   = running
   Hostname = hellofly.fly.dev
+  Image    = hellofly:deployment-abcdefghxyz
 
-Allocations
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-0ac9ed79 0       fra    run     running 1 total, 1 passing 0        44s ago
+Machines
+PROCESS	 ID         VERSION	 REGION	 STATE  	ROLE  CHECKS	LAST UPDATED
+app      0ac9ed79   1        iad     running                2024-02-13T12:52:38Z
+app      1bd10fe8   1        iad     stopped                2024-02-13T12:52:38Z
 $
 ```
 
-As you can see, the application has been deployed with a DNS hostname of hellofly.fly.dev, and an instance is running in Frankfurt. Your deployment's name will, of course, be different.
+As you can see, the application has been deployed with a DNS hostname of hellofly.fly.dev, and an instance is running in Virginia. Your deployment's name will, of course, be different.
 
 ## _Connecting to the App_
 
