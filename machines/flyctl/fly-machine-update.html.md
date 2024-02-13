@@ -78,32 +78,32 @@ The next time the Machine is restarted, this new CMD takes precedence over the C
 
 Set the [`config.init.entrypoint`](/docs/machines/config/#entrypoint) property with the `--entrypoint` option. The next time the Machine is restarted, this new ENTRYPOINT takes precedence over the ENTRYPOINT from the Docker image.
 
-See [Run a new Machine](/docs/machines/run/#custom-entrypoint) for an example of usage.
+See [Run a new Machine](/docs/machines/flyctl/fly-machine-run/#custom-entrypoint) for an example of usage.
 
 ## Set Machine resources
 
-As for [`fly machine run`](/docs/machines/run/#set-machine-resources).
+As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#set-machine-resources).
 
 ## Set environment variables
 
-As for [`fly machine run`](/docs/machines/run/#set-environment-variables).
+As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#set-environment-variables).
 
 
 ## Define a Fly Proxy network service
-As for [`fly machine run`](/docs/machines/run/#define-a-fly-proxy-network-service). 
+As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#define-a-fly-proxy-network-service). 
 
 ## Stop or restart the Machine on process exit
 
-As for [`fly machine run`](/docs/machines/run/#stop-or-restart-the-machine-on-process-exit). 
+As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#stop-or-restart-the-machine-on-process-exit). 
 
 
 ## Destroy the Machine when it exits
 
-As for [`fly machine run`](/docs/machines/run/#destroy-the-machine-when-it-exits).
+As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#destroy-the-machine-when-it-exits).
 
 ## Add metadata to the Machine
 
-As for [`fly machine run`](/docs/machines/run/#add-metadata-to-the-machine).
+As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#add-metadata-to-the-machine).
 
 ## Change the mount point of an attached volume
 
@@ -113,12 +113,12 @@ This sets the Machine's [`config.mounts.path`](/docs/machines/config/#path-3) pr
 
 ## Place data into files on the Machine
 
-As for [`fly machine run`](/docs/machines/run/#place-data-into-files-on-the-machine).
+As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#place-data-into-files-on-the-machine).
 
 ## Make the Machine a stopped standby
 
-As for [`fly machine run`](/docs/machines/run/#create-a-standby-machine).
+As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#create-a-standby-machine).
 
 ## Start the Machine on a schedule
 
-As for [`fly machine run`](/docs/machines/run/#start-a-machine-on-a-schedule).
+As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#start-a-machine-on-a-schedule).

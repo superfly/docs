@@ -3,7 +3,7 @@ title: Run a new Machine
 objective: Run a new Fly Machine with flyctl
 layout: docs
 nav: machines
-redirect_from: /docs/machines/run/
+redirect_from: /docs/machines/flyctl/fly-machine-run/
 ---
 
 The [`fly machine run`](/docs/flyctl/machine-run/) command is a tool to configure, build, and start a new Machine in one line.
@@ -17,7 +17,7 @@ To make changes to a Machine once it's created or run, use [`fly machine update`
 
 To create and run a new Machine with the same configuration as an existing Machine, use [`fly machine clone`](/docs/flyctl/machine-clone/).
 
-To add a new Machine to an app managed by `fly deploy`, see [the scaling doc for Fly Launch apps](/docs/apps/scale-count/). Fly Launch features like `fly deploy`, `fly status`, and `fly scale` don't apply to Machines created with `fly machine run`, unless you [add metadata to indicate otherwise](/docs/machines/run#add-metadata-to-the-machine).
+To add a new Machine to an app managed by `fly deploy`, see [the scaling doc for Fly Launch apps](/docs/apps/scale-count/). Fly Launch features like `fly deploy`, `fly status`, and `fly scale` don't apply to Machines created with `fly machine run`, unless you [add metadata to indicate otherwise](/docs/machines/flyctl/fly-machine-run#add-metadata-to-the-machine).
 </div>
 
 ## What it does
@@ -73,7 +73,7 @@ fly machine run . --name my-special-Machine
 
 ## Choose a geographical region
 
-Tell the Fly Platform which [region](/docs/reference/regions/) to create the Machine in with the `--region` flag; if for some reason it can't start a new Machine in that region, you'll get an error. If the `--region` flag is omitted, the platform chooses the nearest region to you.
+Tell the Fly.io platform which [region](/docs/reference/regions/) to create the Machine in with the `--region` flag; if for some reason it can't start a new Machine in that region, you'll get an error. If the `--region` flag is omitted, the platform chooses the nearest region to you.
 
 This sets the `region` [property](/docs/machines/api-machines-resource/#machine-properties) of the Machine.
 
@@ -143,7 +143,7 @@ fly machine run debian sleep inf
 
 Set the [`config.init.entrypoint`](/docs/machines/config/#entrypoint) property with the `--entrypoint` option. 
 
-In this example we use the [`--file-local` option](/docs/machines/run#copy-a-local-file-into-the-machine-file-system) to send an entrypoint script to the Machine and `--entrypoint` to run the script before continuing to the custom CMD `sleep inf`:
+In this example we use the [`--file-local` option](/docs/machines/flyctl/fly-machine-run#copy-a-local-file-into-the-machine-file-system) to send an entrypoint script to the Machine and `--entrypoint` to run the script before continuing to the custom CMD `sleep inf`:
 
 ```cmd
 fly machine run debian --file-local /entrypoint.sh=./entrypoint.sh \
