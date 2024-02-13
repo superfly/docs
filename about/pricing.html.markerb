@@ -65,7 +65,7 @@ For more details about how costs are calculated, see [Machine billing](/docs/abo
 
 ### GPUs and Fly Machines
 
-Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see [Fly Machines pricing](#fly-machines)) plus the price of the attached GPU. GPU access requires a [Launch, Scale, or Enterprise plan](https://fly.io/plans).
+Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see [Fly Machines pricing](#fly-machines)) plus the price of the attached GPU.
 
 On-demand GPU pricing:
 
