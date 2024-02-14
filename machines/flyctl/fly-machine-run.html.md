@@ -10,14 +10,16 @@ The [`fly machine run`](/docs/flyctl/machine-run/) command is a tool to configur
 
 Many, but not all, [Machine configuration](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) options are available to the `fly machine run` command through flags. The available flags are listed in the flyctl help and on the [`fly machine run` reference page](/docs/flyctl/machine-run/).
 
-<div class="note icon">
+Use `fly machine run` to when you want use more than one Docker image in an app, or to run a one-off or temporary Machine.
+
+<div class="note">
 To create a Machine, but not start it, use [`fly machine create`](/docs/flyctl/machine-create/).
 
 To make changes to a Machine once it's created or run, use [`fly machine update`](/docs/flyctl/machine-update/).
 
 To create and run a new Machine with the same configuration as an existing Machine, use [`fly machine clone`](/docs/flyctl/machine-clone/).
 
-To add a new Machine to an app managed by `fly deploy`, see [the scaling doc for Fly Launch apps](/docs/apps/scale-count/). Fly Launch features like `fly deploy`, `fly status`, and `fly scale` don't apply to Machines created with `fly machine run`, unless you [add metadata to indicate otherwise](/docs/machines/flyctl/fly-machine-run#add-metadata-to-the-machine).
+To add a new Machine to an app managed by `fly deploy`, see [the scaling doc for Fly Launch apps](/docs/apps/scale-count/). By default, `fly machine run` creates Machines that are ignored by Fly Launch features like `fly deploy`, `fly status`, and `fly scale`.
 </div>
 
 ## What it does
