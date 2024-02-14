@@ -135,7 +135,9 @@ You can have the Fly.io `init` override the ENTRYPOINT and CMD (if any) of the M
 
 ### Custom CMD
 
-Set the [`config.init.cmd`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property by including the command to run at the end of the `fly machine run` invocation. This example simply spins up a Debian Linux Machine with a `sleep` task to keep it awake; you can shell into it or whatever:
+Override CMD by including the command to run at the end of the `fly machine run` invocation. This sets the [`config.init.cmd`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property on the Machine. 
+
+This example simply spins up a Debian Linux Machine with a `sleep` task to keep it awake; you can shell into it or whatever:
 
 ```cmd
 fly machine run debian sleep inf
@@ -143,7 +145,7 @@ fly machine run debian sleep inf
 
 ### Custom ENTRYPOINT
 
-Set the [`config.init.entrypoint`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property with the `--entrypoint` option. 
+Override ENTRYPOINT with the `--entrypoint` option. This sets the [`config.init.entrypoint`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property on the Machine.
 
 In this example we use the [`--file-local` option](/docs/machines/flyctl/fly-machine-run#copy-a-local-file-into-the-machine-file-system) to send an entrypoint script to the Machine and `--entrypoint` to run the script before continuing to the custom CMD `sleep inf`:
 
