@@ -27,9 +27,6 @@ You can use the Machines resource to create, stop, start, update, and delete Fly
 
 `GET /apps/{app_name}/machines`
 
-<div class="api-stuff">
-  <div>
-
 ### Query parameters for list Machines
 
 Append parameters to filter the response.
@@ -40,9 +37,6 @@ Append parameters to filter the response.
 
 **`region`**: Filter by region. For example, to return only Machines in the `yyz` region: `GET /v1/apps/my-app-name/machines?region=yyz`
 
-  </div>
-  <div>
-
 ### Example list Machines request
 
 <%= partial "/docs/reference/machines/list_req" %>
@@ -50,9 +44,6 @@ Append parameters to filter the response.
 ### Example list Machines response
 
 <%= partial "/docs/reference/machines/list_resp" %>
-
-  </div>
-</div>
 
 ## Create a Machine
 
