@@ -52,7 +52,7 @@ The default behavior of `fly machine run` is to create a new Fly App for the new
 
 If the app name doesn't belong to an existing app in one of your orgs, flyctl asks if you want to create it. 
 
-Even if you're not using `fly deploy` to configure and run any of your app's Machines, it may be worth creating a `fly.toml` file with just an app name in it, to save using the `--app` option repeatedly. For example:
+Like many flyctl commands, `fly machine run` will pull an app name from a `fly.toml` file if one is present in the working directory. It may be worth creating a `fly.toml` file with just the app name in it, to save using the `--app` option repeatedly. For example:
 
 ```toml
 # a fly.toml just to provide an app name to commands 
