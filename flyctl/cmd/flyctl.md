@@ -44,7 +44,6 @@ flyctl [flags]
 * [status](/docs/flyctl/status/)	 - Show app status
 * [storage](/docs/flyctl/storage/)	 - Provision and manage Tigris object storage buckets
 * [tokens](/docs/flyctl/tokens/)	 - Manage Fly.io API tokens
-* [turboku](/docs/flyctl/turboku/)	 - Launch a Heroku app on Fly.io
 * [version](/docs/flyctl/version/)	 - Show version information for the flyctl command
 * [volumes](/docs/flyctl/volumes/)	 - Manage Fly Volumes.
 * [wireguard](/docs/flyctl/wireguard/)	 - Commands that manage WireGuard peer connections
