@@ -75,13 +75,13 @@ fly machine run . --name my-special-Machine
 
 ## Choose a geographical region
 
-Tell the Fly.io platform which [region](/docs/reference/regions/) to create the Machine in with the `--region` flag; if for some reason it can't start a new Machine in that region, you'll get an error. If the `--region` flag is omitted, the platform chooses the nearest region to you.
+Tell the Fly.io platform which [region](/docs/reference/regions/) to create the Machine in with the `--region` flag; if for some reason it can't start a new Machine in that region, you'll get an error. If the `--region` flag is omitted, the platform chooses the region that's fastest to reach from your location.
 
 This sets the `region` [property](/docs/machines/api-machines-resource/#machine-properties) of the Machine.
 
 ## Get or build the Docker image
 
-All Fly Machines are made from Docker images. When you `fly launch` an app, this may be invisible: a Fly Launch scanner may generate one for you based on your source code.
+All Fly Machines are made from Docker images.
 
 Once the Machine is created, you can see this image reflected in its [`image_ref`](/docs/machines/api-machines-resource/#machine-properties) and [`config.image`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) properties.
 
@@ -203,7 +203,11 @@ For sensitive environmment variables, [set secrets on the app](https://fly.io/do
 
 The `--port` option defines a network service to allow the Fly Proxy to reach a local service on the Machine. This option gives you access to basic service configuration; the [Machines API](/docs/machines/api-machines-resource/) and [Fly Launch](/docs/apps/) both offer more complete control over the Machine's [`config.services`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) properties.
 
-Map any "external" ports, where the proxy accepts requests directed at the app, to the internal port where the service is listening on IPv4. For each port combination, specify the protocol and [connection handler(s)](/docs/networking/services/#connection-handlers), using this format: `port[:machinePort][/protocol[:handler[:handler...]]]`.
+Map any external ports, where the proxy accepts requests directed at the app, to the internal port where the service is listening on IPv4. For each port combination, specify the protocol and [connection handler(s)](/docs/networking/services/#connection-handlers), using this format: 
+
+```plain
+port[:machinePort][/protocol[:handler[:handler...]]]
+```
 
 For example, if your Machine runs a server on port 80, and the Fly Proxy should handle HTTP connections on port 80 and HTTPS connections on port 443, the port configuration would look like this: 
 
