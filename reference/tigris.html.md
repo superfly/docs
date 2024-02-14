@@ -12,10 +12,6 @@ Objects in Tigris are stored close to the region where they're written. Then, wh
 
 Learn more from their [service overview](https://www.tigrisdata.com/docs/overview/) and [architecture docs](https://www.tigrisdata.com/docs/concepts/architecture/).
 
-<aside class="callout">
-This service is in private beta. Do not run production workloads yet! [Sign up here](https://hello.tigrisdata.com/forms/early-access/) for beta access.
-</aside>
-
 ## Create and manage a Tigris storage bucket
 
 Creating and managing storage buckets happens exclusively via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/).
