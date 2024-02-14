@@ -47,12 +47,12 @@ Here, `<image>` can point to a prebuilt image, or to the current directory (`.`)
 
 The default behavior of `fly machine run` is to create a new Fly App for the new Machine to belong to, unless it's given the name of an existing app in one of two ways:
 
-1. Like many other flyctl commands, `fly machine run` looks for a `fly.toml` app config file in the working directory, and if it finds one with an app name inside, it adds the new Machine to that app. It disregards the rest of the configuration in the file.
+1. Like many flyctl commands, `fly machine run` will pull an app name from a `fly.toml` file if one is present in the working directory. It disregards the rest of the configuration in the file.
 2. If you pass it an app name with `--app <app-name>`, flyctl prefers that name over any name it gets from a `fly.toml`.
 
 If the app name doesn't belong to an existing app in one of your orgs, flyctl asks if you want to create it. 
 
-Like many flyctl commands, `fly machine run` will pull an app name from a `fly.toml` file if one is present in the working directory. It may be worth creating a `fly.toml` file with just the app name in it, to save using the `--app` option repeatedly. For example:
+ It may be worth creating a `fly.toml` file with just the app name in it, to save using the `--app` option repeatedly. For example:
 
 ```toml
 # a fly.toml just to provide an app name to commands 
