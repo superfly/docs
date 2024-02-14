@@ -9,7 +9,7 @@ order: 4
   <img src="/static/images/docs-guide.webp" srcset="/static/images/docs-guide@2x.webp 2x" alt="">
 </figure>
 
-Each one of the language guides will take you through creating and deploying a simple application.
+<p>Each one of the language guides will take you through creating and deploying a simple application.</p>
 
 <ul class="py-4">
   <% current_page.children.sort_by {|child| child.data[:order] || 99}.each do |page| %>

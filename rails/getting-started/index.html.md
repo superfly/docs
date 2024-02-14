@@ -13,9 +13,9 @@ related_pages:
   - /docs/postgres/
 ---
 
-<div>
+<figure>
   <img src="/static/images/rails-intro.webp" srcset="/static/images/rails-intro@2x.webp 2x" alt="">
-</div>
+</figure>
 
 In this guide we'll develop and deploy a Rails application that first
 demonstrates a trivial view, then scaffolds a database table, and finally makes
