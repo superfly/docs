@@ -683,7 +683,7 @@ The kind of CPU to request. Valid values are `shared` and `performance`.
 
 The number of GPUs to request. Valid values are `1`, `2`, `4`, `8`, but depends on `gpu_kind`. 
 
-Setting this value requires to also set `gpu_kind`.
+Setting this value requires also setting `gpu_kind`.
 
 ### `gpu_kind`
 
