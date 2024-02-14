@@ -689,7 +689,7 @@ Setting this value requires also setting `gpu_kind`.
 
 The kind of GPU to request. Valid values are `a100-pcie-40gb`, `a100-sxm4-80gb` and `l40s`.
 
-Setting this value implies `gpus = 1` if not present.
+Setting this value assumes `gpus = 1` if not present.
 
 ### `host_dedication_id`
 
