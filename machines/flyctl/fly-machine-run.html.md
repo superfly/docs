@@ -65,7 +65,7 @@ Use `--org <org-name>` to specify which organization a newly created app should 
 
 Machines have a human-friendly `name` [property](/docs/machines/api-machines-resource/#machine-properties), like `ancient-glitter-2128`, that shows up alongside the `id` in the output of the `fly machine list` command and in the web dashboard.
 
-You may want to give the Machine a custom name, so you can easily recognize it. Use the `--name` flag:
+You can give the Machine a custom name with the `--name` flag:
 
 ```cmd
 fly machine run . --name my-special-Machine
