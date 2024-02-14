@@ -49,28 +49,32 @@ Typically, 2xx HTTP status codes denote successful operations, 4xx codes imply f
 
 ## Apps​
 
-<div class="code-section" data-exclude-render>
-  <p class="code-description">
+<div class="api-section" data-exclude-render>
+  <p class="code-info">
     A Fly App is an abstraction for a group of Machines running your code on Fly.io, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. Read more <a href="/docs/reference/apps/">here</a>.
   </p>
-  <div class="endpoints highlight">
-    <div class="highlight-header">Endpoints</div>
-    <a class="endpoint">
-      <span class="get">get</span>
-      <span>/apps</span>
-    </a>
-    <a class="endpoint">
-      <span class="post">post</span>
-      <span>/apps</span>
-    </a>
-    <a class="endpoint">
-      <span class="get">get</span>
-      <span>/apps/{app_name}</span>
-    </a>
-    <a class="endpoint">
-      <span class="delete">delete</span>
-      <span>/apps/{app_name}</span>
-    </a>
+  <div class="endpoints code-card">
+    <div class="code-header">
+      Endpoints
+    </div>
+    <div class="highlight">
+      <a class="endpoint">
+        <span class="get">get</span>
+        <span>/apps</span>
+      </a>
+      <a class="endpoint">
+        <span class="post">post</span>
+        <span>/apps</span>
+      </a>
+      <a class="endpoint">
+        <span class="get">get</span>
+        <span>/apps/{app_name}</span>
+      </a>
+      <a class="endpoint">
+        <span class="delete">delete</span>
+        <span>/apps/{app_name}</span>
+      </a>
+    </div>
   </div>
 </div>
 
@@ -78,20 +82,17 @@ Typically, 2xx HTTP status codes denote successful operations, 4xx codes imply f
 
 List all apps with the ability to filter by organization slug.
 
-<div class="code-section">
-  <div class="left-column">
-    <h3>Query Parameters</h3>
-    <code>org_slug</code>
-    <span>REQUIRED</span>
-    <span>string</span>
-    The org slug, or 'personal', to filter apps
-  </div>
-  <div class="highlight">
-    <div class="highlight-header">Endpoints</div>
+<%= render(ApiSectionComponent.new(
+  heading: "Query Parameters", 
+  name: "org_slug", 
+  required: true, 
+  type: "string", 
+  description: "The org slug, or 'personal', to filter apps", 
+  method: "GET", 
+  endpoint: "/apps"
+)) do %>
 ```shell
 curl --request GET \
   --url 'https://api.machines.dev/v1/apps?org_slug='
 ```
-    </pre>
-  </div>
-</div>
+<% end %>
