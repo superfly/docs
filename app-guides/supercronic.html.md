@@ -32,7 +32,7 @@ Check out [cron.help](https://cron.help) if you need a quick crontab syntax refe
 
 ## Install `supercronic` in the container
 
-The [latest releases for supercronic](https://github.com/aptible/supercronic/releases) are on [Github](https://github.com/aptible/supercronic), where they include copy pasta 🍝instructions for getting it in your Dockerfile. As of January 2024, the current version of `supercronic` is v0.2.29. You'll want to check the [releases page](https://github.com/aptible/supercronic/releases) for the latest version, but here's what it looks like now:
+The [latest releases for supercronic](https://github.com/aptible/supercronic/releases) are on [GitHhub](https://github.com/aptible/supercronic), where they include copy pasta 🍝instructions for getting it in your Dockerfile. As of January 2024, the current version of `supercronic` is v0.2.29. You'll want to check the [releases page](https://github.com/aptible/supercronic/releases) for the latest version, but here's what it looks like now:
 
 ```
 # Latest releases available at https://github.com/aptible/supercronic/releases
@@ -88,7 +88,7 @@ Then we'll need to scale the processes so that we only run one virtual machine c
 $ fly scale count cron=1 web=
 ```
 
-That's it! If all went well you now have Cron running in a `cron` process in a Fly virtual machine. When you `fly deploy` it will get the latest code changes and reboot the virtual machines.
+That's it! If all went well you now have cron running in a `cron` process in a Fly virtual machine. When you `fly deploy` it will get the latest code changes and reboot the virtual machines.
 
 # Resources
 
