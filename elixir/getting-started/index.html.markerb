@@ -103,7 +103,7 @@ ENV ERL_AFLAGS "-proto_dist inet6_tcp"
 
 If you customized your Dockerfile or launched without the Dockerfile, this setting may not have been set for you. These values are important and enable your Elixir app to work smoothly in Fly's private IPv6 network.
 
-Check for this ff you encounter network related errors like the following:
+Check for this if you encounter network-related errors like the following:
 
 ```
 Could not contact remote node my-app@fdaa:0:31d4:a5b:9d36:7c1e:f284:2, reason: :nodedown. Aborting...
