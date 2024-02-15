@@ -21,7 +21,7 @@ Astro applications can to be served as either **static pages** _or_ with **serve
 
 <%= partial "partials/flyctl" %>
 
-Nexyt, if you don't already have an existing Astro application, you can create one quickly with the following command:
+Next, if you don't already have an existing Astro application, you can create one quickly with the following command:
 
 ```cmd
 npm create astro@latest
