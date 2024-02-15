@@ -17,6 +17,9 @@ flyctl console [flags]
       --dockerfile string           Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
       --entrypoint string           ENTRYPOINT replacement
   -e, --env stringArray             Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
+      --file-literal stringArray    Set of literals to write to the Machine, in the form of /path/inside/machine=VALUE pairs, where VALUE is the base64-encoded raw content. Can be specified multiple times.
+      --file-local stringArray      Set of files to write to the Machine, in the form of /path/inside/machine=<local/path> pairs. Can be specified multiple times.
+      --file-secret stringArray     Set of secrets to write to the Machine, in the form of /path/inside/machine=SECRET pairs, where SECRET is the name of the secret. The content of the secret must be base64 encoded. Can be specified multiple times.
   -h, --help                        help for console
       --host-dedication-id string   The dedication id of the reserved hosts for your organization (if any)
   -i, --image string                image to use (default: current release)
