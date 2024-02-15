@@ -1,59 +1,125 @@
-When we run `fly launch` from the newly-created project directory, the launcher will:
+When you run `fly launch` from the newly-created project directory, the launcher provides some defaults for your new app, and gives you the option to tweak the settings.
 
-* Ask you to select a deployment region
-* Set secrets required by <%= detected %> (`SECRET_KEY_BASE`, for example)
-* Run the <%= detected %> deployment setup task
-* Optionally setup a Postgres instance in your selected region
-* Deploy the application in your selected region
-
+Run:
 ```
 cd <%= app_name %>
 fly launch
 ```
+
+You'll get a summary of the defaults chosen for your app:
+
 ```output
-Creating app in /Users/me/<%= app_name %>
-Scanning source code
-Detected a <%= detected %> app
-? App Name (leave blank to use an auto-generated name): <%= app_name %>
-? Select organization: flyio (flyio)
-? Select region: mad (Madrid, Spain)
-Created app <%= app_name %> in organization soupedup
+Organization: MyOrgName              (fly launch defaults to the personal org)
+Name:         <%= app_name %>            (derived from your directory name)
+Region:       Secaucus, NJ (US)      (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+
+? Do you want to tweak these settings before proceeding? Yes
+Opening https://fly.io/cli/launch/bea626e2d179a083a3ba622a367e24ec ...
+```
+
+Type `y` at the prompt to open the Fly Launch page, and make the following changes to your app config:
+
+* Change the default app name and region, if needed.
+* For Databases, select Fly Postgres, give the Postgres database app a name (for example, your app name with `-db` appended) and choose a configuration.
+
+Once you confirm your settings, you can return to the terminal, where the launcher will:
+
+* Run the <%= detected %> deployment setup task
+* Build the image
+* Set secrets required by <%= detected %> (`SECRET_KEY_BASE`, for example)
+* Deploy the application in your selected region
+
+```output
+Waiting for launch data... Done
+Created app '<%= app_name %>' in organization 'personal'
+Admin URL: https://fly.io/apps/<%= app_name %>
+Hostname: <%= app_name %>.fly.dev
 Set secrets on <%= app_name %>: SECRET_KEY_BASE
-Installing dependencies
-Running Docker release generator
-Wrote config file fly.toml
-? Would you like to setup a Postgres database now? Yes
+Creating postgres cluster in organization personal
+Creating app...
+Setting secrets on app <%= app_name %>-db...
+Provisioning 1 of 1 machines with image flyio/postgres-flex:15.3@sha256:44b698752cf113110f2fa72443d7fe452b48228aafbb0d93045ef1e3282360a6
+Waiting for machine to start...
+Machine 2865550c7e96d8 is created
+==> Monitoring health checks
+  Waiting for 2865550c7e96d8 to become healthy (started, 3/3)
+
 Postgres cluster <%= app_name %>-db created
   Username:    postgres
-  Password:    <password>
+  Password:    EChe3BrhCjsPQEI
   Hostname:    <%= app_name %>-db.internal
-  Proxy Port:  5432
-  PG Port: 5433
-Save your credentials in a secure place, you will not be able to see them again!
+  Flycast:     fdaa:2:45b:0:1::1d
+  Proxy port:  5432
+  Postgres port:  5433
+  Connection string: postgres://postgres:EChe3BrhCjsPQEI@<%= app_name %>-db.flycast:5432
 
-Monitoring Deployment
-
-1 desired, 1 placed, 1 healthy, 0 unhealthy [health checks: 2 total, 2 passing]
---> v0 deployed successfully
+Save your credentials in a secure place -- you won't be able to see them again!
 
 Connect to postgres
-Any app within the flyio organization can connect to postgres using the above credentials and the hostname "<%= app_name %>-db.internal."
-For example: postgres://postgres:password@<%= app_name %>-db.internal:5432
+Any app within the MyOrgName organization can connect to this Postgres using the above connection string
 
-See the postgres docs for more information on next steps, managing postgres, connecting from outside fly:  https://fly.io/docs/reference/postgres/
+Now that you've set up Postgres, here's what you need to understand: https://fly.io/docs/postgres/getting-started/what-you-should-know/
+Checking for existing attachments
+Registering attachment
+Creating database
+Creating user
+
 Postgres cluster <%= app_name %>-db is now attached to <%= app_name %>
+The following secret was added to <%= app_name %>:
+  DATABASE_URL=postgres://aa_hello_elixir2:Er6pLzUBuhKcbBl@<%= app_name %>-db.flycast:5432/aa_hello_elixir2?sslmode=disable
+Postgres cluster <%= app_name %>-db is now attached to <%= app_name %>
+Generating rel/env.sh.eex for distributed Elixir support
+Preparing system for Elixir builds
+Installing application dependencies
+Running Docker release generator
+Wrote config file fly.toml
+Validating /Users/anderson/test-elixir-gs/hello_elixir2/fly.toml
+✓ Configuration is valid
+==> Building image
+Remote builder fly-builder-black-pine-7645 ready
+Remote builder fly-builder-black-pine-7645 ready
+==> Building image with Docker
+--> docker host: 20.10.12 linux x86_64
 
-Would you like to deploy now? Yes
-Deploying <%= app_name %>
-
-==> Validating app configuration
---> Validating app configuration done
-Services
-TCP 80/443 ⇢ 8080
-Remote builder fly-builder-little-glitter-8329 ready
 ...
 
+--> Pushing image done
+image: registry.fly.io/<%= app_name %>:deployment-01HPMGHTG8XSYH3ZCV82SF5CEZ
+image size: 126 MB
+
+Watch your deployment at https://fly.io/apps/<%= app_name %>/monitoring
+
+Provisioning ips for <%= app_name %>
+  Dedicated ipv6: 2a09:8280:1::2a:bc0b:0
+  Shared ipv4: 66.241.124.79
+  Add a dedicated ipv4 with: fly ips allocate-v4
+
+Running <%= app_name %> release_command: /app/bin/migrate
+
+-------
+ ✔ release_command 784eee4c294298 completed successfully
+-------
+This deployment will:
+ * create 2 "app" machines
+
+No machines in group app, launching a new machine
+Creating a second machine to increase service availability
+Finished launching new machines
+-------
+NOTE: The machines for [app] have services with 'auto_stop_machines = true' that will be stopped when idling
+
+-------
+Checking DNS configuration for <%= app_name %>.fly.dev
+
+Visit your newly deployed app at https://<%= app_name %>.fly.dev/
 ```
+
+<div class="important icon">
+Make sure to note your Postgres credentials from the output.
+</div>
 
 That's it! Run `fly apps open` to see your deployed app in action.
 
@@ -61,5 +127,5 @@ Try a few other commands:
 
 * `fly logs` - Tail your application logs
 * `fly status` - App deployment details
-* `fly status -a <%= app_name %>-db` - Database deployment details
+* `fly status -a postgres-database-app-name` - Database deployment details
 * `fly deploy` - Deploy the application after making changes

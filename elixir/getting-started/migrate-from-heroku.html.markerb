@@ -20,17 +20,10 @@ The steps below run you through the process of migrating your Phoenix app from H
 
 From the root of the Elixir app you're running on Heroku, run `fly launch` and select the options to provision a new Postgres database.
 
-<%= partial "docs/languages-and-frameworks/partials/launch_with_postgres", locals: { detected: "Phoenix", app_name: "<app_name>" } %>
+<%= partial "docs/languages-and-frameworks/partials/launch_with_postgres", locals: { detected: "Phoenix", app_name: "my_app_name" } %>
 
-When that's done, view your app in a browser:
+There's still work to be done to move more Heroku stuff over, so don't worry if the app doesn't boot right away. Also check out:
 
-```cmd
-fly apps open
-```
-
-There's still work to be done to move more Heroku stuff over, so don't worry if the app doesn't boot right away. There's a few commands that you'll find useful to configure your environment:
-
-* `fly logs` - Read error messages and stack traces emitted by your application.
 * [Connect via IEx](/docs/elixir/the-basics/iex-into-running-app/)
 
 ### Transfer Heroku secrets
