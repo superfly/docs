@@ -32,13 +32,13 @@ Check out [cron.help](https://cron.help) if you need a quick crontab syntax refe
 
 ## Install `supercronic` in the container
 
-The [latest releases for supercronic](https://github.com/aptible/supercronic/releases) are on [Github](https://github.com/aptible/supercronic), where they include copy pasta 🍝instructions for getting it in your Dockerfile. As of November 2022, the current version of `supercronic` is v0.2.1. You'll want to check the [releases page](https://github.com/aptible/supercronic/releases) for the latest version, but here's what it looks like now:
+The [latest releases for supercronic](https://github.com/aptible/supercronic/releases) are on [Github](https://github.com/aptible/supercronic), where they include copy pasta 🍝instructions for getting it in your Dockerfile. As of January 2024, the current version of `supercronic` is v0.2.29. You'll want to check the [releases page](https://github.com/aptible/supercronic/releases) for the latest version, but here's what it looks like now:
 
 ```
 # Latest releases available at https://github.com/aptible/supercronic/releases
-ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.1/supercronic-linux-amd64 \
+ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.29/supercronic-linux-amd64 \
     SUPERCRONIC=supercronic-linux-amd64 \
-    SUPERCRONIC_SHA1SUM=d7f4c0886eb85249ad05ed592902fa6865bb9d70
+    SUPERCRONIC_SHA1SUM=cd48d45c4b10f3f0bfdd3a57d054cd05ac96812b
 
 RUN curl -fsSLO "$SUPERCRONIC_URL" \
  && echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - \
