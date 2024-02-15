@@ -12,32 +12,11 @@ If you have an existing Elixir app that you want to move over to Fly, this guide
 
 To configure and launch your Elixir app, you can use `fly launch` and follow the wizard.
 
-<%= partial "docs/languages-and-frameworks/partials/launch_with_postgres", locals: { detected: "Phoenix", app_name: "<app_name>" } %>
-
-You can set a name for the app, choose a default region, and choose to launch and attach a PostgreSQL database.
-
-### Deploy your application
-
-Deploying your application is done with the following command:
-
-```cmd
-fly deploy
-```
-
-This will take a few seconds as it uploads your application, builds a machine image,
-deploys the images, and then monitors to ensure it starts successfully. Once complete
-visit your app with the following command:
-
-```cmd
-fly apps open
-```
-
-If all went well, you'll see your Elixir application homepage.
+<%= partial "docs/languages-and-frameworks/partials/launch_with_postgres", locals: { detected: "Phoenix", app_name: "my-app-name" } %>
 
 ## Troubleshooting your initial deployment
 
 Since this is an existing Elixir app, its highly likely it might not boot because you probably need to configure secrets or other service dependencies. Let's walk through how to troubleshoot these issues so you can get your app running.
-
 
 ### View log files
 
@@ -73,3 +52,21 @@ Interactive Elixir (1.11.2) - press Ctrl+C to exit (type h() ENTER for help)
 iex(hello_elixir@fdaa:0:1da8:a7b:ac4:b204:7e29:2)1>
 ```
 You have a live IEx shell into your application!
+
+## Deploy your application after changes
+
+Deploying your application is done with the following command:
+
+```cmd
+fly deploy
+```
+
+This will take a few seconds as it uploads your application, builds a machine image,
+deploys the images, and then monitors to ensure it starts successfully. Once complete
+visit your app with the following command:
+
+```cmd
+fly apps open
+```
+
+If all went well, you'll see your Elixir application homepage.
