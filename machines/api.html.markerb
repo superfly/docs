@@ -50,11 +50,11 @@ Typically, 2xx HTTP status codes denote successful operations, 4xx codes imply f
 ## Apps​
 
 <div class="api-section" data-exclude-render>
-  <p class="code-info">
+  <p class="api-info">
     A Fly App is an abstraction for a group of Machines running your code on Fly.io, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. Read more <a href="/docs/reference/apps/">here</a>.
   </p>
-  <div class="endpoints code-card">
-    <div class="code-header">
+  <div class="endpoints api-card">
+    <div class="api-card-header">
       Endpoints
     </div>
     <div class="highlight">
@@ -82,17 +82,79 @@ Typically, 2xx HTTP status codes denote successful operations, 4xx codes imply f
 
 List all apps with the ability to filter by organization slug.
 
-<%= render(ApiSectionComponent.new(
-  heading: "Query Parameters", 
-  name: "org_slug", 
-  required: true, 
-  type: "string", 
-  description: "The org slug, or 'personal', to filter apps", 
-  method: "GET", 
-  endpoint: "/apps"
-)) do %>
-```shell
-curl --request GET \
-  --url 'https://api.machines.dev/v1/apps?org_slug='
-```
+<div class="api-section" data-exclude-render>
+  <div>
+    <%= api_info(
+      heading: "Query Parameters", 
+      name: "org_slug", 
+      type: "string", 
+      required: true, 
+      description: "The org slug, or 'personal', to filter apps"
+    ) %>
+    <%= api_info(
+      heading: "Responses", 
+      name: "200", 
+      description: "OK"
+    ) %>
+  </div>
+  <div> 
+<%= code_toggle(badge: "GET", title: "/apps") do %>
+<%= curl do %> 
+  curl --request GET \
+    --url 'https://api.machines.dev/v1/apps?org_slug='
 <% end %>
+<%= json do %>
+  {
+    "glossary": {
+      "title": "example glossary",
+      "GlossDiv": {e
+        "title": "S",
+        "GlossList": {
+          "GlossEntry": {
+            "ID": "SGML",
+            "SortAs": "SGML",
+            "GlossTerm": "Standard Generalized Markup Language",
+            "Acronym": "SGML",
+            "Abbrev": "ISO 8879:1986",
+            "GlossDef": {
+              "para": "A meta-markup language, used to create markup languages such as DocBook.",
+              "GlossSeeAlso": [
+                "GML",
+                "XML"
+              ]
+            },
+            "GlossSee": "markup"
+          }
+        }
+      }
+    }
+  }
+<% end %>
+<%= table do %>
+  | Status | Description                                 |
+  |--------|---------------------------------------------|
+  | `200`  | Successful request.                         |
+  | `201`  | Created successfully.                       |
+  | `202`  | Successful request. No content.             |
+  | `400`  | Check that the parameters were correct.     |
+  | `401`  | The API key used was missing or invalid.    |
+  | `404`  | The resource was not found.                 |
+  | `5xx`  | Indicates an error with Fly.io API servers. |
+<% end %>
+<% end %>
+
+    <%= api_response(code: "200", format: "json") do %>
+{
+  "apps": [
+    {
+      "id": "…",
+      "machine_count": 1,
+      "name": "…",
+      "network": {}
+    }
+  ],
+  "total_apps": 1
+}
+<% end %>
+  </div>
+</div>
