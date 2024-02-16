@@ -11,7 +11,7 @@ order: 1
 <% app_name = "hello-next" %>
 <%= partial "partials/intro", locals: { runtime: "Astro", link: "https://astro.build/" } %>
 
-You can deploy your [Astro](https://astro.build/) app on Fly with minimal effort, our CLI will do the heavy lifting. You can use your existing Astro app or you can create one from scratch.
+You can deploy your [Astro](https://astro.build/) app on Fly.io with minimal effort, our CLI will do the heavy lifting. You can use your existing Astro app or you can create one from scratch.
 
 
 Astro applications can to be served as either **static pages** _or_ with **server-side rendering (SSR)**. On this page you'll find guides to deploying both varieties.
