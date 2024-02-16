@@ -280,7 +280,7 @@ Status: 200 OK
 }
 ```
 
-If `needs_restart`  is true, your machine needs to be restarted to make use of the added space.
+If `needs_restart`  is true, then your Machine needs to be restarted to make use of the added space.
 
 ## Get a list of snapshots for a volume
 
