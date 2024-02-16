@@ -8,7 +8,7 @@ redirect_from: /docs/machines/run/
 
 The [`fly machine run`](/docs/flyctl/machine-run/) command is a tool to configure, build, and start a new Machine in one line.
 
-Many, but not all, [Machine configuration](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) options are available to the `fly machine run` command through flags. The available flags are listed in the flyctl help and on the [`fly machine run` reference page](/docs/flyctl/machine-run/).
+Many, but not all, [Machine configuration](/docs/machines/api-machines-resource/#the-machine-config-object-properties) options are available to the `fly machine run` command through flags. The available flags are listed in the flyctl help and on the [`fly machine run` reference page](/docs/flyctl/machine-run/).
 
 Use `fly machine run` to when you want use more than one Docker image in an app, or to run a one-off or temporary Machine.
 
@@ -83,7 +83,7 @@ This sets the `region` [property](/docs/machines/api-machines-resource/#machine-
 
 All Fly Machines are made from Docker images.
 
-Once the Machine is created, you can see this image reflected in its [`image_ref`](/docs/machines/api-machines-resource/#machine-properties) and [`config.image`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) properties.
+Once the Machine is created, you can see this image reflected in its [`image_ref`](/docs/machines/api-machines-resource/#machine-properties) and [`config.image`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) properties.
 
 With `fly machine run`, there are two options: point to a prebuilt image, or point to a Dockerfile, which flyctl will use to build an image.
 
@@ -135,7 +135,7 @@ You can have the Fly.io `init` override the ENTRYPOINT and CMD (if any) of the M
 
 ### Custom CMD
 
-Override CMD by including the command to run at the end of the `fly machine run` invocation. This sets the [`config.init.cmd`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property on the Machine. 
+Override CMD by including the command to run at the end of the `fly machine run` invocation. This sets the [`config.init.cmd`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) property on the Machine. 
 
 This example simply spins up a Debian Linux Machine with a `sleep` task to keep it awake; you can shell into it or whatever:
 
@@ -145,7 +145,7 @@ fly machine run debian sleep inf
 
 ### Custom ENTRYPOINT
 
-Override ENTRYPOINT with the `--entrypoint` option. This sets the [`config.init.entrypoint`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property on the Machine.
+Override ENTRYPOINT with the `--entrypoint` option. This sets the [`config.init.entrypoint`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) property on the Machine.
 
 In this example we use the [`--file-local` option](/docs/machines/flyctl/fly-machine-run#copy-a-local-file-into-the-machine-file-system) to send an entrypoint script to the Machine and `--entrypoint` to run the script before continuing to the custom CMD `sleep inf`:
 
@@ -179,13 +179,13 @@ Include one or more of the following options to use non-default specifications f
 --vm-size string              The VM size to set machines to. See "fly platform vm-sizes" for valid values
 ```
 
-These flags set [`config.guest`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) properties.
+These flags set [`config.guest`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) properties.
 
 ## Set environment variables
 
 Specify environment variables to be available on the Machine with the `--env` flag, using NAME=VALUE pairs.
 
-This flag sets the [`config.env`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property on the Machine.
+This flag sets the [`config.env`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) property on the Machine.
 
 Example:
 
@@ -201,7 +201,7 @@ For sensitive environmment variables, [set secrets on the app](https://fly.io/do
 
 ## Define a Fly Proxy network service
 
-The `--port` option defines a network service to allow the Fly Proxy to reach a local service on the Machine. This option gives you access to basic service configuration; the [Machines API](/docs/machines/api-machines-resource/) and [Fly Launch](/docs/apps/) both offer more complete control over the Machine's [`config.services`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) properties.
+The `--port` option defines a network service to allow the Fly Proxy to reach a local service on the Machine. This option gives you access to basic service configuration; the [Machines API](/docs/machines/api-machines-resource/) and [Fly Launch](/docs/apps/) both offer more complete control over the Machine's [`config.services`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) properties.
 
 Map any external ports, where the proxy accepts requests directed at the app, to the internal port where the service is listening on IPv4. For each port combination, specify the protocol and [connection handler(s)](/docs/networking/services/#connection-handlers), using this format: 
 
@@ -228,9 +228,9 @@ fly machine run . --port 80/tcp:http \
 
 In a Machine service's configuration, `auto_stop` and `auto_start` settings are optional. 
 
-If the `--autostop` flag is absent in a `fly machine run` command, the Machine's [`config.services.auto_stop`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) value doesn't get set, and the Fly Proxy does not shut the Machine down, even when there is no traffic to it.
+If the `--autostop` flag is absent in a `fly machine run` command, the Machine's [`config.services.auto_stop`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) value doesn't get set, and the Fly Proxy does not shut the Machine down, even when there is no traffic to it.
 
-If the `--autostart` flag is absent in a `fly machine run` command, the Machine's [`config.services.auto_start`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) value doesn't get set, and the Fly Proxy does not start it in response to requests.
+If the `--autostart` flag is absent in a `fly machine run` command, the Machine's [`config.services.auto_start`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) value doesn't get set, and the Fly Proxy does not start it in response to requests.
 
 The `--autostart` and `--autostop` flags set the value of `autostart` or `autostop` to `true` by default; you can explicitly set the value to `false`. For example, the following runs a new Machine that may be stopped by the Fly Proxy, but will never be restarted by it:
 
@@ -245,7 +245,7 @@ If you define more than one service on the Machine, and also use one or both of 
 
 ## Stop or restart the machine on process exit
 
-Set the Machine's [restart policy](/docs/machines/guides-examples/machine-restart-policy/) using the `--restart` option. Options are `no`, `always`, and `on-fail`, which correspond to `no`, `always`, and `on-failure` values for the Machine [`config.restart.policy`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property.
+Set the Machine's [restart policy](/docs/machines/guides-examples/machine-restart-policy/) using the `--restart` option. Options are `no`, `always`, and `on-fail`, which correspond to `no`, `always`, and `on-failure` values for the Machine [`config.restart.policy`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) property.
 
 
 The default restart policy for a Machine created using `fly machine run` is `always`, unless you use the [`--rm` option](#destroy-the-machine-when-it-exits), in which case the default is `no`.
@@ -278,7 +278,7 @@ fly machine run . --volume vol_d42652p88kdw9l7r:data --region arn
 
 A Machine can only mount one volume, and each volume can only be mounted on one Machine. To release a volume that is attached to a Machine, destroy the Machine.
 
-The `--volume` flag on the `fly machine run` command sets a subset of the properties of the Machine's [`config.mounts`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) object.
+The `--volume` flag on the `fly machine run` command sets a subset of the properties of the Machine's [`config.mounts`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) object.
 
 ## Add metadata to the Machine
 
@@ -292,7 +292,7 @@ fly machine run . --metadata fly_platform_version=v2 \
                   --metadata my_metadata=mineallmine
 ```
 
-You can see the [metadata in the Machine config](/docs/machines/api-machines-resource/#the-machine-config-object-properties/): 
+You can see the [metadata in the Machine config](/docs/machines/api-machines-resource/#the-machine-config-object-properties): 
 
 ```cmd
 fly machine status -d -a my-app-name
@@ -309,7 +309,7 @@ fly machine status -d -a my-app-name
 
 ## Place data into files on the Machine
 
-The [`files` property](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) of a Machine's configuration can be used to place a small amount of data into files on its file system. The `fly machine run` command has three ways to make use of this. 
+The [`files` property](/docs/machines/api-machines-resource/#the-machine-config-object-properties) of a Machine's configuration can be used to place data or secrets into files on the Machine file system.
 
 <div class="important icon">
 **Important:** This won't work for large files. There's a limit to how much data can be stored in an app secret or a Machine's configuration.
@@ -317,19 +317,37 @@ The [`files` property](/docs/machines/api-machines-resource/#the-machine-config-
 
 ### Copy a local file into the Machine file system
 
-If it's not convenient to build a file into the Machine's Docker image, use the `--file-local` flag to store the contents of a local file in the Machine configuration instead. 
+Use the `--file-local` flag to copy a local file onto the Machine at your specified path: 
 
 ```
---file-local /path/inside/machine=local/path
+fly machine run . --file-local /path/inside/machine=local/path
 ```
 
-The file's contents are stored as a Base64-encoded string as part of the Machine configuraton, and decoded to the original data on the Machine. There's a limit to how large a file you can create in this way.
+flyctl Base64-encodes the file contents and stores the result in the `files.raw_value` property of the Machine's config; `/path/inside/machine` is stored in `files.guest_path`. When the Machine is created, the data is decoded and written to the file.
 
-### Make a secret into a file instead of an env var
 
-[Fly Secrets](/docs/reference/secrets/) are stored in an encrypted vault, and become environment variables on each Machine started on the app.
+### Pass data in on the command line
 
-You can configure a Machine to store secret values in the form of a file, rather than an environment variable. Encode the data in Base64 format and put it into an app secret with `fly secrets set` or `fly secrets import`. Use the `--stage` flag to prevent flyctl from initiating a deployment once the secret is registered.
+Place data into a file at your specified path, via an argument of the `--file-literal` flag:
+
+```cmd
+fly machine run . --file-literal /path/inside/machine="Some text I want in a file"
+```
+
+If your data isn't a simple string like in the above example, you can Base64-encode it first.
+
+flyctl Base64-encodes the data and stores the result in the `files.raw_value` property of the Machine's config; `/path/inside/machine` is stored in `files.guest_path`. When the Machine is created, the data is decoded and written to the file.
+
+
+### Make a secret available in a file
+
+[Fly Secrets](/docs/reference/secrets/) are stored in an encrypted vault, and by default they are available as environment variables on each of the app's Machines.
+
+You can make a secret available in a file, rather than an environment variable, if your code looks for secret 
+
+Encode the data in Base64 format and put it into an app secret with `fly secrets set` or `fly secrets import`. Use the `--stage` flag to prevent flyctl from initiating a deployment once the secret is registered.
+
+<div class="important icon">**Important:** The secret must be Base64-encoded. If you try this with a secret that is not Base64-encoded, Machine creation fails.</div>
 
 ```cmd
 fly secrets set \
@@ -353,24 +371,11 @@ Hello! I'm Frankie the balloon!
 
 If a particular process or user on the Machine should not have access to the secret, you can use an entrypoint script to change permissions on the secret file.
 
-<div class="important icon">
-**Important:** This is not a way to hide secret values from members of an app's organization who have deployment privileges. Access via `fly ssh` commands is root access. All secrets that are set on an app are available, as either env vars or a file, in any Machine that gets updated after the secret is set.
+<div class="warning icon">
+**Warning:** This is not a way to hide secret values from members of an app's organization who have deployment privileges. Access via `fly ssh` commands is root access. All secrets that are set on an app are available, as either env vars or a file, in any Machine that gets updated after the secret is set.
 </div>
 
-### Make a file out of a Base64-encoded string
-
-You can place data directly into the Machine through its config as a Base64-encoded string with the `--file-literal` flag:
-
-```cmd
-fly machine run . --file-literal /b64file=SGVsbG8hIEknbSBGcmFua2llIHRoZSBiYWxsb29uIQo=
-```
-
-The Base64 encoding is preserved in a file created using the `--file-literal` flag.
-
-```
-root@1857779a44d108:/# cat b64file | base64 --decode
-Hello! I'm Frankie the balloon!
-```
+In the case of secrets, the data itself is not stored in the Machine config; instead, the name of the secret is stored in the `files.secret_name` config property and when the Machine is created, that secret is retrieved from the vault and its decoded value is written to the file.
 
 ## Create a standby Machine
 
@@ -380,11 +385,11 @@ For the sake of resilience, you can create a stopped [standby](/docs/reference/a
 fly machine run . --standby-for 287444ec026748,148ed726c54768
 ```
 
-The `--standby-for` flag sets the [`config.standbys`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) Machine property.
+The `--standby-for` flag sets the [`config.standbys`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) Machine property.
 
 ## Start a Machine on a schedule
 
-Use the `--schedule` flag to set the Machine's [`config.schedule`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property, which starts the Machine on a fuzzy `hourly`, `daily`, `weekly`, or `monthly` cycle. This is useful for running Machines that do a finite job, then exit. The Machine is started the first time when you run `fly machine run`, and again once per (approximate) hour, day, week, or month.
+Use the `--schedule` flag to set the Machine's [`config.schedule`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) property, which starts the Machine on a fuzzy `hourly`, `daily`, `weekly`, or `monthly` cycle. This is useful for running Machines that do a finite job, then exit. The Machine is started the first time when you run `fly machine run`, and again once per (approximate) hour, day, week, or month.
 
 <div class="important icon">
 **Important:** If the host on which a stopped Machine resides doesn't have the resources to start it when its scheduled time comes, you'll get an error back. It's up to you to build the appropriate level of redundancy into your apps.

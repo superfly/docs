@@ -7,7 +7,7 @@ nav: machines
 
 The [`fly machine update`](/docs/flyctl/machine-update/) command updates the configuration of an individual, existing Fly Machine.
 
-Many, but not all, [Machine configuration](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) options are available to the `fly machine update` command through flags. The available flags are listed in the flyctl help and on the [`fly machine update` reference page](/docs/flyctl/machine-update/).
+Many, but not all, [Machine configuration](/docs/machines/api-machines-resource/#the-machine-config-object-properties) options are available to the `fly machine update` command through flags. The available flags are listed in the flyctl help and on the [`fly machine update` reference page](/docs/flyctl/machine-update/).
 
 ## What it does
 
@@ -66,7 +66,7 @@ You can have the Fly.io `init` override the ENTRYPOINT and CMD (if any) of the M
 
 ### Custom CMD
 
-Set the [`config.init.cmd`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property with the `--command` flag. This example replaces CMD with a `sleep` task:
+Set the [`config.init.cmd`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) property with the `--command` flag. This example replaces CMD with a `sleep` task:
 
 ```cmd
 fly machine update --command sleep inf
@@ -76,7 +76,7 @@ The next time the Machine is restarted, this new CMD takes precedence over the C
 
 ### Custom ENTRYPOINT
 
-Set the [`config.init.entrypoint`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property with the `--entrypoint` option. The next time the Machine is restarted, this new ENTRYPOINT takes precedence over the ENTRYPOINT from the Docker image.
+Set the [`config.init.entrypoint`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) property with the `--entrypoint` option. The next time the Machine is restarted, this new ENTRYPOINT takes precedence over the ENTRYPOINT from the Docker image.
 
 See [Run a new Machine](/docs/machines/flyctl/fly-machine-run/#custom-entrypoint) for an example of usage.
 
@@ -109,7 +109,7 @@ As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#add-metadata-t
 
 You can't detach a volume from an existing Machine, nor attach a new one. You can change the mount point of an attached volume using the `--mount-point` flag.
 
-This sets the Machine's [`config.mounts.path`](/docs/machines/api-machines-resource/#the-machine-config-object-properties/) property.
+This sets the Machine's [`config.mounts.path`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) property.
 
 ## Place data into files on the Machine
 
