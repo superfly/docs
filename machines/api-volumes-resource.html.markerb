@@ -46,27 +46,46 @@ curl -i -X GET \\
 
 Status: 200 OK
 
-```xml
+```json
 [
-    {
-        "id": "vol_9vw681egy1jj5xm4",
-        "name": "disk",
-        "state": "created",
-        "size_gb": 1,
-        "region": "yul",
-        "zone": "09cd",
-        "encrypted": true,
-        "attached_machine_id": "6e8297dc244287",
-        "attached_alloc_id": null,
-        "created_at": "2023-09-01T19:47:14.774Z",
-        "blocks": 252283,
-        "block_size": 4096,
-        "blocks_free": 252277,
-        "blocks_avail": 235125,
-        "fstype": "ext4",
-        "snapshot_retention": 5,
-        "host_dedication_key": ""
-    }
+    {
+        "id": "vol_9vw681egy1jj5xm4",
+        "name": "disk",
+        "state": "created",
+        "size_gb": 3,
+        "region": "yul",
+        "zone": "09cd",
+        "encrypted": true,
+        "attached_machine_id": "908057ef21e487",
+        "attached_alloc_id": null,
+        "created_at": "2023-09-01T19:47:14.774Z",
+        "blocks": 768250,
+        "block_size": 4096,
+        "blocks_free": 768244,
+        "blocks_avail": 730163,
+        "fstype": "ext4",
+        "snapshot_retention": 5,
+        "host_dedication_key": ""
+    },
+    {
+        "id": "vol_q4qeekqzxze29dw4",
+        "name": "disk",
+        "state": "created",
+        "size_gb": 3,
+        "region": "iad",
+        "zone": "a4df",
+        "encrypted": true,
+        "attached_machine_id": null,
+        "attached_alloc_id": null,
+        "created_at": "2024-01-02T21:16:38.996Z",
+        "blocks": 751366,
+        "block_size": 4096,
+        "blocks_free": 751360,
+        "blocks_avail": 708148,
+        "fstype": "ext4",
+        "snapshot_retention": 5,
+        "host_dedication_key": ""
+    }
 ]
 ```
 
@@ -95,7 +114,7 @@ curl -i -X POST \\
 
 Status: 200 OK
 
-```xml
+```json
 {
     "id": "vol_340088w293z35lp4",
     "name": "new_1028_vol",
@@ -119,11 +138,13 @@ Status: 200 OK
 
 ### Create volume request body parameters
 
+`compute`: An optional object defining the compute specifications for the expected Machine size and type that the volume will attach to.
+
 `encrypted`: (boolean) Whether to encrypt the volume. Default true.
 
-`name`: (string) Required? The name for the new volume.
+`name`: (string) Required. The name for the new volume.
 
-`region`: (string) Required? The target region. Must be in the same region as the Machine you want to attach it to.
+`region`: (string) Required. The target region. Must be in the same region as the Machine you want to attach it to.
 
 `size_gb`: (int) The size of the volume in GB. Default 3.
 
@@ -132,55 +153,6 @@ Status: 200 OK
 `source_volume_id`: (string) The ID of the source volume for the volume fork.
 
 `require_unique_zone`: (boolean) If true, we will provision this volume on hardware that doesn't have another volume with the same name on it. The typical pattern is to create as many volumes as you need, all with the same name and `require_unique_zone: true`. This will keep your app available in case a host goes down. This flag can also cause volume creation to fail, in case we have used up all unique zones, in which case you probably want to set it to false.
-
-## Create a volume from a snapshot
-
-`POST /apps/{app_name}/volumes`
-
-Create a volume from a snapshot backup.
-
-### Example create volume from snapshot request
-
-```xml
-curl -i -X POST \\
-    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes" \\
-  -d '{
-  "name": "my-app-vol",
-  "region": "yyz",
-  "size_gb": 10,
-  "snapshot_id": "vs_evl65mZQ937tQ16xGGDX8BN",
-  "source_volume_id": "vol_6r7ye90k98ynwk1r"
-}
-```
-
-### Example create volume from snapshot response
-
-Status: 200 OK
-
-```xml
-{
-    "id": "vol_grnejj355dqdj9kr",
-    "name": "new_1028_vol",
-    "state": "restoring",
-    "size_gb": 3,
-    "region": "yyz",
-    "zone": "aeee",
-    "encrypted": true,
-    "attached_machine_id": null,
-    "attached_alloc_id": null,
-    "created_at": "2023-12-07T21:35:57.42Z",
-    "blocks": 0,
-    "block_size": 0,
-    "blocks_free": 0,
-    "blocks_avail": 0,
-    "fstype": "",
-    "snapshot_retention": 5,
-    "host_dedication_key": ""
-}
-```
-
-Then get it again: the state should be “created”.
 
 ## Get a specific volume
 
@@ -198,9 +170,9 @@ curl -i -X GET \\
 
 Status: 200 OK
 
-```xml
+```json
 {
-    "id": "vol_9vw681egy1jj5xm4",
+    "id": "vvol_6r7ye90k98ynwk1r",
     "name": "disk",
     "state": "created",
     "size_gb": 3,
@@ -240,7 +212,7 @@ curl -i -X DELETE \\
 
 Status: 200 OK
 
-```xml
+```json
 {
     "id": "vol_grnejj355dqdj9kr",
     "name": "new_1028_vol",
@@ -283,7 +255,7 @@ curl -i -X PUT \\
 
 Status: 200 OK
 
-```xml
+```json
 {
     "volume": {
         "id": "vol_9vw681egy1jj5xm4",
@@ -312,12 +284,14 @@ If `needs_restart`  is true, your machine needs to be restarted to make use of t
 
 ## Get a list of snapshots for a volume
 
+`GET /apps/{app_name}/volumes/{volume_id}/snapshots`
+
 Given the name of a Fly app and a volume ID, list the available snapshots for that volume.
 
 ### Example list volume snapshots request
 
 ```xml
-curl -i -X PUT \\
+curl -i -X GET \\
     -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
     "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/snapshots" \\
 
@@ -327,7 +301,7 @@ curl -i -X PUT \\
 
 Status: 200 OK
 
-```xml
+```json
 [
     {
         "id": "vs_4LNvXLLK0P6tk6KgqoexaBw",
@@ -367,6 +341,95 @@ Status: 200 OK
     }
 ]
 ```
+
+## Create a volume from a snapshot
+
+`POST /apps/{app_name}/volumes`
+
+Create a volume from a snapshot backup.
+
+### Example create volume from snapshot request
+
+```xml
+curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes" \\
+  -d '{
+  "name": "my-app-vol",
+  "region": "yyz",
+  "size_gb": 10,
+  "snapshot_id": "vs_evl65mZQ937tQ16xGGDX8BN",
+  "source_volume_id": "vol_6r7ye90k98ynwk1r"
+}
+```
+
+### Example create volume from snapshot response
+
+Status: 200 OK
+
+```json
+{
+    "id": "vol_grnejj355dqdj9kr",
+    "name": "new_1028_vol",
+    "state": "restoring",
+    "size_gb": 3,
+    "region": "yyz",
+    "zone": "aeee",
+    "encrypted": true,
+    "attached_machine_id": null,
+    "attached_alloc_id": null,
+    "created_at": "2023-12-07T21:35:57.42Z",
+    "blocks": 0,
+    "block_size": 0,
+    "blocks_free": 0,
+    "blocks_avail": 0,
+    "fstype": "",
+    "snapshot_retention": 5,
+    "host_dedication_key": ""
+}
+```
+
+Then get it again: the state should be “created”.
+
+## Create an on-demand volume snapshot (beta)
+
+`POST /apps/{app_name}/volumes/{volume_id}/snapshots`
+
+Create an on-demand volume snapshot.
+
+### Example create on-demand volume snapshot request
+
+```xml
+curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/snapshots"
+
+```
+
+### Example create on-demand volume snapshot response
+
+Status: 200 OK
+
+```json
+{
+    "Msg": {
+        "backup": {
+            "id": "85999",
+            "app_id": "1700318",
+            "volume_id": "9151365284627104",
+            "state": "prepare",
+            "type": "BACKUP_TYPE_ON_DEMAND",
+            "message": "",
+            "created_at": "2024-02-16T19:30:43.914350121Z",
+            "updated_at": "2024-02-16T19:30:43.914350121Z",
+            "finished_at": null,
+            "graph_id": "vs_gwMAXwwLjOVuo7jL96v2kGXU2"
+        }
+    }
+}
+```
+
+Wait a few moments for the snapshot to get created and then [get the list of snapshots](#get-a-list-of-snapshots-for-a-volume) to confirm.
 
 ## Related topics
 
