@@ -15,7 +15,7 @@ Here's what `fly machine update` does for you:
 * Optionally, builds a new image and pushes it to the Fly.io registry. 
 * Compares the Machine's existing configuration and confirms the changes you've asked for by passing it flags.
 * Composes a complete Machine configuration using the existing config plus your changes and passes this to the Machines update API endpoint.
-* By default, this restarts the Machine immediately with the new config.
+* Restarts the Machine with the new config.
 * By default, waits for the Machine to start, and for any configured health checks to pass, before declaring success (or failure).
 
 ## Usage
@@ -44,13 +44,13 @@ Any source files the Dockerfile uses should be present in the working directory.
 
 ### Use an existing image
 
-Usse the `--image` flag to specify an existing container image. For example:
+Use the `--image` flag to specify an existing container image. For example:
 
 ```cmd
 fly machine update --image ghcr.io/livebook-dev/livebook:0.11.4     
 ```
 
-## Don't restart the Machine
+## Don't start the Machine
 
 Some configuration changes don't require a restart to take effect. For such changes, you can update the Machine without stopping it, or without starting it, if it's already stopped. 
 
@@ -91,6 +91,9 @@ As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#set-environmen
 
 ## Define a Fly Proxy network service
 As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#define-a-fly-proxy-network-service). 
+
+## Set Fly Proxy auto start and auto stop
+As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#set-fly-proxy-auto-start-and-auto-stop).
 
 ## Stop or restart the Machine on process exit
 
