@@ -102,3 +102,4 @@ CMD ["sleep", "inf"]
 - Github fly-apps repos with the `gpu` topic: https://github.com/orgs/fly-apps/repositories?q=topic%3Agpu
 - Fly.io CUDA example: https://gist.github.com/dangra/f8123001fe0f2453a8cd638b89738465
 - Deploying CLIP on Fly: https://gist.github.com/simonw/52c7734e34cac2b26ea1378845674edc
+- Deploying in Insanely Fast Whisper with hugging face transformers on Fly.io GPU: https://github.com/JigsawStack/insanely-fast-whisper-api 
