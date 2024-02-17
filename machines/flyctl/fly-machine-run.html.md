@@ -334,7 +334,25 @@ Place data into a file at your specified path, via an argument of the `--file-li
 fly machine run . --file-literal /path/inside/machine="Some text I want in a file"
 ```
 
-If your data isn't a simple string like in the above example, you can Base64-encode it first.
+In a shell session on your Machine:
+
+```cmd
+
+
+```
+
+If your data isn't a simple string like in the above example, you can Base64-encode it first, and have your app code decode the contents of the file into the original format:
+
+```cmd
+fly machine run . --file-literal /b64file=SGVsbG8hIEknbSBGcmFua2llIHRoZSBiYWxsb29uIQo=
+```
+
+In a shell session on your Machine:
+
+```cmd
+root@1857779a44d108:/# cat b64file | base64 --decode
+Hello! I'm Frankie the balloon!
+```
 
 flyctl Base64-encodes the data and stores the result in the `files.raw_value` property of the Machine's config; `/path/inside/machine` is stored in `files.guest_path`. When the Machine is created, the data is decoded and written to the file.
 
@@ -343,11 +361,14 @@ flyctl Base64-encodes the data and stores the result in the `files.raw_value` pr
 
 [Fly Secrets](/docs/reference/secrets/) are stored in an encrypted vault, and by default they are available as environment variables on each of the app's Machines.
 
-You can make a secret available in a file, rather than an environment variable, if your code looks for secret 
+You can make a secret available in a file, rather than an environment variable.
 
 Encode the data in Base64 format and put it into an app secret with `fly secrets set` or `fly secrets import`. Use the `--stage` flag to prevent flyctl from initiating a deployment once the secret is registered.
 
 <div class="important icon">**Important:** The secret must be Base64-encoded. If you try this with a secret that is not Base64-encoded, Machine creation fails.</div>
+
+
+Example with a simple secret:
 
 ```cmd
 fly secrets set \
@@ -362,11 +383,32 @@ fly machine run . \
   --file-secret /secret-file=MY_BASE64_SECRET 
 ```
 
-The secret will be available in the specified file, and not in an environment variable, on that Machine. It's decoded from Base64 into plain text.
+The secret is available in the specified file, and not in an environment variable, on that Machine. It's decoded from Base64 into plain text.
 
 ```
 root@1857770b4e10e8:/# cat secret-file
 Hello! I'm Frankie the balloon!
+```
+
+It can be useful to store multiple key-value pairs in a single secret. The following command Base64-encodes the contents of the text file `local-secrets` and registers the Base64-encoded string as the value of the secret `MY_SECRETS` on the app:
+
+```cmd
+fly secrets set MY_SECRETS="$(base64 < local-secrets)" --stage
+```
+
+Run a new Machine with the `MY_SECRETS` secret available in a file (`/secret-file`):
+
+```cmd
+fly machine run ubuntu sleep inf --file-secret /secret-file=MY_SECRETS  
+```
+
+Check it in a shell session:
+
+```cmd
+root@d891116b465018:/# cat secret-file 
+USER="my_name"
+PASSWORD="1a2s3d4f"
+MACARON="macaroon in French"
 ```
 
 If a particular process or user on the Machine should not have access to the secret, you can use an entrypoint script to change permissions on the secret file.
