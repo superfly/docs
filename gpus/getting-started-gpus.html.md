@@ -83,7 +83,7 @@ Machine learning tends to involve large quantities of data. We're working with a
 - The root file system of a Fly Machine is ephemeral -- it's reset from its Docker image on every restart. It's also limited to 50GB on GPU-enabled Machines.
 - Fly Volumes are limited to 500GB, and are attached to a physical server. The Machine must run on the same hardware as the volume it mounts.
 
-Unless you've got a constant workload, you'll likely want to shut down GPU Machines when they're not needed&mdash;either manually with `fly machine stop`, or using the Fly Proxy autostop and autostart features&mdash;to save money. Saving data on a persistent Fly Volume means you don't have to download large amounts of data, or reconstitute a large Docker image into a rootfs, whenever the Machine restarts. You'll probably want to store models, at least, on a volume.
+Unless you've got a constant workload, you'll likely want to shut down GPU Machines when they're not needed&mdash;you can do this manually with `fly machine stop`, [have the main process exit](/docs/apps/autostart-stop/#stop-a-machine-by-terminating-its-main-process) when idle, or use the Fly Proxy [autostop and autostart](/docs/apps/autostart-stop/#how-it-works) features&mdash;to save money. Saving data on a persistent Fly Volume means you don't have to download large amounts of data, or reconstitute a large Docker image into a rootfs, whenever the Machine restarts. You'll probably want to store models, at least, on a volume.
 
 ## Using swap
 
@@ -92,7 +92,7 @@ Designing your workload and provisioning appropriate resources for it are the fi
 You can also enable swap for system RAM on a Fly Machine, simply by including a line like the following in `fly.toml`:
 
 ```
-swap_size_mb = 32768    # This enables 32GB swap
+swap_size_mb = 8192    # This enables 8GB swap
 ```
 
 Keep in mind that this consumes the commensurate amount of space on the Machine's root file system, leaving less capacity for whatever else you want to store there.
