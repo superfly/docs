@@ -99,62 +99,54 @@ List all apps with the ability to filter by organization slug.
   </div>
   <div> 
 <%= code_toggle(badge: "GET", title: "/apps") do %>
-<%= curl do %> 
-  curl --request GET \
-    --url 'https://api.machines.dev/v1/apps?org_slug='
-<% end %>
-<%= json do %>
-  {
-    "glossary": {
-      "title": "example glossary",
-      "GlossDiv": {e
-        "title": "S",
-        "GlossList": {
-          "GlossEntry": {
-            "ID": "SGML",
-            "SortAs": "SGML",
-            "GlossTerm": "Standard Generalized Markup Language",
-            "Acronym": "SGML",
-            "Abbrev": "ISO 8879:1986",
-            "GlossDef": {
-              "para": "A meta-markup language, used to create markup languages such as DocBook.",
-              "GlossSeeAlso": [
-                "GML",
-                "XML"
-              ]
-            },
-            "GlossSee": "markup"
-          }
+<div class="curl">
+```shell
+curl --request GET \
+  --url 'https://api.machines.dev/v1/apps?org_slug='
+```
+</div>
+<div class="json hidden">
+```json
+{
+  "glossary": {
+    "title": "example glossary",
+    "GlossDiv": {
+      "title": "S",
+      "GlossList": {
+        "GlossEntry": {
+          "ID": "SGML",
+          "SortAs": "SGML",
+          "GlossTerm": "Standard Generalized Markup Language",
+          "Acronym": "SGML",
+          "Abbrev": "ISO 8879:1986",
+          "GlossDef": {
+            "para": "A meta-markup language, used to create markup languages such as DocBook.",
+            "GlossSeeAlso": [
+              "GML",
+              "XML"
+            ]
+          },
+          "GlossSee": "markup"
         }
       }
     }
   }
-<% end %>
-<%= table do %>
-  | Status | Description                                 |
-  |--------|---------------------------------------------|
-  | `200`  | Successful request.                         |
-  | `201`  | Created successfully.                       |
-  | `202`  | Successful request. No content.             |
-  | `400`  | Check that the parameters were correct.     |
-  | `401`  | The API key used was missing or invalid.    |
-  | `404`  | The resource was not found.                 |
-  | `5xx`  | Indicates an error with Fly.io API servers. |
-<% end %>
-<% end %>
-
-    <%= api_response(code: "200", format: "json") do %>
-{
-  "apps": [
-    {
-      "id": "…",
-      "machine_count": 1,
-      "name": "…",
-      "network": {}
-    }
-  ],
-  "total_apps": 1
 }
+```
+</div>
+<div class="json-table hidden">
+```
+| Status | Description                                 |
+|--------|---------------------------------------------|
+| `200`  | Successful request.                         |
+| `201`  | Created successfully.                       |
+| `202`  | Successful request. No content.             |
+| `400`  | Check that the parameters were correct.     |
+| `401`  | The API key used was missing or invalid.    |
+| `404`  | The resource was not found.                 |
+| `5xx`  | Indicates an error with Fly.io API servers. |
+```
+</div>
 <% end %>
-  </div>
+</div>
 </div>
