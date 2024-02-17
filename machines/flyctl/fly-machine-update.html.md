@@ -26,7 +26,7 @@ Here's the usage of `fly machine update`:
 fly machine update [machine_id] [flags]
 ```
 
-You can get the `machine_id` with [`fly machine list`](/docs/flyctl/machine-list/). You can omit the `machine_id` if an app name is available from a `fly.toml` file in the working directory, or the `--app` flag passed with the `fly machine update` command.
+You can get the `machine_id` with [`fly machine list`](/docs/flyctl/machine-list/). You can omit the `machine_id` if an app name is available from a `fly.toml` file in the working directory, or if the `--app` flag is passed with the `fly machine update` command.
 
 ## Select a Machine to update
 
