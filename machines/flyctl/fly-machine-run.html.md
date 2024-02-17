@@ -334,11 +334,11 @@ Place data into a file at your specified path, via an argument of the `--file-li
 fly machine run . --file-literal /path/inside/machine="Some text I want in a file"
 ```
 
-In a shell session on your Machine:
+In a shell session on the Machine:
 
 ```cmd
-
-
+root@2865553aedd268:/# cat /path/inside/machine 
+Some text I want in a file
 ```
 
 If your data isn't a simple string like in the above example, you can Base64-encode it first, and have your app code decode the contents of the file into the original format:
@@ -347,7 +347,7 @@ If your data isn't a simple string like in the above example, you can Base64-enc
 fly machine run . --file-literal /b64file=SGVsbG8hIEknbSBGcmFua2llIHRoZSBiYWxsb29uIQo=
 ```
 
-In a shell session on your Machine:
+In a shell session on the Machine:
 
 ```cmd
 root@1857779a44d108:/# cat b64file | base64 --decode
