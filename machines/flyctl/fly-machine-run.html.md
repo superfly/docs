@@ -423,9 +423,12 @@ In the case of secrets, the data itself is not stored in the Machine config; ins
 
 For the sake of resilience, you can create a stopped [standby](/docs/reference/app-availability/#standby-machines-for-process-groups-without-services) for Machines that don't have Fly Proxy services and therefore can't be supplemented by Fly Proxy "autostart" in case of a host failure.
 
-```
+```cmd
 fly machine run . --standby-for 287444ec026748,148ed726c54768
 ```
+
+Standby Machines normally remain stopped unless the watched Machines are affected by a host failure. To allow a standby Machine to be started, you can clear its standby configuration [with `fly machine update`](/docs/machines/flyctl/fly-machine-update/#make-a-standby-machine-a-normal-machine).
+
 
 The `--standby-for` flag sets the [`config.standbys`](/docs/machines/api-machines-resource/#the-machine-config-object-properties) Machine property.
 

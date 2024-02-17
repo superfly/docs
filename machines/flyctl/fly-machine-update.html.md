@@ -119,6 +119,14 @@ As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#place-data-int
 
 As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#create-a-standby-machine).
 
+## Make a standby Machine a normal Machine
+
+If a Machine is configured as a standby, it doesn't start unless one of its watched Machines experiences host failure. To clear a Machine's standby configuration and allow it to be started under other conditions, use the `--standby-for` flag with an empty string:
+
+```cmd
+fly machine update <machine-id> --standby-for ""
+```
+
 ## Start the Machine on a schedule
 
 As for [`fly machine run`](/docs/machines/flyctl/fly-machine-run/#start-a-machine-on-a-schedule).
