@@ -32,7 +32,7 @@ Check out [cron.help](https://cron.help) if you need a quick crontab syntax refe
 
 ## Install `supercronic` in the container
 
-The [latest releases for supercronic](https://github.com/aptible/supercronic/releases) are on [GitHhub](https://github.com/aptible/supercronic), where they include copy pasta 🍝instructions for getting it in your Dockerfile. As of January 2024, the current version of `supercronic` is v0.2.29. You'll want to check the [releases page](https://github.com/aptible/supercronic/releases) for the latest version, but here's what it looks like now:
+The [latest releases for supercronic](https://github.com/aptible/supercronic/releases) are on [GitHub](https://github.com/aptible/supercronic), where they include copy pasta 🍝instructions for getting it in your Dockerfile. As of January 2024, the current version of `supercronic` is v0.2.29. You'll want to check the [releases page](https://github.com/aptible/supercronic/releases) for the latest version, but here's what it looks like now:
 
 ```
 # Latest releases available at https://github.com/aptible/supercronic/releases
