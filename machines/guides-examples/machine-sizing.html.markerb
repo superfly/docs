@@ -10,7 +10,7 @@ nav: machines
 date: 2022-12-08
 ---
 
-Here are a few ways to set the size (CPU and memory) of your Machine VMs.
+Here are a few ways to set the size (CPU and memory) of your Machine VMs. This guide describes creating and sizing individual Machines with the Machines API and `fly machine` commands. For Fly Launch apps, the same general sizing rules apply, but you can also use `fly scale` commands to [update groups of Machines](/docs/apps/scale-machine/) or set a [default VM size](/docs/reference/configuration/#the-vm-section) in the `fly.toml` configuration file.
 
 ## General Rules
 
@@ -52,6 +52,7 @@ fly machine run \
     --vm-size performance-2x \
     some-savvy-image
 ```
+
 
 ## Custom Sizes
 
