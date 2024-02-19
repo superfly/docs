@@ -1,5 +1,5 @@
-This will update the application's image to the latest available version.
-The update will perform a rolling restart against each VM, which may result in a brief service disruption.
+Update the app's image to the latest available version.
+The update will perform a rolling restart against each Machine, which may result in a brief service disruption.
 
 ## Usage
 ~~~
