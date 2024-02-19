@@ -14,6 +14,7 @@ flyctl volumes update <volumename> [flags]
   -c, --config string            Path to application configuration file
   -h, --help                     help for update
   -j, --json                     JSON output
+      --scheduled-snapshots      Disable/Enable scheduled snapshots
       --snapshot-retention int   Snapshot retention in days (min 5)
 ~~~
 
