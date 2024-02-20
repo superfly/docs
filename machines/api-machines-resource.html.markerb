@@ -2,6 +2,7 @@
 title: Machines
 layout: docs
 nav: machines
+toc: false
 ---
 
 You can use the Machines resource to create, stop, start, update, and delete Fly Machines. Fly Machines are fast-launching VMs on Fly.io. The Machine resource is the configuration and state for a Machine.
@@ -22,6 +23,55 @@ You can use the Machines resource to create, stop, start, update, and delete Fly
 | `updated_at` | Date and time the Machine was last updated. |
 | `events` | Array of objects that provide log of what's happened with this Machine. |
 | `nonce` | The Machines lease nonce, if this Machine is currently leased. Also returned on Machine create if `lease_ttl` is provided. |
+
+## List all Machines for an app
+
+`GET /apps/{app_name}/machines`
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Query Parameters',
+      name: 'state',
+      type: 'String',
+      required: true,
+      description: 'Filter by the state of the Machines in the app. For example, to return only Machines in the `started` state: `GET /apps/my-app-name/machines?started`'
+    ) %>
+    <% api_info.add_info(
+      name: 'include_deleted',
+      type: 'Boolean',
+      description: 'If true, include deleted Machines in the response.'
+    ) %>
+    <% api_info.add_info(
+      name: 'region',
+      type: 'String',
+      description: 'Filter by region. For example, to return only Machines in the `yyz` region: `GET /v1/apps/my-app-name/machines?region=yyz`'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/api/v1/users')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/list_req" %>
+      <% end %>
+      <% component.with_json do %>
+        {your json here…}
+      <% end %>
+      <% component.with_json_table do %>
+        {your markdown table here…}
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: '200', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/list_resp" %>
+    <% end %>
+  </div>
+</div>
 
 ## List all Machines for an app
 
