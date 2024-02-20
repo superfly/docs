@@ -141,6 +141,24 @@ The `flyctl` command will always refer to this file in the current directory if 
 
 You can see in the `[build]` section the builder image and the version of Go that was detected in your `go.mod` file. You can change or add build arguments to configure the build process using the `[build.args]` section.
 
+## _Inside `Dockerfile`_
+
+To keep Docker images small, [we use an Alpine base image](https://github.com/superfly/flyctl/blob/master/scanner/templates/go/Dockerfile). However, if you need `CGO` you may want to instead use Debian base images:
+
+```diff
+# ...
+
+- FROM golang:${GO_VERSION}-alpine as builder
++ FROM golang:${GO_VERSION}-bookworm as builder
+
+# ...
+
+- FROM alpine:latest
++ FROM debian:bookworm
+```
+
+If you want to use Alpine with `CGO` enabled, [read here](https://megamorf.gitlab.io/2019/09/08/alpine-go-builds-with-cgo-enabled/).
+
 ## _Deploying to Fly_
 
 To deploy your app, just run:
