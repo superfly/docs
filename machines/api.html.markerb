@@ -50,30 +50,34 @@ Typically, 2xx HTTP status codes denote successful operations, 4xx codes imply f
 ## Apps​
 
 <div class="api-section" data-exclude-render>
-  <p class="api-info">
-    A Fly App is an abstraction for a group of Machines running your code on Fly.io, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. Read more <a href="/docs/reference/apps/">here</a>.
-  </p>
-  <div class="endpoints api-card">
-    <div class="api-card-header">
-      Endpoints
-    </div>
-    <div class="highlight">
-      <a class="endpoint">
-        <span class="get">get</span>
-        <span>/apps</span>
-      </a>
-      <a class="endpoint">
-        <span class="post">post</span>
-        <span>/apps</span>
-      </a>
-      <a class="endpoint">
-        <span class="get">get</span>
-        <span>/apps/{app_name}</span>
-      </a>
-      <a class="endpoint">
-        <span class="delete">delete</span>
-        <span>/apps/{app_name}</span>
-      </a>
+  <div class="left-column">
+    <p class="api-info">
+      A Fly App is an abstraction for a group of Machines running your code on Fly.io, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. Read more <a href="/docs/reference/apps/">here</a>.
+    </p>
+  </div>
+  <div class="right-column">
+    <div class="endpoints api-card">
+      <div class="api-card-header">
+        Endpoints
+      </div>
+      <div class="highlight">
+        <a class="endpoint">
+          <span class="get-badge">get</span>
+          <span>/apps</span>
+        </a>
+        <a class="endpoint">
+          <span class="post-badge">post</span>
+          <span>/apps</span>
+        </a>
+        <a class="endpoint">
+          <span class="get-badge">get</span>
+          <span>/apps/{app_name}</span>
+        </a>
+        <a class="endpoint">
+          <span class="delete-badge">delete</span>
+          <span>/apps/{app_name}</span>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -84,69 +88,73 @@ List all apps with the ability to filter by organization slug.
 
 <div class="api-section" data-exclude-render>
   <div>
-    <%= api_info(
+    <%= render(ApiInfoComponent.new(
       heading: "Query Parameters", 
       name: "org_slug", 
       type: "string", 
       required: true, 
       description: "The org slug, or 'personal', to filter apps"
-    ) %>
-    <%= api_info(
+    )) %>
+    <%= render(ApiInfoComponent.new(
       heading: "Responses", 
       name: "200", 
       description: "OK"
-    ) %>
+    )) %>
   </div>
   <div> 
-<%= code_toggle(badge: "GET", title: "/apps") do %>
-<div class="curl">
-```shell
-curl --request GET \
-  --url 'https://api.machines.dev/v1/apps?org_slug='
-```
-</div>
-<div class="json hidden">
-```json
-{
-  "glossary": {
-    "title": "example glossary",
-    "GlossDiv": {
-      "title": "S",
-      "GlossList": {
-        "GlossEntry": {
-          "ID": "SGML",
-          "SortAs": "SGML",
-          "GlossTerm": "Standard Generalized Markup Language",
-          "Acronym": "SGML",
-          "Abbrev": "ISO 8879:1986",
-          "GlossDef": {
-            "para": "A meta-markup language, used to create markup languages such as DocBook.",
-            "GlossSeeAlso": [
-              "GML",
-              "XML"
-            ]
-          },
-          "GlossSee": "markup"
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/api/v1/users')) do |component| %>
+      <% component.with_curl do %>
+        curl --request GET \
+          --url 'https://api.machines.dev/v1/apps?org_slug='
+      <% end %>
+      <% component.with_json do %>
+        {
+          "glossary": {
+            "title": "example glossary",
+            "GlossDiv": {
+              "title": "S",
+              "GlossList": {
+                "GlossEntry": {
+                  "ID": "SGML",
+                  "SortAs": "SGML",
+                  "GlossTerm": "Standard Generalized Markup Language",
+                  "Acronym": "SGML",
+                  "Abbrev": "ISO 8879:1986",
+                  "GlossDef": {
+                    "para": "A meta-markup language, used to create markup languages such as DocBook.",
+                    "GlossSeeAlso": [
+                      "GML",
+                      "XML"
+                    ]
+                  },
+                  "GlossSee": "markup"
+                }
+              }
+            }
+          }
         }
+      <% end %>
+      <% component.with_json_table do %>
+        | Attribute  | Type                    | Required | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+        |------------|-------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+        | `layout`   | String<br>or<br>`false` | No       | The filename of the [layout](/docs/themes/architecture/layouts) to use when rendering the template. For example, specify `"full-width"` to render `layout/full-width.liquid`.<br>The default layout is `theme.liquid`.<br>Use the value `false` to render the template without a layout. Templates without a layout can't be customized in the theme editor.                                                                                                                                                                         |
+        | `wrapper`  | String                  | No       | The HTML wrapper element for the template's sections. To learn more, refer to [The wrapper property](/docs/themes/architecture/templates/json-templates#the-wrapper-property).                                                                                                                                                                                                                                                                                                                                                       |
+        | `sections` | Object                  | Yes      | An object that uses section IDs as keys, and section data as values. This attribute needs to contain at least one section.<br>Duplicate IDs within the template aren't allowed.<br>The format of the section data is the same as section data in [settings_data.json](/docs/themes/architecture/config/settings-data-json). To learn more, refer to [Section data](/docs/themes/architecture/templates/json-templates#section-data). JSON templates can render up to 25 sections, and each section can have up to 50 blocks.         |
+        | `order`    | Array                   | Yes      | An array of section IDs, listed in the order that they should be rendered. The IDs must exist in the `sections` object. Duplicates are not allowed.                                                                                                                                                                                                                                                                                                                                                                                  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: '200', language: 'json')) do %>
+      {
+        "apps": [
+          {
+            "id": "…",
+            "machine_count": 1,
+            "name": "…",
+            "network": {}
+          }
+        ],
+        "total_apps": 1
       }
-    }
-  }
-}
-```
-</div>
-<div class="json-table hidden">
-```
-| Status | Description                                 |
-|--------|---------------------------------------------|
-| `200`  | Successful request.                         |
-| `201`  | Created successfully.                       |
-| `202`  | Successful request. No content.             |
-| `400`  | Check that the parameters were correct.     |
-| `401`  | The API key used was missing or invalid.    |
-| `404`  | The resource was not found.                 |
-| `5xx`  | Indicates an error with Fly.io API servers. |
-```
-</div>
-<% end %>
-</div>
+    <% end %>
+  </div>
 </div>
