@@ -38,7 +38,7 @@ Volumes exist in a single [region](/docs/reference/regions/). For redundancy wit
 
 ## Volume encryption
 
-Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--no-encryption` to instead create an unencrypted volume for improved performance at deployment and runtime.
+Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--no-encryption` to instead create an unencrypted volume.
 
 ## Volume size
 
