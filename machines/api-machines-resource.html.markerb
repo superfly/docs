@@ -18,19 +18,55 @@ nav: machines
       <div class="highlight">
         <a class="endpoint">
           <span class="get-badge">get</span>
-          <span>TBD</span>
+          <span>/apps/{app_name}/machines</span>
         </a>
         <a class="endpoint">
           <span class="post-badge">post</span>
-          <span>TBD</span>
+          <span>/apps/{app_name}/machines</span>
         </a>
         <a class="endpoint">
-          <span class="get-badge">put</span>
-          <span>TBD</span>
+          <span class="get-badge">get</span>
+          <span>/apps/{app_name}/machines/{machines_id}/wait</span>
+        </a>
+        <a class="endpoint">
+          <span class="get-badge">get</span>
+          <span>/apps/{app_name}/machines/{machine_id}</span>
+        </a>
+        <a class="endpoint">
+          <span class="post-badge">post</span>
+          <span>/apps/{app_name}/machines/{machine_id}</span>
+        </a>
+        <a class="endpoint">
+          <span class="post-badge">post</span>
+          <span>/apps/{app_name}/machines/{machine_id}/stop</span>
+        </a>
+        <a class="endpoint">
+          <span class="post-badge">post</span>
+          <span>/apps/{app_name}/machines/{machine_id}/start</span>
         </a>
         <a class="endpoint">
           <span class="delete-badge">delete</span>
-          <span>TBD</span>
+          <span>/apps/{app_name}/machines/{machine_id}</span>
+        </a>
+        <a class="endpoint">
+          <span class="post-badge">post</span>
+          <span>/apps/{app_name}/machines/{machine_id}/lease</span>
+        </a>
+        <a class="endpoint">
+          <span class="get-badge">get</span>
+          <span>/apps/{app_name}/machines/{machine_id}/lease</span>
+        </a>
+        <a class="endpoint">
+          <span class="delete-badge">delete</span>
+          <span>/apps/{app_name}/machines/{machine_id}/lease</span>
+        </a>
+        <a class="endpoint">
+          <span class="post-badge">post</span>
+          <span>/apps/{app_name}/machines/{machine_id}/cordon</span>
+        </a>
+        <a class="endpoint">
+          <span class="post-badge">post</span>
+          <span>/apps/{app_name}/machines/{machine_id}/uncordon</span>
         </a>
       </div>
     </div>
