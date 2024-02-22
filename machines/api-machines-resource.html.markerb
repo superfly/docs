@@ -5,72 +5,66 @@ nav: machines
 toc: false
 ---
 
-<div class="api-section" data-exclude-render>
-  <div class="left-column">
-    <p class="api-info">
-    You can use the Machines resource to create, stop, start, update, and delete Fly Machines. Fly Machines are fast-launching VMs on Fly.io. The Machine resource is the configuration and state for a Machine.
-    </p>
+
+You can use the Machines resource to create, stop, start, update, and delete Fly Machines. Fly Machines are fast-launching VMs on Fly.io. The Machine resource is the configuration and state for a Machine.
+   
+<div class="endpoints api-card">
+  <div class="api-card-header">
+    Endpoints
   </div>
-  <div class="right-column">
-    <div class="endpoints api-card">
-      <div class="api-card-header">
-        Endpoints
-      </div>
-      <div class="highlight">
-        <a class="endpoint">
-          <span class="get-badge">get</span>
-          <span>/apps/{app_name}/machines</span>
-        </a>
-        <a class="endpoint">
-          <span class="post-badge">post</span>
-          <span>/apps/{app_name}/machines</span>
-        </a>
-        <a class="endpoint">
-          <span class="get-badge">get</span>
-          <span>/apps/{app_name}/machines/{machines_id}/wait</span>
-        </a>
-        <a class="endpoint">
-          <span class="get-badge">get</span>
-          <span>/apps/{app_name}/machines/{machine_id}</span>
-        </a>
-        <a class="endpoint">
-          <span class="post-badge">post</span>
-          <span>/apps/{app_name}/machines/{machine_id}</span>
-        </a>
-        <a class="endpoint">
-          <span class="post-badge">post</span>
-          <span>/apps/{app_name}/machines/{machine_id}/stop</span>
-        </a>
-        <a class="endpoint">
-          <span class="post-badge">post</span>
-          <span>/apps/{app_name}/machines/{machine_id}/start</span>
-        </a>
-        <a class="endpoint">
-          <span class="delete-badge">delete</span>
-          <span>/apps/{app_name}/machines/{machine_id}</span>
-        </a>
-        <a class="endpoint">
-          <span class="post-badge">post</span>
-          <span>/apps/{app_name}/machines/{machine_id}/lease</span>
-        </a>
-        <a class="endpoint">
-          <span class="get-badge">get</span>
-          <span>/apps/{app_name}/machines/{machine_id}/lease</span>
-        </a>
-        <a class="endpoint">
-          <span class="delete-badge">delete</span>
-          <span>/apps/{app_name}/machines/{machine_id}/lease</span>
-        </a>
-        <a class="endpoint">
-          <span class="post-badge">post</span>
-          <span>/apps/{app_name}/machines/{machine_id}/cordon</span>
-        </a>
-        <a class="endpoint">
-          <span class="post-badge">post</span>
-          <span>/apps/{app_name}/machines/{machine_id}/uncordon</span>
-        </a>
-      </div>
-    </div>
+  <div class="highlight">
+    <a class="endpoint">
+      <span class="get-badge">get</span>
+      <span>/apps/{app\_name}/machines</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/apps/{app\_name}/machines</span>
+    </a>
+    <a class="endpoint">
+      <span class="get-badge">get</span>
+      <span>/apps/{app\_name}/machines/{machine\_id}/wait</span>
+    </a>
+    <a class="endpoint">
+      <span class="get-badge">get</span>
+      <span>/apps/{app\_name}/machines/{machine\_id}</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/apps/{app\_name}/machines/{machine\_id}</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/apps/{app\_name}/machines/{machine\_id}/stop</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/apps/{app\_name}/machines/{machine\_id}/start</span>
+    </a>
+    <a class="endpoint">
+      <span class="delete-badge">delete</span>
+      <span>/apps/{app\_name}/machines/{machine\_id}</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/apps/{app\_name}/machines/{machine\_id}/lease</span>
+    </a>
+    <a class="endpoint">
+      <span class="get-badge">get</span>
+      <span>/apps/{app\_name}/machines/{machine\_id}/lease</span>
+    </a>
+    <a class="endpoint">
+      <span class="delete-badge">delete</span>
+      <span>/apps/{app\_name}/machines/{machine\_id}/lease</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/apps/{app\_name}/machines/{machine\_id}/cordon</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/apps/{app\_name}/machines/{machine\_id}/uncordon</span>
+    </a>
   </div>
 </div>
 
@@ -825,7 +819,7 @@ This is useful for bluegreen deployments: boot up a new, "green", cordoned Machi
       | no body |  |  |  |
       <% end %>
     <% end %>
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app_name}/machines/{machine_id}/uncordon')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app\_name}/machines/{machine\_id}/uncordon')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_uncordon_req" %>
       <% end %>
