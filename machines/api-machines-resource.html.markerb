@@ -506,7 +506,7 @@ Stopping a Machine will shut down the Machine, but not destroy it. The Machine m
       <% component.with_json_table do %>
       | Property | Type | Required | Description |
       | --- | --- | --- | --- |
-      | `signal` | object | no | Signal to stop the machine with. (default: SIGINT) |
+      | `signal` | object | no | Signal to stop the Machine with. (default: SIGINT) |
       | `timeout` | string | no | Seconds to wait before sending SIGKILL to the Machine |
       <% end %>
     <% end %>
@@ -866,7 +866,7 @@ For example, to reach a Machine with ID `3d8d413b29d089` on an app called `my-ap
 
 ## Machines `config` object properties
 
-Properties of the `config` object for Machine configuration. See [Machine properties](#machine-properties).
+Properties of the `config` object for Machines configuration. See [Machine properties](#machines-properties).
 
 **`image`:** string - Required. The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
 
