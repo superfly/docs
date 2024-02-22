@@ -4,7 +4,38 @@ layout: docs
 nav: machines
 ---
 
-You can use the Apps resource to create and manage Fly Apps. A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. 
+<div class="api-section" data-exclude-render>
+  <div class="left-column">
+    <p class="api-info">
+      You can use the Apps resource to create and manage Fly Apps. A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines.  Read more <a href="/docs/reference/apps/">here</a>.
+    </p>
+  </div>
+  <div class="right-column">
+    <div class="endpoints api-card">
+      <div class="api-card-header">
+        Endpoints
+      </div>
+      <div class="highlight">
+        <a class="endpoint">
+          <span class="get-badge">get</span>
+          <span>/apps?org_slug=</span>
+        </a>
+        <a class="endpoint">
+          <span class="post-badge">post</span>
+          <span>/apps</span>
+        </a>
+        <a class="endpoint">
+          <span class="get-badge">get</span>
+          <span>/apps/{app_name}</span>
+        </a>
+        <a class="endpoint">
+          <span class="delete-badge">delete</span>
+          <span>/apps/{app_name}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 ## Create a Fly App
 
@@ -12,7 +43,45 @@ You can use the Apps resource to create and manage Fly Apps. A Fly App is an abs
 
 Machines must be associated with a Fly App. App names must be unique.
 
-<%= partial "/docs/reference/machines/create_app_req" %>
+<div class="api-section" data-exclude-render>
+  <div>
+      <%= render(ApiInfoComponent.new(
+      heading: "Responses", 
+      name: "201", 
+      description: "created"
+    )) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/api/v1/apps')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY\_API\_HOSTNAME}/v1/apps" \\
+  -d '{
+      "app\_name": "my-app-name",
+      "org\_slug": "personal"
+    }'
+      <% end %>
+      <% component.with_json do %>
+        {
+          "app_name": "",
+          "network": "",
+          "org_slug": ""
+        }
+      <% end %>
+      <% component.with_json_table do %>
+        | Property   | Type    | Required | Description                |
+        |-------------|---------|----------|----------------------------|
+        | `app_name`  | string  | yes      | Name of the app to create  |
+        | `org_slug`  | string  | yes      | Slug of the org in which to create the app |
+        | `network`   | string  | no       | Name for an IPv6 private network to segment the app onto. |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: '201', language: 'json')) do %>
+    no body
+    <% end %>
+  </div>
+</div>
 
 To segment the app into its own network, you can pass a `network` argument in the JSON body, e.g. `"network": "some-arbitrary-name"`. Any Machine started in such an app will not be able to access other apps within their organization over the private network. However, Machines within such an app can communicate to each other, and the [`fly-replay`](/docs/reference/dynamic-request-routing/) header can still be used to route requests to Machines within a segmented app.
 
@@ -33,19 +102,55 @@ v4   37.16.9.52 global 7s ago
 
 The app will answer on this IP address, and after a small delay, at `my-app-name.fly.dev`.
 
-## Get application details
+## Get app details
 
 `GET /apps/{app_name}`
 
-Get details about an application, like its organization slug and name. Also, to check if the app exists!
-<%= partial "/docs/reference/machines/get_app_req" %>
-<%= partial "/docs/reference/machines/get_app_resp" %>
+Get details about an app, like its organization slug and name. Also, to check if the app exists!
 
-## Set application secrets
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: "Responses", 
+      name: "200", 
+      description: "OK"
+    ) %>
+    <% api_info.add_info(
+      name: "404",
+      description: "not found"
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/api/v1/apps/\{app\_name\}')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name" 
+      <% end %>
+
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: '200', language: 'json')) do %>
+    {
+      "id": "jlyv9r5d56v18xrg",
+      "name": "my-app-name",
+      "status": "deployed",
+      "organization": {
+        "name": "My Org",
+        "slug": "personal"
+      }
+    }
+    <% end %>
+  </div>
+</div>
+
+## Set app secrets
 
 For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly Apps using `flyctl`:
 
-<%= partial "/docs/partials/set_secrets", locals: { app_name: "my-app-name" } %>
+```cmd
+fly secrets set DATABASE_URL=postgres://example.com/mydb <my-app-name>
+```
 
 Machines inherit secrets from the app. Existing Machines must be [updated](/docs/machines/api-machines-resource/#update-a-machine) to pick up secrets set after the Machine was created.
 
@@ -57,7 +162,101 @@ For non-sensitive information, you _can_ set different environment variables per
 
 Machines should be stopped before attempting deletion. Append `?force=true` to the URI to stop and delete immediately.
 
-<%= partial "/docs/reference/machines/delete_app" %>
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <%= render(ApiInfoComponent.new(
+      heading: "Path parameters", 
+      name: "force", 
+      type: "Boolean", 
+      required: false, 
+      description: "Stop all Machines and delete the app immediately."
+    )) %>
+    <%= render(ApiInfoComponent.new(
+      heading: "Responses", 
+      name: "404", 
+      description: "not found"
+    )) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/api/v1/apps/\{app\_name\}')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X DELETE \\
+    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name" 
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: '404', language: 'json')) do %>
+    {
+  "error": "Could not find App \"my-app-name\""
+}
+    <% end %>
+  </div>
+</div>
+
+
+## List apps in an organization
+
+`GET /apps?org_slug=`
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <%= render(ApiInfoComponent.new(
+      heading: "Path parameters", 
+      name: "org_slug", 
+      type: "string", 
+      required: true, 
+      description: "The organization to list apps for."
+    )) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: "Responses", 
+      name: "200", 
+      description: "OK"
+    ) %>
+    <% api_info.add_info(
+      name: "404",
+      description: "not found"
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/api/v1/apps?org\_slug\=')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY\_API\_HOSTNAME}/v1/apps?org\_slug=personal"
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: '200', language: 'json')) do %>
+{
+  "total_apps": 4,
+  "apps": [
+    {
+      "id": "682kqp6pdno9d543",
+      "name": "my-app-1",
+      "machine_count": 3,
+      "network": "default"
+    },
+    ...
+  ]
+}
+    <% end %>
+  </div>
+</div>
+
+
 
 ## Related topics
 
