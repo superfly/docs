@@ -79,12 +79,12 @@ nav: machines
 | --------- | ----------- |
 | `id` | A stable identifier for the Machine. |
 | `name` | Unique name for the Machine. If omitted, one is generated for you. |
+| `state` | The [state](/docs/machines/machine-states/) of the Machine.
 | `region` | The region where the Machine resides, or the target region for the Machine on create. If omitted, the Machine is placed in the same region as your WireGuard peer connection (somewhere near you). |
 | `instance_id` | An identifier for the current running/ready version of the Machine. Every Update request potentially changes the `instance_id`. |
-| `state` | The [state](/docs/machines/machine-states/) of the Machine.
 | `private_ip` | The [6PN IPv6 address](/docs/reference/private-networking/) of the Machine, which is where it's reachable to other Machines in the same organization and `network_id`. |
-| `config` | Object that defines the Machine configuration. Refer to [The `config` object properties](#the-machine-config-object-properties) section for details.|
-| `checks` | Object that provides the status of any checks. |
+| `config` | See the <u>[`config` object properties](#machines-config-object-properties)</u> section. Object that defines the Machine configuration. |
+| `checks` | Object that provides the status of any configured health checks. |
 | `image_ref` | Object that defines the image details. |
 | `created_at` | Date and time the Machine was created. |
 | `updated_at` | Date and time the Machine was last updated. |
@@ -200,7 +200,7 @@ The only required parameter in the body is `image` in the `config` object.
       | `skip_launch` | boolean | no | Create a Fly Machine, but don’t boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as “warming the caches” on our hardware. (default: false) |
       | `lsvd` | boolean | no | Enable Log Structured Virtual Disks for this Machine. (default: false) |
       | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
-      | `config` | object | yes | Required for `image`. An object defining the Machine configuration. See the [`config` object properties](#the-machine-config-object-properties) section. |
+      | `config` | object | yes | Required for `image`. An object defining the Machine configuration. See the [`config` object properties](#machines-config-object-properties) section. |
       | `config.image` | string | yes | The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
       <% end %>
     <% end %>
@@ -258,7 +258,7 @@ Create a Machine with services defined on app. Learn more about [services and ne
       | `skip_launch` | boolean | no | Create a Fly Machine, but don’t boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as “warming the caches” on our hardware. (default: false) |
       | `lsvd` | boolean | no | Enable Log Structured Virtual Disks for this Machine. (default: false) |
       | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
-      | `config` | object | yes | Required for `image`. An object defining the Machine configuration. See the [`config` object properties](#the-machine-config-object-properties) section. |
+      | `config` | object | yes | Required for `image`. An object defining the Machine configuration. See the [`config` object properties](#machines-config-object-properties) section. |
       | `config.image` | string | yes | The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
       | `config.services` | array | no | Defines how Fly Proxy connects requests to an app’s public Anycast or private Flycast address to services running within Machines, and configures other Fly Proxy behavior for a service.
       <% end %>
@@ -393,7 +393,7 @@ This is, in particular, how you would update the running image of a Machine (whe
 `region` and `name` are immutable and cannot be updated. 
 
 <div class="note icon">
-**Note:** You need to specify the entire Machine config to update a Machine; we don't support partial updates. You can get the Machine you want to update, copy and modify the `config` and include it in the body of the update request. Refer to the [Machine `config` object properties](#the-machine-config-object-properties) section for property descriptions.
+**Note:** You need to specify the entire Machine config to update a Machine; we don't support partial updates. You can get the Machine you want to update, copy and modify the `config` and include it in the body of the update request. Refer to the [Machine `config` object properties](#machines-config-object-properties) section for property descriptions.
 </div>
 
 <div class="api-section" data-exclude-render>
@@ -864,15 +864,19 @@ Machines can be reached within the private network by hostname, in the format `<
 
 For example, to reach a Machine with ID `3d8d413b29d089` on an app called `my-app-name`, use hostname `3d8d413b29d089.vm.my-app-name.internal`.
 
-## The Machine `config` object properties
+## Machines `config` object properties
 
-Properties of the `config` object for Machine configuration. Learn about all the [Machine properties](#machine-properties).
+Properties of the `config` object for Machine configuration. See [Machine properties](#machine-properties).
 
-`image`: string - Required. The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
+**`image`:** string - Required. The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
 
-`auto_destroy`: bool (false) - If true, the Machine destroys itself once it's complete.
+---
 
-`checks`: An optional object that defines one or more named checks. The key for each check is the check name. The value for each check supports:
+**`auto_destroy`:** bool (false) - If true, the Machine destroys itself once it's complete.
+
+---
+
+**`checks`:** An optional object that defines one or more named checks. The key for each check is the check name. The value for each check supports:
 
 + `type`: string (nil) - `tcp` or `http`.
 + `port`: int (nil) - The TCP port to connect to, likely should be the same as `internal_port`.
@@ -886,54 +890,63 @@ Properties of the `config` object for Machine configuration. Learn about all the
 + `tls_skip_verify`: bool (false) - For `http` checks with https protocol, whether or not to verify the TLS certificate
 + `headers`: {string: [string, string]} ({}) - For `http` checks, an array of objects with string field `name` and array of strings field `values`.
 
-An example of two checks:
+    An example of two checks:
 
-```json
-        "checks": {
-            "tcp-alive": {
-                "type": "tcp",
-                "port": 8080,
-                "interval": "15s",
-                "timeout": "10s"
-            },
-            "http-get": {
-                "type": "http",
-                "port": 8080,
-                "protocol": "http"
-                "method": "GET",
-                "path": "/",
-                "interval": "15s",
-                "timeout": "10s"
+    ```json
+            "checks": {
+                "tcp-alive": {
+                    "type": "tcp",
+                    "port": 8080,
+                    "interval": "15s",
+                    "timeout": "10s"
+                },
+                "http-get": {
+                    "type": "http",
+                    "port": 8080,
+                    "protocol": "http"
+                    "method": "GET",
+                    "path": "/",
+                    "interval": "15s",
+                    "timeout": "10s"
+                }
             }
-        }
-```
+    ```
 
-`dns`
+---
+
+**`dns`:**
+
   - `skip_registration`: If true, do not register the Machine's 6PN IP with the internal DNS system.
 
-`env`: {string:string} ({}) - An object filled with key/value pairs to be set as environment variables.
+---
 
-`files`: An optional array of objects defining files to be written within a Machine, one of `raw_value` or `secret_name` must be provided.
+**`env`:** {string:string} ({}) - An object filled with key/value pairs to be set as environment variables.
+
+---
+
+**`files`:** An optional array of objects defining files to be written within a Machine, one of `raw_value` or `secret_name` must be provided.
   - `guest_path`: string - The path in the Machine where the file will be written. Must be an absolute path.
   - `raw_value`: string - Contains the base64 encoded string of the file contents.
   - `secret_name`: string - The name of the secret containing the base64 encoded file contents.
 
-An example of two files:
+    An example of two files:
 
-```json
-        "files": [
-            {
-                "guest_path": "/path/to/hello.txt",
-                "raw_value": "aGVsbG8gd29ybGQK"
-            },
-            {
-                "guest_path": "/path/to/secret.txt",
-                "secret_name": "SUPER_SECRET"
-            }
-        ]
-```
+    ```json
+            "files": [
+                {
+                    "guest_path": "/path/to/hello.txt",
+                    "raw_value": "aGVsbG8gd29ybGQK"
+                },
+                {
+                    "guest_path": "/path/to/secret.txt",
+                    "secret_name": "SUPER_SECRET"
+                }
+            ]
+    ```
 
-`guest`: Configure the resources allocated for this Machine. An object with the following options:
+---
+
+**`guest`:** Configure the resources allocated for this Machine. An object with the following options:
   - `cpu_kind`: string (nil) - The type of CPU reservation to make (”shared”, ”performance", and so on).
   - `gpu_kind`: string (nil) - The type of GPU reservation to make.
   - `host_dedication_id`: The ID of the host dedication (group of dedicated hosts) on which to create this Machine. (beta)
@@ -941,20 +954,28 @@ An example of two files:
   - `kernel_args`: Optional array of strings. Arguments passed to the kernel.
   - `memory_mb`: int (nil) - Memory in megabytes as multiples of 256 (default `256`)
 
-`init`: Arguments for `init`, which is Fly.io's footprint inside your Machine, and controls how your own code gets run.
+---
+
+**`init`:** Arguments for `init`, which is Fly.io's footprint inside your Machine, and controls how your own code gets run.
   - `exec`: [string, string] ([]) - The command line for the program to run once the Machine boots up. This overrides any other startup command line, either in our API or in your Docker container definition.
   - `entrypoint`: [string, string] ([]) - A command line to override the ENTRYPOINT of your Docker container; another way to define the program that is going to start up when your Machine boots up.
   - `cmd`: [string, string] ([]) - A command line to override the CMD of your Docker container; still another way to define the program that is going to start up when your Machine boots up.
   - `tty`: bool (false) - Allocate a TTY for the process we start up.
   - `swap_size_mb`: int (nil) -Swap space to reserve for the Fly Machine in, you guessed it, megabytes.
 
-`metadata`: {string:string} ({}) - An object filled with key/value pairs for the Machine metadata. We use metadata internally for routing, process groups, and clusters.
+---
 
-`metrics`: An optional object defining a metrics endpoint that [Prometheus on Fly.io](https://fly.io/docs/reference/metrics/#prometheus-on-fly-io) will scrape.
+**`metadata`:** {string:string} ({}) - An object filled with key/value pairs for the Machine metadata. We use metadata internally for routing, process groups, and clusters.
+
+---
+
+**`metrics`:** An optional object defining a metrics endpoint that [Prometheus on Fly.io](https://fly.io/docs/reference/metrics/#prometheus-on-fly-io) will scrape.
   - `port`: int - Required. The port that Prometheus will connect to.
   - `path`: string - Required. The path that Prometheus will scrape (e.g. `/metrics`).
 
-`mounts`: An array of objects that reference previously created [persistent volumes](https://fly.io/docs/reference/volumes/). Currently, you may only mount one volume per Machine.
+---
+
+**`mounts`:** An array of objects that reference previously created [persistent volumes](https://fly.io/docs/reference/volumes/). Currently, you may only mount one volume per Machine.
   - `name`: string - Required. The name of the Volume to attach.
   - `path`: string - Required. Absolute path on the Machine where the volume should be mounted. For example,  `/data`.
   - `extend_threshold_percent`: int - The threshold of storage used on a volume, by percentage, that triggers extending the volume’s size by the value of `add_size_gb`.
@@ -962,20 +983,28 @@ An example of two files:
   - `size_gb_limit`: int - The total amount, in GB, to extend a volume. Optional with auto_extend_size_increment. Optional with `extend_threshold_percent`.
   - `volume`: int (nil) - The volume ID, visible in `fly volumes list`, i.e. `vol_2n0l3vl60qpv635d`.
 
-`processes`: An optional array of objects defining multiple processes to run within a Machine. The Machine will stop if any process exits without error.
+---
+
+**`processes`:** An optional array of objects defining multiple processes to run within a Machine. The Machine will stop if any process exits without error.
   - `entrypoint`: An array of strings. The process that will run.
   - `cmd`: An array of strings. The arguments passed to the entrypoint.
   - `env`: An object filled with key/value pairs to be set as environment variables.
   - `exec`: An array of strings. The command to run for Machines in this process group on startup.
   - `user`: string (nil) - An optional user that the process runs under.
 
-`restart`: Defines whether and how flyd restarts a Machine after its main process exits. Learn more about [Machine restart policies](/docs/machines/guides-examples/machine-restart-policy/). This object has the following options:
+---
+
+**`restart`:** Defines whether and how flyd restarts a Machine after its main process exits. Learn more about [Machine restart policies](/docs/machines/guides-examples/machine-restart-policy/). This object has the following options:
   - `policy`: string - Required. One of "no", "on-failure", or "always".
   - `max_retries`: int (nil) - The maximum number of retries when the policy is "on-failure".
 
-`schedule`: string (nil) - Optionally one of `hourly`, `daily`, `weekly`, `monthly`. Runs Machine at the given interval. Interval starts at time of Machine creation
+---
 
-`services`contains an array of objects that define a single network service. Check the [Machines networking section](#notes-on-networking) for more information.
+**`schedule`:** string (nil) - Optionally one of `hourly`, `daily`, `weekly`, `monthly`. Runs Machine at the given interval. Interval starts at time of Machine creation.
+
+---
+
+**`services`**: An array of objects that define a single network service. Check the [Machines networking section](#notes-on-networking) for more information.
 
   - `protocol`: string - Required. `tcp` or `udp`. [Learn more about running raw TCP/UDP services](https://fly.io/docs/app-guides/udp-and-tcp/).
   - `internal_port`: int - Required. Port the Machine listens on.
@@ -1000,17 +1029,25 @@ An example of two files:
   - `auto_stop`: bool (false) - If true, Fly Proxy stops Machines when this service goes idle.
   - `min_machines_running`: int (nil) - When `auto_start` is true, the minimum number of Machines to keep running at all times in the primary region.
 
-`size`: A [named size](/docs/about/pricing/#machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
+---
 
-`standbys`: Standbys enable a Machine to be a standby for another. In the event of a hardware failure, the standby Machine will be started. Only for Machines without `services`. Array of strings representing the Machine IDs of Machines watch (act as standby for).
+**`size`:** A [named size](/docs/about/pricing/#machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
 
-`statics`: Optionally serve static files.
+---
+
+**`standbys`:** Standbys enable a Machine to be a standby for another. In the event of a hardware failure, the standby Machine will be started. Only for Machines without `services`. Array of strings representing the Machine IDs of Machines watch (act as standby for).
+
+---
+
+**`statics`:** Optionally serve static files.
   - `guest_path`: string - Required. The path inside the Machines where the files to serve are located.
   - `url_prefix`: string - Required. The URL prefix under which to serve the static files.
 
-`stop_config`: MachineStopConfig (nil) - Configure graceful shutdown of the Machine.
-  - `signal`: string (nil) - the name of the signal to send to the entrypoint process on the Machine to initiate shutdown.
-  - `timeout`: int (nil) - how long in nanoseconds to wait, after signaling the entrypoint process, before hard-shutdown of the Machine.
+---
+
+**`stop_config`:** MachineStopConfig (nil) - Configure graceful shutdown of the Machine.
+  - `signal`: string (nil) - The name of the signal to send to the entrypoint process on the Machine to initiate shutdown.
+  - `timeout`: int (nil) - How long in nanoseconds to wait, after signaling the entrypoint process, before hard-shutdown of the Machine.
 
 ## Related topics
 
