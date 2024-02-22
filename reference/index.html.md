@@ -1,39 +1,38 @@
 ---
-title: "Fly.io Reference Guide"
+title: "Fly.io reference"
 layout: docs
 sitemap: false
 nav: firecracker
 ---
 
-In the Fly.io Reference Section, you will find the definitive documentation for Fly.io features and tools.
+Quick references for often-used resources like flyctl and `fly.toml`. Or dig a little deeper into Fly.io capabilities and how they work.
 
 ## About Fly.io
 
 * [**Architecture**](/docs/reference/architecture/):
-The details about our implementation of Firecracker VMs, Anycast networking, Fly Proxy, and the backhaul network, all of which come together to create Fly.io's infrastructure.
+A brief overview of how Firecracker VMs, Anycast networking, Fly Proxy, and the backhaul network come together to create Fly.io's infrastructure.
 
 * [**Regions**](/docs/reference/regions/):
 The regions around the world where we run servers so your apps can run close to your users.
 
-## Creating and deploying applications
+## Reference docs
 
-* [**Machines**](/docs/machines/):
-Fly Machines are the compute behind the Fly.io platform. Learn about Machines and their fast REST API.
-
-* [**Fly Launch**](/docs/apps/):
-Configure, launch, and orchestrate your app's Machines as a unit, with a single config file and opinionated flyctl commands.
+* [**flyctl**](/docs/flyctl/):
+The Fly CLI reference documentation.
 
 * [**Fly Launch Configuration (fly.toml)**](/docs/reference/configuration/):
 The settings for configuring your app in the `fly.toml` configuration file. The Fly Launch configuration includes how the app is built, its volume mounts, network services, and more.
+
+## Working with Fly.io
+
+* [**Fly Apps**](/docs/reference/apps/):
+What's a Fly App anyway? The abstraction that holds everything you deploy on Fly.io.
 
 * [**App Availability and Resiliency**](/docs/reference/app-availability):
 An overview of the features that can make your app more resistant to events like hardware failures or outages.
 
 * [**Builders**](/docs/reference/builders/):
 The different ways you can assemble applications into deployable images for Fly.io.
-
-* [**flyctl**](/docs/flyctl/):
-The Fly CLI reference documentation.
 
 * [**Load Balancing**](/docs/reference/load-balancing/):
 An explanation of how Fly.io's proxy distributes traffic to your application instances based on load, closeness, and concurrency settings.
@@ -50,37 +49,8 @@ How to set and use Docker secrets to make secrets available at build time.
 * [**Secrets - Runtime**](/docs/reference/secrets/):
 How to set and use secrets, which are exported to the running App through environment variables, and find out how they work with deployments to help secure your App.
 
-* [**Fly Apps**](/docs/reference/apps):
-The abstraction grouping Machines with the other Fly.io resources needed to run and route to them.
-
 * [**Metrics**](/docs/reference/metrics):
 The fully-managed metrics that you can access for your app on Fly.io.
 
-* [**Volumes**](/docs/reference/volumes):
-The Fly.io implementation of volumes for persistent storage attached to Machines, and the things to consider before using them.
-
-## Network services
-
-* [**Dynamic request routing**](/docs/networking/dynamic-request-routing/):
-The different response headers you can use to dynamically route requests to other regions or apps.
-
-* [**Public Networking**](/docs/networking/services/):
-Learn about Fly.io networking and its support for IPv4 and IPv6 addresses via Anycast, automated TLS and HTTP middleware, proxies, and TCP passthrough.
-
-* [**Private Networking**](/docs/networking/private-networking/):
-How Fly.io Private Networking provides secure connections between your applications and a VPN option that allows you to connect into your Fly organization and do the same from your desktop or mobile device. It uses WireGuard and DNS to provide connectivity and discoverability. Find out how to use it in your applications, and how to install and configure the VPN.
-
-* [**Upstash for Redis**](/docs/reference/redis/):
-The fully-managed, Redis-compatible database service that offers global read replicas for reduced latency in distant regions.
-
-## Security
-
-For more general information about security, refer to [Security at Fly.io](/docs/about/security/).
-
 * [**Deploy Tokens**](/docs/reference/deploy-tokens/):
 An experimental feature to use in place of standard API tokens.
-
-* [**TLS support**](/docs/networking/tls/):
-A list of supported cipher suites.
-
-
