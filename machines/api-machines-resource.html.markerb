@@ -315,7 +315,7 @@ Create a Machine with services defined on app. Learn more about [services and ne
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/apps/{app\_name}/machines/{machines\_id}/wait')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/apps/{app\_name}/machines/{machine\_id}/wait')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_wait_req" %>
       <% end %>
@@ -642,7 +642,7 @@ The Machine lease nonce is a random value we provide that indicates that you cur
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app\_name}/machines/{machines\_id}/lease')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app\_name}/machines/{machine\_id}/lease')) do |component| %>
       <% component.with_curl do %>
       <%= partial "/docs/reference/machines/machines_lease_create_req" %>
       <% end %>
@@ -698,7 +698,7 @@ Retrieve the current lease of a specific Machine within an app. Machine leases c
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/apps/{app\_name}/machines/{machines\_id}/lease')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/apps/{app\_name}/machines/{machine\_id}/lease')) do |component| %>
       <% component.with_curl do %>
       <%= partial "/docs/reference/machines/machines_lease_get_req" %>
       <% end %>
@@ -755,7 +755,7 @@ Release the lease of a specific Machine within an app. Machine leases can be use
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/apps/{app\_name}/machines/{machines\_id}/lease')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/apps/{app\_name}/machines/{machine\_id}/lease')) do |component| %>
       <% component.with_curl do %>
       <%= partial "/docs/reference/machines/machines_lease_release_req" %>
       <% end %>
