@@ -1,0 +1,47 @@
+{
+  "id": "1857156b526dd8",
+  "name": "aged-thunder-7371",
+  "state": "created",
+  "region": "ord",
+  "image_ref": {
+    "registry": "registry-1.docker.io",
+    "repository": "library/ubuntu",
+    "tag": "latest",
+    "digest": "sha256:c9cf959fd83770dfdefd8fb42cfef0761432af36a764c077aed54bbc5bb25368",
+    "labels": {
+      "org.opencontainers.image.ref.name": "ubuntu",
+      "org.opencontainers.image.version": "22.04"
+    }
+  },
+  "instance_id": "01HEPA330HZ37A78TK080NAK1M",
+  "private_ip": "fdaa:ff:ff:a7b:195:e229:8038:2",
+  "created_at": "2023-11-08T01:52:30Z",
+  "updated_at": "2023-11-08T01:52:30Z",
+  "config": {
+    "init": {
+      "exec": [
+        "/bin/sleep",
+        "inf"
+      ]
+    },
+    "image": "registry-1.docker.io/library/ubuntu:latest",
+    "auto_destroy": true,
+    "restart": {
+      "policy": "always"
+    },
+    "guest": {
+      "cpu_kind": "shared",
+      "cpus": 1,
+      "memory_mb": 256
+    },
+    "dns": {}
+  },
+  "events": [
+    {
+      "type": "launch",
+      "status": "created",
+      "source": "user",
+      "timestamp": 1699408350300
+    }
+  ]
+}
