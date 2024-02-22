@@ -68,7 +68,7 @@ You can use the Machines resource to create, stop, start, update, and delete Fly
   </div>
 </div>
 
-## Machines properties
+## Machine properties
 
 | Property | Description |
 | --------- | ----------- |
@@ -78,7 +78,7 @@ You can use the Machines resource to create, stop, start, update, and delete Fly
 | `region` | The region where the Machine resides, or the target region for the Machine on create. If omitted, the Machine is placed in the same region as your WireGuard peer connection (somewhere near you). |
 | `instance_id` | An identifier for the current running/ready version of the Machine. Every Update request potentially changes the `instance_id`. |
 | `private_ip` | The [6PN IPv6 address](/docs/reference/private-networking/) of the Machine, which is where it's reachable to other Machines in the same organization and `network_id`. |
-| `config` | See the <u>[`config` object properties](#machines-config-object-properties)</u> section. Object that defines the Machine configuration. |
+| `config` | See the <u>[`config` object properties](#machine-config-object-properties)</u> section. Object that defines the Machine configuration. |
 | `checks` | Object that provides the status of any configured health checks. |
 | `image_ref` | Object that defines the image details. |
 | `created_at` | Date and time the Machine was created. |
@@ -195,7 +195,7 @@ The only required parameter in the body is `image` in the `config` object.
       | `skip_launch` | boolean | no | Create a Fly Machine, but don’t boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as “warming the caches” on our hardware. (default: false) |
       | `lsvd` | boolean | no | Enable Log Structured Virtual Disks for this Machine. (default: false) |
       | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
-      | `config` | object | yes | Required for `image`. An object defining the Machine configuration. See the [`config` object properties](#machines-config-object-properties) section. |
+      | `config` | object | yes | Required for `image`. An object defining the Machine configuration. See the [`config` object properties](#machine-config-object-properties) section. |
       | `config.image` | string | yes | The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
       <% end %>
     <% end %>
@@ -253,7 +253,7 @@ Create a Machine with services defined on app. Learn more about [services and ne
       | `skip_launch` | boolean | no | Create a Fly Machine, but don’t boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as “warming the caches” on our hardware. (default: false) |
       | `lsvd` | boolean | no | Enable Log Structured Virtual Disks for this Machine. (default: false) |
       | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
-      | `config` | object | yes | Required for `image`. An object defining the Machine configuration. See the [`config` object properties](#machines-config-object-properties) section. |
+      | `config` | object | yes | Required for `image`. An object defining the Machine configuration. See the [`config` object properties](#machine-config-object-properties) section. |
       | `config.image` | string | yes | The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
       | `config.services` | array | no | Defines how Fly Proxy connects requests to an app’s public Anycast or private Flycast address to services running within Machines, and configures other Fly Proxy behavior for a service.
       <% end %>
@@ -388,7 +388,7 @@ This is, in particular, how you would update the running image of a Machine (whe
 `region` and `name` are immutable and cannot be updated. 
 
 <div class="note icon">
-**Note:** You need to specify the entire Machine config to update a Machine; we don't support partial updates. You can get the Machine you want to update, copy and modify the `config` and include it in the body of the update request. Refer to the [Machine `config` object properties](#machines-config-object-properties) section for property descriptions.
+**Note:** You need to specify the entire Machine config to update a Machine; we don't support partial updates. You can get the Machine you want to update, copy and modify the `config` and include it in the body of the update request. Refer to the [Machine `config` object properties](#machine-config-object-properties) section for property descriptions.
 </div>
 
 <div class="api-section" data-exclude-render>
@@ -859,9 +859,9 @@ Machines can be reached within the private network by hostname, in the format `<
 
 For example, to reach a Machine with ID `3d8d413b29d089` on an app called `my-app-name`, use hostname `3d8d413b29d089.vm.my-app-name.internal`.
 
-## Machines `config` object properties
+## Machine `config` object properties
 
-Properties of the `config` object for Machines configuration. See [Machines properties](#machines-properties).
+Properties of the `config` object for Machines configuration. See [Machines properties](#machine-properties).
 
 **`image`:** string - Required. The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
 
