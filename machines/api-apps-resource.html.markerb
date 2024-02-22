@@ -17,10 +17,6 @@ nav: machines
       </div>
       <div class="highlight">
         <a class="endpoint">
-          <span class="get-badge">get</span>
-          <span>/apps?org_slug=</span>
-        </a>
-        <a class="endpoint">
           <span class="post-badge">post</span>
           <span>/apps</span>
         </a>
@@ -31,6 +27,10 @@ nav: machines
         <a class="endpoint">
           <span class="delete-badge">delete</span>
           <span>/apps/{app_name}</span>
+        </a>
+        <a class="endpoint">
+          <span class="get-badge">get</span>
+          <span>/apps?org_slug=</span>
         </a>
       </div>
     </div>
@@ -45,11 +45,12 @@ Machines must be associated with a Fly App. App names must be unique.
 
 <div class="api-section" data-exclude-render>
   <div>
-      <%= render(ApiInfoComponent.new(
-      heading: "Responses", 
-      name: "201", 
-      description: "created"
-    )) %>
+     <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '201',
+      description: 'created'
+    ) %>
+    <%= render(api_info) %>
   </div>
   <div> 
     <%= render(CodeToggleComponent.new(badge: 'POST', title: '/api/v1/apps')) do |component| %>
@@ -59,7 +60,8 @@ Machines must be associated with a Fly App. App names must be unique.
     "${FLY\_API\_HOSTNAME}/v1/apps" \\
   -d '{
       "app\_name": "my-app-name",
-      "org\_slug": "personal"
+      "org\_slug": "personal",
+      "network": "my-optional-network"
     }'
       <% end %>
       <% component.with_json do %>
@@ -77,8 +79,11 @@ Machines must be associated with a Fly App. App names must be unique.
         | `network`   | string  | no       | Name for an IPv6 private network to segment the app onto. |
       <% end %>
     <% end %>
-    <%= render(CodeSampleComponent.new(title: '201', language: 'json')) do %>
-    no body
+    <%= render(CodeSampleComponent.new(title: 'Status: 201 created - Example response', language: 'json')) do %>
+      {
+  "id":"z4k69dxd8r31p5mx",
+  "created_at":1708631799000
+}
     <% end %>
   </div>
 </div>
@@ -111,6 +116,14 @@ Get details about an app, like its organization slug and name. Also, to check if
 <div class="api-section" data-exclude-render>
   <div>
     <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to get the details of.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
       heading: "Responses", 
       name: "200", 
       description: "OK"
@@ -130,11 +143,11 @@ Get details about an app, like its organization slug and name. Also, to check if
       <% end %>
 
     <% end %>
-    <%= render(CodeSampleComponent.new(title: '200', language: 'json')) do %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
     {
       "id": "jlyv9r5d56v18xrg",
       "name": "my-app-name",
-      "status": "deployed",
+      "status": "pending",
       "organization": {
         "name": "My Org",
         "slug": "personal"
@@ -146,7 +159,7 @@ Get details about an app, like its organization slug and name. Also, to check if
 
 ## Set app secrets
 
-For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) as you would for standard Fly Apps using `flyctl`:
+For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) on the app:
 
 ```cmd
 fly secrets set DATABASE_URL=postgres://example.com/mydb <my-app-name>
@@ -154,7 +167,7 @@ fly secrets set DATABASE_URL=postgres://example.com/mydb <my-app-name>
 
 Machines inherit secrets from the app. Existing Machines must be [updated](/docs/machines/api-machines-resource/#update-a-machine) to pick up secrets set after the Machine was created.
 
-For non-sensitive information, you _can_ set different environment variables per Machine at creation time.
+For non-sensitive information, you can configure environment variables per Machine when you create or update the Machine.
 
 ## Delete a Fly App
 
@@ -165,17 +178,26 @@ Machines should be stopped before attempting deletion. Append `?force=true` to t
 
 <div class="api-section" data-exclude-render>
   <div>
-    <%= render(ApiInfoComponent.new(
-      heading: "Path parameters", 
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to delete.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Query parameters',
       name: "force", 
       type: "Boolean", 
       required: false, 
       description: "Stop all Machines and delete the app immediately."
-    )) %>
+    ) %>
+    <%= render(api_info) %>
     <%= render(ApiInfoComponent.new(
       heading: "Responses", 
-      name: "404", 
-      description: "not found"
+      name: "202", 
+      description: "accepted"
     )) %>
   </div>
   <div> 
@@ -189,13 +211,13 @@ Machines should be stopped before attempting deletion. Append `?force=true` to t
       no body
       <% end %>
       <% component.with_json_table do %>
-
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
       <% end %>
     <% end %>
-    <%= render(CodeSampleComponent.new(title: '404', language: 'json')) do %>
-    {
-  "error": "Could not find App \"my-app-name\""
-}
+    <%= render(CodeSampleComponent.new(title: 'Status: 202 accepted', language: 'json')) do %>
+    no body
     <% end %>
   </div>
 </div>
@@ -207,13 +229,14 @@ Machines should be stopped before attempting deletion. Append `?force=true` to t
 
 <div class="api-section" data-exclude-render>
   <div>
-    <%= render(ApiInfoComponent.new(
-      heading: "Path parameters", 
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
       name: "org_slug", 
       type: "string", 
       required: true, 
       description: "The organization to list apps for."
-    )) %>
+    ) %>
+    <%= render(api_info) %>
     <% api_info = ApiInfoComponent.new(
       heading: "Responses", 
       name: "200", 
@@ -233,13 +256,15 @@ Machines should be stopped before attempting deletion. Append `?force=true` to t
     "${FLY\_API\_HOSTNAME}/v1/apps?org\_slug=personal"
       <% end %>
       <% component.with_json do %>
-      no body
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
       <% end %>
       <% component.with_json_table do %>
-
+no body
       <% end %>
     <% end %>
-    <%= render(CodeSampleComponent.new(title: '200', language: 'json')) do %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
 {
   "total_apps": 4,
   "apps": [
