@@ -2,6 +2,7 @@
 title: Machines
 layout: docs
 nav: machines
+toc: false
 ---
 
 <div class="api-section" data-exclude-render>
@@ -157,7 +158,7 @@ You can configure the Machine characteristics, like its CPU and memory. You can 
 The only required parameter in the body is `image` in the `config` object.
 
 <div class="api-section" data-exclude-render>
-  <div>
+  <div data-exclude-render>
     <% api_info = ApiInfoComponent.new(
       heading: 'Path parameters',
       name: 'app_name',
@@ -173,7 +174,7 @@ The only required parameter in the body is `image` in the `config` object.
     ) %>
     <%= render(api_info) %>
   </div>
-  <div> 
+  <div data-exclude-render>
     <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app\_name}/machines')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_create_req" %>
