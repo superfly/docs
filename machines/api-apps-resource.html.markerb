@@ -2,6 +2,7 @@
 title: Apps
 layout: docs
 nav: machines
+toc: false
 ---
 
 <div class="api-section" data-exclude-render>
