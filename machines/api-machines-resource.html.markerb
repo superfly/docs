@@ -26,7 +26,7 @@ nav: machines
         </a>
         <a class="endpoint">
           <span class="get-badge">put</span>
-          <span>tbd</span>
+          <span>TBD</span>
         </a>
         <a class="endpoint">
           <span class="delete-badge">delete</span>
@@ -37,7 +37,7 @@ nav: machines
   </div>
 </div>
 
-## Machine properties
+## Machines properties
 
 | Property | Description |
 | --------- | ----------- |
@@ -233,7 +233,7 @@ Create a Machine with services defined on app. Learn more about [services and ne
   </div>
 </div>
 
-## NEW Wait for a Machine to reach a specified state
+## Wait for a Machine to reach a specified state
 
 <div class="api-section" data-exclude-render>
   <div>
@@ -303,7 +303,7 @@ Create a Machine with services defined on app. Learn more about [services and ne
   </div>
 </div>
 
-## NEW Get a Machine
+## Get a Machine
 
 Given the name of a Fly App and a Fly Machine ID, retrieve the details of that Machine.
 
@@ -344,7 +344,7 @@ Given the name of a Fly App and a Fly Machine ID, retrieve the details of that M
   </div>
 </div>
 
-## NEW Update a Machine
+## Update a Machine
 
 Given the name of a Fly App and a Fly Machine ID, update the configuration of the Machine. If the Machine is running and the request is successful, it will reboot; if the Machine isn't running, and you don't want it to start up, set `skip_launch`.
 
