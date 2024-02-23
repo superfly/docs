@@ -129,10 +129,6 @@ Get details about an app, like its organization slug and name. Also, to check if
       name: "200", 
       description: "OK"
     ) %>
-    <% api_info.add_info(
-      name: "404",
-      description: "not found"
-    ) %>
     <%= render(api_info) %>
   </div>
   <div> 
@@ -242,10 +238,6 @@ Machines should be stopped before attempting deletion. Append `?force=true` to t
       heading: "Responses", 
       name: "200", 
       description: "OK"
-    ) %>
-    <% api_info.add_info(
-      name: "404",
-      description: "not found"
     ) %>
     <%= render(api_info) %>
   </div>
