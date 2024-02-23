@@ -477,7 +477,7 @@ Stopping a Machine will shut down the Machine, but not destroy it. The Machine m
       name: 'machine_id',
       type: 'string',
       required: true,
-      description: 'The ID of the Machine to get.'
+      description: 'The ID of the Machine to stop.'
     ) %>
     <%= render(api_info) %>
     <% api_info = ApiInfoComponent.new(
@@ -528,7 +528,7 @@ Start a stopped Machine. Machines that are restarted are completely reset to the
       name: 'machine_id',
       type: 'string',
       required: true,
-      description: 'The ID of the Machine to get.'
+      description: 'The ID of the Machine to start.'
     ) %>
     <%= render(api_info) %>
     <% api_info = ApiInfoComponent.new(
@@ -577,7 +577,7 @@ Given the name of a Fly App and the Machine ID of a Fly Machine, delete the Mach
       name: 'machine_id',
       type: 'string',
       required: true,
-      description: 'The ID of the Machine to wait for.'
+      description: 'The ID of the Machine to delete.'
     ) %>
     <%= render(api_info) %>
     <% api_info = ApiInfoComponent.new(
@@ -627,7 +627,7 @@ The Machine lease nonce is a random value we provide that indicates that you cur
       name: 'machine_id',
       type: 'string',
       required: true,
-      description: 'The ID of the Machine to wait for.'
+      description: 'The ID of the Machine to create a lease for.'
     ) %>
     <%= render(api_info) %>
     <% api_info = ApiInfoComponent.new(
@@ -682,7 +682,7 @@ Retrieve the current lease of a specific Machine within an app. Machine leases c
       name: 'machine_id',
       type: 'string',
       required: true,
-      description: 'The ID of the Machine to wait for.'
+      description: 'The ID of the Machine to retrieve a lease for.'
     ) %>
     <%= render(api_info) %>
     <% api_info = ApiInfoComponent.new(
@@ -740,7 +740,7 @@ Release the lease of a specific Machine within an app. Machine leases can be use
       name: 'machine_id',
       type: 'string',
       required: true,
-      description: 'The ID of the Machine to wait for.'
+      description: 'The ID of the Machine to release a lease for.'
     ) %>
     <%= render(api_info) %>
     <% api_info = ApiInfoComponent.new(
@@ -795,7 +795,7 @@ This is useful for bluegreen deployments: boot up a new, "green", cordoned Machi
       name: 'machine_id',
       type: 'string',
       required: true,
-      description: 'The ID of the Machine to get.'
+      description: 'The ID of the Machine cordon or uncordon.'
     ) %>
     <%= render(api_info) %>
     <% api_info = ApiInfoComponent.new(

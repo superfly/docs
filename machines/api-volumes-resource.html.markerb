@@ -347,7 +347,7 @@ curl -i -X DELETE \\
       | no body |  |  |  |
       <% end %>
     <% end %>
-    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK', language: 'json')) do %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK ', language: 'json')) do %>
 {
     "id": "vol_grnejj355dqdj9kr",
     "name": "new_1028_vol",
@@ -413,7 +413,7 @@ curl -i -X PUT \\
       | size_gb | integer | yes | The size in GB to make the volume. |
       <% end %>
     <% end %>
-    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK', language: 'json')) do %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
 {
     "volume": {
         "id": "vol_9vw681egy1jj5xm4",

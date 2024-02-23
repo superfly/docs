@@ -223,7 +223,7 @@ Machines should be stopped before attempting deletion. Append `?force=true` to t
 <div class="api-section" data-exclude-render>
   <div>
     <% api_info = ApiInfoComponent.new(
-      heading: 'Path parameters',
+      heading: 'Query parameters',
       name: "org_slug", 
       type: "string", 
       required: true, 
