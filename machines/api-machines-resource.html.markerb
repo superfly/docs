@@ -659,7 +659,7 @@ The Machine lease nonce is a random value we provide that indicates that you cur
       | ttl | integer | no | The time in seconds that the lease should be held for.
       <% end %>
     <% end %>
-    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK', language: 'json')) do %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 201 Created – Example response', language: 'json')) do %>
       <%= partial "/docs/reference/machines/machines_lease_create_resp" %>
     <% end %>
   </div>
@@ -690,8 +690,7 @@ Retrieve the current lease of a specific Machine within an app. Machine leases c
       name: '200',
       description: 'OK'
     ) %>
-    <% api_info = ApiInfoComponent.new(
-      heading: 'Responses',
+    <% api_info.add_info(
       name: '404',
       description: 'Not Found'
     ) %>
@@ -832,7 +831,7 @@ This is useful for bluegreen deployments: boot up a new, "green", cordoned Machi
       | no body |  |  |  |
       <% end %>
     <% end %>
-    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK', language: 'json')) do %>
       <%= partial "/docs/reference/machines/machines_ok_true_resp" %>
     <% end %>
   </div>

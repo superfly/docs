@@ -330,6 +330,12 @@ Given the name of a Fly App and the volume ID of a Fly volume, delete the volume
       description: 'The ID of the volume to permanently delete.'
     ) %>
     <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
   </div>
   <div>
     <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/{app\_name}/volumes/{volume\_id}')) do |component| %>
@@ -347,7 +353,7 @@ curl -i -X DELETE \\
       | no body |  |  |  |
       <% end %>
     <% end %>
-    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK ', language: 'json')) do %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
 {
     "id": "vol_grnejj355dqdj9kr",
     "name": "new_1028_vol",
@@ -389,6 +395,12 @@ Given the name of a Fly App and a volume ID, you can make a volume bigger by ext
       type: 'string',
       required: true,
       description: 'The ID of the volume to extend.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
     ) %>
     <%= render(api_info) %>
   </div>
