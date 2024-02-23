@@ -2,13 +2,50 @@
 title: Volumes
 layout: docs
 nav: machines
+toc: false
 ---
 
 You can use the Volumes resource to create and delete volumes. A Fly Volume is persistent storage for a Fly Machine. Learn more about [volumes](/docs/reference/volumes/).
 
+<div class="endpoints api-card">
+  <div class="api-card-header">
+    Endpoints
+  </div>
+  <div class="highlight">
+    <a class="endpoint">
+      <span class="get-badge">get</span>
+      <span>/v1/apps/{app\_name}/volumes</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/v1/apps/{app\_name}/volumes</span>
+    </a>
+    <a class="endpoint">
+      <span class="get-badge">get</span>
+      <span>/v1/apps/{app\_name}/volumes/{volume\_id}</span>
+    </a>
+    <a class="endpoint">
+      <span class="delete-badge">delete</span>
+      <span>/v1/apps/{app\_name}/volumes/{volume\_id}</span>
+    </a>
+    <a class="endpoint">
+      <span class="put-badge">put</span>
+      <span>/v1/apps/{app\_name}/volumes/{volume\_id}/extend</span>
+    </a>
+    <a class="endpoint">
+      <span class="get-badge">get</span>
+      <span>/v1/apps/{app\_name}/volumes/{volume\_id}/snapshots</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/v1/apps/{app\_name}/volumes/{volume\_id}/snapshots</span>
+    </a>
+  </div>
+</div>
+
 ## Volume properties
 
-| **Property** | **Type** | **Description** |
+| Property | Type | Description |
 | --- | --- | --- |
 | `attached_alloc_id` | string | n/a |
 | `attached_machine_id` | string | The ID of the Machine that’s attached to the volume. |
@@ -29,24 +66,42 @@ You can use the Volumes resource to create and delete volumes. A Fly Volume is p
 
 ## List all the volumes in an app
 
-`GET /apps/{app_name}/volumes`
+Given the name of a Fly App, get a list of all the volumes that belong to it.
 
-Given the name of a Fly app, list all the Fly Volumes associated with it.
-
-### Example list volumes
-
-```xml
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to list volumes for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app\_name}/volumes')) do |component| %>
+      <% component.with_curl do %>
 curl -i -X GET \\
-    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes" 
-
-```
-
-### Example list volumes response
-
-Status: 200 OK
-
-```json
+    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes" 
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
 [
     {
         "id": "vol_9vw681egy1jj5xm4",
@@ -87,39 +142,87 @@ Status: 200 OK
         "host_dedication_key": ""
     }
 ]
-```
+    <% end %>
+  </div>
+</div>
 
 ## Create a volume
 
-`POST /apps/{app_name}/volumes`
+Create a volume for a specific app according to the configuration provided in the request body.
 
-Create a volume for an app. 
-
-### Example create volume request
-
-After you create a volume, you can use the `mounts` property in the [Machine `config` object](/docs/machines/api-machines-resource/#the-machine-config-object-properties) to attach the volume to a Machine.
-
-```xml
-curl -i -X POST \\
-    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes" \\
-  -d '{
-  "name": "my_app_vol",
-  "region": "ord",
-  "size_gb": 10
-}
-```
-
-### Example create Volume response
-
-Status: 200 OK
-
-```json
+<div class="api-section" data-exclude-render>
+  <div data-exclude-render>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to create a volume for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div data-exclude-render>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/volumes')) do |component| %>
+      <% component.with_curl do %>
+      curl -i -X POST \\
+      -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+      "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes" \\
+      -d '{
+      "name": "my\_app\_vol",
+      "region": "ord",
+      "size\_gb": 10
+    }'
+      <% end %>
+      <% component.with_json do %>
+        {
+        "compute": {
+            "cpu_kind": "string",
+            "cpus": 0,
+            "gpu_kind": "string",
+            "gpus": 0,
+            "host_dedication_id": "string",
+            "kernel_args": [
+            "string"
+            ],
+            "memory_mb": 0
+        },
+        "encrypted": true,
+        "fstype": "string",
+        "machines_only": true,
+        "name": "string",
+        "region": "string",
+        "require_unique_zone": true,
+        "size_gb": 0,
+        "snapshot_id": "string",
+        "snapshot_retention": 0,
+        "source_volume_id": "string"
+        }
+      <% end %>
+      <% component.with_json_table do %>
+        | Property | Type | Required | Description |
+        | --- | --- | --- | --- |
+        | `compute` | object | no | An optional object defining the compute specifications for the expected Machine size and type that the volume will attach to. |
+        | `encrypted` | boolean | no | Whether to encrypt the volume. Default true. |
+        | `name` | string | yes | The name for the new volume. |
+        | `region` | string | yes | The target region. Must be in the same region as the Machine you want to attach it to. |
+        | `size_gb` | int | no | The size of the volume in GB. Default 3. |
+        | `snapshot_id` | string | no | The ID of the volume snapshot to use to create the new volume. |
+        | `source_volume_id` | string | no | The ID of the source volume for the volume fork. |
+        | `require_unique_zone` | boolean | no | If true, we will provision this volume on hardware that doesn't have another volume with the same name on it. The typical pattern is to create as many volumes as you need, all with the same name and `require_unique_zone: true`. This will keep your app available in case a host goes down. This flag can also cause volume creation to fail, in case we have used up all unique zones, in which case you probably want to set it to false. Default true. |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
 {
     "id": "vol_340088w293z35lp4",
     "name": "new_1028_vol",
     "state": "created",
-    "size_gb": 1,
+    "size_gb": 10,
     "region": "ord",
     "zone": "84d3",
     "encrypted": true,
@@ -134,44 +237,55 @@ Status: 200 OK
     "snapshot_retention": 5,
     "host_dedication_key": ""
 }
-```
-
-### Create volume request body parameters
-
-`compute`: An optional object defining the compute specifications for the expected Machine size and type that the volume will attach to.
-
-`encrypted`: (boolean) Whether to encrypt the volume. Default true.
-
-`name`: (string) Required. The name for the new volume.
-
-`region`: (string) Required. The target region. Must be in the same region as the Machine you want to attach it to.
-
-`size_gb`: (int) The size of the volume in GB. Default 3.
-
-`snapshot_id`: (string) The ID of the volume snapshot to use to create the new volume.
-
-`source_volume_id`: (string) The ID of the source volume for the volume fork.
-
-`require_unique_zone`: (boolean) If true, we will provision this volume on hardware that doesn't have another volume with the same name on it. The typical pattern is to create as many volumes as you need, all with the same name and `require_unique_zone: true`. This will keep your app available in case a host goes down. This flag can also cause volume creation to fail, in case we have used up all unique zones, in which case you probably want to set it to false.
+    <% end %>
+  </div>
+</div>
 
 ## Get a specific volume
 
-`GET /apps/{app_name}/volumes/{volume_id}`
+Retrieve details about a specific volume by its ID within an app.
 
-### Example get volume request
-
-```xml
-curl -i -X GET \\
-    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r" 
-```
-
-### Example get volume response
-
-Status: 200 OK
-
-```json
-{
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the volume belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'volume_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the volume to get.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app\_name}/volumes/{volume\_id}')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X GET \\
+         -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+         "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r" 
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
+    {
     "id": "vvol_6r7ye90k98ynwk1r",
     "name": "disk",
     "state": "created",
@@ -190,29 +304,56 @@ Status: 200 OK
     "snapshot_retention": 5,
     "host_dedication_key": ""
 }
-```
+    <% end %>
+  </div>
+</div>
 
 ## Delete a volume permanently
-
-`DELETE /apps/{app_name}/volumes/{volume_id}`
 
 Delete a volume. This action cannot be undone.
 
 Given the name of a Fly App and the volume ID of a Fly volume, delete the volume.
 
-### Example Volume delete request
-
-```xml
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the volume belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'volume_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the volume to permanently delete.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/{app\_name}/volumes/{volume\_id}')) do |component| %>
+      <% component.with_curl do %>
 curl -i -X DELETE \\
-    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r" 
-```
-
-**Example Machine delete response**
-
-Status: 200 OK
-
-```json
+    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r" 
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
 {
     "id": "vol_grnejj355dqdj9kr",
     "name": "new_1028_vol",
@@ -232,36 +373,65 @@ Status: 200 OK
     "snapshot_retention": 0,
     "host_dedication_key": ""
 }
-```
+    <% end %>
+  </div>
+</div>
 
 ## Extend a volume
 
-`PUT /apps/{app_name}/volumes/{volume_id}/extend`
+Given the name of a Fly App and a volume ID, you can make a volume bigger by extending it. You can extend (increase) a volume’s size, but you can’t make a volume smaller.
 
-Given the name of a Fly App and a volume ID, you can make a volume bigger by extending it.
-
-### Example extend volume request
-
-```xml
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the volume belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'volume_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the volume to extend.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'PUT', title: '/v1/apps/{app\_name}/volumes/{volume\_id}/extend')) do |component| %>
+      <% component.with_curl do %>
 curl -i -X PUT \\
-    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/extend" \\
-  -d '{
-  "size_gb": 10,
+    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/extend" \\
+    -d '{
+    "size\_gb": 10,
+}'
+      <% end %>
+      <% component.with_json do %>
+{
+  "size_gb": 0
 }
-```
-
-### Example extend volume response
-
-Status: 200 OK
-
-```json
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | size_gb | integer | yes | The size in GB to make the volume. |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
 {
     "volume": {
         "id": "vol_9vw681egy1jj5xm4",
         "name": "disk",
         "state": "created",
-        "size_gb": 3,
+        "size_gb": 10,
         "region": "yul",
         "zone": "09cd",
         "encrypted": true,
@@ -278,30 +448,56 @@ Status: 200 OK
     },
     "needs_restart": false
 }
-```
+    <% end %>
+  </div>
+</div>
 
 If `needs_restart`  is true, then your Machine needs to be restarted to make use of the added space.
 
 ## Get a list of snapshots for a volume
 
-`GET /apps/{app_name}/volumes/{volume_id}/snapshots`
-
 Given the name of a Fly app and a volume ID, list the available snapshots for that volume.
 
-### Example list volume snapshots request
-
-```xml
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to list snapshots for.'
+    ) %>
+    <% api_info.add_info(
+      name: 'volume_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the volume to list snapshots for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app\_name}/volumes/{volume\_id}/snapshots')) do |component| %>
+      <% component.with_curl do %>
 curl -i -X GET \\
-    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/snapshots" \\
-
-```
-
-### Example list volume snapshots response
-
-Status: 200 OK
-
-```json
+    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/snapshots" \\
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
 [
     {
         "id": "vs_4LNvXLLK0P6tk6KgqoexaBw",
@@ -340,77 +536,132 @@ Status: 200 OK
         "created_at": "2023-12-07T21:03:25+00:00"
     }
 ]
-```
+    <% end %>
+  </div>
+</div>
 
 ## Create a volume from a snapshot
 
-`POST /apps/{app_name}/volumes`
+Create a new volume from a snapshot backup.
 
-Create a volume from a snapshot backup.
-
-### Example create volume from snapshot request
-
-```xml
+<div class="api-section" data-exclude-render>
+  <div data-exclude-render>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to create a volume for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div data-exclude-render>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/volumes')) do |component| %>
+      <% component.with_curl do %>
 curl -i -X POST \\
-    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes" \\
+    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes" \\
   -d '{
   "name": "my-app-vol",
   "region": "yyz",
-  "size_gb": 10,
-  "snapshot_id": "vs_evl65mZQ937tQ16xGGDX8BN",
-  "source_volume_id": "vol_6r7ye90k98ynwk1r"
-}
-```
-
-### Example create volume from snapshot response
-
-Status: 200 OK
-
-```json
+  "size\_gb": 3,
+  "snapshot\_id": "vs_evl65mZQ937tQ16xGGDX8BN",
+}'
+      <% end %>
+      <% component.with_json do %>
+        {
+        "name": "string",
+        "region": "string",
+        "size_gb": 0,
+        "snapshot_id": "string",
+        }
+      <% end %>
+      <% component.with_json_table do %>
+        | Property | Type | Required | Description |
+        | --- | --- | --- | --- |
+        | `name` | string | yes | The name for the new volume. |
+        | `region` | string | yes | The target region. Must be in the same region as the Machine you want to attach it to. |
+        | `size_gb` | int | no | The size of the volume in GB. Default 3. |
+        | `snapshot_id` | string | no | The ID of the volume snapshot to use to create the new volume. |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
 {
-    "id": "vol_grnejj355dqdj9kr",
-    "name": "new_1028_vol",
-    "state": "restoring",
-    "size_gb": 3,
-    "region": "yyz",
-    "zone": "aeee",
-    "encrypted": true,
-    "attached_machine_id": null,
-    "attached_alloc_id": null,
-    "created_at": "2023-12-07T21:35:57.42Z",
-    "blocks": 0,
-    "block_size": 0,
-    "blocks_free": 0,
-    "blocks_avail": 0,
-    "fstype": "",
-    "snapshot_retention": 5,
-    "host_dedication_key": ""
+    "id": "vol_6vj0ggxl7zjkm2zr",
+    "name": "new_1028_vol",
+    "state": "restoring",
+    "size_gb": 3,
+    "region": "yyz",
+    "zone": "75ec",
+    "encrypted": true,
+    "attached_machine_id": null,
+    "attached_alloc_id": null,
+    "created_at": "2024-02-23T00:41:02.411Z",
+    "blocks": 0,
+    "block_size": 0,
+    "blocks_free": 0,
+    "blocks_avail": 0,
+    "fstype": "",
+    "snapshot_retention": 5,
+    "auto_backup_enabled": true,
+    "host_dedication_key": ""
 }
-```
+    <% end %>
+  </div>
+</div>
 
-Then get it again: the state should be “created”.
+If you wait a moment and then get the new volume, the state should be `“created”`.
 
 ## Create an on-demand volume snapshot (beta)
 
-`POST /apps/{app_name}/volumes/{volume_id}/snapshots`
-
 Create an on-demand volume snapshot.
 
-### Example create on-demand volume snapshot request
-
-```xml
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to create a snapshot for.'
+    ) %>
+    <% api_info.add_info(
+      name: 'volume_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the volume to create a snapshot of.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/volumes/{volume\_id}/snapshots')) do |component| %>
+      <% component.with_curl do %>
 curl -i -X POST \\
-    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/snapshots"
-
-```
-
-### Example create on-demand volume snapshot response
-
-Status: 200 OK
-
-```json
+    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/snapshots"
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
 {
     "Msg": {
         "backup": {
@@ -427,7 +678,9 @@ Status: 200 OK
         }
     }
 }
-```
+    <% end %>
+  </div>
+</div>
 
 Wait a few moments for the snapshot to get created and then [get the list of snapshots](#get-a-list-of-snapshots-for-a-volume) to confirm.
 
