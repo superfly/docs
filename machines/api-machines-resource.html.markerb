@@ -15,55 +15,55 @@ You can use the Machines resource to create, stop, start, update, and delete Fly
   <div class="highlight">
     <a class="endpoint">
       <span class="get-badge">get</span>
-      <span>/apps/{app\_name}/machines</span>
+      <span>/v1/apps/{app\_name}/machines</span>
     </a>
     <a class="endpoint">
       <span class="post-badge">post</span>
-      <span>/apps/{app\_name}/machines</span>
+      <span>/v1/apps/{app\_name}/machines</span>
     </a>
     <a class="endpoint">
       <span class="get-badge">get</span>
-      <span>/apps/{app\_name}/machines/{machine\_id}/wait</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/wait</span>
     </a>
     <a class="endpoint">
       <span class="get-badge">get</span>
-      <span>/apps/{app\_name}/machines/{machine\_id}</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}</span>
     </a>
     <a class="endpoint">
       <span class="post-badge">post</span>
-      <span>/apps/{app\_name}/machines/{machine\_id}</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}</span>
     </a>
     <a class="endpoint">
       <span class="post-badge">post</span>
-      <span>/apps/{app\_name}/machines/{machine\_id}/stop</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/stop</span>
     </a>
     <a class="endpoint">
       <span class="post-badge">post</span>
-      <span>/apps/{app\_name}/machines/{machine\_id}/start</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/start</span>
     </a>
     <a class="endpoint">
       <span class="delete-badge">delete</span>
-      <span>/apps/{app\_name}/machines/{machine\_id}</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}</span>
     </a>
     <a class="endpoint">
       <span class="post-badge">post</span>
-      <span>/apps/{app\_name}/machines/{machine\_id}/lease</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/lease</span>
     </a>
     <a class="endpoint">
       <span class="get-badge">get</span>
-      <span>/apps/{app\_name}/machines/{machine\_id}/lease</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/lease</span>
     </a>
     <a class="endpoint">
       <span class="delete-badge">delete</span>
-      <span>/apps/{app\_name}/machines/{machine\_id}/lease</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/lease</span>
     </a>
     <a class="endpoint">
       <span class="post-badge">post</span>
-      <span>/apps/{app\_name}/machines/{machine\_id}/cordon</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/cordon</span>
     </a>
     <a class="endpoint">
       <span class="post-badge">post</span>
-      <span>/apps/{app\_name}/machines/{machine\_id}/uncordon</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/uncordon</span>
     </a>
   </div>
 </div>
@@ -120,7 +120,7 @@ List all the Machines for an app.
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/apps/{app\_name}/machines')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app\_name}/machines')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_list_req" %>
       <% end %>
@@ -169,7 +169,7 @@ The only required parameter in the body is `image` in the `config` object.
     <%= render(api_info) %>
   </div>
   <div data-exclude-render>
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app\_name}/machines')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/machines')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_create_req" %>
       <% end %>
@@ -227,7 +227,7 @@ Create a Machine with services defined on app. Learn more about [services and ne
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app\_name}/machines')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/machines')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_create_serv_req" %>
       <% end %>
@@ -315,7 +315,7 @@ Create a Machine with services defined on app. Learn more about [services and ne
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/apps/{app\_name}/machines/{machine\_id}/wait')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app\_name}/machines/{machine\_id}/wait')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_wait_req" %>
       <% end %>
@@ -356,7 +356,7 @@ Given the name of a Fly App and a Fly Machine ID, retrieve the details of that M
     <%= render(api_info) %>
   </div>
   <div>
-    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/apps/{app\_name}/machines/{machine\_id}')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app\_name}/machines/{machine\_id}')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_get_req" %>
       <% end %>
@@ -425,7 +425,7 @@ This is, in particular, how you would update the running image of a Machine (whe
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app\_name}/machines/{machine\_id}')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/machines/{machine\_id}')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_update_req" %>
       <% end %>
@@ -488,7 +488,7 @@ Stopping a Machine will shut down the Machine, but not destroy it. The Machine m
     <%= render(api_info) %>
   </div>
   <div>
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app\_name}/machines/{machine\_id}/stop')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/machines/{machine\_id}/stop')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_stop_req" %>
       <% end %>
@@ -539,7 +539,7 @@ Start a stopped Machine. Machines that are restarted are completely reset to the
     <%= render(api_info) %>
   </div>
   <div>
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app\_name}/machines/{machine\_id}/start')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/machines/{machine\_id}/start')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_start_req" %>
       <% end %>
@@ -589,7 +589,7 @@ Given the name of a Fly App and the Machine ID of a Fly Machine, delete the Mach
     <%= render(api_info) %>
   </div>
   <div>
-    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/apps/{app\_name}/machines/{machine\_id}/')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/{app\_name}/machines/{machine\_id}/')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_delete_req" %>
       <% end %>
@@ -642,7 +642,7 @@ The Machine lease nonce is a random value we provide that indicates that you cur
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app\_name}/machines/{machine\_id}/lease')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/machines/{machine\_id}/lease')) do |component| %>
       <% component.with_curl do %>
       <%= partial "/docs/reference/machines/machines_lease_create_req" %>
       <% end %>
@@ -698,7 +698,7 @@ Retrieve the current lease of a specific Machine within an app. Machine leases c
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/apps/{app\_name}/machines/{machine\_id}/lease')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app\_name}/machines/{machine\_id}/lease')) do |component| %>
       <% component.with_curl do %>
       <%= partial "/docs/reference/machines/machines_lease_get_req" %>
       <% end %>
@@ -755,7 +755,7 @@ Release the lease of a specific Machine within an app. Machine leases can be use
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/apps/{app\_name}/machines/{machine\_id}/lease')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/{app\_name}/machines/{machine\_id}/lease')) do |component| %>
       <% component.with_curl do %>
       <%= partial "/docs/reference/machines/machines_lease_release_req" %>
       <% end %>
@@ -806,7 +806,7 @@ This is useful for bluegreen deployments: boot up a new, "green", cordoned Machi
     <%= render(api_info) %>
   </div>
   <div>
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app\_name}/machines/{machine\_id}/cordon')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/machines/{machine\_id}/cordon')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_cordon_req" %>
       <% end %>
@@ -819,7 +819,7 @@ This is useful for bluegreen deployments: boot up a new, "green", cordoned Machi
       | no body |  |  |  |
       <% end %>
     <% end %>
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/apps/{app\_name}/machines/{machine\_id}/uncordon')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/machines/{machine\_id}/uncordon')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_uncordon_req" %>
       <% end %>
