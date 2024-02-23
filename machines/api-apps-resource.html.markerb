@@ -5,13 +5,9 @@ nav: machines
 toc: false
 ---
 
-<div class="api-section" data-exclude-render>
-  <div class="left-column">
-    <p class="api-info">
-      You can use the Apps resource to create and manage Fly Apps. A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines.  Read more <a href="/docs/reference/apps/">here</a>.
-    </p>
-  </div>
-  <div class="right-column">
+You can use the Apps resource to create and manage Fly Apps. A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. Learn more about [Fly Apps](/docs/reference/apps/).
+
+<div class="right-column">
     <div class="endpoints api-card">
       <div class="api-card-header">
         Endpoints
@@ -23,11 +19,11 @@ toc: false
         </a>
         <a class="endpoint">
           <span class="get-badge">get</span>
-          <span>/apps/{app_name}</span>
+          <span>/apps/{app\_name}</span>
         </a>
         <a class="endpoint">
           <span class="delete-badge">delete</span>
-          <span>/apps/{app_name}</span>
+          <span>/apps/{app\_name}</span>
         </a>
         <a class="endpoint">
           <span class="get-badge">get</span>

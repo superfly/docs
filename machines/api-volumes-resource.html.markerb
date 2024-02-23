@@ -89,8 +89,8 @@ Given the name of a Fly App, get a list of all the volumes that belong to it.
     <%= render(CodeToggleComponent.new(badge: 'GET', title: '/apps/{app\_name}/volumes')) do |component| %>
       <% component.with_curl do %>
 curl -i -X GET \\
-    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes" 
+    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes" 
       <% end %>
       <% component.with_json do %>
       no body
