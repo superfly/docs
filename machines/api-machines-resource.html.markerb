@@ -861,7 +861,7 @@ For example, to reach a Machine with ID `3d8d413b29d089` on an app called `my-ap
 
 ## Machine `config` object properties
 
-Properties of the `config` object for Machines configuration. See [Machines properties](#machine-properties).
+Properties of the `config` object for Machine configuration. See [Machine properties](#machine-properties).
 
 **`image`:** string - Required. The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
 
