@@ -134,18 +134,17 @@ Get details about an app, like its organization slug and name. Also, to check if
     -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
     "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name" 
       <% end %>
-
     <% end %>
     <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
-    {
-      "id": "jlyv9r5d56v18xrg",
-      "name": "my-app-name",
-      "status": "pending",
-      "organization": {
-        "name": "My Org",
-        "slug": "personal"
-      }
-    }
+{
+  "id": "jlyv9r5d56v18xrg",
+  "name": "my-app-name",
+  "status": "pending",
+  "organization": {
+    "name": "My Org",
+    "slug": "personal"
+  }
+}
     <% end %>
   </div>
 </div>
