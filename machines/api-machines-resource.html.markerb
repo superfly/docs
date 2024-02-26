@@ -444,7 +444,7 @@ This is, in particular, how you would update the running image of a Machine (whe
       <% component.with_json_table do %>
       | Property | Type | Required | Description |
       | --- | --- | --- | --- |
-      | `config` | object | yes | An object defining the Machine configuration. See the [`config` object properties](#the-machine-config-object-properties) section. |
+      | `config` | object | yes | An object defining the Machine configuration. See the [`config` object properties](#machine-config-object-properties) section. |
       | `current_version` | string | no | The latest `instance_id` value of the Machine. |
       | `name` | string | no | Unique name for this Machine. If omitted, one is generated for you. String. |
       | `region` | string | no | The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you). String. |
