@@ -103,7 +103,7 @@ ID            	NAME          	REGION	STATE    	CREATED
 10e286064b1867	machine-syd   	syd   	started	2022-05-20T17:07:36Z
 0e286e40cee686	quirky-machine	cdg   	stopped	2022-05-20T17:07:04Z
 ```
-Here we see that one of the machine exited itself.
+Here we see that one of the Machines has exited.
 
 The closest equivalent API call lists all Machines in an app:
 
@@ -120,7 +120,7 @@ When you're done, delete the machine:
 
 ## Additional notes
 
-The Machines is young and full of potential. We haven't worked everything out, so please [post on our forums](https://community.fly.io/) with questions! Here are a few things worth noting:
+The Machines API is young and full of potential. We haven't worked everything out, so please [post on our forums](https://community.fly.io/) with questions! Here are a few things worth noting:
 
 The _wake-on-request_ behavior described above will be unpredictable when running more than one machine per region.
 
