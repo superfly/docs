@@ -40,7 +40,7 @@ The first section is a speed-run through the steps to make the go-example app au
         runs-on: ubuntu-latest
         concurrency: deploy-group    # optional: ensure only one action runs at a time
         steps:
-          - uses: actions/checkout@v3
+          - uses: actions/checkout@v4
           - uses: superfly/flyctl-actions/setup-flyctl@master
           - run: flyctl deploy --remote-only
             env:
@@ -122,17 +122,17 @@ The next part is to set up the steps needed to complete this job.
 
 ```yaml
       steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v4
 ```
 
-The first step is one of the built in Actions steps. The step `uses` the `checkout@v3` action which checks out the repository into a directory on the virtual machine. You're now ready to deploy.
+The first step is one of the built in Actions steps. The step `uses` the [`checkout@v4` action](https://github.com/marketplace/actions/checkout) which checks out the repository into a directory on the virtual machine. You're now ready to deploy.
 
 ```yaml
         - uses: superfly/flyctl-actions/setup-flyctl@master
         - run: flyctl deploy --remote-only
 ```
 
-This step `uses` the superfly/flyctl-actions action. This is a GitHub action created by Fly.io which wraps around the `flyctl` command. The wrapper is invoked with the `deploy` argument which will take over the process of building and moving the application to the Fly.io infrastructure. It uses the settings from the `fly.toml` file to guide it and uses the `FLY_API_TOKEN` to authorize its access to the Fly.io GraphQL API.
+This step `uses` the [superfly/flyctl-actions action](https://github.com/marketplace/actions/github-action-for-flyctl). This is a GitHub action created by Fly.io which wraps around the `flyctl` command. The wrapper is invoked with the `deploy` argument which will take over the process of building and moving the application to the Fly.io infrastructure. It uses the settings from the `fly.toml` file to guide it and uses the `FLY_API_TOKEN` to authorize its access to the Fly.io GraphQL API.
 
 ```yaml
           env:
