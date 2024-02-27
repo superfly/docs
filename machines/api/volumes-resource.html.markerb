@@ -686,6 +686,6 @@ Wait a few moments for the snapshot to get created and then [get the list of sna
 
 ## Related topics
 
-- [Working with the Machines API](/docs/machines/working-with-machines/)
-- [Apps resource](/docs/machines/api-apps-resource/) reference
-- [Machines resource](/docs/machines/api-machines-resource/) reference
+- [Working with the Machines API](/docs/machines/api/working-with-machines-api/)
+- [Apps resource](/docs/machines/api/apps-resource/) reference
+- [Machines resource](/docs/machines/api/machines-resource/) reference
