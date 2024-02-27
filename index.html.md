@@ -51,7 +51,7 @@ Add-on services to help you run your entire stack near your users.
 - [Upstash for Redis®](/docs/reference/redis/)
 - [Tigris object storage](/docs/reference/tigris/)
 - [Supabase Postgres (private beta)](/docs/reference/supabase/)
-- [Sentry error alerting](/docs/reference/sentry/)
+- [Sentry application monitoring](/docs/reference/sentry/)
 - [LiteFS Cloud](/docs/litefs/cloud-backups/)
 - [Fly Kubernetes (private beta)](/docs/kubernetes/fks-quickstart/)
 
