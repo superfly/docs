@@ -1045,6 +1045,6 @@ Properties of the `config` object for Machine configuration. See [Machine proper
 
 ## Related topics
 
-- [Working with the Machines API](/docs/machines/working-with-machines/)
-- [Apps resource](/docs/machines/api-apps-resource/) reference
-- [Volumes resource](/docs/machines/api-volumes-resource/) reference
+- [Working with the Machines API](/docs/machines/api/working-with-machines-api/)
+- [Apps resource](/docs/machines/api/apps-resource/) reference
+- [Volumes resource](/docs/machines/api/volumes-resource/) reference

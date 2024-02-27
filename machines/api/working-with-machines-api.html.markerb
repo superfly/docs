@@ -82,6 +82,6 @@ Authorization: Bearer <fly_api_token>
 
 ## Related topics
 
-- [Apps resource](/docs/machines/api-apps-resource/) reference
-- [Machines resource](/docs/machines/api-machines-resource/) reference
-- [Volumes resource](/docs/machines/api-volumes-resource/) reference
+- [Apps resource](/docs/machines/api/apps-resource/) reference
+- [Machines resource](/docs/machines/api/machines-resource/) reference
+- [Volumes resource](/docs/machines/api/volumes-resource/) reference

@@ -15,11 +15,11 @@ nav: firecracker
 
 Machines are fast-launching VMs—and the engine of the Fly.io platform.
 
-[Fly Machines](/docs/machines/working-with-machines/)
+[Fly Machines](/docs/machines/)
 
 They're also a low-level interface to deploy and scale out your application with precise control.
 
-[The Machines API](/docs/machines/)
+[The Machines API](/docs/machines/api/)
 
 ## Fly Launch
 
