@@ -12,6 +12,7 @@ flyctl postgres users list [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for list
+  -j, --json            JSON output
 ~~~
 
 ## Global Options

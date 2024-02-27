@@ -13,7 +13,6 @@ flyctl postgres users [command] [flags]
 
 ~~~
   -h, --help   help for users
-  -j, --json   JSON output
 ~~~
 
 ## Global Options
