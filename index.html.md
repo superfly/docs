@@ -37,10 +37,10 @@ Run GPU workloads on Fly Machines.
 
 All languages and frameworks can run on Fly.io. We have more extensive docs and support for the following:
 - [Elixir](/docs/elixir/)
-- [Rails](/docs/elixir/)
-- [JS](/docs/elixir/)
-- [Laravel](/docs/elixir/)
-- [Django](/docs/elixir/)
+- [Rails](/docs/rails/)
+- [JS](/docs/js/)
+- [Laravel](/docs/laravel/)
+- [Django](/docs/django/)
 
 <br>
 See the whole list:
