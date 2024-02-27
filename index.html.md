@@ -4,9 +4,12 @@ layout: docs
 toc: false
 nav: firecracker
 ---
-## Start here
 
+<div class="index-page">
+
+## Start here
 [Getting started](/docs/getting-started/)
+
 
 ## Fly Machines
 
@@ -33,13 +36,13 @@ Run GPU workloads on Fly Machines.
 ## Languages and frameworks
 
 All languages and frameworks can run on Fly.io. We have more extensive docs and support for the following:
-
 - [Elixir](/docs/elixir/)
 - [Rails](/docs/elixir/)
 - [JS](/docs/elixir/)
 - [Laravel](/docs/elixir/)
 - [Django](/docs/elixir/)
 
+<br>
 See the whole list:
 
 [Languages & Frameworks](/docs/languages-and-frameworks/)
@@ -47,7 +50,6 @@ See the whole list:
 ## Supporting services
 
 Add-on services to help you run your entire stack near your users.
-
 - [Upstash for Redis®](/docs/reference/redis/)
 - [Tigris object storage](/docs/reference/tigris/)
 - [Supabase Postgres (private beta)](/docs/reference/supabase/)
@@ -76,3 +78,6 @@ Set up DNS and SSL certs for your app at your own domain.
 [Deploy with GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/)
 
 Set up continuous deployment from GitHub.
+
+
+</div>
