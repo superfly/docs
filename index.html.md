@@ -1,36 +1,83 @@
 ---
 title: "Fly.io developer documentation"
 layout: docs
-sitemap: false
+toc: false
 nav: firecracker
 ---
 
-Deploy your project in a few minutes with [Fly Launch](/docs/apps/). Then do more with [Fly Machines](/docs/machines/).
+<div class="index-page">
 
-## Run your entire stack near your users
+## Start here
+[Getting started](/docs/getting-started/)
 
-Deploy in any [region](/docs/reference/regions/). Manage your worker [processes](/docs/apps/processes/) alongside your web server. Back it with a [Fly Postgres](/docs/postgres/) app, or bring your own exotic database. Whatever supporting infrastructure you need! It's all just VMs.
 
-[Try our Speedrun](/docs/speedrun/)
+## Fly Machines
+
+Machines are fast-launching VMs—and the engine of the Fly.io platform.
+
+[Fly Machines](/docs/machines/working-with-machines/)
+
+They're also a low-level interface to deploy and scale out your application with precise control.
+
+[The Machines API](/docs/machines/)
+
+## Fly Launch
+
+Fly Launch is configuration, provisioning, deployment, scaling, and orchestration with flyctl, built on Fly Machines.
 
 [Learn more about Fly Launch](/docs/apps/)
 
-## Scale at your own pace
+## GPU compute
 
-[flyctl](/docs/flyctl/) helps you herd VMs, but puts the power in your hands.
+Run GPU workloads on Fly Machines.
 
-Scale locally, or put your app next to your users in ten more cities. Either way, it's [one command](/docs/apps/scale-count/). Add CPU oomph or RAM, again with [one command](/docs/apps/scale-machine/). Pay for what you use, and have your VMs stop when they're idle, so you don't use more than you need.
+[Fly GPUs](/docs/gpus/)
 
-<figure>
-  <img src="/static/images/docs-intro.webp" srcset="/static/images/docs-intro@2x.webp 2x" alt="">
-</figure>
+## Languages and frameworks
 
-## Control individual VMs
+All languages and frameworks can run on Fly.io. We have more extensive docs and support for the following:
+- [Elixir](/docs/elixir/)
+- [Rails](/docs/elixir/)
+- [JS](/docs/elixir/)
+- [Laravel](/docs/elixir/)
+- [Django](/docs/elixir/)
 
-The Fly Launch platform-as-a-service is there to make your apps easy to launch and manage. When you outgrow its opinions, micromanage your app VMs with `fly machines` commands, or drop down a level of abstraction to the [Machines API](/docs/machines/api/). Launch [tiny, fast-booting VMs](/docs/machines/) from your app! The perfect way to run user code, or try that sketchy TypeScript snippet ChatGPT suggested.
+<br>
+See the whole list:
 
-[Learn more about Fly Machines](/docs/machines/)
+[Languages & Frameworks](/docs/languages-and-frameworks/)
 
-## Build your own cloud
+## Supporting services
 
-Go ahead and build your own cloud on top of Fly Machines! Did we mention it's all just VMs? Fly.io features don't care what shape your project takes. A powerful CLI, remote Docker builds, private networking, persistent storage, logging, metrics, secrets management, load balancing, certs, autoscaling, dynamic request routing...it's all available, whatever scale and complexity you're working with.
+Add-on services to help you run your entire stack near your users.
+- [Upstash for Redis®](/docs/reference/redis/)
+- [Tigris object storage](/docs/reference/tigris/)
+- [Supabase Postgres (private beta)](/docs/reference/supabase/)
+- [Sentry application monitoring](/docs/reference/sentry/)
+- [LiteFS Cloud](/docs/litefs/cloud-backups/)
+- [Fly Kubernetes (private beta)](/docs/kubernetes/fks-quickstart/)
+
+## Production readiness
+
+[Networking](/docs/networking/)
+
+Private networking, public services, routing, and load balancing.
+
+[Export logs](/docs/going-to-production/monitoring/exporting-logs/)
+
+Ship your app’s logs where you want them.
+
+[Metrics](/docs/reference/metrics/)
+
+Explore built-in and custom Prometheus metrics and Grafana dashboards.
+
+[Custom domains](/docs/networking/custom-domain/)
+
+Set up DNS and SSL certs for your app at your own domain.
+
+[Deploy with GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/)
+
+Set up continuous deployment from GitHub.
+
+
+</div>
