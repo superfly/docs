@@ -2,7 +2,7 @@
 title: The Machine Runtime Environment
 layout: docs
 nav: firecracker
-redirect_from: /docs/reference/runtime-environment/
+redirect_from: /docs/machines/runtime-environment/
 ---
 
 Environment variables make several kinds of information available within a Machine's runtime environment. The values come from three sources:

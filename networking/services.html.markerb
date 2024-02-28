@@ -137,7 +137,7 @@ If you depend on knowing this address for some reason, it's up to you to monitor
 
 ### Find your Machine's outbound IP
 
-The Machine's outbound IPv6 address is available in the `FLY_PUBLIC_IP` [environment variable](/docs/reference/runtime-environment/). Use `fly ssh console -s` to get an interactive shell on the Machine of your choice.
+The Machine's outbound IPv6 address is available in the `FLY_PUBLIC_IP` [environment variable](/docs/machines/runtime-environment/). Use `fly ssh console -s` to get an interactive shell on the Machine of your choice.
 
 ```
 / # echo $FLY_PUBLIC_IP

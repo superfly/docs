@@ -140,7 +140,7 @@ By default, Django is configured for local development. The [How to Deploy Djang
 However, for demonstration purposes, we can take some shortcuts.
 
 First, in the [`hello_django/settings.py`](https://github.com/fly-apps/hello-django/blob/main/hello_django/settings.py) file update the `ALLOWED_HOSTS` configuration to accept
-a host on which it's deployed. Use the [`FLY_APP_NAME`](https://fly.io/docs/reference/runtime-environment/#fly_app_name)
+a host on which it's deployed. Use the [`FLY_APP_NAME`](https://fly.io/docs/machines/runtime-environment/#fly_app_name)
 environment variable for that:
 
 ```python

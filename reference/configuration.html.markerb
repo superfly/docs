@@ -235,11 +235,11 @@ wait_timeout = "10m"
   S3_BUCKET = "my-app-production"
 ```
 
-This optional section allows setting non-sensitive information as environment variables in the application's [runtime environment](/docs/reference/runtime-environment/).
+This optional section allows setting non-sensitive information as environment variables in the application's [runtime environment](/docs/machines/runtime-environment/).
 
 For sensitive information, such as credentials or passwords, use the [secrets CLI command](/docs/reference/secrets).
 
-Env variable names are strictly case-sensitive and cannot begin with `FLY_` (as this could clash with the [runtime environment](/docs/reference/runtime-environment)). Env values can only be strings.
+Env variable names are strictly case-sensitive and cannot begin with `FLY_` (as this could clash with the [runtime environment](/docs/machines/runtime-environment)). Env values can only be strings.
 
 Secrets take precedence over env variables with the same name.
 

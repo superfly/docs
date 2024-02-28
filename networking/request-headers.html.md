@@ -17,7 +17,7 @@ Request headers carry information that is specific to the incoming request and i
 ### `Fly-Region`
 **Edge Node Region**: This header is a three letter region code which represents the region that the connection was accepted in and routed from.
 
-Not to be confused with the [environment variable](/docs/reference/runtime-environment/#fly_region) `FLY_REGION`, which is where the application is running.
+Not to be confused with the [environment variable](/docs/machines/runtime-environment/#fly_region) `FLY_REGION`, which is where the application is running.
 
 ### `X-Forwarded-For`
 **Client and Proxy List**: This is a comma separated list comprising of the client that originated the request and the proxy servers the request passed through. For example, "77.97.0.98, 77.83.142.33" contains the client and the one proxy it passed through.
