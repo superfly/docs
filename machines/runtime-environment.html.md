@@ -31,7 +31,7 @@ Not to be confused with the [HTTP header](/docs/networking/request-headers/#fly-
 **IPV6 public IP**: The full public outbound IPV6 address for this Machine. Read more in the [Network Services](/docs/networking/services/#outbound-ip-addresses) section.
 
 ### `FLY_IMAGE_REF`
-**Docker image reference**: The name of the Docker image running this container. `registry.fly.io/my-app-name:deployment-01H9RK9EYO9PGNBYAKGXSHV0PH` is an example of the Docker Image Reference's format.
+**Docker image reference**: The name of the Docker image used to create the Machine. `registry.fly.io/my-app-name:deployment-01H9RK9EYO9PGNBYAKGXSHV0PH` is an example of the Docker Image Reference's format.
 
 Useful if your app needs to launch Machine instances of itself to scale background workers to zero and back, as in [Rails Background Jobs with Fly Machines](https://fly.io/ruby-dispatch/rails-background-jobs-with-fly-machines/).
 
