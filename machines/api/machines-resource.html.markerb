@@ -807,7 +807,7 @@ This is useful for bluegreen deployments: boot up a new, "green", cordoned Machi
       name: 'machine_id',
       type: 'string',
       required: true,
-      description: 'The ID of the Machine cordon or uncordon.'
+      description: 'The ID of the Machine to cordon or uncordon.'
     ) %>
     <%= render(api_info) %>
     <% api_info = ApiInfoComponent.new(
@@ -831,7 +831,7 @@ This is useful for bluegreen deployments: boot up a new, "green", cordoned Machi
       | no body |  |  |  |
       <% end %>
     <% end %>
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines/{machine_id}/uncordon')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/machines/{machine\_id}/uncordon')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_uncordon_req" %>
       <% end %>
@@ -939,8 +939,8 @@ Add or update a metadata key-value pair on a specific Machine's config.
       <% end %>
       <% component.with_json do %>
       {
-"value":""
-}
+        "value":""
+      }
       <% end %>
       <% component.with_json_table do %>
       | Property | Type | Required | Description |
@@ -979,7 +979,6 @@ Delete a metadata key-value pair on a specific Machine's config.
       required: true,
       description: 'The key of the metadata to delete.'
     ) %>
-
     <%= render(api_info) %>
     <% api_info = ApiInfoComponent.new(
       heading: 'Responses',
