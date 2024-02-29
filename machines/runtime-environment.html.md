@@ -1,7 +1,7 @@
 ---
 title: The Machine Runtime Environment
 layout: docs
-nav: firecracker
+nav: machines
 redirect_from: /docs/machines/runtime-environment/
 ---
 
