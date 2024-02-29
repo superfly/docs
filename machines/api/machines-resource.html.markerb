@@ -989,7 +989,7 @@ This is useful for bluegreen deployments: boot up a new, "green", cordoned Machi
       | no body |  |  |  |
       <% end %>
     <% end %>
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/machines/{machine\_id}/uncordon')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines/{machine_id}/uncordon')) do |component| %>
       <% component.with_curl do %>
         <%= partial "/docs/reference/machines/machines_uncordon_req" %>
       <% end %>
@@ -1002,6 +1002,7 @@ This is useful for bluegreen deployments: boot up a new, "green", cordoned Machi
       | no body |  |  |  |
       <% end %>
     <% end %>
+
     <%= render(CodeSampleComponent.new(title: 'Status: 200 OK', language: 'json')) do %>
       <%= partial "/docs/reference/machines/machines_ok_true_resp" %>
     <% end %>
