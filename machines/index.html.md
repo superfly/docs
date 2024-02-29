@@ -14,7 +14,7 @@ Understand how Machines work and other things you need to know when you have low
 
 [Machine sizing](/docs/machines/guides-examples/machine-sizing/)
 
-[The Machine Runtime Environment](/docs/machines/runtime-environment/)
+[The Machine runtime environment](/docs/machines/runtime-environment/)
 
 ## How-Tos
 
