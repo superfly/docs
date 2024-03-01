@@ -6,7 +6,6 @@ toc: false
 redirect_from: /docs/machines/api-machines-resource/
 ---
 
-
 You can use the Machines resource to create, stop, start, update, and delete Fly Machines. Fly Machines are fast-launching VMs on Fly.io. The Machine resource is the configuration and state for a Machine.
    
 <div class="endpoints api-card">
@@ -123,6 +122,11 @@ List all the Machines for an app.
       name: 'region',
       type: 'String',
       description: 'Filter by region. For example, to return only Machines in the `yyz` region: `GET /v1/apps/my-app-name/machines?region=yyz`'
+    ) %>
+    <% api_info.add_info(
+      name: 'metadata.{key}',
+      type: 'String',
+      description: 'Filter by metadata key-value pair. For example, to return only Machines with metadata item `"foo": "bar"` : `GET /v1/apps/my-app-name/machines?metadata.foo=bar`'
     ) %>
     <%= render(api_info) %>
     <% api_info = ApiInfoComponent.new(
