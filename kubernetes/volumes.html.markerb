@@ -76,3 +76,8 @@ spec:
 
 This will search for an existing volume with the name `my-volume`. If it does not exist, it will create the volume with the resources
 requested in the volume claim. In this example, this will create a 5GB volume named `my-volume`.
+
+## Related topics
+
+- [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
+- [Create an FKS cluster](/docs/kubernetes/clusters/)

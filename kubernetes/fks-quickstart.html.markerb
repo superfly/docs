@@ -142,3 +142,8 @@ On container specs, we don't support the following fields:
 - `terminationMessagePolicy`
 - `imagePullPolicy`
 - `securityContext`
+
+## Related topics
+
+- [Create an FKS cluster](/docs/kubernetes/clusters/)
+- [Using volumes with FKS](/docs/kubernetes/volumes/)
