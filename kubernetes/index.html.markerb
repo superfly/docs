@@ -1,0 +1,67 @@
+---
+title: Fly Kubernetes
+layout: docs
+toc: false
+nav: firecracker
+---
+
+<div class= "important icon">
+Fly Kubernetes is a closed beta. Email us at sales@fly.io for early access.
+</div>
+
+Fly Kubernetes (FKS) is a fully managed Kubernetes service built on the Fly.io platform. It enables you to easily deploy Kubernetes clusters without the hassle of managing and operating the control plane. Learn more about [why and how we made FKS](https://fly.io/blog/fks/).
+
+## Getting started
+
+To get up and running immediately, try the [Fly Kubernetes quickstart](https://fly.io/docs/kubernetes/fks-quickstart/) guide
+
+## Features
+
+Fly Kubernetes benefits from the features of the Fly.io platform.
+
+### Fly.io infrastructure
+
+FKS is built on top of Fly.io infrastructure:
+
+* Compute is backed by [Fly Machines](/docs/machines/), our fast-launching VMs built with Firecracker. 
+* Volumes are handled with [Fly Volumes](/docs/volumes/); local, fast NVME drives.  
+* Networking is built on our [internal WireGuard mesh](/docs/networking/private-networking/#private-network-vpn) with routing performed by Fly Proxy.
+
+### Cluster scalability
+
+Pods are scheduled across our fleet of bare-metal servers, not limited to a specific node. Workloads are automatically distributed across the fleet, enabling a cluster to scale with ease.
+
+### Security
+
+With Fly Kubernetes, you get all the security benefits of our platform.
+
+  * Private network traffic flows over our internal WireGuard mesh, ensuring it is encrypted.
+  * FKS clusters are secured within a private VPN.
+  * Compute is built on Firecracker microVMs — lightweight and secure virtual machines. This provides improved isolation guarantees ensuring your application code is safe.
+  * Volumes are encrypted at rest for additional protection of the data on the volume.
+  * Secrets are automatically stored in an encrypted vault.
+
+### Simple and secure client authentication
+
+Connect to your cluster using kubectl. Clients are authenticated with our API tokens. They expire after an hour and are rotated automatically after expiration.
+
+### Not supported
+
+  * Persistent volumes (coming soon)
+  * Sidecars and init processes (coming soon)
+  * Horizontal pod autoscaling
+  * Gateway API
+  * Network policies
+  * Daemon sets
+  * EmptyDir volumes (coming soon)
+
+### Pricing
+
+See the [pricing page](/docs/about/pricing/#fly-kubernetes) for information on FKS pricing.
+
+## Related topics
+
+- [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
+- [Create an FKS cluster](/docs/kubernetes/clusters/)
+- [Using volumes with FKS](/docs/kubernetes/volumes/)
+

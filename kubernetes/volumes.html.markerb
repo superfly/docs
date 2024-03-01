@@ -1,0 +1,87 @@
+---
+title: Using volumes with FKS
+layout: docs
+toc: true
+nav: firecracker
+---
+
+<div class= "important icon">
+Fly Kubernetes is a closed beta. Email us at sales@fly.io for early access.
+</div>
+
+Fly Kubernetes supports CSI ephemeral volumes and persistent volumes.
+
+## CSI ephemeral volumes
+
+CSI volumes are supported through our CSI driver `volume.csi.storage.fly.io`. Here is an example of a CSI ephemeral volume
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webserver
+spec:
+  containers:
+    - name: webserver
+      image: nginx:latest
+      volumeMounts:
+        - mountPath: "/data"
+          name: csi-volume
+  volumes:
+    - name: csi-volume
+      csi:
+        driver: volume.csi.storage.fly.io
+        volumeAttributes:
+          size: "2Gi"
+```
+
+## Persistent volumes
+
+Persistent volumes are created through a `PersistentVolumeClaim`. Here is an example of creating a claim
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: flyio-pv-claim
+spec:
+  storageClassName: flyio-volume
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+```
+
+The `storageClassName` is the name of the type of storage provided by us. It must always be set to `flyio-volume`.
+
+To use the volume in a pod
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  volumes:
+    - name: my-volume
+      persistentVolumeClaim:
+        claimName: flyio-pv-claim
+  containers:
+    - name: my-nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: my-volume
+```
+
+This will search for an existing volume with the name `my-volume`. If it does not exist, it will create the volume with the resources
+requested in the volume claim. In this example, this will create a 5GB volume named `my-volume`.
+
+## Related topics
+
+- [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
+- [Create an FKS cluster](/docs/kubernetes/clusters/)
