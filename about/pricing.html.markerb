@@ -115,6 +115,12 @@ We bill for outbound data transfer from the region a VM is running in, inbound t
 
 <%= partial("shared/network_pricing") %>
 
+## Fly Kubernetes
+
+[Fly Kubernetes](/docs/kubernetes/) (FKS) is an implementation of Kubernetes that runs on Fly.io.
+
+- $75/mo per cluster
+- Plus the cost of [Fly Machines](#fly-machines) and [Fly volumes](#persistent-storage-volumes) used by FKS
 
 ## LiteFS Cloud
 
