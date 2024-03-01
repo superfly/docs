@@ -19,13 +19,16 @@ For example:
 ```yaml
 apiVersion: v1
 clusters:
-  - cluster:
-      certificate-authority-data: xxxxxxxx
-      server: https://fks-senyeezus-972-morning-cherry-7280.flycast:6443
-    name: fks-senyeezus-972-morning-cherry-7280
+  - name: fks-flyio-fksdemo
+    cluster:
+      certificate-authority-data: ...
+      server: https://fks-flyio-fksdemo.flycast:6443
+      extensions:
+      ...
+      ...
 contexts:
   - context:
-      cluster: fks-senyeezus-972-morning-cherry-7280
+      cluster: fks-flyio-fksdemo
       user: default
     name: default
 current-context: default
@@ -34,7 +37,8 @@ preferences: {}
 users:
   - name: default
     user:
-      token: xxxxxx
+    ...
+    ...
 ```
 
 We're going to save the output into a file named `kubeconfig` and create an environment variable `KUBECONFIG` that points to the file:
@@ -112,9 +116,12 @@ Configuring firecracker
 
 ## What we don't support
 
-- Services (coming soon)
 - Multi-container pods (coming soon)
-- Autoscaling
+- Network policies
+- Horizontal pod autoscaling
+- Gateway API
+- Daemon sets
+- EmptyDir volumes
 
 On container specs, we don't support the following fields:
 
@@ -127,10 +134,8 @@ On container specs, we don't support the following fields:
 - `stdin`
 - `stdinOnce`
 - `tty`
-- `EnvFromSource.secretRef`
 - `EnvVarSource.fieldRef`
 - `EnvVarSource.resourceFieldRef`
-- `EnvVarSource.secretKeyRef`
 - `volumeDevices`
 - `lifecycle`
 - `terminationMessagePath`
