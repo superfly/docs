@@ -5,6 +5,10 @@ toc: true
 nav: firecracker
 ---
 
+<div class= "important icon">
+Fly Kubernetes is a closed beta. Email us at sales@fly.io for early access.
+</div>
+
 Fly Kubernetes supports CSI ephemeral volumes and persistent volumes.
 
 ## CSI ephemeral volumes

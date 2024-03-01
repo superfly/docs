@@ -5,6 +5,10 @@ toc: false
 nav: firecracker
 ---
 
+<div class= "important icon">
+Fly Kubernetes is a closed beta. Email us at sales@fly.io for early access.
+</div>
+
 To create a Kubernetes cluster, run:
 
 ```cmd
