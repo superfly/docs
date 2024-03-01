@@ -54,11 +54,11 @@ Machines must be associated with a Fly App. App names must be unique.
     <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps')) do |component| %>
       <% component.with_curl do %>
         curl -i -X POST \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY\_API\_HOSTNAME}/v1/apps" \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps" \\
   -d '{
-      "app\_name": "my-app-name",
-      "org\_slug": "personal",
+      "app_name": "my-app-name",
+      "org_slug": "personal",
       "network": "my-optional-network"
     }'
       <% end %>
@@ -129,11 +129,11 @@ Get details about an app, like its organization slug and name. Also, to check if
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/\{app\_name\}')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/\{app_name\}')) do |component| %>
       <% component.with_curl do %>
         curl -i -X GET \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name" 
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name" 
       <% end %>
     <% end %>
     <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
@@ -194,11 +194,11 @@ Machines should be stopped before attempting deletion. Append `?force=true` to t
     )) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/\{app\_name\}')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/\{app_name\}')) do |component| %>
       <% component.with_curl do %>
         curl -i -X DELETE \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name" 
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name" 
       <% end %>
       <% component.with_json do %>
       no body
@@ -238,11 +238,11 @@ Machines should be stopped before attempting deletion. Append `?force=true` to t
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps?org\_slug\=')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps?org_slug\=')) do |component| %>
       <% component.with_curl do %>
         curl -i -X GET \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY\_API\_HOSTNAME}/v1/apps?org\_slug=personal"
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps?org_slug=personal"
       <% end %>
       <% component.with_json do %>
       | Property | Type | Required | Description |
