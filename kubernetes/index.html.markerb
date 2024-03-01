@@ -53,5 +53,5 @@ Connect to your cluster using kubectl. Clients are authenticated with our API to
 
 ### Pricing
 
-See the [pricing page](/docs/about/pricing/) for information on FKS pricing
+See the [pricing page](/docs/about/pricing/#fly-kubernetes) for information on FKS pricing.
 
