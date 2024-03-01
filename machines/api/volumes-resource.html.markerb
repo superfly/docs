@@ -87,11 +87,11 @@ Given the name of a Fly App, get a list of all the volumes that belong to it.
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app\_name}/volumes')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app_name}/volumes')) do |component| %>
       <% component.with_curl do %>
 curl -i -X GET \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes" 
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes" 
       <% end %>
       <% component.with_json do %>
       no body
@@ -169,15 +169,15 @@ Create a volume for a specific app according to the configuration provided in th
     <%= render(api_info) %>
   </div>
   <div data-exclude-render>
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/volumes')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/volumes')) do |component| %>
       <% component.with_curl do %>
       curl -i -X POST \\
-      -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-      "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes" \\
+      -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+      "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes" \\
       -d '{
-      "name": "my\_app\_vol",
+      "name": "my_app_vol",
       "region": "ord",
-      "size\_gb": 10
+      "size_gb": 10
     }'
       <% end %>
       <% component.with_json do %>
@@ -270,11 +270,11 @@ Retrieve details about a specific volume by its ID within an app.
     <%= render(api_info) %>
   </div>
   <div>
-    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app\_name}/volumes/{volume\_id}')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app_name}/volumes/{volume_id}')) do |component| %>
       <% component.with_curl do %>
         curl -i -X GET \\
-         -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-         "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r" 
+         -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+         "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r" 
       <% end %>
       <% component.with_json do %>
       no body
@@ -339,11 +339,11 @@ Given the name of a Fly App and the volume ID of a Fly volume, delete the volume
     <%= render(api_info) %>
   </div>
   <div>
-    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/{app\_name}/volumes/{volume\_id}')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/{app_name}/volumes/{volume_id}')) do |component| %>
       <% component.with_curl do %>
 curl -i -X DELETE \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r" 
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r" 
       <% end %>
       <% component.with_json do %>
       no body
@@ -406,13 +406,13 @@ Given the name of a Fly App and a volume ID, you can make a volume bigger by ext
     <%= render(api_info) %>
   </div>
   <div>
-    <%= render(CodeToggleComponent.new(badge: 'PUT', title: '/v1/apps/{app\_name}/volumes/{volume\_id}/extend')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'PUT', title: '/v1/apps/{app_name}/volumes/{volume_id}/extend')) do |component| %>
       <% component.with_curl do %>
 curl -i -X PUT \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/extend" \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/extend" \\
     -d '{
-    "size\_gb": 10,
+    "size_gb": 10,
 }'
       <% end %>
       <% component.with_json do %>
@@ -483,11 +483,11 @@ Given the name of a Fly app and a volume ID, list the available snapshots for th
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app\_name}/volumes/{volume\_id}/snapshots')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app_name}/volumes/{volume_id}/snapshots')) do |component| %>
       <% component.with_curl do %>
 curl -i -X GET \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/snapshots" \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/snapshots" \\
       <% end %>
       <% component.with_json do %>
       no body
@@ -563,16 +563,16 @@ Create a new volume from a snapshot backup.
     <%= render(api_info) %>
   </div>
   <div data-exclude-render>
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/volumes')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/volumes')) do |component| %>
       <% component.with_curl do %>
 curl -i -X POST \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes" \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes" \\
   -d '{
   "name": "my-app-vol",
   "region": "yyz",
-  "size\_gb": 3,
-  "snapshot\_id": "vs_evl65mZQ937tQ16xGGDX8BN",
+  "size_gb": 3,
+  "snapshot_id": "vs_evl65mZQ937tQ16xGGDX8BN",
 }'
       <% end %>
       <% component.with_json do %>
@@ -647,11 +647,11 @@ Create an on-demand volume snapshot.
     <%= render(api_info) %>
   </div>
   <div> 
-    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app\_name}/volumes/{volume\_id}/snapshots')) do |component| %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/volumes/{volume_id}/snapshots')) do |component| %>
       <% component.with_curl do %>
 curl -i -X POST \\
-    -H "Authorization: Bearer ${FLY\_API\_TOKEN}" -H "Content-Type: application/json" \\
-    "${FLY\_API\_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/snapshots"
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r/snapshots"
       <% end %>
       <% component.with_json do %>
       no body
