@@ -1,5 +1,5 @@
 ---
-title: Clusters
+title: Create an FKS cluster
 layout: docs
 toc: false
 nav: firecracker
@@ -39,11 +39,12 @@ users:
     ...
     ...
 ```
-Our cluster is accessible over our organization's [private WireGuard network](/docs/reference/private-networking). To connect to our cluster, we need a WireGuard configuration. 
+
+Your cluster is accessible over your organization's [private WireGuard network](/docs/reference/private-networking). To connect to your cluster, you need a WireGuard configuration. 
 
 Follow the [Private Network VPN instructions](/docs/networking/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io IPv6 private network.
 
-Once set up, you can use `kubectl`
+Once set up, you can use `kubectl`:
 
 ```
 > kubectl get ns

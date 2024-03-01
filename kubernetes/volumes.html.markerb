@@ -1,11 +1,11 @@
 ---
-title: Volumes
+title: Using volumes with FKS
 layout: docs
-toc: false
+toc: true
 nav: firecracker
 ---
 
-We support CSI ephemeral volumes and persistent volumes.
+Fly Kubernetes supports CSI ephemeral volumes and persistent volumes.
 
 ## CSI ephemeral volumes
 
@@ -30,6 +30,8 @@ spec:
         volumeAttributes:
           size: "2Gi"
 ```
+
+## Persistent volumes
 
 Persistent volumes are created through a `PersistentVolumeClaim`. Here is an example of creating a claim
 

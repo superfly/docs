@@ -5,7 +5,7 @@ toc: false
 nav: firecracker
 ---
 
-Fly Kubernetes is a fully managed Kubernetes service built on the Fly.io platform. It enables you to easily deploy Kubernetes clusters without the hassle of managing and operating the control plane.
+Fly Kubernetes (FKS) is a fully managed Kubernetes service built on the Fly.io platform. It enables you to easily deploy Kubernetes clusters without the hassle of managing and operating the control plane.
 
 ## Getting started
 
@@ -13,10 +13,15 @@ To get up and running immediately, try the [Fly Kubernetes quickstart](https://f
 
 ## Features
 
+FLy Kubernetes benefits from the features of the Fly.io platform.
+
 ### Fly.io infrastructure
 
-FKS is built on top of Fly.io infrastructure. Compute is backed by Fly Machines, our fast-launching VMs built with Firecracker. Volumes are handled with
-Fly Volumes, local, fast NVME drives.  Networking is built on our internal WireGuard mesh with routing performed by Fly Proxy.
+FKS is built on top of Fly.io infrastructure:
+
+* Compute is backed by [Fly Machines](/docs/machines/), our fast-launching VMs built with Firecracker. 
+* Volumes are handled with [Fly Volumes](/docs/volumes/); local, fast NVME drives.  
+* Networking is built on our [internal WireGuard mesh](/docs/networking/private-networking/#private-network-vpn) with routing performed by Fly Proxy.
 
 ### Cluster scalability
 
@@ -26,11 +31,11 @@ Pods are scheduled across our fleet of bare-metal servers, not limited to a spec
 
 With Fly Kubernetes, you get all the security benefits of our platform.
 
-  * Private network traffic flows over our internal WireGuard mesh, ensuring it is encrypted
-  * FKS clusters are secured within a private VPN
+  * Private network traffic flows over our internal WireGuard mesh, ensuring it is encrypted.
+  * FKS clusters are secured within a private VPN.
   * Compute is built on Firecracker microVMs — lightweight and secure virtual machines. This provides improved isolation guarantees ensuring your application code is safe.
-  * Volumes are encrypted at rest for additional protection of the data on the volume
-  * Secrets are automatically stored in an encrypted vault
+  * Volumes are encrypted at rest for additional protection of the data on the volume.
+  * Secrets are automatically stored in an encrypted vault.
 
 ### Simple and secure client authentication
 
@@ -48,5 +53,5 @@ Connect to your cluster using kubectl. Clients are authenticated with our API to
 
 ### Pricing
 
-See the pricing page for information on FKS pricing
+See the [pricing page](/docs/about/pricing/) for information on FKS pricing
 
