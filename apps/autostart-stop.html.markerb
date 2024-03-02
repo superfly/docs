@@ -43,7 +43,7 @@ Concurrency limits for services affect [how automatic starts and stops work](#ho
 
 ### Default values
 
-The default settings for apps that don't specify any auto start and stop settings in `fly.toml` are `auto_start_machines = true` and `auto_stop_machines = false`.
+The default settings for apps that don't specify any auto start and stop settings in `fly.toml` are `auto_start_machines = true` and `auto_stop_machines = true`.
 
 When you create an app using the `fly launch` command, the default settings in `fly.toml` are:
 
