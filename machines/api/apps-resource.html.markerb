@@ -1,7 +1,7 @@
 ---
 title: Apps
 layout: docs
-nav: machines
+nav: machines_toc
 toc: false
 redirect_from: /docs/machines/api-apps-resource/
 ---
@@ -9,28 +9,27 @@ redirect_from: /docs/machines/api-apps-resource/
 You can use the Apps resource to create and manage Fly Apps. A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. Learn more about [Fly Apps](/docs/reference/apps/).
 
 <div class="right-column">
-    <div class="endpoints api-card">
-      <div class="api-card-header">
-        Endpoints
-      </div>
-      <div class="highlight">
-        <a class="endpoint">
-          <span class="post-badge">post</span>
-          <span>/v1/apps</span>
-        </a>
-        <a class="endpoint">
-          <span class="get-badge">get</span>
-          <span>/v1/apps/{app\_name}</span>
-        </a>
-        <a class="endpoint">
-          <span class="delete-badge">delete</span>
-          <span>/v1/apps/{app\_name}</span>
-        </a>
-        <a class="endpoint">
-          <span class="get-badge">get</span>
-          <span>/v1/apps?org_slug=</span>
-        </a>
-      </div>
+  <div class="endpoints api-card">
+    <div class="api-card-header">
+      Endpoints
+    </div>
+    <div class="highlight">
+      <a class="endpoint">
+        <span class="post-badge">post</span>
+        <span>/v1/apps</span>
+      </a>
+      <a class="endpoint">
+        <span class="get-badge">get</span>
+        <span>/v1/apps/{app\_name}</span>
+      </a>
+      <a class="endpoint">
+        <span class="delete-badge">delete</span>
+        <span>/v1/apps/{app\_name}</span>
+      </a>
+      <a class="endpoint">
+        <span class="get-badge">get</span>
+        <span>/v1/apps?org_slug=</span>
+      </a>
     </div>
   </div>
 </div>

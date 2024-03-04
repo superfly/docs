@@ -1,96 +1,48 @@
 <%= partial "/docs/partials/back_to_docs" %>
 
-<ul class="outline-list">
-  <li>
-    <%= nav_link "Fly Machines", "/docs/machines/" %>
-  </li>
-</ul>
+<%
+  @nav = [
+    {
+      title: "Fly Machines",
+      path: "/docs/machines/",
+      accordion: false,
+      links: [
+        { text: "Fly Machines overview", path: "/docs/machines/overview/" },
+        { text: "Run a new Machine", path: "/docs/machines/flyctl/fly-machine-run/" },
+        { text: "Update a Machine", path: "/docs/machines/flyctl/fly-machine-update/" },
+      ]
+    },
+    {
+      title: "Machines API", 
+      path: "/docs/machines/api/",
+      open: false,
+      links: [
+        { text: "Working with the Machines API", path: "/docs/machines/api/working-with-machines-api/" },
+        { text: "Apps", path: "/docs/machines/api/apps-resource/" },
+        { text: "Machines", path: "/docs/machines/api/machines-resource/" },
+        { text: "Volumes", path: "/docs/machines/api/volumes-resource/" },
+        { text: "Machines API Spec", path: "https://docs.machines.dev/#description/introduction" }
+      ]
+    },
+    {
+      title: "Guides and Examples",
+      open: false,
+      links: [
+        { text: "Run user code on Fly Machines", path: "/docs/machines/guides-examples/functions-with-machines/" },
+        { text: "Machine sizing", path: "/docs/machines/guides-examples/machine-sizing/" },
+        { text: "Machine restart policy", path: "/docs/machines/guides-examples/machine-restart-policy/" }
+      ]
+    },
+    {
+      title: "Reference",
+      open: false,
+      links: [
+        { text: "Machine states", path: "/docs/machines/machine-states/" },
+        { text: "The Machine runtime environment", path: "/docs/machines/runtime-environment/" },
+        { text: "flyctl Machine commands", path: "/docs/flyctl/machine/" }
+      ]
+    }
+  ]
+%>
 
-<ul class="outline-list">
-  <li>
-    <span>
-      Learn about Fly Machines
-    </span>
-  <ul>
-    <li>
-      <%= nav_link "Fly Machines overview", "/docs/machines/overview/" %>
-    </li>
-  </ul>
-</ul>
-
-<ul class="outline-list">
-  <li>
-    <span>
-      Machines and flyctl
-    </span>
-  <ul>  
-   <li>
-    <%= nav_link "Run a new Machine", "/docs/machines/flyctl/fly-machine-run/" %>
-   </li>
-   <li>
-    <%= nav_link "Update a Machine", "/docs/machines/flyctl/fly-machine-update/" %>
-   </li>
-  </ul>
-</ul>
-
-<ul class="outline-list">
-  <li>
-     <%= nav_link "Machines API", "/docs/machines/api" %>
-    <ul>
-      <li>
-        <%= nav_link "Working with the Machines API", "/docs/machines/api/working-with-machines-api/" %>
-      </li>
-      <li>
-        <%= nav_link "Apps", "/docs/machines/api/apps-resource/" %>
-      </li>
-      <li>
-        <%= nav_link "Machines", "/docs/machines/api/machines-resource/" %>
-      </li>
-      <li>
-        <%= nav_link "Volumes", "/docs/machines/api/volumes-resource/" %>
-      </li>
-      <li>
-        <%= nav_link "Machines API Spec", "https://docs.machines.dev/#description/introduction" %>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<ul class="outline-list">
-  <li>    
-    <span>
-      Guides and Examples
-    </span>
-    <ul>
-      <li>
-        <%= nav_link "Run user code on Fly Machines", "/docs/machines/guides-examples/functions-with-machines/" %>
-      </li>
-      <li>
-        <%= nav_link "Machine sizing", "/docs/machines/guides-examples/machine-sizing/" %>
-      </li>
-      <li>
-        <%= nav_link "Machine restart policy", "/docs/machines/guides-examples/machine-restart-policy/" %>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<ul class="outline-list">
-  <li>    
-    <span>
-      Reference
-    </span>
-    <ul>
-      <li>
-        <%= nav_link "Machine states", "/docs/machines/machine-states/" %>
-      </li>
-       <li>
-        <%= nav_link "The Machine runtime environment", "/docs/machines/runtime-environment/" %>
-      </li>
-      <li>
-        <%= nav_link "flyctl Machine commands", "/docs/flyctl/machine/" %>
-      </li>
-    </ul>
-  </li>
-</ul>
-
+<%= partial "/docs/partials/accordion_nav", locals: { nav: @nav } %>

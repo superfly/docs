@@ -1,7 +1,7 @@
 ---
 title: Volumes
 layout: docs
-nav: machines
+nav: machines_toc
 toc: false
 redirect_from: /docs/machines/api-volumes-resource/
 ---

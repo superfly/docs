@@ -2,7 +2,7 @@
 title: Troubleshooting
 layout: framework_docs
 order: 10
-tredirect_from: /docs/elixir/getting-started/troubleshooting/
+redirect_from: /docs/elixir/getting-started/troubleshooting/
 blog_path: /phoenix-files
 objective: Common troubleshooting issues and resources for getting unstuck.
 ---

@@ -11,7 +11,7 @@ Environment variables make several kinds of information available within a Machi
 * [Environment variable settings](/docs/reference/configuration/#the-env-variables-section) from the Machine config
 * Fly.io infrastructure, as detailed below
 
-## Environment variables
+## _Environment variables_
 
 ### `FLY_APP_NAME`
 **App name**: Each app running on Fly.io has a unique app name. This identifies the app for the user, and can also identify its Machines on their IPv6 private network, using internal DNS. For example, `syd.$FLY_APP_NAME.internal` can refer to the app's Machines running in the `syd` region. Read more about [6PN Naming](/docs/networking/private-networking/#fly-io-internal-addresses) in the [Private Networking](/docs/networking/private-networking/) docs.
