@@ -4,6 +4,7 @@ layout: docs
 sitemap: false
 nav: litefs
 toc: true
+redirect_from: /docs/litefs/proxy/primary
 ---
 
 The LiteFS directory (typically `/litefs`) provides a `.primary` file that

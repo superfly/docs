@@ -1,93 +1,54 @@
 <%= partial "/docs/partials/back_to_docs" %>
-<ul class="outline-list">
-  <li>
-    <%= nav_link "LiteFS Overview", "/docs/litefs/" %>
-    <ul>
-      <li>
-        <%= nav_link "Speedrun: Adding LiteFS to your app", "/docs/litefs/speedrun" %>
-      </li>
-      <li>
-        <%= nav_link "Getting Started with LiteFS on Fly.io", "/docs/litefs/getting-started-fly" %>
-      </li>
-      <li>
-        <%= nav_link "Getting Started with LiteFS in Docker", "/docs/litefs/getting-started-docker" %>
-      </li>
-      <li>
-        <%= nav_link "How LiteFS Works", "/docs/litefs/how-it-works" %>
-      </li>
-      <li>
-        <%= nav_link "FAQ", "/docs/litefs/faq" %>
-      </li>
-    </ul>
-  </li>
-</ul>
 
-<ul class="outline-list">
-  <li>
-    <%= nav_link "LiteFS Cloud", "/docs/litefs/" %>
-    <ul>
-      <li>
-        <%= nav_link "Using LiteFS Cloud for Backups", "/docs/litefs/cloud-backups" %>
-      </li>
-      <li>
-        <%= nav_link "Restoring from a LiteFS Cloud Backup", "/docs/litefs/cloud-restore" %>
-      </li>
-      <li>
-        <%= nav_link "Disaster Recovery from LiteFS Cloud", "/docs/litefs/disaster-recovery" %>
-      </li>
-    </ul>
-  </li>
-</ul>
+<%
+  @nav = [
+    {
+      title: "Get Started with LiteFS",
+      accordion: true,
+      open: true,
+      links: [
+        { text: "LiteFS overview", path: "/docs/litefs/" },
+        { text: "Speedrun: Adding LiteFS to your app", path: "/docs/litefs/speedrun" },
+        { text: "Getting Started with LiteFS on Fly.io", path: "/docs/litefs/getting-started-fly" },
+        { text: "Getting Started with LiteFS in Docker", path: "/docs/litefs/getting-started-docker" },
+        { text: "How LiteFS Works", path: "/docs/litefs/how-it-works" },
+        { text: "FAQ", path: "/docs/litefs/faq" }
+      ]
+    },
+    {
+      title: "LiteFS Cloud",
+      accordion: true,
+      links: [
+        { text: "Using LiteFS Cloud for Backups", path: "/docs/litefs/cloud-backups" },
+        { text: "Restoring from a LiteFS Cloud Backup", path: "/docs/litefs/cloud-restore" },
+        { text: "Disaster Recovery from LiteFS Cloud", path: "/docs/litefs/disaster-recovery" }
+      ]
+    },
+    {
+      title: "Using LiteFS",
+      accordion: true,
+      links: [
+        { text: "LiteFS Releases", path: "/docs/litefs/releases" },
+        { text: "Built-in HTTP Proxy", path: "/docs/litefs/proxy" },
+        { text: "Running database migrations", path: "/docs/litefs/migrations" },
+        { text: "Backing up your cluster", path: "/docs/litefs/backup" },
+        { text: "Determining the primary", path: "/docs/litefs/primary" },
+        { text: "Tracking replication position", path: "/docs/litefs/position" },
+        { text: "Reading the event stream", path: "/docs/litefs/events" }
+      ]
+    },
+    {
+      title: "LiteFS Reference",
+      accordion: true,
+      links: [
+        { text: "Export Command", path: "/docs/litefs/export" },
+        { text: "Import Command", path: "/docs/litefs/import" },
+        { text: "Mount Command", path: "/docs/litefs/mount" },
+        { text: "Run Command", path: "/docs/litefs/run" },
+        { text: "Config Reference", path: "/docs/litefs/config" }
+      ]
+    }
+  ]
+%>
 
-<ul class="outline-list">
-  <li>
-    <%= nav_link "Using LiteFS", "/docs/litefs/" %>
-    <ul>
-      <li>
-        <%= nav_link "LiteFS Releases", "/docs/litefs/releases" %>
-      </li>
-      <li>
-        <%= nav_link "Built-in HTTP Proxy", "/docs/litefs/proxy" %>
-      </li>
-      <li>
-        <%= nav_link "Running database migrations", "/docs/litefs/migrations" %>
-      </li>
-      <li>
-        <%= nav_link "Backing up your cluster", "/docs/litefs/backup" %>
-      </li>
-      <li>
-        <%= nav_link "Determining the primary", "/docs/litefs/primary" %>
-      </li>
-      <li>
-        <%= nav_link "Tracking replication position", "/docs/litefs/position" %>
-      </li>
-      <li>
-        <%= nav_link "Reading the event stream", "/docs/litefs/events" %>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<ul class="outline-list">
-  <li>
-    <%= nav_link "LiteFS Reference", "/docs/litefs/" %>
-    <ul>
-      <li>
-        <%= nav_link "Export Command", "/docs/litefs/export" %>
-      </li>
-      <li>
-        <%= nav_link "Import Command", "/docs/litefs/import" %>
-      </li>
-      <li>
-        <%= nav_link "Mount Command", "/docs/litefs/mount" %>
-      </li>
-      <li>
-        <%= nav_link "Run Command", "/docs/litefs/run" %>
-      </li>
-      <li>
-        <%= nav_link "Config Reference", "/docs/litefs/config" %>
-      </li>
-    </ul>
-  </li>
-</ul>
-  
+<%= partial "/docs/partials/accordion_nav", locals: { nav: @nav } %>
