@@ -1,14 +1,14 @@
 ---
-title: Introducing flyctl - The Fly.io CLI
+title: flyctl - The Fly.io CLI
 layout: docs
 sitemap: false
 edit: false
 nav: flyctl
 ---
 
-The `flyctl` command is your primary way to interact with Fly.io.
+The `fly` command is one of the primary ways to interact with Fly.io. If you're doing anything with Fly.io, you'll need it.
 
-If you are doing anything with Fly.io, you'll need it. We have [flyctl installation instructions](/docs/hands-on/install-flyctl/) to guide you through installing it on your system. There's also [flyctl and continuous integration](/docs/flyctl/integrating/) which covers environment variables, JSON and other automation related information about flyctl.
+We have [flyctl installation instructions](/docs/hands-on/install-flyctl/) to guide you through installing it on your system. There's also [flyctl and continuous integration](/docs/flyctl/integrating/) which covers environment variables, JSON and other automation related information about flyctl.
 
 ## Using your Fly.io Account
 
