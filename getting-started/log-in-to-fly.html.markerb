@@ -1,15 +1,17 @@
 ---
-title: Sign up and sign in to Fly.io
+title: Sign up / Sign in
 layout: docs
 sitemap: false
-nav: firecracker
+nav: hands_on
 toc: false
 ---
 
-## No account? Sign up for Fly.io
+## Sign up
 
 <%= partial "/docs/partials/sign_up" %>
 
-## Already have a Fly.io account? Sign in
+## Sign in
 
 <%= partial "/docs/partials/sign_in" %>
+
+[Next: Launch the app](/docs/hands-on/launch-app/)

@@ -7,22 +7,23 @@ toc: false
 ---
 
 <figure class="w:full mt:6">
-  <img src="/static/images/speedrun.webp" srcset="/static/images/speedrun@2x.webp 2x" alt="">
+  <img src="/static/images/speedrun.webp" srcset="/static/images/speedrun@2x.webp 2x" alt="Illustration by Annie Ruygt of a hot air balloon leaving an exhaust of flames in its wake as it follows a trajectory from lower left to upper right, indicated clearly by a dotted line. The background has indistinct line drawings that conjure up outer space and circuitry.">
 </figure>
 
 You have an application you want to deploy on Fly.io? You're in the right place.
 
-Welcome to Fly Launch. For many languages and frameworks, you can deploy your app from zero, with the following three steps.
+Welcome to Fly Launch. For most languages and frameworks, you can deploy your app from zero, with the following steps:
 
-1. [Install flyctl](/docs/hands-on/install-flyctl/) - you'll need it.
+<div class="important">
+1. [Install flyctl](/docs/hands-on/install-flyctl/) &ndash; you'll need it.
 2. Create an account with `fly auth signup` or login with `fly auth login`.
-3. Run `fly launch` from inside your project source directory - create, configure, and deploy a new application.
+3. Run `fly launch` from inside your project source directory to create, configure, and (for most apps) deploy a new application.
+4. If prompted, run `fly deploy` to deploy your new app (or to redeploy after changes!).
+</div>
 
-`fly launch` can configure and deploy the following kinds of apps automatically:
+`fly launch` knows what to do with a [Dockerfile](/docs/languages-and-frameworks/dockerfile/)&mdash;so you can use the tech _you_ love&mdash;and also configures and deploys the following kinds of apps automatically:
 
 <%= partial "/docs/languages-and-frameworks/partials/scanner_guides" %>
-
-You're not limited to these kinds of projects, though! `fly launch` also knows what to do [with a Dockerfile](/docs/languages-and-frameworks/dockerfile/), so you can use the tech _you_ love.
 
 Refer to [Launch a new app](/docs/apps/launch/) to learn more about what `fly launch` does.
 
@@ -32,17 +33,11 @@ Refer to [Launch a new app](/docs/apps/launch/) to learn more about what `fly la
 
 ## Next steps
 
-1. Run `fly status` - show the status of the application instances.
-2. Run `fly apps open` - open your browser and direct it to your app.
+1. Run `fly status` &ndash; show the status of the application instances.
+2. Run `fly apps open` &ndash; open your browser and direct it to your app.
+3. Run `fly deploy` &ndash; deploy your app after making changes.
 
-
-If things don't go as smoothly as you'd like, visit our [community forum](https://community.fly.io) and get help.
-
-Would you like to know more?
-
-* **Apps can store only ephemeral data in their root file systems.** Learn about [persistent storage options](/docs/database-storage-guides/).
-* **You have control over how your app deploys and what resources it uses.** Learn about [Fly Apps](/docs/apps/).
-* **Beyond just launching your app; go deeper with our most comprehensive framework guides.** Learn about [Elixir on Fly.io](/docs/elixir), [Rails on Fly.io](/docs/rails/), [Laravel on Fly.io](/docs/laravel/), and [Django on Fly.io](/docs/django).
+If you have questions, need help, or want to talk about what you're building, visit our [community forum](https://community.fly.io).
 
 <figure class="text-center">
   <img src="/static/images/speedrun-guidebooks.webp" srcset="/static/images/speedrun-guidebooks@2x.webp 2x" alt="">

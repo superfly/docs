@@ -1,5 +1,5 @@
 ---
-title: Check Your App's Status
+title: Check your app's status
 layout: docs
 sitemap: false
 nav: hands_on
@@ -29,4 +29,4 @@ app    	5683d311c3228e	1      	ord   	stopped	      	2023-05-17T17:38:44Z
 
 In this example, the application has been deployed with a DNS hostname of `hellofly.fly.dev`. Your deployment's name will, of course, be different. We can also see that the app has 2 Machines running in the ord (Chicago) region. We recommend running at least 2 machines to improve availability in case of hardware or host failure.
 
-[Next: Visit Your App on Fly.io](/docs/hands-on/open-app/)
+[Next: Visit your app on Fly.io](/docs/hands-on/open-app/)
