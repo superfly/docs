@@ -29,10 +29,10 @@ InfraSec is the practice of ensuring a hardened, minimal attack surface for comp
 - Our platform networking runs over a WireGuard mesh with further BPF-based access controls. Everything is encrypted in transit, at multiple layers.
 - Remote management is largely automated, and fully audited; remote access is done through an IdP-backed cert-based SSH system with transcript-level audit trails.
 - [Fly.io](http://Fly.io) operates a large logging and metrics cluster (it’s a feature of our platform!).
-- Our internal client/server services are locked down further with Mutual TLS. 
+- Our internal client/server services are locked down further with Mutual TLS.
 - We work with upstream traffic providers to perform automated and manual DDoS mitigation.
-- Compute jobs at [Fly.io](http://Fly.io) are virtualized using Firecracker, the virtualization engine developed at AWS as the engine for Lambda and Fargate. 
-- Customer information on databases and volumes at [Fly.io](http://Fly.io) is encrypted with the Linux LUKS block storage encryption secrets. 
+- Compute jobs at [Fly.io](http://Fly.io) are virtualized using Firecracker, the virtualization engine developed at AWS as the engine for Lambda and Fargate.
+- Customer information on databases and volumes at [Fly.io](http://Fly.io) is encrypted with the Linux LUKS block storage encryption secrets.
 
 ## Application Security (“AppSec”)
 
@@ -53,12 +53,12 @@ Vulnerabilities that directly affect Fly.io's systems and services will be patch
 * Low: 3 months
 * Informational:	As necessary
 
-If there's a severity rating that accompanies a vulnerability disclosure, we'll generally rely on that as a starting point, but may upgrade or downgrade the severity in our best judgement. 
+If there's a severity rating that accompanies a vulnerability disclosure, we'll generally rely on that as a starting point, but may upgrade or downgrade the severity in our best judgement.
 
 
 ## SOC2 and HIPAA
 
-[We have our SOC2 Type I](/blog/soc2-the-screenshots-will-continue-until-security-improves/) where we've documented a bunch of these controls. Additionally, we've detailed a number of controls for folks exploring [running HIPAA-compliant applications on our platform](/docs/about/healthcare).
+[We have our SOC2 Type 2](/blog/soc2-the-screenshots-will-continue-until-security-improves/) where we've documented a bunch of these controls. Additionally, we've detailed a number of controls for folks exploring [running HIPAA-compliant applications on our platform](/docs/about/healthcare).
 
 ## Questions?
 
