@@ -17,7 +17,7 @@ psql postgres://postgres:secret123@appname.internal:5432
 
 You can, of course, run psql from a shell on a Fly app as well (as long as that app has psql installed).
 
-### Connecting with Ruby
+## Connecting with Ruby
 [docs](https://github.com/ged/ruby-pg)
 
 Ruby apps use the `pg` gem to connect to postgres.
@@ -36,7 +36,7 @@ conn.exec( "SELECT * FROM pg_stat_activity" ) do |result|
 end
 ```
 
-### Connecting with Rails
+## Connecting with Rails
 [docs](https://guides.rubyonrails.org/configuring.html#configuring-a-database)
 
 Rails apps automatically connect to the database specified in the `DATABASE_URL` environment variable.
@@ -48,8 +48,65 @@ flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.intern
 
 or by attaching the Postgres database to your Fly app.
 
+## Connecting with Python
 
-### Connecting with Go
+[`psycopg`](https://www.psycopg.org/psycopg3/) is the recommended driver for connecting
+to postgres:
+
+```python
+import psycopg
+
+conninfo = "postgres://postgres:secret123@postgresapp.internal:5432/yourdb"
+with psycopg.connect(conninfo) as connection:
+    with connection.cursor() as cursor:
+        cursor.execute(...)
+        results = cursor.fetchall()
+```
+
+## Connecting with Django
+
+[docs](https://docs.djangoproject.com/en/stable/ref/settings/#databases)
+
+[`psycopg`](https://www.psycopg.org/psycopg3/) is the recommended driver for connecting
+to postgres. You can use the [`django-environ`](https://pypi.org/project/django-environ/)
+package to translate the `DATABASE_URL` environment variable into Django database
+configuration. First, install both packages:
+
+```cmd
+python -m pip install psycopg django-environ
+```
+
+Now we can define `DATABASES` in our ``settings.py`` file.
+
+```python
+import environ  # ← Added
+
+...
+
+env = environ.Env()  # ← Added
+environ.Env.read_env(BASE_DIR / ".env")  # ← Added
+
+DATABASES = {
+    # env.db() reads the DATABASE_URL environment variable.
+    "default": env.db(),  # ← Updated
+}
+```
+
+You can set the `DATABASE_URL` manually with `flyctl secrets set`:
+
+```cmd
+flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.internal:5432/yourdb
+```
+
+or by adding it to the `.env` file:
+
+```
+# .env
+SECRET_KEY=06\Rd75]S.vzZtrZoxc3!*~JR*/te[8BR%L-7~I7eFsGCqk,ze
+DATABASE_URL=postgres://postgres:secret123@postgresapp.internal:5432/yourdb  # ← Added
+```
+
+## Connecting with Go
 [docs](https://github.com/jackc/pgx/wiki/Getting-started-with-pgx-through-database-sql)
 
 `pgx` is the recommended driver for connecting to postgres. It supports the standard `database/sql` interface as well as directly exposing low level / high performance APIs.
@@ -90,7 +147,7 @@ func main() {
 }
 ```
 
-### Connecting with Node.js
+## Connecting with Node.js
 [docs](https://node-postgres.com)
 
 You'll use the `pg` npm module to connect to Postgres from a Node.js app.
@@ -105,7 +162,7 @@ console.log(res.rows[0].message) // Hello world!
 await client.end()
 ```
 
-### Connecting with Prisma – Node.js
+## Connecting with Prisma – Node.js
 [docs](https://www.prisma.io/)
 
 Prisma is an open-source object-relational mapper (ORM) for Node.js and works with both JavaScript and TypeScript. It consists of 3 components:
@@ -194,7 +251,7 @@ main()
   })
 ```
 
-### Connecting with Sequelize – Node.js
+## Connecting with Sequelize – Node.js
 [docs](https://sequelize.org)
 
 Sequelize is an open-source object-relational mapper (ORM) for Node.js and works with JavaScript and TypeScript.
