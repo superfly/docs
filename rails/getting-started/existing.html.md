@@ -98,7 +98,7 @@ in the left hand column.
 
 ### Open a Rails console
 
-It can be helpful to open a Rails console to run commands and diagnose production issues.  If you are not running with a sqlite3 or a volume, the recommended way to do this is to run a [console](/docs/reference/configuration/#console-command) in an ephemeral machine:
+It can be helpful to open a Rails console to run commands and diagnose production issues.  If you are not running with a sqlite3 or a volume, the recommended way to do this is to run a [console](/docs/reference/configuration/#console-command) in an ephemeral Machine:
 
 ```cmd
 fly console
