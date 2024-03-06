@@ -18,7 +18,7 @@ The REST Machines API provides resources to provision and manage Fly Apps, Fly M
 
 API reference and OpenAPI specification:
 
-* **[Machines API Spec](https://docs.machines.dev/)**
+* **[Machines API Spec](https://docs.machines.dev/+external)**
 
 <figure>
   <img src="/static/images/docs-machines-fast.webp" alt="fast-launching hot air balloons against a green sky">

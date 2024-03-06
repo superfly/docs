@@ -32,6 +32,6 @@ Using Machines.
 
 Commands and APIs for Machines.
 
-[Machines API Spec](https://docs.machines.dev/)
+[Machines API Spec](https://docs.machines.dev/+external)
 
 [flyctl commands - `fly machine`](/docs/flyctl/machine/)
