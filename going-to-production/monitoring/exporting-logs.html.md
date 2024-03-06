@@ -38,7 +38,7 @@ fly launch --no-deploy --image ghcr.io/superfly/fly-log-shipper:latest
 # determines which "sinks" are configured
 fly secrets set ORG=personal
 fly secrets set ACCESS_TOKEN=$(fly auth token)
-fly secrets set LOGTAIL_TOKEN=<token provided by logtail source>
+fly secrets set BETTER_STACK_SOURCE_TOKEN=<token provided by logtail source>
 ```
 
 You can configure as many providers as you'd like by adding more secrets. The secrets needed are determined by [which provider(s)](https://github.com/superfly/fly-log-shipper#provider-configuration) you want to use.
