@@ -12,4 +12,6 @@ Whenever you make changes to your app, deploy it with:
 fly deploy
 ```
 
+For more info about how `fly deploy` works, see [Deploy a Fly App](/docs/apps/deploy/).
+
 [Next: Learn more about what you can do with Fly.io](/docs/hands-on/next/)

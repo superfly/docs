@@ -10,19 +10,19 @@ redirect_from:
 
 ---
 
-Fly Launch helps you quickly deploy almost any kind of app using a Docker image. To learn more about the different ways to get your app ready to deploy, refer to [Fly Launch](/docs/apps/launch/).
+Fly Launch can help you quickly deploy almost any kind of app using a Docker image. To learn more about the different ways to get your app ready to deploy, refer to [Fly Launch](/docs/apps/launch/).
 
-For this example, you can use our pre-built Docker image, `flyio/hellofly:latest`, to create and deploy an app. 
+For this example, you'll use our pre-built Docker image, `flyio/hellofly:latest`, to create and deploy an app. 
 
-Each Fly Launch application uses a `fly.toml` file to tell the system how to deploy it. The `fly.toml` file can be automatically generated with the `fly launch` command, which will provide some useful defaults that you can tweak through a web interface before deploying the app.
+Each Fly Launch app uses a `fly.toml` config file to tell the system how to deploy it. Running `fly launch` automatically generates the `fly.toml` file, which will provide some useful defaults that you can tweak through a web interface before deploying the app.
 
-Run:
+To create the demo app, run:
 
 ```cmd
 fly launch --image flyio/hellofly:latest
 ```
 
-You'll get a summary of the defaults chosen for your app:
+You'll get a summary of the defaults chosen for your app. For example:
 
 ```output 
 Using image flyio/hellofly:latest
@@ -43,9 +43,9 @@ Type `y` at the prompt to open the Fly Launch page, where you can make changes t
 
 For this example, the only settings you might want to change are the app name and the [region](/docs/reference/regions/) to deploy in. App names can include only numbers, lowercase letters, and dashes.
 
-Click **Confirm Settings** to confirm and deploy the example app.
+Click **Confirm Settings** to confirm and deploy the demo app.
 
-You can return to your terminal to view the progress of the app deployment:
+Then return to your terminal to view the progress of the app deployment:
 
 ```output
 Waiting for launch data... Done
@@ -85,6 +85,6 @@ Visit your newly deployed app at https://my-app-name.fly.dev/
 **Note:** If you've just signed up, then you'll also be prompted at some point for credit card payment information. Refer to [Billing](/docs/about/billing/) and [Pricing](/docs/about/pricing) for more details.
 </div>
 
-When you run a command, flyctl always checks to see if `fly.toml` exists in the current directory, and then checks the `app` value at the start of the file. Many commands use this app name to determine which Fly App to apply to by default. The `fly.toml` file also defines how the app will be built (from a pre-built Docker image, in this case), the ports for services, and further configuration to be applied to the app when it deploys.
+When you run a command, flyctl will look for a `fly.toml` file to find the name of the app to operate on, and for an app configuration to apply during deployment. For all the config options in `fly.toml`, see the [Fly Launch configuration (fly.toml)](/docs/reference/configuration/) reference.
 
 [Next: Check your app's status](/docs/hands-on/check-app-status/)
