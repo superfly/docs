@@ -12,9 +12,9 @@ redirect_from:
 
 Fly Launch can help you quickly deploy almost any kind of app using a Docker image. To learn more about the different ways to get your app ready to deploy, refer to [Fly Launch](/docs/apps/launch/).
 
-For this example, you'll use our pre-built Docker image, `flyio/hellofly:latest`, to create and deploy an app. 
+For this example, you'll use our pre-built Docker image, `flyio/hellofly:latest`, to create and deploy a demo app.
 
-Each Fly Launch app uses a `fly.toml` config file to tell the system how to deploy it. Running `fly launch` automatically generates the `fly.toml` file, which will provide some useful defaults that you can tweak through a web interface before deploying the app.
+Every Fly Launch app uses a `fly.toml` config file to tell the system how to deploy it. Running `fly launch` to create a new app generates the `fly.toml` file, which will provide some useful defaults that you can tweak through a web interface before deploying the app.
 
 To create the demo app, run:
 

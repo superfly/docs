@@ -16,7 +16,7 @@ Get up and running quickly on Fly.io.
 
 - **[Speedrun](/docs/speedrun/):** Jump right in and launch your own app fast.
 
-Once that's done, check out out in-depth docs:
+Once that's done, check out our in-depth docs:
 
 * [Language & Framework Guides](/docs/languages-and-frameworks/): Comprehensive and starter guides for your favorite languages and frameworks.
 * [Fly Launch](/docs/apps): You've tried the `fly launch` command. Now learn how to use all the Fly Launch features that help you manage and run your apps.
