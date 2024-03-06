@@ -3,6 +3,7 @@ title: Fly Kubernetes
 layout: docs
 toc: false
 nav: firecracker
+redirect_from: /docs/kubernetes/volumes/
 ---
 
 <div class= "important icon">
@@ -24,7 +25,7 @@ Fly Kubernetes benefits from the features of the Fly.io platform.
 FKS is built on top of Fly.io infrastructure:
 
 * Compute is backed by [Fly Machines](/docs/machines/), our fast-launching VMs built with Firecracker. 
-* Volumes are handled with [Fly Volumes](/docs/volumes/); local, fast NVME drives.  
+* Volumes are handled with [Fly Volumes](/docs/volumes/); local, fast NVMe drives.  
 * Networking is built on our [internal WireGuard mesh](/docs/networking/private-networking/#private-network-vpn) with routing performed by Fly Proxy.
 
 ### Cluster scalability
@@ -70,5 +71,3 @@ See the [pricing page](/docs/about/pricing/#fly-kubernetes) for information on F
 
 - [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
 - [Create an FKS cluster](/docs/kubernetes/clusters/)
-- [Using volumes with FKS](/docs/kubernetes/volumes/)
-
