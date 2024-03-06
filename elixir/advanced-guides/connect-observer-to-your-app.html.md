@@ -60,7 +60,7 @@ You don't have to use a tool like [`direnv`](https://direnv.net/) though. The `.
 
 This is a bash script to kick off a correctly configured local IEx session, connect a new local node to the remote cluster, and start Observer.
 
-Here's a copy of the [`observer`](https://github.com/fly-apps/hello_elixir/observer) script file.
+Here's a copy of the **[`observer`](https://github.com/fly-apps/hello_elixir/blob/main/observer) script file**.
 
 This should work fine on Linux and MacOS. On Windows, if you are using [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10) then it will work because it's Linux. Otherwise, refer to the manual steps outlined below.
 
