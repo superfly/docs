@@ -270,8 +270,8 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
 * `processes`: For apps with multiple processes. The process group that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
 * `internal_port`: The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `force_https`: A Boolean which determines whether to enforce HTTP to HTTPS redirects.
-* `auto_stop_machines`: Whether to automatically stop an application's Machines when there's excess capacity, per region. If there's only one Machine in a region, then the Machine is stopped if it has no traffic. The Fly Proxy runs a process to automatically stop Machines every few minutes. The default is `true`.
-* `auto_start_machines`: Whether to automatically start an application's Machines when a new request is made to the application and there's no excess capacity, per region. If there's only one Machine in a region, then it's started whenever a request is made to the application. The default is `true`.
+* `auto_stop_machines`: Whether to automatically stop an application's Machines when there's excess capacity, per region. If there's only one Machine in a region, then the Machine is stopped if it has no traffic. The Fly Proxy runs a process to automatically stop Machines every few minutes. The default if not set is `false`.
+* `auto_start_machines`: Whether to automatically start an application's Machines when a new request is made to the application and there's no excess capacity, per region. If there's only one Machine in a region, then it's started whenever a request is made to the application. The default if not set is `true`.
 * `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines = true`.
 
 <div class="callout">
@@ -390,8 +390,8 @@ Settings:
 * `processes`: For apps with multiple process groups, the process group or groups that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
 * `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `protocol` : The protocol that this service will use to communicate. Typically `tcp` for most applications, but can also be `udp`.
-* `auto_stop_machines`: Whether to automatically stop an application's Machines when there's excess capacity, per region. If there's only one Machine in a region, then the Machine is stopped if it has no traffic. The Fly Proxy runs the checks to automatically stop Machines every few minutes. The default is `true`.
-* `auto_start_machines`: Whether to automatically start an application's Machines when a new request is made to the application and there's no excess capacity, per region. If there's only one Machine in a region, then it's started whenever a request is made to the application. The default is `true`.
+* `auto_stop_machines`: Whether to automatically stop an application's Machines when there's excess capacity, per region. If there's only one Machine in a region, then the Machine is stopped if it has no traffic. The Fly Proxy runs the checks to automatically stop Machines every few minutes. The default if not set is `false`.
+* `auto_start_machines`: Whether to automatically start an application's Machines when a new request is made to the application and there's no excess capacity, per region. If there's only one Machine in a region, then it's started whenever a request is made to the application. The default if not set is `true`.
 * `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines = true`.
 
 <div class="callout">
