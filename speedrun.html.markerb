@@ -28,7 +28,7 @@ Welcome to Fly Launch. For most languages and frameworks, you can deploy your ap
 Refer to [Launch a new app](/docs/apps/launch/) to learn more about what `fly launch` does.
 
 <figure class="w:full mt:6">
-  <img src="/static/images/speedrun-next-steps.webp" srcset="/static/images/speedrun-next-steps@2x.webp 2x" alt="">
+  <img src="/static/images/speedrun-next-steps.webp" srcset="/static/images/speedrun-next-steps@2x.webp 2x" alt="Illustration by Annie Ruygt of Frankie the Fly.io hot air balloon character pointing at a set of stairs">
 </figure>
 
 ## Next steps
@@ -40,5 +40,5 @@ Refer to [Launch a new app](/docs/apps/launch/) to learn more about what `fly la
 If you have questions, need help, or want to talk about what you're building, visit our [community forum](https://community.fly.io).
 
 <figure class="text-center">
-  <img src="/static/images/speedrun-guidebooks.webp" srcset="/static/images/speedrun-guidebooks@2x.webp 2x" alt="">
+  <img src="/static/images/speedrun-guidebooks.webp" srcset="/static/images/speedrun-guidebooks@2x.webp 2x" alt="Illustration by Annie Ruygt of Frankie the Fly.io hot air balloon character with one hand on their hip and the other hand out, palm up, with images floating above the hand representing the Elixir, Ruby, Laravel, and Django programming languages">
 </figure>
