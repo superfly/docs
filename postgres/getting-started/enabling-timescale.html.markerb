@@ -1,8 +1,8 @@
 ---
 title: Enable TimescaleDB
-objective: Learn how to enable Timescale on your Postgres database.
 layout: framework_docs
-order: 80
+order: 20
+objective: Learn how to enable Timescale on your Postgres database.
 redirect_from: /docs/postgres/managing/enabling-timescale/
 ---
 

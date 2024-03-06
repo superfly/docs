@@ -44,7 +44,7 @@ For apps without volumes, you can bring up a new Machine by scaling to zero and 
     ```
 
 <div class="note icon">
-**Note:** When you scale all your app's Machines to zero, the Machine size resets to shared-cpu-1x with 256MB of RAM. Use one of the `--vm-` options to size the Machines. For example: `fly scale count 2 --vm-size shared-cpu-4x`. See the [fly scale count docs](docs/flyctl/scale-count/) for options.
+**Note:** When you scale all your app's Machines to zero, the Machine size resets to shared-cpu-1x with 256MB of RAM. Use one of the `--vm-` options to size the Machines. For example: `fly scale count 2 --vm-size shared-cpu-4x`. See the [fly scale count docs](/docs/flyctl/scale-count/) for options.
 </div>
 
 
