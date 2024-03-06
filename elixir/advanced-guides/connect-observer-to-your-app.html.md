@@ -38,12 +38,11 @@ Let's do it. This will be fun!
 
 The deployed servers running on Fly need a predictable, stable, known cookie value used for allowing nodes to join each other to create a cluster. This is required for your local node to be able to connect to the remote nodes. Your local node needs the cookie value too!
 
-See [this guide on creating a static cookie value](/docs/app-guides/elixir-static-cookie/) in your Elixir project.
+See [this guide on creating a static cookie value](/docs/elixir/the-basics/clustering/#the-cookie-situation) in your Elixir project.
 
 ## WireGuard Tunnel
 
 Setup WireGuard on your local machine. Follow the Fly.io [Private Network VPN](/docs/networking/private-networking/#private-network-vpn) guide to walk through that.
-
 
 ## Connecting to Production
 
@@ -55,42 +54,17 @@ Our script needs to know the cookie value. The easiest way to do this and keep t
 
 To help manage project-specific ENV values, I like using [direnv](https://direnv.net/). When changing into a directory with an `.envrc` file, it loads those values into my ENV, when I leave that directory, it unloads them. This means I can set a COOKIE value (or other config) specific to each project and it works great.
 
-You don't have to use a tool like `direnv` though. The `./observer` script file can be customized to set the COOKIE value explicitly if you prefer that approach. Refer to the full [script file here](https://github.com/fly-apps/hello_elixir-dockerfile/blob/explicitly-set-release-cookie/observer#L14) in the comments to see how you can  do that.
+You don't have to use a tool like [`direnv`](https://direnv.net/) though. The `./observer` script file can be customized to set the COOKIE value explicitly if you prefer that approach. Refer to the full [script file here](https://github.com/fly-apps/hello_elixir/blob/main/observer#L14) in the comments to see how you can  do that.
 
 ### Script File
 
-This is a simple bash script file to kick off a correctly configured local IEx session, connect our node to the remote cluster, and start Observer.
+This is a bash script to kick off a correctly configured local IEx session, connect a new local node to the remote cluster, and start Observer.
 
-Create a file titled `observer`. Here are the important contents. (See [here for full script file](https://github.com/fly-apps/hello_elixir-dockerfile/blob/explicitly-set-release-cookie/observer))
+Here's a copy of the [`observer`](https://github.com/fly-apps/hello_elixir/observer) script file.
 
-```bash
-#!/bin/bash
+This should work fine on Linux and MacOS. On Windows, if you are using [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10) then it will work because it's Linux. Otherwise, refer to the manual steps outlined below.
 
-set -e
-
-if [ -z "$COOKIE" ]; then
-    echo "Set the COOKIE your project uses in the COOKIE ENV value before running this script"
-    exit 1
-fi
-
-# Get the first IPv6 address returned
-ip_array=( $(fly ips private | awk '(NR>1){ print $3 }') )
-IP=${ip_array[0]}
-
-# Get the Fly app name. Assumes it is used as part of the full node name
-APP_NAME=`fly info --name`
-FULL_NODE_NAME="${APP_NAME}@${IP}"
-echo Attempting to connect to $FULL_NODE_NAME
-
-# Export the BEAM settings for running the "iex" command.
-# This creates a local node named "my_remote". The name used isn't important.
-# The cookie must match the cookie used in your project so the two nodes can connect.
-iex --erl "-proto_dist inet6_tcp" --sname my_remote --cookie ${COOKIE} -e "IO.inspect(Node.connect(:'${FULL_NODE_NAME}'), label: \"Node Connected?\"); IO.inspect(Node.list(), label: \"Connected Nodes\"); :observer.start"
-```
-
-This should work fine on Linux and MacOS. On Windows, if you are using [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10) then it will work because it's Linux. Otherwise refer to the manual steps outlined below.
-
-Make the script file executable:
+After creating the file locally, make the script file executable:
 
 ```cmd
 chmod +x observer
@@ -102,15 +76,15 @@ Execute the script:
 ./observer
 ```
 ```output
-Attempting to connect to icy-leaf-7381@fdaa:0:1da8:a7b:ac2:baed:c434:2
-Erlang/OTP 24 [erts-12.0.1] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:1] [jit]
+Attempting to connect to hello-elixir-01HR8CXEYKQ9RXYQFEWSE5PTE0@fdaa:0:1da8:a7b:a160:73d2:f48b:2
+Erlang/OTP 26 [erts-14.2.2] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:1] [jit]
 
 Node Connected?: true
-Connected Nodes: [:"icy-leaf-7381@fdaa:0:1da8:a7b:ac2:baed:c434:2"]
+Connected Nodes: [:"hello-elixir-01HR8CXEYKQ9RXYQFEWSE5PTE0@fdaa:0:1da8:a7b:a160:73d2:f48b:2"]
 
 ...
 
-Interactive Elixir (1.12.1) - press Ctrl+C to exit (type h() ENTER for help)
+Interactive Elixir (1.16.1) - press Ctrl+C to exit (type h() ENTER for help)
 ```
 
 When observer first opens, it might looks something like this:
@@ -121,11 +95,11 @@ Notice that the window title shows `my_remote@...`? This means it's showing the 
 
 If everything worked and it's connected, under the Nodes menu you should see the connected remote node.
 
-![Observer connected to local node](/docs/images/observer-local-node-menu.webp?card&2/3&centered)
+![Observer connected to local node](/docs/images/observer-local-node-menu.webp?2/3&centered)
 
 When the remote node is selected, then all the stats and information changes to reflect what's going on in the selected node.
 
-![Observer connected to local node](/docs/images/observer-local-node-connected.webp?scentered)
+![Observer connected to local node](/docs/images/observer-local-node-connected.webp?centered)
 
 It worked! I'm seeing the information for the production node!
 
@@ -157,25 +131,59 @@ In order for everything to work, here's the checklist overview:
 - The local COOKIE value must be the same as the cookie value used in production.
 - Observer needs to be working in your local environment. That requires WxWidget support in your Erlang install.
 
+### Networking and the BEAM
+
+Fly.io uses an IPv6 network internally for private IPs. The BEAM needs IPv6 support to be enabled explicitly. That's taken care of for the server through the Dockerfile. Locally, however, it needs to be enabled as well so the machine running Observer can actually _connect_ to the remote node.
+
+The issue is, if IPv6 support is enabled globally, like in a `.bashrc` file, then setting it in the `observer` script essentially flips it OFF. If NOT set globally, then it should be set in the script. Choose the version that fits your situation by modifying the script.
+
+It's the `--erl "-proto_dist inet6_tcp"` portion.
+
+Example:
+```
+iex --erl "-proto_dist inet6_tcp" --sname my_remote --cookie ${COOKIE} -e "IO.inspect(Node.connect(:'${FULL_NODE_NAME}'), label: \"Node Connected?\"); IO.inspect(Node.list(), label: \"Connected Nodes\"); :observer.start"
+```
+
+Versus without the `--erl` option:
+```
+iex --sname my_remote --cookie ${COOKIE} -e "IO.inspect(Node.connect(:'${FULL_NODE_NAME}'), label: \"Node Connected?\"); IO.inspect(Node.list(), label: \"Connected Nodes\"); :observer.start"
+```
+
 ### Manual Script Steps
 
 If you encounter issues, this can help you diagnose what's going on. The script automates 4 things.
 
 1. Getting the cookie value from the ENV - make sure the correct cookie value is either available in the ENV or explicitly set in the script.
-2. Uses the `fly info --name` command to get the app name. This is used to build the fully qualified node name.
-3. Get the first IPv6 address for your server using `fly ips private | awk '(NR>1){ print $3 }'`. If you have multiple servers, it just returns the first one. You only need one. Once you join to any node you are introduced and connected to all of them.
-4. Set up a local node and executes multiple commands.
-  1. It runs a command like `Node.connect(:'icy-leaf-7381@fdaa:0:1da8:a7b:ac2:baed:c434:2')` to connect to the remote node. It returns `true` when it succeeds or `false` when it fails. The app name and the IP address used to make up the node's name are assembled from the previous steps.
+2. Uses the `fly status` command to get the app name, Docker image ref, and the first private IP. This is used to build the fully qualified node name. You only need one IP address. Once you join to any node you are introduced and connected to all of them.
+3. Set up a local node and executes multiple commands.
+  1. It runs a command like `Node.connect(:'APP_NAME-IMAGE_REF@IPv6_ADDRESS')` to connect to the remote node. It returns `true` when it succeeds or `false` when it fails. The app name and the IP address used to make up the node's name are assembled from the previous steps.
   2. Launch observer with the command `:observer.start`. If this fails, check the other tip for WxWidgets.
 
 To do it manually, once you get the IP address, you can customize the following command to launch Observer.
 
 ```
-iex --erl "-proto_dist inet6_tcp" --sname my_remote --cookie ${COOKIE} -e "Node.connect(:'APP_NAME@IP_ADDRESS'); :observer.start"
+iex --erl "-proto_dist inet6_tcp" --sname my_remote --cookie ${YOUR-COOKIE-VALUE} -e "IO.inspect(Node.connect(:'${FULL_NODE_NAME}'), label: \"Node Connected?\"); :observer.start"
 ```
 
-You need to substitute in your `YOUR-COOKIE-VALUE` value, the `APP_NAME` and the `IP_ADDRESS`.
+You need to substitute in your `YOUR-COOKIE-VALUE` value, the `FULL_NODE_NAME`.
 
 ### WxWidgets Support
 
 If you are using [asdf-vm](https://asdf-vm.com/) for managing your Elixir and Erlang versions, check out the [Erlang plugin's documentation](https://github.com/asdf-vm/asdf-erlang) for getting WxWidget support in your Erlang environment. This is required for using Observer.
+
+To test if WxWidgets and observer is working correctly on you local machine, try the following.
+
+Start IEx:
+
+```
+iex
+```
+
+Start observer:
+
+```
+:observer.start
+```
+
+It should bring Observer running on your machine. It won't be connected to
+anything else, but it verifies that the libraries and dependencies are working.

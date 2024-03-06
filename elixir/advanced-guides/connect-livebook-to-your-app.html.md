@@ -164,7 +164,7 @@ When you have the name and cookie, enter those and "**Connect**" to the server.
 
 **REMEMBER:** Each time we deploy our apps, the private IP will change. We need to get the current IP before we can connect again.
 
-Once connected, we have code completion available in the Elixir cells for the app we are connected to. The [HelloElixir app](https://github.com/fly-apps/hello_elixir-dockerfile) doesn't have anything useful to run so we can just prove to ourselves that our code is being executed remotely.
+Once connected, we have code completion available in the Elixir cells for the app we are connected to. The [HelloElixir app](https://github.com/fly-apps/hello_elixir) doesn't have anything useful to run so we can just prove to ourselves that our code is being executed remotely.
 
 Add the following code to a Livebook Elixir cell and execute it.
 
