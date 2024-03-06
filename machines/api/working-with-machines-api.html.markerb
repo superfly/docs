@@ -24,7 +24,7 @@ Simply skip down to [setting up the environment](#setting-up-the-environment), a
 
 ### Using the private Machines API endpoint
 
-You can still access your Machines directly over a WireGuard VPN, and use the private Machines API endpoint: `http://_api.internal:4280`. This method requires more setup, but provides a connection with less latency than the public endpoint if accessed from a Fly Machine.
+You can still access your Machines directly over a WireGuard VPN, and use the private Machines API endpoint: `http://_api.internal:4280`. This method requires more setup, but provides a connection with less latency than the public endpoint if accessed from another Fly Machine.
 
 Follow the [instructions](/docs/networking/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io [IPv6 private network](/docs/networking/private-networking/). Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
 
