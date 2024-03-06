@@ -98,7 +98,7 @@ in the left hand column.
 
 ### Open a Rails console
 
-It can be helpful to open a Rails console to run commands and diagnose production issues.  If you are not running with a sqlite3 or a volume, the recommended way to do this is to run a [console](../../../reference/configuration/#console-command) in an emphemeral machine:
+It can be helpful to open a Rails console to run commands and diagnose production issues.  If you are not running with a sqlite3 or a volume, the recommended way to do this is to run a [console](/docs/reference/configuration/#console-command) in an ephemeral machine:
 
 ```cmd
 fly console
@@ -150,7 +150,7 @@ to your Dockerfile don't contain actual secrets as your Dockerfile will
 generally be committed to git or otherwise may be visible.
 
 If you have need for actual secrets at build time, take a look
-at [Build Secrets](../../../reference/build-secrets/).
+at [Build Secrets](/docs/reference/build-secrets/).
 
 Finally, if there are no other options you can generate a Dockerfile that will
 run `assets:precompile` at deployment time with the following command:
