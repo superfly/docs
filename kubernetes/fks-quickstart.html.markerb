@@ -150,4 +150,3 @@ On container specs, we don't support the following fields:
 ## Related topics
 
 - [Create an FKS cluster](/docs/kubernetes/clusters/)
-- [Using volumes with FKS](/docs/kubernetes/volumes/)
