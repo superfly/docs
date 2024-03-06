@@ -18,13 +18,13 @@ This guide assumes that you have `flyctl` and `curl` installed, and have authent
 
 ### Using the public `api.machines.dev` endpoint
 
-The easiest (and recommended) way to connect to the Machines API is to use the public `api.machines.dev` endpoint, a simpler and more performant alternative to connecting over WireGuard.
+The easiest (and recommended) way to connect to the Machines API is to use the public `api.machines.dev` endpoint, a simpler alternative to connecting over WireGuard.
 
 Simply skip down to [setting up the environment](#setting-up-the-environment), and make sure to set `$FLY_API_HOSTNAME` to `https://api.machines.dev`.
 
 ### Using the private Machines API endpoint
 
-You can still access your Machines directly over a WireGuard VPN, and use the private Machines API endpoint: `http://_api.internal:4280`. This method requires more setup.
+You can still access your Machines directly over a WireGuard VPN, and use the private Machines API endpoint: `http://_api.internal:4280`. This method requires more setup, but provides a connection with less latency than the public endpoint if accessed from a Fly Machine.
 
 Follow the [instructions](/docs/networking/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io [IPv6 private network](/docs/networking/private-networking/). Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
 
