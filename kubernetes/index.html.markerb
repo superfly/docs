@@ -55,7 +55,7 @@ There are a few features we don't support yet but are part of the roadmap
   * StatefulSets
   * CronJob
 
-Features we don't support
+Features we don't support:
 
   * Node affinity
   * Inter-pod (anti) affinity
