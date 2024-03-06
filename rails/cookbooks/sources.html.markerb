@@ -110,10 +110,10 @@ For node, four different ways were defined, so there are four different techniqu
 * node as base: specify the desired node version on the FROM line, but then
   use a Ruby version manager to install the desired version of Ruby.
 
-A few examples to demonstrate these concepts:
-  * [minimal/import maps](./sources/Dockerfile1)
-  * [esbuild/volta](./sources/Dockerfile2)
-  * [api](./sources/Dockerfile3)
+A few example Dockerfiles that you can download to demonstrate these concepts:
+  * [minimal/import maps](/docs/rails/cookbooks/sources/Dockerfile1)
+  * [esbuild/volta](/docs/rails/cookbooks/sources/Dockerfile2)
+  * [api](/docs/rails/cookbooks/sources/Dockerfile3)
 
 ## dockerignore
 

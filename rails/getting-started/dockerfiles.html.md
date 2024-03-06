@@ -2,6 +2,7 @@
 title: Dockerfiles and fly.toml
 layout: framework_docs
 order: 4
+redirect_from: /rails/getting-started/dockerfiles/
 ---
 
 Once you have completed running `fly launch` you have some new files,

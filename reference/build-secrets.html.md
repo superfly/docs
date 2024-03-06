@@ -49,11 +49,11 @@ echo -n "secret_value" > mysecret.txt
 docker build --secret id=MY_SUPER_SECRET,src=mysecret.txt .
 ```
 
-## Automate the inclusion of build secrets using an ephemeral machine
+## Automate the inclusion of build secrets using an ephemeral Machine
 
 The above requires you to have access to the values of secrets and to
 provide those values on the command line. If this poses a problem, an
-alternative may be to create an ephemeral machine using the `fly console`
+alternative may be to create an ephemeral Machine using the `fly console`
 command to do the deployment.
 
 An example Dockerfile you can use for that purpose:

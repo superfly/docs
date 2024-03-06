@@ -4,6 +4,7 @@ objective:
 layout: docs
 nav: firecracker
 order: 60
+redirect_from: /docs/reference/scaling/
 ---
 
 <figure>

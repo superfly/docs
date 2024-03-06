@@ -160,7 +160,7 @@ List all the Machines for an app.
 
 Given the name of a Fly App, create a Fly Machine, given the URI of a container image, in some region (or, by default, the region closest to you) on Fly.io’s platform. If successful, that Machine will boot up by default. Create a Machine without booting it by setting `skip_launch`.
 
-You can configure the Machine characteristics, like its CPU and memory. You can also allow connections from the internet through the Fly Proxy by [creating a Machine with services](#create-a-machine-with-services). Learn more about this behavior in the [networking section](#networking).
+You can configure the Machine characteristics, like its CPU and memory. You can also allow connections from the internet through the Fly Proxy by [creating a Machine with services](#create-a-machine-with-services). Learn more about this behavior in the [networking section](#notes-on-networking).
 
 <div class="important icon">
 **Important:** This request can fail, and you're responsible for handling that failure. If you ask for a large Machine, or a Machine in a region we happen to be at capacity for, you might need to retry the request, or to fall back to another region. If you're working directly with the Machines API, you're taking some responsibility for your own orchestration!
