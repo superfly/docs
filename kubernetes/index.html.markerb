@@ -47,7 +47,7 @@ Connect to your cluster using kubectl. Clients are authenticated with our API to
 
 ### Not supported
 
-There are a few features we don't support yet but are part of the roadmap
+There are a few features we don't support yet but are part of the roadmap:
 
   * Sidecars and init processes
   * EmptyDir volumes
