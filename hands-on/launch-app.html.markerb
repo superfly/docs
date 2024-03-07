@@ -10,7 +10,7 @@ redirect_from:
 
 ---
 
-Fly Launch can help you quickly deploy almost any kind of app using a Docker image. To learn more about the different ways to get your app ready to deploy, refer to [Fly Launch](/docs/apps/launch/).
+Fly Launch helps you quickly deploy almost any kind of app using a Docker image. To learn more about the different ways to get your app ready to deploy, refer to [Fly Launch](/docs/apps/launch/).
 
 For this example, you'll use our pre-built Docker image, `flyio/hellofly:latest`, to create and deploy a demo app.
 
@@ -41,11 +41,11 @@ Redis:        <none>                 (not requested)
 
 Type `y` at the prompt to open the Fly Launch page, where you can make changes to your app config.
 
-For this example, the only settings you might want to change are the app name and the [region](/docs/reference/regions/) to deploy in. App names can include only numbers, lowercase letters, and dashes.
+For this example, you'll probably want to change the app name and maybe the [region](/docs/reference/regions/) to deploy in. App names need to be globally unique and can include only numbers, lowercase letters, and dashes.
 
 Click **Confirm Settings** to confirm and deploy the demo app.
 
-Then return to your terminal to view the progress of the app deployment:
+Then return to your terminal to view the progress of the app deployment. For example:
 
 ```output
 Waiting for launch data... Done

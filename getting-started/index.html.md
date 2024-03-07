@@ -12,7 +12,7 @@ toc: false
 
 Get up and running quickly on Fly.io.
 
-- **[Hands-on](/docs/hands-on/):** Launch a small demo app, and walk through creating an account and installing `flyctl`, the Fly.io command-line tool.
+- **[Hands-on](/docs/hands-on/):** Launch a small demo app, walk through creating an account, and installing `flyctl`, the Fly.io command-line tool.
 
 - **[Speedrun](/docs/speedrun/):** Jump right in and launch your own app fast.
 
