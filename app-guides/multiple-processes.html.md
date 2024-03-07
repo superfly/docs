@@ -133,7 +133,7 @@ This works well enough to connect the app to Fly.io's Anycast network, so here's
 
 The other Docker documentation suggestion: use `supervisor`. `supervisor` is an actual process manager; it'll run in the foreground and manage all our processes and, most importantly, when our processes exit, `supervisor` will (configurably) restart it. 
 
-`supervisor` has [a lot of configuration options](http://supervisord.org/configuration.html). But because we're running on Fly.io, we mostly don't care about them; the platform is doing a lot of this work for us. So the `supervisor` configuration we want is pretty simple:
+`supervisor` has [a lot of configuration options](http://supervisord.org/configuration.html+external). But because we're running on Fly.io, we mostly don't care about them; the platform is doing a lot of this work for us. So the `supervisor` configuration we want is pretty simple:
 
 ```toml
 [supervisord]
@@ -183,7 +183,7 @@ foo: /app/server
 bar: /app/server -bar
 ```
 
-A Procfile manager I like a lot is [overmind](https://github.com/DarthSim/overmind). `overmind` is a Go program, so it's got a small runtime, and you could, if you were fussy, build a container that just takes the `overmind` binary and none of its build deps. We won't bother, though, since we're already bringing those deps in. So:
+A Procfile manager I like a lot is [overmind](https://github.com/DarthSim/overmind+external). `overmind` is a Go program, so it's got a small runtime, and you could, if you were fussy, build a container that just takes the `overmind` binary and none of its build deps. We won't bother, though, since we're already bringing those deps in. So:
 
 ```Dockerfile
 FROM golang

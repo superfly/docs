@@ -88,9 +88,9 @@ Now that you have a database in your Postgres Fly App, it's time to connect it w
 
 
 #### _Manually connect to Laravel Fly App_ 
-Once you have your running and <i>[database configured](/docs/laravel/the-basics/databases/#manually-set-up-a-database-in-your-postgres-fly-app)</i> Postgres Fly App, it's time to connect with your Laravel Fly App:
+Once you have your running and <i>[database configured](/docs/laravel/database-guides/laravel-pgsql/#manually-set-up-a-database-in-your-postgres-fly-app)</i> Postgres Fly App, it's time to connect with your Laravel Fly App:
 
-1.  Revise your Laravel Fly App's `fly.toml` file to connect with the `Hostname`( your Postgres Fly App's .internal Address ) from the configuration output, and the `DB_Name` configured [above](/docs/laravel/the-basics/databases/#interacting-with-your-postgres-fly-app):
+1.  Revise your Laravel Fly App's `fly.toml` file to connect with the `Hostname`( your Postgres Fly App's .internal Address ) from the configuration output, and the `DB_NAME` configured above:
 
     ```toml
     [env]

@@ -1011,8 +1011,6 @@ Delete a metadata key-value pair on a specific Machine's config.
   </div>
 </div>
 
-
-
 ## Notes on networking
 
 Machines are closed to the public internet by default. To make them accessible via the associated application, you need to:
@@ -1139,13 +1137,13 @@ Properties of the `config` object for Machine configuration. See [Machine proper
 
 ---
 
-**`metrics`:** An optional object defining a metrics endpoint that [Prometheus on Fly.io](https://fly.io/docs/reference/metrics/#prometheus-on-fly-io) will scrape.
+**`metrics`:** An optional object defining a metrics endpoint that [Prometheus on Fly.io](/docs/reference/metrics/#prometheus-on-fly-io) will scrape.
   - `port`: int - Required. The port that Prometheus will connect to.
   - `path`: string - Required. The path that Prometheus will scrape (e.g. `/metrics`).
 
 ---
 
-**`mounts`:** An array of objects that reference previously created [persistent volumes](https://fly.io/docs/reference/volumes/). Currently, you may only mount one volume per Machine.
+**`mounts`:** An array of objects that reference previously created [persistent volumes](/docs/volumes/). Currently, you may only mount one volume per Machine.
   - `name`: string - Required. The name of the Volume to attach.
   - `path`: string - Required. Absolute path on the Machine where the volume should be mounted. For example,  `/data`.
   - `extend_threshold_percent`: int - The threshold of storage used on a volume, by percentage, that triggers extending the volume’s size by the value of `add_size_gb`.
@@ -1176,7 +1174,7 @@ Properties of the `config` object for Machine configuration. See [Machine proper
 
 **`services`**: An array of objects that define a single network service. Check the [Machines networking section](#notes-on-networking) for more information.
 
-  - `protocol`: string - Required. `tcp` or `udp`. [Learn more about running raw TCP/UDP services](https://fly.io/docs/app-guides/udp-and-tcp/).
+  - `protocol`: string - Required. `tcp` or `udp`. [Learn more about running raw TCP/UDP services](/docs/networking/udp-and-tcp/).
   - `internal_port`: int - Required. Port the Machine listens on.
   - `concurrency`: Control Fly Proxy’s load balancing for this service.
       + `type`: string - `connections` (TCP) or `requests` (HTTP). Default is `connections`. Determines which kind of event we count for load balancing.
@@ -1185,7 +1183,7 @@ Properties of the `config` object for Machine configuration. See [Machine proper
   - `ports`: MachinePort - An array of objects defining the service's ports and associated handlers. Options:
       + `port`: int (nil) - The internet-exposed port to receive traffic on; if you want HTTP traffic routed to 8080/tcp on your Machine, this would be 80.
       + `start_port`, `end-port`: int (nil) - Like `port``, but allocate a range of ports to route internally, for applications that want to occupy whole port ranges.
-      + `handlers`: Array of protocol [handlers](https://fly.io/docs/reference/services/#connection-handlers) for this port. How should the Fly Proxy handle and terminate this connection. Options include `http`, `tcp`, `tls`.
+      + `handlers`: Array of protocol [handlers](/docs/networking/services/#connection-handlers) for this port. How should the Fly Proxy handle and terminate this connection. Options include `http`, `tcp`, `tls`.
       + `force_https`: bool (false) - If true, force HTTP to HTTPS redirects.
       + `http_options`: Fiddly HTTP options (if you don’t know you need them, you don’t), including:
         - `compress`: bool (false) to enable HTTP compression
@@ -1201,7 +1199,7 @@ Properties of the `config` object for Machine configuration. See [Machine proper
 
 ---
 
-**`size`:** A [named size](/docs/about/pricing/#machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
+**`size`:** A [named size](/docs/about/pricing/#fly-machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
 
 ---
 

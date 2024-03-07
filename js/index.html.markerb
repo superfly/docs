@@ -17,13 +17,13 @@ or React Server Components.
 
 If you have questions or comments about running JavaScript applications on Fly.io, create a new topic in [the Fly.io community Forum](https://community.fly.io/) and tag it with "nodejs" so the right people from Fly.io and our community can give you the support you need.
 
-## [Getting Started](./getting-started)
+## Getting Started
 
 Run through the [Starter Node.js App](https://fly.io/blog/vanilla-candy-sprinkles/) to get a feel for what it's like to deploy to Fly. If you're short on time, just do the first section and you'll have a Node.js app running in just a few minutes.
 
-## [The Basics](./the-basics)
+## The Basics
 
-Covers everything you need to setup, run, and manage production Node.js apps on Fly. These documents also identify some common problems you may encounter and provides some pointers on how to resolve them.
+[The Basics](/docs/js/the-basics/) covers everything you need to set up, run, and manage production Node.js apps on Fly. These documents also identify some common problems you may encounter and provides some pointers on how to resolve them.
 
 <!--
 ## [Advanced Guides](./advanced-guides)

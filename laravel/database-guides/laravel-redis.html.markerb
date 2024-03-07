@@ -91,7 +91,7 @@ If you would like to use [Redis' official docker image](https://hub.docker.com/_
 
 Now that you have your Redis Fly App running, the next step is to connect it with your Laravel Fly App! Follow the steps below:
 
-1. First, retrieve your Redis Fly App's [Fly .internal Address](/docs/laravel/the-basics/databases/#fly-internal-address). 
+1. First, retrieve your Redis Fly App's [Fly .internal Address](/docs/networking/private-networking/#fly-io-internal-addresses). 
 
 2.  Next, make sure you move to your Laravel Fly App's directory for better navigation:
 

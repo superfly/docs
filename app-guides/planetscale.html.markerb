@@ -14,13 +14,13 @@ date: 2022-05-24
 
 PlanetScale is a MySQL-compatible serverless database. It now supports read replicas so you can perform low-latency reads wherever your users are located. This guide walks you through setting up PlanetScale with Fly.io apps. 
 
-We'll work with a [sample Express app](https://github.com/fly-apps/nodejs-planetscale-read-replicas/) for the [Fly platform](https://fly.io) which uses a [PlanetScale](https://planetscale.com) database. 
+We'll work with a [sample Express app](https://github.com/fly-apps/nodejs-planetscale-read-replicas/+external) for the [Fly platform](https://fly.io) which uses a [PlanetScale](https://planetscale.com+external) database. 
 
 ## Create a database
 
 The sample app assumes a database already exists. You'll need to create that database before running the app. Since read-only regions can currently only be created using the PlanetScale UI, this guide does not use their CLI.
 
-[Sign in to PlanetScale](https://auth.planetscale.com/sign-in), creating an account if you don't already have one. You can use a free account to create a database however you will need to upgrade to their paid _Scaler_, _Team_,  or _Enterprise_ [plan](https://planetscale.com/pricing) if you would like to add read-only regions.
+[Sign in to PlanetScale](https://auth.planetscale.com/sign-in+external), creating an account if you don't already have one. You can use a free account to create a database however you will need to upgrade to their paid _Scaler_, _Team_,  or _Enterprise_ [plan](https://planetscale.com/pricing+external) if you would like to add read-only regions.
 
 Click on the black 'New database' button and pick 'Create new database'. Give it a name and choose its region. This is your **primary** database (we'll refer to it in multiple places later on). Choose the closest region to where you will deploy your app for the best performance:
 
@@ -87,9 +87,9 @@ Your database is now ready to be queried by our sample app!
 
 ## Run the app locally
 
-To run it locally you will need [NodeJS](https://nodejs.org/en/download/)
+To run it locally you will need [NodeJS](https://nodejs.org/en/download/+external).
 
-1. Clone the [`nodejs-planetscale-read-replicas`](https://github.com/fly-apps/nodejs-planetscale-read-replicas) repo.
+1. Clone the [`nodejs-planetscale-read-replicas`](https://github.com/fly-apps/nodejs-planetscale-read-replicas+external) repo.
 2. Run `npm install` to install its dependencies.
 3. Duplicate `.env.example`, naming it `.env`.
 4. The application needs to know about all the available regions. There are different ways this could be done. We've opted to use a single comma-separated string of connection strings. In the `.env`, set `DATABASE_URL` as _all_ of the connection URLs you have, separated by a comma. The **first** one should be the one for your **primary** (and possibly only) database. Follow it with those for any read-only regions you've added. It will look something like this. Note the comma between them:

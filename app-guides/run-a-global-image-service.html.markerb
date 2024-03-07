@@ -27,7 +27,7 @@ With Fly you can eliminate all that administrative load by letting Fly deploy a 
 
 ## _What’s Imaginary_
 
-Let's start with [h2non/Imaginary](https://github.com/h2non/imaginary), a fantastically useful image processing application written in Go. Once configured, it lets you process images. The images can be posted to it or you can ask it to get an image from a remote server and all of this is controlled through a URL request to the Imaginary server.
+Let's start with [h2non/Imaginary](https://github.com/h2non/imaginary+external), a fantastically useful image processing application written in Go. Once configured, it lets you process images. The images can be posted to it or you can ask it to get an image from a remote server and all of this is controlled through a URL request to the Imaginary server.
 
 You can find all the source in the GitHub repository, but for this guide, we don't need to worry about that. We're going to use the developer-supplied Docker image to deploy it.
 
@@ -58,7 +58,7 @@ The third  `CMD` line contains the parameters we pass to the `imaginary` command
 
 ## _Testing Locally_
 
-You'll need to have Docker installed locally to test this locally. We won't go into the details of installing Docker - check out the [Docker site and guides](https://docs.docker.com/install/) for how to install. Assuming you've done this we can move on to testing.
+You'll need to have Docker installed locally to test this locally. We won't go into the details of installing Docker - check out the [Docker site and guides](https://docs.docker.com/install/+external) for how to install. Assuming you've done this we can move on to testing.
 
 #### Build a Docker Instance
 

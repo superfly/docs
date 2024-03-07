@@ -120,8 +120,8 @@ Setting your app to automatically stop when there's excess capacity using `auto_
 Here are some examples:
 
 * [Shutting Down a Phoenix App When Idle](https://fly.io/phoenix-files/shut-down-idle-phoenix-app/): a post by Chris McCord on adding a task to an Elixir app's supervision tree that shuts down the Erlang runtime when there are no active connections.
-* For Rails apps, the `dockerfile-rails` generator provides a [--max-idle](https://github.com/rubys/dockerfile-rails#addremove-a-feature) option that exits after _n_ seconds of inactivity.
-* [A Tired Proxy in Go](https://github.com/superfly/tired-proxy) used in [Building an In-Browser IDE the Hard Way](https://fly.io/blog/remote-ide-machines/). [There's a community fork with more recent updates](https://community.fly.io/t/improved-tired-proxy-for-use-with-fly-machines/10584).
-* A minimal demo app in TypeScript/Remix: [code](https://github.com/fly-apps/autoscale-to-zero-demo) & [demo](https://autoscale-to-zero-demo.fly.dev/).
+* For Rails apps, the `dockerfile-rails` generator provides a [--max-idle](https://github.com/rubys/dockerfile-rails#addremove-a-feature+external) option that exits after _n_ seconds of inactivity.
+* [A Tired Proxy in Go](https://github.com/superfly/tired-proxy+external) used in [Building an In-Browser IDE the Hard Way](https://fly.io/blog/remote-ide-machines/). [There's a community fork with more recent updates](https://community.fly.io/t/improved-tired-proxy-for-use-with-fly-machines/10584).
+* A minimal demo app in TypeScript/Remix: [code](https://github.com/fly-apps/autoscale-to-zero-demo+external) & [demo](https://autoscale-to-zero-demo.fly.dev/+external).
 
 As of `flyctl` v0.0.520, Fly Postgres [supports this too](https://community.fly.io/t/scale-to-zero-postgres-for-hobby-projects/12212).

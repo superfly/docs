@@ -10,17 +10,17 @@ categories:
 date: 2022-12-11
 ---
 
-Object storage is useful when your apps need access to unstructured data like images, videos, or documents. Amazon's S3 is an obvious solution, but you can also host your own S3-compatible object storage using the AGPLv3-licensed [MinIO](https://min.io/).
+Object storage is useful when your apps need access to unstructured data like images, videos, or documents. Amazon's S3 is an obvious solution, but you can also host your own S3-compatible object storage using the AGPLv3-licensed [MinIO](https://min.io/+external).
 
 We're going to set up a single instance of MinIO on Fly.io, backed by [Fly Volume storage](/docs/volumes/).
 
-A note: it's been observed that some features of the MinIO browser console are memory-intensive enough to crash a VM with 256MB of RAM. For even small-scale production use you'll probably need a larger (non-free) VM. 512MB seems to work for poking around and uploading small objects. (For perspective, [MinIO docs recommend a minimum of 128**GB** RAM](https://min.io/docs/minio/container/operations/checklists/hardware.html#minio-hardware-checklist) for deployment at scale.)
+A note: it's been observed that some features of the MinIO browser console are memory-intensive enough to crash a VM with 256MB of RAM. For even small-scale production use you'll probably need a larger (non-free) VM. 512MB seems to work for poking around and uploading small objects. (For perspective, [MinIO docs recommend a minimum of 128GB RAM](https://min.io/docs/minio/container/operations/checklists/hardware.html#minio-hardware-checklist+external) for deployment at scale.)
 
-This is a guide to a demonstration deployment of the official standalone MinIO Docker image, and isn't tuned in any way. Check out the [MinIO](https://min.io/docs/minio/linux/index.html) [docs](https://github.com/minio/minio/tree/master/docs) for more sophisticated use.
+This is a guide to a demonstration deployment of the official standalone MinIO Docker image, and isn't tuned in any way. Check out the [MinIO docs](https://min.io/docs/minio/linux/index.html+external) docs for more sophisticated use.
 
 ## Dockerfile 
 
-We'll use the official [minio/minio](https://hub.docker.com/r/minio/minio) Docker image, but with a custom start command. Here's the Dockerfile to build that: 
+We'll use the official [minio/minio](https://hub.docker.com/r/minio/minio+external) Docker image, but with a custom start command. Here's the Dockerfile to build that: 
 
 ```docker
 FROM minio/minio
@@ -134,7 +134,7 @@ Log into the admin panel with the `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD` va
 
 ## Using the `mc` MinIO Client
 
-You can connect to your MinIO with the `mc` command-line [MinIO Client](https://min.io/docs/minio/linux/reference/minio-mc.html).
+You can connect to your MinIO with the `mc` command-line [MinIO Client](https://min.io/docs/minio/linux/reference/minio-mc.html+external).
 
 MinIO listens for non-browser connections on port 9000, by default. If you're connecting using `fly proxy`, you'll have to proxy port 9000 to use `mc`. 
 
@@ -190,7 +190,7 @@ ENV MINIO_SERVER_URL="http://minio1.local:9000"
 CMD [ "server", "http://minio{1...3}.local:9000/data", "--console-address", ":9001"]
 ```
 
-We're using [expansion notation](https://min.io/docs/minio/linux/operations/install-deploy-manage/deploy-minio-multi-node-multi-drive.html#sequential-hostnames) to tell MinIO that there will be 3 nodes in the cluster.
+We're using [expansion notation](https://min.io/docs/minio/linux/operations/install-deploy-manage/deploy-minio-multi-node-multi-drive.html#sequential-hostnames+external) to tell MinIO that there will be 3 nodes in the cluster.
 
 ### Disk Storage
 
@@ -317,4 +317,4 @@ Create a bucket in one tab and then refresh the other tab. If everything is work
 
 ## What's next?
 
-This was a basic guide for getting an instance of MinIO deployed on Fly.io, scratching the surface of what you might want to do with an S3-compatible object store. You can use your MinIO bucket storage right from the web interface. Your apps can talk to it from within the same private network. [MinIO docs](https://min.io/docs/minio/linux/index.html) cover more advanced usage. 
+This was a basic guide for getting an instance of MinIO deployed on Fly.io, scratching the surface of what you might want to do with an S3-compatible object store. You can use your MinIO bucket storage right from the web interface. Your apps can talk to it from within the same private network. [MinIO docs](https://min.io/docs/minio/linux/index.html+external) cover more advanced usage. 

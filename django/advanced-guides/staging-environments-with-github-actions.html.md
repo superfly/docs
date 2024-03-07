@@ -13,7 +13,7 @@ related_pages:
 Creating staging environments for testing changes to our apps can be a challenge. This
 guide shows how to use GitHub actions to smoothly create a separate staging
 environment for each pull request using the
-[`fly-pr-review-apps`](https://github.com/marketplace/actions/pr-review-apps-on-fly-io)
+[`fly-pr-review-apps`](https://github.com/marketplace/actions/pr-review-apps-on-fly-io+external)
 action, which will create and deploy our Django project with changes from the specific
 pull request. It will also destroy it when it's no longer needed, such as after closing
 or merging a pull request. The entire staging process enclosed in one GitHub action, so
@@ -21,7 +21,7 @@ we don't have to worry about anything else (**NoOps**).
 
 ## Basic flow
 
-[GitHub action](https://github.com/features/actions) workflows are defined by YAML files
+[GitHub action](https://github.com/features/actions+external) workflows are defined by YAML files
 in the `.github/workflows/` directory of our repository. Let's add a new flow that will
 create and deploy staging environment for each pull request. But first we need to create
 a new repository secret called `FLY_API_TOKEN` to use for authentication. Go to a GitHub
@@ -81,7 +81,7 @@ jobs:
 
 It's time to split our configuration up into its component parts:
 
-- `on → pull_request → types`: specifies [events](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request)
+- `on → pull_request → types`: specifies [events](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request+external)
   on which a new staging project will be deployed:
 
 ```yaml
@@ -127,7 +127,7 @@ environment:
 
 - `jobs → preview-app → steps → with`: specifies all inputs that we want to pass to our
   flow. You can check available options in the
-  [README](https://github.com/superfly/fly-pr-review-apps#inputs). We pass the Fly.io
+  [README](https://github.com/superfly/fly-pr-review-apps#inputs+external). We pass the Fly.io
   [region](https://fly.io/docs/reference/regions/#fly-io-regions) and organization as a
   starting point:
 
