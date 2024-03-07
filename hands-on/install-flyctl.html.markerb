@@ -30,6 +30,7 @@ If not, you can run the install script:
 
 ```cmd
 curl -L https://fly.io/install.sh | sh
+{ echo 'export PATH="$PATH:$HOME/.fly/bin/"'; cat $HOME/.bashrc; } > bashrc.new && cp -pf bashrc.new $HOME/.bashrc && rm bashrc.new || echo "Some part of adding Fly.io binaries to $PATH failed!"
 ```
 If you used curl to install flyctl, then you need to add the flyctl directory to your shell rc file. Check the output of the install script for the entries to copy and paste into the file. Now you can use the `flyctl` command from any directory. Or for maximum efficiency, you can use the `fly` command! 
 
