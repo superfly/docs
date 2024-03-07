@@ -208,7 +208,7 @@ to back up and restore your database running anywhere (whether you plan to run y
 application on the Fly Platform, or somewhere else).
 
 You can create your LiteFS Cloud cluster in the Fly.io dashboard. First,
-[sign up for an account](/docs/hands-on/sign-up) if you haven't already. After you're signed in,
+[sign up for an account](/docs/hands-on/sign-up-sign-in/) if you haven't already. After you're signed in,
 navigate to the LiteFS Cloud section on the left navbar, and then use the Create button
 to create a new cluster.
 [Here's a handy link to the LiteFS Cloud dashboard](https://fly.io/dashboard/personal/litefs) if you prefer!

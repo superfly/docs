@@ -8,18 +8,18 @@ toc: false
 
 What's next? Well, this is only the start of your travels with Fly.io.
 
-* **[Language & Framework Guides](/docs/languages-and-frameworks/)**: Comprehensive and starter guides for your favorite languages and frameworks.
-* **[Fly Launch](/docs/apps)**: You've tried the `fly launch` command. Now learn how to use all the Fly Launch features that help you manage and run your apps.
-* **[Databases & Storage](/docs/database-storage-guides/)**: Options for persistent data storage on the Fly Platform
-* **[Fly Machines](/docs/machines/)**: Go deeper with our VMs, and use them to run your projects and tasks.
-* **[Reference](/docs/reference)**: The details of how the Fly Platform works.
+* [Language & Framework Guides](/docs/languages-and-frameworks/): Comprehensive and starter guides for your favorite languages and frameworks.
+* [Fly Launch](/docs/apps): You've tried the `fly launch` command. Now learn how to use all the Fly Launch features that help you manage and run your apps.
+* [Databases & Storage](/docs/database-storage-guides/): Options for persistent data storage on Fly.io.
+* [Fly Machines](/docs/machines/): Go deeper with our fast-launching VMs, and use them to run your projects and tasks.
+* [Networking](/docs/networking): How to connect to an app service, use a custom domain, and take advantage of private networking and dynamic request routing.
 
 When you are ready to move real traffic to your app, check out the ways you can increase availability, capacity and performance with Fly.io:
 
 * Read up on our [App Availability and Resiliency](/docs/reference/app-availability/) features
 * [Scale Machine CPU and RAM](/docs/apps/scale-machine/) 
 * [Scale Machine Count](/docs/apps/scale-count/) 
-* [Autostart and Autostop Machines](/docs/apps/autostart-stop/) in response to traffic
+* [Automatically start and stop Machines](/docs/apps/autostart-stop/) in response to traffic
 
 ## Community
 

@@ -36,7 +36,7 @@ button to create a new cluster.
 When you create your LiteFS Cloud cluster, you'll be asked to save an auth token.
 Keep this handy - you'll use it below.
 
-[Sign up]: /docs/hands-on/sign-up
+[Sign up]: /docs/hands-on/sign-up-sign-in/
 [LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
 
 ## Configuring LiteFS to use LiteFS Cloud

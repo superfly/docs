@@ -1,5 +1,5 @@
 ---
-title: Visit Your App on Fly.io
+title: Visit your app on Fly.io
 layout: docs
 sitemap: false
 nav: hands_on
@@ -22,4 +22,4 @@ Opening http://hellofly.fly.dev/fred
 
 You've successfully launched your first Fly App.
 
-[Next: Learn more about what you can do with Fly.io](/docs/hands-on/next/)
+[Next: Deploy app changes](/docs/hands-on/deploy-app/)
