@@ -75,6 +75,7 @@ flyctl launch [flags]
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --volume-initial-size int          The initial size in GB for volumes created on first deploy
       --wait-timeout string              Time duration to wait for individual machines to transition states and become healthy. (default "5m0s")
+      --wg                               Determines whether communication with remote builders are conducted over wireguard or plain internet(https) (default true)
   -y, --yes                              Accept all confirmations
 ~~~
 
