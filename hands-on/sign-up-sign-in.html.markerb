@@ -4,6 +4,9 @@ layout: docs
 sitemap: false
 nav: hands_on
 toc: false
+redirect_from:
+  - /docs/hands-on/sign-up/
+  - /docs/hands-on/sign-in/
 ---
 
 ## Sign up

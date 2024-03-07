@@ -39,7 +39,7 @@ Just a note: if you decide not to create a LiteFS Cloud cluster right now,
 you can always change your mind and add it later. Check out the
 [LiteFS Cloud backup][] docs for more details.
 
-[Sign up]: /docs/hands-on/sign-up
+[Sign up]: /docs/hands-on/sign-up-sign-in/
 [LiteFS Cloud backup]: /docs/litefs/cloud-backups
 [LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
 

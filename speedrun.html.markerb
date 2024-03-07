@@ -16,8 +16,11 @@ Welcome to Fly Launch. For most languages and frameworks, you can deploy your ap
 
 <div class="important">
 1. [Install flyctl](/docs/hands-on/install-flyctl/) &ndash; you'll need it.
+
 2. Create an account with `fly auth signup` or login with `fly auth login`.
+
 3. Run `fly launch` from inside your project source directory to create, configure, and (for most apps) deploy a new application.
+
 4. If prompted, run `fly deploy` to deploy your new app (or to redeploy after changes!).
 </div>
 
