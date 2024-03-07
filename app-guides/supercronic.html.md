@@ -28,11 +28,11 @@ If you need to run a job every 5 minutes, your `crontab` file would something li
 */5 * * * * echo "hello world!"
 ```
 
-Check out [cron.help](https://cron.help) if you need a quick crontab syntax reference.
+Check out [cron.help](https://cron.help+external) if you need a quick crontab syntax reference.
 
 ## Install `supercronic` in the container
 
-The [latest releases for supercronic](https://github.com/aptible/supercronic/releases) are on [GitHub](https://github.com/aptible/supercronic), where they include copy pasta 🍝instructions for getting it in your Dockerfile. As of January 2024, the current version of `supercronic` is v0.2.29. You'll want to check the [releases page](https://github.com/aptible/supercronic/releases) for the latest version, but here's what it looks like now:
+The [latest releases for supercronic](https://github.com/aptible/supercronic/releases+external) are on [GitHub](https://github.com/aptible/supercronic+external), where they include copy pasta 🍝instructions for getting it in your Dockerfile. As of January 2024, the current version of `supercronic` is v0.2.29. You'll want to check the [releases page](https://github.com/aptible/supercronic/releases+external) for the latest version, but here's what it looks like now:
 
 ```
 # Latest releases available at https://github.com/aptible/supercronic/releases
@@ -92,5 +92,5 @@ That's it! If all went well you now have cron running in a `cron` process in a F
 
 # Resources
 
-- [https://github.com/fly-apps/supercronic](https://github.com/fly-apps/supercronic)
-- [https://cron.help](https://cron.help)
+- [https://github.com/fly-apps/supercronic](https://github.com/fly-apps/supercronic+external)
+- [https://cron.help](https://cron.help+external)

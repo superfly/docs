@@ -9,10 +9,10 @@ categories:
 date: 2024-01-14
 ---
 
-A number of tools allow you to interact with your server over ssh.  These tools are useful for tasks such as
-copying files ([rsync](https://rsync.samba.org/), [scp](https://en.wikipedia.org/wiki/Secure_copy_protocol), [sshfs](https://github.com/libfuse/sshfs#sshfs)), 
-editing ([emacs](https://www.gnu.org/software/emacs/manual/html_node/emacs/Remote-Files.html), [vim](https://www.vim.org/scripts/script.php?script_id=1075), [vscode](https://code.visualstudio.com/docs/remote/ssh)), and
-deployment ([ansible](https://www.ansible.com/), [github actions](https://github.com/marketplace/actions/ssh-deploy), and [kamal](https://kamal-deploy.org/)).
+A number of tools allow you to interact with your server over ssh. These tools are useful for tasks such as
+copying files ([rsync](https://rsync.samba.org/+external), [scp](https://en.wikipedia.org/wiki/Secure_copy_protocol+external), [sshfs](https://github.com/libfuse/sshfs#sshfs+external)), 
+editing ([emacs](https://www.gnu.org/software/emacs/manual/html_node/emacs/Remote-Files.html+external), [vim](https://www.vim.org/scripts/script.php?script_id=1075+external), [vscode](https://code.visualstudio.com/docs/remote/ssh+external)), and
+deployment ([ansible](https://www.ansible.com/+external), [github actions](https://github.com/marketplace/actions/ssh-deploy+external), and [kamal](https://kamal-deploy.org/+external)).
 
 One way to use these tools is to [set up a wireguard VPN](https://fly.io/docs/reference/private-networking/#install-your-wireguard-app) and
 [issue a new SSH credential](https://fly.io/docs/flyctl/ssh-issue/).  This may be impractical for some use cases (example: github actions).
@@ -23,7 +23,7 @@ Before proceeding, a **caution**: unless you are **certain** that all of the cli
 
 ## Install and configure opensshd
 
-Most Docker images are ultimately based on Debian, so the following will work.  Adjust as necessary for other operating systems (example: [Alpine](https://www.alpinelinux.org/)).
+Most Docker images are ultimately based on Debian, so the following will work.  Adjust as necessary for other operating systems (example: [Alpine](https://www.alpinelinux.org/+external)).
 
 ```Dockerfile
 RUN apt-get update \
@@ -67,7 +67,7 @@ This section is needed even if the internal and external ports are the same.
 Notes:
 
 * `internal_port` needs to match the port you selected in the previous step.
-* `port` can be any available port.  `22` is the [default port](https://www.ssh.com/academy/ssh/port) for ssh,
+* `port` can be any available port.  `22` is the [default port](https://www.ssh.com/academy/ssh/port+external) for ssh,
   and the one that most applications expect to be used.
 * Like with your web server port, your server can be configured to spin down when idle and restart when accessed.
   Feel free to adjust `auto_stop_machines` and `auto_start_machines` if your needs differ.
@@ -110,7 +110,7 @@ The above commands will start `sshd` as root, then remove sudo access from your 
 
 ## Upload your ssh key
 
-First, locate your ssh key.  You can create a new key using [`ssh-keygen`](https://www.ssh.com/academy/ssh/keygen),
+First, locate your ssh key.  You can create a new key using [`ssh-keygen`](https://www.ssh.com/academy/ssh/keygen+external),
 Or you can use an existing one: look inside the `.ssh` folder in your home directory for a file with a name like `id_rsa.pub`.
 
 Once located, there are multiple ways to proceed.  Following you will find two ways.  Depending on the framework your
@@ -177,14 +177,14 @@ Notes:
 * These keys are expected to be private, so if you go with an alternate route, make sure that these values are
   not committed to a public repository unencrypted.
 * If you are running with `sudo`, you need to add `sudo` before the `mkdir`, the `ls` and both of the `cp` statements.
-* If you have multiple machines, you may want all of them to [share the same keys](https://security.stackexchange.com/a/89621).
+* If you have multiple machines, you may want all of them to [share the same keys](https://security.stackexchange.com/a/89621+external).
 
 ## [OPTIONAL] Configure client user and aliases
 
 Your full dnsname may be a mouthful, the user the application runs under may be different than the one you use on your laptop.
 the port you expose may be non-standard, or you may have multiple machines and a desire to be able to ssh into a specific one.
 
-If any of these apply to you, you can create or update a file named [`config`](https://www.ssh.com/academy/ssh/config) in your `.ssh` directory.
+If any of these apply to you, you can create or update a file named [`config`](https://www.ssh.com/academy/ssh/config+external) in your `.ssh` directory.
 Following is an example that illustrates addressing a number of the above cases: 
 
 ```config

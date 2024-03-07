@@ -13,13 +13,13 @@ categories:
 
 This guide works through setting up your app for continuous deployment to Fly.io from the app's GitHub repository.
 
-You'll start with an example application called [go-example](https://github.com/fly-apps/go-example). It's a simple, lightweight app that displays the Fly.io region that served the request.
+You'll start with an example application called [go-example](https://github.com/fly-apps/go-example+external). It's a simple, lightweight app that displays the Fly.io region that served the request.
 
 The first section is a speed-run through the steps to make the go-example app automatically deploy to Fly.io from GitHub. The next section loops back for a [longer look at each step](#a-longer-look-at-the-deployment-process).
 
 ## Speed-run your way to continuous deployment
 
-1. Fork the [go-example](https://github.com/fly-apps/go-example) repository to your GitHub account.
+1. Fork the [go-example](https://github.com/fly-apps/go-example+external) repository to your GitHub account.
 2. Clone the new repository to your local machine.
 3. Run `fly launch --no-deploy` from within the project source directory to create a new app and a `fly.toml` configuration file. 
 4. Type `y` to when prompted to tweak settings and enter a name for the app. Adjust other settings, such as region, as needed. Then click **Confirm Settings**.
@@ -125,14 +125,14 @@ The next part is to set up the steps needed to complete this job.
         - uses: actions/checkout@v4
 ```
 
-The first step is one of the built in Actions steps. The step `uses` the [`checkout@v4` action](https://github.com/marketplace/actions/checkout) which checks out the repository into a directory on the virtual machine. You're now ready to deploy.
+The first step is one of the built in Actions steps. The step `uses` the [`checkout@v4` action](https://github.com/marketplace/actions/checkout+external) which checks out the repository into a directory on the virtual machine. You're now ready to deploy.
 
 ```yaml
         - uses: superfly/flyctl-actions/setup-flyctl@master
         - run: flyctl deploy --remote-only
 ```
 
-This step `uses` the [superfly/flyctl-actions action](https://github.com/marketplace/actions/github-action-for-flyctl). This is a GitHub action created by Fly.io which wraps around the `flyctl` command. The wrapper is invoked with the `deploy` argument which will take over the process of building and moving the application to the Fly.io infrastructure. It uses the settings from the `fly.toml` file to guide it and uses the `FLY_API_TOKEN` to authorize its access to the Fly.io GraphQL API.
+This step `uses` the [superfly/flyctl-actions action](https://github.com/marketplace/actions/github-action-for-flyctl+external). This is a GitHub action created by Fly.io which wraps around the `flyctl` command. The wrapper is invoked with the `deploy` argument which will take over the process of building and moving the application to the Fly.io infrastructure. It uses the settings from the `fly.toml` file to guide it and uses the `FLY_API_TOKEN` to authorize its access to the Fly.io GraphQL API.
 
 ```yaml
           env:
@@ -150,8 +150,8 @@ And that's the deployment process. You can, of course, leverage the GitHub Actio
 **Read:**
 
 * [Deploy Tokens](/docs/reference/deploy-tokens/)
-* [GitHub Actions Documentation](https://docs.github.com/en/actions)
+* [GitHub Actions Documentation](https://docs.github.com/en/actions+external)
 
 **See:**
 
-* [GitHub Actions for flyctl](https://github.com/superfly/flyctl-actions)
+* [GitHub Actions for flyctl](https://github.com/superfly/flyctl-actions+external)

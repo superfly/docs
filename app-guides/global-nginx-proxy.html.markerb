@@ -56,7 +56,7 @@ Both server sections are set to listen on port 8080. The `server_name` directive
 
 ### Deploying NGINX to Fly
 
-We now need to create a slot for our new Fly app. Assuming you are signed up and logged in (if not see our [hands-on for getting started](/docs/hands-on/start/)), then we'll run this:
+We now need to create a slot for our new Fly app. Assuming you are signed up and logged in (if not see our [hands-on for getting started](/docs/hands-on/)), then we'll run this:
 
 ```cmd
 flyctl apps create
@@ -72,4 +72,4 @@ Our app will now be built and deployed onto the Fly infrastructure. When that's 
 
 ### Choose your own adventure
 
-With the proxy app in place, you now have a foundation for adding features "at the edge". Maybe try HTTP caching in NGINX, or look at our [OpenResty guide and learn to write Lua](/docs/app-guides/openresty-nginx-plus-lua). Or if you're feeling extra spicey, let your customers [add their own domains](/docs/networking/custom-domains-with-fly/) to your application.
+With the proxy app in place, you now have a foundation for adding features "at the edge". Maybe try HTTP caching in NGINX, or look at our [OpenResty guide and learn to write Lua](/docs/app-guides/openresty-nginx-plus-lua). Or if you're feeling extra spicey, let your customers [add their own domains](/docs/networking/custom-domain/) to your application.
