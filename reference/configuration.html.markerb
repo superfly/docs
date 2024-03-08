@@ -5,13 +5,16 @@ sitemap: false
 nav: firecracker
 ---
 
-You can configure an app for deployment on Fly.io using a `fly.toml` file. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here.
+You can configure an app for deployment on Fly.io using a `fly.toml` file. Configuration of builds, environment variables, internet-exposed services, disk mounts, and release commands go here.
 
-TOML is a [simple configuration file format](https://github.com/toml-lang/toml). Here's a [useful introduction](https://npf.io/2014/08/intro-to-toml/) on its syntax.
+Ways to get a `fly.toml` file:
 
-You don't need to create a `fly.toml` file by hand. Running [flyctl launch](/docs/flyctl/launch/) will create one for you. You can also generate one from an existing app by running [flyctl config save](/docs/flyctl/config-save/).
+ - Run [`flyctl launch`](/docs/flyctl/launch/) in your project source directory to create a new app and `fly.toml` file automatically. 
+ - Run [`flyctl config save -a <existing-app-name>`](/docs/flyctl/config-save/) to generate a `fly.toml` file from an existing app.
 
-*VSCode users*: Install the [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml) extension for automatic `fly.toml` validation and hints drawn from this documentation.
+<div class="note icon">
+TOML is a [simple configuration file format](https://github.com/toml-lang/toml+external). Here's a [useful introduction](https://npf.io/2014/08/intro-to-toml/+external) on its syntax. VSCode users can install the [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml+external) extension for automatic `fly.toml` validation and hints drawn from this documentation.
+</div>
 
 ## The `app` name
 
@@ -23,7 +26,7 @@ app = "restless-fire-6276"
 
 Whenever `flyctl` is run, it will look for a `fly.toml` file in the current directory and use the application name in that file. This behavior can be overridden by using the `-a` flag to set the application name, or on some commands (such as `deploy`) by using a `-c` flag to point to a different `fly.toml` file.
 
-## Primary Region
+## Primary region
 
 `fly deploy` uses the `primary_region` option to determine where to create new Machines, as well as to set the `PRIMARY_REGION` environment variable within the Machines it deploys. Replace `ord` with the three-letter code for your [Fly Region](/docs/reference/regions/) of choice.
 
@@ -37,7 +40,7 @@ The following options are available to control the lifecycle of a running applic
 
 ### `kill_signal` option
 
-When shutting down a Fly app instance, by default, Fly sends a `SIGINT` signal to the running process. Typically this triggers a hard shutdown option on most applications. The `kill_signal` option allows you to change what signal is sent so that you can trigger a softer, less disruptive shutdown. Options are `SIGINT` (The default), `SIGTERM`, `SIGQUIT`, `SIGUSR1`, `SIGUSR2`, `SIGKILL`, or `SIGSTOP`. For example, to set the kill signal to SIGTERM, you would add:
+When shutting down a Fly Machine, by default, Fly.io sends a `SIGINT` signal to the running process. Typically this triggers a hard shutdown option on most applications. The `kill_signal` option allows you to change what signal is sent so that you can trigger a softer, less disruptive shutdown. Options are `SIGINT` (default), `SIGTERM`, `SIGQUIT`, `SIGUSR1`, `SIGUSR2`, `SIGKILL`, or `SIGSTOP`. For example, to set the kill signal to SIGTERM, you would add:
 
 ```toml
 kill_signal = "SIGTERM"
@@ -157,24 +160,24 @@ This section configures deployment-related settings such as the release command 
 
 ### Run one-off commands before releasing a deployment
 
-To run a command in a temporary VM&mdash;using the app's successfully built Docker image&mdash;*before* the release is deployed, define a `release_command`:
+To run a command in a temporary Machine&mdash;using the app's successfully built Docker image&mdash;*before* the release is deployed, define a `release_command`:
 
 ```toml
 [deploy]
   release_command = "bin/rails db:prepare"
 ```
 
-The `release_command` value replaces `CMD` in the temporary VM. This is useful for running database migrations before app VMs are created or updated with the new release. Note that the Docker image's `ENTRYPOINT` is not overridden by the `release_command`; `ENTRYPOINT` always runs.
+The `release_command` value replaces `CMD` in the temporary Machine. This is useful for running database migrations before app Machines are created or updated with the new release. Note that the Docker image's `ENTRYPOINT` is not overridden by the `release_command`; `ENTRYPOINT` always runs.
 
-The temporary VM has full access to the network, environment variables and secrets, but *not* to persistent volumes. Changes made to the file system on the temporary VM will not be retained or deployed. The building/compiling of your project should be done in your Dockerfile. If you need to modify persistent volumes or configure your application, consider making use of `CMD` or `ENTRYPOINT` in your Dockerfile, or of a [process group command](#the-processes-section).
+The temporary Machine has full access to the network, environment variables and secrets, but *not* to persistent volumes. Changes made to the file system on the temporary Machine will not be retained or deployed. The building/compiling of your project should be done in your Dockerfile. If you need to modify persistent volumes or configure your application, consider making use of `CMD` or `ENTRYPOINT` in your Dockerfile, or of a [process group command](#the-processes-section).
 
-The temporary VM inherits the size from the largest Machine in the default process group of the app as of flyctl v0.0.508 (they also default larger on empty/new apps, using the Machine `shared-cpu-2x` preset).
+The temporary Machine inherits the size from the largest Machine in the default process group of the app as of flyctl v0.0.508 (they also default larger on empty/new apps, using the Machine `shared-cpu-2x` preset).
 
 A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
 
 To ensure the command runs in a specific region, such as `dfw`, set `PRIMARY_REGION = 'dfw'` in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if you're running [database replicas in multiple regions](/docs/postgres/high-availability-and-global-replication).
 
-The environment variable `RELEASE_COMMAND=1` is set within the temporary release VM. You can use this to define behavior in your Dockerfile's `ENTRYPOINT`  that's conditional on being run on a release VM.
+The environment variable `RELEASE_COMMAND=1` is set within the temporary release Machine. You can use this to define behavior in your Dockerfile's `ENTRYPOINT`  that's conditional on being run on a release Machine.
 
 By default, the release command has 5 minutes to complete before it is killed. It is possible to increase or decrease the timeout with `fly deploy --release-command-timeout=10m` or by setting `release_command_timeout = "10m"` in `[deploy]` section of `fly.toml`.
 
@@ -199,7 +202,9 @@ The available strategies are:
 
 **bluegreen**: For every running Machine, a new one is booted alongside it in the same region. Once all of the new Machines pass health checks, traffic gets migrated to the new Machines and the old Machines are destroyed. If your app is scaled to 2 or more Machines, this strategy can reduce deploy time by running tasks in parallel. You need to configure at least one health check to use the `bluegreen` strategy. The `bluegreen` strategy doesn't work if Machines have volumes attached.
 
-Note: If `max-per-region` is set to 1, then the default strategy is set to `rolling`. This happens because `canary` needs to temporarily run more than one VM to work correctly. The `bluegreen` strategy will behave similarly with `max-per-region` set to 1.
+<div class="note icon">
+**Note:** If `max-per-region` is set to 1, then the default strategy is set to `rolling`. This happens because `canary` needs to temporarily run more than one Machine to work correctly. The `bluegreen` strategy will behave similarly with `max-per-region` set to 1.
+</div>
 
 #### Rolling deploy configuration
 
@@ -274,7 +279,7 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
 * `auto_start_machines`: Whether to automatically start an application's Machines when a new request is made to the application and there's no excess capacity, per region. If there's only one Machine in a region, then it's started whenever a request is made to the application. The default if not set is `true`.
 * `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines = true`.
 
-<div class="callout">
+<div class="important icon">
 We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having Machines that either never start or never stop. Learn more about [automatically starting and stopping Machines](/docs/apps/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
 </div>
 
@@ -282,14 +287,14 @@ We recommend setting `auto_stop_machines` and `auto_start_machines` to the same 
 
 The `http_service` concurrency section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and [auto start and stop](/docs/apps/autostart-stop/). The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
 
-* `type` specifies what metric is used to determine when to scale up and down, or when a given instance should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
+* `type` specifies what metric is used to determine when to auto start or stop, or when a given Machine should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
 
 **connections**: Load balance and scale based on the number of concurrent TCP connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
 
 **requests**: Load balance and scale based on the number of HTTP requests. This is recommended for web services, since multiple requests can be sent over a single TCP connection.
 
-* `hard_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that application instance. The system will bring up another instance if the auto scaling policy supports doing so.
-* `soft_limit` : When an application instance is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that application instance and only send it to that application instance if all other instances are also at or above their soft_limit. The system will likely bring up another instance if the auto scaling policy for the application supports doing so.
+* `hard_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that Machine.
+* `soft_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that Machine and only send it to that Machine if all other Machines are also at or above their `soft_limit`. This setting is also used to determine excess capacity for the [auto start and stop feature](/docs/apps/autostart-stop/).
 
 ### `http_service.http_options.response.headers`
 
@@ -349,7 +354,7 @@ Roughly translated, this section says every thirty seconds, perform an HTTP GET 
 
 Times are in milliseconds unless units are specified.
 
-* `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.
+* `grace_period`: The time to wait after a Machine starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.
 * `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If it's long and your grace_period shorter than your app's startup time, health check will take too long adding you your deployment time.
 * `timeout`: The maximum time a connection can take before being reported as failing its health check.
 * `method`: The HTTP method to be used for the check.
@@ -522,14 +527,14 @@ This section is a simple list of key/values, so the section is denoted with sing
     soft_limit = 20
 ```
 
-`type` specifies what metric is used to determine when a given instance has reached a concurrency limit. The two supported values are `connections` and `requests`.
+`type` specifies what metric is used to determine when a given Machine has reached a concurrency limit. The two supported values are `connections` and `requests`.
 
 **connections**: Load balance based on the number of concurrent TCP connections. This is the default when unspecified. This is also the default when fly.toml is created with `fly launch`.
 
 **requests**: Load balance based on the number of HTTP requests. This is recommended for web services, since multiple requests can be sent over a single TCP connection.
 
 * `hard_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that Machine.
-* `soft_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that Machine and only send it to that Machine if all other Machines are also at or above their `soft_limit`.
+* `soft_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that Machine and only send it to that Machine if all other Machines are also at or above their `soft_limit`. This setting is also used to determine excess capacity for the [auto start and stop feature](/docs/apps/autostart-stop/).
 
 ### `services.tcp_checks`
 
@@ -544,7 +549,7 @@ When a service is running, Fly Proxy can check up on it by connecting to a port.
 ```
 Times are in milliseconds unless units are specified.
 
-* `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your application to start up. For example if your app takes 2 seconds to start up, give it some runway by setting this to at least 3 seconds.
+* `grace_period`: The time to wait after a Machine starts before checking its health. Make sure this is long enough for your application to start up. For example if your app takes 2 seconds to start up, give it some runway by setting this to at least 3 seconds.
 * `interval`: The time between connectivity checks. If the interval is long, and the `grace_period` is shorter than your app's startup time, then the health check will take longer and will add to your deployment time.
 * `timeout`: The maximum time a connection can take before being reported as failing its health check.
 
@@ -568,7 +573,7 @@ Roughly translated, this section says every ten seconds, perform an HTTP GET on 
 
 Times are in milliseconds unless units are specified.
 
-* `grace_period`: The time to wait after a VM starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.
+* `grace_period`: The time to wait after a Machine starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.
 * `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If it's long and your grace_period shorter than your app's startup time, health check will take too long adding you your deployment time.
 * `timeout`: The maximum time a connection can take before being reported as failing its health check.
 * `method`: The HTTP method to be used for the check.
@@ -602,7 +607,7 @@ The `destination` is the directory where the `source` volume should be mounted o
 
 ### `processes`
 
-Optionally, you can specify a list of [processes](#the-processes-section) to limit volume mounts by process group. You can even specify two different `[[mounts]]` sections to mount different source volumes to VMs in different process groups. Note the need to use double brackets if there are multiple `[[mounts]]` defined.
+Optionally, you can specify a list of [processes](#the-processes-section) to limit volume mounts by process group. You can even specify two different `[[mounts]]` sections to mount different source volumes to Machines in different process groups. Note the need to use double brackets if there are multiple `[[mounts]]` defined.
 
 ### `initial_size`
 
@@ -645,7 +650,7 @@ This section defines the compute requirements for the Machines used for the appl
 
 The default Machine size is `shared-cpu-1x` but it is not enforced if not specified in `fly.toml`. It means commands like `fly deploy` won't attempt to update the compute requirements (or size) for a Machine. `fly scale` commands will use existing Machines to infer new Machine sizes, and in the event that there are no Machines, they will use `shared-cpu-1x`.
 
-If you care about a predictable _scaling up from zero_ case, or if you have different compute requirements for different process groups, then it is highly recommended to add this section to `fly.toml`. Once compute requirements are set, `fly deploy` and `fly scale count` commands will enforce them. If you change the size of the Machines using `fly scale vm` (or its sibling `fly scale memory`) then it will be reset on next `fly deploy` unless `fly.toml` is updated accordingly.
+If you care about a predictable _scaling up from zero_ case, or if you have different compute requirements for different process groups, then it is highly recommended to add this section to `fly.toml`. Once compute requirements are set, `fly deploy` and `fly scale count` commands will enforce them. If you change the size of the Machines using `fly scale vm` (or its sibling `fly scale memory`) then it will be reset on next `fly deploy` unless `fly.toml` is updated accordingly. Learn more about [Machine size configuration precedence](/docs/apps/scale-machine/#machine-size-configuration-precedence).
 
 All keys are optional and `size` has lower precedence than all other keys.
 
@@ -751,7 +756,7 @@ Fields are very similar to `[[services.checks]]`:
 
 * `port`: Internal port to connect to. Needs to be available on `0.0.0.0`. Required.
 * `type`: Either `tcp` or `http`. Required.
-* `grace_period`: The time to wait after a VM starts before checking its health. Make sure you give your app enough time to start up. For example if your app takes 2 seconds to start up, give it some runway by setting this to at least 3 seconds.
+* `grace_period`: The time to wait after a Machine starts before checking its health. Make sure you give your app enough time to start up. For example if your app takes 2 seconds to start up, give it some runway by setting this to at least 3 seconds.
 * `interval`: The time between check runs. If your `grace_period` is shorter than your app's startup time, and `interval` is too long, checks will increase deployment times.
 * `processes`: For apps with multiple processes. The process group to apply the health checks to. Define process groups in the [processes](#the-processes-section) section.
 
@@ -766,7 +771,7 @@ Again, times are in milliseconds unless units are specified.
 
 ## The `processes` section
 
-The `processes` section allows you to define process groups to be run on separate VMs within a single app. Learn more about [running multiple process groups in an app](/docs/apps/processes/).
+The `processes` section allows you to define process groups to be run on separate Machines within a single app. Learn more about [running multiple process groups in an app](/docs/apps/processes/).
 
 **Each Machine can run a different command on start**, allowing you to re-use your code base for different tasks (web server, queue worker, etc).
 
@@ -787,7 +792,7 @@ Furthermore, you can "match" a specific process (or processes) to an [`[http_ser
   force_https = true
 ```
 
-Volumes can also be assigned to specific processes; use double brackets to include more than one [`[[mounts]]`](#the-mounts-section) section, and mount differently named volumes to VMs in different process groups:
+Volumes can also be assigned to specific processes; use double brackets to include more than one [`[[mounts]]`](#the-mounts-section) section, and mount differently named volumes to Machines in different process groups:
 
 ```toml
 [[mounts]]
@@ -838,7 +843,7 @@ The "guest path" --- the path inside your container where the files to serve are
 
 This feature should not be compared directly with a CDN, for the following reasons:
 
-* This feature does not exempt you from having to run a web service in your VM.
+* This feature does not exempt you from having to run a web service in your Machine.
 
 * Statics will not find `index.html` at the root. The full path must be requested.
 
