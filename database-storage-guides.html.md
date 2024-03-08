@@ -32,6 +32,8 @@ These are projects that we develop and support. They're not managed services; yo
 
 - **[Upstash for Redis](/docs/reference/redis/)** - [Redis](https://redis.io/+external) is an in-memory database commonly used for caching. A managed service by [Upstash](https://upstash.com/+external).
 
+- **[Tigris for S3-Compatible Object Storage](docs/reference/tigris/)** - [Object Storage](https://en.wikipedia.org/wiki/Object_storage), S3-compatible and globally caching. A managed service by [Tigris](https://www.tigrisdata.com/).
+
 ## Other Storage Apps
 
 If your application calls for a different solution, you can deploy it yourself as an App on Fly.io. These examples can help you get started with other popular storage options.
