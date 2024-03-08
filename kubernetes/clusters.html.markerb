@@ -62,3 +62,4 @@ kube-system       Active   22d
 ## Related topics
 
 - [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
+- [Configure FKS Services](/docs/kubernetes/services)

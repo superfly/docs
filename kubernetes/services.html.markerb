@@ -1,5 +1,5 @@
 ---
-title: Configuring Services
+title: Configure FKS Services
 layout: docs
 toc: false
 nav: firecracker
@@ -9,7 +9,7 @@ nav: firecracker
 Fly Kubernetes is a closed beta. Email us at sales@fly.io for early access.
 </div>
 
-A [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/) exposes applications running on your cluster.
+A [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/+external) exposes applications running on your cluster.
 Fly Kubernetes supports ClusterIP and LoadBalancer Services.
 
 You can create a Service with a service configuration file. Here's an example ClusterIP service:
@@ -38,8 +38,9 @@ kubectl apply -f service.yaml
 ## Fly.io connection Handlers
 
 Fly.io connection handlers modify your connection before it reaches your application.
-Learn more about [connection handlers](/docs/networking/services/#connection-handlers). Connection
-handlers are supported with custom annotations to a Service object. The annotations have the form:
+Learn more about [connection handlers](/docs/networking/services/#connection-handlers). 
+
+Connection handlers are supported with custom annotations to a Service object. The annotations have the form:
 
 ```yaml
 "service.fly.io/<exposed port name/number>-handlers": "<handler1,handler2,...handlerN>"
@@ -79,4 +80,3 @@ We currently do not support:
 
 - [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
 - [Create an FKS cluster](/docs/kubernetes/clusters/)
-

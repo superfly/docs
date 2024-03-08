@@ -1,5 +1,5 @@
 ---
-title: Fly Kubernetes quickstart
+title: Fly Kubernetes Quickstart
 layout: docs
 toc: false
 nav: firecracker
@@ -150,3 +150,4 @@ On container specs, we don't support the following fields:
 ## Related topics
 
 - [Create an FKS cluster](/docs/kubernetes/clusters/)
+- [Configure FKS Services](/docs/kubernetes/services)
