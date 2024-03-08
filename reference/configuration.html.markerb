@@ -11,6 +11,7 @@ Ways to get a `fly.toml` file:
 
  - Run [`flyctl launch`](/docs/flyctl/launch/) in your project source directory to create a new app and `fly.toml` file automatically. 
  - Run [`flyctl config save -a <existing-app-name>`](/docs/flyctl/config-save/) to generate a `fly.toml` file from an existing app.
+ - Create one by hand with help from this reference.
 
 <div class="note icon">
 TOML is a [simple configuration file format](https://github.com/toml-lang/toml+external). Here's a [useful introduction](https://npf.io/2014/08/intro-to-toml/+external) on its syntax. VSCode users can install the [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml+external) extension for automatic `fly.toml` validation and hints drawn from this documentation.
