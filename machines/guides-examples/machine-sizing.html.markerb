@@ -14,7 +14,7 @@ Here are a few ways to set the size (CPU and memory) of your Machine VMs. This g
 
 ## General Rules
 
-We have some [preset sizes](/docs/about/pricing/#fly-machines) for you to choose from. Each CPU selection defaults to a specific amount of memory.
+We have some [preset sizes](/docs/about/pricing/#running-fly-machines) for you to choose from. Each CPU selection defaults to a specific amount of memory.
 
 You can, however, scale your machine's CPU and memory separately. Memory limits are `2gb * shared CPU size` or `8gb * performance CPU size`. Minimum memory is `256m * shared CPU size` or `2048m * performance CPU size`.
 

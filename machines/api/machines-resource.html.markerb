@@ -1199,7 +1199,7 @@ Properties of the `config` object for Machine configuration. See [Machine proper
 
 ---
 
-**`size`:** A [named size](/docs/about/pricing/#fly-machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
+**`size`:** A [named size](/docs/about/pricing/#running-fly-machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
 
 ---
 
