@@ -3,6 +3,7 @@ title: Create a Fly Postgres Cluster
 layout: framework_docs
 order: 2
 objective: Create a new Fly Postgres cluster.
+toc: false
 ---
 
 To create a Postgres cluster, use the `fly postgres create` command. The command will walk you through the creation with prompts for name, region, and VM resources.

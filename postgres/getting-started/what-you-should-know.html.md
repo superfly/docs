@@ -11,7 +11,7 @@ Fly Postgres is a regular app you deploy on Fly.io, with an automated creation p
 
 This is not a managed database. If Postgres crashes because it ran out of memory or disk space, you'll need to do a little work to get it back.
 
-### Here's what Fly.io manages
+## Here's what Fly.io manages
 
 - **Basic provisioning & upgrade tools** - `fly pg` provides a set of commands and building blocks that automates the provisioning of databases, connecting them to your applications, and accessing remote Postgres shells.
 - **Daily volume snapshots** - Fly.io takes daily snapshots of Postgres volumes and saves them for 5 days.
@@ -19,7 +19,7 @@ This is not a managed database. If Postgres crashes because it ran out of memory
 - **Prometheus metrics** - Fly.io collects and exposes various metrics via Prometheus, but you have to set up a tool, like Grafana, for aggregation and alerting.
 - **Open Source templates** - Templates and documentation are available at [https://github.com/fly-apps/postgres-ha](https://github.com/fly-apps/postgres-ha) in the event that you need to work the Fly Postgres app to fine-tune it for your specific application.
 
-### Here's what you manage
+## Here's what you manage
 
 Deploying a Fly Postgres database means you may need to manage the following:
 
@@ -36,21 +36,25 @@ There are a lot of knobs to turn, but `fly pg config` only supports a few of the
 
 ## Fully managed Postgres
 
+<div class="important icon">
+Supabase Postgres, a fully managed Postgres database on Fly.io, is now in beta. Learn more about [Supabase Postgres](/docs/reference/supabase/) on Fly.io.
+</div>
+
 ### Recommended External Providers
 
 If you want a fully managed database solution for your Fly Apps, there are many great options, including:
 
-- [Crunchy Bridge Managed Postgres](https://www.crunchydata.com/products/crunchy-bridge) (on AWS, Azure, GCP, or Heroku)
-- [Neon Serverless Postgres](https://neon.tech/)
-- [PlanetScale Serverless MySQL](https://planetscale.com/) ([guide to use with Fly Apps](https://fly.io/docs/app-guides/planetscale/))
-- [Supabase Postgres](https://supabase.com/database)
+- [Crunchy Bridge Managed Postgres](https://www.crunchydata.com/products/crunchy-bridge+external) (on AWS, Azure, GCP, or Heroku)
+- [Neon Serverless Postgres](https://neon.tech/+external)
+- [PlanetScale Serverless MySQL](https://planetscale.com/+external) ([guide to use with Fly Apps](https://fly.io/docs/app-guides/planetscale/))
+- [Supabase Postgres](https://supabase.com/database+external)
 
 ### Other Places
 
 You can connect your Fly Apps to the usual suspects, too:
 
-- [Amazon RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/)
-- [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql/#overview)
-- [Digital Ocean Managed Postgres](https://www.digitalocean.com/products/managed-databases-postgresql)
-- [Google Cloud SQL for PostgreSQL](https://cloud.google.com/sql/docs/postgres/)
-- [Heroku Managed Data Services](https://www.heroku.com/managed-data-services)
+- [Amazon RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/+external)
+- [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql/#overview+external)
+- [Digital Ocean Managed Postgres](https://www.digitalocean.com/products/managed-databases-postgresql+external)
+- [Google Cloud SQL for PostgreSQL](https://cloud.google.com/sql/docs/postgres/+external)
+- [Heroku Managed Data Services](https://www.heroku.com/managed-data-services+external)

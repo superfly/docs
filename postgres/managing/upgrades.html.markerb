@@ -3,6 +3,7 @@ title: Upgrade Postgres
 objective: Upgrade Fly instances with the latest version of Postgres.
 layout: framework_docs
 order: 60
+toc: false
 ---
 
 You can upgrade a Fly Postgres cluster across minor Postgres app versions with [`fly image update`](/docs/flyctl/image-update/). This updates your Machines to the [latest release](https://github.com/fly-apps/postgres-flex/releases) of the [postgres-flex](https://github.com/fly-apps/postgres-flex) app.

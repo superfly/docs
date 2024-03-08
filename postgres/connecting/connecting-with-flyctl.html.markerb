@@ -3,6 +3,7 @@ title: Connect With flyctl
 objective: Access your Postgres app from the terminal using flyctl.
 layout: framework_docs
 order: 1
+toc: false
 ---
 
 To connect to your Postgres database from outside your Fly organization, you need a WireGuard connection. However, flyctl on your local machine can connect using [user-mode WireGuard](/blog/our-user-mode-wireguard-year/) magic, without you having to set up your own WireGuard tunnel.
