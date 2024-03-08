@@ -28,7 +28,7 @@ Prepare a directory for your Livebook app config and place a `fly.toml` file ins
 
 ```toml
 [build]
-  image = "ghcr.io/livebook-dev/livebook:0.11.3"
+  image = "ghcr.io/livebook-dev/livebook:0.12.1"
                                                # use a prebuilt Livebook Docker image
 
 [env]
