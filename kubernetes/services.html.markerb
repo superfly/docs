@@ -1,0 +1,82 @@
+---
+title: Configure FKS Services
+layout: docs
+toc: false
+nav: firecracker
+---
+
+<div class= "important icon">
+Fly Kubernetes is a closed beta. Email us at sales@fly.io for early access.
+</div>
+
+A [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/+external) exposes applications running on your cluster.
+Fly Kubernetes supports ClusterIP and LoadBalancer Services.
+
+You can create a Service with a service configuration file. Here's an example ClusterIP service:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: fksdemo-service
+spec:
+  selector:
+    app: fksdemo
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+```
+
+Using `kubectl`, create the service:
+
+```
+kubectl apply -f service.yaml
+```
+
+## Fly.io connection Handlers
+
+Fly.io connection handlers modify your connection before it reaches your application.
+Learn more about [connection handlers](/docs/networking/services/#connection-handlers). 
+
+Connection handlers are supported with custom annotations to a Service object. The annotations have the form:
+
+```yaml
+"service.fly.io/<exposed port name/number>-handlers": "<handler1,handler2,...handlerN>"
+```
+
+The example below adds an HTTP and TLS handler for port 443.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: fksdemo-service
+  annotations:
+    "service.fly.io/https-handlers": "http,tls" # can replace https with 443
+spec:
+  selector:
+    app: fksdemo
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 8080
+```
+
+## Not supported
+
+We currently do not support:
+
+* NodePort Services
+* UDP protocol
+
+## Related topics
+
+- [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
+- [Create an FKS cluster](/docs/kubernetes/clusters/)

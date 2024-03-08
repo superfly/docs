@@ -71,3 +71,4 @@ See the [pricing page](/docs/about/pricing/#fly-kubernetes) for information on F
 
 - [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
 - [Create an FKS cluster](/docs/kubernetes/clusters/)
+- [Configure FKS Services](/docs/kubernetes/services)
