@@ -3,6 +3,7 @@ title: Connect From a Fly App
 objective: Access your Postgres from within the same Fly.io private network.
 layout: framework_docs
 order: 1
+toc: false
 ---
 
 Connection string URIs are a common way to describe a connection to a Postgres server. The output from `flyctl postgres create` provides a connection string of the format:

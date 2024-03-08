@@ -3,6 +3,7 @@ title: Delete a Postgres Cluster
 objective: 
 layout: framework_docs
 order: 90
+toc: false
 ---
 
 **Before deleting any app with a volume, including a Fly Postgres app, make certain that you no longer need any of its data; once an app is deleted, its volumes are deleted and you lose access to their snapshots too.**

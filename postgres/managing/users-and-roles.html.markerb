@@ -3,6 +3,7 @@ title: Users & Roles
 objective: Add users and roles to control who can access what in the database.
 layout: framework_docs
 order: 1
+toc: false
 ---
 
 A Postgres cluster is configured with three users when created:
