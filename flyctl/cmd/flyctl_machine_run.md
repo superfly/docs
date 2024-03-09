@@ -48,6 +48,7 @@ flyctl machine run <image> [command] [flags]
       --vm-memory string            Memory (in megabytes) to attribute to the VM
       --vm-size string              The VM size to set machines to. See "fly platform vm-sizes" for valid values
   -v, --volume strings              Volume to mount, in the form of <volume_id_or_name>:/path/inside/machine[:<options>]
+      --wg                          Determines whether communication with remote builders are conducted over wireguard or plain internet(https) (default true)
 ~~~
 
 ## Global Options
