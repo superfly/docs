@@ -63,4 +63,4 @@ pwsh -Command "iwr https://fly.io/install.ps1 -useb | iex"
 
 If you encounter an error saying the `pwsh` command is not found, `powershell` can be used instead, though we recommend [installing the latest version of PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows).
 
-[Next: Sign up / Sign in](/docs/getting-started/log-in-to-fly/)
+[Next: Sign up / Sign in](/docs/hands-on/sign-up-sign-in/)
