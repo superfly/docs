@@ -20,7 +20,7 @@ To download a past invoice, click View for the relevant cycle. You'll be sent to
 
 ## Plan billing
 
-You're charged for a plan as soon as you sign up for that plan. The exception is [new customers](/docs/about/pricing/#new-customers), who have a $5 sign-up credit for usage, and are only charged after that credit is used up. For existing Fly.io accounts, when you create a new organization, you are signing up for the Hobby plan. 
+You're charged for a plan as soon as you sign up for that plan. The exception is [new customers](/docs/about/pricing/#new-customers-get-a-free-trial), who have a $5 free trial credit for usage, and are only charged after that credit is used up. For existing Fly.io accounts, when you create a new organization, you are signing up for the Hobby plan. 
 
 Plan billing, and any included usage, is pro-rated over the month. For example, if you sign up for a Hobby plan on September 15th, then you'll be charged $2.50 (half of the $5/mo plan cost) right away and you'll have $2.50 of usage included up to September 30th. Then you'll be charged $5 at the start of October and have $5/mo of usage included for that billing cycle.
 
