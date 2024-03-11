@@ -4,10 +4,7 @@ layout: docs
 sitemap: false
 nav: hands_on
 toc: false
-redirect_from: 
-  - /docs/hands-on/create-app/
-  - /docs/hands-on/deploy-app/
-
+redirect_from: /docs/hands-on/create-app/
 ---
 
 Fly Launch helps you quickly deploy almost any kind of app using a Docker image. To learn more about the different ways to get your app ready to deploy, refer to [Fly Launch](/docs/apps/launch/).
