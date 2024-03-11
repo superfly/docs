@@ -24,6 +24,13 @@ flyctl ext kafka create
 ? Select Organization: fly-apps (fly-apps)
 ? Choose a name, use the default, or leave blank to generate one: my-kafka-cluster
 ? Choose a primary region (can't be changed later) Madrid, Spain (mad)
+
+Your Upstash cluster (my-kafka-cluster) in iad is ready.
+
+Set the following secrets on your target app.
+KAFKA_PASSWORD: MThlOTQ5MDMtZTIwZi00MjI2LTllMjctOTExZTIyMDRhOTc0
+KAFKA_USERNAME: Y2VydGFpbi1qYXliaXJkLTEzNjA3JLqKob4rMqdAB2CELIAS--Lh56MEHo_E83s
+TCP_ENDPOINT: fly-falling-dust-7800-kafka.upstash.io:9092
 ```
 
 ### The Upstash web console
