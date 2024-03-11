@@ -8,8 +8,34 @@
       open: current_page?("/docs"),
       links: [
         { text: "Speedrun: Launch on Fly.io", path: "/docs/speedrun/" },
-        { text: "Hands-on with Fly.io", path: "/docs/hands-on/" },
+        { text: "Hands-on demo with Fly.io", path: "/docs/hands-on/" },
+        { text: "Fly.io Primitives", path: "" },      
         { text: "Troubleshooting Deployments", path: "/docs/getting-started/troubleshooting/" }
+      ]
+    },
+    {
+      title: "Languages & Frameworks",
+      path: "/docs/languages-and-frameworks/",
+      open: false,
+      links: [
+        { text: "Run an Elixir App", path: "/docs/elixir/getting-started" },
+        { text: "Run a Rails App", path: "/docs/rails/getting-started/" },
+        { text: "Run a Laravel App", path: "/docs/laravel/" },
+        { text: "Run a Django App", path: "/docs/django/getting-started/" },
+        { text: "Run a JavaScript App", path: "/docs/js/" }
+      ]
+    },
+    {
+      title: "Fly Apps",
+      path: "/docs/apps/index2",
+      open: false,
+      links: [
+        { text: "Fly Launch", path: "" },
+        { text: "App Basics", path: "" },
+        { text: "Networking", path: "" },
+        { text: "Secrets and Tokens", path: "" },
+        { text: "Metrics & Observability", path: "" },
+        { text: "Production Apps", path: "" }
       ]
     },
     {
@@ -29,36 +55,13 @@
       ]
     },
     {
-      title: "Languages & Frameworks",
-      path: "/docs/languages-and-frameworks/",
+      title: "Fly Volumes",
+      path: "/docs/volumes/",
       open: false,
       links: [
-        { text: "Run an Elixir App", path: "/docs/elixir/getting-started" },
-        { text: "Run a Rails App", path: "/docs/rails/getting-started/" },
-        { text: "Run a Laravel App", path: "/docs/laravel/" },
-        { text: "Run a Django App", path: "/docs/django/getting-started/" },
-        { text: "Run a JavaScript App", path: "/docs/js/" }
-      ]
-    },
-    {
-      title: "Fly Launch",
-      path: "/docs/apps/",
-      open: false,
-      links: [
-        { text: "Launch a New App", path: "/docs/apps/launch/" },
-        { text: "Deploy a Fly App", path: "/docs/apps/deploy/" },
-        { text: "Get Information about an App", path: "/docs/apps/info/" },
-        { text: "Scale Machine CPU and RAM", path: "/docs/apps/scale-machine/" },
-        { text: "Scale the Number of Machines", path: "/docs/apps/scale-count/" },
-        { text: "Auto Stop and Start Machines", path: "/docs/apps/autostart-stop/" },
+        { text: "Fly Volumes overview", path: "/docs/reference/volumes/" },
         { text: "Add volume storage", path: "/docs/apps/volume-storage/" },
-        { text: "Manage volume storage", path: "/docs/apps/volume-manage/" },
-        { text: "Restart an App", path: "/docs/apps/restart/" },
-        { text: "Run Multiple Processes in an App", path: "/docs/apps/processes/" },
-        { text: "Deploy with GitHub Actions", path: "/docs/app-guides/continuous-deployment-with-github-actions/" },
-        { text: "Delete an App", path: "/docs/apps/delete/" },
-        { text: "Troubleshoot apps when a host is unavailable", path: "/docs/apps/trouble-host-unavailable/" },
-        { text: "Fly Launch Config (fly.toml)", path: "/docs/reference/configuration/" }
+        { text: "Manage volume storage", path: "/docs/apps/volume-manage/" }
       ]
     },
     {
@@ -96,27 +99,10 @@
       ]
     },
     {
-      title: "Networking",
-      path: "/docs/networking/",
-      open: false,
-      links: [
-        { text: "Connect to an App Service", path: "/docs/networking/app-services/" },
-        { text: "Private Networking", path: "/docs/networking/private-networking/" },
-        { text: "Public Networking", path: "/docs/networking/services/" },
-        { text: "Dynamic Request Routing", path: "/docs/networking/dynamic-request-routing/" },
-        { text: "Use a Custom Domain", path: "/docs/networking/custom-domain/" },
-        { text: "More About Custom Domains and SSL Certificates", path: "/docs/networking/custom-domains-with-fly/" },
-        { text: "Request Headers", path: "/docs/networking/request-headers/" },
-        { text: "Run UDP Services", path: "/docs/networking/udp-and-tcp/" },
-        { text: "TLS Support", path: "/docs/networking/tls/" }
-      ]
-    },
-    {
-      title: "Other Guides",
+      title: "Tutorials",
       path: "/docs/guides/",
       open: current_page?("/docs/guides/"),
       links: [
-        { text: "Going to Production", path: "/docs/going-to-production/" },
         { text: "Crontab with Supercronic", path: "/docs/app-guides/supercronic/" },
         { text: "Run an ssh server", path: "/docs/app-guides/opensshd/" }
       ]
@@ -128,22 +114,10 @@
       links: [
         { text: "flyctl", path: "/docs/flyctl/" },
         { text: "Fly Launch Config (fly.toml)", path: "/docs/reference/configuration/" },
-        { text: "Apps", path: "/docs/reference/apps/" },
-        { text: "Architecture", path: "/docs/reference/architecture/" },
-        { text: "Availability and Resiliency", path: "/docs/reference/app-availability/" },
-        { text: "Builders", path: "/docs/reference/builders/" },
-        { text: "Deploy Tokens", path: "/docs/reference/deploy-tokens/" },
-        { text: "Sentry Error Tracking", path: "/docs/reference/sentry/" },
-        { text: "Fly Launch", path: "/docs/reference/fly-launch/" },
-        { text: "Load Balancing", path: "/docs/reference/load-balancing/" },
-        { text: "Machines", path: "/docs/machines/overview/" },
-        { text: "Metrics", path: "/docs/reference/metrics/" },
-        { text: "Monorepo Apps", path: "/docs/reference/monorepo/" },
-        { text: "Multiple Processes in Apps", path: "/docs/app-guides/multiple-processes/" },
         { text: "Regions", path: "/docs/reference/regions/" },
-        { text: "Build Secrets", path: "/docs/reference/build-secrets/" },
-        { text: "Runtime Secrets", path: "/docs/reference/secrets/" },
-        { text: "Volumes", path: "/docs/reference/volumes" }
+        { text: "Architecture", path: "/docs/reference/architecture/" },
+        { text: "Fly Launch", path: "/docs/reference/fly-launch/" },
+        { text: "Multiple Processes in Apps", path: "/docs/app-guides/multiple-processes/" }
       ]
     },
     {

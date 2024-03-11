@@ -2,7 +2,7 @@
 title: "Fly Launch"
 layout: docs
 toc: false
-nav: firecracker
+nav: apps
 ---
 
 Fly Launch is a collection of opinionated Fly.io platform features that help you configure and orchestrate your app as a unit. The following are some Fly Launch features:

@@ -1,43 +1,93 @@
-<ul class="outline-list">
-  <li>
-    <%= nav_link "Back to Docs", "/docs/" %>
-  </li>
-</ul>
+<%= partial "/docs/partials/back_to_docs" %>
 
-<ul class="outline-list">
-  <li>
-    <%= nav_link "Fly Apps", "/docs/apps/" %>
-    <ul>
-      <li>
-        <%= nav_link "Launch a New App", "/docs/apps/launch/" %>
-      </li>
-      <li>
-        <%= nav_link "Deploy Changes to an App", "/docs/apps/deploy/" %>
-      </li>
-      <li>
-        <%= nav_link "Get Information about an App", "/docs/apps/info/" %>
-      </li>  
-      <li>
-        <%= nav_link "Add Volume Storage", "/docs/apps/volume-storage/" %>
-      </li>
-      <li>
-        <%= nav_link "Scale VM Resources", "/docs/apps/scale-machine/" %>
-      </li>
-      <li>
-        <%= nav_link "Scale VM Count", "/docs/apps/scale-count/" %>
-      </li>
-      <li>
-        <%= nav_link "Restart an App", "/docs/apps/restart/" %>
-      </li>
-      <li>
-        <%= nav_link "Run Multiple Processes in an App", "/docs/apps/processes/" %>
-      </li>
-      <li>
-        <%= nav_link "Delete an App", "/docs/apps/delete/" %>
-      </li>
-      <li>
-        <%= nav_link "Fly Launch Configuration Reference", "/docs/reference/configuration/" %>
-      </li>
-    </ul>
-  </li>
-</ul>
+<% 
+  @nav = [
+    {
+      title: "Fly Apps",
+      path: "/docs/apps/index2",
+      accordion: false,
+      links: [
+        { text: "Fly Apps overview", path: "/docs/reference/apps/" }
+      ]
+    },
+    {
+      title: "Fly Launch",
+      path: "/docs/apps/",
+      open: false,
+      links: [
+        { text: "Launch a New App", path: "/docs/apps/launch/" },
+        { text: "Deploy a Fly App", path: "/docs/apps/deploy/" },
+        { text: "Fly Launch Config (fly.toml)", path: "/docs/reference/configuration/" },
+        { text: "Scale Machine CPU and RAM", path: "/docs/apps/scale-machine/" },
+        { text: "Scale the Number of Machines", path: "/docs/apps/scale-count/" },
+        { text: "Run Multiple Processes in an App", path: "/docs/apps/processes/" },
+        { text: "Auto Stop and Start App Services", path: "/docs/apps/autostart-stop/" },
+        { text: "Deploy with GitHub Actions", path: "/docs/app-guides/continuous-deployment-with-github-actions/" },
+        { text: "Deploy Monorepo Apps", path: "/docs/reference/monorepo/" },
+        { text: "Understand Builders", path: "/docs/reference/builders/" },
+        { text: "Troubleshoot when a host is down", path: "/docs/apps/trouble-host-unavailable/" }
+      ]
+    },
+    {
+      title: "App Basics",
+      path: "",
+      open: false,
+      links: [
+        { text: "Get Info about an App", path: "/docs/apps/info/" },
+        { text: "Restart an App", path: "/docs/apps/restart/" },
+        { text: "Delete an App", path: "/docs/apps/delete/" },
+      ]
+    },
+    {
+      title: "Secrets and Tokens",
+      path: "",
+      open: false,
+      links: [
+        { text: "Use Build Secrets", path: "/docs/reference/build-secrets/" },
+        { text: "Set Runtime Secrets", path: "/docs/reference/secrets/" },
+        { text: "Create Deploy Tokens", path: "/docs/reference/deploy-tokens/" }
+      ]
+    },
+    {
+      title: "Networking",
+      path: "/docs/networking/",
+      open: false,
+      links: [
+        { text: "Connect to an App Service", path: "/docs/networking/app-services/" },
+        { text: "Private Networking", path: "/docs/networking/private-networking/" },
+        { text: "Public Networking", path: "/docs/networking/services/" },
+        { text: "Dynamic Request Routing", path: "/docs/networking/dynamic-request-routing/" },
+        { text: "Use a Custom Domain", path: "/docs/networking/custom-domain/" },
+        { text: "More About Custom Domains and SSL Certificates", path: "/docs/networking/custom-domains-with-fly/" },
+        { text: "Request Headers", path: "/docs/networking/request-headers/" },
+        { text: "Run UDP Services", path: "/docs/networking/udp-and-tcp/" },
+        { text: "TLS Support", path: "/docs/networking/tls/" },
+        { text: "Understand Load Balancing", path: "/docs/reference/load-balancing/" }
+      ]
+    },
+    {
+      title: "Metrics & Observability",
+      path: "",
+      open: false,
+      links: [
+        { text: "Sentry Error Tracking", path: "/docs/reference/sentry/" },
+        { text: "Metrics", path: "/docs/reference/metrics/" },
+        { text: "Exporting Logs", path: "/docs/going-to-production/monitoring/exporting-logs/" }
+      ]
+    },
+    {
+      title: "Production Apps",
+      path: "",
+      open: false,
+      links: [
+        { text: "Production Checklist", path: "" },
+        { text: "Production and Staging Isolation", path: "/docs/going-to-production/the-basics/production-staging-isolation/" },
+        { text: "Production Databases", path: "/docs/going-to-production/the-basics/production-databases/" },
+        { text: "App Availability and Resiliency", path: "/docs/reference/app-availability/" },
+        { text: "App Optimization and (not) Benchmarking", path: "" }
+      ]
+    },
+  ]
+%>
+
+<%= partial "/docs/partials/accordion_nav", locals: { nav: @nav } %>
