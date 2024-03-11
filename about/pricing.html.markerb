@@ -57,9 +57,9 @@ Additional resources are billed at the usage-based pricing detailed below.
 
 ## Compute
 
-We charge for running and stopped machines differently. Attached GPUs are charged separately. For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
+We charge for started and stopped Machines differently. Attached GPUs are charged separately. For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
 
-### Running Fly Machines
+### Started Fly Machines
 
 The price of a running [Fly Machine](/docs/machines/) VM is the price of a named CPU/RAM preset, plus about $5 per 30 days per GB of additional RAM.
 
@@ -139,7 +139,6 @@ backups and point-in-time restore for your SQLite-based applications that use
 
 - $5 per month for up to 10GB of database storage.
 - Additional $0.50/GB per month for database storage above 10GB.
-
 
 ## Support
 
