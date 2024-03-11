@@ -23,7 +23,7 @@ Check out our [plans and plan pricing](https://fly.io/plans).
 
 Every organization belongs to a plan. When you create a new organization, it starts on the [Hobby plan](https://fly.io/plans). If you need more support or compliance options, then you can upgrade to a Launch, Scale, or Enterprise plan.
 
-Some usage is included with all plans (except the [Legacy Hobby plan](#legacy-hobby-plan)). You can upgrade your plan at any time, or just pay for extra usage at the usage-based prices listed below.
+Some usage is included with our plans (except the [Legacy Hobby plan](#legacy-hobby-plan)). You can upgrade your plan at any time, or just pay for extra usage at the usage-based prices listed below.
 
 <div class="note icon">
 Regardless of which plan you're on, your organization may be subject to automated scaling limits to prevent abuse or to help with capacity planning. Email the address in the error message if you run into such a limit and it's getting in your way.
@@ -57,7 +57,7 @@ Additional resources are billed at the usage-based pricing detailed below.
 
 ## Compute
 
-We charge for running and stopped machines differently. Attached GPUs are charged separately.
+We charge for running and stopped machines differently. Attached GPUs are charged separately. For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
 
 ### Running Fly Machines
 
@@ -69,9 +69,7 @@ Here's the pricing for named presets and the allowed additional RAM configuratio
 
 ### Stopped Fly Machines
 
-For stopped machines we charge only for the root file system (rootfs) needed for each machine. Each 1GB of rootfs for a machine stopped for 30 days is $0.15. The amount of rootfs needed is defined by your OCI image generated on your app plus a few [containerd](https://containerd.io/) tweaks on the underlying file system.
-
-For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
+For stopped machines we charge only for the root file system (rootfs) needed for each machine. Each 1GB of rootfs for a machine stopped for 30 days is $0.15. The amount of rootfs needed is defined by your OCI image generated on your app plus a few [containerd](https://containerd.io/+external) tweaks on the underlying file system.
 
 ### GPUs and Fly Machines
 
@@ -93,6 +91,7 @@ Reserved and dedicated options:
 * Discounted rates for reserved GPU Machines and dedicated hosts.
 
 ## Persistent Storage Volumes
+
 [Fly Volumes](/docs/volumes/) are local persistent storage for Machines.
 
 * Free: 3GB of total provisioned capacity per organization
