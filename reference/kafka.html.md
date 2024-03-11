@@ -28,9 +28,10 @@ flyctl ext kafka create
 Your Upstash cluster (my-kafka-cluster) in iad is ready.
 
 Set the following secrets on your target app.
-KAFKA_PASSWORD: MThlOTQ5MDMtZTIwZi00MjI2LTllMjctOTExZTIyMDRhOTc0
-KAFKA_USERNAME: Y2VydGFpbi1qYXliaXJkLTEzNjA3JLqKob4rMqdAB2CELIAS--Lh56MEHo_E83s
-TCP_ENDPOINT: fly-falling-dust-7800-kafka.upstash.io:9092
+
+KAFKA_PASSWORD: MThl0io456uil345u-jkh34-kuj
+KAFKA_USERNAME: Y02kghq4ka345uj0-kl340hkl23
+TCP_ENDPOINT: my-kafka-cluster-kafka.upstash.io:9092
 ```
 
 ### The Upstash web console
