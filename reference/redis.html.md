@@ -127,9 +127,3 @@ Note that items marked with an explicit TTL will expire accurately, regardless o
 Upstash Redis databases are billed by usage on a pay-as-you-go basis, with a free allowance of 10,000 commands per day. Check the official [Upstash Pricing](https://upstash.com/pricing) page for details.
 
 Your usage is updated hourly on your monthly Fly.io bill. You can track database usage details in the [Upstash web console](#the-upstash-web-console) as well.
-
-### Usage from Sidekiq, BullMQ and other prepackaged software
-
-Tools like [Sidekiq](https://sidekiq.org/) or [BullMQ](https://bullmq.io/) make heavy use of Redis through polling, even when completely idle. Many of their polling commands return empty responses.
-
-While Upstash won't count these responses against your usage, they tend to exceed 10,000 requests per day. You'll be notified if you pass this limit.
