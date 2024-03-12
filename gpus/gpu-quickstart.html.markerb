@@ -17,16 +17,12 @@ nav: firecracker
 1. From flyctl, create an app using either `fly launch` or `fly apps create`.
 
     <div class="note icon">
-    **Note**: GPUs are not available in all regions.
-
-    There are three GPU types available: Nvidia L40S, A100-PCIe-40GB and A100-SXM4-80GB ([datasheet](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-nvidia-us-2188504-web.pdf)). And we offer two Machine size presets `a100-40gb` and `a100-80gb` available in the following regions:
-
-    Currently GPUs are available in the following regions:
+    **Note**: GPUs are not available in all regions. There are three GPU types available: Nvidia L40S, A100-PCIe-40GB, and A100-SXM4-80GB.
+    
+    <br>Currently GPUs are available in the following regions:
     - `l40s`: `ord`
     - `a100-40gb`: `ord`
     - `a100-80gb`: `ams`, `iad`, `mia`, `sjc`, `syd`
-
-    <br>Follow [this thread](https://community.fly.io/t/fly-gpus-are-here/16110) for updates.
     </div>
 
 1. Create or modify the `fly.toml` config file in the project source directory, replacing values with your own:
@@ -63,16 +59,18 @@ nav: firecracker
 
 That's pretty much it to get an app running with a Machine on a GPU.
 
+## Volumes and GPU Machines
+
 <div class="important icon">
-**Important**: If you create any additional volumes, they need to be created with the same constraints as your Machine. See the following example.
+**Important**: If you create any additional volumes, they need to be created with the same constraints as your Machine.
 </div>
 
-A volume needs to be created with the same constraints as your Machine. Here's an example of creating a one hundred gigabyte volume for storing ML models in the `ord` region, on a machine with a GPU:
+Here's an example of creating a new one hundred gigabyte volume for storing ML models in the `ord` region, on a machine with a GPU:
 
 ```cmd
 fly volumes create models \
   --size 100 \
-  --vm-gpu-kind a100-pcie-40gb \
+  --vm-gpu-kind a100-40gb \
   --region ord
 ```
 
@@ -96,10 +94,10 @@ COPY --from=builder /usr/local/bin/deviceQuery /usr/local/bin/deviceQuery
 CMD ["sleep", "inf"]
 ```
 
-## Examples
+## Examples using Fly GPUs
 
-- Elixir Llama2-13b on Fly.io GPUs: https://gist.github.com/chrismccord/59a5e81f144a4dfb4bf0a8c3f2673131
+- Elixir Llama2-13b on Fly GPUs: https://gist.github.com/chrismccord/59a5e81f144a4dfb4bf0a8c3f2673131
 - Github fly-apps repos with the `gpu` topic: https://github.com/orgs/fly-apps/repositories?q=topic%3Agpu
 - Fly.io CUDA example: https://gist.github.com/dangra/f8123001fe0f2453a8cd638b89738465
-- Deploying CLIP on Fly: https://gist.github.com/simonw/52c7734e34cac2b26ea1378845674edc
+- Deploying CLIP on Fly.io: https://gist.github.com/simonw/52c7734e34cac2b26ea1378845674edc
 
