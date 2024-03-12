@@ -33,10 +33,11 @@ vm.size = "a100-40gb"
 
 The `a100-40gb` preset is the `a100-pcie-40gb` GPU with the `performance-8x` CPU config and 32GB RAM. You can exert more granular control over resources using the [`[[vm]]` table](https:///docs/reference/configuration/#the-vm-section) in `fly.toml`.
 
-Run `fly platform vm-sizes` to get the list of presets, and [check out the pricing page](https:///docs/about/pricing/#gpus-and-fly-machines) to help you plan ahead.
+Run `fly platform vm-sizes` to get the list of presets, and check out the [pricing page](/docs/about/pricing/#gpus-and-fly-machines) to help you plan ahead.
 
 ### Specify the region
-But you're not done! For `fly deploy` to succeed in provisioning your Machine(s), the app's `primary_region` must match a region that hosts the kind of GPU you're asking for. At the time of writing, `a100-pcie-40gb` GPUs are only available in `ord`. Set the initial region in `fly.toml`:
+
+But you're not done! For `fly deploy` to succeed in provisioning your Machine(s), the app's `primary_region` must match a region that hosts the kind of GPU you're asking for. At the time of writing, `a100-40gb` GPUs are only available in `ord`. Set the initial region in `fly.toml`:
 
 ```
 primary_region = "ord"  # If you change this, ensure it's to a region that offers the GPU model you want
@@ -50,20 +51,21 @@ Currently GPUs are available in the following regions:
 
 
 ### Change GPU model
+
 GPU models are located in different regions, so you'll likely have to destroy any existing Machines before redeploying using a different GPU spec.
 
 
 ## Choosing a Docker base image
 
-Many open-source ML projects have ready-made Docker images; for example: [Ollama](https://ollama.ai/blog/ollama-is-now-available-as-an-official-docker-image), [Basaran](https://github.com/hyperonym/basaran), [LocalAI](https://localai.io/basics/getting_started/). Check out [GitHub `fly-apps` repos with the `gpu` topic](https://github.com/orgs/fly-apps/repositories?q=topic%3Agpu) for some examples.
+Many open-source ML projects have ready-made Docker images; for example: [Ollama](https://ollama.ai/blog/ollama-is-now-available-as-an-official-docker-image+external), [Basaran](https://github.com/hyperonym/basaran+external), [LocalAI](https://localai.io/basics/getting_started/+external). Check out [GitHub `fly-apps` repos with the `gpu` topic](https://github.com/orgs/fly-apps/repositories?q=topic%3Agpu+external) for some examples.
 
-If you're building your own image, choose a base image that [NVIDIA supports](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#system-requirements); `ubuntu:22.04` is a solid choice that's compatible with the CUDA driver GPU Machines use. You can launch a vanilla Ubuntu image and run `nvidia-smi` with no further setup.
+If you're building your own image, choose a base image that [NVIDIA supports](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#system-requirements+external); `ubuntu:22.04` is a solid choice that's compatible with the CUDA driver GPU Machines use. You can launch a vanilla Ubuntu image and run `nvidia-smi` with no further setup.
 
 From there, install whatever packages your project needs. This will include some libraries from NVIDIA if you want to do something more than admire the output of `nvidia-smi`.
 
 ## Installing NVIDIA libraries
 
-You don't need to install any `cuda-drivers` packages in the Docker image, but you'll want some subset of [NVIDIA's GPU-accelerated libraries](https://developer.nvidia.com/gpu-accelerated-libraries)—`libcublas-12-2` (linear algebra) and `libcudnn8` (deep-learning primitives) are a common combination, along with [`cuda-nvcc`](https://developer.nvidia.com/cuda-llvm-compiler)  for compiling stuff with CUDA support.
+You don't need to install any `cuda-drivers` packages in the Docker image, but you'll want some subset of [NVIDIA's GPU-accelerated libraries](https://developer.nvidia.com/gpu-accelerated-libraries+external)—`libcublas-12-2` (linear algebra) and `libcudnn8` (deep-learning primitives) are a common combination, along with [`cuda-nvcc`](https://developer.nvidia.com/cuda-llvm-compiler+external) for compiling stuff with CUDA support.
 
 In general, you'll install NVIDIA libs using your Linux package manager. In a Python environment, it's possible to skip system-wide installation and use pip packages instead.
 
@@ -87,7 +89,7 @@ Unless you've got a constant workload, you'll likely want to shut down GPU Machi
 
 ## Using swap
 
-Designing your workload and provisioning appropriate resources for it are the first line of defence against losing work by running out of memory (system RAM or VRAM). 
+Designing your workload and provisioning appropriate resources for it are the first line of defense against losing work by running out of memory (system RAM or VRAM). 
 
 You can also enable swap for system RAM on a Fly Machine, simply by including a line like the following in `fly.toml`:
 
@@ -97,4 +99,4 @@ swap_size_mb = 8192    # This enables 8GB swap
 
 Keep in mind that this consumes the commensurate amount of space on the Machine's root file system, leaving less capacity for whatever else you want to store there.
 
-If you need more system RAM and fastest performance, also scale up with `fly scale memory`.
+If you need more system RAM and faster performance, also scale up with `fly scale memory`.
