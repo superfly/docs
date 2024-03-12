@@ -65,7 +65,7 @@ That's pretty much it to get an app running with a Machine on a GPU.
 **Important**: If you create any additional volumes, they need to be created with the same constraints as your Machine.
 </div>
 
-Here's an example of creating a one hundred gigabyte volume for storing ML models in the `ord` region, on a machine with a GPU:
+Here's an example of creating a new one hundred gigabyte volume for storing ML models in the `ord` region, on a machine with a GPU:
 
 ```cmd
 fly volumes create models \
