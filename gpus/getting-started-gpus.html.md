@@ -65,7 +65,7 @@ From there, install whatever packages your project needs. This will include some
 
 ## Installing NVIDIA libraries
 
-You don't need to install any `cuda-drivers` packages in the Docker image, but you'll want some subset of [NVIDIA's GPU-accelerated libraries](https://developer.nvidia.com/gpu-accelerated-libraries+external)—`libcublas-12-2` (linear algebra) and `libcudnn8` (deep-learning primitives) are a common combination, along with [`cuda-nvcc`](https://developer.nvidia.com/cuda-llvm-compiler+external) for compiling stuff with CUDA support.
+You don't need to install any `cuda-drivers` packages in the Docker image, but you'll want some subset of [NVIDIA's GPU-accelerated libraries](https://developer.nvidia.com/gpu-accelerated-libraries+external). `libcublas-12-2` (linear algebra) and `libcudnn8` (deep-learning primitives) are a common combination, along with [`cuda-nvcc`](https://developer.nvidia.com/cuda-llvm-compiler+external) for compiling stuff with CUDA support.
 
 In general, you'll install NVIDIA libs using your Linux package manager. In a Python environment, it's possible to skip system-wide installation and use pip packages instead.
 
