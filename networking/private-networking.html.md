@@ -73,9 +73,11 @@ For a service to be accessible via its 6PN address, it needs to bind to/listen o
 
 ## Fly.io `.internal` addresses
 
-A typical `.internal` address is composed of a region qualifier, followed by the app name, followed by `.internal`.
+You can use `.internal` addresses to connect to apps and Machines in the 6PN network. You might want to use `.internal` addresses to connect your app to databases, API servers, or other apps.
 
-The simplest regional qualifier is a region name. For example: `iad.appname.internal`. This would return the IPv6 internal address (or addresses) of the instances of app `appname` in the `iad` region.
+A typical `.internal` address might be composed of a region qualifier, followed by the app name, followed by `.internal`.
+
+The simplest regional qualifier is a region name. For example: `iad.appname.internal`. This would return the IPv6 internal address (or addresses) of the `appname` Machines in the `iad` region.
 
 Applications can use this form of `.internal` address to look up the address of a host. Rather than returning a list of addresses, it will return the first address.
 
@@ -85,15 +87,19 @@ As well, as being able to query and lookup addresses, there's a TXT record assoc
 
 Finally, you can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will contain a comma-separated list of the application names.
 
+
+
+The following table describes what gets returned by each form of `.internal` address.
+
 | Name | AAAA | TXT |
 | -- | --- | -- |
-|`top<number>.nearest.of.<appname>.internal`| top _number_ closest app instances|none
-|`<alloc_id>.vm.<appname>.internal`|specific app instance<br/>|none
-|`vms.<appname>.internal`|none|comma-separated alloc-ids<br/> of app instances|none
-|`<region>.<appname>.internal`|app instances<br/> in region|none
-|`<process_group>.process.<appname>.internal`|app instances<br/> in process group|none
-|`global.<appname>.internal`|app instances<br/> in all regions|none
-|`regions.<appname>.internal`|none|region names<br/> where app is deployed|
+|`top<number>.nearest.of.<appname>.internal`| top _number_ closest Machines|none
+|`<machine_id>.vm.<appname>.internal`|6PN address of a specific Machine|none
+|`vms.<appname>.internal`|none|comma-separated list of Machine ID and region of started Machines
+|`<region>.<appname>.internal`|Machines in region|none
+|`<process_group>.process.<appname>.internal`|Machines in process group | none
+|`global.<appname>.internal`|Machines in all regions|none
+|`regions.<appname>.internal`|none|comma-separated list of region names where Machines are deployed|
 |`<appname>.internal`|app instances<br/> in any region|none
 |`_apps.internal`|none|names of all 6PN<br/> private networking apps<br/> in the same organization|
 |`_peer.internal`|none|names of all WireGuard peers|
@@ -103,7 +109,7 @@ Finally, you can discover all the apps in the organization by requesting the TXT
 
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
-## Flycast - Private Load Balancing
+## Flycast - Private load balancing
 
 Flycast offers the same [geographically-aware load balancing](/docs/reference/load-balancing/) as the public Fly proxy while restricting traffic to private networks.
 
