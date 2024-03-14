@@ -3,61 +3,78 @@ title: Working with the Machines API
 objective: Get started with the Fly Machines API.
 layout: docs
 nav: machines
-order: 1
 ---
 
-With the Machines REST API, you can create, delete, and interact with Fly apps, Fly Machines and Fly Volumes. For the impatient, [flyctl also provides commands](https://fly.io/docs/flyctl/machine/) for experimenting with the API.
+You can create, delete, and interact with Fly Apps, Fly Machines and Fly Volumes directly using the Machines REST API.
 
-## API spec
+These documents that you have flyctl and cURL installed, and have authenticated to Fly.io. Examples assume that you have two environment variables set: `FLY_API_TOKEN`, the authorization token to use  and `FLY_API_HOSTNAME`. 
 
-We have a OpenAPI 3.0 specification available at [docs.machines.dev](https://docs.machines.dev) for the Machines API, so that you can autogenerate clients in your preferred language.
+## Endpoints
 
-## Connecting to the API
+There are two base URLs available to connect to the Machines API service.
 
-This guide assumes that you have `flyctl` and `curl` installed, and have authenticated to Fly.io.
+**Internal base endpoint:** `http://_api.internal:4280`
 
-### Using the public `api.machines.dev` endpoint
+**Public base endpoint:** `https://api.machines.dev`
 
-The easiest (and recommended) way to connect to the Machines API is to use the public `api.machines.dev` endpoint, a simpler alternative to connecting over WireGuard.
+From within your Fly.io [private WireGuard network](/docs/networking/private-networking/), you can connect to the API directly using the internal endpoint. From outside the Fly.io WireGuard mesh, use the public endpoint; this proxies your request to the API.
 
-Simply skip down to [setting up the environment](#setting-up-the-environment), and make sure to set `$FLY_API_HOSTNAME` to `https://api.machines.dev`.
+## Authentication
 
-### Using the private Machines API endpoint
+All requests must include an API Token in the HTTP Headers as follows:
 
-You can still access your Machines directly over a WireGuard VPN, and use the private Machines API endpoint: `http://_api.internal:4280`. This method requires more setup, but provides a connection with less latency than the public endpoint if accessed from another Fly Machine.
-
-Follow the [instructions](/docs/networking/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io [IPv6 private network](/docs/networking/private-networking/). Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
-
-### Connecting through flyctl 
-
-You can also proxy a local port to the internal API endpoint. This section is preserved mainly for the sake of interest, as the public Machines API endpoint is simpler and more performant.
-
-```cmd
-fly machines api-proxy
+```
+Authorization: Bearer <fly_api_token>
 ```
 
-Pick any organization when asked.
 
-With the above command running, in a separate terminal, try this to confirm you can access the API:
-
-```cmd
-curl http://127.0.0.1:4280
+If you want to use an org-wide token, with the power to create and destroy apps,:
+```
+export FLY_API_TOKEN=$(fly auth token)
 ```
 
-If you successfully reach the API, it should respond with a `404 page not found` error. That's because this was not a defined endpoint.
 
-## Setting up the environment
+You can generate a token scoped to a single app with `fly tokens create deploy -a <app-name>`
+
+```
+export FLY_API_TOKEN=$(fly tokens create deploy -a gah)
+```
+
+
+
+## Local setup
 
 Set these environment variables to make the following commands easier to use.
 
+
+Prepare an environment variable
+
+```cmd
+export FLY_API_HOSTNAME="https://api.machines.dev" # set to http://_api.internal:4280 when using WireGuard
+```
+
+
+
 ```bash
-$ export FLY_API_HOSTNAME="https://api.machines.dev" # set to http://_api.internal:4280 when using WireGuard or `http://127.0.0.1:4280` when using 'flyctl proxy'
 $ export FLY_API_TOKEN=$(fly auth token)
 ```
 
 For local development, you can see the token used by `flyctl` with `fly auth token`. You can also create a new auth token in the [personal access token section of the fly.io dashboard](https://fly.io/user/personal_access_tokens).
 
-In order to access this API on a Fly Machine, make the token available as a secret:
+
+### Using the private Machines API endpoint
+
+Accessing the public API endpoint is 
+You can still access your Machines directly over a WireGuard VPN, and use the private Machines API endpoint: `http://_api.internal:4280`. This method requires more setup.
+
+/docs/networking/private-networking/#private-network-vpn
+## Setting up the environment
+
+### Local setup
+
+## API access from Fly Machines
+
+In order to access this API from Fly Machines, make the token available as a secret:
 
 ```cmd
 fly secrets set FLY_API_TOKEN=$(fly auth token)
@@ -69,19 +86,17 @@ A convenient way to set the `FLY_API_HOSTNAME` is to add it to your `Dockerfile`
 ENV FLY_API_HOSTNAME="https://api.machines.dev"
 ```
 
-<section class="warning">The cURL examples in this document are for an app named `my-app-name`. Replace `my-app-name` with the name of your app. Also replace any example Machine IDs with your app's Machine IDs.
+<section class="important">The cURL examples in this document are for an app named `my-app-name`. Replace `my-app-name` with the name of your app. Also replace any example Machine IDs with your app's Machine IDs.
 </section>
 
-## Authentication
+## Machines API reference
 
-All requests must include the Fly API Token in the HTTP Headers as follows:
-
-```
-Authorization: Bearer <fly_api_token>
-```
 
 ## Related topics
 
 - [Apps resource](/docs/machines/api/apps-resource/) reference
 - [Machines resource](/docs/machines/api/machines-resource/) reference
 - [Volumes resource](/docs/machines/api/volumes-resource/) reference
+- ## API spec
+
+We have a OpenAPI 3.0 specification available at [docs.machines.dev](https://docs.machines.dev) for the Machines API, so that you can autogenerate clients in your preferred language.
