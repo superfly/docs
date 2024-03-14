@@ -9,7 +9,7 @@ redirect_from:
 
 Fly.io has public and private network services available. The public network services connect apps to the wider public internet, while the [private network services](/docs/reference/private-networking) allow apps to communicate with other apps within the Fly.io private network.
 
-## IP addresses
+## Anycast IP addresses
 
 IPv6 addresses and shared IPv4 Anycast addresses are free. Dedicated IPv4 addresses are [billed](/docs/about/pricing/#anycast-ip-addresses) monthly.
 
@@ -50,13 +50,13 @@ If you create apps with public services in their Machine config using [`fly mach
 
 Dedicated IPv4 addresses are [billed](/docs/about/pricing/#anycast-ip-addresses) monthly.
 
-Shared IPv4 addresses are recommended unless you have an explicit need for your own IP. Some of the reasons to use a dedicated IPv4 address:
+Shared IPv4 addresses are recommended unless you have an explicit need for your own IP. Some of the reasons to use a dedicated IPv4 address include:
 
 - Your app uses a non-HTTP protocol that doesn't use TLS.
 - You want to use a wildcard certificate.
 - Your app needs to do something over UDP (we don't support UDP over shared IPv4 or dedicated IPv6).
 - You want your app to accept raw TCP and handle TLS termination.
-- You have a Fly Postgres app with the default hostname that you want exposed to the internet for external connections.
+- You have a Fly Postgres exposed to the internet over TLS for external connections.
 
 Allocating a dedicated IPv4 Anycast address is opt-in only. To manually allocate a dedicated IPv4 address for your app, run:
 
@@ -181,7 +181,7 @@ Example configuration from default Fly Postgres app `fly.toml`:
 
 ### PROXY protocol handler
 
-The `proxy_proto` handler adds information about the original connection, including client IP + port and server IP + port (from the client's perspective). Most apps need additional logic to accept the proxy protocol, either using a prebuilt library or implementing the [PROXY protocol](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt+external) directly. 
+The `proxy_proto` handler adds information about the original connection, including client IP + port and server IP + port (from the client's perspective). Most apps need additional logic to accept the PROXY protocol, either using a prebuilt library or implementing the [PROXY protocol](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt+external) directly. 
 
 Fly.io supports version 1 (human-readable header format) of the PROXY protocol by default with the `proxy_proto` handler. You can configure the `proxy_proto` handler to use version 2 (binary header format) in the [`services.ports.proxy_proto_options`](/docs/reference/configuration/#services-ports-proxy_proto_options) section of your `fly.toml` file.
 
@@ -200,7 +200,7 @@ The `force_https` configuration option automatically redirects HTTP to HTTPS. Wh
 
 ## Outbound IP addresses
 
-Fly Machines have IPv6 addresses from which they make requests to the wider internet without going through the Fly proxy.
+Fly Machines have IPv6 addresses from which they make requests to the wider internet without going through the Fly Proxy.
 
 We don’t offer static IPs or regional IP ranges, and we discourage the use of our outbound IPs to bypass firewalls. A Machine's outbound IP is liable to change without notice. This shouldn't be a daily occurrence, but it will happen if a Machine is moved for whatever reason, such as a load-balancing of Fly Machines between servers in one region.
 
