@@ -34,7 +34,9 @@ Along with the dedicated IPv6 address, apps are automatically given a shared Any
 
 This includes apps configured with the simplified [`[http_service]`](/docs/reference/configuration/#the-http_service-section) section, which handles only these protocols and ports by default.
 
-You can use a shared IPv4 address for TCP ports other than 80 and 443 by using the [TLS handler](#tls-handler) with the port. Shared IPv4 addresses are recommended unless you have an [explicit need for your own IP](#dedicated-ipv4). Shared IPv4 addresses are shared across many apps and organizations. Routing is based on your app's domain.
+You can use a shared IPv4 address for TCP ports other than 80 and 443 by using the [TLS handler](#tls-handler) when you specify the port. 
+
+Shared IPv4 addresses are recommended unless you have an [explicit need for your own IP](#dedicated-ipv4). Shared IPv4 addresses are shared across many apps and organizations. Routing is based on your app's domain.
 
 To allocate a shared IPv4 to an app without a public IPv4 address, run:
 
