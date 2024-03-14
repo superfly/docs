@@ -58,7 +58,7 @@ Shared IPv4 addresses are recommended unless you have an explicit need for your 
 - You want your app to accept raw TCP and handle TLS termination.
 - You have a Fly Postgres app with the default hostname that you want exposed to the internet for external connections.
 
-Allocating a dedicated IPv4 anycast address is opt-in only. To manually allocate a dedicated IPv4 address for your app, run:
+Allocating a dedicated IPv4 Anycast address is opt-in only. To manually allocate a dedicated IPv4 address for your app, run:
 
 ```cmd
 fly ips allocate-v4
