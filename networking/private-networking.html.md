@@ -10,22 +10,22 @@ redirect_from:
 
 Fly apps are connected by a mesh of WireGuard tunnels using IPV6.
 
-Applications within the same organization are assigned special addresses ("6PN addresses") tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly platform won't forward between different 6PN networks.
+Applications within the same organization are assigned special addresses ("6PN addresses") tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly.io platform won't forward between different 6PN networks.
 
 This connectivity is always available to applications; you don't have to do anything special to get it.
 
 You can connect applications running outside of Fly.io to your 6PN network using WireGuard; for that matter, you can connect your dev laptop to your 6PN network. To do that, you'll use flyctl, the Fly.io CLI, to generate a WireGuard configuration that is addressed with a 6PN address.
 
-## Discovering Apps through DNS on an instance
+## Discovering Apps through DNS on a Machine
 
-Instances are configured with their DNS server pointing to `fdaa::3`. The DNS server on this address can resolve arbitrary DNS queries, so you can look up "google.com" with it. But it's also aware of 6PN addresses, and, when queried from an instance, will let you look up the addresses of other applications in your organization. Those addresses live under the synthetic top-level domain `.internal`.
+Machines are configured with their DNS server pointing to `fdaa::3`. The DNS server on this address can resolve arbitrary DNS queries, so you can look up "google.com" with it. But it's also aware of 6PN addresses, and, when queried from a Machine, will let you look up the addresses of other applications in your organization. Those addresses live under the synthetic top-level domain `.internal`.
 
-Since this is the default configuration we set up for instances on Fly, you probably don't need to do anything special to make this work; if your instance shares an organization with an application called `random-potato-45`, then you should be able to `ping6 random-potato-45.internal`.
+Since this is the default configuration we set up for Machines on Fly, you probably don't need to do anything special to make this work; if your app shares an organization with another app called `random-potato-45`, then you should be able to `ping6 random-potato-45.internal`.
 
-If you want to get fancy, you can install `dig` and query the DNS directly.
+If you want to get fancy, you can install `dig` on the Machine and query the DNS directly. For example:
 
-```bash
-$ root@f066b83b:/# dig +short aaaa paulgra-ham.internal @fdaa::3
+```cmd
+root@f066b83b:/# dig +short aaaa my-app-name.internal @fdaa::3
 ```
 ```output
 fdaa:0:18:a7b:7d:f066:b83b:2
@@ -33,9 +33,9 @@ fdaa:0:18:a7b:7d:f066:b83b:2
 
 ## Discovering Apps through DNS on a WireGuard connection
 
-**The DNS server address is different on WireGuard connections than on instances**. That's because you can run multiple WireGuard connections; your dev laptop could be WireGuard-connected to multiple organizations, but an instance can't be. So DNS is just a little more complicated over WireGuard.
+**The DNS server address is different on WireGuard connections than on Machines**. That's because you can run multiple WireGuard connections; your dev laptop could be WireGuard-connected to multiple organizations, but a Machine can't be. So DNS is just a little more complicated over WireGuard.
 
-Your DNS server address for a WireGuard connection is a part of the WireGuard connection flyctl generates. Your platform WireGuard tools might read and automatically configure DNS from that configuration, or it might not. Here's how to find it:
+Your DNS server address for a WireGuard connection is part of the WireGuard tunnel configuration that flyctl generates. Your platform WireGuard tools might read and automatically configure DNS from that configuration, or it might not. Here's how to find it in the WireGuard configuration file:
 
 ```
 [Interface]
@@ -58,25 +58,26 @@ fdaa:0:18::3
 
 To use `dig` to probe DNS on a WireGuard connection, supply the DNS server address to it. Note that `dig`'s syntax is silly, and that you have to put a `@` at the beginning of the address; this trips us up all the time.
 
-```bash
-$ root@f066b83b:/# dig +short aaaa paulgra-ham.internal @fdaa:0:18::3
+```cmd
+root@f066b83b:/# dig +short aaaa my-app-name.internal @fdaa:0:18::3
 ```
 ```output
 fdaa:0:18:a7b:7d:f066:b83b:2
 ```
 
 ## Connecting to a running service via its 6PN address
+
 In the `/etc/hosts` of a deployed Fly App, we alias the 6PN address of the app to `fly-local-6pn`.  
-For a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, you need to bind it to `fly-local-6pn:8080` for it to be accessible at "[6PN_Address:8080]".  
-(`fly-local-6pn` is to 6pn-addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine)
+
+For a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, you need to bind it to `fly-local-6pn:8080` for it to be accessible at "[6PN_Address:8080]". (`fly-local-6pn` is to 6pn-addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine.)
 
 ## Fly.io `.internal` addresses
 
-A typical .internal address is composed of a region qualifier, followed by the app name followed by `.internal`.
+A typical `.internal` address is composed of a region qualifier, followed by the app name, followed by `.internal`.
 
-The simplest regional qualifier is a region name. `iad.appname.internal`. This would return the IPv6 internal address (or addresses) of the instances of app `appname` in the `iad` region.
+The simplest regional qualifier is a region name. For example: `iad.appname.internal`. This would return the IPv6 internal address (or addresses) of the instances of app `appname` in the `iad` region.
 
-Applications can use this form of `.internal` address to look up address of a host. Rather than returning a list of addresses, it will return the first address.
+Applications can use this form of `.internal` address to look up the address of a host. Rather than returning a list of addresses, it will return the first address.
 
 The regional qualifier `global` will return the IPv6 internal addresses for all instances of the app in every region.
 
