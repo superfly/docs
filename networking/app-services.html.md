@@ -20,7 +20,7 @@ There are two basic ways to talk to a process running in your Fly Machine:
 
 Here's a cheat sheet for configuring apps to be reachable by each of these means:
 
-||Fly Proxy|Internal (6PN)|
+| App config |Fly Proxy|Internal (6PN)|
 |---|---|---|
 |Bind to | `0.0.0.0:<port>` ([<u>not UDP</u>](#udp-is-special)) | `fly-local-6pn:<port>`|
 |Needs `services` or<br>`http_service` in config? | YES | NO |
