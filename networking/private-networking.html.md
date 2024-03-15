@@ -12,15 +12,15 @@ Fly apps are connected by a mesh of WireGuard tunnels using IPV6.
 
 Applications within the same organization are assigned special addresses ("6PN addresses") tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly.io platform won't forward between different 6PN networks.
 
-This connectivity is always available to applications; you don't have to do anything special to get it.
+This connectivity is always available to apps; you don't have to do anything special to get it.
 
-You can connect applications running outside of Fly.io to your 6PN network using WireGuard; for that matter, you can connect your dev laptop to your 6PN network. To do that, you'll use flyctl, the Fly.io CLI, to generate a WireGuard configuration that is addressed with a 6PN address.
+You can connect apps running outside of Fly.io to your 6PN network using WireGuard; for that matter, you can connect your dev laptop to your 6PN network. To do that, you'll use flyctl, the Fly.io CLI, to generate a WireGuard configuration that is addressed with a 6PN address.
 
 ## Discovering Apps through DNS on a Machine
 
-Machines are configured with their DNS server pointing to `fdaa::3`. The DNS server on this address can resolve arbitrary DNS queries, so you can look up "google.com" with it. But it's also aware of 6PN addresses, and, when queried from a Machine, will let you look up the addresses of other applications in your organization. Those addresses live under the synthetic top-level domain `.internal`.
+Machines are configured with their DNS server pointing to `fdaa::3`. The DNS server on this address can resolve arbitrary DNS queries, so you can look up "google.com" with it. But it's also aware of 6PN addresses, and, when queried from a Machine, will let you look up the addresses of other apps in your organization. Those addresses live under the synthetic top-level domain `.internal`.
 
-Since this is the default configuration we set up for Machines on Fly, you probably don't need to do anything special to make this work; if your app shares an organization with another app called `random-potato-45`, then you should be able to `ping6 random-potato-45.internal`.
+Since this is the default configuration we set up for Machines on Fly.io, you probably don't need to do anything special to make this work; if your app shares an organization with another app called `random-potato-45`, then you should be able to `ping6 random-potato-45.internal`.
 
 If you want to get fancy, you can install `dig` on the Machine and query the DNS directly. For example:
 
@@ -73,39 +73,38 @@ For a service to be accessible via its 6PN address, it needs to bind to/listen o
 
 ## Fly.io `.internal` addresses
 
-You can use `.internal` addresses to connect to apps and Machines in the 6PN network. You might want to use `.internal` addresses to connect your app to databases, API servers, or other apps.
+Fly.io `.internal` hostnames resolve to internal IPv6 addresses associated with Fly Machines. You can use `.internal` addresses to connect to apps and Machines in your 6PN network, by querying for specific IPv6 internal addresses and then using those addresses to send requests. You might want to use `.internal` addresses to connect your app to databases, API servers, or other apps.
 
-A typical `.internal` address might be composed of a region qualifier, followed by the app name, followed by `.internal`.
+The `.internal` addresses can include qualifiers to return more specific addresses or info. For example, you can add a region name qualifier to return the IPv6 internal addresses of an app's Machines in a specific region: `iad.my-app-name.internal`. This address returns the IPv6 internal address (or addresses) of the `my-app-name` Machines in the `iad` region. 
 
-The simplest regional qualifier is a region name. For example: `iad.appname.internal`. This would return the IPv6 internal address (or addresses) of the `appname` Machines in the `iad` region.
+Another example is the `global` qualifier, `global.<appname>.internal`, which returns the IPv6 internal addresses for all the app's Machines in every region.
 
-Applications can use this form of `.internal` address to look up the address of a host. Rather than returning a list of addresses, it will return the first address.
-
-The regional qualifier `global` will return the IPv6 internal addresses for all instances of the app in every region.
-
-As well, as being able to query and lookup addresses, there's a TXT record associated with `regions.appname.internal` which will list the regions that `appname` is deployed in.
+Some `.internal` hostnames  well as being able to query and lookup addresses, there's a TXT record associated with `regions.appname.internal` which will list the regions that `appname` is deployed in.
 
 Finally, you can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will contain a comma-separated list of the application names.
 
-
+<div class="important icon">
+**Important:** Queries return Machine info for only started Machines.
+</div>
 
 The following table describes what gets returned by each form of `.internal` address.
 
 | Name | AAAA | TXT |
 | -- | --- | -- |
-|`top<number>.nearest.of.<appname>.internal`| top _number_ closest Machines|none
-|`<machine_id>.vm.<appname>.internal`|6PN address of a specific Machine|none
-|`vms.<appname>.internal`|none|comma-separated list of Machine ID and region of started Machines
-|`<region>.<appname>.internal`|Machines in region|none
-|`<process_group>.process.<appname>.internal`|Machines in process group | none
-|`global.<appname>.internal`|Machines in all regions|none
-|`regions.<appname>.internal`|none|comma-separated list of region names where Machines are deployed|
-|`<appname>.internal`|app instances<br/> in any region|none
-|`_apps.internal`|none|names of all 6PN<br/> private networking apps<br/> in the same organization|
-|`_peer.internal`|none|names of all WireGuard peers|
+|`<appname>.internal`|6PN addresses of all Machines in any region for app|none
+|`top<number>.nearest.of.<appname>.internal`|6PN addresses of top _number_ closest Machines for app|none
+|`<machine_id>.vm.<appname>.internal`|6PN address of a specific Machine for app|none
+|`vms.<appname>.internal`|none|comma-separated list of Machine ID and region name for app
+|`<region>.<appname>.internal`|6PN addresses of Machines in region for app|none
+|`<process_group>.process.<appname>.internal`|6PN addresses of Machines in process group for app|none
+|`global.<appname>.internal`|6PN addresses of Machines in all regions for app|none
+|`regions.<appname>.internal`|none|comma-separated list of region names where Machines are deployed for app|
+|`<value>.<key>.kv._metadata.<appname>.internal`|6PN addresses of Machines with matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
+|`_apps.internal`|none|names of all apps in current organization|
+|`_peer.internal`|none|names of all WireGuard peers in current organization|
 |`<peername>._peer.internal`|IPv6 of peer|none|
-|`_instances.internal`|none|IDs, apps, addresses, and regions<br>of all running instances<br>comma separated|
-|`<value>.<key>.kv._metadata.<appname>.internal`|IPv6 of Machines with matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
+|`_instances.internal`|none|comma-separated list of Machine ID, app name, 6PN address, and region for all Machines in current organization|
+
 
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
@@ -274,7 +273,7 @@ If you have the `dig` tool installed, a TXT query to `_apps.internal` will show 
 dig +noall +answer _apps.internal txt
 ```
 ```output
-_apps.internal.		5	IN	TXT	"datasette-apache-proxy-demo,datasette-demo"
+_apps.internal.		5	IN	TXT	"my-app-name,my-app-name-0,my-app-name-1"
 ```
 
 ### Managing WireGuard on Fly.io
