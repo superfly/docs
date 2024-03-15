@@ -8,17 +8,17 @@ redirect_from:
   - /docs/reference/private-networking/
 ---
 
-Fly apps are connected by a mesh of WireGuard tunnels using IPV6.
+Fly Apps are connected by a mesh of WireGuard tunnels using IPV6.
 
-Applications within the same organization are assigned special addresses ("6PN addresses") tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly.io platform won't forward between different 6PN networks.
+Applications within the same organization are assigned special addresses (6PN addresses) tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly.io platform won't forward between different 6PN networks.
 
 This connectivity is always available to apps; you don't have to do anything special to get it.
 
 You can connect apps running outside of Fly.io to your 6PN network using WireGuard; for that matter, you can connect your dev laptop to your 6PN network. To do that, you'll use flyctl, the Fly.io CLI, to generate a WireGuard configuration that is addressed with a 6PN address.
 
-## Discovering Apps through DNS on a Machine
+## Discovering Apps through DNS on a Fly Machine
 
-Machines are configured with their DNS server pointing to `fdaa::3`. The DNS server on this address can resolve arbitrary DNS queries, so you can look up "google.com" with it. But it's also aware of 6PN addresses, and, when queried from a Machine, will let you look up the addresses of other apps in your organization. Those addresses live under the synthetic top-level domain `.internal`.
+Fly Machines are configured with their DNS server pointing to `fdaa::3`. The DNS server on this address can resolve arbitrary DNS queries, so you can look up "google.com" with it. But it's also aware of 6PN addresses, and, when queried from a Machine, will let you look up the addresses of other apps in your organization. Those addresses live under the synthetic top-level domain `.internal`.
 
 Since this is the default configuration we set up for Machines on Fly.io, you probably don't need to do anything special to make this work; if your app shares an organization with another app called `random-potato-45`, then you should be able to `ping6 random-potato-45.internal`.
 
@@ -56,7 +56,7 @@ fdaa:0:18:a7b:d6b:0:a:2
 fdaa:0:18::3
 ```
 
-To use `dig` to probe DNS on a WireGuard connection, supply the DNS server address to it. Note that `dig`'s syntax is silly, and that you have to put a `@` at the beginning of the address; this trips us up all the time.
+To use `dig` to probe DNS on a WireGuard connection, supply the DNS server address to it. Note that `dig`'s syntax requires a `@` at the beginning of the address; this trips us up all the time.
 
 ```cmd
 root@f066b83b:/# dig +short aaaa my-app-name.internal @fdaa:0:18::3
@@ -67,19 +67,19 @@ fdaa:0:18:a7b:7d:f066:b83b:2
 
 ## Connecting to a running service via its 6PN address
 
-In the `/etc/hosts` of a deployed Fly App, we alias the 6PN address of the app to `fly-local-6pn`.  
+In the `/etc/hosts` of a deployed Fly Machine, we alias the 6PN address of the Machine to `fly-local-6pn`.  
 
 For a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, you need to bind it to `fly-local-6pn:8080` for it to be accessible at "[6PN_Address:8080]". (`fly-local-6pn` is to 6pn-addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine.)
 
 ## Fly.io `.internal` addresses
 
-Fly.io `.internal` hostnames resolve to internal IPv6 addresses associated with Fly Machines. You can use `.internal` addresses to connect to apps and Machines in your 6PN network, by querying for specific IPv6 internal addresses and then using those addresses to send requests. You might want to use `.internal` addresses to connect your app to databases, API servers, or other apps.
+Fly.io `.internal` hostnames resolve to 6PN addresses (internal IPv6 addresses) associated with Fly Machines. You can use `.internal` addresses to connect to apps and Machines in your 6PN network, by querying for specific 6PN addresses and then using those addresses to send requests. You might want to use `.internal` addresses to connect your app to databases, API servers, or other apps.
 
-The `.internal` addresses can include qualifiers to return more specific addresses or info. For example, you can add a region name qualifier to return the IPv6 internal addresses of an app's Machines in a specific region: `iad.my-app-name.internal`. This address returns the IPv6 internal address (or addresses) of the `my-app-name` Machines in the `iad` region. 
+The `.internal` addresses can include qualifiers to return more specific addresses or info. For example, you can add a region name qualifier to return the 6PN addresses of an app's Machines in a specific region: `iad.my-app-name.internal`. This address returns the 6PN address (or addresses) of the `my-app-name` Machines in the `iad` region. 
 
-Another example is the `global` qualifier, `global.<appname>.internal`, which returns the IPv6 internal addresses for all the app's Machines in every region.
+Another example is the `global` qualifier, `global.<appname>.internal`, which returns the 6PN addresses for all the app's Machines in every region.
 
-Some `.internal` hostnames  well as being able to query and lookup addresses, there's a TXT record associated with `regions.appname.internal` which will list the regions that `appname` is deployed in.
+Some `.internal` hostnames return  well as being able to query and lookup addresses, there's a TXT record associated with `regions.appname.internal` which will list the regions that `appname` is deployed in.
 
 Finally, you can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will contain a comma-separated list of the application names.
 
