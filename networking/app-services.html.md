@@ -16,11 +16,11 @@ There are two basic ways to talk to a process running in your Fly Machine:
 1. Via Fly Proxy, the Fly.io component that handles load balancing&mdash;this is what you'll need for any public web service
 2. Over the WireGuard [IPv6 private network ("6PN")](/docs/networking/private-networking/) that the app belongs to&mdash;this can be useful for, e.g., providing private supporting services to your Fly Apps
 
-## TL:DR
+## TL;DR
 
 Here's a cheat sheet for configuring apps to be reachable by each of these means:
 
-||Fly Proxy|Internal (6PN)|
+| &nbsp; |Fly Proxy|Internal (6PN)|
 |---|---|---|
 |Bind to | `0.0.0.0:<port>` ([<u>not UDP</u>](#udp-is-special)) | `fly-local-6pn:<port>`|
 |Needs `services` or<br>`http_service` in config? | YES | NO |
