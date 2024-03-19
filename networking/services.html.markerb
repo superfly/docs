@@ -66,7 +66,11 @@ Allocating a dedicated IPv4 Anycast address is opt-in only. To manually allocate
 fly ips allocate-v4
 ```
 
-If your app has a shared IPv4 address and you allocate a dedicated IPv4 address, then the shared IPv4 is released automatically.
+After allocating a dedicated IPv4 address, release the shared IPv4 address:
+
+```cmd
+fly ips release <ip address to release>
+```
 
 ### Switch from dedicated IPv4 to shared IPv4
 
