@@ -93,20 +93,19 @@ The following table describes the information returned by each form of `.interna
 
 | Name | AAAA | TXT |
 | -- | --- | -- |
-|`<appname>.internal`|6PN addresses of all Machines<br>in any region for the app|none
-|`top<number>.nearest.of.<appname>.internal`|6PN addresses of top _number_<br>closestMachines for the app|none
-|`<machine_id>.vm.<appname>.internal`|6PN address of a specific<br>Machine for the app|none
-|`vms.<appname>.internal`|none|comma-separated list of<br>Machine ID and region<br>name for the app
-|`<region>.<appname>.internal`|6PN addresses of Machines<br>in region for the app|none
-|`<process_group>.process.<appname>.internal`|6PN addresses of Machines<br>in process group for the app|none
-|`global.<appname>.internal`|6PN addresses of Machines<br>in all regions for the app|none
-|`regions.<appname>.internal`|none|comma-separated list of<br>region names where<br>Machines are deployed for app|
-|`<value>.<key>.kv._metadata.<appname>.internal`|6PN addresses of Machines<br>with matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
-|`_apps.internal`|none|comma-separated list of<br>the names of all apps in current<br>organization|
-|`_peer.internal`|none|comma-separated list of<br>the names of all WireGuard<br>peers in current<br>organization|
+|`<appname>.internal`|6PN addresses of all<br> Machines in any<br> region for the app|none
+|`top<number>.nearest.of.<appname>.internal`|6PN addresses of<br> top _number_ closest<br> Machines for the app|none
+|`<machine_id>.vm.<appname>.internal`|6PN address of<br> a specific Machine<br> for the app|none
+|`vms.<appname>.internal`|none|comma-separated list<br> of Machine ID and region<br>name for the app
+|`<region>.<appname>.internal`|6PN addresses of<br> Machines in region<br> for the app|none
+|`<process_group>.process.<appname>.internal`|6PN addresses of<br> Machines in process<br> group for the app|none
+|`global.<appname>.internal`|6PN addresses of<br> Machines in all regions<br> for the app|none
+|`regions.<appname>.internal`|none|comma-separated list<br> of region names where<br>Machines are deployed<br> for app|
+|`<value>.<key>.kv._metadata.<appname>.internal`|6PN addresses of<br> Machines with<br> matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
+|`_apps.internal`|none|comma-separated list<br> of the names of all apps<br> in current organization|
+|`_peer.internal`|none|comma-separated list<br> of the names of all<br> WireGuard peers in<br> current organization|
 |`<peername>._peer.internal`|6PN address of peer|none|
-|`_instances.internal`|none|comma-separated list of<br>Machine ID, app name,<br>6PN address, and region for<br>all Machines in current organization|
-
+|`_instances.internal`|none|comma-separated list<br> of Machine ID, app name,<br>6PN address, and region for<br> all Machines in current<br> organization|
 
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
@@ -121,7 +120,7 @@ Use this feature under the following circumstances:
 * You want to limit access to specific ports/services in your app from other Fly.io organizations.
 * You private service needs advanced proxy features like TLS termination or PROXY protocol support.
 
-The general flow for setting this up is:
+The general flow for setting up Flycast is:
 
 1. Allocate a private IPv6 address for your app on one of your Fly.io organization networks.
 2. Expose services in your app's `fly.toml` `[services]` or `[http_service]` block; **do not use `force_https` as Flycast is HTTP-only**.
@@ -144,7 +143,7 @@ VERSION	IP                	TYPE   	REGION	CREATED AT
 v6     	fdaa:0:22b7:0:1::3	private	global	just now
 ```
 
-If you want to expose services to another Fl.io organization you have access to, then use the `--org` flag.
+If you want to expose services to another Fly.io organization you have access to, then use the `--org` flag.
 
 ```cmd
  fly ips allocate-v6 --private --org my-other-org
