@@ -8,36 +8,36 @@ redirect_from:
   - /docs/reference/private-networking/
 ---
 
-Fly apps are connected by a mesh of WireGuard tunnels using IPV6.
+Fly Apps are connected by a mesh of WireGuard tunnels using IPv6.
 
-Applications within the same organization are assigned special addresses ("6PN addresses") tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly platform won't forward between different 6PN networks.
+Applications within the same organization are assigned special addresses (6PN addresses) tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly.io platform won't forward between different 6PN networks.
 
-This connectivity is always available to applications; you don't have to do anything special to get it.
+This connectivity is always available to apps; you don't have to do anything special to get it.
 
-You can connect applications running outside of Fly.io to your 6PN network using WireGuard; for that matter, you can connect your dev laptop to your 6PN network. To do that, you'll use flyctl, the Fly.io CLI, to generate a WireGuard configuration that is addressed with a 6PN address.
+You can connect apps running outside of Fly.io to your 6PN network using WireGuard; for that matter, you can connect your dev laptop to your 6PN network. To do that, you'll use flyctl, the Fly.io CLI, to generate a WireGuard configuration that is addressed with a 6PN address.
 
-## Discovering Apps through DNS on an instance
+## Discover apps through DNS on a Fly Machine
 
-Instances are configured with their DNS server pointing to `fdaa::3`. The DNS server on this address can resolve arbitrary DNS queries, so you can look up "google.com" with it. But it's also aware of 6PN addresses, and, when queried from an instance, will let you look up the addresses of other applications in your organization. Those addresses live under the synthetic top-level domain `.internal`.
+An app's Fly Machines are configured with their DNS server pointing to `fdaa::3`. The DNS server on this address can resolve arbitrary DNS queries, so you can look up "google.com" with it. But it's also aware of 6PN addresses, and, when queried from a Machine, will let you look up the addresses of other apps in your organization. Those addresses live under the synthetic top-level domain `.internal`.
 
-Since this is the default configuration we set up for instances on Fly, you probably don't need to do anything special to make this work; if your instance shares an organization with an application called `random-potato-45`, then you should be able to `ping6 random-potato-45.internal`.
+Since this is the default configuration we set up for Machines on Fly.io, you probably don't need to do anything special to make this work; if your app shares an organization with another app called `random-potato-45`, then you should be able to `ping6 random-potato-45.internal`.
 
-If you want to get fancy, you can install `dig` and query the DNS directly.
+If you want to get fancy, you can install `dig` on the Machine and query the DNS directly. For example:
 
-```bash
-$ root@f066b83b:/# dig +short aaaa paulgra-ham.internal @fdaa::3
+```cmd
+root@f066b83b:/# dig +short aaaa my-app-name.internal @fdaa::3
 ```
 ```output
 fdaa:0:18:a7b:7d:f066:b83b:2
 ```
 
-## Discovering Apps through DNS on a WireGuard connection
+## Discover apps through DNS on a WireGuard connection
 
-**The DNS server address is different on WireGuard connections than on instances**. That's because you can run multiple WireGuard connections; your dev laptop could be WireGuard-connected to multiple organizations, but an instance can't be. So DNS is just a little more complicated over WireGuard.
+The DNS server address is different on WireGuard connections than on Machines. That's because you can run multiple WireGuard connections; your dev laptop could be WireGuard-connected to multiple organizations, but a Machine can't be. So DNS is just a little more complicated over WireGuard.
 
-Your DNS server address for a WireGuard connection is a part of the WireGuard connection flyctl generates. Your platform WireGuard tools might read and automatically configure DNS from that configuration, or it might not. Here's how to find it:
+Your DNS server address for a WireGuard connection is part of the WireGuard tunnel configuration that flyctl generates. Your platform WireGuard tools might read and automatically configure DNS from that configuration, or it might not. Here's how to find it in the WireGuard configuration file:
 
-```
+```yaml
 [Interface]
 PrivateKey = [redacted]
 Address = fdaa:0:18:a7b:d6b:0:a:2/120
@@ -46,7 +46,7 @@ DNS = fdaa:0:18::3
 
 You guessed it; it's the `DNS` line.
 
-If you look carefully, you'll notice something about the DNS address: it shares the first couple parts with the WireGuard IP address. That's because 6PN addresses are prefixed by the organization's network ID; that's the part of the address that locks it to your organization. All our WireGuard DNS addresses follow this pattern: take the organization prefix, and tack `::3` onto the end:
+The DNS address shares the first couple of parts with the WireGuard IP address. That's because 6PN addresses are prefixed by the organization's network ID; that's the part of the address that locks it to your organization. All our WireGuard DNS addresses follow this pattern: take the organization prefix, and tack `::3` onto the end:
 
 ```
 fdaa:0:18:a7b:d6b:0:a:2
@@ -56,75 +56,84 @@ fdaa:0:18:a7b:d6b:0:a:2
 fdaa:0:18::3
 ```
 
-To use `dig` to probe DNS on a WireGuard connection, supply the DNS server address to it. Note that `dig`'s syntax is silly, and that you have to put a `@` at the beginning of the address; this trips us up all the time.
+To use `dig` to probe DNS on a WireGuard connection, supply the DNS server address to it. Note that `dig`'s syntax requires a `@` at the beginning of the address; this trips us up all the time.
 
-```bash
-$ root@f066b83b:/# dig +short aaaa paulgra-ham.internal @fdaa:0:18::3
+```cmd
+root@f066b83b:/# dig +short aaaa my-app-name.internal @fdaa:0:18::3
 ```
 ```output
 fdaa:0:18:a7b:7d:f066:b83b:2
 ```
 
-## Connecting to a running service via its 6PN address
-In the `/etc/hosts` of a deployed Fly App, we alias the 6PN address of the app to `fly-local-6pn`.  
-For a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, you need to bind it to `fly-local-6pn:8080` for it to be accessible at "[6PN_Address:8080]".  
-(`fly-local-6pn` is to 6pn-addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine)
+## Connect to a running service via its 6PN address
+
+In the `/etc/hosts` of a deployed Fly Machine, we alias the 6PN address of the Machine to `fly-local-6pn`.  
+
+For a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, then you need to bind it to `fly-local-6pn:8080` for it to be accessible at "[6PN_Address:8080]". 
+
+<div class="note icon">
+`fly-local-6pn` is to 6pn-addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine.
+</div>
+
+Learn more about [connecting to app services](/docs/networking/app-services/).
 
 ## Fly.io `.internal` addresses
 
-A typical .internal address is composed of a region qualifier, followed by the app name followed by `.internal`.
+Fly.io `.internal` hostnames resolve to 6PN addresses (internal IPv6 addresses) associated with Fly Machines. You can use `.internal` addresses to connect to apps and Machines in your 6PN network by doing a DNS lookup for specific 6PN addresses and then using those addresses to send requests. You might want to use `.internal` addresses to connect your app to databases, API servers, or other apps in your 6PN network.
 
-The simplest regional qualifier is a region name. `iad.appname.internal`. This would return the IPv6 internal address (or addresses) of the instances of app `appname` in the `iad` region.
+<div class="important icon">
+**Important:** Queries to Fly.io `.internal` hostnames only return information for started (running) Machines. Any stopped Machines, including those auto stopped by the Fly Proxy, won't be included in the response to the DNS query.
+</div>
 
-Applications can use this form of `.internal` address to look up address of a host. Rather than returning a list of addresses, it will return the first address.
+The `.internal` addresses can include qualifiers to return more specific addresses or info. For example, you can add a region name qualifier to return the 6PN addresses of an app's Machines in a specific region: `iad.my-app-name.internal`. Querying this hostname returns the 6PN address (or addresses) of the `my-app-name` Machines in the `iad` region. 
 
-The regional qualifier `global` will return the IPv6 internal addresses for all instances of the app in every region.
+Some `.internal` hostnames return a TXT record with Machine, app, or region information. For example, if you request the TXT records using `regions.my-app-name.internal`, then you'll get back a comma-separated list of regions that `my-app-name` is deployed in. And you can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will return a comma-separated list of the app names.
 
-As well, as being able to query and lookup addresses, there's a TXT record associated with `regions.appname.internal` which will list the regions that `appname` is deployed in.
-
-Finally, you can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will contain a comma-separated list of the application names.
+The following table describes the information returned by each form of `.internal` address.
 
 | Name | AAAA | TXT |
 | -- | --- | -- |
-|`top<number>.nearest.of.<appname>.internal`| top _number_ closest app instances|none
-|`<alloc_id>.vm.<appname>.internal`|specific app instance<br/>|none
-|`vms.<appname>.internal`|none|comma-separated alloc-ids<br/> of app instances|none
-|`<region>.<appname>.internal`|app instances<br/> in region|none
-|`<process_group>.process.<appname>.internal`|app instances<br/> in process group|none
-|`global.<appname>.internal`|app instances<br/> in all regions|none
-|`regions.<appname>.internal`|none|region names<br/> where app is deployed|
-|`<appname>.internal`|app instances<br/> in any region|none
-|`_apps.internal`|none|names of all 6PN<br/> private networking apps<br/> in the same organization|
-|`_peer.internal`|none|names of all WireGuard peers|
-|`<peername>._peer.internal`|IPv6 of peer|none|
-|`_instances.internal`|none|IDs, apps, addresses, and regions<br>of all running instances<br>comma separated|
-|`<value>.<key>.kv._metadata.<appname>.internal`|IPv6 of Machines with matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
+|`<appname>.internal`|6PN addresses of all<br> Machines in any<br> region for the app|none
+|`top<number>.nearest.of.<appname>.internal`|6PN addresses of<br> top _number_ closest<br> Machines for the app|none
+|`<machine_id>.vm.<appname>.internal`|6PN address of<br> a specific Machine<br> for the app|none
+|`vms.<appname>.internal`|none|comma-separated list<br> of Machine ID and region<br>name for the app
+|`<region>.<appname>.internal`|6PN addresses of<br> Machines in region<br> for the app|none
+|`<process_group>.process.<appname>.internal`|6PN addresses of<br> Machines in process<br> group for the app|none
+|`global.<appname>.internal`|6PN addresses of<br> Machines in all regions<br> for the app|none
+|`regions.<appname>.internal`|none|comma-separated list<br> of region names where<br>Machines are deployed<br> for app|
+|`<value>.<key>.kv._metadata.<appname>.internal`|6PN addresses of<br> Machines with<br> matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
+|`_apps.internal`|none|comma-separated list<br> of the names of all apps<br> in current organization|
+|`_peer.internal`|none|comma-separated list<br> of the names of all<br> WireGuard peers in<br> current organization|
+|`<peername>._peer.internal`|6PN address of peer|none|
+|`_instances.internal`|none|comma-separated list<br> of Machine ID, app name,<br>6PN address, and region for<br> all Machines in current<br> organization|
 
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
-## Flycast - Private Load Balancing
+## Flycast - Private load balancing
 
-Flycast offers the same [geographically-aware load balancing](/docs/reference/load-balancing/) as the public Fly proxy while restricting traffic to private networks.
+Flycast offers the same [geographically-aware load balancing](/docs/reference/load-balancing/) as the public Fly Proxy while restricting traffic to private networks.
 
 Use this feature under the following circumstances:
 
-* Your app can't use DNS
-* You're using 3rd party software, like a database, that doesn't support round-robin DNS entries
-* You want to limit access to specific ports/services in your app from other Fly organizations
-* You private service needs advanced proxy features like TLS termination or proxy protocol support
+* Your app can't use DNS.
+* You're using 3rd party software, like a database, that doesn't support round-robin DNS entries.
+* You want to limit access to specific ports/services in your app from other Fly.io organizations.
+* You private service needs advanced proxy features like TLS termination or PROXY protocol support.
 
-The general flow for setting this up is:
+The general flow for setting up Flycast is:
 
-1. Allocate a private IPv6 address on one of your Fly organization networks
-2. Expose services in your app's `fly.toml` `[services]` or `[http_service]` block; **do not use `force_https` as Flycast is HTTP-only** 
-3. Deploy your app
-4. Access the services on the private IP from the target organization network
+1. Allocate a private IPv6 address for your app on one of your Fly.io organization networks.
+2. Expose services in your app's `fly.toml` `[services]` or `[http_service]` block; **do not use `force_https` as Flycast is HTTP-only**.
+3. Deploy your app.
+4. Access the services on the private IP from the target organization network.
 
-**Note: If you have a public IP address assigned to your app, services in fly.toml will be exposed to the public internet. Verify this with `fly ips list`.**
+<div class="warning icon">
+**Warning:** If you have a public IP address assigned to your app, then services in `fly.toml` are exposed to the public internet. Verify your app's IP addresses with `fly ips list`.
+</div>
 
-### Assigning a Flycast address
+### Assign a Flycast address
 
-By default, the Flycast IP is allocated on app's parent organization network.
+By default, the Flycast IP address is allocated on an app's parent organization network.
 
 ```cmd
  fly ips allocate-v6 --private
@@ -134,7 +143,7 @@ VERSION	IP                	TYPE   	REGION	CREATED AT
 v6     	fdaa:0:22b7:0:1::3	private	global	just now
 ```
 
-If you want to expose services to another Fly organization you have access to, use the `--org` flag.
+If you want to expose services to another Fly.io organization you have access to, then use the `--org` flag.
 
 ```cmd
  fly ips allocate-v6 --private --org my-other-org
@@ -144,28 +153,27 @@ VERSION	IP                	TYPE   	REGION	CREATED AT
 v6     	fdaa:0:22b7:0:1::3	private	global	just now
 ```
 
-### DNS
+### DNS and Flycast
 
-You can use `appname.flycast` domains. They behave like `appname.internal` domains except they only return Flycast addresses (if you have any) of the app.
+You can use `appname.flycast` domains. They behave like [`appname.internal`](#fly-io-internal-addresses) domains, except they only return the app's Flycast addresses (if you have any).
 
+<div class="callout">
 The original motivation for this is accommodating PostgreSQL clients that don’t like raw IPv6 addresses in the connection string. The eagle-eyed and elephant-memoried of you might remember that we introduced Flycast for PostgreSQL to get away from DNS! Why are we going back? The problem we were trying to get away from with DNS is avoiding the case where there is a lag between a PostgreSQL instance becoming unhealthy or dying and it getting removed from DNS. Flycast IPs don’t change so we don’t have to worry about that issue in this case.
+</div>
 
 ## Private Network VPN
 
-You can use the [WireGuard](https://wireguard.com/) VPN to connect to our [6PN private network](/docs/networking/private-networking/). This is a flexible and secure way to plug into each one of your Fly organizations and connect to any and all apps within that organization.
+You can use the [WireGuard](https://wireguard.com/+external) VPN to connect to the 6PN private network. WireGuard is a flexible and secure way to plug into each one of your Fly.io organizations and connect to any app within that organization.
 
+### Set up a private network VPN
 
-### TL:DR;
+To set up your VPN, you'll use flyctl to generate a tunnel configuration file with private keys already embedded. Then you can load that file into your local WireGuard application to create a tunnel. Activate the tunnel and you'll be using the internal Fly.io DNS service which resolves `.internal` addresses - and passes on other requests to Google's DNS for resolution.
 
-The flyctl command line  can generate you a tunnel configuration file with private keys already embedded. You can load that file into your local WireGuard application to create a tunnel. Activate the tunnel and you'll be using the internal Fly.io DNS service which resolves `.internal` addresses - and passes on other requests to Google's DNS for resolution.
+#### 1. Install your WireGuard App
 
-### Step by Step
+Visit the [WireGuard](https://www.wireguard.com/install/+external) site for installation options. Install the software that is appropriate for your system. Windows and macOS have apps available to install. Linux systems have packages, typically named wireguard and wireguard-tools, you should install both.
 
-#### Install your WireGuard App
-
-Visit the [WireGuard](https://www.wireguard.com/install/) site for installation options. Install the software that is appropriate for your system. Windows and macOS have apps available to install. Linux systems have packages, typically named wireguard and wireguard-tools, you should install both.
-
-#### Creating your tunnel configuration
+#### 2. Create your tunnel configuration
 
 To create your tunnel, run:
 
@@ -177,34 +185,82 @@ You'll be asked to select which organization you want the WireGuard tunnel to wo
 
 ```output
 ? Select organization:  [Use arrows to move, type to filter]
-> Dj (personal)
-  Demo Sandbox (demo-sandbox)
+> My Org (personal)
+  Test Org (test-org)
 ```
 
-As well as configuring the WireGuard service, the create command also generates a tunnel configuration file, complete with private keys which cannot be recovered. This configuration file will be used in the next step. First it has to be saved:
+The `fly wireguard create` command configures the WireGuard service and generates a tunnel configuration file, complete with private keys which cannot be recovered. This configuration file will be used in the next step. First, save the configuration file:
 
 ```output
 !!!! WARNING: Output includes private key. Private keys cannot be recovered !!!!
 !!!! after creating the peer; if you lose the key, you’ll need to remove    !!!!
 !!!! and re-add the peering connection.                                     !!!!
-? Filename to store WireGuard configuration in, or 'stdout':  basic.conf
-Wrote WireGuard configuration to 'basic.conf'; load in your WireGuard client
+? Filename to store WireGuard configuration in, or 'stdout':  mypeer.conf
+Wrote WireGuard configuration to 'mypeer.conf'; load in your WireGuard client
 ```
 
 We suggest you name your saved configuration with the same name as the peer you have created. Add the extension `.conf` to ensure it will be recognized by the various WireGuard apps as a configuration file for a tunnel. Note that the name (excluding the `.conf` extension) shouldn't exceed 15 characters since this is the maximum length for an interface name on Linux.
 
-##### Dealing with Defaults
+<div class="important icon">
+**Important:** If you want to interact with your peer using its name, then you need to specify a name when you create the tunnel.
 
-A default `region` and `name` will be used if they are not provided to the create command. In most cases, this is fine. However, the default generated name will start with `interactive-*` which are filtered out of DNS (because of the sheer volume of them) and subsequently can't be queried with `_peer.internal` or `<peername>._peer.internal`. If you want to interact with your peer via it's name, then you need to specify a name when you create the tunnel.
+A default `region` and `name` will be used if they're not provided to the create command. In most cases, this is fine. However, the default generated name will start with `interactive-*` which are filtered out of DNS (because of the sheer volume of them) and subsequently can't be queried with `_peer.internal` or `<peername>._peer.internal`.
 
-First, look up available regions by running `fly platform regions`. Select a region with a check mark in the Gateway column.
+To specify a peer name and region, first look up available regions by running `fly platform regions`. Select a region with a check mark in the Gateway column.
 
-Then run:
-```cmd
-fly wireguard create [your-org] [region] [peer-name]
+Then run: `fly wireguard create [your-org] [region] [peer-name]`
+</div>
+
+#### 3. Import your tunnel
+
+##### Windows
+
+Run the WireGuard app. Click **Import tunnel(s) from file**. Select your configuration file. The WireGuard app will display the details of your tunnel. Click **Activate** to bring the tunnel online.
+
+##### macOS
+
+Run the WireGuard app. Click **Import tunnel(s) from file**. Select your configuration file and click **Import**. You might be prompted by the OS that WireGuard would like to add VPN configurations; click **Allow**. The WireGuard app will display the details of your tunnel. Click **Activate** to bring the tunnel online.
+
+##### Ubuntu Linux
+
+If you don't have `wg-quick` installed, then run the command below. For Ubuntu 18.04 to 22.04, `openresolv` is also required.
+
+```
+sudo apt install wireguard-tools openresolv
 ```
 
-After that you'll be able to `dig` to your heart's desire:
+Copy the configuration file to `/etc/wireguard`; you'll need root/sudo permissions:
+
+```
+sudo cp basic.conf /etc/wireguard
+```
+
+Run `wg-quick` to bring `up` the connection by name (i.e. less the `.conf` extension). For example:
+
+```cmd
+wg-quick up mypeer
+```
+```output
+[#] ip link add mypeer type wireguard
+[#] wg setconf mypeer /dev/fd/63
+[#] ip -6 address add fdaa:0:4:a7b:ab6:0:a:102/120 dev mypeer
+[#] ip link set mtu 1420 up dev mypeer
+[#] resolvconf -a tun.mypeer -m 0 -x
+[#] ip -6 route add fdaa:0:4::/48 dev mypeer
+```
+
+### Test the VPN tunnel
+
+If you have the `dig` tool installed, a TXT query to `_apps.internal` will show all the apps in the organization you are connected to:
+
+```cmd
+dig +noall +answer _apps.internal txt
+```
+```output
+_apps.internal.		5	IN	TXT	"my-app-name,my-app-name-0,my-app-name-1"
+```
+
+You can also query for peer names and addresses:
 
 ```cmd
 dig +short txt _peer.internal @fdaa:0:18::3
@@ -220,75 +276,18 @@ dig +short aaaa my-peer._peer.internal @fdaa:0:18::3
 fdaa:0:18:a7b:7d:f066:b83b:102
 ```
 
-#### Importing your tunnel
-
-##### Windows
-
-Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select your configuration file. The WireGuard app will display the details of your tunnel. Click `Activate` to bring the tunnel online.
-
-##### macOS
-
-Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select your configuration file and click Ok. You will be prompted by the OS that WireGuard would like to add VPN configurations; click `Allow`. The WireGuard app will display the details of your tunnel. Click `Activate` to bring the tunnel online.
-
-##### Ubuntu Linux
-
-Ensure you have `wg-quick` installed, if not, run the below command.
-From Ubuntu 18.04 to 22.04, `openresolv` is also required.
+Query for the 6PN addresses of all started Machines in an app:
 
 ```
-sudo apt install wireguard-tools openresolv
+dig +short aaaa my-app-name.internal
 ```
 
-Copy the configuration file to `/etc/wireguard`; you'll need root/sudo permissions:
+### Manage WireGuard on Fly.io
 
-```
-sudo cp basic.conf /etc/wireguard
-```
-
-Run `wg-quick` to bring `up` the connection by name (i.e. less the `.conf` extension):
-
-```cmd
-wg-quick up basic
-```
-```output
-[#] ip link add basic type wireguard
-[#] wg setconf basic /dev/fd/63
-[#] ip -6 address add fdaa:0:4:a7b:ab6:0:a:102/120 dev basic
-[#] ip link set mtu 1420 up dev basic
-[#] resolvconf -a tun.basic -m 0 -x
-[#] ip -6 route add fdaa:0:4::/48 dev basic
-```
-
-### Testing the tunnel
-
-If you have the `dig` tool installed, a TXT query to `_apps.internal` will show all the application names available in the organization you are connected to.
-
-```cmd
-dig +noall +answer _apps.internal txt
-```
-```output
-_apps.internal.		5	IN	TXT	"datasette-apache-proxy-demo,datasette-demo"
-```
-
-### Managing WireGuard on Fly.io
-
-#### Listing the tunnels
+#### List the tunnels
 
 To list all the tunnels set up for an organization, run `fly wireguard list`. You can provide an organization on the command line or you'll be prompted for one.
 
-#### Removing a tunnel
+#### Remove a tunnel
 
 To remove a tunnel, run `fly wireguard remove`. You can specify the organization and tunnel name on the command line or be prompted for both.
-
-
-
-
-
-
-
-
-
-
-
-
-
