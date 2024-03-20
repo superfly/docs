@@ -73,7 +73,7 @@ For stopped machines we charge only for the root file system (rootfs) needed for
 
 ### GPUs and Fly Machines
 
-Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see above) plus the price of the attached GPU.
+Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see above) plus the price of the attached GPU. Like Machines, GPUs are billed by the second when the attached Machine is running.
 
 On-demand GPU pricing:
 
