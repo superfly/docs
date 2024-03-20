@@ -153,9 +153,9 @@ VERSION	IP                	TYPE   	REGION	CREATED AT
 v6     	fdaa:0:22b7:0:1::3	private	global	just now
 ```
 
-### DNS
+### DNS and Flycast
 
-You can use `appname.flycast` domains. They behave like [`appname.internal`](#flyio-internal-addresses) domains, except they only return the app's Flycast addresses (if you have any).
+You can use `appname.flycast` domains. They behave like [`appname.internal`](#fly-io-internal-addresses) domains, except they only return the app's Flycast addresses (if you have any).
 
 <div class="callout">
 The original motivation for this is accommodating PostgreSQL clients that don’t like raw IPv6 addresses in the connection string. The eagle-eyed and elephant-memoried of you might remember that we introduced Flycast for PostgreSQL to get away from DNS! Why are we going back? The problem we were trying to get away from with DNS is avoiding the case where there is a lag between a PostgreSQL instance becoming unhealthy or dying and it getting removed from DNS. Flycast IPs don’t change so we don’t have to worry about that issue in this case.
@@ -163,7 +163,7 @@ The original motivation for this is accommodating PostgreSQL clients that don’
 
 ## Private Network VPN
 
-You can use the [WireGuard](https://wireguard.com/) VPN to connect to our [6PN private network](/docs/networking/private-networking/). This is a flexible and secure way to plug into each one of your Fly.io organizations and connect to any app within that organization.
+You can use the [WireGuard](https://wireguard.com/+external) VPN to connect to the 6PN private network. WireGuard is a flexible and secure way to plug into each one of your Fly.io organizations and connect to any app within that organization.
 
 ### Set up a private network VPN
 
@@ -171,7 +171,7 @@ To set up your VPN, you'll use flyctl to generate a tunnel configuration file wi
 
 #### 1. Install your WireGuard App
 
-Visit the [WireGuard](https://www.wireguard.com/install/) site for installation options. Install the software that is appropriate for your system. Windows and macOS have apps available to install. Linux systems have packages, typically named wireguard and wireguard-tools, you should install both.
+Visit the [WireGuard](https://www.wireguard.com/install/+external) site for installation options. Install the software that is appropriate for your system. Windows and macOS have apps available to install. Linux systems have packages, typically named wireguard and wireguard-tools, you should install both.
 
 #### 2. Create your tunnel configuration
 
@@ -208,21 +208,18 @@ A default `region` and `name` will be used if they're not provided to the create
 
 To specify a peer name and region, first look up available regions by running `fly platform regions`. Select a region with a check mark in the Gateway column.
 
-Then run:
-```cmd
-fly wireguard create [your-org] [region] [peer-name]
-```
+Then run: `fly wireguard create [your-org] [region] [peer-name]`
 </div>
 
 #### 3. Import your tunnel
 
 ##### Windows
 
-Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select your configuration file. The WireGuard app will display the details of your tunnel. Click `Activate` to bring the tunnel online.
+Run the WireGuard app. Click **Import tunnel(s) from file**. Select your configuration file. The WireGuard app will display the details of your tunnel. Click **Activate** to bring the tunnel online.
 
 ##### macOS
 
-Run the WireGuard app. Click the `Import tunnel(s) from file` button. Select your configuration file and click Import. You might be prompted by the OS that WireGuard would like to add VPN configurations; click `Allow`. The WireGuard app will display the details of your tunnel. Click `Activate` to bring the tunnel online.
+Run the WireGuard app. Click **Import tunnel(s) from file**. Select your configuration file and click **Import**. You might be prompted by the OS that WireGuard would like to add VPN configurations; click **Allow**. The WireGuard app will display the details of your tunnel. Click **Activate** to bring the tunnel online.
 
 ##### Ubuntu Linux
 
