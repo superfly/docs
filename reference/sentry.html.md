@@ -38,7 +38,7 @@ This promotional plan includes, monthly:
 * 500 [session replays](https://docs.sentry.io/product/session-replay)
 * 1GB [attachments](https://docs.sentry.io/platforms/native/guides/minidumps/enriching-events/attachments/)
 
-If you need more than this, sign in to your account and review upgrade options in the [billing section](https://flyio.sentry.io/settings/billing/overview/).
+If you need more than this, sign in to your Sentry account and review upgrade options in the **Settings > Usage & Billing > Subscription** section.
 
 Note that if you upgrade from this plan, you may not downgrade back to the promotional Team plan.
 
