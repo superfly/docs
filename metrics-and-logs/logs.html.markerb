@@ -1,0 +1,15 @@
+---
+title: Logs on Fly.io
+layout: docs
+sitemap: false
+nav: firecracker
+---
+
+** **Content TBD** **
+
+Ways to view logs on Fly.io.
+
+- Dashboard
+- flyctl
+- Grafana!
+
