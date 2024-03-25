@@ -1,0 +1,24 @@
+---
+title: Search logs
+layout: docs
+nav: firecracker
+---
+
+<div class="warning icon">
+Searchable application logs is an experimental feature. Learn more and post your suggestions or issues in the community thread: [Searchable application logs in Grafana](https://community.fly.io/t/searchable-application-logs-in-grafana/18878+external)
+</div>
+
+We’re working with [Quickwit](https://quickwit.io/docs+external) to bring you an experimental application log cluster and search interface. 
+
+You can access searchable logs in Grafana:
+
+- Click **Log Search** in your Fly.io app dashboard, or
+- Go directly to your shared metrics Grafana
+
+<div class="important icon">
+**Important:** If you’re already signed in to Grafana, then you'll need to log out and log back in.
+</div>
+
+Searchable logs are built on our new Tigris Storage and Supabase Postgres extensions. 
+
+For the period of this experiment, log search is free and we retain logs for 30 days. Learn how to build more complex queries in Quickwit’s Query Language Intro 11.

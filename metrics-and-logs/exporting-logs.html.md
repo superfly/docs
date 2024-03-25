@@ -1,29 +1,29 @@
 ---
-title: Exporting Logs
+title: Export logs
 layout: docs
 objective: Aggregate your logs to a service of your choice.
 nav: firecracker
 ---
 
-Your applications' output to `stdout` become logs in Fly.io. The logs for all VM instances within any given app can be viewed within an app's Monitoring page. However, these logs are intermingled and do not persist very long.
+The Fly Log Shipper app enables you to aggregate your app's logs to a service of your choice.
 
-If you need or want your logs to be aggregated to one spot, more organized, or to persist longer than we keep them, you can!
+Your app's output to `stdout` become logs in Fly.io. The logs for all Machines in an app can be viewed within the app's dashboard. However, we only persist these logs for about two days. If you need or want your logs to be aggregated to one spot, be more organized, or to persist longer than we keep them, then you can do that with the Fly Log Shipper.
 
 ## The Fly Log Shipper
 
 Here's the easiest way to ship your logs to a location of your choosing.
 
-We provide [an application](https://github.com/superfly/fly-log-shipper) that hooks into Fly.io's internal log stream. We've named it Fly Log Shipper. You run this in your Fly.io organization like any other application!
+The [Fly Log Shipper app](https://github.com/superfly/fly-log-shipper+external) hooks into Fly.io's internal log stream. You can run this in your Fly.io organization like any other app.
 
-This runs [Vector](https://vector.dev/), which grabs the logs and sends them to a location of your choosing (via a Vector [sink](https://vector.dev/docs/reference/configuration/sinks/)).
+The Fly Log Shipper runs [Vector](https://vector.dev/+external), which grabs the logs and sends them to a location of your choosing (via a Vector [sink](https://vector.dev/docs/reference/configuration/sinks/+external)).
 
-You can select one or more items from the list of supported [Providers (sinks)](https://github.com/superfly/fly-log-shipper#provider-configuration) and configure the application to run those sinks.
+You can select one or more items from the list of supported [Providers (sinks)](https://github.com/superfly/fly-log-shipper#provider-configuration+external) and configure the Fly Log Shipper to run those sinks.
 
 Each provider just needs some environment variables (or secrets) set for them to work.
 
 ## Using the Fly Log Shipper
 
-Here's an example. To ship logs to [Logtail](https://betterstack.com/logtail), you would do the following:
+Here's an example. To ship logs to [Logtail](https://betterstack.com/logtail+external), you would do the following:
 
 ```bash
 # Make a directory for your log shipper app
@@ -40,7 +40,7 @@ fly secrets set ACCESS_TOKEN=$(fly auth token)
 fly secrets set LOGTAIL_TOKEN=<token provided by logtail source>
 ```
 
-You can configure as many providers as you'd like by adding more secrets. The secrets needed are determined by [which provider(s)](https://github.com/superfly/fly-log-shipper#provider-configuration) you want to use.
+You can configure as many providers as you'd like by adding more secrets. The secrets needed are determined by [which provider(s)](https://github.com/superfly/fly-log-shipper#provider-configuration+external) you want to use.
 
 Before launching your application, you should edit the generated `fly.toml` file and delete the entire `[[services]]` section. Replace it with this:
 
@@ -56,15 +56,15 @@ Then you can deploy it:
 fly deploy
 ```
 
-## Shipping Specific Logs
+## Shipping specific logs
 
-By default, the log shipper gets logs from *every* application running within your organization (which organization is set by the `ORG` secret/environment variable).
+By default, the log shipper gets logs from every app running within your organization (organization is set by the `ORG` secret/environment variable).
 
-To narrow that down, you can set a [`SUBJECT`](https://github.com/superfly/fly-log-shipper#subject) environment variable in your instance of the Fly Log Shipper. That can be set as a secret, or as an environment variable in your `fly.toml` file.
+To narrow that down, you can set a [`SUBJECT`](https://github.com/superfly/fly-log-shipper#subject+external) environment variable in your instance of the Fly Log Shipper. That can be set as a secret, or as an environment variable in your `fly.toml` file.
 
 Subjects are in the format `logs.<app_name>.<region>.<instance_id>`. You can set the Log Shipper to narrow down to a specific instance, a specific region, and/or a specific application.
 
-There are [2 wildcards](https://docs.nats.io/nats-concepts/subjects#wildcards) you can use:
+There are [2 wildcards](https://docs.nats.io/nats-concepts/subjects#wildcards+external) you can use:
 
 * `*` wildcards go between strings and can be used multiple times
 * `>` wildcards go at the end of a string and can be used once
@@ -89,7 +89,7 @@ This `SUBJECT` says to grab logs from all instances of any applications hosted i
 
 ## Configuring Vector
 
-Based on your provider (or preferences), it may be necessary to customize the [Vector configuration](https://vector.dev/docs/reference/configuration/). This is done with a `vector.toml` configuration file and, thanks to [Machine files](https://fly.io/docs/reference/configuration/#the-files-section), it's as simple as copying the [source](https://github.com/superfly/fly-log-shipper/blob/3b780b3a3c68fdbbbb55430d7d9ff1eb377fdbf0/vector-configs/vector.toml) `vector.toml` to a local directory, modifying it according to your requirements, then saving it and redeploying:
+Based on your provider (or preferences), it may be necessary to customize the [Vector configuration](https://vector.dev/docs/reference/configuration/+external). This is done with a `vector.toml` configuration file and, thanks to [Machine files](/docs/reference/configuration/#the-files-section), it's as simple as copying the [source](https://github.com/superfly/fly-log-shipper/blob/3b780b3a3c68fdbbbb55430d7d9ff1eb377fdbf0/vector-configs/vector.toml+external) `vector.toml` to a local directory, modifying it according to your requirements, then saving it and redeploying:
 
 ```sh
 fly deploy --file-local="/etc/vector/vector.toml=/path/to/local/vector.toml"
@@ -99,15 +99,15 @@ That's it! The baked in config file is overwritten and Vector will use your modi
 
 ## Internals
 
-Fly.io ships logs through a [NATS](https://nats.io) stream. This is available to all of your applications via `nats://[fdaa::3]:4223`, which is where the Log Shipper grabs the logs.
+Fly.io ships logs through a [NATS](https://nats.io+external) stream. This is available to all of your apps via `nats://[fdaa::3]:4223`, which is where the Log Shipper grabs the logs.
 
-The Vector configuration to grab those logs within the Log Shipper is [seen here](https://github.com/superfly/fly-log-shipper/blob/main/vector-configs/vector.toml).
+The Vector configuration to grab those logs within the Log Shipper is in the [vector.toml file](https://github.com/superfly/fly-log-shipper/blob/main/vector-configs/vector.toml+external).
 
 You can contribute to (or, you know, fork) this repository to add providers (sinks) of your own!
 
-## Avoiding Duplicate Log Messages In High Availability Apps
+## Avoid duplicate log messages in high availability apps
 
-If you would like to run more than one Machine for high availability, the [NATS](https://docs.nats.io/) endpoint supports [subscription queues](https://docs.nats.io/nats-concepts/core-nats/queue) to ensure messages are only sent to one subscriber of the named queue. The `QUEUE` secret can be set to configure an arbitrary queue name if you want to run multiple log processes for HA and avoid duplicate messages being shipped.
+If you want to run more than one Machine for high availability, the [NATS](https://docs.nats.io/) endpoint supports [subscription queues](https://docs.nats.io/nats-concepts/core-nats/queue) to ensure messages are only sent to one subscriber of the named queue. The `QUEUE` secret can be set to configure an arbitrary queue name in your Log Shipper `fly.toml` file if you want to run multiple log processes for HA and avoid duplicate messages being shipped. For example:
 
 ```toml
 [env]
