@@ -24,6 +24,14 @@ fly logs --instance <machine id>
 
 See the `fly logs` help or [docs](/docs/flyctl/logs/) for option details.
 
+### Use flyctl to activate debug logging for a command
+
+`LOG_LEVEL=debug` prints all the logs into the console as a command runs. To activate debug logging for `fly deploy` run:
+
+```cmd
+LOG_LEVEL=debug fly deploy
+```
+
 ## Use the dashboard to view logs
 
 To view recent and live tail app logs in the dashboard, go to the **Live Logs** page. From there, you can use the dropdowns to filter logs by region or instance (Machine). 
