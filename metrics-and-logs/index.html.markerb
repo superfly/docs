@@ -7,6 +7,8 @@ toc: false
 
 Fly.io metrics and logs.
 
-- **[Logs on Fly.io](/docs/metrics-and-logs/logs/):** TBD
-- **[Exporting logs](/docs/metrics-and-logs/exporting-logs/):** Aggregate your logs to a service of your choice.
-- **[Metrics on Fly.io](/docs/metrics-and-logs/metrics):** The fully-managed metrics that you can access for your app on Fly.io.
+- **[Logs overview](/docs/metrics-and-logs/logs/):** How logs work on Fly.io.
+- **[Live tail logs](/docs/metrics-and-logs/live-tail-logs/):** Where to access live tail logs.
+- **[Search logs](/docs/metrics-and-logs/search-logs/):** Experimental searchable app logs in Grafana. 
+- **[Export logs](/docs/metrics-and-logs/exporting-logs/):** Aggregate your logs to a service of your choice.
+- **[Metrics](/docs/metrics-and-logs/metrics):** The fully-managed metrics that you can access for your app on Fly.io.
