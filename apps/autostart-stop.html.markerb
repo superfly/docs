@@ -2,7 +2,7 @@
 title: Automatically stop and start Machines
 objective:
 layout: docs
-nav: firecracker
+nav: apps
 order: 65
 ---
 

@@ -2,7 +2,7 @@
 title: Build Secrets
 layout: docs
 sitemap: false
-nav: firecracker
+nav: apps
 ---
 
 You can set [secrets](/docs/reference/secrets/) for your applications, but these are only available at _run-time_. They aren't available when building your Docker image without a little extra work.

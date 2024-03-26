@@ -1,11 +1,11 @@
 ---
-title: Builders and Fly
+title: Builders and Fly.io
 layout: docs
 sitemap: false
-nav: firecracker
+nav: apps
 ---
 
-When you deploy an app on Fly, the app has to be assembled into a deployable image. That's the job that builders take on. There are three kinds of Fly builders - **dockerfile**, **buildpacks**, and **image**.
+When you deploy an app on Fly.io, the app has to be assembled into a deployable image. That's the job that builders take on. There are three kinds of Fly builders - **dockerfile**, **buildpacks**, and **image**.
 
 ## Dockerfile
 

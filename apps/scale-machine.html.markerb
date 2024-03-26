@@ -2,7 +2,7 @@
 title: Scale Machine CPU and RAM
 objective: 
 layout: docs
-nav: firecracker
+nav: apps
 order: 50
 ---
 
