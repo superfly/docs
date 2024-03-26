@@ -69,6 +69,31 @@ spec:
       targetPort: 8080
 ```
 
+## Concurrency limits
+
+[Concurrency limits](https://fly.io/docs/reference/configuration/#services-concurrency) are used to limit the load on your application.
+By default, the soft limit is set to 20 and the hard limit is set to 25.
+Learn more about [concurrency limits](https://fly.io/docs/reference/configuration/#services-concurrency).
+
+They can be configured on your Services using custom annotations. There are 3 annotations used to configure the limits:
+
+  * `service.fly.io/concurrency-kind` - sets the metric used to measure concurrency
+  * `service.fly.io/concurrency-limit-soft` - sets the concurrency soft limit
+  * `service.fly.io/concurrency-limit-hard` - sets the concurrency hard limit
+
+Below is an example of setting this in your Service
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: fksdemo-service
+  annotations:
+    "service.fly.io/concurrency-kind": "connections"
+    "service.fly.io/concurrency-limit-soft": 20 
+    "service.fly.io/concurrency-limit-hard": 25 
+```
+
 ## Not supported
 
 We currently do not support:

@@ -9,15 +9,21 @@ nav: firecracker
 
 ## How it works
 
-Our pricing is designed to let you test us out for free, and scale costs affordably as your needs grow.
+Our pricing lets you try Fly.io with a [free trial credit](#new-customers-get-a-free-trial) for new customers, and then scale costs affordably as your needs grow.
 
-Fly.io services are billed per organization. Organizations are administrative entities on Fly.io that enable you to add members, share app development environments, and manage billing separately. Billing is based on the resources provisioned for your apps, pro-rated for the time they are provisioned. Learn more about [billing](/docs/about/billing/).
+Fly.io services are billed per organization. Every organization is on a [plan](https://fly.io/plans), and each plan includes some usage. If you want to scale beyond your plan, then you can upgrade, or just pay for what you need at the usage-based pricing listed below.
+
+<div class="callout">
+Organizations are administrative entities on Fly.io that let you add members, share app development environments, and manage billing separately. [Billing](/docs/about/billing/) is based on the resources provisioned for your apps, pro-rated for the time they are provisioned.
+</div>
 
 ## Plans
 
-Every organization belongs to a [plan](https://fly.io/plans). New organizations start on the [Hobby plan](https://fly.io/plans). If you need more support or compliance options, you can upgrade to a Launch, Scale, or Enterprise plan.
+Check out our [plans and plan pricing](https://fly.io/plans).
 
-All plans (except the [Legacy Hobby plan](#legacy-hobby-plan)) come with some usage included; if you want to scale beyond this, you pay for just what you need at the usage-based pricing listed below. 
+Every organization belongs to a plan. When you create a new organization, it starts on the [Hobby plan](https://fly.io/plans). If you need more support or compliance options, then you can upgrade to a Launch, Scale, or Enterprise plan.
+
+Some usage is included with our plans (except the [Legacy Hobby plan](#legacy-hobby-plan)). You can upgrade your plan at any time, or just pay for extra usage at the usage-based prices listed below.
 
 <div class="note icon">
 Regardless of which plan you're on, your organization may be subject to automated scaling limits to prevent abuse or to help with capacity planning. Email the address in the error message if you run into such a limit and it's getting in your way.
@@ -25,11 +31,13 @@ Regardless of which plan you're on, your organization may be subject to automate
 
 All plans require a [credit card](/docs/about/billing/#payment-options) on file. For details, or to select a different plan, see [Plan Pricing](https://fly.io/plans).
 
-### New customers
+### New customers get a free trial
 
-When you sign up for a Fly.io account, we create a default (“personal”) organization for you, which receives a one-time $5 sign-up credit to let you test-drive Fly.io at no cost. This organization's $5/month Hobby plan subscription does not start until the credit has been used up. Usage that falls outside of our free resource allowances consumes your sign-up credit.
+When you sign up for a Fly.io account, you get a one-time $5 free trial credit to let you test-drive Fly.io at no cost. You won't be charged for the $5/month Hobby plan subscription until the credit has been used up. The free trial credit doesn't expire.
 
-Once this credit is exhausted, the organization is automatically migrated to the $5/month [Hobby plan](https://fly.io/plans) (we’ll send you an email when it happens). There’s no time limit to use up the sign-up credit and move to the paid subscription.
+Usage beyond our [free resource allowances](#free-allowances) consumes your free trial credit.
+
+The free trial credit applies to your default (“personal”) organization that we create for you on sign-up. When the free trial credit is used up, that organization is automatically placed on the $5/month [Hobby plan](https://fly.io/plans) (we’ll send you an email when it happens).
 
 ### Legacy Hobby plan
 
@@ -49,9 +57,9 @@ Additional resources are billed at the usage-based pricing detailed below.
 
 ## Compute
 
-### Fly Machines
+We charge for started and stopped Machines differently. Attached GPUs are charged separately. For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
 
-We charge for running and stopped machines differently.
+### Started Fly Machines
 
 The price of a running [Fly Machine](/docs/machines/) VM is the price of a named CPU/RAM preset, plus about $5 per 30 days per GB of additional RAM.
 
@@ -59,13 +67,13 @@ Here's the pricing for named presets and the allowed additional RAM configuratio
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
 
-For stopped machines we only charge for the root file system (rootfs) needed for each machine. Each 1GB of rootfs for a machine stopped for 30 days is $0.15. The amount of rootfs needed is defined by your OCI image generated on your app plus a few [containerd](https://containerd.io/) tweaks on the underlying file system.
+### Stopped Fly Machines
 
-For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
+For stopped machines we charge only for the root file system (rootfs) needed for each machine. Each 1GB of rootfs for a machine stopped for 30 days is $0.15. The amount of rootfs needed is defined by your OCI image generated on your app plus a few [containerd](https://containerd.io/+external) tweaks on the underlying file system.
 
 ### GPUs and Fly Machines
 
-Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see [Fly Machines pricing](#fly-machines)) plus the price of the attached GPU.
+Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see above) plus the price of the attached GPU. Like Machines, GPUs are billed by the second when the attached Machine is running.
 
 On-demand GPU pricing:
 
@@ -83,6 +91,7 @@ Reserved and dedicated options:
 * Discounted rates for reserved GPU Machines and dedicated hosts.
 
 ## Persistent Storage Volumes
+
 [Fly Volumes](/docs/volumes/) are local persistent storage for Machines.
 
 * Free: 3GB of total provisioned capacity per organization
@@ -120,7 +129,7 @@ We bill for outbound data transfer from the region a VM is running in, inbound t
 [Fly Kubernetes](/docs/kubernetes/) (FKS) is an implementation of Kubernetes that runs on Fly.io.
 
 - $75/mo per cluster
-- Plus the cost of any [Fly Machines](#fly-machines) and [Fly volumes](#persistent-storage-volumes) that you create
+- Plus the cost of [compute](#compute) and [Fly volumes](#persistent-storage-volumes) that you create
 
 ## LiteFS Cloud
 
@@ -130,7 +139,6 @@ backups and point-in-time restore for your SQLite-based applications that use
 
 - $5 per month for up to 10GB of database storage.
 - Additional $0.50/GB per month for database storage above 10GB.
-
 
 ## Support
 
