@@ -2,7 +2,7 @@
 title: Get Information about an App
 objective: 
 layout: docs
-nav: firecracker
+nav: apps
 order: 15
 ---
 

@@ -2,7 +2,7 @@
 title: Deploy Tokens
 layout: docs
 sitemap: false
-nav: firecracker
+nav: apps
 ---
 
 <div class="border border-violet-600 bg-violet-50 rounded-l p-4 my-4 text-base text-navy">

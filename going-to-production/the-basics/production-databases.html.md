@@ -1,8 +1,8 @@
 ---
 title: Production Databases
-layout: framework_docs
+layout: docs
+nav: apps
 objective: Information on setting up and managing a production database.
-order: 1
 status: beta
 ---
 

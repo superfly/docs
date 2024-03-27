@@ -2,7 +2,7 @@
 title: "Continuous Deployment with Fly.io and GitHub Actions"
 layout: docs
 sitemap: false
-nav: firecracker
+nav: apps
 categories:
   - ci
   - github

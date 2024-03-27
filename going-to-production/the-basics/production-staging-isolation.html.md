@@ -1,8 +1,8 @@
 ---
 title: Production and Staging Isolation
-layout: framework_docs
+layout: docs
+nav: apps
 objective: How to separate a production environment from staging, testing, dev, whatever.
-order: 2
 status: beta
 ---
 

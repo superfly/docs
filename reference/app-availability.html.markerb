@@ -2,7 +2,7 @@
 title: App Availability and Resiliency
 layout: docs
 sitemap: false
-nav: firecracker
+nav: apps
 ---
 
 A resilient app is resistant to events like hardware failures or outages. Redundancy, supported by monitoring and scaling, is one of the ways to make your app more resilient, and we provide some built-in features to make this easier.

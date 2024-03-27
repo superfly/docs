@@ -7,9 +7,29 @@
       path: "/docs/getting-started/",
       open: current_page?("/docs"),
       links: [
-        { text: "Speedrun: Launch on Fly.io", path: "/docs/speedrun/" },
-        { text: "Hands-on with Fly.io", path: "/docs/hands-on/" },
-        { text: "Troubleshooting Deployments", path: "/docs/getting-started/troubleshooting/" }
+        { text: "Launch Your App", path: "/speedrun/" },
+        { text: "Launch a Demo App", path: "/docs/hands-on/" },
+        { text: "Choose Your Language/Framework", path: "/docs/languages-and-frameworks/" },
+        { text: "*Learn About Fly.io", path: "" },     
+        { text: "Troubleshoot Deployments", path: "/docs/getting-started/troubleshooting/" }
+      ]
+    },
+    {
+      title: "Fly Apps",
+      path: "/docs/apps/index2",
+      open: false,
+      links: [
+        { text: "Fly Apps overview", path: "/docs/reference/apps/" },
+
+        { text: "Fly Launch", path: "/docs/apps/launch/" },
+
+        { text: "Manage Apps", path: "/docs/apps/index2" },
+
+        { text: "*Secrets and Tokens", path: "/docs/apps/index2" },
+
+        { text: "*Production Apps", path: "/docs/apps/index2" },
+
+        { text: "App Config (fly.toml)", path: "/docs/reference/configuration/" }
       ]
     },
     {
@@ -29,39 +49,6 @@
       ]
     },
     {
-      title: "Languages & Frameworks",
-      path: "/docs/languages-and-frameworks/",
-      open: false,
-      links: [
-        { text: "Run an Elixir App", path: "/docs/elixir/getting-started" },
-        { text: "Run a Rails App", path: "/docs/rails/getting-started/" },
-        { text: "Run a Laravel App", path: "/docs/laravel/" },
-        { text: "Run a Django App", path: "/docs/django/getting-started/" },
-        { text: "Run a JavaScript App", path: "/docs/js/" }
-      ]
-    },
-    {
-      title: "Fly Launch",
-      path: "/docs/apps/",
-      open: false,
-      links: [
-        { text: "Launch a New App", path: "/docs/apps/launch/" },
-        { text: "Deploy a Fly App", path: "/docs/apps/deploy/" },
-        { text: "Get App Info", path: "/docs/apps/info/" },
-        { text: "Scale Machine CPU and RAM", path: "/docs/apps/scale-machine/" },
-        { text: "Scale the Number of Machines", path: "/docs/apps/scale-count/" },
-        { text: "Auto Stop and Start Machines", path: "/docs/apps/autostart-stop/" },
-        { text: "Add Volume Storage", path: "/docs/apps/volume-storage/" },
-        { text: "Manage Volume Storage", path: "/docs/apps/volume-manage/" },
-        { text: "Restart Apps and Machines", path: "/docs/apps/restart/" },
-        { text: "Run Multiple Processes in an App", path: "/docs/apps/processes/" },
-        { text: "Deploy with GitHub Actions", path: "/docs/app-guides/continuous-deployment-with-github-actions/" },
-        { text: "Delete an App", path: "/docs/apps/delete/" },
-        { text: "Troubleshoot When a Host is Down", path: "/docs/apps/trouble-host-unavailable/" },
-        { text: "Fly Launch Config (fly.toml)", path: "/docs/reference/configuration/" }
-      ]
-    },
-    {
       title: "Fly GPUs",
       path: "/docs/gpus/",
       open: false,
@@ -69,6 +56,16 @@
         { text: "GPU Quickstart", path: "/docs/gpus/gpu-quickstart/" },
         { text: "Getting Started with GPU Machines", path: "/docs/gpus/getting-started-gpus/" },
         { text: "Python GPU Dev Machine", path: "/docs/gpus/python-gpu-example/" }
+      ]
+    },
+    {
+      title: "Fly Volumes",
+      path: "/docs/volumes/",
+      open: false,
+      links: [
+        { text: "Fly Volumes overview", path: "/docs/volumes/" },
+        { text: "Add volume storage", path: "/docs/volumes/volume-storage/" },
+        { text: "Manage volume storage", path: "/docs/volumes/volume-manage/" }
       ]
     },
     {
@@ -86,14 +83,13 @@
       path: "/docs/database-storage-guides/",
       open: false,
       links: [
-        { text: "Volumes", path: "/docs/volumes" },
+        { text: "Fly Volumes", path: "/docs/volumes" },
         { text: "Tigris Object Storage", path: "/docs/reference/tigris/" },
         { text: "Fly Postgres", path: "/docs/postgres/" },
         { text: "SQLite & LiteFS", path: "/docs/litefs/" },
         { text: "Supabase Postgres", path: "/docs/reference/supabase/" },
         { text: "Upstash for Redis®", path: "/docs/reference/redis/" },
         { text: "Upstash Kafka", path: "/docs/reference/kafka/" },
-{ text: "More...", path: "/docs/database-storage-guides/#other-storage-apps" }
       ]
     },
     {
@@ -112,12 +108,23 @@
         { text: "TLS Support", path: "/docs/networking/tls/" }
       ]
     },
+   {
+      title: "*Metrics and Logs",
+      path: "/docs/metrics-and-logs/",
+      open: false,
+      links: [
+        { text: "Metrics", path: "/docs/metrics-and-logs/metrics/" },
+        { text: "Logging overview", path: "/docs/metrics-and-logs/logs/" },
+        { text: "Live tail logs", path: "/docs/metrics-and-logs/live-tail-logs/" },
+        { text: "Search logs", path: "/docs/metrics-and-logs/search-logs/" },
+        { text: "Export logs", path: "/docs/metrics-and-logs/exporting-logs/" }
+      ]
+    },
     {
-      title: "Other Guides",
+      title: "Tutorials",
       path: "/docs/guides/",
       open: current_page?("/docs/guides/"),
       links: [
-        { text: "Going to Production", path: "/docs/going-to-production/" },
         { text: "Crontab with Supercronic", path: "/docs/app-guides/supercronic/" },
         { text: "Run an ssh server", path: "/docs/app-guides/opensshd/" }
       ]
@@ -127,24 +134,12 @@
       path: "/docs/reference/",
       open: false,
       links: [
-        { text: "flyctl", path: "/docs/flyctl/" },
-        { text: "Fly Launch Config (fly.toml)", path: "/docs/reference/configuration/" },
-        { text: "Apps", path: "/docs/reference/apps/" },
-        { text: "Architecture", path: "/docs/reference/architecture/" },
-        { text: "Availability and Resiliency", path: "/docs/reference/app-availability/" },
-        { text: "Builders", path: "/docs/reference/builders/" },
-        { text: "Deploy Tokens", path: "/docs/reference/deploy-tokens/" },
-        { text: "Sentry Error Tracking", path: "/docs/reference/sentry/" },
-        { text: "Fly Launch", path: "/docs/reference/fly-launch/" },
-        { text: "Load Balancing", path: "/docs/reference/load-balancing/" },
-        { text: "Machines", path: "/docs/machines/overview/" },
-        { text: "Metrics", path: "/docs/reference/metrics/" },
-        { text: "Monorepo Apps", path: "/docs/reference/monorepo/" },
-        { text: "Multiple Processes in Apps", path: "/docs/app-guides/multiple-processes/" },
+        { text: "flyctl commands", path: "/docs/flyctl/" },
+        { text: "App Config (fly.toml)", path: "/docs/reference/configuration/" },
         { text: "Regions", path: "/docs/reference/regions/" },
-        { text: "Build Secrets", path: "/docs/reference/build-secrets/" },
-        { text: "Runtime Secrets", path: "/docs/reference/secrets/" },
-        { text: "Volumes", path: "/docs/reference/volumes" }
+        { text: "Architecture", path: "/docs/reference/architecture/" },
+        { text: "Fly Launch", path: "/docs/reference/fly-launch/" },
+        { text: "Multiple Processes in Apps", path: "/docs/app-guides/multiple-processes/" }
       ]
     },
     {

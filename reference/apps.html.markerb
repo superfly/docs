@@ -2,7 +2,7 @@
 title: "Fly Apps"
 layout: docs
 toc: false
-nav: firecracker
+nav: apps
 ---
 
 A Fly App is an abstraction for a group of Machines running your code on Fly.io, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. 

@@ -3,7 +3,6 @@ title: "Fly Volumes"
 layout: docs
 nav: firecracker
 toc: false
-order: 10
 ---
 
 Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/).
