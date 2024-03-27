@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-The Fly platform includes a fully-managed metrics solution to help you easily monitor your Fly apps.
+The Fly.io platform includes a fully-managed metrics solution to help you easily monitor your Fly apps.
 It includes the following components:
 
 - [**Prometheus on Fly.io**](#prometheus-on-fly-io): Managed, Prometheus-compatible time series storage
@@ -64,6 +64,8 @@ You'll need to authenticate with a Fly Access Token sent in the [standard](https
 
 **Find your Organization slug**
 
+List your organizations, find the org slug and set it as a local variable.
+
 ```cmd
 flyctl orgs list
 ORG_SLUG=[org-slug]
@@ -91,7 +93,7 @@ queries.
 The Metrics tab on the [Fly.io Dashboard](https://fly.io/dashboard) provides an overview
 of your Fly apps using the built-in metrics stored in Prometheus.
 
-### Managed Grafana [Preview]
+### Managed Grafana
 
 [Grafana](https://grafana.com/) is a popular open source data visualization web application, that allows you to
 compose queries against data sources into dynamic, reusable dashboards.
@@ -104,8 +106,6 @@ or create/import additional dashboards for further customization or to visualize
 
 Switch between your Fly.io Organizations by clicking the "Switch organization" link beneath
 the user icon in the lower-left of the screen.
-
-Note: Managed Grafana is still an early preview release.
 
 ### External or self-hosted Grafana
 

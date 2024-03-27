@@ -13,7 +13,7 @@ We’re working with [Quickwit](https://quickwit.io/docs+external) to bring you 
 You can access searchable logs in Grafana:
 
 - Click **Log Search** in your Fly.io app dashboard, or
-- Go directly to your shared metrics Grafana
+- Go directly to your [Grafana metrics](https://fly-metrics.net/d/fly-logs/fly-logs)
 
 <div class="important icon">
 **Important:** If you’re already signed in to Grafana, then you'll need to log out and log back in.
