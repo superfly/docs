@@ -226,11 +226,11 @@ fly machine run . --port 80/tcp:http \
 
 The `--autostart` and `--autostop` flags only work on Machines with Fly Proxy services configured. [Read more about Fly Proxy auto start and auto stop](/docs/apps/autostart-stop/#how-it-works).
 
-In a Machine service's configuration, `auto_stop` and `auto_start` settings are optional. 
+In a Machine service's configuration, `autostop` and `autostart` settings are optional.
 
-If the `--autostop` flag is absent in a `fly machine run` command, the Machine's [`config.services.auto_stop`](/docs/machines/api-machines-resource/#machine-config-object-properties) value doesn't get set, and the Fly Proxy does not shut the Machine down, even when there is no traffic to it.
+If the `--autostop` flag is absent in a `fly machine run` command, the Machine's [`config.services.autostop`](/docs/machines/api-machines-resource/#machine-config-object-properties) value doesn't get set, and the Fly Proxy does not shut the Machine down, even when there is no traffic to it.
 
-If the `--autostart` flag is absent in a `fly machine run` command, the Machine's [`config.services.auto_start`](/docs/machines/api-machines-resource/#machine-config-object-properties) value doesn't get set, and the Fly Proxy does not start it in response to requests.
+If the `--autostart` flag is absent in a `fly machine run` command, the Machine's [`config.services.autostart`](/docs/machines/api-machines-resource/#machine-config-object-properties) value doesn't get set, and the Fly Proxy does not start it in response to requests.
 
 The `--autostart` and `--autostop` flags set the value of `autostart` or `autostop` to `true` by default; you can explicitly set the value to `false`. For example, the following runs a new Machine that may be stopped by the Fly Proxy, but will never be restarted by it:
 
