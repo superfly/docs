@@ -63,13 +63,9 @@ Add-on services to help you run your entire stack near your users.
 
 Private networking, public services, routing, and load balancing.
 
-[Export logs](/docs/going-to-production/monitoring/exporting-logs/)
+[Metrics and Logs](/docs/metrics-and-logs/)
 
-Ship your app’s logs where you want them.
-
-[Metrics](/docs/reference/metrics/)
-
-Explore built-in and custom Prometheus metrics and Grafana dashboards.
+Explore built-in and custom Prometheus metrics and Grafana dashboards. Live tail and search your app's logs, or ship them where you want them. 
 
 [Custom domains](/docs/networking/custom-domain/)
 
