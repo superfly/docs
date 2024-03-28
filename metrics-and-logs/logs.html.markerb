@@ -16,12 +16,12 @@ Vector can act as a NATS client, read the logs, and ship them somewhere. An exam
 
 ## Live tail logs
 
-[this section WIP] You can live tail logs from the dashboard or with the `fly logs` command.
+You can live tail logs from the dashboard or with the `fly logs` command. For more information, see [Live tail logs](/docs/metrics-and-logs/live-tail-logs/).
 
 ## Search logs
 
-[this section WIP] We have an experimental app log search feature that retains logs for 30 days.
+We have an app log search feature in Grafana that retains logs for 30 days. For more information, see [Search logs](/docs/metrics-and-logs/search-logs/).
 
 ## Export logs
 
-[this section WIP] Try the Fly Log Shipper app to export logs to a service.
+Try the Fly Log Shipper app to export logs to a service. For more information, see [Export logs](/docs/metrics-and-logs/exporting-logs/).

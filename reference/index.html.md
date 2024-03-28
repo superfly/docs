@@ -46,8 +46,5 @@ How to set and use Docker secrets to make secrets available at build time.
 * [**Secrets - Runtime**](/docs/reference/secrets/):
 How to set and use secrets, which are exported to the running App through environment variables, and find out how they work with deployments to help secure your App.
 
-* [**Metrics**](/docs/reference/metrics):
-The fully-managed metrics that you can access for your app on Fly.io.
-
 * [**Deploy Tokens**](/docs/reference/deploy-tokens/):
 An experimental feature to use in place of standard API tokens.
