@@ -8,7 +8,7 @@ redirect_from: /docs/going-to-production/monitoring/exporting-logs/
 
 The Fly Log Shipper app enables you to aggregate your app's logs to a service of your choice.
 
-Your app's output to `stdout` become logs in Fly.io. The logs for all Machines in an app can be viewed within the app's dashboard. However, we only persist these logs for about two days. If you need or want your logs to be aggregated to one spot, be more organized, or to persist longer than we keep them, then you can do that with the Fly Log Shipper.
+Your app's output to `stdout` become logs in Fly.io. Live log tail and log search are good enough for most things. But if you need to export your logs to an external service, such as Datadog or AWS S3, then you can use the Log Shipper.
 
 ## The Fly Log Shipper
 
