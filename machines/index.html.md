@@ -4,34 +4,10 @@ layout: docs
 nav: machines
 ---
 
-Fly Machines are fast-launching VMs; they can be started and stopped at subsecond speeds. You control Machines with their simple REST API or with the flyctl `fly machine` commands. On the other hand, if you prefer easy app-wide configuration and containerized deployment for your app, then try [Fly Launch](/docs/reference/fly-launch/).
+Fly Machines are fast-launching VMs; they can be started and stopped at subsecond speeds. We give you control over every Machine's lifecycle, resources, count, and region placement with a simple REST API or flyctl commands.
 
-## Learn
+- [**An introduction to Fly Machines**:](/docs/machines/overview/) Learn about the lifecycle of Fly Machines and what you can do with them.
+- [**Machines API:**](/docs/machines/api/) A simple and fast REST API for full control over our fast-launching Machines.
+- **[Run a New Machine](/docs/machines/flyctl/fly-machine-run/) or [Update a Machine](/docs/machines/flyctl/fly-machine-update/) with flyctl:** Configure, build, and start new Machines with a single command or update some or all of a Machine's configuration.
 
-Understand how Machines work and other things you need to know when you have low-level control of powerful VMs on Fly.io.
-
-[Fly Machines overview](/docs/machines/overview)
-
-[Machine sizing](/docs/machines/guides-examples/machine-sizing/)
-
-[The Machine runtime environment](/docs/machines/runtime-environment/)
-
-## How-Tos
-
-Using Machines.
-
-[Run a new Machine](/docs/machines/run/)
-
-[Work with the Machines API](/docs/machines/working-with-machines)
-
-[Set a Machine restart policy](/docs/machines/guides-examples/machine-restart-policy/)
-
-[Run user code on Fly Machines](/docs/machines/guides-examples/functions-with-machines/)
-
-## Reference
-
-Commands and APIs for Machines.
-
-[Machines API Spec](https://docs.machines.dev/+external)
-
-[flyctl commands - `fly machine`](/docs/flyctl/machine/)
+On the other hand, try [Fly Launch](/docs/reference/fly-launch/) if you prefer easy app-wide configuration and containerized deployment for your app.
