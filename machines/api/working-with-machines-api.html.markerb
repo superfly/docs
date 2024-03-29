@@ -7,9 +7,9 @@ nav: machines
 
 You can create, delete, and interact with Fly Apps, Fly Machines and Fly Volumes directly using the Machines REST API.
 
-These documents that you have flyctl and cURL installed, and have authenticated to Fly.io. Examples assume that you have two environment variables set: `FLY_API_TOKEN`, the authorization token to use  and `FLY_API_HOSTNAME`. 
+These documents assume that you have flyctl and cURL installed, and have authenticated to Fly.io. Examples assume that you have two environment variables set: `FLY_API_TOKEN`, the authorization token to use with the API call, and `FLY_API_HOSTNAME`, the base URL you're reaching the API at. 
 
-## Endpoints
+## API URLs
 
 There are two base URLs available to connect to the Machines API service.
 
@@ -28,19 +28,20 @@ Authorization: Bearer <fly_api_token>
 ```
 
 
-If you want to use an org-wide token, with the power to create and destroy apps,:
+You can use an org-wide token, with the power to create and destroy apps using the following.
+
+
 ```
 export FLY_API_TOKEN=$(fly auth token)
 ```
 
+The `fly auth token` command returns the token you're currently logged in with.
 
 You can generate a token scoped to a single app with `fly tokens create deploy -a <app-name>`
 
 ```
 export FLY_API_TOKEN=$(fly tokens create deploy -a gah)
 ```
-
-
 
 ## Local setup
 
@@ -97,6 +98,5 @@ ENV FLY_API_HOSTNAME="https://api.machines.dev"
 - [Apps resource](/docs/machines/api/apps-resource/) reference
 - [Machines resource](/docs/machines/api/machines-resource/) reference
 - [Volumes resource](/docs/machines/api/volumes-resource/) reference
-- ## API spec
 
 We have a OpenAPI 3.0 specification available at [docs.machines.dev](https://docs.machines.dev) for the Machines API, so that you can autogenerate clients in your preferred language.
