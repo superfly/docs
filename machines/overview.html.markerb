@@ -53,13 +53,13 @@ The big Fly Machine trick is: starting up super fast; like, "in response to an H
 To get your head around that trick, start by understanding the lifecycle of a Fly Machine:
 
 1. You create a Fly Machine with a [Create Machine request](/docs/machines/api/machines-resource/#create-a-machine), or 
-   with `fly machine run`. The Machine is in `created` state while we reserve space for your Machine, and fetch your container from our global registry, and then build a root file system; this can take some time, maybe low double digit seconds.
+   with `fly machine run`. The Machine is in `created` state while we reserve space for your Machine, fetch your container from our global registry, and then build a root file system; this can take some time, maybe low double digit seconds.
    
 2. Once the Fly Machine exists, we boot it up for you right away. The Machine is in `started` state. It's running. You can talk to it. This happens fast! Everything's already assembled; we're just booting. Usually this takes _well under a second_. The same goes for starting a stopped Machine with a [Start Machine request](/docs/machines/api/machines-resource/#start-a-machine), or with `fly machine start`.
    
 3. You're done with the Fly Machine, so you stop it with a [Stop Machine request](/docs/machines/api/machines-resource/#stop-a-machine), or `fly machine stop`. The VM shuts down. The Machine is in `stopped` state. Its components are still assembled on our worker host, ready to start back up; if you want to do that, `GOTO 2`.
    
-4. You're tired of the Fly Machine, and want it to go away. Send a [Delete Machine request](/docs/machines/api/machines-resource/#delete-a-machine-permanently), or use `fly machine destroy`. We clear the resources we were holding for the Machine off our server. You can easily create and start a new Machine from the same image, but it'll be slower than stopping and starting an existing Machine.
+4. You're tired of the Fly Machine, and want it to go away permanently. Send a [Delete Machine request](/docs/machines/api/machines-resource/#delete-a-machine-permanently), or use `fly machine destroy`. We clear the resources we were holding for the Machine off our server. You can easily create and start a new Machine from the same image, but it'll be slower than stopping and starting an existing Machine.
 
 Learn more about [running a new Machine](/docs/machines/flyctl/fly-machine-run/) or [updating a Machine](/docs/machines/flyctl/fly-machine-update/) with flyctl commands.
 

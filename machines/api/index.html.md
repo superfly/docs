@@ -17,7 +17,3 @@ The REST Machines API provides resources to provision and manage Fly Apps, Fly M
 * **[Volumes resource](/docs/machines/api/volumes-resource):** Create and manage persistent storage volumes for your Machines.
 
 * **[Machines API Spec](https://docs.machines.dev/+external):** OpenAPI specification.
-
-<figure>
-  <img src="/static/images/docs-machines-fast.webp" alt="fast-launching hot air balloons against a green sky">
-</figure>
