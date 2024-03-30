@@ -32,4 +32,4 @@ Commands and APIs for volumes.
 
 [flyctl commands - `fly volumes`](/docs/flyctl/volumes/)
 
-[Machines API - Volumes](https://docs.machines.dev/#tag/volumes)
+[Machines API - Volumes](/docs/machines/api/volumes-resource/)
