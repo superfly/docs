@@ -7,7 +7,7 @@ redirect_from: /docs/reference/machines/
 
 Fly Machines are fast-launching VMs with a simple [REST API](/docs/machines/api/). They're [the compute](https://fly.io/blog/fly-machines/) behind the Fly.io platform. If you've launched an app on Fly.io, you're already using Fly Machines.
 
-We use the Machines API to build the orchestration for [Fly Launch](/docs/apps). You can use it however you'd like.
+We use the [Machines API](/docs/machines/api/) to build the orchestration for [Fly Launch](/docs/apps). You can use it however you'd like.
 
 ## Do I need to control Machines directly?
 
