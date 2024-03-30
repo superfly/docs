@@ -18,13 +18,13 @@ out to more regions and more Machine counts. [Fly Launch](/docs/apps) does all t
 
 ## Concepts
 
-You control every Machine's lifecycle, resources, count, and region placement.
+You can create and destroy Machines directly, and you have control over every Machine's lifecycle, resources, and region placement.
 
 ### Machines
 
-You can look at a Machine as the configuration and state for a single VM running on Fly.io.
+A Machine is the configuration and state for a single VM running on Fly.io.
 
-Every Machine will belong to a Fly App; Apps can have more than one Machine. You can start a Machine right now, without configuring anything: 
+Every Machine will belong to a Fly App; Apps can have more than one Machine. You can start a Machine right now, without configuring anything:
 
 ```cmd
 fly machine run --shell
