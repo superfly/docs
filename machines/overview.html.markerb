@@ -5,15 +5,13 @@ nav: machines
 redirect_from: /docs/reference/machines/
 ---
 
-Fly Machines are fast-launching VMs. They are:
+Fly Machines are fast-launching VMs with a simple [REST API](/docs/machines/api/). They're [the compute](https://fly.io/blog/fly-machines/) behind the Fly.io platform. If you've launched an app on Fly.io, you're already using Fly Machines.
 
-* [The compute](https://fly.io/blog/fly-machines/) behind the Fly.io platform. If you've launched an app on Fly.io, then you're already using Machines.
-
-* [Driven by a simple REST API](/docs/machines/api/) that you can use for precise control over Machines to deploy and build out applications on a larger scale.
+We use the Machines API to build the orchestration for [Fly Launch](/docs/apps). You can use it however you'd like.
 
 ## Do I need to control Machines directly?
 
-We give you low-level control over Fly Machines for when you need to be picky about how, where, and when to start VMs on Fly.io. We use the Machines API to build the orchestration for [Fly Launch](/docs/apps), and you can use it however you'd like. 
+We give you low-level control over Fly Machines for when you need to be picky about how, where, and when to start VMs on Fly.io.
 
 For most applications, most of the time, you don't need to be picky! You scale things up to more cores or more memory, and
 out to more regions and more Machine counts. [Fly Launch](/docs/apps) does all that for you with simple syntax and configuration.
@@ -24,7 +22,7 @@ You control every Machine's lifecycle, resources, count, and region placement.
 
 ### Machines
 
-A Machine is the configuration and state for a single VM running on Fly.io.
+You can look at a Machine as the configuration and state for a single VM running on Fly.io.
 
 Every Machine will belong to a Fly App; Apps can have more than one Machine. You can start a Machine right now, without configuring anything: 
 
