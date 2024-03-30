@@ -22,9 +22,9 @@ You can create and destroy Machines directly, and you have control over every Ma
 
 ### Machines
 
-A Machine is the configuration and state for a single VM running on Fly.io.
+A Machine is the configuration and state for a single VM running on Fly.io. Every Machine will belong to a Fly App; Apps can have more than one Machine. 
 
-Every Machine will belong to a Fly App; Apps can have more than one Machine. You can start a Machine right now, without configuring anything:
+You can start a Machine right now, without configuring anything:
 
 ```cmd
 fly machine run --shell
@@ -46,7 +46,8 @@ Go ahead and try it! When you `run` a Machine with `--shell`, we'll make a small
 
 ### Machine state
 
-The big Fly Machine trick is: starting up super fast; like, "in response to an HTTP request from a user" fast.
+The big Fly Machine trick is: starting up super fast; like, "in response to an HTTP request from a user" fast. Doing things like 
+that is why you'd use Fly Machines directly, rather than [letting flyctl run your deployment](/docs/apps/deploy/). 
 
 To get your head around that trick, start by understanding the lifecycle of a Fly Machine:
 
