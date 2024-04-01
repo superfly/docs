@@ -98,9 +98,9 @@ When replaying an HTTP request, our proxy appends the `fly-replay-src` header wi
 
 ## The `fly-prefer-region` request header
 
-Clients accessing Fly.io apps may append the `fly-prefer-region` header to attempt sending the request directly to a desired target region. This is useful for cases where `fly-replay` isn't practical, such as large file uploads which can't be replayed once buffered by the proxy.
+Clients accessing Fly.io apps may set the `fly-prefer-region` header to attempt sending the request directly to a desired target region. This is useful for cases where `fly-replay` isn't practical, such as large file uploads which can't be replayed once buffered by the proxy.
 
-If the target regions hosts no healthy instances, the nearest region with healthy instances will field the request.
+If the target region has no healthy instances, the region nearest to the client with healthy instances will field the request.
 
 Example:
 ```
