@@ -24,7 +24,7 @@ If you've worked with GitHub Actions before and want to jump right in, here are 
 
 And that's it! Any new pull requests will trigger the creation of review apps for your application.
 
-By default, review apps will be available at `https://pr-$PR_NUMBER-$GITHUB_REPOSITORY_OWNER-$GITHUB_REPOSITORY_NAME.fly.dev`.
+By default, review apps will be available at `https://pr-<PR number>-<repository owner>-<repository name>.fly.dev`.
 
 The workflow described above will spin up a **single application** without other resources; if datastores, multiple Fly Apps, or other resources are required, see [Customizing your workflow](#customize-your-workflow).
 
@@ -43,7 +43,7 @@ fly auth token
 
 This token is specific to a single Fly.io account and is valid for applications belonging the that account.
 
-Next, let's save our API token as a secret in our GitHub repository. Visit the Settings tab in your repository, then Secrets and variables → Actions. Alternatively, you can visit `https://github.com/$USERNAME_OR_ORG/$REPO_NAME/settings/secrets/actions`. There, create a new **Repository Secret** called `FLY_API_TOKEN` with the value of your token.
+Next, let's save our API token as a secret in our GitHub repository. Visit the Settings tab in your repository, then Secrets and variables → Actions. Alternatively, you can visit `https://github.com/<username or org>/<repository>/settings/secrets/actions`. There, create a new **Repository Secret** called `FLY_API_TOKEN` with the value of your token.
 
 ### Create your GitHub Action
 
