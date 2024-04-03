@@ -55,7 +55,7 @@ fly ips list
 Create an A record pointing to your v4 address, and an AAAA record pointing to your v6 address. You're then free to make this an Apex domain as needed.
 
 <div class="important">
-Our hostname validation will fail without a v6 address and we won't attempt to issue or renew a certificate. If your app does not have one, you can allocate one with `flyctl ips allocate-v6`. If you use a CNAME `_acme-challenge` for domain verification, you don't need to worry about this. However, it is still recommended to have both IPv4 and IPv6 addresses allocated if your app is serving traffic.
+**Important:** Our hostname validation will fail without an IPv6 address and we won't attempt to issue or renew a certificate. If your app does not have one, you can allocate one with `flyctl ips allocate-v6`. If you use a CNAME `_acme-challenge` for domain verification, you don't need to worry about this. However, it is still recommended to have both IPv4 and IPv6 addresses allocated if your app is serving traffic.
 </div>
 
 #### Adding the certificate
