@@ -54,6 +54,10 @@ fly ips list
 
 Create an A record pointing to your v4 address, and an AAAA record pointing to your v6 address. You're then free to make this an Apex domain as needed.
 
+<div class="important">
+`TLS-APLN-01` validation will fail without an IPv6 address. If your app does not have one, you can allocate one with `flyctl ips allocate-v6` or we wonlt be able to issue or renew certificates.
+</div>
+
 #### Adding the certificate
 
 Once these settings are in place, you can add the custom domain to the application's certificates. If we are configuring example.com, then we would simply run:
