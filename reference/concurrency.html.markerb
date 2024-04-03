@@ -39,7 +39,7 @@ General caveats:
 
 The decision to use `connections` or `requests` for concurrency depends on the type of app and its load.
 
-`requests` are HTTP requests and the recommended concurrency type for web services. Using requests for concurrency can prevent too many connections to your app and reduce latency; the proxy can temporarily pool and reuse connections.
+`requests` are HTTP requests and the recommended concurrency type for web services. Using `requests` for concurrency can prevent too many connections to your app and reduce latency; the proxy can temporarily pool and reuse connections.
 
 `connections` are TCP connections. Multiple requests can be sent over a connection, so you need to consider how your app handles that. If you use `connections` for web services, then the proxy opens a new connection for each HTTP request, which is why `requests` is a better setting for HTTP apps.
 
