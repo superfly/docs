@@ -118,7 +118,7 @@ Examples of retrieving this information are in the [fly-examples/privatenet](htt
 
 A Flycast address is an app-wide IPv6 address that the Fly Proxy can route to privately. 6PN traffic doesn't go through the Fly Proxy, so can't use its features, like geographically aware load balancing and autostart/autostop based on traffic. Conversely, Flycast services can't use internal DNS to target specific Machines or regions, and are not reachable on `.internal` addresses.
 
-Use Flycast address to do the following within the Fly.io private WireGuard mesh:
+Use Flycast to do the following within the Fly.io private WireGuard mesh:
 
 * [Autostart and/or autostop](https://fly.io/docs/apps/autostart-stop/) Machines based on network requests.
 * Use Fly Proxy's [geographically aware load balancing](/docs/reference/load-balancing/) for private services.
