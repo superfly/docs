@@ -66,8 +66,9 @@ root@f066b83b:/# dig +short aaaa my-app-name.internal @fdaa:0:18::3
 ```output
 fdaa:0:18:a7b:7d:f066:b83b:2
 ```
-
-Note that `dig`'s syntax requires a `@` at the beginning of the address; this trips us up all the time.
+<div class="note icon">
+<b>Note:</b>`dig`'s syntax requires a `@` at the beginning of the address; this trips us up all the time.
+</div>
 
 ## Connect to a running service via its 6PN address
 
@@ -76,7 +77,7 @@ In the `/etc/hosts` of a deployed Fly Machine, we alias the 6PN address of the M
 For a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, then you need to bind it to `fly-local-6pn:8080` for it to be accessible at "[6PN_Address:8080]". 
 
 <div class="note icon">
-`fly-local-6pn` is to 6pn-addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine.
+`fly-local-6pn` is to 6PN addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine.
 </div>
 
 Learn more about [connecting to app services](/docs/networking/app-services/).
@@ -113,16 +114,18 @@ The following table describes the information returned by each form of `.interna
 
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
-## Flycast - Private load balancing
+## Flycast - Private Fly Proxy services
 
-Flycast offers the same [geographically-aware load balancing](/docs/reference/load-balancing/) as the public Fly Proxy while restricting traffic to private networks.
+A Flycast address is an app-wide IPv6 address that the Fly Proxy can route to privately. 6PN traffic doesn't go through the Fly Proxy, so can't use its features, like geographically aware load balancing and autostart/autostop based on traffic. Conversely, Flycast services can't use internal DNS to target specific Machines or regions, and are not reachable on `.internal` addresses.
 
-Use this feature under the following circumstances:
+Use Flycast address to do the following within the Fly.io private WireGuard mesh:
 
-* Your app can't use DNS.
-* You're using 3rd party software, like a database, that doesn't support round-robin DNS entries.
-* You want to limit access to specific ports/services in your app from other Fly.io organizations.
-* You private service needs advanced proxy features like TLS termination or PROXY protocol support.
+* [Autostart and/or autostop](https://fly.io/docs/apps/autostart-stop/) Machines based on network requests.
+* Use Fly Proxy's [geographically aware load balancing](/docs/reference/load-balancing/) for private services.
+* Connect to a service from another app that can't use DNS.
+* Connect from third-party software, like a database, that doesn't support round-robin DNS entries.
+* Access specific ports or services in your app from other Fly.io organizations.
+* Use advanced proxy features like TLS termination or PROXY protocol support.
 
 The general flow for setting up Flycast is:
 
