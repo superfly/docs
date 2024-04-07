@@ -78,7 +78,7 @@ fly deploy
 
 ## _Deploy an Astro site with SSR_
 
-Astro supports server-side rendering (SSR) through the use of **adapters**. There are a handful of adapters that are officially maintained by the Astro team. When using the `@astrojs/node` adapter, Fly.io will automatically detect this during `fly launch` and if no existing Dockerfile is found, it will generate a new one with the appropriate start command and environment variables.
+Astro supports server-side rendering (SSR) through the use of **adapters**. There are a handful of adapters that are officially maintained by the Astro team. When using the [`@astrojs/node`](https://docs.astro.build/en/guides/integrations-guide/node/) adapter, Fly.io will automatically detect this during `fly launch` and if no existing Dockerfile is found, it will generate a new one with the appropriate start command and environment variables.
 
 You can add the necessary Node adapter like so:
 
@@ -86,20 +86,7 @@ You can add the necessary Node adapter like so:
 npx astro add node
 ```
 
-Then, in your `astro.config.*` file, add the following lines:
-
-```diff
-
-import { defineConfig } from 'astro/config';
-+ import node from '@astrojs/node';
-
-export default defineConfig({
-+  output: 'server',
-+  adapter: node({
-+    mode: 'standalone',
-+  }),
-});
-```
+This will install `@astrojs/node` and make the appropriate changes to your `astro.config.*` file in one step.
 
 ## Generating your Astro Dockerfile
 
