@@ -61,17 +61,34 @@ Validating [redacted]/my-astro-app/fly.toml
 Platform: machines
 ✓ Configuration is valid
 
-If you need custom packages installed, or have problems with your deployment
-build, you may need to edit the Dockerfile for app-specific changes. If you
-need help, please post on https://community.fly.io.
+==> Building image
+...
+--> Building image done
+==> Pushing image to fly
+...
+--> Pushing image done
+...
 
-Now: run 'fly deploy' to deploy your Astro app.
-```
+Watch your deployment at https://fly.io/apps/my-astro-app/monitoring
 
-Finally, run the following:
+Provisioning ips for my-astro-app
+  Dedicated ipv6: 2a09:6739:1::30:xxxx:0
+  Shared ipv4: 66.241.124.xxx
+  Add a dedicated ipv4 with: fly ips allocate-v4
 
-```cmd
-fly deploy
+This deployment will:
+ * create 2 "app" machines
+
+No machines in group app, launching a new machine
+Creating a second machine to increase service availability
+Finished launching new machines
+-------
+NOTE: The machines for [app] have services with 'auto_stop_machines = true' that will be stopped when idling
+
+-------
+Checking DNS configuration for my-astro-app.fly.dev
+
+Visit your newly deployed app at https://my-astro-app.fly.dev/
 ```
 
 <%= partial "partials/launched" %>
