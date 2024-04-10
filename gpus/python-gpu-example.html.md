@@ -37,7 +37,11 @@ git clone git@github.com:fly-apps/python_gpu_example.git && cd python_gpu_exampl
 
 ### Jupyter notebook
 
-The easiest way to visit a private Fly App with the browser is with `fly proxy` command, which proxies a local port to a Machine.
+The easiest way to visit a private Fly App with the browser is with the `fly proxy` command, which proxies a local port to a Machine.
+
+```
+fly proxy 8888:8888
+```
 
 Run `fly logs` to find a line like 
 
