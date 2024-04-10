@@ -54,13 +54,13 @@ There are a few features we don't support yet but are part of the roadmap:
   * EmptyDir volumes
   * Horizontal pod autoscaling
   * StatefulSets
+  * Network policies
   * CronJob
 
 Features we don't support:
 
   * Node affinity
   * Inter-pod (anti) affinity
-  * Network policies
   * DaemonSets
 
 ### Pricing
