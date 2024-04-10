@@ -29,10 +29,50 @@ spec:
       targetPort: 8080
 ```
 
-Using `kubectl`, create the service:
+Using kubectl, create the service:
 
 ```
-kubectl apply -f service.yaml
+> kubectl apply -f service.yaml
+```
+
+To view your service:
+
+```
+> kubectl get svc
+NAME              TYPE        CLUSTER-IP            EXTERNAL-IP   PORT(S)   AGE
+kubernetes        ClusterIP   fdaa:3:dde8:0:1::3a   <none>        443/TCP   32h
+fksdemo-service   ClusterIP   fdaa:3:dde8:0:1::3b   <none>        80/TCP    11s
+```
+
+## Exposing Services publicly
+
+Services can be exposed to the public internet with a Service of type LoadBalancer.
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: fksdemo-service-public
+spec:
+  selector:
+    app: fksdemo
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
+```
+
+The domain name and IP address to access the Service over the internet can be found using kubectl. In the below output, the values are found
+under the `EXTERNAL-IP` column.  
+
+```
+> kubectl get svc
+NAME                     TYPE           CLUSTER-IP            EXTERNAL-IP                                                                                           PORT(S)   AGE
+kubernetes               ClusterIP      fdaa:3:dde8:0:1::3a   <none>                                                                                                443/TCP   32h
+fksdemo-service          ClusterIP      fdaa:3:dde8:0:1::3b   <none>                                                                                                80/TCP    26m
+fksdemo-service-public   LoadBalancer   fdaa:3:dde8:0:1::3c   fksdemo-service-public.svc.fks-default-vz5dlqz7v4ylrnpq.fly.dev,2a09:8280:1::31:ab8:0,137.66.25.254   80/TCP    8s
 ```
 
 ## Fly.io connection Handlers
