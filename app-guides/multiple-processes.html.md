@@ -12,11 +12,9 @@ date: 2020-07-20
 
 This comes up a lot: how can you run multiple programs in an app on Fly.io? Recall that Fly.io apps are shipped to us in containers, usually built by Docker, and Docker has… opinions… about running multiple things in a container.
 
-Well, [we don't use Docker to run containers](https://fly.io/blog/docker-without-docker/). Your app is running in a VM, with its own kernel. You can do pretty much anything you want inside of it, including running as many programs as you like. Most of the time, the trick is just telling Docker how to do that.
+Well, [we don't use Docker to run containers](https://fly.io/blog/docker-without-docker/). Your app is running in a [Machine](/docs/machines/), a fast-launching VM with its own kernel. You can do pretty much anything you want inside of it, including running as many programs as you like. Most of the time, the trick is just telling Docker how to do that.
 
-There are a couple different ways to run multiple processes in a Fly.io app. All of them address the first rule of programs running in Fly VM: when your entrypoint program exits, our `init` kills the VM and we start a new one. So at the end of the day, *something* has to keep running "in the foreground".
-
-For more information about process groups, refer to [Run multiple process groups in an app](/docs/apps/processes/).
+There are a couple different ways to run multiple processes in a Fly.io app. All of them address the first rule of programs running in a Fly Machine: when your entrypoint program exits, our `init` kills the Machine and we start a new one. So at the end of the day, *something* has to keep running "in the foreground".
 
 <div class="callout">Fly.io <u>[Machines](/docs/machines)</u> can run multiple processes</u> natively, no need for extra configuration. <u>[Examples here](https://community.fly.io/t/multi-process-machines/8375)</u>.</div>
 
@@ -50,9 +48,9 @@ Now, some options to actually run this stuff:
 
 ### Process groups
 
-This is the recommended way to run multiple processes. **This method runs each process in its own VM**. Examples of running multiple processes within a single VM are found below!
+Process groups are the recommended way to run multiple processes. **This method runs each process in its own Machine**. Examples of running multiple processes within a single Machine are discussed later.
 
-Fly.io has the notion of [process groups](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316). You can define multiple processes in your `fly.toml`, giving each a name. Each defined process runs in its own VM within the one app.
+Fly.io has the notion of process groups. You can define multiple processes in your `fly.toml`, giving each a name. Each defined process runs in its own Machine within the one app. Learn more about [app-wide process groups](/docs/apps/processes/). 
 
 You can see that in action in the below (truncated) `fly.toml` file:
 
