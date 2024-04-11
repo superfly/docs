@@ -111,9 +111,9 @@ spec:
 
 ## Concurrency limits
 
-[Concurrency limits](https://fly.io/docs/reference/configuration/#services-concurrency) are used to limit the load on your application.
+[Concurrency limits](/docs/reference/configuration/#services-concurrency) are used to limit the load on your application.
 By default, the soft limit is set to 20 and the hard limit is set to 25.
-Learn more about [concurrency limits](https://fly.io/docs/reference/configuration/#services-concurrency).
+Learn more about [concurrency limits](/docs/reference/configuration/#services-concurrency).
 
 They can be configured on your Services using custom annotations. There are 3 annotations used to configure the limits:
 
@@ -145,3 +145,5 @@ We currently do not support:
 
 - [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
 - [Create an FKS cluster](/docs/kubernetes/clusters/)
+- [Connect to an FKS cluster](/docs/kubernetes/connect-clusters/)
+- [Use volumes with FKS](/docs/kubernetes/using-volumes/)
