@@ -12,7 +12,7 @@ Fly Kubernetes is a closed beta. Email us at sales@fly.io for early access.
 Fly Kubernetes clusters are accessible over an organization's [private WireGuard network](/docs/reference/private-networking). To connect to a cluster, you need a WireGuard configuration. 
 Follow the [Private Network VPN instructions](/docs/networking/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io IPv6 private network.
 
-To connect to your cluster, you need a kubeconfig file. These are generated when your [cluster is created](https://fly.io/docs/kubernetes/clusters/). They can also be retrieved using `flyctl`.
+To connect to your cluster, you need a kubeconfig file. These are generated when your [cluster is created](/docs/kubernetes/clusters/). They can also be retrieved using `flyctl`.
 First, we need our cluster name:
 
 ```
@@ -51,3 +51,5 @@ kube-system       Active   22d
 
 - [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
 - [Create an FKS cluster](/docs/kubernetes/clusters/)
+- [Configure FKS Services](/docs/kubernetes/services)
+- [Use volumes with FKS](/docs/kubernetes/using-volumes/)

@@ -9,8 +9,8 @@ nav: firecracker
 Fly Kubernetes is a closed beta. Email us at sales@fly.io for early access.
 </div>
 
-Fly Kubernetes supports [persistent volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) and
-[generic ephemeral volumes](https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/#generic-ephemeral-volumes).
+Fly Kubernetes supports [persistent volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/+external) and
+[generic ephemeral volumes](https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/#generic-ephemeral-volumes+external).
 There are general considerations to keep in mind when using volumes in Fly Kubernetes:
 
 * Only one persistent or ephemeral volume can be mounted at a time
@@ -171,3 +171,5 @@ For generic ephemeral volumes to work as expected, `storageClassName` must be se
 
 - [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
 - [Create an FKS cluster](/docs/kubernetes/clusters/)
+- [Connect to an FKS cluster](/docs/kubernetes/connect-clusters/)
+- [Configure FKS Services](/docs/kubernetes/services)
