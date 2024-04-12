@@ -22,7 +22,7 @@ There are general considerations to keep in mind when using volumes in Fly Kuber
 PersistentVolumes are managed through PersistentVolumeClaims (PVCs). PersistentVolumes (PVs) are tied to the lifecycle of a
 PersistentVolumeClaim. By default, creating a PVC creates an underlying PV and deleting a PVC deletes the PV bound to it.
 
-Below is an example of configuring a PersistentVolume to use with a Pod
+Below is an example of configuring a PersistentVolume to use with a Pod:
 
 ```yaml
 apiVersion: v1
@@ -135,7 +135,7 @@ fly vol rm pvc-r1plo75g59d25l0r -a fks-default-vz5dlqz7v4ylrnpq
 
 Fly Kubernetes supports ephemeral volumes through generic ephemeral volumes. It uses the same underlying PVC and PV machinery. Kubernetes
 handles creating the PVC and its corresponding PV and deleting both objects when the Pod is deleted. Below is an example of creating a Pod
-with a generic ephemeral volume. 
+with a generic ephemeral volume: 
 
 ```yaml
 apiVersion: v1

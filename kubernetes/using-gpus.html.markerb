@@ -1,0 +1,47 @@
+---
+title: Using GPUs with FKS
+layout: docs
+toc: false
+nav: firecracker
+---
+
+<div class= "important icon">
+Fly Kubernetes is a closed beta. Email us at sales@fly.io for early access.
+</div>
+
+GPUs are available on Fly Kubernetes. Information about our GPUs can be found in our [Fly GPUs documentation](https://fly.io/docs/gpus/#what-can-i-use-fly-gpus-for).
+
+GPUs are consumed by requesting a GPU resource, similarly to requesting `cpu` or `memory`. There is a custom resource `gpu.fly.io/<gpu type>` that is used to request
+GPUs. Note that:
+
+* The available GPU types are: `a100-40gb`, `a100-80gb` and `l40s`. Check the [documentation](https://fly.io/docs/gpus/#regions-with-gpus) for which regions they are available in.
+* Pods are deployed in the same region as your cluster. You can place your Pod in a particular region by adding a `fly.io/region: <region>` annotation to your Pod's metadata.
+* Resources should only be requested in the `limits` section.
+* The valid number of GPUs you can request are: 1, 2, 4 and 8.
+
+Below is an example of a Pod with a GPU:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  annotations:
+    fly.io/region: ams # optional
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      resources:
+        limits:
+          gpu.fly.io/a100-80gb: 1
+```
+
+This will deploy a GPU Machine with the size `a100-80gb` with 1 GPU in the region `ams`.
+
+## Related topics
+
+- [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
+- [Create an FKS cluster](/docs/kubernetes/clusters/)
+- [Configure FKS Services](/docs/kubernetes/services)
+- [Use volumes with FKS](/docs/kubernetes/using-volumes/)
