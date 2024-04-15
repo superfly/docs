@@ -31,7 +31,7 @@ Assuming that you're going the [Fly Launch](/docs/apps/) way and configuring you
 vm.size = "a100-40gb"
 ```
 
-The `a100-40gb` preset is the `a100-pcie-40gb` GPU with the `performance-8x` CPU config and 32GB RAM. You can exert more granular control over resources using the [`[[vm]]` table](https:///docs/reference/configuration/#the-vm-section) in `fly.toml`.
+The `a100-40gb` preset is the `a100-pcie-40gb` GPU with the `performance-8x` CPU config and 32GB RAM. You can exert more granular control over resources using the [`[[vm]]` table](/docs/reference/configuration/#the-vm-section) in `fly.toml`.
 
 Run `fly platform vm-sizes` to get the list of presets, and check out the [pricing page](/docs/about/pricing/#gpus-and-fly-machines) to help you plan ahead.
 

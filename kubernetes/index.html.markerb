@@ -53,7 +53,6 @@ There are a few features we don't support yet but are part of the roadmap:
   * Sidecars and init processes
   * EmptyDir volumes
   * Horizontal pod autoscaling
-  * StatefulSets
   * Network policies
   * CronJob
 
