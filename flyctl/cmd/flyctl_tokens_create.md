@@ -10,6 +10,7 @@ flyctl tokens create [command] [flags]
 * [litefs-cloud](/docs/flyctl/tokens-create-litefs-cloud/)	 - Create LiteFS Cloud tokens
 * [org](/docs/flyctl/tokens-create-org/)	 - Create org deploy tokens
 * [readonly](/docs/flyctl/tokens-create-readonly/)	 - Create read-only org tokens
+* [ssh](/docs/flyctl/tokens-create-ssh/)	 - Create token for SSH'ing to a single app
 
 ## Options
 
