@@ -4,34 +4,14 @@ layout: docs
 nav: machines
 ---
 
-Fly Machines are the engine of the Fly.io platform: fast-launching VMs that can be started and stopped at subsecond speeds. Control them with their fast REST API or the flyctl CLI. Or use [Fly Launch](/docs/reference/fly-launch/) for opinionated app-wide configuration and deployment.
+Fly Machines are fast-launching VMs; they can be started and stopped at subsecond speeds. We give you control of your Machine count and each Machine's lifecycle, resources, and region placement with a simple REST API or flyctl commands.
 
-## Learn
+- [**Introduction to Fly Machines**:](/docs/machines/overview/) Learn whether you need low-level Machine control. Find out more about the lifecycle of Fly Machines and about scaling and placement.
+- [**Machines API:**](/docs/machines/api/) A simple and fast REST API for full control over our fast-launching Machines.
+- **[Run a New Machine](/docs/machines/flyctl/fly-machine-run/) or [Update a Machine](/docs/machines/flyctl/fly-machine-update/) with flyctl:** Configure, build, and start new Machines with a single command or update some or all of a Machine's configuration.
 
-Understand how Machines work and other things you need to know when you have low-level control of powerful VMs on Fly.io.
+On the other hand, try [Fly Launch](/docs/reference/fly-launch/) if you prefer easy app-wide configuration and containerized deployment for your app.
 
-[Fly Machines overview](/docs/machines/overview)
-
-[Machine sizing](/docs/machines/guides-examples/machine-sizing/)
-
-[The Machine runtime environment](/docs/machines/runtime-environment/)
-
-## How-Tos
-
-Using Machines.
-
-[Run a new Machine](/docs/machines/run/)
-
-[Work with the Machines API](/docs/machines/working-with-machines)
-
-[Set a Machine restart policy](/docs/machines/guides-examples/machine-restart-policy/)
-
-[Run user code on Fly Machines](/docs/machines/guides-examples/functions-with-machines/)
-
-## Reference
-
-Commands and APIs for Machines.
-
-[Machines API Spec](https://docs.machines.dev/+external)
-
-[flyctl commands - `fly machine`](/docs/flyctl/machine/)
+<figure>
+  <img src="/static/images/docs-machines-fast.webp" alt="fast-launching hot air balloons against a green sky">
+</figure>

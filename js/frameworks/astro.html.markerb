@@ -61,24 +61,41 @@ Validating [redacted]/my-astro-app/fly.toml
 Platform: machines
 ✓ Configuration is valid
 
-If you need custom packages installed, or have problems with your deployment
-build, you may need to edit the Dockerfile for app-specific changes. If you
-need help, please post on https://community.fly.io.
+==> Building image
+...
+--> Building image done
+==> Pushing image to fly
+...
+--> Pushing image done
+...
 
-Now: run 'fly deploy' to deploy your Astro app.
-```
+Watch your deployment at https://fly.io/apps/my-astro-app/monitoring
 
-Finally, run the following:
+Provisioning ips for my-astro-app
+  Dedicated ipv6: 2a09:6739:1::30:xxxx:0
+  Shared ipv4: 66.241.124.xxx
+  Add a dedicated ipv4 with: fly ips allocate-v4
 
-```cmd
-fly deploy
+This deployment will:
+ * create 2 "app" machines
+
+No machines in group app, launching a new machine
+Creating a second machine to increase service availability
+Finished launching new machines
+-------
+NOTE: The machines for [app] have services with 'auto_stop_machines = true' that will be stopped when idling
+
+-------
+Checking DNS configuration for my-astro-app.fly.dev
+
+Visit your newly deployed app at https://my-astro-app.fly.dev/
 ```
 
 <%= partial "partials/launched" %>
 
 ## _Deploy an Astro site with SSR_
 
-Astro supports server-side rendering (SSR) through the use of **adapters**. There are a handful of adapters that are officially maintained by the Astro team. When using the `@astrojs/node` adapter, Fly.io will automatically detect this during `fly launch` and if no existing Dockerfile is found, it will generate a new one with the appropriate start command and environment variables.
+Astro supports server-side rendering (SSR) through the use of **adapters**. There are a handful of adapters that are officially maintained by the Astro team. When using the [`@astrojs/node`](https://docs.astro.build/en/guides/integrations-guide/node/) adapter, Fly.io will automatically detect this during `fly launch` and if no existing Dockerfile is found, it will generate a new one with the appropriate start command and environment variables.
 
 You can add the necessary Node adapter like so:
 
@@ -86,20 +103,7 @@ You can add the necessary Node adapter like so:
 npx astro add node
 ```
 
-Then, in your `astro.config.*` file, add the following lines:
-
-```diff
-
-import { defineConfig } from 'astro/config';
-+ import node from '@astrojs/node';
-
-export default defineConfig({
-+  output: 'server',
-+  adapter: node({
-+    mode: 'standalone',
-+  }),
-});
-```
+This will install `@astrojs/node` and make the appropriate changes to your `astro.config.*` file in one step.
 
 ## Generating your Astro Dockerfile
 

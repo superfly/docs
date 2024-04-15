@@ -6,82 +6,51 @@ nav: machines
 order: 1
 ---
 
-With the Machines REST API, you can create, delete, and interact with Fly apps, Fly Machines and Fly Volumes. For the impatient, [flyctl also provides commands](https://fly.io/docs/flyctl/machine/) for experimenting with the API.
+The Fly Machines API provides resources to create, destroy, and manage Fly Apps, Fly Machines, and Fly Volumes. Refer to the following reference docs for the usage of each:
 
-## API spec
+**[Apps resource](/docs/machines/api/apps-resource/)** - Every Fly Machine belongs to a [Fly App](/docs/reference/apps/).
 
-We have a OpenAPI 3.0 specification available at [docs.machines.dev](https://docs.machines.dev) for the Machines API, so that you can autogenerate clients in your preferred language.
+**[Machines resource](/docs/machines/api/machines-resource/)** - Fly Machines VMs themselves.
+
+**[Volumes resource](/docs/machines/api/volumes-resource/)** - [Fly Volumes](/docs/volumes/) are persistent storage for Machines.
 
 ## Connecting to the API
 
-This guide assumes that you have `flyctl` and `curl` installed, and have authenticated to Fly.io.
+### API addresses
 
-### Using the public `api.machines.dev` endpoint
+There are two base URLs available to connect to the Machines API service.
 
-The easiest (and recommended) way to connect to the Machines API is to use the public `api.machines.dev` endpoint, a simpler alternative to connecting over WireGuard.
+**Internal base URL:** `http://_api.internal:4280`
 
-Simply skip down to [setting up the environment](#setting-up-the-environment), and make sure to set `$FLY_API_HOSTNAME` to `https://api.machines.dev`.
+**Public base URL:** `https://api.machines.dev`
 
-### Using the private Machines API endpoint
+From within your Fly.io [private WireGuard network](/docs/networking/private-networking/), you can connect to the API directly using the internal endpoint. From outside the Fly.io WireGuard mesh, use the public endpoint; this proxies your request to the API.
 
-You can still access your Machines directly over a WireGuard VPN, and use the private Machines API endpoint: `http://_api.internal:4280`. This method requires more setup, but provides a connection with less latency than the public endpoint if accessed from another Fly Machine.
+### Authentication
 
-Follow the [instructions](/docs/networking/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io [IPv6 private network](/docs/networking/private-networking/). Once you're connected, Fly internal DNS should expose the Machines API endpoint at: `http://_api.internal:4280`
-
-### Connecting through flyctl 
-
-You can also proxy a local port to the internal API endpoint. This section is preserved mainly for the sake of interest, as the public Machines API endpoint is simpler and more performant.
-
-```cmd
-fly machines api-proxy
-```
-
-Pick any organization when asked.
-
-With the above command running, in a separate terminal, try this to confirm you can access the API:
-
-```cmd
-curl http://127.0.0.1:4280
-```
-
-If you successfully reach the API, it should respond with a `404 page not found` error. That's because this was not a defined endpoint.
-
-## Setting up the environment
-
-Set these environment variables to make the following commands easier to use.
-
-```bash
-$ export FLY_API_HOSTNAME="https://api.machines.dev" # set to http://_api.internal:4280 when using WireGuard or `http://127.0.0.1:4280` when using 'flyctl proxy'
-$ export FLY_API_TOKEN=$(fly auth token)
-```
-
-For local development, you can see the token used by `flyctl` with `fly auth token`. You can also create a new auth token in the [personal access token section of the fly.io dashboard](https://fly.io/user/personal_access_tokens).
-
-In order to access this API on a Fly Machine, make the token available as a secret:
-
-```cmd
-fly secrets set FLY_API_TOKEN=$(fly auth token)
-```
-
-A convenient way to set the `FLY_API_HOSTNAME` is to add it to your `Dockerfile`:
-
-```dockerfile
-ENV FLY_API_HOSTNAME="https://api.machines.dev"
-```
-
-<section class="warning">The cURL examples in this document are for an app named `my-app-name`. Replace `my-app-name` with the name of your app. Also replace any example Machine IDs with your app's Machine IDs.
-</section>
-
-## Authentication
-
-All requests must include the Fly API Token in the HTTP Headers as follows:
+All requests must include an API token in the HTTP headers as follows:
 
 ```
 Authorization: Bearer <fly_api_token>
 ```
 
-## Related topics
+Replace `<fly_api_token>` with a Fly.io authentication token.
 
-- [Apps resource](/docs/machines/api/apps-resource/) reference
-- [Machines resource](/docs/machines/api/machines-resource/) reference
-- [Volumes resource](/docs/machines/api/volumes-resource/) reference
+## Environment setup
+
+The examples in the Machines API reference docs assume that you have two environment variables set: `FLY_API_TOKEN`, the authorization token to use with the API call; and `FLY_API_HOSTNAME`, the API base URL.
+
+For local development, you might set them as follows, assuming you have flyctl installed and have authenticated to Fly.io:
+
+```bash
+$ export FLY_API_HOSTNAME="https://api.machines.dev" # set to http://_api.internal:4280 when using WireGuard
+$ export FLY_API_TOKEN=$(fly auth token)
+```
+
+The `fly auth token` command returns the token currently in use by `flyctl`. You can also create a new auth token in the Tokens section of the Fly.io dashboard.
+
+To set an access token as an environment variable on Fly Machines, use a [secret](/docs/reference/secrets/); for example:
+
+```cmd
+fly secrets set FLY_API_TOKEN=$(fly auth token)
+```

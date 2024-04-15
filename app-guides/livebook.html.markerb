@@ -106,7 +106,7 @@ To use your Livebook, visit `https://<your-app-name>.fly.dev` in the browser, or
 
 You can test that your notebook was saved onto the persistent volume by running `fly apps restart` and clicking "Open" on the Livebook home page to find and open it from storage.
 
-## A note on `auto_stop_machines` and `auto_start_machines` settings
+## A note on auto start and stop settings
 
 The `auto_stop_machines` and `auto_start_machines` config options are set to `true` in the app config. The Fly proxy will shut down the Machine when there's nobody connected to it. Livebook does try to save even "unsaved notebooks," but principle you can lose data if it shuts down and you have not saved your work.
 

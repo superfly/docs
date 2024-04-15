@@ -90,7 +90,7 @@ To segment the app into its own network, you can pass a `network` argument in th
 ## Allocate an IP address for global request routing
 
 If you intend for Machines to be accessible to the internet, you'll need to allocate an IP address to the app. Currently
-this is done using `flyctl` or the [Fly.io GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](https://fly.io/docs/reference/services/#anycast). Read more about this in [the Networking section](https://fly.io/docs/reference/services/#notes-on-networking).
+this is done using `flyctl` or the [Fly.io GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](https://fly.io/docs/reference/services/#about-anycast). Read more about this in [the Networking section](https://fly.io/docs/reference/services/#notes-on-networking).
 
 Example:
 

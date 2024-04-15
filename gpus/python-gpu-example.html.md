@@ -21,7 +21,7 @@ git clone git@github.com:fly-apps/python_gpu_example.git && cd python_gpu_exampl
 
 ### Edit app configuration in `fly.toml`
 * Change `app` to match the name of the app you just created.
-* Optionally, `primary_region`&mdash;make sure to choose a region in which GPU Machines are available. Check the [docs](https://fly.io/docs/gpus/gpu-quickstart/) for GPU regions.
+* Optionally, `primary_region`&mdash;make sure to choose a [region in which GPU Machines are available](/docs/gpus/#regions-with-gpus).
 * Optionally, change the NONROOT_USER `build.arg`&mdash;if you do, also edit the `destination` of the volume mount in `mounts` to match.
 * Optionally, tweak `swap_size_mb`.
 
@@ -37,7 +37,11 @@ git clone git@github.com:fly-apps/python_gpu_example.git && cd python_gpu_exampl
 
 ### Jupyter notebook
 
-The easiest way to visit a private Fly App with the browser is with `fly proxy` command, which proxies a local port to a Machine.
+The easiest way to visit a private Fly App with the browser is with the `fly proxy` command, which proxies a local port to a Machine.
+
+```
+fly proxy 8888:8888
+```
 
 Run `fly logs` to find a line like 
 

@@ -10,7 +10,7 @@ The [`fly machine run`](/docs/flyctl/machine-run/) command is a tool to configur
 
 Many, but not all, [Machine configuration](/docs/machines/api-machines-resource/#machine-config-object-properties) options are available to the `fly machine run` command through flags. The available flags are listed in the flyctl help and on the [`fly machine run` reference page](/docs/flyctl/machine-run/).
 
-Use `fly machine run` to when you want use more than one Docker image in an app, or to run a one-off or temporary Machine.
+Use `fly machine run` when you want use more than one Docker image in an app, or to run a one-off or temporary Machine.
 
 <div class="note">
 To create a Machine, but not start it, use [`fly machine create`](/docs/flyctl/machine-create/).
@@ -197,11 +197,11 @@ fly machine run . --env MY_VAR=MY_VALUE \
 
 Use quotes around the value if it has spaces in it.
 
-For sensitive environmment variables, [set secrets on the app](https://fly.io/docs/flyctl/secrets/) instead.
+For sensitive environment variables, [set secrets on the app](https://fly.io/docs/flyctl/secrets/) instead.
 
 ## Define a Fly Proxy network service
 
-The `--port` option defines a network service to allow the Fly Proxy to reach a local service on the Machine. This option gives you access to basic service configuration; the [Machines API](/docs/machines/api-machines-resource/) and [Fly Launch](/docs/apps/) both offer more complete control over the Machine's [`config.services`](/docs/machines/api-machines-resource/#machine-config-object-properties) properties.
+The `--port` option defines a network service to allow the Fly Proxy to reach a local service on the Machine. This option gives you access to basic service configuration; the [Machines API](/docs/machines/api-machines-resource/) and [Fly Launch](/docs/apps/) both offer more control over the Machine's [`config.services`](/docs/machines/api-machines-resource/#machine-config-object-properties) properties.
 
 Map any external ports, where the proxy accepts requests directed at the app, to the internal port where the service is listening on IPv4. For each port combination, specify the protocol and [connection handler(s)](/docs/networking/services/#connection-handlers), using this format: 
 
@@ -226,11 +226,11 @@ fly machine run . --port 80/tcp:http \
 
 The `--autostart` and `--autostop` flags only work on Machines with Fly Proxy services configured. [Read more about Fly Proxy auto start and auto stop](/docs/apps/autostart-stop/#how-it-works).
 
-In a Machine service's configuration, `auto_stop` and `auto_start` settings are optional. 
+In a Machine service's configuration, `autostop` and `autostart` settings are optional.
 
-If the `--autostop` flag is absent in a `fly machine run` command, the Machine's [`config.services.auto_stop`](/docs/machines/api-machines-resource/#machine-config-object-properties) value doesn't get set, and the Fly Proxy does not shut the Machine down, even when there is no traffic to it.
+If the `--autostop` flag is absent in a `fly machine run` command, the Machine's [`config.services.autostop`](/docs/machines/api-machines-resource/#machine-config-object-properties) value doesn't get set, and the Fly Proxy does not shut the Machine down, even when there is no traffic to it.
 
-If the `--autostart` flag is absent in a `fly machine run` command, the Machine's [`config.services.auto_start`](/docs/machines/api-machines-resource/#machine-config-object-properties) value doesn't get set, and the Fly Proxy does not start it in response to requests.
+If the `--autostart` flag is absent in a `fly machine run` command, the Machine's [`config.services.autostart`](/docs/machines/api-machines-resource/#machine-config-object-properties) value doesn't get set, and the Fly Proxy does not start it in response to requests.
 
 The `--autostart` and `--autostop` flags set the value of `autostart` or `autostop` to `true` by default; you can explicitly set the value to `false`. For example, the following runs a new Machine that may be stopped by the Fly Proxy, but will never be restarted by it:
 

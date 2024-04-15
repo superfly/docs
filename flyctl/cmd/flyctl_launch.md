@@ -36,6 +36,7 @@ flyctl launch [flags]
       --file-literal stringArray         Set of literals in the form of /path/inside/machine=VALUE pairs where VALUE is the content. Can be specified multiple times.
       --file-local stringArray           Set of files in the form of /path/inside/machine=<local/path> pairs. Can be specified multiple times.
       --file-secret stringArray          Set of secrets in the form of /path/inside/machine=SECRET pairs where SECRET is the name of the secret. Can be specified multiple times.
+      --from string                      A github repo URL to use as a template for the new app
       --generate-name                    Always generate a name for the app, without prompting
       --ha                               Create spare machines that increases app availability (default true)
   -h, --help                             help for launch
@@ -43,11 +44,11 @@ flyctl launch [flags]
       --ignorefile string                Path to a Docker ignore file. Defaults to the .dockerignore file in the working directory.
   -i, --image string                     The Docker image to deploy
       --image-label string               Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
-      --immediate-max-concurrent int     Maximum number of machines to update concurrently when using the immediate deployment strategy. (default 16)
       --internal-port int                Set internal_port for all services in the generated fly.toml (default -1)
       --label stringArray                Add custom metadata to an image via docker labels
       --lease-timeout string             Time duration to lease individual machines while running deployment. All machines are leased at the beginning and released at the end.The lease is refreshed periodically for this same time, which is why it is short.flyctl releases leases in most cases. (default "13s")
       --local-only                       Perform builds locally using the local docker daemon. The default is --remote-only.
+      --max-concurrent int               Maximum number of machines to operate on concurrently. (default 16)
       --max-unavailable float            Max number of unavailable machines during rolling updates. A number between 0 and 1 means percent of total machines (default 0.33)
       --name string                      Name of the new app
       --nixpacks                         Deploy using nixpacks to build the image

@@ -2,8 +2,9 @@
 title: Connecting Livebook to Your App in Production
 layout: framework_docs
 order: 6
-objective: Guide shows how to connect a locally running Livebook to your application running on Fly.
+objective: Guide for connecting a locally running Livebook to your application running on Fly.
 redirect_from: /docs/app-guides/elixir-livebook-connection-to-your-app
+redirect_from: /blog/connecting-livebook-to-your-production-application/
 author: mark
 categories:
   - elixir

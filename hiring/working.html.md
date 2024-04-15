@@ -42,7 +42,7 @@ We&#39;re a product for developers, by developers. We have a [thriving community
 ## Leveling
 
 Levels at Fly.io are relatively informal. We're pretty flat, as companies
-go. Small teams, like we just said. Our current [engineering leveling](/docs/hiring/levels/) looks
+go. Small teams, like we just said. Our current [leveling](/docs/hiring/company-levels/) looks
 roughly like:
 
 * Level 1: Early-career or intern-level demonstrated aptitude. An L1 might need

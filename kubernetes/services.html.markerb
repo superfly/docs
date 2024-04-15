@@ -29,10 +29,50 @@ spec:
       targetPort: 8080
 ```
 
-Using `kubectl`, create the service:
+Using kubectl, create the service:
 
 ```
-kubectl apply -f service.yaml
+> kubectl apply -f service.yaml
+```
+
+To view your service:
+
+```
+> kubectl get svc
+NAME              TYPE        CLUSTER-IP            EXTERNAL-IP   PORT(S)   AGE
+kubernetes        ClusterIP   fdaa:3:dde8:0:1::3a   <none>        443/TCP   32h
+fksdemo-service   ClusterIP   fdaa:3:dde8:0:1::3b   <none>        80/TCP    11s
+```
+
+## Exposing Services publicly
+
+Services can be exposed to the public internet with a Service of type LoadBalancer.
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: fksdemo-service-public
+spec:
+  selector:
+    app: fksdemo
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
+```
+
+The domain name and IP address to access the Service over the internet can be found using kubectl. In the below output, the values are found
+under the `EXTERNAL-IP` column.  
+
+```
+> kubectl get svc
+NAME                     TYPE           CLUSTER-IP            EXTERNAL-IP                                                                                           PORT(S)   AGE
+kubernetes               ClusterIP      fdaa:3:dde8:0:1::3a   <none>                                                                                                443/TCP   32h
+fksdemo-service          ClusterIP      fdaa:3:dde8:0:1::3b   <none>                                                                                                80/TCP    26m
+fksdemo-service-public   LoadBalancer   fdaa:3:dde8:0:1::3c   fksdemo-service-public.svc.fks-default-vz5dlqz7v4ylrnpq.fly.dev,2a09:8280:1::31:ab8:0,137.66.25.254   80/TCP    8s
 ```
 
 ## Fly.io connection Handlers
@@ -71,9 +111,9 @@ spec:
 
 ## Concurrency limits
 
-[Concurrency limits](https://fly.io/docs/reference/configuration/#services-concurrency) are used to limit the load on your application.
+[Concurrency limits](/docs/reference/configuration/#services-concurrency) are used to limit the load on your application.
 By default, the soft limit is set to 20 and the hard limit is set to 25.
-Learn more about [concurrency limits](https://fly.io/docs/reference/configuration/#services-concurrency).
+Learn more about [concurrency limits](/docs/reference/configuration/#services-concurrency).
 
 They can be configured on your Services using custom annotations. There are 3 annotations used to configure the limits:
 
@@ -105,3 +145,5 @@ We currently do not support:
 
 - [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
 - [Create an FKS cluster](/docs/kubernetes/clusters/)
+- [Connect to an FKS cluster](/docs/kubernetes/connect-clusters/)
+- [Use volumes with FKS](/docs/kubernetes/using-volumes/)

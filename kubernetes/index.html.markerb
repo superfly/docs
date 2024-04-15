@@ -53,14 +53,13 @@ There are a few features we don't support yet but are part of the roadmap:
   * Sidecars and init processes
   * EmptyDir volumes
   * Horizontal pod autoscaling
-  * StatefulSets
+  * Network policies
   * CronJob
 
 Features we don't support:
 
   * Node affinity
   * Inter-pod (anti) affinity
-  * Network policies
   * DaemonSets
 
 ### Pricing
@@ -71,4 +70,6 @@ See the [pricing page](/docs/about/pricing/#fly-kubernetes) for information on F
 
 - [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
 - [Create an FKS cluster](/docs/kubernetes/clusters/)
+- [Connect to an FKS cluster](/docs/kubernetes/connect-clusters/)
 - [Configure FKS Services](/docs/kubernetes/services)
+- [Use volumes with FKS](/docs/kubernetes/using-volumes/)
