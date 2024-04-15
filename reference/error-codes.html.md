@@ -76,10 +76,25 @@ A connection to a machine experienced an unidentifiable I/O error.
 
 #### PC07: Connection retries exhausted
 
+The proxy failed to connect to a machine after too many retries.
 
-    PC08, // failed to set some important tcp socket options, this is a fly issue
-    PT01, // could not proxy TCP data to/from instance
-    PT02, // could not proxy TCP data to/from instance,
+#### PC08: TCP timeout couldn't be set
+
+Failed to set the TCP timeout for an upstream connection. This is an internal Fly.io issue.
+
+### TLS errors
+
+TLS errors are related to the automatic TLS termination provided by Fly Proxy. These errors occur before a request is passed on to your application.
+
+#### PT01: Exceeded rate limit for IP range
+
+A given IP range made too many TLS handshake attempts and was rate limited.
+
+#### PT02: could not proxy TCP data
+
+The proxy failed to proxy TCP data to or from a machine.
+
+
     PT03, // tls handshake was canceled
     PT04, // tls handshake failed
     PT05, // no valid tls certificate was found for SNI {sn}. aborted connection
