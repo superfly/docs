@@ -48,23 +48,11 @@ install yjit by default if rustc is available.
 
 ## Enabling swap
 
-While RAM is always faster, not everything that is loaded into RAM needs 
+While RAM is always faster, not everything that is loaded into RAM needs
 equal treatment.  Enabling swap can allow less frequently used regions
-of memory to be moved out to disk (which these days is SSD).  Running
-the following commands at runtime will enable swap:
-
-```
-fallocate -l 512M /swapfile
-chmod 0600 /swapfile
-mkswap /swapfile
-echo 10 > /proc/sys/vm/swappiness
-swapon /swapfile
-echo 1 > /proc/sys/vm/overcommit_memory
-```
-
-The way to incorporate these commands into your deploy is to change
-the CMD (or ENTRYPOINT) of your Dockerfile to run either a rake task 
-or shell script which runs these commands then starts your server.
+of memory to be moved out to disk (which these days is SSD). See
+[`swap_size_mb`](https://fly.io/docs/reference/configuration/#swap_size_mb-option) for configuring
+for deploys.
 
 ## Recap
 
