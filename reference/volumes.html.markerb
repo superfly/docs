@@ -24,7 +24,7 @@ Explore other options for data storage in [Databases & Storage](/docs/database-s
 
 ## Volume attachment
 
-Fly Volumes and Fly Machines are meant to be paired together, but they are not necessarily always found in pairs. A Fly Volume can be created without a Fly Machine, or a Machine can be destroyed without destroying its volume. In these cases, the volume that’s left is called an "unattached" volume. A Fly Machine that does not require a volume will never attach itself to one. Fly Machines that do require volumes will *always* be attached to one, and any method of creating a new Fly Machine will always create a matching Fly Volume if there is not an unattached one available.
+Fly Volumes and Fly Machines are meant to be paired together, but they are not necessarily always found in pairs. A Fly Volume can be created without a Fly Machine, or a Machine can be destroyed without destroying its volume. In these cases, the volume that’s left is called an "unattached" volume. A Fly Machine that does not require a volume will never attach itself to one. Fly Machines that do require volumes will *always* be attached to one, and any method of creating a new Fly Machine will either create a matching Fly Volume if there is not an unattached one available, or it will fail.
 
 ## Volume redundancy
 
@@ -36,7 +36,7 @@ In a few cases, you can run a single Machine with an attached volume. For exampl
 
 ## Volume placement
 
-You can create volumes at the same time you create Machines, or ahead of time. If you try to create new Machines through `flyctl scale count`, then `flyctl` will first check if you have any unattached volumes in the region you are creating new Machines in. If it finds unattached volumes, it will try to create the new Machines on the same servers. If it does not find any unattached volumes, then it will create new ones together with the Machines. You can also create unattached volumes through [`fly volumes create`](/docs/flyctl/volumes-create/).
+You can create volumes at the same time you create Machines, or ahead of time. If you try to create new Machines through [`flyctl scale count`](/docs/apps/scale-count/#scale-an-app-with-volumes), then `flyctl` will first check if you have any unattached volumes in the region you are creating new Machines in. If it finds unattached volumes, it will try to create the new Machines on the same servers. If it does not find any unattached volumes, then it will create new ones together with the Machines. You can also create unattached volumes through [`fly volumes create`](/docs/flyctl/volumes-create/).
 
 Volumes exist on a single server in a single [region](/docs/reference/regions/). For redundancy within a region, you can run multiple Machines with attached volumes by creating multiple volumes with the same name. For example, if you had an app that required a volume named `myapp_data` and wanted to run three Machines in `bos`, then you would have to create at least three volumes named `myapp_data` in `bos`. Every volume has a unique ID to allow for multiple volumes with the same name. Remember that volumes don't automatically replicate data between them.
 
