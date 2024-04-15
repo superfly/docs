@@ -1,4 +1,4 @@
-Create and configure a new app from source code or a Docker image
+Create and configure a new app from source code or a Docker image.  Options passed after double dashes ("--") will be passed to the language specific scanner/dockerfile generator.
 
 ## Usage
 ~~~
