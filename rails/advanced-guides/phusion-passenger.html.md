@@ -35,9 +35,6 @@ RUN rm /etc/nginx/sites-enabled/default
 ADD config/fly/rails.conf /etc/nginx/sites-enabled/rails.conf
 ADD config/fly/envvars.conf /etc/nginx/main.d/envvars.conf
 
-ADD config/fly/mkswap.sh /etc/my_init.d/95-mkswap.sh
-RUN chmod +x /etc/my_init.d/95-mkswap.sh
-
 ENV RAILS_LOG_TO_STDOUT true
 
 ARG BUNDLE_WITHOUT=development:test
@@ -121,22 +118,11 @@ env RAILS_LOG_TO_STDOUT;
 
 The above are commonly used variables, feel free to adjust as you see fit.
 
-## Making a swapfile
+## Enabling swap
 
-The Dockerfile provided by Phusion will create a swapfile when your application
-is run in a container.  Fly uses your Dockerfile to build an image, but then
-deploys that image to a VM, so while the commands necessary to build a
-swapfile are there, they aren't executed on your VM.  We can execute them by
-placing the following into `config/fly/mkswap.sh`:
-
-```
-#!/bin/sh
-fallocate -l 512M /swapfile
-chmod 0600 /swapfile
-mkswap /swapfile
-swapon /swapfile
-exit 0
-```
+See
+[`swap_size_mb`](https://fly.io/docs/reference/configuration/#swap_size_mb-option) for configuring
+for deploys.
 
 ## Deployment
 
