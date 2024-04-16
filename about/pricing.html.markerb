@@ -126,7 +126,7 @@ We bill for outbound data transfer from the region a VM is running in, inbound t
 
 ## Fly Kubernetes
 
-[Fly Kubernetes](/docs/kubernetes/) (FKS) is an implementation of Kubernetes that runs on Fly.io.
+[Fly Kubernetes](/docs/kubernetes/) (FKS) is a managed Kubernetes service that runs on Fly.io.
 
 - $75/mo per cluster
 - Plus the cost of [compute](#compute) and [Fly volumes](#persistent-storage-volumes) that you create
