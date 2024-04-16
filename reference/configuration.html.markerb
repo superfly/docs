@@ -307,6 +307,8 @@ Configures Fly Proxy to not add any Fly headers to HTTP responses. The following
  - `Fly-Request-Id`
  - `Fly-Cache-Status`
 
+This is useful if you are building a platform on top of Fly and have your own load balancer that already adds similar response headers.
+
 ```toml
   [http_service.http_options.response]
     pristine = true
@@ -473,6 +475,8 @@ Configures Fly Proxy to not add any Fly headers to HTTP responses. The following
  - `Via`
  - `Fly-Request-Id`
  - `Fly-Cache-Status`
+
+This is useful if you are building a platform on top of Fly and have your own load balancer that already adds similar response headers.
 
 ```toml
   [services.ports.http_options.response]
