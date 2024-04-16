@@ -7,7 +7,7 @@ redirect_from: /docs/kubernetes/volumes/
 ---
 
 <div class= "important icon">
-Fly Kubernetes is a closed beta. Email us at sales@fly.io for early access.
+Fly Kubernetes is in beta and not recommended for critical production usage. To report issues or provide feedback, email us at fks@fly.io.
 </div>
 
 Fly Kubernetes (FKS) is a fully managed Kubernetes service built on the Fly.io platform. It enables you to easily deploy Kubernetes clusters without the hassle of managing and operating the control plane. Learn more about [why and how we made FKS](https://fly.io/blog/fks/).
