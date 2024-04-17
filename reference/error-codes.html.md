@@ -5,11 +5,11 @@ sitemap: false
 nav: firecracker
 ---
 
-The Fly.io platform logs internal errors from our proxy, VM orchestrator, etc. Each log line contains an error code and a field containing that code. This page gives more context about the errors.
+The Fly.io platform logs errors to customer log streams. Each log line contains an error code and a field containing that code. This page gives more context about the errors and how to troubleshoot them.
 
 ## Proxy errors
 
-THe Fly proxy issues different categories of errors, identifiable by the second letter in each code: Upstream, Connection, TLS, Machine, App, Edge and Routing.
+The Fly proxy issues different categories of errors, identifiable by the second letter in each code, referring to: Upstream, Connection, TLS, Machine, App, Edge and Routing errors.
 
 ### Internal Errors
 
@@ -235,7 +235,9 @@ If you with the `immediate` deploy strategy, all current machines will be replac
 
 **App concurrency limits reached**
 
-[Concurrency limits](https://fly.io/docs/reference/concurrency/#main-content-start) set in `fly.toml` define how traffic should be balanced across machines in your app. Check if:
+[Concurrency limits](https://fly.io/docs/reference/concurrency/#main-content-start) set in `fly.toml` define how traffic should be balanced across machines in your app.
+
+To diagnose, check if:
 * your app is using too much CPU, memory or disk I/O
 * your app applies its own concurrency limits
 * Connection pools to external services like databases are exhausted
