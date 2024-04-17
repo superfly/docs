@@ -29,10 +29,12 @@ Fly Volumes and Fly Machines are meant to be paired together, but they are not n
 ## Volume redundancy
 
 <div class="important icon">
-<b>Important: Always run at least two volumes per app.</b> We usually recommend running at least two Machines per app to increase availability, and if you're using volumes, then each Machine should have an attached volume. If you only have one Machine and volume, then you'll have downtime if there's a host or network failure, and whenever you deploy your app. Also remember that volumes don't have built-in replication between them.
+<b>Important: Always provision at least two volumes per app.</b> Running an app with a single Machine and volume leaves you at risk for downtime and data loss.
 </div>
 
-In a few cases, you can run a single Machine with an attached volume. For example, if you're running an app with a standard SQLite database, or your app is in development and you're not yet worried about downtime.
+We try to keep individual Fly Machines up for as long as possible, but all hardware fails eventually. That's why [we recommend running at least **two** Machines per app](/docs/going-to-production/#first-things-first) to increase availability. This can be **two** or more Machines in one region, or better yet, one or more Machines in **multiple regions**. If you only have one Machine and volume, then you'll have downtime if there's a host or network failure, and whenever you deploy your app.
+
+In a few cases, you can run a single Machine with an attached volume. For example, if your app is in development and you're not yet worried about downtime or if you're running an app that can handle downtime and has a custom backup procedure.
 
 ## Volume placement
 
@@ -40,7 +42,7 @@ You can create volumes at the same time you create Machines, or ahead of time. I
 
 Volumes exist on a single server in a single [region](/docs/reference/regions/). For redundancy within a region, you can run multiple Machines with attached volumes by creating multiple volumes with the same name. For example, if you had an app that required a volume named `myapp_data` and wanted to run three Machines in `bos`, then you would have to create at least three volumes named `myapp_data` in `bos`. Every volume has a unique ID to allow for multiple volumes with the same name. Remember that volumes don't automatically replicate data between them.
 
-To prevent a single server hardware failure from taking down multiple Fly Machines, by default each volume you create for your app is placed in a separate hardware zone (i.e. on a different server). Note that having each volume in a separate hardware zone limits the number of volumes your app can have in a region. If you would like more volumes in a region than there are distinct hardware zones, you can set `--require-unique-zone` to `false` when you run [`fly volumes create`](/docs/flyctl/volumes-create/).
+To prevent a single server hardware failure from taking down multiple Fly Machines, it is better if each volume you create for your app is placed in a separate hardware zone (i.e. on a different server). This happens by default when using [`fly volumes create`](/docs/flyctl/volumes-create/), but is not guaranteed when creating Fly Volumes through other methods. Note that having each volume in a separate hardware zone limits the number of volumes your app can have in a region. If you would like more volumes in a region than there are distinct hardware zones, you can set `--require-unique-zone` to `false` when you run [`fly volumes create`](/docs/flyctl/volumes-create/).
 
 When using [`fly volumes create`](/docs/flyctl/volumes-create/), you can hint what type of compute load you expect to use the volume for by using the `--vm-XXX` flags. For example, if you were creating a volume you want to use with a L40S GPU Machine, you could set `--vm-gpu-kind=l40s`. This will ensure that your new volume is placed on GPU hardware.
 
