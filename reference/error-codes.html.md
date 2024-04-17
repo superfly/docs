@@ -248,9 +248,28 @@ The Fly proxy couldn't find a specific machine ID after the request was forwarde
 
 #### PR03: No candidate machines found after retries
 
+This error is functionally similar to `PR01`. It only applies to HTTP services however, and up to 90 retries are attempted before the proxy gives up and issues this error. This error should also display the cause of the most recent error before this one.
+
 #### PR04: No candidate machines found after retries
+
+This error is functionally similar to `PR03`, except it will not display previous errors.
+
 #### PR05: Statics retrieval failed
 
+The proxy failed to retrieve a static file from the specified Tigris storage bucket.
 
 #### PL01: Bypassed connection concurrency limit
+
+[Concurrency limits](https://fly.io/docs/reference/concurrency/#main-content-start) set in `fly.toml` define how traffic should be balanced across machines in your app.
+
+This error occurs when concurrency is measured as the number of concurrent **connections**.
+
+To diagnose, check if:
+* your app is using too much CPU, memory or disk I/O
+* your app applies its own concurrency limits
+* Connection pools to external services like databases are exhausted
+* Connections to external services from your app are slow
+
 #### PL02: Bypassed request concurrency limit
+
+This error is similar to `PL01`, but refers to concurrency measured as the number of concurrent **requests**.
