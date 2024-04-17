@@ -1186,10 +1186,14 @@ Properties of the `config` object for Machine configuration. See [Machine proper
       + `handlers`: Array of protocol [handlers](/docs/networking/services/#connection-handlers) for this port. How should the Fly Proxy handle and terminate this connection. Options include `http`, `tcp`, `tls`.
       + `force_https`: bool (false) - If true, force HTTP to HTTPS redirects.
       + `http_options`: Fiddly HTTP options (if you don’t know you need them, you don’t), including:
-        - `compress`: bool (false) to enable HTTP compression
-        - `response`: ({"headers": {string:string}} (nil)) for HTTP headers to set on responses.
+        - `compress`: bool (false) - If true, enable HTTP compression.
+        - `h2_backend`: bool (false) - If true, inform Fly Proxy that your app supports HTTP/2 (h2c with prior knowledge), which enables HTTP/2 only workloads to work with the `http` handler.
+        - `response`: Options for controlling HTTP response headers.
+          - `headers`: ({"headers": {string:string}} (nil)) HTTP headers to set on responses.
+          - `pristine`: bool (false) - If true, do not add any Fly.io headers to HTTP responses. The following response headers won’t be added and won’t be modified if returned by the app: `Server`, `Via`, `Fly-Request-Id`, `Fly-Cache-Status`.
       + `tls_options`:  Fiddly TLS options (if you don’t know you need to mess with these, you don’t need to), including:
         - `alpn`: [string, string] ([]) : ALPN protocols to present TLS clients (for instance, [“h2”, “http/1.1”]).
+        - `default_self_signed`: bool (false) - If true, serve a self-signed certificate if no certificate exists.
         - `versions`: [string, string] ([]) : TLS versions to allow (for instance, [“TLSv1.2”, “TLSv1.3”]).
       + `proxy_proto_options`: Configure the version of the PROXY protocol that your app accepts. Version 1 is the default.
         - `version`: A string to indicate that the TCP connection uses PROXY protocol version 2. The default when not set is version 1.
