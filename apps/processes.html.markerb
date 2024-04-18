@@ -1,5 +1,5 @@
 ---
-title: Run Multiple Process Groups in an App
+title: Run multiple process groups in an app
 objective: 
 layout: docs
 nav: firecracker
@@ -8,13 +8,13 @@ order: 90
 
 Process groups are a way to configure a single Fly App to run multiple different programs.
 
-You define processes in your `fly.toml`, giving each process group a name and a command to run at boot. Every defined process runs in its own Fly Machine(s) within the app, which means they don't compete with each other for VM resources, and they can be scaled individually.
+You define processes in your `fly.toml`, giving each process group a name and a command to run at boot. Every defined process runs in its own Fly Machine(s) within the app, which means they don't compete for VM resources, and they can be scaled by process group.
 
 ## The default process group
 
 If you don't explicitly define any processes, then the Machines in a Fly App belong to the default `app` process group, and on boot they run whatever entrypoint process the app's Docker image has. (Apps are shipped to Fly.io in Docker images, even though [we run VMs, not containers](https://fly.io/blog/docker-without-docker/).)
 
-When the `fly launch` command creates a `fly.toml` file for your app, the default service defined in the `http_service` section applies to the `app` process group.
+When the `fly launch` command creates a `fly.toml` file for your app, the default service defined in the `http_service` section belongs to the `app` process group.
 
 ## Run multiple processes
 
@@ -45,9 +45,11 @@ Chances are, you only want user requests to hit one of your processes; in the ab
   ...
 ```
 
-You can define distinct services for each process that needs to accept connections via Fly Proxy (whether [publicly](/docs/networking/services/) or via [Flycast](/docs/networking/private-networking/#flycast-private-load-balancing)), by creating multiple `[[services]]` sections in `fly.toml`. 
+You can define distinct services for each process that needs to accept connections from Fly Proxy (whether [publicly](/docs/networking/services/) or via [Flycast](/docs/networking/private-networking/#flycast-private-load-balancing)), by creating multiple `[[services]]` sections in `fly.toml`. 
 
-**Note:** Make sure processes handle connections on different [external ports](/docs/reference/configuration/#services-ports). Fly Proxy doesn't know about process groups; it load-balances requests among all Machines with a service configured on the requested port.
+<div class="important icon">
+**Important:** Make sure processes handle connections on different [external ports](/docs/reference/configuration/#services-ports). Fly Proxy doesn't know about process groups; it load-balances requests among all Machines with a service configured on the requested port.
+</div>
 
 ## Deployment
 
@@ -93,7 +95,7 @@ The following example clones a Machine into the `gru` (São Paulo) region:
 fly machine clone --region gru e2865641be9786
 ```
 
-Run the following commands to destroy a Machine:
+Run the following command to force stop and destroy a Machine:
 
 ```
 fly machine stop e2865641be9786

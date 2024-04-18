@@ -1,5 +1,5 @@
 ---
-title: "Running Multiple Processes Inside A Fly.io App"
+title: Running multiple processes inside a Fly.io app
 layout: docs
 sitemap: true
 toc: true
@@ -48,9 +48,9 @@ Now, some options to actually run this stuff:
 
 ### Process groups
 
-Process groups are the recommended way to run multiple processes. **This method runs each process in its own Machine**. Examples of running multiple processes within a single Machine are discussed later.
+[Process groups](/docs/apps/processes/) are the recommended way to run multiple processes. This method runs each process in its own Machine or group of Machines.
 
-Fly.io has the notion of process groups. You can define multiple processes in your `fly.toml`, giving each a name. Each defined process runs in its own Machine within the one app. Learn more about [app-wide process groups](/docs/apps/processes/). 
+You can define multiple process groups in your `fly.toml`, giving each a name. Each defined process runs in its own Machine or group of Machines within the one app.
 
 You can see that in action in the below (truncated) `fly.toml` file:
 
@@ -67,7 +67,7 @@ bar_web = "/app/server -bar"
   script_checks = []
 ```
 
-Here we define two processes: `web` and `bar_web`. Each command (e.g. `/app/server` and `/app/server -bar`) is setting the *command* passed to your Dockerfile *entrypoint*. That means your entrypoint needs to be able to handle a command being passed to it!
+Here we define two processes: `web` and `bar_web`. The command defined for each process group is setting the *command* passed to your Dockerfile *entrypoint*. That means your entrypoint needs to be able to handle a command being passed to it!
 
 Here's an example of such an entrypoint:
 
@@ -85,7 +85,7 @@ fi
 
 Note that under the `[[services]]` section of the `fly.toml` file, we define a service for process `web`. The `processes = [...]` array acts as a filter - it will apply only to the processes listed.
 
-See the [announcement post](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) for more details on scaling with multiple processes. Also note that it's a bit finnicky - it's best to create *new* apps with multiple processes. Adding them on top of existing apps (or removing them from apps that are using them) may cause some confusion. We're working on it!
+You can also scale Machines horizontally and vertically by process group. See the [process groups](/docs/apps/processes/) docs for details.
 
 ### Just use Bash
 
