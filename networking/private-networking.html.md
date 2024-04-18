@@ -72,9 +72,9 @@ fdaa:0:18:a7b:7d:f066:b83b:2
 
 ## Connect to a running service via its 6PN address
 
-In the `/etc/hosts` of a deployed Fly Machine, we alias the 6PN address of the Machine to `fly-local-6pn`.  
+In the `/etc/hosts` of a deployed Fly Machine, we alias the 6PN address of the Machine to `fly-local-6pn`.
 
-For a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, then you need to bind it to `fly-local-6pn:8080` for it to be accessible at "[6PN_Address:8080]". 
+For a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, then you need to bind it to `fly-local-6pn:8080` for it to be accessible at "[6PN_Address:8080]".
 
 <div class="note icon">
 `fly-local-6pn` is to 6PN addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine.
@@ -90,7 +90,7 @@ Fly.io `.internal` hostnames resolve to 6PN addresses (internal IPv6 addresses) 
 **Important:** Queries to Fly.io `.internal` hostnames only return information for started (running) Machines. Any stopped Machines, including those auto stopped by the Fly Proxy, are not included in the response to the DNS query.
 </div>
 
-The `.internal` addresses can include qualifiers to return more specific addresses or info. For example, you can add a region name qualifier to return the 6PN addresses of an app's Machines in a specific region: `iad.my-app-name.internal`. Querying this hostname returns the 6PN address (or addresses) of the `my-app-name` Machines in the `iad` region. 
+The `.internal` addresses can include qualifiers to return more specific addresses or info. For example, you can add a region name qualifier to return the 6PN addresses of an app's Machines in a specific region: `iad.my-app-name.internal`. Querying this hostname returns the 6PN address (or addresses) of the `my-app-name` Machines in the `iad` region.
 
 Some `.internal` hostnames return a TXT record with Machine, app, or region information. For example, if you request the TXT records using `regions.my-app-name.internal`, then you'll get back a comma-separated list of regions that `my-app-name` is deployed in. And you can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will return a comma-separated list of the app names.
 
@@ -298,3 +298,61 @@ To list all the tunnels set up for an organization, run `fly wireguard list`. Yo
 #### Remove a tunnel
 
 To remove a tunnel, run `fly wireguard remove`. You can specify the organization and tunnel name on the command line or be prompted for both.
+
+### Troubleshooting
+
+Having trouble connecting to a Fly.io hosted resource? The Private Network VPN feature makes it easy for a local machine to establish a fast, reliable connection to a Fly.io organization. However, when you can't connect to something, it's helpful to establish a baseline of what is, or what is not, working.
+
+#### Am I connected to Fly.io VPN?
+
+When connected locally, you can run a `dig` command to list all the apps your connection has access to.
+
+```cmd
+dig _apps.internal TXT +short
+```
+```output
+my-app,my-app-db
+```
+
+If results are returned, you have a VPN connection to an org at Fly.io and the results list all the app names.
+
+If no results are returned, either you do not have a WireGuard VPN connection open or there are NO apps running in the org.
+
+#### Am I connected to the right Fly.io org?
+
+WireGuard connections are created to a specific org. Each org's network is isolated from other orgs. You may have a VPN connection to Fly.io, but it may be to a different org than where your app is located. By default, you are working with your **personal** organization. If the app is in a business focused org or a shared org, you need to ensure your VPN connection is the org where the app lives.
+
+We can also try and ping our app's machine.
+
+Mac version:
+```cmd
+ping6 my-app.internal
+```
+
+Linux version:
+```cmd
+ping -6 my-app.internal
+```
+
+If the ping succeeds, you have a VPN connection to the same org that your application's machine is running in.
+
+If the ping fails, check which org the application is deployed in.
+
+```cmd
+fly status
+```
+```output
+App
+  Name     = my-app
+  Owner    = my-biz
+  Hostname = my-app.fly.dev
+  Image    = my-app:deployment-0123456789
+
+Machines
+PROCESS ID              VERSION REGION  STATE   ROLE    CHECKS  LAST UPDATED
+app     90706e10f12094  10      ord     started                 2024-04-16T20:20:59Z
+```
+
+The `Owner` is the **organization**. In this example, it is `my-biz`.
+
+Then check that your WireGuard connection is to the same organization. To be certain, you can remove the current connection and re-create it explicitly specifying the org.
