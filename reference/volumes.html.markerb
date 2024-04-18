@@ -42,7 +42,7 @@ Volumes are, by default, created with encryption-at-rest enabled for additional 
 
 ## Volume size
 
-The default volume size is 3GB when you create a volume with the `fly volumes create` command, and when you use the `fly launch` command to [launch an app with a volume](/docs/apps/volume-storage/#launch-a-new-app-with-a-fly-volume). The maximum volume size is 500GB.
+The default volume size is 1GB when you create a volume with the `fly volumes create` command, and when you use the `fly launch` command to [launch an app with a volume](/docs/apps/volume-storage/#launch-a-new-app-with-a-fly-volume). The maximum volume size is 500GB.
 
 You can extend a volume's size&mdash;either [manually](/docs/apps/volume-manage/#extend-a-volume) or [automatically](/docs/reference/configuration/#the-mounts-section)&mdash;to make it larger, but you can't shrink a volume.
 
