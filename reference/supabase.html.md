@@ -9,7 +9,7 @@ nav: firecracker
 [Supabase](https://supabase.com) now offers their excellent managed Postgres service on Fly.io infrastructure. Provisioning Supabase via `flyctl` ensures secure, low-latency database access from applications hosted on Fly.io.
 
 <aside class="callout">
-This service is in public beta. Do not run production workloads yet! [Sign up here](https://forms.supabase.com/fly-postgres) for beta access.
+This service is in beta. Test any workloads you want, but we recommend against running in production!
 </aside>
 
 ## Pricing and Billing
