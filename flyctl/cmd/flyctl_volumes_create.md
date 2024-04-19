@@ -1,6 +1,4 @@
-Create a new volume for an app. Volumes are persistent storage for
-		Fly Machines. The default size is 3 GB. Learn how to add a volume to
-		your app: https://fly.io/docs/apps/volume-storage/
+Volumes are persistent storage for Fly Machines. Learn how to add a volume to your app: https://fly.io/docs/apps/volume-storage/
 
 ## Usage
 ~~~
@@ -19,7 +17,7 @@ flyctl volumes create <volumename> [flags]
       --no-encryption               Do not encrypt the volume contents. Volume contents are encrypted by default.
   -r, --region string               The target region (see 'flyctl platform regions')
       --require-unique-zone         Place the volume in a separate hardware zone from existing volumes. This is the default. (default true)
-  -s, --size int                    The size of volume in gigabytes. The default is 3. (default 3)
+  -s, --size int                    The size of volume in gigabytes (default 1)
       --snapshot-id string          Create the volume from the specified snapshot
       --snapshot-retention int      Snapshot retention in days (min 5) (default 5)
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
