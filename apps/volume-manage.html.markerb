@@ -70,7 +70,7 @@ For options, refer to the [`fly volumes extend` docs](/docs/flyctl/volumes-exten
 
 ## Create a copy of a volume (Fork a volume)
 
-Create an exact copy of a volume, including its data. By default, we place the new volume on a separate physical host in the same region.
+Create an exact copy of a volume, including its data. By default, we place the new volume on a separate physical host in the same region. Use the `--region` option to fork the volume into another region.
 
 <div class="important icon">
 **Important:** After you fork a volume, the new volume is independent of the source volume. The new volume and the source volume do not continue to sync.
@@ -81,7 +81,7 @@ Create an exact copy of a volume, including its data. By default, we place the n
 2. Fork the volume:
 
     ```cmd
-    fly volumes fork <volume ID>
+    fly volumes fork <volume ID> --region <region>
     ```
 
     Example output:
@@ -95,7 +95,7 @@ Create an exact copy of a volume, including its data. By default, we place the n
    Encrypted: true
   Created at: 12 Oct 23 18:57 UTC
     ```
-
+    
 3. (Optional) Attach the volume to a new Machine by cloning with `fly machine clone <machine id> -r <region code> --attach-volume <volume id>:<destination mount path>` or [use `fly scale count`](/docs/apps/scale-count/#scale-an-app-with-volumes) to create a new Machine that picks up the unattached volume.
 
 For options, refer to the [`fly volumes fork` docs](/docs/flyctl/volumes-fork/) or run `fly vol fork -h`.

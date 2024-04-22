@@ -58,7 +58,7 @@ You can extend a volume's size&mdash;either [manually](/docs/apps/volume-manage/
 
 ## Volume forks
 
-When you [fork a volume](/docs/apps/volume-manage/#create-a-copy-of-a-volume-fork-a-volume), you create a new volume with an exact copy of the data from the source volume to use for testing, backups, or whatever you like. The new volume is in the same region, but on a different physical host, and is not attached to a Machine. The new volume and the source volume are independent, and changes to their contents are not synchronized.
+When you [fork a volume](/docs/apps/volume-manage/#create-a-copy-of-a-volume-fork-a-volume), you create a new volume with an exact copy of the data from the source volume to use for testing, backups, or whatever you like. If you don't specify a region, then the new volume is in the same region, but on a different physical host. The forked volume isn't attached to a Machine until you scale a new Machine in the same region. The new volume and the source volume are independent, and changes to their contents are not synchronized.
 
 ## Volume snapshots
 
