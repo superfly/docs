@@ -322,7 +322,7 @@ If no results are returned, either you do not have a WireGuard VPN connection op
 
 WireGuard connections are created to a specific org. Each org's network is isolated from other orgs. You may have a VPN connection to Fly.io, but it may be to a different org than where your app is located. By default, you are working with your **personal** organization. If the app is in a business focused org or a shared org, you need to ensure your VPN connection is the org where the app lives.
 
-We can also try and ping our app's machine.
+You can also try to ping your app's Machine.
 
 Mac version:
 ```cmd
