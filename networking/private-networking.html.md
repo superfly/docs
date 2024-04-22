@@ -301,7 +301,7 @@ To remove a tunnel, run `fly wireguard remove`. You can specify the organization
 
 ### Troubleshooting
 
-Having trouble connecting to a Fly.io hosted resource? The Private Network VPN feature makes it easy for a local machine to establish a fast, reliable connection to a Fly.io organization. However, when you can't connect to something, it's helpful to establish a baseline of what is, or what is not, working.
+Having trouble connecting to a Fly.io hosted app? When you can't connect to something, it's helpful to establish a baseline of what is, or what is not, working.
 
 #### Am I connected to Fly.io VPN?
 
