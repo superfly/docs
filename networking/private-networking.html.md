@@ -299,7 +299,7 @@ To list all the tunnels set up for an organization, run `fly wireguard list`. Yo
 
 To remove a tunnel, run `fly wireguard remove`. You can specify the organization and tunnel name on the command line or be prompted for both.
 
-### Troubleshooting
+### Troubleshoot a WireGuard VPN connection
 
 Having trouble connecting to a Fly.io hosted resource? The Private Network VPN feature makes it easy for a local machine to establish a fast, reliable connection to a Fly.io organization. However, when you can't connect to something, it's helpful to establish a baseline of what is, or what is not, working.
 
