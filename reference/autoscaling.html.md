@@ -18,7 +18,8 @@ For a comprehensive overview of how it works, see the [documentation](https://fl
 
 ## Metrics-based autoscaling
 
-This feature is supported through [Fly Autoscaler](https://github.com/superfly/fly-autoscaler) which you deploy as an app into your organisation.
-It polls metrics from a Prometheus instance and computes the number of machines needed based on those metrics. The autoscaler will create and
-delete machines as configured. To learn how to deploy and configure it, see the [documentation](https://github.com/superfly/fly-autoscaler). 
+Autoscales your application based on metrics such as CPU and memory. This uses [Fly Autoscaler](https://github.com/superfly/fly-autoscaler)
+which you deploy as an app into your organisation. It polls metrics from a Prometheus instance and computes the number of machines needed
+based on those metrics. The autoscaler will create and delete machines as configured. To learn how to deploy and configure it, see
+the [documentation](https://github.com/superfly/fly-autoscaler). 
 
