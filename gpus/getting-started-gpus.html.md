@@ -46,6 +46,7 @@ primary_region = "ord"  # If you change this, ensure it's to a region that offer
 Currently GPUs are available in the following regions:
 
 - `l40s`: `ord`
+- `a10`: `ord`
 - `a100-40gb`: `ord`
 - `a100-80gb`: `ams`, `iad`, `mia`, `sjc`, `syd`
 

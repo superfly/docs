@@ -727,7 +727,7 @@ Setting this value requires also setting `gpu_kind`.
 
 ### `gpu_kind`
 
-The kind of GPU to request. Valid values are `a100-pcie-40gb`, `a100-sxm4-80gb` and `l40s`.
+The kind of GPU to request. Valid values are `a100-pcie-40gb`, `a100-sxm4-80gb`, `a10` and `l40s`.
 
 Setting this value assumes `gpus = 1` if not present.
 
