@@ -15,7 +15,7 @@ A100 units are all about the tensor cores, and are positioned for inference, mod
 
 The L40S cards are all-rounders; they've got tensor cores, RT cores, and NVENC/NVDEC, and have 48GB of GPU RAM. Choose the L40S to accelerate graphics or video workloads, as well as for inference. ([L40S datasheet](https://resources.nvidia.com/en-us-l40s/l40s-datasheet-28413+external))
 
-A10 cards are ... ([A10 datasheet](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a10/pdf/a10-datasheet.pdf))
+A10 cards are all-arounders with less GPU RAM. They've got tensor cores, shader cores, NVENC/NVDEC, and can run Llama 3 8B at float16 without breaking the bank. Choose the A10 when you don't need more than 8 billion parameters. This works great for smaller large language models, Stable Diffusion, and other such workflows. ([A10 datasheet](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a10/pdf/a10-datasheet.pdf))
 
 Right now each Fly GPU Machine uses a single full GPU. A single GPU is well suited to rendering, encoding/decoding, inference, and a smidgen of fine tuning. Training large models from scratch requires much, much beefier resources.
 
