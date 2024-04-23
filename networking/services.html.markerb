@@ -247,6 +247,4 @@ You may have to install software on the Machine to use `dig` or `curl`. On Debia
 
 ## Default-Deny security policy
 
-All requests to Fly.io apps are our edge servers, where we use our memory-safe Rust proxy to direct traffic. The proxy listens on all ports and all Anycast addresses, so ports appear to be 'open' from the wider internet.
-
-However, nothing on your app is exposed unless you expose it via [services](/docs/networking/app-services/). You’re locked down by default.
+All requests to Fly.io apps are routed to our edge servers, where we use our memory-safe Rust proxy to direct traffic. The proxy listens on all ports and all Anycast addresses, so ports appear to be 'open' from the wider internet. However, nothing on your app is exposed unless you expose it via [services](/docs/networking/app-services/). You’re locked down by default.
