@@ -55,7 +55,6 @@ Dedicated IPv4 addresses are [billed](/docs/about/pricing/#anycast-ip-addresses)
 Shared IPv4 addresses are recommended unless you have an explicit need for your own IP. Some of the reasons to use a dedicated IPv4 address include:
 
 - Your app uses a non-HTTP protocol that doesn't use TLS.
-- You want to use a wildcard certificate.
 - Your app needs to do something over UDP (we don't support UDP over shared IPv4 or dedicated IPv6).
 - You want your app to accept raw TCP and handle TLS termination.
 - You have a Fly Postgres exposed to the internet over TLS for external connections.
