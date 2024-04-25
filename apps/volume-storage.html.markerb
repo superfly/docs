@@ -14,10 +14,11 @@ Use [Fly Launch](/docs/apps/) to create a new app with one Machine and an attach
 1. Launch a new app from your project source directory, specifying `--no-deploy` so it does not deploy immediately:
 
     ```cmd
-    fly launch --no-deploy
+    fly launch --no-deploy [flags, like --image or --dockerfile if using]
     ```
+    `fly launch` creates a `fly.toml` app configuration file in your project source directory.
 
-1. After the app is created, add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`, where `source` is the volume name and `destination` is the directory where the volume should be mounted on the Machine file system. For example:
+1. After the app is created, add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the `fly.toml`, where `source` is the volume name and `destination` is the directory where the volume should be mounted on the Machine file system. For example:
 
     ```toml
     [mounts]
@@ -25,9 +26,9 @@ Use [Fly Launch](/docs/apps/) to create a new app with one Machine and an attach
       destination="/data"
     ```
 
-<div class="note icon">
-<b>Note:</b> You can't mount a volume with `destination="/"` since `/` is used for the root file system.
-</div>
+        <div class="note icon">
+        <b>Note:</b> You can't mount a volume with `destination="/"` since `/` is used for the root file system.
+        </div>
 
 1. Deploy the app:
 
@@ -37,7 +38,7 @@ Use [Fly Launch](/docs/apps/) to create a new app with one Machine and an attach
 
 1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
 
-1. (Recommended if your app handles replication) Clone the first Machine to scale out to two Machines with volumes:
+1. (Recommended only if your app handles replication) Clone the first Machine to scale out to two Machines with volumes:
 
     ```cmd
     fly machine clone <machine id>
