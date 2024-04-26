@@ -66,7 +66,7 @@ Volumes are pinned to physical hosts, so when there's a host outage the volume i
 
 1. Run `fly volumes list` and copy the volume ID.
 
-1. Run `fly volumes snapshots <volume id>` to list the volume’s snapshots and then copy the snapshot ID.
+1. Run `fly volumes snapshots list <volume id>` to list the volume’s snapshots and then copy the snapshot ID.
 
 1. Run `fly volumes create <volume name> --snapshot-id <snapshot id> -s <volume size in GB>`  to create a new volume from a stored snapshot.
 
