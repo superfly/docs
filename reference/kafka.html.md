@@ -6,7 +6,7 @@ nav: firecracker
 ---
 
 <aside class="callout">
-This service is in private beta, available in select regions. Write to [extensions@fly.io](mailto:extensions@fly.io) to request access for your Fly.io organization.
+This service is in public beta in the `iad` and `fra` regions. We don't recommend using it in production, but highly encourage testing with real workloads. Help us make this service shine!
 </aside>
 
 [Upstash Kafka](https://docs.upstash.com/kafka) is a fully-managed, pay-as-you-go Kafka service hosted on Fly.io infrastructure.
