@@ -697,6 +697,7 @@ All keys are optional and `size` has lower precedence than all other keys.
   cpu_kind = "performance"
   gpus = 1
   gpu_kind = "a100-pcie-40gb"
+  kernel_args = "no-hlt=true"
   host_dedication_id = "customer-id"
   processes = ["app"]
 ```
@@ -730,6 +731,10 @@ Setting this value requires also setting `gpu_kind`.
 The kind of GPU to request. Valid values are `a100-pcie-40gb`, `a100-sxm4-80gb` and `l40s`.
 
 Setting this value assumes `gpus = 1` if not present.
+
+### `kernel_args`
+
+Additional kernel parameters provided to the kernel when booting the VM.
 
 ### `host_dedication_id`
 
