@@ -12,7 +12,7 @@ categories:
 redirect_from: /docs/app-guides/review-apps-guide/
 ---
 
-This guide will teach you how to automatically generate ephemeral "review apps" on Fly.io for each pull request (PR) using GitHub Actions. Review apps are a great way to preview new features, changes, and bug fixes.
+Review apps are a great way to preview new features, changes, and bug fixes. This guide will teach you how to automatically generate ephemeral "review apps" on Fly.io for each pull request (PR) using GitHub Actions. This approach can be applied to other Git services and source code versioning software that supports branching and hooks.
 
 ## Quick Start
 
