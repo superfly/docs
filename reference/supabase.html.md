@@ -2,26 +2,21 @@
 title: Supabase Postgres
 layout: docs
 sitemap: false
-status: beta
+status: alpha
 nav: firecracker
 ---
 
-[Supabase](https://supabase.com) now offers their excellent managed Postgres service on Fly.io infrastructure. Provisioning Supabase via `flyctl` ensures secure, low-latency database access from applications hosted on Fly.io.
+[Supabase](https://supabase.com) offers a preview of their managed Postgres service on Fly.io infrastructure. Provisioning Supabase on Fly.io ensures low-latency database access from applications hosted on Fly.io.
 
 <aside class="callout">
-This service is in private beta. Do not run production workloads yet! [Sign up here](https://forms.supabase.com/fly-postgres) for beta access.
+This service is in **public alpha**. Do not run production workloads of any kind!
+
+Alpha databases:
+ * should only be used for testing and getting customer feedback
+ * can lose data or go offline at any time
+ * come with no support guarantees
+ * won't be charged for
 </aside>
-
-## Pricing and Billing
-
-<aside class="callout">
-During the Supabase beta, we recommend you upgrade your organization to the Supabase Pro Plan to test without limitations. Your beta credits will cover plenty of usage. Use `flyctl ext supabase dashboard --org yourorg` to sign in and upgrade.
-</aside>
-
-Supabase offers one free, resource-limited database per Fly.io user. After that, all databases are billed on pay-as-you-go basis under the [Supabase Pro plan](https://supabase.com/pricing#compare-plans). Check the official [Supabase Pricing](https://supabase.com/pricing) page for details.
-
-
-Your database usage charges and plan fees will show up on your monthly Fly.io bill. You can track database usage details in the [Supabase web console](#the-supabase-web-console).
 
 ## Create and manage a Supabase Postgres database
 
@@ -46,6 +41,17 @@ DATABASE_POOLER_URL: postgres://postgres.kworhjwentroqhegh@password@fly-0-mia.po
 `DATABASE_URL` offers a direct IPv6 connection to your database. Use this URL from your Fly.io applications.
 
 `DATABASE_POOLER_URL` runs connections through a connection pooler. Currently, the connection pooler runs outside of Fly.io and may introduce connection latency. Use this URL to test connection pooling behavior, or to connect from locations that don't support IPv6, like many household ISPs.
+
+## Pricing and Billing
+
+<aside class="callout">
+To test more than one database, or to test Supabase addons, you must upgrade your Supabase organization to the Supabase Pro Plan. Use `flyctl ext supabase dashboard --org yourorg` to sign in and upgrade.
+</aside>
+
+Supabase offers one free, resource-limited database per Fly.io user. After that, all databases are billed on pay-as-you-go basis under the [Supabase Pro plan](https://supabase.com/pricing#compare-plans). Check the official [Supabase Pricing](https://supabase.com/pricing) page for details.
+
+While you won't be charged during alpha, database usage and Supabase plan fees will show up on your monthly Fly.io bill. You can track database usage details in the [Supabase web console](#the-supabase-web-console).
+
 
 ### The Supabase web console
 

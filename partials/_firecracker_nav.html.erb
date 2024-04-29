@@ -13,6 +13,14 @@
       ]
     },
     {
+      title: "Fly.io Blueprints",
+      path: "/docs/blueprints/",
+      open: false,
+      links: site.get("docs/blueprints").children.map do |page|
+        { text: page.data.title, path: page.request_path }
+      end
+    },
+    {
       title: "Fly Machines",
       path: "/docs/machines/",
       open: false,
@@ -56,6 +64,7 @@
         { text: "Restart Apps and Machines", path: "/docs/apps/restart/" },
         { text: "Run Multiple Processes in an App", path: "/docs/apps/processes/" },
         { text: "Deploy with GitHub Actions", path: "/docs/app-guides/continuous-deployment-with-github-actions/" },
+        { text: "Deploy Review Apps with GitHub Actions", path: "/docs/app-guides/review-apps-guide/" },
         { text: "Delete an App", path: "/docs/apps/delete/" },
         { text: "Troubleshoot When a Host is Down", path: "/docs/apps/trouble-host-unavailable/" },
         { text: "Fly Launch Config (fly.toml)", path: "/docs/reference/configuration/" }
@@ -78,7 +87,10 @@
       links: [
         { text: "Kubernetes Quickstart", path: "/docs/kubernetes/fks-quickstart/" },
         { text: "Create an FKS cluster", path: "/docs/kubernetes/clusters/" },
-        { text: "Configure FKS Services", path: "/docs/kubernetes/services/" }
+        { text: "Connect to an FKS cluster", path: "/docs/kubernetes/connect-clusters/" },
+        { text: "Configure FKS Services", path: "/docs/kubernetes/services/" },
+        { text: "Use volumes with FKS", path: "/docs/kubernetes/using-volumes/" },
+        { text: "Use GPUs with FKS", path: "/docs/kubernetes/using-gpus/" },
       ]
     },
     {
@@ -113,7 +125,7 @@
       ]
     },
     {
-      title: "Metrics and Logs",
+      title: "Metrics & Logs",
       path: "/docs/metrics-and-logs/",
       open: false,
       links: [
@@ -122,16 +134,6 @@
         { text: "Live tail logs", path: "/docs/metrics-and-logs/live-tail-logs/" },
         { text: "Search logs", path: "/docs/metrics-and-logs/search-logs/" },
         { text: "Export logs", path: "/docs/metrics-and-logs/exporting-logs/" }
-      ]
-    },
-    {
-      title: "Other Guides",
-      path: "/docs/guides/",
-      open: current_page?("/docs/guides/"),
-      links: [
-        { text: "Going to Production", path: "/docs/going-to-production/" },
-        { text: "Crontab with Supercronic", path: "/docs/app-guides/supercronic/" },
-        { text: "Run an ssh server", path: "/docs/app-guides/opensshd/" }
       ]
     },
     {
@@ -144,11 +146,15 @@
         { text: "Apps", path: "/docs/reference/apps/" },
         { text: "Architecture", path: "/docs/reference/architecture/" },
         { text: "Availability and Resiliency", path: "/docs/reference/app-availability/" },
+        { text: "Fine-tune and Benchmark", path: "/docs/reference/fine-tune-apps/" },
         { text: "Builders", path: "/docs/reference/builders/" },
+        { text: "Concurrency Settings", path: "/docs/reference/concurrency/" },
         { text: "Deploy Tokens", path: "/docs/reference/deploy-tokens/" },
+        { text: "Error Codes", path: "/docs/reference/error-codes/" },
         { text: "Sentry Error Tracking", path: "/docs/reference/sentry/" },
         { text: "Fly Launch", path: "/docs/reference/fly-launch/" },
         { text: "Load Balancing", path: "/docs/reference/load-balancing/" },
+        { text: "Autoscaling", path: "/docs/reference/autoscaling/" },
         { text: "Machines", path: "/docs/machines/overview/" },
         { text: "Monorepo Apps", path: "/docs/reference/monorepo/" },
         { text: "Multiple Processes in Apps", path: "/docs/app-guides/multiple-processes/" },

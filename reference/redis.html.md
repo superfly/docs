@@ -19,6 +19,10 @@ Creating and managing databases happens exclusively via the [Fly CLI](/docs/hand
 
 ### Create and get status of a Redis database
 
+<aside class="callout">
+  If you're using Sidekiq, BullMQ or similar software, consider switching your database to a [fixed price plan](#fixed-price-plans) to avoid running up your pay-as-you-go bill.
+</aside>
+
 ```cmd
 flyctl redis create
 ```
@@ -100,7 +104,11 @@ Your Redis database my-redis-db was deleted
 
 ## What you should know
 
-Once provisioned, the database primary region cannot be changed.
+Your databases run within Fly.io infrastructure, but not inside your organization's network. So you're only paying Upstash pricing - not additional VM costs.
+
+All Upstash Redis databases are replicated within the same region in a highly-available configuration. This means that hardware failures generally don't affect Upstash software, and therefore, your databases. Upstash also keeps regular backups of data in storage outside of Fly.io.
+
+Once provisioned, the database primary region cannot be changed. However, replica regions can be added and removed at any time.
 
 ### Traffic routing
 
@@ -116,7 +124,7 @@ If you're using Redis as region-local cache and don't require a shared cache, se
 
 ### Memory limits and object eviction policies
 
-By default, Upstash Redis will disallow writes when the max data size limit has been reached. If you enable **eviction** during creation on update, Upstash Redis will evict keys to free up space.
+By default, Upstash Redis will disallow writes when the max data size limit has been reached. If you enable **eviction**, keys will be evicted to free up space.
 
 First, keys marked with a TTL will be evicted at random. In the absence of volatile keys, keys will be chosen randomly for eviction. This is roughly the combination of the `volatile-random` and `allkeys-random` [eviction policies available in standard Redis](https://redis.io/docs/manual/eviction/).
 
@@ -124,6 +132,26 @@ Note that items marked with an explicit TTL will expire accurately, regardless o
 
 ## Pricing
 
-Upstash Redis databases are billed by usage on a pay-as-you-go basis, with a free allowance of 10,000 commands per day. Check the official [Upstash Pricing](https://upstash.com/pricing) page for details.
+Upstash offers a range of payment plans for different use cases.
+
+#### Pay-as-you-go plan
+
+Upstash Redis databases start on the pay-as-you-go plan at **$0.20 per 100k requests**. This means you only pay for what you use. For most use cases, this is a good starting point.
+
+### Fixed price plans
+
+Upstash also offers fixed price plans for when:
+
+* You're using Sidekiq, BullMQ or similar pre-packaged software that uses Redis as a queue, that aggressively poll Redis
+* You understand your Redis usage patterns and want a predictable monthly pricing
+
+These fixed price plans are available via `flyctl redis update <dbname>`:
+
+* Starter: $10 per month, single region only. Includes 200MB storage, 100 req/sec
+* Standard: $50 per month, per region. Includes 3GB storage, 100 req/sec
+* Pro 2K: $280 per month, $100 per replica region. Includes 50GB storage, 10k req/sec
 
 Your usage is updated hourly on your monthly Fly.io bill. You can track database usage details in the [Upstash web console](#the-upstash-web-console) as well.
+
+
+Check the official [Upstash Pricing](https://upstash.com/pricing) page for more information.

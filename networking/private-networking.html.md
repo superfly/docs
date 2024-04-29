@@ -66,17 +66,18 @@ root@f066b83b:/# dig +short aaaa my-app-name.internal @fdaa:0:18::3
 ```output
 fdaa:0:18:a7b:7d:f066:b83b:2
 ```
-
-Note that `dig`'s syntax requires a `@` at the beginning of the address; this trips us up all the time.
+<div class="note icon">
+<b>Note:</b>`dig`'s syntax requires a `@` at the beginning of the address; this trips us up all the time.
+</div>
 
 ## Connect to a running service via its 6PN address
 
-In the `/etc/hosts` of a deployed Fly Machine, we alias the 6PN address of the Machine to `fly-local-6pn`.  
+In the `/etc/hosts` of a deployed Fly Machine, we alias the 6PN address of the Machine to `fly-local-6pn`.
 
-For a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, then you need to bind it to `fly-local-6pn:8080` for it to be accessible at "[6PN_Address:8080]". 
+For a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, then you need to bind it to `fly-local-6pn:8080` for it to be accessible at "[6PN_Address:8080]".
 
 <div class="note icon">
-`fly-local-6pn` is to 6pn-addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine.
+`fly-local-6pn` is to 6PN addresses  as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself, that's also fine.
 </div>
 
 Learn more about [connecting to app services](/docs/networking/app-services/).
@@ -89,7 +90,7 @@ Fly.io `.internal` hostnames resolve to 6PN addresses (internal IPv6 addresses) 
 **Important:** Queries to Fly.io `.internal` hostnames only return information for started (running) Machines. Any stopped Machines, including those auto stopped by the Fly Proxy, are not included in the response to the DNS query.
 </div>
 
-The `.internal` addresses can include qualifiers to return more specific addresses or info. For example, you can add a region name qualifier to return the 6PN addresses of an app's Machines in a specific region: `iad.my-app-name.internal`. Querying this hostname returns the 6PN address (or addresses) of the `my-app-name` Machines in the `iad` region. 
+The `.internal` addresses can include qualifiers to return more specific addresses or info. For example, you can add a region name qualifier to return the 6PN addresses of an app's Machines in a specific region: `iad.my-app-name.internal`. Querying this hostname returns the 6PN address (or addresses) of the `my-app-name` Machines in the `iad` region.
 
 Some `.internal` hostnames return a TXT record with Machine, app, or region information. For example, if you request the TXT records using `regions.my-app-name.internal`, then you'll get back a comma-separated list of regions that `my-app-name` is deployed in. And you can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will return a comma-separated list of the app names.
 
@@ -113,16 +114,18 @@ The following table describes the information returned by each form of `.interna
 
 Examples of retrieving this information are in the [fly-examples/privatenet](https://github.com/fly-apps/privatenet) repository.
 
-## Flycast - Private load balancing
+## Flycast - Private Fly Proxy services
 
-Flycast offers the same [geographically-aware load balancing](/docs/reference/load-balancing/) as the public Fly Proxy while restricting traffic to private networks.
+A Flycast address is an app-wide IPv6 address that the Fly Proxy can route to privately. 6PN traffic doesn't go through the Fly Proxy, so can't use its features, like geographically aware load balancing and autostart/autostop based on traffic. Conversely, Flycast services can't use internal DNS to target specific Machines or regions, and are not reachable on `.internal` addresses.
 
-Use this feature under the following circumstances:
+Use Flycast to do the following within the Fly.io private WireGuard mesh:
 
-* Your app can't use DNS.
-* You're using 3rd party software, like a database, that doesn't support round-robin DNS entries.
-* You want to limit access to specific ports/services in your app from other Fly.io organizations.
-* You private service needs advanced proxy features like TLS termination or PROXY protocol support.
+* [Autostart and/or autostop](https://fly.io/docs/apps/autostart-stop/) Machines based on network requests.
+* Use Fly Proxy's [geographically aware load balancing](/docs/reference/load-balancing/) for private services.
+* Connect to a service from another app that can't use DNS.
+* Connect from third-party software, like a database, that doesn't support round-robin DNS entries.
+* Access specific ports or services in your app from other Fly.io organizations.
+* Use advanced proxy features like TLS termination or PROXY protocol support.
 
 The general flow for setting up Flycast is:
 
@@ -295,3 +298,61 @@ To list all the tunnels set up for an organization, run `fly wireguard list`. Yo
 #### Remove a tunnel
 
 To remove a tunnel, run `fly wireguard remove`. You can specify the organization and tunnel name on the command line or be prompted for both.
+
+### Troubleshoot a WireGuard VPN connection
+
+Having trouble connecting to a Fly.io hosted app? When you can't connect to something, it's helpful to establish a baseline of what is, or what is not, working.
+
+#### Am I connected to Fly.io VPN?
+
+When connected locally, you can run a `dig` command to list all the apps your connection has access to.
+
+```cmd
+dig _apps.internal TXT +short
+```
+```output
+my-app,my-app-db
+```
+
+If results are returned, you have a VPN connection to an org at Fly.io and the results list all the app names.
+
+If no results are returned, either you do not have a WireGuard VPN connection open or there are NO apps running in the org.
+
+#### Am I connected to the right Fly.io org?
+
+WireGuard connections are created to a specific org. Each org's network is isolated from other orgs. You may have a VPN connection to Fly.io, but it may be to a different org than where your app is located. By default, you are working with your **personal** organization. If the app is in a business focused org or a shared org, you need to ensure your VPN connection is the org where the app lives.
+
+You can also try to ping your app's Machine.
+
+Mac version:
+```cmd
+ping6 my-app.internal
+```
+
+Linux version:
+```cmd
+ping -6 my-app.internal
+```
+
+If the ping succeeds, you have a VPN connection to the same org that your application's machine is running in.
+
+If the ping fails, check which org the application is deployed in.
+
+```cmd
+fly status
+```
+```output
+App
+  Name     = my-app
+  Owner    = my-biz
+  Hostname = my-app.fly.dev
+  Image    = my-app:deployment-0123456789
+
+Machines
+PROCESS ID              VERSION REGION  STATE   ROLE    CHECKS  LAST UPDATED
+app     90706e10f12094  10      ord     started                 2024-04-16T20:20:59Z
+```
+
+The `Owner` is the **organization**. In this example, it is `my-biz`.
+
+Then check that your WireGuard connection is to the same organization. To be certain, you can remove the current connection and re-create it explicitly specifying the org.

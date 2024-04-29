@@ -6,7 +6,7 @@ nav: firecracker
 ---
 
 <div class= "important icon">
-Fly Kubernetes is a closed beta. Email us at sales@fly.io for early access.
+Fly Kubernetes is in beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
 </div>
 
 To create a Kubernetes cluster, run:
@@ -62,4 +62,6 @@ kube-system       Active   22d
 ## Related topics
 
 - [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
+- [Connect to an FKS cluster](/docs/kubernetes/connect-clusters/)
 - [Configure FKS Services](/docs/kubernetes/services)
+- [Use volumes with FKS](/docs/kubernetes/using-volumes/)

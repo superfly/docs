@@ -31,13 +31,13 @@ There's a question to ask and answer. Do you want to start accepting traffic imm
 
 ### Accepting traffic immediately for the custom domain
 
-In this scenario, we want the custom domain to point to the `nginxproxy` server which will allow unencrypted IPv4 and IPv6 connections. Again, there are two ways to do this. Using DNS's CNAME capability or setting the A and AAAA records.
+In this scenario, we want the custom domain to point to the `nginxproxy` server which will allow unencrypted IPv4 and IPv6 connections. Again, there are two ways to do this. Using DNS CNAME capability or setting the A and AAAA records.
 
 #### Option I: CNAME records
 
 CNAME records in DNS act like a pointer. If we add a CNAME record to our custom domain that points to our proxy name `nginxproxy.fly.dev` then requests for the custom domain's IP address would return the proxy's address and clients would then lookup the IP addresses for the proxy.
 
-It's the quickest way to get set up, but there are catches. First, it is ever so slightly slower with that second look up. Second, it limits what you can do with the domain, especially if it's an "Apex domain" - CNAMEs are, according to DNS standards, meant to be the only record in a host's DNS records and so you can't add MX and other essential records to the DNS entry. If you aren't setting up an Apex domain, the CNAME is the quickest way to get going.
+It's the quickest way to get set up, but there are catches. First, it is ever so slightly slower with that second look up. Second, it limits what you can do with the domain, especially if it's an "Apex domain" - CNAME records are, according to DNS standards, meant to be the only record in a host's DNS records and so you can't add MX and other essential records to the DNS entry. If you aren't setting up an Apex domain, the CNAME is the quickest way to get going.
 
 #### Option II: A and AAAA records
 
@@ -52,7 +52,11 @@ fly ips list
   v6     2a09:8280:1:659f:6cb7:4925:6bfd:90a3   2020-03-02T14:59:13Z
 ```
 
-Create an A record pointing to your v4 address, and an AAAA record pointing to your v6 address. You're then free to make this an Apex domain as needed.
+Create an A record pointing to your IPv4 address, and an AAAA record pointing to your IPv6 address. You're then free to make this an Apex domain as needed.
+
+<div class="important">
+**Important:** Our hostname validation will fail without an IPv6 address and we won't attempt to issue or renew a certificate. If your app does not have one, you can allocate one with `flyctl ips allocate-v6`. If you use a CNAME `_acme-challenge` for domain verification, you don't need to worry about this. However, it is still recommended to have both IPv4 and IPv6 addresses allocated if your app is serving traffic.
+</div>
 
 #### Adding the certificate
 

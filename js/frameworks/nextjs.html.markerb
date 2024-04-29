@@ -1,5 +1,5 @@
 ---
-title: "Run a NextJS App"
+title: "Run a Next.js App"
 layout: framework_docs
 sitemap: false
 redirect_from:
@@ -9,17 +9,17 @@ order: 4
 ---
 
 <% app_name = "hello-next" %>
-<%= partial "partials/intro", locals: { runtime: "NextJS", link: "https://NextJS.org" } %>
+<%= partial "partials/intro", locals: { runtime: "Next.js", link: "https://nextjs.org" } %>
 
-You can deploy your [NextJS](https://nextjs.org/) app on Fly with minimal effort, our CLI will do the heavy lifting. You can use your existing NextJS app or you can [create one using the tutorial](https://nextjs.org/learn/basics/create-nextjs-app) and then come back here to deploy your app.
+You can deploy your [Next.js](https://nextjs.org/) app on Fly with minimal effort, our CLI will do the heavy lifting. You can use your existing Next.js app or you can [create one using the tutorial](https://nextjs.org/learn/basics/create-nextjs-app) and then come back here to deploy your app.
 
-## _Deploy an existing NextJS app_
+## _Deploy an existing Next.js app_
 
 If you just want to see how Fly deployment works, follow these steps.
 
 <%= partial "partials/flyctl" %>
 
-Now let's launch your NextJS app from the root of your application.
+Now let's launch your Next.js app from the root of your application.
 
 ```cmd
 cd nextjs-blog
@@ -55,7 +55,37 @@ Now: run 'fly deploy' to deploy your Next.js app.
 
 <%= partial "partials/launched" %>
 
-## Generating your NextJS Dockerfile
+## Standalone builds (recommended)
+
+To reduce the size of the final image deployed to Fly.io, **we recommend using the [standalone output](https://nextjs.org/docs/app/api-reference/next-config-js/output#automatically-copying-traced-files)** in your `next.config.js` (or `next.config.mjs`) file:
+
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: "standalone"
+};
+
+export default nextConfig;
+```
+
+When running `fly launch` or using the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile), if this `"standalone"` value is set in your Next config, your Dockerfile will be updated such that only the files necessary for a production environment will be used in the final image. Using the standalone setting and updating your Dockerfile can reduce your total image size by ~400mb, so we highly recommend this approach!
+
+You can also manually update your Dockerfile to accommodate a standalone Next.js app. After running the build script (`npm run build`), there should typically be a final `COPY` instruction towards the end of one's Dockerfile. Replace that with the following:
+
+```dockerfile
+COPY --from=build /app/.next/standalone /app
+COPY --from=build /app/.next/static /app/.next/static
+COPY --from=build /app/public /app/public
+```
+
+Lastly, update your `CMD` to the following:
+
+```dockerfile
+CMD [ "node", "server.js" ]
+```
+
+
+## Generating your Next.js Dockerfile
 
 While you're welcome to write your own Dockerfile, the easiest way to get started with this is to use the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile). Once installed, it can be run using `npx dockerfile` for Node applications or `bunx dockerfile` for Bun applications. You'll see it referenced throughout this article for various use cases.
 
@@ -153,7 +183,7 @@ Downsides of this approach:
 
 ## Exposing environment variables to the browser
 
-If you're a NextJS user you might know that it supports [exposing environment variables to the browser](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser) using variables with names starting with `NEXT_PUBLIC_`. **These variables are fixed at build time**, and unlike runtime environment variables (which are only available on the server), they can't be changed unless the application is built again.
+If you're a Next.js user you might know that it supports [exposing environment variables to the browser](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser) using variables with names starting with `NEXT_PUBLIC_`. **These variables are fixed at build time**, and unlike runtime environment variables (which are only available on the server), they can't be changed unless the application is built again.
 
 In order to make these `NEXT_PUBLIC_` variables available, you can add them as `ARG` variables in your Dockerfile, as seen in the example below. **This should come after any actual build steps** (if you've used the Dockerfile generator or the Dockerfile created from `fly launch`, this would be after the line `FROM base as build`).
 
