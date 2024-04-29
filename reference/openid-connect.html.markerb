@@ -89,33 +89,33 @@ To read from an S3 bucket using a Fly.io machine you'll first need to set up a t
 1. Creating a Fly.io app using `fly launch` in the same directory as your Dockerfile.
 1. Find the slug for the organisation you want to launch your app in.
 
-```cmd
-fly orgs list
-```
+    ```cmd
+    fly orgs list
+    ```
 
 1. Create an [OpenID Connect Identity provider](https://us-east-1.console.aws.amazon.com/iam/home?region=us-east-1#/identity_providers/create) in your AWS account with your org slug and the following settings:
 
-```
-Provider URL: https://oidc.fly.io/<org-slug>
-Audience: sts.amazonaws.com
-```
+    ```
+    Provider URL: https://oidc.fly.io/<org-slug>
+    Audience: sts.amazonaws.com
+    ```
 
-1. Create an [IAM Role](https://us-east-1.console.aws.amazon.com/iam/home?region=us-east-1#/roles/create) and when choosing the trusted entity select: 
- * `Web Identity -> Identity Provider -> oidc.fly.io` 
+1. Create an [IAM Role](https://us-east-1.console.aws.amazon.com/iam/home?region=us-east-1#/roles/create) with the following settings:
+ * Trusted Identity: `Web Identity -> Identity Provider -> oidc.fly.io` 
  * Select the `AmazonS3ReadOnlyAccess` policy.
 
 1. Set the `AWS_ROLE_ARN` as an environment variable in your `fly.toml`.
 
-```toml
-[env]
-  AWS_ROLE_ARN = "arn:aws:iam::<ACCOUNT_ID>:role/<ROLE_NAME>"
-```
+    ```toml
+    [env]
+      AWS_ROLE_ARN = "arn:aws:iam::<ACCOUNT_ID>:role/<ROLE_NAME>"
+    ```
 
 1. Deploy your app and let the AWS SDK will do the rest.
 
-```cmd
-fly deploy
-```
+    ```cmd
+    fly deploy
+    ```
 
   <div class = "note icon">
   **Notes**:
