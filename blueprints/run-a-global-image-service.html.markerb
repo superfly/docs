@@ -1,5 +1,5 @@
 ---
-title: Run a Global Image Service
+title: Global Image Processing Service
 layout: docs
 sitemap: false
 nav: firecracker
@@ -11,9 +11,10 @@ categories:
   - cdn
 image: https://fly.io/ui/images/image-service.webp
 date: 2020-05-10
+redirect_from: /docs/app-guides/run-a-global-image-service
 ---
 
-<figure class="flex ai:center jc:center w:full r:lg overflow:off mb:4">
+<figure class="flex ai:center jc:center w:full r:lg overflow:off mb:4 rounded">
   <img src="/static/images/image-service.webp" alt="A hand holding scissors and cutting out paper for a scrapbook" class="w:full h:full fit:cover">
 </figure>
 

@@ -1,5 +1,5 @@
 ---
-title: "Deploy review apps with Github Actions"
+title: "Git Branch Preview Environments on Github"
 layout: docs
 sitemap: false
 nav: firecracker
@@ -9,8 +9,8 @@ categories:
   - guide
   - review apps
   - cd
+redirect_from: /docs/app-guides/review-apps-guide/
 ---
-
 
 This guide will teach you how to automatically generate ephemeral "review apps" on Fly.io for each pull request (PR) using GitHub Actions. Review apps are a great way to preview new features, changes, and bug fixes.
 
