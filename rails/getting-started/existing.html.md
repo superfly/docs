@@ -56,7 +56,7 @@ Once ready: run 'fly deploy' to deploy your Rails app.
 
 You can set a name for the app, choose a default region, and choose to launch
 and attach either or both a PostgreSQL and Redis databases.  Be sure to include
-Redis is if you make use of Action Cable, caching, and popular third party gems
+Redis is if you make use of Action Cable, caching, and popular third-party gems
 like Sidekiq.
 
 ### Deploy your application
@@ -94,7 +94,7 @@ This shows the past few log file entries and tails your production log files.
 Rails stack tracebacks can be lengthy, and the information you often want
 to see is at the top.  If not enough information is available in the
 `fly logs` command, try running `fly dashboard`, and select `Monitoring`
-in the left hand column.
+in the left-hand column.
 
 ### Open a Rails console
 
@@ -121,7 +121,7 @@ Now that you know the basics of troubleshooting production deployments, lets hav
 
 ### Access to Environment Variables at Build Time
 
-Some third party gems and services require configuration including the
+Some third-party gems and services require configuration including the
 setting of secrets/environment variables.  The `assets:precompile` step
 will load your configuration and may fail if those secrets aren't set
 even if they aren't actually used by the `assets:precompile` step.
@@ -144,7 +144,7 @@ if Rails.application.credentials.stripe
 end
 ```
 
-If that is not sufficient and you have need for more such dummy values, add
+If that is not sufficient and you need more such dummy values, add
 them directly to the `Dockerfile`.  Just be sure that any such values you add
 to your Dockerfile don't contain actual secrets as your Dockerfile will
 generally be committed to git or otherwise may be visible.
@@ -205,7 +205,7 @@ Dockerfile:
 $ bin/rails generate dockerfile
 ```
 
-You can see the versions of each tool that will be use on your deployment
+You can see the versions of each tool that will be used on your deployment
 machine by looking for lines that start with `ARG` in your Dockerfile.
 
 
@@ -244,15 +244,15 @@ care to make sure that each Rails application uses a different database name.
 
 ### ActiveSupport::MessageEncryptor::InvalidMessage
 
-Generally this means that there is a problem with your `RAILS_MASTER_KEY`. It is a common initial setup problem, but once it works it tends to keep working.
+Generally, this means that there is a problem with your `RAILS_MASTER_KEY`. It is a common initial setup problem, but once it works it tends to keep working.
 
 `fly launch` will extract your master key if your project has one and make it
 available to your deployed application as a
 [secret](https://fly.io/docs/reference/secrets/).
 
-If you've already run `fly launch` on a project which doesn't have a master key
+If you've already run `fly launch` on a project that doesn't have a master key
 (commonly because files containing these values are excluded from being pushed by being listed in your `.gitignore` file), you will need to generate a key
-and set the secret yourself.  The [Ruby on Rails Guides](https://guides.rubyonrails.org/security.html#custom-credentials) contain information on generating new credentials.
+and set the secret yourself.  The [Ruby on Rails Guides](https://guides.rubyonrails.org/security.html#custom-credentials) contains information on generating new credentials.
 
 If you've got your app's secrets stored in an encrypted credentials file such as `config/credentials.yml.enc`
 or `config/credentials/production.yml.enc`, you'll need to provide the master key to your app via
