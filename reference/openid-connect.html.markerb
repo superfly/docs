@@ -6,7 +6,7 @@ nav: firecracker
 ---
 
 
-Fly.io Machines sometimes need to access 3rd-party services or cloud providers like AWS, Azure, or GCP. To authenticate against these 3rd parties, your Fly.io Machines need to supply credentials such as a password or token to the cloud provider; usually these are stored as `fly secrets` and then passed into your Machine's environment variables.
+Fly Machines sometimes need to access 3rd-party services or cloud providers like AWS, Azure, or GCP. To authenticate against these 3rd parties, your Machines need to supply credentials such as a password or token to the cloud provider; usually these are stored as `fly secrets` and then passed into your Machine's environment variables.
 
 However this approach involves creating hardcoded long-lived credentials on the 3rd party platform and involves either managing a lot of tokens or sharing the same token across multiple apps.
 
@@ -15,13 +15,13 @@ Using OpenID Connect (OIDC) allows for a more secure approach by using short-liv
 ## Benefits of OpenID Connect (OIDC)
 
 Adopting OIDC to manage access to 3rd party services allows your apps to easily use good security practices like:
-* No hardcoded credentials, these are often shared across machines and apps. OIDC allows for every machine to have it's own credential.
-* Granular control over machines access to 3rd party resources through leveraging the authentication (authN) and authorization (authZ) tools of the 3rd party.
+* No hardcoded credentials, these are often shared across Machines and apps. OIDC allows for every Machine to have it's own credential.
+* Granular control over Machines access to 3rd party resources through leveraging the authentication (authN) and authorization (authZ) tools of the 3rd party.
 * Rotating credentials: credentials issued from 3rd parties are only valid for 15 minutes before they expire.
 
 ## Understanding OpenID Connect 
 
-Every request to the token endpoint generates a unique Json Web Token (JWT). When you give this JWT to a 3rd party they validate the token against the OIDC configuration hosted at the endpoint in the issuer (`iss`) claim. Below is an example of an issued OIDC token. A useful feature here is that the subject (`sub`) claim references the machine's org name, app name and machine name. This allows for regex checks to be built against the claim which can restrict accepted tokens to a specific app or machine.
+Every request to the token endpoint generates a unique Json Web Token (JWT). When you give this JWT to a 3rd party they validate the token against the OIDC configuration hosted at the endpoint in the issuer (`iss`) claim. Below is an example of an issued OIDC token. A useful feature here is that the subject (`sub`) claim references the Machine's org name, app name and Machine name. This allows for regex checks to be built against the claim which can restrict accepted tokens to a specific app or Machine.
 
 ```json
 {
@@ -47,7 +47,7 @@ Every request to the token endpoint generates a unique Json Web Token (JWT). Whe
 
 ## Customizing OIDC token claims
 
-Customizing tokens allows for powerful authorization clauses in the platform you're authenticating against. For example, with AWS, you can require that a role can only be assumed by tokens which match certain `aud` and `sub` claims. This allows you to lock down and provide credentials only to a specific Fly.io app or machine.
+Customizing tokens allows for powerful authorization clauses in the platform you're authenticating against. For example, with AWS, you can require that a role can only be assumed by tokens which match certain `aud` and `sub` claims. This allows you to lock down and provide credentials only to a specific Fly.io app or Machine.
 
 You can customize the audience (aud) claim of your tokens by providing a value for aud in the body of the POST request. This lets you specify the recipient of the token. This is what it looks like in a curl request with the `aud` claim set to `sts.amazonaws.com`.
 
@@ -57,7 +57,7 @@ curl --unix-socket /.fly/api -X POST "http://localhost/v1/tokens/oidc" --data '{
 
 ## OpenID Connect Trust Policies in AWS
 
-You can leverage the trust policy of an IAM role to restrict which machines in your organisation can assume a role in AWS. For example the following policy would only allow machines in the app `foo-bar` within your org to assume the role it’s attached to.
+You can leverage the trust policy of an IAM role to restrict which Machines in your organisation can assume a role in AWS. For example the following policy would only allow Machines in the app `foo-bar` within your org to assume the role it’s attached to.
 
 ```json
 {
@@ -84,7 +84,7 @@ You can leverage the trust policy of an IAM role to restrict which machines in y
 
 ## Reading from an S3 Bucket on a Fly Machine
 
-To read from an S3 bucket using a Fly Machine you'll first need to set up a trust between AWS and Fly.io by creating an OIDC provider in AWS and then attaching a trust policy to the role policy your machine will assume. If you've already packaged up your app in a Dockerfile, then you can follow these steps to read from an S3 bucket:
+To read from an S3 bucket using a Fly Machine you'll first need to set up a trust between AWS and Fly.io by creating an OIDC provider in AWS and then attaching a trust policy to the role policy your Machine will assume. If you've already packaged up your app in a Dockerfile, then you can follow these steps to read from an S3 bucket:
 
 1. Create a Fly.io app by running `fly launch` in the same directory as your Dockerfile.
 1. Find the slug for the organisation you want to launch your app in.
