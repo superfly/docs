@@ -136,7 +136,7 @@ Upstash offers a range of payment plans for different use cases.
 
 #### Pay-as-you-go plan
 
-Upstash Redis databases start on the pay-as-you-go plan at **$0.02 per 100k requests**. This means you only pay for what you use. For most use cases, this is a good starting point.
+Upstash Redis databases start on the pay-as-you-go plan at **$0.20 per 100k requests**. This means you only pay for what you use. For most use cases, this is a good starting point.
 
 ### Fixed price plans
 
@@ -148,8 +148,8 @@ Upstash also offers fixed price plans for when:
 These fixed price plans are available via `flyctl redis update <dbname>`:
 
 * Starter: $10 per month, single region only. Includes 200MB storage, 100 req/sec
-* Standard: $50 per month, per region. Includes 3GB storage, 1000 concurrent connections, 100 req/sec
-* Pro 2K: $280 per month, $100 per replica region. Includes 50GB storage, 2000 concurrent connections, 10k req/sec
+* Standard: $50 per month, per region. Includes 3GB storage, 100 req/sec
+* Pro 2K: $280 per month, $100 per replica region. Includes 50GB storage, 10k req/sec
 
 Your usage is updated hourly on your monthly Fly.io bill. You can track database usage details in the [Upstash web console](#the-upstash-web-console) as well.
 
