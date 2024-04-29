@@ -6,11 +6,13 @@ status: alpha
 nav: firecracker
 ---
 
-[Supabase](https://supabase.com) now offers their excellent managed Postgres service on Fly.io infrastructure. Provisioning Supabase via `flyctl` ensures secure, low-latency database access from applications hosted on Fly.io.
+[Supabase](https://supabase.com) offers a preview of their managed Postgres service on Fly.io infrastructure. Provisioning Supabase on Fly.io ensures low-latency database access from applications hosted on Fly.io.
 
 <aside class="callout">
-This service is in **public alpha**. Do not run production workloads of any kind! Alpha databases:
- * are intended for testing and getting customer feedback
+This service is in **public alpha**. Do not run production workloads of any kind!
+
+Alpha databases:
+ * should only be used for testing and getting customer feedback
  * can lose data or go offline at any time
  * come with no support guarantees
  * won't be charged for
