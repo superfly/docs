@@ -13,6 +13,14 @@
       ]
     },
     {
+      title: "Fly.io Blueprints",
+      path: "/docs/blueprints/",
+      open: false,
+      links: site.get("docs/blueprints").children.map do |page|
+        { text: page.data.title, path: page.request_path }
+      end
+    },
+    {
       title: "Fly Machines",
       path: "/docs/machines/",
       open: false,
@@ -117,7 +125,7 @@
       ]
     },
     {
-      title: "Metrics and Logs",
+      title: "Metrics & Logs",
       path: "/docs/metrics-and-logs/",
       open: false,
       links: [
@@ -126,16 +134,6 @@
         { text: "Live tail logs", path: "/docs/metrics-and-logs/live-tail-logs/" },
         { text: "Search logs", path: "/docs/metrics-and-logs/search-logs/" },
         { text: "Export logs", path: "/docs/metrics-and-logs/exporting-logs/" }
-      ]
-    },
-    {
-      title: "Other Guides",
-      path: "/docs/guides/",
-      open: current_page?("/docs/guides/"),
-      links: [
-        { text: "Going to Production", path: "/docs/going-to-production/" },
-        { text: "Crontab with Supercronic", path: "/docs/app-guides/supercronic/" },
-        { text: "Run an ssh server", path: "/docs/app-guides/opensshd/" }
       ]
     },
     {
