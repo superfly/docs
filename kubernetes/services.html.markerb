@@ -80,7 +80,7 @@ fksdemo-service-public   LoadBalancer   fdaa:3:dde8:0:1::3c   fksdemo-service-pu
 Fly.io connection handlers modify your connection before it reaches your application.
 Learn more about [connection handlers](/docs/networking/services/#connection-handlers). 
 
-Connection handlers are supported with custom annotations to a Service object. The annotations have the form:
+Connection handlers are supported with a custom annotation to a Service object. The annotations have the form:
 
 ```yaml
 "service.fly.io/<exposed port name/number>-handlers": "<handler1,handler2,...handlerN>"
@@ -95,6 +95,43 @@ metadata:
   name: fksdemo-service
   annotations:
     "service.fly.io/https-handlers": "http,tls" # can replace https with 443
+spec:
+  selector:
+    app: fksdemo
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 8080
+```
+
+### TLS Options
+
+[TLS options](https://fly.io/docs/reference/configuration/#services-ports-tls_options) are used to configure the TLS settings
+of a service with a TLS connection handler. Fly's edge will use these settings to terminate TLS for your application. Refer
+to the [documentation](https://fly.io/docs/reference/configuration/#services-ports-tls_options) for details. 
+
+TLS options are set using custom annotations. There are 3 annotations, one for each setting:
+
+
+  * `service.fly.io/<exposed port name/number>-tls-alpn` - Sets the ALPN for negotation with clients. Values must be comma-separated.
+  * `service.fly.io/<exposed port name/number>-tls-versions` - Sets which TLS versions are allowed. Values must be comma-separated.
+  * `service.fly.io/<exposed port name/number>-tls-default-self-signed` - If true, serves a self-signed certificate if none exists.
+
+The most common use case for TLS options is to support gRPC. For example:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: fksdemo-service
+  annotations:
+    "service.fly.io/https-handlers": "tls"
+    "service.fly.io/https-tls-alpn": "h2"
 spec:
   selector:
     app: fksdemo
