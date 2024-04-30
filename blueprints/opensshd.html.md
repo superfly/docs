@@ -7,6 +7,7 @@ author: rubys
 categories:
   - ssh
 date: 2024-01-14
+redirect_from: /docs/app-guides/opensshd/
 ---
 
 A number of tools allow you to interact with your server over ssh. These tools are useful for tasks such as
