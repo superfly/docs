@@ -7,7 +7,9 @@ author: brad
 categories:
   - cron
 date: 2022-11-19
-redirect_from: /docs/app-guides/superchronic/
+redirect_from:
+  - /docs/app-guides/superchronic/
+  - docs/app-guides/supercronic/
 ---
 
 `crontab` is a little too opinionated for containers—it's a great little tool, but when run inside of containers it doesn't grab `ENV` vars how we'd like it to. Fortunately there's a Go binary called `supercronic` that's a drop-in replacement for containers.
