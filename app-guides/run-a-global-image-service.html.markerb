@@ -11,7 +11,6 @@ categories:
   - cdn
 image: https://fly.io/ui/images/image-service.webp
 date: 2020-05-10
-redirect_from: /docs/app-guides/run-a-global-image-service
 ---
 
 <figure class="flex ai:center jc:center w:full r:lg overflow:off mb:4 rounded">
