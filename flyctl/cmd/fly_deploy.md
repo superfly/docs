@@ -56,7 +56,6 @@ fly deploy [WORKING_DIRECTORY] [flags]
       --now                              Deploy now without confirmation
       --only-regions strings             Deploy to machines only in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times. --only-regions iad,sea --only-regions syd will deploy to all three iad, sea, and syd regions. Applied before --exclude-regions. V2 machines platform only.
       --process-groups strings           Deploy to machines only in these process groups
-      --provision-extensions             Provision any extensions assigned as a default to first deployments
       --push                             Push image to registry after build is complete
   -r, --region string                    The target region (see 'flyctl platform regions')
       --release-command-timeout string   Time duration to wait for a release command finish running, or 'none' to disable. (default "5m0s")

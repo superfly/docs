@@ -1,8 +1,8 @@
-Permanently destroy a PlanetScale MySQL database
+Permanently destroy an Upstash Vector index
 
 ## Usage
 ~~~
-fly extensions planetscale destroy [name] [flags]
+fly extensions vector destroy [name] [flags]
 ~~~
 
 ## Options
@@ -24,5 +24,5 @@ fly extensions planetscale destroy [name] [flags]
 
 ## See Also
 
-* [fly extensions planetscale](/docs/flyctl/extensions-planetscale/)	 - Provision and manage PlanetScale MySQL databases
+* [fly extensions vector](/docs/flyctl/extensions-vector/)	 - Provision and manage Upstash Vector index
 
