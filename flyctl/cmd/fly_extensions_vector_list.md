@@ -1,8 +1,8 @@
-List your provisioned PlanetScale MySQL databases
+List your Upstash Vector index
 
 ## Usage
 ~~~
-fly extensions planetscale list [flags]
+fly extensions vector list [flags]
 ~~~
 
 ## Options
@@ -23,5 +23,5 @@ fly extensions planetscale list [flags]
 
 ## See Also
 
-* [fly extensions planetscale](/docs/flyctl/extensions-planetscale/)	 - Provision and manage PlanetScale MySQL databases
+* [fly extensions vector](/docs/flyctl/extensions-vector/)	 - Provision and manage Upstash Vector index
 

@@ -1,8 +1,8 @@
-Permanently destroy a PlanetScale MySQL database
+Visit the Upstash Vector dashboard on the Upstash web console
 
 ## Usage
 ~~~
-fly planetscale destroy [name] [flags]
+fly extensions vector dashboard [flags]
 ~~~
 
 ## Options
@@ -10,7 +10,8 @@ fly planetscale destroy [name] [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for destroy
+  -h, --help            help for dashboard
+  -o, --org string      The target Fly.io organization
   -y, --yes             Accept all confirmations
 ~~~
 
@@ -24,5 +25,5 @@ fly planetscale destroy [name] [flags]
 
 ## See Also
 
-* [fly planetscale](/docs/flyctl/planetscale/)	 - Provision and manage PlanetScale MySQL databases
+* [fly extensions vector](/docs/flyctl/extensions-vector/)	 - Provision and manage Upstash Vector index
 

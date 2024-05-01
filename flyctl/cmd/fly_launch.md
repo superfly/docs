@@ -60,7 +60,6 @@ fly launch [flags]
   -o, --org string                       The target Fly.io organization
       --path string                      Path to the app source root, where fly.toml file will be saved (default ".")
       --process-groups strings           Deploy to machines only in these process groups
-      --provision-extensions             Provision any extensions assigned as a default to first deployments
       --push                             Push image to registry after build is complete
   -r, --region string                    The target region (see 'flyctl platform regions')
       --release-command-timeout string   Time duration to wait for a release command finish running, or 'none' to disable. (default "5m0s")

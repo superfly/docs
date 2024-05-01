@@ -1,9 +1,9 @@
-Provision a PlanetScale MySQL database
+Provision a Upstash Vector index
 
 
 ## Usage
 ~~~
-fly extensions planetscale create [flags]
+fly extensions vector create [flags]
 ~~~
 
 ## Options
@@ -12,7 +12,7 @@ fly extensions planetscale create [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for create
-  -n, --name string     The name of your database
+  -n, --name string     The name of your cluster
   -o, --org string      The target Fly.io organization
   -r, --region string   The target region (see 'flyctl platform regions')
   -y, --yes             Accept all confirmations
@@ -28,5 +28,5 @@ fly extensions planetscale create [flags]
 
 ## See Also
 
-* [fly extensions planetscale](/docs/flyctl/extensions-planetscale/)	 - Provision and manage PlanetScale MySQL databases
+* [fly extensions vector](/docs/flyctl/extensions-vector/)	 - Provision and manage Upstash Vector index
 

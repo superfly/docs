@@ -29,7 +29,6 @@ fly [flags]
 * [machine](/docs/flyctl/machine/)	 - Manage Fly Machines.
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 * [ping](/docs/flyctl/ping/)	 - Test connectivity with ICMP ping messages
-* [planetscale](/docs/flyctl/planetscale/)	 - Provision and manage PlanetScale MySQL databases
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
 * [postgres](/docs/flyctl/postgres/)	 - Manage Postgres clusters.
 * [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a Fly Machine.
