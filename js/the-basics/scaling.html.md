@@ -29,6 +29,17 @@ Once you have settled on a size, some links to get you started:
 
 These options are not mutually exclusive.  A good starting point may be 512MB of RAM and 1024MB of swap.
 
+Note: if you do elect to use swap, Node.js may not make full use of the extra memory, resulting in an `JavaScript heap out of memory` error,  You can instruct it to use more by setting an environment variable in your `fly.toml`:
+
+```toml
+[env]
+NODE_OPTIONS='--max-old-space-size=4096'
+```
+
+See the [Node.js documentation](https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes) for more information.
+
+
+
 ## CPU Cores
 
 By default, JavaScript applications (whether they be Node.js, Deno, or Bun)
