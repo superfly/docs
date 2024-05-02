@@ -74,7 +74,10 @@ The MySQL instance you spun up in Fly.io "[is closed to the public internet](/do
 
 ## _Laravel with MySQL-compatible PlanetScale_
 
-For a basic PlanetScale and Fly.io connection, follow [our guide here](/docs/app-guides/planetscale/).
+<div class="warning icon">
+Warning: This part of the guide is out-of date and might not reflect the current functionality.
+</div>
+
 If you're up for a multi-region level up, check out our [Multi-Region Laravel with PlanetScale](https://fly.io/laravel-bytes/multi-region-laravel-with-planetscale/) article.
 
 Once you're setup with PlanetScale, connect your Laravel application in Fly.io through the following steps below:

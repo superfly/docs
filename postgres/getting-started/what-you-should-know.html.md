@@ -46,7 +46,7 @@ If you want a fully managed database solution for your Fly Apps, there are many 
 
 - [Crunchy Bridge Managed Postgres](https://www.crunchydata.com/products/crunchy-bridge+external) (on AWS, Azure, GCP, or Heroku)
 - [Neon Serverless Postgres](https://neon.tech/+external)
-- [PlanetScale Serverless MySQL](https://planetscale.com/+external) ([guide to use with Fly Apps](https://fly.io/docs/app-guides/planetscale/))
+- [PlanetScale Serverless MySQL](https://planetscale.com/+external)
 - [Supabase Postgres](https://supabase.com/database+external)
 
 ### Other Places

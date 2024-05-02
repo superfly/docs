@@ -3,6 +3,7 @@ title: Databases & Storage
 layout: docs
 toc: true
 nav: firecracker
+redirect_from: /docs/app-guides/planetscale
 ---
 
 ## Choosing an approach to storage
@@ -50,7 +51,7 @@ If you want a different fully-managed database or storage solution for your Fly 
 
 - [Crunchy Bridge Managed Postgres](https://www.crunchydata.com/products/crunchy-bridge+external) (on AWS, Azure, GCP, or Heroku)
 - [Neon Serverless Postgres](https://neon.tech/+external)
-- [PlanetScale Serverless MySQL](https://planetscale.com/+external) ([guide to use with Fly Apps](/docs/app-guides/planetscale/))
+- [PlanetScale Serverless MySQL](https://planetscale.com/+external)
 - [MinIO Hosted Object Storage](https://min.io/+external)
 - [Fauna](https://fauna.com/+external) ([guide to use with Fly Apps](/docs/app-guides/fauna/))
 
