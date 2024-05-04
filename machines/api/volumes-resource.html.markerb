@@ -26,6 +26,10 @@ You can use the Volumes resource to create and delete volumes. A Fly Volume is p
       <span>/v1/apps/{app\_name}/volumes/{volume\_id}</span>
     </a>
     <a class="endpoint">
+      <span class="put-badge">put</span>
+      <span>/v1/apps/{app\_name}/volumes/{volume\_id}</span>
+    </a>
+    <a class="endpoint">
       <span class="delete-badge">delete</span>
       <span>/v1/apps/{app\_name}/volumes/{volume\_id}</span>
     </a>
@@ -61,7 +65,7 @@ You can use the Volumes resource to create and delete volumes. A Fly Volume is p
 | `name` | string | The volume name. |
 | `region` | string | The region where the volume resides, or the target region for volume create. |
 | `size_gb` | int | The size of the volume in GB. |
-| `snapshot_retention` | int | Not yet configurable. The number of days to retain daily snapshots. |
+| `snapshot_retention` | int | The number of days to retain daily snapshots. Defaults to 5 when not set. Min 1, max 60. |
 | `state` | string | The state of the volume. |
 | `zone` | string | The hardware zone on which the volume resides. |
 
@@ -216,6 +220,7 @@ Create a volume for a specific app according to the configuration provided in th
         | `snapshot_id` | string | no | The ID of the volume snapshot to use to create the new volume. |
         | `source_volume_id` | string | no | The ID of the source volume for the volume fork. |
         | `require_unique_zone` | boolean | no | If true, we will provision this volume on hardware that doesn't have another volume with the same name on it. The typical pattern is to create as many volumes as you need, all with the same name and `require_unique_zone: true`. This will keep your app available in case a host goes down. This flag can also cause volume creation to fail, in case we have used up all unique zones, in which case you probably want to set it to false. Default true. |
+        | `snapshot_retention` | int | no | The number of days to retain daily snapshots. Defaults to 5 when not set. Min 1, max 60. |
       <% end %>
     <% end %>
     <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
@@ -303,6 +308,98 @@ Retrieve details about a specific volume by its ID within an app.
     "blocks_avail": 730163,
     "fstype": "ext4",
     "snapshot_retention": 5,
+    "host_dedication_key": ""
+}
+    <% end %>
+  </div>
+</div>
+
+## Update a volume
+
+Update paratemeters on the volume.
+
+<div class="api-section" data-exclude-render>
+  <div data-exclude-render>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to create a volume for.'
+    ) %>
+    <% api_info.add_info(
+      name: 'volume_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the volume to get.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div data-exclude-render>
+    <%= render(CodeToggleComponent.new(badge: 'PUT', title: '/v1/apps/{app_name}/volumes/{volume_id}')) do |component| %>
+      <% component.with_curl do %>
+      curl -i -X POST \\
+      -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+      "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r" \\
+      -d '{
+      "snapshot_retention": 10
+    }'
+      <% end %>
+      <% component.with_json do %>
+        {
+        "compute": {
+            "cpu_kind": "string",
+            "cpus": 0,
+            "gpu_kind": "string",
+            "gpus": 0,
+            "host_dedication_id": "string",
+            "kernel_args": [
+            "string"
+            ],
+            "memory_mb": 0
+        },
+        "encrypted": true,
+        "fstype": "string",
+        "machines_only": true,
+        "name": "string",
+        "region": "string",
+        "require_unique_zone": true,
+        "size_gb": 0,
+        "snapshot_id": "string",
+        "snapshot_retention": 10,
+        "source_volume_id": "string"
+        }
+      <% end %>
+      <% component.with_json_table do %>
+        | Property | Type | Required | Description |
+        | --- | --- | --- | --- |
+        | `snapshot_retention` | int | no | The number of days to retain daily snapshots. Defaults to 5 when not set. Min 1, max 60. |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
+{
+    "id": "vol_340088w293z35lp4",
+    "name": "new_1028_vol",
+    "state": "created",
+    "size_gb": 10,
+    "region": "ord",
+    "zone": "84d3",
+    "encrypted": true,
+    "attached_machine_id": null,
+    "attached_alloc_id": null,
+    "created_at": "2023-11-27T21:47:06.837Z",
+    "blocks": 0,
+    "block_size": 0,
+    "blocks_free": 0,
+    "blocks_avail": 0,
+    "fstype": "",
+    "snapshot_retention": 10,
     "host_dedication_key": ""
 }
     <% end %>
