@@ -6,6 +6,7 @@ fly extensions [command] [flags]
 ~~~
 
 ## Available Commands
+* [enveloop](/docs/flyctl/extensions-enveloop/)	 - Provision and manage Enveloop projects
 * [kafka](/docs/flyctl/extensions-kafka/)	 - Provision and manage Upstash Kafka clusters
 * [sentry](/docs/flyctl/extensions-sentry/)	 - Setup a Sentry project for this app
 * [storage](/docs/flyctl/extensions-storage/)	 - Provision and manage Tigris object storage buckets
