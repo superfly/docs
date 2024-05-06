@@ -48,7 +48,7 @@ users:
 We're going to save the output into a file named `kubeconfig` and create an environment variable `KUBECONFIG` that points to the file:
 
 ```cmd
-export KUBECONFIG=/home/fly/fks/kubeconfig
+export KUBECONFIG=/path/to/kubeconfig/file
 ```
 
 Our cluster is accessible over our organization's [private WireGuard network](/docs/reference/private-networking). To connect to our cluster, we need a WireGuard configuration. 

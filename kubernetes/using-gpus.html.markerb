@@ -28,13 +28,13 @@ Below is an example of a Pod with a GPU:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
+  name: ollama
   annotations:
     fly.io/region: ams # optional
 spec:
   containers:
-    - name: nginx
-      image: nginx:latest
+    - name: ollama
+      image: ollama/ollama:latest
       resources:
         limits:
           gpu.fly.io/a100-80gb: 1
