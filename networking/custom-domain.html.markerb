@@ -86,6 +86,9 @@ those errors aren't ever visible, you can use a DNS challenge to pre-generate th
 To do that, you need to create a `CNAME` DNS record for a subdomain, `_acme-challenge`, of your domain (the DNS Validation host name)
 and point it at the DNS Validation Target. The process will depend on your DNS provider. Once complete, and the updated DNS data has propagated, that domain will be queried and confirm you have control of it. Certificates will be generated and installed and you'll be able to access your custom domain.
 
+## Supported top-level domains
+
+Here is the list of custom Top-Level Domains (TLDs) we currently support: [Supported TLDs](https://data.iana.org/TLD/tlds-alpha-by-domain.txt). Please note that we do not regularly update this list. It reflects the TLDs we support as of today, and there may be delays in including the newest ones.
 ## Related topics
 
 For a more detailed example of configuring custom domains, see the [Custom domains and SSL certificates](/docs/networking/custom-domains-with-fly/) guide.
