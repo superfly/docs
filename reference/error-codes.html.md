@@ -120,7 +120,7 @@ A TLS handshake timed out.
 
 #### PT09: Internal TLS error
 
-An internal TLS error occured.
+An internal TLS error occurred.
 
 ### Machine-related errors
 
@@ -211,7 +211,7 @@ An internal error occured while using `fly-replay` related to the source app nam
 
 #### PE02: Replay source organization not found
 
-An internal error occured while using `fly-replay` related to the source organization.
+An internal error occurred while using `fly-replay` related to the source organization.
 
 ### Routing errors
 

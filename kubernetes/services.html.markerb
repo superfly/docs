@@ -118,7 +118,7 @@ to the [documentation](https://fly.io/docs/reference/configuration/#services-por
 TLS options are set using custom annotations. There are 3 annotations, one for each setting:
 
 
-  * `service.fly.io/<exposed port name/number>-tls-alpn` - Sets the ALPN for negotation with clients. Values must be comma-separated.
+  * `service.fly.io/<exposed port name/number>-tls-alpn` - Sets the ALPN for negotiation with clients. Values must be comma-separated.
   * `service.fly.io/<exposed port name/number>-tls-versions` - Sets which TLS versions are allowed. Values must be comma-separated.
   * `service.fly.io/<exposed port name/number>-tls-default-self-signed` - If true, serves a self-signed certificate if none exists.
 

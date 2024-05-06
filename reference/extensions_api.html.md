@@ -382,7 +382,7 @@ Providers should mostly send transactional messages about the resource itself, o
 
 Providers should take care that developers do not receive duplicate emails. For example, if a user is placed on an opt-out email campaign, you should ensure the following:
 
-The same user should not receive multiple, indentical emails because they happen to provision resources on more than one Fly.io organization. This is quite common, as organizations are used for separating production and staging environments, for example.
+The same user should not receive multiple, identical emails because they happen to provision resources on more than one Fly.io organization. This is quite common, as organizations are used for separating production and staging environments, for example.
 
 Once a single user in an organization has been placed on an email campaign, other users in the same organization should not be placed on a similar campaign merely for having used SSO sign-in.
 
