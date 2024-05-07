@@ -207,7 +207,7 @@ This category of errors refers to internal Fly.io errors happening only on edge 
 
 #### PE01: Replay source app not found
 
-An internal error occured while using `fly-replay` related to the source app name.
+An internal error occurred while using `fly-replay` related to the source app name.
 
 #### PE02: Replay source organization not found
 

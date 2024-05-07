@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-[Sentry](https://sentry.io) is a developer-first application monitoring platform that helps you identify and fix software problems before they impact your users. Through our parternships with Sentry, each of your Fly organizations can claim a year's worth of [Team Plan](https://sentry.io/pricing) credits.
+[Sentry](https://sentry.io) is a developer-first application monitoring platform that helps you identify and fix software problems before they impact your users. Through our partnerships with Sentry, each of your Fly organizations can claim a year's worth of [Team Plan](https://sentry.io/pricing) credits.
 
 To configure your application to use Sentry, run this command from your Fly.io application directory.
 

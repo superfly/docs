@@ -105,7 +105,7 @@ fly console
 ```
 
 If you are running with sqlite3 or a volume, you will need to ssh into an existing machine.  You may need to first make sure that you have enough
-[memory](../dockerfiles/#out-of-memory) to accomodate the additional session.
+[memory](../dockerfiles/#out-of-memory) to accommodate the additional session.
 
 ```cmd
 fly ssh console --pty -C "/rails/bin/rails console"
