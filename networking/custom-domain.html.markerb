@@ -88,7 +88,7 @@ and point it at the DNS Validation Target. The process will depend on your DNS p
 
 ## Supported top-level domains
 
-Here is the list of custom Top-Level Domains (TLDs) we currently support: [Supported TLDs](https://data.iana.org/TLD/tlds-alpha-by-domain.txt). Please note that we do not regularly update this list. It reflects the TLDs we support as of today, and there may be delays in including the newest ones.
+We support the top-level domains on the [IANA list](https://data.iana.org/TLD/tlds-alpha-by-domain.txt+external). Note that we only periodically update top-level domain support and there might be a delay before we add support for new top-level domains.
 ## Related topics
 
 For a more detailed example of configuring custom domains, see the [Custom domains and SSL certificates](/docs/networking/custom-domains-with-fly/) guide.
