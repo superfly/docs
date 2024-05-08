@@ -2,7 +2,7 @@ Permanently destroy a Tigris object storage bucket
 
 ## Usage
 ~~~
-fly storage destroy [name] [flags]
+fly storage destroy [storage-bucket-name] [flags]
 ~~~
 
 ## Options
