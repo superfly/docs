@@ -32,7 +32,8 @@ fly launch [flags]
       --dockerfile string                Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
       --dockerignore-from-gitignore      If a .dockerignore does not exist, create one from .gitignore files
   -e, --env stringArray                  Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
-      --exclude-regions strings          Deploy to all machines except machines in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times. --exclude-regions iad,sea --exclude-regions syd will exclude all three iad, sea, and syd regions. Applied after --regions. V2 machines platform only.
+      --exclude-machines strings         Deploy to all machines except machines with these IDs. Multiple IDs can be specified with comma separated values or by providing the flag multiple times.
+      --exclude-regions strings          Deploy to all machines except machines in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times.
       --file-literal stringArray         Set of literals in the form of /path/inside/machine=VALUE pairs where VALUE is the content. Can be specified multiple times.
       --file-local stringArray           Set of files in the form of /path/inside/machine=<local/path> pairs. Can be specified multiple times.
       --file-secret stringArray          Set of secrets in the form of /path/inside/machine=SECRET pairs where SECRET is the name of the secret. Can be specified multiple times.
@@ -57,12 +58,13 @@ fly launch [flags]
       --no-deploy                        Do not immediately deploy the new app after fly launch creates and configures it
       --no-public-ips                    Do not allocate any new public IP addresses
       --now                              Deploy now without confirmation
+      --only-machines strings            Deploy to machines only with these IDs. Multiple IDs can be specified with comma separated values or by providing the flag multiple times.
   -o, --org string                       The target Fly.io organization
       --path string                      Path to the app source root, where fly.toml file will be saved (default ".")
       --process-groups strings           Deploy to machines only in these process groups
       --push                             Push image to registry after build is complete
   -r, --region string                    The target region (see 'flyctl platform regions')
-      --regions strings                  Deploy to machines only in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times. --region iad,sea --regions syd will deploy to all three iad, sea, and syd regions. Applied before --exclude-regions. V2 machines platform only.
+      --regions strings                  Deploy to machines only in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times.
       --release-command-timeout string   Time duration to wait for a release command finish running, or 'none' to disable. (default "5m0s")
       --remote-only                      Perform builds on a remote builder instance instead of using the local docker daemon. This is the default. Use --local-only to build locally.
   -s, --signal string                    Signal to stop the machine with for bluegreen strategy (default: SIGINT)
