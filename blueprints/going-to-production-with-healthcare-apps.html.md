@@ -3,6 +3,7 @@ title: Going to Production with Healthcare Apps
 layout: docs
 nav: firecracker
 redirect_from: /docs/blueprints/going-to-production-with-hipaa-apps
+status: alpha
 ---
 
 Fly.io is [SOC 2 certified](https://fly.io/blog/soc2-the-screenshots-will-continue-until-security-improves/) and was built by security researchers from the ground up to be both productive and secure, making it a viable host for HIPAA-compliant production healthcare applications for productive teams that ship often.
