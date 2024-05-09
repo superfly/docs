@@ -145,7 +145,7 @@ application.  If you still have questions, post on our [community forum](https:/
 
 ## Static site generation with databases
 
-Some applications may require database access at build time. By default, the build machine on Fly.io does not have access to your production
+Some applications may require database access at build time. By default, the build Machine on Fly.io does not have access to your production
 database.  This means you won't be able to access your database from
 inside methods like `getStaticProps`.
 
@@ -157,7 +157,7 @@ Should this be something your application requires, there are two approaches for
 This approach allows you to inject secrets (such as database URLs) that are only available at build time.
 
 <div class="note icon">
-**This approach will not work for SQLite3,** as the build machine still won’t have access to your volume. However, it can be used with PostgreSQL, MySQL and other such databases.
+**This approach will not work for SQLite3,** as the build Machine still won’t have access to your volume. However, it can be used with PostgreSQL, MySQL and other such databases.
 </div>
 
 First, you need to obtain the secrets you will need to deploy.  Often this
@@ -201,13 +201,13 @@ npx dockerfile --build=defer
 
 Downsides of this approach:
 
-* Your deployment machines will need enough memory to run a build.  See:
+* Your deployment Machines will need enough memory to run a build.  See:
   [`fly scale memory`](https://fly.io/docs/flyctl/scale-memory/) and
   [`swap_size_mb`](https://fly.io/docs/reference/configuration/#swap_size_mb-option) for two options.
 * You may need to adjust the [grace_period](https://fly.io/docs/reference/configuration/#http_service-checks) for any HTTP service checks.
-* If you are only running one machine there will be a period of time where
+* If you are only running one Machine there will be a period of time where
   your server is inaccessible while the site is being statically generated.
-* If you run multiple machines, the static site generation will be run on
+* If you run multiple Machines, the static site generation will be run on
   each increasing the total time before any changes are fully deployed.
 
 ## Exposing environment variables to the browser
