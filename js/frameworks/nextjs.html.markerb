@@ -11,49 +11,78 @@ order: 4
 <% app_name = "hello-next" %>
 <%= partial "partials/intro", locals: { runtime: "Next.js", link: "https://nextjs.org" } %>
 
-You can deploy your [Next.js](https://nextjs.org/) app on Fly with minimal effort, our CLI will do the heavy lifting. You can use your existing Next.js app or you can [create one using the tutorial](https://nextjs.org/learn/basics/create-nextjs-app) and then come back here to deploy your app.
+You can deploy your [Next.js](https://nextjs.org/) app on Fly with minimal effort, our CLI will do the heavy lifting. We'll be using a standard app generated with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app) CLI tool provided by Next.js.
 
-## _Deploy an existing Next.js app_
+## _Generate the Next.js app_
 
-If you just want to see how Fly deployment works, follow these steps.
+We'll assume you have NodeJS installed already and can run `npx`. Refer to the [documentation](https://nextjs.org/docs/pages/api-reference/create-next-app#interactive) if you would like to use `yarn`, `pnpm` or `bun`.
+
+Now let's create a new project by running the `create-next-app`. This will scaffold a new project asking you if you'd like to set up some basic tooling such as TypeScript.
+
+```cmd
+npx create-next-app@latest hello-nextjs
+```
+```output
+✔ Would you like to use TypeScript? … No / Yes
+
+...
+
+Initializing project with template: app-tw
+
+Installing dependencies:
+- react
+
+...
+
+Installing devDependencies:
+- typescript
+
+...
+
+Success! Created hello-nextjs at /.../hello-nextjs
+```
+
+Great! You should be able to run our app locally with `cd hello-nextjs && npm run dev` and access it at http://localhost:3000.
+
+## _Deploy to Fly.io_
 
 <%= partial "partials/flyctl" %>
 
 Now let's launch your Next.js app from the root of your application.
 
 ```cmd
-cd nextjs-blog
+cd hello-nextjs
 fly launch
 ```
 ```output
-Creating app in /Users/me/nextjs-blog
 Scanning source code
 Detected a Next.js app
-? Choose an app name (leave blank to generate one): nextjs-blog
-? Select Organization: flyio (flyio)
-Some regions require a paid plan (bom, fra, maa).
-See https://fly.io/plans to set up a plan.
+Creating app in /Users/mentels/work/hello-nextjs
+We're about to launch your Next.js app on Fly.io. Here's what you're getting:
 
-? Choose a region for deployment: Ashburn, Virginia (US) (iad)
-App will use 'iad' region as primary
+Organization: mentels                (fly launch defaults to the personal org)
+Name:         hello-nextjs           (derived from your directory name)
+Region:       Warsaw, Poland         (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+Sentry:       false                  (not requested)
 
-Created app 'nextjs-blog' in organization 'personal'
-Admin URL: https://fly.io/apps/nextjs-blog
-Hostname: nextjs-blog.fly.dev
-     create  Dockerfile
-Wrote config file fly.toml
-Validating /Users/rubys/tmp/nextjs-blog/fly.toml
-Platform: machines
-✓ Configuration is valid
+? Do you want to tweak these settings before proceeding? No
+Created app 'hello-nextjs' in organization 'personal'
+Admin URL: https://fly.io/apps/hello-nextjs
+Hostname: hello-nextjs.fly.dev
 
-If you need custom packages installed, or have problems with your deployment
-build, you may need to edit the Dockerfile for app-specific changes. If you
-need help, please post on https://community.fly.io.
+...
 
-Now: run 'fly deploy' to deploy your Next.js app.
+Visit your newly deployed app at https://hello-nextjs.fly.dev/
 ```
 
 <%= partial "partials/launched" %>
+
+In the process we've generated a [`fly.toml`](https://fly.io/docs/reference/configuration/) and `Dockerfile` in the root of the project. Change them if you need to customize your deployment.
+****
+The following sections cover further steps you can apply for your Next.js app deployment.
 
 ## Standalone builds (recommended)
 
@@ -142,7 +171,7 @@ Next, you need to modify your Dockerfile to mount a secret. The easiest way to d
 npx dockerfile --mount-secret=DATABASE_URL
 ```
 
-It is possible to mount multiple secrets, and you can read more about [mounting secrets](https://fly.io/docs/reference/build-secrets/#mounting-secrets) for further details. 
+It is possible to mount multiple secrets, and you can read more about [mounting secrets](https://fly.io/docs/reference/build-secrets/#mounting-secrets) for further details.
 
 Finally, you need to pass the secret on each deploy:
 
@@ -161,7 +190,7 @@ your deployment secrets and environment variables.
 
 This involves replacing the entry point in your Dockerfile (typically your `CMD`) with a script
 and having that script run `npm build` (or equivalent) prior to starting
-your server.  
+your server.
 
 You can let the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile) take care of these
 changes for you:
