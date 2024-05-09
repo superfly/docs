@@ -601,37 +601,43 @@ curl -i -X GET \\
         "id": "vs_4LNvXLLK0P6tk6KgqoexaBw",
         "size": 36007729,
         "digest": "76d64a69199766d1600d46f0fd48ad9c-1",
-        "created_at": "2023-12-02T20:59:35+00:00"
+        "created_at": "2023-12-02T20:59:35+00:00",
+        "retention_days": 5
     },
     {
         "id": "vs_3NlZ9NNmpvoSPqG6DO8BkDy",
         "size": 36007729,
         "digest": "e06b15e5467de62c5d505fa57923db93-1",
-        "created_at": "2023-12-03T21:00:35+00:00"
+        "created_at": "2023-12-03T21:00:35+00:00",
+        "retention_days": 5
     },
     {
         "id": "vs_Ql8xbllZOYDSDgo2D7NYGj",
         "size": 36007729,
         "digest": "c37d2a590a351fa561fdb1ffd2f53d62-1",
-        "created_at": "2023-12-04T21:01:35+00:00"
+        "created_at": "2023-12-04T21:01:35+00:00",
+        "retention_days": 5
     },
     {
         "id": "vs_x4AxX44lmpbcpap7vwX5x8e",
         "size": 36007729,
         "digest": "91fac554e5261d8f4eb6f7b69e88c8f9-1",
-        "created_at": "2023-12-05T21:01:55+00:00"
+        "created_at": "2023-12-05T21:01:55+00:00",
+        "retention_days": 5
     },
     {
         "id": "vs_DkV2wkk7av1c9Kmlv79PL4o",
         "size": 36007729,
         "digest": "d78b5ff73a87b2bdfecb4a87c89c312b-1",
-        "created_at": "2023-12-06T21:02:55+00:00"
+        "created_at": "2023-12-06T21:02:55+00:00",
+        "retention_days": 5
     },
     {
         "id": "vs_K8z1w88ZBOys22zqKGZ36R",
         "size": 36007729,
         "digest": "95dfe85046c67834566ccff2a29b18ec-1",
-        "created_at": "2023-12-07T21:03:25+00:00"
+        "created_at": "2023-12-07T21:03:25+00:00",
+        "retention_days": 10
     }
 ]
     <% end %>
