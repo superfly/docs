@@ -55,7 +55,7 @@ The Phoenix library [dns_cluster](https://github.com/phoenixframework/dns_cluste
 
 The `dns_cluster` library lets you easily setup Erlang Clustering using DNS, and Fly.io has built in DNS support!
 
-After installing `dns_cluser`, add it to the application like this:
+After installing `dns_cluster`, add it to the application like this:
 
 ```elixir
 defmodule HelloElixir.Application do

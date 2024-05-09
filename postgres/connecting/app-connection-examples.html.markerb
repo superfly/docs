@@ -346,7 +346,7 @@ let sequelize = new Sequelize(process.env.DATABASE_URL);
 [Fly docs: How to add Read Replica database with flyctl](https://fly.io/docs/postgres/advanced-guides/high-availability-and-global-replication/)
 
 
-Set the Sequelize consturctor in `model/index.js` to conditionally connect to the primary/read-replica database depending on the `primary region` value set in `fly.toml`.
+Set the Sequelize constructor in `model/index.js` to conditionally connect to the primary/read-replica database depending on the `primary region` value set in `fly.toml`.
 ```javascript
 let sequelize;
 if (config.use_env_variable) {
