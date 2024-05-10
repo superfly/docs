@@ -1,0 +1,115 @@
+---
+title: "Run an Axum App"
+layout: framework_docs
+sitemap: false
+order: 1
+---
+
+<% app_name = "hello-next" %>
+<%= partial "partials/intro", locals: { runtime: "Rust Axum", link: "https://docs.rs/axum/latest/axum/" } %>
+
+Deploying an [Axum](https://docs.rs/axum/latest/axum/) app on fly.io is really straightforward! With the help of the wonderful [cargo chef](https://github.com/LukeMathWalker/cargo-chef) we get great build times and small images.
+
+## _Deploy an Axum App_
+
+<%= partial "partials/flyctl" %>
+
+Next, if you don't already have an existing Axum application, you can create one quickly with the following command:
+
+```cmd
+cargo new axum-app
+cd axum-app
+```
+
+Then we have to add some dependencies to the project:
+
+```cmd
+cargo add axum
+cargo add tokio -F macros -F rt-multi-thread
+```
+
+Now, let's create a simple Axum app in `src/main.rs`:
+
+```rust
+use axum::{routing::get, Router};
+
+#[tokio::main]
+async fn main() {
+    let app = Router::new().route("/", get(|| async { "Hello, World!" }));
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+}
+```
+
+This will display a simple "Hello, World!" message when you visit the root URL.
+Take note that we serve the app on port `8080`.
+
+We can confirm everything works fine by running `cargo run` and checking out `http://localhost:8080`.
+
+Now we add a `Dockerfile` to the project:
+
+```dockerfile
+FROM lukemathwalker/cargo-chef:latest-rust-1 AS chef
+WORKDIR /app
+
+FROM chef AS planner
+COPY . .
+RUN cargo chef prepare --recipe-path recipe.json
+
+FROM chef AS builder 
+COPY --from=planner /app/recipe.json recipe.json
+# Build dependencies - this is the caching Docker layer!
+RUN cargo chef cook --release --recipe-path recipe.json
+# Build application
+COPY . .
+RUN cargo build --release --bin axum-app
+
+# We do not need the Rust toolchain to run the binary!
+FROM debian:bookworm-slim AS runtime
+WORKDIR /app
+COPY --from=builder /app/target/release/axum-app /usr/local/bin
+ENTRYPOINT ["/usr/local/bin/axum-app"] 
+```
+
+Modify the dockerfile to match your project name (in this case that's `axum-app`).
+
+Finally, deploy the app!
+
+```cmd
+fly launch
+```
+
+```output
+Scanning source code
+Detected a Dockerfile app
+Warning: This organization has no payment method, turning off high availability
+Creating app in [redacted]/fly-rust-axum-starter
+We're about to launch your app on Fly.io. Here's what you're getting:
+
+Organization: Your Name              (fly launch defaults to the personal org)
+Name:         axum-app               (derived from your directory name)
+Region:       Amsterdam, Netherlands (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+Sentry:       false                  (not requested)
+
+...
+
+==> Building image
+...
+==> Building image with Docker
+...
+
+Watch your deployment at https://fly.io/apps/[app-name]/monitoring
+...
+
+Visit your newly deployed app at https://[app-name].fly.dev/
+```
+
+This will generate a `fly.toml` file with the configuration for your app.
+Refer to the [fly.toml docs](https://fly.io/docs/reference/configuration/) for more configuration options.
+
+To deploy a new version of your app, simply run `fly deploy` in the project directory.
+
+You can checkout the full (yet minimal) example in [this github repository](https://github.com/superfly/fly-rust-axum-starter) for a reference. 
