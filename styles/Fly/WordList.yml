@@ -30,6 +30,7 @@ swap:
   in order to: to
   # instance: Machine
   k8s: Kubernetes
+  leverage: use
   Nodejs: Node.js
   open-source: open source
   SHA1: SHA-1|HAS-SHA1
