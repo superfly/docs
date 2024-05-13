@@ -65,7 +65,7 @@ fly deploy [WORKING_DIRECTORY] [flags]
   -s, --signal string                    Signal to stop the machine with for bluegreen strategy (default: SIGINT)
       --skip-release-command             Do not run the release command during deployment.
       --smoke-checks                     Perform smoke checks during deployment (default true)
-      --strategy string                  The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. Default is canary, or rolling when max-per-region is set.
+      --strategy string                  The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. The default strategy is rolling.
       --update-only                      Do not create Machines for new process groups
       --vm-cpu-kind string               The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                      Number of CPUs
