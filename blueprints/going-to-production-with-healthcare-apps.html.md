@@ -6,15 +6,15 @@ redirect_from: /docs/blueprints/going-to-production-with-hipaa-apps
 status: alpha
 ---
 
-Fly.io is [SOC 2 certified](https://fly.io/blog/soc2-the-screenshots-will-continue-until-security-improves/) and was built by security researchers from the ground up to be both productive and secure, making it a viable host for HIPAA-compliant production healthcare applications for productive teams that ship often.
+Fly.io was built by security researchers from the ground up to be both productive and secure, making it a great home for HIPAA-compliant production healthcare applications for productive teams that ship often.
 
-This guide will run a developer or operations engineer through the process of evaluation Fly.io's security for HIPAA healthcare apps, launching a pilot application, signing a BAA, and deploying to production.
+This blueprint runs a developer or operations engineer through the process of evaluating Fly.io's security for HIPAA healthcare apps, launching a pilot application, signing a BAA, and deploying to production.
 
 ## HIPAA and Fly.io Primer
 
 The Health Insurance Portability and Accountability Act (HIPAA) sets the standard for protecting sensitive patient data. Any company that processes protected health information (PHI) must ensure that all the required physical, network, and process security measures are in place and followed.
 
-Fly.io takes a "principle of least privileged" approach to security. Here are the highlights of what healthcare app developers get out of the box on Fly.io:
+Fly.io takes a "principle of least privilege" approach to security. Here are the highlights of what healthcare app developers get out of the box on Fly.io:
 
 ### Data Protection and Encryption
 
@@ -28,47 +28,36 @@ HIPAA requires that PHI is encrypted both in transit and at rest to prevent unau
 Access to PHI must be limited to authorized personnel only, which is managed through:
 
 - **Network Isolation**: Each application on Fly.io runs within its own private network by default, reducing the risk of unauthorized access.
-
 - **Secrets Management**: Fly.io provides a [secrets manager](https://fly.io/docs/reference/secrets/) for storing and handling API credentials and environment variables securely, ensuring that sensitive information is accessible only to authorized applications.
-
 - **Isolated Application Environments**: Fly.io allows organizations to create separate organizations for different environments, ensuring that production environments are isolated from test and staging environments.
-
 - **Workload Isolation:** [Docker workloads on Fly.io are isolated at the kernel hardware level through the Firecracker VM runtime](https://fly.io/blog/fly-machines/). These workloads are hosted in secure data centers on Fly.io's dedicated hardware, ensuring HIPAA compliance by minimizing the risk of unauthorized access and maintaining strict control over PHI data.
 
 ### Audit Controls
 
-HIPAA mandates that covered entities must implement hardware, software, and procedural mechanisms that record and examine activity in systems containing PHI:
+HIPAA demands that you implement hardware, software, and procedural mechanisms that record and examine activity in systems containing PHI:
 
-- **Logging and Monitoring**: Fly.io offers features that allow organizations to monitor and log access and usage, helping comply with HIPAA’s information system activity review requirements.
-
-- **Version-Controlled Configuration**: Fly.io utilizes a Dockerfile and fly.toml configuration file for managing application deployments. These files can be checked into version control systems, allowing for comprehensive audit trails of infrastructure changes. This capability supports HIPAA's mandates for traceability and accountability in the modification and management of systems handling PHI.
+- **Logging and Monitoring**: Fly.io allows organizations to monitor and log access and usage, helping comply with HIPAA’s information system activity review requirements.
+- **Version-Controlled Configuration**: Fly.io uses a Dockerfile and fly.toml configuration file for managing application deployments. These files can be checked into version control systems, like Github, allowing for comprehensive audit trails of infrastructure changes. This capability supports HIPAA's mandates for traceability and accountability in the modification and management of systems handling PHI.
 
 ### Data Integrity
 
 To comply with HIPAA, entities must ensure that PHI is not altered or destroyed in an unauthorized manner:
 
-- **Data Storage and Backup**: Fly.io’s infrastructure provides robust data integrity controls, including regular snapshots of encrypted volumes to prevent data loss.
-
-- **Reproducible Builds**: Fly.io's use of Docker ensures that application builds are reproducible and can be locked down to a mostly read-only state. This contributes to data integrity by reducing the likelihood of unauthorized modifications to application environments, meeting HIPAA's requirements for protecting PHI from unauthorized alteration or destruction.
+- **Data Storage and Backup**: Fly.io’s infrastructure provides robust data integrity controls, including [regular snapshots](https://fly.io/docs/apps/volume-manage/) of [encrypted volumes](https://fly.io/docs/reference/volumes/#volume-encryption) to prevent data loss.
+- **Reproducible Deployments**: Fly.io's use of Docker ensures that application deployments are reproducible and can be locked down to a mostly read-only state. This reduces the likelihood of unauthorized modifications to application environments, meeting HIPAA's requirements for protecting PHI from unauthorized alteration or destruction.
 
 ### Physical Security
 
 Physical access to data centers where PHI is stored must be controlled:
 
 - **Data Centers**: Fly.io hosts services in secure data centers with restricted access, surveillance, and environmental controls, ensuring the physical security of the hardware that stores and processes PHI.
-
 - **Regional Data Control**: Fly.io allows users to control the [physical region](https://fly.io/docs/reference/regions/) where data is stored and processed using simple commands, facilitating compliance with data residency requirements of HIPAA by ensuring PHI is stored within designated secure regions, such as the United States.
-
 
 There's more detail at [https://fly.io/docs/about/healthcare](https://fly.io/docs/about/healthcare/) and [https://fly.io/security](https://fly.io/security). If you have additional questions about Fly.io's security infrastructure & practices, please [reach out](mailto:sales@fly.io).
 
 ## Launch pilot application
 
-The fastest way to deploy a pilot application is to run through the [Fly.io Speedrun](https://fly.io/speedrun/). The speed run covers:
-
-- Sign up for [a Fly account](https://fly.io/app/sign-up).
-- Install the `flyctl` [command line tool](https://fly.io/docs/hands-on/install-flyctl/), which is used to provision server resources on Fly, deploy your application, and other administrative functions.
-- Run `fly launch` from the root of your project to provision resources and deploy your application.
+The fastest way to deploy a pilot application is to run through the [Fly.io Speedrun](https://fly.io/speedrun/).
 
 If your free demo account doesn't have enough resources for your pilot application you may [upgrade to a paid plan](https://fly.io/docs/about/pricing/) or [contact us](mailto:sales@fly.io) to make other arrangements.
 
@@ -93,29 +82,7 @@ Denver, Colorado (US)                         den
 Ezeiza, Argentina                             eze
 Frankfurt, Germany                            fra   ✓       ✓
 Guadalajara, Mexico                           gdl
-Hong Kong, Hong Kong                          hkg   ✓
-Johannesburg, South Africa                    jnb
-London, United Kingdom                        lhr   ✓
-Los Angeles, California (US)                  lax   ✓
-Madrid, Spain                                 mad
-Miami, Florida (US)                           mia
-Montreal, Canada                              yul
-Mumbai, India                                 bom           ✓
-Paris, France                                 cdg   ✓
-Phoenix, Arizona (US)                         phx
-Querétaro, Mexico                             qro   ✓
-Rio de Janeiro, Brazil                        gig
-San Jose, California (US)                     sjc   ✓                           ✓
-Santiago, Chile                               scl   ✓
-Sao Paulo, Brazil                             gru
-Seattle, Washington (US)                      sea   ✓
-Secaucus, NJ (US)                             ewr   ✓
-Singapore, Singapore                          sin   ✓
-Stockholm, Sweden                             arn
-Sydney, Australia                             syd   ✓                           ✓
-Tokyo, Japan                                  nrt   ✓
-Toronto, Canada                               yyz   ✓
-Warsaw, Poland                                waw
+# ... Lots more regions...
 ```
 
 Then select your desired region:
@@ -140,10 +107,9 @@ Fly.io's [secret manager stores](https://fly.io/docs/reference/secrets/) your ap
 
 If at any time during your evaluation of Fly you have questions about the infrastructure, security, or service terms you can ask in the community forums or [email Fly.io with your questions](mailto:sales@fly.io).
 
-
 ## Deploy to production
 
-Once you've evaluated Fly.io and have a BAA, it's time to go to production. The remaind of this guide will walk you through how to setup an isolated production environment, controll access, and deploy your application.
+Once you've evaluated Fly.io and have a BAA, it's time to go to production. The remainder of this guide will walk you through how to setup an isolated production environment, control access, and deploy your application.
 
 ### Sign a Business Associate Agreement (BAA)
 
@@ -169,7 +135,7 @@ You'll walk through the steps of creating a new organization within Fly.io. You'
 
 Grant access to team members who may have access to the production environment:
 
-```sh
+```bash
 $ fly orgs invite somebody@$MYORG.com --org $MYORG-production
 ```
 
