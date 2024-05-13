@@ -23,7 +23,7 @@ The TXID is represented a 16-character hex-encoded `uint64`. The checksum is
 encoded as a 16-character hex-encoded `uint64`. These are concatenated using
 a slash and a newline is appended at the end.
 
-You can also use the [LiteFS event stream](events) to receive replication
+You can also use the [LiteFS event stream](../events) to receive replication
 position updates in real time.
 
 
