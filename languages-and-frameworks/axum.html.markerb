@@ -6,15 +6,15 @@ order: 1
 ---
 
 <% app_name = "hello-next" %>
-<%= partial "/docs/js/frameworks/partials/intro", locals: { runtime: "Rust Axum", link: "https://docs.rs/axum/latest/axum/" } %>
+<%= partial "partials/intro", locals: { runtime: "Rust Axum", link: "https://docs.rs/axum/latest/axum/" } %>
 
 Deploying an [Axum](https://docs.rs/axum/latest/axum/) app on Fly.io is really straightforward! With the help of the [cargo chef](https://github.com/LukeMathWalker/cargo-chef), we get great build times and small images.
 
 ## _Deploy an Axum App_
 
-<%= partial "/docs/js/frameworks/partials/flyctl" %>
+<%= partial "partials/flyctl" %>
 
-Next, if you don't already have an existing Axum application, you can create one quickly with the following command:
+If you don't already have an existing Axum application, you can create one quickly with `cargo`:
 
 ```cmd
 cargo new axum-app
