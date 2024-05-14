@@ -3,7 +3,6 @@ title: Going to Production with Healthcare Apps
 layout: docs
 nav: firecracker
 redirect_from: /docs/blueprints/going-to-production-with-hipaa-apps
-status: alpha
 ---
 
 Fly.io was built by security researchers from the ground up to be both productive and secure, making it a great home for HIPAA-compliant production healthcare applications for productive teams that ship often.
