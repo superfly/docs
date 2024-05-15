@@ -18,7 +18,7 @@ A Fly Volume is a slice of an NVMe drive on the physical server your Fly App run
 * **A volume can attach to one Machine**: You need to run as many volumes as there are Machines. There's a one-to-one mapping between Machines and volumes. A Machine can only mount one volume at a time and a volume can be attached to only one Machine.
 * **Develop your app to handle replication**: Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app, so if you need the volumes to sync up, then your app has to make that happen.
 * **Create redundancy in your primary region**: If your app needs a volume to function, and the NVMe drive hosting your volume fails, then that instance of your app goes down. There's no way around that. You can run multiple Machines with volumes in your app's primary region to mitigate hardware failures.
-* **Create and store backups**: If you only have a single copy of your data on a single volume, and that drive fails, then the data is lost. Fly.io takes daily snapshots and retains them for 5 days, but the snapshots shouldn't be your primary backup method.
+* **Create and store backups**: If you only have a single copy of your data on a single volume, and that drive fails, then the data is lost. Fly.io takes daily snapshots and can retain them from 1 to 60 days (5 days by default), but the snapshots shouldn't be your primary backup method.
 
 Explore other options for data storage in [Databases & Storage](/docs/database-storage-guides/).
 
@@ -62,7 +62,7 @@ When you [fork a volume](/docs/apps/volume-manage/#create-a-copy-of-a-volume-for
 
 ## Volume snapshots
 
-Fly.io takes daily block-level snapshots of volumes. We keep snapshots for five days. Daily automatic snapshots may not have your latest data. You should still implement your own backup plan for important data.
+Fly.io takes daily block-level snapshots of volumes. We keep snapshots for five days by default, but you can configure the snapshot retention to be from 1 to 60 days. Daily automatic snapshots may not have your latest data. You should still implement your own backup plan for important data.
 
 You can also [create a snapshot of a volume](/docs/apps/volume-manage/#create-a-volume-snapshot) on demand.
 

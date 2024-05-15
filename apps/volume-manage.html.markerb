@@ -138,12 +138,56 @@ We take daily snapshots of your volume and keep them for five days. You can also
 
 The state of the new snapshot will go from `waiting` to `running` to `created`. Once the snapshot is created, you can use it to [restore the volume's data](#restore-a-volume-from-a-snapshot) if needed.
 
-
 ## Restore a volume from a snapshot
 
-We take daily snapshots of your volume and keep them for five days. You can also [create a snapshot on demand](#create-an-on-demand-volume-snapshot). 
+We take daily snapshots of your volume and keep them for five days by default. You can also [create a snapshot on demand](#create-an-on-demand-volume-snapshot). 
 
-You can restore the data from a volume by creating a new volume from a snapshot.
+Restore the data from a volume by creating a new volume from a snapshot.
+
+1. Run `fly volumes list` and copy the ID of the volume to restore.
+
+1. List the volume's snapshots:
+
+    ```cmd
+    fly vol snapshots list <volume id>
+    ```
+
+    Example output:
+    ```out
+    Snapshots
+    ID                 	SIZE    	CREATED AT
+    vs_MgLAggLZkYx89fLy	17638389	1 hour ago
+    vs_1KRgwpDqZ2ll5tx 	17649006	1 day ago
+    vs_nymJyYMwXpjxqTzJ	17677766	2 days ago
+    vs_R3OPAz5jBqzogF16	17689473	3 days ago
+    vs_pZlGZvq3gkAlAcaZ	17655830	4 days ago
+    vs_A9k6age3bQov6twj	17631880	5 days ago
+    ```
+
+1. Restore from the volume snapshot into a new volume of equal or greater size:
+
+    ```cmd
+    fly volumes create <volume name> --snapshot-id <snapshot id> -s <volume size in GB>
+    ```
+
+    Example output:  
+    ```out
+    ? Select region: Sydney, Australia (syd)
+            ID: vol_mjn924o9l3q403lq
+          Name: pg_data
+          App: my-app-name
+        Region: syd
+          Zone: 180d
+      Size GB: 3
+    Encrypted: true
+    Created at: 02 Aug 22 21:27 UTC
+    ```
+
+For options, refer to the [`fly volumes snapshots` docs](/docs/flyctl/volumes-snapshots/) or run `fly vol snapshots -h`.
+
+## Restore a deleted volume
+
+You can restore a deleted volume using a volume snapshot, as long as you do so within the snapshot retention period. The default snapshot retention period is 5 days.
 
 1. Run `fly volumes list` and copy the ID of the volume to restore.
 
