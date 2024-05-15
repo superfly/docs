@@ -7,7 +7,7 @@ order: 3
 
 If you have an existing Rails app that you want to move over to Fly, this guide walks you through the initial deployment process and shows you techniques you can use to troubleshoot issues you may encounter in a new environment.
 
-### Provision Rails and Postgres Servers
+## Provision Rails and Postgres Servers
 
 To configure and launch your Rails app, you can use `fly launch` and follow the wizard.
 
@@ -59,7 +59,7 @@ and attach either or both a PostgreSQL and Redis databases.  Be sure to include
 Redis is if you make use of Action Cable, caching, and popular third-party gems
 like Sidekiq.
 
-### Deploy your application
+## Deploy your application
 
 Deploying your application is done with the following command:
 
@@ -208,14 +208,11 @@ $ bin/rails generate dockerfile
 You can see the versions of each tool that will be used on your deployment
 machine by looking for lines that start with `ARG` in your Dockerfile.
 
-
 ### ActiveStorage
 
 From the [documentation](https://guides.rubyonrails.org/active_storage_overview.html#what-is-active-storage-questionmark):
 
-<blockquote style="margin-left: 3em">
-Active Storage facilitates uploading files to a cloud storage service like Amazon S3, Google Cloud Storage, or Microsoft Azure Storage and attaching those files to Active Record objects. It comes with a local disk-based service for development and testing and supports mirroring files to subordinate services for backups and migrations.
-</blockquote>
+> Active Storage facilitates uploading files to a cloud storage service like Amazon S3, Google Cloud Storage, or Microsoft Azure Storage and attaching those files to Active Record objects. It comes with a local disk-based service for development and testing and supports mirroring files to subordinate services for backups and migrations.
 
 Accordingly:
 
