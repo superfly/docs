@@ -1,6 +1,6 @@
 ---
 title: "Run a Rust Axum App"
-layout: framework_docs
+layout: language-and-framework-docs
 sitemap: false
 order: 1
 ---
