@@ -13,6 +13,8 @@ Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). Le
 
 ## Create a volume
 
+To create a new app with volumes or add a volume to your app, see [Add volume storage](/docs/apps/volume-storage/).
+
 Run:
 
 ```cmd
@@ -22,8 +24,6 @@ fly vol create <my_volume_name>
 Use the `-r` option to set a [region](/docs/reference/regions/), or select a region when prompted.
 
 For options, refer to the [`fly volumes create` docs](/docs/flyctl/volumes-create/) or run `fly vol create -h`.
-
-To add a volume to your app, see [Add volume storage](/docs/apps/volume-storage/).
 
 ## Access a volume
 
@@ -100,9 +100,15 @@ Create an exact copy of a volume, including its data. By default, we place the n
 
 For options, refer to the [`fly volumes fork` docs](/docs/flyctl/volumes-fork/) or run `fly vol fork -h`.
 
-## Create a volume snapshot
+## Volume snapshots
 
-We take daily snapshots of your volume and keep them for five days. You can also create a snapshot of a volume on demand.
+A snapshot is a point-in-time copy of a volume's data. We automatically take daily snapshots of all Fly Volumes. We store snapshots for 5 days by default, but you can set volume snapshot retention from 1 to 60 days when you, or `fly launch`, creates the volume.
+
+If you accidentally delete a volume, you can use a volume snapshot to [restore the data on a new volume](#restore-a-deleted-volume). Restoring a deleted volume is the same procedure as restoring the data from en existing volume.
+
+### Create a volume snapshot
+
+We take daily snapshots of your volume and keep them for five days by default. You can also create a snapshot of a volume on demand.
 
 1. Run `fly volumes list` and copy the ID of the volume to create a snapshot from.
 
@@ -138,56 +144,11 @@ We take daily snapshots of your volume and keep them for five days. You can also
 
 The state of the new snapshot will go from `waiting` to `running` to `created`. Once the snapshot is created, you can use it to [restore the volume's data](#restore-a-volume-from-a-snapshot) if needed.
 
-## Restore a volume from a snapshot
+### Restore a volume from a snapshot
 
 We take daily snapshots of your volume and keep them for five days by default. You can also [create a snapshot on demand](#create-an-on-demand-volume-snapshot). 
 
 Restore the data from a volume by creating a new volume from a snapshot.
-
-1. Run `fly volumes list` and copy the ID of the volume to restore.
-
-1. List the volume's snapshots:
-
-    ```cmd
-    fly vol snapshots list <volume id>
-    ```
-
-    Example output:
-    ```out
-    Snapshots
-    ID                 	SIZE    	CREATED AT
-    vs_MgLAggLZkYx89fLy	17638389	1 hour ago
-    vs_1KRgwpDqZ2ll5tx 	17649006	1 day ago
-    vs_nymJyYMwXpjxqTzJ	17677766	2 days ago
-    vs_R3OPAz5jBqzogF16	17689473	3 days ago
-    vs_pZlGZvq3gkAlAcaZ	17655830	4 days ago
-    vs_A9k6age3bQov6twj	17631880	5 days ago
-    ```
-
-1. Restore from the volume snapshot into a new volume of equal or greater size:
-
-    ```cmd
-    fly volumes create <volume name> --snapshot-id <snapshot id> -s <volume size in GB>
-    ```
-
-    Example output:  
-    ```out
-    ? Select region: Sydney, Australia (syd)
-            ID: vol_mjn924o9l3q403lq
-          Name: pg_data
-          App: my-app-name
-        Region: syd
-          Zone: 180d
-      Size GB: 3
-    Encrypted: true
-    Created at: 02 Aug 22 21:27 UTC
-    ```
-
-For options, refer to the [`fly volumes snapshots` docs](/docs/flyctl/volumes-snapshots/) or run `fly vol snapshots -h`.
-
-## Restore a deleted volume
-
-You can restore a deleted volume using a volume snapshot, as long as you do so within the snapshot retention period. The default snapshot retention period is 5 days.
 
 1. Run `fly volumes list` and copy the ID of the volume to restore.
 
@@ -276,6 +237,51 @@ fly vol destroy <volume id>
 ```
 
 For options, refer to the [`fly vol destroy` docs](/docs/flyctl/volumes-destroy/) or run `fly vol destroy -h`.
+
+## Restore a deleted volume
+
+You can restore a deleted volume using a volume snapshot, as long as you do so within the snapshot retention period. The default snapshot retention period is 5 days.
+
+1. Run `fly volumes list` and copy the ID of the volume to restore.
+
+1. List the volume's snapshots:
+
+    ```cmd
+    fly vol snapshots list <volume id>
+    ```
+
+    Example output:
+    ```out
+    Snapshots
+    ID                 	SIZE    	CREATED AT
+    vs_MgLAggLZkYx89fLy	17638389	1 hour ago
+    vs_1KRgwpDqZ2ll5tx 	17649006	1 day ago
+    vs_nymJyYMwXpjxqTzJ	17677766	2 days ago
+    vs_R3OPAz5jBqzogF16	17689473	3 days ago
+    vs_pZlGZvq3gkAlAcaZ	17655830	4 days ago
+    vs_A9k6age3bQov6twj	17631880	5 days ago
+    ```
+
+1. Restore from the volume snapshot into a new volume of equal or greater size:
+
+    ```cmd
+    fly volumes create <volume name> --snapshot-id <snapshot id> -s <volume size in GB>
+    ```
+
+    Example output:  
+    ```out
+    ? Select region: Sydney, Australia (syd)
+            ID: vol_mjn924o9l3q403lq
+          Name: pg_data
+          App: my-app-name
+        Region: syd
+          Zone: 180d
+      Size GB: 3
+    Encrypted: true
+    Created at: 02 Aug 22 21:27 UTC
+    ```
+
+For options, refer to the [`fly volumes snapshots` docs](/docs/flyctl/volumes-snapshots/) or run `fly vol snapshots -h`.
 
 ## Related topics
 
