@@ -15,7 +15,7 @@ You can use a volume snapshot to [restore the data into a new volume](#restore-a
 
 ## Set or change the snapshot retention period
 
-Snapshot retention is length of time (in days) that we store a volume snapshot. The default is 5 days.
+Snapshot retention is the length of time (in days) that we store a volume snapshot. The default is 5 days.
 
 Set snapshot retention when you create a volume:
 
@@ -121,3 +121,10 @@ Restore the data from a volume by creating a new volume from a snapshot:
     ```
 
 For options, refer to the [`fly volumes snapshots` docs](/docs/flyctl/volumes-snapshots/) or run `fly volumes snapshots -h`.
+
+## Related topics
+
+- [Fly Volumes overview](/docs/volumes/overview/)
+- [Create and manage volumes](/docs/volumes/volume-manage/)
+- [Add volume storage to a Fly Launch app](/docs/apps/volume-storage/)
+- [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)
