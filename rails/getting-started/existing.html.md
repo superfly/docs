@@ -219,7 +219,7 @@ Active Storage facilitates uploading files to a cloud storage service like Amazo
 
 Accordingly:
 
-* Don't use [Disk service](https://community.fly.io/t/active-storage-images-are-not-persisting-in-disk-part-2/13095/3) unless you put the data on a [Volume](https://fly.io/docs/reference/volumes/) and are prepared to sync the data between machines
+* Don't use [Disk service](https://community.fly.io/t/active-storage-images-are-not-persisting-in-disk-part-2/13095/3) unless you put the data on a [Volume](https://fly.io/docs/volumes/) and are prepared to sync the data between machines
 * If you want to have your active storage data hosted on fly.io, consider using the [postgres adapter](https://github.com/lsylvester/active_storage-postgresql) or [MinIO](https://fly.io/docs/app-guides/minio/).
 * Of course, you are welcome to use [Amazon S3](https://edgeguides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis), [Microsoft Azure](https://edgeguides.rubyonrails.org/active_storage_overview.html#microsoft-azure-storage-service), or [Google Cloud Services](https://edgeguides.rubyonrails.org/active_storage_overview.html#google-cloud-storage-service).
 

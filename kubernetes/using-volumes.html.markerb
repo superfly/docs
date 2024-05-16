@@ -13,7 +13,7 @@ Fly Kubernetes supports [persistent volumes](https://kubernetes.io/docs/concepts
 [generic ephemeral volumes](https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/#generic-ephemeral-volumes+external).
 There are general considerations to keep in mind when using volumes in Fly Kubernetes:
 
-* Volumes are built on top of [Fly Volumes](/docs/reference/volumes/). They are local NVME drives and require your Pod to be deployed in the same region as the volume.
+* Volumes are built on top of [Fly Volumes](/docs/volumes/). They are local NVME drives and require your Pod to be deployed in the same region as the volume.
 * Only one persistent or ephemeral volume can be mounted at a time.
 * The maximum storage size available is 500GB.
 

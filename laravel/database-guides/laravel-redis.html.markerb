@@ -26,7 +26,7 @@ You can set up your own Redis Fly App either through Fly.io's Redis Docker Image
     - You can specify your region code through the `--region` attribute
     - You can opt not to immediately deploy by adding `--no-deploy` argument
     <br><br>
-2.  Afterwards, add a [volume](/docs/reference/volumes/) that will persist your Redis data
+2.  Afterwards, add a [volume](/docs/volumes/) that will persist your Redis data
 
     ```cmd
     fly volumes create redis_server --size 1

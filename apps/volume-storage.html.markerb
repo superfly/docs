@@ -1,11 +1,11 @@
 ---
-title: Add volume storage
+title: Add volume storage to a Fly Launch app
 layout: docs
 nav: firecracker
 order: 30
 ---
 
-Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). Learn [how Fly Volumes work](/docs/reference/volumes/).
+Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). Learn [how Fly Volumes work](/docs/volumes/overview/).
 
 ## Launch a new app with a Fly Volume
 
@@ -81,6 +81,10 @@ Add a volume to an app created with [Fly Launch](/docs/apps/).
 
 1. Repeat step 2 for each Machine in the process group. If you create an app using the `fly launch` command, then the app will usually have two Machines in the `app` process by default.
 
+        <div class="note icon">
+        **Note:** If you have multiple Machines, then you need to create an equal number of volumes with the same name. For example, your app's `[mounts]` config specifies `source="myapp_data"` and you have three Machines in `bos` (Boston), then you need to create three volumes named `myapp_data` in `bos`. Every volume has a unique ID to allow for multiple volumes with the same name.
+        </div>
+
 1. Deploy the app:
 
     ```cmd
@@ -89,39 +93,7 @@ Add a volume to an app created with [Fly Launch](/docs/apps/).
 
 1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
 
-## Add a volume to an unmanaged Machine
-
-For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`), you can create a volume and attach it when you clone a Machine. You can also [clone a Machine with a volume](/docs/apps/volume-manage/#clone-a-machine-with-a-volume) to get a new Machine with an empty volume.
-
-1. Create the volume in the same region as your app. For example:
-
-    ```cmd
-    fly volumes create <volume name> -r <region code>
-    ```
-
-1. Clone one of your app's Machines (with no volume) and attach the volume you just created:
-
-    ```cmd
-    fly machine clone <machine id> -r <region code> --attach-volume <volume id>:<destination mount path>
-    ```
-
-    `destination-mount-path` is the directory where the volume should be mounted on the file system.
-
-    For example:
-
-    ```cmd
-    fly machine clone 148eddeef09789 -r yyz --attach-volume vol_8l524yj0ko347zmp:/data
-    ```
-
-1. Repeat the preceding steps as needed to create more Machines with volumes.
-
-1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
-
-1. (Optional) Destroy the Machine used to create the clone:
-
-    ```cmd
-    fly machine destroy <machine id>
-    ```
+by creating multiple volumes with the same name. For example, if you had an app that required a volume named `myapp_data` and wanted to run three Machines in `bos`, then you would have to create at least three volumes named `myapp_data` in `bos`. Every volume has a unique ID to allow for multiple volumes with the same name.
 
 ## Confirm the volume is attached to a Machine
 
@@ -186,7 +158,7 @@ The volume is mounted in the directory specified by the `destination` field in t
 
 ## Related topics
 
-- [Fly Volumes overview](/docs/reference/volumes/)
-- [Manage volume storage](/docs/apps/volume-manage/)
+- [Fly Volumes overview](/docs/volumes/overview/)
+- [Create and manage volumes](/docs/apps/volume-manage/)
 - [`mounts` section](/docs/reference/configuration/#the-mounts-section) in the `fly.toml` Fly Launch configuration file
 - [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)

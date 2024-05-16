@@ -6,21 +6,16 @@ toc: false
 order: 10
 ---
 
-Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/).
+Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). 
 
-## Learn
 
-Understand how volumes work and whether they're right for your use case.
-
-[Fly Volumes overview](/docs/reference/volumes/)
-
-## How-Tos
+**[Fly Volumes overview](/docs/reference/volumes/):** Understand how volumes work and whether they're right for your use case.
 
 Get things done with volumes.
 
 [Add volume storage](/docs/apps/volume-storage/)
 
-[Manage volume storage](/docs/apps/volume-manage/)
+[Create and manage volume storage](/docs/volumes/volume-manage/)
 
 Related how-tos:
 

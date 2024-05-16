@@ -19,7 +19,7 @@ Explore these, and further options, for data storage in the following sections.
 
 Anything an App VM writes to its root disk is ephemeral: when the VM is redeployed, the root file system is rebuilt using its Docker image, deleting any data written to it since it was started up. This is fine for `/tmp` files, but most apps need to keep state in a database or another form of persistent storage.
 
-- **[Fly Volumes](/docs/volumes/)** - Persistent storage on Fly.io is provided by Fly Volumes. You can use volumes on an app directly, or run a separate database app with volume storage and connect an app to that. A Fly Volume is a slice of NVMe disk storage attached to the server that hosts your Machine. Volumes have pros and cons, and you should read the [Fly volumes overview](/docs/reference/volumes/) before deciding whether they're the best solution for your use case.
+- **[Fly Volumes](/docs/volumes/)** - Persistent storage on Fly.io is provided by Fly Volumes. You can use volumes on an app directly, or run a separate database app with volume storage and connect an app to that. A Fly Volume is a slice of NVMe disk storage attached to the server that hosts your Machine. Volumes have pros and cons, and you should read the [Fly volumes overview](/docs/volumes/overview/) before deciding whether they're the best solution for your use case.
 
 ## Fly.io database projects
 

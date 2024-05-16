@@ -1,19 +1,22 @@
 ---
-title: Manage volume storage
+title: Create and manage volumes
 layout: docs
 nav: firecracker
 order: 40
+redirect_from: /docs/apps/volume-manage/
 ---
+
+<div class="callout">
+**For Fly Launch apps:** Learn how to [create a new app with volumes or add a volume to your app](/docs/apps/volume-storage/).
+</div>
 
 Manage Fly Volumes using the [`fly volumes`](/docs/flyctl/volumes/) command. 
 
-Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). Learn [how Fly Volumes work](/docs/reference/volumes/).
+Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). Learn [how Fly Volumes work](/docs/volumes/overview/).
 
 <div class="note icon">**Note**: `fly volumes` is aliased to `fly volume` and `fly vol`.</div>
 
 ## Create a volume
-
-To create a new app with volumes or add a volume to your app, see [Add volume storage](/docs/apps/volume-storage/).
 
 Run:
 
@@ -24,6 +27,40 @@ fly vol create <my_volume_name>
 Use the `-r` option to set a [region](/docs/reference/regions/), or select a region when prompted.
 
 For options, refer to the [`fly volumes create` docs](/docs/flyctl/volumes-create/) or run `fly vol create -h`.
+
+## Add a volume to an unmanaged Machine
+
+For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`), you can create a volume and attach it when you clone a Machine. You can also [clone a Machine with a volume](/#clone-a-machine-with-a-volume) to get a new Machine with an empty volume.
+
+1. Create the volume in the same region as your app. For example:
+
+    ```cmd
+    fly volumes create <volume name> -r <region code>
+    ```
+
+1. Clone one of your app's Machines (with no volume) and attach the volume you just created:
+
+    ```cmd
+    fly machine clone <machine id> -r <region code> --attach-volume <volume id>:<destination mount path>
+    ```
+
+    `destination-mount-path` is the directory where the volume should be mounted on the file system.
+
+    For example:
+
+    ```cmd
+    fly machine clone 148eddeef09789 -r yyz --attach-volume vol_8l524yj0ko347zmp:/data
+    ```
+
+1. Repeat the preceding steps as needed to create more Machines with volumes.
+
+1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
+
+1. (Optional) Destroy the Machine used to create the clone:
+
+    ```cmd
+    fly machine destroy <machine id>
+    ```
 
 ## Access a volume
 
@@ -285,6 +322,6 @@ For options, refer to the [`fly volumes snapshots` docs](/docs/flyctl/volumes-sn
 
 ## Related topics
 
-- [Fly Volumes overview](/docs/reference/volumes/)
-- [Add volume storage](/docs/apps/volume-storage/)
+- [Fly Volumes overview](/doccs/volumes/overview/)
+- [Add volume storage to a Fly Launch app](/docs/apps/volume-storage/)
 - [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)

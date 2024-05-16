@@ -21,7 +21,7 @@ Fly.io takes a "principle of least privilege" approach to security. Here are the
 HIPAA requires that PHI is encrypted both in transit and at rest to prevent unauthorized access:
 
 - **In Transit**: Fly.io uses [WireGuard](https://fly.io/blog/our-user-mode-wireguard-year/) to encrypt data as it moves between networks, ensuring compliance with HIPAA's transmission security requirements.
-- **At Rest**: Fly.io ensures data at rest is secured on [encrypted NVMe user volumes](https://fly.io/docs/reference/volumes/), aligning with the encryption standards required by HIPAA for storage security.
+- **At Rest**: Fly.io ensures data at rest is secured on [encrypted NVMe user volumes](https://fly.io/docs/volumes/), aligning with the encryption standards required by HIPAA for storage security.
 
 ### Access Control
 
@@ -43,7 +43,7 @@ HIPAA demands that you implement hardware, software, and procedural mechanisms t
 
 To comply with HIPAA, entities must ensure that PHI is not altered or destroyed in an unauthorized manner:
 
-- **Data Storage and Backup**: Fly.io’s infrastructure provides robust data integrity controls, including [regular snapshots](https://fly.io/docs/apps/volume-manage/) of [encrypted volumes](https://fly.io/docs/reference/volumes/#volume-encryption) to prevent data loss.
+- **Data Storage and Backup**: Fly.io’s infrastructure provides robust data integrity controls, including [regular snapshots](https://fly.io/docs/apps/volume-manage/) of [encrypted volumes](https://fly.io/docs/volumes/overview/#volume-encryption) to prevent data loss.
 - **Reproducible Deployments**: Fly.io's use of Docker ensures that application deployments are reproducible and can be locked down to a mostly read-only state. This reduces the likelihood of unauthorized modifications to application environments, meeting HIPAA's requirements for protecting PHI from unauthorized alteration or destruction.
 
 ### Physical Security
