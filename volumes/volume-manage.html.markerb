@@ -38,7 +38,9 @@ For more options, refer to the [`fly volumes create` docs](/docs/flyctl/volumes-
 
 ## Extend a volume
 
-You can extend (increase) a volume's size, but you can't make a volume smaller.
+You can make a volume bigger using the `fly volume extend` command. Note that you can extend (increase) a volume's size, but you can't make a volume smaller.
+
+You can also configure a volume to extend automatically after a certain threshold [using the Machines API](/docs/machines/api/volumes-resource/#extend-a-volume) or [in the [mounts] section](/docs/reference/configuration/#auto-extend-volume-size-configuration) of your app's `fly.toml` file.
 
 1. Run `fly volumes list` and copy the ID of the volume to extend.
 
@@ -186,7 +188,7 @@ For options, refer to the [`fly volumes destroy` docs](/docs/flyctl/volumes-dest
 
 ## Restore a deleted volume
 
-You can restore a deleted volume using a volume snapshot, as long as you do so within the snapshot retention period. The default snapshot retention period is 5 days. Learn how to [set or change the snapshot retention period](/docs/volumes/snapshots/#set-or-change-snapshot-retention).
+You can restore data from a deleted volume using a volume snapshot, as long as you do so within the snapshot retention period. The default snapshot retention period is 5 days. Learn how to [set or change the snapshot retention period](/docs/volumes/snapshots/#set-or-change-snapshot-retention).
 
 1. Run `fly volumes list --all` and copy the ID of the deleted volume.
 

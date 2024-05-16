@@ -11,7 +11,7 @@ A snapshot is a point-in-time copy of a volume's data. We automatically take dai
 If the data stored on your volume updates frequently, then you should have other methods to back up or replicate your data in addition to daily snapshots. If you only have a single copy of your data on a single volume, and the host fails, then any data stored between the time when the snapshot was taken and the time when the failure occurred will be lost.
 </div>
 
-You can use a volume snapshot to [restore the data into a new volume](#restore-a-deleted-volume). You can even use the same process to restore data from a deleted volume.
+You can use a volume snapshot to [restore the data into a new volume](#restore-a-deleted-volume). You can even use the same process to [restore data from a deleted volume](/docs/volumes/volume-manage/#restore-a-deleted-volume).
 
 ## Set or change the snapshot retention period
 
