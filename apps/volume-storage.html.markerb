@@ -5,13 +5,18 @@ nav: firecracker
 order: 30
 ---
 
-Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). Learn [how Fly Volumes work](/docs/volumes/overview/).
+Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). 
+
+Learn more: 
+- [How Fly Volumes work](/docs/volumes/overview/)
+- [How to manage volumes with flyctl commands](/docs/volumes/volume-manage/)
+- [How to manage volume snapshots (backups)](/docs/volumes/snapshots)
 
 ## Launch a new app with a Fly Volume
 
 Use [Fly Launch](/docs/apps/) to create a new app with one Machine and an attached volume, and then clone the Machine to scale out.
 
-1. Launch a new app from your project source directory, specifying `--no-deploy` so it does not deploy immediately:
+1. Launch a new app from your project source directory with the `--no-deploy` option so it doesn't deploy automatically:
 
     ```cmd
     fly launch --no-deploy [flags, like --image or --dockerfile if using]
@@ -93,8 +98,6 @@ Add a volume to an app created with [Fly Launch](/docs/apps/).
 
 1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
 
-by creating multiple volumes with the same name. For example, if you had an app that required a volume named `myapp_data` and wanted to run three Machines in `bos`, then you would have to create at least three volumes named `myapp_data` in `bos`. Every volume has a unique ID to allow for multiple volumes with the same name.
-
 ## Confirm the volume is attached to a Machine
 
 Use flyctl to check the status of volumes and Machines.
@@ -156,9 +159,14 @@ tmpfs             113224      0    113224   0% /sys/fs/cgroup
 
 The volume is mounted in the directory specified by the `destination` field in the `[mounts]` section of the `fly.toml` file, or the `attach-volume` option for cloned Machines.
 
+## Access a volume
+
+<%= partial "/docs/partials/docs/volumes_access" %>
+
 ## Related topics
 
 - [Fly Volumes overview](/docs/volumes/overview/)
-- [Create and manage volumes](/docs/apps/volume-manage/)
 - [`mounts` section](/docs/reference/configuration/#the-mounts-section) in the `fly.toml` Fly Launch configuration file
+- [Create and manage volumes](/docs/apps/volume-manage/)
+- [Manage volume snapshots](/docs/volumes/snapshots/)
 - [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)
