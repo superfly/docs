@@ -1,0 +1,39 @@
+---
+title: Volume states
+layout: docs
+nav: firecracker
+toc: false
+---
+
+This table explains the possible states for a Fly Volume. A volume may only be in one state at a time.
+
+|                |                                                                        |
+|----------------|------------------------------------------------------------------------|
+| **creating**                 | Initial state for a new volume.                          |
+| **created**                  | Volume is in a stable state with no on-going operations. |
+| **extending**                | The volume is being extended.                            |
+| **restoring**                | The volume is being restored from a snapshot.            |
+| **enabling\_remote\_export** | The volume fork process is initializing.            |
+| **hydrating**                | The volume is being forked (copied) and is actively hydrating. The volume can be mounted. |
+| **recovering**               | The volume is being recovered from the `pending_destroy` state. |
+| **scheduling_destroy**       | The volume is being deleted.           |
+| **pending_destroy**          | The volume is soft deleted.                              |
+
+## Transitions and states during actions on volumes
+
+- Create a volume: `creating` → `created`
+- Restore a volume from a snapshot: `creating` → `restoring` → `created`
+- Fork a volume to another host/region: `creating` → `enabling_remote_export` → `hydrating` → `created`
+- Extend a volume: `creating` → `extending` → `created`
+- Destroy a volume: `creating` → `scheduling_destroy` → `pending_destroy`
+- Migrate a volume to a new host (performed by Fly.io): source volume `created` → `pending_destroy`; destination volume [Fork a volume transitions]
+
+## Volumes are soft deleted before being destroyed
+
+We always soft delete volumes before destroying them permanently, so that we can recover them if needed. Soft-deleted volumes are in the `pending_destroy` state.
+
+When you destroy a volume (whether by flyctl commands or the Machines API), the volume stays in the `pending_destroy` state for 24 hours before being permanently deleted.
+
+When we destroy a volume during migration to a new host, the volume stays in the `pending_destroy` state for 1 week before being permanently deleted.
+
+

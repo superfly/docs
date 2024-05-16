@@ -15,7 +15,7 @@ Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/).
 
 **[Create and manage volume storage with flyctl](/docs/volumes/volume-manage/):** Create, extend, copy, destroy, and restore volumes.
 
-**[Manage volume snapshots](/docs/volumes/snapshots/):** Back up your data with volume snapshots. Create a volume snapshot on-demand, change the retention time for automatic snapshots, and restore data from a snapshot.
+**[Manage volume snapshots](/docs/volumes/snapshots/):** We back up your data with volume snapshots. Create a volume snapshot on-demand, change the retention time for automatic snapshots, and restore data from a snapshot.
 
 ## Volume references
 

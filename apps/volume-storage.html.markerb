@@ -27,8 +27,8 @@ Use [Fly Launch](/docs/apps/) to create a new app with one Machine and an attach
 
     ```toml
     [mounts]
-      source="myapp_data"
-      destination="/data"
+      source = "myapp_data"
+      destination = "/data"
     ```
 
         <div class="note icon">
@@ -74,8 +74,8 @@ Add a volume to an app created with [Fly Launch](/docs/apps/).
 
     ```toml
     [mounts]
-      source="myapp_data"
-      destination="/data"
+      source = "myapp_data"
+      destination = "/data"
     ```
 
 1. Run `fly status` to check the [regions](/docs/reference/regions/) of the Machines and then create the volume in the same regions as your app's Machines. For example:

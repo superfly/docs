@@ -119,7 +119,7 @@ For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`), 
     fly machine clone <machine id> -r <region code> --attach-volume <volume id>:<destination mount path>
     ```
 
-    `destination-mount-path` is the directory where the volume should be mounted on the file system.
+    `destination-mount-path` is the directory where the volume should be mounted on the file system. Note that you can't mount a volume with a `destination-mount-path` of `/`, since `/` is used for the root file system.
 
     For example:
 
