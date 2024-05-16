@@ -43,7 +43,7 @@ fly deploy [WORKING_DIRECTORY] [flags]
       --ha                               Create spare machines that increases app availability (default true)
   -h, --help                             help for deploy
       --host-dedication-id string        The dedication id of the reserved hosts for your organization (if any)
-      --http-failover                    Determines whether to failover to plain internet(https) communication with remote builders if wireguard fails
+      --https-failover                   Determines whether to failover to plain internet(https) communication with remote builders if wireguard fails (default true)
       --ignorefile string                Path to a Docker ignore file. Defaults to the .dockerignore file in the working directory.
   -i, --image string                     The Docker image to deploy
       --image-label string               Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
