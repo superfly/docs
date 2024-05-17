@@ -187,7 +187,7 @@ For options, refer to the [`fly volumes destroy` docs](/docs/flyctl/volumes-dest
 
 ## Restore a deleted volume
 
-You can restore data from a deleted volume using a volume snapshot, as long as you do so within the snapshot retention period. The default snapshot retention period is 5 days. Learn how to [set or change the snapshot retention period](/docs/volumes/snapshots/#set-or-change-the-snapshot-retention-period).
+You can restore data from a deleted volume using a volume snapshot. At this time, you can only retrieve a deleted volume's ID for 24 hours after deletion. If you already have the volume ID, then you can still use it to access the volume's snapshots within the snapshot retention period. The default snapshot retention period is 5 days. Learn how to [set or change the snapshot retention period](/docs/volumes/snapshots/#set-or-change-the-snapshot-retention-period).
 
 1. Run `fly volumes list --all` and copy the ID of the deleted volume.
 
