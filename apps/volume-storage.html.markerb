@@ -16,10 +16,10 @@ Learn more:
 
 Use [Fly Launch](/docs/apps/) to create a new app with one Machine and an attached volume, and then clone the Machine to scale out.
 
-1. Launch a new app from your project source directory with the `--no-deploy` option so it doesn't deploy automatically:
+1. Launch a new app from your project source directory with the `--no-deploy` option so it doesn't deploy automatically. Include any required options for deploying your app, like `--image` or `--dockerfile`.
 
     ```cmd
-    fly launch --no-deploy [flags, like --image or --dockerfile if using]
+    fly launch --no-deploy
     ```
     `fly launch` creates a `fly.toml` app configuration file in your project source directory.
 

@@ -23,10 +23,12 @@ Set snapshot retention when you create a volume:
 fly volumes create <my_volume_name> --snapshot-retention <retention in days>
 ```
 
-You can update the snapshot retention for a volume. The new retention period won't affect existing snapshots, only new ones. Update snapshot retention for an existing volume:
+You can also update the snapshot retention for a volume. The new retention period is applied to new snapshots; it won't affect existing snapshots. 
+
+Update snapshot retention for an existing volume:
 
 ```
-fly volumes update <my_volume_name> --snapshot-retention <retention in days>
+fly volumes update <volume id> --snapshot-retention <retention in days>
 ```
 
 For Fly Launch apps, you can add snapshot retention to the `[mounts]` section of your app's `fly.toml` file. Any new Fly Volumes `fly deploy` creates will have the new retention period. This example sets the snapshot retention period to 14 days:
