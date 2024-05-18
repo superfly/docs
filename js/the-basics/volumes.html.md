@@ -7,7 +7,7 @@ order: 3
 
 If your application writes configuration, session, or user data to the file system
 and you want this data to persist across restarts you will need a
-[fly volume](https://fly.io/docs/reference/volumes/).  This doesn't apply if your
+[fly volume](/docs/volumes/).  This doesn't apply if your
 data is stored in a database elsewhere (for example in PostgreSQL, MySQL, or MongoDB),
 but does apply if you are using Sqlite3.
 

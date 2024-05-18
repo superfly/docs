@@ -6,7 +6,7 @@ toc: false
 redirect_from: /docs/machines/api-volumes-resource/
 ---
 
-You can use the Volumes resource to create and delete volumes. A Fly Volume is persistent storage for a Fly Machine. Learn more about [volumes](/docs/reference/volumes/).
+You can use the Volumes resource to create and delete volumes. A Fly Volume is persistent storage for a Fly Machine. Learn more about [volumes](/docs/volumes/).
 
 <div class="endpoints api-card">
   <div class="api-card-header">

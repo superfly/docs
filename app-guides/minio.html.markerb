@@ -74,7 +74,7 @@ fly vol create miniodata --region lhr
 ```
 
 ```out
-Warning! Every volume is pinned to a specific physical host. You should create two or more volumes per application to avoid downtime. Learn more at https://fly.io/docs/reference/volumes/
+Warning! Every volume is pinned to a specific physical host. You should create two or more volumes per application to avoid downtime. Learn more at https://fly.io/docs/volumes/
 ? Do you still want to use the volumes feature? Yes
                   ID: vol_6vjd0dkm5ny038mv
                 Name: miniodata

@@ -107,7 +107,7 @@ do it now.
 The counter itself needs to be saved in a database, and by default that
 database is sqlite3 for Rails.  For that database to be kept intact
 across deploys it needs to be placed on a
-[volume](https://fly.io/docs/reference/volumes/).
+[volume](https://fly.io/docs/volumes/).
 
 We can create a volume using the CLI:
 
