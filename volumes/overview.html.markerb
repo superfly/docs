@@ -55,19 +55,19 @@ Volumes are, by default, created with encryption-at-rest enabled for additional 
 
 The default volume size is 1GB when you create a volume with the `fly volumes create` command, and when you use the `fly launch` command to [launch an app with a volume](/docs/apps/volume-storage/#launch-a-new-app-with-a-fly-volume). The maximum volume size is 500GB.
 
-You can extend a volume's size&mdash;either [manually](/docs/apps/volume-manage/#extend-a-volume) or [automatically](/docs/reference/configuration/#the-mounts-section)&mdash;to make it larger, but you can't shrink a volume.
+You can extend a volume's size&mdash;either [manually](/docs/volumes/volume-manage/#extend-a-volume) or [automatically](/docs/reference/configuration/#the-mounts-section)&mdash;to make it larger, but you can't shrink a volume.
 
 ## Volume forks
 
-When you [fork a volume](/docs/apps/volume-manage/#create-a-copy-of-a-volume-fork-a-volume), you create a new volume with an exact copy of the data from the source volume to use for testing, backups, or whatever you like. If you don't specify a region, then the new volume is in the same region, but on a different physical host. The forked volume isn't attached to a Machine until you scale or clone a new Machine in the same region. The new volume and the source volume are independent, and changes to their contents are not synchronized.
+When you [fork a volume](/docs/volumes/volume-manage/#create-a-copy-of-a-volume-fork-a-volume), you create a new volume with an exact copy of the data from the source volume to use for testing, backups, or whatever you like. If you don't specify a region, then the new volume is in the same region, but on a different physical host. The forked volume isn't attached to a Machine until you scale or clone a new Machine in the same region. The new volume and the source volume are independent, and changes to their contents are not synchronized.
 
 ## Volume snapshots
 
 Fly.io takes daily block-level snapshots of volumes. We keep snapshots for five days by default, but you can configure the snapshot retention to be from 1 to 60 days. Daily automatic snapshots may not have your latest data. You should still implement your own backup plan for important data.
 
-You can also [create a snapshot of a volume](/docs/apps/volume-manage/#create-a-volume-snapshot) on demand.
+You can also [create a snapshot of a volume](/docs/volumes/snapshots/#create-a-volume-snapshot) on demand.
 
-You can [restore a volume snapshot](/docs/apps/volume-manage/#restore-a-volume-from-a-snapshot) into a new volume of equal or greater size.
+You can [restore a volume snapshot](/docs/volumes/snapshots/#restore-a-volume-from-a-snapshot) into a new volume of equal or greater size.
 
 ## When volumes are not available
 
