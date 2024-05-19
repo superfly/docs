@@ -34,7 +34,7 @@ It's the default burrow for session, cache, and file data amongst others. If you
     ```
 
     
-3.  To mount a volume named `"storage_vol"` to this Fly App, you'll have to create two `"storage_vol"` volumes in the AMS region, [one for each machine](https://fly.io/docs/reference/volumes/#volume-considerations):
+3.  To mount a volume named `"storage_vol"` to this Fly App, you'll have to create two `"storage_vol"` volumes in the AMS region, [one for each machine](https://fly.io/docs/volumes/overview/#volume-considerations):
     ```cmd
     fly volumes create storage_vol --region ams --count 2 
     ```

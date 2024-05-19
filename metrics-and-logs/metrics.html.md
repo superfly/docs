@@ -283,7 +283,7 @@ fly_instance_filefd_maximum
 Filesystem metrics derived from [VFS File System Information](https://man7.org/linux/man-pages/man0/sys_statvfs.h.0p.html).
 
 Labels:
-- `mount`: mountpoint name(s), `/` and if using [Volumes](https://fly.io/docs/reference/volumes/), the destination name in fly.toml.
+- `mount`: mountpoint name(s), `/` and if using [Volumes](https://fly.io/docs/volumes/), the destination name in fly.toml.
 
 ```
 fly_instance_filesystem_blocks

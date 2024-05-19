@@ -1,0 +1,134 @@
+---
+title: Manage volume snapshots
+layout: docs
+nav: firecracker
+order: 40
+---
+
+A snapshot is a point-in-time copy of a volume's data. We automatically take daily snapshots of all Fly Volumes. We store snapshots for 5 days by default, but you can set volume snapshot retention from 1 to 60 days.
+
+<div class="important icon">
+If the data stored on your volume updates frequently, then you should have other methods to back up or replicate your data in addition to daily snapshots. If you only have a single copy of your data on a single volume, and the host fails, then any data stored between the time when the snapshot was taken and the time when the failure occurred will be lost.
+</div>
+
+You can use a volume snapshot to [restore the data into a new volume](#restore-a-deleted-volume). You can even use the same process to [restore data from a deleted volume](/docs/volumes/volume-manage/#restore-a-deleted-volume).
+
+## Set or change the snapshot retention period
+
+Snapshot retention is the length of time (in days) that we store a volume snapshot. The default is 5 days.
+
+Set snapshot retention when you create a volume:
+
+```
+fly volumes create <my_volume_name> --snapshot-retention <retention in days>
+```
+
+You can also update the snapshot retention for a volume. The new retention period is applied to new snapshots; it won't affect existing snapshots. 
+
+Update snapshot retention for an existing volume:
+
+```
+fly volumes update <volume id> --snapshot-retention <retention in days>
+```
+
+For Fly Launch apps, you can add snapshot retention to the `[mounts]` section of your app's `fly.toml` file. Any new Fly Volumes `fly deploy` creates will have the new retention period. This example sets the snapshot retention period to 14 days:
+
+```toml
+[mounts]
+source = "myapp_data"
+destination = "/data"
+snapshot_retention = 14
+```
+
+## Create a volume snapshot
+
+We automatically take daily snapshots of your volume and keep them for 5 days by default. You can also create a snapshot of a volume on demand:
+
+1. Run `fly volumes list` and copy the ID of the volume to create a snapshot from.
+
+1. Create a snapshot of the volume:
+
+    ```cmd
+    fly volumes snapshots create <volume id>
+    ```
+    ```out
+    Scheduled to snapshot volume <volume id>
+    ```
+
+    The snapshot might take a few seconds or longer to complete, depending on the volume size.
+
+1. List the volume's snapshots:
+
+    ```cmd
+    fly volumes snapshots list <volume id>
+    ```
+
+    Example output:
+    ```out
+    Snapshots
+    ID                          	STATUS 	SIZE    	CREATED AT
+    vs_yAJylAAN83ZFna0A2yRA3J   	created	76082175	3 hours ago
+    vs_3NlZ9NNmpvoSP4yv3Om1gPm  	created	76082175	1 day ago
+    vs_Y49bw44Z6OocN8j4oXq6ww   	created	76082175	2 days ago
+    vs_gwMAXwwLjOVu1vPQVMN2w3N  	created	76082175	3 days ago
+    vs_Ql8xbllZOYDSmlKB0jxYVpg  	created	76082175	4 days ago
+    vs_plNk4llRGexSL22MOJYRpp   	created	76082175	5 days ago
+    vs_O9jqw997yvOuzyg1NVmmmjxhJ	running	0
+    ```
+
+The state of the new snapshot will go from `waiting` to `running` to `created`.
+
+For options, refer to the [`fly volumes snapshots` docs](/docs/flyctl/volumes-snapshots/) or run `fly volumes snapshots --help`.
+
+## Restore a volume from a snapshot
+
+To procedure to restore data from a deleted volume is very similar, see [Restore a deleted volume](/docs/volumes/volume-manage/#restore-a-deleted-volume). 
+
+Restore the data from a volume by creating a new volume from a snapshot:
+
+1. Run `fly volumes list` and copy the ID of the volume to restore.
+
+1. List the volume's snapshots:
+
+    ```cmd
+    fly volumes snapshots list <volume id>
+    ```
+
+    Example output:
+    ```out
+    Snapshots
+    ID                 	SIZE    	CREATED AT
+    vs_1KRgwpDqZ2ll5tx 	17649006	1 day ago
+    vs_nymJyYMwXpjxqTzJ	17677766	2 days ago
+    vs_R3OPAz5jBqzogF16	17689473	3 days ago
+    vs_pZlGZvq3gkAlAcaZ	17655830	4 days ago
+    vs_A9k6age3bQov6twj	17631880	5 days ago
+    ```
+
+1. Restore data from the volume snapshot into a new volume of equal or greater size:
+
+    ```cmd
+    fly volumes create <volume name> --snapshot-id <snapshot id> -s <volume size in GB>
+    ```
+
+    Example output:  
+    ```out
+    ? Select region: Sydney, Australia (syd)
+            ID: vol_mjn924o9l3q403lq
+          Name: pg_data
+          App: my-app-name
+        Region: syd
+          Zone: 180d
+      Size GB: 3
+    Encrypted: true
+    Created at: 02 Aug 22 21:27 UTC
+    ```
+
+For options, refer to the [`fly volumes create` docs](/docs/flyctl/volumes-create/) or run `fly volumes create --help`.
+
+## Related topics
+
+- [Fly Volumes overview](/docs/volumes/overview/)
+- [Create and manage volumes](/docs/volumes/volume-manage/)
+- [Add volume storage to a Fly Launch app](/docs/apps/volume-storage/)
+- [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)
