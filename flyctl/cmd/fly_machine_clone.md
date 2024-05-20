@@ -28,7 +28,7 @@ fly machine clone [machine_id] [flags]
       --vm-gpus int                   Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
       --vm-memory string              Memory (in megabytes) to attribute to the VM
       --vm-size string                The VM size to set machines to. See "fly platform vm-sizes" for valid values
-      --volume-requires-unique-zone   Require volume to be placed in separate hardware zone from existing volumes. Default false.
+      --volume-requires-unique-zone   Require volume to be placed in separate hardware zone from existing volumes. Default true. (default true)
 ~~~
 
 ## Global Options
