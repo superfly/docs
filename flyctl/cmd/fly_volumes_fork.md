@@ -15,7 +15,7 @@ fly volumes fork [id] [flags]
   -j, --json                        JSON output
   -n, --name string                 The name of the new volume
   -r, --region string               The target region. By default, the new volume will be created in the source volume's region.
-      --require-unique-zone         Place the volume in a separate hardware zone from existing volumes. This is the default.
+      --require-unique-zone         Place the volume in a separate hardware zone from existing volumes. This is the default. (default true)
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
       --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10)
