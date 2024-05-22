@@ -32,4 +32,4 @@ COPY --from=builder /app/target/release/[rust-app] /usr/local/bin
 ENTRYPOINT ["/usr/local/bin/[rust-app]"] 
 ```
 
-You can read more about cargo chef on the [GitHub Repository](https://github.com/LukeMathWalker/cargo-chef).
+You can read more about cargo chef on the [GitHub Repository](https://github.com/LukeMathWalker/cargo-chef+external).
