@@ -1,7 +1,7 @@
 ---
 title: Cargo Chef
 layout: framework_docs
-objective: Dockerfile for Rust Projects
+objective: Cargo Chef is a cargo extension that is commonly used in Dockerfiles for Rust apps. 
 order: 1
 ---
 
