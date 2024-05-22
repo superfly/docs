@@ -13,6 +13,6 @@ Thanks for signing up for Fly.io!
 
 ## Where to start
 
-* **[Speedrun](/docs/speedrun/):** You have a project or a Dockerfile and you just want to launch. 
+* **[Launch on Fly.io](/docs/getting-started/launch/):** You have a project or a Dockerfile and you just want to launch. 
 * **[Hands-on with Fly.io](/docs/hands-on/start/):** A step-by-step approach to learning.
 * **[Languages & Framework guides](/docs/languages-and-frameworks/):** Choose your framework or language and get started.
