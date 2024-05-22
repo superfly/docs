@@ -41,6 +41,7 @@ All languages and frameworks can run on Fly.io. We have more extensive docs and 
 - [JS](/docs/js/)
 - [Laravel](/docs/laravel/)
 - [Django](/docs/django/)
+- [Rust](/docs/rust)
 
 <br>
 See the whole list:
