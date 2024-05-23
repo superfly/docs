@@ -96,7 +96,7 @@ The machine identifier portion of the 6PN address is not related to the 14 chara
 
 ## Flycast - Private Fly Proxy services
 
-6PN addresses directly connect one Fly Machine with another. Packets sent from one Fly Machine arrive at another Fly Machine without passing through the Fly Proxy. This is very fast. But sometimes users want to direct packets through the Fly Proxy, even for private network traffic, to take advantage of its features, like geographically aware load balancing and autostart/autostop based on traffic. The is possible with Flycast addresses.
+6PN addresses directly connect one Fly Machine with another. Packets sent from one Fly Machine arrive at another Fly Machine without passing through the Fly Proxy. This is very fast. But sometimes you'll want to direct private network traffic through the Fly Proxy to take advantage of its features, like geographically aware load balancing and autostart/autostop based on traffic. The is possible with Flycast addresses.
 
 A Flycast address is an app-wide IPv6 address that the Fly Proxy can route to privately. Use Flycast to do the following entirely within your organization's private network:
 
