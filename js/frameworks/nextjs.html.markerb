@@ -182,9 +182,9 @@ SUPABASE_ANON_KEY=<API KEY>
 
 Finally, install the [supabase.js](https://www.npmjs.com/package/@supabase/supabase-js) `npm install @supabase/supabase-js`.
 
-With the above setup in place, let's create a simple page listing TODOs (we'll add some items to the database later) in `app/todos/page.tsx`:
+With the above setup in place, let's create a simple to-do list on a new page `app/todos/page.tsx` (we'll add some items to the database later):
 
-```javascript
+```jsx
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.SUPABASE_URL ?? ''
@@ -208,8 +208,8 @@ export default async function Page() {
 }
 ```
 
-If you try to run it locally and hit the `http://localhost:3000/todos` you'll get an empty page. That's totally expected since we need to create the table and fill it in with some data!
-To do that, return to the Supabase dashboard, navigate to the _SQL Editor_, and create the table with sample TODO tasks:
+If you try to run your app locally (`npm run dev`) and visit `http://localhost:3000/todos`, you'll get an empty page. That's totally expected since we need to create the table and fill it in with some data!
+To do that, return to the Supabase dashboard (`fly ext supabase dashboard`), navigate to _SQL Editor_, and create a table named `todo` and insert some sample tasks:
 
 ```sql
  -- Create the table
@@ -226,7 +226,7 @@ To do that, return to the Supabase dashboard, navigate to the _SQL Editor_, and 
    ('Deploy to Fly.io');
 ```
 
-And that's it! You should see your TODOs served locally from Supabase as well as when you redeploy the app at `Fly.io` with `fly deploy`.
+And that's it! You should see your to-do items served locally at `http://localhost:3000/todos` from Supabase as well as when you redeploy the app to Fly.io with `fly deploy`.
 
 <aside class="callout">This is the basic setup that to get you started and connect your Next.js app to a Fly.io-hosted Supabase Postgres. For more comprehensive guide look at [Supabase Frameworks Quickstarts](https://supabase.com/docs/guides/getting-started/quickstarts/nextjs).</aside>
 
