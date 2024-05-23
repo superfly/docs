@@ -52,7 +52,7 @@ Examples of retrieving this information are in the [fly-examples/privatenet](htt
 
 ## Listening for connections on 6PN addresses
 
-When deploying a Fly Machine, we append to the Machine's `/etc/hosts` to alias the 6PN address of the Machine to `fly-local-6pn`.
+When deploying a Fly Machine, we alias the 6PN address of the Machine to `fly-local-6pn` in the Machine's `/etc/hosts` file.
 
 For a service to be accessible via its 6PN address, it needs to bind to/listen on `fly-local-6pn`. For example, if you have a service running on port 8080, then you need to bind it to `fly-local-6pn:8080` for it to be accessible to other Machines over the 6PN network.
 
