@@ -20,15 +20,15 @@ You can connect apps running outside of Fly.io to your 6PN network using WireGua
 
 A Fly Machine is configured to resolve domain names with a custom DNS server from the Fly Platform. This DNS server can resolve arbitrary DNS queries, so you can look up `google.com` with it. But it’s also aware of 6PN addresses, and will let you look up 6PN addresses for other apps in your organization. Those addresses live under the custom top-level domain `.internal`. You might want to use `.internal` domains to connect your app to databases, API servers, or other apps in your 6PN network.
 
-Underneath `.internal` there are second-level domains for every app in your Fly organization. For example, if your app is in an organization with another app called `random-potato-45`, then there will be a AAAA record at `random-potato-45.internal`. The AAAA record will contain *all* the 6PN addresses of the started Fly Machines that make up the `random-potato-45` Fly App. Note that different libraries and tools will use multi-address AAAA records differently; most will only use the first address that is returned, but others might round-robin between entries for every request -- if you'd like to know more, consult the documentation for the library or tool you are using for DNS lookup.
+Underneath `.internal` there are second-level domains for every app in your Fly organization. For example, if your app is in an organization with another app called `my-app-name`, then there will be a AAAA record at `my-app-name.internal`. The AAAA record will contain *all* the 6PN addresses of the started Fly Machines that make up the `my-app-name` Fly App. Note that different libraries and tools will use multi-address AAAA records differently; most will only use the first address that is returned, but others might round-robin between entries for every request -- if you'd like to know more, consult the documentation for the library or tool you are using for DNS lookup.
 
 <div class="important icon">
 **Important:** All queries to Fly.io `.internal` domains only return information for started (running) Machines. Any stopped Machines, including those auto stopped by the Fly Proxy, are not included in the response to the DNS query.
 </div>
 
-Each `<appname>.internal` domain has further subdomains which can be used to return a more precise subset of the started Machines in that app. For example, you can add a region name qualifier to return the 6PN addresses of an app's Machines in a specific region: `iad.random-potato-45.internal`. Querying this domain returns the 6PN addresses of `random-potato-45` Machines in the `iad` region.
+Each `<appname>.internal` domain has further subdomains which can be used to return a more precise subset of the started Machines in that app. For example, you can add a region name qualifier to return the 6PN addresses of an app's Machines in a specific region: `iad.my-app-name.internal`. Querying this domain returns the 6PN addresses of `my-app-name` Machines in the `iad` region.
 
-Some `.internal` domains do not contain an AAAA record, but instead contain a TXT record with Machine, app, or region information. For example, if you request the TXT records using `regions.random-potato-45.internal`, then you'll get back a comma-separated list of regions that `random-potato-45` is deployed in. And you can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will return a comma-separated list of the app names.
+Some `.internal` domains do not contain an AAAA record, but instead contain a TXT record with Machine, app, or region information. For example, if you request the TXT records using `regions.my-app-name.internal`, then you'll get back a comma-separated list of regions that `my-app-name` is deployed in. And you can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will return a comma-separated list of the app names.
 
 The following table is a complete list of the available `.internal` domains:
 
@@ -67,7 +67,7 @@ Learn more about [connecting to app services](/docs/networking/app-services/).
 The custom Fly.io DNS server is always available at the IPv6 address `fdaa::3`. If you want to get fancy, you can install `dig` on the Machine and query the DNS directly. For example:
 
 ```cmd
-root@f066b83b:/# dig +short aaaa random-potato-45.internal @fdaa::3
+root@f066b83b:/# dig +short aaaa my-app-name.internal @fdaa::3
 ```
 ```output
 fdaa:0:18:a7b:7d:f066:b83b:2
@@ -75,11 +75,11 @@ fdaa:0:18:a7b:7d:f066:b83b:2
 
 When deploying a Fly Machine, we overwrite `/etc/resolv.conf` to point the DNS server to `fdaa::3`. Since this is the default configuration we set up for Machines on Fly.io, you probably don't need to do anything special to make this work.
 
-In uncommon circumstances, such as having an unusual filesystem layout, or using a networking stack that needs the nameserver explicitly indicated, you may need to point your application to the Fly.io DNS yourself. It's easy: from any Fly Machine, the nameserver is always at `fdaa::3`.
+In uncommon circumstances, such as having an unusual file system layout, or using a networking stack that needs the nameserver explicitly indicated, you may need to point your application to the Fly.io DNS yourself. It's easy: from any Fly Machine, the nameserver is always at `fdaa::3`.
 
 ## 6PN addresses in detail
 
-For the vast majority of users, connecting to other Machines via the `.internal` DNS will be the most convenient and accessible way to connect their Fly Apps and Machines. Still, some users may need more precise control over their networking than the `.internal` DNS will be able to give them. There is a structure to 6PN addresses, which such users might exploit in their designs. Technically, rather than a single address, each Fly Machine is assigned a `/112` 6PN subnet, which is structured as follows:
+In most cases, connecting to other Machines via the `.internal` DNS is the most convenient and accessible way to connect your Fly Apps and Machines. But in rare cases you may need more complicated routing than the `.internal` DNS gives you. In this cases, you might be able to take advantage of the structure of 6PN addresses in your App's design. Rather than a single address, each Fly Machine is assigned a `/112` 6PN subnet, which is structured as follows:
 
 | fdaa    | 16 bits | ULA prefix             |
 | ------- | ------- | ---------------------- |
@@ -89,10 +89,10 @@ For the vast majority of users, connecting to other Machines via the `.internal`
 |         | 16 bits | free space             |
 
 <div class="important icon">
-**Caution:** 6PN addresses are **not** static and will change over time. Fly Machines will be migrated from one host server to another from time to time, and since a host server identifier is encoded in the 6PN address, this means the 6PN address will change. If you need an unchanging method to address an individual Fly Machine, you can use the domain `<machine_id>.vm.<appname>.internal`.
+**Caution:** 6PN addresses are **not** static and will change over time, for various reasons. If you need an unchanging method to address an individual Fly Machine, you can use the domain `<machine_id>.vm.<appname>.internal`.
 </div>
 
-The machine identifier portion of the 6PN address is not related to the 14 character Machine ID; the two are independent. A Fly Machine's current 6PN address can be found in the environment variable `FLY_PRIVATE_IP`. As noted above, a Machine's 6PN address is not static, so do not assume that a Fly Machine's Machine ID can be permanently mapped to a particular 6PN address. However, an 6PN address change can only happen on a reboot, so supplying a procedure to check for a change in 6PN address on Machine startup is sufficient to handle this event.
+The machine identifier portion of the 6PN address is not related to the 14 character Machine ID; the two are independent. A Fly Machine's current 6PN address can be found in the environment variable `FLY_PRIVATE_IP`. As noted above, a Machine's 6PN address is not static, so do not assume that a Fly Machine's Machine ID can be permanently mapped to a particular 6PN address. 6PN addresses will change when an app is moved into a new Fly Org, or when a Fly Machine is migrated onto a new host server. However, an 6PN address change can only happen on a reboot, so supplying a procedure to check for a change in 6PN address on Machine startup is sufficient to handle this event.
 
 ## Flycast - Private Fly Proxy services
 
@@ -247,7 +247,7 @@ DNS = fdaa:0:18::3
 
 You guessed it; it's the `DNS` line. Your DNS server address will also start with `fdaa:`, but the next two parts are unique to your organization's network. All 6PN addresses are prefixed by the organization's network ID; that's the part of the address that locks it to your organization.
 
-All our WireGuard DNS addresses follow this pattern: take the organization prefix, and tack `::3` onto the end. In this example, the Wireguard peer address is:
+All our WireGuard DNS addresses follow this pattern: take the organization prefix, and tack `::3` onto the end. In this example, the WireGuard peer address is:
 
 ```
 fdaa:0:18:a7b:d6b:0:a:2
@@ -262,7 +262,7 @@ fdaa:0:18::3
 To use `dig` to probe DNS on a WireGuard connection, supply the DNS server address to it. For example:
 
 ```cmd
-root@f066b83b:/# dig +short aaaa random-potato-45.internal @fdaa:0:18::3
+root@f066b83b:/# dig +short aaaa my-app-name.internal @fdaa:0:18::3
 ```
 ```output
 fdaa:0:18:a7b:7d:f066:b83b:2
@@ -276,7 +276,7 @@ If you have the `dig` tool installed, a TXT query to `_apps.internal` will show 
 dig +noall +answer _apps.internal txt
 ```
 ```output
-_apps.internal.		5	IN	TXT	"random-potato-45,random-potato-45-0,random-potato-45-1"
+_apps.internal.		5	IN	TXT	"my-app-name,my-app-name-0,my-app-name-1"
 ```
 
 You can also query for peer names and addresses:
@@ -298,7 +298,7 @@ fdaa:0:18:a7b:7d:f066:b83b:102
 Query for the 6PN addresses of all started Machines in an app:
 
 ```
-dig +short aaaa random-potato-45.internal
+dig +short aaaa my-app-name.internal
 ```
 
 ### Manage WireGuard on Fly.io
@@ -346,7 +346,7 @@ Linux version:
 ping -6 my-app.internal
 ```
 
-If the ping succeeds, you have a VPN connection to the same org that your application's machine is running in.
+If the ping succeeds, you have a VPN connection to the same org that your application's Machine is running in.
 
 If the ping fails, check which org the application is deployed in.
 
