@@ -1,5 +1,4 @@
-Clone a Fly Machine The new Machine will be a copy of the specified Machine.
-If the original Machine has a volume, then a new empty volume will be created and attached to the new Machine.
+Clone a Fly Machine. The new Machine will be a copy of the specified Machine. If the original Machine has a volume, then a new empty volume will be created and attached to the new Machine.
 
 ## Usage
 ~~~

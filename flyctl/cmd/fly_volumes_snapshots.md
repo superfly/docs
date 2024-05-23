@@ -1,5 +1,4 @@
-"Commands for managing volume snapshots"
-
+Manage volume snapshots. A snapshot is a point-in-time copy of a volume. Snapshots can be used to create new volumes or restore a volume to a previous state.
 
 ## Usage
 ~~~
@@ -7,8 +6,8 @@ fly volumes snapshots [command] [flags]
 ~~~
 
 ## Available Commands
-* [create](/docs/flyctl/volumes-snapshots-create/)	 - Snapshot a volume
-* [list](/docs/flyctl/volumes-snapshots-list/)	 - List snapshots
+* [create](/docs/flyctl/volumes-snapshots-create/)	 - Create a volume snapshot.
+* [list](/docs/flyctl/volumes-snapshots-list/)	 - List snapshots.
 
 ## Options
 

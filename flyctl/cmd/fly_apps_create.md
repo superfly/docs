@@ -1,10 +1,10 @@
-The APPS CREATE command will register a new application
-with the Fly platform. It will not generate a configuration file, but one
-may be fetched with 'fly config save -a <app_name>'
+Create a new application on the Fly platform.
+This command won't generate a fly.toml configuration file, but you can
+fetch one with 'fly config save -a <app_name>'.
 
 ## Usage
 ~~~
-fly apps create [APPNAME] [flags]
+fly apps create <app name> [flags]
 ~~~
 
 ## Options
@@ -28,5 +28,5 @@ fly apps create [APPNAME] [flags]
 
 ## See Also
 
-* [fly apps](/docs/flyctl/apps/)	 - Manage apps
+* [fly apps](/docs/flyctl/apps/)	 - Manage apps.
 

@@ -2,7 +2,7 @@ Destroy one or more volumes. When you destroy a volume, you permanently delete a
 
 ## Usage
 ~~~
-fly volumes destroy [flags] ID ID ...
+fly volumes destroy <volume id> ... [flags]
 ~~~
 
 ## Options
