@@ -191,20 +191,18 @@ const supabaseUrl = process.env.SUPABASE_URL ?? ''
 const supabaseKey = process.env.SUPABASE_ANON_KEY ?? ''
 
 export default async function Page() {
-    const supabase = createClient(supabaseUrl, supabaseKey)
-    const { data: todos } = await supabase.from('todos').select()
+  const supabase = createClient(supabaseUrl, supabaseKey)
+  const { data: todos } = await supabase.from('todos').select()
 
-    return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-                <ul>
-                    {todos?.map((todo) => (
-                        <li key={todo.id} className="flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-                            {todo.title}
-                        </li>
-                    ))}
-                </ul>
-        </main>
-    )
+  return (
+    <ul>
+      {todos?.map((todo) => (
+        <li key={todo.id}>
+          {todo.title}
+        </li>
+      ))}
+    </ul>
+  )
 }
 ```
 
