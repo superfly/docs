@@ -1,7 +1,7 @@
-The APPS LIST command will show the applications currently
-registered and available to this user. The list will include applications
-from all the organizations the user is a member of. Each application will
-be shown with its name, owner and when it was last deployed.
+List the applications currently
+available to this user. The list includes applications
+from all the organizations the user is a member of. The list shows
+the name, owner (org), status, and date/time of latest deploy for each app.
 
 
 ## Usage
@@ -27,5 +27,5 @@ fly apps list [flags]
 
 ## See Also
 
-* [fly apps](/docs/flyctl/apps/)	 - Manage apps
+* [fly apps](/docs/flyctl/apps/)	 - Manage apps.
 

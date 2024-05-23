@@ -3,7 +3,7 @@ Snapshot a volume
 
 ## Usage
 ~~~
-fly volumes snapshots create <volume-id> [flags]
+fly volumes snapshots create <volume id> [flags]
 ~~~
 
 ## Options
@@ -23,5 +23,5 @@ fly volumes snapshots create <volume-id> [flags]
 
 ## See Also
 
-* [fly volumes snapshots](/docs/flyctl/volumes-snapshots/)	 - Manage volume snapshots
+* [fly volumes snapshots](/docs/flyctl/volumes-snapshots/)	 - Manage volume snapshots.
 

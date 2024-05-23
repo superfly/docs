@@ -1,10 +1,10 @@
-The APPS MOVE command will move an application to another
+Move an application to another
 organization the current user belongs to.
 
 
 ## Usage
 ~~~
-fly apps move <APPNAME> [flags]
+fly apps move <app name> [flags]
 ~~~
 
 ## Options
@@ -26,5 +26,5 @@ fly apps move <APPNAME> [flags]
 
 ## See Also
 
-* [fly apps](/docs/flyctl/apps/)	 - Manage apps
+* [fly apps](/docs/flyctl/apps/)	 - Manage apps.
 

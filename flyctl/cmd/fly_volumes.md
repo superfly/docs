@@ -1,4 +1,4 @@
-Manage Fly Volumes.
+Manage Fly Volumes. Volumes are persistent storage for Fly Machines. Learn how how volumes work: https://fly.io/docs/reference/volumes/.
 
 ## Usage
 ~~~
@@ -12,7 +12,7 @@ fly volumes [command] [flags]
 * [fork](/docs/flyctl/volumes-fork/)	 - Fork the specified volume.
 * [list](/docs/flyctl/volumes-list/)	 - List the volumes associated with an app.
 * [show](/docs/flyctl/volumes-show/)	 - Show the details of the specified volume.
-* [snapshots](/docs/flyctl/volumes-snapshots/)	 - Manage volume snapshots
+* [snapshots](/docs/flyctl/volumes-snapshots/)	 - Manage volume snapshots.
 * [update](/docs/flyctl/volumes-update/)	 - Update a volume for an app.
 
 ## Options

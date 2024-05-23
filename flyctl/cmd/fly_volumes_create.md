@@ -1,8 +1,8 @@
-Volumes are persistent storage for Fly Machines. Learn how to add a volume to your app: https://fly.io/docs/apps/volume-storage/
+Create a new volume for an app. Volumes are persistent storage for Fly Machines. Learn how to add a volume to your app: https://fly.io/docs/apps/volume-storage/.
 
 ## Usage
 ~~~
-fly volumes create <volumename> [flags]
+fly volumes create <volume name> [flags]
 ~~~
 
 ## Options
@@ -16,10 +16,10 @@ fly volumes create <volumename> [flags]
   -j, --json                        JSON output
       --no-encryption               Do not encrypt the volume contents. Volume contents are encrypted by default.
   -r, --region string               The target region (see 'flyctl platform regions')
-      --require-unique-zone         Place the volume in a separate hardware zone from existing volumes. This is the default. (default true)
+      --require-unique-zone         Place the volume in a separate hardware zone from existing volumes to help ensure availability (default true)
   -s, --size int                    The size of volume in gigabytes (default 1)
       --snapshot-id string          Create the volume from the specified snapshot
-      --snapshot-retention int      Snapshot retention in days (min 5) (default 5)
+      --snapshot-retention int      Snapshot retention in days (default 5)
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
       --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10)

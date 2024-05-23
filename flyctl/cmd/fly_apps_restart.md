@@ -1,8 +1,8 @@
-The APPS RESTART command will perform a rolling restart against all running VMs
+Restart an application. Perform a rolling restart against all running Machines.
 
 ## Usage
 ~~~
-fly apps restart [APPNAME] [flags]
+fly apps restart <app name> [flags]
 ~~~
 
 ## Options
@@ -23,5 +23,5 @@ fly apps restart [APPNAME] [flags]
 
 ## See Also
 
-* [fly apps](/docs/flyctl/apps/)	 - Manage apps
+* [fly apps](/docs/flyctl/apps/)	 - Manage apps.
 
