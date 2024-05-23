@@ -12,6 +12,8 @@ fly config save [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for save
+      --json            Output the configuration in JSON format
+      --yaml            Output the configuration in YAML format
   -y, --yes             Accept all confirmations
 ~~~
 

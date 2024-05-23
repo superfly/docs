@@ -27,5 +27,5 @@ fly apps releases [flags]
 
 ## See Also
 
-* [fly apps](/docs/flyctl/apps/)	 - Manage apps
+* [fly apps](/docs/flyctl/apps/)	 - Manage apps.
 

@@ -2,7 +2,7 @@ Show the details of the specified volume.
 
 ## Usage
 ~~~
-fly volumes show [id] [flags]
+fly volumes show <volume id> [flags]
 ~~~
 
 ## Options

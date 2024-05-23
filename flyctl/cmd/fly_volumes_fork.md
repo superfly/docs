@@ -2,7 +2,7 @@ Fork the specified volume. Volume forking creates an independent copy of a stora
 
 ## Usage
 ~~~
-fly volumes fork [id] [flags]
+fly volumes fork <volume id> [flags]
 ~~~
 
 ## Options

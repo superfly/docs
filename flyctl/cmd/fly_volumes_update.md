@@ -1,10 +1,9 @@
 Update a volume for an app. Volumes are persistent storage for
-		Fly Machines. Learn how to add a volume to
-		your app: https://fly.io/docs/apps/volume-storage/
+		Fly Machines.
 
 ## Usage
 ~~~
-fly volumes update <volumename> [flags]
+fly volumes update <volume id> [flags]
 ~~~
 
 ## Options
@@ -14,8 +13,8 @@ fly volumes update <volumename> [flags]
   -c, --config string            Path to application configuration file
   -h, --help                     help for update
   -j, --json                     JSON output
-      --scheduled-snapshots      Disable/Enable scheduled snapshots
-      --snapshot-retention int   Snapshot retention in days (min 5)
+      --scheduled-snapshots      Activate/deactivate scheduled automatic snapshots
+      --snapshot-retention int   Snapshot retention in days
 ~~~
 
 ## Global Options

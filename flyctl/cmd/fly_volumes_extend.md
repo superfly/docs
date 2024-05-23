@@ -1,8 +1,8 @@
-Extend a volume to the specified size. Most Machines don't require a restart. Some older Machines get a message to manually restart the Machine to increase the size of the file system.
+Extend a volume to the specified size. Most Machines don't require a restart after extending a volume. Some older Machines get a message to manually restart the Machine to increase the size of the file system.
 
 ## Usage
 ~~~
-fly volumes extend [id] [flags]
+fly volumes extend <volume id> [flags]
 ~~~
 
 ## Options
