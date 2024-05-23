@@ -131,7 +131,7 @@ VERSION	IP                	TYPE   	REGION	CREATED AT
 v6     	fdaa:0:22b7:0:1::3	private	global	just now
 ```
 
-You can also use Flycast to expose an app in one Fly organization to another Fly organization. If you want to expose services to another Fly.io organization you have access to, then use the `--org` flag.
+You can also use Flycast to expose an app in one Fly organization to another Fly organization by using the `--org` option when you allocate the Flycast address:
 
 ```cmd
  fly ips allocate-v6 --private --org my-other-org
