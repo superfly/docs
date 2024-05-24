@@ -620,6 +620,29 @@ Times are in milliseconds unless units are specified.
 
 **Note**: The `services.http_checks` section is optional and not generated in the default `fly.toml` file.
 
+### `services.machine_checks`
+
+Machine checks work a bit differently than the other checks. They run on each deploy, and if they fail, the deploy is stopped. A new machine is spawned with the environment variable `FLY_TEST_MACHINE_IP` set to the IP address of the machine being tested. This is useful for running integration tests on machines before a deployment. Here's an example:
+
+```toml
+  [[services.machine_checks]]
+    image = "curlimages/curl"
+    entrypoint = ["/bin/sh", "-c"]
+    command = ["curl", "$FLY_TEST_MACHINE_IP", "|", "grep", "Hello, World!"]
+    kill_signal = "SIGKILL"
+    kill_timeout = "5s"
+```
+
+This example uses the `curl` image to run a test. It checks that the machine is serving a page with the text "Hello, World!".
+
+* `image`: The Docker image to use for the test. We default to the one used for the process group the machine is in.
+* `entrypoint`: The entrypoint for the test. Defaults to the entrypoint of the machine being tested if not set
+* `command`: The command to run for the test.
+* `kill_signal`: The signal to send to the test process if it runs too long. Defaults to the signal of the image, if a custom image is set.
+* `kill_timeout`: The time to wait before sending the kill signal. Defaults to the timeout of the image, if a custom image is set.
+
+Machine checks are especially useful for canary deploys. `flyctl` will spawn a new machine, ensure that all the functionality you'd expect is working, and then deploy the rest of the machines in your app.
+
 ## The `mounts` section
 
 This section supports the Volumes feature for persistent storage. The section has two required entries: `source` and `destination`.
