@@ -100,7 +100,11 @@ Create an exact copy of a volume, including its data. By default, we place the n
   Created at: 12 Oct 23 18:57 UTC
     ```
     
-3. (Optional) Attach the volume to a new Machine by cloning with `fly machine clone <machine id> --region <region code> --attach-volume <volume id>:<destination mount path>` or [use `fly scale count`](/docs/apps/scale-count/#scale-an-app-with-volumes) to create a new Machine that picks up the unattached volume.
+3. (Optional) Use [`fly scale count`](/docs/apps/scale-count/#scale-an-app-with-volumes) to create a new Machine that picks up the unattached volume, or attach the volume to a new Machine by cloning with the following command:
+
+```cmd
+`fly machine clone <machine id> --region <region code> --attach-volume <volume id>:<destination mount path>`
+```
 
 For options, refer to the [`fly volumes fork` docs](/docs/flyctl/volumes-fork/) or run `fly volumes fork --help`.
 
