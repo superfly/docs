@@ -275,4 +275,5 @@ no body
 
 - [Working with the Machines API](/docs/machines/api/working-with-machines-api/)
 - [Machines resource](/docs/machines/api/machines-resource/) reference
+- [Tokens resource](/docs/machines/api/tokens-resource) reference
 - [Volumes resource](/docs/machines/api/volumes-resource/) reference
