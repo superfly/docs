@@ -5,7 +5,7 @@ nav: machines
 redirect_from: /docs/machines/working-with-machines/
 ---
 
-The REST Machines API provides resources to provision and manage Fly Apps, Fly Machines, and Fly Volumes.
+The Fly Machines REST API provides resources to provision and manage Fly Apps, Fly Machines, and Fly Volumes.
 
 
 * **[Working with the Machines API](/docs/machines/api/working-with-machines-api):** Get set up quickly to use the Machines API.

@@ -77,6 +77,10 @@ You can use the Machines resource to create, stop, start, update, and delete Fly
       <span class="delete-badge">delete</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/metadata/{key}</span>
     </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/v1/tokens/oidc</span>
+    </a>
   </div>
 </div>
 
@@ -1007,6 +1011,46 @@ Delete a metadata key-value pair on a specific Machine's config.
     <% end %>
     <%= render(CodeSampleComponent.new(title: 'Status: 204 No content', language: 'json')) do %>
       <%= partial "/docs/reference/machines/machines_metadata_delete_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Create an OIDC token
+
+Request an Open ID Connect token for your machine. Customize the audience claim with the `aud` parameter. This returns a JWT token. Learn more about [using OpenID Connect with Fly.io](/docs/reference/openid-connect/).
+
+<div class="api-section" data-exclude-render>
+  <div>
+     <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OIDC token'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/tokens/oidc')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/tokens/oidc" \\
+  -d '{
+      "aud": "https://fly.io/my-org-slug",
+    }'
+      <% end %>
+      <% component.with_json do %>
+        {
+          "aud": ""
+        }
+      <% end %>
+      <% component.with_json_table do %>
+        | Property   | Type    | Required | Description                |
+        |-------------|---------|----------|----------------------------|
+        | `aud`  | string  | no      | The audience claim for the token (the recipient of this access token). |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+    <raw oidc token>
     <% end %>
   </div>
 </div>
