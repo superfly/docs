@@ -24,52 +24,52 @@ The way you access the `DATABASE_URL` value depends on the module or ORM you are
 
 For Prisma, ensure your `prisma/schema.prisma` file contains:
 
-```
+```js
 url = env("DATABASE_URL")
 ```
 
 For drizzle/sqlite3:
 
-```
+```js
 db = drizzle(new Database(new URL(process.env.DATABASE_URL).pathname));
 ```
 
 For drizzle/postgres:
 
-```
+```js
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const db = drizzle(pool)
 ```
 
 For knex/sqlite3:
 
-```
+```js
   client: 'sqlite3',
   connection: { filename: new URL(process.env.DATABASE_URL).pathname },
 ```
 
 For knex/pg:
 
-```
+```js
   client: 'pg',
   connection: process.env.DATABASE_URL
 ```
 
 for sqlite3:
 
-```
+```js
 const db = new sqlite3.Database(new URL(process.env.DATABASE_URL).pathname);
 ```
 
 for postgres:
 
-```
+```js
 client = new pg.Client({connectionString: process.env.DATABASE_URL});
 ```
 
 for mongodb:
 
-```
+```js
 const client = new mongodb.MongoClient(process.env.DATABASE_URL);
 ```
 
