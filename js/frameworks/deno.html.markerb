@@ -5,6 +5,7 @@ sitemap: false
 redirect_from:
  - /docs/languages-and-frameworks/deno/
  - /docs/getting-started/deno/
+objective: Deno is the open-source JavaScript runtime for the modern web.
 order: 2
 ---
 

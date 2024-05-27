@@ -5,6 +5,7 @@ sitemap: false
 redirect_from:
  - /docs/languages-and-frameworks/astro/
  - /docs/getting-started/astro/
+objective: Astro is the web framework for content-driven websites.
 order: 1
 ---
 

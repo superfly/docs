@@ -5,6 +5,7 @@ sitemap: false
 redirect_from:
  - /docs/languages-and-frameworks/remix/
  - /docs/getting-started/remix/
+objective: Remix is a full stack web framework that lets you focus on the user interface and work back through web standards to deliver a fast, slick, and resilient user experience. 
 order: 12
 ---
 

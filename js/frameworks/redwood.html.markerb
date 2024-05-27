@@ -5,6 +5,7 @@ sitemap: false
 redirect_from:
  - /docs/languages-and-frameworks/redwood/
  - /docs/getting-started/redwood/
+objective: Redwood is the full-stack web framework designed to help you grow from side project to startup.
 order: 10
 ---
 
