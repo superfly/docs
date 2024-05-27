@@ -79,7 +79,7 @@ If your database is hosted external to fly.io, you generally will want to connec
 it securely.  The way to do so varies by database and adapter.  An example for
 postgres can be found at [node-postgres features > ssl](https://node-postgres.com/features/ssl).
 
-Equally importantly, if your database is hosted within the
+Equally important, if your database is hosted within the
 [Fly.io private network](https://fly.io/docs/networking/private-networking/), you will _not_
 want to connect with SSL/TLS connection options.
 
