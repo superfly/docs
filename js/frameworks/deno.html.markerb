@@ -68,7 +68,7 @@ We are ready to start working with Fly.io, and that means we need `flyctl`, our 
 ## Configuring the App for Fly.io
 
 Each Fly App needs a `fly.toml` file to tell the system how we'd like to deploy it.
-That file can be automatically generated with the command `flyctl launch` command. This command will also generate a Dockerfile for deployment.
+That file can be automatically generated with the command `fly launch` command. This command will also generate a Dockerfile for deployment.
 
 ```cmd
 fly launch
@@ -90,7 +90,7 @@ Then, pick the region you want to deploy in.
 
 ## Inside `fly.toml`
 
-The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also created a Fly-side application slot of the same name, "hellodeno". If we look at the `fly.toml` configuration file we can see the name in there:
+The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also created a Fly-side application slot with the same name, "hellodeno". If we look at the `fly.toml` configuration file we can see the name in there:
 
 ```toml
 app = "empty-sea-2541"
@@ -114,9 +114,9 @@ We are now ready to deploy our containerized app to Fly.io. At the command line,
 fly deploy
 ```
 
-This will lookup our `fly.toml` file and get the app name `empty-sea-2541` from there.
+This will get the app name `empty-sea-2541` from our `fly.toml` file.
 
-Then `flyctl` will start the process of deploying our application to Fly.io using the Dockerfile. Flyctl will return you to the command line when it's done.
+Then `flyctl` will start the process of deploying our application to Fly.io using the Dockerfile. `flyctl` will return you to the command line when it's done.
 
 ## Viewing the Deployed App
 
