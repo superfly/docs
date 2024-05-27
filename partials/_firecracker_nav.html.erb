@@ -16,7 +16,7 @@
       title: "Fly.io Blueprints",
       path: "/docs/blueprints/",
       open: false,
-      links: site.get("docs/blueprints").children.reject{ |page| page.data.status == "alpha" }.map do |page|
+      links: site.get("docs/blueprints").children.reject{ |page| page.data.status == "alpha" || page.data.published == false }.map do |page|
         { text: page.data.title, path: page.request_path }
       end
     },
