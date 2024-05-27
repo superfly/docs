@@ -249,6 +249,7 @@ build.
 - [Felt blog: Taking Hashrocket's "Ultimate Elixir CI" to the Next Level](https://felt.com/blog/hashrocket-ultimate-elixir-to-the-next-level)
   - [felt/ultimate-elixir-ci](https://github.com/felt/ultimate-elixir-ci) - Good examples on CI setup with explanations.
   - [Source for cleaning out incremental builds on retry](https://github.com/felt/ultimate-elixir-ci/blob/main/.github/actions/elixir-setup/action.yml#L97)
+- [Optimum Elixir CI with GitHub Actions](https://optimum.ba/blog/optimum-elixir-ci-with-github-actions) - examples of a superior caching technique
 
 ## Continuous Deployment (CD)
 
