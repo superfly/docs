@@ -44,7 +44,7 @@ If you don't have one, the following will do:
 rails new blog --css tailwind
 cd blog
 bin/rails generate scaffold Post title:string body:text
-fly launch --name blog-$user-$RANDOM
+fly launch --name blog-$USER-$RANDOM
 ```
 
 Feel free to substitute a different name for your application.
