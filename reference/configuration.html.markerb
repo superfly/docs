@@ -382,6 +382,19 @@ Times are in milliseconds unless units are specified.
 * `tls_skip_verify`: When `true` (and using HTTPS protocol) skip verifying the certificates sent by the server.
 * `http_service.checks.headers`: This is a sub-section of `http_service.checks`. It uses the key/value pairs as a specification of header and header values that will get passed with the check call.
 
+### The `http_services.machine_checks` section
+
+You can use the same `machine_checks` section for HTTP services as for [`services`](#services-machine-checks). The `machine_checks` section defines parameters for checking the health of a service.
+
+```toml
+[http_services.machine_checks]
+  image = "curlimages/curl"
+  entrypoint = ["/bin/sh", "-c"]
+  command = ["curl", "$FLY_TEST_MACHINE_IP", "|", "grep", "Hello, World!"]
+  kill_signal = "SIGKILL"
+  kill_timeout = "5s"
+```
+
 ## The `services` sections
 
 The `services` sections define how Fly Proxy connects requests that hit an app's public [Anycast](/docs/networking/services/) or private [Flycast](/docs/networking/private-networking/#flycast-private-load-balancing) address to services running within Machines, and configure other Fly Proxy behavior for a service. If a service only needs HTTP and HTTPS on standard ports, you can use the less verbose [`http_service`](#the-http_service-section).
@@ -619,6 +632,29 @@ Times are in milliseconds unless units are specified.
 * `services.http_checks.headers`: This is a sub-section of `services.http_checks`. It uses the key/value pairs as a specification of header and header values that will get passed with the http_check call.
 
 **Note**: The `services.http_checks` section is optional and not generated in the default `fly.toml` file.
+
+### `services.machine_checks`
+
+Machine checks work a bit differently than the other checks. They run on each deploy, and if they fail, the deploy is stopped. A new Machine is spawned with the environment variable `FLY_TEST_MACHINE_IP` set to the IP address of the Machine being tested. This is useful for running integration tests on Machines before a deployment. Here's an example:
+
+```toml
+  [[services.machine_checks]]
+    image = "curlimages/curl"
+    entrypoint = ["/bin/sh", "-c"]
+    command = ["curl", "$FLY_TEST_MACHINE_IP", "|", "grep", "Hello, World!"]
+    kill_signal = "SIGKILL"
+    kill_timeout = "5s"
+```
+
+This example uses the `curl` image to run a test. It checks that the Machine is serving a page with the text "Hello, World!".
+
+* `image`: The Docker image to use for the test. We default to the one used for the process group the Machine is in.
+* `entrypoint`: The entrypoint for the test. Defaults to the entrypoint of the Machine being tested if not set
+* `command`: The command to run for the test.
+* `kill_signal`: The signal to send to the test process if it runs too long. Defaults to the signal of the image, if a custom image is set.
+* `kill_timeout`: The time to wait before sending the kill signal. Defaults to the timeout of the image, if a custom image is set.
+
+Machine checks are especially useful for canary deploys. `flyctl` will spawn a new Machine, ensure that all the functionality you'd expect is working, and then deploy the rest of the Machines in your app.
 
 ## The `mounts` section
 
