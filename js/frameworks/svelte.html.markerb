@@ -164,7 +164,7 @@ We are now ready to deploy our containerized app to Fly.io:
 fly deploy
 ```
 
-This will get the app name `hello-sveltekit` from our `fly.toml` and start the process of deploying our application to Fly.io using the Dockerfile. Flyctl will return you to the command line when it's done.
+This will get the app name `hello-sveltekit` from our `fly.toml` and start the process of deploying our application to Fly.io using the Dockerfile. `fly` will return you to the command line when it's done.
 
 ## _Viewing the Deployed App_
 

@@ -90,7 +90,7 @@ Then, pick the region you want to deploy in.
 
 ## Inside `fly.toml`
 
-The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also created a Fly-side application slot with the same name, "hellodeno". If we look at the `fly.toml` configuration file we can see the name in there:
+The `fly.toml` file now contains a default configuration for deploying your app. While creating that file, `fly` has also created a Fly-side application slot with the same name, "hellodeno". If we look at the `fly.toml` configuration file we can see the name in there:
 
 ```toml
 app = "empty-sea-2541"
@@ -116,7 +116,7 @@ fly deploy
 
 This will get the app name `empty-sea-2541` from our `fly.toml` file.
 
-Then `flyctl` will start the process of deploying our application to Fly.io using the Dockerfile. `flyctl` will return you to the command line when it's done.
+Then, `fly` will start deploying our application to Fly.io using the Dockerfile. `fly` will return you to the command line when it's done.
 
 ## Viewing the Deployed App
 
