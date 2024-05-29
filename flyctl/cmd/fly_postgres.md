@@ -18,6 +18,7 @@ fly postgres [command] [flags]
 * [failover](/docs/flyctl/postgres-failover/)	 - Failover to a new primary
 * [import](/docs/flyctl/postgres-import/)	 - Imports database from a specified Postgres URI
 * [list](/docs/flyctl/postgres-list/)	 - List postgres clusters
+* [renew-certs](/docs/flyctl/postgres-renew-certs/)	 - Renews the SSH certificates for the Postgres cluster.
 * [restart](/docs/flyctl/postgres-restart/)	 - Restarts each member of the Postgres cluster one by one.
 * [users](/docs/flyctl/postgres-users/)	 - Manage users in a postgres cluster
 
