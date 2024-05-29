@@ -21,4 +21,4 @@ In the single-instance "Development" config, you'll also be given the option to 
 
 You can also add read-only replicas in other regions and take advantage of the Fly.io platform's proxy features to build a [Globally Distributed Postgres cluster](/docs/postgres/advanced-guides/high-availability-and-global-replication).
 
-The Fly Postgres app is fully open source. Just fork [fly-apps/postgres-ha](https://github.com/fly-apps/postgres-ha) and add whatever meets your needs. You can even update an existing cluster with your new image using `fly deploy --image`. One caveat is that once you fork, you won't be able to use `fly postgres` commands to administer your app. 
+The Fly Postgres app is fully open source. Just fork [fly-apps/postgres-flex](https://github.com/fly-apps/postgres-flex) and add whatever meets your needs. You can even update an existing cluster with your new image using `fly deploy --image`. One caveat is that once you fork, you won't be able to use `fly postgres` commands to administer your app. 
