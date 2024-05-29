@@ -63,13 +63,13 @@ Create an A record pointing to your IPv4 address, and an AAAA record pointing to
 Once these settings are in place, you can add the custom domain to the application's certificates. If we are configuring example.com, then we would simply run:
 
 ```cmd
-fly certs create example.com
+fly certs add example.com
 ```
 
 If you need a wildcard domain, remember to place quotes around the hostname to avoid shell expansion:
 
 ```cmd
-fly certs create "*.example.com"
+fly certs add "*.example.com"
 ```
 
 This will kick off the process of validating your domain and generating certificates. You can check on the progress if you run:
@@ -100,13 +100,13 @@ This process allows certificates to be issued before the domain is live and acce
 The process starts with adding the certificate to the application like so:
 
 ```cmd
-fly certs create example.com
+fly certs add example.com
 ```
 
 Again, if you are creating a wildcard domain, remember to place quotes around the hostname to avoid shell expansion:
 
 ```cmd
-fly certs create "*.example.com"
+fly certs add "*.example.com"
 ```
 
 Now we have created the certificate, we need to ask for the CNAME entry that has to be set up. For this, we run `fly certs show`:
@@ -207,7 +207,7 @@ This lists every host associated with the application. Each host may have up to 
 
 ### Creating a certificate for an application
 
-**With flyctl**: `fly certs create <hostname>`
+**With flyctl**: `fly certs add <hostname>`
 
 **With GraphQL**: The example is [addcert.js](https://github.com/fly-apps/hostnamesapi/blob/master/getcerts.js). This request takes the application id and hostname as parameters.
 
