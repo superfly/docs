@@ -24,52 +24,52 @@ The way you access the `DATABASE_URL` value depends on the module or ORM you are
 
 For Prisma, ensure your `prisma/schema.prisma` file contains:
 
-```
-url = env("DATABASE_URL")
+```js
+const url = env("DATABASE_URL")
 ```
 
 For drizzle/sqlite3:
 
-```
-db = drizzle(new Database(new URL(process.env.DATABASE_URL).pathname));
+```js
+const db = drizzle(new Database(new URL(process.env.DATABASE_URL).pathname));
 ```
 
 For drizzle/postgres:
 
-```
+```js
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const db = drizzle(pool)
 ```
 
 For knex/sqlite3:
 
-```
+```js
   client: 'sqlite3',
   connection: { filename: new URL(process.env.DATABASE_URL).pathname },
 ```
 
 For knex/pg:
 
-```
+```js
   client: 'pg',
   connection: process.env.DATABASE_URL
 ```
 
 for sqlite3:
 
-```
+```js
 const db = new sqlite3.Database(new URL(process.env.DATABASE_URL).pathname);
 ```
 
 for postgres:
 
-```
-client = new pg.Client({connectionString: process.env.DATABASE_URL});
+```js
+const client = new pg.Client({connectionString: process.env.DATABASE_URL});
 ```
 
 for mongodb:
 
-```
+```js
 const client = new mongodb.MongoClient(process.env.DATABASE_URL);
 ```
 
@@ -79,7 +79,7 @@ If your database is hosted external to fly.io, you generally will want to connec
 it securely.  The way to do so varies by database and adapter.  An example for
 postgres can be found at [node-postgres features > ssl](https://node-postgres.com/features/ssl).
 
-Equally importantly, if your database is hosted within the
+Equally important, if your database is hosted within the
 [Fly.io private network](https://fly.io/docs/networking/private-networking/), you will _not_
 want to connect with SSL/TLS connection options.
 

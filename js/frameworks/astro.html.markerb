@@ -5,6 +5,7 @@ sitemap: false
 redirect_from:
  - /docs/languages-and-frameworks/astro/
  - /docs/getting-started/astro/
+objective: Astro is the web framework for content-driven websites.
 order: 1
 ---
 
@@ -14,20 +15,20 @@ order: 1
 You can deploy your [Astro](https://astro.build/) app on Fly.io with minimal effort, our CLI will do the heavy lifting. You can use your existing Astro app or you can create one from scratch.
 
 
-Astro applications can to be served as either **static pages** _or_ with **server-side rendering (SSR)**. On this page you'll find guides to deploying both varieties.
+Astro applications can be served as either **static pages** _or_ with **server-side rendering (SSR)**. On this page you'll find guides to deploying both varieties.
 
 
 ## _Deploy a static Astro site_
 
 <%= partial "partials/flyctl" %>
 
-Next, if you don't already have an existing Astro application, you can create one quickly with the following command:
+Next, if you don't have an existing Astro application, you can create one with the following command:
 
 ```cmd
 npm create astro@latest
 ```
 
-Once your project is ready, you're ready to start deploying! If you don't already have a Dockerfile, `fly launch` will generate one for you, as well as prepare a `fly.toml` file.
+With the project setup out of the way, you're ready to start deploying! If you don't have a Dockerfile yet, `fly launch` will generate one for you, as well as prepare a `fly.toml` file.
 
 ```cmd
 cd my-astro-app
