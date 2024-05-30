@@ -15,7 +15,7 @@ Using OpenID Connect (OIDC) allows for a more secure approach by using short-liv
 ## Benefits of OpenID Connect (OIDC)
 
 Adopting OIDC to manage access to 3rd party services allows your apps to easily use good security practices like:
-* No hardcoded credentials, these are often shared across Machines and apps. OIDC allows for every Machine to have it's own credential.
+* No hardcoded credentials, these are often shared across Machines and apps. OIDC allows for every Machine to have its own credential.
 * Granular control over Machines access to 3rd party resources through leveraging the authentication (authN) and authorization (authZ) tools of the 3rd party.
 * Rotating credentials: credentials issued from 3rd parties are only valid for 15 minutes before they expire.
 
