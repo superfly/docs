@@ -35,8 +35,6 @@ All plans require a [credit card](/docs/about/billing/#payment-options) on file.
 
 When you sign up for a Fly.io account, you get a one-time $5 free trial credit to let you test-drive Fly.io at no cost. You won't be charged for the $5/month Hobby plan subscription until the credit has been used up. The free trial credit doesn't expire.
 
-Usage beyond our [free resource allowances](#free-allowances) consumes your free trial credit.
-
 The free trial credit applies to your default (“personal”) organization that we create for you on sign-up. When the free trial credit is used up, that organization is automatically placed on the $5/month [Hobby plan](https://fly.io/plans) (we’ll send you an email when it happens).
 
 ### Legacy Hobby plan
@@ -54,6 +52,8 @@ Resources included for free on all plans:
 * 160GB outbound data transfer
 
 Additional resources are billed at the usage-based pricing detailed below.
+
+There are no free allowances during the free trial.
 
 ## Compute
 
