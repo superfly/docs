@@ -89,7 +89,7 @@ You can set up health checks to monitor replication status and fail when replica
 
 Another useful pattern is to poll the database until the data is replicated. The Fly Postgres [LSN module](https://github.com/superfly/fly_postgres_elixir/tree/main/lib/lsn+external) has an example of how to poll with a [Postgres stored procedure ](https://github.com/superfly/fly_postgres_elixir/blob/main/lib/migrations/v01.ex+external). You can reuse this pattern from any database library.
 
-Less ideal, but still an option: your app can catch the errors thrown when records don't exist and then retry failed requests.
+A less efficient method would be for your app to catch the errors thrown when records don't exist and then retry failed requests.
 
 ## Implementation resources
 
