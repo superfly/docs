@@ -22,14 +22,14 @@ When your app receives write requests, you can use the `fly-replay` response hea
 
 The [`fly-replay` response header](/docs/networking/dynamic-request-routing/) instructs the Fly proxy to redeliver (replay) the original request to another region or Machine in your app, or even another app in your organization. In this case, you’ll be replaying write requests to the Machine in the primary region. Using `fly-replay` to replay write requests is a general pattern that can be applied in most languages and frameworks for databases with one primary and multiple read replicas.
 
-In the following diagram, the app is running one Machine in each of three regions. The primary region is Chicago, and this is where the read/write primary database resides. There are Machines in two secondary regions, Rio de Janeiro and Amsterdam, each of which has a read replica. Note that you could deploy in more than three regions and have more than one Machine per region connecting to the same read replica.
+In the following diagram, the app is running one Machine in each of three regions. The primary region is Chicago, and this is where the read/write primary database resides. There are Machines in two other regions, Rio de Janeiro and Amsterdam, each of which has a read replica. This example uses three regions for simplicity, but you could deploy in more than three regions and have more than one Machine per region connecting to the same read replica.
 
 <figure>
-  <img src="/static/images/docs-fly-replay.png" alt="Three Machines with attached databases in 3 regions, one region is the primary with a writable database, the other two regions have read only replica databases. Arrows pointing from the secondary Machines to the primary Machine show the direction of HTTP requests redelivered using the fly-replay response header. Arrows pointing from the primary database to the read replicas indicate syncing of data.">
+  <img src="/static/images/docs-fly-replay.png" alt="Three Machines with attached databases in 3 regions: Chicago is the primary region with a writable database, while Rio de Janeiro and Amsterdam have read only replica databases. Arrows pointing from the secondary Machines to the primary Machine show the direction of HTTP requests redelivered using the fly-replay response header. Arrows pointing from the primary database to the read replicas indicate syncing of data.">
 </figure>
 
 <div class="note">
-**Note:** To explain the `fly-replay` concept in our diagram, we show the replayed HTTP request going directly from a Machine in one region to the Machine in the primary region. In real life, Fly Proxy routes the request back through an edge node first. The cost of this routing is small, but if extreme efficiency is important for your use case, you can run your app in more regions to mitigate that.
+**Note:** To illustrate the `fly-replay` concept in our diagram, we show the replayed HTTP request going directly from Machines in Rio de Janeiro and Amsterdam to the Machine in Chicago. In real life, Fly Proxy routes the request back through an edge node first. The cost of this routing is small, but if extreme efficiency is important for your use case, you can run your app in more regions to mitigate that.
 </div>
 
 Your app is running on Fly.io, and the database can be hosted on Fly.io—in which case the regions will match up—or on another provider where you can pick regions close to the Fly.io region of your Machines.
@@ -47,7 +47,7 @@ Your app has a configurable primary region and you'll also host your primary dat
 
 Each Machine exposes the region in which it's running in the `FLY_REGION` environment variable.
 
-Your app can check the `FLY_REGION` against the `PRIMARY_REGION`, and modify the `DATABASE_URL`, `DB_HOST`, or other database variables when the values don't match. In some cases this just means changing a port ([as for Postgres](/docs/postgres/advanced-guides/high-availability-and-global-replication/#connecting-to-read-replicas)) and in other cases it will be more complex if the database requires different variables for each read replica (like in this [Laravel example](/laravel-bytes/multi-region-laravel-with-planetscale/)).
+Your app can check the `FLY_REGION` against the `PRIMARY_REGION`, and modify the `DATABASE_URL`, `DB_HOST`, or other database variables when the region codes don't match. In some cases this just means changing a port ([as for Postgres](/docs/postgres/advanced-guides/high-availability-and-global-replication/#connecting-to-read-replicas)) and in other cases it will be more complex if the database requires different variables for each read replica (like in this [Laravel example](/laravel-bytes/multi-region-laravel-with-planetscale/)).
 
 ### Replay write requests to the primary region
 
@@ -61,7 +61,7 @@ You can also set up routes in middleware if your language provides support for s
 
 #### Send a response with the fly-replay header
 
-When your app detects a write request, it can send a response that contains only the `fly-replay` header. Include the `fly-replay` header with the [region code](/docs/reference/regions/) of your primary region in responses to replay the whole request to that region, like so: `fly-replay: region=<region code> `. The code would look something like this:
+When your app detects a write request, it should send a response that contains only the `fly-replay` header with the [region code](/docs/reference/regions/) of your primary region like so: `fly-replay: region=<region code or env variable>`. Fly Proxy will replay the whole request to the specified region. The code would look something like this:
 
 ```yaml
 # This code should be in the handler for non-GET requests to the endpoint you 
@@ -87,20 +87,20 @@ There will be short periods of time when data is not consistent between replicas
 
 You can set up health checks to monitor replication status and fail when replication is not complete.
 
-Another useful pattern is to poll the database until the data is replicated. The Fly Postgres [LSN module](https://github.com/superfly/fly_postgres_elixir/tree/main/lib/lsn+external) has an example of how to poll with a [Postgres stored procedure ](https://github.com/superfly/fly_postgres_elixir/blob/main/lib/migrations/v01.ex+external). You can reuse this pattern from any database library.
+Another useful pattern is to poll the database until the data is replicated. The Fly Postgres [LSN module](https://github.com/superfly/fly_postgres_elixir/tree/main/lib/lsn+external) has an example of how to poll with a [Postgres stored procedure](https://github.com/superfly/fly_postgres_elixir/blob/main/lib/migrations/v01.ex+external). You can reuse this pattern from any database library.
 
 A less efficient method would be for your app to catch the errors thrown when records don't exist and then retry failed requests.
 
 ## Implementation resources
 
-Example implementations of this multi-region database with `fly-replay` pattern:
+Example implementations of this multi-region database with `fly-replay` pattern can give you a head start:
 
 - [Fly Ruby gem](https://github.com/superfly/fly-ruby+external) for running database replicas alongside your app instances in multiple regions.
 - [Fly Postgres Elixir library](https://github.com/superfly/fly_postgres_elixir+external) for geographically distributed Elixir applications using Ecto and PostgreSQL in a primary/replica configuration on Fly.io.
 
 ### Read more
 
-We've also covered this pattern in a few past blog posts:
+We've also covered multi-region databases with `fly-replay` in some past blog posts:
 
 - [Globally Distributed Postgres](https://fly.io/blog/globally-distributed-postgres/)
 
