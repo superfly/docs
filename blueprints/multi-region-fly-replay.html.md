@@ -4,7 +4,7 @@ layout: docs
 nav: firecracker
 ---
 
-You want to run your app and database in multiple [regions](https://fly.io/docs/reference/regions/) close to your users, and deploying database read replicas will give you better performance on read requests. This is a good solution for apps with read-heavy database workloads. But you also want writes to be efficient, despite needing to write to a primary database on the other side of the world.
+You want to run your app and database in multiple [regions](/docs/reference/regions/) close to your users, and deploying database read replicas will give you better performance on read requests. This is a good solution for apps with read-heavy database workloads. But you also want writes to be efficient, despite needing to write to a primary database on the other side of the world.
 
 This blueprint will help you understand the concepts to implement an app, with a primary database and read replicas in multiple regions, that uses the `fly-replay` response header to re-route write requests to the primary region. Consider using this blueprint when:
 
@@ -20,7 +20,7 @@ When your app receives write requests, you can use the `fly-replay` response hea
 
 ## How it works
 
-The `fly-replay` response header instructs the Fly proxy to redeliver (replay) the original request to another region or Machine in your app, or even another app in your organization. In this case, you’ll be replaying write requests to the Machine in the primary region. Using `fly-replay` to replay write requests is a general pattern that can be applied in most languages and frameworks for databases with one primary and multiple read replicas.
+The [`fly-replay` response header](/docs/networking/dynamic-request-routing/) instructs the Fly proxy to redeliver (replay) the original request to another region or Machine in your app, or even another app in your organization. In this case, you’ll be replaying write requests to the Machine in the primary region. Using `fly-replay` to replay write requests is a general pattern that can be applied in most languages and frameworks for databases with one primary and multiple read replicas.
 
 In the following diagram, the app is running one Machine in each of three regions. The primary region is Chicago, and this is where the read/write primary database resides. There are Machines in two secondary regions, Rio de Janeiro and Amsterdam, each of which has a read replica. Note that you could deploy in more than three regions and have more than one Machine per region connecting to the same read replica.
 
@@ -51,7 +51,7 @@ Your app can check the `FLY_REGION` against the `PRIMARY_REGION`, and modify the
 
 ### Replay write requests to the primary region
 
-Your app can detect write requests and send a response with the [`fly-replay` header](https://fly.io/docs/networking/dynamic-request-routing/) that tells the Fly Proxy to replay the whole request to the Fly Machine in the primary region.
+Your app can detect write requests and send a response with the `fly-replay` header that tells the Fly Proxy to replay the whole request to the Fly Machine in the primary region.
 
 #### Detect write requests
 
@@ -61,7 +61,7 @@ You can also set up routes in middleware if your language provides support for s
 
 #### Send a response with the fly-replay header
 
-When your app detects a write request, it can send a response that contains only the `fly-replay` header. Include the `fly-replay` header with the [region code](https://fly.io/docs/reference/regions/) of your primary region in responses to replay the whole request to that region, like so: `fly-replay: region=<region code> `. The code would look something like this:
+When your app detects a write request, it can send a response that contains only the `fly-replay` header. Include the `fly-replay` header with the [region code](/docs/reference/regions/) of your primary region in responses to replay the whole request to that region, like so: `fly-replay: region=<region code> `. The code would look something like this:
 
 ```yaml
 # This code should be in the handler for non-GET requests to the endpoint you 
