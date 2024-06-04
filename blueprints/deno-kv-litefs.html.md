@@ -141,10 +141,10 @@ Your reward for running all those commands should be a running app with LiteFS! 
 
 ### Scaling
 
-Deploying just one node using LiteFS doesn’t actually _do much_, so try scaling outwards! You can add a few machines in regions close to your users like this:
+Deploying just one node using LiteFS doesn’t actually _do much_, so try scaling outwards! You can add a few Machines in regions close to your users like this:
 
 ```
 fly scale count 3 -r yyz,ewr,waw
 ```
 
-This will automatically add volumes and machines to [scale your app](/docs/apps/scale-count/#scale-an-apps-regions) out and around the world!
+This will automatically add volumes and Machines to [scale your app](/docs/apps/scale-count/#scale-an-apps-regions) out and around the world!
