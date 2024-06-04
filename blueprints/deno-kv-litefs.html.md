@@ -9,17 +9,15 @@ date: 2024-05-28
 
 ## Problem
 
-If you're porting an app from Deno Deploy to Fly.io, you may hit a bit of a snag: if it was built with [Deno KV](https://deno.com/blog/kv), a _traditionally_ FoundationDB backed K/V store made for Deno Deploy, it may seem like you're stuck because there's no obvious way to easily run Deno KV at scale on Fly.io. You _could_ use [denoland/denokv](https://github.com/denoland/denokv) on Fly.io, but due to an alignment of the stars there happens to be an easier way.
+If you're porting an app from Deno Deploy to Fly.io, you may hit a bit of a snag: if it was built with [Deno KV](https://deno.com/blog/kv), a _traditionally_ FoundationDB backed K/V store made for Deno Deploy, there's no obvious way to easily run Deno KV at scale on Fly.io. You _could_ use [denoland/denokv](https://github.com/denoland/denokv) on Fly.io, but due to an alignment of the stars there happens to be an easier way.
 
-Deno KV can actually be backed by an SQLite DB stored on disk in a cache folder, and you can actually specify the path of this DB with the parameter to `Deno.openKv( <here> )`.
+Deno KV can actually be backed by an SQLite DB stored on disk in a cache folder, and you can specify the path of this DB with the parameter to `Deno.openKv( <here> )`.
 
-This means you can do something like this:
+This means you can do something like this to get the SQLite-backed Deno KV implementation to work off an arbitrary SQLite DB:
 
 ```typescript
 const kv = await Deno.openKv("/any/path/i/want.db");
 ```
-
-To get the SQLite-backed Deno KV implementation to work off an arbitrary SQLite DB.
 
 Now, Fly.io has some special features for SQLite users, namely [LiteFS Cloud](https://fly.io/docs/litefs/speedrun), a distributed file system that transparently replicates and backs up SQLite databases across all your instances. The magic here is that you can just treat it like a local on-disk SQLite database but behind the curtain it’s doing all the work to replicate your DB.
 
@@ -62,9 +60,12 @@ lease:
 
 This is 99% the [sample config](https://github.com/superfly/litefs-example/blob/main/fly-io-config/etc/litefs.yml), only changing the exec command to a Deno one.
 
-<section class="callout"> It’s not immediately clear based on the config, but you need to make your app listen on 8081, not 8080. Part of LiteFS acts as a proxy, so you need the fly-proxy to send requests to LiteFS which then forwards them on to your app.
+<div class="important icon">
+It's not immediately clear based on the example config, but your app needs to listen on "target" (:8081) and your service/http_service in fly.toml needs to port to "addr" (:8080). This is because part of LiteFS acts as a proxy, so you need the fly-proxy to send requests to LiteFS which then forwards them on to your app.
 
-If you’re not able to change your application’s port, make sure `target` is set up correctly then change `addr` and `fly.toml` to something other than `:8080`. </section>
+If you’re not able to change your application’s port, make sure `target` is set up correctly then change `addr` and `fly.toml` to something other than `:8080`.
+
+</div>
 
 Once you've added the config, you just need to make your app look for the SQLite DB in the right location. For Deno KV, that looks like this:
 
@@ -100,7 +101,7 @@ And copy in the LiteFS binary:
 COPY --from=flyio/litefs:0.5 /usr/local/bin/litefs /usr/local/bin/litefs
 ```
 
-And update the `ENTRYPOINT`/`CMD`.
+And update the `ENTRYPOINT`/`CMD`:
 
 ```docker
 ENTRYPOINT litefs mount
@@ -136,14 +137,14 @@ Aaannnndddd, Deploy!
 fly deploy
 ```
 
-Wow! Your reward for all those commands is hopefully a running app with LiteFS! From my (somewhat limited) testing, this appears to be fully functional with Deno KV as a “client”, but I’d love to hear if any of you run into friction using LiteFS with Deno KV or any other client, you can reach out on [the Fly Community](https://community.fly.io/).
+Your reward for running all those commands should be a running app with LiteFS! Let us know if you run into friction using LiteFS with Deno KV or any other client, you can reach out on [the Fly Community](https://community.fly.io/).
 
 ### Scaling
 
-Deploying just one node using LiteFS doesn’t actually _do much_, so try scaling outwards! I like to add a few machines in regions close to my friends for hobby apps like this:
+Deploying just one node using LiteFS doesn’t actually _do much_, so try scaling outwards! You can add a few machines in regions close to your users like this:
 
 ```
 fly scale count 3 -r yyz,ewr,waw
 ```
 
-This will automatically add volumes and machines to scale your app out and around the world!
+This will automatically add volumes and machines to [scale your app](/docs/apps/scale-count/#scale-an-apps-regions) out and around the world!
