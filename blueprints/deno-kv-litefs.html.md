@@ -61,7 +61,7 @@ lease:
 This is 99% the [sample config](https://github.com/superfly/litefs-example/blob/main/fly-io-config/etc/litefs.yml), only changing the exec command to a Deno one.
 
 <div class="important icon">
-It's not immediately clear based on the example config, but your app needs to listen on "target" (:8081) and your service/http_service in fly.toml needs to port to "addr" (:8080). This is because part of LiteFS acts as a proxy, so you need the fly-proxy to send requests to LiteFS which then forwards them on to your app.
+It's not immediately clear based on the example config, but your app needs to listen on "target" (:8081) and your service/http_service in fly.toml needs to listen on "addr" (:8080). This is because part of LiteFS acts as a proxy, so you need the fly-proxy to send requests to LiteFS which then forwards them on to your app.
 
 If you’re not able to change your application’s port, make sure `target` is set up correctly then change `addr` and `fly.toml` to something other than `:8080`.
 
