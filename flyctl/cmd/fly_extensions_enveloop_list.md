@@ -1,4 +1,4 @@
-List your Upstash Enveloop project
+List your Enveloop projects
 
 ## Usage
 ~~~

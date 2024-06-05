@@ -21,6 +21,7 @@ fly [flags]
 * [doctor](/docs/flyctl/doctor/)	 - The DOCTOR command allows you to debug your Fly environment
 * [extensions](/docs/flyctl/extensions/)	 - Extensions are additional functionality that can be added to your Fly apps
 * [image](/docs/flyctl/image/)	 - Manage app image
+* [incidents](/docs/flyctl/incidents/)	 - Show incidents
 * [ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
 * [jobs](/docs/flyctl/jobs/)	 - Show jobs at Fly.io
 * [launch](/docs/flyctl/launch/)	 - Create and configure a new app from source code or a Docker image

@@ -1,4 +1,4 @@
-Visit the Enveloop dashboard on the Upstash web console
+Open the Enveloop dashboard via your web browser
 
 ## Usage
 ~~~

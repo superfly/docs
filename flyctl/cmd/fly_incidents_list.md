@@ -1,8 +1,8 @@
-Permanently destroy an Enveloop project
+List the active incidents that may be affecting your apps or deployments.
 
 ## Usage
 ~~~
-fly extensions enveloop destroy [name] [flags]
+fly incidents list [flags]
 ~~~
 
 ## Options
@@ -10,8 +10,9 @@ fly extensions enveloop destroy [name] [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for destroy
-  -y, --yes             Accept all confirmations
+  -h, --help            help for list
+  -j, --json            JSON output
+  -o, --org string      The target Fly.io organization
 ~~~
 
 ## Global Options
@@ -24,5 +25,5 @@ fly extensions enveloop destroy [name] [flags]
 
 ## See Also
 
-* [fly extensions enveloop](/docs/flyctl/extensions-enveloop/)	 - Provision and manage Enveloop projects
+* [fly incidents](/docs/flyctl/incidents/)	 - Show incidents
 
