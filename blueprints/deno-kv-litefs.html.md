@@ -13,7 +13,7 @@ If you're porting an app from Deno Deploy to Fly.io, you may hit a bit of a snag
 
 Deno KV can actually be backed by an SQLite DB stored on disk in a cache folder, and you can specify the path of this DB with the parameter to `Deno.openKv( <here> )`.
 
-This means you can do something like this to get the SQLite-backed Deno KV implementation to work off an arbitrary SQLite DB:
+This means you can do something like this to get Deno KV to use an arbitrary SQLite DB:
 
 ```typescript
 const kv = await Deno.openKv("/any/path/i/want.db");
@@ -61,7 +61,7 @@ lease:
 This is 99% the [sample config](https://github.com/superfly/litefs-example/blob/main/fly-io-config/etc/litefs.yml), only changing the exec command to a Deno one.
 
 <div class="important icon">
-It's not immediately clear based on the example config, but your app needs to listen on "target" (:8081) and your service/http_service in fly.toml needs to port to "addr" (:8080). This is because part of LiteFS acts as a proxy, so you need the fly-proxy to send requests to LiteFS which then forwards them on to your app.
+It's not immediately clear based on the example config, but your app needs to listen on "target" (:8081) and your service/http_service in fly.toml needs to listen on "addr" (:8080). This is because part of LiteFS acts as a proxy, so you need the fly-proxy to send requests to LiteFS which then forwards them on to your app.
 
 If you’re not able to change your application’s port, make sure `target` is set up correctly then change `addr` and `fly.toml` to something other than `:8080`.
 
@@ -73,7 +73,7 @@ Once you've added the config, you just need to make your app look for the SQLite
 const kv = await Deno.openKv(Deno.env.get("DB_LOCATION"));
 ```
 
-Where `DB_LOCATION` is set to `/litefs/my.db`.
+Where `DB_LOCATION` is set to `/litefs/my.db` in `fly.toml` under `[env]`.
 
 Now, if you’re deploying to Fly.io, you’re almost ready to go. [Here’s where to look if you’re not running on Fly.io](https://fly.io/docs/litefs/getting-started-docker/).
 
