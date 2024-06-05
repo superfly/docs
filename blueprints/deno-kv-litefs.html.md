@@ -13,7 +13,7 @@ If you're porting an app from Deno Deploy to Fly.io, you may hit a bit of a snag
 
 Deno KV can actually be backed by an SQLite DB stored on disk in a cache folder, and you can specify the path of this DB with the parameter to `Deno.openKv( <here> )`.
 
-This means you can do something like this to get the SQLite-backed Deno KV implementation to work off an arbitrary SQLite DB:
+This means you can do something like this to get Deno KV to use an arbitrary SQLite DB:
 
 ```typescript
 const kv = await Deno.openKv("/any/path/i/want.db");
@@ -73,7 +73,7 @@ Once you've added the config, you just need to make your app look for the SQLite
 const kv = await Deno.openKv(Deno.env.get("DB_LOCATION"));
 ```
 
-Where `DB_LOCATION` is set to `/litefs/my.db`.
+Where `DB_LOCATION` is set to `/litefs/my.db` in `fly.toml` under `[env]`.
 
 Now, if you’re deploying to Fly.io, you’re almost ready to go. [Here’s where to look if you’re not running on Fly.io](https://fly.io/docs/litefs/getting-started-docker/).
 
