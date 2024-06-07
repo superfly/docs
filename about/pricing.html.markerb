@@ -23,7 +23,7 @@ Check out our [plans and plan pricing](https://fly.io/plans).
 
 Every organization belongs to a plan. When you create a new organization, it starts on the [Hobby plan](https://fly.io/plans). If you need more support or compliance options, then you can upgrade to a Launch, Scale, or Enterprise plan.
 
-Some usage is included with our Launch, Scale, and Enterprise. You can upgrade your plan at any time, or just pay for extra usage at the usage-based prices listed below.
+Some usage is included with our Launch, Scale, and Enterprise plans. You can upgrade your plan at any time, or just pay for extra usage at the usage-based prices listed below.
 
 <div class="note icon">
 Regardless of which plan you're on, your organization may be subject to automated scaling limits to prevent abuse or to help with capacity planning. Email the address in the error message if you run into such a limit and it's getting in your way.
