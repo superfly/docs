@@ -6,6 +6,7 @@ fly incidents [command] [flags]
 ~~~
 
 ## Available Commands
+* [hosts](/docs/flyctl/incidents-hosts/)	 - Show hosts' incidents
 * [list](/docs/flyctl/incidents-list/)	 - List active incidents.
 
 ## Options
