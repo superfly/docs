@@ -12,7 +12,7 @@ Reasons to set up extra Machines:
 
 - Your app won't fail when a single host fails because another Machine will start up to take over app requests or tasks.
 - If your app has a lot of users, or bursts of high usage, then the Fly Proxy can load balance requests and automatically stop and start Machines based on traffic to your app. 
-- When Machines aren't running, you only pay for rootfs, not CPU and RAM. Rootfs is [cheap](/docs/about/pricing/#stopped-fly-machines), like 18 cents a month for an average Elixir app that uses 1.2 GB of rootfs.
+- When Machines aren't running, you only pay for rootfs, not CPU and RAM. Machine rootfs is [cheap](/docs/about/pricing/#stopped-fly-machines), like 18 cents a month for an average Elixir app that uses 1.2 GB of rootfs.
 
 You can add [extra Machines](#extra-machines-for-apps-that-receive-requests) for Fly Proxy to start and stop as needed, which is great for apps that have built-in replication or that don't share data.
 
