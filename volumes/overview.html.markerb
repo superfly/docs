@@ -10,14 +10,14 @@ Apps can store only ephemeral data on the root file systems of their Fly Machine
 
 Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can access and write to a volume on a Machine just like a regular directory. Use volumes to store your database files, to save your app's state, such as configuration and session or user data, or for any information that needs to persist after deploy or restart.
 
-A Fly Volume is a slice of an NVMe drive on the same physical server as the Machine on which it's mounted and it's tied to that hardware. Fly Volumes are similar to disk inside your laptop, accessible from a mount point in your file system. Using volumes tied to hardware has both advantages and disadvantages.
+A Fly Volume is a slice of an NVMe drive on the same physical server as the Machine on which it's mounted and it's tied to that hardware. Fly Volumes are similar to the disk inside your laptop, accessible from a mount point in your file system. Using volumes tied to hardware has both advantages and disadvantages.
 
 ## Volume considerations
 
 * **A volume belongs to one app**: Every Fly Volume belongs to a [Fly App](/docs/reference/apps/) and you can't share a volume between apps.
 * **A volume exists on one server**: Each volume exists on one server in a single region. It is not network storage.
 * **A volume can attach to one Machine**: You need to run as many volumes as there are Machines. There's a one-to-one mapping between Machines and volumes. A Machine can only mount one volume at a time and a volume can be attached to only one Machine.
-* **Develop your app to handle replication**: Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app, so if you need the volumes to sync up, then your app has to make that happen.
+* **Develop your app to handle replication**: Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app, so if you need the volumes to sync up, then your app has to make that happen. 
 * **Create redundancy in your primary region**: If your app needs a volume to function, and the NVMe drive hosting your volume fails, then that instance of your app goes down. There's no way around that. You can run multiple Machines with volumes in your app's primary region to mitigate hardware failures.
 * **Create and store backups**: If you only have a single copy of your data on a single volume, and that drive fails, then the data is lost. Fly.io takes daily snapshots and can retain them from 1 to 60 days (5 days by default), but the snapshots shouldn't be your primary backup method.
 
@@ -25,7 +25,9 @@ Explore other options for data storage in [Databases & Storage](/docs/database-s
 
 ## Volume attachment
 
-Fly Volumes and Fly Machines are meant to be paired together, but they are not always found in pairs. A Fly Volume can be created without a Fly Machine, or a Machine can be destroyed without destroying its volume. In these cases, the volume that’s left is called an "unattached" volume. A Fly Machine that does not require a volume will never attach itself to one. A Fly Machine that does require a volume will always be attached to one. When a volume is required according to the app or Machine configuration, any method of creating a new Fly Machine will pick up an unattached volume, create a new volume to attach, or it will fail (in the case of `fly machine` commands or create Machine API calls).
+Fly Volumes and Fly Machines are meant to be paired together, but they are not always found in pairs. A Fly Volume can be created without a Fly Machine, or a Machine can be destroyed without destroying its volume. In these cases, the volume that’s left is called an "unattached" volume. 
+
+A Fly Machine that does not require a volume will never attach itself to one. A Fly Machine that does require a volume will always be attached to one. When a volume is required according to the app or Machine configuration, any method of creating a new Fly Machine will pick up an unattached volume, create a new volume to attach, or it will fail (in the case of `fly machine` commands or create Machine API calls).
 
 ## Volume redundancy
 
@@ -33,7 +35,9 @@ Fly Volumes and Fly Machines are meant to be paired together, but they are not a
 <b>Warning: Always provision at least two volumes per app.</b> Running an app with a single Machine and volume leaves you at risk for downtime and data loss. Volumes don't have built-in replication between them, so your app or database needs to take care of replicating data between volumes.
 </div>
 
-We try to keep individual Fly Machines up for as long as possible, but hardware failures happen. That's why we recommend running at least two Machines per app to increase availability. This can be two or more Machines in one region, or better yet, one or more Machines in multiple regions. If you only have one Machine and volume, then you'll have downtime if there's a host or network failure, and whenever you deploy your app.
+We try to keep individual Fly Machines up for as long as possible, but hardware failures happen. That's why we recommend running at least two Machines per app to increase availability. You can run two or more Machines in one region, or better yet, one or more Machines in multiple regions. If you only have one Machine and volume, then you'll have downtime if there's a host or network failure, and whenever you deploy your app. 
+
+You'll also need to replicate data between volumes. Some options for replicating databases include [LiteFS - Distributed SQLite](/docs/litefs/) and [Supabase Postgres](/docs/reference/supabase/).
 
 In a few cases, you can run a single Machine with an attached volume. For example, if your app is in development and you're not yet worried about downtime or if you're running an app that can handle downtime and has a custom backup procedure.
 
