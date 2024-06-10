@@ -10,13 +10,13 @@ nav: firecracker
 [Enveloop](https://enveloop.com) gives you the ability to design and send email and text messages from your Fly applications. Store all your message content, images, HTML, and CSS in Enveloop -- keeping your Fly apps lightweight (and saving you from trivial deploys).
 
 <aside class="callout">
-This service is in **public alpha**.
+This service is in **public beta**.
 </aside>
 
 ## Create an Enveloop project
-Creating an Enveloop project happens via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/) and create your first Fly app. From there, you can add an Enveloop project.
+Creating an Enveloop project happens via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/) and create your first Fly app. From there, you can add an Enveloop project to your Fly app.
 
-Fly apps can have one Enveloop project per app.
+You can create one Enveloop project per Fly app.
 
 <aside class="callout">Running the following command in a Fly.io app context -- inside an app directory or specifying `-a yourapp` -- will automatically create a new Enveloop project and set secrets (sandbox & production) on Fly for your app.</aside>
 
@@ -25,11 +25,11 @@ flyctl ext enveloop create
 ```
 
 ```output
-? Select Organization: soupedup (soupedup)
+? Select Organization: moon (moon)
 ? Choose a name, use the default, or leave blank to generate one:
 Your Enveloop project (quiet-butterfly-6638) is ready. See details and next steps with:
 
-Setting the following secrets on blog-jason-mccay:
+Setting the following secrets on quiet-butterfly-6638:
 ENVELOOP_LIVE_API_KEY: live_**********
 ENVELOOP_SANDBOX_API_KEY: test_**********
 ```
@@ -52,6 +52,8 @@ Enveloop usage fees are billed daily and will show up, throughout the month, on 
 
 <aside class="callout">
 Enveloop plans include unlimited use of our message builder, templates, analytics, logging, and our webhooks. Also, you can add as many users as you need. These features are accessible via the Enveloop web console.
+
+Additional information about Enveloop capabilities are located in the [Enveloop Docs](https://docs.enveloop.com).
 </aside>
   
 
@@ -71,7 +73,7 @@ flyctl ext enveloop list
 
 ```output
 NAME ORG PRIMARY REGION
-quiet-butterfly-6638 mayfield ue2
+quiet-butterfly-6638 moon ue2
 ```
 
 ```cmd
