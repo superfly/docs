@@ -7,7 +7,7 @@ nav: firecracker
 
 You really can [get an app up and running in just minutes](https://fly.io/speedrun/) on Fly.io.
 
-But if you want to know a bit more about what's what on the Fly.io platform, then read on. Or skip to the [glossary ](https://flyio.slab.com/posts/fly-io-essentials-2xvh71z4#hw2of-fly-io-glossary)for the tl;dr.
+But if you want to know a bit more about what's what on the Fly.io platform, then read on. Or skip to the [glossary](#flyio-glossary) for the tl;dr.
 
 Two big concepts to know about how Fly.io works, and one small one: Fly Machines, Fly Launch, and Fly Apps.
 
@@ -17,7 +17,7 @@ Fly Machines are fast-launching virtual machines (VMs) that are individually run
 
 Machines are the compute on Fly.io,[ our lowest level of orchestration](https://fly.io/blog/carving-the-scheduler-out-of-our-orchestrator/). When you just have to run a VM of a specific size in a specific place, Machines are what you want. If you're thinking in terms of individual VMs, rather than applications comprising groups of VMs, then you're thinking in terms of Machines.
 
-Learn more about [Fly Machines](https://fly.io/docs/machines/).
+Learn more about [Fly Machines](/docs/machines/).
 
 ## Fly Launch: Manage applications built on Fly Machines
 
@@ -26,13 +26,13 @@ Fly Launch is how you manage the whole lifecycle of an application on top of Mac
 Fly Launch is our built-from-scratch-for-Fly-Machines orchestrator:
 
 - Create your app and get started fast with framework scanners and useful defaults with the `fly launch` command.
-- Configure your app's deployment and services with the[ fly.toml](https://fly.io/docs/reference/configuration/) configuration file.
+- Configure your app's deployment and services with the[ fly.toml](/docs/reference/configuration/) configuration file.
 - Perform coordinated deployment of Machines for your app with the `fly deploy` command.
-- Scale your app's Machines[ horizontally](https://fly.io/docs/apps/scale-count/) or[ vertically](https://fly.io/docs/apps/scale-machine/) with the `fly scale` command.
+- Scale your app's Machines[ horizontally](/docs/apps/scale-count/) or[ vertically](/docs/apps/scale-machine/) with the `fly scale` command.
 
 Again, Fly Launch is built on Machines: you can use Fly Launch to manage the scale of your application with a single command, or you can interact directly with Machines for fine-grained control.
 
-Learn more about [Fly Launch](https://fly.io/docs/apps/).
+Learn more about [Fly Launch](/docs/apps/).
 
 ## Fly Apps, Fly Machines, and Fly Launch
 
@@ -44,7 +44,7 @@ You can manage a Fly App's Machines as a group with Fly Launch features. or you 
 
 **The Fly.io platform**: Everything Fly.io.
 
-[**Fly Apps**](https://fly.io/docs/reference/apps/): The way Machines are grouped on the Fly Platform.
+[**Fly Apps**](/docs/reference/apps/): The way Machines are grouped on the Fly Platform.
 
 You might create and manage your app using Fly Launch, but you can also have a Fly App that just has individual Machines running tasks or user code, for example.
 
@@ -57,16 +57,16 @@ From a developer point of view, a Fly App might be:
 - a few Machines running tasks, or a bunch of Machines, all with different configs, doing things you want them to do
 - a mixture of the above, or really, anything you can do with fast-launching Machines
 
-All the Fly Apps in your organization can communicate over a [private network](https://fly.io/docs/networking/private-networking/), so it's also possible to have multiple apps working together as one system.
+All the Fly Apps in your organization can communicate over a [private network](/docs/networking/private-networking/), so it's also possible to have multiple apps working together as one system.
 
-[**Fly GPUs**](https://fly.io/docs/gpus/): Machines, but with GPUs. They boot up with GPU drivers installed and you can run `nvidia-smi` right away.
+[**Fly GPUs**](/docs/gpus/): Machines, but with GPUs. They boot up with GPU drivers installed and you can run `nvidia-smi` right away.
 
-[**Fly Launch**](https://fly.io/docs/apps/): Our orchestrator that includes some really good stuff for app hosting, like the `fly launch` command to get started, `fly.toml` for configuration, the `fly deploy` command to deploy all your app's Machines into new versions/releases, and the `fly scale` command to scale Machines.
+[**Fly Launch**](/docs/apps/): Our orchestrator that includes some really good stuff for app hosting, like the `fly launch` command to get started, `fly.toml` for configuration, the `fly deploy` command to deploy all your app's Machines into new versions/releases, and the `fly scale` command to scale Machines.
 
-[**Fly Machines**](https://fly.io/docs/machines/): [Firecracker microVMs]([https://firecracker-microvm.github.io/](https://firecracker-microvm.github.io/)) that launch quickly in any [region supported by Fly.io]([https://fly.io/docs/reference/regions/](https://fly.io/docs/reference/regions/)). A VM, or virtual machine, functions like a physical computer, but is software-based. Multiple VMs can run, completely isolated, on one physical host.
+[**Fly Machines**](/docs/machines/): [Firecracker microVMs]([https://firecracker-microvm.github.io/](https://firecracker-microvm.github.io/)) that launch quickly in any [region supported by Fly.io](/docs/reference/regions/). A VM, or virtual machine, functions like a physical computer, but is software-based. Multiple VMs can run, completely isolated, on one physical host.
 
-If you've deployed an app on the Fly Platform, then it's running on Fly Machines. There’s a fast [REST API ](https://fly.io/docs/machines/api/)to manage Machines, but you don't have to use the API. Use flyctl–the Fly CLI–to manage everything from the command line. And then there’s Fly Launch, which combines flyctl commands with a shared config to manage your app’s Machines as a group.
+If you've deployed an app on the Fly Platform, then it's running on Fly Machines. There’s a fast [REST API ](/docs/machines/api/) to manage Machines, but you don't have to use the API. Use flyctl–the Fly CLI–to manage everything from the command line. And then there’s Fly Launch, which combines flyctl commands with a shared config to manage your app’s Machines as a group.
 
-[**Fly Volumes**](https://fly.io/docs/volumes/): Local persistent storage for Fly Machines. Every Fly Volume can be attached to one Machine at a time and belongs to one Fly App.
+[**Fly Volumes**](/docs/volumes/): Local persistent storage for Fly Machines. Every Fly Volume can be attached to one Machine at a time and belongs to one Fly App.
 
 **Organizations**: Administrative entities on Fly.io that enable you to manage billing separately, add members, and share app development environments.
