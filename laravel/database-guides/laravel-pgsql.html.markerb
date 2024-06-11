@@ -20,15 +20,22 @@ To run PostgreSQL as a [Fly App](/docs/app-guides/mysql-on-fly/), follow our gui
     - This will create an env variable `DATABASE_URL` containing a connection string in your Laravel fly app
     <br><br>
 
-2.  Make sure the `fly.toml` of your Laravel Fly App uses postgres:
+2.  Please make sure the `fly.toml` of your Laravel Fly App uses the postgres driver by specifying it as the value of `DB_CONNECTION`:
 
     ```toml
     [env]
     APP_ENV = "production"
     DB_CONNECTION = "pgsql"
     ```
-    
-    Thanks to the attach command, Postgres connection will now be available to your Laravel Fly App using the auto-generated `DATABASE_URL` from the attachment process.
+
+        Thanks to the attach command, Postgres connection will now be available to your Laravel Fly App using the auto-generated `DATABASE_URL` from the attachment process.
+
+
+3. If you are using Laravel version 11, it no longer uses the `DATABASE_URL` env variable name, instead it uses [DB_URL](https://laravel.com/docs/11.x/database#:~:text=(or%20corresponding-,DB_URL,-environment%20variable)%20configuration). So, please set an additional Fly secret, `DB_URL` with the value of the `DATABASE_URL`.
+
+    ```cmd
+    fly secrets set DB_URL="<DATABASE_URL_VALUE>"
+    ```
 
 ### _Connect From a Laravel Fly App Manually_
 
