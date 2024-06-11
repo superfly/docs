@@ -100,6 +100,14 @@ There are a few important things to note:
     * For MySQL 8+, you'll want to use the `mysql_native_password` password plugin.
     * **Important**: For MySQL 5.7 and MySQL 8+, we set MySQL's data directory to a subdirectory of our mounted volume.
 
+If you're using MySQL 8.4, the `--default-authentication-plugin` above has been [depreciated from 8.4](https://github.com/docker-library/mysql/issues/1048#issuecomment-2088836076). Because of this, revise the [process] section on your MySQL Fly app’s fly.toml file to use an updated syntax of setting mysql-native-password:
+```toml
+[processes]
+  app = """--datadir /data/mysql \
+    --mysql-native-password=ON"""
+```
+
+
 If you're using MySQL 5.7, your `app` process can be simplified:
 
 ```toml
