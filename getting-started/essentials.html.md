@@ -7,7 +7,7 @@ nav: firecracker
 
 You really can [get an app up and running in just minutes](https://fly.io/speedrun/) on Fly.io.
 
-But if you want to know a bit more about what's what on the Fly.io platform, then read on. Or skip to the [glossary](#flyio-glossary) for the tl;dr.
+But if you want to know a bit more about what's what on the Fly.io platform, then read on. Or skip to the [glossary](#fly-io-glossary) for the tl;dr.
 
 Two big concepts to know about how Fly.io works, and one small one: Fly Machines, Fly Launch, and Fly Apps.
 
