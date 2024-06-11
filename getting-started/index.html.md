@@ -12,11 +12,13 @@ toc: false
 
 Get up and running quickly on Fly.io.
 
-- **[Launch on Fly.io](/docs/getting-started/launch/):** Jump right in and launch your own app fast.
+- **[Fly Launch your app](/docs/getting-started/launch/):** Launch your own app right now.
 
-- **[Hands-on](/docs/hands-on/):** Launch a small demo app, walk through creating an account, and installing `flyctl`, the Fly.io command-line tool.
+- **[Get hands-on with a demo app](/docs/hands-on/):** Launch a small demo app, walk through creating an account, and installing `flyctl`, the Fly.io command-line tool.
 
-Once that's done, check out our in-depth docs:
+- **[Fly.io essentials](/docs/getting-started/essentials):** A primer on Fly Machines and Fly Launch, plus the Fly.io glossary. It's all here.
+
+Next steps:
 
 * [Language & Framework Guides](/docs/languages-and-frameworks/): Comprehensive and starter guides for your favorite languages and frameworks.
 * [Fly Launch](/docs/apps): You've tried the `fly launch` command. Now learn how to use all the Fly Launch features that help you manage and run your apps.
