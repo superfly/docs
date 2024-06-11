@@ -60,4 +60,4 @@ To run in production mode, we can amend the command:
 fastapi run main.py
 ```
 
-<%= partial "/docs/rust/partials/deploy", locals: { runtime: "FastAPI" }  %>
+<%= partial "/docs/python/partials/deploy", locals: { runtime: "FastAPI" }  %>

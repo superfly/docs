@@ -68,4 +68,4 @@ flask --app hello run
 
 If you open http://127.0.0.1:5000/ in your web browser, it should display `hello from fly.io`.
 
-<%= partial "/docs/rust/partials/deploy", locals: { runtime: "Flask" }  %>
+<%= partial "/docs/python/partials/deploy", locals: { runtime: "Flask" }  %>
