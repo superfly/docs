@@ -1,5 +1,5 @@
 ---
-title: Running multiple processes inside a Fly.io app
+title: Multiple processes inside a Fly.io app
 layout: docs
 sitemap: true
 toc: true
@@ -10,13 +10,15 @@ categories:
 date: 2020-07-20
 ---
 
-This comes up a lot: how can you run multiple programs in an app on Fly.io? Recall that Fly.io apps are shipped to us in containers, usually built by Docker, and Docker has… opinions… about running multiple things in a container.
+<div class="callout">
+This guide discusses different ways to run multiple processes in your app. To learn about process groups in Fly Apps and the `[processes]` configuration in `fly.toml`, see [Run multiple process groups in an app](/docs/apps/processes/). For process group configuration with the Machines API, see the `config.processes` object in the [Machine config](docs/machines/api/machines-resource/#machine-config-object-properties).
+</div>
+
+This comes up a lot: how can you run multiple programs in an app on Fly.io? Recall that Fly.io apps are shipped to us in OCI images, usually built by Docker, and Docker has… opinions… about running multiple things in a container.
 
 Well, [we don't use Docker to run containers](https://fly.io/blog/docker-without-docker/). Your app is running in a [Machine](/docs/machines/), a fast-launching VM with its own kernel. You can do pretty much anything you want inside of it, including running as many programs as you like. Most of the time, the trick is just telling Docker how to do that.
 
 There are a couple different ways to run multiple processes in a Fly.io app. All of them address the first rule of programs running in a Fly Machine: when your entrypoint program exits, our `init` kills the Machine and we start a new one. So at the end of the day, *something* has to keep running "in the foreground".
-
-<div class="callout">Fly.io <u>[Machines](/docs/machines)</u> can run multiple processes</u> natively, no need for extra configuration. <u>[Examples here](https://community.fly.io/t/multi-process-machines/8375)</u>.</div>
 
 ### Setting the scene
 

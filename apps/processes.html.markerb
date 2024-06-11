@@ -98,8 +98,7 @@ fly machine clone --region gru e2865641be9786
 Run the following command to force stop and destroy a Machine:
 
 ```
-fly machine stop e2865641be9786
-fly machine destroy e2865641be9786
+fly machine destroy e2865641be9786 --force
 ```
 
 ## Scale a process group vertically
