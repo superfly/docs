@@ -823,6 +823,23 @@ size = "performance-1x"
 processes = ["worker"]
 ```
 
+## The `restart` section
+
+```toml
+[[restart]]
+  policy = "never"
+  retries = 10
+  processes = ["app"]
+```
+
+When a machine unexpectedly exits, our scheduling machinery follows a machine’s restart policy to restart it without your intervention. These policies are quite similar to docker’s container restart policies:
+
+- always: we’ll attempt to restart the machine no matter the exit code.
+- never: we won’t restart the machine even if it exits with a non-zero exit code.
+- on-failure: we’ll only restart the machine if it exited with a non-zero exit code (due to a failure or crash). This is the default policy if one is not explicitly set. 
+
+A restart policy can be targeted to a specific process group. If a group is not specified, all machines in an app will have the same default restart policy. You can also specify the number of times we should retry restarting the machine before giving up.
+
 ## The `checks` section
 
 If your app doesn't have public-facing services, or you want independent health checks that don't affect request routing,
