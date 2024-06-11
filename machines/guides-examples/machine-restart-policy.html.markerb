@@ -94,3 +94,14 @@ For example:
 ```
 
 Refer to the Machines API docs for more information about [updating a Machine](/docs/machines/api-machines-resource/#update-a-machine).
+
+## Set a restart policy in your Fly.toml
+You can also set a default app-level restart policy in your Fly.toml file:
+```toml
+[[restart]]
+  policy = "<never | always | on-failure>"
+  retries = 10
+  processes = ["app"]
+```
+
+ A restart policy can be targeted to a specific process group. If a group is not specified, all machines in an app will have the same default restart policy. If needed, you can still apply different policies on individual machines using the Flyctl or Machines API methods above.
