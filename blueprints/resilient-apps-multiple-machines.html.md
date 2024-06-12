@@ -14,9 +14,9 @@ When you have multiple Machines:
 - If your app has a lot of users, or bursts of high usage, then the Fly Proxy can load balance requests and automatically stop and start Machines based on traffic to your app. 
 - You pay only for rootfs when Machines aren't running, not CPU and RAM. Machine rootfs is [cheap](/docs/about/pricing/#stopped-fly-machines), like 18 cents a month for an average Elixir app that uses 1.2 GB of rootfs.
 
-## Extra Machines for apps with services
+## Multiple Machines for apps with services
 
-You can add extra Machines for Fly Proxy to start and stop as needed, which is great for apps that have built-in replication or that don't share data.
+You can add more Machines for Fly Proxy to start and stop as needed, which is great for apps that have built-in replication or that don't share data.
 
 When you deploy an app for the first time with the `fly launch` or `fly deploy` command, you automatically get two identical Machines for processes that have HTTP/TCP services configured in `fly.toml`. The Machines have autostart/autostop enabled so that Fly Proxy can start and stop them based on traffic to your app.
 
