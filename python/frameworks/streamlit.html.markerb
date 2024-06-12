@@ -6,7 +6,7 @@ sitemap: false
 redirect_from:
   - /docs/languages-and-frameworks/streamlit/
   - /docs/getting-started/streamlit/
-order: 1
+order: 3
 ---
 
 <%= partial "/docs/languages-and-frameworks/partials/intro", locals: { runtime: "Streamlit", link: "https://streamlit.io/" } %>
@@ -21,7 +21,7 @@ Spinning up a `streamlit` app takes no time at all!
 
 <%= partial "/docs/python/partials/speedrun", locals: { runtime: "streamlit", repo: "hello-streamlit" }  %>
 
-## _Deploy a FastAPI from scratch_
+## _Deploy a Streamlit from scratch_
 
 <%= partial "/docs/python/partials/poetry_new", locals: { runtime: "Streamlit" }  %>
 

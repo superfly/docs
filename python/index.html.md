@@ -9,7 +9,7 @@ redirect_from:
 
 Fly.io is a great place to launch your Python applications, especially if you plan on running them on multiple servers around the world so your users have a fast, snappy, low-latency experience.
 
-If you have questions or comments about running Rust applications on Fly.io, create a new topic in our [community forum](https://community.fly.io/) and tag it with "python" so the right people can give you the support you need.
+If you have questions or comments about running Python applications on Fly.io, create a new topic in our [community forum](https://community.fly.io/) and tag it with "python" so the right people can give you the support you need.
 
 ## Getting Started
 

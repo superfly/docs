@@ -21,7 +21,7 @@ Deploying a FastAPI app on Fly.io is... well it's fast! You can be up and runnin
 
 <%= partial "/docs/python/partials/speedrun", locals: { runtime: "FastAPI", repo: "hello-fastapi" }  %>
 
-## _Deploy a FastAPI from scratch_
+## _Deploy a FastAPI app from scratch_
 
 <%= partial "/docs/python/partials/poetry_new", locals: { runtime: "FastAPI" }  %>
 
@@ -68,4 +68,4 @@ The `fastapi` assumes your app is stored in `main.py` or `app.py` - if this is n
 fastapi run hello/entrypoint.py
 ```
 
-<%= partial "/docs/python/partials/deploy", locals: { runtime: "FastAPI", repo: "hello-streamlit" }  %>
+<%= partial "/docs/python/partials/deploy", locals: { runtime: "FastAPI", repo: "hello-fastapi" }  %>
