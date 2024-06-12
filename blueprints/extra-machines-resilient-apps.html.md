@@ -1,29 +1,27 @@
 ---
-title: Resilient apps use extra Machines
+title: Resilient apps use multiple Machines
 layout: docs
 nav: firecracker
 ---
 
-Fly Machines are fast-launching VMs; they're the compute of the Fly.io platform. Every Machine is assigned to a single physical host. This helps keep `start` operations consistently fast, but comes at the cost of Machine availability when something goes wrong on a single host.
+Fly Machines are fast-launching VMs; they're the compute of the Fly.io platform. Every Machine runs on a single physical host. If that host fails, the Machine becomes unavailable; it does not automatically get rescheduled on another host.
 
-We have several platform features available to create high availability services with Machines. They all require a second Machine, even if it’s not running most of the time.
+To make your app resilient to single-host failure, create at least two Machines per app or process. The Fly Proxy autostart/autostop feature and standby Machines are built-in platform features that you can use to start extra Machines only when needed.
 
-Reasons to set up extra Machines:
+When you have multiple Machines:
 
 - Your app won't fail when a single host fails because another Machine will start up to take over app requests or tasks.
 - If your app has a lot of users, or bursts of high usage, then the Fly Proxy can load balance requests and automatically stop and start Machines based on traffic to your app. 
-- When Machines aren't running, you only pay for rootfs, not CPU and RAM. Machine rootfs is [cheap](/docs/about/pricing/#stopped-fly-machines), like 18 cents a month for an average Elixir app that uses 1.2 GB of rootfs.
+- You only pay for rootfs when Machines aren't running, not CPU and RAM. Machine rootfs is [cheap](/docs/about/pricing/#stopped-fly-machines), like 18 cents a month for an average Elixir app that uses 1.2 GB of rootfs.
 
-You can add [extra Machines](#extra-machines-for-apps-that-receive-requests) for Fly Proxy to start and stop as needed, which is great for apps that have built-in replication or that don't share data.
+## Extra Machines for apps with services
 
-For worker Machines that don't accept external requests, [create a standby Machine](#create-a-standby-machine), stopped and ready to take over in case the original Machine becomes unavailable.
+You can add extra Machines for Fly Proxy to start and stop as needed, which is great for apps that have built-in replication or that don't share data.
 
-## Extra Machines for apps that receive requests
-
-When you deploy an app for the first time with the `fly launch` or `fly deploy` command, you automatically get two identical Machines for processes that accept HTTP/TCP requests (i.e. that run a service). The Machines have auto start and stop enabled so that Fly Proxy can start and stop the Machines based on traffic to your app.
+When you deploy an app for the first time with the `fly launch` or `fly deploy` command, you automatically get two identical Machines for processes that have services configured in `fly.toml` to accept HTTP/TCP requests. The Machines have autostart/autostop enabled so that Fly Proxy can start and stop the Machines based on traffic to your app.
 
 <div class="important icon">
-**Volumes:** You'll only get one Machine with `fly launch` for processes or apps with volumes mounted. Volumes don't automatically replicate your data for you, so you'll need to set that up before intentionally creating multiple Machines with volumes.
+**Volumes:** You'll only get one Machine with `fly launch` for processes or apps with volumes mounted. Volumes don't automatically replicate your data for you, so you'll need to set that up before intentionally creating more Machines with volumes.
 </div>
 
 If your app doesn't already have multiple Machines with auto start and stop, then you can set it up yourself. You can create any number of Machines to both meet user demand and provide redundancy against host failures.
@@ -67,13 +65,13 @@ Learn more about [scaling the number of Machines](/docs/apps/scale-count/).
 
 **Using the Machines API:** To scale the number of Machines with the Machines API, you can "clone" Machines. Get and modify your Machine config and use that config to create new Machines in any region. See the[ Machines resource docs](/docs/machines/api/machines-resource/).
 
-## Standby Machines for apps that don't accept requests
+## Standby Machines for apps without services
 
-When apps or processes are running tools like cron that don't require local storage or accept external requests, it's common to run only one Machine. To add redundancy against host failures for this kind of Machine, use a standby Machine.
+When apps or processes are running tools like cron that don't require local storage or accept external requests, it's common to run only one Machine. Since these Machines don't have services configured, they can't be automatically started and stopped by the Fly Proxy. To add redundancy against host failures for this kind of Machine, use a standby Machine; it stays stopped and ready to take over in case the original Machine becomes unavailable.
 
-A standby Machine watches the Machine it's paired to and starts only if that Machine becomes unavailable.
+Unlike the autostart/autostop feature, a standby Machine watches the Machine it's paired to and starts only if that Machine becomes unavailable.
 
-When you deploy an app for the first time with the `fly launch` or `fly deploy` command, you automatically get a standby Machine for processes that don't accept HTTP requests (and therefore aren't visible to Fly Proxy). That standby Machine is a copy of the original, running Machine.
+When you deploy an app for the first time with the `fly launch` or `fly deploy` command, you automatically get a standby Machine for processes that don't have services configured in `fly.toml` (and therefore aren't visible to Fly Proxy). That standby Machine is a copy of the original, running Machine.
 
 If you don't already have a standby Machine for your worker Machines, then you can create one yourself.
 
@@ -89,7 +87,7 @@ fly machine clone <worker machine id> --standby-for <worker machine id>
 
 ## Bonus uses for standby Machines
 
-A standby Machine doesn't need to be a copy of the Machine it's watching. It can be configured to run with any image you like when a watched Machine becomes unavailable. The standby Machine could run a recovery script, trigger alerts, or anything else.
+A standby Machine doesn't need to be a copy of the Machine it's watching. You can configure the standby Machine to run with any image you like when a watched Machine becomes unavailable. The standby Machine could run a recovery script, trigger alerts, or anything else. You can create a standby Machine for any Machine, including one with services.
 
 To create a standby Machine from a different image:
 
