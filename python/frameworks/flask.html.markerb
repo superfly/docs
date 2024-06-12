@@ -1,7 +1,7 @@
 ---
 title: "Run a Flask App"
 layout: framework_docs
-objective: Flask is a minimal and composable web framework
+objective: Flask is a lightweight WSGI web application framework. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. 
 sitemap: false
 redirect_from:
   - /docs/languages-and-frameworks/flask/
@@ -11,7 +11,7 @@ order: 5
 
 <%= partial "/docs/languages-and-frameworks/partials/intro", locals: { runtime: "Flask", link: "https://flask.palletsprojects.com/" } %>
 
-Flask is a minimal and composable web framework for python.
+Flask is a lightweight WSGI web application framework. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. 
 
 Spinning up a flask app is fun! 
 
@@ -19,7 +19,7 @@ Spinning up a flask app is fun!
 
 <%= partial "/docs/languages-and-frameworks/partials/flyctl" %>
 
-<%= partial "/docs/python/partials/speedrun", locals: { runtime: "Flask" }  %>
+<%= partial "/docs/python/partials/speedrun", locals: { runtime: "Flask", repo: "hello-flask-poetry" }  %>
 
 ## _Deploy a Flask app from scratch_
 
@@ -68,4 +68,4 @@ flask --app hello run
 
 If you open http://127.0.0.1:5000/ in your web browser, it should display `hello from fly.io`.
 
-<%= partial "/docs/python/partials/deploy", locals: { runtime: "Flask" }  %>
+<%= partial "/docs/python/partials/deploy", locals: { runtime: "Flask", repo: "hello-streamlit" }  %>

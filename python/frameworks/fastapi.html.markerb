@@ -19,7 +19,7 @@ Deploying a FastAPI app on Fly.io is... well it's fast! You can be up and runnin
 
 <%= partial "/docs/languages-and-frameworks/partials/flyctl" %>
 
-<%= partial "/docs/python/partials/speedrun", locals: { runtime: "FastAPI" }  %>
+<%= partial "/docs/python/partials/speedrun", locals: { runtime: "FastAPI", repo: "hello-fastapi" }  %>
 
 ## _Deploy a FastAPI from scratch_
 
@@ -48,7 +48,7 @@ async def hello_fly():
 We can then serve the development version of the app using the `fastapi` cli tool:
 
 ```cmd
-fastapi dev main.py
+fastapi dev
 ```
 
 This will display a 'hello from fly.io!' message when you visit the root URL.
@@ -57,7 +57,15 @@ With the development environment we also get cool features like hot-reloading.
 To run in production mode, we can amend the command:
 
 ```cmd
-fastapi run main.py
+fastapi run
 ```
 
-<%= partial "/docs/python/partials/deploy", locals: { runtime: "FastAPI" }  %>
+<section class="callout">
+The `fastapi` assumes your app is stored in `main.py` or `app.py` - if this is not the case, you must specify that when running the app: 
+
+</section>
+```cmd
+fastapi run hello/entrypoint.py
+```
+
+<%= partial "/docs/python/partials/deploy", locals: { runtime: "FastAPI", repo: "hello-streamlit" }  %>
