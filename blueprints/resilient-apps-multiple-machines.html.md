@@ -12,7 +12,7 @@ When you have multiple Machines:
 
 - Your app won't fail when a single host fails because another Machine will start up to take over app requests or tasks.
 - If your app has a lot of users, or bursts of high usage, then the Fly Proxy can load balance requests and automatically stop and start Machines based on traffic to your app. 
-- You pay only for rootfs when Machines aren't running, not CPU and RAM. Machine rootfs is [cheap](/docs/about/pricing/#stopped-fly-machines), like 18 cents a month for an average Elixir app that uses 1.2 GB of rootfs.
+- You pay only for rootfs when Machines aren't running, not for CPU and RAM. Machine rootfs is [cheap](/docs/about/pricing/#stopped-fly-machines), like 18 cents a month for an average Elixir app that uses 1.2 GB of rootfs.
 
 ## Multiple Machines for apps with services
 
