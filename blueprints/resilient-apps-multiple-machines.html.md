@@ -12,15 +12,15 @@ To make your app resilient to single-host failure, create at least two Machines 
 
 You can add more Machines for Fly Proxy to start and stop as needed, which is great for apps that have built-in replication or that don't share data.
 
-### What you get with `fly launch`
+### You get two Machines on first deploy
 
-When you deploy an app for the first time with the `fly launch` or `fly deploy` command, you automatically get two identical Machines for processes that have HTTP/TCP services configured in `fly.toml`. The Machines have autostart/autostop enabled so that Fly Proxy can start and stop them based on traffic to your app.
+When you deploy an app for the first time with the `fly launch` or `fly deploy` command, you automatically get two identical Machines for processes that have HTTP/TCP services configured in `fly.toml`. The Machines have autostart/autostop enabled so that Fly Proxy can start and stop them based on traffic to your app. You'll also get this default redundant Machine when you `fly deploy` after scaling to zero.
 
 <div class="important icon">
 **Volumes:** You'll only get one Machine with `fly launch` for processes or apps with volumes mounted. Volumes don't automatically replicate your data for you, so you'll need to set that up before intentionally creating more Machines with volumes.
 </div>
 
-### Set up autostart/autostop and add more Machines yourself
+### Add more Machines yourself
 
 If your app doesn't already have multiple Machines with auto start and stop, then you can set it up yourself. You can create any number of Machines to both meet user demand and provide redundancy against host failures.
 
@@ -68,9 +68,9 @@ When apps or processes are running tools like cron that don't require local stor
 
 Unlike the autostart/autostop feature, which starts Machines based on app traffic, a standby Machine watches the Machine it's paired to and starts only if that Machine becomes unavailable. Learn more about [standby Machines](https://fly.io/docs/reference/app-availability/#standby-machines-for-process-groups-without-services).
 
-### What you get with `fly launch`
+### You get a standby Machine on first deploy
 
-When you deploy an app for the first time with the `fly launch` or `fly deploy` command, you automatically get a standby Machine for processes that don't have services configured in `fly.toml` (and therefore aren't visible to Fly Proxy). That standby Machine is a copy of the original, running Machine.
+When you deploy an app for the first time with the `fly launch` or `fly deploy` command, you automatically get a standby Machine for processes that don't have services configured in `fly.toml` (and therefore aren't visible to Fly Proxy). That standby Machine is a copy of the original, running Machine. You'll also get this standby Machine when you `fly deploy` after scaling to zero.
 
 ### Create a standby Machine yourself
 
