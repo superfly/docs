@@ -14,13 +14,13 @@ Learn more about [Flycast](/docs/networking/private-networking/#flycast-private-
 
 ## Create a new app with a Flycast address
 
-When you run `fly launch` to create a new app, it automatically assigns your app a public IPv6 address and a public shared IPv4 address. If you know your app won't need to be reachable from the Internet, then you can inform Fly Launch with the following option:
+When you run `fly launch` to create a new app, it automatically assigns your app a public IPv6 address and a shared public IPv4 address. If you know your app won't need to be reachable from the Internet, then you can inform Fly Launch with the following option:
 
 ```
 fly launch --no-public-ips
 ```
 
-Then allocate a Flycast address to your app with:
+Then allocate a Flycast address to your app:
 
 ```
 fly ips allocate-v6 --private
@@ -50,17 +50,23 @@ Example output:
 
 ```
 VERSION	IP                  	TYPE              	REGION	CREATED AT
-v6     	2a09:8280:1::2d:678b	public (dedicated)	global	Sep 1 2023 19:47
-v6     	fdaa:2:45b:0:1::23  	private           	global	Mar 16 2024 18:20
-v4     	66.241.124.63       	public (shared)   	      	Jan 1 0001 00:00
+v6     	2a09:8280:1::2d:1111	public (dedicated)	global	Sep 1 2023 19:47
+v6     	fdaa:2:45b:0:1::11  	private           	global	Mar 16 2024 18:20
+v4     	66.241.124.11       	public (shared)   	      	Jan 1 0001 00:00
 ```
 
-This example app has a shared public IPv4 address and a dedicated private IPv6 address. These are the addresses automatically assigned to an app on first deploy.
+This example app has public IPv4 and IPv6 addresses. These are the addresses automatically assigned to an app on first deploy.
 
-Copy the public IP addresses and run the `release` command to remove them from your app. For example:
+Copy the public IP addresses and run the `release` command to remove them from your app:
 
 ```
-fly ips release 2a09:8280:1::2d:678b 66.241.124.63
+fly ips release <ip address> <ip address> ...
+```
+
+For example:
+
+```
+fly ips release 2a09:8280:1::2d:1111 66.241.124.11
 ```
 
 Next steps: [Configure and deploy a private app](#configure-and-deploy-a-private-app) below.
@@ -77,17 +83,25 @@ Here's an example `fly.toml` snippet:
 
 ```toml
 [http_service]
-  internal_port = 8081 # the port on which your app receives requests over the 6PN
-  force_https = false # must be false - Flycast is http-only
-  auto_stop_machines = true # Fly Proxy stops Machines based on traffic
-  auto_start_machines = true # Fly Proxy starts Machines based on traffic 
-  min_machines_running = 0 # No. of Machines to keep running in primary region
+  # the port on which your app receives requests over the 6PN
+  internal_port = 8081
+  # must be false - Flycast is http-only
+  force_https = false
+  # Fly Proxy stops Machines based on traffic
+  auto_stop_machines = true
+  # Fly Proxy starts Machines based on traffic
+  auto_start_machines = true
+  # Number of Machines to keep running in primary region
+  min_machines_running = 0
   [http_service.concurrency]
     type = "requests"
-    soft_limit = 200 # Fly Proxy uses this to determine Machine excess capacity
+    # Fly Proxy uses this limit to determine Machine excess capacity
+    soft_limit = 250
 ```
 
-Make sure to set `force_https = false` since Flycast only works over HTTP.  HTTPS isn't necessary because all your private network traffic is sent through an encrypted WireGuard tunnel.
+<div class="important icon">
+**Important:** Set `force_https = false` since Flycast only works over HTTP.  HTTPS isn't necessary because all your private network traffic is sent through an encrypted WireGuard tunnel.
+</div>
 
 Learn more about [Fly Launch configuration](https://docs/reference/configuration/) and the [autostart/autostop](https:///docs/apps/autostart-stop/) feature.
 
@@ -99,7 +113,7 @@ To be reachable by Fly Proxy, an app needs to listen on `0.0.0.0` and bind to th
 
 Run `fly deploy` for the configuration changes to take effect.
 
-Other apps in your organization can now reach your internal app using the private Flycast IP address or  [`<appname>.flycast`](/docs/networking/private-networking/#flycast-and-fly-io-dns).
+Other apps in your organization can now reach your internal app using the Flycast IP address or  [`<appname>.flycast`](/docs/networking/private-networking/#flycast-and-fly-io-dns).
 
 ## Implementation resources
 
