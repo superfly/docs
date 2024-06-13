@@ -86,7 +86,7 @@ fly machine clone <worker machine id> --standby-for <worker machine id>
 
 ## Bonus uses for standby Machines
 
-A standby Machine doesn't need to be a copy of the Machine it's watching. You can configure the standby Machine to run with any image you like when a watched Machine becomes unavailable. The standby Machine could run a recovery script, trigger alerts, or anything else. You can create a standby Machine for any Machine, including one with services.
+A standby Machine doesn't need to be a copy of the Machine it's watching. You can configure the standby Machine to run with any image you like when a watched Machine becomes unavailable; you can use it to run a recovery script, trigger alerts, or anything else. You can create a standby Machine for any Machine, including one with services.
 
 To create a standby Machine from a different image:
 
