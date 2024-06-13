@@ -18,7 +18,7 @@ We recommend the latest [supported versions](https://devguide.python.org/version
 
 ## Dependency Management
 
-For project and dependency management we use [Poetry](https://python-poetry.org/). It comes with a nice developer experience and combines multiple tools in one resembling a lot of other package managers out there. 
+For project and dependency management we use [Poetry](https://python-poetry.org/). Like most package managers, Poetry combines multiple tools in one. 
 
 You have other options:
 - [venv](https://docs.python.org/3/library/venv.html#module-venv)
