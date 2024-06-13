@@ -56,6 +56,7 @@ Logtail
 microVMs?\b
 middleware
 Minecraft
+nameservers?\b
 navbar
 nginx
 Nixpack
@@ -66,6 +67,7 @@ Nuxt
 NVIDIA
 NVMe
 OAuth
+Ollama
 orgs?\b
 Paketo
 param
