@@ -228,8 +228,10 @@ And use the `put` command to transfer your file to the volume path.
 **NOTE**: Because our server is running, we first need to give the database a new name. Do **not** try to put this file in the same place as your current `DATABASE_PATH`.
 
 ```
-» put ./name.db mnt/name-prod.db
+» put ./name.db mnt/volume_name/name-prod.db
 ```
+
+Where `volume_name` corresponds to the name you used when [creating your volume](#create-volume).
 
 Check that it's there:
 
