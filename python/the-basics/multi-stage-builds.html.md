@@ -1,7 +1,7 @@
 ---
 title: Multi-stage Builds
 layout: framework_docs
-objective: A strategy to make your containers smaller in size and reduce attack surface
+objective: A strategy to make your containers smaller in size and reduce attack surface.
 order: 3
 ---
 
