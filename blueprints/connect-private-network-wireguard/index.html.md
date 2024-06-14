@@ -139,4 +139,4 @@ And then the model will reply with something like this:
 
 > The sky appears blue because of a phenomenon called Rayleigh scattering, where shorter wavelengths of light (like blue and violet) are scattered more than longer wavelengths (like red and orange) by tiny molecules of gases like nitrogen and oxygen in the Earth's atmosphere.
 
-And there you go! You're in your private network and can access all your apps and machines like they were right next to you.
+And there you go! You're in your private network and can access all your apps and Machines like they were right next to you.
