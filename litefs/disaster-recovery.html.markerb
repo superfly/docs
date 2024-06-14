@@ -141,8 +141,14 @@ First, you'll need to add `consul` in your image. Connect to your primary node v
 install it there. Here's how to install it:
 
 ```sh
-# For debian/ubuntu-based images
+# For debian/ubuntu-based images before bookworm
 apt-get install consul
+
+# From official source:
+# https://developer.hashicorp.com/consul/install?product_intent=consul#Linux
+wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list
+apt update && apt install consul
 
 # For alpine-based images
 apk add consul
