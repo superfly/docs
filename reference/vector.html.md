@@ -15,7 +15,7 @@ When using Upstash vector through Fly.io, your index is hosted on Fly.io infrast
 
 ## Create and manage a Vector index
 
-Creating and managing indexes happens exclusively via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/).
+Creating and managing indexes happens exclusively via the [Fly CLI](/docs/flyctl/install/). Install it, then [signup for a Fly account](/docs/getting-started/sign-up-sign-in/).
 
 You need to select a [similarity function](https://upstash.com/docs/vector/features/similarityfunctions) and [embedding model](https://upstash.com/docs/vector/features/embeddingmodels) to create an index. If you're bringing your own vectorization, you need to choose the index dimension count.
 

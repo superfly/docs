@@ -13,7 +13,7 @@ This service is in public beta in the `iad` and `fra` regions. We don't recommen
 
 ## Create and manage a Kafka cluster
 
-Creating and managing clusters happens exclusively via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/).
+Creating and managing clusters happens exclusively via the [Fly CLI](/docs/flyctl/install/). Install it, then [signup for a Fly account](/docs/getting-started/sign-up-sign-in/).
 
 ### Create and get status of a Kafka cluster
 
