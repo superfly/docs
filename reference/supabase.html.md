@@ -20,7 +20,7 @@ Alpha databases:
 
 ## Create and manage a Supabase Postgres database
 
-Creating and managing databases happens exclusively via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/).
+Creating and managing databases happens exclusively via the [Fly CLI](/docs/flyctl/install/). Install it, then [signup for a Fly account](/docs/getting-started/sign-up-sign-in/).
 
 <aside class="callout">Running the following command in a Fly.io app context -- inside an app directory or specifying `-a yourapp` -- will automatically pick a region and set secrets on your app.</aside>
 

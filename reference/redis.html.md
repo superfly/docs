@@ -15,7 +15,7 @@ See the [What you Should Know](#what-you-should-know) section for more details a
 
 ## Create and manage a Redis database
 
-Creating and managing databases happens exclusively via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/).
+Creating and managing databases happens exclusively via the [Fly CLI](/docs/flyctl/install/). Install it, then [signup for a Fly account](/docs/getting-started/sign-up-sign-in/).
 
 ### Create and get status of a Redis database
 
