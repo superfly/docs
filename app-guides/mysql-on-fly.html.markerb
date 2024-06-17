@@ -61,8 +61,6 @@ Save these secrets somewhere, because they're not accessible after you set them.
 
 Finally, edit the `fly.toml` file that `fly launch` generated.
 
-For apps using MySQL 8+:
-
 ```toml
 # Keep your own app name
 app = 'my-mysql'
@@ -77,7 +75,8 @@ primary_region = "bos"
   cpus = 1
   memory_mb = 2048
 
-# Add the following sections
+# Add the following sections for 8+, 
+# Note that the [processes] section would be different for 8.4, and 5.7 ( the syntax will be shown below )
 [processes]
   app = """--datadir /data/mysql \
     --default-authentication-plugin mysql_native_password"""
@@ -97,23 +96,21 @@ There are a few important things to note:
 1. In the `[env]` section, we added two not-so-secret environment variables that MySQL will need to initialize itself.
     * The `MYSQL_USER` here should be any user but `root`, which already exists.
 1. We added the `[processes]` section for the default `app` process, which lets us pass custom commands (overriding Docker's `CMD`).
-    * For MySQL 8+, you'll want to use the `mysql_native_password` password plugin.
+    * For MySQL 8+, you'll want to use the `mysql_native_password` authentication plugin
+        
+        Starting from MySQL 8.4, the `--default-authentication-plugin` above has been [depreciated](https://github.com/docker-library/mysql/issues/1048#issuecomment-2088836076). If you are using this verion, please make sure to revise the [process] section to use an updated syntax of setting mysql-native-password:
+        ```toml
+        [processes]
+          app = """--datadir /data/mysql \
+            --mysql-native-password=ON"""
+        ```
     * **Important**: For MySQL 5.7 and MySQL 8+, we set MySQL's data directory to a subdirectory of our mounted volume.
-
-If you're using MySQL 8.4, the `--default-authentication-plugin` above has been [depreciated from 8.4](https://github.com/docker-library/mysql/issues/1048#issuecomment-2088836076). Because of this, revise the [process] section on your MySQL Fly app’s fly.toml file to use an updated syntax of setting mysql-native-password:
-```toml
-[processes]
-  app = """--datadir /data/mysql \
-    --mysql-native-password=ON"""
-```
-
-
-If you're using MySQL 5.7, your `app` process can be simplified:
-
-```toml
-[processes]
-app = "--datadir /data/mysql"
-```
+      
+        If you're using MySQL 5.7, your `app` process can be simplified:
+        ```toml
+        [processes]
+        app = "--datadir /data/mysql"
+        ```
 
 <div class="important icon">
 Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. Therefore, we use a subdirectory of the mounted location: `/data/mysql`.
@@ -130,6 +127,28 @@ fly deploy
 After a minute of MySQL initializing itself (on its first run), you should now have an app running MySQL! 
 
 Your other apps can access the MySQL service by its name. In my case, I would use `my-mysql.internal` as the hostname. Any app that needs to access the database should set the hostname and username as environment variables, and create a secret for the database password.
+
+## Debugging Possible Errors
+
+1. `mysqld: Table 'mysql.plugin' doesn't exist`
+
+This error is an indicator that the [mysql System Schema](https://dev.mysql.com/doc/refman/8.4/en/system-schema.html) inside the [MySQL data directory](https://dev.mysql.com/doc/refman/8.4/en/data-directory.html) is empty. This can happen due to different reasons. One of them is when a MySQL app is previously deployed with `--default-authentication-plugin`, and it gets re-deployed with the updated syntax `--mysql-native-password=ON`.
+
+The quickest way to fix this is to revise the `--datadir` flag to a different directory from what was previously set:
+
+```toml
+# Please revise the MySQL data directory to another location
+
+# For example if you have:
+[processes]
+app = "--datadir /data/mysql ..."
+
+# You can change the path to a different directory
+[processes]
+app = "--datadir /data/mysql_ ..."
+```
+Changing the [MySQL data directory](https://dev.mysql.com/doc/refman/8.4/en/data-directory.html) will allow MySQL to completely initialize the new directory with a complete `mysql system schema.` Once done, redeploy your changes with `fly deploy`, and hopefully you no longer get the error regarding the missing mysql table.
+
 
 ## Access the database from outside
 
