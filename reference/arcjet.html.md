@@ -17,11 +17,12 @@ To configure your application to use Arcjet, run this command from your Fly.io a
 flyctl ext arcjet create
 ```
 
-Then set the `ARCJET_KEY` secret on your app.
+This will:
 
-```cmd
-flyctl secrets set ARCJET_KEY=ajkey_...
-```
+* Create an Arcjet account linked to your Fly.io account.
+* Create a Arcjet team mapped to your Fly.io organization.
+* Create an Arcjet site for your Fly.io application.
+* Set `ARCJET_KEY` as a secret on your app.
 
 Use this command to open the dashboard for the Arcjet site associated with the current application:
 
@@ -33,10 +34,10 @@ flyctl ext arcjet dashboard
 
 Once you have set your `ARCJET_KEY` secret, you can start using Arcjet to protect your application:
 
-- [Bun](https://docs.arcjet.com/get-started/bun)
-- [Next.js](https://docs.arcjet.com/get-started/nextjs)
-- [Node.js](https://docs.arcjet.com/get-started/nodejs)
-- [SvelteKit](https://docs.arcjet.com/get-started/sveltekit)
+* [Bun](https://docs.arcjet.com/get-started/bun)
+* [Next.js](https://docs.arcjet.com/get-started/nextjs)
+* [Node.js](https://docs.arcjet.com/get-started/nodejs)
+* [SvelteKit](https://docs.arcjet.com/get-started/sveltekit)
 
 ### Node.js example
 
