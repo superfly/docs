@@ -1,0 +1,181 @@
+---
+title: Autoscale based on metrics
+layout: docs
+nav: firecracker
+---
+
+Most applications on Fly.io can use the request-based autoscaling that is built into our proxy by setting [the soft & hard limits in your fly.toml](/docs/reference/configuration/#http_service-concurrency). However, some applications need to scale on other metrics besides requests such as a work queue depth. In these instances, you can use our open source [fly-autoscaler](https://github.com/superfly/fly-autoscaler) to scale your workload.
+
+The metrics-based autoscaler works by collecting metrics from different sources, such as Prometheus or Temporal, and computing the number of required Machines based on those metrics. This reconciliation process happens on a loop every 15 seconds by default. We use the [Expr language](https://expr-lang.org/) for defining target Machine counts which gives a rich set of built-in arithmetic functions.
+
+## Quickstart
+
+The `fly-autoscaler` is an application that you can run and customize yourself to work with your specific scaling needs. To get up and running, you'll set up the app, configure secrets, set the configuration, and deploy the autoscaler.
+
+As a prerequisite, you need an existing target application that you want to scale and a user-defined metric to scale on. In this example, you'll scale on a metric called `queue_depth` but you can replace that with your own.
+
+### Create the autoscaler application
+
+First, create a new Fly.io application that will run the autoscaler. This application will run within your organization so you have full control over it. Replace the `my-autoscaler` name with a unique name for your autoscaler application.
+
+```
+fly apps create my-autoscaler
+```
+
+### Acquire a deploy token
+
+The first auth token you'll need is one that has permissions to deploy your target app:
+
+```cmd
+fly tokens create deploy -a my-target-app
+```
+
+Copy the resulting token and set it as a secret on your autoscaler app:
+
+```cmd
+fly secrets set -o my-autoscaler --stage FAS_API_TOKEN="FlyV1 ..."
+```
+
+## Acquire a token to read from Prometheus
+
+The next auth token you'll need is one that has permissions to read from your organization's Prometheus data on Fly:
+
+```cmd
+fly tokens create readonly -o my-org
+```
+
+Copy the token and use it as a secret on your autoscaler app:
+
+```cmd
+fly secrets set -o my-autoscaler --stage FAS_PROMETHEUS_TOKEN="FlyV1 ..."
+```
+
+### Configure your autoscaler fly.toml
+
+Next, set up a `fly.toml` configuration file for your autoscaler to set a few environment variables. Replace the `my-autoscaler`, `my-target-app`, and `my-org` with values for your situation.
+
+```toml
+app = "my-autoscaler"
+
+[build]
+image = "flyio/fly-autoscaler:0.3"
+
+[env]
+FAS_PROMETHEUS_ADDRESS = "https://api.fly.io/prometheus/my-org"
+FAS_PROMETHEUS_METRIC_NAME = "qdepth"
+FAS_PROMETHEUS_QUERY = "sum(queue_depth{app='$APP_NAME'})"
+
+FAS_APP_NAME = "my-target-app"
+FAS_CREATED_MACHINE_COUNT = "min(50, qdepth / 2)"
+
+[metrics]
+port = 9090
+path = "/metrics"
+```
+
+Environment variables are the primary way to define your configuration.
+
+Metrics collection settings:
+
+- `FAS_PROMETHEUS_ADDRESS` defines the Prometheus URL endpoint to query.
+- `FAS_PROMETHEUS_METRIC_NAME` defines the local variable name that the metric result will be store as. This example stores the query result value as `qdepth`.
+- `FAS_PROMETHEUS_QUERY` defines the Prometheus query to run. This example computes the sum of a user-defined `queue_depth` metric.
+
+Autoscaling settings:
+
+- `FAS_APP_NAME` is the name of the target application to scale.
+- `FAS_CREATED_MACHINE_COUNT` defines an [Expr](https://expr-lang.org/) expression to calculate the number of Machines to create.
+
+This example expression assumes that each Machine could handle two items in the queue and uses the `min()` function to prevent the autoscaler from scaling more than `50` Machines.
+
+### Deploy the autoscaler
+
+The autoscaler only works on a single Machine, so you'll use the `--ha` option to turn off the high availability feature that cerates two Machines:
+
+```cmd
+fly deploy --ha=false
+```
+
+After the autoscaler deploys, you should see the number of Machines in your target application increase as your user-defined `queue_depth` gauge increases.
+
+<div class="note icon">
+**Note:** The autoscaler creates new Machines in an application by cloning existing ones so it is not able to scale to zero. It will always keep at least one Machine running.
+</div>
+
+You can find a full working example of the autoscaler at our [fly-autoscaler-example](https://github.com/fly-apps/fly-autoscaler-example) repo.
+
+## Other use cases
+
+### Start and stop Machines
+
+If you already have a pool of created Machines that you wish to autoscale, you can use the `FAS_STARTED_MACHINE_COUNT` expression instead of creating and destroying Machines.
+
+When using this setting, the autoscaler will send a termination signal to the Machines instead of destroying them when performing scaling. It will also automatically cap the number of Machines that can be started to the number of pre-created Machines.
+
+### Scale multiple applications
+
+You can scale multiple independent applications with the same autoscaler by using a wildcard expression for your application name. Your applications must all share a common prefix and they must all be in the same organization.
+
+To enable multi-app scaling, you will need to use an organization-wide auth token rather than an app-specific deploy token:
+
+```cmd
+fly tokens create org -o my-org
+```
+
+and then set the resulting token on your autoscaler application:
+
+```cmd
+fly secrets set -a my-autoscaler --stage FAS_API_TOKEN="FlyV1 ..."
+```
+
+Next, set the organization name and application wildcard in your `fly.toml` config:
+
+```toml
+[env]
+FAS_ORG="my-org"
+FAS_APP_NAME="my-app-*"
+```
+
+And finally, you can use `$APP_NAME` or `${APP_NAME}` in your Prometheus query to identify the specific application that is currently being scaled:
+
+```toml
+[env]
+FAS_PROMETHEUS_QUERY = "sum(queue_depth{app='$APP_NAME'})"
+```
+
+You can find a working example of multi-application scaling in the [fly-autoscaler-multiapp-example](https://github.com/fly-apps/fly-autoscaler-multiapp-example) repository.
+
+### Scale based on a pending Temporal work
+
+If you are scaling based on pending work in a Temporal namespace, you can connect to  it using the `FAS_TEMPORAL` environment variables:
+
+```toml
+[env]
+FAS_TEMPORAL_ADDRESS = 'mynamespace.lyeth.tmprl.cloud:7233'
+FAS_TEMPORAL_NAMESPACE = 'mynamespace.lyeth'
+FAS_TEMPORAL_METRIC_NAME = 'queue_depth'
+```
+
+You will also need to use load the certificate & key data as secrets from your `ca.pem` and `ca.key` files:
+
+```cmd
+fly secrets set --stage FAS_TEMPORAL_CERT_DATA="$(<ca.pem)"
+```
+
+```cmd
+fly secrets set --stage FAS_TEMPORAL_KEY_DATA="$(<ca.key)"
+```
+
+You can find a full working example of Temporal autoscaling in our [fly-autoscaler-temporal-example](https://github.com/fly-apps/fly-autoscaler-temporal-example) repository.
+
+## Configuration Reference
+
+TODO
+
+### Prometheus Collector
+
+TODO
+
+### Temporal Collector
+
+TODO
