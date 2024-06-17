@@ -75,12 +75,22 @@ primary_region = "bos"
   cpus = 1
   memory_mb = 2048
 
-# Add the following sections for 8+, 
-# Note that the [processes] section would be different for 8.4, and 5.7 ( the syntax will be shown below )
+# The [processes] section is different for 8+, 8.4, and 5.7. Use the one that matches your version.
+# Use the following for versions 8 to 8.3:
 [processes]
   app = """--datadir /data/mysql \
     --default-authentication-plugin mysql_native_password"""
 
+# Uncomment and use the following for 8.4:
+# [processes]
+#  app = """--datadir /data/mysql \
+#    --mysql-native-password=ON"""
+
+# Uncomment and use the following for 5.7:
+# [processes]
+#  app = "--datadir /data/mysql"
+
+# Add the following sections for all versions
 [mounts]
   source = "mysqldata"
   destination = "/data"
@@ -96,25 +106,15 @@ There are a few important things to note:
 1. In the `[env]` section, we added two not-so-secret environment variables that MySQL will need to initialize itself.
     * The `MYSQL_USER` here should be any user but `root`, which already exists.
 1. We added the `[processes]` section for the default `app` process, which lets us pass custom commands (overriding Docker's `CMD`).
-    * For MySQL 8+, you'll want to use the `mysql_native_password` authentication plugin
-        
-        Starting from MySQL 8.4, the `--default-authentication-plugin` above has been [depreciated](https://github.com/docker-library/mysql/issues/1048#issuecomment-2088836076). If you are using this verion, please make sure to revise the [process] section to use an updated syntax of setting mysql-native-password:
-        ```toml
-        [processes]
-          app = """--datadir /data/mysql \
-            --mysql-native-password=ON"""
-        ```
-    * **Important**: For MySQL 5.7 and MySQL 8+, we set MySQL's data directory to a subdirectory of our mounted volume.
-      
-        If you're using MySQL 5.7, your `app` process can be simplified:
-        ```toml
-        [processes]
-        app = "--datadir /data/mysql"
-        ```
-
+    * For MySQL 8+, you'll want to use the `mysql_native_password` authentication plugin. As shown in the fly.toml above, there are different syntax for setting this plugin based on the MySQL version.
+    * If you're using **MySQL 5.7**, your `app` process can be simplified as shown in the `fly.toml` example above, as it uses `mysql_native_password` [by default](https://dev.mysql.com/doc/refman/5.7/en/native-pluggable-authentication.html#:~:text=client%20programs%20use-,mysql_native_password,-by%20default.%20The).
+    * **MySQL 8 to 8.3** must explicitly set this with the `--default-authentication-plugin` flag.
+    * Starting from **MySQL 8.4**, the `--default-authentication-plugin` option is [deprecated](https://github.com/docker-library/mysql/issues/1048#issuecomment-2088836076). If you're using 8.4+, you can make use of the `--mysql-native-password` flag instead.
+   
 <div class="important icon">
-Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. Therefore, we use a subdirectory of the mounted location: `/data/mysql`.
+**Important**: Set MySQL's data directory to a subdirectory of your mounted volume. Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. That's why you need to use a subdirectory of the mounted location: `/data/mysql`.
 </div>
+
 
 ## Deploy the App
 
