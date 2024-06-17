@@ -15,7 +15,7 @@ date: 2024-06-17
 
 A lot of the time your applications are made to be public and shared with the world. Sometimes you need to be more careful. When you deploy your apps on Fly.io, you get a private network for your organization. This lets your applications in other continents contact eachother like they were in the same room.
 
-Sometimes you need a middle ground between fully public apps and fully private apps, and Flycast is there for when you need it. Flycast addresses are private but global IPv6 addresses inside your private network that go through the Fly Proxy, so you get all of the load management and machine waking powers that you get for free with public apps.
+Sometimes you need a middle ground between fully public apps and fully private apps, and Flycast is there for when you need it. Flycast addresses are private but global IPv6 addresses inside your private network that go through the Fly Proxy, so you get all of the load management and Machine waking powers that you get for free with public apps.
 
 Today I’ll cover what Flycast is, when and why you’d want to use it, and show you how to create an instance of Ollama that you can connect to over Flycast.
 
@@ -31,7 +31,7 @@ However, with a fully private app, all connections go directly to the Machines v
 
 Flycast exists for this middle category of apps. With Flycast, your apps are only visible over your organization’s private network, but any traffic to them goes through the proxy so they can turn on when you need them and turn off when you don’t. This allows your administrative panels to be physically separate so that users can’t access them.
 
-When you want to connect to an app via Flycast, you connect to appname.flycast.
+When you want to connect to an app via Flycast, you connect to `appname.flycast`.
 
 ### Security note
 
@@ -54,7 +54,7 @@ This is where Flycast comes in. Flycast lets you run a copy of Ollama on your pr
 In order to get started, you need to have the following:
 
 - A [fly.io](http://fly.io) account
-- Flyctl installed ([https://fly.io/docs/flyctl/install/](https://fly.io/docs/flyctl/install/))
+- `flyctl` installed ([https://fly.io/docs/flyctl/install/](https://fly.io/docs/flyctl/install/))
 
 The links are in the description.
 
@@ -62,13 +62,13 @@ If you want to interact with your Flycast apps from your computer, like an Ollam
 
 ## Steps
 
-Create a new folder on your computer called ollama. This is where we’ll put the Ollama configuration. Open a terminal in that folder and run the fly launch command:
+Create a new folder on your computer called `ollama`. This is where we’ll put the Ollama configuration. Open a terminal in that folder and run the fly launch command:
 
 ```
 fly launch --from https://github.com/fly-apps/ollama-demo --no-deploy
 ```
 
-This command creates a new fly app from the ollama-demo template and tells the flyctl command to not deploy it after you create the app. If we don’t do this, then the platform will create public IPv4 and IPv6 addresses, which will make this a public app. The name you choose when you create your app will be used to connect to your app over Flycast.
+This command creates a new fly app from the [ollama-demo template](https://github.com/fly-apps/ollama-demo) and tells the flyctl command to not deploy it after you create the app. If we don’t do this, then the platform will create public IPv4 and IPv6 addresses, which will make this a public app. The name you choose when you create your app will be used to connect to your app over Flycast.
 
 Next, allocate a Flycast address for your app with the `fly ips allocate-v6` command:
 
@@ -101,7 +101,7 @@ v6     	2a09:8280:1::37:7312:0	public (dedicated)	global	May 30 2024 13:51
 v4     	66.241.124.113        	public (shared)   	      	Jan 1 0001 00:00
 ```
 
-Now that we've proven it's private, let’s open an interactive shell machine to play around with Flycast. Create the shell machine with `fly machine run`:
+Now that we've proven it's private, let’s open an interactive shell Machine to play around with Flycast. Create the shell Machine with `fly machine run`:
 
 ```
 $ fly machine run --shell ubuntu
@@ -114,7 +114,7 @@ The Ubuntu image we chose is very minimal, so we need to install a few tools suc
 # apt update && apt install -y curl iputils-ping dnsutils
 ```
 
-My app is named xe-ollama, so let’s look up its `.flycast` address with `nslookup xe-ollama.flycast`:
+My app is named`xe-ollama`, so let’s look up its `.flycast` address with `nslookup xe-ollama.flycast`:
 
 ```
 # nslookup xe-ollama.flycast
@@ -168,7 +168,7 @@ And if you wait a few moments, it’ll spin back down.
 
 ### Running Llama 3
 
-Now that we’ve set up Ollama and demonstrated the platform turning it off and on for you, let’s run Llama 3. Exit out of that shell machine with control-D so we can make a new one with the Ollama client installed.
+Now that we’ve set up Ollama and demonstrated the platform turning it off and on for you, let’s run Llama 3. Exit out of that shell Machine with control-D so we can make a new one with the Ollama client installed.
 
 Create an Ollama shell using `fly machine run`:
 
