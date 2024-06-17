@@ -141,11 +141,11 @@ The quickest way to fix this is to revise the `--datadir` flag to a different di
 
 # For example if you had:
 [processes]
-app = "--datadir /data/mysql ..."
+app = "--datadir /data/mysql"
 
 # You can change the path to a different directory
 [processes]
-app = "--datadir /data/mysql_ ..."
+app = "--datadir /data/mysql_
 ```
 Changing the [MySQL data directory](https://dev.mysql.com/doc/refman/8.4/en/data-directory.html) will allow MySQL to completely initialize the new directory with a complete `mysql system schema.` Once done, redeploy your changes with `fly deploy`.
 
