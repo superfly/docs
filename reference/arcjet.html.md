@@ -22,7 +22,7 @@ This will:
 * Create an Arcjet account linked to your Fly.io account.
 * Create a Arcjet team mapped to your Fly.io organization.
 * Create an Arcjet site for your Fly.io application.
-* Set `ARCJET_KEY` as a secret on your app.
+* Set `ARCJET_KEY` as a secret on your Fly.io application.
 
 Use this command to open the dashboard for the Arcjet site associated with the current application:
 
