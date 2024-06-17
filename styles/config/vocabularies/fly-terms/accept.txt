@@ -12,6 +12,7 @@ buildpacks?\b
 bursty
 callouts?\b
 cleartext
+containerd
 cron
 datacenters?\b
 datasource

@@ -132,10 +132,10 @@ Otherwise, Fly.io bills per-region pricing for outbound data transfer.
 
 <%= partial("shared/network_pricing") %>
 
-Any traffic exiting a Fly.io machine is considered outbound data transfer, including:
+Any traffic exiting a Fly.io Machine is considered outbound data transfer, including:
 
 * traffic destined for the internet
-* traffic destined for other machines or apps in your network
+* traffic destined for other Machines or apps in your network
 * traffic destined for [extensions](#extensions) like Supabase or Upstash Redis
 
 One exception: traffic destined for [Tigris Object Storage](/reference/tigris) is free. Learn more about [Extensions billing](#extensions).
