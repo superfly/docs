@@ -122,11 +122,24 @@ We use Lets Encrypt to issue certificates, and donate half of our SSL fees to th
 * Single hostname certificates: $0.10/mo
 * Wildcard certificates: $1/mo
 
-### Outbound data transfer
+### Data transfer pricing
 
-We bill for outbound data transfer from the region a VM is running in, inbound transfer is free.
+Inbound data transfer is free.
+
+Data transfer from apps without an assigned IP address is free. [Flycast IPs](/docs/networking/private-networking/#flycast-private-fly-proxy-services) are considered an IP assignment, so apps using Flycast will accrue data transfer costs.
+
+Otherwise, Fly.io bills per-region pricing for outbound data transfer.
 
 <%= partial("shared/network_pricing") %>
+
+Any traffic exiting a Fly.io machine is considered outbound data transfer, including:
+
+* traffic destined for the internet
+* traffic destined for other machines or apps in your network
+* traffic destined for [extensions](#extensions) like Supabase or Upstash Redis
+
+One exception: traffic destined for [Tigris Object Storage](/reference/tigris) is free. Learn more about [Extensions billing](#extensions).
+
 
 ## Fly Kubernetes
 
@@ -134,6 +147,19 @@ We bill for outbound data transfer from the region a VM is running in, inbound t
 
 - $75/mo per cluster
 - Plus the cost of [compute](#compute) and [Fly volumes](#persistent-storage-volumes) that you create
+
+## Extensions
+
+Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/reference/tigris), [Supabase Postgres](/reference/supabase) and [Upstash Redis](/reference/redis).
+
+When you provision their services, you become their customer, and you pay their list prices via your monthly Fly.io bill.
+
+You will not be billed separately for:
+
+* Machines running the services, which are hosted in the provider's account
+* Bandwidth to Tigris Object Storage
+
+You **will** be billed separately for data transfer to services other than Tigris Object Storage. See our [data transfer pricing](#data-transfer-pricing) for details.
 
 ## LiteFS Cloud
 
