@@ -139,7 +139,7 @@ The quickest way to fix this is to revise the `--datadir` flag to a different di
 ```toml
 # Please revise the MySQL data directory to another location
 
-# For example if you have:
+# For example if you had:
 [processes]
 app = "--datadir /data/mysql ..."
 
@@ -147,7 +147,7 @@ app = "--datadir /data/mysql ..."
 [processes]
 app = "--datadir /data/mysql_ ..."
 ```
-Changing the [MySQL data directory](https://dev.mysql.com/doc/refman/8.4/en/data-directory.html) will allow MySQL to completely initialize the new directory with a complete `mysql system schema.` Once done, redeploy your changes with `fly deploy`, and hopefully you no longer get the error regarding the missing mysql table.
+Changing the [MySQL data directory](https://dev.mysql.com/doc/refman/8.4/en/data-directory.html) will allow MySQL to completely initialize the new directory with a complete `mysql system schema.` Once done, redeploy your changes with `fly deploy`.
 
 
 ## Access the database from outside
