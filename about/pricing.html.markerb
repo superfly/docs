@@ -152,11 +152,12 @@ One exception: traffic destined for [Tigris Object Storage](/reference/tigris) i
 
 Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/reference/tigris), [Supabase Postgres](/reference/supabase) and [Upstash Redis](/reference/redis).
 
-When you provision their services, you become their customer, and you pay their list prices via your monthly Fly.io bill.
+When you provision their services, you become their customer, and you pay their list prices via your monthly Fly.io bill. Charges are updated daily in your Fly.io dashboard.
 
 You will not be billed separately for:
 
 * Machines running the services, which are hosted in the provider's account
+* IP addresses associated with the service
 * Bandwidth to Tigris Object Storage
 
 You **will** be billed separately for data transfer to services other than Tigris Object Storage. See our [data transfer pricing](#data-transfer-pricing) for details.
