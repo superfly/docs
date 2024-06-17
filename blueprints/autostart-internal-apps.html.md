@@ -2,7 +2,6 @@
 title: Autostart and autostop private apps
 layout: docs
 nav: firecracker
-redirect_from: /docs/blueprints/autostart-internal-apps/
 ---
 
 You have an private, or internal, app that communicates only with other apps on your [private network](/docs/networking/private-networking/). This private app might be a database or authentication server, or any other "backend" app that you don't want exposed to the public Internet. You want the app's Machines to stop when they're not serving requests from your other apps, and start again automatically when needed.
