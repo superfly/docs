@@ -3,6 +3,23 @@ title: "Launch a demo app"
 layout: docs
 sitemap: false
 nav: firecracker
+redirect_from:
+  - /docs/hands-on/view-app/
+  - /docs/hands-on/start/
+  - /docs/hands-on/installing/
+  - /docs/hands-on/create-app/
+  - /docs/hands-on/connecting-to-an-app/
+  - /docs/hands-on/sign-up/
+  - /docs/hands-on/sign-in/
+  - /docs/hands-on/
+  - /docs/hands-on/install-flyctl/
+  - /docs/hands-on/sign-up-sign-in/
+  - /docs/hands-on/launch-app/
+  - /docs/hands-on/check-app-status/
+  - /docs/hands-on/open-app/
+  - /docs/hands-on/deploy-app/
+  - /docs/hands-on/next/
+
 ---
 
 In this step-by-step guide you'll use Fly Launch to deploy a simple "hello fly" demo app to Fly.io. 

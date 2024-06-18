@@ -3,6 +3,8 @@ title: Install flyctl
 layout: docs
 sitemap: false
 nav: flyctl
+  - /docs/getting-started/installing-flyctl/
+  - /docs/flyctl/installing/
 ---
 
 <%= partial "/docs/partials/docs/flyctl_install" %>
