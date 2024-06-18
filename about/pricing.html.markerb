@@ -138,7 +138,7 @@ Any traffic exiting a Fly.io Machine is considered outbound data transfer, inclu
 * traffic destined for other Machines or apps in your network
 * traffic destined for [extensions](#extensions) like Supabase or Upstash Redis
 
-One exception: traffic destined for [Tigris Object Storage](/reference/tigris) is free. Learn more about [Extensions billing](#extensions).
+One exception: traffic destined for [Tigris Object Storage](/docs/reference/tigris) is free. Learn more about [Extensions billing](#extensions).
 
 
 ## Fly Kubernetes
@@ -150,7 +150,7 @@ One exception: traffic destined for [Tigris Object Storage](/reference/tigris) i
 
 ## Extensions
 
-Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/reference/tigris), [Supabase Postgres](/reference/supabase) and [Upstash Redis](/reference/redis).
+Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/docs/reference/tigris), [Supabase Postgres](/reference/supabase) and [Upstash Redis](/reference/redis).
 
 When you provision their services, you become their customer, and you pay their list prices via your monthly Fly.io bill. Charges are updated daily in your Fly.io dashboard.
 
