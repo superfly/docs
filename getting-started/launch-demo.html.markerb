@@ -32,21 +32,21 @@ The first step is installing all the tools you need to work with Fly Launch. Whi
 
 ## 2. Sign up or sign in
 
+Sign up for an account or [sign in](#sign-in-to-your-flyio-account) to your existing account.
+
 ### Sign up for a Fly.io account
 
 <%= partial "/docs/partials/sign_up" %>
 
-### Log in to your Fly.io account
+### Sign in to your Fly.io account
 
 <%= partial "/docs/partials/sign_in" %>
 
 ## 3. Launch the demo app
 
-Fly Launch helps you quickly deploy almost any kind of app using a Docker image. To learn more about the different ways to get your app ready to deploy, see the [Fly Launch](/docs/apps/launch/) docs.
+Fly Launch helps you quickly deploy almost any kind of app using a Docker image. For this example, you'll use our pre-built Docker image, `flyio/hellofly:latest`, to create and deploy the demo app.
 
-For this example, you'll use our pre-built Docker image, `flyio/hellofly:latest`, to create and deploy a demo app.
-
-Every Fly Launch app uses a [`fly.toml` config file](/docs/reference/configuration/) to tell the system how to deploy it. Running `fly launch` to create a new app generates the `fly.toml` file, which provides some useful defaults that you can tweak through a web interface before deploying the app. When you run a command, flyctl looks for a `fly.toml` file to get the name of the app to operate on and the config to apply during deployment.
+Every Fly Launch app uses a [`fly.toml` config file](/docs/reference/configuration/) to tell the platform how to deploy it. Running `fly launch` to create a new app generates the `fly.toml` file, which provides some useful defaults that you can tweak through a web interface before deploying the app. When you run a command post-deploy, flyctl looks for a `fly.toml` file to get the name of the app to operate on and the config to apply during deployment.
 
 To create the demo app, run:
 
@@ -111,9 +111,9 @@ NOTE: The machines for [app] have services with 'auto_stop_machines = true' that
 Visit your newly deployed app at https://my-app-name.fly.dev/
 ```
 
-## 4. Check app status
+## 4. Check your app's status
 
-Use the `fly status` command to get the basic details about your new app.
+After the app is deployed, use the `fly status` command to get the basic details about your new app.
 
 ```cmd
 fly status
