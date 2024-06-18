@@ -1189,8 +1189,8 @@ Properties of the `config` object for Machine configuration. See [Machine proper
   - `internal_port`: int - Required. Port the Machine listens on.
   - `concurrency`: Control Fly Proxy’s load balancing for this service.
       + `type`: string - `connections` (TCP) or `requests` (HTTP). Default is `connections`. Determines which kind of event we count for load balancing.
-      + `soft_limit`: int (nil) - Ideal service concurrency. We will attempt to spread load to keep services at or below this limit. We’ll deprioritize a Machine to give other Machines a chance to absorb traffic.
-      + `hard_limit`: int (nil) - Maximum allowed concurrency. The limit of events at which we’ll stop routing to a Machine altogether, and, if configured to do so, potentially start up existing Machines to handle the load.
+      + `soft_limit`: int (nil) - Ideal service concurrency. We will attempt to spread load to keep services at or below this limit. We’ll deprioritize a Machine to give other Machines a chance to absorb traffic. Defaults to 20 when unset.
+      + `hard_limit`: int (nil) - Maximum allowed concurrency. The limit of events at which we’ll stop routing to a Machine altogether, and, if configured to do so, potentially start up existing Machines to handle the load. Defaults to unlimited when unset.
   - `ports`: MachinePort - An array of objects defining the service's ports and associated handlers. Options:
       + `port`: int (nil) - The internet-exposed port to receive traffic on; if you want HTTP traffic routed to 8080/tcp on your Machine, this would be 80.
       + `start_port`, `end-port`: int (nil) - Like `port``, but allocate a range of ports to route internally, for applications that want to occupy whole port ranges.
