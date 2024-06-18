@@ -9,6 +9,10 @@ nav: firecracker
 
 Arcjet is installed as a dependency in your application and doesn't require an agent or any additional infrastructure. The SDK is currently available for JS applications, with support for other languages coming soon.
 
+<aside class="callout">
+This service is in **beta**. We consider it ready for production, but we may make breaking changes to the SDK. These will be announced in the [GitHub changelog](https://github.com/arcjet/arcjet-js/releases).
+</aside>
+
 ## Get started
 
 To configure your application to use Arcjet, run this command from your Fly.io application directory:
@@ -98,3 +102,16 @@ npx tsx --env-file .env.local index.ts
 ```
 
 4. Load the application and refresh the page a few times to see the rate limit in action.
+
+## Pricing
+
+Arcjet is currently in beta and is free to use. The current features available today will be unlimited and free to use. Our goal is to help developers protect their applications so we don’t want you to incur costs if you are attacked.
+
+Arcjet pricing will be based on the usage of features we intend to introduce in the future e.g. organization-wide rules, compliance tools, team management, etc.
+
+## Support
+
+Email: <support@arcjet.com>
+Discord: [Join](https://discord.gg/TPra6jqZDC).
+
+See the Arcjet docs for the [full support policy](https://docs.arcjet.com/support).
