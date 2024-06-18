@@ -3,6 +3,7 @@ title: Install flyctl
 layout: docs
 sitemap: false
 nav: flyctl
+redirect_from:
   - /docs/getting-started/installing-flyctl/
   - /docs/flyctl/installing/
 ---
