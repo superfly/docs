@@ -130,7 +130,7 @@ Your other apps can access the MySQL service by its name. In my case, I would us
 
 ## Debugging Possible Errors
 
-1. `mysqld: Table 'mysql.plugin' doesn't exist`
+### `mysqld: Table 'mysql.plugin' doesn't exist`
 
 This error is an indicator that the [mysql System Schema](https://dev.mysql.com/doc/refman/8.4/en/system-schema.html) inside the [MySQL data directory](https://dev.mysql.com/doc/refman/8.4/en/data-directory.html) is empty. This can happen due to different reasons. One of them is when a MySQL app is previously deployed with `--default-authentication-plugin`, and it gets re-deployed with the updated syntax `--mysql-native-password=ON`.
 
