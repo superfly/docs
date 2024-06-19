@@ -52,7 +52,7 @@ When you create an app using the `fly launch` command, the default settings in `
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = true
+  auto_stop_machines = false
   auto_start_machines = true
   min_machines_running = 0
 ...
