@@ -137,7 +137,7 @@ In this example, the app has a DNS hostname of `hellofly.fly.dev`. Your app's na
 
 ## 5. Visit your app
 
-You can connect to your deployed app is with the `fly apps open` command, which opens a browser on the http version of the site. That http connection will automatically be upgraded to an https secured connection (when using the `fly.dev` domain) to connect to it securely.
+You can connect to your deployed app with the `fly apps open` command, which opens a browser on the http version of the site. That http connection will automatically be upgraded to an https secured connection (when using the `fly.dev` domain) to connect to it securely.
 
 You've successfully launched your first app on Fly.io!
 
