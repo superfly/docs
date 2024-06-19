@@ -42,7 +42,7 @@ We release the internal lock on your private network. The process repeats if any
 
 ## Check whether your machine was migrated
 
-Even though you usually don't need to take any action after we migrate a Machine, you can use the `fly machine status` command to check Event Logs for migration events. For example, the following Machine was migrated, as indicated the `import=true` info in the `launch` Event Log:
+Even though you usually don't need to take any action after we migrate a Machine, you can use the `fly machine status` command to check Event Logs for migration events. For example, the following Machine was migrated, as indicated the `migrated=true` info in the `launch` Event Log:
 
 ```cmd
 fly machine status --app epic-stack-691c
@@ -72,5 +72,5 @@ VM
 Event Logs
 STATE   EVENT   SOURCE  TIMESTAMP                       INFO
 started start   flyd    2024-06-13T13:37:01.36+02:00
-created launch  flyd    2024-06-13T13:36:59.864+02:00   import=true
+created launch  flyd    2024-06-13T13:36:59.864+02:00   migrated=true
 ```
