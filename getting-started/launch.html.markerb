@@ -1,47 +1,49 @@
 ---
-title: "Launch on Fly.io"
+title: "Quickstart: Launch your app"
 layout: docs
 sitemap: false
 nav: firecracker
 toc: false
 ---
 
-<figure class="w:full mt:6">
-  <img src="/static/images/speedrun.webp" srcset="/static/images/speedrun@2x.webp 2x" alt="Illustration by Annie Ruygt of a hot air balloon leaving an exhaust of flames in its wake as it follows a trajectory from lower left to upper right, indicated clearly by a dotted line. The background has indistinct line drawings that conjure up outer space and circuitry.">
-</figure>
-
-You have an application you want to deploy on Fly.io? You're in the right place.
-
-Welcome to Fly Launch. For most languages and frameworks, you can deploy your app from zero, with the following steps:
+Welcome to Fly Launch. To deploy your app on Fly.io for the first time:
 
 <div class="important">
-1. [Install flyctl](/docs/flyctl/install/) &ndash; you'll need it.
+1. [Install flyctl](/docs/flyctl/install/) &ndash; the [open-source](https://github.com/superfly/flyctl+external) Fly.io CLI.
 
-2. Create an account with `fly auth signup` or login with `fly auth login`.
+2. Create an account with `fly auth signup` or log in with `fly auth login`.
 
 3. Run `fly launch` from inside your project source directory to create, configure, and (for most apps) deploy a new application.
 
 4. If prompted, run `fly deploy` to deploy your new app (or to redeploy after changes!).
 </div>
 
-`fly launch` knows what to do with a [Dockerfile](/docs/languages-and-frameworks/dockerfile/)&mdash;so you can use the tech _you_ love&mdash;and also configures and deploys the following kinds of apps automatically:
+Fly Launch knows what to do with a [Dockerfile](/docs/languages-and-frameworks/dockerfile/)&mdash;so you can use the tech _you_ love&mdash;and also configures and deploys the following kinds of apps automatically:
 
 <%= partial "/docs/languages-and-frameworks/partials/scanner_guides" %>
 
-Refer to [Launch a new app](/docs/apps/launch/) to learn more about what `fly launch` does.
+See [Launch a new app](/docs/apps/launch/) to learn more about what `fly launch` does.
+
+## Next steps
+
+1. Run `fly status` to show the status of your app and Machines.
+2. Run `fly apps open` to open your app in your browser.
+3. Learn [the essentials](/docs/getting-started/essentials/) about Fly Launch and Machines.
 
 <figure class="w:full mt:6">
   <img src="/static/images/speedrun-next-steps.webp" srcset="/static/images/speedrun-next-steps@2x.webp 2x" alt="Illustration by Annie Ruygt of Frankie the Fly.io hot air balloon character pointing at a set of stairs">
 </figure>
 
-## Next steps
+## Grow and scale
 
-1. Run `fly status` &ndash; show the status of the application instances.
-2. Run `fly apps open` &ndash; open your browser and direct it to your app.
-3. Run `fly deploy` &ndash; deploy your app after making changes.
+Check out some of the ways you can increase availability, capacity, and performance with Fly.io:
+
+* Follow the blueprint for [extra Machines for more resilient apps](/docs/blueprints/resilient-apps-multiple-machines/)
+* Read up on [App availability and resiliency](/docs/reference/app-availability/)
+* [Scale Machine CPU and RAM](/docs/apps/scale-machine/) 
+* [Scale Machine count](/docs/apps/scale-count/)
+* [Automatically start and stop Machines](/docs/apps/autostart-stop/) in response to app traffic
+* Try out [Fly GPUs](/docs/gpus/)
+
 
 If you have questions, need help, or want to talk about what you're building, visit our [community forum](https://community.fly.io).
-
-<figure class="text-center">
-  <img src="/static/images/speedrun-guidebooks.webp" srcset="/static/images/speedrun-guidebooks@2x.webp 2x" alt="Illustration by Annie Ruygt of Frankie the Fly.io hot air balloon character with one hand on their hip and the other hand out, palm up, with images floating above the hand representing the Elixir, Ruby, Laravel, and Django programming languages">
-</figure>
