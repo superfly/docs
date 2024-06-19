@@ -26,12 +26,24 @@ See [Launch a new app](/docs/apps/launch/) to learn more about what `fly launch`
 
 ## Next steps
 
-1. Run `fly status` &ndash; show the status of your app and Machines.
-2. Run `fly apps open` &ndash; open your app in your browser.
+1. Run `fly status` to show the status of your app and Machines.
+2. Run `fly apps open` to open your app in your browser.
 3. Learn [the essentials](/docs/getting-started/essentials/) about Fly Launch and Machines.
-
-If you have questions, need help, or want to talk about what you're building, visit our [community forum](https://community.fly.io).
 
 <figure class="w:full mt:6">
   <img src="/static/images/speedrun-next-steps.webp" srcset="/static/images/speedrun-next-steps@2x.webp 2x" alt="Illustration by Annie Ruygt of Frankie the Fly.io hot air balloon character pointing at a set of stairs">
 </figure>
+
+## Grow and scale
+
+Check out some of the ways you can increase availability, capacity, and performance with Fly.io:
+
+* Follow the blueprint for [extra Machines for more resilient apps](/docs/blueprints/resilient-apps-multiple-machines/)
+* Read up on [App availability and resiliency](/docs/reference/app-availability/)
+* [Scale Machine CPU and RAM](/docs/apps/scale-machine/) 
+* [Scale Machine count](/docs/apps/scale-count/)
+* [Automatically start and stop Machines](/docs/apps/autostart-stop/) in response to app traffic
+* Try out [Fly GPUs](/docs/gpus/)
+
+
+If you have questions, need help, or want to talk about what you're building, visit our [community forum](https://community.fly.io).
