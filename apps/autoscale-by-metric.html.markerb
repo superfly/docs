@@ -8,7 +8,7 @@ The metrics-based autoscaler scales an app's Machines based on any metric, such 
 
 The autoscaler works by collecting metrics from different sources, such as Prometheus or Temporal, and computing the number of required Machines based on those metrics. This reconciliation process happens on a loop every 15 seconds by default. We use the [Expr language](https://expr-lang.org/) for defining target Machine counts, which gives a rich set of built-in arithmetic functions.
 
-The `fly-autoscaler` is an application that you can run and customize yourself to work with your specific scaling needs. The app runs within your organization so you have full control over it.
+You run the autoscaler as an app based on the [`fly-autoscaler`](https://github.com/superfly/fly-autoscaler+external) image. The app runs within your organization so you have full control over it. You can customize it to work with your specific scaling needs.
 
 ## Quickstart
 
