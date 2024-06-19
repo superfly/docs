@@ -15,7 +15,7 @@ These guides will help you get through the basics of setting up your JavaScript 
 
 ## Installing flyctl and logging in
 
-In order to start working with Fly.io, you will need `flyctl`, our CLI app for managing apps. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/hands-on/install-flyctl/). Once that's installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
+In order to start working with Fly.io, you will need `flyctl`, our CLI app for managing apps. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/flyctl/install/). Once that's installed you'll want to [log in to Fly](/docs/getting-started/sign-up-sign-in/).
 
 Once you have logged on, below are a number of topics.  Review the ones you want, and in review them in any order.  Once you are ready, run:
 

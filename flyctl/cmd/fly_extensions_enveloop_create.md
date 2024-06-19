@@ -1,4 +1,4 @@
-Provision a Upstash Enveloop project
+Provision an Enveloop project
 
 
 ## Usage

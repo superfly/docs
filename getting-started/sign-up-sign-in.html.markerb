@@ -4,6 +4,7 @@ layout: docs
 sitemap: false
 nav: firecracker
 toc: false
+redirect_from: /docs/getting-started/log-in-to-fly/
 ---
 
 ## No account? Sign up for Fly.io

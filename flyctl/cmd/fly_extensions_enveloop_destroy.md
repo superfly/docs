@@ -1,4 +1,4 @@
-Permanently destroy an Upstash Enveloop project
+Permanently destroy an Enveloop project
 
 ## Usage
 ~~~

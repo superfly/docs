@@ -1,4 +1,4 @@
-Show details about an Upstash Enveloop project
+Show details about an Enveloop project
 
 
 ## Usage

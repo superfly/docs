@@ -186,9 +186,9 @@ Now, let's move on to deploying this app to Fly.io.
 
 ### Launch your Fly App
 
-Fly.io has its own command-line utility for managing apps, [flyctl](/docs/hands-on/install-flyctl/). 
+Fly.io has its own command-line utility for managing apps, [flyctl](/docs/flyctl/). 
 
-If not already installed, follow the instructions on the [installation guide](/docs/hands-on/install-flyctl/) and [log in to Fly.io](/docs/getting-started/log-in-to-fly/).
+If not already installed, follow the instructions on the [installation guide](/docs/flyctl/install/) and [log in to Fly.io](/docs/getting-started/sign-up-sign-in/).
 
 <section class="callout">
 Both `flyctl` and `fly` commands will work the same way.

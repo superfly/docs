@@ -15,7 +15,7 @@ You have an application you want to deploy on Fly.io? You're in the right place.
 Welcome to Fly Launch. For most languages and frameworks, you can deploy your app from zero, with the following steps:
 
 <div class="important">
-1. [Install flyctl](/docs/hands-on/install-flyctl/) &ndash; you'll need it.
+1. [Install flyctl](/docs/flyctl/install/) &ndash; you'll need it.
 
 2. Create an account with `fly auth signup` or login with `fly auth login`.
 

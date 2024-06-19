@@ -64,6 +64,7 @@ Machines must be associated with a Fly App. App names must be unique.
       <% component.with_json do %>
         {
           "app_name": "",
+          "enable_subdomains": false,
           "network": "",
           "org_slug": ""
         }
@@ -72,6 +73,7 @@ Machines must be associated with a Fly App. App names must be unique.
         | Property   | Type    | Required | Description                |
         |-------------|---------|----------|----------------------------|
         | `app_name`  | string  | yes      | Name of the app to create  |
+        | `enable_subdomains`  | boolean  | no      | Used for Fly Kubernetes. |
         | `org_slug`  | string  | yes      | Slug of the org in which to create the app |
         | `network`   | string  | no       | Name for an IPv6 private network to segment the app onto. |
       <% end %>
@@ -85,7 +87,7 @@ Machines must be associated with a Fly App. App names must be unique.
   </div>
 </div>
 
-To segment the app into its own network, you can pass a `network` argument in the JSON body, e.g. `"network": "some-arbitrary-name"`. Any Machine started in such an app will not be able to access other apps within their organization over the private network. However, Machines within such an app can communicate to each other, and the [`fly-replay`](/docs/reference/dynamic-request-routing/) header can still be used to route requests to Machines within a segmented app.
+To segment the app into its own network, you can pass a `network` argument in the JSON body, for example: `"network": "some-arbitrary-name"`. Any Machine started in such an app will not be able to access other apps within their organization over the private network. However, Machines within such an app can communicate to each other, and the [`fly-replay`](/docs/reference/dynamic-request-routing/) header can still be used to route requests to Machines within a segmented app.
 
 ## Allocate an IP address for global request routing
 

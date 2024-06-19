@@ -7,11 +7,11 @@ fly extensions enveloop [command] [flags]
 ~~~
 
 ## Available Commands
-* [create](/docs/flyctl/extensions-enveloop-create/)	 - Provision a Upstash Enveloop project
-* [dashboard](/docs/flyctl/extensions-enveloop-dashboard/)	 - Visit the Enveloop dashboard on the Upstash web console
-* [destroy](/docs/flyctl/extensions-enveloop-destroy/)	 - Permanently destroy an Upstash Enveloop project
-* [list](/docs/flyctl/extensions-enveloop-list/)	 - List your Upstash Enveloop project
-* [status](/docs/flyctl/extensions-enveloop-status/)	 - Show details about an Upstash Enveloop project
+* [create](/docs/flyctl/extensions-enveloop-create/)	 - Provision an Enveloop project
+* [dashboard](/docs/flyctl/extensions-enveloop-dashboard/)	 - Open the Enveloop dashboard via your web browser
+* [destroy](/docs/flyctl/extensions-enveloop-destroy/)	 - Permanently destroy an Enveloop project
+* [list](/docs/flyctl/extensions-enveloop-list/)	 - List your Enveloop projects
+* [status](/docs/flyctl/extensions-enveloop-status/)	 - Show details about an Enveloop project
 
 ## Options
 
