@@ -8,7 +8,7 @@ Fly.io will migrate your Machines from problematic hosts to healthy hosts as req
 
 ## Machine migration process
 
-Migrating a Machine consists of several steps:
+We migrate Machines using the following process:
 
 1. Acquire an internal lock to coordinate multiple Machine migrations in the Fly.io platform globally.
 1. Stop a Machine.
@@ -20,11 +20,11 @@ The following sections describe the migration process in more detail.
 
 ### 1. Acquire an internal lock
 
-The internal lock for migration is per network ID. All the apps in your organization are on a [private network](/docs/networking/private-networking/) by default. There's no way around it, a Machine will be stopped prior to migration. When we lock by network ID, we ensure that we don't migrate other Machines from the same app or, in fact, any other apps in your network, at the same time. This can prevent clustering or quorum issues for databases and avoid downtime for apps with multiple Machines.
+We set the internal lock for migration using your network ID. All the apps in your organization are on a [private network](/docs/networking/private-networking/) by default. There's no way around it, a Machine will be stopped prior to migration. When we lock by network ID, we ensure that we don't migrate other Machines from the same app or, in fact, any other apps in your network, at the same time. This can prevent clustering or quorum issues for databases and avoid downtime for apps with multiple Machines.
 
 ### 2. Stop a Machine
 
-We send the Machine the signal configured as its `kill_signal` in `fly.toml` or Machine config and then shut down. This should result in a graceful shutdown of a running app Machine.
+We send the Machine the signal configured as its `kill_signal` in `fly.toml` or the `stop_config` settings in the Machine config and then shut down. This should initiate a graceful shutdown of a running app Machine.
 
 ### 3. Fork the Machine's volume
 
@@ -32,7 +32,9 @@ If the Machine has an attached volume, we create an exact copy of that volume, i
 
 ### 4. Start a new machine
 
-We start a new Machine on the destination host and, if applicable, attach the volume we copied in step 3. The new Machine will have the same Machine ID as the original Machine.
+We start a new Machine on the destination host and, if applicable, attach the volume we copied in step 3. The new Machine will have the same Machine ID as the original Machine. 
+
+The 6PN address will be different from the original machine. Most apps communicating on Fly.io private networks use [our internal DNS](/docs/networking/private-networking/#fly-io-internal-dns) to query for 6PN addresses and that feature will continue to work as usual. Note that apps should never rely on 6PN addresses remaining static.
 
 ### 5. Release the internal lock
 
@@ -40,10 +42,10 @@ We release the internal lock on your private network. The process repeats if any
 
 ## Check whether your machine was migrated
 
-The `flyctl machine status` command shows migration events in the Event Logs. For example, the following Machine was migrated, as indicated the `import=true` info in the `created` event log:
+Even though you usually don't need to take any action after we migrate a Machine, you can use the `fly machine status` command to check Event Logs for migration events. For example, the following Machine was migrated, as indicated the `import=true` info in the `launch` Event Log:
 
 ```cmd
- go run . m status -a epic-stack-691c
+fly machine status --app epic-stack-691c
 ? Select a machine: d8dd625fed5568 crimson-grass-559 (started, region ord, process group 'app')
 Machine ID: d8dd625fed5568
 Instance ID: 01J08P60K8NK33K9P5MQ5M4QN8
@@ -66,12 +68,6 @@ VM
   Entrypoint    =
   Command       =
   Volume        = vol_r6gzo1p3yq83yxjv
-
-Checks [0/3]
-NAME                            STATUS          LAST UPDATED    OUTPUT
-servicecheck-02-http-8080       critical        5h39m ago       connect: connection refused
-servicecheck-01-http-8080       critical        5h39m ago       connect: connection refused
-servicecheck-00-tcp-8080        critical        5h39m ago       connect: connection refused
 
 Event Logs
 STATE   EVENT   SOURCE  TIMESTAMP                       INFO
