@@ -4,11 +4,11 @@ layout: docs
 nav: firecracker
 ---
 
-Fly.io will migrate your Machines from problematic hosts to healthy hosts as required. Some of the reasons for migrating Machines include host overcrowding, deprecation, or scheduled maintenance. The migration process helps your applications run efficiently on the Fly.io platform. You don't need to take any action to migrate your Machines to another host and, if your app has multiple Machines, migration shouldn't result in downtime for your app.
+Fly.io will migrate your Machines from problematic hosts to healthy hosts as required. Some of the reasons for migrating Machines include host overcrowding, deprecation, or scheduled maintenance. The migration process helps your applications run efficiently on the Fly.io platform. You don't need to take any action to migrate your Machines to another host and, if your app has [multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/), migration shouldn't result in any downtime for your app.
 
 ## Machine migration process
 
-The Machine migration process consists of several steps:
+Migrating a Machine consists of several steps:
 
 1. Acquire an internal lock to coordinate multiple Machine migrations in the Fly.io platform globally.
 1. Stop a Machine.
@@ -16,7 +16,7 @@ The Machine migration process consists of several steps:
 1. Start a new Machine on the destination host.
 1. Release the internal lock.
 
-The following sections describe the process in more detail.
+The following sections describe the migration process in more detail.
 
 ### 1. Acquire an internal lock
 
@@ -26,20 +26,17 @@ The internal lock for migration is per network ID. All the apps in your organiza
 
 We send the Machine the signal configured as its `kill_signal` in `fly.toml` or Machine config and then shut down. This should result in a graceful shutdown of a running app Machine.
 
-
 ### 3. Fork the Machine's volume
 
-Things to cover
-
-- Volume IDs will be different
+If the Machine has an attached volume, we create an exact copy of that volume, including its data, on the destination host. The new volume will have a different volume ID than the original volume.
 
 ### 4. Start a new machine
 
-Things to cover
-
-- Machine IDs will be same
+We start a new Machine on the destination host and, if applicable, attach the volume we copied in step 3. The new Machine will have the same Machine ID as the original Machine.
 
 ### 5. Release the internal lock
+
+We release the internal lock on your private network. The process repeats if any of your apps have more Machines on the affected host.
 
 ## Check whether your machine was migrated
 
