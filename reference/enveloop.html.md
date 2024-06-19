@@ -14,7 +14,7 @@ This service is in **public beta**.
 </aside>
 
 ## Create an Enveloop project
-Creating an Enveloop project happens via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/) and create your first Fly app. From there, you can add an Enveloop project to your Fly app.
+Creating an Enveloop project happens via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [sign up for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/) and create your first Fly app. From there, you can add an Enveloop project to your Fly app.
 
 You can create one Enveloop project per Fly app.
 
