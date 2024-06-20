@@ -12,6 +12,8 @@ Get up and running on Fly.io:
 
 - **[Launch a demo app](/docs/hands-on/):** Walk through installing the flyctl command-line tool and creating an account, then launch a simple "hellofly" demo app.
 
+- **[Choose your language or framework](/docs/getting-started/get-started-by-framework/):** Get started on Fly.io with the tech _you_ love.
+
 - **[Fly.io essentials](/docs/getting-started/essentials):** A primer on Fly Machines and Fly Launch, plus the Fly.io glossary. It's all here.
 
 <figure>
