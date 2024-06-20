@@ -168,5 +168,5 @@ Check out some of the ways you can increase availability, capacity, and performa
 * Read up on [App availability and resiliency](/docs/reference/app-availability/)
 * [Scale Machine CPU and RAM](/docs/apps/scale-machine/) 
 * [Scale Machine count](/docs/apps/scale-count/)
-* [Automatically start and stop Machines](/docs/apps/autostart-stop/) in response to app traffic
+* [Autoscale Machines based on load or metrics](/docs/reference/autoscaling/)
 * Try out [Fly GPUs](/docs/gpus/)
