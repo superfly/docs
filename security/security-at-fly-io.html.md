@@ -1,5 +1,5 @@
 ---
-title: Security at Fly.io
+title: Fly.io security practices and compliance
 layout: docs
 nav: firecracker
 ---
@@ -8,9 +8,7 @@ nav: firecracker
 **Report an issue**: If you have a security concern, or believe you’ve found a vulnerability in any part of our infrastructure, please contact us. You can reach us at [**security@fly.io**](mailto:security@fly.io), and we can provide you with a Signal number if needed to convey sensitive information.
 </div>
 
-## Our Security Practice
-
-**Corporate Security (“CorpSec”)**
+## Corporate Security (“CorpSec”)
 
 CorpSec is the practice of making sure [Fly.io](http://Fly.io) team members have secure access to [Fly.io](http://Fly.io) company infrastructure, and that secured channels are the only exposed channels to [Fly.io](http://Fly.io). CorpSec controls are the primary concern of standards like SOC2.
 
