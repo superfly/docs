@@ -1,0 +1,40 @@
+And with that you can deploy the app!
+
+```cmd
+fly launch
+```
+
+```output
+Scanning source code
+Detected a <%= runtime %> app
+Warning: This organization has no payment method, turning off high availability
+Creating app in [redacted]/[app-name]
+We're about to launch your app on Fly.io. Here's what you're getting:
+
+Organization: Your Name              (fly launch defaults to the personal org)
+Name:         [app-name]             (derived from your directory name)
+Region:       Amsterdam, Netherlands (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+Sentry:       false                  (not requested)
+
+...
+
+==> Building image
+...
+==> Building image with Docker
+...
+
+Watch your deployment at https://fly.io/apps/[app-name]/monitoring
+...
+
+Visit your newly deployed app at https://[app-name].fly.dev/
+```
+
+This will generate a `fly.toml` file with the configuration for your app and a Dockerfile that uses [multi-stage builds](/docs/python/the-basics/multi-stage-builds).
+Refer to the [fly.toml docs](https://fly.io/docs/reference/configuration/) for more configuration options.
+
+To deploy a new version of your app, simply run `fly deploy` in the project directory.
+
+You can check out the full (yet minimal) example in [this GitHub repository](https://github.com/fly-apps/<%= repo %>) for a reference.
