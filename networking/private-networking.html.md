@@ -10,11 +10,11 @@ redirect_from:
 
 Fly Apps are connected by a mesh of WireGuard tunnels using IPv6.
 
-Applications within the same organization are assigned special addresses (6PN addresses) tied to the organization. Those applications can talk to each other because of those 6PN addresses, but applications from other organizations can't; the Fly.io platform won't forward packets between different 6PN networks.
+Applications within the same organization are assigned special addresses (6PN addresses) tied to the organization. Those applications can talk to each other because of their 6PN addresses, but applications from other organizations can't. The Fly.io platform won't forward packets between different 6PN networks.
 
-This connectivity is always available to apps by default; you don't have to do anything special to get it.
+Private networking is always available to apps by default; you don't have to do anything special to get it.
 
-You can connect apps running outside of Fly.io to your 6PN network using WireGuard; for that matter, you can connect your dev laptop to your 6PN network. To do that, you'll use flyctl, the Fly.io CLI, to generate a WireGuard configuration that has a 6PN address.
+You can connect apps running outside of Fly.io to your 6PN network using WireGuard. You can even connect your dev laptop to your 6PN network. To do that, you'll use flyctl, the Fly.io CLI, to generate a WireGuard configuration that has a 6PN address.
 
 ## Fly.io `.internal` DNS
 
@@ -79,7 +79,13 @@ In uncommon circumstances, such as having an unusual file system layout, or usin
 
 ## 6PN addresses in detail
 
-In most cases, connecting to other Machines via the `.internal` DNS is the most convenient and accessible way to connect your Fly Apps and Machines. But in rare cases you may need more complicated routing than the `.internal` DNS gives you. In this cases, you might be able to take advantage of the structure of 6PN addresses in your App's design. Rather than a single address, each Fly Machine is assigned a `/112` 6PN subnet, which is structured as follows:
+In most cases, connecting to other Machines via the `.internal` DNS is the most convenient and accessible way to connect your Fly Apps and Machines. 
+
+<div class="note icon">
+**Note:** 6PN addresses directly connect one Fly Machine with another, bypassing the Fly Proxy. To use Fly Proxy features like auto start and stop on your private network, you can use a [Flycast address](#flycast---private-fly-proxy-services).
+</div>
+
+Most of the time, the `.internal` DNS is all you'll need for routing. If you need more complicated routing, you might be able to take advantage of the structure of 6PN addresses in your app's design. Rather than a single address, each Fly Machine is assigned a `/112` 6PN subnet, which is structured as follows:
 
 | fdaa    | 16 bits | ULA prefix             |
 | ------- | ------- | ---------------------- |
@@ -88,7 +94,7 @@ In most cases, connecting to other Machines via the `.internal` DNS is the most 
 | machine | 32 bits | fly machine identifier |
 |         | 16 bits | free space             |
 
-<div class="important icon">
+<div class="warning icon">
 **Caution:** 6PN addresses are **not** static and will change over time, for various reasons. If you need an unchanging method to address an individual Fly Machine, you can use the domain `<machine_id>.vm.<appname>.internal`.
 </div>
 
@@ -96,9 +102,9 @@ The machine identifier portion of the 6PN address is not related to the 14 chara
 
 ## Flycast - Private Fly Proxy services
 
-6PN addresses directly connect one Fly Machine with another. Packets sent from one Fly Machine arrive at another Fly Machine without passing through the Fly Proxy. This is very fast. But sometimes you'll want to direct private network traffic through the Fly Proxy to take advantage of its features, like geographically aware load balancing and autostart/autostop based on traffic. The is possible with Flycast addresses.
+A Flycast address is an app-wide IPv6 address that the Fly Proxy can route to privately. Use a Flycast address to direct private network traffic through the Fly Proxy to take advantage of features like geographically aware load balancing and autostart/autostop based on traffic. 
 
-A Flycast address is an app-wide IPv6 address that the Fly Proxy can route to privately. Use Flycast to do the following entirely within your organization's private network:
+Use Flycast to do the following entirely within your organization's private network:
 
 * [Autostart and/or autostop](https://fly.io/docs/apps/autostart-stop/) Machines based on network requests.
 * Use Fly Proxy's [geographically aware load balancing](/docs/reference/load-balancing/) for private services.

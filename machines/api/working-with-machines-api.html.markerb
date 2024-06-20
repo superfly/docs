@@ -67,6 +67,7 @@ Typically, 2xx HTTP status codes denote successful operations, 4xx codes imply f
 | --- | --- |
 | 200 | Successful request. |
 | 201 | Created successfully. |
+| 202 | Accepted (success). |
 | 204 | Successful request. No content. |
 | 400 | Bad request. Check that the parameters were correct. |
 | 401 | The API key used was missing or invalid. |

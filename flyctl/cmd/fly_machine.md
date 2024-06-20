@@ -22,6 +22,7 @@ fly machine [command] [flags]
 * [start](/docs/flyctl/machine-start/)	 - Start one or more Fly machines
 * [status](/docs/flyctl/machine-status/)	 - Show current status of a running machine
 * [stop](/docs/flyctl/machine-stop/)	 - Stop one or more Fly machines
+* [suspend](/docs/flyctl/machine-suspend/)	 - Suspend one or more Fly machines
 * [uncordon](/docs/flyctl/machine-uncordon/)	 - Reactivate all services on a machine
 * [update](/docs/flyctl/machine-update/)	 - Update a machine
 

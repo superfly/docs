@@ -6,21 +6,23 @@ status: alpha
 nav: firecracker
 ---
 
-[Supabase](https://supabase.com) offers a preview of their managed Postgres service on Fly.io infrastructure. Provisioning Supabase on Fly.io ensures low-latency database access from applications hosted on Fly.io.
+[Supabase](https://supabase.com) offers managed Postgres databases on Fly.io infrastructure. Provisioning Supabase on Fly.io ensures low-latency database access from applications hosted on Fly.io.
 
 <aside class="callout">
-This service is in **public alpha**. Do not run production workloads of any kind!
+This service is in **public alpha**. Here's what you should know.
 
-Alpha databases:
- * should only be used for testing and getting customer feedback
- * can lose data or go offline at any time
- * come with no support guarantees
- * won't be charged for
+Supabase Databases run on single machines and are susceptible to hardware issues. Restoring an affected database may require contacting support.
+
+During the alpha, you won't be charged for usage, but your usage will show up as a preview on your Fly.io bill.
+
+Most Supabase features besides raw Postgres are not enabled yet, such as [auth](https://supabase.com/docs/guides/auth) or [storage](https://supabase.com/docs/guides/storage).
+
+Supabase's connection pooler runs on AWS infrastructure, so using it may add connection latency depending on your region's [proximity to AWS servers](https://rtt.fly.dev/).
 </aside>
 
 ## Create and manage a Supabase Postgres database
 
-Creating and managing databases happens exclusively via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [signup for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/).
+Creating and managing databases happens exclusively via the [Fly CLI](/docs/flyctl/install/). Install it, then [signup for a Fly account](/docs/getting-started/sign-up-sign-in/).
 
 <aside class="callout">Running the following command in a Fly.io app context -- inside an app directory or specifying `-a yourapp` -- will automatically pick a region and set secrets on your app.</aside>
 

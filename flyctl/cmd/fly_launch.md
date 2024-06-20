@@ -26,6 +26,7 @@ fly launch [flags]
                                              - "volume-opt=<key>=<value>", can be specified more than once, takes a key-value pair consisting of the option name and its value.
                                          Repeat for each volume in order (comma-separated lists not accepted)
                                          
+  -c, --config string                    Path to application configuration file
       --copy-config                      Use the configuration file if present without prompting
       --detach                           Return immediately instead of monitoring deployment progress
       --dns-checks                       Perform DNS checks during deployment (default true)
@@ -64,6 +65,7 @@ fly launch [flags]
       --path string                      Path to the app source root, where fly.toml file will be saved (default ".")
       --process-groups strings           Deploy to machines only in these process groups
       --push                             Push image to registry after build is complete
+      --recreate-builder                 Recreate the builder app, if it exists
   -r, --region string                    The target region (see 'flyctl platform regions')
       --regions strings                  Deploy to machines only in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times.
       --release-command-timeout string   Time duration to wait for a release command finish running, or 'none' to disable. (default "5m0s")

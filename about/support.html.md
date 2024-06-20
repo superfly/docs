@@ -35,6 +35,10 @@ Our Launch, Scale, and Enterprise plans have access to email support. These plan
 
 Your support address is in the [Fly.io dashboard](https://fly.io/dashboard). Select your organization, and look for your Support email address in the Billing section.
 
+## Support metrics
+
+The Fly.io Support team publishes our email support response time metrics in order to better set expectations regarding response times and help to you understand how we're doing. You can view these metrics in the public [Support Metrics Dashboard](https://fly.io/support).
+
 ## Working with support
 
 We understand that describing technical issues can sometimes be challenging. Providing a clear and detailed description of the problem, including any noticeable symptoms and relevant artifacts, can help us identify similar cases and potentially speed up the resolution process.

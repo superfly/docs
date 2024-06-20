@@ -35,7 +35,7 @@ For more details about each step, follow the guide below.
 
 ### Set your Fly API token
 
-Your GitHub Action will need a Fly API token in order to deploy and manage new review apps on Fly.io. You can get this token using the following [flyctl](https://fly.io/docs/hands-on/install-flyctl/) command:
+Your GitHub Action will need a Fly API token in order to deploy and manage new review apps on Fly.io. You can get this token using the following [flyctl](/docs/flyctl/install/) command:
 
 ```cmd
 fly auth token

@@ -2,15 +2,15 @@
 title: Install flyctl
 layout: docs
 sitemap: false
-nav: hands_on
-toc: true
-redirect_from: 
+nav: flyctl
+redirect_from:
   - /docs/getting-started/installing-flyctl/
-  - /docs/hands-on/installing/
   - /docs/flyctl/installing/
 ---
 
 <%= partial "/docs/partials/docs/flyctl_install" %>
 
+## Next steps
 
-[Next: Sign up / Sign in](/docs/hands-on/sign-up-sign-in/)
+- [Launch an app](/docs/getting-started/launch/)
+- [Browse what's possible on Fly.io](/docs/blueprints/)

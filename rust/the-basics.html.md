@@ -12,7 +12,7 @@ To develop Rust applications, you will need to setup the rust toolchain. We reco
 
 ## Install flyctl and log in
 
-In order to start working with Fly.io, you will need `flyctl`, our CLI app for managing apps. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/hands-on/install-flyctl/). Once that's installed you'll want to [log in to Fly](/docs/getting-started/log-in-to-fly/).
+In order to start working with Fly.io, you will need `flyctl`, our CLI app for managing apps. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/flyctl/install/). Once that's installed you'll want to [log in to Fly](/docs/getting-started/sign-up-sign-in/).
 
 For most popular frameworks you can deploy your app with just one command: 
 
