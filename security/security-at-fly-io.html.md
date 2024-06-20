@@ -2,11 +2,10 @@
 title: Security at Fly.io
 layout: docs
 nav: firecracker
-redirect_from: /docs/about/security/
 ---
 
 <div class="important icon">
-**Reporting issues**: If you have a security concern, or believe you’ve found a vulnerability in any part of our infrastructure, please contact us. You can reach us at [**security@fly.io**](mailto:security@fly.io), and we can provide you with a Signal number if needed to convey sensitive information.
+**Report an issue**: If you have a security concern, or believe you’ve found a vulnerability in any part of our infrastructure, please contact us. You can reach us at [**security@fly.io**](mailto:security@fly.io), and we can provide you with a Signal number if needed to convey sensitive information.
 </div>
 
 ## Our Security Practice
