@@ -7,8 +7,8 @@ nav: firecracker
 
 Autoscaling adjusts the number of running or created Fly Machines dynamically. We support two forms of autoscaling:
 
-1. Autostart/autostop Machines
-2. Metrics-based autoscaling
+- Autostart/autostop Machines
+- Metrics-based autoscaling
 
 ## Autostart/autostop Machines
 
