@@ -5,21 +5,15 @@ sitemap: false
 nav: firecracker
 ---
 
-Autoscaling is used to increase the number of Fly Machines based on demand. There are two forms of autoscaling supported:
+Autoscaling adjusts the number of running or created Fly Machines dynamically. We support two forms of autoscaling:
 
-1. Pre-allocated Machine autoscaling
+1. Autostart/autostop Machines
 2. Metrics-based autoscaling
 
-## Pre-allocated Machine autoscaling
+## Autostart/autostop Machines
 
-This relies on the Fly Proxy feature, [auto start and stop machines](https://fly.io/docs/apps/autostart-stop/). The proxy starts and stops
-existing Machines based on demand, machines are never created or deleted. The responsibility is on you to create as many machines as needed.
-For a comprehensive overview of how it works, see the [documentation](https://fly.io/docs/apps/autostart-stop/).
+The Fly Proxy autostart/autostop feature starts and stops Machines based on load; Machines are never created or deleted. You create a "pool" of Machines in one or more regions and the Fly Proxy starts and stops them as needed. For a comprehensive overview of how it works, see [Automatically stop and start Machines](https://fly.io/docs/apps/autostart-stop/).
 
 ## Metrics-based autoscaling
 
-Autoscales your application based on metrics such as CPU and memory. This uses [Fly Autoscaler](https://github.com/superfly/fly-autoscaler)
-which you deploy as an app into your organisation. It polls metrics from a Prometheus instance and computes the number of machines needed
-based on those metrics. The autoscaler will create and delete machines as configured. To learn how to deploy and configure it, see
-the [documentation](https://github.com/superfly/fly-autoscaler). 
-
+The metrics-based autoscaler scales your application based on any metric. You deploy the autoscaler as an app in your organization. It polls collected metrics and computes the number of machines needed based on the metric you define. The autoscaler can create and delete machines or stop and start existing Machines. To learn how to deploy and configure the autoscaler, see [Autoscale based on metrics](/docs/apps/autoscale-by-metric/).
