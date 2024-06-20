@@ -5,7 +5,7 @@ sitemap: false
 nav: firecracker
 ---
 
-Concurrency settings are used by the Fly Proxy for important things like [load balancing](/docs/reference/load-balancing/#load-balancing-strategy) and [automatically stopping and starting](/docs/apps/autostart-stop/) Machines.
+Concurrency settings are used by the Fly Proxy for important things like [load balancing](/docs/reference/load-balancing/#load-balancing-strategy) and [autostart/autostop](/docs/apps/autostart-stop/) for Machines.
 
 The following concurrency settings apply per Machine and per service in your app:
 
@@ -19,7 +19,7 @@ For Fly Launch apps, configure concurrency settings in the [[http_service.concur
 
 ## Default settings
 
-The default concurrency settings are a `soft_limit` of 20 and a `hard_limit` of 25. However, many apps can handle a few hundred concurrent connections or more. You can try out different concurrency settings and see how it affects performance and load balancing.
+The default concurrency settings when not specified are a `soft_limit` of 20 and no `hard_limit`. Many apps can handle a few hundred concurrent connections or more. You can try out different concurrency settings and see how it affects performance and load balancing.
 
 `connections` is the default concurrency type.
 
@@ -45,4 +45,4 @@ The decision to use `connections` or `requests` for concurrency depends on the t
 
 ## Concurrency limit tuning tips
 
-When tuning concurrency, try setting a relatively high `hard_limit`. You might have to do an initial benchmark to estimate the maximum number of concurrent connections or requests that your app can handle. Then tune the `soft_limit` to optimize auto start/stop and load balancing. Once your app is getting real-world traffic, you can continue to monitor your app and adjust the `soft_limit` further to suit your workload.
+When tuning concurrency, try setting a relatively high `hard_limit`, or leave it unset to have no hard limit. If you do want to set a `hard_limit` to have more control over load balancing, then you might have to do an initial benchmark to estimate the maximum number of concurrent connections or requests that your app can handle. Then tune the `soft_limit` and [create more Machines](/docs/blueprints/resilient-apps-multiple-machines/) to optimize autostart/autostop and load balancing. Once your app is getting real-world traffic, you can continue to monitor your app and adjust the `soft_limit` further to suit your workload.
