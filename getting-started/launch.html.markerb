@@ -1,12 +1,13 @@
 ---
 title: "Quickstart: Launch your app"
 layout: docs
-sitemap: false
 nav: firecracker
 toc: false
 ---
 
-Welcome to Fly Launch. To deploy your app on Fly.io for the first time:
+Welcome to Fly Launch. Fly Launch works with a Dockerfile or scans and configures apps for most common languages and frameworks. 
+
+To deploy your app on Fly.io for the first time:
 
 <div class="important">
 1. [Install flyctl](/docs/flyctl/install/) &ndash; the [open-source](https://github.com/superfly/flyctl+external) Fly.io CLI.
@@ -18,17 +19,11 @@ Welcome to Fly Launch. To deploy your app on Fly.io for the first time:
 4. If prompted, run `fly deploy` to deploy your new app (or to redeploy after changes!).
 </div>
 
-Fly Launch knows what to do with a [Dockerfile](/docs/languages-and-frameworks/dockerfile/)&mdash;so you can use the tech _you_ love&mdash;and also configures and deploys the following kinds of apps automatically:
-
-<%= partial "/docs/languages-and-frameworks/partials/scanner_guides" %>
-
-See [Launch a new app](/docs/apps/launch/) to learn more about what `fly launch` does.
-
 ## Next steps
 
 1. Run `fly status` to show the status of your app and Machines.
 2. Run `fly apps open` to open your app in your browser.
-3. Learn [the essentials](/docs/getting-started/essentials/) about Fly Launch and Machines.
+3. Learn [the essentials](/docs/getting-started/essentials/) about Fly Launch and Fly Machines.
 
 <figure class="w:full mt:6">
   <img src="/static/images/speedrun-next-steps.webp" srcset="/static/images/speedrun-next-steps@2x.webp 2x" alt="Illustration by Annie Ruygt of Frankie the Fly.io hot air balloon character pointing at a set of stairs">
@@ -40,9 +35,9 @@ Check out some of the ways you can increase availability, capacity, and performa
 
 * Follow the blueprint for [extra Machines for more resilient apps](/docs/blueprints/resilient-apps-multiple-machines/)
 * Read up on [App availability and resiliency](/docs/reference/app-availability/)
+* [Autoscale Machines based on load or custom metrics](/docs/reference/autoscaling/)
 * [Scale Machine CPU and RAM](/docs/apps/scale-machine/) 
 * [Scale Machine count](/docs/apps/scale-count/)
-* [Automatically start and stop Machines](/docs/apps/autostart-stop/) in response to app traffic
 * Try out [Fly GPUs](/docs/gpus/)
 
 
