@@ -8,7 +8,7 @@ redirect_from: /docs/about/credit-cards/
 
 Billing for Fly.io is monthly per organization. Organizations are administrative entities that enable you to add members, share app development environments, and manage billing separately.
 
-The amount you're charged depends on your plan. For the Pay As You Go plan, you pay for resource usage. For other plans, you pay the plan cost plus your resource usage beyond the included usage and [free allowances](/docs/about/pricing/#free-allowances).
+The amount you're charged depends on your plan. For the Pay As You Go plan, you pay for resource usage. For other plans, you pay for the cost of the plan plus your resource usage beyond the included usage and [free allowances](/docs/about/pricing/#free-allowances).
 
 Refer to our [Plans page](https://fly.io/plans) and our resource [Pricing page](/docs/about/pricing/) for details.
 
