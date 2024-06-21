@@ -122,6 +122,7 @@ unencrypted
 unmanaged
 unmount
 Upstash
+Valkey
 vCPUs?\b
 virtualized
 Vite
