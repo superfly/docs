@@ -84,13 +84,13 @@ late-surf-5384        	fly-ephemeral mad
 Note the database name, then fetch its status.
 
 ```cmd
-fly ext supabase status late-waterfall-1133
+fly ext supabase status late-surf-5384
 ```
 ```output
-Redis
-  ID             = aaV829vaMVDGbi5
-  Name           = late-waterfall-1133
-  App            = myapp
+Status
+   Name           = late-surf-5384
+   Primary Region = mia
+   Status         = created
 ```
 
 ### Delete a Supabase database
