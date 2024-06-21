@@ -7,7 +7,7 @@ toc: false
 
 Fly Launch can deploy almost any app from a [Dockerfile](/docs/languages-and-frameworks/dockerfile/). 
 
-The Fly Launch scanners also detect and deploy the following kinds of apps automatically:
+Fly Launch scanners also detect and deploy the following kinds of apps automatically:
 
 <%= partial "/docs/languages-and-frameworks/partials/scanner_guides" %>
 

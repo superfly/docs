@@ -35,9 +35,9 @@ Check out some of the ways you can increase availability, capacity, and performa
 
 * Follow the blueprint for [extra Machines for more resilient apps](/docs/blueprints/resilient-apps-multiple-machines/)
 * Read up on [App availability and resiliency](/docs/reference/app-availability/)
+* [Autoscale Machines based on load or custom metrics](/docs/reference/autoscaling/)
 * [Scale Machine CPU and RAM](/docs/apps/scale-machine/) 
 * [Scale Machine count](/docs/apps/scale-count/)
-* [Autoscale Machines based on load or metrics](/docs/reference/autoscaling/)
 * Try out [Fly GPUs](/docs/gpus/)
 
 
