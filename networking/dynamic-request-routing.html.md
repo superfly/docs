@@ -51,6 +51,8 @@ fly-replay: region=sjc
 
 The proxy will get the request to an instance in that region and let the instances in the cluster take care of getting it to the writeable leader.
 
+Check out our blueprint for [Multi-region databases and fly-replay](/docs/blueprints/multi-region-fly-replay/).
+
 ### Replay requests to other apps
 
 `fly-replay` can replay requests across apps in the same organization. Think of a router app for a FaaS that wants to spin up a customer [Machine](/docs/machines/) on demand.
