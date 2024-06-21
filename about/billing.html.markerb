@@ -8,21 +8,27 @@ redirect_from: /docs/about/credit-cards/
 
 Billing for Fly.io is monthly per organization. Organizations are administrative entities that enable you to add members, share app development environments, and manage billing separately.
 
-The amount you're charged depends on your plan, and your resource usage beyond the included plan usage and [free allowances](/docs/about/pricing/#free-allowances).
+The amount you're charged depends on your plan. For the Pay As You Go plan, you pay for resource usage. For other plans, you pay the plan cost plus your resource usage beyond the included usage and [free allowances](/docs/about/pricing/#free-allowances).
 
 Refer to our [Plans page](https://fly.io/plans) and our resource [Pricing page](/docs/about/pricing/) for details.
 
 ## View invoices
 
-You can view and download invoices from the Billing section of your [dashboard](https://fly.io/dashboard/personal/billing) for each organization.
+You can view and download invoices from the **Billing** section of your [dashboard](https://fly.io/dashboard/personal/billing) for each organization.
 
-To download a past invoice, click View for the relevant cycle. You'll be sent to the Stripe billing portal where you'll have the option to download the invoice.
+To download a past invoice, click **View** for the relevant cycle. You'll be sent to the Stripe billing portal where you'll have the option to download the invoice.
 
 ## Plan billing
 
-You're charged for a plan as soon as you sign up for that plan. There's an exception for [new customers](/docs/about/pricing/#new-customers-get-a-free-trial), who have a $5 free trial credit for usage, and are only charged after that credit is used up. For existing Fly.io accounts, when you create a new organization, you are signing up for the Hobby plan. 
+You're charged for Launch, Scale, and Enterprise plans as soon as you sign up for them. 
 
-Plan billing, and any included usage, is pro-rated over the month. For example, if you sign up for a Hobby plan on September 15th, then you'll be charged $2.50 (half of the $5/mo plan cost) right away and you'll have $2.50 of usage included up to September 30th. Then you'll be charged $5 at the start of October and have $5/mo of usage included for that billing cycle.
+New customers that are automatically signed up for the Pay As You Go plan are billed monthly for resource usage. For existing Fly.io accounts, when you create a new organization, you're signing up for the Pay As You Go plan.
+
+<div class="note icon">
+Customers who received a $5 free trial usage credit when signing up for the $5/mo Hobby plan will be billed monthly after that credit is used up.
+</div>
+
+Plan billing, and any included usage, is pro-rated over the month. For example, if you sign up for a Scale plan on September 15th, then you'll be charged $14.50 (half of the $29/mo plan cost) right away and you'll have $14.50 of usage included up to September 30th. Then you'll be charged $29 at the start of October and have $29/mo of usage included for that billing cycle.
 
 When you upgrade to a higher plan, your billing is pro-rated and adjusted accordingly.
 
@@ -44,13 +50,13 @@ You're also billed for the Fly Machine separately from the GPU.
 
 ## Volume billing
 
-Volume billing is pro-rated to the hour and we subtract the free allowances first. For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).
+Volume billing is pro-rated to the hour and we subtract the free allowances first for the Launch, Scale, and Enterprise plans. For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).
 
 If you create a volume, you will be charged for it. You’re billed for volumes that aren’t attached to Machines, and for volumes that are attached to Machines in any state, including stopped Machines.
 
 ## Free resource allowances
 
-We subtract [free allowances](https://fly.io/docs/about/pricing/#free-allowances) off the top of your usage total. Once your usage exceeds the free allowance on any given resource, we start metering usage of that resource for billing purposes.
+We subtract [free allowances](https://fly.io/docs/about/pricing/#free-allowances) off the top of your usage total for Launch, Scale, and Enterprise plans. Once your usage exceeds the free allowance on any given resource, we start metering usage of that resource for billing purposes.
 
 ## Payment options
 
