@@ -7,9 +7,9 @@ nav: firecracker
 
 A resilient app is resistant to events like hardware failures or outages. Redundancy, supported by monitoring and scaling, is one of the ways to make your app more resilient, and we provide some built-in features to make this easier.
 
-First, it's important to understand what your app needs to take care of.
-
 ## What your app needs to do
+
+First, it's important to understand what your app needs to take care of.
 
 Since Fly Proxy does load balancing by default, you need to consider how your app handles:
 
@@ -45,7 +45,7 @@ These features require or depend on your app configuration in the `fly.toml` fil
 
 ## Redundancy by default on first deploy
 
-Technically, the title of this section should be "Redundancy by default on first deploy or after scaling down to zero Machines". When you deploy your app for the first time (or after scaling down to zero Machines), you get some default redundancy configurations. These settings help you to deploy a recommended setup without having to think about it. If the defaults aren't what you're looking for, then you can still configure your app and processes the way you want. Learn more about [scaling Machine CPU and RAM](/docs/apps/scale-machine/) and [scaling the number of Machines](/docs/apps/scale-count/).
+You get redundancy by default on first deploy and when you deploy after scaling down to zero Machines. This feature helps you deploy a recommended setup without having to think about it. If the defaults in the following sections aren't what you're looking for, then you can still configure your app and processes the way you want. Learn more about [resilient apps and multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/), [scaling Machine CPU and RAM](/docs/apps/scale-machine/), and [scaling the number of Machines](/docs/apps/scale-count/).
 
 Here's what Fly Launch (the `fly launch` or `fly deploy` command) does, based on your app configuration:
 

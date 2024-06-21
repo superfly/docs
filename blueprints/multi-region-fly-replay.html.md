@@ -98,12 +98,14 @@ Example implementations of this multi-region database with `fly-replay` pattern 
 - [Fly Ruby gem](https://github.com/superfly/fly-ruby+external) for running database replicas alongside your app instances in multiple regions.
 - [Fly Postgres Elixir library](https://github.com/superfly/fly_postgres_elixir+external) for geographically distributed Elixir applications using Ecto and PostgreSQL in a primary/replica configuration on Fly.io.
 
-### Read more
+## Read more
 
-We've also covered multi-region databases with `fly-replay` in some past blog posts:
+We've covered multi-region databases with `fly-replay` in some past blog posts and in our docs:
 
 - [Globally Distributed Postgres](https://fly.io/blog/globally-distributed-postgres/)
 
 - [Multi-Region Laravel with PlanetScale](https://fly.io/laravel-bytes/multi-region-laravel-with-planetscale/)
 
 - [Run Ordinary Rails Apps Globally](https://fly.io/ruby-dispatch/run-ordinary-rails-apps-globally/)
+
+- [Dynamic Request Routing](/docs/networking/dynamic-request-routing/) docs
