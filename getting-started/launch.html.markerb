@@ -5,7 +5,7 @@ nav: firecracker
 toc: false
 ---
 
-Welcome to Fly Launch. Fly Launch works with a Dockerfile or scans and configures apps for most common languages and frameworks. 
+Welcome to Fly Launch. Fly Launch works with a Dockerfile or scans and configures apps for most [common languages and frameworks](/docs/getting-started/get-started-by-framework/).
 
 To deploy your app on Fly.io for the first time:
 
