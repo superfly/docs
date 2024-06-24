@@ -1,7 +1,6 @@
 ---
 title: Fly Kubernetes Quickstart
 layout: docs
-toc: false
 nav: firecracker
 ---
 
@@ -150,7 +149,7 @@ On container specs, we don't support the following fields:
 
 ## Other caveats
 
-- Right now we don't getting logs from a single pod. If you try to get logs from a single pod, you'll get the logs from every pod in the namespace.
+Right now we don't get logs from a single pod. If you try to get logs from a single pod, you'll get the logs from every pod in the namespace.
 
 ## Related topics
 
