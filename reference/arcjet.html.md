@@ -40,7 +40,7 @@ fly ext arcjet create
 This will:
 
 * Create an Arcjet account linked to your Fly account.
-* Create a Arcjet team mapped to your Fly organization.
+* Create an Arcjet team mapped to your Fly organization.
 * Create an Arcjet site for your Fly application.
 * Set `ARCJET_KEY` as a secret on your Fly application.
 
