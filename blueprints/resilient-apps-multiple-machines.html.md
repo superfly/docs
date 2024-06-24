@@ -22,11 +22,11 @@ When you deploy an app for the first time with the `fly launch` or `fly deploy` 
 
 ### Add more Machines yourself
 
-If your app doesn't already have multiple Machines with auto start and stop, then you can set it up yourself. You can create any number of Machines to both meet user demand and provide redundancy against host failures.
+If your app doesn't already have multiple Machines with autostart/autostop, then you can set it up yourself. You can create any number of Machines to both meet user demand and provide redundancy against host failures.
 
-#### 1. Set up auto start and stop
+#### 1. Set up autostart/autostop
 
-Use auto start and stop to tell the Fly Proxy to start and stop Machines based on traffic. Keep one or more Machines running in your primary region if you want to. Example from `fly.toml` config:
+Use autostart/autostop to tell the Fly Proxy to start and stop Machines based on traffic. Keep one or more Machines running in your primary region if you want to. Example from `fly.toml` config:
 
 ```toml
 [http_service]
@@ -40,9 +40,9 @@ Use auto start and stop to tell the Fly Proxy to start and stop Machines based o
     soft_limit = 200 # Used by Fly Proxy to determine Machine excess capacity
 ```
 
-Fly Proxy uses the concurrency `soft_limit` to determine if Machines have capacity. Learn more about [auto start and stop](/docs/apps/autostart-stop/).
+Fly Proxy uses the concurrency `soft_limit` to determine if Machines have capacity. Learn more about [autostart/autostop](/docs/apps/autostart-stop/).
 
-**Using the Machines API:** To add or change the auto start and stop settings with the Machines API, use the settings in the `services` object of the [Machine config](/docs/machines/api/machines-resource/#machine-config-object-properties) in your create or update calls.
+**Using the Machines API:** To add or change the autotart/autostop settings with the Machines API, use the settings in the `services` object of the [Machine config](/docs/machines/api/machines-resource/#machine-config-object-properties) in your create or update calls.
 
 #### 2. Create more Machines
 
@@ -101,3 +101,8 @@ fly machine run <image> --standby-for <machine-id>
 **Performance:** Machines are really fast to start and stop. If your app has a lot of users, or bursts of high usage, then the Fly Proxy can load balance requests and automatically stop and start Machines based on traffic to your app. Keep one or more Machines running all the time if your app needs even faster first response times.
 
 **Cost**: You pay only for rootfs when Machines aren't running, not for CPU and RAM. Machine rootfs is [cheap](/docs/about/pricing/#stopped-fly-machines), like 18 cents a month for an average Elixir app that uses 1.2 GB of rootfs.
+
+## Read more
+
+- [App availability and resiliency](/docs/reference/app-availability/): An overview of the all features that can make your app more resistant to events like hardware failures or outages.
+- [Troubleshoot apps when a host is unavailable](/docs/apps/trouble-host-unavailable/): What we hope you won't have to do, because you followed this blueprint and have multiple Machines.

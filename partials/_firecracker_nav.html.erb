@@ -7,8 +7,9 @@
       path: "/docs/getting-started/",
       open: current_page?("/docs"),
       links: [
-        { text: "Launch on Fly.io", path: "/docs/getting-started/launch/" },
-        { text: "Hands-on with a Demo App", path: "/docs/hands-on/" },
+        { text: "Quickstart: Launch your app", path: "/docs/getting-started/launch/" },
+        { text: "Launch a Demo App", path: "/docs/getting-started/launch-demo" },
+        { text: "Choose a language or framework", path: "/docs/getting-started/get-started-by-framework/" },
         { text: "Fly.io Essentials", path: "/docs/getting-started/essentials/" },
         { text: "Troubleshooting Deployments", path: "/docs/getting-started/troubleshooting/" }
       ]
@@ -26,12 +27,14 @@
       path: "/docs/languages-and-frameworks/",
       open: false,
       links: [
-        { text: "Run an Elixir App", path: "/docs/elixir/getting-started" },
-        { text: "Run a Rails App", path: "/docs/rails/getting-started/" },
-        { text: "Run a Laravel App", path: "/docs/laravel/" },
-        { text: "Run a Django App", path: "/docs/django/getting-started/" },
-        { text: "Run a JavaScript App", path: "/docs/js/" },
-        { text: "Run a Rust App", path: "/docs/rust/" }
+        { text: "Elixir", path: "/docs/elixir/" },
+        { text: "Rails", path: "/docs/rails/getting-started/" },
+        { text: "Laravel", path: "/docs/laravel/" },
+        { text: "Django", path: "/docs/django/getting-started/" },
+        { text: "JavaScript", path: "/docs/js/" },
+        { text: "Rust", path: "/docs/rust/" },
+        { text: "Python", path: "/docs/python/" },
+        { text: "More...", path: "/docs/languages-and-frameworks/" }
       ]
     },
     {
@@ -72,6 +75,7 @@
         { text: "Scale Machine CPU and RAM", path: "/docs/apps/scale-machine/" },
         { text: "Scale the Number of Machines", path: "/docs/apps/scale-count/" },
         { text: "Auto Stop and Start Machines", path: "/docs/apps/autostart-stop/" },
+        { text: "Autoscale Based on Metrics", path: "/docs/apps/autoscale-by-metric/" },
         { text: "Add Volume Storage", path: "/docs/apps/volume-storage/" },
         { text: "Restart Apps and Machines", path: "/docs/apps/restart/" },
         { text: "Run Multiple Processes in an App", path: "/docs/apps/processes/" },
@@ -167,7 +171,7 @@
         { text: "Sentry Error Tracking", path: "/docs/reference/sentry/" },
         { text: "Fly Launch", path: "/docs/reference/fly-launch/" },
         { text: "Load Balancing", path: "/docs/reference/load-balancing/" },
-        { text: "Machines", path: "/docs/machines/overview/" },
+        { text: "Machine migration", path: "/docs/reference/machine-migration/" },
         { text: "Monorepo Apps", path: "/docs/reference/monorepo/" },
         { text: "Multiple Processes in Apps", path: "/docs/app-guides/multiple-processes/" },
         { text: "OpenID Connect", path: "/docs/reference/openid-connect/" },

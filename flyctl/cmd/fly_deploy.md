@@ -59,6 +59,7 @@ fly deploy [WORKING_DIRECTORY] [flags]
       --only-machines strings            Deploy to machines only with these IDs. Multiple IDs can be specified with comma separated values or by providing the flag multiple times.
       --process-groups strings           Deploy to machines only in these process groups
       --push                             Push image to registry after build is complete
+      --recreate-builder                 Recreate the builder app, if it exists
       --regions strings                  Deploy to machines only in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times.
       --release-command-timeout string   Time duration to wait for a release command finish running, or 'none' to disable. (default "5m0s")
       --remote-only                      Perform builds on a remote builder instance instead of using the local docker daemon. This is the default. Use --local-only to build locally.
