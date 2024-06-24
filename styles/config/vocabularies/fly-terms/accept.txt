@@ -63,6 +63,7 @@ middleware
 Midjourney
 Minecraft
 nameservers?\b
+namespaces?\b
 navbar
 nginx
 Nixpack
