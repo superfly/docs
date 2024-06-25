@@ -32,7 +32,7 @@ Prepare a directory for your Livebook app config and place a `fly.toml` file ins
                                                # use a prebuilt Livebook Docker image
 
 [env]
-  ERL_AFLAGS = "-proto_dist inet6_tcp" # enable ipv6 for Fly.io private networking
+  ERL_AFLAGS = "-proto_dist inet6_tcp"         # enable ipv6 for Fly.io private networking
   LIVEBOOK_DATA_PATH = "/data"                 # /data is the mount point of the persistent volume
   LIVEBOOK_HOME = "/data"
   LIVEBOOK_ROOT_PATH = "/data"
