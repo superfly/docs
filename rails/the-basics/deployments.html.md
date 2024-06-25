@@ -71,13 +71,13 @@ fly ssh console
 Connecting to top1.nearest.of.my-rails-app.internal... complete
 ```
 ```cmd
-cd app
 ls
 ```
 ```output
-Aptfile       CHANGELOG.md  Dockerfile    LICENSE     README.md  app   config.ru  fly     package.json       pull_request_template.md  test    yarn.lock
-Brewfile      CODE_OF_CONDUCT.md  Gemfile       Procfile      Rakefile   bin   db     lib     postcss.config.js  resources           tmp
-Brewfile.lock.json  CONTRIBUTING.md Gemfile.lock  Procfile.dev  SECURITY.md  config  docs     node_modules  public       tailwind.config.js        vendor
+Dockerfile      README.md       config          lib             test
+Gemfile         Rakefile        config.ru       log             tmp
+Gemfile.lock    app             db              public          vendor
+Procfile.dev    bin             fly.toml        storage
 ```
 ```cmd
 bundle exec ruby my-hello-world-script.rb
