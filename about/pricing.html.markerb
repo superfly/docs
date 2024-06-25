@@ -67,11 +67,52 @@ We charge for started and stopped Machines differently. Attached GPUs are charge
 
 ### Started Fly Machines
 
-The price of a running [Fly Machine](/docs/machines/) VM is the price of a named CPU/RAM preset, plus about $5 per 30 days per GB of additional RAM.
+<p>
+  <label for="region-select">Region: </label>
+  <select id="region-select" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+    <% data.pricing.regions.each do |r| %>
+      <option value="<%= r.code %>"><%= r.code %></option>
+    <% end %>
+  </select>
+</p>
 
-Here's the pricing for named presets and the allowed additional RAM configurations:
+<script type="text/javascript">
+const regionMarkups = {
+  <% data.pricing.regions.each do |region| %>
+    "<%= region.code %>": <%= region.markup_ratio %>,
+  <% end %>
+};
+
+const regionSelect = document.getElementById("region-select");
+
+regionSelect.addEventListener("change", function () {
+  document.querySelectorAll(".started-machines-pricing-matrix").forEach((matrix) => matrix.classList.add("hidden"));
+  document.getElementById(`started-machines-pricing-matrix-${regionSelect.value}`).classList.remove("hidden");
+});
+</script>
+
+The price of a running [Fly Machine](/docs/machines/) VM is the price of a named CPU/RAM preset, plus about <span id="ram-price">$5</span> per 30 days per GB of additional RAM.
+
+Here's the pricing for named presets and a few standard additional RAM configurations:
 
 <%= partial("shared/cpu_mem_machines_pricing") %>
+
+<script type="text/javascript">
+const ramPriceSpan = document.getElementById("ram-price");
+const baselineRamPricePer30Days = 5;
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});
+
+
+regionSelect.addEventListener("change", function () {
+  const selectedRegion = regionSelect.value; // regionSelect defined in landing/pages/shared/_cpu_mem_machines_pricing.html.erb
+  ramPriceSpan.textContent = formatter.format(baselineRamPricePer30Days * regionMarkups[selectedRegion]);
+});
+</script>
 
 ### Stopped Fly Machines
 
