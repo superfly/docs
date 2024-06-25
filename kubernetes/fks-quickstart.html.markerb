@@ -1,7 +1,6 @@
 ---
 title: Fly Kubernetes Quickstart
 layout: docs
-toc: false
 nav: firecracker
 ---
 
@@ -126,6 +125,7 @@ Configuring firecracker
 - Gateway API
 - Daemon sets
 - EmptyDir volumes
+- Interactive pods (`kubectl run --interactive --tty`)
 
 On container specs, we don't support the following fields:
 
@@ -146,6 +146,10 @@ On container specs, we don't support the following fields:
 - `terminationMessagePolicy`
 - `imagePullPolicy`
 - `securityContext`
+
+## Other caveats
+
+Right now we don't get logs from a single pod. If you try to get logs from a single pod, you'll get the logs from every pod in the namespace.
 
 ## Related topics
 

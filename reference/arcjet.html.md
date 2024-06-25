@@ -15,24 +15,79 @@ This service is in **beta**. We consider it ready for production, but we may mak
 
 ## Get started
 
-To configure your application to use Arcjet, run this command from your Fly.io application directory:
+A quick way to see what Arcjet can do is to deploy [the example app](https://github.com/arcjet/arcjet-example-nextjs-fly). It's also available at [example.arcjet.com](https://example.arcjet.com).
+
+1. Clone the GitHub repository:
 
 ```cmd
-flyctl ext arcjet create
+git clone git@github.com:arcjet/arcjet-example-nextjs-fly.git
+```
+
+2. Set up a new Fly app:
+
+```cmd
+fly launch --name $YOUR_APP_NAME --no-deploy
+```
+
+Replace `$YOUR_APP_NAME` with whatever name you'd like. This command will generate a `Dockerfile` and a `fly.toml` for you.
+
+3. Create an Arcjet account and link it to your Fly app:
+
+```cmd
+fly ext arcjet create
 ```
 
 This will:
 
-* Create an Arcjet account linked to your Fly.io account.
-* Create a Arcjet team mapped to your Fly.io organization.
-* Create an Arcjet site for your Fly.io application.
-* Set `ARCJET_KEY` as a secret on your Fly.io application.
+* Create an Arcjet account linked to your Fly account.
+* Create an Arcjet team mapped to your Fly organization.
+* Create an Arcjet site for your Fly application.
+* Set `ARCJET_KEY` as a secret on your Fly application.
 
-Use this command to open the dashboard for the Arcjet site associated with the current application:
+4. Deploy to Fly:
 
 ```cmd
-flyctl ext arcjet dashboard
+fly deploy
 ```
+
+5. Open your app in your browser and try the features.
+
+6. Review the request details in your Arcjet dashboard:
+
+```cmd
+fly ext arcjet dashboard
+```
+
+## Run locally
+
+Arcjet protections run locally as well as when deployed to Fly. This makes it easy to test and debug security rules.
+
+Assuming you have already cloned [the example](https://github.com/arcjet/arcjet-example-nextjs-fly) and linked Arcjet to your Fly app (see above):
+
+1. Log into your Arcjet dashboard to get the `ARCJET_KEY` for your app.
+
+```cmd
+fly ext arcjet dashboard
+```
+
+2. Install dependencies:
+
+```cmd
+npm ci
+```
+
+3. Rename `.env.local.example` to `.env.local` and add your Arcjet key. If you
+   want to test the rate limiting authentication, you will also need to add an
+   Auth.js secret and [create a GitHub OAuth
+   app](https://authjs.dev/guides/configuring-github).
+
+4. Start the dev server
+
+```cmd
+npm run dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Protecting your application with Arcjet
 
