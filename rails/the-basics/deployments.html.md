@@ -44,13 +44,17 @@ You may need to open another terminal window and deploy again while running `fly
 
 ## Running migrations
 
-Migrations are configured to automatically run after each deployment via the following task in your application's `lib/tasks/fly.rake` file:
+For Postgresql, migrations are configured to automatically run after each
+deployment via the following task in your application's `fly.toml`:
 
-```ruby
-task :release => 'db:migrate'
+```toml
+[deploy]
+  release_command = './bin/rails db:prepare'
 ```
 
-To disable automatic migrations for deploys, remove the dependency from the `:release` task. Then, to manually run migrations after a deployment, run:
+Sqlite3 migrations are done by the `bin/docker-entrypoint` script.
+
+To disable automatic migrations for deploys, remove `db:prepare` lines from these files. Then, to manually run migrations after a deployment, run:
 
 ```cmd
 fly ssh console -C "/rails/bin/rails db:migrate"
@@ -81,13 +85,3 @@ bundle exec ruby my-hello-world-script.rb
 ```output
 hello world
 ```
-
-## Asset compilation and build commands
-
-The default Rails image is configured to run `assets:precompile` in your application's `lib/tasks/fly.rake` file:
-
-```ruby
-task :build => 'assets:precompile'
-```
-
-If you have additional build steps beyond the Rails asset precompiler, you may need to modify your application's `lib/tasks/fly.rake` file.
