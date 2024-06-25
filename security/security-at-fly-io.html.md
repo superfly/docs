@@ -12,7 +12,7 @@ nav: firecracker
 
 CorpSec is the practice of making sure [Fly.io](http://Fly.io) team members have secure access to [Fly.io](http://Fly.io) company infrastructure, and that secured channels are the only exposed channels to [Fly.io](http://Fly.io). CorpSec controls are the primary concern of standards like SOC2.
 
-- Access to our services and applications is gated on a SSO Identity Provider.
+- Access to our services and applications is gated on an SSO Identity Provider.
 - We require strong, phishing-resistant 2FA in all enrolled IdP accounts.
 - We rely on IdP-backed WireGuard with strict, default-deny, role-based access controls to access internal applications.
 - We have centralized repositories of policy and audit controls, including team onboard and offboarding and access requests; we regularly audit access to internal systems.
