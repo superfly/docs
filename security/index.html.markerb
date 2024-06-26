@@ -10,7 +10,6 @@ Securing a public cloud platform like Fly.io is a hard problem, and we take it s
 ## Fly.io platform security
 
 - **[Single sign-on (SSO) for organizations](/docs/security/sso/):** Set up org-wide SSO with Google or GitHub.
-- **Security: Shared responsibility model:** TBD
 - **[Fly.io security practices and compliance](/docs/security/security-at-fly-io/):** Learn about our security practices for the Fly.io platform.
 
 ## Security extensions
