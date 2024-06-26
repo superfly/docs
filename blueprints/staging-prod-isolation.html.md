@@ -8,6 +8,8 @@ You have your own good reasons for wanting to isolate your production environmen
 
 All Fly.io accounts start with a "personal" organization. You can create as many organizations as you need, not just for different environments, but also for different projects or clients.
 
+
+
 Before you create a new organization, here's what you need to know:
 
 - All organizations have their own [private network](/docs/networking/private-networking/) by default. An organization can have multiple apps and those apps can communicate with each other securely over the org's private network.
@@ -18,10 +20,16 @@ Before you create a new organization, here's what you need to know:
 Adjust the pattern to fit your needs. Here's an example:
 
 - personal org: the org you started with, and the one you keep for personal projects
-- staging org: <project>-staging, for development and testing
-- production org: <project>-production, for your production app
+- staging org: `<project>-staging`, for development and testing
+- production org: `<project>-production`, for your production app
 
 ## Create organizations
 
 You can create new organizations and invite members from the [dashboard]((https://fly.io/dashboard/)) or using [`fly orgs` flyctl commands](/docs/flyctl/orgs/).
 
+## Other kinds of isolation
+
+When you only need app isolation or user or 3rd-party access control:
+
+- Custom networks for isolating apps from one another in the same organization.
+- Deploy and organization tokens to limit access to apps or orgs.
