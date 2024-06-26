@@ -8,8 +8,6 @@ You have your own good reasons for wanting to isolate your production environmen
 
 All Fly.io accounts start with a "personal" organization. You can create as many organizations as you need, not just for different environments, but also for different projects or clients.
 
-
-
 Before you create a new organization, here's what you need to know:
 
 - All organizations have their own [private network](/docs/networking/private-networking/) by default. An organization can have multiple apps and those apps can communicate with each other securely over the org's private network.
