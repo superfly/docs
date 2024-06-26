@@ -91,6 +91,37 @@ regionSelect.addEventListener("change", function () {
 });
 </script>
 
+<% if Time.now.utc < '2024-11-01T00:00:00Z' %>
+<section class="callout">
+  **Machines pricing is changing!**
+
+  <p class="mt-2">
+    On July 1st, we're beginning a phased roll-out of per-region pricing. For the first month, prices will remain the same, but the lines on your invoice will be broken down by region. Each subsequent month, prices will be increase by 25% of the difference between the price in `iad` and the price listed for the region, until the listed price is reached in November.
+  </p>
+
+  <p class="my-4 w-full text-right"><button id="phased-roll-out-example-toggle-btn" toggle>See how the phased roll-out works</button></p>
+
+  <ul id="phased-roll-out-example" class="hidden block overflow-hidden mt-2 text-sm leading-normal bg-white card pointer-events-none " aria-label="show phased roll-out worked example">
+
+    <li>In July, Machines in `lax` will cost the same as Machines in `iad`, roughly $1.94/month.</li>
+    <li>In August, Machines in `lax` will cost roughly $1.94 + 0.25\*($2.33 - 1.94) = $2.04/month.</li>
+    <li>In September, they'll cost roughly $1.94 + 0.5\*($2.33 - 1.94) = $2.14/month.</li>
+    <li>In October, they'll cost roughly $1.94 + 0.75\*($2.33 - 1.94) = $2.23/month.</li>
+    <li class="mb-0">Finally, in November they'll cost roughly $2.33, the listed price for Machines in `lax`.</li>
+
+  </ul>
+</section>
+
+<script type="text/javascript">
+  const phasedRollOutToggleBtn = document.getElementById("phased-roll-out-example-toggle-btn");
+  const phasedRollOutContent = document.getElementById("phased-roll-out-example");
+
+  phasedRollOutToggleBtn.addEventListener("click", function() {
+    phasedRollOutContent.classList.toggle("hidden");
+  })
+</script>
+<% end %>
+
 The price of a running [Fly Machine](/docs/machines/) VM is the price of a named CPU/RAM preset, plus about <span id="ram-price">$5</span> per 30 days per GB of additional RAM.
 
 Here's the pricing for named presets and a few standard additional RAM configurations:
