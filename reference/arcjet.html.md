@@ -102,59 +102,59 @@ Once you have set your `ARCJET_KEY` secret, you can start using Arcjet to protec
 
 You can also find this example [on GitHub](https://github.com/arcjet/arcjet-js/tree/main/examples/nodejs-rl).
 
-Install the Arcjet SDK:
+1. Install the Arcjet SDK:
 
-```cmd
-npm i @arcjet/node
-```
+    ```cmd
+    npm i @arcjet/node
+    ```
 
-Add a rate limit to a route in `index.ts`:
+1. Add a rate limit to a route in `index.ts`:
 
-```ts
-import arcjet, { tokenBucket } from "@arcjet/node";
-import http from "node:http";
+    ```ts
+    import arcjet, { tokenBucket } from "@arcjet/node";
+    import http from "node:http";
 
-const aj = arcjet({
-  key: process.env.ARCJET_KEY!, // Set as a secret on your Fly app
-  rules: [
-    // Create a token bucket rate limit. Other algorithms are supported.
-    tokenBucket({
-      mode: "LIVE", // will block requests. Use "DRY_RUN" to log only
-      characteristics: ["userId"], // track requests by a custom user ID
-      refillRate: 5, // refill 5 tokens per interval
-      interval: 10, // refill every 10 seconds
-      capacity: 10, // bucket maximum capacity of 10 tokens
-    }),
-  ],
-});
+    const aj = arcjet({
+      key: process.env.ARCJET_KEY!, // Set as a secret on your Fly app
+      rules: [
+        // Create a token bucket rate limit. Other algorithms are supported.
+        tokenBucket({
+          mode: "LIVE", // will block requests. Use "DRY_RUN" to log only
+          characteristics: ["userId"], // track requests by a custom user ID
+          refillRate: 5, // refill 5 tokens per interval
+          interval: 10, // refill every 10 seconds
+          capacity: 10, // bucket maximum capacity of 10 tokens
+        }),
+      ],
+    });
 
-const server = http.createServer(async function (
-  req: http.IncomingMessage,
-  res: http.ServerResponse,
-) {
-  const userId = "user123"; // Replace with your authenticated user ID
-  const decision = await aj.protect(req, { userId, requested: 5 }); // Deduct 5 tokens from the bucket
-  console.log("Arcjet decision", decision);
+    const server = http.createServer(async function (
+      req: http.IncomingMessage,
+      res: http.ServerResponse,
+    ) {
+      const userId = "user123"; // Replace with your authenticated user ID
+      const decision = await aj.protect(req, { userId, requested: 5 }); // Deduct 5 tokens from the bucket
+      console.log("Arcjet decision", decision);
 
-  if (decision.isDenied()) {
-    res.writeHead(429, { "Content-Type": "application/json" });
-    res.end(
-      JSON.stringify({ error: "Too Many Requests", reason: decision.reason }),
-    );
-  } else {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ message: "Hello world" }));
-  }
-});
+      if (decision.isDenied()) {
+        res.writeHead(429, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({ error: "Too Many Requests", reason: decision.reason }),
+        );
+      } else {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ message: "Hello world" }));
+      }
+    });
 
-server.listen(8000);
-```
+    server.listen(8000);
+    ```
 
-Run your application:
+1. Run your application:
 
-```cmd
-npx tsx --env-file .env.local index.ts
-```
+    ```cmd
+    npx tsx --env-file .env.local index.ts
+    ```
 
 Load the application and refresh the page a few times to see the rate limit in action.
 
@@ -167,6 +167,7 @@ Arcjet pricing will be based on the usage of features we intend to introduce in 
 ## Support
 
 Email: <support@arcjet.com>
+
 Discord: [Join](https://discord.gg/TPra6jqZDC).
 
 See the Arcjet docs for the [full support policy](https://docs.arcjet.com/support).
