@@ -2,7 +2,7 @@
 title: Deployments
 layout: framework_docs
 objective: Understand what it means to deploy a Rails application to Fly along with some common tasks you may want to run after deployments, like a database migration or script.
-order: 0
+order: 2
 ---
 
 Deploying applications to Fly can be as simple as running:
