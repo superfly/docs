@@ -1,7 +1,7 @@
 ---
 title: Application Security by Arcjet
 layout: docs
-sitemap: false
+sitemap: true
 nav: firecracker
 ---
 
