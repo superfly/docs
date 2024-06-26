@@ -27,9 +27,7 @@ Adjust the pattern to fit your needs. Here's an example:
 
 You can create new organizations and invite members from the [dashboard]((https://fly.io/dashboard/)) or using [`fly orgs` flyctl commands](/docs/flyctl/orgs/).
 
-## Other kinds of isolation
+## Other kinds of isolation and access control
 
-When you only need app isolation or user or 3rd-party access control:
-
-- Custom networks for isolating apps from one another in the same organization.
-- Deploy and organization tokens to limit access to apps or orgs.
+- When you only need app isolation within an org, you can use [custom private networks](https://community.fly.io/t/fly-ssh-with-custom-network/19296) to isolate apps from one another by creating an app with `fly apps create` and the `--network` option. More on this feature coming soon.
+- When you want user or 3rd-party access control, you can use [deploy](https://community.fly.io/t/deploy-tokens/11895) and [org-scoped tokens](https://community.fly.io/t/org-scoped-tokens/13194) to limit access to apps or orgs.
