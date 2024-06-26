@@ -16,7 +16,7 @@ Securing a public cloud platform like Fly.io is a hard problem, and we take it s
 
 Security add-ons from our extension partners.
 
-- **[Application Security by Arcjet](/docs/reference/arcjet/):** Use the Arcjet security layer to protect your Javascript app with just a few lines of code (beta).
+- **[Application Security by Arcjet](/docs/reference/arcjet/):** Use the Arcjet security layer to protect your Javascript app with just a few lines of code.
 
 ## Talk to the security team
 
