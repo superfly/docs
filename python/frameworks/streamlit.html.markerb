@@ -2,7 +2,6 @@
 title: Run a Streamlit app
 layout: framework_docs
 objective: Streamlit turns data scripts into shareable web apps in minutes. All in pure Python. No front‑end experience required.
-sitemap: false
 redirect_from:
   - /docs/languages-and-frameworks/streamlit/
   - /docs/getting-started/streamlit/

@@ -2,7 +2,6 @@
 title: "Run a Poem App"
 layout: framework_docs
 objective: Poem is a full-featured and easy-to-use web framework with the Rust programming language.
-sitemap: false
 redirect_from:
  - /docs/languages-and-frameworks/poem/
  - /docs/getting-started/poem/

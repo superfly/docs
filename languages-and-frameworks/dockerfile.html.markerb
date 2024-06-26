@@ -1,7 +1,6 @@
 ---
 title: Deploy via Dockerfile
 layout: language-and-framework-docs
-sitemap: false
 redirect_from: /docs/getting-started/dockerfile/
 ---
 
