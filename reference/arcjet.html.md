@@ -17,21 +17,21 @@ This service is in **beta**. We consider it ready for production, but we may mak
 
 A quick way to see what Arcjet can do is to deploy [the example app](https://github.com/arcjet/arcjet-example-nextjs-fly). It's also available at [example.arcjet.com](https://example.arcjet.com).
 
-1. Clone the GitHub repository:
+Clone the GitHub repository:
 
 ```cmd
 git clone git@github.com:arcjet/arcjet-example-nextjs-fly.git
 ```
 
-2. Set up a new Fly app:
+Set up a new Fly app:
 
 ```cmd
-fly launch --name $YOUR_APP_NAME --no-deploy
+fly launch --no-deploy
 ```
 
-Replace `$YOUR_APP_NAME` with whatever name you'd like. This command will generate a `Dockerfile` and a `fly.toml` for you.
+This command will generate a `Dockerfile` and a `fly.toml` for you.
 
-3. Create an Arcjet account and link it to your Fly app:
+Create an Arcjet account and link it to your Fly app:
 
 ```cmd
 fly ext arcjet create
@@ -44,15 +44,15 @@ This will:
 * Create an Arcjet site for your Fly application.
 * Set `ARCJET_KEY` as a secret on your Fly application.
 
-4. Deploy to Fly:
+Deploy to Fly:
 
 ```cmd
 fly deploy
 ```
 
-5. Open your app in your browser and try the features.
+Open your app in your browser and try the features.
 
-6. Review the request details in your Arcjet dashboard:
+Review the request details in your Arcjet dashboard:
 
 ```cmd
 fly ext arcjet dashboard
@@ -64,30 +64,30 @@ Arcjet protections run locally as well as when deployed to Fly. This makes it ea
 
 Assuming you have already cloned [the example](https://github.com/arcjet/arcjet-example-nextjs-fly) and linked Arcjet to your Fly app (see above):
 
-1. Log into your Arcjet dashboard to get the `ARCJET_KEY` for your app.
+Log into your Arcjet dashboard to get the `ARCJET_KEY` for your app.
 
 ```cmd
 fly ext arcjet dashboard
 ```
 
-2. Install dependencies:
+Install dependencies:
 
 ```cmd
 npm ci
 ```
 
-3. Rename `.env.local.example` to `.env.local` and add your Arcjet key. If you
-   want to test the rate limiting authentication, you will also need to add an
-   Auth.js secret and [create a GitHub OAuth
-   app](https://authjs.dev/guides/configuring-github).
+Rename `.env.local.example` to `.env.local` and add your Arcjet key. If you
+want to test the rate limiting authentication, you will also need to add an
+Auth.js secret and [create a GitHub OAuth
+app](https://authjs.dev/guides/configuring-github).
 
-4. Start the dev server
+Start the dev server
 
 ```cmd
 npm run dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Protecting your application with Arcjet
 
@@ -102,13 +102,13 @@ Once you have set your `ARCJET_KEY` secret, you can start using Arcjet to protec
 
 You can also find this example [on GitHub](https://github.com/arcjet/arcjet-js/tree/main/examples/nodejs-rl).
 
-1. Install the Arcjet SDK:
+Install the Arcjet SDK:
 
 ```cmd
 npm i @arcjet/node
 ```
 
-2. Add a rate limit to a route in `index.ts`:
+Add a rate limit to a route in `index.ts`:
 
 ```ts
 import arcjet, { tokenBucket } from "@arcjet/node";
@@ -150,13 +150,13 @@ const server = http.createServer(async function (
 server.listen(8000);
 ```
 
-3. Run your application:
+Run your application:
 
 ```cmd
 npx tsx --env-file .env.local index.ts
 ```
 
-4. Load the application and refresh the page a few times to see the rate limit in action.
+Load the application and refresh the page a few times to see the rate limit in action.
 
 ## Pricing
 
