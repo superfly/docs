@@ -101,7 +101,7 @@ regionSelect.addEventListener("change", function () {
 
   <p class="my-4 w-full text-right"><button id="phased-roll-out-example-toggle-btn" toggle>See how the phased roll-out works</button></p>
 
-  <ul id="phased-roll-out-example" class="hidden block overflow-hidden mt-2 text-sm leading-normal bg-white card pointer-events-none " aria-label="show phased roll-out worked example">
+  <ul id="phased-roll-out-example" class="hidden block overflow-hidden mt-2 text-sm leading-normal bg-white card" aria-label="show phased roll-out worked example" aria-hidden="true">
 
     <li>In July, Machines in `lax` will cost the same as Machines in `iad`, roughly $1.94/month.</li>
     <li>In August, Machines in `lax` will cost roughly $1.94 + 0.25\*($2.33 - 1.94) = $2.04/month.</li>
@@ -118,6 +118,7 @@ regionSelect.addEventListener("change", function () {
 
   phasedRollOutToggleBtn.addEventListener("click", function() {
     phasedRollOutContent.classList.toggle("hidden");
+    phasedRollOutContent.ariaHidden = phasedRollOutContent.ariaHidden === "true" ? "false" : "true";
   })
 </script>
 <% end %>
