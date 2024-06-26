@@ -2,7 +2,6 @@
 title: "Run a Rocket App"
 layout: framework_docs
 objective: Rocket is a web framework for Rust that makes it simple to write fast, type-safe, secure web applications with incredible usability, productivity and performance.
-sitemap: false
 redirect_from:
  - /docs/languages-and-frameworks/rocket/
  - /docs/getting-started/rocket/

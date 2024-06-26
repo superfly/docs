@@ -1,7 +1,6 @@
 ---
 title: "Run a Go App"
 layout: language-and-framework-docs
-sitemap: false
 redirect_from: /docs/getting-started/golang/
 ---
 

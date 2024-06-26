@@ -1,7 +1,6 @@
 ---
 title: "Run a SvelteKit App"
 layout: framework_docs
-sitemap: false
 redirect_from:
  - /docs/languages-and-frameworks/sveltekit/
  - /docs/getting-started/sveltekit/

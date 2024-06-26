@@ -2,7 +2,6 @@
 title: "Run a Flask App"
 layout: framework_docs
 objective: Flask is a lightweight WSGI web application framework. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. 
-sitemap: false
 redirect_from:
   - /docs/languages-and-frameworks/flask/
   - /docs/getting-started/flask/
