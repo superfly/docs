@@ -67,30 +67,6 @@ We charge for started and stopped Machines differently. Attached GPUs are charge
 
 ### Started Fly Machines
 
-<p>
-  <label for="region-select">Region: </label>
-  <select id="region-select" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-    <% data.pricing.regions.each do |r| %>
-      <option value="<%= r.code %>"><%= r.code %></option>
-    <% end %>
-  </select>
-</p>
-
-<script type="text/javascript">
-const regionMarkups = {
-  <% data.pricing.regions.each do |region| %>
-    "<%= region.code %>": <%= region.markup_ratio %>,
-  <% end %>
-};
-
-const regionSelect = document.getElementById("region-select");
-
-regionSelect.addEventListener("change", function () {
-  document.querySelectorAll(".started-machines-pricing-matrix").forEach((matrix) => matrix.classList.add("hidden"));
-  document.getElementById(`started-machines-pricing-matrix-${regionSelect.value}`).classList.remove("hidden");
-});
-</script>
-
 <% if Time.now.utc < '2024-11-01T00:00:00Z' %>
 <section class="callout">
   **Machines pricing is changing!**
@@ -122,6 +98,30 @@ regionSelect.addEventListener("change", function () {
   })
 </script>
 <% end %>
+
+<p>
+  <label for="region-select">Region: </label>
+  <select id="region-select" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+    <% data.pricing.regions.each do |r| %>
+      <option value="<%= r.code %>"><%= r.code %></option>
+    <% end %>
+  </select>
+</p>
+
+<script type="text/javascript">
+const regionMarkups = {
+  <% data.pricing.regions.each do |region| %>
+    "<%= region.code %>": <%= region.markup_ratio %>,
+  <% end %>
+};
+
+const regionSelect = document.getElementById("region-select");
+
+regionSelect.addEventListener("change", function () {
+  document.querySelectorAll(".started-machines-pricing-matrix").forEach((matrix) => matrix.classList.add("hidden"));
+  document.getElementById(`started-machines-pricing-matrix-${regionSelect.value}`).classList.remove("hidden");
+});
+</script>
 
 The price of a running [Fly Machine](/docs/machines/) VM is the price of a named CPU/RAM preset, plus about <span id="ram-price">$5</span> per 30 days per GB of additional RAM.
 
