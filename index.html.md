@@ -91,6 +91,6 @@ _Built-in security and partner extensions._
 
 [Security](/docs/security/#fly-io-platform-security) on the Fly.io platform
 
-[Application security by Arcjet](/docs/reference/arcjet/) for Javascript apps
+[Application security by Arcjet](/docs/reference/arcjet/) for JavaScript apps
 
 </div>
