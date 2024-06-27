@@ -15,11 +15,11 @@ Before you create a new organization, here's what you need to know:
 - You invite or remove members in each organization separately.
 - An organization can have multiple apps and those apps can communicate with each other securely over the org's private network.
 
-Adjust the pattern to fit your needs. Here's an example:
+Adjust the pattern to fit your needs. For example:
 
-- personal org: the org you started with, and the one you keep for personal projects
-- staging org: `<project>-staging`, for development and testing
-- production org: `<project>-production`, for your production app
+- personal organization: the org you started with, and the one you keep for personal projects
+- staging organization: `<project>-staging` used for development and testing
+- production organization: `<project>-production` used for your production app
 
 ## Work with multiple organizations
 
@@ -33,9 +33,9 @@ To view or send invites to members, use the **Organization** dropdown to choose 
 
 ### Manage organizations with flyctl
 
-You can create new organizations and invite or remove members using [`fly orgs` flyctl commands](/docs/flyctl/orgs/).
+To create new organizations and invite or remove members, use [`fly orgs` flyctl commands](/docs/flyctl/orgs/).
 
-When you have more than one org, flyctl prompts you to choose an organization when needed. You can run commands on a specific app in any org using the `--app` option if you aren't in the app's project source directory in your terminal.
+When you have more than one org, flyctl prompts you to choose an organization when required. You can run commands on a specific app in any org using the `--app` option if you aren't in the app's project source directory in your terminal.
 
 ## Other kinds of isolation and access control
 
