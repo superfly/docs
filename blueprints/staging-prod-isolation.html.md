@@ -2,17 +2,18 @@
 title: Staging and production isolation
 layout: docs
 nav: firecracker
+redirect_from: /docs/going-to-production/the-basics/production-staging-isolation/
 ---
 
-You have your own good reasons for wanting to isolate your production environment from your test or staging environments. When you want to limit access to production to the smallest possible group, you can get dependable isolation by using multiple organizations. Organizations are isolated from one another at a low level by our private networking architecture.
+You have your own good reasons for wanting to isolate your production environment from your test or staging environments. When you want to limit access to production to the smallest possible group, you can get dependable isolation by using multiple organizations. Organization access is invitation-only and orgs are isolated from one another at a low level by our private networking architecture: every organization has its own [private network](/docs/networking/private-networking/) by default.
 
 All Fly.io accounts start with a "personal" organization. You can create as many organizations as you need, not just for different environments, but also for different projects or clients.
 
 Before you create a new organization, here's what you need to know:
 
-- All organizations have their own [private network](/docs/networking/private-networking/) by default. An organization can have multiple apps and those apps can communicate with each other securely over the org's private network.
-- We bill organizations separately and each org has its own [plan](https://fly.io/plans). When you create a new org, you need to enter a payment method and choose a plan. You'll be invoiced per organization at the end of each billing cycle.
+- We bill organizations separately and each org has its own [plan](https://fly.io/plans). When you create the new org, you need to enter a payment method and choose a plan. You'll be invoiced per organization at the end of each billing cycle.
 - You invite or remove members in each organization separately.
+- An organization can have multiple apps and those apps can communicate with each other securely over the org's private network.
 
 Adjust the pattern to fit your needs. Here's an example:
 
@@ -20,12 +21,21 @@ Adjust the pattern to fit your needs. Here's an example:
 - staging org: `<project>-staging`, for development and testing
 - production org: `<project>-production`, for your production app
 
-## Create organizations
+## Work with multiple organizations
 
-Create a new org from the [dashboard]((https://fly.io/dashboard/)): Select **Create new organization** from the **Organization** dropdown. Then switch to that org and view members or send invitation from the **Team** section.
+It's best if you use one Fly.io account to manage all your organizations, so you can access them without logging in and out. App names are unique across the Fly.io platform, so your staging and production apps will have different names and their own `fly.toml` files for configuration.
 
-You can also create new organizations and invite or remove members using [`fly orgs` flyctl commands](/docs/flyctl/orgs/).
+### Manage organizations in your dashboard
 
+To create a new org from the [dashboard]((https://fly.io/dashboard/)), select **Create new organization** from the **Organization** dropdown.
+
+To view or send invites to members, use the **Organization** dropdown to choose an org, then go to **Team**.
+
+### Manage organizations with flyctl
+
+You can create new organizations and invite or remove members using [`fly orgs` flyctl commands](/docs/flyctl/orgs/).
+
+When you have more than one org, flyctl prompts you to choose an organization when needed. You can run commands on a specific app in any org using the `--app` option if you aren't in the app's project source directory in your terminal.
 
 ## Other kinds of isolation and access control
 
