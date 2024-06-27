@@ -5,7 +5,7 @@ nav: firecracker
 redirect_from: /docs/going-to-production/the-basics/production-staging-isolation/
 ---
 
-You have your own good reasons for wanting to isolate your production environment from your test or staging environments. When you want to limit access to production to the smallest possible group, you can get dependable isolation by using multiple organizations. Organization access is invitation-only and orgs are isolated from one another at a low level by our private networking architecture: every organization has its own [private network](/docs/networking/private-networking/) by default.
+You want to isolate your production environment from your test or staging environments by limiting production access to the smallest possible group. You can get dependable isolation by using multiple organizations. Organization access is invitation-only and orgs are isolated from one another at a low level by our private networking architecture: every organization has its own [private network](/docs/networking/private-networking/) by default.
 
 All Fly.io accounts start with a "personal" organization. You can create as many organizations as you need, not just for different environments, but also for different projects or clients.
 
