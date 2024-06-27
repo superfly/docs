@@ -1,5 +1,5 @@
 ---
-title: "Fly.io documentation"
+title: "Fly.io developer documentation"
 layout: docs
 toc: false
 nav: firecracker
@@ -23,7 +23,7 @@ _Use the `fly` command to create and deploy apps, control individual Machines, c
 
 Install [flyctl](/docs/flyctl/install)
 
-Don't worry, it's [open source](https://github.com/superfly/flyctl)
+Don't worry, it's [open source](https://github.com/superfly/flyctl+external)
 
 ---
 
@@ -39,7 +39,7 @@ Learn all about [Fly Machines](/docs/machines/)
 
 _Get precise, low-level control of Machines with our REST API._
 
-[Machines API](/docs/machines/api/)
+[Machines API docs](/docs/machines/api/)
 
 ---
 
@@ -55,12 +55,15 @@ _Run GPU workloads on Fly Machines._
 
 _Services from Fly.io and our extension partners to help you run your entire stack near your users._
 
-- [Upstash for Redis®](/docs/reference/redis/)
-- [Tigris object storage](/docs/reference/tigris/)
-- [Supabase Postgres (public alpha)](/docs/reference/supabase/)
-- [Sentry application monitoring](/docs/reference/sentry/)
-- [LiteFS Cloud](/docs/litefs/cloud-backups/)
-- [Fly Kubernetes (private beta)](/docs/kubernetes/fks-quickstart/)
+[Upstash for Redis®](/docs/reference/redis/)
+
+[Tigris object storage](/docs/reference/tigris/)
+
+[Supabase Postgres (public alpha)](/docs/reference/supabase/)
+
+[LiteFS Cloud](/docs/litefs/cloud-backups/)
+
+[Fly Kubernetes (private beta)](/docs/kubernetes/fks-quickstart/)
 
 ---
 
@@ -78,7 +81,7 @@ _Explore built-in and custom Prometheus metrics and Grafana dashboards. Live tai
 
 Fly.io [Metrics and logs](/docs/metrics-and-logs/)
 
-Application Monitoring by [Sentry](/docs/reference/sentry/)
+[Application Monitoring by Sentry](/docs/reference/sentry/)
 
 ---
 
@@ -86,6 +89,8 @@ Application Monitoring by [Sentry](/docs/reference/sentry/)
 
 _Built-in security and partner extensions._
 
-[Security](/docs/security/) on the Fly.io platform
+[Security](/docs/security/#fly-io-platform-security) on the Fly.io platform
+
+[Application security by Arcjet](/docs/reference/arcjet/) for Javascript apps
 
 </div>
