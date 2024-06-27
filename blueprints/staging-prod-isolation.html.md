@@ -11,9 +11,8 @@ All Fly.io accounts start with a "personal" organization. You can create as many
 Before you create a new organization, here's what you need to know:
 
 - All organizations have their own [private network](/docs/networking/private-networking/) by default. An organization can have multiple apps and those apps can communicate with each other securely over the org's private network.
-- As mentioned, we bill organizations separately. You'll need to enter a payment method and you'll be invoiced per organization at the end of each billing cycle.
-- Since they're billed separately, each organization will be on its own [plan](https://fly.io/plans).
-- You'll invite or remove members in each organization separately.
+- We bill organizations separately and each org has its own [plan](https://fly.io/plans). When you create a new org, you need to enter a payment method and choose a plan. You'll be invoiced per organization at the end of each billing cycle.
+- You invite or remove members in each organization separately.
 
 Adjust the pattern to fit your needs. Here's an example:
 
@@ -23,7 +22,10 @@ Adjust the pattern to fit your needs. Here's an example:
 
 ## Create organizations
 
-You can create new organizations and invite members from the [dashboard]((https://fly.io/dashboard/)) or using [`fly orgs` flyctl commands](/docs/flyctl/orgs/).
+Create a new org from the [dashboard]((https://fly.io/dashboard/)): Select **Create new organization** from the **Organization** dropdown. Then switch to that org and view members or send invitation from the **Team** section.
+
+You can also create new organizations and invite or remove members using [`fly orgs` flyctl commands](/docs/flyctl/orgs/).
+
 
 ## Other kinds of isolation and access control
 
