@@ -19,7 +19,7 @@ Or get started with your favorite [language or framework](/docs/getting-started/
 
 ## Fly CLI
 
-_Use the the `fly` command to create and deploy apps, control individual Machines, configure networking, and more._
+_Use the `fly` command to create and deploy apps, control individual Machines, configure networking, and more._
 
 Install [flyctl](/docs/flyctl/install)
 
