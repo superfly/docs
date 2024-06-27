@@ -5,22 +5,12 @@ objective: Mount a volume to a re-initialized storage folder
 order: 7
 ---
 
-The [storage folder](https://laravel.com/docs/9.x/filesystem#the-local-driver) by default, holds several "generated" essentials of your Laravel application. It's the default burrow for session, cache, and file data amongst other data generated on your Laravel app. 
+The [storage folder](https://laravel.com/docs/9.x/filesystem#the-local-driver) by default, holds several "generated" essentials of your Laravel application. 
 
-However, applications deployed on Fly.io are ephemeral&mdash;meaning data generated on your app during runtime does not persist across redeployments or Machine restarts.
-
-There're many parts to the Laravel storage folder, and in this documentation, we'll tackle two ways of persisting data on these: 
-
-1. [Mount](/docs/laravel/the-basics/laravel-volume-storage/#mounting-a-fly-volume) a Fly Volume to the Laravel storage folder to persist data on it
-2. Save data across external Fly Apps: 
-    Tigris S3-Compatible Bucket for File Storage, 
-    Redis for Cache, Session, and Views
+It's the default burrow for session, cache, and file data amongst others. If you'd opt to persist data on this folder, you'll have to mount a [volume](/docs/volumes/) to it.
 
 
-## Mounting a Fly Volume
-[Fly Volumes](https://fly.io/docs/volumes/overview/) are local persistent storage that can be mounted on Fly Machines. We can mount a volume to our Laravel app's storage folder to persist data on it throughout restarts and re-deployments.
-
-Doing so  would allow us to "locally" store data on our Laravel Fly App, and in doing so, would allow us to store generated data in one place. A strong caveat however, is that a Fly Volume can only attach to one Machine, and therefore can only be accessed from that specific Machine.  
+## The Steps
 
 1.  Make sure you are in your Laravel Fly App's directory
 
@@ -106,9 +96,11 @@ Doing so  would allow us to "locally" store data on our Laravel Fly App, and in 
 
 <div class="callout">
 Fly Volumes do not automatically sync their data with each other. Please remember to create the appropriate data-replication logic if your Fly App will be using more than one volume instance, and if your app requires data available across its Volumes.
+
+Of course there's a bunch of workarounds! Have you heard about Tigris? It's an S3-compatible, globally caching, object storage that can manage your buckets and create CDN-like behavior with zero-configuration! Check out its integration with [Laravel here](/docs/laravel/the-basics/laravel-tigris-file-storage/)!
 </div> 
 
-### **_Possible Errors_**
+#### **_Possible Errors_**
 
 ```output
 Error not enough volumes named `<volume_name>` (1) to run `(<n>)` processes
@@ -122,43 +114,3 @@ Take note however, that a Volume can only be used by one at any given time.
 One way to fix this issue is to separate each process into [different Fly.io apps](/docs/app-guides/multiple-processes/#maybe-you-want-multiple-apps-though). Of course, separate application per process might require inter-communication between the applications. 
 
 Fly.io applications can easily communicate with each other over a [private network](/docs/networking/private-networking/). Not only that, but Fly.io also offers the `fly-replay` [response header](/docs/networking/dynamic-request-routing/#the-fly-replay-response-header) which can be used to "redirect" request from one application to another, and return response from the correct application.
-
-
-## Tigris Bucket for File Storage
-
-The Laravel Filesystem provides integration with Amazon S3's file storage driver. Instead of saving files to the local `storage/app` directory of a Laravel application, the S3 driver can connect and send files over to Amazon S3 compatible service.
-
-Tigris is an S3-compatible storage service built on Fly.io infrastructure,with an added bonus of providing CDN-like behavior with zero configuration needed. So if you have multiple Machines across different regions, you can rest assured for your files to be accessible across these Machines.
-
-
-1. To start, create a Tigris Bucket:
-
-    ```cli
-    fly storage create
-    ```
-    You'll be asked for a custom name for your bucket, but you can choose to create one with a random name. Afterwards, wait a moment for your bucket to get initialized and receive the details of your bucket:
-    ```cli
-    Setting the following secrets on <fly-app-name>:
-    AWS_ACCESS_KEY_ID: tid_RTur_dGXddWaJaZhBdkIGpZNJyNLDRDHwdUXYmfZifFDHXxCMT
-    AWS_ENDPOINT_URL_S3: https://fly.storage.tigris.dev
-    AWS_REGION: auto
-    AWS_SECRET_ACCESS_KEY: tsec_zpZwGxjPeMXDcBh4SHuHjwOYRxnfiKrrCqCAKizy+7udoTlKs9LGZ5a5AU3+9PENsCJ8N1
-    BUCKET_NAME: weathered-cloud-4166
-    ```
-
-2. Once you've taken note of these secrets, you can visit this newly created bucket by getting your console link using the `BUCKET_NAME` attribute received from above:
-
-    ```
-    fly storage dashboard weathered-cloud-4166
-    ```
-    Running the above should give you a link to your bucket's console dashboard:
-    ```
-    Opening https://console.tigris.dev/flyio/signin?org_id=6y84kn089gw5z3gw ...
-    ```
-    Visiting the link provided will lead you to your Tigris console, where you should see the name of the Bucket you've recently created. Of course, you'll have to be logged in via Fly.io to access this dashboard. 
-
-3. Setup with Laravel
-
-    Since Tigris is S3-compatible, we can simply leverage Laravel's existing S3 storage driver to connect with our Tigris Bucket. 
-    Make sure you have the S3 driver installed for your project. After installing the S3 driver, it's only a matter of filling in the blanks with values for the AWS S3 environment variables needed by Laravel's S3 driver. 
-    During our creation of the Tigris bucket we received configuration values, which we can update our .env values with, like so:
