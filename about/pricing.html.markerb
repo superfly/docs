@@ -75,7 +75,7 @@ We charge for started and stopped Machines differently. Attached GPUs are charge
     On July 1st, we're beginning a phased roll-out of per-region pricing. For the first month, prices will remain the same, but the lines on your invoice will be broken down by region. Each subsequent month, prices will be increase by 25% of the difference between the price in `iad` and the price listed for the region, until the listed price is reached in November.
   </p>
 
-  <p class="my-4 w-full text-right"><button id="phased-roll-out-example-toggle-btn" toggle>See how the phased roll-out works</button></p>
+  <p class="my-4 w-full text-right"><button id="phased-roll-out-example-toggle-btn" toggle>See an example of how the phased roll-out works</button></p>
 
   <ul id="phased-roll-out-example" class="hidden block overflow-hidden mt-2 text-sm leading-normal bg-white card" aria-label="show phased roll-out worked example" aria-hidden="true">
 
