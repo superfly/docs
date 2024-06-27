@@ -72,18 +72,19 @@ We charge for started and stopped Machines differently. Attached GPUs are charge
   **Machines pricing is changing!**
 
   <p class="mt-2">
-    On July 1st, we're beginning a phased roll-out of per-region pricing. For the first month, prices will remain the same, but the lines on your invoice will be broken down by region. Each subsequent month, prices will be increase by 25% of the difference between the price in `iad` and the price listed for the region, until the listed price is reached in November.
+    On July 1st, we're beginning a phased roll-out of per-region pricing. For the first month, prices will remain the same, but the lines on your invoice will be broken down by region. Each subsequent month, prices will be increase by 25% of the difference between the price in <span class="font-mono">iad</span> and the price listed for the region, until the listed price is reached in November.
   </p>
 
   <p class="my-4 w-full text-right"><button id="phased-roll-out-example-toggle-btn" toggle>See an example of how the phased roll-out works</button></p>
 
   <ul id="phased-roll-out-example" class="hidden block overflow-hidden mt-2 text-sm leading-normal bg-white card" aria-label="show phased roll-out worked example" aria-hidden="true">
 
-    <li>In July, Machines in `lax` will cost the same as Machines in `iad`, roughly $1.94/month.</li>
-    <li>In August, Machines in `lax` will cost roughly $1.94 + 0.25\*($2.33 - 1.94) = $2.04/month.</li>
-    <li>In September, they'll cost roughly $1.94 + 0.5\*($2.33 - 1.94) = $2.14/month.</li>
-    <li>In October, they'll cost roughly $1.94 + 0.75\*($2.33 - 1.94) = $2.23/month.</li>
-    <li class="mb-0">Finally, in November they'll cost roughly $2.33, the listed price for Machines in `lax`.</li>
+    <li>The listed price for <span class="font-mono">shared-1x-256mb</span> Machines in <span class="font-mono">lax</span> is $2.33/month.</li>
+    <li>In July, <span class="font-mono">shared-1x-256mb</span> Machines in <span class="font-mono">lax</span> will cost the same as Machines in <span class="font-mono">iad</span>, roughly $1.94/month.</li>
+    <li>In August, they'll cost roughly $1.94 + 0.25\*($2.33 - $1.94) = $2.04/month.</li>
+    <li>In September, they'll cost roughly $1.94 + 0.5\*($2.33 - $1.94) = $2.14/month.</li>
+    <li>In October, they'll cost roughly $1.94 + 0.75\*($2.33 - $1.94) = $2.23/month.</li>
+    <li class="mb-0">Finally, in November they'll cost roughly $2.33/month, the listed price for Machines in <span class="font-mono">lax</span>.</li>
 
   </ul>
 </section>
