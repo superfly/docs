@@ -1,0 +1,63 @@
+---
+title: Going to production
+layout: docs
+nav: firecracker
+redirect_from:
+  - /docs/going-to-production/
+---
+
+There are a lot of considerations when going to production with your app. This doc provides some pointers to important topics when setting up a good production environment on Fly.io. What makes an app production-ready can vary from one framework to another. The following topics and linked docs can help you understand when and why you might need specific features or configurations.
+
+<div class="important icon">
+This list is not exhaustive and does not guarantee production-readiness for your app. Apps might have unique requirements and designs that require different set ups. **Contact us for an architecture review? TBD**
+</div>
+
+## Security
+
+- **[Set up single sign-on for organizations](/docs/security/sso/):** Enable SSO on your organization to take advantage of Google or GitHub authentication security.
+- **[Use Arcjet application security for Javascript apps](/docs/reference/arcjet/):** Secure your app with rate limiting, bot protection, email validation, and defense against common attacks through our extension partner Arcjet. (currently [free in beta](/docs/reference/arcjet/#pricing) but subject to change)
+- **Protect sensitive information**: Set [secrets](/docs/reference/secrets/) to store sensitive data and make them available as environment variables to your app.
+- **Tokens and access:** TBD
+- **Make sure private services are not exposed**: Check that your private apps don't have public IPS. Run `fly ips list` and use `fly ips release` to release unnecessary public IPs.
+- **[Isolate staging and production environments](/docs/blueprints/staging-prod-isolation/):** Use organizations to limit access to your production environment.
+- **Isolate tenants**: TBD custom private networks?
+
+## Databases
+
+- **Run "production-grade" Postgres**: For Fly Postgres, our unmanaged database, set up [replication clusters of 3+ servers](/postgres/advanced-guides/high-availability-and-global-replication/). Or use an external database provider and configure for redundancy.
+- **[Set up offsite backups]**: TBD recommendations?
+- **LiteFS**: Include? TBD
+
+## Monitoring
+
+- **[Export your logs](/docs/metrics-and-logs/exporting-logs/):** Set up the Fly Log Shipper to aggregate your app’s logs to a service of your choice.
+- **[Use Sentry for Error tracking](/docs/reference/sentry/)**: An application monitoring platform that helps you identify and fix software problems before they impact your users from our extension partner Sentry.(Fly.io organization get a year's worth of [Team Plan](https://sentry.io/pricing/) credits)
+
+
+## Availability and resiliency
+
+- **[Use multiple Machines for resiliency](/docs/blueprints/resilient-apps-multiple-machines/):** Make your app resilient to single-host failures with multiple Machines that stay stopped until you need them.
+- **[Set up autoscaling by load or metric](/docs/reference/autoscaling/):** Use Fly Proxy autostart/autostop or the metrics-based autoscaler app.
+
+## CI/CD
+
+- **[Deploy with GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/):** Set up your app for continuous deployment to Fly.io from the app’s GitHub repository.
+- **[Generate review apps with GitHub Actions](/docs/blueprints/review-apps-guide/):** Automatically generate ephemeral “review apps” on Fly.io for each pull request (PR) using GitHub Actions.
+
+## Networking
+
+- **[Use a custom domain](/docs/networking/custom-domain/):** Configure a certificate for your domain.
+- **[Consider a dedicated IPv4 address](/docs/networking/services/#dedicated-ipv4):** Completely eliminate the chance of blacklisted spammers causing problems for your app.([added cost](https://fly.io/docs/about/pricing/#anycast-ip-addresses))
+
+
+## Fine-tuning your app
+
+**[Get Machine sizing right]():** Most production apps require 2x or performance CPUs. Also make sure you have enough RAM for your app and/or enable [swapping to disk](https://fly.io/docs/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use.
+**[Fine-tune and (not) benchmark your app](/docs/reference/fine-tune-apps/):** Considerations when optimizing your app on Fly.io.
+
+## Support
+
+Check out our [community](https://community.fly.io/) for answers.
+
+Get email support with a Launch, Scale, or Enterprise [plan](/plans).
+
