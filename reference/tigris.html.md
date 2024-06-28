@@ -21,7 +21,7 @@ Language- and framework-specific guides for setting up Tigris.
 
 ## Create and manage a Tigris storage bucket
 
-Creating and managing storage buckets happens exclusively via the [Fly CLI](/docs/flyctl/install/). Install it, then [signup for a Fly account](/docs/getting-started/sign-up-sign-in/).
+Creating and managing storage buckets happens exclusively via the [Fly CLI](/docs/flyctl/install/). Install it, then [sign up for a Fly account](/docs/getting-started/sign-up-sign-in/).
 
 <aside class="callout">Running the following command in a Fly.io app context -- inside an app directory or specifying `-a yourapp` -- will automatically set secrets on your app.</aside>
 
@@ -42,7 +42,7 @@ AWS_SECRET_ACCESS_KEY: tsec_xxxxxx
 
 ### Public buckets
 
-By default, buckets are private. If you need to serve public assets like images or javascript files, create a *public bucket*:
+By default, buckets are private. If you need to serve public assets like images or JavaScript files, create a *public bucket*:
 
 ```cmd
 fly storage create --public
@@ -88,7 +88,7 @@ flyctl storage create -n mybucket -o myorg --shadow-access-key 123 --shadow-secr
 
 #### Add or remove a shadow bucket on an existing Tigris bucket
 
-You can also and and remove shadow buckets from existing Tigris buckets.
+You can also add and remove shadow buckets from existing Tigris buckets.
 
 ```cmd
 flyctl storage update mybucket --shadow-access-key 123 --shadow-secret-key abc --shadow-endpoint https://s3.us-east-1.amazonaws.com --shadow-region us-east-1
