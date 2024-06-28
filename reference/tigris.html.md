@@ -65,7 +65,7 @@ Shadow buckets enable transparent copying and writing of objects as they are req
 * Avoiding egress fees from large data migrations
 * Avoiding downtime by serving requests from Tigris while running a data migration
 * Testing Tigris global cache performance
-* Testing Tigris functionality with the option to switch back to your current provider
+* Testing Tigris features with the option to switch back to your current provider
 
 #### How shadow buckets work
 
