@@ -9,11 +9,11 @@ nav: firecracker
 
 ## Launch an app
 
-_Fly Launch is configuration, provisioning, deployment, scaling, and orchestration with our CLI, all built on Fly Machines._
+_Fly Launch is app configuration, provisioning, deployment, scaling, and orchestration with our CLI, all built on Fly Machines._
 
-Get up and running with a [quickstart or a demo app](/docs/getting-started/)
+Get started with our [quickstart or demo app](/docs/getting-started/)
 
-Or get started with your favorite [language or framework](/docs/getting-started/get-started-by-framework/)
+Or choose your favorite [language or framework](/docs/getting-started/get-started-by-framework/)
 
 ---
 
