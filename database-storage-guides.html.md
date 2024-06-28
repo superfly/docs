@@ -1,5 +1,5 @@
 ---
-title: Databases & Storage
+title: Databases and storage
 layout: docs
 toc: true
 nav: firecracker
