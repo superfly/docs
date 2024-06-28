@@ -13,7 +13,7 @@ date: 2024-06-17
 
 ## Intro
 
-A lot of the time your applications are made to be public and shared with the world. Sometimes you need to be more careful. When you deploy your apps on Fly.io, you get a private network for your organization. This lets your applications in other continents contact eachother like they were in the same room.
+A lot of the time your applications are made to be public and shared with the world. Sometimes you need to be more careful. When you deploy your apps on Fly.io, you get a private network for your organization. This lets your applications in other continents contact each other like they were in the same room.
 
 Sometimes you need a middle ground between fully public apps and fully private apps, and Flycast is there for when you need it. Flycast addresses are private but global IPv6 addresses inside your private network that go through the Fly Proxy, so you get all of the load management and Machine waking powers that you get for free with public apps.
 
@@ -68,7 +68,7 @@ Create a new folder on your computer called `ollama`. This is where we’ll put 
 fly launch --from https://github.com/fly-apps/ollama-demo --no-deploy
 ```
 
-This command creates a new fly app from the [ollama-demo template](https://github.com/fly-apps/ollama-demo) and tells the flyctl command to not deploy it after you create the app. If we don’t do this, then the platform will create public IPv4 and IPv6 addresses, which will make this a public app. The name you choose when you create your app will be used to connect to your app over Flycast.
+This command creates a new fly app from the [`ollama-demo` template](https://github.com/fly-apps/ollama-demo) and tells the flyctl command to not deploy it after you create the app. If we don’t do this, then the platform will create public IPv4 and IPv6 addresses, which will make this a public app. The name you choose when you create your app will be used to connect to your app over Flycast.
 
 Next, allocate a Flycast address for your app with the `fly ips allocate-v6` command:
 
@@ -194,7 +194,6 @@ It took a moment for Ollama to get ready and download the image, then it downloa
 
 And there we go! We've covered what Flycast is, why you'd want to use it, and set up an instance of Ollama to show it off.
 
-You can use Flycast with any application that listens over HTTP or TCP without any modification to your code. UDP is a bit more tricky due to the fact that there's no sessions, but there's documentation you can follow to do this. The link is in the description.
 
 I hope this helped you learn more about the platform and the cool hacks you can pull off on it. If you have any questions or want me to cover anything else in the future, please leave a comment in the box down below. If you've created something cool with Flycast, also leave a comment or shout us out on Twitter at [@flydotio](https://x.com/flydotio).
 
