@@ -12,6 +12,13 @@ Objects in Tigris are stored close to the region where they're written. Then, wh
 
 Learn more from their [service overview](https://www.tigrisdata.com/docs/overview/) and [architecture docs](https://www.tigrisdata.com/docs/concepts/architecture/).
 
+## Use Tigris with your framework
+
+Language- and framework-specific guides for setting up Tigris.
+
+- [Rails with Active Storage](docs/rails/the-basics/active-storage/)
+- Tigris file storage with Laravel TBD
+
 ## Create and manage a Tigris storage bucket
 
 Creating and managing storage buckets happens exclusively via the [Fly CLI](/docs/flyctl/install/). Install it, then [signup for a Fly account](/docs/getting-started/sign-up-sign-in/).
