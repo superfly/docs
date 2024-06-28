@@ -21,7 +21,28 @@ Don't want Tigris for any reason?  Hey - we don't judge here.  Simply disable th
 
 ## Adding Tigris to an existing application?
 
-No problem!  [Create a storage bucket](/docs/reference/tigris/) and let [`dockerfile-rails`](https://github.com/fly-apps/dockerfile-rails?tab=readme-ov-file#overview) do the configuring for you:
+No problem!  It can be as easy as a two step process.  
+
+Step 1: Create a storage bucket:
+
+```cmd
+fly storage create
+```
+```output
+? Choose a name, use the default, or leave blank to generate one: 
+Your Tigris project (xxx) is ready. See details and next steps with: https://fly.io/docs/reference/tigris/
+
+Setting the following secrets on xxx:
+AWS_ACCESS_KEY_ID: tid_xxx
+AWS_ENDPOINT_URL_S3: https://fly.storage.tigris.dev
+AWS_REGION: auto
+AWS_SECRET_ACCESS_KEY: tsec_xxxxx
+BUCKET_NAME: xxx
+
+Secrets are staged for the first deployment
+```
+
+Step 2: Let [`dockerfile-rails`](https://github.com/fly-apps/dockerfile-rails?tab=readme-ov-file#overview) do the configuring for you:
 
 ```
 bin/rails generate dockerfile --tigris
@@ -59,3 +80,7 @@ fly launch
 ```
 
 Watch the app deploy and then upload, view, and download a few files!
+
+## Find out more!
+
+Now that you are up and running, there is a lot more to explore on the [Tigris Global Object Storage](https://fly.io/docs/reference/tigris/) page. Highlights include public buckets, migrating to Tigris with shadow butckets, Pricing, and AWS API compatibility.
