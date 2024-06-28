@@ -108,3 +108,14 @@ Example:
 ```
 fly-prefer-region: ams
 ```
+
+## The `fly-force-instance-id` request header
+
+Clients accessing Fly.io apps may set the `fly-force-instance-id` header to ensure that the request is sent directly to a desired machine instance only. 
+
+If the instance is down, no other instances will be tried.
+
+Example:
+```
+fly-force-instance-id: 9080ee5da341e
+```

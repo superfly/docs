@@ -129,6 +129,12 @@ You can set a preference on HTTP requests for which region you would like to con
 Fly-Prefer-Region: region-code
 ```
 
+You can force routing to a specific machine instance:
+
+```
+Fly-Force-Instance-Id: instance-number
+```
+
 Configuration example in `fly.toml`:
 
 ```toml
