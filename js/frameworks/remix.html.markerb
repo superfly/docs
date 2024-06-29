@@ -68,10 +68,10 @@ fly launch
 ```output
 Scanning source code
 Detected a Remix app
-Creating app in /Users/rubys/tmp/my-remix-app
+Creating app in .../my-remix-app
 We're about to launch your Remix app on Fly.io. Here's what you're getting:
 
-Organization: Sam Ruby                        (fly launch defaults to the personal org)
+Organization: Jane Developer                  (fly launch defaults to the personal org)
 Name:         my-remix-app-restless-moon-4797 (generated)
 Region:       Ashburn, Virginia (US)          (this is the fastest region for you)
 App Machines: shared-cpu-1x, 1GB RAM          (most apps need about 1GB of RAM)
