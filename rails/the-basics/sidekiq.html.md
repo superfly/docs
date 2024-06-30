@@ -2,7 +2,7 @@
 title: Sidekiq Background Workers
 layout: framework_docs
 objective: Deploy Rails applications that run in multiple processes to one Fly application, like Sidekiq background jobs.
-order: 5
+order: 6
 ---
 
 Rails applications commonly defer complex tasks that take a long to complete to a background worker to make web responses seem fast. This guide shows how to use [Sidekiq](https://github.com/mperham/sidekiq), a popular open-source Rails background job framework, to set up background workers, but it could be done with other great libraries like [Good Job](https://github.com/bensheldon/good_job), [Resque](https://github.com/resque/resque), [etc](https://www.ruby-toolbox.com/categories/Background_Jobs).
