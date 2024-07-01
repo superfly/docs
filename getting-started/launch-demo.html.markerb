@@ -40,7 +40,7 @@ Sign up for an account or [sign in](#sign-in-to-your-flyio-account) to your exis
 
 Fly Launch helps you quickly deploy almost any kind of app using a Docker image. For this example, you'll use our pre-built Docker image, `flyio/hellofly:latest`, to create and deploy the demo app.
 
-Every Fly Launch app uses a [`fly.toml` config file](/docs/reference/configuration/) to tell the platform how to deploy it. Running `fly launch` to create a new app generates the `fly.toml` file with some useful defaults that you can tweak through a web interface before deploying the app. When you run a command post-deploy, flyctl looks for a `fly.toml` file to get the app name and configuration.
+Running `fly launch` to create a new app generates a [`fly.toml` config file](/docs/reference/configuration/) file with some useful defaults that you can tweak through a web interface before deploying the app. When you run a command post-deploy, flyctl looks for a `fly.toml` file to get the app name and the configuration to apply.
 
 To create the demo app, run:
 
@@ -65,16 +65,15 @@ Redis:        <none>                 (not requested)
 ? Do you want to tweak these settings before proceeding? (y/N)
 ```
 
-Type `y` at the prompt to open the Fly Launch page, where you can make changes to your app config.
+Fly launch creates an app name by appending a random name to your project directory name. App names must be globally unique.
 
-For this example, you'll probably want to change the app name and maybe the [region](/docs/reference/regions/) to deploy in. App names need to be globally unique.
+To change any settings, type `y` at the prompt to open the Fly Launch page, then click **Confirm Settings** to confirm and deploy the demo app.
 
-Click **Confirm Settings** to confirm and deploy the demo app.
+Or just type `n` to accept the default and deploy the app.
 
-Then return to your terminal to view the progress of the app deployment. For example:
+Example `fly launch` output:
 
 ```output
-Waiting for launch data... Done
 Created app 'my-app-name' in organization 'personal'
 Admin URL: https://fly.io/apps/my-app-name
 Hostname: my-app-name.fly.dev
@@ -107,14 +106,12 @@ Visit your newly deployed app at https://my-app-name.fly.dev/
 
 ## 4. Check your app's status
 
-After the app is deployed, use the `fly status` command to get the basic details about your new app.
+After the app is deployed, use the `fly status` command to get the basic details about your new app. For example:
 
 ```cmd
 fly status
 ```
-
-Example output:
-```cmd
+```output
 App
   Name     = hellofly          
   Owner    = personal       
