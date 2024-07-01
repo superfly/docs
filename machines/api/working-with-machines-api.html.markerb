@@ -77,6 +77,6 @@ Typically, 2xx HTTP status codes denote successful operations, 4xx codes imply f
 
 ## Rate Limits
 
-Machine API rate limits apply _per-action_, _per-machine_. The limit is 1 request, per second, per action (i.e. Create Machine, Start Machine etc.) — short-term burstable up to 3 req/s, per action.
+Machine API rate limits apply _per-action_, _per-machine_. The limit is 1 request, per second, per action (i.e. Create Machine, Start Machine etc.) — with a short-term burst limit up to 3 req/s, per action.
 
-This applies to all actions except [Get Machine](/docs/machines/api/machines-resource/#get-a-machine) which is 5 req/s, burstable up to 10 req/s.
+This applies to all actions except [Get Machine](/docs/machines/api/machines-resource/#get-a-machine) which is 5 req/s, with a short-term burst limit up to 10 req/s.
