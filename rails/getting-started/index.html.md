@@ -67,7 +67,7 @@ Now use your favorite editor to make a one line change to `config/routes.rb`:
  Now that we have an application that does something, albeit something trivial,
  let's deploy it.
 
-### Provision Rails and Postgres Servers
+### Launch
 
 To configure and launch the app, you can use `fly launch` and follow the
 wizard.  This demo does not need a database or redis.
