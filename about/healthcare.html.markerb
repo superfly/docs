@@ -120,4 +120,8 @@ Anything stored persistently in a Fly.io volume is backed up on a regular schedu
 
 ## More info
 
-You can check our [community](https://community.fly.io) or [our documentation](https://fly.io/docs/) for answers to your questions. If you can't find what you're looking for want to know more, [get in touch](mailto:sales@fly.io)!
+Our blueprint for [Going to production with healthcare apps](/docs/blueprints/going-to-production-with-healthcare-apps/) runs a developer or operations engineer through the process of evaluating Fly.io’s security for HIPAA healthcare apps, launching a pilot application, signing a BAA, and deploying to production.
+
+You can also check our [community](https://community.fly.io) for answers to your questions.
+
+If you can't find what you're looking for or want to know more, [get in touch](mailto:sales@fly.io).
