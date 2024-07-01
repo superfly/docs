@@ -12,7 +12,7 @@ The Fly Machines API provides resources to create, destroy, and manage Fly Apps,
 
 **[Machines resource](/docs/machines/api/machines-resource/)** - Fly Machines are our fast-launching VMs.
 
-**[Tokens resource](/docs/machines/api/tokens-resource)** — Support for OpenID Connect tokens.
+**[Tokens resource](/docs/machines/api/tokens-resource)** - Support for OpenID Connect tokens.
 
 **[Volumes resource](/docs/machines/api/volumes-resource/)** - [Fly Volumes](/docs/volumes/) are persistent storage for Machines.
 
@@ -74,3 +74,9 @@ Typically, 2xx HTTP status codes denote successful operations, 4xx codes imply f
 | 404 | The resource was not found. |
 | 408 | Request timed out. |
 | 5xx | Indicates an error with Fly.io API servers. |
+
+## Rate Limits
+
+Machine API rate limits apply _per-action_, _per-machine_. The limit is 1 request, per second, per action (i.e. Create Machine, Start Machine etc.) — with a short-term burst limit up to 3 req/s, per action.
+
+This applies to all actions except [Get Machine](/docs/machines/api/machines-resource/#get-a-machine) which is 5 req/s, with a short-term burst limit up to 10 req/s.
