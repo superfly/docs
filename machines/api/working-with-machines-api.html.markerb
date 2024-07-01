@@ -8,13 +8,13 @@ order: 1
 
 The Fly Machines API provides resources to create, destroy, and manage Fly Apps, Fly Machines, and Fly Volumes. Refer to the following reference docs for the usage of each:
 
-**[Apps resource](/docs/machines/api/apps-resource/)** — Every Fly Machine belongs to a [Fly App](/docs/reference/apps/).
+**[Apps resource](/docs/machines/api/apps-resource/)** - Every Fly Machine belongs to a [Fly App](/docs/reference/apps/).
 
-**[Machines resource](/docs/machines/api/machines-resource/)** — Fly Machines are our fast-launching VMs.
+**[Machines resource](/docs/machines/api/machines-resource/)** - Fly Machines are our fast-launching VMs.
 
-**[Tokens resource](/docs/machines/api/tokens-resource)** — Support for OpenID Connect tokens.
+**[Tokens resource](/docs/machines/api/tokens-resource)** - Support for OpenID Connect tokens.
 
-**[Volumes resource](/docs/machines/api/volumes-resource/)** — [Fly Volumes](/docs/volumes/) are persistent storage for Machines.
+**[Volumes resource](/docs/machines/api/volumes-resource/)** - [Fly Volumes](/docs/volumes/) are persistent storage for Machines.
 
 ## Connecting to the API
 
