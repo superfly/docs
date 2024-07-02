@@ -12,9 +12,16 @@ Objects in Tigris are stored close to the region where they're written. Then, wh
 
 Learn more from their [service overview](https://www.tigrisdata.com/docs/overview/) and [architecture docs](https://www.tigrisdata.com/docs/concepts/architecture/).
 
+## Use Tigris with your framework
+
+Language- and framework-specific guides for setting up Tigris:
+
+- [Rails with Active Storage](docs/rails/the-basics/active-storage/)
+- [Laravel with Tigris for CDN File Storage](/docs/laravel/the-basics/laravel-tigris-file-storage/)
+
 ## Create and manage a Tigris storage bucket
 
-Creating and managing storage buckets happens exclusively via the [Fly CLI](/docs/flyctl/install/). Install it, then [signup for a Fly account](/docs/getting-started/sign-up-sign-in/).
+Creating and managing storage buckets happens exclusively via the [Fly CLI](/docs/flyctl/install/). Install it, then [sign up for a Fly account](/docs/getting-started/sign-up-sign-in/).
 
 <aside class="callout">Running the following command in a Fly.io app context -- inside an app directory or specifying `-a yourapp` -- will automatically set secrets on your app.</aside>
 
@@ -35,7 +42,7 @@ AWS_SECRET_ACCESS_KEY: tsec_xxxxxx
 
 ### Public buckets
 
-By default, buckets are private. If you need to serve public assets like images or javascript files, create a *public bucket*:
+By default, buckets are private. If you need to serve public assets like images or JavaScript files, create a *public bucket*:
 
 ```cmd
 fly storage create --public
@@ -58,7 +65,7 @@ Shadow buckets enable transparent copying and writing of objects as they are req
 * Avoiding egress fees from large data migrations
 * Avoiding downtime by serving requests from Tigris while running a data migration
 * Testing Tigris global cache performance
-* Testing Tigris functionality with the option to switch back to your current provider
+* Testing Tigris features with the option to switch back to your current provider
 
 #### How shadow buckets work
 
@@ -81,7 +88,7 @@ flyctl storage create -n mybucket -o myorg --shadow-access-key 123 --shadow-secr
 
 #### Add or remove a shadow bucket on an existing Tigris bucket
 
-You can also and and remove shadow buckets from existing Tigris buckets.
+You can also add and remove shadow buckets from existing Tigris buckets.
 
 ```cmd
 flyctl storage update mybucket --shadow-access-key 123 --shadow-secret-key abc --shadow-endpoint https://s3.us-east-1.amazonaws.com --shadow-region us-east-1
