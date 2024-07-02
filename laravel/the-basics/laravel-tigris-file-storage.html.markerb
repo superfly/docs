@@ -4,11 +4,11 @@ layout: framework_docs
 objective: Integrate Tigris Bucket using Laravel S3 driver
 order: 8
 ---
-[Tigris is an S3-compatible](https://www.tigrisdata.com/docs/overview/) storage service built on Fly.io infrastructure. It provides an intelligent cache-managing, data replication service that offers CDN-like behavior for your object storage with zero configuration needed. 
+[Tigris is an S3-compatible](https://www.tigrisdata.com/docs/overview/) storage service built on Fly.io infrastructure. It provides an intelligent cache-managing, data replication service that offers CDN-like behavior for your object storage with almost-zero configuration needed. 
 
-The Laravel Flysystem integration provides a driver for working with Amazon S3 compatible services. Since Tigris supports the S3 API, Laravel's existing S3 driver can be used to connect with it. 
+The Laravel Flysystem integration provides a driver for working with Amazon S3-compatible services. Since Tigris supports the S3 API, Laravel's existing S3 driver can be used to connect with it. 
 
-It's really easy to get started with Tigris. Just create a bucekt, plug in its credentials to your Laravel app, upload your files, and users from around the globe should be able to access your files closer and faster thanks to Tigris' automatic data distribution feature. Try it out!
+It's really easy to get started with Tigris. Just create a bucket, plug in its credentials to your Laravel app, upload your files, and users from around the globe should be able to access your files closer and faster thanks to Tigris' automatic data distribution feature. Try it out!
 
 ## The Tigris Bucket
 1. Create a Tigris Bucket
@@ -17,7 +17,7 @@ It's really easy to get started with Tigris. Just create a bucekt, plug in its c
 
     ```cli
     // Open your project directory
-    cd my-laravel-fly-init-app
+    cd my-laravel-fly-initialized-app
 
     // Run the create command
     fly storage create
@@ -90,7 +90,7 @@ Now that we have our Tigris Bucket, let's connect it with our Laravel app.
 
 2. Upload a file from the Controller:
 
-    To test out our connection to the Tigris bucket, we can creata a sample function that uploads a text file to the bucket:
+    To test out our connection to the Tigris bucket, we can create a sample function that uploads a text file to the bucket:
 
     ```
     use Illuminate\Support\Facades\Storage;
