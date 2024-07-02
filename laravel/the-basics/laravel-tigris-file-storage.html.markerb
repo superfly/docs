@@ -82,9 +82,9 @@ Now that we have our Tigris Bucket, let's connect it with our Laravel app.
     
     ```
     // Please change the values enclosed in <> with the appropriate value received during the creation of the Tigris Bucket
-    fly secrets set AWS_DEFAULT_REGION=<AWS_REGION_VALUE>
-    fly secrets set AWS_BUCKET=<AWS_BUCKET_VALUE>
-    fly secrets set AWS_ENDPOINT=<AWS_ENDPOINT_URL_S3>
+    fly secrets set AWS_DEFAULT_REGION="<AWS_REGION_VALUE>"
+    fly secrets set AWS_BUCKET="<AWS_BUCKET_VALUE>"
+    fly secrets set AWS_ENDPOINT="<AWS_ENDPOINT_URL_S3>"
     ```
 
 
