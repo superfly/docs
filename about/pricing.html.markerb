@@ -152,7 +152,7 @@ regionSelect.addEventListener("change", function () {
 
 ### Stopped Fly Machines
 
-For stopped machines we charge only for the root file system (rootfs) needed for each machine. Each 1GB of rootfs for a machine stopped for 30 days is $0.15. The amount of rootfs needed is defined by your OCI image generated on your app plus a few [containerd](https://containerd.io/+external) tweaks on the underlying file system.
+For stopped Machines we charge only for the root file system (rootfs) needed for each Machine. Each 1GB of rootfs for a Machine stopped for 30 days is $0.15. The amount of rootfs needed is defined by your OCI image generated on your app plus a few [containerd](https://containerd.io/+external) tweaks on the underlying file system.
 
 ### GPUs and Fly Machines
 
