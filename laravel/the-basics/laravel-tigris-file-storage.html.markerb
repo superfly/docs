@@ -44,7 +44,7 @@ It's really easy to get started with Tigris. Just create a bucekt, plug in its c
     ```
     Running the command above should give you a link to your bucket's console dashboard:
     ```
-    Opening https://console.tigris.dev/flyio/signin?org_id=6y84kn089gw5z3gw ...
+    Opening https://console.tigris.dev/flyio/signin?org_id=6y84k....
     ```
     The link provided will lead straight to your Tigris console, where you should see the name of the bucket you've recently created. Of course, you'll have to be logged in via Fly.io to access this dashboard. 
 
