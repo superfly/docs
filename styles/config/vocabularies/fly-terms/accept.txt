@@ -31,7 +31,6 @@ failover
 Fastify
 Fly.io
 Flycast
-Fly
 flyctl
 flyd
 Flysystem
