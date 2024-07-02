@@ -9,6 +9,17 @@ The [storage folder](https://laravel.com/docs/9.x/filesystem#the-local-driver) b
 
 It's the default burrow for session, cache, and file data amongst others. If you'd opt to persist data on this folder, you'll have to mount a [volume](/docs/volumes/) to it.
 
+<div class="warning icon">
+Fly Volumes do not automatically sync their data with each other. Please remember to create the appropriate data-replication logic if your Fly App will be using more than one volume instance, and if your app requires data available across its Volumes.
+</div>
+
+<div class="important icon">
+For file storage, you can utilize the S3-compatible [Tigris service](https://www.tigrisdata.com/docs/overview/)! 
+
+Aside from offering S3-compatible storage buckets, it handles data distribution and cache management for you, providing CDN-like behavior for your application's file storage with almost zero-configuration needed. 
+
+Check out its integration with Laravel [here](/docs/laravel/the-basics/laravel-tigris-file-storage/).
+</div> 
 
 ## The Steps
 
@@ -94,9 +105,7 @@ It's the default burrow for session, cache, and file data amongst others. If you
     fly deploy
     ```
 
-<div class="callout">
-Fly Volumes do not automatically sync their data with each other. Please remember to create the appropriate data-replication logic if your Fly App will be using more than one volume instance, and if your app requires data available across its Volumes.
-</div> 
+
 
 #### **_Possible Errors_**
 
