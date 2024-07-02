@@ -31,8 +31,10 @@ failover
 Fastify
 Fly.io
 Flycast
+Fly
 flyctl
 flyd
+Flysystem
 fly.toml
 Gemfile
 GPUs?\b
