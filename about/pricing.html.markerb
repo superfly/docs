@@ -21,34 +21,39 @@ Check out our [plans and plan pricing](https://fly.io/plans).
 
 Every organization belongs to a plan. When you create a new organization, it starts on the [Pay As You Go plan](https://fly.io/plans). If you need more support or compliance options, then you can upgrade to a Launch, Scale, or Enterprise plan.
 
-Some usage is included with our Hobby, Launch, Scale, and Enterprise plans. You can upgrade your plan at any time, or just pay for extra usage at the usage-based prices listed below.
+Some usage is included with our Hobby (deprecated), Launch, Scale, and Enterprise plans. You can upgrade your plan at any time, or just pay for extra usage at the usage-based prices listed below.
 
 <div class="note icon">
-Regardless of which plan you're on, your organization may be subject to automated scaling limits to prevent abuse or to help with capacity planning. Email the address in the error message if you run into such a limit and it's getting in your way.
+Organizations may be subject to automated scaling limits to prevent abuse or to help with capacity planning. Email the address in the error message if you run into such a limit and it's getting in your way.
 </div>
 
-All plans require a [credit card](/docs/about/billing/#payment-options) on file. For details, or to select a different plan, see [Plan Pricing](https://fly.io/plans).
+All plans require a [credit card](/docs/about/billing/#payment-options) on file. For plan details, or to select a different plan, see [Plan Pricing](https://fly.io/plans).
 
 ### New sign-ups
 
 When you sign up for a Fly.io account, we create a default ("personal") organization for you on the [Pay As You Go plan](https://fly.io/plans).
 
-<div class="note icon">
-If you signed up before the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit is used up, that organization is automatically placed on the $5/month [Hobby plan](https://fly.io/plans) (we’ll send you an email when it happens).
+### Discontinued plans
 
-You won't be charged for the $5/month Hobby plan subscription until the credit has been used up. The free trial credit doesn't expire. and applies to your default (“personal”) organization that we created for you on sign-up.
-</div>
+The paid Hobby plan and the Legacy Hobby plan are not available for new sign-ups.
 
+#### Paid Hobby plan (deprecated) and free trial
 
-### Legacy Hobby plan
+If you signed up for a $5/month Hobby plan before the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit is used up, we automatically place your organization on the $5/month Hobby plan, which includes $5/month of usage and free allowances. We’ll send you an email when your free trial credit is used up and you won't be charged before that. The free trial credit doesn't expire and applies only to the default (“personal”) organization that we created for you on sign-up.
 
-If you were on the free Hobby plan at the time that the paid Hobby plan became the default for new organizations, your plan is now called the Legacy Hobby plan. Your costs stay the same as they were, with no monthly subscription fee, and no included usage beyond the free resource allowances that apply to all plans.
+To change your plan to the Pay As You Go plan, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Choose Pay As You Go**. If you change your plan, you won't be able to return to the paid Hobby Plan.
 
-If you upgrade to a different plan and downgrade back to Hobby, you’ll be on the current (paid) Hobby plan.
+#### Legacy Hobby plan
+
+If you were on the free Hobby plan at the time that the paid Hobby plan became the default for new organizations, your plan is now called the Legacy Hobby plan. Your costs stay the same as they were, with no monthly subscription fee, and no included usage beyond the free resource allowances.
+
+If you change your plan, you won't be able to return to the Legacy Hobby Plan.
 
 ## Free allowances
 
-Resources included for free on the Hobby, Launch and Scale plans:
+There are no free allowances on the Pay As You Go plan or during the paid Hobby plan (deprecated) free trial.
+
+Resources included for free on the Hobby (deprecated), Launch, and Scale plans:
 
 * Up to 3 shared-cpu-1x 256mb VMs
 * 3GB persistent volume storage (total)
@@ -58,8 +63,6 @@ Resources included for free on the Hobby, Launch and Scale plans:
   * 30 GB Africa & India
 
 Additional resources are billed at the usage-based pricing detailed below.
-
-There are no free allowances during the free trial or on the Pay As You Go plan.
 
 ## Compute
 
