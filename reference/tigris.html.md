@@ -14,10 +14,10 @@ Learn more from their [service overview](https://www.tigrisdata.com/docs/overvie
 
 ## Use Tigris with your framework
 
-Language- and framework-specific guides for setting up Tigris.
+Language- and framework-specific guides for setting up Tigris:
 
 - [Rails with Active Storage](docs/rails/the-basics/active-storage/)
-- Tigris file storage with Laravel TBD
+- [Laravel with Tigris for CDN File Storage](/docs/laravel/the-basics/laravel-tigris-file-storage/)
 
 ## Create and manage a Tigris storage bucket
 
