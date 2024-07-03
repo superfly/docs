@@ -69,4 +69,4 @@ If you've deployed an app on Fly.io, then it's running on Fly Machines. There’
 
 [**Fly Volumes**](/docs/volumes/): Local persistent storage for Fly Machines. Every Fly Volume can be attached to one Machine at a time and belongs to one Fly App.
 
-**Organizations**: Administrative entities on Fly.io that enable you to manage billing separately, add members, and share app development environments.
+**Organizations**: Administrative entities on Fly.io that let you to manage billing separately, control access by adding and removing members, and share app development environments.

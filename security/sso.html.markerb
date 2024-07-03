@@ -4,7 +4,7 @@ layout: docs
 nav: firecracker
 ---
 
-You can, and usually should, require members of your organizations to use SSO. Fly.io supports Google and GitHub as Identity Providers, and you can use one or both. If you already use Google or GitHub, enabling SSO takes advantage of their built-in security, like 2FA/MFA and passkeys.
+Organizations are administrative entities on Fly.io that let you to manage billing separately, control access by adding and removing members, and share app development environments. You can, and usually should, require members of your organizations to use SSO. Fly.io supports Google and GitHub as Identity Providers, and you can use one or both. If you already use Google or GitHub, enabling SSO takes advantage of their built-in security, like 2FA/MFA and passkeys.
 
 ## Authenticating user accounts vs. organizations
 
@@ -19,3 +19,7 @@ From the Fly.io [dashboard](https://fly.io/dashboard/), select an organization f
 Install the [Fly.io Github app](https://github.com/apps/fly-io/installations/select_target+external) on the GitHub organization you want to use for SSO.
 
 From the Fly.io [dashboard](https://fly.io/dashboard/), select an organization from the dropdown. Go to **Settings > Single Sign On > Google SSO Requirement**. Enter the GitHub organization ID for SSO, check **Enable**, and click Save.
+
+## Related topics
+
+- [Use organizations for staging and production isolation](/docs/blueprints/staging-prod-isolation/)
