@@ -5,10 +5,11 @@ nav: firecracker
 toc: false
 ---
 
-Fly.io metrics and logs.
+Metrics and logs on Fly.io.
 
-- **[Metrics](/docs/metrics-and-logs/metrics):** The fully-managed metrics that you can access for your app on Fly.io.
+- **[Metrics](/docs/metrics-and-logs/metrics):** Fully-managed metrics for your app on Fly.io.
 - **[Logging overview](/docs/metrics-and-logs/logs/):** How logs work on Fly.io.
-- **[Live tail logs](/docs/metrics-and-logs/live-tail-logs/):** Where to access live tail logs.
-- **[Search logs](/docs/metrics-and-logs/search-logs/):** Searchable app logs in Grafana (beta). 
-- **[Export logs](/docs/metrics-and-logs/exporting-logs/):** Aggregate your logs to a service of your choice.
+  - **[Live tail logs](/docs/metrics-and-logs/live-tail-logs/):** Where to access live tail logs.
+  - **[Search logs](/docs/metrics-and-logs/search-logs/):** Searchable app logs in Grafana (beta). 
+  - **[Export logs](/docs/metrics-and-logs/exporting-logs/):** Aggregate your logs to a service of your choice.
+  - **[Fly.io error codes and troubleshooting](/docs/metrics-and-logs/error-codes/):** Look up error codes and get tips for troubleshooting.

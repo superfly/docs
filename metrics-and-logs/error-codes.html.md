@@ -1,8 +1,8 @@
 ---
-title: Fly.io Error Codes
+title: Fly.io error codes and troubleshooting
 layout: docs
-sitemap: false
 nav: firecracker
+redirect_from: /docs/reference/error-codes/
 ---
 
 The Fly.io platform logs errors to customer log streams. Each log line contains an error code and a field containing that code. This page gives more context about the errors and how to troubleshoot them.
@@ -17,11 +17,11 @@ These errors are internal to the Fly proxy. They're not related to your applicat
 
 #### PP01: Failed to set TCP socket options
 
-The proxy wasn't able to set TCP socket options. This an internal Fly.io error.
+The proxy wasn't able to set TCP socket options. This is an internal Fly.io error.
 
 ### Upstream Proxy errors
 
-Upstream errors occur when the proxy fails to send or complete a request to your one of your upstream application machines.
+Upstream errors occur when the proxy fails to send or complete a request to one of your upstream application machines.
 
 #### PU01: Failed HTTP/2 handshake
 
@@ -46,13 +46,13 @@ A request was sent to a specific port that isn't open on the target machine.
 
 Is your app listening on the correct port?
 
-Is your app listening on `0.0.0.0` or `::`? Make sure it's not listening `127.0.0.1`. Check your app startup logs. Servers often print the address they're listening on.
+Is your app listening on `0.0.0.0` or `::`? Make sure it's not listening on `127.0.0.1`. Check your app startup logs. Servers often print the address they're listening on.
 
 #### PC02: Connection refused
 
 A request was sent to an unspecified port that isn't open on the target machine.
 
-Is your app listening on `0.0.0.0` or `::`? Make sure it's not listening `127.0.0.1`. Check your app startup logs. Servers often print the address they're listening on.
+Is your app listening on `0.0.0.0` or `::`? Make sure it's not listening on `127.0.0.1`. Check your app startup logs. Servers often print the address they're listening on.
 
 #### PC03: Connection reset
 
@@ -140,7 +140,7 @@ The API request to transition a machine from a `stopped` to `started` state time
 
 #### PM04: Machine wake parsing error
 
-An request parsing error prevented a machine transitioning from a `stopped` to `started` state.
+A request parsing error prevented a machine transitioning from a `stopped` to `started` state.
 
 #### PM05: Machine connection failed
 
@@ -161,7 +161,7 @@ A machine could not be started since due to its current non-startable state, suc
 
 #### PM09: Unknown machine state
 
-The proxy doesn't recognize the a machine's current state.
+The proxy doesn't recognize the machine's current state.
 
 #### PM10: Machine start canceled
 
@@ -227,15 +227,15 @@ Your app machines may all be stopped due to boot errors exhausting the number of
 
 **Deployments with volumes are failing**
 
-If you app uses volumes and your rolling deployment is failing, you might encounter this error. Check your app logs and `fly status`.
+If your app uses volumes and your rolling deployment is failing, you might encounter this error. Check your app logs and `fly status`.
 
 **Using the `immediate` deploy strategy**
 
-If you with the `immediate` deploy strategy, all current machines will be replaced at once, possibly leading to downtime and some `PR01` errors.
+If you use the `immediate` deploy strategy, all current machines will be replaced at once, possibly leading to downtime and some `PR01` errors.
 
 **App concurrency limits reached**
 
-[Concurrency limits](https://fly.io/docs/reference/concurrency/#main-content-start) set in `fly.toml` define how traffic should be balanced across machines in your app.
+[Concurrency limits](/docs/reference/concurrency/) set in `fly.toml` define how traffic should be balanced across machines in your app.
 
 To diagnose, check if:
 * your app is using too much CPU, memory or disk I/O
@@ -243,10 +243,9 @@ To diagnose, check if:
 * Connection pools to external services like databases are exhausted
 * Connections to external services from your app are slow
 
-
 #### PR02: Machine not found
 
-The Fly proxy couldn't find a specific machine ID after the request was forwarded from an edge proxy. The VM was likely was shutdown between when the proxy received the request and when it got forwarded. This error is most common during [`bluegreen` deployments](https://fly.io/docs/reference/configuration/#picking-a-deployment-strategy).
+The Fly proxy couldn't find a specific machine ID after the request was forwarded from an edge proxy. The VM was likely shut down between when the proxy received the request and when it got forwarded. This error is most common during [`bluegreen` deployments](https://fly.io/docs/reference/configuration/#picking-a-deployment-strategy).
 
 #### PR03: No candidate machines found after retries
 
