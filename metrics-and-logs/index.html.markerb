@@ -3,6 +3,7 @@ title: "Metrics and Logs"
 layout: docs
 nav: firecracker
 toc: false
+redirect_from: /docs/going-to-production/monitoring/
 ---
 
 Metrics and logs on Fly.io.
