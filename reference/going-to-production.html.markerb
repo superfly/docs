@@ -18,7 +18,7 @@ This document important topics when setting up a good production environment on 
 
 - **Set up single sign-on for organizations:** Enable SSO on your organization to take advantage of Google or GitHub authentication security. See [Single sign-on for organizations](/docs/security/sso/).
 
-- **Use Arcjet application security for Javascript apps:** Secure your app with rate limiting, bot protection, email validation, and defense against common attacks through our extension partner Arcjet. Currently [free in beta](/docs/reference/arcjet/#pricing), but pricing is subject to change. See [Application Security by Arcjet](/docs/reference/arcjet/).
+- **Use Arcjet application security for JavaScript apps:** Secure your app with rate limiting, bot protection, email validation, and defense against common attacks through our extension partner Arcjet. Currently [free in beta](/docs/reference/arcjet/#pricing), but pricing is subject to change. See [Application Security by Arcjet](/docs/reference/arcjet/).
 
 - **Protect sensitive information:** Set secrets to store sensitive data and make them available as environment variables to your app. See [Secrets and Fly Apps](/docs/reference/secrets/).
 
@@ -51,7 +51,7 @@ This document important topics when setting up a good production environment on 
 
 - **Deploy with GitHub Actions:** Set up your app for continuous deployment to Fly.io from the app’s GitHub repository. See [Continuous Deployment with Fly.io and GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/).
 
-- **Generate review apps with GitHub Actions:** Automatically generate ephemeral review apps on Fly.io for each pull request (PR) using GitHub Actions. See [Blueprint: Git Branch Preview Environments on Github](/docs/blueprints/review-apps-guide/).
+- **Generate review apps with GitHub Actions:** Automatically generate ephemeral review apps on Fly.io for each pull request (PR) using GitHub Actions. See [Blueprint: Git Branch Preview Environments on GitHub](/docs/blueprints/review-apps-guide/).
 
 ## Networking
 
