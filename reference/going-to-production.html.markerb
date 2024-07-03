@@ -11,7 +11,7 @@ redirect_from:
 This document important topics when setting up a good production environment on Fly.io. What makes an app production-ready can vary from one framework to another. The following topics and linked resources can help you understand when and why you might need specific features or configurations.
 
 <div class="important icon">
-**Important:** This list is not exhaustive and does not guarantee production-readiness for your app. Apps might have unique requirements and designs that require different set ups.
+**Important:** This list is neither exhaustive nor mandatory, and does not guarantee production-readiness for your app. Some apps might have unique requirements for production.
 </div>
 
 ## Security
@@ -70,4 +70,4 @@ This document important topics when setting up a good production environment on 
 
 Check out our [community](https://community.fly.io/) to get help and answers.
 
-Get email support with a Launch, Scale, or Enterprise [plan](/plans).
+Get email support with a [Launch, Scale, or Enterprise plan](https://fly.io/plans).
