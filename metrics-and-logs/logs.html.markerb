@@ -25,3 +25,7 @@ We have an app log search feature in Grafana that retains logs for 30 days. For 
 ## Export logs
 
 Try the Fly Log Shipper app to export logs to a service. For more information, see [Export logs](/docs/metrics-and-logs/exporting-logs/).
+
+## Error codes and troubleshooting
+
+Look up error codes from logs and get tips on troubleshooting them.
