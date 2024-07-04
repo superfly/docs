@@ -86,7 +86,7 @@ Metrics collection settings:
 Autoscaling settings:
 
 - `FAS_APP_NAME` is the name of the target application to scale.
-- `FAS_CREATED_MACHINE_COUNT` defines an [Expr](https://expr-lang.org/) expression to calculate the number of Machines to create or destroy.
+- `FAS_CREATED_MACHINE_COUNT` defines an [Expr](https://expr-lang.org/) expression to calculate the target number of Machines, scaling via either create or destroy.
 
 This example expression assumes that each Machine could handle two items in the queue and uses the `min()` function to prevent the autoscaler from scaling more than `50` Machines.
 
@@ -190,8 +190,8 @@ See the reference [fly-autoscaler.yml](https://github.com/superfly/fly-autoscale
 ### Autoscaler config
 
 - `FAS_APP_NAME`: The name of the target app to scale.
-- `FAS_CREATED_MACHINE_COUNT`: An [Expr](https://expr-lang.org/) expression to calculate the number of Machines to create or destroy.
-- `FAS_STARTED_MACHINE_COUNT`: An [Expr](https://expr-lang.org/) expression to calculate the number of Machines to stop or start.
+- `FAS_CREATED_MACHINE_COUNT`: An [Expr](https://expr-lang.org/) expression to calculate the target number of Machines, scaling via either create or destroy.
+- `FAS_STARTED_MACHINE_COUNT`: An [Expr](https://expr-lang.org/) expression to calculate the target number of Machines, scaling via either stop or start.
 
 ### Prometheus collector
 
