@@ -1,0 +1,58 @@
+---
+title: Fly Launch for Apps
+layout: docs
+nav: firecracker
+redirect_from: /launch/
+---
+
+Fly Launch helps you configure and orchestrate your app. Fly Launch includes:
+
+- the `fly launch` command to get started with a new app
+- the `fly.toml` file for app configuration
+- the `fly deploy` command to deploy or redeploy your app
+- the `fly scale` command for quick horizontal and vertical scaling
+
+<figure>
+  <img src="/static/images/docs-island.webp" alt="">
+</figure>
+
+Learn how to use Fly Launch:
+
+<ul class="outline-list">
+    <li>
+    <%= nav_link "Create an app", "/docs/apps/launch/" %>
+    </li>
+    <li>
+    <%= nav_link "Deploy an app", "/docs/apps/deploy/" %>
+    </li>
+    <li>
+    <%= nav_link "App configuration reference (fly.toml)", "/docs/reference/configuration/" %>
+    </li>
+    <li>
+    <%= nav_link "Scale Machine CPU and RAM", "/docs/apps/scale-machine/" %>
+    </li>
+    <li>
+    <%= nav_link "Add or remove Machines in an app", "/docs/apps/scale-count/" %>
+    </li>
+    <li>
+    <%= nav_link "Auto start and stop Machines", "/docs/apps/autostart-stop/" %>
+    <li>
+    <li>
+    <%= nav_link "Autoscale Machines based on metrics", "/docs/apps/autoscale-by-metric/" %>
+    </li>
+    <li>
+    <%= nav_link "Add Volume storage", "/docs/apps/volume-storage/" %>
+    </li>
+    <li>
+    <%= nav_link "Use process groups for multiple processes in one app", "/docs/apps/processes/" %>
+    </li>
+    <li>
+    <%= nav_link "Deploy with GitHub Actions", "/docs/app-guides/continuous-deployment-with-github-actions/" %>
+    </li>
+    <li>
+    <%= nav_link "Deploy review apps with GitHub Actions (Blueprint)", "/docs/blueprints/review-apps-guide/" %>
+    </li>
+    <li>
+    <%= nav_link "Troubleshoot when a host is down", "/docs/apps/trouble-host-unavailable/" %>
+    </li>
+</ul>
