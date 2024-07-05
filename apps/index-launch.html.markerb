@@ -5,7 +5,9 @@ nav: firecracker
 redirect_from: /launch/
 ---
 
-Fly Launch helps you configure and orchestrate your app. Fly Launch includes:
+Fly Launch helps you configure and orchestrate your app. If you followed any of the guides in [Getting started](/docs/getting-started/), then you're already using Fly Launch.
+
+Fly Launch includes:
 
 - the `fly launch` command to get started with a new app
 - the `fly.toml` file for app configuration
