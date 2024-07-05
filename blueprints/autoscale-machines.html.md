@@ -1,7 +1,8 @@
 ---
-title: Autoscale Machines like a boss
+title: Autoscale Machines
 layout: docs
 nav: firecracker
+redirect_from: /docs/blueprints/autoscale-machines-like-a-boss/
 ---
 
 You have an app with services and configured Fly Proxy to automatically start
