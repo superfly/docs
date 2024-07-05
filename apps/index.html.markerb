@@ -5,12 +5,14 @@ toc: false
 nav: firecracker
 ---
 
-A Fly App is the way we group Machines (VMs) for admin and management on the Fly.io platform. An app on Fly.io can be anything from a simple frontend web app to a complex array of Machines and processes all doing their own thing.
+Fly Apps are how we group Machines (VMs) for admin and management on the Fly.io platform. An app on Fly.io can be anything from a simple frontend web app to a complex arrangement of processes and Machines all doing their own thing.
+
+## Ways to create an app
 
 There might be an infinite number of potential apps you can run on Fly.io, but there are only a few ways to create one. Choose the one that works for you:
 
-* **Fly Launch:** Use Fly Launch to create your app and then manage the whole lifecycle, from starting to scaling to changing and redeploying. Fly Launch is great for web apps, both backend and frontend, and databases.
+* **Fly Launch:** Fly Launch is great for web apps, both backend and frontend, and databases. Use Fly Launch to create your app and then manage the whole lifecycle, from starting to scaling to changing and redeploying. [Get started](/docs/getting-started/) with Fly Launch or learn more about [using Fly Launch features](/docs/apps/index-launch/). 
 
-* **Create an "empty" app manually:** Use the `fly apps create` command or the Machines API to create an app. You can grab a `fly.toml` from an example app or hand-craft one yourself. Or use the resulting mostly unconfigured Fly App just to hold the Machines you plan to spin up based on a particular image. Using the `fly apps create` command is useful when deploying our autoscaler app or example apps created by others. Creating apps with the Machines API might be useful if you want to create apps for your own users with generated or modified `fly.toml` files.
+* **Create an "empty" app manually:** Use the [`fly apps create` command](/docs/flyctl/apps-create/) or the [Machines API](/docs/machines/api/apps-resource/#create-a-fly-app) to create an app. You can grab a `fly.toml` from an example app or hand-craft one yourself. Or skip `fly.toml` config and use the Fly App to hold the Machines you plan to spin up individually based on a particular image. Using the `fly apps create` command is useful when deploying our [autoscaler app](/docs/apps/autoscale-by-metric/) or example apps created by others. Creating apps with the Machines API might be useful if you want to create apps for your own users with generated or modified `fly.toml` files.
 
-* **Create a Machine with flyctl**: When you create a Machine with `fly machine run` or the Machines API, you'll automatically get an app at the same time. This scenario might be useful when you're spinning up individual Machines on-demand for users or tasks.
+* **Create a Machine with flyctl**: When you [create a Machine with `fly machine run`](/docs/machines/flyctl/fly-machine-run/), you automatically get an app at the same time if you don't specify one. This scenario might be useful when you're spinning up individual Machines on-demand for users or tasks.

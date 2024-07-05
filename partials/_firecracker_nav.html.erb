@@ -23,6 +23,21 @@
       end
     },
     {
+      title: "Languages & Frameworks",
+      path: "/docs/languages-and-frameworks/",
+      open: false,
+      links: [
+        { text: "Elixir", path: "/docs/elixir/" },
+        { text: "Rails", path: "/docs/rails/getting-started/" },
+        { text: "Laravel", path: "/docs/laravel/" },
+        { text: "Django", path: "/docs/django/getting-started/" },
+        { text: "JavaScript", path: "/docs/js/" },
+        { text: "Rust", path: "/docs/rust/" },
+        { text: "Python", path: "/docs/python/" },
+        { text: "More...", path: "/docs/languages-and-frameworks/" }
+      ]
+    },
+    {
       title: "Apps",
       path: "/docs/apps/",
       open: false,
@@ -33,7 +48,7 @@
         { text: "Delete an App", path: "/docs/apps/delete/" },
         { text: "Add Build Secrets", path: "/docs/reference/build-secrets/" },
         { text: "Set Runtime Secrets", path: "/docs/reference/secrets/" },
-        { text: "Fine-tune and benchmark apps", path: "/docs/reference/fine-tune-apps/" },
+        { text: "Fine-tune and Benchmark Apps", path: "/docs/reference/fine-tune-apps/" },
         { text: "Concurrency Settings", path: "/docs/reference/concurrency/" },
         { text: "Going to Production", path: "/docs/reference/going-to-production/" }
       ]
@@ -55,21 +70,6 @@
         { text: "Deploy with GitHub Actions", path: "/docs/app-guides/continuous-deployment-with-github-actions/" },
         { text: "Deploy Review Apps with GitHub Actions", path: "/docs/app-guides/review-apps-guide/" },
         { text: "Troubleshoot When a Host is Down", path: "/docs/apps/trouble-host-unavailable/" },
-      ]
-    },
-    {
-      title: "Languages & Frameworks",
-      path: "/docs/languages-and-frameworks/",
-      open: false,
-      links: [
-        { text: "Elixir", path: "/docs/elixir/" },
-        { text: "Rails", path: "/docs/rails/getting-started/" },
-        { text: "Laravel", path: "/docs/laravel/" },
-        { text: "Django", path: "/docs/django/getting-started/" },
-        { text: "JavaScript", path: "/docs/js/" },
-        { text: "Rust", path: "/docs/rust/" },
-        { text: "Python", path: "/docs/python/" },
-        { text: "More...", path: "/docs/languages-and-frameworks/" }
       ]
     },
     {
@@ -103,7 +103,6 @@
       path: "/docs/database-storage-guides/",
       open: false,
       links: [
-        { text: "Fly Volumes", path: "/docs/volumes/" },
         { text: "Tigris Object Storage", path: "/docs/reference/tigris/" },
         { text: "Fly Postgres", path: "/docs/postgres/" },
         { text: "SQLite & LiteFS", path: "/docs/litefs/" },
@@ -112,6 +111,30 @@
         { text: "Upstash Kafka", path: "/docs/reference/kafka/" },
         { text: "Upstash Vector", path: "/docs/reference/vector/" },
 { text: "More...", path: "/docs/database-storage-guides/#other-storage-apps" }
+      ]
+    },
+    {
+      title: "Fly Volumes",
+      path: "/docs/volumes/",
+      open: false,
+      links: [
+        { text: "Fly Volumes overview", path: "/docs/volumes/overview/" },
+        { text: "Create and manage volumes", path: "/docs/volumes/volume-manage/" },
+        { text: "Manage volume snapshots", path: "/docs/volumes/snapshots/" },
+        { text: "Volume states", path: "/docs/volumes/volume-states/" }
+      ]
+    },
+    {
+      title: "Fly Kubernetes",
+      path: "/docs/kubernetes/",
+      open: false,
+      links: [
+        { text: "Kubernetes Quickstart", path: "/docs/kubernetes/fks-quickstart/" },
+        { text: "Create an FKS cluster", path: "/docs/kubernetes/clusters/" },
+        { text: "Connect to an FKS cluster", path: "/docs/kubernetes/connect-clusters/" },
+        { text: "Configure FKS Services", path: "/docs/kubernetes/services/" },
+        { text: "Use volumes with FKS", path: "/docs/kubernetes/using-volumes/" },
+        { text: "Use GPUs with FKS", path: "/docs/kubernetes/using-gpus/" },
       ]
     },
     {
@@ -153,19 +176,6 @@
         { text: "Security practices and compliance", path: "/docs/security/security-at-fly-io/" },
         { text: "Deploy Tokens", path: "/docs/reference/deploy-tokens/" },
         { text: "App Security by Arcjet", path: "/docs/reference/arcjet/" }
-      ]
-    },
-    {
-      title: "Fly Kubernetes",
-      path: "/docs/kubernetes/",
-      open: false,
-      links: [
-        { text: "Kubernetes Quickstart", path: "/docs/kubernetes/fks-quickstart/" },
-        { text: "Create an FKS cluster", path: "/docs/kubernetes/clusters/" },
-        { text: "Connect to an FKS cluster", path: "/docs/kubernetes/connect-clusters/" },
-        { text: "Configure FKS Services", path: "/docs/kubernetes/services/" },
-        { text: "Use volumes with FKS", path: "/docs/kubernetes/using-volumes/" },
-        { text: "Use GPUs with FKS", path: "/docs/kubernetes/using-gpus/" },
       ]
     },
     {

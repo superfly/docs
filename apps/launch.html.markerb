@@ -5,7 +5,9 @@ nav: firecracker
 redirect_from: /launch/
 ---
 
-Fly Launch is a collection of opinionated Fly.io platform features that help you configure and orchestrate your app as a unit. This document goes into some detail about using Fly Launch to create and configure an app. To try out Fly.io even faster, see [Getting Started](/docs/getting-started).
+Fly Launch is a collection of opinionated Fly.io platform features that help you configure and orchestrate your app as a unit. 
+
+This guide goes into some detail about using Fly Launch to create and configure an app. To try out Fly.io even faster, see [Getting Started](/docs/getting-started).
 
 ## Create an app with Fly Launch
 
