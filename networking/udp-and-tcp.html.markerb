@@ -1,7 +1,6 @@
 ---
 title: "Running Fly Apps On UDP and TCP"
 layout: docs
-sitemap: false
 nav: firecracker
 author: thomas
 categories:

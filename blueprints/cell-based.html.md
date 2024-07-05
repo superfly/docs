@@ -1,7 +1,6 @@
 ---
 title: Cell-based architecture
 layout: docs
-sitemap: false
 nav: firecracker
 author: rubys
 categories:

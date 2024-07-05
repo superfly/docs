@@ -1,7 +1,6 @@
 ---
 title: Build Secrets
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 

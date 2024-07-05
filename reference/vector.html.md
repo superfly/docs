@@ -1,7 +1,6 @@
 ---
 title: Upstash Vector
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: Integrating flyctl
 layout: docs
-sitemap: false
 nav: flyctl
 ---
 

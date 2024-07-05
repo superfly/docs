@@ -1,7 +1,6 @@
 ---
 title: Metrics on Fly.io
 layout: docs
-sitemap: false
 nav: firecracker
 redirect_from:
   - /docs/reference/metrics/

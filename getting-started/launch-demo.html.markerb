@@ -1,7 +1,6 @@
 ---
 title: "Launch a demo app"
 layout: docs
-sitemap: false
 nav: firecracker
 redirect_from:
   - /docs/hands-on/view-app/

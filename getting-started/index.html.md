@@ -1,7 +1,6 @@
 ---
 title: "Getting started"
 layout: docs
-sitemap: false
 nav: firecracker
 toc: false
 ---

@@ -1,7 +1,6 @@
 ---
 title: Custom Domains and SSL Certificates
 layout: docs
-sitemap: false
 nav: firecracker
 categories:
   - ssl

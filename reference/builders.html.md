@@ -1,7 +1,6 @@
 ---
 title: Builders and Fly.io
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 

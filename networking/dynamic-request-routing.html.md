@@ -1,7 +1,6 @@
 ---
 title: Dynamic Request Routing
 layout: docs
-sitemap: false
 nav: firecracker
 redirect_from:
   - /docs/reference/fly-replay/

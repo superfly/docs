@@ -1,5 +1,5 @@
 ---
-title: Run private applications with Flycast
+title: Run private apps with Flycast
 layout: docs
 sitemap: true
 nav: firecracker
@@ -15,9 +15,9 @@ date: 2024-06-17
 
 A lot of the time your applications are made to be public and shared with the world. Sometimes you need to be more careful. When you deploy your apps on Fly.io, you get a private network for your organization. This lets your applications in other continents contact each other like they were in the same room.
 
-Sometimes you need a middle ground between fully public apps and fully private apps, and Flycast is there for when you need it. Flycast addresses are private but global IPv6 addresses inside your private network that go through the Fly Proxy, so you get all of the load management and Machine waking powers that you get for free with public apps.
+Sometimes you need a middle ground between fully public apps and fully private apps. Flycast addresses are private but global IPv6 addresses inside your private network that go through the Fly Proxy, so you get all of the load management and Machine waking powers that you get for free with public apps.
 
-Today I’ll cover what Flycast is, when and why you’d want to use it, and show you how to create an instance of Ollama that you can connect to over Flycast.
+This blueprint covers what Flycast is, when and why you’d want to use it, and shows you how to create an instance of Ollama that you can connect to over Flycast.
 
 ## What is Flycast?
 
@@ -41,7 +41,7 @@ One of the biggest platform features that uses Flycast out of the box is Fly Pos
 
 ## Goal
 
-Today we’re gonna show Flycast off by setting up an instance of [Ollama](https://ollama.com).
+We'll show Flycast off by setting up an instance of [Ollama](https://ollama.com+external).
 
 Ollama is a program that wraps large language models and gives you an interface like Docker so that you can run open-weights large language models privately on your own device. Large language models are computationally expensive to run, so being able to offload them to a GPU-powered Fly Machine means you can hack all you want without burning up your precious battery life.
 
@@ -51,14 +51,12 @@ This is where Flycast comes in. Flycast lets you run a copy of Ollama on your pr
 
 ## Prerequisites
 
-In order to get started, you need to have the following:
+To get started, you need to do the following:
 
-- A [fly.io](http://fly.io) account
-- `flyctl` installed ([https://fly.io/docs/flyctl/install/](https://fly.io/docs/flyctl/install/))
+- [sign up or sign in](/docs/getting-started/sign-up-sign-in/) to Fly.io
+- [install flyctl](/docs/flyctl/install/) (the Fly CLI)
 
-The links are in the description.
-
-If you want to interact with your Flycast apps from your computer, like an Ollama instance, you’ll need to jack into your private network with WireGuard. The link for how to do that is in the description.
+If you want to interact with your Flycast apps&mdash;like an Ollama instance&mdash;from your computer, you’ll need to [jack into your private network with WireGuard](/docs/blueprints/connect-private-network-wireguard/).
 
 ## Steps
 
@@ -68,7 +66,7 @@ Create a new folder on your computer called `ollama`. This is where we’ll put 
 fly launch --from https://github.com/fly-apps/ollama-demo --no-deploy
 ```
 
-This command creates a new fly app from the [`ollama-demo` template](https://github.com/fly-apps/ollama-demo) and tells the flyctl command to not deploy it after you create the app. If we don’t do this, then the platform will create public IPv4 and IPv6 addresses, which will make this a public app. The name you choose when you create your app will be used to connect to your app over Flycast.
+This command creates a new fly app from the [`ollama-demo` template](https://github.com/fly-apps/ollama-demo+external) and tells the flyctl command to not deploy it after you create the app. If we don’t do this, then the platform will create public IPv4 and IPv6 addresses, which will make this a public app. The name you choose when you create your app will be used to connect to your app over Flycast.
 
 Next, allocate a Flycast address for your app with the `fly ips allocate-v6` command:
 
@@ -89,7 +87,7 @@ $ fly ips list
 VERSION	IP                	TYPE   	REGION	CREATED AT
 v6     	fdaa:3:9018:0:1::7	private	global	23h12m ago
 
-Learn more about Fly.io public, private, shared and dedicated IP addresses in our docs: https://fly.io/docs/reference/services/#ip-addresses
+Learn more about [Fly.io public, private, shared and dedicated IP addresses](/docs/reference/services/#ip-addresses).
 ```
 
 This app only has one IP address: a private Flycast IPv6 address. If had public IP addresses, it'd look like this:
@@ -125,7 +123,7 @@ Name:	xe-ollama.flycast
 Address: fdaa:3:9018:0:1::7
 ```
 
-Awesome, it matches that IP address from earlier! Now let’s see what happens when we ping it:
+It matches that IP address from earlier. Now let’s see what happens when we ping it:
 
 ```
 # ping xe-ollama.flycast -c2
@@ -190,11 +188,14 @@ Then you can ask Llama 3 anything you want:
 
 It took a moment for Ollama to get ready and download the image, then it downloaded it and answered your question. Once it’s been idle for a moment, the platform will turn Ollama back off.
 
-## Conclusion
+And there we go! We’ve covered what Flycast is, why you’d want to use it, and set up an instance of Ollama to show it off.
 
-And there we go! We've covered what Flycast is, why you'd want to use it, and set up an instance of Ollama to show it off.
+## Read more
 
+We've talked about Flycast in some past blog posts and blueprints:
 
-I hope this helped you learn more about the platform and the cool hacks you can pull off on it. If you have any questions or want me to cover anything else in the future, please leave a comment in the box down below. If you've created something cool with Flycast, also leave a comment or shout us out on Twitter at [@flydotio](https://x.com/flydotio).
+- [Autostart and autostop private apps](/docs/blueprints/autostart-internal-apps/)
 
-Have a good day everyone!
+- [Deploy Your Own (Not) Midjourney Bot on Fly GPUs](https://fly.io/blog/not-midjourney-bot/)
+
+- [Scaling Large Language Models to zero with Ollama](https://fly.io/blog/scaling-llm-ollama/)

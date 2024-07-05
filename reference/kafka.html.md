@@ -1,7 +1,6 @@
 ---
 title: Upstash Kafka
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 

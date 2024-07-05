@@ -1,7 +1,6 @@
 ---
 title: The Fly.io Architecture
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 
