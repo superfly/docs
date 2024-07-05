@@ -1,5 +1,5 @@
 ---
-title: Run private applications with Flycast
+title: Run private apps with Flycast
 layout: docs
 sitemap: true
 nav: firecracker
@@ -15,9 +15,9 @@ date: 2024-06-17
 
 A lot of the time your applications are made to be public and shared with the world. Sometimes you need to be more careful. When you deploy your apps on Fly.io, you get a private network for your organization. This lets your applications in other continents contact each other like they were in the same room.
 
-Sometimes you need a middle ground between fully public apps and fully private apps, and Flycast is there for when you need it. Flycast addresses are private but global IPv6 addresses inside your private network that go through the Fly Proxy, so you get all of the load management and Machine waking powers that you get for free with public apps.
+Sometimes you need a middle ground between fully public apps and fully private apps. Flycast addresses are private but global IPv6 addresses inside your private network that go through the Fly Proxy, so you get all of the load management and Machine waking powers that you get for free with public apps.
 
-Today I’ll cover what Flycast is, when and why you’d want to use it, and show you how to create an instance of Ollama that you can connect to over Flycast.
+This blueprint covers what Flycast is, when and why you’d want to use it, and shows you how to create an instance of Ollama that you can connect to over Flycast.
 
 ## What is Flycast?
 
@@ -190,11 +190,12 @@ Then you can ask Llama 3 anything you want:
 
 It took a moment for Ollama to get ready and download the image, then it downloaded it and answered your question. Once it’s been idle for a moment, the platform will turn Ollama back off.
 
-## Conclusion
+## Read more
 
-And there we go! We've covered what Flycast is, why you'd want to use it, and set up an instance of Ollama to show it off.
+We've talked about Flycast in some past blog posts and blueprints:
 
+- [Autostart and autostop private apps](/docs/blueprints/autostart-internal-apps/)
 
-I hope this helped you learn more about the platform and the cool hacks you can pull off on it. If you have any questions or want me to cover anything else in the future, please leave a comment in the box down below. If you've created something cool with Flycast, also leave a comment or shout us out on Twitter at [@flydotio](https://x.com/flydotio).
+- [Deploy Your Own (Not) Midjourney Bot on Fly GPUs](https://fly.io/blog/not-midjourney-bot/)
 
-Have a good day everyone!
+- [Scaling Large Language Models to zero with Ollama](https://fly.io/blog/scaling-llm-ollama/)
