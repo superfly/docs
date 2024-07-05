@@ -41,7 +41,7 @@ One of the biggest platform features that uses Flycast out of the box is Fly Pos
 
 ## Goal
 
-Today we’re gonna show Flycast off by setting up an instance of [Ollama](https://ollama.com).
+We'll show Flycast off by setting up an instance of [Ollama](https://ollama.com+external).
 
 Ollama is a program that wraps large language models and gives you an interface like Docker so that you can run open-weights large language models privately on your own device. Large language models are computationally expensive to run, so being able to offload them to a GPU-powered Fly Machine means you can hack all you want without burning up your precious battery life.
 
@@ -51,14 +51,12 @@ This is where Flycast comes in. Flycast lets you run a copy of Ollama on your pr
 
 ## Prerequisites
 
-In order to get started, you need to have the following:
+To get started, you need to do the following:
 
-- A [fly.io](http://fly.io) account
-- `flyctl` installed ([https://fly.io/docs/flyctl/install/](https://fly.io/docs/flyctl/install/))
+- [sign up or sign in](/docs/getting-started/sign-up-sign-in/) to Fly.io
+- [install flyctl](/docs/flyctl/install/) (the Fly CLI)
 
-The links are in the description.
-
-If you want to interact with your Flycast apps from your computer, like an Ollama instance, you’ll need to jack into your private network with WireGuard. The link for how to do that is in the description.
+If you want to interact with your Flycast apps&mdash;like an Ollama instance&mdash;from your computer, you’ll need to [jack into your private network with WireGuard](/docs/blueprints/connect-private-network-wireguard/).
 
 ## Steps
 
@@ -68,7 +66,7 @@ Create a new folder on your computer called `ollama`. This is where we’ll put 
 fly launch --from https://github.com/fly-apps/ollama-demo --no-deploy
 ```
 
-This command creates a new fly app from the [`ollama-demo` template](https://github.com/fly-apps/ollama-demo) and tells the flyctl command to not deploy it after you create the app. If we don’t do this, then the platform will create public IPv4 and IPv6 addresses, which will make this a public app. The name you choose when you create your app will be used to connect to your app over Flycast.
+This command creates a new fly app from the [`ollama-demo` template](https://github.com/fly-apps/ollama-demo+external) and tells the flyctl command to not deploy it after you create the app. If we don’t do this, then the platform will create public IPv4 and IPv6 addresses, which will make this a public app. The name you choose when you create your app will be used to connect to your app over Flycast.
 
 Next, allocate a Flycast address for your app with the `fly ips allocate-v6` command:
 
@@ -89,7 +87,7 @@ $ fly ips list
 VERSION	IP                	TYPE   	REGION	CREATED AT
 v6     	fdaa:3:9018:0:1::7	private	global	23h12m ago
 
-Learn more about Fly.io public, private, shared and dedicated IP addresses in our docs: https://fly.io/docs/reference/services/#ip-addresses
+Learn more about [Fly.io public, private, shared and dedicated IP addresses](/docs/reference/services/#ip-addresses).
 ```
 
 This app only has one IP address: a private Flycast IPv6 address. If had public IP addresses, it'd look like this:
@@ -125,7 +123,7 @@ Name:	xe-ollama.flycast
 Address: fdaa:3:9018:0:1::7
 ```
 
-Awesome, it matches that IP address from earlier! Now let’s see what happens when we ping it:
+It matches that IP address from earlier. Now let’s see what happens when we ping it:
 
 ```
 # ping xe-ollama.flycast -c2
@@ -189,6 +187,8 @@ Then you can ask Llama 3 anything you want:
 ```
 
 It took a moment for Ollama to get ready and download the image, then it downloaded it and answered your question. Once it’s been idle for a moment, the platform will turn Ollama back off.
+
+And there we go! We’ve covered what Flycast is, why you’d want to use it, and set up an instance of Ollama to show it off.
 
 ## Read more
 
