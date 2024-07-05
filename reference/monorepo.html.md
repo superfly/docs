@@ -1,7 +1,6 @@
 ---
 title: Monorepo and Multi-Environment Deployments
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 

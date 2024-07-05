@@ -1,7 +1,6 @@
 ---
 title: LiteFS Mount Command
-layout: docs
-sitemap: false
+layout: docs 
 nav: litefs
 toc: true
 ---

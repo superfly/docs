@@ -1,7 +1,6 @@
 ---
 title: Upstash for Redis®*
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 

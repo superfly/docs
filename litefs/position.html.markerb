@@ -1,7 +1,6 @@
 ---
 title: Tracking LiteFS replication position
 layout: docs
-sitemap: false
 nav: litefs
 toc: true
 ---

@@ -1,7 +1,6 @@
 ---
 title: Crontab with Supercronic
 layout: docs
-sitemap: false
 nav: firecracker
 author: brad
 categories:

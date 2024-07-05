@@ -1,7 +1,6 @@
 ---
 title: "Fly.io reference"
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 

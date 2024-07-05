@@ -1,7 +1,6 @@
 ---
 title: Fly Launch overview
 layout: docs
-sitemap: false
 nav: firecracker
 toc: false
 redirect_from:

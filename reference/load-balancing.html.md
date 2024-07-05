@@ -1,7 +1,6 @@
 ---
 title: Load Balancing
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 

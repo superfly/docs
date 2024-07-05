@@ -1,7 +1,6 @@
 ---
 title: "Fly.io essentials"
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 

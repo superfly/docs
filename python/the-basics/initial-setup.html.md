@@ -2,7 +2,6 @@
 title: "Setting up a Python Environment"
 layout: framework_docs
 objective: How to setup a functional python environment on your local machine.
-sitemap: false
 order: 0
 ---
 

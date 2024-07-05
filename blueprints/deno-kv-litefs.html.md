@@ -1,7 +1,6 @@
 ---
 title: Deno KV with LiteFS Cloud
 layout: docs
-sitemap: false
 nav: firecracker
 author: jesse
 date: 2024-05-28

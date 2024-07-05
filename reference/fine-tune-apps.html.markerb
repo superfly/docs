@@ -1,7 +1,6 @@
 ---
 title: Tips to fine-tune and (not) benchmark your app on Fly.io
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 
