@@ -1,8 +1,8 @@
 ---
 title: Deploy Tokens
 layout: docs
-sitemap: false
 nav: firecracker
+redirect_from: /docs/reference/deploy-tokens/
 ---
 
 Whether you're [deploying your app with GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/) or running your own CD service, it's best to avoid configuring deployment infrastructure with all-powerful tokens. Deploy tokens can be used with [flyctl](/docs/flyctl/) to manage a single application and its resources.
