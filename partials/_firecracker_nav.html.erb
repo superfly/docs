@@ -11,7 +11,7 @@
         { text: "Launch a Demo App", path: "/docs/getting-started/launch-demo" },
         { text: "Choose a language or framework", path: "/docs/getting-started/get-started-by-framework/" },
         { text: "Fly.io Essentials", path: "/docs/getting-started/essentials/" },
-        { text: "Troubleshooting Deployments", path: "/docs/getting-started/troubleshooting/" }
+        { text: "Troubleshoot Deployments", path: "/docs/getting-started/troubleshooting/" }
       ]
     },
     {
@@ -21,21 +21,6 @@
       links: site.get("docs/blueprints").children.reject{ |page| page.data.status == "alpha" || page.data.published == false }.map do |page|
         { text: page.data.title, path: page.request_path }
       end
-    },
-    {
-      title: "Languages & Frameworks",
-      path: "/docs/languages-and-frameworks/",
-      open: false,
-      links: [
-        { text: "Elixir", path: "/docs/elixir/" },
-        { text: "Rails", path: "/docs/rails/getting-started/" },
-        { text: "Laravel", path: "/docs/laravel/" },
-        { text: "Django", path: "/docs/django/getting-started/" },
-        { text: "JavaScript", path: "/docs/js/" },
-        { text: "Rust", path: "/docs/rust/" },
-        { text: "Python", path: "/docs/python/" },
-        { text: "More...", path: "/docs/languages-and-frameworks/" }
-      ]
     },
     {
       title: "Apps",
@@ -71,6 +56,21 @@
         { text: "Deploy Review Apps with GitHub Actions", path: "/docs/app-guides/review-apps-guide/" },
         { text: "Deploy Monorepo Apps", path: "/docs/reference/monorepo/" },
         { text: "Troubleshoot When a Host is Down", path: "/docs/apps/trouble-host-unavailable/" },
+      ]
+    },
+    {
+      title: "Languages & Frameworks",
+      path: "/docs/languages-and-frameworks/",
+      open: false,
+      links: [
+        { text: "Elixir", path: "/docs/elixir/" },
+        { text: "Rails", path: "/docs/rails/getting-started/" },
+        { text: "Laravel", path: "/docs/laravel/" },
+        { text: "Django", path: "/docs/django/getting-started/" },
+        { text: "JavaScript", path: "/docs/js/" },
+        { text: "Rust", path: "/docs/rust/" },
+        { text: "Python", path: "/docs/python/" },
+        { text: "More...", path: "/docs/languages-and-frameworks/" }
       ]
     },
     {

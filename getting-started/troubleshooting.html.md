@@ -1,5 +1,5 @@
 ---
-title: Troubleshooting your deployment
+title: Troubleshoot your deployment
 layout: docs
 sitemap: false
 nav: firecracker
