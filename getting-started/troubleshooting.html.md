@@ -1,7 +1,6 @@
 ---
 title: Troubleshooting your deployment
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: Run an ssh server
 layout: docs
-sitemap: false
 nav: firecracker
 author: rubys
 categories:

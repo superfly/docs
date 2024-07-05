@@ -1,7 +1,6 @@
 ---
 title: Supabase Postgres
 layout: docs
-sitemap: false
 status: alpha
 nav: firecracker
 ---

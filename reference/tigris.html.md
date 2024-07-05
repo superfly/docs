@@ -1,7 +1,6 @@
 ---
 title: Tigris Global Object Storage
 layout: docs
-sitemap: false
 status: beta
 nav: firecracker
 ---

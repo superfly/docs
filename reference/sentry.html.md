@@ -1,7 +1,6 @@
 ---
 title: Application Monitoring by Sentry
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 

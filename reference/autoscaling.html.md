@@ -1,7 +1,6 @@
 ---
 title: Autoscaling
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 

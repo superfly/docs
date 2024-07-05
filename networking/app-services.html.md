@@ -1,7 +1,6 @@
 ---
 title: Connect to an App Service
 layout: docs
-sitemap: false
 nav: firecracker
 redirect_from: 
   - /docs/getting-started/app-services/

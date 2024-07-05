@@ -1,7 +1,6 @@
 ---
 title: "Public Network Services"
 layout: docs
-sitemap: false
 nav: firecracker
 redirect_from:
   - /docs/reference/services/

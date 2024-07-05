@@ -1,7 +1,6 @@
 ---
 title: "Private Networking"
 layout: docs
-sitemap: false
 nav: firecracker
 redirect_from:
   - /docs/reference/privatenetwork/

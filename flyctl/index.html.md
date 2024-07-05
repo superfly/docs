@@ -1,7 +1,6 @@
 ---
 title: flyctl - The Fly.io CLI
 layout: docs
-sitemap: false
 edit: false
 nav: flyctl
 ---
