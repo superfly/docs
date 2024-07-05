@@ -10,10 +10,11 @@ and stop Machines based on traffic demand. The traffic to your app changes
 significantly during the day and you don't want to keep a lot of stopped
 Machines during the period of low traffic.
 
-This blueprint will guide you through the process of configuring
-`fly-autoscaler` in conjunction with Fly Proxy autostart/autostop feature to
-always keep a fixed number of stopped Machines ready to be quickly started by
-Fly Proxy.
+This blueprint will guide you through the process of configuring the
+[`fly-autoscaler` app](/docs/apps/autoscale-by-metric/) in conjunction with 
+the [Fly Proxy autostart/autostop](/docs/apps/autostart-stop/) feature to 
+always keep a fixed number of stopped Machines ready to be quickly started 
+by Fly Proxy.
 
 ## Configuring automatic start and stop
 
