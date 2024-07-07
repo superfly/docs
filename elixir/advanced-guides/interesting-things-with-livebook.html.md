@@ -12,13 +12,13 @@ date: 2021-06-22
 
 [Livebook](https://livebook.dev/) is an exciting advancement in the Elixir community. It was created for the Elixir machine learning library [nx](https://github.com/elixir-nx/nx). You can think of it as Elixir's version of [Jupyter Notebooks](https://jupyter.org/).
 
-Livebook ends up being very flexible and powerful. Because Elixir nodes can easily be clustered together, you can run Livebook on your local machine, connect it to your Elixir servers, and do some really interesting things.
+Livebook ends up being very flexible and powerful. Since Elixir nodes can easily be clustered together, you can run Livebook on your local machine, connect it to your Elixir servers, and do some really interesting things.
 
 Once you have [Livebook connected to your app on Fly](/docs/elixir/advanced-guides/connect-livebook-to-your-app/), you are ready to start playing!
 
 ## Getting Started with Livebook
 
-Once you have Livebook running locally, **visit the "Learn" section** for examples of things you can do. Also, check out the [Livebook News](https://news.livebook.dev/) to find interesting developments and to spark new ideas.
+Once Livebook is running locally, **visit the "Learn" section** for examples of things you can do. Also, check out the [Livebook News](https://news.livebook.dev/) to find interesting developments and to spark new ideas.
 
 Here are a few ideas of things you can do when Livebook is connected to your server.
 
@@ -35,9 +35,9 @@ Let's walk through using Livebook to get Business Intelligence (BI) data from yo
 
 With [Livebook v0.2](https://github.com/livebook-dev/livebook/blob/main/CHANGELOG.md), support was added for visualizations through the Elixir packages [VegaLite](https://github.com/livebook-dev/vega_lite) and [Kino](https://github.com/livebook-dev/kino). In this example, we're connecting a locally running Livebook to our app running on Fly. In order for the visualization tools to work, these libraries need to be installed on our server.
 
-You may have seen Livebook examples showing how we can `Mix.install` the needed graphics libraries. That doesn't work when you are attaching to a remote mix project. It's actually a good thing that we can't just `Mix.install` like that on a remote project. You wouldn't want anyone with access to attach to your live system and install random packages!
+You may have seen Livebook examples showing how we can `Mix.install` the needed graphics libraries. However, this doesn't work when you are attaching to a remote mix project. It's actually beneficial that we can't simply `Mix.install` on a remote project. You wouldn't want anyone with access to attach to your live system and install random packages!
 
-That just means we need to install the dependencies first. Add the `vega_lite` and `kino` libraries to your project's `mix.exs` file and deploy your app.
+This means we need to install the dependencies first. Add the `vega_lite` and `kino` libraries to your project's `mix.exs` file and deploy your app.
 
 ```elixir
   defp deps do
@@ -52,13 +52,13 @@ That just means we need to install the dependencies first. Add the `vega_lite` a
   end
 ```
 
-With the updated app deployed to Fly, Livebook can connect and render charts and visualizations!
+Once the updated app deployed to Fly, Livebook can connect and render charts and visualizations!
 
 ### Starting Your Analysis Notebook
 
-While you are figuring out **what** you want to examine in your app, you can explore it locally on your dev machine. Once you start, you may find you want to update your project code. Also, while playing locally, you reduce the chance of a badly structured query negatively impacting your live system.
+While figuring out **what** you want to examine in your app, you can explore it locally on your dev machine. As you proceed, you may find that you need to update your project code. Also, while playing locally, you reduce the chance of a badly structured query negatively impacting your live system.
 
-I like [starting Livebook using the EScript method](https://github.com/livebook-dev/livebook#escript). Once installed, in a terminal you just go to the directory where your project's source code lives and start Livebook from there.
+I prefer [starting Livebook using the EScript method](https://github.com/livebook-dev/livebook#escript). Once installed, you simply go to the directory where your project's source code is located and start Livebook from there using a terminal.
 
 ```cmd
 livebook server
@@ -74,7 +74,7 @@ Save the notebook with your project. I suggest creating a "notebook" folder to h
 
 #### Connect to Your Project
 
-At this point, we haven't connected Livebook to our project so we can't access the project's code yet. To do this, start the project with something similar to the following command:
+At this point, we haven't connected Livebook to our project so we can't access the project's code yet. To do this, start the project with a command similar to the following:
 
 ```
 iex --sname my_app --cookie secret -S mix phx.server
@@ -88,7 +88,7 @@ Back in Livebook, click the "Runtime settings" button.
 
 From here, click "Configure" then "Attached Node". Now, enter the name "my_app" and the cookie "secret" (or whatever values were used when starting the server) and click "Connect". If everything went well, Livebook is connected to your locally running application!
 
-We can verify it's connected by typing a module from the project into a code cell in the notebook and getting auto-complete help that's specific to our project.
+We can verify the connection by typing a module from the project into a code cell in the notebook and receiving auto-complete help that's specific to our project.
 
 #### Your First Analysis
 
@@ -132,7 +132,7 @@ The results look like this:
 %{any: 77, extrovert: 10, introvert: 13}
 ```
 
-That's helpful already, but it's still just data. I'd like to see what that looks like.
+That's already helpful, but it's still just data. I'd like to see what that looks like.
 
 I add another Elixir cell and write the following code:
 

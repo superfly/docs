@@ -9,7 +9,7 @@ categories:
 date: 2022-11-06
 ---
 
-You want the benefits of modern CI/CD for your Elixir projects? You're in the
+Do you want the benefits of modern CI/CD for your Elixir projects? You're in the
 right place!
 
 ## Continuous Integration (CI)
@@ -26,7 +26,7 @@ workflow. To do this, create this path and file in the root of your project:
 
 `.github/workflows/elixir.yaml`
 
-Let's look at a sample file. Comments are included to explain and document what
+Here's a sample file. Comments are included to explain and document what
 we're doing and why.
 
 ```yaml
@@ -150,7 +150,7 @@ jobs:
 ### When the Workflow Runs...
 
 When code is pushed to the `main` branch, this workflow is run. This happens
-either from directly pushing to the `main` branch or after merging a PR into the
+either when code is directly pushed to the `main` branch or after a PR is merged into the
 `main` branch.
 
 This workflow is also configured to run checks on PR branches that target the
@@ -159,12 +159,12 @@ feature in a branch and as we work and push our code up, it automatically runs
 the full gamut of checks we want.
 
 When all steps in the workflow succeed, the workflow "passes" and the automated
-checks say it can be merged. When a step fails, the workflow halts at that point
-and "fails", potentially blocking a merge.
+checks say it can be merged. When a step fails, the workflow halts
+and "fails", potentially blocking the merge.
 
 ### Customizing the Workflow Steps
 
-This workflow is a starting point for a team. Every project is unique and every
+This workflow is a starting point for a team. Every project is unique, and every
 team values different things. Is this missing something your team wants? Check
 out some additional steps that can be added to your workflow.
 
@@ -192,7 +192,7 @@ It's worth spending time tweaking your caches. Why? A lot of effort has been put
 into speeding up Elixir build times. If we don't cache the build artifacts, then
 we don't reap any of those benefits!
 
-Of course, faster build times means you spend less money running your CI
+Of course, faster build times mean you spend less money running your CI
 workflow. But that's not the reason to do it! Better caches mean the checks are
 performed faster and that means faster feedback. Faster feedback means that, as
 a team, you save time and can move faster. No waiting 20 minutes for the checks
@@ -207,7 +207,7 @@ team.
 If our caches ever cause a problem, and sometimes they can, it's good to know
 how to clear them. In our project, go to Actions > (Sidebar) Management >
 Caches. This is the list of caches saved for the project. We can use our naming
-format to identify which cache file is for what.
+format to identify the purpose of each cache file.
 
 ### Retrying Failed Builds
 
@@ -255,7 +255,7 @@ build.
 Continuous deployment is a software development practice that automatically
 builds and releases the project into production when new changes pass automated
 checks and are merged to the main branch. Using this practice, it is common to
-release new versions of the applications multiple times a day, ideally, without
+release new versions of the applications multiple times a day, ideally without
 users even being aware of the process.
 
 ### Auto-Deploying our Elixir Applications

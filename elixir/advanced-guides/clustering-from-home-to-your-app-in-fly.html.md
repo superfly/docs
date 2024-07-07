@@ -169,6 +169,6 @@ Now you're _really_ doing distributed Elixir!
 
 ## Summary
 
-When we couple Elixir's clustering ability with Fly.io's networking, VPN, and API discoverability, we can easily cluster a locally running Elixir application with a deployed Elixir application. This makes it easy to leverage hosted GPUs for developing AI/ML applications or working on distributed applications.
+By combining Elixir's clustering capability with Fly.io's networking, VPN, and API discoverability, we can seamlessly cluster a locally running Elixir application with a deployed one. This setup is easier for leveraging hosted GPUs for AI/ML development or for working on distributed applications.
 
-The ready-to-use script automates much of the process.
+The provided script automates much of the process.

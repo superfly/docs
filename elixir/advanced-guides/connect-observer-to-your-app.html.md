@@ -10,9 +10,9 @@ categories:
 date: 2021-06-15
 ---
 
-Elixir, Erlang, and really just the BEAM has a slick feature called "[Observer](https://elixir-lang.org/getting-started/debugging.html#observer)". It's a powerful UI that connects to a running Elixir or Erlang node and let's you "observe" what's going on inside. It has some limited ability to modify things as well, most notably you can kill running processes. This can help when something is misbehaving or you just want to play "chaos monkey" and kill parts of the system to see how it recovers.
+Elixir, Erlang, and really just the BEAM has a slick feature called "[Observer](https://elixir-lang.org/getting-started/debugging.html#observer)". It's a powerful UI that connects to a running Elixir or Erlang node and lets you "observe" what's going on inside. It has some limited ability to modify things as well, most notably you can kill running processes. This can help when something is misbehaving or if you just want to play "chaos monkey" and kill parts of the system to see how it recovers.
 
-This shows a process tree for the application. Using this I can inspect individual processes or even kill them!
+This shows a process tree for the application. Using this, I can inspect individual processes or even kill them!
 
 ![Observer screen shot](/docs/images/observer-tictac-local-application-pane.webp?card&2/3&centered)
 
@@ -22,9 +22,9 @@ Next we'll cover how your project can support this feature and see how to do it 
 
 ## What We Will Do
 
-Fly.io natively supports [WireGuard](https://www.wireguard.com/), Jason Donenfeld's amazing VPN protocol. If you’ve ever lost hours of your life trying to set up an IPSec VPN, you’ll be blown away by how easy WireGuard is. It’s so flexible and performant that Fly uses it as our network fabric. And it’s supported on [every major platform](https://www.wireguard.com/install/), including macOS, iOS, Windows, and Linux. What that means for you is that if your app runs on Fly, you can open a secure, private, direct connection from your dev machine to your production network, in less time than it took me to write this paragraph. Cool, right?
+Fly.io natively supports [WireGuard](https://www.wireguard.com/), Jason Donenfeld's amazing VPN protocol. If you’ve ever lost hours of your life trying to set up an IPSec VPN, you’ll be blown away by how easy WireGuard is. It’s so flexible and performant that Fly uses it as our network fabric. And it’s supported on [every major platform](https://www.wireguard.com/install/), including macOS, iOS, Windows, and Linux. This means that if your app runs on Fly, you can open a secure, private, direct connection from your dev machine to your production network, in less time than it took me to write this paragraph. Cool, right?
 
-This is what we're going to do.
+Here's what we're going to do.
 
 ![WireGuard observer connection](/docs/images/elixir-wireguard-observer-tunnel.webp?2/3&centered)
 
@@ -91,7 +91,7 @@ When observer first opens, it might looks something like this:
 
 ![Observer connected to local node](/docs/images/observer-local-node.webp?centered)
 
-Notice that the window title shows `my_remote@...`? This means it's showing the stats of my local IEx node that isn't actually running any of my code. So this data isn't very interesting yet.
+Notice that the window title shows `my_remote@...`? This means it's showing the stats of my local IEx node that isn't actually running any of my code. So, this data isn't very interesting yet.
 
 If everything worked and it's connected, under the Nodes menu you should see the connected remote node.
 
@@ -118,7 +118,7 @@ Now, using WireGuard and this script, I can easily launch Observer and observe a
 
 When done, close Observer. It leaves you with an open IEx shell that is still connected to the remote cluster. You can safely CTRL+C, CTRL+C to exit it.
 
-At this point you can shutdown your WireGuard connection as well if desired.
+At this point, you can shutdown your WireGuard connection as well, if desired.
 
 ## Tips and Troubleshooting
 
@@ -133,9 +133,9 @@ In order for everything to work, here's the checklist overview:
 
 ### Networking and the BEAM
 
-Fly.io uses an IPv6 network internally for private IPs. The BEAM needs IPv6 support to be enabled explicitly. That's taken care of for the server through the Dockerfile. Locally, however, it needs to be enabled as well so the machine running Observer can actually _connect_ to the remote node.
+Fly.io uses an IPv6 network internally for private IPs. The BEAM needs IPv6 support to be explicitly enabled. That's taken care of for the server through the Dockerfile. Locally, however, it needs to be enabled as well so the machine running Observer can actually _connect_ to the remote node.
 
-The issue is, if IPv6 support is enabled globally, like in a `.bashrc` file, then setting it in the `observer` script essentially flips it OFF. If NOT set globally, then it should be set in the script. Choose the version that fits your situation by modifying the script.
+The issue is that if IPv6 support is enabled globally, such as in a `.bashrc` file, then setting it in the `observer` script essentially flips it OFF. If NOT set globally, then it should be set in the script. Choose the version that fits your situation by modifying the script.
 
 It's the `--erl "-proto_dist inet6_tcp"` portion.
 
@@ -171,7 +171,7 @@ You need to substitute in your `YOUR-COOKIE-VALUE` value, the `FULL_NODE_NAME`.
 
 If you are using [asdf-vm](https://asdf-vm.com/) for managing your Elixir and Erlang versions, check out the [Erlang plugin's documentation](https://github.com/asdf-vm/asdf-erlang) for getting WxWidget support in your Erlang environment. This is required for using Observer.
 
-To test if WxWidgets and observer is working correctly on you local machine, try the following.
+To test if WxWidgets and observer are working correctly on you local machine, try the following.
 
 Start IEx:
 
@@ -185,5 +185,5 @@ Start observer:
 :observer.start
 ```
 
-It should bring Observer running on your machine. It won't be connected to
+It should bring up Observer running on your machine. It won't be connected to
 anything else, but it verifies that the libraries and dependencies are working.
