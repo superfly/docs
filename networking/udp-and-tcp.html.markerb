@@ -1,5 +1,5 @@
 ---
-title: "Running Fly Apps On UDP and TCP"
+title: "Running apps on UDP and TCP"
 layout: docs
 nav: firecracker
 author: thomas
@@ -10,11 +10,65 @@ redirect_from:
   - /docs/app-guides/udp-and-tcp/
 ---
 
-Fly.io tries to make it easy to run any containerized app on our platform, regardless of what protocols it talks over. That includes apps that rely on UDP in addition to TCP.
+You can run any containerized app on our platform, regardless of what protocols it talks over, including apps that rely on TCP and UDP. This guide walks you through how to set up your UDP app on Fly.io.
 
-Our UDP support can be a little tricky, and can catch you out, especially if your app uses both UDP and TCP --- as is the case with the most popular UDP protocols, most notably DNS. It should be easier to run things like DNS servers on Fly.io than it is! But it's not hard; there's just four gotchas, and this article walks you through them.
+Before getting started, here's the summary of important points about using up UDP on Fly.io (that we'll expand on below):
 
-## The Basic Idea
+* You need a dedicated IPv4 address. You can't use a shared IPv4 address or an IPv6 address for UDP. We support public IPv6 and shared IPv4 for TCP.
+
+* The UDP side of your app needs to bind to the special `fly-global-services` address. But the TCP side of your app can't; it should bind to `0.0.0.0`.
+
+* The UDP side of your app needs to bind to the same port that is used externally. Fly will not rewrite the port; Fly only rewrites the IP address for UDP packets.
+
+* We swipe a couple dozen bytes from your MTU for UDP, which usually doesn't matter, but in rare cases might.
+
+## You need a dedicated IPv4 address
+
+You'll need a [dedicated IPv4 address](/docs/networking/services/#dedicated-ipv4) for your app to accept UDP packets. We don't support UDP over public IPv6. Every Fly.io app gets a public IPv6 address and a shared IPv4 address that will work for the TCP side of your app.
+
+<div class="note icon">
+**Note:** UDP does work over [Fly.io IPv6 private networking](/docs/reference/private-networking/).
+</div>
+
+## Your app needs to bind to the `fly-global-services` address
+
+To receive UDP packets, your app needs to bind to the special `fly-global-services` address (that's it; that's the address). Just as importantly: it needs to reply to messages using that address.
+
+You usually need to explicitly bind your UDP service to `fly-global-services`. Sorry, but `0.0.0.0`, `*`, and `INADDR_ANY` generally won't do: Linux will use the wrong source address in replies if you use those.
+
+**But: TCP can't use `fly-global-services`**
+
+You can't bind your TCP service to `fly-global-services`; the TCP side of your app should probably bind to `*`.
+
+### Why the `fly-global-services` address?
+
+For the most part, UDP "just works" on Fly.io, the way you'd expect it to.
+
+The thing about forwarding UDP that makes it different from HTTP is that UDP messages don't have HTTP headers. When a standard proxy receives an HTTP message and sends it to its target, it stashes the original source address in the headers, so the target knows who it's talking to. You can't generally do that with UDP messages. But you need to know who you're talking to in order to respond to a UDP message!
+
+We use ⚡️`eBPF magic`⚡️ to shuttle UDP packets across our forwarding fabric while transparently mapping source addresses. What that means for you is that you can generally just write a standard socket program that reads UDP messages and replies to them based on the source address of the packet. 
+
+<div class="callout">If we didn't do this `fly-global-services` thing, our UDP proxying logic would also try to proxy your app's own DNS traffic; it can't otherwise tell the difference between UDP packets you're sending to respond to a user and UDP packets your app generates in the ordinary course of its business.</div>
+
+## Your app needs to listen on the same port externally and internally
+
+Fly will only rewrite the IP addresses for UDP packets. The destination port for inbound packets will not be rewritten. That means if your app receives UDP traffic on port 5000 externally, the app needs to bind to `fly-global-services:5000` to receive that UDP traffic.
+
+## You might need to be mindful of MTUs
+
+An invariant on almost every network is the maximum packet size, the MTU. Typically, the MTU is 1500 bytes. If you exceed 1500 bytes, your packets will fragment. [You don't want to fragment](https://datatracker.ietf.org/doc/html/draft-mathis-frag-harmful-00).
+
+Fly.io takes a bite out of your packets for two purposes:
+
+1. We forward all traffic across a [WireGuard](https://www.wireguard.com/) mesh, and WireGuard eats 60 bytes of every packet.
+
+2. The UDP proxy forwarding system we use grabs another dozen bytes to record the original addresses of the packets --- the source address we saw when your client's packet hit our edge. You don't see these bytes; they're stripped off the packet before it's delivered to your app. But they're used in transit.
+
+In most cases this won't matter to you at all. Modern UDP protocols are designed to assume they have far less than 1500 bytes to work with, because there are all sorts of weird links on the Internet with smaller MTUs.
+
+But if you're doing something super-custom, it's best to assume you've got something more like 1300 bytes to work with, not 1500.
+
+## Example UDP app
 
 Let's build a simple echo service. You can play the home version at [this GitHub repository](https://github.com/fly-apps/udp-echo-). We'll listen on port 5000, UDP and TCP, and just bat back whatever clients send us.
 
@@ -36,15 +90,7 @@ Use `flyctl launch` to create a `fly.toml` file. Use it to wire up the ports.
     port = "5000"
 ```
 
-We're going to build this silly app in Go (don't worry, it's trivial, you'll be able to follow it even if you aren't a gopher). It's going to be vanilla socket code. But before we get started, there are four gotchas you need to know about.
-
-* The UDP side of your application needs to bind to the special `fly-global-services` address. But the TCP side of your application can't; it should bind to `0.0.0.0`.
-
-* The UDP side of your application needs to bind to the same port that is used externally. Fly will not rewrite the port; Fly only rewrites the ip address for UDP packets.
-
-* We support IPv6 for TCP, but not currently for UDP.
-
-* We swipe a couple dozen bytes from your MTU for UDP, which usually doesn't matter, but in rare cases might.
+We're going to build this app in Go (don't worry, it's simple, you'll be able to follow it even if you aren't a gopher). It's going to be vanilla socket code.
 
 ## Let's See Some Code
 
@@ -78,7 +124,7 @@ func main() {
 
 ```
 
-The handlers for this app are trivial and are textbook Go code; after the UDP bind, nothing else in your app will care about Fly.io.
+The handlers for this app are textbook Go code; after the UDP bind, nothing else in your app will care about Fly.io.
 
 Here's TCP:
 
@@ -147,53 +193,3 @@ echo hello world | nc -w1 -u udp-echo-sample.fly.dev 5000
 ```output
 hello world
 ```
-
-## More On Those Four Gotchas
-
-### The `fly-global-services` Address
-
-For the most part, UDP "just works" on Fly.io, the way you'd expect it to.
-
-The thing about forwarding UDP that makes it different from HTTP is that UDP messages don't have HTTP headers. When a standard proxy receives an HTTP message and sends it to its target, it stashes the original source address in the headers, so the target knows who it's talking to. You can't generally do that with UDP messages. But you need to know who you're talking to in order to respond to a UDP message!
-
-We use ⚡️`eBPF magic`⚡️ to shuttle UDP packets across our forwarding fabric (I wrote that because it sounds cool) while transparently mapping source addresses. What that means for you is that you can generally just write a standard socket program that reads UDP messages and replies to them based on the source address of the packet.
-
-Here comes the first catch: the magic we're using to make this transparently work requires us to discriminate UDP traffic from TCP traffic. To receive UDP packets, your app needs to bind to the special `fly-global-services` address (that's it; that's the address). Just as importantly: **it needs to reply to messages using that address**.
-
-You usually need to **explicitly bind your UDP service to `fly-global-services`.** Sorry, but `0.0.0.0`, `*`, and `INADDR_ANY` generally won't do: Linux will use the wrong source address in replies if you use those.
-
-<div class="callout">If we didn't do this `fly-global-services` thing, our UDP proxying logic would also try to proxy your app's own DNS traffic; it can't otherwise tell the difference between UDP packets you're sending to respond to a user and UDP packets your app generates in the ordinary course of its business.</div>
-
-**But: TCP Can't Use `fly-global-services`**
-
-You can't bind your TCP service to `fly-global-services`; the TCP side of your app should probably bind to `*`.
-
-This is super annoying. You probably want to use the same configuration value for both UDP and TCP ports, but you have to be fussy about it on Fly.io. We're working on it!
-
-### UDP Won't Work Over IPv6
-
-Another thing that won't impact your code that you'll need to know about is that we don't currently support UDP over IPv6. The kernel forwarding code we run to make UDP work isn't IPv6 aware. This is not OK, and we're working on it, but it's a limitation you'll run into today.
-
-Every Fly.io app gets an IPv6 address, and that address will work fine for the TCP side of your app, for whatever that's worth.
-
-<div class="note icon">
-**Note:** UDP does work over [Fly.io IPv6 private networking](/docs/reference/private-networking/).
-</div>
-
-### You Might Need To Be Mindful Of MTUs
-
-An invariant on almost every network is the maximum packet size, the MTU. Typically, the MTU is 1500 bytes. If you exceed 1500 bytes, your packets will fragment. [You don't want to fragment](https://datatracker.ietf.org/doc/html/draft-mathis-frag-harmful-00).
-
-Fly.io takes a bite out of all of your packets for two purposes:
-
-1. We forward all traffic across a [WireGuard](https://www.wireguard.com/) mesh, and WireGuard eats 60 bytes of every packet.
-
-2. The UDP proxy forwarding system we use grabs another dozen bytes to record the original addresses of the packets --- the source address we saw when your client's packet hit our edge. You don't see these bytes; they're stripped off the packet before it's delivered to your app. But they're used in transit.
-
-In most cases this won't matter to you at all. Modern UDP protocols are designed to assume they have far less than 1500 bytes to work with, because there are all sorts of weird links on the Internet with smaller MTUs.
-
-But if you're doing something super-custom, it's best to assume you've got something more like 1300 bytes to work with, not 1500.
-
-### UDP Must Listen On The Same Port Externally And Internally
-
-Fly will only rewrite the IP addresses for UDP packets. The destination port for inbound packets will not be rewritten. That means if your applications receives UDP traffic on port 5000 externally, the application needs to bind to `fly-global-services:5000` in order to receive that UDP traffic.
