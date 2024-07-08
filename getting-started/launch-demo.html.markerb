@@ -140,6 +140,8 @@ fly apps open /fred
 opening https:http://hellofly.fly.dev/fred ...
 ```
 
+You just deployed an app on Fly.io!
+
 ## Deploy changes
 
 You probably don't need to make any changes to our demo app. But when you do make changes to an app on Fly.io, deploy a new release with:
@@ -149,6 +151,14 @@ fly deploy
 ```
 
 For more info about how `fly deploy` works, see [Deploy a Fly App](/docs/apps/deploy/).
+
+## Delete the demo app
+
+When you're done playing with the demo app, delete it so you're not using unnecessary resources:
+
+```
+fly apps destroy
+```
 
 ## Grow and scale
 
