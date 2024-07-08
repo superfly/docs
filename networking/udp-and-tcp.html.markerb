@@ -10,7 +10,7 @@ redirect_from:
   - /docs/app-guides/udp-and-tcp/
 ---
 
-You can run any containerized app on our platform, regardless of what protocols it talks over, including apps that rely on TCP and UDP. This guide walks you through how to set up your UDP app on Fly.io.
+You can run any containerized app on our platform, regardless of what protocols it talks over, including apps that rely on UDP in addition to TCP. This guide walks you through how to set up your UDP app on Fly.io.
 
 Before getting started, here's the summary of important points about using up UDP on Fly.io (that we'll expand on below):
 
@@ -92,7 +92,7 @@ Use `flyctl launch` to create a `fly.toml` file. Use it to wire up the ports.
 
 We're going to build this app in Go (don't worry, it's simple, you'll be able to follow it even if you aren't a gopher). It's going to be vanilla socket code.
 
-## Let's See Some Code
+### Let's See Some Code
 
 You light up UDP and TCP with standard socket code. Usually, the only fussy bit will be the `fly-global-services` bind for UDP. Here's what that looks like in Go:
 
