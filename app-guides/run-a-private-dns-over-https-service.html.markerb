@@ -9,6 +9,7 @@ tag:
   - dns
 date: 2020-04-10
 ---
+<%= partial "/docs/partials/obsolete_doc" %>
 
 ## _Why DNS over HTTPS?_
 
