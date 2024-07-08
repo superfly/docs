@@ -107,7 +107,7 @@ We charge for started and stopped Machines differently. Attached GPUs are charge
   <label for="region-select">Region: </label>
   <select id="region-select" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
     <% data.pricing.regions.each do |r| %>
-      <option value="<%= r.code %>"><%= r.code %></option>
+      <option value="<%= r.code %>"><%= r.city %>, <%= r.country %> (<%= r.code %>)</option>
     <% end %>
   </select>
 </p>
