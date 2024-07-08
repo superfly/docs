@@ -39,7 +39,7 @@ Sign up for an account or [sign in](#sign-in-to-your-flyio-account) to your exis
 
 Fly Launch helps you quickly deploy almost any kind of app using a Docker image. For this example, you'll use our pre-built Docker image, `flyio/hellofly:latest`, to create and deploy the demo app.
 
-Running `fly launch` to create a new app generates a [`fly.toml` config file](/docs/reference/configuration/) file with some useful defaults that you can tweak through a web interface before deploying the app. When you run a command post-deploy, flyctl looks for a `fly.toml` file to get the app name and the configuration to apply.
+Running `fly launch` to create a new app generates a [`fly.toml` config file](/docs/reference/configuration/) with some useful defaults that you can tweak through a web interface before deploying the app. When you run a command post-deploy, flyctl looks for a `fly.toml` file to get the app name and the configuration to apply.
 
 To create the demo app, run:
 
@@ -123,7 +123,7 @@ app    	148e453b7d7289	1      	ord   	started	      	        2023-05-17T17:39:37
 app    	5683d311c3228e	1      	ord   	stopped	      	        2023-05-17T17:38:44Z
 ```
 
-In this example, the app has a DNS hostname of `hellofly.fly.dev`. The app has two Machines running in the ord (Chicago) region. We recommend running at least two machines to improve availability.
+In this example, the app has a DNS hostname of `hellofly.fly.dev`. The app has two Machines running in the ord (Chicago) region. We recommend running at least two Machines to improve availability.
 
 ## 5. Visit your app
 
