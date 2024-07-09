@@ -22,7 +22,7 @@ Now, Fly.io has some special features for SQLite users, namely [LiteFS Cloud](ht
 
 ## Setting up LiteFS
 
-Firstly, you need to add a `litefs.yml` file to your project, and make sure it gets included in the Dockerfile.
+First, you need to add a `litefs.yml` file to your project, and make sure it gets included in the Dockerfile.
 
 Here’s an example:
 
