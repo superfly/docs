@@ -9,11 +9,11 @@ categories:
 date: 2024-05-27
 ---
 
-Sometimes you can recreate production on Fly.io without any issues. Other times you need to be able to incrementally move things over. Fly.io [has private networking](https://fly.io/docs/networking/private-networking/) by default for apps in the same organization, but you can also easily connect your existing external servers to this private network. This lets you use your private network as a way to incrementally move services over.
+Sometimes, you can recreate production on Fly.io without any issues. Other times, you need to be able to incrementally move things over. Fly.io [has private networking](https://fly.io/docs/networking/private-networking/) by default for apps in the same organization, but you can also easily connect your existing external servers to this private network. This lets you use your private network as a way to incrementally move services over.
 
-Say you have an existing service on AWS or a database with RDS that needs to be accessed over RDS. You can use that AWS instance to pivot traffic from your Fly Machines to those other services. You can also go the other way and access your Fly apps (such as [an instance of Ollama](https://fly.io/blog/scaling-llm-ollama/)) from AWS, your laptop, or any other self-hosted server you have in your arsenal. Or maybe you're making a tool for a support team, and it needs to hit that one database on prem.
+Suppose you have an existing service on AWS or a database with RDS that needs to be accessed over RDS. You can use that AWS instance to route traffic from your Fly Machines to those other services. You can also go the other way and access your Fly apps (such as [an instance of Ollama](https://fly.io/blog/scaling-llm-ollama/)) from AWS, your laptop, or any other self-hosted server you have in your arsenal. Or maybe you're making a tool for a support team, and it needs to hit that one database on prem.
 
-Fly.io private networks use [WireGuard](https://www.wireguard.com/) internally, and when you connect other computers to that network, you do connect to them over WireGuard. WireGuard is used by many people for many reasons, but the primary use is a "site-to-site" VPN like this. This won't route all of your traffic through Fly.io's gateway servers, but it will give you internal access to your private network from anywhere.
+Fly.io private networks use [WireGuard](https://www.wireguard.com/) internally. When you connect other computers to that network, you do connect to them over WireGuard. WireGuard is used by many people for many reasons, but the primary use is a "site-to-site" VPN like this. This won't route all of your traffic through Fly.io's gateway servers, but it will provide internal access to your private network from anywhere.
 
 ## Weaving the networks together
 
