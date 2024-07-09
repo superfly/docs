@@ -2,7 +2,7 @@
 title: Scaling
 layout: framework_docs
 objective: Scaling your application to meet demand
-order: 6
+order: 7
 ---
 
 Scaling an application is a complex subject with many variables, in this page we will focus on a number of factors that are largely universal: number of CPU cores, memory, and both the number and placement of virtual machines.
