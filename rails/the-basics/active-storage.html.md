@@ -1,7 +1,7 @@
 ---
 title: Active Storage
 layout: framework_docs
-objective: Provision a Tigris Server and configure Rails to run Active Storage.
+objective: Provision a Tigris Bucket and configure Rails to run Active Storage.
 order: 4
 ---
 

@@ -2,7 +2,7 @@
 title: Listening Ports
 layout: framework_docs
 objective: Connecting your application to the internet.
-order: 4
+order: 5
 ---
 
 When you run your application locally you typically test it in your browser by navigating

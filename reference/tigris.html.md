@@ -15,8 +15,9 @@ Learn more from their [service overview](https://www.tigrisdata.com/docs/overvie
 
 Language- and framework-specific guides for setting up Tigris:
 
-- [Rails with Active Storage](docs/rails/the-basics/active-storage/)
+- [Rails with Active Storage](/docs/rails/the-basics/active-storage/)
 - [Laravel with Tigris for CDN File Storage](/docs/laravel/the-basics/laravel-tigris-file-storage/)
+- [JavaScript with S3Client](/docs/js/the-basics/object-storage/)
 
 ## Create and manage a Tigris storage bucket
 
