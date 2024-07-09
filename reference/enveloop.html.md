@@ -75,7 +75,7 @@ flyctl ext enveloop list
 
 ```output
 NAME ORG PRIMARY REGION
-quiet-butterfly-6638 moon ue2
+quiet-butterfly-6638 moon
 ```
 
 ```cmd
@@ -86,7 +86,7 @@ flyctl ext enveloop status quiet-butterfly-6638
 Status
   Name   = quiet-butterfly-6638
   Status = created
-  Region = ue2
+  Region = 
 ```  
 
 ### Delete an Enveloop project
