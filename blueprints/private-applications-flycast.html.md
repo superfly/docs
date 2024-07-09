@@ -66,7 +66,7 @@ Create a new folder on your computer called `ollama`. This is where we’ll put 
 fly launch --from https://github.com/fly-apps/ollama-demo --no-deploy
 ```
 
-This command creates a new fly app from the [`ollama-demo` template](https://github.com/fly-apps/ollama-demo+external) and tells the flyctl command to not deploy it after you create the app. If we don’t do this, then the platform will create public IPv4 and IPv6 addresses, which will make this a public app. The name you choose when you create your app will be used to connect to your app over Flycast.
+This command creates a new fly app from the [`ollama-demo` template](https://github.com/fly-apps/ollama-demo+external) and tells the flyctl command to not deploy it after you create the app. Otherwise, then the platform will create public IPv4 and IPv6 addresses, which will make this a public app. The name you choose when you create your app will be used to connect to your app over Flycast.
 
 Next, allocate a Flycast address for your app with the `fly ips allocate-v6` command:
 
@@ -166,7 +166,7 @@ And if you wait a few moments, it’ll spin back down.
 
 ### Running Llama 3
 
-Now that we’ve set up Ollama and demonstrated the platform turning it off and on for you, let’s run Llama 3. Exit out of that shell Machine with control-D so we can make a new one with the Ollama client installed.
+Now that we’ve set up Ollama and demonstrated the platform turning it off and on for you, let’s run Llama 3. Exit the shell Machine with control-D to set up a new one with the Ollama client installed.
 
 Create an Ollama shell using `fly machine run`:
 
