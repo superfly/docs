@@ -23,7 +23,7 @@ In the root of your project, add a `crontab` file.
 touch ./crontab
 ```
 
-If you need to run a job every 5 minutes, your `crontab` file would something like this:
+If you need to run a job every 5 minutes, your `crontab` file should look something like this:
 
 ```
 */5 * * * * echo "hello world!"
@@ -33,7 +33,7 @@ Check out [cron.help](https://cron.help+external) if you need a quick crontab sy
 
 ## Install `supercronic` in the container
 
-The [latest releases for supercronic](https://github.com/aptible/supercronic/releases+external) are on [GitHub](https://github.com/aptible/supercronic+external), where they include copy pasta 🍝instructions for getting it in your Dockerfile. As of January 2024, the current version of `supercronic` is v0.2.29. You'll want to check the [releases page](https://github.com/aptible/supercronic/releases+external) for the latest version, but here's what it looks like now:
+The [latest releases for supercronic](https://github.com/aptible/supercronic/releases+external) are on [GitHub](https://github.com/aptible/supercronic+external), where they include copy pasta 🍝instructions for getting it in your Dockerfile. As of January 2024, the current version of `supercronic` is v0.2.29. You should check the [releases page](https://github.com/aptible/supercronic/releases+external) for the latest version, but here's what it looks like now:
 
 ```
 # Latest releases available at https://github.com/aptible/supercronic/releases
@@ -83,13 +83,13 @@ Now that we've added `supercronic` to our `Dockerfile`, put the `crontab` at the
 $ fly deploy
 ```
 
-Then we'll need to scale the processes so that we only run one virtual machine container with the `cron` process. Be sure to change `web` to whatever number you had before.
+Then, we'll need to scale the processes so that we only run one virtual machine container with the `cron` process. Be sure to change `web` to whatever number you had before.
 
 ```
 $ fly scale count cron=1 web=
 ```
 
-That's it! If all went well you now have cron running in a `cron` process in a Fly virtual machine. When you `fly deploy` it will get the latest code changes and reboot the virtual machines.
+That's it! If all went well, you now have cron running in a `cron` process in a Fly virtual machine. When you `fly deploy` it will get the latest code changes and reboot the virtual machines.
 
 # Resources
 
