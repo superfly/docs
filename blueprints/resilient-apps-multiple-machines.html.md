@@ -42,7 +42,7 @@ Use autostart/autostop to tell the Fly Proxy to start and stop Machines based on
 
 Fly Proxy uses the concurrency `soft_limit` to determine if Machines have capacity. Learn more about [autostart/autostop](/docs/apps/autostart-stop/).
 
-**Using the Machines API:** To add or change the autotart/autostop settings with the Machines API, use the settings in the `services` object of the [Machine config](/docs/machines/api/machines-resource/#machine-config-object-properties) in your create or update calls.
+**Using the Machines API:** To add or change the autostart/autostop settings with the Machines API, use the settings in the `services` object of the [Machine config](/docs/machines/api/machines-resource/#machine-config-object-properties) in your create or update calls.
 
 #### 2. Create more Machines
 
@@ -94,7 +94,7 @@ To create a standby Machine from a different image:
 fly machine run <image> --standby-for <machine-id>
 ```
 
-## Benefits and cost of multiple Machines
+## Benefits and costs of multiple Machines
 
 **Resiliency:** Your app won't fail when a single host fails because another Machine will start up to take over app requests or tasks.
 
