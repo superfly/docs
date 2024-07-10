@@ -4,14 +4,14 @@ layout: docs
 nav: firecracker
 ---
 
-Fly Proxy is the omnipresent routing layer between the public Internet and the Fly.io platform and within the global WireGuard mesh that encompasses everything that runs on Fly.io. Every Fly.io edge and worker runs Fly Proxy to do the heavy lifting of moving data around our infrastructure: managing traffic and load balancing, applying protocol handlers, and managing connections to services.
+Fly Proxy is the omnipresent routing layer between the public Internet and the Fly.io platform and within the global WireGuard mesh that encompasses everything that runs on Fly.io. Every Fly.io edge and worker runs Fly Proxy to do the heavy lifting of moving data around our infrastructure: managing traffic and load balancing, applying protocol handlers, and connecting to services.
 
 A summary of things Fly Proxy does:
 
 - accept client connections and match them to your app's Machines in the closest region
 - handle backhaul between Fly.io servers over WireGuard tunnels
 - route requests to private Flycast addresses in your 6PN (private network)
-- handle connections for different protocols with connection handler options:
+- handle connections for different protocols with simple connection handler options:
   - terminate TLS by default for most public apps
   - terminate TLS for Postgres connections
   - accept PROXY protocol headers on incoming requests
