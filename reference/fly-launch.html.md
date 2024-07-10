@@ -238,7 +238,7 @@ app    	e28697ce6d3986	1      	ewr   	stopped	    	      	2023-11-29T20:55:33Z
 ```
 
 <div class="note icon">
-**Note:** Both Machines are in a stopped state, because they were idle for a few minutes and we enable the [auto start and stop feature](/docs/apps/autostart-stop/) by default.
+**Note:** Both Machines are in a stopped state, because they were idle for a few minutes and we enable the [auto start and stop feature](/docs/launch/autostart-stop/) by default.
 </div>
 
 I can [scale out](/docs/apps/scale-count/) by adding Machines in other regions if I want to get close to users in more corners of the world.

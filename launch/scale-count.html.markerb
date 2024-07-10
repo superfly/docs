@@ -19,7 +19,7 @@ Starting and stopping existing Machines is much faster than creating and destroy
 For bursty workloads, we recommend creating enough Machines to handle your peak load, and adjusting the active capacity of the app by stopping and starting Machines as needed. 
 
 For more information, see:
-* [Automatically Stop and Start App Machines](/docs/apps/autostart-stop/), for adjusting active capacity based on traffic.
+* [Automatically Stop and Start App Machines](/docs/launch/autostart-stop/), for adjusting active capacity based on traffic.
 * [`fly machine` commands](/docs/flyctl/machine/), including [`start`](/docs/flyctl/machine-start/) and [`stop`](/docs/flyctl/machine-start/) subcommands to target individual Machines with flyctl.
 * Machines API [stop](/docs/machines/api-machines-resource/#stop-a-machine) and [start](/docs/machines/api-machines-resource/#start-a-machine) endpoints.
 </div>

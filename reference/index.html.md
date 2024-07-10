@@ -24,7 +24,7 @@ The settings for configuring your app in the `fly.toml` configuration file. The 
 
 ## Working with Fly.io
 
-* [**Fly Apps**](/docs/reference/apps/):
+* [**Fly Apps**](/docs/apps/):
 What's a Fly App anyway? The abstraction that holds everything you deploy on Fly.io.
 
 * [**App Availability and Resiliency**](/docs/reference/app-availability):
@@ -35,11 +35,3 @@ The different ways you can assemble applications into deployable images for Fly.
 
 * [**Load Balancing**](/docs/reference/load-balancing/):
 An explanation of how Fly.io's proxy distributes traffic to your application instances based on load, closeness, and concurrency settings.
-
-* [**Monorepo and Multi-Environment Deployments**](/docs/reference/monorepo/):
-The command options you can use with flyctl to build and deploy multiple apps from a monorepo or deploy an app to multiple targets.
-
-
-
-* [**Deploy Tokens**](/docs/reference/deploy-tokens/):
-An experimental feature to use in place of standard API tokens.

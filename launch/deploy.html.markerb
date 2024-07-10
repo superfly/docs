@@ -1,5 +1,5 @@
 ---
-title: Deploy a Fly App
+title: Deploy an app
 layout: docs
 nav: firecracker
 redirect_from: /docs/apps/deploy/
@@ -9,9 +9,9 @@ redirect_from: /docs/apps/deploy/
   <img src="/static/images/docs-apps.webp" alt="">
 </figure>
 
-The `fly deploy` flyctl command builds your Fly App and spins it up on one or more Fly Machines, applying the configuration specified in a local `fly.toml` file. 
+A feature of Fly Launch, the `fly deploy` flyctl command builds your app and spins it up on one or more Fly Machines, applying the configuration specified in a local `fly.toml` file.
 
-Whether you've run [`fly launch`](/docs/launch/create/) with the `--no-deploy` option, or want to apply changes to your deployed Fly App's source or configuration, you can make a new release by running 
+Whether you've run [`fly launch`](/docs/launch/create/) with the `--no-deploy` option, or want to apply changes to your deployed app's source or configuration, you can make a new release by running 
 
 ```cmd
 fly deploy
@@ -109,5 +109,5 @@ Smoke checks monitor Machines during deployment, for about 10 seconds after a Ma
 
 ## Related topics
 
-- [Fly Launch](/docs/launch/)
+- [Create a new app with Fly Launch](/docs/launch/create/)
 - [Troubleshooting your deployment](/docs/getting-started/troubleshooting/)

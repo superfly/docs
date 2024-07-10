@@ -5,30 +5,41 @@ toc: false
 nav: firecracker
 ---
 
-Fly Apps are how we group Machines (our fast-launching VMs) for admin and management on the Fly.io platform. An app on Fly.io can be anything from a simple frontend web app to a complex arrangement of processes and Machines all doing their own thing.
+Fly Apps are how we group Machines (our fast-launching VMs) for admin and management on the Fly.io platform. An app on Fly.io can be anything from a simple frontend web app to a complex arrangement of processes and Machines all doing their own thing. See [Fly.io essentials](/docs/getting-started/essentials/) for more context about Fly Launch, Fly Machines, and Fly Apps.
 
-If you're looking to deploy an app on Fly.io, you probably want Fly Launch. You can use Fly Launch to create your app and then manage the whole lifecycle, from starting to scaling to changing and redeploying. [Get started](/docs/getting-started/) with Fly Launch or learn more about [using Fly Launch features](/docs/launch/).
+If you want to deploy an app on Fly.io, you probably want Fly Launch. You can use Fly Launch to create your app and then manage the whole lifecycle, from starting to scaling to changing and redeploying. [Get started](/docs/getting-started/) with Fly Launch or learn more about [using Fly Launch features](/docs/launch/).
 
 This section covers tasks and basic management for all apps, including apps created with Fly Launch:
 
-- Get information about an app
-- Restart apps or Machines
-- Delete an app
-- Create an app manually
-- Run multiple process groups in an app
-- Troubleshoot apps when a host is unavailable
-
-* [**Secrets - Build time**](/docs/apps/build-secrets/):
-How to set and use Docker secrets to make secrets available at build time.
-
-* [**Secrets - Runtime**](/docs/apps/secrets/):
-How to set and use secrets, which are exported to the running App through environment variables, and find out how they work with deployments to help secure your App.
-
-
-<ul>
-  <% current_page.children.each do |page| %>
+<ul class="outline-list">
     <li>
-      <%= link_to_page page %>
+    <%= nav_link "Get information about an app", "/docs/apps/info/" %>
     </li>
-  <% end %>
+    <li>
+    <%= nav_link "Restart apps or Machines", "/docs/apps/restart/" %>
+    </li>
+    <li>
+    <%= nav_link "Delete an app permanently", "/docs/apps/delete/" %>
+    </li>
+    <li>
+    <%= nav_link "Create an app manually", "/docs/apps/create/" %>
+    </li>
+    <li>
+    <%=nav_link "Set app secrets to be available at runtime", "/docs/apps/secrets/" %>
+    </li>
+    <li>
+    <%=nav_link "Mount secrets in your Dockerfile to be available at buildtime", "/docs/apps/build-secrets/" %>
+    </li>
+    <li>
+    <%=nav_link "Going to production with your app", "/docs/apps/going-to-production/" %>
+    </li>
+    <li>
+    <%=nav_link "Tips to fine-tune and (not) benchmark your app on Fly.io", "/docs/apps/fine-tune-apps/" %>
+    </li>
+    <li>
+    <%=nav_link "Guidelines for concurrency settings", "/docs/apps/concurrency/" %>
+    </li>
+    <li>
+    <%=nav_link "Troubleshoot apps when a host is unavailable", "/docs/apps/trouble-host-unavailable/" %>
+    </li>
 </ul>

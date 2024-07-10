@@ -19,7 +19,7 @@ Fly Launch includes:
   <img src="/static/images/docs-island.webp" alt="">
 </figure>
 
-Learn how to use Fly Launch:
+Learn how to work with Fly Launch:
 
 <ul class="outline-list">
     <li>
@@ -39,7 +39,7 @@ Learn how to use Fly Launch:
     </li>
     <li>
     <%= nav_link "Auto start and stop Machines", "/docs/launch/autostart-stop/" %>
-    <li>
+    </li>
     <li>
     <%= nav_link "Autoscale Machines based on metrics", "/docs/launch/autoscale-by-metric/" %>
     </li>
@@ -54,5 +54,8 @@ Learn how to use Fly Launch:
     </li>
     <li>
     <%= nav_link "Deploy review apps with GitHub Actions (Blueprint)", "/docs/blueprints/review-apps-guide/" %>
+    </li>
+    <li>
+    <%= nav_link "Monorepo and multi-environment deployments", "/docs/launch/monorepo/" %>
     </li>
 </ul>
