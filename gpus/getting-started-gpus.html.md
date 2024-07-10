@@ -6,9 +6,9 @@ nav: firecracker
 
 ## How do I run a GPU Machine on Fly.io?
 
-A Fly GPU Machine works very similarly to a CPU-only (or "normal") Fly Machine, and has access to the same platform features by default. It boots up with GPU drivers installed and you can run `nvidia-smi` right away. So running a Fly App that uses CUDA compute is a slight variation on running any Fly App. In a nutshell:
+A Fly GPU Machine works very similarly to a CPU-only (or "normal") Fly Machine, and has access to the same platform features by default. It boots up with GPU drivers installed, allowing you to run `nvidia-smi` right away. So running a Fly App that uses CUDA compute is a slight variation on running any Fly App. In a nutshell:
 
-1. Make sure GPUs are enabled on your Fly Organization.
+1. Ensure GPUs are enabled on your Fly Organization.
 1. Tell the Fly Platform to provision your Machines on Fly GPU hosts.
 1. Provide a Docker image or Dockerfile for your project that installs the NVIDIA libraries your project uses, alongside the rest of your project.
 1. Carry on as you would for any Fly App, tailoring it to the needs of your application.
