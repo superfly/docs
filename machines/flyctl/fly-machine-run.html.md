@@ -359,7 +359,7 @@ flyctl Base64-encodes the data and stores the result in the `files.raw_value` pr
 
 ### Make a secret available in a file
 
-[Fly Secrets](/docs/reference/secrets/) are stored in an encrypted vault, and by default they are available as environment variables on each of the app's Machines.
+[Fly Secrets](/docs/apps/secrets/) are stored in an encrypted vault, and by default they are available as environment variables on each of the app's Machines.
 
 You can make a secret available in a file, rather than an environment variable.
 

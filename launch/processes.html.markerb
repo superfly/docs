@@ -1,14 +1,13 @@
 ---
 title: Run multiple process groups in an app
-objective: 
 layout: docs
 nav: firecracker
-order: 90
+redirect_from: /docs/apps/processes/
 ---
 
 Process groups are a way to configure a single Fly App to run multiple different programs.
 
-You define processes in your `fly.toml`, giving each process group a name and a command to run at boot. Every defined process runs in its own Fly Machine(s) within the app, which means they don't compete for VM resources, and they can be scaled by process group.
+You define processes in your `fly.toml`, giving each process group a name and a command to run at boot. Every defined process runs in its own Fly Machine(s) within the app, which means they don't compete for resources, and they can be scaled by process group.
 
 ## The default process group
 

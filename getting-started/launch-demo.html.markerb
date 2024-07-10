@@ -148,7 +148,7 @@ You probably don't need to make any changes to our demo app. But when you do mak
 fly deploy
 ```
 
-Now that you have a working demo app, learn [what you can do with Fly Launch](/docs/apps/index-launch/).
+Now that you have a working demo app, learn [what you can do with Fly Launch](/docs/launch/).
 
 ## Grow and scale
 

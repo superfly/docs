@@ -27,7 +27,7 @@ HIPAA requires that PHI is encrypted both in transit and at rest to prevent unau
 Access to PHI must be limited to authorized personnel only, which is managed through:
 
 - **Network Isolation**: Each application on Fly.io runs within its own private network by default, reducing the risk of unauthorized access.
-- **Secrets Management**: Fly.io provides a [secrets manager](https://fly.io/docs/reference/secrets/) for storing and handling API credentials and environment variables securely, ensuring that sensitive information is accessible only to authorized applications.
+- **Secrets Management**: Fly.io provides a [secrets manager](/docs/apps/secrets/) for storing and handling API credentials and environment variables securely, ensuring that sensitive information is accessible only to authorized applications.
 - **Isolated Application Environments**: Fly.io allows organizations to create separate organizations for different environments, ensuring that production environments are isolated from test and staging environments.
 - **Workload Isolation:** [Docker workloads on Fly.io are isolated at the kernel hardware level through the Firecracker VM runtime](https://fly.io/blog/fly-machines/). These workloads are hosted in secure data centers on Fly.io's dedicated hardware, ensuring HIPAA compliance by minimizing the risk of unauthorized access and maintaining strict control over PHI data.
 
@@ -100,7 +100,7 @@ Your application will automatically be deployed to the regions specified and com
 
 ### Add API keys and credentials to the Secrets Manager
 
-Fly.io's [secret manager stores](https://fly.io/docs/reference/secrets/) your application's API credentials and secrets in a secure vault. The contents remain encrypted and are only available from running Machine instances as environment variables.
+Fly.io's [secret manager stores](/docs/apps/secrets/) your application's API credentials and secrets in a secure vault. The contents remain encrypted and are only available from running Machine instances as environment variables.
 
 ### Talk to our solution architects if you have questions
 

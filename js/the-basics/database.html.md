@@ -16,7 +16,7 @@ and will by default automatically set, `DATABASE_URL` to this path when we eithe
 or can detect the database.
 
 For cases where an external database is used, you can set this yourself using
-[`fly secrets set`](https://fly.io/docs/reference/secrets/#setting-secrets).
+[`fly secrets set`](/docs/apps/secrets/#set-secrets).
 
 ## Accessing the DATABASE_URL value
 

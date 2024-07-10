@@ -12,6 +12,6 @@ You probably don't need to make any changes to our demo app. But when you do mak
 fly deploy
 ```
 
-For more info about how `fly deploy` works, see [Deploy a Fly App](/docs/apps/deploy/).
+For more info about how `fly deploy` works, see [Deploy a Fly App](/docs/launch/deploy/).
 
 [Next: Learn more about what you can do with Fly.io](/docs/hands-on/next/)

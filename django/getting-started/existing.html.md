@@ -165,7 +165,7 @@ fly ssh console --pty -C 'python /code/manage.py createsuperuser'
 
 ### Secrets
 
-Secrets allow sensitive values, such as credentials and API keys, to be securely passed to your Django applications. You can set, remove, or list all secrets with the [fly secrets](https://fly.io/docs/reference/secrets/) command.
+Secrets allow sensitive values, such as credentials and API keys, to be securely passed to your Django applications. You can set, remove, or list all secrets with the [fly secrets](/docs/apps/secrets/) command.
 
 ### Git
 

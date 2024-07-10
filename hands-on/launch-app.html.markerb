@@ -7,7 +7,7 @@ toc: false
 redirect_from: /docs/hands-on/create-app/
 ---
 
-Fly Launch helps you quickly deploy almost any kind of app using a Docker image. To learn more about the different ways to get your app ready to deploy, refer to [Fly Launch](/docs/apps/launch/).
+Fly Launch helps you quickly deploy almost any kind of app using a Docker image. To learn more about the different ways to get your app ready to deploy, refer to [Launch a new app on Fly.io](/docs/launch/create/).
 
 For this example, you'll use our pre-built Docker image, `flyio/hellofly:latest`, to create and deploy a demo app.
 

@@ -23,7 +23,7 @@ To deploy your app on Fly.io for the first time:
 
 1. Run `fly status` to show the status of your app and Machines.
 2. Run `fly apps open` to open your app in your browser.
-3. Learn some [Fly.io essentials](/docs/getting-started/essentials/) and continue to [explore what you can do with Fly Launch](/docs/apps/index-launch/).
+3. Learn some [Fly.io essentials](/docs/getting-started/essentials/) and continue to [explore what you can do with Fly Launch](/docs/launch/).
 
 <figure class="w:full mt:6">
   <img src="/static/images/speedrun-next-steps.webp" srcset="/static/images/speedrun-next-steps@2x.webp 2x" alt="Illustration by Annie Ruygt of Frankie the Fly.io hot air balloon character pointing at a set of stairs">

@@ -39,11 +39,7 @@ An explanation of how Fly.io's proxy distributes traffic to your application ins
 * [**Monorepo and Multi-Environment Deployments**](/docs/reference/monorepo/):
 The command options you can use with flyctl to build and deploy multiple apps from a monorepo or deploy an app to multiple targets.
 
-* [**Secrets - Build time**](/docs/reference/build-secrets/):
-How to set and use Docker secrets to make secrets available at build time.
 
-* [**Secrets - Runtime**](/docs/reference/secrets/):
-How to set and use secrets, which are exported to the running App through environment variables, and find out how they work with deployments to help secure your App.
 
 * [**Deploy Tokens**](/docs/reference/deploy-tokens/):
 An experimental feature to use in place of standard API tokens.

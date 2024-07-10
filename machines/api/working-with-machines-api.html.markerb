@@ -51,7 +51,7 @@ $ export FLY_API_TOKEN=$(fly auth token)
 
 The `fly auth token` command returns the token currently in use by `flyctl`. You can also create a new auth token in the Tokens section of the Fly.io dashboard.
 
-To set an access token as an environment variable on Fly Machines, use a [secret](/docs/reference/secrets/); for example:
+To set an access token as an environment variable on Fly Machines, use a [secret](/docs/apps/secrets/); for example:
 
 ```cmd
 fly secrets set FLY_API_TOKEN=$(fly auth token)

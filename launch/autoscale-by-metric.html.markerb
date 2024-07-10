@@ -2,6 +2,7 @@
 title: Autoscale based on metrics
 layout: docs
 nav: firecracker
+redirect_from: /docs/apps//autoscale-by-metric/
 ---
 
 The metrics-based autoscaler scales an app's Machines based on any metric, such as pending work items or queue depth. Scaling on metrics other than requests or connections is useful for apps, like background workers, that aren't running web services. Apps with services that need to scale based on HTTP requests can use the built-in Fly Proxy [autostop/autostart feature](https://fly.io/docs/apps/autostart-stop/) for Machines.

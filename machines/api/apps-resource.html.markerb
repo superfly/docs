@@ -153,7 +153,7 @@ Get details about an app, like its organization slug and name. Also, to check if
 
 ## Set app secrets
 
-For sensitive environment variables, such as credentials, you can set [secrets](https://fly.io/docs/reference/secrets/) on the app:
+For sensitive environment variables, such as credentials, you can set [secrets](/docs/apps/secrets/) on the app:
 
 ```cmd
 fly secrets set DATABASE_URL=postgres://example.com/mydb <my-app-name>

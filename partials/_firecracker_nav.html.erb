@@ -23,39 +23,40 @@
       end
     },
     {
+      title: "Fly Launch",
+      path: "/docs/launch/",
+      open: false,
+      links: [
+        { text: "Launch a New App", path: "/docs/launch/create/" },
+        { text: "Deploy an App", path: "/docs/launch/deploy/" },
+        { text: "App Config Reference (fly.toml)", path: "/docs/reference/configuration/" },
+        { text: "Scale Machine CPU and RAM", path: "/docs/launch/scale-machine/" },
+        { text: "Scale the Number of Machines", path: "/docs/launch/scale-count/" },
+        { text: "Auto Stop and Start Machines", path: "/docs/launch/autostart-stop/" },
+        { text: "Autoscale Based on Metrics", path: "/docs/launch/autoscale-by-metric/" },
+        { text: "Add Volume Storage", path: "/docs/launch/volume-storage/" },
+        { text: "Use Process Groups", path: "/docs/launch/processes/" },
+        { text: "Deploy with GitHub Actions", path: "/docs/app-guides/continuous-deployment-with-github-actions/" },
+        { text: "Deploy Review Apps with GitHub Actions", path: "/docs/app-guides/review-apps-guide/" },
+        { text: "Deploy Monorepo Apps", path: "/docs/launch/monorepo/" }
+      ]
+    },
+    {
       title: "Apps",
       path: "/docs/apps/",
       open: false,
       links: [
-        { text: "Fly Apps overview", path: "/docs/apps/overview/" },
         { text: "Get App Info", path: "/docs/apps/info/" },
         { text: "Restart an App", path: "/docs/apps/restart/" },
         { text: "Delete an App", path: "/docs/apps/delete/" },
-        { text: "Add Build Secrets", path: "/docs/reference/build-secrets/" },
-        { text: "Set Runtime Secrets", path: "/docs/reference/secrets/" },
+        { text: "Create an App Manually", path: "/docs/apps/create-app/" },
+        { text: "Add Build Secrets", path: "/docs/apps/build-secrets/" },
+        { text: "Set Runtime Secrets", path: "/docs/apps/secrets/" },
         { text: "Fine-tune and Benchmark Apps", path: "/docs/reference/fine-tune-apps/" },
         { text: "Concurrency Settings", path: "/docs/reference/concurrency/" },
-        { text: "Going to Production", path: "/docs/reference/going-to-production/" }
-      ]
-    },
-    {
-      title: "Fly Launch for Apps",
-      path: "/docs/apps/index-launch/",
-      open: false,
-      links: [
-        { text: "Create a New App", path: "/docs/apps/launch/" },
-        { text: "Deploy an App", path: "/docs/apps/deploy/" },
-        { text: "App Config Reference (fly.toml)", path: "/docs/reference/configuration/" },
-        { text: "Scale Machine CPU and RAM", path: "/docs/apps/scale-machine/" },
-        { text: "Scale the Number of Machines", path: "/docs/apps/scale-count/" },
-        { text: "Auto Stop and Start Machines", path: "/docs/apps/autostart-stop/" },
-        { text: "Autoscale Based on Metrics", path: "/docs/apps/autoscale-by-metric/" },
-        { text: "Add Volume Storage", path: "/docs/apps/volume-storage/" },
-        { text: "Use Process Groups", path: "/docs/apps/processes/" },
-        { text: "Deploy with GitHub Actions", path: "/docs/app-guides/continuous-deployment-with-github-actions/" },
-        { text: "Deploy Review Apps with GitHub Actions", path: "/docs/app-guides/review-apps-guide/" },
-        { text: "Deploy Monorepo Apps", path: "/docs/reference/monorepo/" },
-        { text: "Troubleshoot When a Host is Down", path: "/docs/apps/trouble-host-unavailable/" },
+        { text: "Going to Production", path: "/docs/reference/going-to-production/" },
+        { text: "Troubleshoot When a Host is Down", path: "/docs/apps/trouble-host-unavailable/" }
+
       ]
     },
     {
