@@ -34,7 +34,20 @@ ENVELOOP_LIVE_API_KEY: live_**********
 ENVELOOP_SANDBOX_API_KEY: test_**********
 ```
 
+## Use Enveloop with your Language and Framework
+
+Here are some examples for how to use Enveloop with various languages and frameworks.
+
+* [Rails with ActionMailer](https://docs.enveloop.com/enveloop-api/languages-and-frameworks/ruby-on-rails)
+* [Ruby](https://github.com/enveloophq/enveloop-ruby)
+* [Node.js](https://github.com/enveloophq/enveloop-js)
+* [Python](https://github.com/enveloophq/enveloop-py)
+
 ## Pricing and Billing
+
+<aside class="callout">
+During the public beta, Enveloop is free to use on Fly. 
+</aside>
 
 Enveloop starts at $5 per month. With that, we include 1000 messages per month -- each message over 1000 is $0.005. As you send more messages, individual messages sent cost less -- the breakdown below illustrates. While we only charges for messages (email or text) sent, the $5 minimum helps cover logging, data retention, and support. You can view the official [Enveloop Pricing](https://enveloop.com/pricing) page for additional information.
 
