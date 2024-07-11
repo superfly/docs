@@ -15,47 +15,29 @@ Fly Launch includes:
 - the `fly deploy` command to deploy or redeploy your app
 - the `fly scale` command for quick horizontal and vertical scaling
 
+Learn how to work with Fly Launch:
+
+**Create and configure**
+
+- [Create an app with Fly Launch](/docs/launch/create/)
+- [Deploy an app](/docs/launch/deploy/)
+- [App configuration reference (fly.toml)](/docs/reference/configuration/)
+- [Add Volume storage](/docs/launch/volume-storage/)
+- [Use process groups for multiple processes in one app](/docs/launch/processes/)
+
+**Scale and control**
+
+- [Scale Machine CPU and RAM](/docs/launch/scale-machine/)
+- [Scale the number of Machines in an app](/docs/launch/scale-count/)
+- [Auto start and stop Machines](/docs/launch/autostart-stop/)
+- [Autoscale Machines based on metrics](/docs/launch/autoscale-by-metric/)
+
+**Custom deployments**
+
+- [Deploy an app with GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/)
+- [Deploy review apps with GitHub Actions (Blueprint)](/docs/blueprints/review-apps-guide/)
+- [Deploy monorepo and multi-environment apps](/docs/launch/monorepo/)
+
 <figure>
   <img src="/static/images/docs-island.webp" alt="">
 </figure>
-
-Learn how to work with Fly Launch:
-
-<ul class="outline-list">
-    <li>
-    <%= nav_link "Create an app with Fly Launch", "/docs/launch/create/" %>
-    </li>
-    <li>
-    <%= nav_link "Deploy an app", "/docs/launch/deploy/" %>
-    </li>
-    <li>
-    <%= nav_link "App configuration reference (fly.toml)", "/docs/reference/configuration/" %>
-    </li>
-    <li>
-    <%= nav_link "Scale Machine CPU and RAM", "/docs/launch/scale-machine/" %>
-    </li>
-    <li>
-    <%= nav_link "Scale the number of Machines in an app", "/docs/launch/scale-count/" %>
-    </li>
-    <li>
-    <%= nav_link "Auto start and stop Machines", "/docs/launch/autostart-stop/" %>
-    </li>
-    <li>
-    <%= nav_link "Autoscale Machines based on metrics", "/docs/launch/autoscale-by-metric/" %>
-    </li>
-    <li>
-    <%= nav_link "Add Volume storage", "/docs/launch/volume-storage/" %>
-    </li>
-    <li>
-    <%= nav_link "Use process groups for multiple processes in one app", "/docs/launch/processes/" %>
-    </li>
-    <li>
-    <%= nav_link "Deploy an app with GitHub Actions", "/docs/app-guides/continuous-deployment-with-github-actions/" %>
-    </li>
-    <li>
-    <%= nav_link "Deploy review apps with GitHub Actions (Blueprint)", "/docs/blueprints/review-apps-guide/" %>
-    </li>
-    <li>
-    <%= nav_link "Deploy monorepo and multi-environment apps", "/docs/launch/monorepo/" %>
-    </li>
-</ul>

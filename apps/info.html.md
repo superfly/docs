@@ -1,9 +1,7 @@
 ---
 title: Get information about an app
-objective: 
 layout: docs
-nav: firecracker
-order: 15
+nav: apps
 ---
 
 <figure>

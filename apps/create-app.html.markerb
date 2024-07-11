@@ -1,7 +1,7 @@
 ---
 title: "Create an app manually"
 layout: docs
-nav: firecracker
+nav: apps
 ---
 
 Most of the time, all you need is [Fly Launch](/docs/launch/) to create and manage your app. But if you need to, you can skip all the handy launch scanners and resource provisioning Fly Launch offers and use the `fly apps create` command or the Machines API to create an app and piece it together yourself.

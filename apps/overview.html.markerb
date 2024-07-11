@@ -5,7 +5,7 @@ toc: false
 nav: apps
 ---
 
-A Fly App is an abstraction for a group of Fly Machines running your code on Fly.io. You can create and manage your app as a whole using Fly Launch, but you can also have a Fly App with individual Machines running tasks or user code.
+A Fly App is an abstraction for a group of Fly Machines running your code on Fly.io. You can create and manage your app as a whole using [Fly Launch](/docs/launch/), but you can also have a Fly App with individual Machines running tasks or user code.
 
 From an admin point of view a Fly App is just a group of Machines (with optional attached volumes) that belongs to one organization.
 
@@ -14,13 +14,13 @@ From a developer point of view, a Fly App might be:
 * a fullstack application (or just part of one)
 * a database
 * a few Machines running tasks, or a bunch of Machines, all with different configs, doing things you want them to do
-* anything you can think of doing with fast-launching Machines
+* anything you can think of doing with fast-launching Machines, including [GPU Machines](/docs/gpus/) for AI/ML workloads
 
 All the apps in your organization can communicate over a [private network](/docs/networking/private-networking/), so it’s also possible to have multiple apps working together as one system.
 
-Fly Apps comprise:
+Fly Apps include:
 
-* app configuration (Fly Launch only)
+* app configuration
 * provisioned resources
 * Anycast IP addresses
 * certificates

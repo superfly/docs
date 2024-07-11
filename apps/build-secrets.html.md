@@ -1,7 +1,7 @@
 ---
 title: Build Secrets
 layout: docs
-nav: firecracker
+nav: apps
 redirect_from: /docs/reference/build-secrets/
 ---
 

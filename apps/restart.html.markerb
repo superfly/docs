@@ -1,9 +1,7 @@
 ---
 title: Restart apps or Machines
-objective: 
 layout: docs
-nav: firecracker
-order: 70
+nav: apps
 ---
 
 <figure>

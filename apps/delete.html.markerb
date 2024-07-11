@@ -1,9 +1,7 @@
 ---
 title: Delete an app
-objective: 
 layout: docs
-nav: firecracker
-order: 110
+nav: apps
 ---
 
 You can scale an app right down to zero Machines if you like. But if you're done with a Fly App forever, you can delete it using `fly apps destroy <app-name>`. 
