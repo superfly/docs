@@ -59,6 +59,8 @@ After that, set up these environment variables by adding this to the end of your
   WORDPRESS_CONFIG_EXTRA = "define( 'WP_HOME', 'https://<name-of-your-wordpress-app>.fly.dev' );define( 'WP_SITEURL', 'https://<name-of-your-wordpress-app>.fly.dev');"
 ```
 
+The `WORDPRESS_DB_NAME` and `WORDPRESS_DB_HOST` are needed for the wordpress application to connect to the database. The `WORDPRESS_CONFIG_EXTRA` makes sure that the application serves everything from the `https://...` address.
+
 Here's how the total fly.toml should look now:
 ```toml
 app = 'fly-wordpress'
@@ -86,8 +88,6 @@ WORDPRESS_DB_NAME= "wordpress_db"
 WORDPRESS_DB_HOST= "db-wordpress.internal"
 WORDPRESS_CONFIG_EXTRA = "define( 'WP_HOME', 'https://fly-wordpress.fly.dev' );define( 'WP_SITEURL', 'https://fly-wordpress.fly.dev');"
 ```
-
-The `WORDPRESS_DB_NAME` and `WORDPRESS_DB_HOST` are needed for the wordpress application to connect to the database. The `WORDPRESS_CONFIG_EXTRA` makes sure that the application serves everything from the https address.
 
 Next, we need to set up the `WORDPRESS_DB_USER` and `WORDPRESS_DB_PASSWORD` variables. Since these are sensitive, let's use the [`fly secrets`](/docs/reference/secrets/#set-secrets) command:
 
