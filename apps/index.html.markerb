@@ -5,9 +5,9 @@ toc: false
 nav: firecracker
 ---
 
-Fly Apps are how we group Machines (our fast-launching VMs) for admin and management on the Fly.io platform. An app on Fly.io can be anything from a simple frontend web app to a complex arrangement of processes and Machines all doing their own thing. See [Fly.io essentials](/docs/getting-started/essentials/) for more context about Fly Launch, Fly Machines, and Fly Apps.
+Fly Apps are how we group Machines (our fast-launching VMs) for admin and management on the Fly.io platform. An app on Fly.io can be anything from a simple frontend web app to a complex arrangement of processes and Machines all doing their own thing.
 
-If you want to deploy an app on Fly.io, you probably want Fly Launch. You can use Fly Launch to create your app and then manage the whole lifecycle, from starting to scaling to changing and redeploying. [Get started](/docs/getting-started/) with Fly Launch or learn more about [using Fly Launch features](/docs/launch/).
+If you want to deploy an app on Fly.io, you probably want Fly Launch. You can use Fly Launch to create your app and then manage the whole lifecycle, from starting to scaling to changing and redeploying. [Get started](/docs/getting-started/) with Fly Launch or learn more about [using Fly Launch features](/docs/launch/). See [Fly.io essentials](/docs/getting-started/essentials/) for more context about Fly Launch, Fly Machines, and Fly Apps.
 
 This section covers tasks and basic management for all apps, including apps created with Fly Launch:
 

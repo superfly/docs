@@ -6,7 +6,7 @@ redirect_from:
   - /launch/
 ---
 
-Fly Launch helps you configure and orchestrate your app. If you followed any of the [Getting started](/docs/getting-started/) guides, then you're already using Fly Launch.
+Fly Launch helps you configure and orchestrate your app. If you followed one of the [Getting started](/docs/getting-started/) guides, then you're already using Fly Launch.
 
 Fly Launch includes:
 
@@ -23,7 +23,7 @@ Learn how to work with Fly Launch:
 
 <ul class="outline-list">
     <li>
-    <%= nav_link "Create an app", "/docs/launch/create/" %>
+    <%= nav_link "Create an app with Fly Launch", "/docs/launch/create/" %>
     </li>
     <li>
     <%= nav_link "Deploy an app", "/docs/launch/deploy/" %>
@@ -35,7 +35,7 @@ Learn how to work with Fly Launch:
     <%= nav_link "Scale Machine CPU and RAM", "/docs/launch/scale-machine/" %>
     </li>
     <li>
-    <%= nav_link "Add or remove Machines in an app", "/docs/launch/scale-count/" %>
+    <%= nav_link "Scale the number of Machines in an app", "/docs/launch/scale-count/" %>
     </li>
     <li>
     <%= nav_link "Auto start and stop Machines", "/docs/launch/autostart-stop/" %>
@@ -50,12 +50,12 @@ Learn how to work with Fly Launch:
     <%= nav_link "Use process groups for multiple processes in one app", "/docs/launch/processes/" %>
     </li>
     <li>
-    <%= nav_link "Deploy with GitHub Actions", "/docs/app-guides/continuous-deployment-with-github-actions/" %>
+    <%= nav_link "Deploy an app with GitHub Actions", "/docs/app-guides/continuous-deployment-with-github-actions/" %>
     </li>
     <li>
     <%= nav_link "Deploy review apps with GitHub Actions (Blueprint)", "/docs/blueprints/review-apps-guide/" %>
     </li>
     <li>
-    <%= nav_link "Monorepo and multi-environment deployments", "/docs/launch/monorepo/" %>
+    <%= nav_link "Deploy monorepo and multi-environment apps", "/docs/launch/monorepo/" %>
     </li>
 </ul>
