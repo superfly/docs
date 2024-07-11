@@ -138,10 +138,10 @@ Visit your newly deployed app at https://my-app-name.fly.dev/
 
 ### Set up a custom domain
 
-You probably want to set up a custom domain for your wordpress application. You can find all you need to know (and more!) in [this handy guide](https://fly.io/docs/networking/custom-domain/).
+You probably want to set up a custom domain for your WordPress application. You can find all you need to know (and more!) in [this handy guide](https://fly.io/docs/networking/custom-domain/).
 
 ### Open your app
 
-Run `fly apps open`, or just go to the URL specified in the output, to open your deployed App in a browser.
+Run `fly apps open`, or just go to the URL specified in the output of the deploy command, to open your deployed App in a browser.
 
 If you have any questions, need help, or want to talk about what you're building, visit our [community forum](https://community.fly.io).
