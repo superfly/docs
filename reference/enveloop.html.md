@@ -14,11 +14,11 @@ This service is in **public beta**.
 
 ## Create an Enveloop project
 
-Creating an Enveloop project happens via the [Fly CLI](/docs/hands-on/install-flyctl/). Install it, then [sign up for a Fly account](https://fly.io/docs/getting-started/log-in-to-fly/) and create your first Fly app. From there, you can add an Enveloop project to your Fly app.
+Creating an Enveloop project happens via the [Fly.io CLI](/docs/hands-on/install-flyctl/). Install it, then [sign up for a Fly.io account](https://fly.io/docs/getting-started/log-in-to-fly/) and create your first Fly app. From there, you can add an Enveloop project to your app.
 
 You can create one Enveloop project per Fly app.
 
-<aside class="callout">Running the following command in a Fly.io app context -- inside an app directory or specifying `-a yourapp` -- will automatically create a new Enveloop project and set secrets (sandbox & production) on Fly for your app.</aside>
+<aside class="callout">Running the following command in a Fly app context -- inside an app directory or specifying `-a yourapp` -- will automatically create a new Enveloop project and set secrets (sandbox & production) on your app.</aside>
 
 ```cmd
 flyctl ext enveloop create
@@ -46,7 +46,7 @@ Here are some examples for how to use Enveloop with various languages and framew
 ## Pricing and Billing
 
 <aside class="callout">
-During the public beta, Enveloop is free to use on Fly. 
+During the public beta, Enveloop is free to use on Fly.io.
 </aside>
 
 Enveloop starts at $5 per month. With that, we include 1000 messages per month -- each message over 1000 is $0.005. As you send more messages, individual messages sent cost less -- the breakdown below illustrates. While we only charges for messages (email or text) sent, the $5 minimum helps cover logging, data retention, and support. You can view the official [Enveloop Pricing](https://enveloop.com/pricing) page for additional information.
