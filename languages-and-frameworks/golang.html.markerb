@@ -255,18 +255,14 @@ It's [simple](https://www.tigrisdata.com/docs/api/s3/)&mdash;has S3-API compatib
 	<b>For our Go Fly App</b>, these environment variables should have already been set as [secrets](https://fly.io/docs/flyctl/secrets/) during the running of `fly storage create`:
 	
 	```output
-	? Choose a name, use the default, or leave blank to generate one: 
-	Your Tigris project (...) is ready. See details and next steps with: https://fly.io/docs/reference/tigris/
-
 	Setting the following secrets on ...:
 	AWS_ACCESS_KEY_ID: <AWS_ACCESS_KEY_ID_VALUE>
 	AWS_ENDPOINT_URL_S3: https://fly.storage.tigris.dev
 	AWS_REGION: auto
 	AWS_SECRET_ACCESS_KEY: <AWS_SECRET_ACCESS_KEY>
 	BUCKET_NAME: <BUCKET_NAME>
-
-	Secrets are staged for the first deployment
 	```
+	
 	Of course, this would only automatically happen if the create command was run in a directory containing a `fly.toml` for our Go Fly app. 
 	On the otherhand, if that wasn't the case, we can still manually set necessary [secrets](https://fly.io/docs/flyctl/secrets/) likeso:
 	```cmd
