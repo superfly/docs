@@ -33,7 +33,7 @@ Redis:        <none>                 (not requested)
 
 Type `n` if you're happy with the defaults listed, otherwise type `y` to open the Fly Launch web page and edit your settings, including:
 
-* Name: Keep the default app name or enter your own. This name will be part of the url for your app, unless you use a custom domain.
+* Name: Keep the default app name or enter your own. This name will be part of the URL for your app, unless you use a custom domain.
 
 * Region: Keep the fastest [region](/docs/reference/regions/) (the value of `primary_region` in the `fly.toml` file) as chosen by Fly Launch, or select a different region to deploy to.
 
