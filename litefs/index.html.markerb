@@ -13,15 +13,15 @@ application on the edge. You can run LiteFS anywhere!
 ## LiteFS Cloud
 
 LiteFS Cloud is a Fly.io product which provides backups and recovery for your
-LiteFS SQLite database. With LiteFS Cloud, you'll have the ability to restore
-your LiteFS database to any point in time from the last 30 days, near instantaneously.
+LiteFS SQLite database. With LiteFS Cloud, you can restore
+your LiteFS database to any point in time from the last 30 days, nearly instantaneously.
 You can use LiteFS Cloud to back up your LiteFS database running anywhere (whether your
-application is running on Fly.io or somewhere else).
+application is running on Fly.io or elsewhere).
 
 ## Project status
 
 LiteFS is stable and running in production environments. The project is still
-pre-1.0 so APIs may change and features could be removed. Please remember that
+pre-1.0, so APIs may change and features could be removed. Please remember that
 all software has bugs so we recommend you set up regular off-site
 backups in case of malfunction or disk corruption. You can back up
 using [LiteFS Cloud][], or [configure your own backups][backup].
