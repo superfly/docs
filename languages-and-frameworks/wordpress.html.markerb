@@ -1,19 +1,18 @@
 ---
-title: Run a Wordpress app
+title: Run a WordPress App
 layout: language-and-framework-docs
-redirect_from: /docs/getting-started/wordpress/
 ---
 
-Setting up a wordpress application on Fly.io is quite simple. In this guide, we'll learn just how simple it is!
+Setting up a WordPress application on Fly.io is quite simple. In this guide, we'll learn just how simple it is!
 
-There's one thing you need before setting up a wordpress application: a MySQL database. You can find out how to get one set up on Fly.io in [this handy guide](https://fly.io/docs/app-guides/mysql-on-fly/#main-content-start).
+There's one thing you need before setting up a WordPress application: a MySQL database. You can find out how to get one set up on Fly.io in [this handy guide](https://fly.io/docs/app-guides/mysql-on-fly/#main-content-start).
 Make sure you remember the hostname (this will be `<your-mysql-app-name>.internal`), the database name and the database credentials.
 
 Ready? Let's get started!
 
-## Launch a new wordpress application
+## Launch a new WordPress application
 
-To launch a new wordpress application, we can use the [official wordpress docker image](https://hub.docker.com/_/wordpress). To do so, run the following command:
+To launch a new WordPress application, we can use the [official WordPress docker image](https://hub.docker.com/_/wordpress). To do so, run the following command:
 ```cmd
 flyctl launch -i wordpress --no-deploy
 ```
@@ -34,21 +33,17 @@ Redis:        <none>                 (not requested)
 
 Type `n` if you're happy with the defaults listed, otherwise type `y` to open the Fly Launch web page and edit your settings, including:
 
-* Name: Keep the default app name or enter your own.
+* Name: Keep the default app name or enter your own. This name will be part of the url for your app, unless you use a custom domain.
 
 * Region: Keep the fastest [region](/docs/reference/regions/) (the value of `primary_region` in the `fly.toml` file) as chosen by Fly Launch, or select a different region to deploy to.
 
-* Services: The port for services (the value of `internal_port` in the `fly.toml` file) depends on the `EXPOSE` instruction in your Dockerfile. The default port when the `fly launch` command doesn't find ports set in a Dockerfile is `8080`.
+After you click **Confirm Settings**, Fly Launch creates your App and generates a `fly.toml` file for your project with the settings.
 
-* You can also set a default Machine size and memory, and add and configure Postgres or Redis.
+The reason we added the `--no-deploy` flag is so that the App doesn't get deployed right away. This way, we can set up things like secrets and environment variables before the first deployment.
 
-After you click **Confirm Settings**, Fly Launch creates your app and generates a `fly.toml` file for your project with the settings.
+## Configure & deploy the WordPress application
 
-The reason we added the `--no-deploy` flag is so that the app doesn't get deployed right away. This way, we can set up things like secrets and environment variables before the first deployment.
-
-## Configure & deploy the wordpress application
-
-Before deploying, we'll need to configure a couple of things. In your newly created fly.toml file, change the `internal_port` under `[http_service]` from 8080 to **80**. This setting lets Fly know on what port your app will respond, which is 80 in our case.
+Before deploying, we'll need to configure a couple of things. In your newly created fly.toml file, change the `internal_port` under `[http_service]` from 8080 to **80**. This setting lets Fly know on what port your App will respond, which is 80 in our case.
 
 After that, set up these environment variables by adding this to the end of your `fly.toml`:
 
@@ -59,7 +54,7 @@ After that, set up these environment variables by adding this to the end of your
   WORDPRESS_CONFIG_EXTRA = "define( 'WP_HOME', 'https://<name-of-your-wordpress-app>.fly.dev' );define( 'WP_SITEURL', 'https://<name-of-your-wordpress-app>.fly.dev');"
 ```
 
-The `WORDPRESS_DB_NAME` and `WORDPRESS_DB_HOST` are needed for the wordpress application to connect to the database. The `WORDPRESS_CONFIG_EXTRA` makes sure that the application serves everything from the `https://...` address.
+The `WORDPRESS_DB_NAME` and `WORDPRESS_DB_HOST` are needed for the WordPress application to connect to the database. The `WORDPRESS_CONFIG_EXTRA` makes sure that the application serves everything from the `https://...` address.
 
 Here's how the total fly.toml should look now:
 ```toml
@@ -113,7 +108,7 @@ The values aren't displayed, since they're secret!
 
 ### Deploy your app
 
-The last step is to deploy the app with the deploy command:
+The last step is to deploy the App with the deploy command:
 
 ```cmd
 flyctl deploy
@@ -141,20 +136,12 @@ Updating existing machines in 'my-app-name' with rolling strategy
 Visit your newly deployed app at https://my-app-name.fly.dev/
 ```
 
+### Set up a custom domain
+
+You probably want to set up a custom domain for your wordpress application. You can find all you need to know (and more!) in [this handy guide](https://fly.io/docs/networking/custom-domain/).
+
 ### Open your app
 
-Run `fly apps open`, or just go to the URL specified in the output, to open your deployed app in a browser.
+Run `fly apps open`, or just go to the URL specified in the output, to open your deployed App in a browser.
 
-## Grow and scale
-
-Check out some of the ways you can increase availability, capacity, and performance with Fly.io:
-
-* Follow the blueprint for [extra Machines for more resilient apps](/docs/blueprints/resilient-apps-multiple-machines/)
-* Read up on [App availability and resiliency](/docs/reference/app-availability/)
-* [Autoscale Machines based on load or custom metrics](/docs/reference/autoscaling/)
-* [Scale Machine CPU and RAM](/docs/apps/scale-machine/) 
-* [Scale Machine count](/docs/apps/scale-count/)
-* Try out [Fly GPUs](/docs/gpus/)
-
-
-If you have questions, need help, or want to talk about what you're building, visit our [community forum](https://community.fly.io).
+If you have any questions, need help, or want to talk about what you're building, visit our [community forum](https://community.fly.io).
