@@ -206,40 +206,26 @@ Your browser will be sent to the displayed URL.
 
 ## _Tigris Global Storage( Optional )_
 
-[Tigris](https://www.tigrisdata.com/docs/overview/) is an S3-compatible object storage service exhibiting CDN-like behavior.
-It intelligently improves the availability of objects by automatically [replicating](https://www.tigrisdata.com/docs/concepts/architecture/#multi-cluster-redundancy-and-replication) and [caching](https://www.tigrisdata.com/docs/objects/caching/) data.
+[Tigris](https://www.tigrisdata.com/docs/overview/) takes storage service a top-notch higher by providing CDN-like accessibility for your stored objects.
+It's [simple](https://www.tigrisdata.com/docs/api/s3/)&mdash;has S3-API compatibility, [scalable](https://www.tigrisdata.com/docs/concepts/architecture/)&mdash;automatically manages data replication and caching for you, and [secured](https://www.tigrisdata.com/docs/concepts/authnz/)&mdash;offers AuthN and AuthZ authentication mechanisms. Try it out!
 
-1. Create a Tigris bucket: simply run the create command. Afterwards, make sure to take note of the credentials received:
+1. <b>Create a Tigris bucket</b>: run the create command inside your Go Fly App's directory. Afterwards, make sure to take note of the credentials received:
 
 	```cmd
 	fly storage create
 	```
 
-2. Retrieve AWS SDK modules: Tigris has an S3 compatible API service, thus, we can easily use [AWS SDK Go](https://aws.github.io/aws-sdk-go-v2/docs/getting-started/) modules to connect with the Tigris Bucket we've just created.
+2. <b>Retrieve AWS SDK modules</b>: Tigris has an S3 compatible API service, thus, we can easily use [AWS SDK Go](https://aws.github.io/aws-sdk-go-v2/docs/getting-started/#install-the-aws-sdk-for-go-v2) modules to connect with the Tigris Bucket we've just created.
 	
 	```cmd
 	go get github.com/aws/aws-sdk-go-v2
-
-	// Config module for loading AWS shared configuration.
 	go get github.com/aws/aws-sdk-go-v2/config
-
-	// S3 client
 	go get github.com/aws/aws-sdk-go-v2/service/s3
 	```
 
-3. Create the [Client function](https://github.com/Xe/x/blob/master/tigris/tigris.go). This function will create an S3 client instance ready to connect with a Tigris bucket:
+3. <b>Create a [Client function](https://github.com/Xe/x/blob/master/tigris/tigris.go)</b> that will return an instance ready to connect with a Tigris bucket:
 
 	```go
-	package tigris
-
-	import (
-		"context"
-		"fmt"
-		"github.com/aws/aws-sdk-go-v2/aws"
-		"github.com/aws/aws-sdk-go-v2/config"
-		"github.com/aws/aws-sdk-go-v2/service/s3"
-	)
-	
 	func Client(ctx context.Context) (*s3.Client, error) {
 		// 1. Create an aws.Config instance
 		cfg, err := config.LoadDefaultConfig(ctx)
@@ -254,11 +240,11 @@ It intelligently improves the availability of objects by automatically [replicat
 		}), nil
 	}
 	```
-	The function uses `LoadDefaultConfig()` to create an [aws.Config instance](https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/aws#Config).
-	Passing this to `NewFromConfig` allows the retrieval of [credentials from the environment](https://aws.github.io/aws-sdk-go-v2/docs/configuring-sdk/#specifying-credentials).
+	The `LoadDefaultConfig()` function will create an [aws.Config instance](https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/aws#Config) that can load [credentials from environment variables](https://aws.github.io/aws-sdk-go-v2/docs/configuring-sdk/#specifying-credentials).
+	Passing this instance to the `NewFromConfig()` [function](https://aws.github.io/aws-sdk-go-v2/docs/making-requests/#newfromconfig) creates an S3 service client we've configured to connect with the Tigris endpoint.
 
 
-4. Set up Tigris Credentials. 
+4. <b>Set up Tigris Credentials</b>. 
 	To successfully connect with our Tigris Bucket, we can set our Tigris credentials as AWS SDK environment variables. 
 	
 	<b>In a local setup</b>, this should look something like:
@@ -266,7 +252,7 @@ It intelligently improves the availability of objects by automatically [replicat
 	export AWS_ACCESS_KEY_ID=TIGRIS_ACCESS_KEY_ID
 	export AWS_SECRET_ACCESS_KEY=TIGRIS_SECRET_ACCESS_KEY
 	```
-	<b>For our Go Fly App</b>, these environment variables should have already been set as secrets during the running of `fly storage create`:
+	<b>For our Go Fly App</b>, these environment variables should have already been set as [secrets](https://fly.io/docs/flyctl/secrets/) during the running of `fly storage create`:
 	
 	```output
 	? Choose a name, use the default, or leave blank to generate one: 
@@ -282,27 +268,38 @@ It intelligently improves the availability of objects by automatically [replicat
 	Secrets are staged for the first deployment
 	```
 	Of course, this would only automatically happen if the create command was run in a directory containing a `fly.toml` for our Go Fly app. 
-	On the otherhand, if that wasn't the case, we can still manually set necessary secrets likeso:
+	On the otherhand, if that wasn't the case, we can still manually set necessary [secrets](https://fly.io/docs/flyctl/secrets/) likeso:
 	```cmd
 	fly secrets set AWS_ACCESS_KEY_ID="<TIGRIS_ACCESS_KEY_ID>"
 	fly secrets set AWS_SECRET_ACCESS_KEY="<TIGRIS_SECRET_ACCESS_KEY>"
 	```
 
-5. Upload a string. Let's test out our connection by uploading a text file. We can use the AWS SDK PutObject function to do so:
+5. <b>Upload a file:</b> Aside from connecting with a Bucket, we can use other [AWS SDK functions](https://docs.aws.amazon.com/code-library/latest/ug/go_2_s3_code_examples.html). Let's use PutObject function to  upload a text file on the go likeso:
+
 ```go
-	func UploadText( ct context.Context, client *s3.Client ) (error){
-		
-		_, err = client.PutObject(context.TODO(), &s3.PutObjectInput{
-			Bucket: aws.String("<BUCKET_NAME>"),
-			Key:    aws.String("sample.txt"),
-			Body:    strings.NewReader("testing content"),
-		})
+  func Client( ctx context.Context ) (*s3.Client, error){}
 
-		return nil
-	}
+  func UploadText( ctx context.Context ) (string, error){
+      // 1. Create connection via client
+      conn, err := Client( ctx )
+
+      // 2. Upload sample file
+      if err==nil{
+        _, err = conn.PutObject(ctx, &s3.PutObjectInput{
+            Bucket: aws.String("<TIGRIS_BUCKET_NAME>"),
+            Key:    aws.String("sample.txt"),
+            Body:    strings.NewReader("testing content"),
+        })
+      }
+
+      if err!=nil{
+        return err.Error(), err
+      }else{
+        return "success",nil
+      }
+  }
 ```
-
-For further reference, please see official Tigris [documentation for AWS SDK GO](https://www.tigrisdata.com/docs/sdks/s3/aws-go-sdk/), as well as [this compact package](https://github.com/Xe/x/blob/master/tigris/tigris.go) sample for connecting with AWS SDK.
+For further reference, please see official Tigris [documentation for AWS SDK GO](https://www.tigrisdata.com/docs/sdks/s3/aws-go-sdk/), as well as [this compact package](https://github.com/Xe/x/blob/master/tigris/tigris.go) containing helpers for interacting with Tigris.
 
 ## _Bonus Points_
 
