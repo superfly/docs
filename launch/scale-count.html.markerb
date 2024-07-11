@@ -1,9 +1,7 @@
 ---
 title: Scale the Number of Machines
-objective: 
 layout: docs
-nav: firecracker
-order: 60
+nav: apps
 redirect_from: /docs/reference/scaling/
 ---
 

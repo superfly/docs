@@ -1,9 +1,7 @@
 ---
 title: Scale Machine CPU and RAM
-objective: 
 layout: docs
-nav: firecracker
-order: 50
+nav: apps
 ---
 
 You can scale Machine memory and CPU settings for entire process groups in apps that are managed by Fly Launch (`fly deploy` + `fly.toml`). If you haven't defined any process groups, then commands and settings are applied to all the Machines in your app (in the default `app` process group).

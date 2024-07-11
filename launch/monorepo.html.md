@@ -1,7 +1,7 @@
 ---
 title: Monorepo and multi-environment deployments
 layout: docs
-nav: firecracker
+nav: apps
 redirect_from: /docs/reference/monorepo/
 ---
 
