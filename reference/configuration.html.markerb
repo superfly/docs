@@ -758,7 +758,7 @@ All keys are optional and `size` has lower precedence than all other keys.
   cpus = 4
   cpu_kind = "performance"
   gpus = 1
-  gpu_kind = "a100-pcie-40gb"
+  gpu_kind = "a100-40gb"
   kernel_args = "no-hlt=true"
   host_dedication_id = "customer-id"
   processes = ["app"]
