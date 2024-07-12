@@ -6,7 +6,7 @@ toc: false
 redirect_from: /docs/machines/api-apps-resource/
 ---
 
-You can use the Apps resource to create and manage Fly Apps. A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. Learn more about [Fly Apps](/docs/reference/apps/).
+You can use the Apps resource to create and manage Fly Apps. A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. Learn more about [Fly Apps](/docs/apps/overview).
 
 <div class="right-column">
   <div class="endpoints api-card">

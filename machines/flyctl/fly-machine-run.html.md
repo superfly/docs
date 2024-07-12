@@ -201,7 +201,7 @@ For sensitive environment variables, [set secrets on the app](https://fly.io/doc
 
 ## Define a Fly Proxy network service
 
-The `--port` option defines a network service to allow the Fly Proxy to reach a local service on the Machine. This option gives you access to basic service configuration; the [Machines API](/docs/machines/api-machines-resource/) and [Fly Launch](/docs/apps/) both offer more control over the Machine's [`config.services`](/docs/machines/api-machines-resource/#machine-config-object-properties) properties.
+The `--port` option defines a network service to allow the Fly Proxy to reach a local service on the Machine. This option gives you access to basic service configuration; the [Machines API](/docs/machines/api-machines-resource/) and [Fly Launch](/docs/launch/) both offer more control over the Machine's [`config.services`](/docs/machines/api-machines-resource/#machine-config-object-properties) properties.
 
 Map any external ports, where the proxy accepts requests directed at the app, to the internal port where the service is listening on IPv4. For each port combination, specify the protocol and [connection handler(s)](/docs/networking/services/#connection-handlers), using this format: 
 

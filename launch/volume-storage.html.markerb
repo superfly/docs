@@ -13,7 +13,7 @@ Learn more:
 
 ## Launch a new app with a Fly Volume
 
-Use [Fly Launch](/docs/apps/) to create a new app with one Machine and an attached volume, and then clone the Machine to scale out.
+Use [Fly Launch](/docs/launch/) to create a new app with one Machine and an attached volume, and then clone the Machine to scale out.
 
 1. Launch a new app from your project source directory with the `--no-deploy` option so it doesn't deploy automatically. Include any required options for deploying your app, like `--image` or `--dockerfile`.
 
@@ -67,7 +67,7 @@ Use [Fly Launch](/docs/apps/) to create a new app with one Machine and an attach
 
 ## Add volumes to an existing app
 
-Add a volume to an app created with [Fly Launch](/docs/apps/).
+Add a volume to an app created with [Fly Launch](/docs/launch/).
 
 1. Add a [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) in the app's `fly.toml`, where `source` is the volume name and `destination` is the directory where the volume should be mounted on the Machine file system. For example:
 
@@ -77,25 +77,25 @@ Add a volume to an app created with [Fly Launch](/docs/apps/).
       destination = "/data"
     ```
 
-1. Run `fly status` to check the [regions](/docs/reference/regions/) of the Machines and then create the volume in the same regions as your app's Machines. For example:
+2. Run `fly status` to check the [regions](/docs/reference/regions/) of the Machines and then create the volume in the same regions as your app's Machines. For example:
 
     ```cmd
     fly volumes create <volume name> -r <region code>
     ```
 
-1. Repeat step 2 for each Machine in the process group. If you create an app using the `fly launch` command, then the app will usually have two Machines in the `app` process by default.
+3. Repeat step 2 for each Machine in the process group. If you create an app using the `fly launch` command, then the app will usually have two Machines in the `app` process by default.
 
         <div class="note icon">
         **Note:** If you have multiple Machines, then you need to create an equal number of volumes with the same name. For example, your app's `[mounts]` config specifies `source="myapp_data"` and you have three Machines in `bos` (Boston), then you need to create three volumes named `myapp_data` in `bos`. Every volume has a unique ID to allow for multiple volumes with the same name.
         </div>
 
-1. Deploy the app:
+4. Deploy the app:
 
     ```cmd
     fly deploy 
     ```
 
-1. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
+5. [Confirm that the volume is attached to a Machine](#confirm-the-volume-is-attached-to-a-machine).
 
 ## Confirm the volume is attached to a Machine
 

@@ -5,7 +5,7 @@ toc: false
 nav: apps
 ---
 
-An app on Fly.io can be anything from a simple frontend web app to a complex arrangement of processes and Machines all doing their own thing.
+An app on Fly.io can be anything from a simple frontend web app to a complex arrangement of processes and Machines all doing their own thing. Check out the [Fly Apps overview](/docs/apps/overview/) for details.
 
 
 ## Fly Launch

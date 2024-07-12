@@ -25,7 +25,7 @@ Configuration is done by different means depending on whether you're using Fly L
 
 ### Specify the GPU model
 
-Assuming that you're going the [Fly Launch](/docs/apps/) way and configuring your Machines app-wide, you can include a line like the following in your `fly.toml` file before running `fly deploy` for the first time:
+Assuming that you're going the [Fly Launch](/docs/launch/) way and configuring your Machines app-wide, you can include a line like the following in your `fly.toml` file before running `fly deploy` for the first time:
 
 ```
 vm.size = "a100-40gb"

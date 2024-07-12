@@ -15,15 +15,17 @@ Get started with our [quickstart or demo app](/docs/getting-started/)
 
 Or choose your favorite [language or framework](/docs/getting-started/get-started-by-framework/)
 
+Get the big picture with the [Fly Apps overview](/docs/apps/overview/)
+
 ---
 
-## Fly CLI
+## flyctl CLI
 
 _Use the `fly` command to create and deploy apps, control individual Machines, configure networking, and more._
 
 Install [flyctl](/docs/flyctl/install)
 
-Don't worry, it's [open source](https://github.com/superfly/flyctl+external)
+flyctl is [open source](https://github.com/superfly/flyctl+external)
 
 ---
 
