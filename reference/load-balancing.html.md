@@ -4,40 +4,36 @@ layout: docs
 nav: firecracker
 ---
 
-Fly.io routes requests to individual instances of your applications using a combination of concurrency settings specified on your application, current load, and closeness. This page describes the details of load balancing traffic to your applications on Fly.io.
+[Fly Proxy](/docs/reference/fly-proxy) routes requests to individual Machines in you apps using a combination of concurrency settings specified on your app, current load, and closeness. This page describes the details of load balancing traffic to your apps on Fly.io.
 
-## Load Balancing Strategy
+## Load balancing strategy
 
-Our load balancing strategy is:
-* Send traffic to the least loaded, closest instance
-* If multiple instances have identical load and closeness, randomly choose one
+The basic load balancing strategy is:
 
+* Send traffic to the least loaded, closest Machine
+* If multiple Machines have identical load and closeness, randomly choose one
 
 ### Load
 
-Load is determined by the [concurrency limits](/docs/reference/configuration#services-concurrency) configured for an application and the current traffic relative to those configured limits.
+Fly Proxy determines load using the [concurrency settings](/docs/reference/configuration#services-concurrency) configured for an app and the current traffic relative to those settings.
 
-The table below describes how traffic may or may not be routed to an instance based on configured `soft_limit` and `hard_limit` values.
+The table below describes how traffic may or may not be routed to a Machine based on configured `soft_limit` and `hard_limit` values.
 
-| Instance load | What happens |
+| Machine load | What happens |
 |---|---|
-| Above `hard_limit` | No new traffic will be sent to instance |
-| At or above `soft_limit`, below `hard_limit` | Traffic will only be sent to this instance if all other instances are also above their `soft_limit` |
-| Below `soft_limit` | Traffic will be sent to instance when it is closest instance that is under `soft_limit` |
+| Above `hard_limit` | No new traffic will be sent to the Machine |
+| At or above `soft_limit`, below `hard_limit` | Traffic will only be sent to this Machine if all other Machines are also above their `soft_limit` |
+| Below `soft_limit` | Traffic will be sent to the Machine when it is the closest Machine that is under `soft_limit` |
 
 ### Closeness
 
-Closeness is determined by RTT (round-trip time) between the Fly.io edge node receiving a connection or request, and the worker node where your instance runs. Even within the same region, we use different datacenters with different RTTs. These RTTs are measured constantly between all servers.
+Closeness is determined by RTT (round-trip time) between the Fly.io edge server receiving a connection or request, and the worker server where your Machine runs. Even within the same region, we use different datacenters with different RTTs. These RTTs are measured constantly between all servers.
 
-*Note:* These values are not visible to Fly.io users. We share this information here to help clarify how load balancing decisions are made.
+You can observe live RTT values between Fly.io regions using our [RTT app](https://rtt.fly.dev/).
 
-## Examples
+## Example of load balancing for a web service
 
-To help clarify how the Fly.io platform makes load balancing decisions, we provide some example configuration and scenarios:
-
-### Web service
-
-We have a web service that we know can handle 25 concurrent requests with the currently configured cpu and memory settings. So, we set the following values in our fly.toml:
+We have a hypothetical web service that we know can handle 25 concurrent requests with the configured CPU and memory settings. We set the following values in our fly.toml:
 
 ```toml
   [services.concurrency]
@@ -46,20 +42,17 @@ We have a web service that we know can handle 25 concurrent requests with the cu
     soft_limit = 20
 ```
 
-We set `type = "requests"` so Fly.io will use concurrent http requests to determine when to adjust load. We prefer this to `type = "connections"`, because our web service does work for each request and our users may make multiple requests over a single connection (e.g., with HTTP/2).
+We set `type = "requests"` so Fly.io will use concurrent HTTP requests to determine when to adjust load. We prefer this to `type = "connections"`, because our web service does work for each request and our users may make multiple requests over a single connection (e.g., with HTTP/2). 
 
-We choose to set our `soft_limit` to 20, so we have a little room for Fly.io to shift load to other instances before a single instance becomes overwhelmed.
+We set the `soft_limit` to 20, so we have a little room for Fly Proxy to shift load to other Machines before a single Machine becomes overwhelmed.
 
-We deployed 10 VMs in four regions: `ams`, `bom`, `sea`, and `sin`, with three of those in `ams`.
+We deploy 10 Machines in four regions: `ams` (Amsterdam), `bom` (Mumbai), `sea` (Seattle), and `sin` (Singapore), with three of those in `ams`.
 
-In this contrived example, all of the users are currently in Amsterdam (ams region) so their traffic is arriving at one of the Fly.io edges in Amsterdam. There are currently 3 instances of our web service running in Amsterdam.
+In this contrived example, all of the users are currently in Amsterdam, so the traffic is arriving at one of the Fly.io edges in Amsterdam. Here's what happens as the number of concurrent HTTP requests from users in Amsterdam increases:
 
-When users in Amsterdam generate up to 60 concurrent http requests, those requests are divided evenly between the three application instances in the ams region. Closeness of the worker and edge will determine which of the 3 instances each request goes to.
+- 60 concurrent requests: Requests are divided evenly between the 3 Machines in the `ams` region. Closeness of the worker and edge will determine which of the 3 Machines each request goes to.
+- 61+ concurrent requests: 60 of those requests will be sent to the 3 Machines in the `ams` region and the rest will be sent to the closest Machines in other regions.
+- 200+ concurrent requests: All Machines are at their `soft_limit`, so Fly Proxy will start routing requests to the `ams` Machines again. For example, the 201st concurrent request will go to a Machine in the `ams` region that is currently at its `soft_limit`.
+- 250 concurrent requests: All Machines are at their `hard_limit`. The 251st concurrent request will get queued by Fly Proxy until a Machine is below its `hard_limit`.
 
-When users generate 61+ concurrent requests from Amsterdam, 60 of those requests will be sent to the 3 instances in the ams region and then the rest will be sent to instances in other regions based on which ones are closest.
-
-That keeps going until we get to 200+ concurrent requests. At 200 concurrent requests all application instances are at their `soft_limit`, so Fly.io will start routing requests to the ams instances again. E.g., the 201st concurrent request will go to an application instance in the ams region that is currently at its `soft_limit`.
-
-When users generate 250 concurrent requests, all instances will be at their `hard_limit`. The 251st concurrent request will get delayed by the Fly Proxy until an instance is below its `hard_limit`.
-
-If traffic is far above the `hard_limit` for a long period of time, Fly.io may start returning 503 Service Unavailable responses for requests that are not able to be routed to an instance.
+If traffic is far above the `hard_limit` for a long period of time, Fly Proxy might start returning 503 Service Unavailable responses for requests that are not able to be routed to a Machine.

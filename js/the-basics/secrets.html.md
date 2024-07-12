@@ -2,7 +2,7 @@
 title: Secrets
 layout: framework_docs
 objective: Making credentials available to your production
-order: 5
+order: 6
 ---
 
 Running an application often involves a number of credentials, containing such things as database passwords, S3 buckets, and session encryption keys.

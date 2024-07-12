@@ -1,0 +1,60 @@
+---
+title: Fly Proxy
+layout: docs
+nav: firecracker
+---
+
+Fly Proxy is the omnipresent routing layer between the public Internet and the Fly.io platform and within the global WireGuard mesh that encompasses everything that runs on Fly.io. Every Fly.io edge and worker runs Fly Proxy to do the heavy lifting of moving data around our infrastructure: managing traffic and load balancing, applying protocol handlers, and connecting to services.
+
+A summary of things Fly Proxy does:
+
+- accept client connections and match them to your app's Machines in the closest region
+- handle backhaul between Fly.io servers over WireGuard tunnels
+- route requests to private Flycast addresses in your 6PN (private network)
+- load balance requests to your app's Machines
+- handle connections for different protocols:
+  - terminate TLS by default for most public apps
+  - terminate TLS for Postgres connections
+  - write PROXY protocol headers on TCP connections
+- autostart/autostop Machines based on traffic to your app
+- dynamic request routing with the `fly-replay` response header
+
+## How Fly Proxy routes incoming public requests
+
+When one of your app's users makes a request to your app on Fly.io, the request lands on our closest edge server. Fly Proxy (on the edge server) checks out the details of the request, adds the appropriate headers, redirects HTTP traffic to HTTPS, and routes the request through the WireGuard tunnel backhaul to the nearest healthy worker server that hosts your app's Machines. Fly Proxy (on the worker this time) sends the request to a Machine running your app over a local virtual interface, so your app can do its thing. Fly Proxy handles the response back from the Machine to the worker, from the worker to the edge server, and back to the user.
+
+Fly Proxy gets all its information about apps and Machines and services from corrosion, our service catalog that stores the state of pretty much everything on the Fly.io platform. Corrosion provides gossip-based service discovery that's highly-distributed, covering all our edges and regions.
+
+## How Fly Proxy routes requests over your private network (6PN)
+
+Apps can communicate with each other by default on your [private network](/docs/networking/private-networking/) without Fly Proxy's help, but if you want to use Fly Proxy features, then you can do that with [Flycast](/docs/networking/private-networking/#flycast-private-fly-proxy-services).
+
+When you assign a Flycast address to your app, the traffic gets routed through Fly Proxy while remaining entirely in your private network. When App 1 makes a request to App 2 in the same private network, Fly Proxy on the worker hosting App 1's Machines checks out the details of the request, adds the appropriate headers, and routes the request through the same WireGuard tunnel backhaul to the nearest healthy worker that hosts Machines for App 2. Fly Proxy on that server sends the request to a Machine running App 2.
+
+## Load balancing
+
+Fly Proxy routes requests to individual Machines in your app using a combination of concurrency settings in your app config, current load, and closeness.
+
+For more information and an example describing how Fly Proxy balances load, see [Load balancing](http://127.0.0.1:4567/docs/reference/load-balancing/).
+
+## Connection handlers
+
+Connection handler settings tell Fly Proxy how to convert TCP requests for specific protocols before they reach your app. Most standard web services use both `http` and `tls` handlers by default and there's an optional handler for apps that use PROXY protocol. Postgres connections get their own `pg_tls` handler.
+
+Handlers aren't mandatory; if you don't use them, then Fly Proxy just forwards TCP to your app with no changes.
+
+Learn more about [connection handlers](/docs/networking/services/#connection-handlers).
+
+## Autostart and autostop Machines
+
+Fly Proxy can start and stop existing Machines based on incoming requests, so that your app can accommodate bursts in demand without keeping extra Machines running constantly.
+
+Fly Proxy uses the same concurrency settings for autostart/autostop as for load balancing to determine when Machines have excess capacity and can be stopped.
+
+Learn more about [how autostart/autostop works and how to configure it](/docs/apps/autostart-stop/). 
+
+## Dynamic request routing with `fly-replay`
+
+The `fly-replay` response header instructs Fly Proxy to redeliver (replay) the original request to another region or Machine in your app, or even another app in your organization. Your app needs to send a response with the `fly-replay` header specifying the region, Machine, or app and Fly Proxy replays the whole request as instructed.
+
+Learn more about [dynamic request routing](/docs/networking/dynamic-request-routing/).
