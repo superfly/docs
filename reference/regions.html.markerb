@@ -14,51 +14,56 @@ Run <code>fly platform regions</code> to get a list of regions.
 
 ## Fly.io Regions
 
-|Region ID| Region Location | Gateway&#42; | [Launch Plan or Higher](https://fly.io/plans) Only&#42;&#42; |
-|---------|-----------------|---------|---------|
-ams |    Amsterdam, Netherlands         | ✓
-arn |    Stockholm, Sweden              |
-atl |    Atlanta, Georgia (US)          |
-bog |    Bogotá, Colombia               |
-bom |    Mumbai, India                  |  | ✓ |
-bos |    Boston, Massachusetts (US)     |
-cdg |    Paris, France                  | ✓
-den |    Denver, Colorado (US)          |
-dfw |    Dallas, Texas (US)             | ✓
-ewr |    Secaucus, NJ (US)              |
-eze |    Ezeiza, Argentina              |
-fra |    Frankfurt, Germany             | ✓ | ✓ |
-gdl |    Guadalajara, Mexico            |
-gig |    Rio de Janeiro, Brazil         |
-gru |    Sao Paulo, Brazil              |
-hkg |    Hong Kong, Hong Kong           | ✓
-iad |    Ashburn, Virginia (US)         | ✓
-jnb |    Johannesburg, South Africa     |
-lax |    Los Angeles, California (US)   | ✓
-lhr |    London, United Kingdom         | ✓
-mad |    Madrid, Spain                  |
-mia |    Miami, Florida (US)            |
-nrt |    Tokyo, Japan                   | ✓
-ord |    Chicago, Illinois (US)         | ✓
-otp |    Bucharest, Romania             |
-phx |    Phoenix, Arizona (US)          |
-qro |    Querétaro, Mexico              |
-scl |    Santiago, Chile                | ✓
-sea |    Seattle, Washington (US)       | ✓
-sin |    Singapore, Singapore           | ✓
-sjc |    San Jose, California (US)      | ✓
-syd |    Sydney, Australia              | ✓
-waw |    Warsaw, Poland                 |
-yul |    Montreal, Canada               |
-yyz |    Toronto, Canada                | ✓
+| Region ID | Region Location               | Gateway     | [Launch Plan or Higher](https://fly.io/plans)         | Edge - No Deploys |
+|-----------|-------------------------------|-------------|-------------------------------------------------------|-------------------|
+| ams       | Amsterdam, Netherlands        | ✓           |                                                       |                  |
+| arn       | Stockholm, Sweden             |             |                                                       |                  |
+| atl       | Atlanta, Georgia (US)         |             |                                                       |                  |
+| bog       | Bogotá, Colombia              |             |                                                       |                  |
+| bom       | Mumbai, India                 |             | ✓                                                     |                  |
+| bos       | Boston, Massachusetts (US)    |             |                                                       |                  |
+| cdg       | Paris, France                 | ✓           |                                                       |                  |
+| den       | Denver, Colorado (US)         |             |                                                       |                  |
+| dfw       | Dallas, Texas (US)            | ✓           |                                                       |                  |
+| dxb       | Dubai, United Arab Emirates   |             |                                                       | ✓                |
+| ewr       | Secaucus, NJ (US)             |             |                                                       |                  |
+| eze       | Ezeiza, Argentina             |             |                                                       |                  |
+| fra       | Frankfurt, Germany            | ✓           | ✓                                                     |                  |
+| gdl       | Guadalajara, Mexico           |             |                                                       |                  |
+| gig       | Rio de Janeiro, Brazil        |             |                                                       |                  |
+| gru       | Sao Paulo, Brazil             |             |                                                       |                  |
+| hkg       | Hong Kong, Hong Kong          | ✓           |                                                       |                  |
+| iad       | Ashburn, Virginia (US)        | ✓           |                                                       |                  |
+| ist       | Istanbul, Turkey              |             |                                                       | ✓                |
+| jnb       | Johannesburg, South Africa    |             |                                                       |                  |
+| lax       | Los Angeles, California (US)  | ✓           |                                                       |                  |
+| lhr       | London, United Kingdom        | ✓           |                                                       |                  |
+| mad       | Madrid, Spain                 |             |                                                       |                  |
+| mel       | Melbourne, Australia          |             |                                                       |  ✓               |
+| mia       | Miami, Florida (US)           |             |                                                       |                  |
+| nrt       | Tokyo, Japan                  | ✓           |                                                       |                  |
+| ord       | Chicago, Illinois (US)        | ✓           |                                                       |                  |
+| otp       | Bucharest, Romania            |             |                                                       |                  |
+| phx       | Phoenix, Arizona (US)         |             |                                                       |                  |
+| qro       | Querétaro, Mexico             |             |                                                       |                  |
+| scl       | Santiago, Chile               | ✓           |                                                       |                  |
+| sea       | Seattle, Washington (US)      | ✓           |                                                       |                  |
+| sin       | Singapore, Singapore          | ✓           |                                                       |                  |
+| sjc       | San Jose, California (US)     | ✓           |                                                       |                  |
+| syd       | Sydney, Australia             | ✓           |                                                       |                  |
+| waw       | Warsaw, Poland                |             |                                                       |                  |
+| yul       | Montreal, Canada              |             |                                                       |                  |
+| yyz       | Toronto, Canada               | ✓           |                                                       |                  |
 
-&#42; You can host your apps in any region; "Gateway" regions also have WireGuard gateways, through which you connect to your organization's private network.
+You can host your apps in any region other than those marked "Edge - No deploy".
 
-&#42;&#42; For some higher-demand regions we restrict scaling up Machines to organizations with the [Launch, Scale, or Enterprise plans](https://fly.io/plans).
+- **Gateway regions:** "Gateway" regions also have WireGuard gateways, through which you connect to your organization's private network.
+- **Launch Plan or higher region:** For some higher-demand regions, we restrict scaling up Machines to organizations with the [Launch, Scale, or Enterprise plans](https://fly.io/plans).
+- **Edge - No deploys:** Edge servers receive inbound traffic from the Internet destined for apps on the Fly.io platform. Fly Proxy routes traffic from edges to regional worker servers.
 
-## _Discovering your Application's Region_
+## Discovering your app's region
 
-You can see the list of Fly.io regions any time with [`fly platform regions`](https://fly.io/docs/flyctl/platform-regions).
+View the list of Fly.io regions with [`fly platform regions`](https://fly.io/docs/flyctl/platform-regions).
 
 You can see which regions your app is running in with [`fly status`](https://fly.io/docs/flyctl/status/).
 
