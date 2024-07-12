@@ -42,7 +42,7 @@ Use autostart/autostop to tell the Fly Proxy to start and stop Machines based on
 
 Fly Proxy uses the concurrency `soft_limit` to determine if Machines have capacity. Learn more about [autostart/autostop](/docs/apps/autostart-stop/).
 
-**Using the Machines API:** To add or change the autotart/autostop settings with the Machines API, use the settings in the `services` object of the [Machine config](/docs/machines/api/machines-resource/#machine-config-object-properties) in your create or update calls.
+**Using the Machines API:** To add or change the autostart/autostop settings with the Machines API, use the settings in the `services` object of the [Machine config](/docs/machines/api/machines-resource/#machine-config-object-properties) in your create or update calls.
 
 #### 2. Create more Machines
 
