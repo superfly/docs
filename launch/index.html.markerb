@@ -6,7 +6,11 @@ redirect_from:
   - /launch/
 ---
 
-Fly Launch helps you configure and orchestrate your app. If you followed one of the [Getting started](/docs/getting-started/) guides, then you're already using Fly Launch.
+Fly Launch helps you configure and orchestrate your app. If you followed one of our [Getting started](/docs/getting-started/) guides, then you're already using Fly Launch.
+
+<figure>
+  <img src="/static/images/docs-island.webp" alt="">
+</figure>
 
 Fly Launch includes:
 
@@ -37,7 +41,3 @@ Learn how to work with Fly Launch:
 - [Deploy an app with GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/)
 - [Deploy review apps with GitHub Actions (Blueprint)](/docs/blueprints/review-apps-guide/)
 - [Deploy monorepo and multi-environment apps](/docs/launch/monorepo/)
-
-<figure>
-  <img src="/static/images/docs-island.webp" alt="">
-</figure>
