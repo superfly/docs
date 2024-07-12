@@ -4,17 +4,17 @@ layout: docs
 nav: firecracker
 ---
 
-You have an private, or internal, app that communicates only with other apps on your [private network](/docs/networking/private-networking/). This private app might be a database or authentication server, or any other "backend" app that you don't want exposed to the public Internet. You want the app's Machines to stop when they're not serving requests from your other apps, and start again automatically when needed.
+You have a private, or internal, app that communicates only with other apps on your [private network](/docs/networking/private-networking/). This private app might be a database, authentication server, or any other "backend" app that you don't want exposed to the public Internet. You want the app's Machines to stop when they're not serving requests from your other apps, and start again automatically when needed.
 
 To use the Fly Proxy autostart and autostop feature you need to configure services in `fly.toml`, like you would for a public app. But instead of using a public Anycast address, you assign a Flycast address to expose those services only on your private network.
 
-This blueprint focuses on autostart and autostop to control Machines based on incoming requests. But when you use Flycast for private apps you also get other Fly Proxy features like geographically aware load balancing.
+This blueprint focuses on using autostart and autostop to control Machines based on incoming requests. But when you use Flycast for private apps you also get other Fly Proxy features like geographically aware load balancing.
 
 Learn more about [Flycast](/docs/networking/private-networking/#flycast-private-fly-proxy-services).
 
 ## Create a new private app with a Flycast address
 
-When you run `fly launch` to create a new app, it automatically assigns your app a public IPv6 address and a shared public IPv4 address. If you know your app won't need to be reachable from the Internet, then you can inform Fly Launch with the following option:
+When you run `fly launch` to create a new app, it automatically assigns your app a public IPv6 address and a shared public IPv4 address. If you know your app won't need to be reachable from the Internet, you can inform Fly Launch with the following option:
 
 ```
 fly launch --no-public-ips
@@ -77,7 +77,7 @@ Whether you're creating a new app or making an existing app private, there are a
 
 ### Add services in your `fly.toml` config file
 
-If your app was private, then you might not have configured an `[http_services]` or `[services]` section in `fly.toml` because you didn't want it reachable through the public Internet. Now that you removed the public IPs, you can safely add services to allow access to the app on your private network and enable Fly Proxy to control Machines and load balance traffic.
+If your app was private, you might not have configured an `[http_services]` or `[services]` section in `fly.toml` because you didn't want it reachable through the public Internet. Now that you removed the public IPs, you can safely add services to allow access to the app on your private network and enable Fly Proxy to control Machines and load balance traffic.
 
 Here's an example `fly.toml` snippet:
 
