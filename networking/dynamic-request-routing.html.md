@@ -14,7 +14,7 @@ Sometimes it's useful, or necessary, to route requests to other regions, other a
 
 ## The `fly-replay` response header
 
-Apps may append a `fly-replay` header to responses. This instructs the Fly proxy to redeliver (replay) the original request in another region, or to replay it to another app in the same Fly organization.
+Apps may append a `fly-replay` header to responses. This instructs the [Fly Proxy](/docs/reference/fly-proxy) to redeliver (replay) the original request in another region, or to replay it to another app in the same Fly organization.
 
 The content of the `fly-replay` header fields tells our proxy which magic to perform, and the proxy takes it from there. If the target region doesn't host any healthy instances for the target app, the proxy throws an error.
 
