@@ -958,13 +958,32 @@ Each `[[statics]]` block maps a URL prefix to a path inside your container. You 
 
 The "guest path" --- the path inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
 
+Alternatively, you can serve statics directly from object storage using [Tigris](/docs/reference/tigris/). Similar to machine statics, requests under `url_prefix` are served from static assets in your Tigris bucket under `guest_path`. The same rules apply for overlapping URL prefixes.
+
+```toml
+[[statics]]
+  guest_path = "/app/public"
+  url_prefix = "/public"
+  tigris_bucket = "my-bucket"
+```
+
+Serving statics from Tigris supports index documents. When an index document is specified, requests to the root domain of the URL prefix serve the index document.
+
+```toml
+[[statics]]
+  guest_path = "/app/public"
+  url_prefix = "/public"
+  tigris_bucket = "my-bucket"
+  index_document = "index.html"
+```
+
 ### Caveats
 
 This feature should not be compared directly with a CDN, for the following reasons:
 
 * This feature does not exempt you from having to run a web service in your Machine.
 
-* Statics will not find `index.html` at the root. The full path must be requested.
+* Statics will not find `index.html` at the root, except when serving statics from Tigris directly. The full path must be requested.
 
 * You can't set `Cache-Control` or any other headers on assets. If you need those, you'll need to deliver them from your application and set the relevant headers.
 
