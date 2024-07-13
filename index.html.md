@@ -7,15 +7,19 @@ nav: firecracker
 
 <div class="index-page">
 
-## Launch an app
+## Get started
 
-_Fly Launch is app configuration, provisioning, deployment, scaling, and orchestration with our CLI, all built on Fly Machines._
-
-Get started with our [quickstart or demo app](/docs/getting-started/)
+Try our [quickstart or demo app](/docs/getting-started/)
 
 Or choose your favorite [language or framework](/docs/getting-started/get-started-by-framework/)
 
-Get the big picture with the [Fly Apps overview](/docs/apps/overview/)
+---
+
+## Apps on Fly.io
+
+_Fly Launch is app configuration, provisioning, deployment, scaling, and orchestration with our flyctl CLI._
+
+[Work with your apps](/docs/apps/): create, configure, deploy, and scale with Fly Launch, set secrets, and prepare for production
 
 ---
 

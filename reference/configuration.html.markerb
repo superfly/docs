@@ -6,7 +6,7 @@ nav: firecracker
 
 You can configure an app for deployment on Fly.io using a `fly.toml` file. Configuration of builds, environment variables, internet-exposed services, disk mounts, and release commands go here.
 
-## Fly Launch config files
+## App configuration files
 
 Most of the time you'll use the `fly.toml` file that you get automatically when you run `fly launch` to create an app. There are also ways to re-use config files and to generate them in different formats.
 
