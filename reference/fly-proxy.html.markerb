@@ -35,7 +35,7 @@ When you assign a Flycast address to your app, the traffic gets routed through F
 
 Fly Proxy routes requests to individual Machines in your app using a combination of concurrency settings in your app config, current load, and closeness.
 
-For more information and an example describing how Fly Proxy balances load, see [Load balancing](http://127.0.0.1:4567/docs/reference/load-balancing/).
+For more information and an example describing how Fly Proxy balances load, see [Load balancing](/docs/reference/load-balancing/).
 
 ## Connection handlers
 
