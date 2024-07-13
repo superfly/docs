@@ -131,7 +131,7 @@ Most Dockerfiles expect some configuration settings through `ENV`. The generated
 
 Add whatever values your Dockerfile or container requires.
 
-Sometimes you have secrets that shouldn't be checked in to `git` or shared publicly. For those settings, you can set them using [`fly secrets`](https://fly.io/docs/reference/secrets/#setting-secrets).
+Sometimes you have secrets that shouldn't be checked in to `git` or shared publicly. For those settings, you can set them using [`fly secrets`](https://fly.io/docs/apps/secrets/#set-secrets).
 
 ```cmd
 fly secrets set MY_SECRET=romance

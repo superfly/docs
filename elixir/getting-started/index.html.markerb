@@ -57,7 +57,7 @@ To recap, the `fly launch` command  detected that we are using Phoenix, set up a
 
 You may also have some secrets you'd like set on your app.
 
-Use [`fly secrets`](https://fly.io/docs/reference/secrets/#setting-secrets) to configure those.
+Use [`fly secrets`](/docs/apps/secrets/) to configure those.
 
 ```cmd
 fly secrets set MY_SECRET_KEY=my_secret_value

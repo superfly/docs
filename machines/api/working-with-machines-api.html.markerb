@@ -8,7 +8,7 @@ order: 1
 
 The Fly Machines API provides resources to create, destroy, and manage Fly Apps, Fly Machines, and Fly Volumes. Refer to the following reference docs for the usage of each:
 
-**[Apps resource](/docs/machines/api/apps-resource/)** - Every Fly Machine belongs to a [Fly App](/docs/reference/apps/).
+**[Apps resource](/docs/machines/api/apps-resource/)** - Every Fly Machine belongs to a [Fly App](/docs/apps/overview/).
 
 **[Machines resource](/docs/machines/api/machines-resource/)** - Fly Machines are our fast-launching VMs.
 
@@ -51,7 +51,7 @@ $ export FLY_API_TOKEN=$(fly auth token)
 
 The `fly auth token` command returns the token currently in use by `flyctl`. You can also create a new auth token in the Tokens section of the Fly.io dashboard.
 
-To set an access token as an environment variable on Fly Machines, use a [secret](/docs/reference/secrets/); for example:
+To set an access token as an environment variable on Fly Machines, use a [secret](/docs/apps/secrets/); for example:
 
 ```cmd
 fly secrets set FLY_API_TOKEN=$(fly auth token)

@@ -201,7 +201,7 @@ For sensitive environment variables, [set secrets on the app](https://fly.io/doc
 
 ## Define a Fly Proxy network service
 
-The `--port` option defines a network service to allow the Fly Proxy to reach a local service on the Machine. This option gives you access to basic service configuration; the [Machines API](/docs/machines/api-machines-resource/) and [Fly Launch](/docs/apps/) both offer more control over the Machine's [`config.services`](/docs/machines/api-machines-resource/#machine-config-object-properties) properties.
+The `--port` option defines a network service to allow the Fly Proxy to reach a local service on the Machine. This option gives you access to basic service configuration; the [Machines API](/docs/machines/api-machines-resource/) and [Fly Launch](/docs/launch/) both offer more control over the Machine's [`config.services`](/docs/machines/api-machines-resource/#machine-config-object-properties) properties.
 
 Map any external ports, where the proxy accepts requests directed at the app, to the internal port where the service is listening on IPv4. For each port combination, specify the protocol and [connection handler(s)](/docs/networking/services/#connection-handlers), using this format: 
 
@@ -224,7 +224,7 @@ fly machine run . --port 80/tcp:http \
 
 ## Set Fly Proxy auto start and auto stop
 
-The `--autostart` and `--autostop` flags only work on Machines with Fly Proxy services configured. [Read more about Fly Proxy auto start and auto stop](/docs/apps/autostart-stop/#how-it-works).
+The `--autostart` and `--autostop` flags only work on Machines with Fly Proxy services configured. [Read more about Fly Proxy auto start and auto stop](/docs/launch/autostart-stop/#how-it-works).
 
 In a Machine service's configuration, `autostop` and `autostart` settings are optional.
 
@@ -359,7 +359,7 @@ flyctl Base64-encodes the data and stores the result in the `files.raw_value` pr
 
 ### Make a secret available in a file
 
-[Fly Secrets](/docs/reference/secrets/) are stored in an encrypted vault, and by default they are available as environment variables on each of the app's Machines.
+[Fly Secrets](/docs/apps/secrets/) are stored in an encrypted vault, and by default they are available as environment variables on each of the app's Machines.
 
 You can make a secret available in a file, rather than an environment variable.
 

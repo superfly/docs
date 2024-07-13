@@ -1,7 +1,8 @@
 ---
 title: Tips to fine-tune and (not) benchmark your app on Fly.io
 layout: docs
-nav: firecracker
+nav: apps
+redirect_from: /docs/reference/fine-tune-apps/
 ---
 
 It’s safe to assume Fly.io can support thousands of requests or connections per second and can keep hundreds of thousands of them live at any given moment. This  is even truer when the clients connect from multiple geographic locations.
@@ -75,7 +76,7 @@ Refer to our guidelines for [concurrency settings](/docs/reference/concurrency/)
 
 ### Auto stop and start feature
 
-[Auto stop and start](/docs/apps/autostart-stop/) can be turned off if you want to test the performance of your app without that variable.
+[Auto stop and start](/docs/launch/autostart-stop/) can be turned off if you want to test the performance of your app without that variable.
 
 If you don’t turn off auto stop and start, then you’ll likely have some pretty high p99 values due to the initial cost of the Fly Proxy queueing connections while waiting for the Machine to start.
 

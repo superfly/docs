@@ -7,7 +7,7 @@ categories:
   - elixir
 ---
 
-In this guide we'll deploy [Livebook](https://livebook.dev+external), the interactive Elixir notebook app, to a single Fly Machine using the [Fly Launch](/docs/apps/) approach. 
+In this guide we'll deploy [Livebook](https://livebook.dev+external), the interactive Elixir notebook app, to a single Fly Machine using the [Fly Launch](/docs/launch/) approach. 
 
 We'll give Livebook a 1GB [persistent volume](/docs/volumes/) on which to store notebooks and other data.
 

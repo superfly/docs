@@ -1,10 +1,11 @@
 ---
 title: Guidelines for concurrency settings
 layout: docs
-nav: firecracker
+nav: apps
+redirect_from: /docs/reference/concurrency/
 ---
 
-Concurrency settings are used by the Fly Proxy for important things like [load balancing](/docs/reference/load-balancing/#load-balancing-strategy) and [autostart/autostop](/docs/apps/autostart-stop/) for Machines.
+Concurrency settings are used by the Fly Proxy for important things like [load balancing](/docs/reference/load-balancing/#load-balancing-strategy) and [autostart/autostop](/docs/launch/autostart-stop/) for Machines.
 
 The following concurrency settings apply per Machine and per service in your app:
 

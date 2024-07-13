@@ -1,18 +1,16 @@
 ---
-title: Get Information about an App
-objective: 
+title: Get information about an app
 layout: docs
-nav: firecracker
-order: 15
+nav: apps
 ---
 
 <figure>
   <img src="/static/images/docs-books.webp" alt="">
 </figure>
 
-Once your Fly App is launched, `flyctl` has various tools for getting information about it. You can also find a lot of information on your Fly.io [web dashboard](https://fly.io/dashboard).
+Once your Fly App is launched, `flyctl` has various tools for getting information about it. You can also find a lot of information on your Fly.io [dashboard](https://fly.io/dashboard).
 
-## Find all your Apps
+## Find all your apps
 
 You can see a list of all your Fly Apps:
 
@@ -25,7 +23,7 @@ testrun       personal        deployed        machines        21h17m ago
 my-app        personal        suspended       machines        2023-11-15T23:33:07Z
 ```
 
-## App Overviews
+## App overviews
 
 If you want a brief app overview, including a list of Machines on that app with their current status, use `fly status`:
 
@@ -108,18 +106,19 @@ TCP             80 => 8080 [HTTP]       True
 
 ## Public IP addresses
 
-Find your app's public Anycast IPs with `fly ips list`.
+Find your app's public Anycast IPs and private Flycast IPs with `fly ips list`.
 
 ```cmd
 fly ips list
 ```
 ```out
-VERSION IP                      TYPE            REGION  CREATED AT           
-v6      2a09:8280:1::d285       public          global  2023-01-25T21:35:29Z
-v4      66.241.125.211          public (shared)           
+VERSION	IP                  	TYPE              	REGION	CREATED AT
+v6     	2a09:8280:1::2d:678b	public (dedicated)	global	Sep 1 2023 19:47
+v6     	fdaa:2:45b:0:1::23  	private           	global	Mar 16 2024 18:20
+v4     	66.241.124.63       	public (shared)   	      	Jan 1 0001 00:00
 ```
 
-Read more about [Public Network Services](/docs/networking/services/) and [Private Networking](/docs/networking/private-networking/).
+Read more about [Public networking](/docs/networking/services/) and [Private networking](/docs/networking/private-networking/).
 
 
 ## Check on it from inside
@@ -153,10 +152,9 @@ tmpfs             113224      0    113224   0% /sys/fs/cgroup
 <div class="callout">If you are running an interactive command (like a shell, IEx, Django management command, or the Rails console), you may need to use the `--pty` flag. This tells the SSH server to run the command in a pseudo-terminal. (If you're familiar with OpenSSH, this is like the `-t` flag for `ssh`.)</div>
 
 
-## Inspect the Current Configuration of a Deployed App or Machine
+## Inspect the current configuration of a deployed app or Machine
 
 Machines can be configured individually, but Fly Launch applies the app's config on `fly deploy` to all Machines that are administered by the app. Display the app configuration in JSON format with `fly config show`.
-
 
 ### Show the app config
 
@@ -273,4 +271,4 @@ fly logs -a testrun
 
 `fly logs` stays open, watching the logs, until you stop it (<kbd>ctrl-C</kbd>).
 
-You can also [ship logs to an external service](/blog/shipping-logs/).
+Learn more about [logging on Fly.io](/docs/metrics-and-logs/logs/).

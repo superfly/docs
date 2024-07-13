@@ -150,7 +150,7 @@ You probably don't need to make any changes to our demo app. But when you do mak
 fly deploy
 ```
 
-For more info about how `fly deploy` works, see [Deploy a Fly App](/docs/apps/deploy/).
+Now that you have a working demo app, learn [what you can do with Fly Launch](/docs/launch/).
 
 ## Delete the demo app
 
@@ -162,7 +162,7 @@ fly apps destroy
 
 ## Grow and scale
 
-Check out some of the ways you can increase availability, capacity, and performance with Fly.io:
+Read about some of the ways you can increase availability, capacity, and performance with Fly.io:
 
 * Follow the blueprint for [extra Machines for more resilient apps](/docs/blueprints/resilient-apps-multiple-machines/)
 * Read up on [App availability and resiliency](/docs/reference/app-availability/)

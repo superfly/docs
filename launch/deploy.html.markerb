@@ -1,17 +1,17 @@
 ---
-title: Deploy a Fly App
+title: Deploy an app
 layout: docs
-nav: firecracker
-order: 30
+nav: apps
+redirect_from: /docs/apps/deploy/
 ---
 
 <figure>
   <img src="/static/images/docs-apps.webp" alt="">
 </figure>
 
-The `fly deploy` flyctl command builds your Fly App and spins it up on one or more Fly Machines, applying the configuration specified in a local `fly.toml` file. 
+A feature of Fly Launch, the `fly deploy` flyctl command builds your app and spins it up on one or more Fly Machines, applying the configuration specified in a local `fly.toml` file.
 
-Whether you've run [`fly launch`](/docs/apps/launch/) with the `--no-deploy` option, or want to apply changes to your deployed Fly App's source or configuration, you can make a new release by running 
+Whether you've run [`fly launch`](/docs/launch/create/) with the `--no-deploy` option, or want to apply changes to your deployed app's source or configuration, you can make a new release by running 
 
 ```cmd
 fly deploy
@@ -101,7 +101,7 @@ Updating existing machines in 'example-app-8803' with canary strategy
 
 You can [add an IP address](/docs/networking/services/#ip-addresses) to an App, for example, without redeploying.
 
-Adding a [secret](/docs/reference/secrets/) to the App does require a restart, so `fly secrets set` triggers a new deployment.
+Adding a [secret](/docs/apps/secrets/) to the App does require a restart, so `fly secrets set` triggers a new deployment.
 
 ## Smoke checks
 
@@ -109,5 +109,5 @@ Smoke checks monitor Machines during deployment, for about 10 seconds after a Ma
 
 ## Related topics
 
-- [Fly Launch](/docs/apps/launch/)
+- [Create a new app with Fly Launch](/docs/launch/create/)
 - [Troubleshooting your deployment](/docs/getting-started/troubleshooting/)

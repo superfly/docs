@@ -7,23 +7,29 @@ nav: firecracker
 
 <div class="index-page">
 
-## Launch an app
+## Get started
 
-_Fly Launch is app configuration, provisioning, deployment, scaling, and orchestration with our CLI, all built on Fly Machines._
-
-Get started with our [quickstart or demo app](/docs/getting-started/)
+Try our [quickstart or demo app](/docs/getting-started/)
 
 Or choose your favorite [language or framework](/docs/getting-started/get-started-by-framework/)
 
 ---
 
-## Fly CLI
+## Apps on Fly.io
+
+_Fly Launch is app configuration, provisioning, deployment, scaling, and orchestration with our flyctl CLI._
+
+[Work with your apps](/docs/apps/): create, configure, deploy, and scale with Fly Launch, set secrets, and prepare for production
+
+---
+
+## flyctl CLI
 
 _Use the `fly` command to create and deploy apps, control individual Machines, configure networking, and more._
 
 Install [flyctl](/docs/flyctl/install)
 
-Don't worry, it's [open source](https://github.com/superfly/flyctl+external)
+flyctl is [open source](https://github.com/superfly/flyctl+external)
 
 ---
 

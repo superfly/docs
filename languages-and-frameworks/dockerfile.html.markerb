@@ -59,7 +59,7 @@ Most Dockerfiles expect some configuration settings through `ENV`. Add your cust
 
 Add the values your Dockerfile requires.
 
-Sometimes you have secrets that shouldn't be checked in to `git` or shared publicly. You can set secrets using the [`fly secrets`](/docs/reference/secrets/#set-secrets) command. For example:
+Sometimes you have secrets that shouldn't be checked in to `git` or shared publicly. You can set secrets using the [`fly secrets`](/docs/apps/secrets/#set-secrets) command. For example:
 
 ```cmd
 flyctl secrets set MY_SECRET=romance

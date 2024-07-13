@@ -256,7 +256,7 @@ Next, you need to modify your Dockerfile to mount a secret. The easiest way to d
 npx dockerfile --mount-secret=DATABASE_URL
 ```
 
-It is possible to mount multiple secrets, and you can read more about [mounting secrets](https://fly.io/docs/reference/build-secrets/#mounting-secrets) for further details.
+It is possible to mount multiple secrets, and you can read more about [mounting secrets](/docs/apps/build-secrets/#mounting-secrets) for further details.
 
 Finally, you need to pass the secret on each deploy:
 

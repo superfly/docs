@@ -1,9 +1,8 @@
 ---
 title: Automatically stop and start Machines
-objective:
 layout: docs
-nav: firecracker
-order: 65
+nav: apps
+redirect_from: /docs/apps/autostart-stop/
 ---
 
 <figure>

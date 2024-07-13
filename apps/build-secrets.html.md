@@ -1,10 +1,11 @@
 ---
 title: Build Secrets
 layout: docs
-nav: firecracker
+nav: apps
+redirect_from: /docs/reference/build-secrets/
 ---
 
-You can set [secrets](/docs/reference/secrets/) for your applications, but these are only available at _run-time_. They aren't available when building your Docker image without a little extra work.
+You can set [secrets](/docs/apps/secrets/) for your applications, but these are only available at _run-time_. They aren't available when building your Docker image without a little extra work.
 
 To make a secret available at build time,  we'll use [Docker secrets](https://docs.docker.com/develop/develop-images/build_enhancements/).
 

@@ -47,7 +47,7 @@ Go ahead and try it! When you `run` a Machine with `--shell`, we'll make a small
 ### Machine state
 
 The big Fly Machine trick is: starting up super fast; like, "in response to an HTTP request from a user" fast. Doing things like 
-that is why you'd use Fly Machines directly, rather than [letting flyctl run your deployment](/docs/apps/deploy/). 
+that is why you'd use Fly Machines directly, rather than [letting flyctl run your deployment](/docs/launch/deploy/). 
 
 To get your head around that trick, start by understanding the lifecycle of a Fly Machine:
 
