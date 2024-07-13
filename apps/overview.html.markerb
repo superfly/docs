@@ -3,6 +3,7 @@ title: "Fly Apps overview"
 layout: docs
 toc: false
 nav: apps
+redirect_from: /docs/reference/apps/
 ---
 
 A Fly App is an abstraction for a group of Fly Machines running your code on Fly.io. You can create and manage your app as a whole using [Fly Launch](/docs/launch/), but you can also have a Fly App with individual Machines running tasks or user code.

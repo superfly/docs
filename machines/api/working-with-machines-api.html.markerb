@@ -8,7 +8,7 @@ order: 1
 
 The Fly Machines API provides resources to create, destroy, and manage Fly Apps, Fly Machines, and Fly Volumes. Refer to the following reference docs for the usage of each:
 
-**[Apps resource](/docs/machines/api/apps-resource/)** - Every Fly Machine belongs to a [Fly App](/docs/reference/apps/).
+**[Apps resource](/docs/machines/api/apps-resource/)** - Every Fly Machine belongs to a [Fly App](/docs/apps/overview/).
 
 **[Machines resource](/docs/machines/api/machines-resource/)** - Fly Machines are our fast-launching VMs.
 
