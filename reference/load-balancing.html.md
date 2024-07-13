@@ -42,7 +42,7 @@ We have a hypothetical web service that we know can handle 25 concurrent request
     soft_limit = 20
 ```
 
-We set `type = "requests"` so Fly.io will use concurrent HTTP requests to determine when to adjust load. We prefer this to `type = "connections"`, because our web service does work for each request and our users may make multiple requests over a single connection (e.g., with HTTP/2). 
+We set `type = "requests"` so Fly.io will use concurrent HTTP requests to determine when to adjust load. We prefer this to `type = "connections"`, because our web service does work for each request and our users may make multiple requests over a single connection (e.g., with HTTP/2). Fly Proxy will also pool connections to a Machine for a short time (about 4 seconds) when using `type = "requests"` to avoid frequent opening and closing of connections to your app.
 
 We set the `soft_limit` to 20, so we have a little room for Fly Proxy to shift load to other Machines before a single Machine becomes overwhelmed.
 
