@@ -204,7 +204,7 @@ opening https://golang-example.fly.dev ...
 
 Your browser will be sent to the displayed URL.
 
-## _Tigris Global Storage( Optional )_
+## _Add Tigris Global Storage (Optional)_
 
 [Tigris](https://www.tigrisdata.com/docs/overview/) takes storage service a top-notch higher by providing CDN-like accessibility for your stored objects.
 It's [simple](https://www.tigrisdata.com/docs/api/s3/)&mdash;has S3-API compatibility, [scalable](https://www.tigrisdata.com/docs/concepts/architecture/)&mdash;automatically manages data replication and caching for you, and [secured](https://www.tigrisdata.com/docs/concepts/authnz/)&mdash;offers AuthN and AuthZ authentication mechanisms. Try it out!
