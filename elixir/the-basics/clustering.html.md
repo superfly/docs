@@ -220,25 +220,35 @@ The easiest solution here is to **specify** the value to use for our cookie. One
 
 If we read the [Mix.Tasks.Release docs](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-options), in the `:cookie` section we learn that if we provide an ENV named `RELEASE_COOKIE`, it will be used. If that ENV is not found, it falls back to the randomly generated one.
 
-To do this, we can create the cookie we want and store it in our `fly.toml` file like this:
+To generate the cookie string we will use this Elixir command:
+
+```elixir
+Base.url_encode64(:crypto.strong_rand_bytes(40))
+```
+
+To provide the ENV named `RELEASE_COOKIE` inside the running app, after generating the cookie, we can either:
+- [Put it as a secret](https://fly.io/docs/apps/secrets/#set-secrets) inside project settings under the `RELEASE_COOKIE` name, or
+- Store it in our `fly.toml` file like this:
 
 ```toml
 [env]
   RELEASE_COOKIE = "my-app-cookie"
 ```
 
-Also from the docs, we can generate the cookie string to use with this Elixir command:
+After setting up the ENV and deploying the application, we can verify that the cookie is being used by getting an [IEx shell into our running server](/docs/elixir/the-basics/iex-into-running-app/) and issuing the following command:
 
 ```elixir
-Base.url_encode64(:crypto.strong_rand_bytes(40))
-```
-
-After deploying the application, we can verify that the cookie is being used by getting an [IEx shell into our running server](/docs/elixir/the-basics/iex-into-running-app/) and issuing the following command:
-
-```
 Node.get_cookie()
 ```
 
 This shows the cookie being used at runtime.
 
-With a known and unchanging cookie deployed in our application, we are ready for the next step!
+We can also check list of connected nodes by running the following command:
+
+```elixir
+Node.list()
+```
+
+An empty list means the node has no connections. If you are sure that there is more then one node running, you could proceed to [Troubleshooting](/docs/elixir/the-basics/troubleshooting/) documentation.
+
+If you have non-empty list with all of your running nodes - congratulations, you have successfully set up the clustering!
