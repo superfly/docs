@@ -264,7 +264,7 @@ It's [simple](https://www.tigrisdata.com/docs/api/s3/)&mdash;has S3-API compatib
 	```
 	
 	Of course, this would only automatically happen if the create command was run in a directory containing a `fly.toml` for our Go Fly app. 
-	On the otherhand, if that wasn't the case, we can still manually set necessary [secrets](https://fly.io/docs/flyctl/secrets/) likeso:
+	But if that wasn't the case, we can still manually set necessary [secrets](https://fly.io/docs/flyctl/secrets/) likeso:
 	```cmd
 	fly secrets set AWS_ACCESS_KEY_ID="<TIGRIS_ACCESS_KEY_ID>"
 	fly secrets set AWS_SECRET_ACCESS_KEY="<TIGRIS_SECRET_ACCESS_KEY>"
