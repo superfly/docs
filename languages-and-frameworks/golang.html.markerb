@@ -6,6 +6,12 @@ redirect_from: /docs/getting-started/golang/
 
 <%= partial "partials/intro", locals: { runtime: "Go" } %>
 
+<div class="note icon">
+Already have a Go Fly App? Integrate it with [Tigris for file storage!](https://www.tigrisdata.com/docs/concepts/architecture/)
+
+It's simple, it's scalable, it's secure&mdash;it's your bucket in the cloud with effortless CDN-magic. It's easy to integrate with Go, [try it out](docs/languages-and-frameworks/golang/#add-tigris-global-storage-optional).
+</div>
+
 ## _The Example Application_
 
 You can get the code for the example from [the GitHub repository](https://github.com/fly-apps/go-example). Just `git clone https://github.com/fly-apps/go-example` to get a local copy.
@@ -223,7 +229,7 @@ It's [simple](https://www.tigrisdata.com/docs/api/s3/)&mdash;has S3-API compatib
 	go get github.com/aws/aws-sdk-go-v2/service/s3
 	```
 
-3. <b>Create a [Client function](https://github.com/Xe/x/blob/master/tigris/tigris.go)</b> that will return an instance ready to connect with a Tigris bucket:
+3. <b>Create a [Client function](https://github.com/fly-apps/go-example-tigris/blob/main/tigris/tigris.go#L12)</b> that will return an instance ready to connect with a Tigris bucket:
 
 	```go
 	func Client(ctx context.Context) (*s3.Client, error) {
@@ -270,7 +276,7 @@ It's [simple](https://www.tigrisdata.com/docs/api/s3/)&mdash;has S3-API compatib
 	fly secrets set AWS_SECRET_ACCESS_KEY="<TIGRIS_SECRET_ACCESS_KEY>"
 	```
 
-5. <b>Upload a file:</b> Aside from connecting with a Bucket, we can use other [AWS SDK functions](https://docs.aws.amazon.com/code-library/latest/ug/go_2_s3_code_examples.html). Let's use the `PutObject` function to  upload a text file on the go like so:
+5. <b>[Upload a file](https://github.com/fly-apps/go-example-tigris/blob/main/tigris/tigris.go#L26):</b> Aside from connecting with a Bucket, we can use other [AWS SDK functions](https://docs.aws.amazon.com/code-library/latest/ug/go_2_s3_code_examples.html). Let's use the `PutObject` function to  upload a text file on the go like so:
 
 ```go
   func Client( ctx context.Context ) (*s3.Client, error){}
