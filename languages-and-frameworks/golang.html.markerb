@@ -270,7 +270,7 @@ It's [simple](https://www.tigrisdata.com/docs/api/s3/)&mdash;has S3-API compatib
 	fly secrets set AWS_SECRET_ACCESS_KEY="<TIGRIS_SECRET_ACCESS_KEY>"
 	```
 
-5. <b>Upload a file:</b> Aside from connecting with a Bucket, we can use other [AWS SDK functions](https://docs.aws.amazon.com/code-library/latest/ug/go_2_s3_code_examples.html). Let's use PutObject function to  upload a text file on the go likeso:
+5. <b>Upload a file:</b> Aside from connecting with a Bucket, we can use other [AWS SDK functions](https://docs.aws.amazon.com/code-library/latest/ug/go_2_s3_code_examples.html). Let's use the `PutObject` function to  upload a text file on the go like so:
 
 ```go
   func Client( ctx context.Context ) (*s3.Client, error){}
