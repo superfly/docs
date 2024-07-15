@@ -7,7 +7,7 @@ redirect_from: /docs/blueprints/going-to-production-with-hipaa-apps
 
 Fly.io was built by security researchers from the ground up to be both productive and secure, making it a great home for HIPAA-compliant production healthcare applications for productive teams that ship often.
 
-This blueprint runs a developer or operations engineer through the process of evaluating Fly.io's security for HIPAA healthcare apps, launching a pilot application, signing a BAA, and deploying to production.
+This blueprint runs a developer or operations engineer through the process of evaluating Fly.io's security for HIPAA healthcare apps, launching a pilot application, signing a Business Associate Agreement (BAA), and deploying to production.
 
 ## HIPAA and Fly.io Primer
 
@@ -17,7 +17,7 @@ Fly.io takes a "principle of least privilege" approach to security. Here are the
 
 ### Data Protection and Encryption
 
-HIPAA requires that PHI is encrypted both in transit and at rest to prevent unauthorized access:
+HIPAA requires that PHI be encrypted both in transit and at rest to prevent unauthorized access:
 
 - **In Transit**: Fly.io uses [WireGuard](https://fly.io/blog/our-user-mode-wireguard-year/) to encrypt data as it moves between networks, ensuring compliance with HIPAA's transmission security requirements.
 - **At Rest**: Fly.io ensures data at rest is secured on [encrypted NVMe user volumes](https://fly.io/docs/volumes/), aligning with the encryption standards required by HIPAA for storage security.
@@ -58,7 +58,7 @@ There's more detail at [https://fly.io/docs/about/healthcare](https://fly.io/doc
 
 The fastest way to deploy a pilot application is to run through the [Fly.io Speedrun](https://fly.io/speedrun/).
 
-If your free demo account doesn't have enough resources for your pilot application you may [upgrade to a paid plan](https://fly.io/docs/about/pricing/) or [contact us](mailto:sales@fly.io) to make other arrangements.
+If your free demo account doesn't have enough resources for your pilot application, you may [upgrade to a paid plan](https://fly.io/docs/about/pricing/) or [contact us](mailto:sales@fly.io) to make other arrangements.
 
 ### Specify deployment regions
 
@@ -140,7 +140,7 @@ $ fly orgs invite somebody@$MYORG.com --org $MYORG-production
 
 ### Launch application
 
-Next we have to make sure we have a `fly.toml` file per environment:
+Next, ensure you have a `fly.toml` file for each environment:
 
 ```bash
 $ cp fly.toml fly.staging.toml
@@ -162,7 +162,7 @@ If you run into problems during or after deploy you can run `fly logs --path fly
 
 ### Create SSL certificate and custom domain
 
-Next you'll want to point a domain name to the new production environment via `fly certs`.
+Next, point a domain name to the new production environment via `fly certs`.
 
 ```bash
 $ fly certs add myappname.com --path fly.production.yml
