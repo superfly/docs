@@ -232,6 +232,16 @@ v4      66.241.125.223          public (shared)
 
 ## A word on Session Affinity (AKA 'Sticky Sessions')
 
+Sticky sessions are a feature of a load balancer that ensures that all requests from a client are routed to the same server. This can be important for Meteor applications depending on the client/server architecture of your app, as it ensures that the client is always connected to the same server, and that any changes made to the server are reflected in the client.
+
+To achieve this on Fly.io, you can run your app with a maximum of one Machine per region. The [Fly Proxy](docs/reference/fly-proxy/) will take care of load balancing clients to the Machine closest to them, and will ensure that all requests from a client are routed to the same Machine.
+
+Now, when your app starts getting popular and receiving traffic from all over the world, you can [scale out](/docs/launch/scale-count/#balance-machines-between-regions-with-max-per-region) to multiple regions and balance Machines per region with the `--max-per-region` flag set to `1`.
+
+```cmd
+fly scale count 3 --max-per-region 1
+```
+
 ## Arrived at Destination
 
 You have successfully built, deployed, and connected to your first Meteor application on Fly.io.
