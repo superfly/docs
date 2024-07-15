@@ -18,7 +18,7 @@ From the Fly.io [dashboard](https://fly.io/dashboard/), select an organization f
 
 Install the [Fly.io Github app](https://github.com/apps/fly-io/installations/select_target+external) on the GitHub organization you want to use for SSO.
 
-From the Fly.io [dashboard](https://fly.io/dashboard/), select an organization from the dropdown. Go to **Settings > Single Sign On > Google SSO Requirement**. Enter the GitHub organization ID for SSO, check **Enable**, and click Save.
+From the Fly.io [dashboard](https://fly.io/dashboard/), select an organization from the dropdown. Go to **Settings > Single Sign On > GitHub SSO Requirement**. Enter the GitHub organization ID for SSO, check **Enable**, and click Save.
 
 ## Related topics
 
