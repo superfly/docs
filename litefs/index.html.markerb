@@ -14,8 +14,8 @@ application on the edge. You can run LiteFS anywhere!
 
 LiteFS is stable and running in production environments. The project is still
 pre-1.0 so APIs may change and features could be removed. Please remember that
-all software has bugs so we recommend you set up regular off-site
-backups in case of malfunction or disk corruption. You should [configure backups][backup] for LiteFS.
+all software has bugs so we recommend you set up [regular off-site backups][backup] 
+in case of malfunction or disk corruption.
 
 [LiteFS Cloud]: /docs/litefs/cloud-backups/
 [backup]: /docs/litefs/backup/
