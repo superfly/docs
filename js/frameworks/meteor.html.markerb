@@ -15,7 +15,9 @@ order: 3
 This guide is intended for users of Meteor 3. If you're using Meteor 2 and want to migrate, please see the <a href="https://v3-migration-docs.meteor.com/">Meteor 3.0 migration guide</a>.
 </div>
 
-We'll start off by installing Meteor, a full-stack JavaScript framework for building modern web and mobile applications.
+Meteor is a full-stack JavaScript framework for building modern web and mobile applications. You get realtime features for free, built-in accounts, TypeScript support, and a powerful CLI tool for creating and managing your app.
+
+We'll start off by installing Meteor:
 
 ```cmd
 npx meteor@latest
