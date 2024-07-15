@@ -2,6 +2,7 @@
 title: Add volume storage to a Fly Launch app
 layout: docs
 nav: apps
+redirect_from: /docs/apps/volume-storage/
 ---
 
 Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). 

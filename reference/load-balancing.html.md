@@ -4,7 +4,7 @@ layout: docs
 nav: firecracker
 ---
 
-[Fly Proxy](/docs/reference/fly-proxy) routes requests to individual Machines in you apps using a combination of concurrency settings specified on your app, current load, and closeness. This page describes the details of load balancing traffic to your apps on Fly.io.
+[Fly Proxy](/docs/reference/fly-proxy) routes requests to individual Machines in your apps using a combination of concurrency settings specified on your app, current load, and closeness. This page describes the details of load balancing traffic to your apps on Fly.io.
 
 ## Load balancing strategy
 
