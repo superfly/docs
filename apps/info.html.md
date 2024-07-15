@@ -271,4 +271,4 @@ fly logs -a testrun
 
 `fly logs` stays open, watching the logs, until you stop it (<kbd>ctrl-C</kbd>).
 
-Learn more about [logging on Fly.io](/docs/metrics-and-logs/logs/).
+Learn more about [logging on Fly.io](/docs/monitoring/logging-overview/).

@@ -87,4 +87,4 @@ Fly.io strongly recommends running at least two Machines per app in your primary
 - [App availability and resiliency](/docs/reference/app-availability/)
 - [Resilient apps use multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/)
 - [Troubleshooting your deployment](/docs/getting-started/troubleshooting/)
-- [Fly.io error codes and troubleshooting](/docs/metrics-and-logs/error-codes/)
+- [Fly.io error codes and troubleshooting](/docs/monitoring/error-codes/)

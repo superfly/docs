@@ -41,6 +41,6 @@ _Get your app ready for production on Fly.io._
 
 - [Databases & Storage](/docs/database-storage-guides/)
 - [Networking](/docs/networking/)
-- [Metrics & Logs](/docs/metrics-and-logs/)
+- [Monitoring](/docs/monitoring/)
 - [Security](/docs/security)
 - [Blueprints: Fly.io patterns for your projects](/docs/blueprints/)

@@ -3,7 +3,9 @@ title: Export logs
 layout: docs
 objective: Aggregate your logs to a service of your choice.
 nav: firecracker
-redirect_from: /docs/going-to-production/monitoring/exporting-logs/
+redirect_from: 
+  - /docs/going-to-production/monitoring/exporting-logs/
+  - /docs/metrics-and-logs/exporting-logs/
 ---
 
 The Fly Log Shipper app enables you to aggregate your app's logs to a service of your choice.

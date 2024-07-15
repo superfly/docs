@@ -1,8 +1,10 @@
 ---
-title: Fly.io error codes and troubleshooting
+title: Error codes and troubleshooting
 layout: docs
 nav: firecracker
-redirect_from: /docs/reference/error-codes/
+redirect_from: 
+  - /docs/reference/error-codes/
+  - /docs/metrics-and-logs/error-codes/
 ---
 
 The Fly.io platform logs errors to customer log streams. Each log line contains an error code and a field containing that code. This page gives more context about the errors and how to troubleshoot them.
@@ -68,7 +70,7 @@ This indicates a problem with connections timing out to your application. Check 
 
 * Application logs may indicate the cause of a timeout
 * Ensure your app isn't overloaded by properly set its [concurrency limits](https://fly.io/docs/reference/concurrency/#main-content-start)
-* Check [application metrics](https://fly.io/docs/metrics-and-logs/metrics/#managed-grafana) for signs of resource exhaustion (CPU, memory, disk I/O)
+* Check [application metrics](/docs/monitoring/metrics/#managed-grafana) for signs of resource exhaustion (CPU, memory, disk I/O)
 
 #### PC06: Unidentified I/O error
 
