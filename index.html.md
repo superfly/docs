@@ -67,7 +67,7 @@ _Services from Fly.io and our extension partners to help you run your entire sta
 
 [Supabase Postgres (public alpha)](/docs/reference/supabase/)
 
-[LiteFS Cloud](/docs/litefs/cloud-backups/)
+[LiteFS - Distributed SQLite](/docs/litefs/)
 
 [Fly Kubernetes (private beta)](/docs/kubernetes/fks-quickstart/)
 

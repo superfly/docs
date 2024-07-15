@@ -33,7 +33,7 @@ This document lists important topics to consider when you set up a production en
 
 - **Set up offsite backups:** Consider offsite backups for your database.
   
-- **LiteFS with LiteFS Cloud**: LiteFS is a distributed file system that transparently replicates SQLite databases. LiteFS Cloud is a Fly.io product which provides backups and recovery for your LiteFS SQLite database. See the [LiteFS docs](/docs/litefs/).
+- **LiteFS**: LiteFS is a distributed file system that transparently replicates SQLite databases. See the [LiteFS docs](/docs/litefs/).
 
 ## Monitoring
 

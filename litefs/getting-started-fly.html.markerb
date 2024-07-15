@@ -19,6 +19,8 @@ running on Fly.io. For a full, working example of a LiteFS application, please s
 
 ## Creating a LiteFS Cloud Cluster (optional)
 
+<%= partial "/docs/partials/docs/litefs_sunset" %>
+
 You can choose to create a LiteFS Cloud cluster, which will provide automatic
 backups managed by Fly.io. With LiteFS Cloud, you'll have the ability to restore
 your LiteFS database to any point in time near instantaneously. You can use LiteFS Cloud
@@ -33,10 +35,6 @@ to create a new cluster.
 
 When you create your LiteFS Cloud cluster, you'll be asked to save an auth token.
 Keep this handy - you'll use it later.
-
-Just a note: if you decide not to create a LiteFS Cloud cluster right now,
-you can always change your mind and add it later. Check out the
-[LiteFS Cloud backup][] docs for more details.
 
 [Sign up]: /docs/hands-on/sign-up-sign-in/
 [LiteFS Cloud backup]: /docs/litefs/cloud-backups

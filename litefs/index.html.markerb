@@ -10,21 +10,12 @@ on-disk SQLite database but behind the scenes the database is replicated to all
 the nodes in your cluster. With LiteFS, you can run your database right next to your
 application on the edge. You can run LiteFS anywhere!
 
-## LiteFS Cloud
-
-LiteFS Cloud is a Fly.io product which provides backups and recovery for your
-LiteFS SQLite database. With LiteFS Cloud, you'll have the ability to restore
-your LiteFS database to any point in time from the last 30 days, near instantaneously.
-You can use LiteFS Cloud to back up your LiteFS database running anywhere (whether your
-application is running on Fly.io or somewhere else).
-
 ## Project status
 
 LiteFS is stable and running in production environments. The project is still
 pre-1.0 so APIs may change and features could be removed. Please remember that
 all software has bugs so we recommend you set up regular off-site
-backups in case of malfunction or disk corruption. You can back up
-using [LiteFS Cloud][], or [configure your own backups][backup].
+backups in case of malfunction or disk corruption. You can or [configure backups][backup] for LiteFS.
 
 [LiteFS Cloud]: /docs/litefs/cloud-backups/
 [backup]: /docs/litefs/backup/
@@ -40,8 +31,6 @@ You can get up and running quickly with one of our guides:
 provides more details and explanation than the Speedrun.
 
 - [Getting Started with Docker][] helps you add LiteFS to an existing application that you want to run outside of Fly.io.
-
-- [Using LiteFS Cloud for Backups][] shows you how to easily back up and restore your data.
 
 - [How LiteFS Works][] explains the concepts behind LiteFS.
 

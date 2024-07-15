@@ -198,6 +198,8 @@ Refer to the [`litefs import`](/docs/litefs/import) documentation for more detai
 
 ## LiteFS Cloud configuration (optional)
 
+<%= partial "/docs/partials/docs/litefs_sunset" %>
+
 ### Creating a LiteFS Cloud Cluster
 
 You can choose to create a LiteFS Cloud cluster, which will provide automatic

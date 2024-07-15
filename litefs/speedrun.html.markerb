@@ -23,15 +23,7 @@ back here!
 
 ## Let's do this!
 
-### 1. Create a LiteFS Cloud cluster
-
-Create a LiteFS Cloud cluster in [the LiteFS section](https://fly.io/dashboard/personal/litefs) of the fly.io dashboard.
-Take note of your auth token (you'll need it later).
-
-LiteFS Cloud is optional, but highly recommended if your data is important to you!
-
-
-### 2. Configure litefs.yml
+### 1. Configure litefs.yml
 
 Copy [the sample `litefs.yml` file](https://github.com/superfly/litefs-example/blob/main/fly-io-config/etc/litefs.yml)
 from the `litefs-example` repo, and make the following updates:
@@ -39,7 +31,7 @@ from the `litefs-example` repo, and make the following updates:
 * Update from `8081` in `proxy.target` to whatever port your app listens on
 * Update `exec[0].cmd` to the command that runs your app
 
-### 3. Update your Dockerfile
+### 2. Update your Dockerfile
 
 Install LiteFS dependencies:
 
@@ -62,7 +54,7 @@ Update the `ENTRYPOINT` (or `CMD`):
 ENTRYPOINT litefs mount
 ```
 
-### 4. Set up & deploy to the Fly Platform
+### 3. Set up & deploy to the Fly Platform
 
 Create a volume:
 
@@ -82,12 +74,6 @@ Configure consul (this sets the `FLY_CONSUL_URL` secret for your app, which is r
 fly consul attach
 ```
 
-Add the LiteFS Cloud secret (replace `yoursecrettoken` with the actual token value):
-
-```sh
-fly secrets set LITEFS_CLOUD_TOKEN=yoursecrettoken
-```
-
 Update your `fly.toml` file to mount your volume:
 
 ```yml
@@ -105,7 +91,7 @@ fly deploy
 TADA! You (hopefully) now have an app running with LiteFS! If you're having trouble, you can
 ask for help in [the Fly community](https://community.fly.io).
 
-### 5. Add some replicas in other regions
+### 4. Add some replicas in other regions
 
 LiteFS isn't *super* useful if you're running only one node. So, add some
 more nodes in more regions!
@@ -116,3 +102,9 @@ fly m clone --select --region lhr
 # Add a clone in Sydney
 fly m clone --select --region syd
 ```
+
+### Next steps
+
+[Back up your LiteFS cluster][backup].
+
+[backup]: /docs/litefs/backup/
