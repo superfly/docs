@@ -67,7 +67,7 @@ This indicates a problem with your application aborting a TCP connection prematu
 This indicates a problem with connections timing out to your application. Check the following to diagnose:
 
 * Application logs may indicate the cause of a timeout
-* Ensure your app isn't overloaded by properly set its [concurrency limits](https://fly.io/docs/reference/concurrency/#main-content-start)
+* Ensure your app isn't overloaded by properly setting its [concurrency limits](https://fly.io/docs/reference/concurrency/#main-content-start)
 * Check [application metrics](https://fly.io/docs/metrics-and-logs/metrics/#managed-grafana) for signs of resource exhaustion (CPU, memory, disk I/O)
 
 #### PC06: Unidentified I/O error
@@ -169,7 +169,7 @@ A machine start was canceled prematurely due to an internal Fly.io problem.
 
 #### PM11: Machine recently stopped
 
-Machine states are broadcast to the Fly proxies in an eventually consistent manner. So, edge proxies may not have an up-to-date picture about machine states. A machine that appears as `started` to the edge proxy may actually have been recently stopped.
+Machine states are broadcasted to the Fly proxies in an eventually consistent manner. So, edge proxies may not have an up-to-date picture about machine states. A machine that appears as `started` to the edge proxy may actually have been recently stopped.
 
 If the edge proxy forwards a request to a recently stopped machine, and there are other machines available to handle the request, the `PM11` error will be returned to the edge proxy. The error informs the proxy about the `stopped` state of the machine, and instructs the edge to forward the request to another machine.
 
@@ -249,7 +249,7 @@ The Fly proxy couldn't find a specific machine ID after the request was forwarde
 
 #### PR03: No candidate machines found after retries
 
-This error is functionally similar to `PR01`. It only applies to HTTP services however, and up to 90 retries are attempted before the proxy gives up and issues this error. This error should also display the cause of the most recent error before this one.
+This error is functionally similar to `PR01`. It only applies to HTTP services; however, and up to 90 retries are attempted before the proxy gives up and issues this error. This error should also display the cause of the most recent error before this one.
 
 #### PR04: No candidate machines found after retries
 
