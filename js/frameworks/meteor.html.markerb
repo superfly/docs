@@ -169,16 +169,6 @@ The `flyctl` command will always refer to this file in the current directory if 
 
 The rest of the file contains settings to be applied to the application when it deploys.
 
-## _Deploying to Fly.io_
-
-We are now ready to deploy our containerized app to Fly.io:
-
-```cmd
-fly deploy
-```
-
-This will get the app name `hello-meteor` from our `fly.toml` and start the process of deploying our application to Fly.io using the Dockerfile. `fly` will return you to the command line when it's done.
-
 ## _Viewing the Deployed App_
 
 If you want to find out more about the deployment. The command `fly status` will give you all the essential details.
