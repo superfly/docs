@@ -57,7 +57,7 @@ Cloud:
 You can preview your production build locally by executing the command `meteor run`.
 
 ```cmd
-meteor run
+meteor
 ```
 ```output
 [[[[[ ~/hello-meteor ]]]]]
