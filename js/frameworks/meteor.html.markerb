@@ -12,7 +12,7 @@ order: 3
 <%= partial "partials/intro", locals: { runtime: "Meteor", link: "https://meteor.com" } %>
 
 <div class="callout">
-This guide is intended for users of Meteor 3. If you're using Meteor 2 and want to migrate, please see the <a href="/docs/getting-started/meteor/">Meteor 2 migration guide</a>.
+This guide is intended for users of Meteor 3. If you're using Meteor 2 and want to migrate, please see the <a href="https://v3-migration-docs.meteor.com/">Meteor 3.0 migration guide</a>.
 </div>
 
 We'll start off by installing Meteor, a full-stack JavaScript framework for building modern web and mobile applications.
