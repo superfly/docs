@@ -201,20 +201,6 @@ Opening https://hello-meteor.fly.dev/
 
 Your browser will be sent to the displayed URL.
 
-## _Bonus Points_
-
-If you want to know what IP addresses the app is using, try `fly ips list`:
-
-```cmd
-fly ips list
-```
-
-```out
-VERSION IP                      TYPE            REGION  CREATED AT 
-v6      2a09:8280:1::69:37fd    public          global  18m55s ago
-v4      66.241.125.223          public (shared)
-```
-
 ## _A word on Session Affinity (AKA 'Sticky Sessions')_
 
 Sticky sessions are a feature of a load balancer that ensures that all requests from a client are routed to the same server. This can be important for Meteor applications depending on the client/server architecture of your app, as it ensures that the client is always connected to the same server, and that any changes made to the server are reflected in the client.
@@ -230,3 +216,78 @@ fly scale count 3 --max-per-region 1
 ## _Arrived at Destination_
 
 You have successfully built, deployed, and connected to your first Meteor application on Fly.io.
+
+## _Bonus Points_
+
+Let's take a look at a slightly more advanced app that uses a MongoDB database for storing account details and user data — but also for real-time UI updates.
+
+First, we'll need a MongoDB database to connect to. If you have one, great! If not, it's easy to deploy a development MongoDB database on Fly.io. If you're deploying a production app, we recommend that you look at a managed service like [MongoDB Atlas](https://www.mongodb.com/atlas).
+
+Save the below as your `mongo.fly.toml`, then run `fly launch -c mongo.fly.toml --no-deploy` to create the database app without deploying it.
+
+```toml
+...
+[build]
+  image = 'mongodb/mongodb-community-server'
+
+[experimental]
+  cmd = ["mongod", "--bind_ip_all", "--ipv6"]
+
+[[services]]
+  internal_port = 27017
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["tls"]
+    port = 27017
+    force_https = false
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+[[mounts]]
+  source = "mongo_data"
+  destination = "/data/db"
+
+```
+
+Now, set the default username and password for the database:
+
+```cmd
+fly secrets set MONGODB_INITDB_ROOT_USERNAME=admin MONGODB_INITDB_ROOT_PASSWORD=password
+```
+
+And finally, deploy it:
+
+```cmd
+fly deploy --ha=false --no-public-ips
+```
+
+Ok, now we can deploy our Meteor app. We'll use the Simple Tasks example app:
+
+```cmd
+fly launch --from https://github.com/fredmaiaarantes/simpletasks --no-deploy
+```
+
+This simultaneously clones the GitHub repo and launches the new app on Fly.io
+
+Set the `MONGO_URL` secret so Meteor knows where to connect to:
+
+```cmd
+fly secrets set MONGO_URL=mongodb://admin:password@hello-mongo.internal:27017/meteor
+```
+
+And deploy the app:
+```cmd
+fly deploy
+```
+
+And finally, open the app. It'll take a second longer on the first run while database migrations are performed:
+
+```cmd
+flyctl apps open
+```
+
+That's it! You should see the app running at https://hello-meteor.fly.dev/
