@@ -143,7 +143,7 @@ Finished launching new machines
 NOTE: The machines for [app] have services with 'auto_stop_machines = true' that will be stopped when idling
 
 -------
-Checking DNS configuration for mhello-meteor.fly.dev
+Checking DNS configuration for hello-meteor.fly.dev
 
 Visit your newly deployed app at https://hello-meteor.fly.dev/
 ...
