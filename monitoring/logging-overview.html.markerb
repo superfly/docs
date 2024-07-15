@@ -2,6 +2,7 @@
 title: Logging overview
 layout: docs
 nav: firecracker
+redirect_from: /docs/metrics-and-logs/logs/
 ---
 
 Fly.io app logs are the stdout from the processes run in your apps: whatever an app outputs becomes a log.
@@ -16,16 +17,17 @@ Vector can act as a NATS client, read the logs, and ship them somewhere. An exam
 
 ## Live tail logs
 
-You can live tail logs from the dashboard or with the `fly logs` command. For more information, see [Live tail logs](/docs/metrics-and-logs/live-tail-logs/).
+You can live tail logs from the dashboard or with the `fly logs` command. For more information, see [Live tail logs](/docs/monitoring/live-tail-logs/).
 
 ## Search logs
 
-We have an app log search feature in Grafana that retains logs for 30 days. For more information, see [Search logs](/docs/metrics-and-logs/search-logs/).
+We have an app log search feature in Grafana that retains logs for 30 days. For more information, see [Search logs](/docs/monitoring/search-logs/).
 
 ## Export logs
 
-Try the Fly Log Shipper app to export logs to a service. For more information, see [Export logs](/docs/metrics-and-logs/exporting-logs/).
+Try the Fly Log Shipper app to export logs to a service. For more information, see [Export logs](/docs/monitoring/exporting-logs/).
 
 ## Error codes and troubleshooting
 
-Look up error codes from logs and get tips on troubleshooting them.
+Look up error codes from logs and get tips on troubleshooting them. For more information, see [Error codes and troubleshooting](/docs/monitoring/error-codes/).
+

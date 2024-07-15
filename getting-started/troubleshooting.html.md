@@ -236,4 +236,4 @@ That said, if the build used to work, then you can try using a previous, fixed b
 ## Related topics
 
 - [Troubleshoot apps when a host is unavailable](/docs/apps/trouble-host-unavailable/)
-- [Fly.io error codes and troubleshooting](/docs/metrics-and-logs/error-codes/)
+- [Fly.io error codes and troubleshooting](/docs/monitoring/error-codes/)

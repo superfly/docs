@@ -1,0 +1,35 @@
+---
+title: "Monitoring on Fly.io"
+layout: docs
+nav: firecracker
+toc: false
+redirect_from: 
+  - /docs/going-to-production/monitoring/
+  - /docs/metrics-and-logs/
+---
+
+## Metrics
+
+_Fully-managed metrics solutions to help you monitor your apps._
+
+- **[Metrics](/docs/monitoring/metrics):** Learn how to configure and use the Fly.io metrics for Prometheus and Grafana, and built-in and custom metrics for  your apps.
+
+---
+
+## Error monitoring by Sentry
+
+_Error monitoring for your apps from our extension providers._
+
+- **[Sentry](/docs/reference/sentry/):** Use Sentry on Fly.io and get actionable insights to resolve the most important code-related issues. Fly.io organizations that use Sentry can claim a year’s worth of Team Plan credits.
+
+---
+
+## Logging
+
+_Live tail and search your app’s logs, or ship them where you want them._
+
+- **[Logging overview](/docs/monitoring/logging-overview/):** How logs work on Fly.io.
+- **[Live tail logs](/docs/monitoring/live-tail-logs/):** Where to access live tail logs.
+- **[Search logs](/docs/monitoring/search-logs/):** Searchable app logs in Grafana (beta). 
+- **[Export logs](/docs/monitoring/exporting-logs/):** Aggregate your logs to a service of your choice.
+- **[Error codes and troubleshooting](/docs/monitoring/error-codes/):** Look up error codes and get tips for troubleshooting.

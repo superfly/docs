@@ -37,7 +37,7 @@ This document lists important topics to consider when you set up a production en
 
 ## Monitoring
 
-- **Export your logs:** Set up the Fly Log Shipper to aggregate your app’s logs to a service of your choice. See [Export logs](/docs/metrics-and-logs/exporting-logs/).
+- **Export your logs:** Set up the Fly Log Shipper to aggregate your app’s logs to a service of your choice. See [Export logs](/docs/monitoring/exporting-logs/).
 
 - **Use Sentry for Error tracking**: An application monitoring platform that helps you identify and fix software problems before they impact your users from our extension partner Sentry.Fly.io organizations get a year's worth of [Team Plan](https://sentry.io/pricing/+external) credits. See [Application Monitoring by Sentry](/docs/reference/sentry/).
 

@@ -85,9 +85,11 @@ _Private networking, public services, custom domains, routing, and load balancin
 
 _Explore built-in and custom Prometheus metrics and Grafana dashboards. Live tail and search your app's logs, or ship them where you want them._
 
-Fly.io [Metrics and logs](/docs/metrics-and-logs/)
+[Fly.io Metrics](/docs/monitoring/metrics/)
 
-[Application Monitoring by Sentry](/docs/reference/sentry/)
+[Error Monitoring by Sentry](/docs/reference/sentry/)
+
+[Logging on Fly.io](/docs/monitoring/logging-overview/)
 
 ---
 

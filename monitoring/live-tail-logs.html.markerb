@@ -2,6 +2,7 @@
 title: Live tail logs
 layout: docs
 nav: firecracker
+redirect_from: /docs/metrics-and-logs/live-tail-logs/
 ---
 
 You can quickly live tail logs in your dashboard or using the `fly logs` command.
