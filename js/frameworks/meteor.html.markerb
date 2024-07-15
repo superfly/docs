@@ -1,9 +1,6 @@
 ---
 title: "Run a Meteor App"
 layout: framework_docs
-redirect_from:
- - /docs/languages-and-frameworks/meteor/
- - /docs/getting-started/meteor/
 objective: Meteor is a full-stack JavaScript framework for building modern web and mobile applications.
 order: 3
 ---
