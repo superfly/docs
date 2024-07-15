@@ -290,4 +290,6 @@ And finally, open the app. It'll take a second longer on the first run while dat
 flyctl apps open
 ```
 
-That's it! You should see the app running at https://hello-meteor.fly.dev/
+That's it! You should see the app running:
+
+<img src="/static/images/simple-tasks.webp" alt="A screenshot of the Simple Tasks Meteor app login pagea.">
