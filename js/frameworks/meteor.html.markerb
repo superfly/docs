@@ -52,17 +52,9 @@ Cloud:
   https://www.meteor.com/cloud
 ```
 
-## _Building the Application_
-
-Building a Meteor app happens in two stages, both of which are executed when the command `npm run build` is run.
-
-Firstly, Vite undertakes the creation of an optimized production build that encompasses your server code, browser code, and, if applicable, your service worker. Pre-rendering is carried out during this stage if deemed necessary.
-
-Secondly, an adapter is employed to fine-tune this production build to align with your specific target environment.
-
 ## _Preview your Application_
 
-Once the build process is complete, you can preview your production build locally by executing the command `meteor run`.
+You can preview your production build locally by executing the command `meteor run`.
 
 ```cmd
 meteor run
@@ -93,7 +85,7 @@ fly launch
 ```output
 Scanning source code
 Detected a Meteor app
-Creating app in /Demo/hello-meteor
+Creating app in ~/Demo/hello-meteor
 We're about to launch your Meteor app on Fly.io. Here's what you're getting:
 
 Organization: Demo                       (fly launch defaults to the personal org)  
@@ -118,7 +110,7 @@ added 33 packages, and audited 143 packages in 4s
 found 0 vulnerabilities
      create  Dockerfile
 Wrote config file fly.toml
-Validating /Demo/hello-meteor/fly.toml
+Validating ~/Demo/hello-meteor/fly.toml
 ✓ Configuration is valid
 ==> Building image
 Remote builder fly-builder-frosty-night-3947 ready
