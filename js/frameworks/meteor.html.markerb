@@ -171,6 +171,8 @@ primary_region = "ord"
 ...
 ```
 
+We make sure to set the `ROOT_URL` and `PORT` environment variables. These are important to Meteor. When you eventually add a [custom domain](/docs/networking/custom-domain/) to your app, you'll want to make sure your `ROOT_URL` is set to the domain name.
+
 The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly.io platform.
 
 The rest of the file contains settings to be applied to the application when it deploys.
