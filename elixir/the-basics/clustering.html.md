@@ -43,7 +43,7 @@ export RELEASE_DISTRIBUTION="name"
 export RELEASE_NODE="${FLY_APP_NAME}-${FLY_IMAGE_REF##*-}@${FLY_PRIVATE_IP}"
 ```
 
-This names our Elixir node's name (aka RELEASE_NODE) using the Fly application name, the Docker image reference value, and the internal IPv6 address. Make sure to deploy after making this change!
+This names our Elixir node's name (also known as RELEASE_NODE) using the Fly application name, the Docker image reference value, and the internal IPv6 address. Make sure to deploy after making this change!
 
 ```cmd
 fly deploy
@@ -170,7 +170,7 @@ I included the IEx prompt because it shows the IP address of the node I'm connec
 
 Fly.io makes it super easy to run VMs of your applications physically closer to your users. Through the magic of DNS, users are directed to the nearest [region](/docs/reference/regions/) where your application is located.
 
-Starting back from our baseline of a single VM running in `sea` which is Seattle, Washington (US), I'll add the region `ewr` which is Parsippany, NJ (US). I can do this by cloning the existing Fly Machine into my desired region:
+Starting back from our baseline of a single VM running in `sea` which is Seattle, Washington (US), I'll add the region `ewr` which is NJ (US). I can do this by cloning the existing Fly Machine into my desired region:
 
 ```cmd
 fly machine clone 6e82dd00f75687 --region ewr
@@ -204,7 +204,7 @@ We have two VMs of our application deployed to the West and East coasts of the N
 
 ## The cookie situation
 
-Before two Elixir nodes **can** cluster together, they must share a secret cookie. The cookie itself isn't meant to be a super secret encryption key or anything like that, it's designed to let us create multiple sets of small clusters on the same network that don't all just connect together. Different cookies means different clusters. For instance, only the nodes that all use the cookie "abc" will connect together.
+Before two Elixir nodes **can** cluster together, they must share a secret cookie. The cookie itself isn't meant to be a super secret encryption key or anything like that, it's designed to let us create multiple sets of small clusters on the same network that don't all just connect together. Different cookies means different clusters. For instance, only the nodes that all use the cookie `abc` will connect together.
 
 For us, this means that in order for `my_remote` node to connect to the cluster on Fly, we need to share the same cookie value used in production.
 
