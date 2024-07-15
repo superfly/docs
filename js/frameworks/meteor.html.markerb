@@ -169,7 +169,7 @@ The `flyctl` command will always refer to this file in the current directory if 
 
 The rest of the file contains settings to be applied to the application when it deploys.
 
-## Deploying to Fly.io
+## _Deploying to Fly.io_
 
 We are now ready to deploy our containerized app to Fly.io:
 
@@ -226,7 +226,7 @@ v6      2a09:8280:1::69:37fd    public          global  18m55s ago
 v4      66.241.125.223          public (shared)
 ```
 
-## A word on Session Affinity (AKA 'Sticky Sessions')
+## _A word on Session Affinity (AKA 'Sticky Sessions')_
 
 Sticky sessions are a feature of a load balancer that ensures that all requests from a client are routed to the same server. This can be important for Meteor applications depending on the client/server architecture of your app, as it ensures that the client is always connected to the same server, and that any changes made to the server are reflected in the client.
 
@@ -238,6 +238,6 @@ Now, when your app starts getting popular and receiving traffic from all over th
 fly scale count 3 --max-per-region 1
 ```
 
-## Arrived at Destination
+## _Arrived at Destination_
 
 You have successfully built, deployed, and connected to your first Meteor application on Fly.io.
