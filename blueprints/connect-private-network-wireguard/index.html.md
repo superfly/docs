@@ -11,7 +11,7 @@ date: 2024-06-14
 
 <center><iframe width="600" height="315" src="https://www.youtube-nocookie.com/embed/4NcvlIlIlso?si=DPbDPwzlRTQFx0hB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></center><br />
 
-Every [Fly.io](http://Fly.io) organization comes with a [private network](https://fly.io/docs/networking/private-networking/) that lets all your apps connect to each other. This is super convenient when you need to have microservices call each other’s endpoints or use [Flycast](https://fly.io/docs/networking/private-networking/#flycast-private-fly-proxy-services) to let your private apps turn off when you’re not using them. However, this isn’t just limited to your apps. You can jack into this network with WireGuard.
+Every Fly.io organization comes with a [private network](https://fly.io/docs/networking/private-networking/) that lets all your apps connect to each other. This is super convenient when you need to have microservices call each other’s endpoints or use [Flycast](https://fly.io/docs/networking/private-networking/#flycast-private-fly-proxy-services) to let your private apps turn off when you’re not using them. However, this isn’t just limited to your apps. You can jack into this network with WireGuard.
 
 This blueprint shows you how to create a WireGuard peer to your private network and connect to it so that you can access it from anywhere.
 
