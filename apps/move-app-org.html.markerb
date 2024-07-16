@@ -29,7 +29,8 @@ The following app resources are transferred to the new org automatically:
 - Fly Machines and Fly Volumes (including data)
 - environment variables and secrets
 - certificates and domain names
-- LiteFS databases and Tigris object storage
+- LiteFS databases (when `$FLY_APP_NAME` is used for your Consul key in `litefs.yml`)
+- Tigris object storage
 
 ## Resources that you need to manually reconfigure
 
