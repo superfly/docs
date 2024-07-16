@@ -56,7 +56,7 @@ If you create a volume, you will be charged for it. You’re billed for volumes 
 
 ## Free resource allowances
 
-We subtract [free allowances](https://fly.io/docs/about/pricing/#free-allowances) off the top of your usage total for Launch, Scale, and Enterprise plans. Once your usage exceeds the free allowance on any given resource, we start metering usage of that resource for billing purposes.
+We subtract [free allowances](/docs/about/pricing/#free-allowances) off the top of your usage total for Launch, Scale, and Enterprise plans. Once your usage exceeds the free allowance on any given resource, we start metering usage of that resource for billing purposes.
 
 ## Payment options
 
