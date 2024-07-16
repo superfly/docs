@@ -205,8 +205,6 @@ Inbound data transfer is free.
 
 We bill for data leaving your app destined for the public internet or for apps or Machines in other regions.
 
-### Billed data transfer
-
 You're billed for data transfer to the public Internet and between regions on your private network:
 
 - data egress to the Internet, from Machine to edge server to Internet
