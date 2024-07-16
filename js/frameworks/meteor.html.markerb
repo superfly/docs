@@ -21,7 +21,7 @@ npx meteor@latest
 ```
 ```output
 => Arch: os.osx.arm64
-=> Meteor Release: 3.0
+=> Meteor Release: 3.0.0
 Downloading |█████████████████████████████████░░░░░░░| 82%
 ```
 
@@ -143,7 +143,7 @@ The `fly.toml` file now contains a default configuration for deploying your app.
 
 ```toml
 app = "hello-meteor"
-primary_region = "ord"
+primary_region = "jnb"
 
 [env]
   PORT = "3000"
@@ -223,7 +223,9 @@ First, we'll need a MongoDB database to connect to. If you have one, great! If n
 Save the below as your `mongo.fly.toml`, then run `fly launch -c mongo.fly.toml --no-deploy` to create the database app without deploying it.
 
 ```toml
-...
+app = "hello-mongo"
+primary_region = "jnb"
+
 [build]
   image = 'mongodb/mongodb-community-server'
 
@@ -259,7 +261,7 @@ fly secrets set MONGODB_INITDB_ROOT_USERNAME=admin MONGODB_INITDB_ROOT_PASSWORD=
 And finally, deploy it:
 
 ```cmd
-fly deploy --ha=false --no-public-ips
+fly deploy --no-public-ips
 ```
 
 Ok, now we can deploy our Meteor app. We'll use the Simple Tasks example app:
