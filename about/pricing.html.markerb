@@ -214,7 +214,7 @@ You're billed for data transfer to the public Internet and between regions on yo
 You're not billed for the following types of traffic:
 
 - all inbound data transfer
-- data transfer between apps or Machines in the same region
+- data transfer between apps or Machines in the same region (for organizations created after July 17 2024)
 - data transfer from apps without an assigned IP address (for orgs created before July 17 2024)
 - data transfer to [Tigris Object Storage](https://fly.io/docs/reference/tigris)
 
