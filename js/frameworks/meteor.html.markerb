@@ -17,7 +17,7 @@ Meteor is a full-stack JavaScript framework for building modern web and mobile a
 We'll start off by installing Meteor:
 
 ```cmd
-npx meteor@latest
+npx meteor
 ```
 ```output
 => Arch: os.osx.arm64
@@ -32,7 +32,7 @@ We'll assume you have NodeJS installed already. Meteor 3 requires NodeJS v20 or 
 Let's create the new project by running `meteor create`. We'll choose a "minimal" skeleton, which is a good choice for a new project and to get up and running quickly.
 
 ```cmd
-meteor create hello-meteor --minimal
+meteor create hello-meteor --minimal --release 3.0.0
 ```
 ```output
 Created a new Meteor app in 'hello-meteor'.
@@ -187,10 +187,10 @@ app    	4d890d17a6d768	1      	jnb   	stopped	    	      	2024-07-14T17:23:03Z
 
 ## _Connecting to the App_
 
-The quickest way to browse your newly deployed application is with the `flyctl apps open` command.
+The quickest way to browse your newly deployed application is with the `fly apps open` command.
 
 ```cmd
-flyctl apps open
+fly apps open
 ```
 ```output
 Opening https://hello-meteor.fly.dev/
@@ -282,7 +282,7 @@ fly deploy
 And finally, open the app. It'll take a second longer on the first run while database migrations are performed:
 
 ```cmd
-flyctl apps open
+fly apps open
 ```
 
 That's it! You should see the app running:
