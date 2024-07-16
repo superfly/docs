@@ -121,7 +121,7 @@ Now that you have seen it up and running, a few things are worth noting:
   * As your application needs change, you can have us update your `Dockerfiles` for you by running: `bin/rails generate dockerfile`.
   * There is also a `config/dockerfile.yml` file which keeps track of your
     dockerfile generation options.  This is covered by the
-    [FAQ](https://fly.io/docs/rails/getting-started/dockerfiles/).
+    [FAQ](/docs/rails/getting-started/dockerfiles/).
   * Other files of note: `.dockerignore` and
     [`fly.toml`](https://fly.io/docs/reference/configuration/), both of which
     you can also modify.
