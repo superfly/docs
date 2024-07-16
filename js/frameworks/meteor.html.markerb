@@ -210,10 +210,6 @@ Now, when your app starts getting popular and receiving traffic from all over th
 fly scale count 3 --max-per-region 1
 ```
 
-## _Arrived at Destination_
-
-You have successfully built, deployed, and connected to your first Meteor application on Fly.io.
-
 ## _Bonus Points_
 
 Let's take a look at a slightly more advanced app that uses a MongoDB database for storing account details and user data — but also for real-time UI updates.
@@ -292,3 +288,7 @@ flyctl apps open
 That's it! You should see the app running:
 
 <img src="/static/images/simple-tasks.webp" alt="A screenshot of the Simple Tasks Meteor app login page.">
+
+## _Arrived at Destination_
+
+You have successfully built, deployed, and connected to your first Meteor application on Fly.io.
