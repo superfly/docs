@@ -34,7 +34,7 @@ Building a globally distributed application can be challenging to model locally.
 
 ## How it works
 
-Elixir supports [clustering](https://fly.io/docs/elixir/the-basics/clustering/) multiple running Elixir applications together (thanks to [Erlang](https://www.erlang.org/doc/reference_manual/distributed.html)), even while running on separate machines.
+Elixir supports [clustering](/docs/elixir/the-basics/clustering/) multiple running Elixir applications together (thanks to [Erlang](https://www.erlang.org/doc/reference_manual/distributed.html)), even while running on separate machines.
 
 Fly.io makes creating a [WireGuard VPN tunnel](https://fly.io/docs/networking/private-networking/#private-network-vpn) between your local machine and your Fly.io organization easy.
 
@@ -54,7 +54,7 @@ There are a few prerequisites to consider when clustering a local Elixir applica
 
 ### Setting the Erlang cookie
 
-The [recommended way for setting the Erlang COOKIE](https://fly.io/docs/elixir/the-basics/clustering/#making-the-cookie-changes) value in your deployed application is to set an ENV named `RELEASE_COOKIE`. This gives the server a stable, predictable cookie value. In order for the nodes to connect, they need the same cookie.
+The [recommended way for setting the Erlang COOKIE](/docs/elixir/the-basics/clustering/#making-the-cookie-changes) value in your deployed application is to set an ENV named `RELEASE_COOKIE`. This gives the server a stable, predictable cookie value. In order for the nodes to connect, they need the same cookie.
 
 When [set in the ENV through Fly.io](https://fly.io/docs/flyctl/config-env/), we can read it from the application's information. The script does this so we don't have to do anything else.
 
