@@ -103,8 +103,6 @@ fly m clone --select --region lhr
 fly m clone --select --region syd
 ```
 
-### Next steps
+## Next steps
 
-[Back up your LiteFS cluster][backup].
-
-[backup]: /docs/litefs/backup/
+[Back up your LiteFS cluster](/docs/litefs/backup/).
