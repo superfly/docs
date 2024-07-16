@@ -215,12 +215,14 @@ You're not billed for the following types of traffic:
 
 - all inbound data transfer
 - data transfer between apps or Machines in the same region (for organizations created after July 17 2024)
-- data transfer from apps without an assigned IP address (for orgs created before July 17 2024)
+- data transfer from apps without an assigned IP address (for organizations created before July 17 2024)
 - data transfer to [Tigris Object Storage](https://fly.io/docs/reference/tigris)
 
 Fly.io pricing is per region group for outbound data transfer. You'll see a more detailed breakdown of cost per region and per traffic type on your monthly invoice.
 
-> **Important**: Organizations created after July 17 2024 are billed at a different rate for private network data transfer between regions, per the following table. Organizations created before July 17 2024 are billed for all data transfer (excluding that listed as free above) at the "Egress to public internet" rate.
+<div class="important icon">
+**Important:** Organizations created after July 17 2024 are billed at a different rate for private network data transfer between regions, per the following table. Organizations created before July 17 2024 are billed for all data transfer (excluding that listed as free above) at the "Egress to public internet" rate.
+</div>
 
 | Region groups | Egress to public internet cost | Private network cross-region transfer cost |
 | --- | --- | --- |
