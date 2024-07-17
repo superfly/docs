@@ -203,19 +203,32 @@ We use Lets Encrypt to issue certificates, and donate half of our SSL fees to th
 
 Inbound data transfer is free.
 
-Data transfer from apps without an assigned IP address is free. [Flycast IPs](/docs/networking/private-networking/#flycast-private-fly-proxy-services) are considered an IP assignment, so apps using Flycast will accrue data transfer costs.
+We bill for data leaving your app destined for the public internet or for apps or Machines in other regions.
 
-Otherwise, Fly.io bills per-region pricing for outbound data transfer.
+You're billed for data transfer to the public Internet and between regions on your private network:
 
-<%= partial("shared/network_pricing") %>
+- data egress to the Internet, from Machine to edge server to Internet
+- data transfer over private network between regions, from Machine to edge server and edge server to Machine
+- data transfer to some [extensions](https://fly.io/docs/about/pricing/#extensions) like Supabase or Upstash Redis (excludes Tigris Object Storage)
 
-Any traffic exiting a Fly.io Machine is considered outbound data transfer, including:
+You're not billed for the following types of traffic:
 
-* traffic destined for the internet
-* traffic destined for other Machines or apps in your network
-* traffic destined for [extensions](#extensions) like Supabase or Upstash Redis
+- all inbound data transfer
+- data transfer between apps or Machines in the same region (for organizations created after July 17 2024)
+- data transfer from apps without an assigned IP address (for organizations created before July 17 2024)
+- data transfer to [Tigris Object Storage](https://fly.io/docs/reference/tigris)
 
-One exception: traffic destined for [Tigris Object Storage](/docs/reference/tigris) is free. Learn more about [Extensions billing](#extensions).
+Fly.io pricing is per region group for outbound data transfer. You'll see a more detailed breakdown of cost per region and per traffic type on your monthly invoice.
+
+<div class="important icon">
+**Important:** Organizations created after July 17 2024 are billed at a different rate for private network data transfer between regions, per the following table. Organizations created before July 17 2024 are billed for all data transfer (excluding that listed as free above) at the "Egress to public internet" rate.
+</div>
+
+| Region groups | Egress to public internet cost | Private network cross-region transfer cost |
+| --- | --- | --- |
+| - North America<br>- Europe | $0.02 per GB | $0.006 per GB |
+| - Asia Pacific<br>- Oceania<br>- South America | $0.04 per GB | $0.015 per GB |
+| - Africa<br>- India | $0.12 per GB | $0.050 per GB |
 
 
 ## Fly Kubernetes
