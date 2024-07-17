@@ -528,6 +528,53 @@ Stopping a Machine will shut down the Machine, but not destroy it. The Machine m
   </div>
 </div>
 
+## Suspend a Machine
+
+Suspending a Machine pauses the Machine and takes a snapshot of its state, including its memory. The next start operation will attempt (but is not guaranteed) to resume the Machine from the snapshot, rather than performing a cold boot.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to suspend.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines/{machine_id}/suspend')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/machines_suspend_req" %>
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_ok_true_resp" %>
+    <% end %>
+  </div>
+</div>
+
 ## Start a Machine
 
 Start a stopped Machine. Machines that are restarted are completely reset to their original state so that they start clean on the next run.
