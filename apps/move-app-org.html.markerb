@@ -15,7 +15,7 @@ fly apps move <app name> --org <target organization name>
 ```
 
 <div class="important">
-**Fly Postgres:** You can't use the `fly apps move` command for Fly Postgres apps. To move a Postgres app to another organization, create a new Postgres app under the target organization, and then either [restore the data from your current Postgres app volume snapshot](/docs/postgres/managing/backup-and-restore/#restoring-from-a-snapshot), or [import the data](/docs/flyctl/postgres-import/).
+**Fly Postgres:** You can't use the `fly apps move` command for Fly Postgres apps. To move a Postgres app to another organization, create a new Postgres app under the target organization, and then [restore the data from your current Postgres app volume snapshot](/docs/postgres/managing/backup-and-restore/#restoring-from-a-snapshot).
 </div>
 
 ## App downtime
