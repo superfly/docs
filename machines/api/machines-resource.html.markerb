@@ -479,7 +479,9 @@ This is, in particular, how you would update the running image of a Machine (whe
 
 ## Stop a Machine
 
-Stopping a Machine will shut down the Machine, but not destroy it. The Machine may be started again with `machines/<machine_id>/start`.
+Stopping a started Machine will shut down the Machine, but not destroy it. The Machine may be started again with `machines/<machine_id>/start`.
+
+Stopping a suspended Machine will invalidate its snapshot, forcing it to perform a cold boot the next time it is started.
 
 <div class="api-section" data-exclude-render>
   <div>
@@ -577,7 +579,11 @@ Suspending a Machine pauses the Machine and takes a snapshot of its state, inclu
 
 ## Start a Machine
 
-Start a stopped Machine. Machines that are restarted are completely reset to their original state so that they start clean on the next run.
+Start a Machine.
+
+Stopped Machines that are restarted are completely reset to their original state so that they start clean on the next run.
+
+Suspended Machines that are started attempt to resume from the snapshot taken when they were suspended. If this is not possible, then they will perform a normal cold boot.
 
 <div class="api-section" data-exclude-render>
   <div>
