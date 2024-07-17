@@ -313,7 +313,7 @@ Create a Machine with services defined on app. Learn more about [services and ne
     <% api_info.add_info(
       name: 'state',
       type: 'string enum',
-      description: 'The Machine state to wait for. Values are: `started`, `stopped`, or `destroyed`. Default is `started`.'
+      description: 'The Machine state to wait for. Values are: `started`, `stopped`, `suspended`, or `destroyed`. Default is `started`.'
     ) %>
     <%= render(api_info) %>
     <% api_info = ApiInfoComponent.new(
