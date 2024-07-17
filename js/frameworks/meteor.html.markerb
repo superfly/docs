@@ -198,17 +198,46 @@ Opening https://hello-meteor.fly.dev/
 
 Your browser will be sent to the displayed URL.
 
-## _A word on Session Affinity (AKA 'Sticky Sessions')_
+## _Session Affinity (aka 'Sticky Sessions')_
 
 Sticky sessions are a feature of a load balancer that ensures that all requests from a client are routed to the same server. This can be important for Meteor applications depending on the client/server architecture of your app, as it ensures that the client is always connected to the same server, and that any changes made to the server are reflected in the client.
 
-To achieve this on Fly.io, you can run your app with a maximum of one Machine per region. The [Fly Proxy](docs/reference/fly-proxy/) will take care of load balancing clients to the Machine closest to them, and will ensure that all requests from a client are routed to the same Machine.
+The easiest way to achieve this on Fly.io is to run your app with a maximum of one Machine per region. The [Fly Proxy](docs/reference/fly-proxy/) will take care of load balancing clients to the Machine closest to them, and will ensure that all requests from a client are routed to the same Machine.
 
-Now, when your app starts getting popular and receiving traffic from all over the world, you can [scale out](/docs/launch/scale-count/#balance-machines-between-regions-with-max-per-region) to multiple regions and balance Machines per region with the `--max-per-region` flag set to `1`.
+A better option, is to use [dynamic request routing](/docs/networking/dynamic-request-routing) with the `fly-replay` response header.You'll need to implement some additional code that uses the `meteor/webapp` package and plugs into your Meteor app's server-side entry point. This example uses middleware to creates cookies containing the desired Machine ID, and then replays requests that arrive at the wrong destination. The process is explained in greater detail [here](/docs/blueprints/sticky-sessions/).
+
+First, install `cookie-parser`:
 
 ```cmd
-fly scale count 3 --max-per-region 1
+npm install cookie-parser
 ```
+Now create a new file called `sticky.js` wherever you keep your server server-side code:
+
+```js
+import { WebApp } from 'meteor/webapp';
+import cookieParser from "cookie-parser";
+
+WebApp.connectHandlers.use(cookieParser());
+
+WebApp.connectHandlers.use('/',(request, response, next) => {
+  if (!process.env.FLY_MACHINE_ID) {
+    next();
+  } else if (!request.cookies["fly-machine-id"]) {
+    const maxAge = 24 * 60 * 60 * 1000; // 24 hours
+    response.cookie("fly-machine-id", process.env.FLY_MACHINE_ID, { maxAge });
+    next();
+  } else if (request.cookies["fly-machine-id"] !== process.env.FLY_MACHINE_ID) {
+    response.set('Fly-Replay', `instance=${request.cookies["fly-machine-id"]}`)
+    response.status(307)
+    response.send()
+  } else {
+    next();
+  }
+});
+
+```
+
+Make sure to import that module when initializing your Meteor server, then you should see clients routed to the same Fly Machine for the duration of the session.
 
 ## _Bonus Points_
 
