@@ -967,7 +967,7 @@ Alternatively, you can serve statics directly from object storage using [Tigris]
   tigris_bucket = "my-bucket"
 ```
 
-Serving statics from Tigris supports index documents. When an index document is specified, requests to the root domain of the URL prefix serve the index document.
+Serving statics from Tigris supports index documents. When an index document is specified, requests to the root or any of its subfolders serve the index document.
 
 ```toml
 [[statics]]
@@ -977,13 +977,17 @@ Serving statics from Tigris supports index documents. When an index document is 
   index_document = "index.html"
 ```
 
+In this configuration, a request to `https://example.com/public/` will serve the file `/app/public/index.html` stored in `my-bucket`. Similarly, a request to `https://example.com/public/assets/`, will serve the file `/app/public/assets/index.html`.
+
 ### Caveats
 
 This feature should not be compared directly with a CDN, for the following reasons:
 
 * This feature does not exempt you from having to run a web service in your Machine.
 
-* Statics will not find `index.html` at the root, except when serving statics from Tigris directly. The full path must be requested.
+* Serving an index document is only supported for statics served directly from Tigris. The index document must have the same name in all the relevant locations in your Tigris bucket.
+
+* For statics served from your container, it will not find `index.html` at the root. The full path must be requested.
 
 * You can't set `Cache-Control` or any other headers on assets. If you need those, you'll need to deliver them from your application and set the relevant headers.
 
