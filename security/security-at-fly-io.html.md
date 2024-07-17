@@ -15,7 +15,7 @@ CorpSec is the practice of making sure Fly.io team members have secure access to
 - Access to our services and applications is gated on an SSO Identity Provider.
 - We require strong, phishing-resistant 2FA in all enrolled IdP accounts.
 - We rely on IdP-backed WireGuard with strict, default-deny, role-based access controls to access internal applications.
-- We have centralized repositories of policy and audit controls, including team onboard and offboarding and access requests; we regularly audit access to internal systems.
+- We have centralized repositories of policy and audit controls, including team onboarding and offboarding and access requests; we regularly audit access to internal systems.
 
 ## Process Controls: Network/Infrastructure Security (“InfraSec”)
 
