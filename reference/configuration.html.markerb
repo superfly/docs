@@ -275,7 +275,7 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = true
+  auto_stop_machines = "stop"
   auto_start_machines = true
   min_machines_running = 0
   [http_service.concurrency]
@@ -287,12 +287,12 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
 * `processes`: For apps with multiple processes. The process group that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
 * `internal_port`: The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `force_https`: A Boolean which determines whether to enforce HTTP to HTTPS redirects.
-* `auto_stop_machines`: Whether to automatically stop an application's Machines when there's excess capacity, per region. If there's only one Machine in a region, then the Machine is stopped if it has no traffic. The Fly Proxy runs a process to automatically stop Machines every few minutes. The default if not set is `false`.
+* `auto_stop_machines`: Whether to automatically stop or suspend an application's Machines when there's excess capacity, per region. Options are `"off"`, `"stop"`, and `"suspend"`. If there's only one Machine in a region, then the Machine is stopped or suspended if it has no traffic. The Fly Proxy runs a process to automatically stop Machines every few minutes. The default if not set is `"off"`.
 * `auto_start_machines`: Whether to automatically start an application's Machines when a new request is made to the application and there's no excess capacity, per region. If there's only one Machine in a region, then it's started whenever a request is made to the application. The default if not set is `true`.
-* `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines = true`.
+* `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines` is `"stop"` or `"suspend"`.
 
 <div class="important icon">
-We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having Machines that either never start or never stop. Learn more about [automatically starting and stopping Machines](/docs/launch/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
+We recommend configuring `auto_stop_machines` and `auto_start_machines` so that they are both enabled or both disabled, to avoid having Machines that either never start or never stop. Learn more about [automatically starting and stopping Machines](/docs/launch/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
 </div>
 
 ### `http_service.concurrency`
@@ -427,7 +427,7 @@ Example (note the double square brackets):
 [[services]]
   internal_port = 8080
   protocol = "tcp"
-  auto_stop_machines = true
+  auto_stop_machines = "stop"
   auto_start_machines = true
   min_machines_running = 0
 ```
@@ -437,12 +437,12 @@ Settings:
 * `processes`: For apps with multiple process groups, the process group or groups that this service belongs to. Define process groups in the [processes](#the-processes-section) section.
 * `internal_port` : The port this service (and application) will use to communicate with clients. The default is 8080. We recommend applications use the default.
 * `protocol` : The protocol that this service will use to communicate. Typically `tcp` for most applications, but can also be `udp`.
-* `auto_stop_machines`: Whether to automatically stop an application's Machines when there's excess capacity, per region. If there's only one Machine in a region, then the Machine is stopped if it has no traffic. The Fly Proxy runs the checks to automatically stop Machines every few minutes. The default if not set is `false`.
+* `auto_stop_machines`: Whether to automatically stop or suspend an application's Machines when there's excess capacity, per region. Options are `"off"`, `"stop"`, and `"suspend"`. If there's only one Machine in a region, then the Machine is stopped or suspended if it has no traffic. The Fly Proxy runs a process to automatically stop Machines every few minutes. The default if not set is `"off"`.
 * `auto_start_machines`: Whether to automatically start an application's Machines when a new request is made to the application and there's no excess capacity, per region. If there's only one Machine in a region, then it's started whenever a request is made to the application. The default if not set is `true`.
-* `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines = true`.
+* `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines` is `"stop"` or `"suspend"`.
 
 <div class="callout">
-We recommend setting `auto_stop_machines` and `auto_start_machines` to the same value to avoid having Machines that either never start or never stop. Learn more about [automatically starting and stopping Machines](/docs/launch/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
+We recommend configuring `auto_stop_machines` and `auto_start_machines` so that they are both enabled or both disabled, to avoid having Machines that either never start or never stop. Learn more about [automatically starting and stopping Machines](/docs/launch/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
 </div>
 
 ### `services.ports`

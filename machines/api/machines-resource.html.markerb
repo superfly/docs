@@ -1262,7 +1262,7 @@ Properties of the `config` object for Machine configuration. See [Machine proper
       + `proxy_proto_options`: Configure the version of the PROXY protocol that your app accepts. Version 1 is the default.
         - `version`: A string to indicate that the TCP connection uses PROXY protocol version 2. The default when not set is version 1.
   - `autostart`: bool (false) - If true, Fly Proxy starts Machines when requests for this service arrive.
-  - `autostop`: bool (false) - If true, Fly Proxy stops Machines when this service goes idle.
+  - `autostop`: string or bool (`off`) - One of `off` (or false), `stop` (or true), `suspend`. If `stop`, Fly Proxy stops Machines when this service goes idle. If `suspend`, Fly Proxy instead suspends Machines if possible and stops them if not.
   - `min_machines_running`: int (nil) - When `autostart` is true, the minimum number of Machines to keep running at all times in the primary region.
 
 ---
