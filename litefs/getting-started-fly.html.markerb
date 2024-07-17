@@ -16,33 +16,6 @@ running on Fly.io. For a full, working example of a LiteFS application, please s
 
 [litefs-example]: https://github.com/superfly/litefs-example
 
-
-## Creating a LiteFS Cloud Cluster (optional)
-
-You can choose to create a LiteFS Cloud cluster, which will provide automatic
-backups managed by Fly.io. With LiteFS Cloud, you'll have the ability to restore
-your LiteFS database to any point in time near instantaneously. You can use LiteFS Cloud
-to back up and restore your database running anywhere (whether you plan to run your
-application on the Fly Platform, or somewhere else).
-
-You can create your LiteFS Cloud cluster in the Fly.io dashboard. First,
-[sign up for an account][Sign up] if you haven't already. After you're signed in,
-navigate to the LiteFS Cloud section on the left navbar, and then use the Create button
-to create a new cluster.
-[Here's a handy link to the LiteFS Cloud dashboard][LiteFS Cloud Dashboard] if you prefer!
-
-When you create your LiteFS Cloud cluster, you'll be asked to save an auth token.
-Keep this handy - you'll use it later.
-
-Just a note: if you decide not to create a LiteFS Cloud cluster right now,
-you can always change your mind and add it later. Check out the
-[LiteFS Cloud backup][] docs for more details.
-
-[Sign up]: /docs/hands-on/sign-up-sign-in/
-[LiteFS Cloud backup]: /docs/litefs/cloud-backups
-[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
-
-
 ## Installing LiteFS
 
 ### Dependencies
@@ -179,22 +152,6 @@ guide.
 [fly.io]: https://fly.io
 [lease management]: /docs/litefs/config#lease-management
 
-
-### LiteFS Cloud Configuration
-
-If you're using LiteFS Cloud for backups, you'll need to provide a LiteFS Cloud
-API authentication token, which you got when you created the cluster (or you can
-create a new one from [the LiteFS Cloud section][LiteFS Cloud Dashboard] in Fly.io
-dashboard).
-
-You should add this as a secret for your application named `LITEFS_CLOUD_TOKEN` with:
-
-```cmd
-fly secrets set LITEFS_CLOUD_TOKEN=$(litefs cloud auth token)
-```
-
-[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
-
 ### Configuring the proxy
 
 LiteFS requires that all writes occur on the primary node, which means
@@ -293,3 +250,6 @@ Refer to the [`litefs import`](/docs/litefs/import) documentation for more detai
   Do not use `cp` to copy a database into place.
 </div>
 
+## Next steps
+
+[Back up your LiteFS cluster](/docs/litefs/backup/).

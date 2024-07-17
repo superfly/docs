@@ -10,12 +10,6 @@ currently have a disaster recovery system in place in the event you lose your
 entire cluster. These are some strategies you can use to reduce your risk of
 data loss in the event of a bug or disk corruption.
 
-If you'd rather let someone else handle your backups, check out the
-[Using LiteFS Cloud for Backups][] docs. You can use LiteFS Cloud for backups
-even if your LiteFS cluster is not running on Fly.io!
-
-[Using LiteFS Cloud for Backups]: /docs/litefs/cloud-backups
-
 ## Periodic backup via export
 
 The simplest approach is to export your database via the [litefs

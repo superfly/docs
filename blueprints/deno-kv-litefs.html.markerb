@@ -6,6 +6,8 @@ author: jesse
 date: 2024-05-28
 ---
 
+<%= partial "/docs/partials/docs/litefs_sunset" %>
+
 ## Problem
 
 If you're porting an app from Deno Deploy to Fly.io, you may hit a bit of a snag: if it was built with [Deno KV](https://deno.com/blog/kv), a _traditionally_ FoundationDB backed K/V store made for Deno Deploy, there's no obvious way to easily run Deno KV at scale on Fly.io. You _could_ use [denoland/denokv](https://github.com/denoland/denokv) on Fly.io, but due to an alignment of the stars there happens to be an easier way.

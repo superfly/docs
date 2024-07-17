@@ -3,14 +3,15 @@ title: Disaster Recovery from LiteFS Cloud
 layout: docs
 nav: litefs
 ---
+<%= partial "/docs/partials/docs/litefs_sunset" %>
 
 The biggest advantage of using LiteFS Cloud is that you have backups
 to restore from in case of an unfortunate situation where you lose
 all the nodes in your cluster. In this doc, we'll show you how to restore
 your cluster from LiteFS Cloud if you've lost all the nodes.
 
-<section class="warning icon">
-You should only follow the steps in this document if you've lost all
+<section class="important icon">
+**Important:** You should only follow the steps in this document if you've lost all
 nodes of your LiteFS cluster. Otherwise, you can
 [restore from a LiteFS Cloud backup](/docs/litefs/cloud-restore).
 </section>

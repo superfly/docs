@@ -195,43 +195,6 @@ Refer to the [`litefs import`](/docs/litefs/import) documentation for more detai
   Do not use `cp` to copy a database into place.
 </div>
 
-
-## LiteFS Cloud configuration (optional)
-
-### Creating a LiteFS Cloud Cluster
-
-You can choose to create a LiteFS Cloud cluster, which will provide automatic
-backups managed by Fly.io. With LiteFS Cloud, you'll have the ability to restore
-your LiteFS database to any point in time near instantaneously. You can use LiteFS Cloud
-to back up and restore your database running anywhere (whether you plan to run your
-application on the Fly Platform, or somewhere else).
-
-You can create your LiteFS Cloud cluster in the Fly.io dashboard. First,
-[sign up for an account](/docs/hands-on/sign-up-sign-in/) if you haven't already. After you're signed in,
-navigate to the LiteFS Cloud section on the left navbar, and then use the Create button
-to create a new cluster.
-[Here's a handy link to the LiteFS Cloud dashboard](https://fly.io/dashboard/personal/litefs) if you prefer!
-
-When you create your LiteFS Cloud cluster, you'll be asked to save an auth token.
-Keep this handy - you'll use it later.
-
-Just a note: if you decide not to create a LiteFS Cloud cluster right now,
-you can always change your mind and add it later. Check out the
-[LiteFS Cloud backup](/docs/litefs/cloud-backups) docs for more details.
-
-
-### Configuring LiteFS to use LiteFS Cloud
-
-If you're using LiteFS Cloud for backups, you'll need to provide a LiteFS Cloud
-API authentication token, which you got when you created the cluster (or you can
-create a new one from [the LiteFS Cloud section](https://fly.io/dashboard/personal/litefs) in Fly.io
-dashboard).
-
-This token should be made available to LiteFS via the `LITEFS_CLOUD_TOKEN` environment
-variable. This is a secret value, so configure it however you configure secrets
-for your application! This will depend on your platform.
-
-
 ## Configuring writes to primary node
 
 LiteFS has a few differences from regular SQLite since it is a distributed
@@ -249,3 +212,6 @@ You can take a look at this [sample nginx config](https://github.com/superfly/li
 the primary node, and load balances between primary and replica node
 for other requests.
 
+## Next steps
+
+[Back up your LiteFS cluster](/docs/litefs/backup/).

@@ -254,6 +254,8 @@ You **will** be billed separately for data transfer to services other than Tigri
 
 ## LiteFS Cloud
 
+<%= partial "/docs/partials/docs/litefs_sunset" %>
+
 [LiteFS Cloud](/docs/litefs/cloud-backups) is a service that provides streaming
 backups and point-in-time restore for your SQLite-based applications that use
 [LiteFS](/docs/litefs).
