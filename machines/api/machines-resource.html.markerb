@@ -1223,9 +1223,11 @@ Properties of the `config` object for Machine configuration. See [Machine proper
 ---
 
 **`statics`:** Optionally serve static files.
-  - `guest_path`: string - Required. The path inside the Machines where the files to serve are located.
+  - `guest_path`: string - Required. The path inside the Machines or object storage bucket where the files to serve are located.
   - `url_prefix`: string - Required. The URL prefix under which to serve the static files.
-
+  - `tigris_bucket`: string - The Tigris bucket where the files to serve are located.
+  - `index_document`: string - The name of the index document, served when a request is made to the root or any of its subfolders. Only works for statics hosted on Tigris
+  
 ---
 
 **`stop_config`:** MachineStopConfig (nil) - Configure graceful shutdown of the Machine.
