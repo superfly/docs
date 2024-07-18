@@ -2,6 +2,7 @@
 title: Search logs
 layout: docs
 nav: firecracker
+redirect_from: /docs/metrics-and-logs/search-logs/
 ---
 
 <div class="warning icon">

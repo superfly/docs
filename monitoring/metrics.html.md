@@ -5,6 +5,7 @@ nav: firecracker
 redirect_from:
   - /docs/reference/metrics/
   - /docs/going-to-production/monitoring/publishing-metrics/
+  - /docs/metrics-and-logs/metrics
 ---
 
 The Fly.io platform includes a fully-managed metrics solution to help you easily monitor your Fly apps.
