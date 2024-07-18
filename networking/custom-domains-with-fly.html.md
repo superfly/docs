@@ -10,7 +10,7 @@ redirect_from:
   - /docs/app-guides/custom-domains-with-fly/
 ---
 
-For a quick custom domain how-to, see [Use a custom domain](/docs/networking/custom-domain/).
+For a quick custom domain how-to, see [Use a custom domain](/docs/networking/custom-domain/). 
 
 An application's brand is often encapsulated in its domain name, and that in turn is wrapped with value. So being able to configure secure custom domains is essential.
 
@@ -22,7 +22,7 @@ Your application code needs to know how to accept custom domains and adjust the 
 
 When users make requests, their browser sends a `Host` header you can use to alter the behavior of your application. When you run your app server on Fly.io directly, just get the contents of the `Host` header to identify a request.
 
-If you're running your application on another provider, you will need to create a proxy application (like [NGINX](/docs/app-guides/global-nginx-proxy/)) to route traffic through Fly.io. Your application can then use the `X-Forwarded-Host` header to determine how to handle requests.
+If you're running your application on another provider, you will need to create a proxy application, like NGINX to route traffic through Fly.io. Your application can then use the `X-Forwarded-Host` header to determine how to handle requests.
 
 ## Creating a custom domain on Fly.io manually
 
