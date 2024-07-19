@@ -2,8 +2,6 @@
 title: Automate the certificate process for custom domains
 layout: docs
 nav: firecracker
-redirect_from:
-  - /docs/networking/custom-domains-with-fly/#automating-the-certificate-process
 ---
 
 This document provides examples of using Fly.io GraphQL API queries and mutations to automate the certificates process, which is useful when you need to issue multiple certificates automatically, for example, if you have individual apps per user with custom domains.
