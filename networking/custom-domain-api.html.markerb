@@ -262,3 +262,7 @@ The GraphQL mutation returns the app name and the hostname and certificate id th
   }
 }
 ```
+
+## Related topics
+
+- [Custom domains](/docs/networking/custom-domain/)

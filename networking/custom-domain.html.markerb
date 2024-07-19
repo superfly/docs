@@ -178,3 +178,7 @@ If you're building a platform on top of Fly.io, and you expect that your users w
 If you're using Cloudflare, you might be using their Universal SSL feature which inserts a TXT record of `_acme_challenge.<YOUR_DOMAIN>` for your domain. This can interfere with our certificate validation/challenge and you should [disable](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/disable-universal-ssl/#disable-universal-ssl-certificate+external) this feature.
 
 You can then verify that the change has propagated and the TXT record is no longer present by running `dig txt _acme-challenge.<YOUR_DOMAIN> +short`.
+
+## Related topics
+
+- [Automate the certificate process for custom domains with the GraphQL API](/docs/networking/custom-domain-api/)
