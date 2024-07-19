@@ -100,12 +100,12 @@ fly certs add "*.example.com"
 Running `fly certs add` starts the process of getting a certificate. `Configured` should be true and `Status` will change to `Ready` when the certificates are available. You can run `fly certs show <hostname>` to check the status.
 
 
-### (Optional) Validate with an ACME challenge
+### (Optional) Validate with an ACME DNS-01 challenge
 
-Validate your domain with an ACME challenge if one or more of the following scenarios apply:
+Validate your domain with an ACME DNS-01 challenge if one or more of the following scenarios apply:
 
 - You want to issue a certificate before creating the CNAME or A/AAAA records to point to your app.
-- You're using a proxy like Cloudflare, which prevents our systems from verifying the source IP addresses.
+- You're using a proxy like Cloudflare, [which prevents our systems from verifying the source IP addresses](#i-use-cloudflare-and-there-seems-to-be-a-problem-issuing-or-validating-my-flyio-tls-certificate).
 - You want to ensure no HTTPS connection errors occur during the short time (usually minutes) it takes to generate the first-ever certificate for your site.
 - You're using a wildcard certificate.
 
