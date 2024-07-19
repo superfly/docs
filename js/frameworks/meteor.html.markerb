@@ -202,9 +202,9 @@ Your browser will be sent to the displayed URL.
 
 Sticky sessions are a feature of a load balancer that ensures that all requests from a client are routed to the same server. This can be important for Meteor applications depending on the client/server architecture of your app, as it ensures that the client is always connected to the same server, and that any changes made to the server are reflected in the client.
 
-The easiest way to achieve this on Fly.io is to run your app with a maximum of one Machine per region. The [Fly Proxy](docs/reference/fly-proxy/) will take care of load balancing clients — pinning them to the Machine closest to them. The Proxy will then attempt to route all requests to the same Machine.
+The easiest way to achieve this on Fly.io is to run your app with a maximum of one Machine per region. The [Fly Proxy](/docs/reference/fly-proxy/) will take care of load balancing clients — sending requests to the Machine closest to them.
 
-A better option, is to use [dynamic request routing](/docs/networking/dynamic-request-routing) with the `fly-replay` response header.You'll need to implement some additional code that uses the `meteor/webapp` package and plugs into your Meteor app's server-side entry point. This example uses middleware to creates cookies containing the desired Machine ID, and then replays requests that arrive at the wrong destination. The process is explained in greater detail [here](/docs/blueprints/sticky-sessions/).
+A better option, is to use [dynamic request routing](/docs/networking/dynamic-request-routing) with the `fly-replay` response header. You'll need to implement some additional code (roughly 18 liness) that uses the `meteor/webapp` package and plugs into your app's server-side entry point. This example uses middleware to create a client-side cooking containing the Machine ID to "pin" requests to. The process is explained in greater detail [here](/docs/blueprints/sticky-sessions/).
 
 First, install `cookie-parser`:
 
