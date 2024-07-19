@@ -42,9 +42,9 @@ For our example, with this CNAME record added, accessing `example.com` will tell
 
 #### Option II: Set the A/AAAA records
 
-A and AAAA records use the app's IP addresses rather than the domain name. This option might be only very slightly faster than the CNAME record lookup.
+A and AAAA records use the app's IP addresses rather than the domain name. This option might be slightly faster than the CNAME record lookup.
 
-Get the IP addresses of your deployed application:
+Get your app's IP addresses:
 
 ```cmd
 fly ips list
@@ -60,7 +60,7 @@ Set the A and AAAA records with your DNS provider. Add an A record for your doma
 Once the A and AAAA records are added and propagated through the DNS system, you should be able to connect over unencrypted HTTP to the domain name. Continuing the preceding example, that's the domain name: `http://example.com`.
 
 <div class="important">
-**Important:** Hostname validation will fail without an IPv6 address and we won't attempt to issue or renew a certificate. If your app doesn't have an IPv6 address, allocate one with `flyctl ips allocate-v6`. If you use a CNAME `_acme-challenge` for domain verification, you don't need to worry about this. However, it is still recommended to have both IPv4 and IPv6 addresses allocated if your app is serving traffic.
+**Important:** Hostname validation will fail without an IPv6 address&mdash;and we won't attempt to issue or renew a certificate&mdash;unless you're using a [CNAME `_acme-challenge` for domain verification](#optional-validate-with-an-acme-challenge). However, we still recommend having both an IPv4 and an IPv6 address allocated if your app is serving traffic. If your app doesn't have an IPv6 address, allocate one with `flyctl ips allocate-v6`.
 </div>
 
 ### Get certified
@@ -69,6 +69,8 @@ You'll need a TLS certificate for your domain if your app:
 
 * Should accept HTTPS connections, or
 * Uses a shared IPv4 [Anycast address](/docs/networking/services/#ip-addresses). Fly Proxy uses the certificate to associate the custom domain name with your app for routing purposes.
+
+You can add certificates with flyctl or in your app [dashboard](https://fly.io/dashboard/) under **Certificates**.
 
 Create a certificate for your custom domain with the `fly certs add` command. For example:
 
@@ -148,7 +150,7 @@ If you're running your application on another provider, you will need to create 
 
 We support the top-level domains on the [IANA list](https://data.iana.org/TLD/tlds-alpha-by-domain.txt+external). Note that we only periodically update top-level domain support and there might be a delay before we add support for new top-level domains.
 
-## Troubleshooting certificates
+## Troubleshoot certificate creation
 
 ### Certificate creation or validation seems to hang, stall, or fail
 
