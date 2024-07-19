@@ -154,6 +154,28 @@ regionSelect.addEventListener("change", function () {
 
 For stopped Machines we charge only for the root file system (rootfs) needed for each Machine. Each 1GB of rootfs for a Machine stopped for 30 days is $0.15. The amount of rootfs needed is defined by your OCI image generated on your app plus a few [containerd](https://containerd.io/+external) tweaks on the underlying file system.
 
+### Machine Reservation Blocks
+
+We have a block-based commit scheme. Reserve a block of compute time, either for `performance` Machines or `shared` Machines, for a 40% discount. Reservations apply to any number of Machines in that class, in a specific region.
+
+The available reservation sizes are:
+
+**Performance Machines**
+
+* $144/yr for $20/mo of usage (i.e. $12/mo amortised with a 12 month commit)
+* $1,440/yr for $200/mo of usage
+* $14,400/yr for $2,000/mo of usage
+
+**Shared Machines:**
+
+* $36/yr for $5/mo of usage (i.e. $3/mo amortised with a 12 month commit)
+* $360/yr for $50/mo of usage
+* $3,600/yr for $500/mo of usage
+
+There's no limit on the number or combinations of blocks that can be purchased. Reservations are backdated to the first day of the current month.
+
+Email reservations@fly.io with a list of the reservations you’d like to purchase along with which regions, and we’ll set them up for you.
+
 ### GPUs and Fly Machines
 
 Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see above) plus the price of the attached GPU. Like Machines, GPUs are billed by the second when the attached Machine is running.
