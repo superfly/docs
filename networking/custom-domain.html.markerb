@@ -16,15 +16,15 @@ When you create a Fly App, it is automatically given a `fly.dev` subdomain, base
 
 ## Add a custom domain for your app
 
-The order of the steps to add a custom domain depends on when you want start directing traffic to your app:
+The order of the tasks to add a custom domain depends on when you want start directing traffic to your app:
 
-* When you want to start accepting traffic immediately on your custom domain, follow the steps below in order.
+* When you want to start accepting traffic immediately on your custom domain, follow the sections below in order.
 
 * When you want to get certificates before your app starts accepting traffic, for example if you're cutting over from another platform to Fly.io, you should create the certificates and configure the ACME challenge first, and then add the DNS records when you're ready to send traffic to your app.
 
 ### Add DNS records
 
-Direct traffic to your site by mapping your custom domain name to your Fly App through your DNS provider. Choose either a CNAME (Option I) or A/AAAA (Option II) record. 
+Direct traffic to your site by mapping your custom domain name to your Fly App through your DNS provider. Create either a CNAME (Option I) or A/AAAA (Option II) record. 
 
 #### Option I: Set a CNAME record
 
