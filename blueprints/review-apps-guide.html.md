@@ -83,6 +83,7 @@ jobs:
       # The script in the `deploy` sets the URL output for each review app.
       url: ${{ steps.deploy.outputs.url }}
 
+    steps:
       - name: Get code
         uses: actions/checkout@v4
 
