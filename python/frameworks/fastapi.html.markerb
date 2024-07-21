@@ -62,7 +62,7 @@ fastapi run
 <section class="callout">
 The `fastapi` assumes your app is stored in `main.py` or `app.py` - if this is not the case, you must specify that when running the app: 
 
-``fastapi run hello/entrypoint.py`
+`fastapi run hello/entrypoint.py`
 </section>
 
 <%= partial "/docs/python/partials/deploy", locals: { runtime: "FastAPI", repo: "hello-fastapi" }  %>
