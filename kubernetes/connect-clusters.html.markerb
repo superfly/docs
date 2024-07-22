@@ -49,7 +49,5 @@ kube-system       Active   22d
 
 ## Related topics
 
-- [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
 - [Create an FKS cluster](/docs/kubernetes/clusters/)
 - [Configure FKS Services](/docs/kubernetes/services)
-- [Use volumes with FKS](/docs/kubernetes/using-volumes/)

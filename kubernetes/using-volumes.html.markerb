@@ -165,10 +165,3 @@ spec:
 ```
 
 For generic ephemeral volumes to work as expected, `storageClassName` must be set to `flyio-volume`.
-
-## Related topics
-
-- [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
-- [Create an FKS cluster](/docs/kubernetes/clusters/)
-- [Connect to an FKS cluster](/docs/kubernetes/connect-clusters/)
-- [Configure FKS Services](/docs/kubernetes/services)

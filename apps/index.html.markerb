@@ -12,8 +12,9 @@ An app on Fly.io can be anything from a simple frontend web app to a complex arr
 
 _If you're looking to deploy an app on Fly.io, you probably want Fly Launch. Use Fly Launch to create your app and then manage the whole lifecycle, from starting to scaling to changing and redeploying._
 
-- [Get started](/docs/getting-started/) with Fly Launch
-- [Use Fly Launch](/docs/launch/) to create, configure, deploy, and scale your app
+- **[Get started](/docs/getting-started/):** Launch your own app or try a demo app.
+
+- **[Use Fly Launch](/docs/launch/):** Learn how to create, configure, deploy, and scale your app.
 
 ---
 

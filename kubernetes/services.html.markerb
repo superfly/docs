@@ -180,7 +180,5 @@ We currently do not support:
 
 ## Related topics
 
-- [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
 - [Create an FKS cluster](/docs/kubernetes/clusters/)
 - [Connect to an FKS cluster](/docs/kubernetes/connect-clusters/)
-- [Use volumes with FKS](/docs/kubernetes/using-volumes/)
