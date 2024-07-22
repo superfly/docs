@@ -157,7 +157,7 @@ For stopped Machines we charge only for the root file system (rootfs) needed for
 ### Machine reservation blocks
 
 You'll get a 40% discount when you reserve a block of compute time, either for `performance` Machines or `shared` Machines, in a specific region.
-Reservations apply to any number of Machines in that class.
+Reservations apply to any number of Machines of the specified CPU class, in the specified region, in any of your organisation's apps.
 
 The available reservation sizes are:
 
