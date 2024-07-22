@@ -75,7 +75,7 @@ _Services from Fly.io and our extension partners to help you run your entire sta
 
 ## Networking
 
-_Private networking, public services, custom domains, routing, and load balancing._
+_Private networking, public networking, custom domains and certificates, UDP apps, and routing._
 
 [Networking](/docs/networking/) on Fly.io
 
