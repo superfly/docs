@@ -265,6 +265,10 @@ Fly.io pricing is per region group for outbound data transfer. You'll see a more
 - $75/mo per cluster
 - Plus the cost of [compute](#compute) and [Fly volumes](#persistent-storage-volumes) that you create
 
+## Fly Postgres
+
+Fly Postgres clusters are Fly Apps that consist of Machines, volumes, and any configured extra memory. The [Machine price](#compute) and [volume price](#persistent-storage-volumes) for Fly Postgres are the same as any other Machine and volume you’d run on Fly.io. The cost for the preset configurations is about $2/mo for a single node cluster for dev projects, and about $82 to $164/mo for a three-node production cluster. You can [scale your Fly Postgres Machines](https://fly.io/docs/postgres/managing/scaling/) to suit your workload at any time.
+
 ## Extensions
 
 Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/docs/reference/tigris), [Supabase Postgres](/docs/reference/supabase) and [Upstash Redis](/docs/reference/redis).
