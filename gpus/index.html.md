@@ -20,7 +20,7 @@ A10 cards are all-arounders with less GPU RAM. They've got tensor cores, shader 
 
 Right now each Fly GPU Machine uses a single full GPU. A single GPU is well suited to rendering, encoding/decoding, inference, and a smidgen of fine tuning. Training large models from scratch requires much, much beefier resources.
 
-Go to the [GPU Quickstart](https://fly.io/docs/gpus/gpu-quickstart/) to get off the ground fast, or read more practicalities in [Getting started with Fly GPUs](/docs/gpus/getting-started-gpus/).
+Go to the [GPU Quickstart](/docs/gpus/gpu-quickstart/) to get off the ground fast, or read more practicalities in [Getting started with Fly GPUs](/docs/gpus/getting-started-gpus/).
 
 ## Regions with GPUs
 

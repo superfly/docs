@@ -107,4 +107,4 @@ $ fly deploy --ha=false
 
 - [Automatically stop and start Machines](https://fly.io/docs/launch/autostart-stop/)
 
-- [Autostart and autostop private apps](https://fly.io/docs/blueprints/autostart-internal-apps/)
+- [Autostart and autostop private apps](/docs/blueprints/autostart-internal-apps/)

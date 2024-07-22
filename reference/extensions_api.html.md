@@ -157,7 +157,7 @@ Our [Flycast](https://fly.io/docs/networking/private-networking/#flycast-private
 
 The `ip_address` field above refers to this feature. At provisioning time, we'll allocate an address on the customer network for you. Then, your reply should include the target Fly.io application where you wish that IP's traffic to be routed to.
 
-By default, no traffic is routed to your app until it has services configured. See the [Machines API](/docs/machines/api-machines-resource/#create-a-machine) and [fly.toml docs](https://fly.io/docs/reference/configuration/#the-services-sections) for details.
+By default, no traffic is routed to your app until it has services configured. See the [Machines API](/docs/machines/api-machines-resource/#create-a-machine) and [fly.toml docs](/docs/reference/configuration/#the-services-sections) for details.
 
 Optionally, you can add the [proxy protocol handler](https://fly.io/docs/networking/services/#connection-handlers) to a service. We co-opt the [proxy protocol](https://github.com/haproxy/haproxy/blob/master/doc/proxy-protocol.txt) as a way to give your service knowledge of the IP address assigned on the customer network, at client connection time. This IP is useful for performing an additional security check beyond user/password credentials or tokens.
 

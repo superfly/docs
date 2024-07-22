@@ -71,7 +71,7 @@ Once ready: run 'fly deploy' to deploy your Rails app.
 
 It is worth heeding the advice at the end of this:
 Before proceeding, please review the posted Rails FAQ:
-[https://fly.io/docs/rails/getting-started/dockerfiles/](https://fly.io/docs/rails/getting-started/dockerfiles/).
+[https://fly.io/docs/rails/getting-started/dockerfiles/](/docs/rails/getting-started/dockerfiles/).
 
 After the application is provisioned, deploy it by running:
 

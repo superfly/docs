@@ -18,7 +18,7 @@ Platforms like Heroku and Cloud Foundry have the idea of a buildpack, a building
 
 A library of standardized buildpacks is available from [Paketo Buildpacks](https://paketo.io/+external) and it's from this library, Heroku's Heroku20 buildpack, and Fly's own buildpack (for Deno), that you can select from in flyctl. If you want to use an unlisted buildpack, you can specify it by name using the `buildpacks` setting in `fly.toml`.
 
-Buildpack configuration options - such as `YARN_PRODUCTION` in the [Heroku Nodejs Buildpack](https://devcenter.heroku.com/articles/nodejs-support#using-npm-install) - can be set via [Docker build arguments](https://fly.io/docs/reference/configuration/#specify-docker-build-arguments).
+Buildpack configuration options - such as `YARN_PRODUCTION` in the [Heroku Nodejs Buildpack](https://devcenter.heroku.com/articles/nodejs-support#using-npm-install) - can be set via [Docker build arguments](/docs/reference/configuration/#specify-docker-build-arguments).
 
 The deploy process works the same way with buildpacks.
 

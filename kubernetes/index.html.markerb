@@ -14,7 +14,7 @@ Fly Kubernetes (FKS) is a fully managed Kubernetes service built on the Fly.io p
 
 ## Getting started
 
-To get up and running immediately, try the [Fly Kubernetes quickstart](https://fly.io/docs/kubernetes/fks-quickstart/) guide
+To get up and running immediately, try the [Fly Kubernetes quickstart](/docs/kubernetes/fks-quickstart/) guide
 
 ## Features
 

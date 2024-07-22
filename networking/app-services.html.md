@@ -87,7 +87,7 @@ Fly.io runs a specialized internal DNS service to find 6PN addresses for VMs. Qu
 
 Internal DNS gives us some useful presets for targeting requests. For instance, a DNS query on the address `<region>.<appname>.internal` yields the 6PN addresses of the VMs of app `<appname>` in region `<region>`. Addressing a request to `<region>.<appname>.internal` gets it delivered to one of those VMs.
 
-Our [private networking docs](https://fly.io/docs/networking/private-networking/#fly-io-internal-addresses) list the `.internal` names and what kind of information a DNS query returns for each.
+Our [private networking docs](/docs/networking/private-networking/#fly-io-internal-addresses) list the `.internal` names and what kind of information a DNS query returns for each.
 
 ## A note on IPv4 and IPv6 wildcards
 
