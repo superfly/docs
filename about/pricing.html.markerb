@@ -154,6 +154,33 @@ regionSelect.addEventListener("change", function () {
 
 For stopped Machines we charge only for the root file system (rootfs) needed for each Machine. Each 1GB of rootfs for a Machine stopped for 30 days is $0.15. The amount of rootfs needed is defined by your OCI image generated on your app plus a few [containerd](https://containerd.io/+external) tweaks on the underlying file system.
 
+### Machine reservation blocks
+
+You'll get a 40% discount when you reserve a block of compute time, either for `performance` Machines or `shared` Machines, in a specific region.
+Reservations apply to any number of Machines in that class.
+
+The available reservation sizes are:
+
+**Performance Machines**
+
+* $144/year for $20/month of usage
+* $1,440/year for $200/month of usage
+* $14,400/year for $2,000/month of usage
+
+**Shared Machines**
+
+* $36/year for $5/month of usage
+* $360/year for $50/month of usage
+* $3,600/year for $500/month of usage
+
+You pay the "per year" amount upfront, and each month receive a credit worth the "per month" amount. The credit does not rollover; it's only valid for the month in which it's granted.
+
+There's no limit on the number or combinations of blocks that can be purchased. Reservations are backdated to the first day of the month in which they're purchased.
+
+For example, if you purchase a $36/year `shared` Machines block in `cdg`, you'll pay $36 upfront and receive $5/month of credits applicable to `shared` Machines in `cdg` for 12 months, starting with the month of the purchase. Amortised over 12 months, the $36 upfront cost is $3/month, which is a 40% discount on the $5/month of credits you receive.
+
+Email reservations@fly.io with a list of the reservations you’d like to purchase along with which regions, and we’ll set them up for you.
+
 ### GPUs and Fly Machines
 
 Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see above) plus the price of the attached GPU. Like Machines, GPUs are billed by the second when the attached Machine is running.
