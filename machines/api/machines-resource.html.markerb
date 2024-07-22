@@ -479,7 +479,7 @@ This is, in particular, how you would update the running image of a Machine (whe
 
 ## Stop a Machine
 
-Stopping a started Machine will shut down the Machine, but not destroy it. The Machine may be started again with `machines/<machine_id>/start`.
+Stopping a started Machine will shut down the Machine, but not destroy it. The Machine can be started again with `machines/<machine_id>/start`.
 
 Stopping a suspended Machine will invalidate its snapshot, forcing it to perform a cold boot the next time it is started.
 
