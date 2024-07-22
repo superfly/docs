@@ -154,9 +154,10 @@ regionSelect.addEventListener("change", function () {
 
 For stopped Machines we charge only for the root file system (rootfs) needed for each Machine. Each 1GB of rootfs for a Machine stopped for 30 days is $0.15. The amount of rootfs needed is defined by your OCI image generated on your app plus a few [containerd](https://containerd.io/+external) tweaks on the underlying file system.
 
-### Machine Reservation Blocks
+### Machine reservation blocks
 
-We have a block-based commit scheme. Reserve a block of compute time, either for `performance` Machines or `shared` Machines, for a 40% discount. Reservations apply to any number of Machines in that class, in a specific region.
+You'll get a 40% discount when you reserve a block of compute time, either for `performance` Machines or `shared` Machines, in a specific region.
+Reservations apply to any number of Machines in that class.
 
 The available reservation sizes are:
 
