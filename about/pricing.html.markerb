@@ -173,7 +173,9 @@ The available reservation sizes are:
 * $360/yr for $50/mo of usage
 * $3,600/yr for $500/mo of usage
 
-There's no limit on the number or combinations of blocks that can be purchased. Reservations are backdated to the first day of the current month.
+You pay the "per year" amount upfront, and each month receive a credit worth the "per month" amount. The credit does not rollover; it's only valid for the month in which it's granted.
+
+There's no limit on the number or combinations of blocks that can be purchased. Reservations are backdated to the first day of the month in which they're purchased.
 
 Email reservations@fly.io with a list of the reservations you’d like to purchase along with which regions, and we’ll set them up for you.
 
