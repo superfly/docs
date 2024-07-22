@@ -24,6 +24,93 @@ In order to start working with Fly.io, you will need `flyctl`, our CLI app for m
 
 Once you have logged on, here are the three steps and a recap.
 
+Before diving into the installation process, ensure you have Rails installed by running:
+
+```bash
+rails --version
+```
+
+If you see a version number, it means Rails is already installed. If not, follow the steps below to install Rails.
+
+## Installing Rails
+
+There are two primary methods to install Rails:
+
+### Option A: Official Source
+
+[Follow the official Rails guide for installation.](https://guides.rubyonrails.org/getting_started.html#installing-rails)
+
+### Option B: Using `anyenv` and `rbenv`
+
+1. **Install `anyenv` using Homebrew**:
+   ```bash
+   brew install anyenv
+   ```
+
+2. **Initialize `anyenv`**:
+   ```bash
+   anyenv install --init
+   ```
+
+   If prompted with "Manifest directory doesn't exist", choose `y` to checkout `https://github.com/anyenv/anyenv-install.git`.
+
+3. **Install `rbenv` using `anyenv`**:
+   ```bash
+   anyenv install rbenv
+   ```
+
+   After the installation is successful, reload your profile or open a new session:
+   ```bash
+   exec $SHELL -l
+   ```
+
+4. **Install Ruby version 3.1.4 using `rbenv`**:
+   ```bash
+   rbenv install 3.1.4
+   ```
+
+   You can follow the progress by using:
+   ```bash
+   tail -f /tmp/ruby-build.<timestamp>.log
+   ```
+
+5. **Confirmation**:
+   
+   Once you see the message "Installed ruby-3.1.4", it means Ruby 3.1.4 has been successfully installed.
+
+6. **Setting Ruby Version**:
+
+   If you want to set this Ruby version as the new default for all your sessions, run:
+   ```bash
+   rbenv global 3.1.4
+   ```
+   Alternatively, if you want to set this Ruby version for the current directory only, run:
+   ```bash
+   rbenv local 3.1.4
+   ```
+
+7. **Installing Rails**:
+
+   With the desired Ruby version set, you can now install Rails. First, ensure that you have the correct version of Ruby set:
+   ```bash
+   ruby -v
+   ```
+   You should see `ruby 3.1.4` as the output.
+
+   Now, install Rails:
+   ```bash
+   gem install rails
+   ```
+
+8. **Validating Rails Installation**:
+
+   After the installation is complete, you can check the version of Rails that was installed:
+   ```bash
+   rails -v
+   ```
+   This should display the version of Rails that you've just installed.
+
+
 ## Rails Splash Screen
 
 A newly generated Rails application will display a flashy splash screen when
