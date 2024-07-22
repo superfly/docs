@@ -2,8 +2,8 @@
 title: OpenID Connect
 layout: docs
 nav: firecracker
+redirect_from: /docs/reference/openid-connect/
 ---
-
 
 Fly Machines sometimes need to access 3rd-party services or cloud providers like AWS, Azure, or GCP. To authenticate against these 3rd parties, your Machines need to supply credentials such as a password or token to the cloud provider; usually these are stored as `fly secrets` and then passed into your Machine's environment variables.
 

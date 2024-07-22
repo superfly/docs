@@ -18,13 +18,16 @@ Networking on Fly.io.
 
 - **[Custom domains](/docs/networking/custom-domain/):** Add a custom domain for your app and troubleshoot certificate creation.
 
-- **[Automate the certificate process for custom domains with the GraphQL API](/docs/networking/custom-domain-api):** If you need to issue multiple certificates automatically for custom domains, you can do that with the GraphQL API.
+- **[Automate the certificate process with the GraphQL API](/docs/networking/custom-domain-api):** If you need to issue multiple certificates automatically for custom domains, you can do that with the GraphQL API.
 
-- **[Run UDP services](/docs/networking/udp-and-tcp/):** Understand the gotchas of running Fly Apps on UDP.
+- **[HTTP request headers](/docs/networking/request-headers/):** Fly.io-specific and standard HTTP headers added by the HTTP connection handler.
+
+- **[Run UDP services](/docs/networking/udp-and-tcp/):** How to set up apps that use UDP.
 
 - **[TLS support](/docs/networking/tls/):** Supported TLS cipher suites.
 
 ## Related topics
 
-- How Fly.io does [load balancing](/docs/reference/load-balancing/)
-- Fly [Regions](/docs/reference/regions/)
+- [Fly Proxy](/docs/reference/fly-proxy)
+- [How Fly Proxy does load balancing](/docs/reference/load-balancing/)
+- [Fly Regions](/docs/reference/regions/)

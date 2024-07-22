@@ -41,10 +41,3 @@ spec:
 ```
 
 This will deploy a GPU Machine with the size `a100-80gb` with 1 GPU core in the region `ams`.
-
-## Related topics
-
-- [FKS Quickstart](/docs/kubernetes/fks-quickstart/)
-- [Create an FKS cluster](/docs/kubernetes/clusters/)
-- [Configure FKS Services](/docs/kubernetes/services)
-- [Use volumes with FKS](/docs/kubernetes/using-volumes/)

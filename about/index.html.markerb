@@ -8,12 +8,20 @@ nav: firecracker
 
 More details about using and working with the Fly.io platform.
 
-* [_Pricing_](/docs/about/pricing/) : Pricing for compute, storage, and all the FLy.io platform services.
-* [_Billing_](/docs/about/pricing/) : How billing works on Fly.io.
-* [_Healthcare_](/docs/about/healthcare/) : Controls relevant to running healthcare apps on Fly.io.
-* [_Support_](/docs/about/support) : Who to contact and where to go when you need Fly.io support.
-* [_Extensions program_](/docs/about/extensions/) and [_Extensions API_](/docs/reference/extensions_api/): Learn about becoming an extensions partner.
-* [_Open Source_](/docs/about/open-source/) : How we help those OSS projects that help us.
-* [_Using Our Brand_](/docs/about/brand/) : Assets and guidelines to help represent our brand.
-* [_Privacy Policy_](/legal/privacy-policy/) : Our policy on privacy, detailed here.
-* [_Terms of Service_](/legal/terms-of-service) : The legal terms of service for Fly.io users.
+* **[Pricing](/docs/about/pricing/):** Pricing for compute, storage, and all the FLy.io platform services.
+
+* **[Billing](/docs/about/pricing/):** How billing works on Fly.io.
+
+* **[Healthcare](/docs/about/healthcare/):** Controls relevant to running healthcare apps on Fly.io.
+
+* **[Support](/docs/about/support):** Who to contact and where to go when you need Fly.io support.
+
+* **[Extensions program](/docs/about/extensions/) and [Extensions API](/docs/reference/extensions_api/):** Learn about becoming an extensions partner.
+
+* **[Open Source](/docs/about/open-source/):** How we help those OSS projects that help us.
+
+* **[Using Our Brand](/docs/about/brand/):** Assets and guidelines to help represent our brand.
+
+* **[Privacy Policy](/legal/privacy-policy/):** Our policy on privacy, detailed here.
+
+* **[Terms of Service](/legal/terms-of-service):** The legal terms of service for Fly.io users.
