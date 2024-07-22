@@ -1,15 +1,13 @@
 ---
-title: Delete a Fly App
-objective: 
+title: Delete an app
 layout: docs
-nav: firecracker
-order: 110
+nav: apps
 ---
 
-You can scale an App right down to zero Machines if you like. But if you're done with an App forever, you can delete it using `fly apps destroy <app-name>`. 
+You can scale an app right down to zero Machines if you like. But if you're done with a Fly App forever, you can delete it using `fly apps destroy <app-name>`. 
 
-Once you destroy an App, you can no longer access any part of it, and you'll no longer be charged for any part of it either. This includes Machines, Volumes, IP addresses, Secrets, Docker images, and so on. 
+Once you destroy an app, you can no longer access any part of it, and you'll no longer be charged for any part of it either. This includes Fly Machines, Fly Volumes, IP addresses, secrets, Docker images, and so on. 
 
 <div class="warning icon">
-Here's a potential footgun: When you delete an App, you delete its Volumes. After you delete a Volume, you can't access the Volume snapshots. So if you want the data from an app's persistent storage, then get the data before you delete the app.
+Warning: When you destroy an app, you delete its volumes and volume snapshots. If you want the data from an app's persistent storage, then get the data before you destroy the app.
 </div>

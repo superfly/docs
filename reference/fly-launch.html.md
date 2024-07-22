@@ -7,7 +7,7 @@ redirect_from:
   - /docs/getting-started/launch-app/
 ---
 
-Fly Launch is a bundle of features that take a lot of the work out of deploying and managing your Fly App. Two commands that you'll use often are [`fly launch`](/docs/flyctl/launch/) and [`fly deploy`](/docs/apps/deploy/). 
+Fly Launch is a bundle of features that take a lot of the work out of deploying and managing your Fly App. Two commands that you'll use often are [`fly launch`](/docs/flyctl/launch/) and [`fly deploy`](/docs/launch/deploy/). 
 
 The usual way to create a new Fly App is to write your project and then run `fly launch`. The `fly launch` command automates as much as possible between writing the code and deploying on Fly.io, setting you up with a running app with good defaults.
 
@@ -50,7 +50,7 @@ Reference: [Fly Launch configuration (fly.toml)](/docs/reference/configuration/)
 
 ## Platform resource provisioning
 
-Before deployment, you might want to create and configure a [Fly Volume](/docs/volumes/) or [Postgres database](/docs/reference/postgres/), or [set app secrets](/docs/reference/secrets/).
+Before deployment, you might want to create and configure a [Fly Volume](/docs/volumes/) or [Postgres database](/docs/reference/postgres/), or [set app secrets](/docs/apps/secrets/).
 
 Some flyctl scanners will do some or all of this using the API.
 
@@ -98,7 +98,7 @@ Fly Launch uses the config specified in that `fly.toml` instead of the default c
 
 You can customize `fly launch` to better suit your project. The example that follows illustrates how this can work.
 
-For more information about ways to customize your launch, refer to [Custom launch](/docs/apps/launch/#custom-launch) and check out all the [options](/docs/flyctl/launch/) available for use with `fly launch`.
+For more information about ways to customize your launch, refer to [Custom launch](/docs/launch/create/#custom-launch) and check out all the [options](/docs/flyctl/launch/) available for use with `fly launch`.
 
 ### An example of a custom launch
 
@@ -199,7 +199,7 @@ Provisioning ips for hello-gunicorn-flask
   Add a dedicated ipv4 with: fly ips allocate-v4
 ```
 
-Because I had an HTTP service configured, and no [public IP addresses](/docs/networking/services/), Fly Launch [provisioned the IPs on deployment](/docs/apps/deploy/#ip-addresses).
+Because I had an HTTP service configured, and no [public IP addresses](/docs/networking/services/), Fly Launch [provisioned the IPs on deployment](/docs/launch/deploy/#ip-addresses).
 
 ```
 This deployment will:
@@ -238,7 +238,7 @@ app    	e28697ce6d3986	1      	ewr   	stopped	    	      	2023-11-29T20:55:33Z
 ```
 
 <div class="note icon">
-**Note:** Both Machines are in a stopped state, because they were idle for a few minutes and we enable the [auto start and stop feature](/docs/apps/autostart-stop/) by default.
+**Note:** Both Machines are in a stopped state, because they were idle for a few minutes and we enable the [auto start and stop feature](/docs/launch/autostart-stop/) by default.
 </div>
 
 I can [scale out](/docs/apps/scale-count/) by adding Machines in other regions if I want to get close to users in more corners of the world.

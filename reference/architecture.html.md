@@ -20,9 +20,9 @@ The virtualized applications run on dedicated physical servers with 8-32 physica
 
 We broadcast and accept traffic from ranges of IP addresses (both IPv4 and IPv6) in all our datacenters. When we receive a connection on one of those IPs, we match it back to an active customer application, and then proxy the TCP connection to the closest available microVM.
 
-### Proxy
+### Fly Proxy
 
-Every server in our infrastructure runs a Rust-based proxy named `fly-proxy`. The proxy is responsible for accepting client connections, matching them to customer applications, applying [handlers](/docs/networking/services/#connection-handlers) (eg: TLS termination), and [backhaul](#backhaul) between servers.
+Every server in our infrastructure runs a Rust-based proxy named `fly-proxy`. The proxy is responsible for accepting client connections, matching them to customer applications, applying [handlers](/docs/networking/services/#connection-handlers) (eg: TLS termination), and [backhaul](#backhaul) between servers. For more information, see [Fly Proxy](/docs/reference/fly-proxy).
 
 ### Backhaul
 

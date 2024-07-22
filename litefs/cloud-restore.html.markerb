@@ -4,6 +4,7 @@ layout: docs
 nav: litefs
 toc: true
 ---
+<%= partial "/docs/partials/docs/litefs_sunset" %>
 
 ## Overview
 

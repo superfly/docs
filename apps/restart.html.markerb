@@ -1,9 +1,7 @@
 ---
 title: Restart apps or Machines
-objective: 
 layout: docs
-nav: firecracker
-order: 70
+nav: apps
 ---
 
 <figure>
@@ -12,7 +10,7 @@ order: 70
 
 Running `fly deploy` on an app creates a new release of the app, and updates and restarts the Machines that belong to Fly Launch.
 
-Sometimes you don't want to update anything; you just want to reboot and start the root file system afresh. (Yes, restarting wipes the ephemeral file system, just as a `fly deploy` or `fly machine update` will.)
+Sometimes you don't want to update anything; you just want to reboot and start the root file system afresh. Restarting wipes the ephemeral file system, just as a `fly deploy` or `fly machine update` will.
 
 ## Restart every Machine managed by Fly Launch
 

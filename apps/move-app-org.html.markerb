@@ -1,0 +1,39 @@
+---
+title: Move an app between organizations
+layout: docs
+nav: apps
+---
+
+You might want to move an app to a new org to hand off your completed work to a client, to take advantage of a new pricing model, or to move a production app out of your personal organization.
+
+You can move an entire app with its resources to another organization with the `fly apps move` command. You'll need to be a member of both organizations to move an app.
+
+To move an app from one organization to another:
+
+```cmd
+fly apps move <app name> --org <target organization name>
+```
+
+<div class="important">
+**Fly Postgres:** You can't use the `fly apps move` command for Fly Postgres apps. To move a Postgres app to another organization, create a new Postgres app under the target organization, and then [restore the data from your current Postgres app volume snapshot](/docs/postgres/managing/backup-and-restore/#restoring-from-a-snapshot).
+</div>
+
+## App downtime
+
+Your app will have up to a few minutes of downtime while the move operation completes.
+
+## Resources moved with the app
+
+The following app resources are transferred to the new org automatically:
+
+- Fly Machines and Fly Volumes (including data)
+- environment variables and secrets
+- certificates and domain names
+- LiteFS databases (when `$FLY_APP_NAME` is used for your Consul key in `litefs.yml`)
+- Tigris object storage
+
+## Resources that you need to manually reconfigure
+
+The following extension services need to be reconfigured for the app after the move:
+
+- **[Upstash for Redis](https://fly.io/docs/reference/redis/):** Upstash Redis is only available over an organization's private network. After you move the app, you'll need to provision a new database for the new org.

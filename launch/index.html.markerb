@@ -1,0 +1,43 @@
+---
+title: Fly Launch
+layout: docs
+nav: apps
+redirect_from: 
+  - /launch/
+---
+
+Fly Launch helps you configure and orchestrate your app. If you followed one of our [Getting started](/docs/getting-started/) guides, then you're already using Fly Launch.
+
+<figure>
+  <img src="/static/images/docs-island.webp" alt="">
+</figure>
+
+Fly Launch includes:
+
+- the `fly launch` command to get started with a new app
+- the `fly.toml` file for app configuration
+- the `fly deploy` command to deploy or redeploy your app
+- the `fly scale` command for quick horizontal and vertical scaling
+
+Learn how to work with Fly Launch:
+
+**Create and configure**
+
+- [Create an app with Fly Launch](/docs/launch/create/)
+- [Deploy an app](/docs/launch/deploy/)
+- [App configuration reference (fly.toml)](/docs/reference/configuration/)
+- [Add Volume storage](/docs/launch/volume-storage/)
+- [Use process groups for multiple processes in one app](/docs/launch/processes/)
+
+**Scale and control**
+
+- [Scale Machine CPU and RAM](/docs/launch/scale-machine/)
+- [Scale the number of Machines in an app](/docs/launch/scale-count/)
+- [Auto start and stop Machines](/docs/launch/autostart-stop/)
+- [Autoscale Machines based on metrics](/docs/launch/autoscale-by-metric/)
+
+**Custom deployments**
+
+- [Deploy an app with GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/)
+- [Deploy review apps with GitHub Actions (Blueprint)](/docs/blueprints/review-apps-guide/)
+- [Deploy monorepo and multi-environment apps](/docs/launch/monorepo/)

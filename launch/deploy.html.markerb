@@ -1,0 +1,113 @@
+---
+title: Deploy an app
+layout: docs
+nav: apps
+redirect_from: /docs/apps/deploy/
+---
+
+<figure>
+  <img src="/static/images/docs-apps.webp" alt="">
+</figure>
+
+A feature of Fly Launch, the `fly deploy` flyctl command builds your app and spins it up on one or more Fly Machines, applying the configuration specified in a local `fly.toml` file.
+
+Whether you've run [`fly launch`](/docs/launch/create/) with the `--no-deploy` option, or want to apply changes to your deployed app's source or configuration, you can make a new release by running 
+
+```cmd
+fly deploy
+``` 
+
+from the source directory of your project, where any app source code, project config, `fly.toml`, and Dockerfile are located.
+
+If you haven't deployed the app before, `fly deploy` creates one or two Machines for every [process group](/docs/apps/processes/) defined in the app's `fly.toml` file, depending on whether there are services and volumes configured. If you haven't explicitly defined any process groups, the first deployment gives you two Machines for redundancy. For more information about when Fly Launch creates one Machine or two Machines, refer to [Redundancy by default on first deploy](/docs/reference/app-availability/#redundancy-by-default-on-first-deploy).
+
+Subsequent deployments update the app's Machines as a group, with the latest local changes to the app's source and configuration. It's possible for a Fly App to have standalone Machines that aren't managed by `fly deploy`.
+
+
+## Configuration
+
+flyctl will look for a `fly.toml` file to find the name of the app to operate on, and for an app configuration to apply during deployment. Use `fly deploy -a <app-name>` to override the app name given in `fly.toml` and deploy the project in the current working directory to a different existing Fly App.
+
+There are [a number of other options](/docs/flyctl/deploy/) you can use with the `fly deploy` command.
+
+## The build
+
+`fly deploy` builds, or gets, the Docker image for the app, and refreshes Machines with the latest changes.
+
+Here's how `fly deploy` determines how to get the app's Docker image:
+
+1. If an image is specified, either with the `--image` option or in the `[build]` section of `fly.toml`, use that image, regardless of the presence of a Dockerfile in the working directory or the use of the `--dockerfile` option.
+2. Otherwise, check the [`[build]` section of `fly.toml`](/docs/reference/configuration/#the-build-section) and use the method specified there, whether it's a Dockerfile or a buildpack (but don't use buildpacks if you don't have to; they're brittle, bloated, and prone to change).
+3. Otherwise, if the `--dockerfile` flag supplies a path to a Dockerfile, use that Dockerfile to build the image. You read that right. The `--dockerfile` flag is looked at _after_ the `[build]` section of the config file.
+4. Otherwise, if there's a `Dockerfile` (named exactly `Dockerfile` or `dockerfile`) in the local working directory, use that Dockerfile for the build.
+
+## IP addresses
+
+If the app to be deployed is configured with an eligible HTTP `[[services]]` section, and it does not yet have [public IP addresses](/docs/networking/services/), `fly deploy` provisions a public IPv6 and a shared public IPv4 Anycast address. 
+
+## Machines not managed by Fly Launch
+
+Machines created using `fly deploy` (or as part of a deployment during `fly launch`), or by `fly clone`ing such a Machine, carry a piece of metadata marking them as belonging to Fly Launch (`"fly_platform_version": "v2"`). These Machines are updated as a group on all subsequent `fly deploy` commands.
+
+New Machines created using `fly machine run`, also known as unmanaged Machines, don't have the `fly_platform_version` metadata, and are not automatically managed by Fly Launch. These unmanaged Machines can have their own configuration different from that of the App, and can even be based on a different Docker image.
+
+## Volume mounts and `fly deploy`
+
+If a Machine has a mounted [volume](/docs/volumes/), `fly deploy` can't be used to mount a different one. You can change the mount point at which the volume's data is available in the Machine's file system, though. This is configured in the [`[mounts]` section](/docs/reference/configuration/#the-mounts-section) of `fly.toml`.
+
+Learn more about [using Fly Volumes](/docs/volumes/).
+
+## `fly deploy` configuration in `fly.toml`
+
+Configure the following deployment behavior in the [`[deploy]` section](/docs/reference/configuration/#the-deploy-section) of `fly.toml`.
+
+### Release commands
+You can run a one-off [release command](/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment) in a temporary VM&mdash;using the successfully built release&mdash;before that release is deployed. This is good for, e.g., running database migrations. Keep in mind that these temporary VMs do not have access to any volumes you may have mounted in your apps.
+
+### Deployment strategy
+
+You can specify one of the following deployment strategies:
+
+* `rolling` (default): wait for each Machine to be successfully deployed before starting the update of the next one
+* `immediate`: bring all Machines down for update at once
+* `canary`: boot a single new Machine, verify its health, and then proceed with a rolling restart strategy
+* `bluegreen`: boot a new Machine alongside each running Machine in the same region, and migrate traffic to the new Machines only once all the new Machines pass health checks
+
+Learn more about [setting a deployment strategy](/docs/reference/configuration/#picking-a-deployment-strategy).
+
+```cmd
+fly deploy --strategy canary
+```
+```out
+...
+==> Building image
+Searching for image 'flyio/hellofly:latest' remotely...
+image found: img_z1nr0lpjz9v5q98w
+
+Watch your app at https://fly.io/apps/aged-water-8803/monitoring
+
+Creating canary machine for group app
+  Machine 328745da023e85 [app] update finished: success
+Canary machines successfully created and healthy, destroying before continuing
+machine 328745da023e85 was found and is currently in created state, attempting to destroy...
+Updating existing machines in 'example-app-8803' with canary strategy
+  [1/2] Machine 3287457df77785 [app] update finished: success
+  [2/2] Machine 91857266c41638 [app] update finished: success
+  Finished deploying
+...
+```
+
+## Not all changes require a new App release
+
+You can [add an IP address](/docs/networking/services/#ip-addresses) to an App, for example, without redeploying.
+
+Adding a [secret](/docs/apps/secrets/) to the App does require a restart, so `fly secrets set` triggers a new deployment.
+
+## Smoke checks
+
+Smoke checks monitor Machines during deployment, for about 10 seconds after a Machine enters the started state, to make sure the Machine stays running. If a Machine is constantly restarting with a non-zero exit code during this time, then the smoke check fails and the deployment is stopped. If possible, the smoke check failure output includes an excerpt of the logs to help you diagnose the issue with your app. 
+
+## Related topics
+
+- [Create a new app with Fly Launch](/docs/launch/create/)
+- [Troubleshooting your deployment](/docs/getting-started/troubleshooting/)

@@ -1,15 +1,15 @@
 ---
-title: Run an ssh server
+title: Run an SSH server
 layout: docs
 nav: firecracker
 author: rubys
 categories:
-  - ssh
+  - SSH
 date: 2024-01-14
 redirect_from: /docs/app-guides/opensshd/
 ---
 
-A number of tools allow you to interact with your server over ssh. These tools are useful for tasks such as
+A number of tools allow you to interact with your server over SSH. These tools are useful for tasks such as
 copying files ([rsync](https://rsync.samba.org/+external), [scp](https://en.wikipedia.org/wiki/Secure_copy_protocol+external), [sshfs](https://github.com/libfuse/sshfs#sshfs+external)), 
 editing ([emacs](https://www.gnu.org/software/emacs/manual/html_node/emacs/Remote-Files.html+external), [vim](https://www.vim.org/scripts/script.php?script_id=1075+external), [vscode](https://code.visualstudio.com/docs/remote/ssh+external)), and
 deployment ([ansible](https://www.ansible.com/+external), [github actions](https://github.com/marketplace/actions/ssh-deploy+external), and [kamal](https://kamal-deploy.org/+external)).
@@ -17,7 +17,7 @@ deployment ([ansible](https://www.ansible.com/+external), [github actions](https
 One way to use these tools is to [set up a wireguard VPN](https://fly.io/docs/reference/private-networking/#install-your-wireguard-app) and
 [issue a new SSH credential](https://fly.io/docs/flyctl/ssh-issue/).  This may be impractical for some use cases (example: github actions).
 
-As an alternative, you can configure and deploy an ssh server on your machine(s).  This guide will walk you through the process.
+As an alternative, you can configure and deploy an SSH server on your machine(s).  This guide will walk you through the process.
 
 Before proceeding, a **caution**: unless you are **certain** that all of the clients will access this service through IPv6, you will need a [dedicated IPv4](https://fly.io/docs/reference/services/#dedicated-ipv4) address.
 
@@ -67,7 +67,7 @@ This section is needed even if the internal and external ports are the same.
 Notes:
 
 * `internal_port` needs to match the port you selected in the previous step.
-* `port` can be any available port.  `22` is the [default port](https://www.ssh.com/academy/ssh/port+external) for ssh,
+* `port` can be any available port.  `22` is the [default port](https://www.ssh.com/academy/ssh/port+external) for SSH,
   and the one that most applications expect to be used.
 * Like with your web server port, your server can be configured to spin down when idle and restart when accessed.
   Feel free to adjust `auto_stop_machines` and `auto_start_machines` if your needs differ.
@@ -108,9 +108,9 @@ sudo sed -i "/^%rails/d" /etc/sudoers
 
 The above commands will start `sshd` as root, then remove sudo access from your unprivileged userid.
 
-## Upload your ssh key
+## Upload your SSH key
 
-First, locate your ssh key.  You can create a new key using [`ssh-keygen`](https://www.ssh.com/academy/ssh/keygen+external),
+First, locate your SSH key.  You can create a new key using [`ssh-keygen`](https://www.ssh.com/academy/ssh/keygen+external),
 Or you can use an existing one: look inside the `.ssh` folder in your home directory for a file with a name like `id_rsa.pub`.
 
 Once located, there are multiple ways to proceed.  Following you will find two ways.  Depending on the framework your
@@ -129,7 +129,7 @@ Powershell users will want to use the following instead:
 fly secrets set "AUTHORIZED_KEYS=$(Get-Content $HOME\.ssh\id_rsa.pub)"
 ```
 
-Next update your entrypoint script to contain the following:
+Next, update your entrypoint script to contain the following:
 
 ```bash
 echo $AUTHORIZED_KEYS > /root/.ssh/authorized_keys
@@ -150,10 +150,10 @@ there, you can directly copy it as a part of your entrypoint script.
 cp /volume/.ssh/authorized_keys /root/.ssh
 ```
 
-## [RECOMMENDED] Make ssh host keys stable
+## [RECOMMENDED] Make SSH host keys stable
 
-The first time you ssh into a server you will be presented with a fingerprint for the server you are accessing.
-If you accept that fingerprint, it will be added to your `known_hosts` file in your `.ssh` folder.  This key
+The first time you SSH into a server you will be presented with a fingerprint for the server you are accessing.
+If you accept that fingerprint, it will be added to your `known_hosts` file in your `.ssh` directory.  This key
 is generated when you install `openssh-server`.
 
 The issue arises when you redeploy your application.  If something changes (or your docker cache expires),
@@ -182,7 +182,7 @@ Notes:
 ## [OPTIONAL] Configure client user and aliases
 
 Your full dnsname may be a mouthful, the user the application runs under may be different than the one you use on your laptop.
-the port you expose may be non-standard, or you may have multiple machines and a desire to be able to ssh into a specific one.
+the port you expose may be non-standard, or you may have multiple machines and a desire to be able to SSH into a specific one.
 
 If any of these apply to you, you can create or update a file named [`config`](https://www.ssh.com/academy/ssh/config+external) in your `.ssh` directory.
 Following is an example that illustrates addressing a number of the above cases: 

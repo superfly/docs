@@ -150,7 +150,7 @@ to your Dockerfile don't contain actual secrets as your Dockerfile will
 generally be committed to git or otherwise may be visible.
 
 If you have need for actual secrets at build time, take a look
-at [Build Secrets](/docs/reference/build-secrets/).
+at [Build Secrets](/docs/apps/build-secrets/).
 
 Finally, if there are no other options you can generate a Dockerfile that will
 run `assets:precompile` at deployment time with the following command:
@@ -245,7 +245,7 @@ Generally, this means that there is a problem with your `RAILS_MASTER_KEY`. It i
 
 `fly launch` will extract your master key if your project has one and make it
 available to your deployed application as a
-[secret](https://fly.io/docs/reference/secrets/).
+[secret](/docs/apps/secrets/).
 
 If you've already run `fly launch` on a project that doesn't have a master key
 (commonly because files containing these values are excluded from being pushed by being listed in your `.gitignore` file), you will need to generate a key

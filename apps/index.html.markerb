@@ -1,52 +1,46 @@
 ---
-title: "Fly Launch"
+title: "Apps on Fly.io"
 layout: docs
 toc: false
-nav: firecracker
+nav: apps
 ---
 
-Fly Launch is a collection of opinionated Fly.io platform features that help you configure and orchestrate your app as a unit. The following are some Fly Launch features:
+An app on Fly.io can be anything from a simple frontend web app to a complex arrangement of processes and Machines all doing their own thing. Check out the [Fly Apps overview](/docs/apps/overview/) for details.
 
-- the `fly launch` command to get started
-- the `fly.toml` file for app configuration
-- the `fly deploy` command to deploy all your app's Machines
-- the `fly scale` command for horizontal and vertical scaling
 
-You can also configure and manage Fly Machines individually; see the [Fly Machines](/docs/machines/) docs.
+## Fly Launch
 
-Learn how to use Fly Launch:
+_If you're looking to deploy an app on Fly.io, you probably want Fly Launch. Use Fly Launch to create your app and then manage the whole lifecycle, from starting to scaling to changing and redeploying._
 
-<ul class="outline-list">
-    <li>
-    <%= nav_link "Launch a New Fly App", "/docs/apps/launch/" %>
-    </li>
-    <li>
-    <%= nav_link "Deploy a Fly App", "/docs/apps/deploy/" %>
-    </li>
-    <li>
-    <%= nav_link "Get Information about an App", "/docs/apps/info/" %>
-    </li>
-    <li>
-    <%= nav_link "Add Volume Storage", "/docs/apps/volume-storage/" %>
-    </li>
-    <li>
-    <%= nav_link "Scale Machine CPU and RAM", "/docs/apps/scale-machine/" %>
-    </li>
-    <li>
-    <%= nav_link "Add or Remove Machines", "/docs/apps/scale-count/" %>
-    </li>
-    <li>
-    <%= nav_link "Automatically Stop and Start Machines", "/docs/apps/autostart-stop/" %>
-    <li>
-    <%= nav_link "Restart an App", "/docs/apps/restart/" %>
-    </li>
-    <li>
-    <%= nav_link "Run Multiple Processes in an App", "/docs/apps/processes/" %>
-    </li>
-    <li>
-    <%= nav_link "Delete an App", "/docs/apps/delete/" %>
-    </li>
-    <li>
-    <%= nav_link "Fly Launch Configuration Reference", "/docs/reference/configuration/" %>
-    </li>
-</ul>
+- [Get started](/docs/getting-started/) with Fly Launch
+- [Use Fly Launch](/docs/launch/) to create, configure, deploy, and scale your app
+
+---
+
+## Secrets
+
+_Store sensitive data, like usernames and passwords, as secrets in your app. Secrets are made available to the app as environment variables._
+
+- [Set app secrets to be available at runtime](/docs/apps/secrets/)
+- [Mount secrets in your Dockerfile to be available at buildtime](/docs/apps/build-secrets/)
+
+---
+
+## Production apps
+
+_Get your app ready for production on Fly.io._
+
+- [Going to production with your app](/docs/apps/going-to-production/)
+- [App availability and resiliency](/docs/apps/app-availability/)
+- [Tips to fine-tune and (not) benchmark your app on Fly.io](/docs/apps/fine-tune-apps/)
+- [Guidelines for concurrency settings](/docs/apps/concurrency/)
+
+---
+
+## Related topics
+
+- [Databases & Storage](/docs/database-storage-guides/)
+- [Networking](/docs/networking/)
+- [Monitoring](/docs/monitoring/)
+- [Security](/docs/security)
+- [Blueprints: Fly.io patterns for your projects](/docs/blueprints/)

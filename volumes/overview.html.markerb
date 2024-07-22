@@ -14,7 +14,7 @@ A Fly Volume is a slice of an NVMe drive on the same physical server as the Mach
 
 ## Volume considerations
 
-* **A volume belongs to one app**: Every Fly Volume belongs to a [Fly App](/docs/reference/apps/) and you can't share a volume between apps.
+* **A volume belongs to one app**: Every Fly Volume belongs to a [Fly App](/docs/apps/overview/) and you can't share a volume between apps.
 * **A volume exists on one server**: Each volume exists on one server in a single region. It is not network storage.
 * **A volume can attach to one Machine**: You need to run as many volumes as there are Machines. There's a one-to-one mapping between Machines and volumes. A Machine can only mount one volume at a time and a volume can be attached to only one Machine.
 * **Develop your app to handle replication**: Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app, so if you need the volumes to sync up, then your app has to make that happen.

@@ -14,7 +14,7 @@ Sometimes it's useful, or necessary, to route requests to other regions, other a
 
 ## The `fly-replay` response header
 
-Apps may append a `fly-replay` header to responses. This instructs the Fly proxy to redeliver (replay) the original request in another region, or to replay it to another app in the same Fly organization.
+Apps may append a `fly-replay` header to responses. This instructs the [Fly Proxy](/docs/reference/fly-proxy) to redeliver (replay) the original request in another region, or to replay it to another app in the same Fly organization.
 
 The content of the `fly-replay` header fields tells our proxy which magic to perform, and the proxy takes it from there. If the target region doesn't host any healthy instances for the target app, the proxy throws an error.
 
@@ -32,7 +32,7 @@ Attempting to replay requests larger than 1MB will throw an error. If you need c
 
 If your service is simply proxying uploads to object storage, some services like S3 allow [uploading directly from the browser](https://aws.amazon.com/blogs/compute/uploading-to-amazon-s3-directly-from-a-web-or-mobile-application/). Rails supports this [out of the box](https://guides.rubyonrails.org/active_storage_overview.html#direct-uploads).
 
-If you can perform uploads via `XMLHTTPRequest` (aja Ajax), you can prepend the [fly-prefer-region](#the-fly-prefer-region-request-header) header to send the request directly to that region.
+If you can perform uploads via `fetch` or `XMLHttpRequest` (aja Ajax), you can prepend the [fly-prefer-region](#the-fly-prefer-region-request-header) or [fly-force-instance-id](#the-fly-force-instance-id-request-header) header to send the request directly to that region.
 
 
 ## `fly-replay` use cases

@@ -1,7 +1,7 @@
 ---
 title: "Continuous Deployment with Fly.io and GitHub Actions"
 layout: docs
-nav: firecracker
+nav: apps
 categories:
   - ci
   - github
@@ -10,7 +10,7 @@ categories:
 
 <img src="/static/images/continuous-deployment.webp" alt="A man writing code on a vintage desktop computer" class="rounded-xl">
 
-This guide works through setting up your app for continuous deployment to Fly.io from the app's GitHub repository.
+This guide works through setting up your app for continuous deployment to Fly.io from the app's GitHub repository. You might also like our blueprint on [deploying review apps with GitHub Actions](/docs/blueprints/review-apps-guide/).
 
 You'll start with an example application called [go-example](https://github.com/fly-apps/go-example+external). It's a simple, lightweight app that displays the Fly.io region that served the request.
 
@@ -50,7 +50,7 @@ The first section is a speed-run through the steps to make the go-example app au
       **Note:** The `go-example`’s default branch is `master`. If you’re using a different app, yours might be `main`. Change the `branches` value in the `fly.yml` file accordingly.
       </div>
 
-9. Commit your changes and push them up to GitHub. You should be pushing two new files: `fly.toml`, the [Fly Launch](/docs/apps/) configuration file, and `fly.yml`, the GitHub action file.
+9. Commit your changes and push them up to GitHub. You should be pushing two new files: `fly.toml`, the [Fly Launch](/docs/launch/) configuration file, and `fly.yml`, the GitHub action file.
   
 Then the magic happens - The push triggers a deploy, and from now on whenever you push a change, the app will automatically be redeployed.
 
@@ -148,6 +148,7 @@ And that's the deployment process. You can, of course, leverage the GitHub Actio
 
 **Read:**
 
+* [Blueprint: Deploy review apps with GitHub Actions](/docs/blueprints/review-apps-guide/)
 * [Deploy Tokens](/docs/reference/deploy-tokens/)
 * [GitHub Actions Documentation](https://docs.github.com/en/actions+external)
 

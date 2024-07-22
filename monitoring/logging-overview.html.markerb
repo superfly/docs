@@ -1,0 +1,33 @@
+---
+title: Logging overview
+layout: docs
+nav: firecracker
+redirect_from: /docs/metrics-and-logs/logs/
+---
+
+Fly.io app logs are the stdout from the processes run in your apps: whatever an app outputs becomes a log.
+
+Your apps run in Machines. Inside each Machine, we inject a process (init) that runs and monitors your app. Since we build Machines from Docker images, init is taking ENTRYPOINT + CMD and running that. The init program is, among other things, gathering process output from stdout and redirects it to a socket.
+
+Outside of the Machine, on the host, we take that output and send it to [Vector](https://vector.dev/docs/reference/configuration/sinks/nats/+external) via yet another socket. Vector ships logs (your app’s output) to an internal NATS cluster. Clients can subscribe to specific topics, and NATS sends the requested data to those subscribers.
+
+A proxy sits in front of NATS, to ensure you only see your own logs, and you can hook into NATS via this proxy to get your logs.
+
+Vector can act as a NATS client, read the logs, and ship them somewhere. An example of this our Fly Log Shipper app.
+
+## Live tail logs
+
+You can live tail logs from the dashboard or with the `fly logs` command. For more information, see [Live tail logs](/docs/monitoring/live-tail-logs/).
+
+## Search logs
+
+We have an app log search feature in Grafana that retains logs for 30 days. For more information, see [Search logs](/docs/monitoring/search-logs/).
+
+## Export logs
+
+Try the Fly Log Shipper app to export logs to a service. For more information, see [Export logs](/docs/monitoring/exporting-logs/).
+
+## Error codes and troubleshooting
+
+Look up error codes from logs and get tips on troubleshooting them. For more information, see [Error codes and troubleshooting](/docs/monitoring/error-codes/).
+

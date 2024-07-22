@@ -1,0 +1,48 @@
+---
+title: Guidelines for concurrency settings
+layout: docs
+nav: apps
+redirect_from: /docs/reference/concurrency/
+---
+
+Concurrency settings are used by the Fly Proxy for important things like [load balancing](/docs/reference/load-balancing/#load-balancing-strategy) and [autostart/autostop](/docs/launch/autostart-stop/) for Machines.
+
+The following concurrency settings apply per Machine and per service in your app:
+
+`type`: Use `connections` or `requests` as the metric for app load concurrency.
+
+`hard_limit`: At or above this number, no new traffic goes to the Machine.
+
+`soft_limit`: At or above this number, traffic to the Machine is deprioritized. Traffic is only routed to the Machine if all Machines reach the soft limit.
+
+For Fly Launch apps, configure concurrency settings in the [[http_service.concurrency]](/docs/reference/configuration/#http_service-concurrency) or [[services.concurrency]](/docs/reference/configuration/#services-concurrency) sub-sections of your `fly.toml` file. If you're using the Machines API, then concurrency settings are per `service` in [the `config` object](/docs/machines/api/machines-resource/#machine-config-object-properties).
+
+## Default settings
+
+The default concurrency settings when not specified are a `soft_limit` of 20 and no `hard_limit`. Many apps can handle a few hundred concurrent connections or more. You can try out different concurrency settings and see how it affects performance and load balancing.
+
+`connections` is the default concurrency type.
+
+## How the Fly Proxy handles concurrency
+
+The Fly Proxy doesn't consider the exact number of concurrent connections or requests. From the proxy's point of view a Machine is handling between 0 and the soft limit, handling between the soft limit and the hard limit, or is at the hard limit. Along with region, this is how the proxy decides which Machine gets traffic.
+
+The proxy's view of a Machine's load is affected when the gap between the soft limit and the hard limit is small and/or the app's concurrent connections or requests oscillate between them more frequently. In that case, the proxy routes according to the settings, but the thresholds change too quickly and requests or connections end up being re-routed.
+
+General caveats:
+
+- If the limits are too high, then your Machines might not be able to process that much concurrently and your app could crash.
+- If the limits are too low, then the proxy is artificially limiting what your app can process.
+- If the soft and hard limit are too close, then there might not be enough “time” for the proxy to decide to load balance and the result could be multiple retries.
+
+## Connections or requests
+
+The decision to use `connections` or `requests` for concurrency depends on the type of app and its load.
+
+`requests` are HTTP requests and the recommended concurrency type for web services. Using `requests` for concurrency can prevent too many connections to your app and reduce latency; the proxy can temporarily pool and reuse connections.
+
+`connections` are TCP connections. Multiple requests can be sent over a connection, so you need to consider how your app handles that. If you use `connections` for web services, then the proxy opens a new connection for each HTTP request, which is why `requests` is a better setting for HTTP apps.
+
+## Concurrency limit tuning tips
+
+When tuning concurrency, try setting a relatively high `hard_limit`, or leave it unset to have no hard limit. If you do want to set a `hard_limit` to have more control over load balancing, then you might have to do an initial benchmark to estimate the maximum number of concurrent connections or requests that your app can handle. Then tune the `soft_limit` and [create more Machines](/docs/blueprints/resilient-apps-multiple-machines/) to optimize autostart/autostop and load balancing. Once your app is getting real-world traffic, you can continue to monitor your app and adjust the `soft_limit` further to suit your workload.

@@ -31,7 +31,7 @@ There's a bit more to the whole picture, which is why the rest of this document 
 
 All services reachable from the public internet via a Fly App's global Anycast address are routed by Fly Proxy.
 
-Fly Proxy can load-balance requests for both public and private ([Flycast](/docs/networking/private-networking/#flycast-private-load-balancing)) services among a Fly App's VMs. Routing to a service with Fly Proxy also enables other Fly Proxy features, such as [starting and stopping Machines](/docs/apps/autostart-stop/) in response to fluctuations in request traffic.
+Fly Proxy can load-balance requests for both public and private ([Flycast](/docs/networking/private-networking/#flycast-private-load-balancing)) services among a Fly App's VMs. Routing to a service with Fly Proxy also enables other Fly Proxy features, such as [starting and stopping Machines](/docs/launch/autostart-stop/) in response to fluctuations in request traffic.
 
 ### Get the service listening on the right address within the VM
 

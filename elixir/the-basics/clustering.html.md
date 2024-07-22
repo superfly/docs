@@ -43,7 +43,7 @@ export RELEASE_DISTRIBUTION="name"
 export RELEASE_NODE="${FLY_APP_NAME}-${FLY_IMAGE_REF##*-}@${FLY_PRIVATE_IP}"
 ```
 
-This names our Elixir node's name (aka RELEASE_NODE) using the Fly application name, the Docker image reference value, and the internal IPv6 address. Make sure to deploy after making this change!
+This names our Elixir node's name (also known as RELEASE_NODE) using the Fly application name, the Docker image reference value, and the internal IPv6 address. Make sure to deploy after making this change!
 
 ```cmd
 fly deploy
@@ -170,7 +170,7 @@ I included the IEx prompt because it shows the IP address of the node I'm connec
 
 Fly.io makes it super easy to run VMs of your applications physically closer to your users. Through the magic of DNS, users are directed to the nearest [region](/docs/reference/regions/) where your application is located.
 
-Starting back from our baseline of a single VM running in `sea` which is Seattle, Washington (US), I'll add the region `ewr` which is Parsippany, NJ (US). I can do this by cloning the existing Fly Machine into my desired region:
+Starting back from our baseline of a single VM running in `sea` which is Seattle, Washington (US), I'll add the region `ewr` which is NJ (US). I can do this by cloning the existing Fly Machine into my desired region:
 
 ```cmd
 fly machine clone 6e82dd00f75687 --region ewr
@@ -204,7 +204,7 @@ We have two VMs of our application deployed to the West and East coasts of the N
 
 ## The cookie situation
 
-Before two Elixir nodes **can** cluster together, they must share a secret cookie. The cookie itself isn't meant to be a super secret encryption key or anything like that, it's designed to let us create multiple sets of small clusters on the same network that don't all just connect together. Different cookies means different clusters. For instance, only the nodes that all use the cookie "abc" will connect together.
+Before two Elixir nodes **can** cluster together, they must share a secret cookie. The cookie itself isn't meant to be a super secret encryption key or anything like that, it's designed to let us create multiple sets of small clusters on the same network that don't all just connect together. Different cookies means different clusters. For instance, only the nodes that all use the cookie `abc` will connect together.
 
 For us, this means that in order for `my_remote` node to connect to the cluster on Fly, we need to share the same cookie value used in production.
 
@@ -220,25 +220,35 @@ The easiest solution here is to **specify** the value to use for our cookie. One
 
 If we read the [Mix.Tasks.Release docs](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-options), in the `:cookie` section we learn that if we provide an ENV named `RELEASE_COOKIE`, it will be used. If that ENV is not found, it falls back to the randomly generated one.
 
-To do this, we can create the cookie we want and store it in our `fly.toml` file like this:
+To generate the cookie string we will use this Elixir command:
+
+```elixir
+Base.url_encode64(:crypto.strong_rand_bytes(40))
+```
+
+To provide the ENV named `RELEASE_COOKIE` inside the running app, after generating the cookie, we can either:
+- [Put it as a secret](https://fly.io/docs/apps/secrets/#set-secrets) inside project settings under the `RELEASE_COOKIE` name, or
+- Store it in our `fly.toml` file like this:
 
 ```toml
 [env]
   RELEASE_COOKIE = "my-app-cookie"
 ```
 
-Also from the docs, we can generate the cookie string to use with this Elixir command:
+After setting up the ENV and deploying the application, we can verify that the cookie is being used by getting an [IEx shell into our running server](/docs/elixir/the-basics/iex-into-running-app/) and issuing the following command:
 
 ```elixir
-Base.url_encode64(:crypto.strong_rand_bytes(40))
-```
-
-After deploying the application, we can verify that the cookie is being used by getting an [IEx shell into our running server](/docs/elixir/the-basics/iex-into-running-app/) and issuing the following command:
-
-```
 Node.get_cookie()
 ```
 
 This shows the cookie being used at runtime.
 
-With a known and unchanging cookie deployed in our application, we are ready for the next step!
+We can also check list of connected nodes by running the following command:
+
+```elixir
+Node.list()
+```
+
+An empty list means the node has no connections. If you are sure that there is more then one node running, you could proceed to [Troubleshooting](/docs/elixir/the-basics/troubleshooting/) documentation.
+
+If you have non-empty list with all of your running nodes - congratulations, you have successfully set up the clustering!

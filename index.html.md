@@ -7,23 +7,29 @@ nav: firecracker
 
 <div class="index-page">
 
-## Launch an app
+## Get started
 
-_Fly Launch is app configuration, provisioning, deployment, scaling, and orchestration with our CLI, all built on Fly Machines._
-
-Get started with our [quickstart or demo app](/docs/getting-started/)
+Try our [quickstart or demo app](/docs/getting-started/)
 
 Or choose your favorite [language or framework](/docs/getting-started/get-started-by-framework/)
 
 ---
 
-## Fly CLI
+## Apps on Fly.io
+
+_Fly Launch is app configuration, provisioning, deployment, scaling, and orchestration with our flyctl CLI._
+
+[Work with your apps](/docs/apps/): create, configure, deploy, and scale with Fly Launch, set secrets, and prepare for production
+
+---
+
+## flyctl CLI
 
 _Use the `fly` command to create and deploy apps, control individual Machines, configure networking, and more._
 
 Install [flyctl](/docs/flyctl/install)
 
-Don't worry, it's [open source](https://github.com/superfly/flyctl+external)
+flyctl is [open source](https://github.com/superfly/flyctl+external)
 
 ---
 
@@ -61,7 +67,7 @@ _Services from Fly.io and our extension partners to help you run your entire sta
 
 [Supabase Postgres (public alpha)](/docs/reference/supabase/)
 
-[LiteFS Cloud](/docs/litefs/cloud-backups/)
+[LiteFS - Distributed SQLite](/docs/litefs/)
 
 [Fly Kubernetes (private beta)](/docs/kubernetes/fks-quickstart/)
 
@@ -79,9 +85,11 @@ _Private networking, public services, custom domains, routing, and load balancin
 
 _Explore built-in and custom Prometheus metrics and Grafana dashboards. Live tail and search your app's logs, or ship them where you want them._
 
-Fly.io [Metrics and logs](/docs/metrics-and-logs/)
+[Fly.io Metrics](/docs/monitoring/metrics/)
 
-[Application Monitoring by Sentry](/docs/reference/sentry/)
+[Error Monitoring by Sentry](/docs/reference/sentry/)
+
+[Logging on Fly.io](/docs/monitoring/logging-overview/)
 
 ---
 

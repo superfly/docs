@@ -105,7 +105,7 @@ A Flycast address is an app-wide IPv6 address that the Fly Proxy can route to pr
 
 Use Flycast to do the following entirely within your organization's private network:
 
-* [Autostart and/or autostop](https://fly.io/docs/apps/autostart-stop/) Machines based on network requests.
+* [Autostart and/or autostop](/docs/launch/autostart-stop/) Machines based on network requests.
 * Use Fly Proxy's [geographically aware load balancing](/docs/reference/load-balancing/) for private services.
 * Connect to a service from another app that can't use DNS.
 * Connect from third-party software, like a database, that doesn't support round-robin DNS entries.

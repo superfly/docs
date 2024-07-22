@@ -5,6 +5,8 @@ nav: litefs
 toc: true
 ---
 
+<%= partial "/docs/partials/docs/litefs_sunset" %>
+
 The simplest way to implement disaster recovery for your LiteFS cluster is
 to use Fly.io's LiteFS Cloud for backups. LiteFS Cloud provides reliable backup
 and restore functionality, which reduces the risk of data loss in the event

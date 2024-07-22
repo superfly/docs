@@ -20,7 +20,7 @@ We recommend the latest [supported versions](https://devguide.python.org/version
 For project and dependency management we use [Poetry](https://python-poetry.org/). Like most package managers, Poetry combines multiple tools in one. 
 
 You have other options:
-- [venv](https://docs.python.org/3/library/venv.html#module-venv)
+- [venv](https://docs.python.org/3/library/venv.html) and [pip](https://pip.pypa.io/)
 - [Pipenv](https://github.com/pypa/pipenv)
 - [pyenv](https://github.com/pyenv/pyenv)
 - [pip-tools](https://pypi.org/project/pip-tools/)

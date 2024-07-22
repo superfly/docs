@@ -1151,12 +1151,12 @@ Properties of the `config` object for Machine configuration. See [Machine proper
 ---
 
 **`mounts`:** An array of objects that reference previously created [persistent volumes](/docs/volumes/). Currently, you may only mount one volume per Machine.
-  - `name`: string - Required. The name of the Volume to attach.
+  - `volume`: string - Required. The volume ID, visible in `fly volumes list`. For example `vol_2n0l3vl60qpv635d`.  
   - `path`: string - Required. Absolute path on the Machine where the volume should be mounted. For example, `/data`.
+  - `name`: string - The name of the Volume to attach.
   - `extend_threshold_percent`: int - The threshold of storage used on a volume, by percentage, that triggers extending the volume’s size by the value of `add_size_gb`.
   - `add_size_gb`: int - The increment, in GB, by which to extend the volume after reaching the `auto_extend_size_threshold`. Required with `auto_extend_size_increment`. Required with `extend_threshold_percent`.
   - `size_gb_limit`: int - The total amount, in GB, to extend a volume. Optional with `auto_extend_size_increment`. Optional with `extend_threshold_percent`.
-  - `volume`: int (nil) - The volume ID, visible in `fly volumes list`, i.e. `vol_2n0l3vl60qpv635d`.
   - `encrypted`: boolean - Volume is encrypted. Default true.
 
 ---
@@ -1223,9 +1223,11 @@ Properties of the `config` object for Machine configuration. See [Machine proper
 ---
 
 **`statics`:** Optionally serve static files.
-  - `guest_path`: string - Required. The path inside the Machines where the files to serve are located.
+  - `guest_path`: string - Required. The path inside the Machines or object storage bucket where the files to serve are located.
   - `url_prefix`: string - Required. The URL prefix under which to serve the static files.
-
+  - `tigris_bucket`: string - The Tigris bucket where the files to serve are located.
+  - `index_document`: string - The name of the index document, served when a request is made to the root or any of its subfolders. Only works for statics hosted on Tigris
+  
 ---
 
 **`stop_config`:** MachineStopConfig (nil) - Configure graceful shutdown of the Machine.
