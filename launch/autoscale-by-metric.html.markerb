@@ -7,9 +7,9 @@ redirect_from: /docs/apps/autoscale-by-metric/
 
 The metrics-based autoscaler scales an app's Machines based on any metric, such as pending work items or queue depth. Scaling on metrics other than requests or connections is useful for apps, like background workers, that aren't running web services. Apps with services that need to scale based on HTTP requests can use the built-in Fly Proxy [autostop/autostart feature](/docs/launch/autostart-stop/) for Machines.
 
-The autoscaler works by collecting metrics from different sources, such as Prometheus or Temporal, and computing the number of required Machines based on those metrics. This reconciliation process happens on a loop every 15 seconds by default. We use the [Expr language](https://expr-lang.org/+external) for defining target Machine counts, which gives a rich set of built-in arithmetic functions.
+The autoscaler works by collecting metrics from different sources, such as Prometheus or Temporal, and computing the number of required Machines based on those metrics. This reconciliation process happens on a loop every 15 seconds by default. The autoscaler uses the [Expr language](https://expr-lang.org/+external) for defining target Machine counts, which gives a rich set of built-in arithmetic functions.
 
-You run the autoscaler as an app based on the [`fly-autoscaler`](https://github.com/superfly/fly-autoscaler+external) image. The app runs within your organization so you have full control over it. You can customize it to work with your specific scaling needs.
+You run the autoscaler as an app based on the [`fly-autoscaler`](https://github.com/superfly/fly-autoscaler+external) image. The app runs within your organization so you have full control over it. You can customize the autoscaler to work with your specific scaling needs.
 
 ## Quickstart
 
@@ -87,7 +87,7 @@ Metrics collection settings:
 Autoscaling settings:
 
 - `FAS_APP_NAME` is the name of the target application to scale.
-- `FAS_CREATED_MACHINE_COUNT` defines an [Expr](https://expr-lang.org/) expression to calculate the number of Machines to create or destroy.
+- `FAS_CREATED_MACHINE_COUNT` defines an [Expr](https://expr-lang.org/) expression to calculate the required number of Machines. The autoscaler creates or destroys Machines to reach the required number.
 
 This example expression assumes that each Machine could handle two items in the queue and uses the `min()` function to prevent the autoscaler from scaling more than `50` Machines.
 
@@ -191,8 +191,8 @@ See the reference [fly-autoscaler.yml](https://github.com/superfly/fly-autoscale
 ### Autoscaler config
 
 - `FAS_APP_NAME`: The name of the target app to scale.
-- `FAS_CREATED_MACHINE_COUNT`: An [Expr](https://expr-lang.org/) expression to calculate the number of Machines to create or destroy.
-- `FAS_STARTED_MACHINE_COUNT`: An [Expr](https://expr-lang.org/) expression to calculate the number of Machines to stop or start.
+- `FAS_CREATED_MACHINE_COUNT`: An [Expr](https://expr-lang.org/) expression to calculate the required number of Machines. The autoscaler creates or destroys Machines to reach the required number.
+- `FAS_STARTED_MACHINE_COUNT`: An [Expr](https://expr-lang.org/) expression to calculate the required number of Machines. The autoscaler starts or stops Machines to reach the required number.
 
 ### Prometheus collector
 
