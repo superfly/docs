@@ -1,0 +1,245 @@
+---
+title: Scale Machine CPU and RAM
+layout: docs
+nav: apps
+redirect_from: /docs/apps/scale-machine/
+---
+
+You can scale Machine memory and CPU settings for entire process groups in apps that are managed by Fly Launch (`fly deploy` + `fly.toml`). If you haven't defined any process groups, then commands and settings are applied to all the Machines in your app (in the default `app` process group).
+
+<div class="note icon">
+You can scale an app even if it has crashed. Its Machines are restarted with the new specification, however, if you redeploy the app, then any VM settings in `fly.toml` take precedence.
+</div>
+
+## Machine size configuration precedence
+
+1. **The `[[vm]]` section in `fly.toml`**: The `fly deploy` and `fly scale count` commands respect the VM size configurations in your app's `fly.toml` file.
+2. **Existing Machine sizes in the app:** If no VM size is set in `fly.toml`, then `fly deploy` won't change existing Machines, and `fly scale` will use existing Machines to infer new Machine sizes.
+3. **Default Machine size of `shared-cpu-1x`:** If no VM size is set in `fly.toml`, and there are no existing Machines to infer size from, then the default Machine size is used.
+
+## Check the VM resources on an app
+
+Here's a simple web app with three Machines running in different regions: two in Toronto and one in Tokyo. All the app's Machines belong to the default process group, `app`, since no other [processes](/docs/apps/processes/) exist. 
+
+```cmd
+fly status
+```
+```out    
+App
+  Name     = testrun                                        
+  Owner    = personal                                   
+  Hostname = testrun.fly.dev                                
+  Image    = testrun:deployment-01GWZY7ZVJ2HNED4B0KZBPS3AQ  
+
+Machines
+PROCESS	ID            	VERSION	REGION	STATE  	ROLE	CHECKS	                  LAST UPDATED
+app    	17811943f031d8	3     	yyz   	stopped	    	1 total, 1 passing      	2024-02-07T15:34:57Z
+app    	328749d3c53958	3     	yyz   	stopped	    	1 total, 1 passing      	2024-01-23T19:39:50Z
+app   	908057ef21e487	3     	nrt   	started	    	1 total, 1 passing      	2024-01-23T19:39:51Z
+```
+
+`fly scale show` shows the CPU and RAM settings for all the Machines deployed using `fly deploy` under this app.
+
+```cmd
+fly scale show
+```
+```out
+VM Resources for app: testrun
+
+Groups
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS    
+app     3       shared  1       256 MB  nrt,yyz(2)
+```
+
+These Machines are running at the `shared-cpu-1x` preset scale, with a single shared vCPU and 256MB RAM.
+
+## Add Machine size configuration to `fly.toml`
+
+With the `[[vm]]` section in `fly.toml`, you can set default Machine VM memory and CPU configurations, which [take precedence](#machine-size-configuration-precedence) when you run commands like `fly deploy` or `fly scale count`.
+
+This example shows a very simple config that specifies the `shared-cpu-2x` preset with 2GB of RAM:
+
+```toml
+[[vm]]
+  size = "shared-cpu-2x"
+  memory = "2gb"
+```
+
+If you don't include a process group in the `[[vm]]` section, then the settings apply to all process groups in your app. Add another `[[vm]]` section if you want different CPU or memory settings for specific process groups. 
+
+For details and more settings, see [The `vm` section](/docs/reference/configuration/#the-vm-section) in the `fly.toml` reference.
+
+## Scale VM memory and CPU with flyctl
+
+Use [`fly scale`](/docs/flyctl/scale) subcommands to apply VM memory and CPU settings to all Machines: `fly scale vm` applies a preset CPU/RAM combination; `fly scale memory` sets RAM separately, for cases when the preset's RAM is not enough.
+
+<div class="important icon">
+**Important:** If you make changes using `fly scale vm` or `fly scale memory`, the VM settings in `fly.toml` take precedence when you redeploy the app.
+</div>
+
+### Select a preset CPU/RAM combination
+
+There are a number of VM size presets available. See the list of valid named presets with `fly platform vm-sizes`.
+
+Scale to a different preset using `fly scale vm`. In general, you should choose a named VM "size" based on your desired CPU type and scale; RAM can be increased separately.
+
+```cmd
+fly scale vm shared-cpu-2x
+```
+```out
+Updating machine 148ed599c14189
+  Waiting for 148ed599c14189 to become healthy (started, 1/1)
+Machine 148ed599c14189 updated successfully!
+Updating machine 32874400f35285
+  Waiting for 32874400f35285 to become healthy (started, 1/1)
+Machine 32874400f35285 updated successfully!
+Updating machine 9080e6e1f94987
+  Waiting for 9080e6e1f94987 to become healthy (started, 1/1)
+Machine 9080e6e1f94987 updated successfully!
+Scaled VM Type to 'shared-cpu-2x'
+      CPU Cores: 2
+         Memory: 512 MB
+```
+
+Check that the `app` process group has had this scale applied:
+
+```cmd
+fly scale show   
+```
+```out         
+VM Resources for app: testrun
+
+Groups
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS    
+app     3       shared  2       512 MB  nrt,yyz(2)
+```
+
+You can also confirm that an individual Machine's config matches this, using `fly machine status <machine ID>`:
+
+```cmd
+fly machine status 148ed599c14189
+```
+```out
+Machine ID: 148ed599c14189
+Instance ID: 01GX6Q2WE04M85XTHGPYGJK4X6
+State: started
+
+VM
+  ...                                       
+  Process Group = app                                        
+  CPU Kind      = shared                                     
+  vCPUs         = 2                                          
+  Memory        = 512                                        
+  ...
+```
+
+Looks good!
+
+### Add RAM
+
+If you are happy with the provisioned CPU resources, but want more memory, then use `fly scale memory` to top up the RAM.
+
+If your app crashes with an out-of-memory error, then scale up its RAM. Flyctl restarts the Machines to use the new setting. Scaling memory this way lets you test your app with more or less RAM, before optionally [setting memory more permanently in `fly.toml`](#add-machine-size-configuration-to-flytoml).
+
+```cmd
+fly scale memory 4096
+```
+```out
+Updating machine 32874400f35285
+  Waiting for 32874400f35285 to become healthy (started, 1/1)
+Machine 32874400f35285 updated successfully!
+Updating machine 148ed599c14189
+  Waiting for 148ed599c14189 to become healthy (started, 1/1)
+Machine 148ed599c14189 updated successfully!
+Updating machine 9080e6e1f94987
+  Waiting for 9080e6e1f94987 to become healthy (started, 1/1)
+Machine 9080e6e1f94987 updated successfully!
+Scaled VM Type to 'shared-cpu-2x'
+      CPU Cores: 2
+         Memory: 4096 MB
+```
+
+```cmd
+fly scale show
+```
+```out
+VM Resources for app: testrun
+
+Groups
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS    
+app     3       shared  2       4096 MB nrt,yyz(2)
+```
+
+
+If you try to set an incompatible CPU/RAM combination through `fly scale memory`, flyctl will let you know. There's a list of allowed CPU/RAM combinations and their prices on [our Pricing page](/docs/about/pricing/). 
+
+### Scale by process group
+
+Use the `--process-group` option to specify the process group to scale, with either `fly scale vm` or `fly scale memory`.
+
+<div class="note icon">
+**Note**: The `--process-group` option is aliased to `-g` for faster command entry.
+</div>
+
+Here's an app with two process groups defined:
+
+```cmd
+fly scale show
+```
+```out
+VM Resources for app: mr18-2
+
+Groups
+NAME    COUNT   KIND    CPUS    MEMORY  REGIONS 
+worker  2       shared  1       512 MB  ams,yyz
+web     1       shared  1       512 MB  yyz   
+```
+
+Say the workers are constantly crunching data and need to be bigger. You can scale a single process group using the `--process-group` option:
+
+```cmd
+fly scale vm performance-2x --process-group worker
+```
+```out
+Updating machine 0e286561f35586
+No health checks found
+Machine 0e286561f35586 updated successfully!
+Updating machine 32873d9b012048
+No health checks found
+Machine 32873d9b012048 updated successfully!
+Scaled VM Type for 'worker' to 'performance-2x'
+      CPU Cores: 2
+         Memory: 4096 MB
+```
+
+Check the result: 
+
+```cmd
+fly scale show
+```
+```out
+VM Resources for app: mr18-2
+
+Groups
+NAME    COUNT   KIND            CPUS    MEMORY  REGIONS 
+worker  2       performance     2       4096 MB ams,yyz
+web     1       shared          1       512 MB  yyz 
+```
+
+## Machines not belonging to Fly Launch
+
+If an app has Machines that don't belong to Fly Launch (in other words, if you created Machines using `fly machine run` or the Machines API), then `fly status` will warn you of their existence:
+
+```text
+Found machines that aren't part of Fly Launch, run fly machines list to see them.
+```
+
+The app-wide `fly scale` commands and any VM settings in `fly.toml` don't apply to these Machines, but you can scale any Machine individually with `fly machine update`:
+
+```
+fly machine update --vm-size shared-cpu-2x 21781973f03e89
+fly machine update --vm-memory 1024 21781973f03e89
+fly machine update --vm-cpus 2 21781973f03e89
+```
+
+If you try to set an incompatible CPU/RAM combination through `fly machine update --vm-memory` or `fly machine update --vm-cpus`, flyctl will let you know. Learn more about [individual Machine sizing with flyctl and the Machines API](/docs/machines/guides-examples/machine-sizing/).

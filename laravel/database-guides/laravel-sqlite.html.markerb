@@ -1,0 +1,46 @@
+---
+title: Laravel and SQlite
+layout: framework_docs
+objective: Notes and configurations on using the bundle-able SQL database engine, [SQLite](https://www.sqlite.org/index.html)
+order: 4
+--- 
+
+"[SQLite](https://www.sqlite.org/about.html)" is a file-based, lightweight, low-latency, and in-process library providing an embeddable SQL database engine. This guide walks through a single instance of your Laravel Fly App running with SQLite as its main database. 
+
+### Set up SQLite in the Storage Folder
+Since SQLite is "embeddable", you no longer have to set up a separate Fly App for it. You simply configure your Laravel Fly App with one:
+
+1. Configure SQLite connection in your fly.toml file:
+
+    ```toml
+    [env]
+        ...
+        DB_CONNECTION="sqlite"
+        DB_DATABASE="/var/www/html/storage/database/database.sqlite"
+    ```
+
+2.  As seen above, the SQLite database will be located in the storage directory. Make sure to mount a volume on the directory by following [this guide here](/docs/laravel/the-basics/laravel-volume-storage/).
+
+    [Mounting a volume](/docs/apps/volume-storage/) on the storage folder will ensure everything it contains gets persisted, including data on the SQLite database located inside.
+
+3. Once you've configured persisting the storage directory by following step 2 above, revise the start up script that will be created from it. Revise it to enable initializing the SQLite file:
+    ```bash
+    # .fly/scripts/1_storage_init.sh
+    
+    # Add this below the storage folder initialization snippet
+    FOLDER=/var/www/html/storage/database
+    if [ ! -d "$FOLDER" ]; then
+        echo "$FOLDER is not a directory, initializing database" 
+        mkdir /var/www/html/storage/database
+        touch /var/www/html/storage/database/database.sqlite
+    fi
+    ```
+    The condition statement checks if the database folder does not exist in the volumized storage folder. If it does not exist, it creates a database directory inside storage/ and creates a database.sqlite file in the storage/database folder.
+
+4. Finally, deploy your Laravel Fly App with `fly deploy`! 
+
+### Multi-Node SQLite with LiteFS
+
+Do you have multiple instances set up for your Fly app? Data between those instances' SQLite databases will not automatically be in sync with each other. You'll have to configure data replication across those instances' SQLite databases by yourself. Of course, manual setup is not a requirement&mdash;you can instead rely on the *power* of [LiteFS](/docs/litefs/).
+
+LiteFS provides data replication across different SQLite databases of your Fly app. All you’ll need is to set it up on your Fly app, and it will do the replication for you. You can read more about the [getting started guide here](/docs/laravel/advanced-guides/global-sqlite-litefs/), and also check out our Laravel section’s quick notes on setting LiteFS on a [Laravel Fly app here](/docs/laravel/advanced-guides/global-sqlite-litefs/).

@@ -4,7 +4,7 @@ layout: framework_docs
 order: 1
 redirect_from: /docs/getting-started/django/
 subnav_glob: docs/django/getting-started/*.html.*
-objective: Build and deploy a very basic Django app on Fly. This guide is the fastest way to try using Fly, so if you're short on time start here.
+objective: Build and deploy a very basic Django app to Fly.io. This guide is the fastest way to try using Fly.io, so if you're short on time start here.
 related_pages:
   - /docs/django/getting-started/existing
   - /docs/flyctl/
@@ -12,157 +12,203 @@ related_pages:
   - /docs/postgres/
 ---
 
-In this guide we build and deploy a simple Django website to demonstrate how quickly Django apps can be deployed on Fly.io.
+<div>
+  <img src="/static/images/django-intro.webp" srcset="/static/images/django-intro@2x.webp 2x" alt="Green book titled Django on a shelf with other books and a plant">
+</div>
 
-## Initial Set Up
+In this guide we recreate and deploy [this Django application](https://github.com/fly-apps/hello-django) to demonstrate how quickly Django apps can be deployed to Fly.io!
 
-Make sure that [Python](https://www.python.org/) is already installed on your computer along with a way to create virtual environments. We use [venv](https://docs.python.org/3/library/venv.html#module-venv) in this example but any of the other popular choices such as [Poetry](https://python-poetry.org/), [Pipenv](https://github.com/pypa/pipenv), or [pyenv](https://github.com/pyenv/pyenv) work too.
+## Initial Local Setup
 
-Within a new virtual environment, follow the official Django docs for [Getting Started with Django](https://www.djangoproject.com/start/) to install the latest version of Django.
+Make sure that [Python](https://www.python.org/) is already installed on your computer along with a way to create virtual environments.
 
-Create a new Django project called `demo`.
+This allows you to run your project locally, and test that it works, before deploying it to Fly.io.
+
+> We recommend the latest [supported versions](https://devguide.python.org/versions/#supported-versions) of Python.
+
+Create a folder for your project. Here we'll call it `hello-django`. Enter the folder with `cd`:
 
 ```cmd
-django-admin startproject demo .
+mkdir hello-django && cd hello-django
 ```
 
-Now create a new app called `fly`.
+### Virtual Environment
+
+For this guide, we use [venv](https://docs.python.org/3/library/venv.html#module-venv) but any of the other popular choices such as [Poetry](https://python-poetry.org/), [Pipenv](https://github.com/pypa/pipenv), or [pyenv](https://github.com/pyenv/pyenv) work too.
+
+```shell
+# Unix/macOS
+$ python3 -m venv .venv
+$ source .venv/bin/activate
+(.venv) $
+```
+```powershell
+# Windows (PowerShell)
+> python -m venv .venv
+> .venv\Scripts\Activate.ps1
+(.venv) ...>
+```
+
+<section class="callout">From this point on, the commands won't be displayed with `(.venv)` but we assume you have your Python virtual environment activated.</section>
+
+### Install Django
+
+With your virtual environment **activated**, install the [latest](https://www.djangoproject.com/download/#supported-versions) version of Django using [pip](https://pip.pypa.io/en/stable/):
 
 ```cmd
-python manage.py startapp fly
+python -m pip install Django
 ```
 
-Add the new `fly` app to the `INSTALLED_APPS` configuration in the `demo/settings.py` file.
+### Create a Django Project
 
-```python
-# demo/settings.py
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "fly",  # new
-]
+Inside the `hello-django` folder, create a Django project named `hello_django`:
+
+```cmd
+django-admin startproject hello_django .
 ```
 
-## Django Fly App
+> Don't forget the `.` at the end. It's crucial because it tells the script to create the Django project directory structure in the current directory, our folder `hello-django`.
 
-Now let's configure a basic view that returns the text, "Hello, Fly!" by updating the `fly/views.py` file.
+Note that by convention, we name Django projects using `snake_case`: words written in lowercase with spaces replaced by underscore (`_`). Hyphens (`-`) are not valid identifiers and you might get this error message:
+```terminal
+'hello-django' is not a valid project name. Please make sure the name is a valid identifier.
+```
+
+By this point, our project structure should look like this:
+
+```terminal
+hello-django/
+|-- .venv
+|-- hello_django/
+|   |-- __init__.py
+|   |-- asgi.py
+|   |-- settings.py
+|   |-- urls.py
+|   |-- wsgi.py
+|-- manage.py
+```
+
+### Create and Map a URL to a View
+
+Now let's configure a basic view that returns the text, `Hello, Fly!` by updating the
+[`hello_django/urls.py`](https://github.com/fly-apps/hello-django/blob/main/hello_django/urls.py) file:
 
 ```python
-# fly/views.py
+# hello_django/urls.py
+from django.contrib import admin
 from django.http import HttpResponse
-
-
-def homePageView(request):
-    return HttpResponse("Hello, Fly!")
-```
-
-Create a new file called `fly/urls.py` for our app-level URL configuration.
-
-```python
-# fly/urls.py
 from django.urls import path
 
-from .views import homePageView
 
-urlpatterns = [
-    path("", homePageView, name="home"),
-]
-```
+# ↓ New basic view returning "Hello, Fly!" ↓
+def hello(request):
+    return HttpResponse("Hello, Fly!")
 
-And update the existing `demo/urls.py` file as well for project-level URL configuration.
-
-```python
-# demo/urls.py
-from django.contrib import admin
-from django.urls import path, include  # new
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("fly.urls")),  # new
+    path("", hello, name="hello"),  # ← Added!
 ]
 ```
 
-That's it! Run the `migrate` command to initialize our local database.
+### Run migrations
+
+As part of Django's core functionality, some existing apps are included by default to provide you with out-of-the-box features. Some of those apps require their own database tables.
+
+To initialize the local database and set up those tables, run the `migrate` command:
 
 ```cmd
 python manage.py migrate
 ```
 
-Now `runserver` to start up Django's local web server.
+### Start the Web Server
+
+Now `runserver` to start up Django's local web server:
 
 ```cmd
 python manage.py runserver
 ```
 
-If you open `http://127.0.0.1:8000/` in your web browser it now displays the text "Hello, Fly!"
+If you open `http://127.0.0.1:8000/` in your web browser it now displays the text `Hello, Fly!`.
 
 ## Django Deployment Checklist
 
-By default, Django is configured for local development. The [How to Deploy Django](https://docs.djangoproject.com/en/stable/howto/deployment/) and [Django deployment checklist](https://docs.djangoproject.com/en/stable/howto/deployment/checklist/) guide list the various steps required for a secure deployment. However, for demonstration purposes, we can take some shortcuts.
+By default, Django is configured for local development. The [How to Deploy Django](https://docs.djangoproject.com/en/stable/howto/deployment/) and [Django Deployment Checklist](https://docs.djangoproject.com/en/stable/howto/deployment/checklist/) guide list the various steps required for a secure deployment.
 
-First, in the `demo/settings.py` file update the `ALLOWED_HOSTS` configuration to accept all hosts.
+> You can also find a complete guide [Deploying Django to Production](https://fly.io/django-beats/deploying-django-to-production/) in our [Django Beats Blog](https://fly.io/django-beats/).
+
+However, for demonstration purposes, we can take some shortcuts.
+
+First, in the [`hello_django/settings.py`](https://github.com/fly-apps/hello-django/blob/main/hello_django/settings.py) file update the `ALLOWED_HOSTS` configuration to accept
+a host on which it's deployed. Use the [`FLY_APP_NAME`](https://fly.io/docs/machines/runtime-environment/#fly_app_name)
+environment variable for that:
 
 ```python
-# demo/settings.py
-ALLOWED_HOSTS = ["*"]  # new
+# hello_django/settings.py
+import os
+
+APP_NAME = os.environ.get("FLY_APP_NAME")
+ALLOWED_HOSTS = [f"{APP_NAME}.fly.dev"]  # ← Updated!
 ```
 
-Second, install [Gunicorn](https://gunicorn.org/) as our production server.
+Second, install [Gunicorn](https://gunicorn.org/) as our [production server](https://docs.djangoproject.com/en/dev/ref/django-admin/#runserver):
 
 ```cmd
 python -m pip install gunicorn
 ```
 
-Third, create a `requirements.txt` file listing all the packages in the current Python virtual environment.
+Third, create a [`requirements.txt`](https://github.com/fly-apps/hello-django/blob/main/requirements.txt) file listing all the packages in the current Python virtual environment:
 
 ```cmd
 pip freeze > requirements.txt
 ```
 
-That's it! We're ready to deploy on Fly.
+That's it! We're ready to deploy on Fly.io.
 
 ## flyctl
 
-Fly has its own command-line utility for managing apps, [flyctl](https://fly.io/docs/hands-on/install-flyctl/). If not already installed, follow the instructions on the [installation guide](https://fly.io/docs/hands-on/install-flyctl/) and [log in to Fly](https://fly.io/docs/getting-started/log-in-to-fly/).
+Fly.io has its own command-line utility for managing apps, [flyctl](/docs/flyctl/). If not already installed, follow the instructions on the [installation guide](/docs/flyctl/install/) and [log in to Fly.io](/docs/getting-started/sign-up-sign-in/).
 
 
-## Provision Django
+## Configure and Deploy your Fly App
 
-To configure and launch the app, run the `fly launch` command and follow the wizard. You can set a name for the app and choose a default region. You can also choose to launch and attach a Postgresql database and/or a Redis database though we are not using either in this example.
+To configure and launch the app, run the `fly launch` command and follow the wizard. You can set a name for the app and choose your primary region. You can also choose to launch and attach a Postgres database and/or a Redis database though we are not using either in this example.
 
 ```cmd
 fly launch
 ```
 ```output
-Creating app in ~/django-hello-fly
 Scanning source code
 Detected a Django app
-? Choose an app name (leave blank to generate one): django-hello-fly
-automatically selected personal organization: Jane Smith
-? Choose a region for deployment: Ashburn, Virginia (US) (iad)
-Created app django-hello-fly in organization personal
-Set secrets on django-hello-fly: SECRET_KEY
+Creating app in /flyio/hello-django
+We're about to launch your Django app on Fly.io. Here's what you're getting:
+
+Organization: Joe Doe                (fly launch defaults to the personal org)
+Name:         hello-django           (derived from your directory name)
+Region:       Amsterdam, Netherlands (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+
+? Do you want to tweak these settings before proceeding? Yes
+Opening https://fly.io/cli/launch/mo1ootho9ualooghoch3iih6cha2shah ...
+
+Waiting for launch data... Done
+Created app 'hello-django' in organization 'personal'
+Admin URL: https://fly.io/apps/hello-django
+Hostname: hello-django.fly.dev
+Set secrets on hello-django: SECRET_KEY
 Wrote config file fly.toml
-? Would you like to set up a Postgresql database now? No
-? Would you like to set up an Upstash Redis database now? No
+
+[INFO] Python 3.10.12 was detected. 'python:3.10-slim-bullseye' image will be set in the Dockerfile.
+
+Validating /flyio/hello-django/fly.toml
+Platform: machines
+✓ Configuration is valid
 Your app is ready! Deploy with `flyctl deploy`
 ```
 
-This creates two new files in the project that are automatically configured: a [Dockerfile](https://docs.docker.com/engine/reference/builder/) and [`fly.toml`](https://fly.io/docs/reference/configuration/) file to configure applications for deployment.
-
-We do not have [static files](https://docs.djangoproject.com/en/stable/howto/static-files/) in this example so comment out that line near the bottom of the autogenerated Dockerfile. Most Django projects do though which is why it is included by default.
-
-```dockerfile
-...
-# RUN python manage.py collectstatic --noinput
-...
-```
-
-## Deploy Your Application
+This creates two new files in the project that are automatically configured: a [`Dockerfile`](https://github.com/fly-apps/hello-django/blob/main/Dockerfile) and [`fly.toml`](https://github.com/fly-apps/hello-django/blob/main/fly.toml) file to configure applications for deployment.
 
 To deploy the application use the following command:
 
@@ -173,10 +219,10 @@ fly deploy
 This will take a few seconds as it uploads your application, verifies the app configuration, builds the image, and then monitors to ensure it starts successfully. Once complete visit your app with the following command:
 
 ```cmd
-fly open
+fly apps open
 ```
 
-You are up and running! Wasn't that easy?
+YAY! You are up and running! Wasn't that easy?
 
 ## Recap
 
@@ -184,6 +230,6 @@ We started with an empty directory and in a matter of minutes had a running Djan
 
   * Your application is running on a Virtual Machine that was created based on the `Dockerfile` image.
   * The `fly.toml` file controls your app configuration and can be modified as needed.
-  * `fly dashboard` can be used to monitor and adjust your application. Pretty much anything you can do from the browser window you can also do from the command line using `fly` commands. Try `fly help` to see what you can do.
+  * `fly dashboard` can be used to monitor and adjust your application. Pretty much anything you can do from the browser window you can also do from the command line using [`fly` commands](/docs/flyctl/). Try `fly help` to see what you can do.
 
-Now that you have seen how to deploy a simple Django application, it is time to move on to [Existing Django Apps](/docs/django/getting-started/existing/) that feature static files and a PostgreSQL database.
+Now that you have seen how to deploy a simple Django application, it is time to move on to [Existing Django Apps](/docs/django/getting-started/existing/) that feature static files and a Postgres database.

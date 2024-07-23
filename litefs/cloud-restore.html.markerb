@@ -1,0 +1,67 @@
+---
+title: Restoring from a LiteFS Cloud Backup
+layout: docs
+nav: litefs
+toc: true
+---
+<%= partial "/docs/partials/docs/litefs_sunset" %>
+
+## Overview
+
+You can restore your LiteFS database to any point in time
+in the last 30 days, with 5 minute granularity.
+This means that when you select a time, and LiteFS Cloud will
+find the most recent snapshot from before that timestamp,
+which is guaranteed to have been the state of the database
+no more than 5 minutes before the timestamp you selected.
+
+Note: if you decide that you made a mistake restoring from
+snapshot, you can also get your pre-restore state back, simply
+by restoring again, and selecting the time right before you
+did the first (erroneous) restore!
+
+## Restoring your LiteFS database
+
+To restore your LiteFS database to a snapshot, navigate to
+the [Fly.io LiteFS dashboard][LiteFS Dashboard], find
+the LiteFS Cloud cluster and database you would like to restore,
+and click the "view backups" link. Then you can select a date and time
+to restore from. Since restore is a destructive function (you are likely
+to lose up to 5 minutes of data if you need to "revert" the restore),
+you'll need to type the name of the cluster and database to make sure
+you're restoring the database you intend.
+
+The restore normally takes just a few seconds, or up to a couple of minutes
+if your database is very large. However, you won't see the new data until
+after you make a write to your database. For production applications (where
+writes are frequent), this is unlikely to be noticeable, but if you're
+testing it out, you may need to manually make a write to see changes!
+
+[LiteFS Dashboard]: https://fly.io/dashboard/personal/litefs
+
+## Limitations
+
+### Snapshot age
+
+LiteFS Cloud stores "snapshots" as a series of
+[LTX files][]. For cost and performance reasons,
+LiteFS Cloud compacts these files into files containing transactions
+from five minute intervals. This means that when you select a
+timestamp for restoring, LiteFS Cloud takes the most recent file
+available from before that timestamp, which means that you may miss
+some transactions that happened within the five minute period before
+the timestamp you selected.
+
+[LTX files]: https://github.com/superfly/litefs/blob/main/docs/ARCHITECTURE.md#lite-transaction-files-ltx
+
+### Snapshot restore requires database write
+
+When you configure LiteFS Cloud, your LiteFS database considers
+LiteFS Cloud to be the authoritative source for the expected state
+of the database. When you restore a snapshot, LiteFS Cloud downloads
+the appropriate files, compacts them, and sends them to LiteFS the
+next time it asks for the state.
+
+However, currently LiteFS only asks LiteFS Cloud for the expected
+state on write, which means that you need to make a write before
+LiteFS updates the database state when you restore a snapshot.

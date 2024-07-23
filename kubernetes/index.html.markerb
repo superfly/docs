@@ -1,0 +1,26 @@
+---
+title: Fly Kubernetes
+layout: docs
+toc: false
+nav: firecracker
+---
+
+<div class= "important icon">
+Fly Kubernetes is in beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
+</div>
+
+Fly Kubernetes (FKS) is a fully managed Kubernetes service built on the Fly.io platform. Deploy Kubernetes clusters without the hassle of managing and operating the control plane. Learn more about [why and how we made FKS](https://fly.io/blog/fks/) in our blog.
+
+- **[Fly Kubernetes quickstart](/docs/kubernetes/fks-quickstart/):** Get up and running right away with our quickstart guide.
+
+- **[Fly Kubernetes features](/docs/kubernetes/fks-features/):** An overview of FKS benefits and supported features.
+
+- **[Create an FKS cluster](/docs/kubernetes/clusters/):** Create an FKS cluster with flyctl.
+
+- **[Connect to an FKS cluster](/docs/kubernetes/connect-clusters/):** Connect to an FKS cluster on your private network.
+
+- **[Configure FKS Services](/docs/kubernetes/services):** Configure ClusterIP and LoadBalancer services.
+
+- **[Use GPUs with FKS](/docs/kubernetes/using-gpus/):** Use Fly GPU Machines in your FKS cluster.
+
+- **[Use volumes with FKS](/docs/kubernetes/using-volumes/):** Use Fly Volumes for PersistentVolumes in FKS.

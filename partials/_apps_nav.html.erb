@@ -1,0 +1,56 @@
+<%= partial "/docs/partials/back_to_docs" unless current_page?('/docs') %>
+
+<% 
+  @nav = [
+    {
+      title: "Apps on Fly.io",
+      path: "/docs/apps/",
+      accordion: false,
+      links: [
+        { text: "Fly Apps overview", path: "/docs/apps/overview/" },
+        { text: "Get app info", path: "/docs/apps/info/" },
+        { text: "Restart an app", path: "/docs/apps/restart/" },
+        { text: "Delete an app", path: "/docs/apps/delete/" },
+        { text: "Move an app between orgs", path: "/docs/apps/move-app-org/" }
+      ]
+    },
+    {
+      title: "Fly Launch",
+      path: "/docs/launch/",
+      open: true,
+      links: [
+        { text: "Launch a new app", path: "/docs/launch/create/" },
+        { text: "Deploy an app", path: "/docs/launch/deploy/" },
+        { text: "Scale Machine CPU and RAM", path: "/docs/launch/scale-machine/" },
+        { text: "Scale the number of Machines", path: "/docs/launch/scale-count/" },
+        { text: "Autostop/autostart Machines", path: "/docs/launch/autostart-stop/" },
+        { text: "Autoscale based on metrics", path: "/docs/launch/autoscale-by-metric/" },
+        { text: "Add volume storage", path: "/docs/launch/volume-storage/" },
+        { text: "Use process groups", path: "/docs/launch/processes/" },
+        { text: "Deploy with GitHub Actions", path: "/docs/app-guides/continuous-deployment-with-github-actions/" },
+        { text: "Deploy monorepo apps", path: "/docs/launch/monorepo/" },
+        { text: "Troubleshoot when a host is down", path: "/docs/apps/trouble-host-unavailable/" },
+        { text: "App config reference (fly.toml)", path: "/docs/reference/configuration/" }
+      ]
+    },
+    {
+      title: "Secrets",
+      open: true,
+      links: [
+        { text: "Set runtime secrets", path: "/docs/apps/secrets/" },
+        { text: "Set build secrets", path: "/docs/apps/build-secrets/" }
+      ]
+    },
+    {
+      title: "Production Apps",
+      open: true,
+      links: [
+        { text: "Going to production", path: "/docs/apps/going-to-production/" },
+        { text: "App availability and resiliency", path: "/docs/apps/app-availability/" },
+        { text: "Fine-tune and benchmark apps", path: "/docs/apps/fine-tune-apps/" },
+        { text: "Concurrency settings", path: "/docs/apps/concurrency/" }
+      ]
+    },
+  ]
+%>
+<%= partial "/docs/partials/accordion_nav", locals: { nav: @nav } %>

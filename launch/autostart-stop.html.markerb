@@ -1,0 +1,126 @@
+---
+title: Automatically stop and start Machines
+layout: docs
+nav: apps
+redirect_from: /docs/apps/autostart-stop/
+---
+
+<figure>
+  <img src="/static/images/docs-stop-start.webp" alt="">
+</figure>
+
+Fly Machines are fast to start and stop, and you don't pay for their CPU and RAM when they're in the `stopped` state. For Fly Apps with a service configured, [Fly Proxy](/docs/reference/fly-proxy) can automatically start and stop existing Machines based on incoming requests, so that your app can meet demand without keeping extra Machines running. And if your app needs to have one or more Machines always running in your primary region, then you can set a minimum number of machines to keep running.
+
+The auto start and stop feature also plays well with apps whose Machines [exit from within](#stop-a-machine-by-terminating-its-main-process) when idle. If your app already shuts down when idle, then the proxy can restart it when there's traffic.
+
+You might also be interested in learning about [scaling the number of machines](/docs/apps/scale-count/).
+
+## Configure automatic start and stop
+
+The auto start and stop settings apply per service, so you set them within the [[[services]]](/docs/reference/configuration/#the-services-sections) or [[http_service]](/docs/reference/configuration/#the-http_service-section) sections of `fly.toml`:
+
+For example:
+
+```toml
+...
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+...
+```
+
+Briefly, the settings are:
+
+* `auto_start_machines`: Whether Fly Proxy should automatically start Machines based on requests and capacity.
+* `auto_stop_machines`: Whether Fly Proxy should automatically stop Machines when the app is idle for several minutes.
+* `min_machines_running`: The minimum number of Machines to keep running in the primary region when `auto_stop_machines = true`.
+
+Concurrency limits for services affect [how automatic starts and stops work](#how-it-works).
+
+### Default values
+
+The default settings for apps that don't specify any auto start and stop settings in `fly.toml` are `auto_start_machines = true` and `auto_stop_machines = false`.
+
+When you create an app using the `fly launch` command, the default settings in `fly.toml` are:
+
+```toml
+...
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+...
+```
+
+### Recommended settings
+
+If your app already [exits when idle](#stop-a-machine-by-terminating-its-main-process), then you can set `auto_start_machines = true` and `auto_stop_machines = false` to have Fly Proxy automatically restart the Machines stopped by your app.
+
+If your app doesn't exit when idle, then we recommend setting `auto_stop_machines` and `auto_start_machines` to the same value (either both `true` or both `false`) so that Fly Proxy doesn't stop Machines and never restart them. For example, if `auto_start_machines = false` and `auto_stop_machines = true`, then Fly Proxy automatically stops your Machines when there's low traffic but doesn't start them again. When all or most of your Machines stop, requests to your app could start failing.
+
+To keep one or more Machines running all the time in your primary region, set `min_machines_running` to `1` or higher. `min_machines_running` has no effect unless you set `auto_stop_machines = true`.
+
+`min_machines_running` does not apply to Machines running in non-primary regions. For example, if `min_machines_running = 1` and there's no traffic to your app, then Fly Proxy will stop Machines until eventually there is only one Machine running in your primary region.
+
+There's no "maximum machines running" setting, because the maximum number of Machines is just the total number of Machines you've created for your app. Learn more in the [How it works](#how-it-works) section.
+
+## How it works
+
+The Fly Proxy runs a process to automatically stop and start existing Fly Machines every few minutes.
+
+<div class="callout">
+The automatic start and stop feature only works on existing Machines and never creates or destroys Machines for you. The maximum number of running Machines is the number of Machines you've created for your app using `fly scale count` or `fly machine clone`. Learn more about [scaling the number of Machines](/docs/apps/scale-count/).
+</div>
+
+### Fly Proxy stops Machines
+
+When `auto_stop_machines = true` in your `fly.toml`, the proxy looks at Machines running in a single region and uses the concurrency [`soft_limit` setting](/docs/reference/configuration/#the-http_service-section) for each Machine to determine if there's excess capacity. If the proxy decides there's excess capacity, it stops exactly one Machine. The proxy repeats this process every few minutes, stopping only one Machine per region, if needed, each time.
+
+If you have the [`kill_signal` and `kill_timeout` options](/docs/reference/configuration/#runtime-options) configured in your `fly.toml` file, then Fly Proxy uses those settings when it stops a Machine.
+
+Fly Proxy determines excess capacity per region as follows:
+
+* If there's more than one Machine in the region:
+  * the proxy determines how many running Machines are over their `soft_limit` setting and then calculates excess capacity: `excess capacity = num of machines - (num machines over soft limit + 1)`
+  * if excess capacity is 1 or greater, then the proxy stops one Machine
+* If there's only one Machine in the region:
+  * the proxy checks if the Machine has any traffic
+  * if the Machine has no traffic (a load of 0), then the proxy stops the Machine
+
+### Fly Proxy starts Machines
+
+When `auto_start_machines = true` in your `fly.toml`, the Fly Proxy restarts a Machine in the nearest region when required.
+
+Fly Proxy determines when to start a Machine as follows:
+
+* The proxy waits for a request to your app.
+* If all the running Machines are above their `soft_limit` setting, then the proxy starts a stopped Machine in the nearest region (if there are any stopped Machines).
+* The proxy routes the request to the newly started Machine.
+
+## When to stop and start Fly Machines automatically, or not
+
+If your app has highly variable request workloads, then you can set `auto_stop_machines` and `auto_start_machines` to `true` to manage your Fly Machines as demand decreases and increases. This could reduce costs, because you'll never have to run excess Machines to handle peak load; you'll only run, and get charged for, the number of Machines that you need.
+
+The difference between this feature and what's typical in autoscaling, is that it doesn't create new Machines up to a specified maximum. It automatically starts only existing Machines. For example, if you want to have a maximum of 10 Machines available to service requests, then you need to create 10 Machines for your app.
+
+If you need all your app's Machines to run continuously, then you can set `auto_stop_machines` and `auto_start_machines` to `false`.
+
+If you only need a certain number of your app's Machines to run continuously, then you can set `auto_stop_machines = true` and `min_machines_running` to `1` or higher.
+
+## Stop a Machine by terminating its main process
+
+Setting your app to automatically stop when there's excess capacity using `auto_stop_machines = true` is a substitute for when your app doesn't shut itself down automatically after a period of inactivity. If you want a custom shutdown process for your app, then you can code your app to exit from within when idle.
+
+Here are some examples:
+
+* [Shutting Down a Phoenix App When Idle](https://fly.io/phoenix-files/shut-down-idle-phoenix-app/): a post by Chris McCord on adding a task to an Elixir app's supervision tree that shuts down the Erlang runtime when there are no active connections.
+* For Rails apps, the `dockerfile-rails` generator provides a [--max-idle](https://github.com/rubys/dockerfile-rails#addremove-a-feature+external) option that exits after _n_ seconds of inactivity.
+* [A Tired Proxy in Go](https://github.com/superfly/tired-proxy+external) used in [Building an In-Browser IDE the Hard Way](https://fly.io/blog/remote-ide-machines/). [There's a community fork with more recent updates](https://community.fly.io/t/improved-tired-proxy-for-use-with-fly-machines/10584).
+* A minimal demo app in TypeScript/Remix: [code](https://github.com/fly-apps/autoscale-to-zero-demo+external) & [demo](https://autoscale-to-zero-demo.fly.dev/+external).
+
+As of `flyctl` v0.0.520, Fly Postgres [supports this too](https://community.fly.io/t/scale-to-zero-postgres-for-hobby-projects/12212).

@@ -1,0 +1,20 @@
+---
+title: Sign up and sign in to Fly.io
+layout: docs
+sitemap: false
+nav: firecracker
+toc: false
+redirect_from: 
+  - /docs/hands-on/sign-up/
+  - /docs/hands-on/sign-in/
+  - /docs/getting-started/log-in-to-fly/
+  - /docs/hands-on/sign-up-sign-in/
+---
+
+## No account? Sign up for Fly.io
+
+<%= partial "/docs/partials/sign_up" %>
+
+## Already have a Fly.io account? Sign in
+
+<%= partial "/docs/partials/sign_in" %>

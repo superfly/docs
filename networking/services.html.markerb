@@ -1,0 +1,254 @@
+---
+title: "Public Network Services"
+layout: docs
+nav: firecracker
+redirect_from:
+  - /docs/reference/services/
+---
+
+Fly.io has public and private network services available. The public network services connect apps to the wider public internet, while the [private network services](/docs/reference/private-networking) allow apps to communicate with other apps within the Fly.io private network.
+
+## Anycast IP addresses
+
+IPv6 addresses and shared IPv4 Anycast addresses are free. Dedicated IPv4 addresses are [billed](/docs/about/pricing/#anycast-ip-addresses) monthly.
+
+### About Anycast
+
+We announce global IP blocks from all of our datacenters over BGP, otherwise known as Anycast. Anycast is a core internet routing mechanism that connects clients to the "nearest" server advertising a block of IPs. You can read [all about it on Wikipedia](https://en.wikipedia.org/wiki/Anycast+external).
+
+### IPv6
+
+A new Fly App running a public service configured in [`fly.toml`](/docs/reference/configuration/) automatically gets a dedicated Anycast IPv6 address when it's first deployed.
+
+<div class="note icon">
+If you create apps with public services in their Machine config by using [`fly machine` commands](/docs/machines/flyctl/fly-machine-run/#define-a-fly-proxy-network-service) or the [Machines API](https://fly.io/docs/machines/api/), then you need to run `fly ips allocate-v6` to get a dedicated IPv6 address.
+</div>
+
+### Shared IPv4
+
+Along with the dedicated IPv6 address, apps are automatically given a shared Anycast IPv4 address on the first deployment when they're configured to handle one or both of the following protocols and ports in [`fly.toml`](/docs/reference/configuration/):
+
+* HTTP on port 80, or
+* TLS & HTTP on port 443
+
+This includes apps configured with the simplified [`[http_service]`](/docs/reference/configuration/#the-http_service-section) section, which handles only these protocols and ports by default.
+
+You can use a shared IPv4 address for TCP ports other than 80 and 443 by using the [TLS handler](#tls-handler) when you specify the port.
+
+Shared IPv4 addresses are recommended unless you have an [explicit need for your own IP](#dedicated-ipv4). Shared IPv4 addresses are shared across many apps and organizations. Routing is based on your app's domain.
+
+To allocate a shared IPv4 to an app without a public IPv4 address, run:
+
+```cmd
+fly ips allocate-v4 --shared
+```
+
+<div class= "note icon">
+If you create apps with public services in their Machine config using [`fly machine` commands](/docs/machines/flyctl/fly-machine-run/#define-a-fly-proxy-network-service) or the [Machines API](https://fly.io/docs/machines/api/), then you need to run `fly ips allocate-v4 --shared` to get a shared IPv4 address.
+</div>
+
+### Dedicated IPv4
+
+Dedicated IPv4 addresses are [billed](/docs/about/pricing/#anycast-ip-addresses) monthly.
+
+Shared IPv4 addresses are recommended unless you have an explicit need for your own IP. Some of the reasons to use a dedicated IPv4 address include:
+
+- Your app uses a non-HTTP protocol that doesn't use TLS.
+- Your app needs to do something over UDP (we don't support UDP over shared IPv4 or dedicated IPv6).
+- You want your app to accept raw TCP and handle TLS termination.
+- You have a Fly Postgres exposed to the internet over TLS for external connections.
+
+Allocating a dedicated IPv4 Anycast address is opt-in only. To manually allocate a dedicated IPv4 address for your app, run:
+
+```cmd
+fly ips allocate-v4
+```
+
+After allocating a dedicated IPv4 address, release the shared IPv4 address:
+
+```cmd
+fly ips release <ip address to release>
+```
+
+### Switch from dedicated IPv4 to shared IPv4
+
+The following steps should allow you to switch an app with a custom domain from a dedicated IPv4 address to a free shared IPv4 without downtime.
+
+1. Add a shared IPv4 address with `flyctl ips allocate-v4 --shared`.
+2. If you don't use a CNAME to `.fly.dev`, [add the shared IPv4 as an A record](/docs/networking/custom-domain/#set-the-a-record).
+3. Confirm your app works via shared IP: `curl -Iv http://<your-hostname> --resolve <your-hostname>:80:<new-shared-ipv4>`. You should receive a 301 redirect response.
+4. If you are using a custom domain and don't already have an SSL certificate for this app, [create one](/docs/networking/custom-domain/#get-certified). The cert is required for routing to your app via the custom domain, even for HTTP connections.
+5. Wait for DNS caches to clear. Five minutes is likely enough, but this varies wildly. This is determined by the larger of your DNS record’s TTL and that of our `<your-app>.fly.dev` record.
+6. Remove the dedicated IPv4 from the app using `fly ips release <ipv4-address-to-release>`. You can view your app's IP addresses using `fly ips list`.
+7. Remove the unwanted IPv4 address from your DNS if it was set manually as an A record.
+
+If you do not have a custom domain (your app is accessed by its `.fly.dev` address), you don't have to change any DNS records yourself, and you don't need to add your own SSL cert.
+
+## Connection handlers
+
+Handlers convert TCP connections into something your app can handle. Use handlers to specify which middleware applies to incoming TCP connections for each port you accept external connections on.
+
+### TCP pass through
+
+If you don't specify handlers, we just forward TCP to your app as-is. This is useful if you want to handle TLS termination yourself, for example.
+
+### Configure connection handlers
+
+Set the `handlers` config setting in the [`services.ports` section](/docs/reference/configuration/#services-ports) of your `fly.toml` file.
+
+Valid handler strings:
+* [`"http"`:](#http-handler) Convert TCP connection to HTTP
+* [`"tls"`](#tls-handler): Convert TLS connection to unencrypted TCP
+* [`"pg_tls"`](#postgres-tls-handler): Handle TLS for PostgreSQL connections
+* [`"proxy_proto"`](#proxy-protocol): Wrap TCP connection in PROXY protocol
+
+You can also configure [TLS options](/docs/reference/configuration/#http_service-tls_options) for the `[http_service]` section, which has a TLS (and HTTP) handler by default on port 443.
+
+### HTTP handler
+
+Many apps have limited HTTP support, the `http` handler normalizes HTTP connections and sends HTTP 1.1 requests to the application process. This is roughly how `nginx` and other reverse proxies work, and allows your app to globally accept modern HTTP protocols (like HTTP/2) without extra complexity.
+
+If your application stack has good HTTP/2 support (like Go), you will get better performance accepting TCP connections directly, and using the TLS handler to terminate SSL. Your app _does_ need to understand `h2c` for this to work, however.
+
+The HTTP handler adds a number of standard HTTP headers to requests, and a few Fly.io-specific headers for convenience:
+
+| Header | Description
+| -- | -- |
+| `Fly-Client-IP` | The IP address Fly.io accepted a connection from |
+| `X-Forwarded-For` | A comma separated list of proxy servers the request passed through. MDN has [full documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) for this header |
+| `X-Forwarded-Proto` | Original client protocol, either `http` or `https` |
+| `X-Forwarded-SSL` | Indicates if client connected over SSL, either `on` or `off` |
+| `X-Forwarded-Port` | Original connection port, header may be set by client |
+| `Fly-Forwarded-Port` | Original connection port, always set by Fly.io |
+| `Fly-Region` | Original incoming connection region |
+
+You can set a preference on HTTP requests for which region you would like to connect to:
+
+```
+Fly-Prefer-Region: region-code
+```
+
+You can force routing to a specific machine instance:
+
+```
+Fly-Force-Instance-Id: instance-number
+```
+
+Configuration example in `fly.toml`:
+
+```toml
+[[services]]
+...
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+    force_https = true  # optional
+```
+
+### TLS handler
+
+The `tls` handler terminates TLS using Fly.io-managed application certificates, then forwards a plaintext connection to the application process. This is useful for running TCP services and offloading `TLS` to the Fly Proxy.
+
+For performance purposes, the Fly Proxy will terminate TLS on the host a client connects to, and then forward the connection to the nearest available Machine.
+
+<div class="note icon">
+**Note:** The TLS handler includes ALPN negotiation for HTTP/2. When possible, apps will connect to these kinds of Fly.io services using HTTP/2, and we will forward an unencrypted HTTP/2 connection (`h2c`) to the application process.
+</div>
+
+Configuration examples in `fly.toml`:
+
+```toml
+[[services]]
+...
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+    tls_options = { "alpn" = ["h2", "http/1.1"], "versions" = ["TLSv1.2", "TLSv1.3"] }
+```
+
+```toml
+[http_service]
+...
+[http_service.tls_options]
+  alpn = ["h2", "http/1.1"]
+  versions = ["TLSv1.2", "TLSv1.3"]
+  default_self_signed = false
+```
+
+### Postgres TLS handler
+
+The `pg_tls` handler manages Postgres connections, so that you can expose your Postgres databases over the proxy securely. Some interesting notes by @glebarez on why standard TLS termination won't work for Postgres: https://github.com/glebarez/pgssl#readme
+
+Example configuration from default Fly Postgres app `fly.toml`:
+
+```toml
+[[services]]
+...
+  [[services.ports]]
+    port = 5433
+    handlers = ["pg_tls"]
+```
+
+### PROXY protocol handler
+
+The `proxy_proto` handler adds information about the original connection, including client IP + port and server IP + port (from the client's perspective). Most apps need additional logic to accept the PROXY protocol, either using a prebuilt library or implementing the [PROXY protocol](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt+external) directly.
+
+Fly.io supports version 1 (human-readable header format) of the PROXY protocol by default with the `proxy_proto` handler. You can configure the `proxy_proto` handler to use version 2 (binary header format) in the [`services.ports.proxy_proto_options`](/docs/reference/configuration/#services-ports-proxy_proto_options) section of your `fly.toml` file.
+
+Configuration examples in `fly.toml`:
+
+```toml
+[[services.ports]]
+  handlers = ["proxy_proto"]
+  port = 5000
+  proxy_proto_options = { version = "v2" }
+```
+
+## HTTP to HTTPS redirects
+
+The `force_https` configuration option automatically redirects HTTP to HTTPS. When enabled, all HTTP requests return a redirect response with a `301` status code. This option can only be set on HTTP handlers - deployments will fail if set on other handlers.
+
+## Outbound IP addresses
+
+Fly Machines have IPv6 addresses from which they make requests to the wider internet without going through the Fly Proxy.
+
+We don’t offer static IPs or regional IP ranges, and we discourage the use of our outbound IPs to bypass firewalls. A Machine's outbound IP is liable to change without notice. This shouldn't be a daily occurrence, but it will happen if a Machine is moved for whatever reason, such as a load-balancing of Fly Machines between servers in one region.
+
+If you depend on knowing this address for some reason, it's up to you to monitor it for changes.
+
+### Find your Machine's outbound IP
+
+The Machine's outbound IPv6 address is available in the `FLY_PUBLIC_IP` [environment variable](/docs/machines/runtime-environment/). Use `fly ssh console -s` to get an interactive shell on the Machine of your choice.
+
+```cmd
+echo $FLY_PUBLIC_IP
+```
+```out
+2605:4c40:92:520a:0:8c93:3d8a:1
+```
+
+You can also call out to an external service that'll tell you your IP. For example:
+
+```cmd
+curl text.ipv6.wtfismyip.com
+```
+```out
+2605:4c40:92:520a:0:8c93:3d8a:1
+```
+
+or
+
+```cmd
+dig +short txt o-o.myaddr.l.google.com @ns1.google.com
+```
+```out
+"2605:4c40:92:520a:0:8c93:3d8a:1"
+```
+
+So this Machine's outbound IPv6 address is `2605:4c40:92:520a:0:8c93:3d8a:1`.
+
+You may have to install software on the Machine to use `dig` or `curl`. On Debian, `dig` belongs to the `dnsutils` package.
+
+## Default-Deny security policy
+
+All requests to Fly.io apps are routed to our edge servers, where we use our memory-safe Rust proxy to direct traffic. The proxy listens on all ports and all Anycast addresses, so ports appear to be 'open' from the wider internet. However, nothing on your app is exposed unless you expose it via [services](/docs/networking/app-services/). You’re locked down by default.

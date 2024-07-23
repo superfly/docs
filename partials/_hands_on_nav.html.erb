@@ -1,28 +1,20 @@
-<ul class="outline-list">
-  <li>
-    <%= nav_link "Hands-on with Fly.io", "/docs/hands-on/" %>
-    <ul>
-      <li>
-        <%= nav_link "1. Install flyctl", "/docs/hands-on/install-flyctl/" %>
-      </li>
-      <li>
-        <%= nav_link "2. Sign Up", "/docs/hands-on/sign-up/" %>
-      </li>
-      <li>
-        <%= nav_link "3. Sign In", "/docs/hands-on/sign-in/" %>
-      </li>
-      <li>
-        <%= nav_link "4. Launch App", "/docs/hands-on/launch-app/" %>
-      </li>
-      <li>
-        <%= nav_link "5. Check App Status", "/docs/hands-on/check-app-status/" %>
-      </li>
-      <li>
-        <%= nav_link "6. Visit App", "/docs/hands-on/open-app/" %>
-      </li>
-      <li>
-        <%= nav_link "7. Further Reading", "/docs/hands-on/next/" %>
-      </li>
-    </ul>
-  </li>
-</ul>
+<%= partial "/docs/partials/back_to_docs" %>
+<%
+  @nav = [
+    {
+      title: "Hands-on with Fly.io",
+      path: "/docs/hands-on/",
+      accordion: false,
+      links: [
+        { text: "1. Install flyctl", path: "/docs/hands-on/install-flyctl/" },
+        { text: "2. Sign up / Sign in", path: "/docs/hands-on/sign-up-sign-in/" },
+        { text: "3. Launch app", path: "/docs/hands-on/launch-app/" },
+        { text: "4. Check app status", path: "/docs/hands-on/check-app-status/" },
+        { text: "5. Visit app", path: "/docs/hands-on/open-app/" },
+        { text: "6. Deploy changes", path: "/docs/hands-on/deploy-app/" },
+        { text: "7. Learn more", path: "/docs/hands-on/next/" }
+      ]
+    }
+  ]
+%>
+<%= partial "/docs/partials/accordion_nav", locals: { nav: @nav } %>

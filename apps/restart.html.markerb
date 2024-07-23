@@ -1,0 +1,27 @@
+---
+title: Restart apps or Machines
+layout: docs
+nav: apps
+---
+
+<figure>
+  <img src="/static/images/docs-mountains.webp" alt="">
+</figure>
+
+Running `fly deploy` on an app creates a new release of the app, and updates and restarts the Machines that belong to Fly Launch.
+
+Sometimes you don't want to update anything; you just want to reboot and start the root file system afresh. Restarting wipes the ephemeral file system, just as a `fly deploy` or `fly machine update` will.
+
+## Restart every Machine managed by Fly Launch
+
+`fly apps restart <app name>` restarts all Machines in the app that are managed by Fly Launch. In other words, all the Machines deployed with `fly deploy` and configured with `fly.toml`.
+
+## Restart individual Machines
+
+If one particular Machine needs a kick&mdash;or you want to restart an unmanaged Machine&mdash;then run `fly machine restart`:
+
+```cmd
+fly machine restart <machine id>
+```
+
+You can provide multiple `<machine id>`s to restart several Machines in one command.

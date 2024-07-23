@@ -1,0 +1,90 @@
+---
+title: Reading the LiteFS event stream
+layout: docs
+nav: litefs
+toc: true
+---
+
+LiteFS provides mechanisms for reading the [replication position](/docs/litefs/position/) and
+[current primary status](/docs/litefs/primary) through the FUSE file system mount. However,
+this involves polling the file system which has overhead and some delay.
+
+If you need real-time updates of replication or primary changes, you can also 
+use the LiteFS event stream. The event stream is an HTTP endpoint that sends
+a newline-delimited JSON stream of events to the client.
+
+## Usage
+
+The event stream is accessible at `GET /events` on your LiteFS node:
+
+```
+$ curl localhost:20202/events
+{"type":"init","data":{"isPrimary":true}}
+{"type":"tx","db":"db","data":{"txID":"0000000000000027","postApplyChecksum":"83b05248774ce767","pageSize":4096,"commit":2,"timestamp":"2023-09-06T19:12:34.985Z"}}
+{"type":"tx","db":"db","data":{"txID":"0000000000000028","postApplyChecksum":"8467267f644a1b66","pageSize":4096,"commit":2,"timestamp":"2023-09-06T19:12:39.586Z"}}
+```
+
+## Event Types
+
+### `init`
+
+The `init` event is always the first event published to an event stream. It includes
+basic information about whether the local node is the primary and, if not, the
+hostname of the current primary. More fields may be added to this event in the future.
+
+```
+{
+    "type": "init",
+    "data": {
+        "isPrimary": false,
+        "hostname": "myPrimaryHost:20202"
+    }
+}
+```
+
+### `tx`
+
+This event is published every time a new transaction is written to LiteFS. This
+event will fire whether the transaction is performed locally as the primary or
+if the transaction was received by a replica.
+
+The `txID` field is a hex-formatted transaction ID. The `postApplyChecksum` is 
+a checksum of the entire database after the transaction has been applied. These
+two fields form the [replication position](/docs/litefs/position).
+
+The `commit` field is the size of the database in pages and can be multiplied by
+the `pageSize` field to give you the total size of the database file in bytes.
+
+The `timestamp` field is the timestamp of when the transaction was originally
+written on the primary node. This is not always reliable as clocks can skew
+between different servers.
+
+```
+{
+    "type": "tx",
+    "db": "db",
+    "data": {
+        "txID": "0000000000000027",
+        "postApplyChecksum": "83b05248774ce767",
+        "pageSize": 4096,
+        "commit": 2,
+        "timestamp": "2023-09-06T19:12:34.985Z"
+    }
+}
+```
+
+### `primaryChange`
+
+This event shows information about the current primary status. It is delivered
+whenever the status changes such as when the node becomes primary, loses its
+primary status, connects to a primary, or loses its connection to the primary.
+
+```
+{
+    "type": "primaryChange",
+    "data": {
+        "isPrimary": false,
+        "hostname": "myPrimaryHost:20202"
+    }
+}
+```

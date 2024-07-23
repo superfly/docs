@@ -1,0 +1,26 @@
+---
+title: "Fly Volumes"
+layout: docs
+nav: firecracker
+toc: false
+order: 10
+---
+
+Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). A Fly Volume is a slice of an NVMe drive on the same physical server as the Machine on which it's mounted.
+
+
+* **[Fly Volumes overview](/docs/volumes/overview/):** Learn how volumes work and whether they're right for your use case.
+
+* **[Fly Launch apps - Add volume storage](/docs/apps/volume-storage/):** Launch an app with volumes or add volume storage to an existing app.
+
+* **[Create and manage volumes with flyctl](/docs/volumes/volume-manage/):** Create, extend, copy, destroy, and restore volumes.
+
+* **[Manage volume snapshots](/docs/volumes/snapshots/):** We back up your data with volume snapshots. Create a volume snapshot on-demand, change the retention time for automatic snapshots, and restore data from a snapshot.
+
+## Volume references
+
+* [Volume states](/docs/volumes/volume-states/)
+
+* [flyctl commands - `fly volumes`](/docs/flyctl/volumes/)
+
+* [Machines API - Volumes](/docs/machines/api/volumes-resource/)

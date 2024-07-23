@@ -1,0 +1,184 @@
+---
+title: Configure FKS Services
+layout: docs
+toc: false
+nav: firecracker
+---
+
+<div class= "important icon">
+Fly Kubernetes is in beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
+</div>
+
+A [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/+external) exposes applications running on your cluster.
+Fly Kubernetes supports ClusterIP and LoadBalancer Services.
+
+You can create a Service with a service configuration file. Here's an example ClusterIP service:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: fksdemo-service
+spec:
+  selector:
+    app: fksdemo
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+```
+
+Using kubectl, create the service:
+
+```
+> kubectl apply -f service.yaml
+```
+
+To view your service:
+
+```
+> kubectl get svc
+NAME              TYPE        CLUSTER-IP            EXTERNAL-IP   PORT(S)   AGE
+kubernetes        ClusterIP   fdaa:3:dde8:0:1::3a   <none>        443/TCP   32h
+fksdemo-service   ClusterIP   fdaa:3:dde8:0:1::3b   <none>        80/TCP    11s
+```
+
+## Exposing Services publicly
+
+Services can be exposed to the public internet with a Service of type LoadBalancer.
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: fksdemo-service-public
+spec:
+  selector:
+    app: fksdemo
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
+```
+
+The domain name and IP address to access the Service over the internet can be found using kubectl. In the below output, the values are found
+under the `EXTERNAL-IP` column.  
+
+```
+> kubectl get svc
+NAME                     TYPE           CLUSTER-IP            EXTERNAL-IP                                                                                           PORT(S)   AGE
+kubernetes               ClusterIP      fdaa:3:dde8:0:1::3a   <none>                                                                                                443/TCP   32h
+fksdemo-service          ClusterIP      fdaa:3:dde8:0:1::3b   <none>                                                                                                80/TCP    26m
+fksdemo-service-public   LoadBalancer   fdaa:3:dde8:0:1::3c   fksdemo-service-public.svc.fks-default-vz5dlqz7v4ylrnpq.fly.dev,2a09:8280:1::31:ab8:0,137.66.25.254   80/TCP    8s
+```
+
+## Fly.io connection Handlers
+
+Fly.io connection handlers modify your connection before it reaches your application.
+Learn more about [connection handlers](/docs/networking/services/#connection-handlers). 
+
+Connection handlers are supported with a custom annotation to a Service object. The annotations have the form:
+
+```yaml
+"service.fly.io/<exposed port name/number>-handlers": "<handler1,handler2,...handlerN>"
+```
+
+The example below adds an HTTP and TLS handler for port 443.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: fksdemo-service
+  annotations:
+    "service.fly.io/https-handlers": "http,tls" # can replace https with 443
+spec:
+  selector:
+    app: fksdemo
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 8080
+```
+
+### TLS Options
+
+[TLS options](https://fly.io/docs/reference/configuration/#services-ports-tls_options) are used to configure the TLS settings
+of a service with a TLS connection handler. Fly's edge will use these settings to terminate TLS for your application. Refer
+to the [documentation](https://fly.io/docs/reference/configuration/#services-ports-tls_options) for details. 
+
+TLS options are set using custom annotations. There are 3 annotations, one for each setting:
+
+
+  * `service.fly.io/<exposed port name/number>-tls-alpn` - Sets the ALPN for negotiation with clients. Values must be comma-separated.
+  * `service.fly.io/<exposed port name/number>-tls-versions` - Sets which TLS versions are allowed. Values must be comma-separated.
+  * `service.fly.io/<exposed port name/number>-tls-default-self-signed` - If true, serves a self-signed certificate if none exists.
+
+The most common use case for TLS options is to support gRPC. For example:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: fksdemo-service
+  annotations:
+    "service.fly.io/https-handlers": "tls"
+    "service.fly.io/https-tls-alpn": "h2"
+spec:
+  selector:
+    app: fksdemo
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 8080
+```
+
+## Concurrency limits
+
+[Concurrency limits](/docs/reference/configuration/#services-concurrency) are used to limit the load on your application.
+By default, the soft limit is set to 20 and the hard limit is set to 25.
+Learn more about [concurrency limits](/docs/reference/configuration/#services-concurrency).
+
+They can be configured on your Services using custom annotations. There are 3 annotations used to configure the limits:
+
+  * `service.fly.io/concurrency-kind` - sets the metric used to measure concurrency
+  * `service.fly.io/concurrency-limit-soft` - sets the concurrency soft limit
+  * `service.fly.io/concurrency-limit-hard` - sets the concurrency hard limit
+
+Below is an example of setting this in your Service
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: fksdemo-service
+  annotations:
+    "service.fly.io/concurrency-kind": "connections"
+    "service.fly.io/concurrency-limit-soft": 20 
+    "service.fly.io/concurrency-limit-hard": 25 
+```
+
+## Not supported
+
+We currently do not support:
+
+* NodePort Services
+* UDP protocol
+
+## Related topics
+
+- [Create an FKS cluster](/docs/kubernetes/clusters/)
+- [Connect to an FKS cluster](/docs/kubernetes/connect-clusters/)

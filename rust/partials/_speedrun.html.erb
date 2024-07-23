@@ -1,0 +1,7 @@
+The fastest way to get a basic <%= runtime.titleize %> server on Fly.io is to use our <%= runtime %> template:
+
+```cmd
+git clone --single-branch --branch <%= runtime %> git@github.com:superfly/rust-templates.git <%= runtime %>-app
+cd <%= runtime %>-app
+fly launch --generate-name
+```

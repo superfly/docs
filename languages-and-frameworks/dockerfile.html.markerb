@@ -1,0 +1,141 @@
+---
+title: Deploy with a Dockerfile
+layout: language-and-framework-docs
+redirect_from: /docs/getting-started/dockerfile/
+---
+
+Fly Launch can deploy your app from a [Dockerfile](https://docs.docker.com/reference/dockerfile/+external).
+
+The `fly launch` command detects your Dockerfile, builds it, and then deploys your app. Need some extra config? No sweat, we've got you covered.
+
+## Create and configure your app
+
+Run `fly launch` from your project's source directory.
+
+<div class="important icon">
+If you want to configure more than the basic settings, things like secrets or environment variables for example, run `fly launch --no-deploy` so that you can [edit the `fly.toml` file](#more-config) before the first deployment.
+</div>
+
+```cmd
+fly launch
+```
+```output
+Scanning source code
+Detected a Dockerfile app
+Creating app in /Users/name/test/my-app-name
+We're about to launch your app on Fly.io. Here's what you're getting:
+
+Organization: MyOrg                  (fly launch defaults to the personal org)
+Name:         my-app-name            (derived from your directory name)
+Region:       Secaucus, NJ (US)      (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+
+? Do you want to tweak these settings before proceeding? Yes
+```
+
+Type `n` if you're happy with the defaults listed, otherwise type `y` to open the Fly Launch web page and edit your settings, including:
+
+* Name: Keep the default app name or enter your own.
+
+* Region: Keep the fastest [region](/docs/reference/regions/) (the value of `primary_region` in the `fly.toml` file) as chosen by Fly Launch, or select a different region to deploy to.
+
+* Services: The port for services (the value of `internal_port` in the `fly.toml` file) depends on the `EXPOSE` instruction in your Dockerfile. The default port when the `fly launch` command doesn't find ports set in a Dockerfile is `8080`.
+
+* You can also set a default Machine size and memory, and add and configure Postgres or Redis.
+
+After you click **Confirm Settings**, Fly Launch creates your app, generates a `fly.toml` file for your project with the settings, and then deploys the app.
+
+### Add environment variables and secrets
+
+Most Dockerfiles expect some configuration settings through `ENV`. Add your custom `ENV` settings to the `[env]` section of the generated `fly.toml` file. For example:
+
+```toml
+[env]
+  MY_SPECIAL_ENV = "some_value"
+  MAX_PLAYER_COUNT = "15"
+```
+
+Add the values your Dockerfile requires.
+
+Sometimes you have secrets that shouldn't be checked in to `git` or shared publicly. You can set secrets using the [`fly secrets`](/docs/apps/secrets/#set-secrets) command. For example:
+
+```cmd
+flyctl secrets set MY_SECRET=romance
+```
+```output
+Secrets are staged for the first deployment
+```
+
+You can list the secrets you've already set using `fly secrets list`. For example:
+
+```cmd
+fly secrets list
+```
+```
+NAME      DIGEST                           DATE
+MY_SECRET b9e37b7b239ee4aefc75352fe3fa6dc6 1m20s ago
+```
+
+The values aren't displayed, since they're secret!
+
+### Deploy your app
+
+If you didn't deploy the new app, or you've made changes and want to redeploy, then you can do that now.
+
+```cmd
+fly deploy
+```
+```output
+==> Verifying app config
+Validating /Users/name/test/my-app-name/fly.toml
+Platform: machines
+✓ Configuration is valid
+--> Verified app config
+==> Building image
+Remote builder fly-builder-long-glitter-7257 ready
+==> Building image with Docker
+
+...
+
+--> Pushing image done
+image: registry.fly.io/my-app-name:deployment-01HGEQ1Z1DPMJ4NMPNHTA09T6T
+image size: 141 MB
+
+Watch your deployment at https://fly.io/apps/my-app-name/monitoring
+
+-------
+Updating existing machines in 'my-app-name' with rolling strategy
+
+-------
+ ✔ [1/2] Machine 918543b477de83 [app] update succeeded
+ ✔ [2/2] Machine e28697ce6d3986 [app] update succeeded
+-------
+
+Visit your newly deployed app at https://my-app-name.fly.dev/
+```
+
+By default, `fly deploy` builds the image using a remote builder. If you have Docker running locally and want to build locally, then run `fly deploy --local-only`. After the image is built, the app gets deployed.
+
+### Open your app
+
+Run `fly apps open`, or just go to the URL specified in the output, to open your deployed app in a browser.
+
+## Stateful apps
+
+Lots of apps have some state that they want to keep. Learn more about the options for [databases and storage](docs/database-storage-guides/) on Fly.io.
+
+## Grow and scale
+
+Check out some of the ways you can increase availability, capacity, and performance with Fly.io:
+
+* Follow the blueprint for [extra Machines for more resilient apps](/docs/blueprints/resilient-apps-multiple-machines/)
+* Read up on [App availability and resiliency](/docs/reference/app-availability/)
+* [Autoscale Machines based on load or custom metrics](/docs/reference/autoscaling/)
+* [Scale Machine CPU and RAM](/docs/apps/scale-machine/) 
+* [Scale Machine count](/docs/apps/scale-count/)
+* Try out [Fly GPUs](/docs/gpus/)
+
+
+If you have questions, need help, or want to talk about what you're building, visit our [community forum](https://community.fly.io).

@@ -5,7 +5,6 @@ order: 2
 subnav_glob: docs/django/existing/*.html.*
 objective: Learn how to run your existing Django applications on Fly.
 related_pages:
-  - /docs/django/getting-started/existing
   - /docs/flyctl/
   - /docs/postgres/
 ---
@@ -20,38 +19,47 @@ The official [How to Deploy Django](https://docs.djangoproject.com/en/stable/how
 
 The third-party package [WhiteNoise](https://whitenoise.evans.io/en/stable/) is recommended for serving static files in production as this requires [additional configuration](https://docs.djangoproject.com/en/stable/howto/static-files/deployment/).
 
-A production web server must be installed, typically either [Gunicorn](https://docs.gunicorn.org/en/latest/install.html) or [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/). The database adapter [Psycopg](https://www.psycopg.org/docs/) is commonly used along with [dj-database-url](https://pypi.org/project/dj-database-url/) to establish a Django database connection via a `DATABASE_URL` environment variable.
+A production web server must be installed, typically either [Gunicorn](https://docs.gunicorn.org/en/latest/install.html) or [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/). The database adapter [Psycopg](https://www.psycopg.org/psycopg3/docs/) is commonly used along with [dj-database-url](https://pypi.org/project/dj-database-url/) to establish a Django database connection via a `DATABASE_URL` environment variable.
 
 Be sure to have generated an up-to-date `requirements.txt` file for any new packages added for deployment.
 
 ## flyctl
 
-Fly.io has its own command-line utility for managing apps, [flyctl](https://fly.io/docs/hands-on/install-flyctl/). If not already installed, follow the instructions on the [installation guide](https://fly.io/docs/hands-on/install-flyctl/) and [log in to Fly](https://fly.io/docs/getting-started/log-in-to-fly/).
+Fly.io has its own command-line utility for managing apps, [flyctl](/docs/flyctl/). If not already installed, follow the instructions on the [installation guide](/docs/flyctl/install/) and [log in to Fly](/docs/getting-started/sign-up-sign-in/).
 
 
 ## Provision Django and Postgres Servers
 
-To configure and launch the app, use the command `fly launch` and follow the wizard. You can set a name for the app, choose a default region, launch and attach a Postgresql database. You can also set up a Redis database though we will not be doing so in this example.
+To configure and launch the app, use the command `fly launch` and follow the wizard. You can set a name for the app, choose a default region, launch and attach a Postgres database. You can also set up a Redis database though we will not be doing so in this example.
 
 ```cmd
 fly launch
 ```
 ```output
-Creating app in ~/django-existing-app
 Scanning source code
 Detected a Django app
-? Choose an app name (leave blank to generate one): django-existing-app
-automatically selected personal organization: Jane Smith
-? Choose a region for deployment: Ashburn, Virginia (US) (iad)
-Created app django-existing-app in organization personal
+Creating app in ~/django-existing-app
+We're about to launch your Django app on Fly.io. Here's what you're getting:
+
+Organization: Jane Smith             (fly launch defaults to the personal org)
+Name:         django-existing-app    (derived from your directory name)
+Region:       Ashburn, Virginia (US) (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+
+? Do you want to tweak these settings before proceeding? Yes
+Opening https://fly.io/cli/launch/mo1ootho9ualooghoch3iih6cha2shah ...
+
+Waiting for launch data... Done
+Created app 'django-existing-app' in organization 'personal'
+Admin URL: https://fly.io/apps/django-existing-app
+Hostname: django-existing-app.fly.dev
 Set secrets on django-existing-app: SECRET_KEY
-Creating database migrations
-Wrote config file fly.toml
-? Would you like to set up a Postgresql database now? Yes
-? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
 Creating postgres cluster in organization personal
 Creating app...
-Setting secrets on app django-existing-app-db...Provisioning 1 of 1 machines with image flyio/postgres:14.4
+Setting secrets on app django-existing-app-db...
+Provisioning 1 of 1 machines with image flyio/postgres-flex:15.3@sha256:44b698752cf113110f2fa72443d7fe452b48228aafbb0d93045ef1e3282360a6
 Waiting for machine to start...
 Machine 217811c53e0896 is created
 ==> Monitoring health checks
@@ -60,29 +68,36 @@ Machine 217811c53e0896 is created
 Postgres cluster django-existing-app-db created
   Username:    postgres
   Password:    lt5JoEIVons5INJ
-  Hostname:    django-existing-app-db.internal
+  Hostname:    django-existing-app-db.flycast
+  Flycast:     fdaa:3:9f45:0:1::2
   Proxy port:  5432
   Postgres port:  5433
-  Connection string: postgres://postgres:lt5JoEIVons5INJ@django-existing-app-db.internal:5432
+  Connection string: postgres://postgres:lt5JoEIVons5INJ@django-existing-app-db.flycast:5432
 
 Save your credentials in a secure place -- you won't be able to see them again!
 
 Connect to postgres
-Any app within the Jane Smith organization can connect to this Postgres using the following credentials:
-For example: postgres://postgres:lt5JoEIVons5INJ@django-existing-app-db.internal:5432
+Any app within the Jane Smith organization can connect to this Postgres using the above connection string
 
-
-Now that you've set up postgres, here's what you need to understand: https://fly.io/docs/reference/postgres-whats-next/
+Now that you've set up Postgres, here's what you need to understand: https://fly.io/docs/postgres/getting-started/what-you-should-know/
+Checking for existing attachments
+Registering attachment
+Creating database
+Creating user
 
 Postgres cluster django-existing-app-db is now attached to django-existing-app
 The following secret was added to django-existing-app:
-  DATABASE_URL=postgres://django_existing_app:6YuIWrdwzVOgVe1@top2.nearest.of.django-existing-app-db.internal:5432/django_existing_app?sslmode=disable
+  DATABASE_URL=postgres://django_existing_app:lt5JoEIVons5INJ@django-existing-app-db.flycast:5432/django_existing_app?sslmode=disable
 Postgres cluster django-existing-app-db is now attached to django-existing-app
-? Would you like to set up an Upstash Redis database now? No
+Wrote config file fly.toml
 
-Your Django app is almost ready to deploy!
+[INFO] Python 3.10.12 was detected. 'python:3.10-slim-bullseye' image will be set in the Dockerfile.
 
-We recommend using the database_url(pip install dj-database-url) to parse the DATABASE_URL from os.environ['DATABASE_URL']
+Validating ~/django-existing-app/fly.toml
+Platform: machines
+✓ Configuration is valid
+
+Your Django app is ready to deploy!
 
 For detailed documentation, see https://fly.dev/docs/django/
 ```
@@ -91,7 +106,7 @@ For detailed documentation, see https://fly.dev/docs/django/
 
 The `fly launch` command creates two new files in the project that are automatically configured: `Dockerfile` and `fly.toml`.
 
-The [Dockerfile](https://docs.docker.com/engine/reference/builder/) is essentially instructions for creating an image. On the last line make sure to replace `"demo.wsgi"` with your Django project's name.
+The [Dockerfile](https://docs.docker.com/engine/reference/builder/) is essentially instructions for creating an image.
 
 The [`fly.toml`](https://fly.io/docs/reference/configuration/) file is used by Fly.io to configure applications for deployment. Configuration of builds, environment variables, internet-exposed services, disk mounts and release commands go here.
 
@@ -107,10 +122,10 @@ To deploy the application use the following command:
 fly deploy
 ```
 
-This will take a few seconds as it uploads your application, verifies the app configuration, builds the image, and then monitors to ensure it starts successfully. Once complete visit your app with the following command:
+This will take a few seconds as it uploads your application, verifies the app configuration, builds the image, and then monitors to ensure it starts successfully. Once complete, visit your app with the following command:
 
 ```cmd
-fly open
+fly apps open
 ```
 
 If everything went as planned you will see your Django application homepage.
@@ -137,19 +152,20 @@ To SSH into your hosted Django application use the command `fly ssh console`. Fo
 
 ```cmd
 fly ssh console
-# cd code
 # python manage.py createsuperuser
 ```
 
 If you prefer, this can be run as one command instead:
 
 ```cmd
-fly ssh console -C 'python /code/manage.py createsuperuser'
+fly ssh console --pty -C 'python /code/manage.py createsuperuser'
 ```
+
+<div class="callout">The `--pty` flag tells the SSH server to run the command in a pseudo-terminal, which `createsuperuser` requires.</div>
 
 ### Secrets
 
-Secrets allow sensitive values, such as credentials and API keys, to be securely passed to your Django applications. You can set, remove, or list all secrets with the [fly secrets](https://fly.io/docs/reference/secrets/) command.
+Secrets allow sensitive values, such as credentials and API keys, to be securely passed to your Django applications. You can set, remove, or list all secrets with the [fly secrets](/docs/apps/secrets/) command.
 
 ### Git
 

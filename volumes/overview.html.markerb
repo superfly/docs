@@ -1,0 +1,88 @@
+---
+title: Fly Volumes overview
+layout: docs
+nav: firecracker
+order: 20
+redirect_from: /docs/reference/volumes/
+---
+
+Apps can store only ephemeral data on the root file systems of their Fly Machines, because a Machine’s file system gets rebuilt from scratch each time you deploy your app, or when the Machine is restarted.
+
+Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can access and write to a volume on a Machine just like a regular directory. Use volumes to store your database files, to save your app's state, such as configuration and session or user data, or for any information that needs to persist after deploy or restart.
+
+A Fly Volume is a slice of an NVMe drive on the same physical server as the Machine on which it's mounted and it's tied to that hardware. Fly Volumes are similar to the disk inside your laptop, accessible from a mount point in your file system. Using volumes tied to hardware has both advantages and disadvantages.
+
+## Volume considerations
+
+* **A volume belongs to one app**: Every Fly Volume belongs to a [Fly App](/docs/apps/overview/) and you can't share a volume between apps.
+* **A volume exists on one server**: Each volume exists on one server in a single region. It is not network storage.
+* **A volume can attach to one Machine**: You need to run as many volumes as there are Machines. There's a one-to-one mapping between Machines and volumes. A Machine can only mount one volume at a time and a volume can be attached to only one Machine.
+* **Develop your app to handle replication**: Volumes are independent of one another; Fly.io does not automatically replicate data among the volumes on an app, so if you need the volumes to sync up, then your app has to make that happen.
+* **Create redundancy in your primary region**: If your app needs a volume to function, and the NVMe drive hosting your volume fails, then that instance of your app goes down. There's no way around that. You can run multiple Machines with volumes in your app's primary region to mitigate hardware failures.
+* **Create and store backups**: If you only have a single copy of your data on a single volume, and that drive fails, then the data is lost. Fly.io takes daily snapshots and can retain them from 1 to 60 days (5 days by default), but the snapshots shouldn't be your primary backup method.
+
+Explore other options for data storage in [Databases & Storage](/docs/database-storage-guides/).
+
+## Volume attachment
+
+Fly Volumes and Fly Machines are meant to be paired together, but they are not always found in pairs. A Fly Volume can be created without a Fly Machine, or a Machine can be destroyed without destroying its volume. In these cases, the volume that’s left is called an "unattached" volume. 
+
+A Fly Machine that does not require a volume will never attach itself to one. A Fly Machine that does require a volume will always be attached to one. When a volume is required according to the app or Machine configuration, any method of creating a new Fly Machine will pick up an unattached volume, create a new volume to attach, or it will fail (in the case of `fly machine` commands or create Machine API calls).
+
+## Volume redundancy
+
+<div class="warning icon">
+<b>Warning: Always provision at least two volumes per app.</b> Running an app with a single Machine and volume leaves you at risk for downtime and data loss. Volumes don't have built-in replication between them, so your app or database needs to take care of replicating data between volumes.
+</div>
+
+We try to keep individual Fly Machines up for as long as possible, but hardware failures happen. That's why we recommend running at least two Machines per app to increase availability. You can run two or more Machines in one region, or better yet, one or more Machines in multiple regions. If you only have one Machine and volume, then you'll have downtime if there's a host or network failure, and whenever you deploy your app. 
+
+You'll also need to replicate data between volumes. Some options for replicating databases include [LiteFS - Distributed SQLite](/docs/litefs/) and [Supabase Postgres](/docs/reference/supabase/).
+
+In a few cases, you can run a single Machine with an attached volume. For example, if your app is in development and you're not yet worried about downtime or if you're running an app that can handle downtime and has a custom backup procedure.
+
+## Volume placement
+
+You can create volumes at the same time you create Machines, or ahead of time. If you try to create new Machines through [`flyctl scale count`](/docs/apps/scale-count/#scale-an-app-with-volumes), then `flyctl` will first check if you have any unattached volumes in the region you are creating new Machines in. If it finds unattached volumes, it will try to create the new Machines on the same servers. If it does not find any unattached volumes, then it will create new ones together with the Machines. You can also create unattached volumes through [`fly volumes create`](/docs/flyctl/volumes-create/).
+
+Volumes exist on a single server in a single [region](/docs/reference/regions/). For redundancy within a region, you can run multiple Machines with attached volumes. Remember that volumes don't automatically replicate data between them.
+
+To prevent a single server hardware failure from taking down your app, it is better if each volume is placed in a separate hardware zone. A separate hardware zone is just another way of saying a different server. We default to separate hardware zones when you create volumes with the [`fly volumes create`](/docs/flyctl/volumes-create/) command, but this is not guaranteed when creating Fly Volumes through other methods. Note that having each volume in a separate hardware zone limits the number of volumes your app can have in a region. If you need more volumes in a region than there are distinct hardware zones, you can set `--require-unique-zone` to `false` when you run [`fly volumes create`](/docs/flyctl/volumes-create/).
+
+You can hint what type of compute load you expect to use the volume for by using the `--vm-XXX` options with the [`fly volumes create`](/docs/flyctl/volumes-create/) command. For example, to create a volume you want to use with an L40S GPU Machine, set `--vm-gpu-kind=l40s` to ensure that your new volume is placed on GPU hardware.
+
+## Volume encryption
+
+Volumes are, by default, created with encryption-at-rest enabled for additional protection of the data on the volume. Use `--no-encryption` to instead create an unencrypted volume.
+
+## Volume size
+
+The default volume size is 1GB when you create a volume with the `fly volumes create` command, and when you use the `fly launch` command to [launch an app with a volume](/docs/apps/volume-storage/#launch-a-new-app-with-a-fly-volume). The maximum volume size is 500GB.
+
+You can extend a volume's size&mdash;either [manually](/docs/volumes/volume-manage/#extend-a-volume) or [automatically](/docs/reference/configuration/#the-mounts-section)&mdash;to make it larger, but you can't shrink a volume.
+
+## Volume forks
+
+When you [fork a volume](/docs/volumes/volume-manage/#create-a-copy-of-a-volume-fork-a-volume), you create a new volume with an exact copy of the data from the source volume to use for testing, backups, or whatever you like. If you don't specify a region, then the new volume is in the same region, but on a different physical host. The forked volume isn't attached to a Machine until you scale or clone a new Machine in the same region. The new volume and the source volume are independent, and changes to their contents are not synchronized.
+
+## Volume snapshots
+
+Fly.io takes daily block-level snapshots of volumes. We keep snapshots for five days by default, but you can configure the snapshot retention to be from 1 to 60 days. Daily automatic snapshots may not have your latest data. You should still implement your own backup plan for important data.
+
+You can also [create a snapshot of a volume](/docs/volumes/snapshots/#create-a-volume-snapshot) on demand.
+
+You can [restore a volume snapshot](/docs/volumes/snapshots/#restore-a-volume-from-a-snapshot) into a new volume of equal or greater size.
+
+## When volumes are not available
+
+There are some instances where volumes are not available.
+
+* **Build Time**: When building a Docker image for deploying an application (e.g. `flyctl deploy`), volumes are not accessible.
+* **Release Command**: Volumes are also not mounted to the temporary Machine created when using a [release_command](/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment).
+
+## Related topics
+
+- [Create and manage volumes](/docs/volumes/volume-manage/)
+- [Manage volume snapshots](/docs/volumes/snapshots/)
+- [Add volume storage to a Fly Launch app](/docs/apps/volume-storage/)
+- [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)

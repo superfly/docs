@@ -1,5 +1,5 @@
 ---
-title: "Laravel: GitHub Actions - CICD"
+title: "Laravel GitHub Actions: CICD"
 layout: framework_docs
 objective: Configure continuous integration and development on your Laravel Fly App through GitHub. 
 order: 3
@@ -9,7 +9,8 @@ Laravel applications are alive and bustling with feature updates and revisions. 
 
 Once you've set up a repository for your Fly App, you can automate your team's deployment workflow with [GitHub Actions](https://docs.github.com/en/actions)---a really neat way to automate most things you'd manually do during and after code reviews!
 
-## _Initialization_
+## Initialization
+
 In this section, you'll create a new Laravel application, configure and deploy it as a Fly App, and finally add it to a GitHub repository.
 
 1) Start with a [clean slate](/docs/laravel/): create a new Laravel project and configure it as a deployable Fly app by using the `flyctl` launch command:
@@ -40,7 +41,8 @@ git init
 git remote add origin git@github.com:<username>/<repository-name>.git
 ```
 
-## _GitHub CI Action: Auto Deploy to Fly.io_
+## GitHub CI Action: Auto Deploy to Fly.io
+
 Once you have your Laravel application set up with a github repository, you can configure some GitHub Actions to auto deploy your changes. 
 
 In this guide, you'll be using `Fly.io`'s very own [GitHub action template here](https://github.com/superfly/flyctl-actions) to help deploy your application.

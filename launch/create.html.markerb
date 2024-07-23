@@ -1,0 +1,101 @@
+---
+title: Create an app with Fly Launch
+layout: docs
+nav: apps
+redirect_from: /docs/apps/launch/
+---
+
+This guide goes into some detail about using Fly Launch to create and configure an app. See [Getting Started](/docs/getting-started) for ways to get going even faster.
+
+Fly Launch is a collection of opinionated Fly.io platform features that help you configure and orchestrate your app as a unit. 
+
+## Create an app with Fly Launch
+
+To create a brand new app on Fly.io, run this command from the source directory of your project:
+
+```cmd
+fly launch
+``` 
+
+If you're in a hurry, you can also try our super-simple [demo app](https://fly.io/docs/getting-started/launch-demo/). Or get started with your favorite [language or framework](/docs/getting-started/get-started-by-framework/).
+
+## Ingredients for a successful `fly launch`
+
+The components of a successful launch, ready for the first deployment:
+
+* A way to get a Docker image that we can use to get your app running on a Machine.
+* A `fly.toml` file, created by `fly launch` or provided by you, for your app's Fly.io-specific [configuration](/docs/reference/configuration/).
+* Optional resources such as [public IP addresses](/docs/networking/services/), [app secrets](/docs/apps/secrets/), and [databases and storage](/docs/database-storage-guides/) from Fly.io or extenstion partners.
+
+## Framework launch scanners
+
+Depending on your project, `fly launch` may be able to look at your app's source code and get through that [ingredient list](#ingredients-for-a-successful-fly-launch), straight to a ready-to-deploy Fly App. This is most likely to work for frameworks on which Fly.io has people specializing full time. Right now that's [Elixir/Phoenix](/docs/elixir/), [Laravel](/docs/laravel/), [Rails](/docs/rails/), and [Django](/docs/django/), but we also have launch guides for other [languages and frameworks](/docs/languages-and-frameworks/).
+
+Our best scanners furnish a Dockerfile from which your app's image will be built. Some of our terrible older scanners may invoke [buildpacks](/docs/reference/builders/#buildpacks), which tend to be slow and brittle.
+
+Running `fly launch` in a directory containing a working Django app (it happens to be the one from [our Django getting-started example](/docs/django/getting-started/)):
+
+```cmd
+fly launch
+```
+```out
+Scanning source code
+Detected a Django app
+Creating app in /flyio/hello-django
+We're about to launch your Django app on Fly.io. Here's what you're getting:
+
+Organization: MyName                 (fly launch defaults to the personal org)
+Name:         hello-django           (derived from your directory name)
+Region:       Amsterdam, Netherlands (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+
+? Do you want to tweak these settings before proceeding? Yes
+...
+```
+
+The flyctl Django scanner has taken ownership of the launch. You can tweak the basic settings on the Fly Launch web page and then run `fly deploy` to deploy the new app. Visit our [Django guide](/docs/django/getting-started/) to see how that story will end. (Spoiler: it has a happy ending.)
+
+## Custom launch
+
+You can nudge `fly launch` to better suit your project. 
+
+### Point to an image or use a Dockerfile to build
+
+Tell `fly launch` how you want to get the Docker image for your app, using either the `--image` or `--dockerfile` option, or by catching the Dockerfile launch scanner's attention with the presence of a [Dockerfile](/docs/languages-and-frameworks/dockerfile/) in your project source directory. The Dockerfile scanner doesn't do a lot of configuration, but it prevents other scanners from taking over.
+
+The actual Docker image build (or image pull) for a Fly App takes place during deployment. `fly launch` sets the stage by recording how to build, or get, the image, and both the first and all later deploys use that information.
+
+### Customize the configuration file
+
+You can provide your own `fly.toml` and `fly launch` will offer to copy that configuration to a new app. `fly.toml` sets a starting point for the app configuration, and in some cases a framework launch scanner might overwrite parts of it.
+
+The `fly launch` command has plenty of [options]((/docs/flyctl/launch/)) you can use to control how your app gets created and provisioned.
+
+If `fly launch` doesn't have a scanner that can set up your app automatically, it will still initialize a new Fly App in your Fly.io organization and provide you with a default app configuration that's a reasonable starting point for a simple web app.
+
+You'll need to ensure that your Fly App's name is unique across all of Fly.io. By default, Fly Launch will derive an app name from the current directory name. If this is something common like "hello-world", then there's a good chance your launch will fail. You can use the `--name` flag to specify a unique name up front.
+
+You can also perform an entirely manual "launch", skipping all the launch scanners and full-service resource provisioning, using `fly apps create`, a hand-crafted (or copied) `fly.toml`, and step-by-step resource provisioning, followed by `fly deploy`.
+
+## After `fly launch`
+
+If you've run `fly launch` but haven't deployed yet (hint: you can do this with `fly launch --no-deploy`), or you deployed but want to make changes, then you can:
+
+* change your configuration
+* update your app source
+* change or provision platform resources such as [public IP addresses](/docs/networking/services/), [app secrets](/docs/apps/secrets/), and [databases and storage](/docs/database-storage-guides/).
+
+And then deploy (or redeploy) with [`fly deploy`](/docs/launch/deploy/).
+
+## Grow and scale
+
+Check out some of the ways you can increase availability, capacity, and performance with Fly.io:
+
+* Follow the blueprint for [extra Machines for more resilient apps](/docs/blueprints/resilient-apps-multiple-machines/)
+* Read up on [App availability and resiliency](/docs/reference/app-availability/)
+* [Autoscale Machines based on load or custom metrics](/docs/reference/autoscaling/)
+* [Scale Machine CPU and RAM](/docs/apps/scale-machine/) 
+* [Scale Machine count](/docs/apps/scale-count/)
+* Try out [Fly GPUs](/docs/gpus/)

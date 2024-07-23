@@ -1,0 +1,217 @@
+---
+title: Getting Started with LiteFS in Docker
+layout: docs
+nav: litefs
+toc: true
+---
+
+## Overview
+
+This guide will walk you through the steps of getting a LiteFS cluster up and
+running using Docker. You can also use this guide as a reference for running
+LiteFS on a Linux server with minimal changes. If you're planning to run your
+app on Fly.io, please take a look at [Getting Started with LiteFS on Fly.io][Getting Started Fly]
+instead.
+
+For a full, working example of a LiteFS application, with a docker-compose setup
+that you can run locally, please see the [litefs-example][] repository.
+
+[litefs-example]: https://github.com/superfly/litefs-example
+
+[Getting Started Fly]: /docs/litefs/getting-started-fly
+
+## Adding LiteFS to your Dockerfile
+
+### Dependencies
+
+The `litefs` binary is self-contained, but you'll need to install the `fuse3`
+library so LiteFS is able to mount a local file system. You'll also need
+`ca-certificates` if you're connecting to Consul, and you'll almost certainly
+want to install `sqlite`. This installation depends on your package manager, but
+here is a line you can add to your Dockerfile for alpine-based or debian-based images:
+
+```dockerfile
+# for alpine-based images
+RUN apk add ca-certificates fuse3 sqlite
+```
+
+```dockerfile
+# for debian/ubuntu-based images
+RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite3
+```
+
+### Installing LiteFS
+
+LiteFS is meant to run inside your container alongside your application. You
+can pull in the `litefs` binary by copying it from the official Docker image:
+
+```dockerfile
+COPY --from=flyio/litefs:0.5 /usr/local/bin/litefs /usr/local/bin/litefs
+```
+
+It's recommended that you run LiteFS as `root` in Docker instead of using the
+`USER` command to change users. If you need to run your application as another
+user, use the `su` command to run your application as a non-root user.
+
+Take a look at [the example Dockerfile][Dockerfile] in the `litefs-example` repo
+for an example.
+
+[Dockerfile]: https://github.com/superfly/litefs-example/blob/main/Dockerfile
+
+## Configuring LiteFS
+
+Most configuration options for LiteFS are set via a YAML configuration file
+called `litefs.yml`. This file is typically placed in `/etc/litefs.yml` but
+you can change the path by using the `-config` flag.
+
+You can take a look at [a complete example][LiteFS yml] of what your `litefs.yml` file
+should look like.
+
+[LiteFS yml]: https://github.com/superfly/litefs-example/blob/main/docker-config/etc/litefs.static-lease.yml
+
+### File system
+
+Let's first set two fields to tell LiteFS where to mount its file system and
+where to store its internal data.
+
+```yml
+# This directory is where your application will access the database.
+fuse:
+  dir: "/litefs"
+
+# This directory is where LiteFS will store internal data.
+# You must place this directory on a persistent volume.
+data:
+  dir: "/var/lib/litefs"
+```
+
+### Lease configuration
+
+LiteFS only allows a single node to be the _primary_ at any given time. The
+primary node is the only one that can write data to the database. The other
+nodes are called _replicas_ and they provide a read-only copy.
+
+The primary is determined by using a [_distributed lease_](https://martinfowler.com/articles/patterns-of-distributed-systems/time-bound-lease.html).
+In this guide, we'll be using a static lease, because it's simple to configure.
+
+You'll need two slightly different configurations for your primary and replica nodes.
+In particular, use `lease.candidate: true` in the primary node configuration,
+and `lease.candidate: false` in the replica node configuration.
+Here's an example of the primary node's `litefs.yml` file:
+
+```yml
+lease:
+  # Required. Must be either "consul" or "static".
+  type: "static"
+
+  # Required. The URL for the primary node's LiteFS API.
+  # Note: replace `primary` with the appropriate hostname for your primary node!
+  advertise-url: "http://primary:20202"
+
+  # Specifies whether the node can become the primary. If using
+  # "static" leasing, this should be set to true on the primary
+  # and false on the replicas.
+  # Note: update this to `false` on the replica nodes!
+  candidate: true
+```
+
+The replica node configuration should be identical, except with `lease.candidate`
+set to `false`.
+
+## Running LiteFS
+
+The main command used to start LiteFS is the `litefs mount` command. This mounts
+a FUSE file system and then starts an API server for LiteFS nodes to
+communicate with each other. You can use this as the `ENTRYPOINT` in your
+Dockerfile:
+
+```dockerfile
+ENTRYPOINT litefs mount
+```
+
+### Running as a supervisor
+
+LiteFS can either be run on its own or it can act as a simple supervisor process
+for your application. Running as a supervisor lets LiteFS wait to start the
+application until after it has connected to the cluster.
+
+You can specify one or more commands in the `exec` section of your config. If
+you set `lease.promote` to `true`, then you can specify to run your migration
+scripts only on candidate nodes. This means that candidates will automatically
+promote to the primary and run the migrations.
+
+```yml
+exec:
+  # Only run migrations on candidate nodes.
+  - cmd: "rails db:migrate"
+    if-candidate: true
+
+  # Then run the application server on all nodes.
+  - cmd: "rails server"
+```
+
+### Docker container privileges
+
+LiteFS uses the FUSE filesystem, which requires some additional privileges to run.
+The easiest way to get this working quickly is to run with `--privileged`:
+
+```sh
+docker run --privileged ...
+```
+
+Depending on your security requirements, you should take a look at the
+[FUSE documentation][] and decide whether you can reduce privileges!
+
+[FUSE documentation]: https://www.kernel.org/doc/html/next/filesystems/fuse.html
+
+### Testing your LiteFS instance
+
+Once LiteFS is mounted, you can use SQLite clients or the `sqlite3` CLI to
+interact with databases on the mount directory:
+
+```
+sqlite3 /litefs/my.db
+```
+
+LiteFS only allows files in the root of the mount and it does not currently
+support subdirectories.
+
+
+## Importing your database
+
+If you have an existing database, you can import it using the `litefs import`
+command.
+
+```sh
+litefs import -name my.db /path/to/database
+```
+
+Refer to the [`litefs import`](/docs/litefs/import) documentation for more details.
+
+<div class="warning icon">
+  You should only interact with SQLite databases on LiteFS through
+  a SQLite client or through the `litefs` tooling.
+  <br><br>
+  Do not use `cp` to copy a database into place.
+</div>
+
+## Configuring writes to primary node
+
+LiteFS has a few differences from regular SQLite since it is a distributed
+system. LiteFS requires that all writes occur on the primary node which means
+that applications need to redirect write requests to the current primary. It's
+also possible to issue a write to the primary and then read from a replica
+before the change is propagated to that replica.
+
+For most web applications, you can take advantage of load balancer configuration
+to route writes to the primary node, assuming your application follows the
+convention of avoiding write operations (`INSERT`, `UPDATE`, etc.) on `GET`
+requests.
+
+You can take a look at this [sample nginx config](https://github.com/superfly/litefs-example/blob/main/docker-config/nginx/nginx.conf) which routes writes to
+the primary node, and load balances between primary and replica node
+for other requests.
+
+## Next steps
+
+[Back up your LiteFS cluster](/docs/litefs/backup/).

@@ -1,0 +1,8 @@
+---
+title: Getting Started
+order: 1
+toc: false
+layout: framework_docs_overview
+subnav_glob: docs/rails/getting-started/*.html.*
+objective: Quickly get a Postgres instance up and running on Fly.
+---

@@ -1,0 +1,190 @@
+---
+title: Disaster Recovery from LiteFS Cloud
+layout: docs
+nav: litefs
+---
+<%= partial "/docs/partials/docs/litefs_sunset" %>
+
+The biggest advantage of using LiteFS Cloud is that you have backups
+to restore from in case of an unfortunate situation where you lose
+all the nodes in your cluster. In this doc, we'll show you how to restore
+your cluster from LiteFS Cloud if you've lost all the nodes.
+
+<section class="important icon">
+**Important:** You should only follow the steps in this document if you've lost all
+nodes of your LiteFS cluster. Otherwise, you can
+[restore from a LiteFS Cloud backup](/docs/litefs/cloud-restore).
+</section>
+
+## Start your app up with only the primary node
+
+It's simpler to recover a single node, rather than several nodes, so to
+start out with, it's best to remove all replica nodes and run just a
+primary node. If your app hasn't already restarted before you got here,
+just restart it with only the primary node and move on to [the next step](#find-the-correct-cluster-id)!
+
+If your app has already restarted with multiple nodes running, you should temporarily
+remove all of the replicas.
+
+If you're running your app on the Fly Platform, you can see the machines running your app with:
+
+```sh
+fly status
+```
+
+You'll see something like this:
+
+```
+Machines
+PROCESS	ID            	VERSION	REGION	STATE  	ROLE   	CHECKS	LAST UPDATED
+app    	784e900c2de378	1      	ams   	started	primary	      	2023-07-10T13:05:40Z
+app    	e784e471b39208	1      	ord   	started	replica	      	2023-07-10T13:01:16Z
+```
+
+Then destroy each machine that's marked `replica`:
+
+```sh
+fly machines destroy e784e471b39208
+```
+
+You can re-run `fly status` after you're done, to confirm you only have the primary running.
+
+## Find the correct cluster id
+
+When your app restarted, LiteFS generated a new cluster id, which is different
+than the cluster id stored in LiteFS Cloud. This is a safety measure: we don't want
+to accidentally overwrite data in a cluster if you inadvertently set the wrong LiteFS
+Cloud token for the app. You'll see some error messages in the LiteFS logs, similar
+to this:
+
+```
+level=INFO msg="backup stream failed, retrying: fetch position map: backup client error (422): cluster id mismatch, expecting \"LFSC25AD000F32ED02A9\""
+```
+
+If you're running on the Fly Platform, you can see the logs with:
+
+```sh
+fly logs
+```
+
+Note the cluster id specified at the end of the log message: `LFSC25AD000F32ED02A9` in
+our example. Copy this value to use later.
+
+## Update the cluster id
+
+Now that you have the correct cluster id, you can connect to your primary node and
+update the cluster id file. If your app is deployed on the Fly Platform, you can
+connect with:
+
+```sh
+fly ssh console
+```
+
+Then update the `clusterid` file:
+
+```sh
+echo LFSC25AD000F32ED02A9 > /var/lib/litefs/clusterid
+```
+
+After this, you should restart LiteFS. If you're using the Fly Platform, close
+your ssh session, and then restart your app:
+
+```sh
+fly app restart
+```
+
+Check your logs again, and confirm you don't see the cluster id error message anymore!
+You should also take a look at your app and confirm you see the data you expect
+before you continue.
+
+## Resolve consul key error
+
+If you're running on the Fly Platform (or you're using Consul for lease management
+elsewhere), you may see the following errors in your logs:
+
+```
+2023-07-10T13:30:25Z app[784e900c2de378] ams [info]level=INFO msg="cannot connect, \"consul\" lease already initialized with different ID: LFSCA5E3680C1C2FCFFE"
+```
+
+You have two options to resolve this:
+
+- change the Consul key value that LiteFS uses. This is easy, but leaves extra Consul keys set.
+
+or:
+
+- remove the "wrong" key from Consul. This is more difficult but cleaner.
+
+### Easy option: change the Consul key
+
+You can simply update the `lease.consul.key` value in the `litefs.yml` file. The old one will
+still exist in Consul, but LiteFS won't care. For example, you can just add `-v2` to the end
+of the Consul key value:
+
+```yml
+lease:
+  type: consul
+  ...
+  consul:
+    url: "${FLY_CONSUL_URL}"
+    key: "litefs/${FLY_APP_NAME}-v2" # added '-v2'
+```
+
+If you're using the Fly Platform, redeploy your app:
+
+```sh
+fly deploy
+```
+
+### Cleaner option: remove the wrong key from Consul
+
+First, you'll need to add `consul` in your image. Connect to your primary node via ssh, and
+install it there. Here's how to install it:
+
+```sh
+# For debian/ubuntu-based images
+apt-get install consul
+
+# For alpine-based images
+apk add consul
+```
+
+Get your `FLY_CONSUL_URL`:
+
+```sh
+echo $FLY_CONSUL_URL
+```
+
+This url is in the format `https://:{TOKEN}@{HOST}/{PREFIX}`. You'll need each of these values
+separately. You'll also need the value of `lease.consul.key` from your `litefs.yml` file.
+
+Then use the [Consul CLI](https://developer.hashicorp.com/consul/commands/kv) to delete the key with:
+
+```sh
+export TOKEN=(copy the token you found from your consul url)
+export HOST=(copy the host you found from your consul url)
+export PREFIX=(copy the prefix you found from your consul url)
+export LITEFS_CONSUL_KEY=(copy the key from your litefs.yml file)
+
+# and then delete the key!
+consul kv delete -http-addr=https://$HOST -token=$TOKEN $PREFIX/$LITEFS_CONSUL_KEY/clusterid
+```
+
+After this is done, restart LiteFS. If your app is deployed on the Fly Platform, you can do this by
+restarting your app:
+
+```sh
+fly app restart
+```
+
+
+## Add your replicas back
+
+Once your primary node is connected to LiteFS Cloud again and your data has
+been recovered, you should go ahead and scale back up.
+
+If you're using the Fly Platform, that probably looks something like this (replacing `ord`
+with the region you'd like to run your new replica in):
+
+```sh
+fly machines clone --select --region ord
+```

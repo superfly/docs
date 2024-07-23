@@ -20,7 +20,7 @@ We are serious about this process, and have built it carefully. For candidates w
 There are other good things about our process:
 
 - We don&#39;t time the challenges, and you can get them done in dribs and drabs of your spare time if that&#39;s best for you.
-- We don&#39;t look over your shoulder, can&#39;t see your typos, and aren&#39;t driving up your cortisol with loaded sighs and  &quot;hmms&quot; as you work. We want to see you in your best light.
+- We don&#39;t look over your shoulder, can&#39;t see your typos, and aren&#39;t driving up your cortisol with loaded sighs and  "hmms" as you work. We want to see you in your best light.
 - You get to use your own dev setup, which, of course, includes Internet connectivity and the ability to Google things, because that is how all code in the industry is actually written.
 
 Our challenges aren&#39;t artificial. There are no binary trees to invert. We just extract work we&#39;ve actually done ourselves, and simplify it to the point where we think it can get done in a few hours. Our challenges all have objective rubrics (that turns out to be the hard part of developing a work-sample challenge!) and we can usually grade them pretty mechanically.
@@ -32,9 +32,9 @@ So that&#39;s another win: if you find our challenges dreadful, you&#39;ve learn
 A typical hiring process for an engineering job at Fly.io looks like this:
 
 1. You send us an email. There&#39;s an email address at the bottom of all our job descriptions.
-1. We say &quot;hi&quot;, lay out our hiring challenges, and give you some time to ask us questions. We&#39;re happy to field questions!
+1. We say "hi", lay out our hiring challenges, and give you some time to ask us questions. We&#39;re happy to field questions!
 1. When you&#39;re ready, we deliver you a series of at-home challenges (usually 2-3). You knock them out one at a time. If things go roughly with any of them, we&#39;ll let you know.
-1. If you knock out all the challenges, we&#39;ll schedule a &quot;work day&quot;, our last challenge. That&#39;s &quot;day&quot; as in &quot;day in the life&quot; — we don&#39;t ask for a full day of your time! During the work day, you&#39;ll collaborate with us on Slack on an engineering design project.
+1. If you knock out all the challenges, we&#39;ll schedule a "work day", our last challenge. That&#39;s "day" as in "day in the life" — we don&#39;t ask for a full day of your time! During the work day, you&#39;ll collaborate with us on Slack on an engineering design project.
 1. That&#39;s it! If everything goes well, the next step is us working out an offer with you.
 
 ## What About Time Limits?
@@ -83,3 +83,7 @@ much continuously, the economy can get spooky. We can't make promises about
 openings several months out from now. An offer is a commitment, and that's 
 the one thing we can't do if you're looking to start several months from
 now. We'll do our best to stay up-front about this stuff!
+
+## What About Compensation?
+
+At Fly.io, we're focused on getting pay equity (the fairness kind) embedded as close to the core of our philosophy as possible. We want to eliminate as much bias in the hiring process as we can, and we don't want anyone who works here to second-guess themselves on how hard they negotiated their offer. So, we designed our salaries to be intentionally simple and straightforward: everyone at a given level is offered the same salary and options, regardless of their role, geography, and previous experience.

@@ -1,0 +1,102 @@
+---
+title: Fly.io Billing
+layout: docs
+sitemap: true
+nav: firecracker
+redirect_from: /docs/about/credit-cards/
+---
+
+Billing for Fly.io is monthly per organization. Organizations are administrative entities that enable you to add members, share app development environments, and manage billing separately.
+
+The amount you're charged depends on your plan. For the Pay As You Go plan, you pay for resource usage. For other plans, you pay for the cost of the plan plus your resource usage beyond the included usage and [free allowances](/docs/about/pricing/#free-allowances).
+
+Refer to our [Plans page](https://fly.io/plans) and our resource [Pricing page](/docs/about/pricing/) for details.
+
+## View invoices
+
+You can view and download invoices from the **Billing** section of your [dashboard](https://fly.io/dashboard/personal/billing) for each organization.
+
+To download a past invoice, click **View** for the relevant cycle. You'll be sent to the Stripe billing portal where you'll have the option to download the invoice.
+
+## Plan billing
+
+You're charged for Launch, Scale, and Enterprise plans as soon as you sign up for them. 
+
+New customers that are automatically signed up for the Pay As You Go plan are billed monthly for resource usage. For existing Fly.io accounts, when you create a new organization, you're signing up for the Pay As You Go plan.
+
+<div class="note icon">
+Customers who received a $5 free trial usage credit when signing up for the $5/mo Hobby plan will be billed monthly after that credit is used up.
+</div>
+
+Plan billing, and any included usage, is pro-rated over the month. For example, if you sign up for a Scale plan on September 15th, then you'll be charged $14.50 (half of the $29/mo plan cost) right away and you'll have $14.50 of usage included up to September 30th. Then you'll be charged $29 at the start of October and have $29/mo of usage included for that billing cycle.
+
+When you upgrade to a higher plan, your billing is pro-rated and adjusted accordingly.
+
+## Machine billing
+
+Started Machines are billed per second that they're running (the time they spend in the `started` state), based on the price of a named CPU/RAM combination, plus the price of any additional RAM you specify.
+
+For example, a Machine described in your dashboard as "shared-1x-cpu@1024MB" is the “shared-cpu-1x” Machine size preset, which comes with 256MB RAM, plus additional RAM (1024MB - 256MB = 768MB). For pricing and available CPU/RAM combinations, see [Compute pricing](/docs/about/pricing/#compute).
+
+Stopped Machines are billed based on their root file system (rootfs) usage per second (the time they spend in the `stopped` state) by $0.15 per GB per month.
+
+For example, a Machine described in your dashboard as having 1GB of rootfs stopped for 10 days in the entire month will cost $0.05. If you have 3 stopped Machines of 1GB rootfs each stopped for 30 days it will cost $0.45 ($0.15 x 3).
+
+## GPU billing
+
+GPUs are billed per second that the attached Fly Machine is running (the time they spend in the `started` state), based on the per hour cost of the GPU card. See [pricing for GPUs](/docs/about/pricing/#gpus-and-fly-machines).
+
+You're also billed for the Fly Machine separately from the GPU.
+
+## Volume billing
+
+Volume billing is pro-rated to the hour and we subtract the free allowances first for the Launch, Scale, and Enterprise plans. For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).
+
+If you create a volume, you will be charged for it. You’re billed for volumes that aren’t attached to Machines, and for volumes that are attached to Machines in any state, including stopped Machines.
+
+## Free resource allowances
+
+We subtract [free allowances](https://fly.io/docs/about/pricing/#free-allowances) off the top of your usage total for Launch, Scale, and Enterprise plans. Once your usage exceeds the free allowance on any given resource, we start metering usage of that resource for billing purposes.
+
+## Payment options
+
+We process payments through Stripe. Paid plans and monthly invoicing require a credit card or credits.
+
+### How we use credit cards
+
+We require an active, valid credit card on file for most Fly.io accounts to do things like deploying multiple apps and deploying public images. This is primarily a means to prevent abuse and ensure that we can collect payment at the end of the month.
+
+### Preauthorization Requests
+
+We may send a preauthorization request to the issuing bank to verify a bank will authorize charges. Some credit card companies present these as real charges, which may surprise you.
+
+A preauth is really just a hold on a credit card; it is not a real charge. We’ll typically preauthorize a small amount (usually less than $5) after signup, then cancel the authorization immediately. Banks may show the preauth for up to 7 days, even though we have not collected any money.
+
+### If you don't have a credit card
+
+While a credit card is the preferred payment method, if you don't have one, then you can add credits to your account. You can purchase credits from the Billing section of the [dashboard](https://fly.io/dashboard/personal/billing) in various amounts (minimum purchase $25). Your usage cost is subtracted from the credit balance each month.
+
+### Prepaid cards
+
+You can't use a prepaid card as a default (or saved) payment method. You can, however, use a prepaid card to add credits to your account.
+
+## Understand charges beyond the free allowances
+
+The prices of provisioned services are mostly fixed. If you provision Machines and leave them running all month, we’ll charge you a predictable amount for that Machine.
+
+A common reason for additional charges is extra RAM usage.
+
+For a breakdown of charges, check out your invoice in the Billing section of the [dashboard](https://fly.io/dashboard/personal/billing).
+
+We’re happy to discuss a refund if you do create compute resources by mistake, or if your app receives unexpected traffic due to an attack and generates a surprisingly large bill. Just send an email to billing@fly.io.
+
+## Delete your account
+
+To delete your Fly.io account, go to Account > Settings > [Delete Account](https://fly.io/user/deactivate) in your dashboard. You'll see a list of clean-up tasks that need to be done before you can delete the account, including:
+
+- Delete or remove yourself from organizations to avoid leaving behind inaccessible orgs. This does not include your personal organization.
+- Delete apps (or remove yourself from the associated organizations).
+- Remove certificates so that any custom domains are released.
+- Remove extensions to ensure that you don't get billed by partners when you can no longer access your account.
+
+When you've completed the clean-up tasks, click **Delete** to permanently delete your Fly.io account.

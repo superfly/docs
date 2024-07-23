@@ -1,0 +1,31 @@
+---
+title: Users & Roles
+objective: Add users and roles to control who can access what in the database.
+layout: framework_docs
+order: 1
+toc: false
+---
+
+A Postgres cluster is configured with three users when created:
+
+- `postgres` - a role with superuser and login privileges that was created for you along with the cluster. Since the `postgres` role has superuser rights, it's recommended that you only use it for admin tasks and create new users with access restricted to the minimum necessary for applications
+- `flypgadmin` - a role used internally by Fly.io to configure and query the Postgres cluster
+- `repmgr` - a role used by repmgr to manage replication for the Postgres cluster
+
+If you [attached a Fly App](/docs/postgres/managing/attach-detach/) to your Postgres cluster app with `fly postgres attach`, then you'll have a an additional database and user with the same name as the consuming app.
+
+You can list users with flyctl. For example, for a Postgres cluster app named `pg-test`:
+
+```cmd
+fly postgres users list --app pg-test
+```
+
+```output
+NAME          	SUPERUSER	DATABASES
+my_app_name	    yes      	my_app_name, postgres, repmgr
+flypgadmin    	yes      	my_app_name, postgres, repmgr
+postgres      	yes      	my_app_name, postgres, repmgr
+repmgr        	yes      	my_app_name, postgres, repmgr
+```
+
+In this example, there's an attached Fly App in the list of users.

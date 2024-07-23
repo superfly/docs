@@ -10,14 +10,6 @@ This is a technology preview.  It demonstrates how you can launch fly
 machines dynamically to perform background tasks from within a Rails
 application.
 
-Before proceeding, a bit of background.
-
-Fly.io uses [Firecracker](https://firecracker-microvm.github.io/) to run VMs, and uses either [Nomad](https://www.nomadproject.io/) or [Machines](https://fly.io/docs/reference/machines/) for orchestration.  The default today is Nomad, but most of the new features are being implemented for Machines, so Machines are where you would look for upcoming features.
-
-In a nutshell, the advantage of Nomad is that it performs high level orchestration.  The advantage of machines is that it is lower level.  Lower level means that at times you will need to do more work, but this also means that you have more control.
-
-This guide focuses on Machines.
-
 ## Deploying a Rails project as a Fly.io Machine
 
 ```cmd
@@ -64,7 +56,7 @@ bin/rails deploy
 You have now successfully deployed a trivial Rails app Fly.io machines platform.
 
 You can verify that this is running on the machines platform via `fly status`.
-You can also run commands like `fly open` to bring your application up in the
+You can also run commands like `fly apps open` to bring your application up in the
 browser.
 
 Now lets make that application launch more machines.
@@ -251,7 +243,7 @@ Now deploy the application:
 bin/rails deploy
 ```
 
-If you run `fly open` you will arrive at your application's welcome page.
+If you run `fly apps open` you will arrive at your application's welcome page.
 Take a note of the URL.  Either in the browser or in a command window add
 `/job/start`.  As a response (either in your browser or terminal window
 you will see something like:

@@ -1,0 +1,65 @@
+---
+title: Create an FKS cluster
+layout: docs
+toc: false
+nav: firecracker
+---
+
+<div class= "important icon">
+Fly Kubernetes is in beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
+</div>
+
+To create a Kubernetes cluster, run:
+
+```cmd
+fly ext k8s create [--name <name> | --org <org> | --region <region>]
+```
+
+Once a cluster is provisioned, it will return a kubeconfig that can be used to connect to your cluster's Kubernetes API server using kubectl.
+
+For example:
+
+```yaml
+apiVersion: v1
+clusters:
+  - name: fks-flyio-fksdemo
+    cluster:
+      certificate-authority-data: ...
+      server: https://fks-flyio-fksdemo.flycast:6443
+      extensions:
+      ...
+      ...
+contexts:
+  - context:
+      cluster: fks-flyio-fksdemo
+      user: default
+    name: default
+current-context: default
+kind: Config
+preferences: {}
+users:
+  - name: default
+    user:
+    ...
+    ...
+```
+
+Your cluster is accessible over your organization's [private WireGuard network](/docs/reference/private-networking). To connect to your cluster, you need a WireGuard configuration. 
+
+Follow the [Private Network VPN instructions](/docs/networking/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io IPv6 private network.
+
+Once set up, you can use `kubectl`:
+
+```
+> kubectl get ns
+NAME              STATUS   AGE
+kube-public       Active   22d
+kube-node-lease   Active   22d
+default           Active   22d
+kube-system       Active   22d
+```
+
+## Related topics
+
+- [Connect to an FKS cluster](/docs/kubernetes/connect-clusters/)
+- [Configure FKS Services](/docs/kubernetes/services)

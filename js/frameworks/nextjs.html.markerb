@@ -1,0 +1,372 @@
+---
+title: "Run a Next.js App"
+layout: framework_docs
+redirect_from:
+ - /docs/languages-and-frameworks/nextjs/
+ - /docs/getting-started/nextjs/
+objective: NextJS is the React Framework for the Web.
+order: 4
+---
+
+<% app_name = "hello-next" %>
+<%= partial "partials/intro", locals: { runtime: "Next.js", link: "https://nextjs.org" } %>
+
+You can deploy your [Next.js](https://nextjs.org/) app on Fly with minimal effort, our CLI will do the heavy lifting. We'll be using a standard app generated with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app) CLI tool provided by Next.js.
+
+## _Generate the Next.js app_
+
+We'll assume you have NodeJS installed already and can run `npx`. Refer to the [documentation](https://nextjs.org/docs/pages/api-reference/create-next-app#interactive) if you would like to use `yarn`, `pnpm` or `bun`.
+
+Now let's create a new project by running the `create-next-app`. This will scaffold a new project asking you if you'd like to set up some basic tooling such as TypeScript.
+
+```cmd
+npx create-next-app@latest hello-nextjs
+```
+```output
+✔ Would you like to use TypeScript? … No / Yes
+
+...
+
+Initializing project with template: app-tw
+
+Installing dependencies:
+- react
+
+...
+
+Installing devDependencies:
+- typescript
+
+...
+
+Success! Created hello-nextjs at /.../hello-nextjs
+```
+
+Great! You should be able to run our app locally with `cd hello-nextjs && npm run dev` and access it at http://localhost:3000.
+
+## _Deploy to Fly.io_
+
+<%= partial "partials/flyctl" %>
+
+Now let's launch your Next.js app from the root of your application.
+
+```cmd
+cd hello-nextjs
+fly launch
+```
+```output
+Scanning source code
+Detected a Next.js app
+Creating app in /Users/mentels/work/hello-nextjs
+We're about to launch your Next.js app on Fly.io. Here's what you're getting:
+
+Organization: mentels                (fly launch defaults to the personal org)
+Name:         hello-nextjs           (derived from your directory name)
+Region:       Warsaw, Poland         (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+Sentry:       false                  (not requested)
+
+? Do you want to tweak these settings before proceeding? No
+Created app 'hello-nextjs' in organization 'personal'
+Admin URL: https://fly.io/apps/hello-nextjs
+Hostname: hello-nextjs.fly.dev
+
+...
+
+Visit your newly deployed app at https://hello-nextjs.fly.dev/
+```
+
+<%= partial "partials/launched" %>
+
+In the process we've generated a [`fly.toml`](https://fly.io/docs/reference/configuration/) and `Dockerfile` in the root of the project. Change them if you need to customize your deployment.
+****
+The following sections cover further steps you can apply for your Next.js app deployment.
+
+## Standalone builds (recommended)
+
+To reduce the size of the final image deployed to Fly.io, **we recommend using the [standalone output](https://nextjs.org/docs/app/api-reference/next-config-js/output#automatically-copying-traced-files)** in your `next.config.js` (or `next.config.mjs`) file:
+
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: "standalone"
+};
+
+export default nextConfig;
+```
+
+When running `fly launch` or using the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile), if this `"standalone"` value is set in your Next config, your Dockerfile will be updated such that only the files necessary for a production environment will be used in the final image. Using the standalone setting and updating your Dockerfile can reduce your total image size by ~400mb, so we highly recommend this approach!
+
+You can also manually update your Dockerfile to accommodate a standalone Next.js app. After running the build script (`npm run build`), there should typically be a final `COPY` instruction towards the end of one's Dockerfile. Replace that with the following:
+
+```dockerfile
+COPY --from=build /app/.next/standalone /app
+COPY --from=build /app/.next/static /app/.next/static
+COPY --from=build /app/public /app/public
+```
+
+Lastly, update your `CMD` to the following:
+
+```dockerfile
+CMD [ "node", "server.js" ]
+```
+
+
+## Generating your Next.js Dockerfile
+
+While you're welcome to write your own Dockerfile, the easiest way to get started with this is to use the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile). Once installed, it can be run using `npx dockerfile` for Node applications or `bunx dockerfile` for Bun applications. You'll see it referenced throughout this article for various use cases.
+
+## Connecting to databases
+
+Unlike some other frameworks, Next.js does not bundle a database adapter.
+Instead, you are free to choose the ORM or node module you wish.
+
+Fly.io will provide a `DATABASE_URL` that you can use at runtime to
+connect to your database.  How you will use this will depend on the
+database module you choose.  [Prisma](https://www.prisma.io/nextjs) is
+a popular choice, and connecting to your database using Prisma is done
+through your `prisma/schema.prisma` file.  An example:
+
+```
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+```
+
+If you are unsure how to connect using your favorite adapter, check out
+our [Vanilla with Candy Sprinkles](https://fly.io/blog/vanilla-candy-sprinkles/)
+blog entry and select the configuration that most closely matches your
+application.  If you still have questions, post on our [community forum](https://community.fly.io/).
+
+### Connecting to Supabase Postgres
+
+[Supabase](https://fly.io/docs/reference/supabase/#create-and-manage-a-supabase-postgres-database) is a managed Postgres service deployed at Fly.io infrastructure.
+
+You can create a Supabase Postgres instance at Fly.io and use the provided `DATABASE_URL`
+as described above. Alternatively, you can connect with a dedicated JavaScript client and leverage its API. In this section we'll help you to get started with such setup.
+
+Start off with provisioning a Supabase project:
+
+<aside class="callout">Running the following command in a Fly.io app context -- inside an app directory or specifying `-a yourapp` -- will automatically pick a region and set secrets on your app.</aside>
+
+```cmd
+flyctl ext supabase create
+```
+```output
+? Choose a name, use the default, or leave blank to generate one: hello-nextjs-db
+? Choose the primary region (can't be changed later) Warsaw, Poland (waw)
+
+Your Supabase database (hello-nextjs-db) in waw is ready. See details and next steps with: https://fly.io/docs/reference/supabase/
+
+Setting the following secrets on hello-nextjs:
+DATABASE_POOLER_URL
+DATABASE_URL
+
+...
+
+-------
+ ✔ [1/2] Machine 1781344b935d38 [app] update succeeded
+ ✔ [2/2] Machine e82de57a07e528 [app] update succeeded
+-------
+```
+
+Next, go to the Supabase Dashboard (`fly ext supabase dashboard`) and copy the _Project URL_ and _API Key_ into an `.env` file in the root of the project:
+
+```env
+SUPABASE_URL=<PROJECT URL>
+SUPABASE_ANON_KEY=<API KEY>
+```
+
+Finally, install the [supabase.js](https://www.npmjs.com/package/@supabase/supabase-js) `npm install @supabase/supabase-js`.
+
+With the above setup in place, let's create a simple to-do list on a new page `app/todos/page.tsx` (we'll add some items to the database later):
+
+```jsx
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = process.env.SUPABASE_URL ?? ''
+const supabaseKey = process.env.SUPABASE_ANON_KEY ?? ''
+
+export default async function Page() {
+  const supabase = createClient(supabaseUrl, supabaseKey)
+  const { data: todos } = await supabase.from('todos').select()
+
+  return (
+    <ul>
+      {todos?.map((todo) => (
+        <li key={todo.id}>
+          {todo.title}
+        </li>
+      ))}
+    </ul>
+  )
+}
+```
+
+If you try to run your app locally (`npm run dev`) and visit `http://localhost:3000/todos`, you'll get an empty page. That's totally expected since we need to create the table and fill it in with some data!
+To do that, return to the Supabase dashboard (`fly ext supabase dashboard`), navigate to _SQL Editor_, and create a table named `todo` and insert some sample tasks:
+
+```sql
+ -- Create the table
+ create table todos (
+   id serial primary key,
+   title text
+ );
+
+ -- Insert some sample data
+ insert into todos (title)
+ values
+   ('Create a Supabase project'),
+   ('Configure the Next.js project to use Supabase'),
+   ('Deploy to Fly.io');
+```
+
+And that's it! You should see your to-do items served locally at `http://localhost:3000/todos` from Supabase as well as when you redeploy the app to Fly.io with `fly deploy`.
+
+<aside class="callout">This is the basic setup that to get you started and connect your Next.js app to a Fly.io-hosted Supabase Postgres. For more comprehensive guide look at [Supabase Frameworks Quickstarts](https://supabase.com/docs/guides/getting-started/quickstarts/nextjs).</aside>
+
+## Static site generation with databases
+
+Some applications may require database access at build time. By default, the build Machine on Fly.io does not have access to your production
+database.  This means you won't be able to access your database from
+inside methods like `getStaticProps`.
+
+Should this be something your application requires, there are two approaches for addressing this: **build time secrets** and
+**deferring the static site generation** until after deployment.
+
+### Build time secrets
+
+This approach allows you to inject secrets (such as database URLs) that are only available at build time.
+
+<div class="note icon">
+**This approach will not work for SQLite3,** as the build Machine still won’t have access to your volume. However, it can be used with PostgreSQL, MySQL and other such databases.
+</div>
+
+First, you need to obtain the secrets you will need to deploy.  Often this
+is only the value of `DATABASE_URL`.  If you don't know the value of this
+secret, `fly console` and `printenv DATABASE_URL` can obtain this value
+for you.
+
+Next, you need to modify your Dockerfile to mount a secret. The easiest way to do this is using the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile), like so:
+
+```cmd
+npx dockerfile --mount-secret=DATABASE_URL
+```
+
+It is possible to mount multiple secrets, and you can read more about [mounting secrets](/docs/apps/build-secrets/#mounting-secrets) for further details.
+
+Finally, you need to pass the secret on each deploy:
+
+```cmd
+fly deploy --build-secret DATABASE_URL=value
+```
+
+Replace _value_ above with the actual secret. It might be worth putting this command into a shell script or batch file.
+
+### Deferring static site generation
+
+An alternate approach, one that works with SQLite3 too, is to defer
+the running of the build step to just after deployment before your web server is
+started.  The upside is that your build has full access to all of
+your deployment secrets and environment variables.
+
+This involves replacing the entry point in your Dockerfile (typically your `CMD`) with a script
+and having that script run `npm build` (or equivalent) prior to starting
+your server.
+
+You can let the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile) take care of these
+changes for you:
+
+```
+npx dockerfile --build=defer
+```
+
+Downsides of this approach:
+
+* Your deployment Machines will need enough memory to run a build.  See:
+  [`fly scale memory`](https://fly.io/docs/flyctl/scale-memory/) and
+  [`swap_size_mb`](https://fly.io/docs/reference/configuration/#swap_size_mb-option) for two options.
+* You may need to adjust the [grace_period](https://fly.io/docs/reference/configuration/#http_service-checks) for any HTTP service checks.
+* If you are only running one Machine there will be a period of time where
+  your server is inaccessible while the site is being statically generated.
+* If you run multiple Machines, the static site generation will be run on
+  each increasing the total time before any changes are fully deployed.
+
+## Exposing environment variables to the browser
+
+If you're a Next.js user you might know that it supports [exposing environment variables to the browser](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser) using variables with names starting with `NEXT_PUBLIC_`. **These variables are fixed at build time**, and unlike runtime environment variables (which are only available on the server), they can't be changed unless the application is built again.
+
+In order to make these `NEXT_PUBLIC_` variables available, you can add them as `ARG` variables in your Dockerfile, as seen in the example below. **This should come after any actual build steps** (if you've used the Dockerfile generator or the Dockerfile created from `fly launch`, this would be after the line `FROM base as build`).
+
+```dockerfile
+# Build arguments
+ARG NEXT_PUBLIC_EXAMPLE="value"
+ARG NEXT_PUBLIC_OTHER="Other value"
+```
+
+Alternatively, if you'd prefer to use the Dockerfile generator, you can do so by running the following:
+
+```cmd
+npx dockerfile "--arg-build=NEXT_PUBLIC_EXAMPLE:value" \
+  "--arg-build=NEXT_PUBLIC_OTHER=Other value"
+```
+
+## Disabling telemetry in production
+
+During server startup, the following messages may appear in your log:
+
+```
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+```
+
+The following command can be used to modify your Dockerfile to disable telemetry:
+
+```cmd
+npx dockerfile --env-base=NEXT_TELEMETRY_DISABLED:1
+```
+
+
+## _Common pitfalls_
+
+### Out of memory: Killed process
+
+If you should happen to see lines like the following in your logs:
+
+```
+Out of memory: Killed process
+```
+
+Two links that may be of help:
+
+  * [fly scale memory](https://fly.io/docs/flyctl/scale-memory/)
+  * [swap_size_mb](https://fly.io/docs/reference/configuration/#swap_size_mb-option)
+
+
+### Fetch failure when optimizing images
+
+If your application uses the `<Image>` element and your images aren't showing and you are seeing the following in your logs:
+
+```
+TypeError: fetch failed
+```
+
+Scan backward in your logs for the following:
+
+```
+Warning: For production Image Optimization with Next.js, the optional 'sharp' package is strongly recommended. Run 'npm i sharp', and Next.js will use it automatically for Image Optimization.
+
+Read more: https://nextjs.org/docs/messages/sharp-missing-in-production
+```
+
+Follow the instructions in the message, and then redeploy:
+
+```cmd
+npm i sharp
+fly deploy
+```

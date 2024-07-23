@@ -1,0 +1,68 @@
+---
+title: "Run a FastAPI app"
+layout: framework_docs
+objective: FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
+redirect_from:
+  - /docs/languages-and-frameworks/fastapi/
+  - /docs/getting-started/fastapi/
+order: 1
+---
+
+<%= partial "/docs/languages-and-frameworks/partials/intro", locals: { runtime: "FastAPI", link: "https://fastapi.tiangolo.com/" } %>
+
+FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
+
+Deploying a FastAPI app on Fly.io is... well it's fast! You can be up and running in less than a minute. 
+
+## _Speedrun_
+
+<%= partial "/docs/languages-and-frameworks/partials/flyctl" %>
+
+<%= partial "/docs/python/partials/speedrun", locals: { runtime: "FastAPI", repo: "hello-fastapi" }  %>
+
+## _Deploy a FastAPI app from scratch_
+
+<%= partial "/docs/python/partials/poetry_new", locals: { runtime: "FastAPI" }  %>
+
+
+Then we have to add the FastAPI dependency:
+
+```cmd
+poetry add fastapi
+```
+
+Now, let's create a simple FastAPI app in `main.py`:
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+async def hello_fly():
+    return 'hello from fly.io'
+
+```
+
+We can then serve the development version of the app using the `fastapi` cli tool:
+
+```cmd
+fastapi dev
+```
+
+This will display a 'hello from fly.io!' message when you visit the root URL.
+With the development environment we also get cool features like hot-reloading.
+
+To run in production mode, we can amend the command:
+
+```cmd
+fastapi run
+```
+
+<section class="callout">
+The `fastapi` assumes your app is stored in `main.py` or `app.py` - if this is not the case, you must specify that when running the app: 
+
+`fastapi run hello/entrypoint.py`
+</section>
+
+<%= partial "/docs/python/partials/deploy", locals: { runtime: "FastAPI", repo: "hello-fastapi" }  %>

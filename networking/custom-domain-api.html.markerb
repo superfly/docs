@@ -1,0 +1,266 @@
+---
+title: Automate the certificate process for custom domains
+layout: docs
+nav: firecracker
+---
+
+This document provides examples of using Fly.io GraphQL API queries and mutations to automate the certificates process, which is useful when you need to issue multiple certificates automatically, for example, if you have individual apps per user with custom domains.
+
+To add a custom domain to a single app, see [Use a custom domain](/docs/networking/custom-domain/).
+
+To illustrate how to automate the certificates API, we are going to show the flyctl command and the equivalent GraphQL request, wrapped in a compact easy-to-read Node application from our [fly-examples/hostnamesapi](https://github.com/fly-apps/hostnamesapi) repository.
+
+## GraphQL API Notes
+
+**Endpoints**: The Endpoint for the Fly.io GraphQL API is `https://api.fly.io/graphql`.
+
+**Authentication**: All queries require an API token which be obtained by signing into the [dashboard](https://fly.io/dashboard/apps/), selecting **Account > Settings > Access Tokens > Create Access Token**. Create a new token and carefully note the value; we suggest placing it in an environment variable such as `FLY_API_TOKEN` so it can be passed to applications. When used with the API, the token should be passed in an `Authorization` header with the value `Bearer <token value>`.
+
+**IDs and Names**: Applications can be referred to by name or by ID. Currently the Application ID and Name are interchangeable. This will change in a future semantically significant version. To see how to query for ID and Name, see [getappbyid.js](https://github.com/fly-apps/hostnamesapi/blob/master/getappbyid.js) and [getappbyname.js](https://github.com/fly-apps/hostnamesapi/blob/master/getappbyname.js) in the example repository.
+
+## Listing all the hosts of an application
+
+**With flyctl**: `fly certs list`
+
+**With GraphQL**: The example is in the repository as [getcerts.js](https://github.com/fly-apps/hostnamesapi/blob/master/getcerts.js). This request takes the application name as a parameter.
+
+```graphql
+query($appName: String!) {
+  app(name: $appName) {
+    certificates {
+      nodes {
+        createdAt
+        hostname
+        clientStatus
+      }
+    }
+  }
+}
+```
+
+**Example output**:
+
+```json
+{
+  "app": {
+    "certificates": {
+      "nodes": [
+        {
+          "createdAt": "2020-03-04T14:17:14Z",
+          "hostname": "example.com",
+          "clientStatus": "Ready"
+        },
+        {
+          "createdAt": "2020-03-05T15:28:41Z",
+          "hostname": "exemplum.com",
+          "clientStatus": "Ready"
+        }
+		  ]
+	  }
+  }
+}
+```
+
+This lists every host associated with the application. Each host may have up to two (RSA/ECDSA) certificates associated with it. See "[Reading a certificate from an application](#reading-a-certificate-from-an-application)" to see how to query the certificates associated with the hostnames.
+
+## Creating a certificate for an application
+
+**With flyctl**: `fly certs add <hostname>`
+
+**With GraphQL**: The example is [addcert.js](https://github.com/fly-apps/hostnamesapi/blob/master/getcerts.js). This request takes the application id and hostname as parameters.
+
+```graphql
+mutation($appId: ID!, $hostname: String!) {
+    addCertificate(appId: $appId, hostname: $hostname) {
+        certificate {
+            configured
+            acmeDnsConfigured
+            acmeAlpnConfigured
+            certificateAuthority
+            certificateRequestedAt
+            dnsProvider
+            dnsValidationInstructions
+            dnsValidationHostname
+            dnsValidationTarget
+            hostname
+            id
+            source
+        }
+    }
+}
+```
+
+
+**Example Output**:
+
+```json
+{
+  "addCertificate": {
+    "certificate": {
+      "configured": true,
+      "acmeDnsConfigured": true,
+      "acmeAlpnConfigured": true,
+      "certificateAuthority": "lets_encrypt",
+      "certificateRequestedAt": "2020-03-06T12:26:36Z",
+      "dnsProvider": "enom",
+      "dnsValidationInstructions": "CNAME _acme-challenge.codepope.wtf => example.com.o055.flydns.net.",
+      "dnsValidationHostname": "_acme-challenge.example.com",
+      "dnsValidationTarget": "example.com.o055.flydns.net",
+      "hostname": "example.com",
+      "id": "LO7FgYIy0sBZC8yuGNFKQH4QCq4ujMfJZumJCVNiQxhMq",
+      "source": "fly"
+    }
+  }
+}
+```
+
+The returned data here includes all the values needed to configure DNS records for pre-traffic validation.
+
+## Reading a certificate from an application
+
+**With flyctl**: `fly certs show hostname`
+
+**With GraphQL**: The example is [getcert.js](https://github.com/fly-apps/hostnamesapi/blob/master/getcert.js). This request takes the application name and hostname as parameters.
+
+```graphql
+query($appName: String!, $hostname: String!) {
+  app(name: $appName) {
+    certificate(hostname: $hostname) {
+      configured
+      acmeDnsConfigured
+      acmeAlpnConfigured
+      certificateAuthority
+      createdAt
+      dnsProvider
+      dnsValidationInstructions
+      dnsValidationHostname
+      dnsValidationTarget
+      hostname
+      id
+      source
+      clientStatus
+      issued {
+        nodes {
+          type
+          expiresAt
+        }
+      }
+    }
+  }
+}
+```
+
+**Example Output**:
+
+```json
+{
+  "app": {
+    "certificate": {
+      "configured": true,
+      "acmeDnsConfigured": true,
+      "acmeAlpnConfigured": true,
+      "certificateAuthority": "lets_encrypt",
+      "createdAt": "2020-03-04T17:17:39Z",
+      "dnsProvider": "enom",
+      "dnsValidationInstructions": "CNAME _acme-challenge.example.com => example.com.o055.flydns.net.",
+      "dnsValidationHostname": "_acme-challenge.example.com",
+      "dnsValidationTarget": "example.com.o055.flydns.net",
+      "hostname": "example.com",
+      "id": "4n8ikGIzjsm0s5VclwTDaSODtveu2xCZkHkKCaRilafGk",
+      "source": "fly",
+      "clientStatus": "Ready",
+      "issued": {
+        "nodes": [
+          {
+            "type": "ecdsa",
+            "expiresAt": "2020-06-02T16:17:51Z"
+          },
+          {
+            "type": "rsa",
+            "expiresAt": "2020-06-02T16:17:45Z"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+Most of the output duplicates the details from adding a certificate, including the DNS validation settings. The difference here is the `issued` section which contains an array of nodes, each of which is the type and expiry date of certificates that have been issued against this host name. Here we see that ECSDA and RSA certificates have been issued.
+
+## Checking a certificate
+
+**With flyctl**: `fly certs check hostname`
+
+**With GraphQL**: The example is [checkcert.js](https://github.com/fly-apps/hostnamesapi/blob/master/checkcert.js). This request takes the application name and hostname as parameters. It is essentially the same as reading the certificate, but the presence of a request for the certificate's check value will start a validation process. The output is similar too.
+
+```graphql
+query($appName: String!, $hostname: String!) {
+  app(name: $appName) {
+    certificate(hostname: $hostname) {
+        check
+        configured
+        acmeDnsConfigured
+        acmeAlpnConfigured
+        certificateAuthority
+        createdAt
+        dnsProvider
+        dnsValidationInstructions
+        dnsValidationHostname
+        dnsValidationTarget
+        hostname
+        id
+        source
+        clientStatus
+        issued {
+          nodes {
+              type
+              expiresAt
+          }
+        }
+    }
+  }
+}
+```
+
+## Deleting a certificate
+
+**With flyctl**: `fly certs delete hostname`
+
+**With GraphQL**: The example is [deletecert.js](https://github.com/fly-apps/hostnamesapi/blob/master/deletecert.js). This request takes the application name and hostname as parameters and will remove the hostname from the application.
+
+```graphql
+   mutation($appId: ID!, $hostname: String!) {
+        deleteCertificate(appId: $appId, hostname: $hostname) {
+            app {
+                name
+            }
+            certificate {
+                hostname
+                id
+            }
+        }
+    }
+```
+
+The GraphQL mutation returns the app name and the hostname and certificate id that was removed.
+
+**Example Output**:
+
+```json
+{
+  "deleteCertificate": {
+    "app": {
+      "name": "nginxproxy"
+    },
+    "certificate": {
+      "hostname": "example.com",
+      "id": "6AZc4AS6ysZgHPqFg7TGzIyofewuZnToxu6lUbBi8DHGQ"
+    }
+  }
+}
+```
+
+## Related topics
+
+- [Custom domains](/docs/networking/custom-domain/)

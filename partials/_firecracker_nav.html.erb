@@ -1,223 +1,202 @@
-<ul class="outline-list">
-  <li>
-    <%= nav_link "Getting Started", "/docs/getting-started" %>
-    <ul>
-      <li>
-        <%= nav_link "Speedrun: Deploying an App", "/docs/speedrun/" %>
-      </li>
-      <li>
-        <%= nav_link "Hands-on with Fly.io", "/docs/hands-on/" %>
-      </li>
-      <li>
-        <%= nav_link "Web Launchers", "/launch/" %>
-      </li>
-      <li>
-        <%= nav_link "Install Flyctl", "/docs/hands-on/install-flyctl/" %>
-      </li>
-      <li>
-        <%= nav_link "Log in to Fly.io", "/docs/getting-started/log-in-to-fly/" %>
-      </li>
-      <li>
-        <%= nav_link "Working with Fly Apps", "/docs/getting-started/working-with-fly-apps/" %>
-      </li>
-      <li>
-        <%= nav_link "Troubleshooting Deployments", "/docs/getting-started/troubleshooting/" %>
-      </li>
-    </ul>
-  </li>
-</ul>
-<ul class="outline-list">
-  <li>
-    <%= nav_link "Language & Framework Guides", "/docs/languages-and-frameworks/" %>
-    <ul>
-      <li>
-        <%= nav_link "Run an Elixir App", "/docs/elixir/getting-started" %>
-      </li>
-      <li>
-        <%= nav_link "Run a Rails App", "/docs/rails/getting-started/" %>
-      </li>
-      <li>
-        <%= nav_link "Run a Laravel App", "/docs/laravel/" %>
-      </li>
-      <li>
-        <%= nav_link "Run a Django App", "/docs/django/getting-started/" %>
-      </li>
-      <li>
-        <%= nav_link "More...", "/docs/languages-and-frameworks/" %>
-      </li>
-    </ul>
-  </li>
-</ul>
-<ul class="outline-list">
-  <li>
-    <%= nav_link "Databases & Storage", "/docs/database-storage-guides/" %>
-    <ul>
-      <li>
-        <%= nav_link "Volumes", "/docs/reference/volumes" %>
-      </li>
-      <li>
-        <%= nav_link "Fly Postgres", "/docs/postgres/" %>
-      </li>
-      <li>
-        <%= nav_link "SQLite & LiteFS", "/docs/litefs/" %>
-      </li>
-      <li>
-        <%= nav_link "Redis by Upstash", "/docs/reference/redis/" %>
-      </li>
-      <li>
-        <%= nav_link "More...", "/docs/database-storage-guides/" %>
-      </li>
-    </ul>
-  </li>
-</ul>
+<%= partial "/docs/partials/back_to_docs" unless current_page?('/docs') %>
 
-<ul class="outline-list">
-  <li>
-    <%= nav_link "Fly Machines", "/docs/machines/" %>
-    <ul>
-      <li>
-        <%= nav_link "Working with the Machines API", "/docs/machines/working-with-machines/" %>
-      </li>
-      <li>
-        <%= nav_link "Run a Machines App Using flyctl", "/docs/machines/guides-examples/machines-app-using-flyctl/" %>
-      </li>
-      <li>
-        <%= nav_link "Machine Sizing", "/docs/machines/guides-examples/machine-sizing/" %>
-      </li>
-      <li>
-        <%= nav_link "Run User Code on Fly Machines", "/docs/machines/guides-examples/functions-with-machines/" %>
-      </li>
-      <li>
-        <%= nav_link "Use Terraform with Fly Machines", "/docs/machines/guides-examples/terraform-machines/" %>
-      </li>
-    </ul>
-  </li>
-</ul>
+<%
+  @nav = [
+    {
+      title: "Getting Started",
+      path: "/docs/getting-started/",
+      open: current_page?("/docs"),
+      links: [
+        { text: "Quickstart: Launch your app", path: "/docs/getting-started/launch/" },
+        { text: "Launch a Demo App", path: "/docs/getting-started/launch-demo" },
+        { text: "Choose a language or framework", path: "/docs/getting-started/get-started-by-framework/" },
+        { text: "Fly.io Essentials", path: "/docs/getting-started/essentials/" },
+        { text: "Troubleshoot Deployments", path: "/docs/getting-started/troubleshooting/" }
+      ]
+    },
+    {
+      title: "Fly.io Blueprints",
+      path: "/docs/blueprints/",
+      open: false,
+      links: site.get("docs/blueprints").children.reject{ |page| page.data.status == "alpha" || page.data.published == false }.map do |page|
+        { text: page.data.title, path: page.request_path }
+      end
+    },
+    {
+      title: "Apps on Fly.io",
+      path: "/docs/apps/",
+      open: false,
+      links: [
+        { text: "Fly Apps overview", path: "/docs/apps/overview/" },
 
-<ul class="outline-list">
-  <li>
-    <%= nav_link "Other Guides", "/docs/guides/" %>
-    <ul>
-      <li>
-        <%= nav_link "Going to Production", "/docs/going-to-production/" %>
-      </li>
-      <li>
-        <%= nav_link "Custom Domains for SaaS", "/docs/app-guides/custom-domains-with-fly/" %>
-      </li>
-      <li>
-        <%= nav_link "Deploy with GitHub Actions", "/docs/app-guides/continuous-deployment-with-github-actions/" %>
-      </li>
-      <li>
-        <%= nav_link "Run Multiple Processes", "/docs/app-guides/multiple-processes/" %>
-      </li>
-      <li>
-        <%= nav_link "Run UDP Services", "/docs/app-guides/udp-and-tcp/" %>
-      </li>
-    </ul>
-  </li>
-</ul>
-<ul class="outline-list">
-  <li>
-    <%= nav_link "Fly.io Reference", "/docs/reference/" %>
-    <ul>
-      <li>
-        <%= nav_link "flyctl", "/docs/flyctl/" %>
-      </li>
-      <li>
-        <%= nav_link "App Configuration (fly.toml)", "/docs/reference/configuration/" %>
-      </li>
-      <li>
-        <%= nav_link "Apps", "/docs/reference/apps/" %>
-      </li>
-      <li>
-        <%= nav_link "Architecture", "/docs/reference/architecture/" %>
-      </li>
-      <li>
-        <%= nav_link "Builders", "/docs/reference/builders/" %>
-      </li>
-      <li>
-        <%= nav_link "Dynamic Request Routing", "/docs/reference/dynamic-request-routing/" %>
-      </li>
-      <li>
-        <%= nav_link "Fly Launch", "/docs/reference/fly-launch/" %>
-      </li>
-      <li>
-        <%= nav_link "Load Balancing", "/docs/reference/load-balancing/" %>
-      </li>
-      <li>
-        <%= nav_link "Machines", "/docs/reference/machines/" %>
-      </li>
-      <li>
-        <%= nav_link "Metrics", "/docs/reference/metrics/" %>
-      </li>
-      <li>
-        <%= nav_link "Monorepo Apps", "/docs/reference/monorepo/" %>
-      </li>
-      <li>
-        <%= nav_link "Private Networking", "/docs/reference/private-networking/" %>
-      </li>
-      <li>
-        <%= nav_link "Public Networking", "/docs/reference/services/" %>
-      </li>
-      <li>
-        <%= nav_link "Regions", "/docs/reference/regions/" %>
-      </li>
-      <li>
-        <%= nav_link "Runtime Environment", "/docs/reference/runtime-environment/" %>
-      </li>
-      <li>
-        <%= nav_link "Scaling", "/docs/reference/scaling/" %>
-      </li>
-      <li>
-        <%= nav_link "Build Secrets", "/docs/reference/build-secrets/" %>
-      </li>
-      <li>
-        <%= nav_link "Runtime Secrets", "/docs/reference/secrets/" %>
-      </li>
-      <li>
-        <%= nav_link "TLS Support", "/docs/reference/tls/" %>
-      </li>
-      <li>
-        <%= nav_link "Volumes", "/docs/reference/volumes" %>
-      </li>
-    </ul>
-  </li>
-</ul>
+        { text: "Fly Launch", path: "/docs/launch/" },
 
-<ul class="outline-list">
-  <li>
-    <%= nav_link "About", "/docs/about/" %>
-    <ul>
-      <li>
-        <%= nav_link "Pricing", "/docs/about/pricing/" %>
-      </li>
-      <li>
-        <%= nav_link "How We Use Credit Cards", "/docs/about/credit-cards/" %>
-      </li>
-      <li>
-        <%= nav_link "Engineering Jobs", "/docs/hiring/" %>
-      </li>
-      <li>
-        <%= nav_link "Healthcare on Fly.io", "/docs/about/healthcare/" %>
-      </li>
-      <li>
-        <%= nav_link "Support", "/docs/about/support/" %>
-      </li>
-      <li>
-        <%= nav_link "Security", "/docs/about/security/" %>
-      </li>
-      <li>
-        <%= nav_link "Open Source", "/docs/about/open-source/" %>
-      </li>
-      <li>
-        <%= nav_link "Using Our Brand", "/docs/about/brand/" %>
-      </li>
-      <li>
-        <%= nav_link "Privacy Policy", "/legal/privacy-policy/" %>
-      </li>
-      <li>
-        <%= nav_link "Terms of Service", "/legal/terms-of-service/" %>
-      </li>
-    </ul>
-  </li>
-</ul>
+        { text: "Secrets", path: "/docs/apps/secrets/" },
+
+        { text: "Production Apps", path: "/docs/apps/going-to-production/" }
+      ]
+    },
+    {
+      title: "Languages & Frameworks",
+      path: "/docs/languages-and-frameworks/",
+      open: false,
+      links: [
+        { text: "Elixir", path: "/docs/elixir/" },
+        { text: "Rails", path: "/docs/rails/getting-started/" },
+        { text: "Laravel", path: "/docs/laravel/" },
+        { text: "Django", path: "/docs/django/getting-started/" },
+        { text: "JavaScript", path: "/docs/js/" },
+        { text: "Rust", path: "/docs/rust/" },
+        { text: "Python", path: "/docs/python/" },
+        { text: "More...", path: "/docs/languages-and-frameworks/" }
+      ]
+    },
+    {
+      title: "Fly Machines",
+      path: "/docs/machines/",
+      open: false,
+      links: [
+        { text: "Introduction to Fly Machines", path: "/docs/machines/overview/" },
+        { text: "Machines API", path: "/docs/machines/api/" },
+        { text: "Run a new Machine", path: "/docs/machines/flyctl/fly-machine-run/" },
+        { text: "Update a Machine", path: "/docs/machines/flyctl/fly-machine-update/" },
+        { text: "Machine Sizing", path: "/docs/machines/guides-examples/machine-sizing/" },
+        { text: "Machine restart policy", path: "/docs/machines/guides-examples/machine-restart-policy/" },
+        { text: "Machine states", path: "/docs/machines/machine-states/" },
+        { text: "Run User Code on Fly Machines", path: "/docs/machines/guides-examples/functions-with-machines/" },
+        { text: "The Machine Runtime Environment", path: "/docs/machines/runtime-environment/" }
+      ]
+    },
+    {
+      title: "Fly GPUs",
+      path: "/docs/gpus/",
+      open: false,
+      links: [
+        { text: "GPU Quickstart", path: "/docs/gpus/gpu-quickstart/" },
+        { text: "Getting Started with GPU Machines", path: "/docs/gpus/getting-started-gpus/" },
+        { text: "Python GPU Dev Machine", path: "/docs/gpus/python-gpu-example/" }
+      ]
+    },
+    {
+      title: "Databases & Storage",
+      path: "/docs/database-storage-guides/",
+      open: false,
+      links: [
+        { text: "Tigris Object Storage", path: "/docs/reference/tigris/" },
+        { text: "Fly Postgres", path: "/docs/postgres/" },
+        { text: "SQLite & LiteFS", path: "/docs/litefs/" },
+        { text: "Supabase Postgres", path: "/docs/reference/supabase/" },
+        { text: "Upstash for Redis®", path: "/docs/reference/redis/" },
+        { text: "Upstash Kafka", path: "/docs/reference/kafka/" },
+        { text: "Upstash Vector", path: "/docs/reference/vector/" },
+{ text: "More...", path: "/docs/database-storage-guides/#other-storage-apps" }
+      ]
+    },
+    {
+      title: "Fly Volumes",
+      path: "/docs/volumes/",
+      open: false,
+      links: [
+        { text: "Fly Volumes overview", path: "/docs/volumes/overview/" },
+        { text: "Create and manage volumes", path: "/docs/volumes/volume-manage/" },
+        { text: "Manage volume snapshots", path: "/docs/volumes/snapshots/" },
+        { text: "Volume states", path: "/docs/volumes/volume-states/" }
+      ]
+    },
+    {
+      title: "Fly Kubernetes",
+      path: "/docs/kubernetes/",
+      open: false,
+      links: [
+        { text: "Fly Kubernetes Quickstart", path: "/docs/kubernetes/fks-quickstart/" },
+        { text: "Fly Kubernetes Features", path: "/docs/kubernetes/fks-features/" },
+        { text: "Create an FKS Cluster", path: "/docs/kubernetes/clusters/" },
+        { text: "Connect to an FKS Cluster", path: "/docs/kubernetes/connect-clusters/" },
+        { text: "Configure FKS Services", path: "/docs/kubernetes/services/" },
+        { text: "Use GPUs with FKS", path: "/docs/kubernetes/using-gpus/" },
+        { text: "Use Volumes with FKS", path: "/docs/kubernetes/using-volumes/" }
+      ]
+    },
+    {
+      title: "Networking",
+      path: "/docs/networking/",
+      open: false,
+      links: [
+        { text: "Connect to an App Service", path: "/docs/networking/app-services/" },
+        { text: "Private Networking", path: "/docs/networking/private-networking/" },
+        { text: "Public Networking", path: "/docs/networking/services/" },
+        { text: "Dynamic Request Routing", path: "/docs/networking/dynamic-request-routing/" },
+        { text: "Custom Domains", path: "/docs/networking/custom-domain/" },
+        { text: "Automate Certificates via API", path: "/docs/networking/custom-domain-api/" },
+        { text: "Request Headers", path: "/docs/networking/request-headers/" },
+        { text: "Run UDP Services", path: "/docs/networking/udp-and-tcp/" },
+        { text: "TLS Support", path: "/docs/networking/tls/" }
+      ]
+    },
+    {
+      title: "Monitoring",
+      path: "/docs/monitoring/",
+      open: false,
+      links: [
+        { text: "Metrics", path: "/docs/monitoring/metrics/" },
+        { text: "Sentry Error Tracking", path: "/docs/reference/sentry/" },
+        { text: "Logging overview", path: "/docs/monitoring/logging-overview/" },
+        { text: "Live tail logs", path: "/docs/monitoring/live-tail-logs/" },
+        { text: "Search logs", path: "/docs/monitoring/search-logs/" },
+        { text: "Export logs", path: "/docs/monitoring/exporting-logs/" },
+        { text: "Error Codes", path: "/docs/monitoring/error-codes/" }
+      ]
+    },
+    {
+      title: "Security",
+      path: "/docs/security/",
+      open: false,
+      links: [
+        { text: "SSO for organizations", path: "/docs/security/sso/" },
+        { text: "TLS termination", path: "/docs/security/tls-termination/" },
+        { text: "Deploy Tokens", path: "/docs/security/deploy-tokens/" },
+        { text: "OpenID Connect", path: "/docs/reference/openid-connect/" },     
+        { text: "Security practices and compliance", path: "/docs/security/security-at-fly-io/" },
+        { text: "App Security by Arcjet", path: "/docs/reference/arcjet/" }
+      ]
+    },
+    {
+      title: "Reference",
+      path: "/docs/reference/",
+      open: false,
+      links: [
+        { text: "flyctl", path: "/docs/flyctl/" },
+        { text: "App Config Reference (fly.toml)", path: "/docs/reference/configuration/" },
+        { text: "Architecture", path: "/docs/reference/architecture/" },
+        { text: "Autoscaling", path: "/docs/reference/autoscaling/" },
+        { text: "Builders", path: "/docs/reference/builders/" },
+        { text: "Fly Launch", path: "/docs/reference/fly-launch/" },
+        { text: "Load Balancing", path: "/docs/reference/load-balancing/" },
+        { text: "Machine migration", path: "/docs/reference/machine-migration/" },
+        { text: "Multiple Processes in Apps", path: "/docs/app-guides/multiple-processes/" },
+        { text: "Fly Proxy", path: "/docs/reference/fly-proxy/" },
+        { text: "Regions", path: "/docs/reference/regions/" }
+      ]
+    },
+    {
+      title: "About",
+      path: "/docs/about/",
+      open: false,
+      links: [
+        { text: "Pricing", path: "/docs/about/pricing/" },
+        { text: "Billing", path: "/docs/about/billing/" },
+        { text: "Engineering Jobs", path: "/docs/hiring/" },
+        { text: "Healthcare on Fly.io", path: "/docs/about/healthcare/" },
+        { text: "Support", path: "/docs/about/support/" },
+        { text: "Extensions Program", path: "/docs/about/extensions/" },
+        { text: "Extensions API", path: "/docs/reference/extensions_api/" },
+        { text: "Open Source", path: "/docs/about/open-source/" },
+        { text: "Using Our Brand", path: "/docs/about/brand/" },
+        { text: "Privacy Policy", path: "/legal/privacy-policy/" },
+        { text: "Terms of Service", path: "/legal/terms-of-service/" }
+      ]
+    }
+  ]
+%>
+
+<%= partial "/docs/partials/accordion_nav", locals: { nav: @nav } %>

@@ -1,0 +1,24 @@
+---
+title: Django on Fly.io
+layout: framework_docs
+toc: false
+blog_path: /django-beats
+---
+
+<div>
+  <img src="/static/images/django-intro.webp" srcset="/static/images/django-intro@2x.webp 2x" alt="">
+</div>
+
+Fly.io is a great place to run your Django application. `fly launch` can detect, configure and deploy Django apps.
+
+If you have questions or comments, please reach out on the [Django category of the Community Board](https://community.fly.io/c/django/) for Django on Fly.io specific discussions. The general [Community Board](https://community.fly.io/) is great for all things Fly.io: networking, databases, regions, and more. You can use the `django` tag as well to help interested people find a topic more easily.
+
+## [Getting Started](./getting-started)
+
+Run through the [Starter Django App](./getting-started/) guide to get a feel for what it's like to deploy to Fly.io. You'll have a Django app running in just a few minutes.
+
+## [Existing Django Apps](./getting-started/existing/)
+
+The [Existing Django Apps](./getting-started/existing/) guide walks through deploying a production-ready project to Fly.io. If you are coming from another hosting platform like Heroku there are additional tips for managing the migration.
+
+## [Advanced Guides](./advanced-guides)

@@ -1,0 +1,50 @@
+---
+title: Backing up your LiteFS cluster
+layout: docs
+nav: litefs
+toc: true
+---
+
+While LiteFS replicates data between nodes and supports failover, it does not
+currently have a disaster recovery system in place in the event you lose your
+entire cluster. These are some strategies you can use to reduce your risk of
+data loss in the event of a bug or disk corruption.
+
+## Periodic backup via export
+
+The simplest approach is to export your database via the [litefs
+export](/docs/litefs/export) command and then upload that file to long-term
+storage such as S3. The `export` command is safe to use on a live database 
+and can even be run remotely by specifying the `-url` flag.
+
+Once the database is downloaded, it can be compressed & uploaded to S3.
+
+```sh
+# Download current snapshot the "my.db" database to a local file.
+litefs export -name my.db /path/to/backup
+
+# Compress the file.
+gzip /path/to/backup
+
+# Upload the file to S3.
+aws s3 cp /path/to/backup.gz s3://mybucket/backup.gz
+```
+
+It's also recommended to perform a rolling backup based on either hour, day or
+month depending on cost requirements.
+
+```sh
+# 1-day, rolling hourly backup
+aws s3 cp /path/to/backup.gz s3://mybucket/backup-`date +%H`.gz
+
+# 1-month, rolling daily backup
+aws s3 cp /path/to/backup.gz s3://mybucket/backup-`date +%d`.gz
+
+# 1-month, rolling hourly backup
+aws s3 cp /path/to/backup.gz s3://mybucket/backup-`date +%d%H`.gz
+```
+
+This backup can be run on any of your nodes as even the replicas should have
+minimal lag behind the primary. If you run this on multiple nodes (such as all
+your candidates), make sure they are backing up to different storage locations
+so they do not overwrite one another.

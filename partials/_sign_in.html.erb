@@ -1,0 +1,15 @@
+If you already have a Fly.io account, all you need to do is sign in with flyctl. To sign in, run:
+
+```cmd
+fly auth login
+```
+
+When your browser opens to the Fly.io sign-in screen, enter your user name and password to sign in. If you signed up with GitHub, then click `Sign in with GitHub` to sign in.
+
+After logging in you'll be returned to your command line, ready to use Fly.io.
+
+<div class="note icon">
+Microsoft WSL users may need to run the following command, which creates a symbolic link that allows the browser to open:
+
+`ln -s /usr/bin/wslview /usr/local/bin/xdg-open`
+</div>

@@ -1,5 +1,5 @@
 ---
-title: "Running Multiple Processes Inside A Fly.io App"
+title: Multiple processes inside a Fly.io app
 layout: docs
 sitemap: true
 toc: true
@@ -10,15 +10,17 @@ categories:
 date: 2020-07-20
 ---
 
-This comes up a lot: how can you run multiple programs in an app on Fly.io? Recall that Fly.io apps are shipped to us in containers, usually built by Docker, and Docker has… opinions… about running multiple things in a container.
+<div class="callout">
+This guide discusses different ways to run multiple processes in your app. To learn about process groups in Fly Apps and the `[processes]` configuration in `fly.toml`, see [Run multiple process groups in an app](/docs/apps/processes/). For process group configuration with the Machines API, see the `config.processes` object in the [Machine config](docs/machines/api/machines-resource/#machine-config-object-properties).
+</div>
 
-Well, [we don't use Docker to run containers](https://fly.io/blog/docker-without-docker/). Your app is running in a VM, with its own kernel. You can do pretty much anything you want inside of it, including running as many programs as you like. Most of the time, the trick is just telling Docker how to do that.
+This comes up a lot: how can you run multiple programs in an app on Fly.io? Recall that Fly.io apps are shipped to us in OCI images, usually built by Docker, and Docker has… opinions… about running multiple things in a container.
 
-There are a couple different ways to run multiple processes in a Fly.io app. All of them address the first rule of programs running in Fly VM: when your entrypoint program exits, our `init` kills the VM and we start a new one. So at the end of the day, *something* has to keep running "in the foreground".
+Well, [we don't use Docker to run images](https://fly.io/blog/docker-without-docker/). Your app is running in a [Machine](/docs/machines/), a fast-launching VM with its own kernel. You can do pretty much anything you want inside of it, including running as many programs as you like. Most of the time, the trick is just telling Docker how to do that.
 
-<div class="callout">Fly.io <u>[Machines](/docs/machines)</u> can run multiple processes</u> natively, no need for extra configuration. <u>[Examples here](https://community.fly.io/t/multi-process-machines/8375)</u>.</div>
+There are a couple different ways to run multiple processes in a Fly.io app. All of them address the first rule of programs running in a Fly Machine: when your entrypoint program exits, our `init` kills the Machine and we start a new one. So at the end of the day, *something* has to keep running "in the foreground".
 
-### Setting The Scene
+### Setting the scene
 
 Let's use the world's dumbest Golang app as our test case. Here's a Dockerfile:
 
@@ -46,11 +48,11 @@ With a working Dockerfile, we can spin this up with `fly launch`. We'll edit `fl
 
 Now, some options to actually run this stuff:
 
-### Process Groups
+### Process groups
 
-This is the recommended way to run multiple processes. **This method runs each process in its own VM**. Examples of running multiple processes within a single VM are found below!
+[Process groups](/docs/apps/processes/) are the recommended way to run multiple processes. This method runs each process in its own Machine or group of Machines.
 
-Fly.io has the notion of [process groups](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316). You can define multiple processes in your `fly.toml`, giving each a name. Each defined process runs in its own VM within the one app.
+You can define multiple process groups in your `fly.toml`, giving each a name. Each defined process runs in its own Machine or group of Machines within the one app.
 
 You can see that in action in the below (truncated) `fly.toml` file:
 
@@ -67,7 +69,7 @@ bar_web = "/app/server -bar"
   script_checks = []
 ```
 
-Here we define two processes: `web` and `bar_web`. Each command (e.g. `/app/server` and `/app/server -bar`) is setting the *command* passed to your Dockerfile *entrypoint*. That means your entrypoint needs to be able to handle a command being passed to it!
+Here we define two processes: `web` and `bar_web`. The command defined for each process group is setting the *command* passed to your Dockerfile *entrypoint*. That means your entrypoint needs to be able to handle a command being passed to it!
 
 Here's an example of such an entrypoint:
 
@@ -85,9 +87,9 @@ fi
 
 Note that under the `[[services]]` section of the `fly.toml` file, we define a service for process `web`. The `processes = [...]` array acts as a filter - it will apply only to the processes listed.
 
-See the [announcement post](https://community.fly.io/t/preview-multi-process-apps-get-your-workers-here/2316) for more details on scaling with multiple processes. Also note that it's a bit finnicky - it's best to create *new* apps with multiple processes. Adding them on top of existing apps (or removing them from apps that are using them) may cause some confusion. We're working on it!
+You can also scale Machines horizontally and vertically by process group. See the [process groups](/docs/apps/processes/) docs for details.
 
-### Just Use Bash
+### Just use Bash
 
 This is gross, but a suggestion Docker makes in its own documentation, so it must be OK. We boot our Docker container into a shell script. That shell script is:
 
@@ -131,7 +133,7 @@ This works well enough to connect the app to Fly.io's Anycast network, so here's
 
 The other Docker documentation suggestion: use `supervisor`. `supervisor` is an actual process manager; it'll run in the foreground and manage all our processes and, most importantly, when our processes exit, `supervisor` will (configurably) restart it. 
 
-`supervisor` has [a lot of configuration options](http://supervisord.org/configuration.html). But because we're running on Fly.io, we mostly don't care about them; the platform is doing a lot of this work for us. So the `supervisor` configuration we want is pretty simple:
+`supervisor` has [a lot of configuration options](http://supervisord.org/configuration.html+external). But because we're running on Fly.io, we mostly don't care about them; the platform is doing a lot of this work for us. So the `supervisor` configuration we want is pretty simple:
 
 ```toml
 [supervisord]
@@ -181,7 +183,7 @@ foo: /app/server
 bar: /app/server -bar
 ```
 
-A Procfile manager I like a lot is [overmind](https://github.com/DarthSim/overmind). `overmind` is a Go program, so it's got a small runtime, and you could, if you were fussy, build a container that just takes the `overmind` binary and none of its build deps. We won't bother, though, since we're already bringing those deps in. So:
+A Procfile manager I like a lot is [overmind](https://github.com/DarthSim/overmind+external). `overmind` is a Go program, so it's got a small runtime, and you could, if you were fussy, build a container that just takes the `overmind` binary and none of its build deps. We won't bother, though, since we're already bringing those deps in. So:
 
 ```Dockerfile
 FROM golang
@@ -209,19 +211,19 @@ root@30952b25:/# overmind connect foo
 
 If you're not a `tmux` person, `ctr-b d` detaches you from that window.
 
-### There Are So Many Other Process Managers
+### There are so many other process managers
 
 Use whichever you like! The only limitation you're going to run into is that Fly.io owns your `init` (sorry!); we have to be PID 1. There are a bunch of process managers that want to replace `init`, and those'll be tricky to get to work in a Fly.io app. 
 
-### Maybe You Want Multiple Apps, Though
+### Maybe you want multiple apps, though
 
 There are good reasons to run multiple programs in a single container, but sometimes when you're doing that you're actually working against the platform (which is why Docker keeps telling you not to do that). 
 
 If you're running multiple heavy-weight things in a single container, you might explore just running them as separate Fly.io apps. The advantage to doing this, apart from the apps not fighting over the same CPUs and memory, is that you can scale separate apps independently, and put them in different sets of regions.
 
-Fly.io apps can talk to each other over a [private network](https://fly.io/docs/reference/private-networking/) that's always available. They can find each other under the `.internal` top-level domain (if your apps are `foo` and `bar`, they'll be in the DNS as `foo.internal` and `bar.internal`). Because the network connection is private and encrypted, you can generally just talk back and forth without extra authentication until you know you need it; in other words, you can keep things simple.
+Fly.io apps can talk to each other over a [private network](https://fly.io/docs/networking/private-networking/) that's always available. They can find each other under the `.internal` top-level domain (if your apps are `foo` and `bar`, they'll be in the DNS as `foo.internal` and `bar.internal`). Because the network connection is private and encrypted, you can generally just talk back and forth without extra authentication until you know you need it; in other words, you can keep things simple.
 
-### Maybe You Don't Need Multiple Processes
+### Maybe you don't need multiple processes
 
 There are a bunch of reasons people want to run multiple things in a container that Fly.io already takes care of for you. For instance: [metrics are a built-in feature of the platform](https://fly.io/blog/hooking-up-fly-metrics/), as are logs. You might not need to run helper processes for this kind of stuff.
 

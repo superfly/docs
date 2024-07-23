@@ -1,0 +1,170 @@
+---
+title: "Run a .NET App"
+layout: language-and-framework-docs
+redirect_from: /docs/getting-started/dotnet/
+---
+
+<%= partial "partials/intro", locals: { runtime: "[.NET](https://dotnet.microsoft.com/)" } %>
+
+## _Generate the .NET Application_
+
+For our example, we will create a simple "hello world" application using the default web template in .NET. We assume that you have already installed [.NET](https://dotnet.microsoft.com/en-us/download).
+
+Once .NET is installed, we can create a new project by running the following command:
+
+```cmd
+dotnet new web --name hellodotnet
+```
+```output
+The template "ASP.NET Core Empty" was created successfully.
+
+Processing post-creation actions...
+Restoring \hellodotnet\hellodotnet.csproj:
+Determining projects to restore...
+Restored \hellodotnet\hellodotnet.csproj (in 69 ms).
+Restore succeeded.
+```
+
+## _Running the Application_
+
+In the new application folder, execute the command `dotnet run` to initiate the application:
+
+```cmd
+dotnet run
+```
+```output
+Building...
+Now listening on: http://localhost:5162
+Application started. Press Ctrl+C to shut down.
+Hosting environment: Development
+```
+
+This command will start the "hellodotnet" application, and you will be able to access it locally using the address provided in the output.
+
+Now, let's proceed to deploy this application to Fly.
+
+## _Install Flyctl and Login_
+
+We are ready to start working with Fly.io, and that means we need `flyctl`, our CLI app for managing apps on Fly.io. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/flyctl/install/). Once that's installed you'll want to [log in to Fly.io](/docs/getting-started/sign-up-sign-in/).
+
+## _Launch the app on Fly_
+
+Each Fly App needs a `fly.toml` file to tell the system how we'd like to deploy it.
+That file can be automatically generated with the command `flyctl launch` command. This command will also generate a Dockerfile for deployment.
+
+```cmd
+fly launch
+```
+```output
+Creating app in \fly\guides\hellodotnet
+Scanning source code
+Detected a .NET app
+? Choose an app name (leave blank to generate one): hellodotnet
+? Select Organization: demo (demo)
+? Select region: ord (Chicago, Illinois (US))
+App will use 'ord' region as primary
+Created app 'hellodotnet' in organization 'demo'
+Admin URL: https://fly.io/apps/hellodotnet
+Hostname: hellodotnet.fly.dev
+? Would you like to set up a Postgresql database now? No
+? Would you like to set up an Upstash Redis database now? No
+Wrote config file fly.toml
+? Would you like to deploy now? Yes
+
+Deploying hellodotnet
+...
+```
+
+That's it! Run `fly apps open` to see your deployed app in action.
+
+Try a few other commands:
+
+- `fly logs` - Tail your application logs
+- `fly status` - App deployment details
+- `fly deploy` - Deploy the application after making changes
+
+## _Inside `fly.toml`_
+
+The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also created a Fly-side application slot of the same name, "hellodotnet". If we look at the `fly.toml` configuration file we can see the name in there:
+
+```toml
+app = "hellodotnet"
+primary_region = "ord"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+...
+```
+
+The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name/value at the start. That name will be used to identify the application to the Fly.io platform.
+
+The rest of the file contains settings to be applied to the application when it deploys.
+
+## Deploying to Fly.io
+
+To deploy changes to your app, just run just run:
+
+```cmd
+fly deploy
+```
+
+This will lookup our `fly.toml` file and get the app name `hellodotnet` from there.
+
+Then `flyctl` will start the process of deploying our application to Fly.io using the Dockerfile. Flyctl will return you to the command line when it's done.
+
+## _Viewing the Deployed App_
+
+If you want to find out more about the deployment. The command `fly status` will give you all the essential details.
+
+```cmd
+fly status
+```
+```output
+App
+  Name     = hellodotnet
+  Owner    = personal
+  Hostname = hellodotnet.fly.dev
+  Image    = hellodotnet:deployment-01H4MDR3GVFX20X5DNVZS4BPWK
+  Platform = machines
+
+Machines
+PROCESS ID              VERSION REGION  STATE   CHECKS  LAST UPDATED
+app     91857500000083  1       ord     started         2023-07-06T01:49:28Z
+app     e2865100000086  1       ord     stopped         2023-07-06T01:50:04Z
+```
+
+## _Connecting to the App_
+
+The quickest way to browse your newly deployed application is with the `flyctl apps open` command.
+
+```cmd
+flyctl apps open
+```
+```output
+Opening https://hellodotnet.fly.dev/
+```
+
+Your browser will be sent to the displayed URL.
+
+## _Bonus Points_
+
+If you want to know what IP addresses the app is using, try `fly ips list`:
+
+```cmd
+fly ips list
+```
+
+```out
+VERSION IP                      TYPE            REGION  CREATED AT 
+v6      2a09:8280:1::69:37fd    public          global  18m55s ago
+v4      66.241.125.223          public (shared)
+```
+
+## Arrived at Destination
+
+You have successfully built, deployed, and connected to your first .NET web application on Fly.io.

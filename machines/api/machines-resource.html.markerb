@@ -1,0 +1,1242 @@
+---
+title: Machines
+layout: docs
+nav: machines_toc
+toc: false
+redirect_from: /docs/machines/api-machines-resource/
+---
+
+You can use the Machines resource to create, stop, start, update, and delete Fly Machines. Fly Machines are fast-launching VMs on Fly.io. The Machine resource is the configuration and state for a Machine.
+   
+<div class="endpoints api-card">
+  <div class="api-card-header">
+    Endpoints
+  </div>
+  <div class="highlight">
+    <a class="endpoint">
+      <span class="get-badge">get</span>
+      <span>/v1/apps/{app\_name}/machines</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/v1/apps/{app\_name}/machines</span>
+    </a>
+    <a class="endpoint">
+      <span class="get-badge">get</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/wait</span>
+    </a>
+    <a class="endpoint">
+      <span class="get-badge">get</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/stop</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/start</span>
+    </a>
+    <a class="endpoint">
+      <span class="delete-badge">delete</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/lease</span>
+    </a>
+    <a class="endpoint">
+      <span class="get-badge">get</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/lease</span>
+    </a>
+    <a class="endpoint">
+      <span class="delete-badge">delete</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/lease</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/cordon</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/uncordon</span>
+    </a>
+    <a class="endpoint">
+      <span class="get-badge">get</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/metadata</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/metadata/{key}</span>
+    </a>
+    <a class="endpoint">
+      <span class="delete-badge">delete</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/metadata/{key}</span>
+    </a>
+  </div>
+</div>
+
+## Machine properties
+
+| Property | Description |
+| --------- | ----------- |
+| `id` | A stable identifier for the Machine. |
+| `name` | Unique name for the Machine. If omitted, one is generated for you. |
+| `state` | The [state](/docs/machines/machine-states/) of the Machine.
+| `region` | The region where the Machine resides, or the target region for the Machine on create. If omitted, the Machine is placed in the same region as your WireGuard peer connection (somewhere near you). |
+| `instance_id` | An identifier for the current running/ready version of the Machine. Every Update request potentially changes the `instance_id`. |
+| `private_ip` | The [6PN IPv6 address](/docs/reference/private-networking/) of the Machine, which is where it's reachable to other Machines in the same organization and `network_id`. |
+| `config` | See the <u>[`config` object properties](#machine-config-object-properties)</u> section. Object that defines the Machine configuration. |
+| `checks` | Object that provides the status of any configured health checks. |
+| `image_ref` | Object that defines the image details. |
+| `created_at` | Date and time the Machine was created. |
+| `updated_at` | Date and time the Machine was last updated. |
+| `events` | Array of objects that provide log of what's happened with this Machine. |
+| `nonce` | The Machines lease nonce, if this Machine is currently leased. Also returned on Machine create if `lease_ttl` is provided. |
+
+## List Machines
+
+List all the Machines for an app.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to list Machines for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Query parameters',
+      name: 'include_deleted',
+      type: 'Boolean',
+      description: 'If true, include deleted Machines in the response.'
+    ) %>
+    <% api_info.add_info(
+      name: 'region',
+      type: 'String',
+      description: 'Filter by region. For example, to return only Machines in the `yyz` region: `GET /v1/apps/my-app-name/machines?region=yyz`'
+    ) %>
+    <% api_info.add_info(
+      name: 'metadata.{key}',
+      type: 'String',
+      description: 'Filter by metadata key-value pair. For example, to return only Machines with metadata item `"foo": "bar"` : `GET /v1/apps/my-app-name/machines?metadata.foo=bar`'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app_name}/machines')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/machines_list_req" %>
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_list_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Create a Machine
+
+Given the name of a Fly App, create a Fly Machine, given the URI of a container image, in some region (or, by default, the region closest to you) on Fly.io’s platform. If successful, that Machine will boot up by default. Create a Machine without booting it by setting `skip_launch`.
+
+You can configure the Machine characteristics, like its CPU and memory. You can also allow connections from the internet through the Fly Proxy by [creating a Machine with services](#create-a-machine-with-services). Learn more about this behavior in the [networking section](#notes-on-networking).
+
+<div class="important icon">
+**Important:** This request can fail, and you're responsible for handling that failure. If you ask for a large Machine, or a Machine in a region we happen to be at capacity for, you might need to retry the request, or to fall back to another region. If you're working directly with the Machines API, you're taking some responsibility for your own orchestration!
+</div>
+
+The only required parameter in the body is `image` in the `config` object.
+
+<div class="api-section" data-exclude-render>
+  <div data-exclude-render>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to create a Machine for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div data-exclude-render>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/machines_create_req" %>
+      <% end %>
+      <% component.with_json do %>
+      {
+        "config": {
+          "image": ""
+        },
+        "lease_ttl": 1,
+        "lsvd": false,
+        "name": "",
+        "region": "",
+        "skip_launch": false,
+        "skip_service_registration": false
+      }
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | `name` | string | no | Unique name for this Machine. If omitted, one is generated for you. String. |
+      | `region` | string | no | The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you). String. |
+      | `lease_ttl` | integer | no | Acquire a lease on the newly created Machine, waiting this many seconds before failing the request; use to create a Machine that can’t be updated by any other external process while waiting for it to come up and pass health checks. |
+      | `skip_launch` | boolean | no | Create a Fly Machine, but don’t boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as “warming the caches” on our hardware. (default: false) |
+      | `lsvd` | boolean | no | Enable Log Structured Virtual Disks for this Machine. (default: false) |
+      | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
+      | `config` | object | yes | Required for `image`. An object defining the Machine configuration. See the [`config` object properties](#machine-config-object-properties) section. |
+      | `config.image` | string | yes | The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_create_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Create a Machine with services
+
+Create a Machine with services defined on app. Learn more about [services and networking](#notes-on-networking).
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to create a Machine for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/machines_create_serv_req" %>
+      <% end %>
+      <% component.with_json do %>
+      {
+        "config": {
+          "image": ""
+        },
+        "lease_ttl": 1,
+        "lsvd": false,
+        "name": "",
+        "region": "",
+        "skip_launch": false,
+        "skip_service_registration": false
+      }
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | `name` | string | no | Unique name for this Machine. If omitted, one is generated for you. String. |
+      | `region` | string | no | The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you). String. |
+      | `lease_ttl` | integer | no | Acquire a lease on the newly created Machine, waiting this many seconds before failing the request; use to create a Machine that can’t be updated by any other external process while waiting for it to come up and pass health checks. |
+      | `skip_launch` | boolean | no | Create a Fly Machine, but don’t boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as “warming the caches” on our hardware. (default: false) |
+      | `lsvd` | boolean | no | Enable Log Structured Virtual Disks for this Machine. (default: false) |
+      | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
+      | `config` | object | yes | Required for `image`. An object defining the Machine configuration. See the [`config` object properties](#machine-config-object-properties) section. |
+      | `config.image` | string | yes | The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
+      | `config.services` | array | no | Defines how Fly Proxy connects requests to an app’s public Anycast or private Flycast address to services running within Machines, and configures other Fly Proxy behavior for a service.
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_create_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Wait for a Machine to reach a specified state
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to wait for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Query parameters',
+      name: 'instance_id',
+      type: 'string',
+      description: 'Filter for a specific Machine `instance_id` (version). Required when waiting for Machine to be in `stopped` state.'
+    ) %>
+    <% api_info.add_info(
+      name: 'timeout',
+      type: 'integer',
+      description: 'The time, in seconds, to wait for the Machine to enter the specified state. Default is 60.'
+    ) %>
+    <% api_info.add_info(
+      name: 'state',
+      type: 'string enum',
+      description: 'The Machine state to wait for. Values are: `started`, `stopped`, or `destroyed`. Default is `started`.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <% api_info.add_info(
+      name: '400',
+      description: 'Bad Request'
+    ) %>
+    <% api_info.add_info(
+      name: '408',
+      description: 'Request Timeout'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app_name}/machines/{machine_id}/wait')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/machines_wait_req" %>
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_ok_true_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Get a Machine
+
+Given the name of a Fly App and a Fly Machine ID, retrieve the details of that Machine.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to get.'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app_name}/machines/{machine_id}')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/machines_get_req" %>
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_get_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Update a Machine
+
+Given the name of a Fly App and a Fly Machine ID, update the configuration of the Machine. If the Machine is running and the request is successful, it will reboot; if the Machine isn't running, and you don't want it to start up, set `skip_launch`.
+
+This is, in particular, how you would update the running image of a Machine (when you need to deploy new code), or roll back to a previous Machine release. It's also how you'd vertically scale an application.
+
+<div class="important icon">
+**Important:** This request can fail, and you're responsible for handling that failure. If you ask for a large Machine, or a Machine in a region we happen to be at capacity for, you might need to retry the request, or to fall back to another region. If you're working directly with the Machines API, you're taking some responsibility for your own orchestration!
+</div>
+
+`region` and `name` are immutable and cannot be updated. 
+
+<div class="note icon">
+**Note:** You need to specify the entire Machine config to update a Machine; we don't support partial updates. You can get the Machine you want to update, copy and modify the `config` and include it in the body of the update request. Refer to the [Machine `config` object properties](#machine-config-object-properties) section for property descriptions.
+</div>
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <%= render(ApiInfoComponent.new(
+      heading: "Request headers", 
+      name: "fly-machine-lease-nonce", 
+      type: "string", 
+      description: "The Machine lease nonce, a random value we provide that indicates that you currently hold the lease on this Machine. If the Machine is leased, and you don't provide this header, the request to update the Machine will fail."
+    )) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to update.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <% api_info.add_info(
+      name: '400',
+      description: 'Bad Request'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines/{machine_id}')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/machines_update_req" %>
+      <% end %>
+      <% component.with_json do %>
+      {
+        "config": { /* All of Fly Machine Config */  },
+        "current_version":"",
+        "lease_ttl": 1,
+        "lsvd": false,
+        "name": "",
+        "region": "",
+        "skip_launch": false,
+        "skip_service_registration": false
+      }
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | `config` | object | yes | An object defining the Machine configuration. See the [`config` object properties](#machine-config-object-properties) section. |
+      | `current_version` | string | no | The latest `instance_id` value of the Machine. |
+      | `name` | string | no | Unique name for this Machine. If omitted, one is generated for you. String. |
+      | `region` | string | no | The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you). String. |
+      | `lease_ttl` | integer | no | Acquire a lease on the newly created Machine, waiting this many seconds before failing the request; use to create a Machine that can’t be updated by any other external process while waiting for it to come up and pass health checks. |
+      | `skip_launch` | boolean | no | Create a Fly Machine, but don’t boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as “warming the caches” on our hardware. (default: false) |
+      | `lsvd` | boolean | no | Enable Log Structured Virtual Disks for this Machine. (default: false) |
+      | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_update_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Stop a Machine
+
+Stopping a Machine will shut down the Machine, but not destroy it. The Machine may be started again with `machines/<machine_id>/start`.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to stop.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines/{machine_id}/stop')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/machines_stop_req" %>
+      <% end %>
+      <% component.with_json do %>
+      {
+        "signal": "",
+        "timeout": ""
+      }
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | `signal` | object | no | Signal to stop the Machine with. (default: SIGINT) |
+      | `timeout` | string | no | Seconds to wait before sending SIGKILL to the Machine |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_ok_true_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Start a Machine
+
+Start a stopped Machine. Machines that are restarted are completely reset to their original state so that they start clean on the next run.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to start.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines/{machine_id}/start')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/machines_start_req" %>
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_start_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Delete a Machine permanently
+
+Delete a Machine. This action cannot be undone.
+
+Given the name of a Fly App and the Machine ID of a Fly Machine, delete the Machine.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to delete.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Query parameters',
+      name: 'force',
+      type: 'boolean',
+      description: 'Force stop the Machine if running.'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/{app_name}/machines/{machine_id}/')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/machines_delete_req" %>
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_ok_true_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Create a Machine lease
+
+Create a lease for a specific Machine within an app using the details provided in the request body. Machine leases can be used to obtain an exclusive lock on modifying a Machine.
+
+The Machine lease nonce is a random value we provide that indicates that you currently hold the lease on a Machine. To use the provided nonce from the create or get lease response, add the `fly-machine-lease-nonce` header to all subsequent API calls to the Machine for the duration of the lease. See [Release a Machine lease](#release-a-machine-lease).
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to create a lease for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '201',
+      description: 'Created'
+    ) %>
+    <% api_info.add_info(
+      name: '409',
+      description: 'Conflict'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines/{machine_id}/lease')) do |component| %>
+      <% component.with_curl do %>
+      <%= partial "/docs/reference/machines/machines_lease_create_req" %>
+      <% end %>
+      <% component.with_json do %>
+      {
+        "description": "",
+        "ttl": 1
+      }
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | description | string | no | A description of the lease for convenience. |
+      | ttl | integer | no | The time in seconds that the lease should be held for.
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 201 Created – Example response', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_lease_create_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Get a Machine lease
+
+Retrieve the current lease of a specific Machine within an app. Machine leases can be used to obtain an exclusive lock on modifying a Machine.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to retrieve a lease for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <% api_info.add_info(
+      name: '404',
+      description: 'Not Found'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app_name}/machines/{machine_id}/lease')) do |component| %>
+      <% component.with_curl do %>
+      <%= partial "/docs/reference/machines/machines_lease_get_req" %>
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_lease_get_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Release a Machine lease
+
+Release the lease of a specific Machine within an app. Machine leases can be used to obtain an exclusive lock on modifying a Machine.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <%= render(ApiInfoComponent.new(
+      heading: "Request headers", 
+      name: "fly-machine-lease-nonce", 
+      type: "string",
+      description: "Required to release a lease. The Machine lease nonce, a random value provided in the response when you get or create a lease."
+    )) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to release a lease for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <% api_info.add_info(
+      name: '400',
+      description: 'Bad Request'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/{app_name}/machines/{machine_id}/lease')) do |component| %>
+      <% component.with_curl do %>
+      <%= partial "/docs/reference/machines/machines_lease_release_req" %>
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_lease_release_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Route requests away from or back to a Machine (cordon/uncordon)
+
+Given the name of a Fly App and the Machine ID of a Fly Machine, instruct the Fly Proxy not to send requests to a Machine or to start sending requests again to a previously cordoned Machine.
+
+You can also do this with a fresh Machine, all in one shot, using the `skip_service_registration` request field of a Machine Create request.
+
+This is useful for bluegreen deployments: boot up a new, "green", cordoned Machine running the new release (using `skip_service_registration`), make sure it's healthy, then uncordon it and tear down the old, "blue" Machine.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to cordon or uncordon.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines/{machine_id}/cordon')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/machines_cordon_req" %>
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines/{machine_id}/uncordon')) do |component| %>
+      <% component.with_curl do %>
+        <%= partial "/docs/reference/machines/machines_uncordon_req" %>
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_ok_true_resp" %>
+    <% end %>
+  </div>
+</div>
+
+
+## Get a Machine's metadata
+
+Get the metadata defined in a specific Machine's config.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to get the metadata for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app_name}/machines/{machine_id}/metadata')) do |component| %>
+      <% component.with_curl do %>
+      <%= partial "/docs/reference/machines/machines_metadata_get_req" %>
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_metadata_get_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Add or update Machine metadata
+
+Add or update a metadata key-value pair on a specific Machine's config.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to update the metadata for.'
+    ) %>
+    <% api_info.add_info(
+      name: 'key',
+      type: 'string',
+      required: true,
+      description: 'A key for the metadata key-value pair to add or replace. Provide the value in the request body.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '204',
+      description: 'No content'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines/{machine_id}/metadata/{key}')) do |component| %>
+      <% component.with_curl do %>
+      <%= partial "/docs/reference/machines/machines_metadata_update_req" %>
+      <% end %>
+      <% component.with_json do %>
+      {
+        "value":""
+      }
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | `value` | string | yes | The value to assign to the metadata `key` that was passed as a path parameter. |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 204 No content', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_metadata_update_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Delete Machine metadata
+
+Delete a metadata key-value pair on a specific Machine's config.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to delete some metadata for.'
+    ) %>
+    <% api_info.add_info(
+      name: 'key',
+      type: 'string',
+      required: true,
+      description: 'The key of the metadata to delete.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '204',
+      description: 'No content'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/{app_name}/machines/{machine_id}/metadata/{key}')) do |component| %>
+      <% component.with_curl do %>
+      <%= partial "/docs/reference/machines/machines_metadata_delete_req" %>
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 204 No content', language: 'json')) do %>
+      <%= partial "/docs/reference/machines/machines_metadata_delete_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Notes on networking
+
+Machines are closed to the public internet by default. To make them accessible via the associated application, you need to:
+
+* Allocate an IP address to the Fly App
+* Add one or more `services` to the Machine config with ports and handlers, as shown in [Create a Machine with services](#create-a-machine-with-services).
+
+For an application with a single Machine, all requests will be routed to that Machine. A Machine in the `stopped` state will be started up
+automatically when a request arrives.
+
+For an application with multiple Machines *with the same configuration*, requests will be distributed across them. Warm-start behavior in this situation is not well-defined now, so should not be relied upon for apps with multiple Machines.
+
+Requests to Machines with *mixed* configurations will be distributed across Machines whose configurations match the request.
+For example, if 3 out of 6 Machines have service configurations set to listen on port 80, requests to port 80 will be distributed amongst those 3.
+
+### Reaching Machines
+
+Machines can be reached within the private network by hostname, in the format `<id>.vm.<app-name>.internal`. 
+
+For example, to reach a Machine with ID `3d8d413b29d089` on an app called `my-app-name`, use hostname `3d8d413b29d089.vm.my-app-name.internal`.
+
+## Machine `config` object properties
+
+Properties of the `config` object for Machine configuration. See [Machine properties](#machine-properties).
+
+**`image`:** string - Required. The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
+
+---
+
+**`auto_destroy`:** bool (false) - If true, the Machine destroys itself once it's complete.
+
+---
+
+**`checks`:** An optional object that defines one or more named checks. The key for each check is the check name. The value for each check supports:
+
++ `type`: string (nil) - `tcp` or `http`.
++ `port`: int (nil) - The TCP port to connect to, likely should be the same as `internal_port`.
++ `interval`: int (nil) - The interval, in nanoseconds, between connectivity checks
++ `timeout`: int (nil) - The maximum time, in nanoseconds, a connection can take before being reported as failing its health check.
++ `grace_period`: int (nil) - How long to wait, in nanoseconds, before we start running health checks.
++ `method`: string (nil) - For `http` checks, the HTTP method to use to when making the request.
++ `path`: string (nil) - For `http` checks, the path to send the request to.
++ `protocol`: string (nil) - For `http` checks, whether to use `http` or `https`
+* `tls_server_name`: string (nil) - If the protocol is `https`, the hostname to use for TLS certificate validation
++ `tls_skip_verify`: bool (false) - For `http` checks with https protocol, whether or not to verify the TLS certificate
++ `headers`: {string: [string, string]} ({}) - For `http` checks, an array of objects with string field `name` and array of strings field `values`.
+
+    An example of two checks:
+
+    ```json
+            "checks": {
+                "tcp-alive": {
+                    "type": "tcp",
+                    "port": 8080,
+                    "interval": "15s",
+                    "timeout": "10s"
+                },
+                "http-get": {
+                    "type": "http",
+                    "port": 8080,
+                    "protocol": "http"
+                    "method": "GET",
+                    "path": "/",
+                    "interval": "15s",
+                    "timeout": "10s"
+                }
+            }
+    ```
+
+---
+
+**`dns`:**
+
+  - `nameservers`: Used for Fly Kubernetes.
+  - `searches`: Used for Fly Kubernetes.
+  - `options`: Used for Fly Kubernetes.
+  - `dns_forward_rules`: Used for dedicated hosts. 
+  - `skip_registration`: boolean - If true, do not register the Machine's 6PN IP with the internal DNS system.
+  - 
+
+---
+
+**`env`:** {string:string} ({}) - An object filled with key/value pairs to be set as environment variables.
+
+---
+
+**`files`:** An optional array of objects defining files to be written within a Machine, one of `raw_value` or `secret_name` must be provided.
+  - `guest_path`: string - The path in the Machine where the file will be written. Must be an absolute path.
+  - `raw_value`: string - Contains the base64 encoded string of the file contents.
+  - `secret_name`: string - The name of the secret containing the base64 encoded file contents.
+
+    An example of two files:
+
+    ```json
+            "files": [
+                {
+                    "guest_path": "/path/to/hello.txt",
+                    "raw_value": "aGVsbG8gd29ybGQK"
+                },
+                {
+                    "guest_path": "/path/to/secret.txt",
+                    "secret_name": "SUPER_SECRET"
+                }
+            ]
+    ```
+
+---
+
+**`guest`:** Configure the resources allocated for this Machine. An object with the following options:
+  - `cpu_kind`: string (nil) - The type of CPU reservation to make (”shared”, ”performance", and so on).
+  - `gpu_kind`: string (nil) - The type of GPU reservation to make.
+  - `host_dedication_id`: The ID of the host dedication (group of dedicated hosts) on which to create this Machine. (beta)
+  - `cpus`: int (nil) - The number of CPU cores this Machine should occupy when it runs. (default `1`)
+  - `gpus`: int (nil) - The number of GPU cores this Machine should occupy when it runs. (default `1`)
+  - `kernel_args`: Optional array of strings. Arguments passed to the kernel.
+  - `memory_mb`: int (nil) - Memory in megabytes as multiples of 256 (default `256`)
+
+---
+
+**`init`:** Arguments for `init`, which is Fly.io's footprint inside your Machine, and controls how your own code gets run.
+  - `exec`: [string, string] ([]) - The command line for the program to run once the Machine boots up. This overrides any other startup command line, either in our API or in your Docker container definition.
+  - `entrypoint`: [string, string] ([]) - A command line to override the ENTRYPOINT of your Docker container; another way to define the program that is going to start up when your Machine boots up.
+  - `cmd`: [string, string] ([]) - A command line to override the CMD of your Docker container; still another way to define the program that is going to start up when your Machine boots up.
+  - `kernel_args`: Optional array of strings. Arguments passed to the kernel.
+  - `tty`: bool (false) - Allocate a TTY for the process we start up.
+  - `swap_size_mb`: int (nil) -Swap space to reserve for the Fly Machine in, you guessed it, megabytes.
+
+---
+
+**`metadata`:** {string:string} ({}) - An object filled with key/value pairs for the Machine metadata. We use metadata internally for routing, process groups, and clusters.
+
+---
+
+**`metrics`:** An optional object defining a metrics endpoint that [Prometheus on Fly.io](/docs/reference/metrics/#prometheus-on-fly-io) will scrape.
+  - `port`: int - Required. The port that Prometheus will connect to.
+  - `path`: string - Required. The path that Prometheus will scrape (e.g. `/metrics`).
+
+---
+
+**`mounts`:** An array of objects that reference previously created [persistent volumes](/docs/volumes/). Currently, you may only mount one volume per Machine.
+  - `volume`: string - Required. The volume ID, visible in `fly volumes list`. For example `vol_2n0l3vl60qpv635d`.  
+  - `path`: string - Required. Absolute path on the Machine where the volume should be mounted. For example, `/data`.
+  - `name`: string - The name of the Volume to attach.
+  - `extend_threshold_percent`: int - The threshold of storage used on a volume, by percentage, that triggers extending the volume’s size by the value of `add_size_gb`.
+  - `add_size_gb`: int - The increment, in GB, by which to extend the volume after reaching the `auto_extend_size_threshold`. Required with `auto_extend_size_increment`. Required with `extend_threshold_percent`.
+  - `size_gb_limit`: int - The total amount, in GB, to extend a volume. Optional with `auto_extend_size_increment`. Optional with `extend_threshold_percent`.
+  - `encrypted`: boolean - Volume is encrypted. Default true.
+
+---
+
+**`processes`:** An optional array of objects defining multiple processes to run within a Machine. The Machine will stop if any process exits without error.
+  - `entrypoint`: An array of strings. The process that will run.
+  - `cmd`: An array of strings. The arguments passed to the entrypoint.
+  - `env`: An object filled with key/value pairs to be set as environment variables.
+  - `env_from` : An array of objects that define environment variables from Machine fields. Used for Fly Kubernetes.
+  - `exec`: An array of strings. The command to run for Machines in this process group on startup.
+  - `user`: string (nil) - An optional user that the process runs under.
+  - `ignore_app_secrets`: boolean - If true, only use the secrets provided at the process level. Default false.
+  - `secrets`: An array of strings. Set the secrets in the environment of the Machine. `env_var` is required and is the name of the environment variable that will be set from the secret. It must be a valid environment variable name. `name` is optional and when provided is used to reference a secret name where the `env_var` is different from what was set as the secret name.
+
+---
+
+**`restart`:** Defines whether and how flyd restarts a Machine after its main process exits. Learn more about [Machine restart policies](/docs/machines/guides-examples/machine-restart-policy/). This object has the following options:
+  - `policy`: string - Required. One of "no", "on-failure", or "always".
+  - `max_retries`: int (nil) - The maximum number of retries when the policy is "on-failure".
+
+---
+
+**`schedule`:** string (nil) - Optionally one of `hourly`, `daily`, `weekly`, `monthly`. Runs Machine at the given interval. Interval starts at time of Machine creation.
+
+---
+
+**`services`**: An array of objects that define a single network service. Check the [Machines networking section](#notes-on-networking) for more information.
+
+  - `protocol`: string - Required. `tcp` or `udp`. [Learn more about running raw TCP/UDP services](/docs/networking/udp-and-tcp/).
+  - `internal_port`: int - Required. Port the Machine listens on.
+  - `concurrency`: Control Fly Proxy’s load balancing for this service.
+      + `type`: string - `connections` (TCP) or `requests` (HTTP). Default is `connections`. Determines which kind of event we count for load balancing.
+      + `soft_limit`: int (nil) - Ideal service concurrency. We will attempt to spread load to keep services at or below this limit. We’ll deprioritize a Machine to give other Machines a chance to absorb traffic. Defaults to 20 when unset.
+      + `hard_limit`: int (nil) - Maximum allowed concurrency. The limit of events at which we’ll stop routing to a Machine altogether, and, if configured to do so, potentially start up existing Machines to handle the load. Defaults to unlimited when unset.
+  - `ports`: MachinePort - An array of objects defining the service's ports and associated handlers. Options:
+      + `port`: int (nil) - The internet-exposed port to receive traffic on; if you want HTTP traffic routed to 8080/tcp on your Machine, this would be 80.
+      + `start_port`, `end-port`: int (nil) - Like `port``, but allocate a range of ports to route internally, for applications that want to occupy whole port ranges.
+      + `handlers`: Array of protocol [handlers](/docs/networking/services/#connection-handlers) for this port. How should the Fly Proxy handle and terminate this connection. Options include `http`, `tcp`, `tls`.
+      + `force_https`: bool (false) - If true, force HTTP to HTTPS redirects.
+      + `http_options`: Fiddly HTTP options (if you don’t know you need them, you don’t), including:
+        - `compress`: bool (false) - If true, enable HTTP compression.
+        - `h2_backend`: bool (false) - If true, inform Fly Proxy that your app supports HTTP/2 (h2c with prior knowledge), which enables HTTP/2 only workloads to work with the `http` handler.
+        - `response`: Options for controlling HTTP response headers.
+          - `headers`: ({"headers": {string:string}} (nil)) HTTP headers to set on responses.
+          - `pristine`: bool (false) - If true, do not add any Fly.io headers to HTTP responses. The following response headers won’t be added and won’t be modified if returned by the app: `Server`, `Via`, `Fly-Request-Id`, `Fly-Cache-Status`.
+      + `tls_options`:  Fiddly TLS options (if you don’t know you need to mess with these, you don’t need to), including:
+        - `alpn`: [string, string] ([]) : ALPN protocols to present TLS clients (for instance, [“h2”, “http/1.1”]).
+        - `default_self_signed`: bool (false) - If true, serve a self-signed certificate if no certificate exists.
+        - `versions`: [string, string] ([]) : TLS versions to allow (for instance, [“TLSv1.2”, “TLSv1.3”]).
+      + `proxy_proto_options`: Configure the version of the PROXY protocol that your app accepts. Version 1 is the default.
+        - `version`: A string to indicate that the TCP connection uses PROXY protocol version 2. The default when not set is version 1.
+  - `autostart`: bool (false) - If true, Fly Proxy starts Machines when requests for this service arrive.
+  - `autostop`: bool (false) - If true, Fly Proxy stops Machines when this service goes idle.
+  - `min_machines_running`: int (nil) - When `autostart` is true, the minimum number of Machines to keep running at all times in the primary region.
+
+---
+
+**`size`:** A [named size](/docs/about/pricing/#running-fly-machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
+
+---
+
+**`standbys`:** Standbys enable a Machine to be a standby for another. In the event of a hardware failure, the standby Machine will be started. Only for Machines without `services`. Array of strings representing the Machine IDs of Machines watch (act as standby for).
+
+---
+
+**`statics`:** Optionally serve static files.
+  - `guest_path`: string - Required. The path inside the Machines or object storage bucket where the files to serve are located.
+  - `url_prefix`: string - Required. The URL prefix under which to serve the static files.
+  - `tigris_bucket`: string - The Tigris bucket where the files to serve are located.
+  - `index_document`: string - The name of the index document, served when a request is made to the root or any of its subfolders. Only works for statics hosted on Tigris
+  
+---
+
+**`stop_config`:** MachineStopConfig (nil) - Configure graceful shutdown of the Machine.
+  - `signal`: string (nil) - The name of the signal to send to the entrypoint process on the Machine to initiate shutdown.
+  - `timeout`: int (nil) - How long in nanoseconds to wait, after signaling the entrypoint process, before hard-shutdown of the Machine.
+
+## Related topics
+
+- [Working with the Machines API](/docs/machines/api/working-with-machines-api/)
+- [Apps resource](/docs/machines/api/apps-resource/) reference
+- [Tokens resource](/docs/machines/api/tokens-resource) reference
+- [Volumes resource](/docs/machines/api/volumes-resource/) reference

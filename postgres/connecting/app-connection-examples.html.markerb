@@ -1,0 +1,373 @@
+---
+title: App Connection Examples
+objective:
+layout: framework_docs
+order: 4
+---
+
+These examples demonstrate connections from within the same Fly.io internal IPv6 private network . To adapt them for external connections, substitute the internal hostname for one that's reachable over the public Internet.
+
+## psql
+
+If you have an active [WireGuard tunnel](/docs/networking/private-networking/#private-network-vpn) to your organization's private network, you can connect from a local machine to your Postgres cluster the same way you would from a Fly app within the same private network. For example, the following command would start an interactive terminal session on the cluster leader with `psql`:
+
+```cmd
+psql postgres://postgres:secret123@appname.internal:5432
+```
+
+You can, of course, run psql from a shell on a Fly app as well (as long as that app has psql installed).
+
+## Connecting with Ruby
+[docs](https://github.com/ged/ruby-pg)
+
+Ruby apps use the `pg` gem to connect to postgres.
+
+```ruby
+require 'pg'
+
+# Output a table of current connections to the DB
+conn = PG.connect("postgres://postgres:secret123@postgresapp.internal:5432/yourdb")
+conn.exec( "SELECT * FROM pg_stat_activity" ) do |result|
+  puts "     PID | User             | Query"
+  result.each do |row|
+    puts " %7d | %-16s | %s " %
+      row.values_at('pid', 'usename', 'query')
+  end
+end
+```
+
+## Connecting with Rails
+[docs](https://guides.rubyonrails.org/configuring.html#configuring-a-database)
+
+Rails apps automatically connect to the database specified in the `DATABASE_URL` environment variable.
+
+You can set this variable manually with `flyctl secrets set`
+```bash
+flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.internal:5432/yourdb
+```
+
+or by attaching the Postgres database to your Fly app.
+
+## Connecting with Python
+
+[`psycopg`](https://www.psycopg.org/psycopg3/) is the recommended driver for connecting
+to postgres:
+
+```python
+import psycopg
+
+conninfo = "postgres://postgres:secret123@postgresapp.internal:5432/yourdb"
+with psycopg.connect(conninfo) as connection:
+    with connection.cursor() as cursor:
+        cursor.execute(...)
+        results = cursor.fetchall()
+```
+
+## Connecting with Django
+
+[docs](https://docs.djangoproject.com/en/stable/ref/settings/#databases)
+
+[`psycopg`](https://www.psycopg.org/psycopg3/) is the recommended driver for connecting
+to postgres. You can use the [`django-environ`](https://pypi.org/project/django-environ/)
+package to translate the `DATABASE_URL` environment variable into Django database
+configuration. First, install both packages:
+
+```cmd
+python -m pip install psycopg django-environ
+```
+
+Now we can define `DATABASES` in our ``settings.py`` file.
+
+```python
+import environ  # ← Added
+
+...
+
+env = environ.Env()  # ← Added
+environ.Env.read_env(BASE_DIR / ".env")  # ← Added
+
+DATABASES = {
+    # env.db() reads the DATABASE_URL environment variable.
+    "default": env.db(),  # ← Updated
+}
+```
+
+You can set the `DATABASE_URL` manually with `flyctl secrets set`:
+
+```cmd
+flyctl secrets set DATABASE_URL=postgres://postgres:secret123@postgresapp.internal:5432/yourdb
+```
+
+or by adding it to the `.env` file:
+
+```
+# .env
+SECRET_KEY=06\Rd75]S.vzZtrZoxc3!*~JR*/te[8BR%L-7~I7eFsGCqk,ze
+DATABASE_URL=postgres://postgres:secret123@postgresapp.internal:5432/yourdb  # ← Added
+```
+
+## Connecting with Go
+[docs](https://github.com/jackc/pgx/wiki/Getting-started-with-pgx-through-database-sql)
+
+`pgx` is the recommended driver for connecting to postgres. It supports the standard `database/sql` interface as well as directly exposing low level / high performance APIs.
+
+First, add `github.com/jackc/pgx/v4` as a module dependency.
+```bash
+go get github.com/jackc/pgx/v4
+```
+
+The following program will connect to the database in `DATABASE_URL` and run a query.
+```go
+package main
+
+import (
+  "database/sql"
+  "fmt"
+  "os"
+
+  _ "github.com/jackc/pgx/v4/stdlib"
+)
+
+func main() {
+  db, err := sql.Open("pgx", os.Getenv("DATABASE_URL"))
+  if err != nil {
+    fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+    os.Exit(1)
+  }
+  defer db.Close()
+
+  var greeting string
+  err = db.QueryRow("select 'Hello, world!'").Scan(&greeting)
+  if err != nil {
+    fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
+    os.Exit(1)
+  }
+
+  fmt.Println(greeting)
+}
+```
+
+## Connecting with Node.js
+[docs](https://node-postgres.com)
+
+You'll use the `pg` npm module to connect to Postgres from a Node.js app.
+
+```javascript
+const { Client } = require('pg')
+const client = new Client({connectionString: process.env.DATABASE_URL})
+
+await client.connect()
+const res = await client.query('SELECT $1::text as message', ['Hello world!'])
+console.log(res.rows[0].message) // Hello world!
+await client.end()
+```
+
+## Connecting with Prisma – Node.js
+[docs](https://www.prisma.io/)
+
+Prisma is an open-source object-relational mapper (ORM) for Node.js and works with both JavaScript and TypeScript. It consists of 3 components:
+- Prisma Client - a type-safe query builder
+- Prisma Migrate - a data modeling and migration tool
+- Prisma Studio - a modern intuitive GUI for interacting with your database
+
+
+<details data-render="markdown">
+<summary>Set up Prisma in your project</summary>
+
+Install the Prisma CLI and Prisma Client dependencies in your project
+
+```
+npm i --save-dev prisma
+npm i @prisma/client
+```
+
+Initialize Prisma in your project:
+
+```
+npx prisma init
+```
+This command does the following:
+- Creates a folder called `prisma` at the root of your project
+- Creates a `.env` file at the root of your project if it doesn't exist
+- Creates a `schema.prisma` file inside the `prisma` folder. This is the file that you will use to model your data
+
+Update the `DATABASE_URL` in the `.env` to your PostgreSQL database
+```
+DATABASE_URL="postgres://postgres:secret123@postgresapp.internal:5432/yourdb"
+```
+
+If you are working in a brownfield project, you can introspect your database to generate the models in your `schema.prisma` file:
+
+```
+npx prisma db pull
+```
+
+</details>
+
+Assuming you have the following model in your `schema.prisma` file:
+
+Add a model to your `schema.prisma` file:
+
+```groovy
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider  = "prisma-client-js"
+}
+
+model Post {
+  id       Int     @id @default(autoincrement())
+  title    String
+  content  String?
+}
+```
+
+You can query your database using Prisma as follows:
+```typescript
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const posts = await prisma.post.findMany()
+
+  const newPost = await prisma.post.create({
+    data: {
+      title: 'PostgreSQL on Fly',
+      content: 'https://fly.io/docs/reference/postgres'
+    }
+  })
+}
+
+main()
+  .catch((e) => {
+    throw e
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+  })
+```
+
+## Connecting with Sequelize – Node.js
+[docs](https://sequelize.org)
+
+Sequelize is an open-source object-relational mapper (ORM) for Node.js and works with JavaScript and TypeScript.
+
+<details data-render="markdown">
+<summary>Set up Sequelize inside your project</summary>
+
+Install the Sequelize dependencies and CLI into your project
+```
+npm install --save sequelize
+npm install --save-dev sequelize-cli
+```
+
+Initialize Sequelize into your project:
+```
+npx sequelize init
+```
+This will create the following folders:
+- config, contains config file, which tells CLI how to connect with database
+- models, contains all models for your project
+- migrations, contains all migration files
+- seeders, contains all seed files
+
+[Docs: Create your first model](https://sequelize.org/docs/v6/other-topics/migrations/#creating-the-first-model-and-migration)
+
+</details>
+
+
+After initializing you will need to show the CLI how to connect to the database inside of `config/config.js`
+
+```javascript
+const fs = require('fs');
+
+module.exports = {
+  development: {
+    username: 'database_dev',
+    password: 'database_dev',
+    database: 'database_dev',
+    host: '127.0.0.1',
+    port: 3306,
+    dialect: 'mysql',
+    dialectOptions: {
+      bigNumberStrings: true
+    }
+  },
+  test: {
+    username: process.env.CI_DB_USERNAME,
+    password: process.env.CI_DB_PASSWORD,
+    database: process.env.CI_DB_NAME,
+    host: '127.0.0.1',
+    port: 3306,
+    dialect: 'postgres',
+    dialectOptions: {
+      bigNumberStrings: true
+    }
+  },
+  production: {
+    database: process.env.DATABASE_URL,
+    host: process.env.PROD_DB_HOSTNAME,
+    dialect: 'postgres'
+  }
+};
+```
+
+Create a new file named `.sequelizerc` , this allows the CLI to be able to read your `config.js` file
+```javascript
+const path = require('path');
+
+module.exports = {
+  'config': path.resolve('config', 'config.js')
+}
+```
+
+Next pass the `DATABASE_URL` from the env into the Sequelize constructor in `models/index.js` to be able to connect to your fly postgres app and confirm the new seuqelize connection with the async function below
+```javascript
+// Connect to fly postgres app
+let sequelize = new Sequelize(process.env.DATABASE_URL);
+
+// Confirms the connection to the database
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connected to the database!');
+  } catch (err) {
+    console.error('Error connecting to the database:', err);
+  }
+})();
+```
+
+<details data-render="markdown">
+<summary>Configure Sequelize to connect with your read replica databases</summary>
+[Fly docs: How to add Read Replica database with flyctl](https://fly.io/docs/postgres/advanced-guides/high-availability-and-global-replication/)
+
+
+Set the Sequelize constructor in `model/index.js` to conditionally connect to the primary/read-replica database depending on the `primary region` value set in `fly.toml`.
+```javascript
+let sequelize;
+if (config.use_env_variable) {
+  const primary = process.env.PRIMARY_REGION;
+  const current = process.env.FLY_REGION;
+  let db_url = process.env.DATABASE_URL;
+
+  if (!primary || !current || primary === current) {
+    sequelize = new Sequelize(process.env.DATABASE_URL);
+
+    // Check Fly logs to confirm that your primary database is connected
+    console.log("DB connected in Region: ", current)
+  } 
+  else{
+    const u = new URL(db_url);
+    u.port = "5433";
+
+    // Check Fly logs to confirm that your read replica database is connected
+    console.log(`Read Rep DB connected in ${current}`)
+
+    sequelize = new Sequelize(u.toString());
+  }
+```
+</details>

@@ -1,0 +1,281 @@
+---
+title: Apps
+layout: docs
+nav: machines_toc
+toc: false
+redirect_from: /docs/machines/api-apps-resource/
+---
+
+You can use the Apps resource to create and manage Fly Apps. A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. Learn more about [Fly Apps](/docs/apps/overview).
+
+<div class="right-column">
+  <div class="endpoints api-card">
+    <div class="api-card-header">
+      Endpoints
+    </div>
+    <div class="highlight">
+      <a class="endpoint">
+        <span class="post-badge">post</span>
+        <span>/v1/apps</span>
+      </a>
+      <a class="endpoint">
+        <span class="get-badge">get</span>
+        <span>/v1/apps/{app\_name}</span>
+      </a>
+      <a class="endpoint">
+        <span class="delete-badge">delete</span>
+        <span>/v1/apps/{app\_name}</span>
+      </a>
+      <a class="endpoint">
+        <span class="get-badge">get</span>
+        <span>/v1/apps?org_slug=</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+## Create a Fly App
+
+`POST /apps`
+
+Machines must be associated with a Fly App. App names must be unique.
+
+<div class="api-section" data-exclude-render>
+  <div>
+     <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '201',
+      description: 'created'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps" \\
+  -d '{
+      "app_name": "my-app-name",
+      "org_slug": "personal",
+      "network": "my-optional-network"
+    }'
+      <% end %>
+      <% component.with_json do %>
+        {
+          "app_name": "",
+          "enable_subdomains": false,
+          "network": "",
+          "org_slug": ""
+        }
+      <% end %>
+      <% component.with_json_table do %>
+        | Property   | Type    | Required | Description                |
+        |-------------|---------|----------|----------------------------|
+        | `app_name`  | string  | yes      | Name of the app to create  |
+        | `enable_subdomains`  | boolean  | no      | Used for Fly Kubernetes. |
+        | `org_slug`  | string  | yes      | Slug of the org in which to create the app |
+        | `network`   | string  | no       | Name for an IPv6 private network to segment the app onto. |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 201 created - Example response', language: 'json')) do %>
+      {
+  "id":"z4k69dxd8r31p5mx",
+  "created_at":1708631799000
+}
+    <% end %>
+  </div>
+</div>
+
+To segment the app into its own network, you can pass a `network` argument in the JSON body, for example: `"network": "some-arbitrary-name"`. Any Machine started in such an app will not be able to access other apps within their organization over the private network. However, Machines within such an app can communicate to each other, and the [`fly-replay`](/docs/reference/dynamic-request-routing/) header can still be used to route requests to Machines within a segmented app.
+
+## Allocate an IP address for global request routing
+
+If you intend for Machines to be accessible to the internet, you'll need to allocate an IP address to the app. Currently
+this is done using `flyctl` or the [Fly.io GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](https://fly.io/docs/reference/services/#about-anycast). Read more about this in [the Networking section](https://fly.io/docs/reference/services/#notes-on-networking).
+
+Example:
+
+```cmd
+fly ips allocate-v4 -a my-app-name
+```
+```out
+TYPE ADDRESS    REGION CREATED AT
+v4   37.16.9.52 global 7s ago
+```
+
+The app will answer on this IP address, and after a small delay, at `my-app-name.fly.dev`.
+
+## Get app details
+
+`GET /apps/{app_name}`
+
+Get details about an app, like its organization slug and name. Also, to check if the app exists!
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to get the details of.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: "Responses", 
+      name: "200", 
+      description: "OK"
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/\{app_name\}')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name" 
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+{
+  "id": "jlyv9r5d56v18xrg",
+  "name": "my-app-name",
+  "status": "pending",
+  "organization": {
+    "name": "My Org",
+    "slug": "personal"
+  }
+}
+    <% end %>
+  </div>
+</div>
+
+## Set app secrets
+
+For sensitive environment variables, such as credentials, you can set [secrets](/docs/apps/secrets/) on the app:
+
+```cmd
+fly secrets set DATABASE_URL=postgres://example.com/mydb <my-app-name>
+```
+
+Machines inherit secrets from the app. Existing Machines must be [updated](/docs/machines/api-machines-resource/#update-a-machine) to pick up secrets set after the Machine was created.
+
+For non-sensitive information, you can configure environment variables per Machine when you create or update the Machine.
+
+## Delete a Fly App
+
+`DELETE /apps/{app_name}`
+
+Machines should be stopped before attempting deletion. Append `?force=true` to the URI to stop and delete immediately.
+
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to delete.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Query parameters',
+      name: "force", 
+      type: "Boolean", 
+      required: false, 
+      description: "Stop all Machines and delete the app immediately."
+    ) %>
+    <%= render(api_info) %>
+    <%= render(ApiInfoComponent.new(
+      heading: "Responses", 
+      name: "202", 
+      description: "accepted"
+    )) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/\{app_name\}')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X DELETE \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name" 
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 202 accepted', language: 'json')) do %>
+    no body
+    <% end %>
+  </div>
+</div>
+
+
+## List apps in an organization
+
+`GET /apps?org_slug=`
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Query parameters',
+      name: "org_slug", 
+      type: "string", 
+      required: true, 
+      description: "The organization to list apps for."
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: "Responses", 
+      name: "200", 
+      description: "OK"
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps?org_slug\=')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps?org_slug=personal"
+      <% end %>
+      <% component.with_json do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+      <% component.with_json_table do %>
+no body
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+{
+  "total_apps": 4,
+  "apps": [
+    {
+      "id": "682kqp6pdno9d543",
+      "name": "my-app-1",
+      "machine_count": 3,
+      "network": "default"
+    },
+    ...
+  ]
+}
+    <% end %>
+  </div>
+</div>
+
+
+
+## Related topics
+
+- [Working with the Machines API](/docs/machines/api/working-with-machines-api/)
+- [Machines resource](/docs/machines/api/machines-resource/) reference
+- [Tokens resource](/docs/machines/api/tokens-resource) reference
+- [Volumes resource](/docs/machines/api/volumes-resource/) reference

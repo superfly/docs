@@ -117,7 +117,7 @@ server {
 If you haven't already done so, scale your machine:
 
 ```cmd
-fly scale vm shared-cpu-1x --memory 512
+fly scale vm shared-cpu-1x --vm-memory 512
 ```
 
 Now you are ready to deploy:

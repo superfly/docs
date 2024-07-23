@@ -1,0 +1,70 @@
+---
+title: "Run a Flask App"
+layout: framework_docs
+objective: Flask is a lightweight WSGI web application framework. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. 
+redirect_from:
+  - /docs/languages-and-frameworks/flask/
+  - /docs/getting-started/flask/
+order: 2
+---
+
+<%= partial "/docs/languages-and-frameworks/partials/intro", locals: { runtime: "Flask", link: "https://flask.palletsprojects.com/" } %>
+
+Flask is a lightweight WSGI web application framework. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. 
+
+Spinning up a flask app is fun! 
+
+## _Speedrun_
+
+<%= partial "/docs/languages-and-frameworks/partials/flyctl" %>
+
+<%= partial "/docs/python/partials/speedrun", locals: { runtime: "Flask", repo: "hello-flask-poetry" }  %>
+
+## _Deploy a Flask app from scratch_
+
+<%= partial "/docs/python/partials/poetry_new", locals: { runtime: "Flask" }  %>
+
+To run this app we will need 2 dependencies:
+
+- flask: the framework
+- gunicorn: the server
+
+```cmd
+poetry add flask gunicorn
+```
+
+Now let's create a basic app in `app.py`:
+
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello_fly():
+    return "hello from fly.io"
+```
+
+To check that everything is working, we can use the included flask cli tool:
+
+```cmd
+flask run
+```
+```out
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+```
+
+Note that `flask run` command works since our file is named `app.py`. It also works if your file is named `wsgi.py`, so you don't have to use [`--app`](https://flask.palletsprojects.com/en/latest/cli/) to tell Flask where your app is. More details [here](https://flask.palletsprojects.com/en/latest/quickstart/#a-minimal-application).
+
+If your file is saved as `hello.py` instead of `app.py`, you would need to use the `--app` option to point to Flask where your app is: 
+
+```cmd
+flask --app hello run
+```
+
+If you open http://127.0.0.1:5000/ in your web browser, it should display `hello from fly.io`.
+
+<%= partial "/docs/python/partials/deploy", locals: { runtime: "Flask", repo: "hello-flask-poetry" }  %>

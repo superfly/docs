@@ -1,42 +1,104 @@
 ---
-title: "Fly.io: A New Public Cloud"
+title: "Fly.io developer documentation"
 layout: docs
-sitemap: false
+toc: false
 nav: firecracker
 ---
 
-<figure>
-  <img src="/static/images/docs-intro.jpg" srcset="/static/images/docs-intro@2x.jpg 2x" alt="">
-</figure>
+<div class="index-page">
 
-We're doing something ambitious at Fly.io: a new public cloud, built on bare-metal servers we run in data centers around the world, designed to make it easy to deploy distributed and real-time apps close to your users, wherever they are.
+## Get started
 
+Try our [quickstart or demo app](/docs/getting-started/)
 
-<div class="callout">
-Our *raison d'&ecirc;tre* is to deliver your applications to your users globally, with the highest possible availability and the lowest possible latency, with a great developer UX.
+Or choose your favorite [language or framework](/docs/getting-started/get-started-by-framework/)
+
+---
+
+## Apps on Fly.io
+
+_Fly Launch is app configuration, provisioning, deployment, scaling, and orchestration with our flyctl CLI._
+
+[Work with your apps](/docs/apps/): create, configure, deploy, and scale with Fly Launch, set secrets, and prepare for production
+
+---
+
+## flyctl CLI
+
+_Use the `fly` command to create and deploy apps, control individual Machines, configure networking, and more._
+
+Install [flyctl](/docs/flyctl/install)
+
+flyctl is [open source](https://github.com/superfly/flyctl+external)
+
+---
+
+## Fly Machines
+
+_Machines are fast-launching VMs—and the compute engine of the Fly.io platform._
+
+Learn all about [Fly Machines](/docs/machines/)
+
+---
+
+## Machines API
+
+_Get precise, low-level control of Machines with our REST API._
+
+[Machines API docs](/docs/machines/api/)
+
+---
+
+## GPU compute
+
+_Run GPU workloads on Fly Machines._
+
+[Fly GPUs](/docs/gpus/)
+
+---
+
+## Supporting services
+
+_Services from Fly.io and our extension partners to help you run your entire stack near your users._
+
+[Upstash for Redis®](/docs/reference/redis/)
+
+[Tigris object storage](/docs/reference/tigris/)
+
+[Supabase Postgres (public alpha)](/docs/reference/supabase/)
+
+[LiteFS - Distributed SQLite](/docs/litefs/)
+
+[Fly Kubernetes (private beta)](/docs/kubernetes/)
+
+---
+
+## Networking
+
+_Private networking, public networking, custom domains and certificates, UDP apps, and routing._
+
+[Networking](/docs/networking/) on Fly.io
+
+---
+
+## Monitoring
+
+_Explore built-in and custom Prometheus metrics and Grafana dashboards. Live tail and search your app's logs, or ship them where you want them._
+
+[Fly.io Metrics](/docs/monitoring/metrics/)
+
+[Error Monitoring by Sentry](/docs/reference/sentry/)
+
+[Logging on Fly.io](/docs/monitoring/logging-overview/)
+
+---
+
+## Security
+
+_Built-in security and partner extensions._
+
+[Security](/docs/security/) on the Fly.io platform
+
+[Application security by Arcjet](/docs/reference/arcjet/) for JavaScript apps
+
 </div>
-
-We want you to run your full stack close to users, whether it’s a simple web service or your database-backed opus with multiple supporting services. Check out our [persistent storage volumes](/docs/reference/volumes/) and [ready-to-run Postgres](/docs/reference/postgres/). Your organization's Fly.io apps can [talk to each other privately](/docs/reference/private-networking/) through our fast internal [WireGuard](https://www.wireguard.com/) network.
-
-## Docker without Docker, with or without Docker
-
-We upgrade [containers](/blog/docker-without-docker/) to full-fledged [Firecracker](https://firecracker-microvm.github.io/) microVMs. You *can* use a Dockerfile and our remote builders to build an image with your app and its environment. You can also point to a pre-built Docker image.
-
-[In many cases](https://fly.io/docs/languages-and-frameworks/), you won't have to touch Docker; `fly launch` can scan your source code and configure your project for deployment on Fly.io, and our builders will build your app's Docker image when you deploy.
-
-
-## flyctl: your CLI command center
-
-`flyctl` is our command-line tool to facilitate app configuration, building, deployment and management. [It's the command center for your Fly.io apps.](/docs/flyctl/)
-
-Creating and deploying an app on Fly.io is simple. You don't even have to type `flyctl` in full! 
-
-Run `fly launch` to initialize an app. (Maybe) customize the generated [config file](https://fly.io/docs/reference/configuration/) that generates (perhaps to hook up some [metrics](/docs/reference/metrics/)). Run `fly deploy` to build and deploy.
-
-That's the short version. And you do have to write your app, in the language of your choice, first. Although to try it out, you can use one of ours. [Here's one in Go.](/docs/getting-started/golang/)
-
-`flyctl` can then help you manage your app's [deployment regions](/docs/reference/regions/), [scaling](/docs/reference/scaling/), and [secrets](/docs/reference/secrets/).
-
-If you want to experience `flyctl` for yourself, you can go hands-on for free and [launch a VM on Fly](/docs/hands-on/start/).
-
-If you just want to read about all the talents of `flyctl`, here's another link to its [documentation](/docs/flyctl/).

@@ -1,0 +1,23 @@
+curl -i -X POST \\
+  -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+  "${FLY_API_HOSTNAME}/v1/apps/my-app-name/machines" \\
+  -d '{
+    "config": {
+      "init": {
+        "exec": [
+          "/bin/sleep",
+          "inf"
+        ]
+      },
+      "image": "registry-1.docker.io/library/ubuntu:latest",
+      "auto_destroy": true,
+      "restart": {
+        "policy": "always"
+      },
+      "guest": {
+        "cpu_kind": "shared",
+        "cpus": 1,
+        "memory_mb": 256
+      }
+    }
+  }'

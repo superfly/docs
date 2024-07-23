@@ -1,0 +1,172 @@
+---
+title: "Launch a demo app"
+layout: docs
+nav: firecracker
+redirect_from:
+  - /docs/hands-on/view-app/
+  - /docs/hands-on/start/
+  - /docs/hands-on/create-app/
+  - /docs/hands-on/connecting-to-an-app/
+  - /docs/hands-on/
+  - /docs/hands-on/launch-app/
+  - /docs/hands-on/check-app-status/
+  - /docs/hands-on/open-app/
+  - /docs/hands-on/deploy-app/
+  - /docs/hands-on/next/
+---
+
+In this step-by-step guide you'll use Fly Launch to deploy a simple "hello fly" demo app to Fly.io. 
+
+The first step is installing all the tools you need to work with Fly Launch. Which is one tool: flyctl.
+
+## 1. Install flyctl
+
+<%= partial "/docs/partials/docs/flyctl_install" %>
+
+## 2. Sign up or sign in
+
+Sign up for an account or [sign in](#sign-in-to-your-flyio-account) to your existing account.
+
+### Sign up for a Fly.io account
+
+<%= partial "/docs/partials/sign_up" %>
+
+### Sign in to your Fly.io account
+
+<%= partial "/docs/partials/sign_in" %>
+
+## 3. Launch the demo app
+
+Fly Launch helps you quickly deploy almost any kind of app using a Docker image. For this example, you'll use our pre-built Docker image, `flyio/hellofly:latest`, to create and deploy the demo app.
+
+Running `fly launch` to create a new app generates a [`fly.toml` config file](/docs/reference/configuration/) with some useful defaults that you can tweak through a web interface before deploying the app. When you run a command post-deploy, flyctl looks for a `fly.toml` file to get the app name and the configuration to apply.
+
+To create the demo app, run:
+
+```cmd
+fly launch --image flyio/hellofly:latest
+```
+
+You'll get a summary of the defaults for your app. For example:
+
+```output 
+Using image flyio/hellofly:latest
+Creating app in /Users/username/my-app-name
+We're about to launch your app on Fly.io. Here's what you're getting:
+
+Organization: MyName                 (fly launch defaults to the personal org)
+Name:         my-app-name            (derived from your directory name)
+Region:       Secaucus, NJ (US)      (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+
+? Do you want to tweak these settings before proceeding? (y/N)
+```
+
+Fly launch creates an app name by appending a random name to your project directory name. App names must be globally unique.
+
+To change any settings, type `y` at the prompt to open the Fly Launch page, then click **Confirm Settings** to confirm and deploy the demo app.
+
+Or just type `n` to accept the default and deploy the app.
+
+Example `fly launch` output:
+
+```output
+Created app 'my-app-name' in organization 'personal'
+Admin URL: https://fly.io/apps/my-app-name
+Hostname: my-app-name.fly.dev
+Wrote config file fly.toml
+Validating /Users/username/my-app-dir/fly.toml
+Platform: machines
+✓ Configuration is valid
+==> Building image
+Searching for image 'flyio/hellofly:latest' remotely...
+image found: img_z1nr0lpjz9v5q98w
+
+Watch your deployment at https://fly.io/apps/my-app-name/monitoring
+
+Provisioning ips for my-app-name
+  Dedicated ipv6: 2a09:8280:1::42:a8f4
+  Shared ipv4: 66.241.124.213
+  Add a dedicated ipv4 with: fly ips allocate-v4
+
+This deployment will:
+ * create 2 "app" machines
+
+No machines in group app, launching a new machine
+Creating a second machine to increase service availability
+Finished launching new machines
+-------
+NOTE: The machines for [app] have services with 'auto_stop_machines = true' that will be stopped when idling
+-------
+Visit your newly deployed app at https://my-app-name.fly.dev/
+```
+
+## 4. Check your app's status
+
+After the app is deployed, use the `fly status` command to get the basic details about your new app. For example:
+
+```cmd
+fly status
+```
+```output
+App
+  Name     = hellofly          
+  Owner    = personal       
+  Hostname = hellofly.fly.dev
+  Image    = flyio/hellofly:latest
+
+Machines
+PROCESS	ID            	VERSION	REGION	STATE  	ROLE   CHECKS	LAST UPDATED
+app    	148e453b7d7289	1      	ord   	started	      	        2023-05-17T17:39:37Z
+app    	5683d311c3228e	1      	ord   	stopped	      	        2023-05-17T17:38:44Z
+```
+
+In this example, the app has a DNS hostname of `hellofly.fly.dev`. The app has two Machines running in the ord (Chicago) region. We recommend running at least two Machines to improve availability.
+
+## 5. Visit your app
+
+You can connect to your deployed app with the `fly apps open` command, which opens a browser to `https://<my-app-name>.fly.dev/` for a secure connection.
+
+You've successfully launched your first app on Fly.io!
+
+For fun, add `/<your-name>` to `fly apps open` and your name will be appended to the app's path to add an extra greeting from the hellofly application.
+
+```cmd
+fly apps open /fred
+```
+```out
+opening https:http://hellofly.fly.dev/fred ...
+```
+
+You just deployed an app on Fly.io!
+
+## Deploy changes
+
+You probably don't need to make any changes to our demo app. But when you do make changes to an app on Fly.io, deploy a new release with:
+
+```cmd
+fly deploy
+```
+
+Now that you have a working demo app, learn [what you can do with Fly Launch](/docs/launch/).
+
+## Delete the demo app
+
+When you're done playing with the demo app, delete it so you're not using unnecessary resources:
+
+```
+fly apps destroy
+```
+
+## Grow and scale
+
+Read about some of the ways you can increase availability, capacity, and performance with Fly.io:
+
+* Follow the blueprint for [extra Machines for more resilient apps](/docs/blueprints/resilient-apps-multiple-machines/)
+* Read up on [App availability and resiliency](/docs/reference/app-availability/)
+* [Autoscale Machines based on load or custom metrics](/docs/reference/autoscaling/)
+* [Scale Machine CPU and RAM](/docs/apps/scale-machine/) 
+* [Scale Machine count](/docs/apps/scale-count/)
+* Try out [Fly GPUs](/docs/gpus/)

@@ -2,21 +2,22 @@
 title: Connecting Livebook to Your App in Production
 layout: framework_docs
 order: 6
-objective: Guide shows how to connect a locally running Livebook to your application running on Fly.
+objective: Guide for connecting a locally running Livebook to your application running on Fly.
 redirect_from: /docs/app-guides/elixir-livebook-connection-to-your-app
+redirect_from: /blog/connecting-livebook-to-your-production-application/
 author: mark
 categories:
   - elixir
 date: 2021-06-22
 ---
 
-[Livebook](https://github.com/elixir-nx/livebook) is an exciting advancement in the Elixir community. It was created for the Elixir machine learning library [nx](https://github.com/elixir-nx/nx). You can think of it as Elixir's version of [Jupyter Notebooks](https://jupyter.org/).
+[Livebook](https://github.com/elixir-nx/livebook) is an exciting advancement in the Elixir community. It was created for the Elixir machine learning library [Nx](https://github.com/elixir-nx/nx). You can think of it as Elixir's version of [Jupyter Notebooks](https://jupyter.org/).
 
 Livebook ends up being very flexible and powerful. Because Elixir nodes can easily be clustered together, you can run Livebook on your local machine, connect it to your Elixir servers, and do some really interesting things.
 
 Visualizing the setup:
 
-![WireGuard livebook connection](/docs/images/elixir-livebook-to-server-fly-overview.png?2/3&centered)
+![WireGuard livebook connection](/docs/images/elixir-livebook-to-server-fly-overview.webp?2/3&centered)
 
 ## Requirements
 
@@ -24,7 +25,7 @@ There are a few requirements for this to work.
 
 - **Livebook requires Elixir version 1.14.2 or higher**. Livebook runs locally on your machine, so that part is easy to control. However, the **server** side needs to have the same version of Elixir as well. When Livebook connects to the server, it loads some code into the server environment as well. So your server version of Elixir also needs to be 1.14.2 or higher. I recommend making your local version be the same as the production version to reduce potential problems.
 - **Known cookie value on your server**. Livebook needs to know the cookie value used on the server. Follow [this guide to give your app a static cookie value](/docs/elixir/the-basics/clustering/#the-cookie-situation).
-- **WireGuard setup on your local machine**. Follow the Fly.io [Private Network VPN](/docs/reference/private-networking/#private-network-vpn) guide to walk through that.
+- **WireGuard setup on your local machine**. Follow the Fly.io [Private Network VPN](/docs/networking/private-networking/#private-network-vpn) guide to walk through that.
 
 <aside class="callout">
 **Elixir Version Tip**
@@ -36,17 +37,27 @@ You may need to update the version in your Dockerfile and deploy the application
 
 ## Installing Livebook
 
-There are several ways to [install and run Livebook](https://livebook.dev/#install). [Livebook Desktop](https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu) is really slick and deploying a [Livebook on Fly](https://fly.io/launch/livebook) is super easy, however, these approaches currently won't work for what we're doing here. We need to launch Livebook with some special settings and we want to connect to our deployed application through Wireguard. To do that, we'll use the `escript` setup for Livebook.
+There are several ways to [install and run Livebook](https://livebook.dev/#install). [Livebook Desktop](https://news.livebook.dev/introducing-the-livebook-desktop-app-4C8dpu) is really slick and deploying a [Livebook on Fly](https://fly.io/launch/livebook) is super easy.
 
-Fortunately for us, [installing Livebook as an escript](https://github.com/elixir-nx/livebook#escript) is versatile and convenient.
+Livebook Desktop can be installed as an app on Mac and Window. For Linux, we can pull the source or install it as an [Escript](https://github.com/elixir-nx/livebook#escript).
+
+### Using Livebook Desktop
+
+When running [Livebook Desktop](https://livebook.dev/#install), Livebook will invoke on boot a file named `~/.livebookdesktop.sh` on macOS or `%USERPROFILE%\.livebookdesktop.bat` on Windows. This file can be modified to set environment variables used by Livebook, such as:
+
+```
+export LIVEBOOK_DISTRIBUTION=name
+export ERL_AFLAGS="-proto_dist inet6_tcp"
+```
 
 ### Install as an Escript
 
 This section assumes you are already setup for [local Elixir development](https://elixir-lang.org/install.html).
 
-Following the Livebook [Escript README section](https://github.com/elixir-nx/livebook#escript), this is how you install Livebook.
+Following the Livebook [Escript README section](https://github.com/elixir-nx/livebook#escript), this is how to install Livebook.
 
-```cmd
+```
+mix do local.rebar --force, local.hex --force
 mix escript.install hex livebook
 ```
 
@@ -56,13 +67,11 @@ Then locally launching Livebook is:
 livebook server
 ```
 
-When connecting to a Fly.io app, we need to launch it like this:
+When connecting to a Fly.io app, we can pass the needed ENV value like this:
 
 ```cmd
-ERL_AFLAGS="-proto_dist inet6_tcp" livebook server --name livebook@127.0.0.1
+LIVEBOOK_DISTRIBUTION=name ERL_AFLAGS="-proto_dist inet6_tcp" livebook server
 ```
-
-The special customization we need is the `ERL_AFLAGS` settings passed to the beam on startup. The `--name` setting gives our local node a fully qualified name, which helps us connect to remote servers.
 
 <aside class="callout">
 **Upgrading an Escript Installed Livebook**
@@ -74,6 +83,12 @@ When upgrading your Livebook version while using [asdf](https://asdf-vm.com/) fo
 * Re-shim to get the command: `asdf reshim elixir`
 * Verify you have the upgrade: `livebook --version`
 </aside>
+
+### ENV Values
+
+The `ERL_AFLAGS` settings is passed to the BEAM on startup. The `LIVEBOOK_DISTRIBUTION=name` setting configures Livebook to run with a fully qualified name and to be ready for clustering.
+
+The Livebook README page [documents the supported ENV values](https://github.com/livebook-dev/livebook#environment-variables).
 
 ## Running Livebook
 
@@ -93,19 +108,19 @@ Create a new notebook titled, "Remote Connect Test" and add a Section.
 
 On the left side, click the "Runtime settings" as pictured below:
 
-![Runtime settings location on sidebar](/docs/images/livebook-data-analysis-runtime-click-step1.png?centered&card)
+![Runtime settings location on sidebar](/docs/images/livebook-data-analysis-runtime-click-step1.webp?centered&card)
 
 Before we can run any Elixir code, we need to connect to the remote server. To connect to the remote server, we will "Configure" the server we want to connect to.
 
-![Runtime settings configure connection](/docs/images/livebook-data-analysis-runtime-click-step2.png?centered&card)
+![Runtime settings configure connection](/docs/images/livebook-data-analysis-runtime-click-step2.webp?centered&card)
 
 Now we use "Attached Node" to connect to an existing Elixir node.
 
-![Runtime settings configure connection](/docs/images/livebook-data-analysis-runtime-click-step3.png?centered&card)
+![Runtime settings configure connection](/docs/images/livebook-data-analysis-runtime-click-step3.webp?centered&card)
 
 With the "Attached Node" mode selected, we need to provide 2 additional pieces of information before we can connect.
 
-![Attach steps](/docs/images/livebook-runtime-attach-steps.png?centered&card)
+![Attach steps](/docs/images/livebook-runtime-attach-steps.webp?centered&card)
 
 1. **Name** - Our node's name
 2. **Cookie** - The cookie value used by the deployed server
@@ -150,7 +165,7 @@ When you have the name and cookie, enter those and "**Connect**" to the server.
 
 **REMEMBER:** Each time we deploy our apps, the private IP will change. We need to get the current IP before we can connect again.
 
-Once connected, we have code completion available in the Elixir cells for the app we are connected to. The [HelloElixir app](https://github.com/fly-apps/hello_elixir-dockerfile) doesn't have anything useful to run so we can just prove to ourselves that our code is being executed remotely.
+Once connected, we have code completion available in the Elixir cells for the app we are connected to. The [HelloElixir app](https://github.com/fly-apps/hello_elixir) doesn't have anything useful to run so we can just prove to ourselves that our code is being executed remotely.
 
 Add the following code to a Livebook Elixir cell and execute it.
 

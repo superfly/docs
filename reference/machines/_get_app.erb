@@ -1,0 +1,16 @@
+```
+curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name" 
+
+```
+**Status: 200**
+```json
+{
+  "name": "my-app-name",
+  "organization": {
+    "name": "My Org",
+    "slug": "personal"
+  }
+}
+```

@@ -1,0 +1,55 @@
+<%= partial "/docs/partials/back_to_docs" %>
+
+<%
+  @nav = [
+    {
+      title: "Fly Machines",
+      path: "/docs/machines/",
+      accordion: false,
+      links: [
+        { text: "Introduction to Fly Machines", path: "/docs/machines/overview/" }
+      ]
+    },
+    {
+      title: "Machines API", 
+      path: "/docs/machines/api/",
+      open: true,
+      links: [
+        { text: "Working with the Machines API", path: "/docs/machines/api/working-with-machines-api/" },
+        { text: "Apps", path: "/docs/machines/api/apps-resource/" },
+        { text: "Machines", path: "/docs/machines/api/machines-resource/" },
+        { text: "Tokens", path: "/docs/machines/api/tokens-resource/" },
+        { text: "Volumes", path: "/docs/machines/api/volumes-resource/" },
+        { text: "OpenAPI Specification", path: "https://docs.machines.dev/#description/introduction+external" }
+      ]
+    },
+    {
+      title: "Machines and flyctl", 
+      open: true,
+      links: [
+        { text: "Run a new Machine", path: "/docs/machines/flyctl/fly-machine-run/" },
+        { text: "Update a Machine", path: "/docs/machines/flyctl/fly-machine-update/" }
+      ]
+    },
+    {
+      title: "Guides and Examples",
+      open: true,
+      links: [
+        { text: "Machine restart policy", path: "/docs/machines/guides-examples/machine-restart-policy/" },
+        { text: "Machine sizing", path: "/docs/machines/guides-examples/machine-sizing/" },
+        { text: "Run user code on Fly Machines", path: "/docs/machines/guides-examples/functions-with-machines/" }
+      ]
+    },
+    {
+      title: "Reference",
+      open: true,
+      links: [
+        { text: "Machine states", path: "/docs/machines/machine-states/" },
+        { text: "The Machine runtime environment", path: "/docs/machines/runtime-environment/" },
+        { text: "flyctl Machine commands", path: "/docs/flyctl/machine/" }
+      ]
+    }
+  ]
+%>
+
+<%= partial "/docs/partials/accordion_nav", locals: { nav: @nav } %>

@@ -1,0 +1,57 @@
+---
+title: "Run a Warp App"
+layout: framework_docs
+objective: Warp is a super-easy, composable, web server framework for warp speeds.
+redirect_from:
+ - /docs/languages-and-frameworks/warp/
+ - /docs/getting-started/warp/
+order: 3
+---
+
+
+<%= partial "/docs/languages-and-frameworks/partials/intro", locals: { runtime: "Warp", link: "https://docs.rs/warp/latest/warp/" } %>
+
+Warp is a super-easy, composable, web server framework for warp speeds.
+
+Deploying a Warp app on Fly.io happens at the speed of light! With the help of the [cargo chef](https://github.com/LukeMathWalker/cargo-chef), we get great build times and small images.
+
+## _Speedrun_
+
+<%= partial "/docs/languages-and-frameworks/partials/flyctl" %>
+
+<%= partial "/docs/rust/partials/speedrun", locals: { runtime: "warp" }  %>
+
+
+## _Deploy a Warp App from scratch_
+
+<%= partial "/docs/rust/partials/cargo-new", locals: { runtime: "warp" }  %>
+
+Then we have to add some dependencies to the project:
+
+```cmd
+cargo add warp
+cargo add tokio -F full
+```
+
+Now, let's create a simple Warp app in `src/main.rs`:
+
+```rust
+use warp::Filter;
+
+#[tokio::main]
+async fn main() {
+    let hello = warp::path::end().map(|| "Hello from fly.io");
+
+    warp::serve(hello)
+        .run(([0, 0, 0, 0], 8080))
+        .await;
+}
+```
+
+This will display a "Hello from fly.io!" message when you visit the root URL.
+Take note that we serve the app on port `8080`.
+
+We can confirm everything works fine by running `cargo run` and checking out `http://localhost:8080`.
+
+
+<%= partial "/docs/rust/partials/deploy", locals: { runtime: "warp" }  %>

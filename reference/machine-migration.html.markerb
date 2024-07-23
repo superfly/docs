@@ -1,0 +1,76 @@
+---
+title: Machine migration
+layout: docs
+nav: firecracker
+---
+
+Fly.io will migrate your Machines from problematic hosts to healthy hosts as required. Some of the reasons for migrating Machines include host overcrowding, deprecation, or scheduled maintenance. The migration process helps your applications run efficiently on the Fly.io platform. You don't need to take any action to migrate your Machines to another host and, if your app has [multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/), migration shouldn't result in any downtime for your app.
+
+## Machine migration process
+
+We migrate Machines using the following process:
+
+1. Acquire an internal lock to coordinate multiple Machine migrations in the Fly.io platform globally.
+1. Stop a Machine.
+1. Fork the Machine's volume to the destination host (if the Machine has an attached volume).
+1. Start a new Machine on the destination host.
+1. Release the internal lock.
+
+The following sections describe the migration process in more detail.
+
+### 1. Acquire an internal lock
+
+We set the internal lock for migration using your network ID. All the apps in your organization are on a [private network](/docs/networking/private-networking/) by default. There's no way around it, a Machine will be stopped prior to migration. When we lock by network ID, we ensure that we don't migrate other Machines from the same app or, in fact, any other apps in your network, at the same time. This can prevent clustering or quorum issues for databases and avoid downtime for apps with multiple Machines.
+
+### 2. Stop a Machine
+
+We send the Machine the signal configured as its `kill_signal` in `fly.toml` or the `stop_config` settings in the Machine config and then shut down. This should initiate a graceful shutdown of a running app Machine.
+
+### 3. Fork the Machine's volume
+
+If the Machine has an attached volume, we create an exact copy of that volume, including its data, on the destination host. The new volume will have a different volume ID than the original volume.
+
+### 4. Start a new machine
+
+We start a new Machine on the destination host and, if applicable, attach the volume we copied in step 3. The new Machine will have the same Machine ID as the original Machine. 
+
+The 6PN address will be different from the original machine. Most apps communicating on Fly.io private networks use [our internal DNS](/docs/networking/private-networking/#fly-io-internal-dns) to query for 6PN addresses and that feature will continue to work as usual. Note that apps should never rely on 6PN addresses remaining static.
+
+### 5. Release the internal lock
+
+We release the internal lock on your private network. The process repeats if any of your apps have more Machines on the affected host.
+
+## Check whether your machine was migrated
+
+Even though you usually don't need to take any action after we migrate a Machine, you can use the `fly machine status` command to check Event Logs for migration events. For example, the following Machine was migrated, as indicated the `migrated=true` info in the `launch` Event Log:
+
+```cmd
+fly machine status --app epic-stack-691c
+? Select a machine: d8dd625fed5568 crimson-grass-559 (started, region ord, process group 'app')
+Machine ID: d8dd625fed5568
+Instance ID: 01J08P60K8NK33K9P5MQ5M4QN8
+State: started
+
+VM
+  ID            = d8dd625fed5568
+  Instance ID   = 01J08P60K8NK33K9P5MQ5M4QN8
+  State         = started
+  Image         = epic-stack-691c:deployment-01HW81ZEKCE8GB6GV7506VCS7T
+  Name          = crimson-grass-559
+  Private IP    = fdaa:5:a89e:a7b:152:c79c:e922:2
+  Region        = ord
+  Process Group = app
+  CPU Kind      = shared
+  vCPUs         = 1
+  Memory        = 1024
+  Created       = 2024-06-13T11:36:59Z
+  Updated       = 2024-06-13T11:37:01Z
+  Entrypoint    =
+  Command       =
+  Volume        = vol_r6gzo1p3yq83yxjv
+
+Event Logs
+STATE   EVENT   SOURCE  TIMESTAMP                       INFO
+started start   flyd    2024-06-13T13:37:01.36+02:00
+created launch  flyd    2024-06-13T13:36:59.864+02:00   migrated=true
+```

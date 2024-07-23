@@ -1,0 +1,90 @@
+---
+title: Troubleshoot apps when a host is unavailable
+objective: 
+layout: docs
+nav: apps
+---
+
+<figure>
+  <img src="/static/images/docs-magnify.webp" alt="">
+</figure>
+
+Fly.io has multiple hosts (physical hardware) in every supported [region](/docs/reference/regions/). From time to time, a hardware failure, connectivity issues, or other factors will make a host unavailable. A single-host issue may cause a sustained or intermittent outage, or generally degraded performance, and this will disproportionately affect apps that run on a single Machine.
+
+A host can be down for an hour, or a day, or sometimes longer. 
+
+For production apps, or any apps that require high availability, we strongly recommend redundancy to protect against single-host failure. This means running multiple Machines, and for stateful apps it means having a clustering mechanism (such as those built into LiteFS and Postgres, for example) to replicate data between multiple volumes, because volumes are pinned to specific hosts.
+
+<div class="important icon">
+**Important:** The steps for recovery in this document don’t guarantee that you’ll be able to access your app if you have a single Machine on a host that’s affected by an ongoing issue.
+</div>
+
+## Notification of host issues
+
+You’ll get a notification on the Status page in your [dashboard](https://fly.io/dashboard/) when there’s a host issue that affects one or more of your apps. We don’t post individual host issues to our main status page because a host issue usually affects a small number of users in a single region.
+
+## Apps with one Machine and no volumes
+
+You can usually restore an app with one Machine and no volumes by scaling down and back up, or by deploying a new version of the app.
+
+### Scale the app to get new Machines
+
+For apps without volumes, you can bring up a new Machine by scaling to zero and then back up again. The new Machines will be placed on a healthy host.
+
+1. Scale the app to zero Machines:
+
+    ```cmd
+    fly scale count 0
+    ```
+
+2. Scale back up to 2 or more Machines:
+
+    ```cmd
+    fly scale count 2
+    ```
+
+<div class="note icon">
+**Note:** When you scale all your app's Machines to zero, the Machine size resets to shared-cpu-1x with 256MB of RAM. Use one of the `--vm-` options to size the Machines. For example: `fly scale count 2 --vm-size shared-cpu-4x`. See the [fly scale count docs](/docs/flyctl/scale-count/) for options.
+</div>
+
+
+### Deploy the app to get new Machines
+
+In most cases, deploying a new version of your app with `fly deploy` should also work for an app without volumes, because the new Machines will be deployed to healthy hosts.
+
+<div class="important icon">
+<b>Important:</b> Running `fly deploy` during a host outage generally won't destroy the existing Machine. When the impacted host returns, the Machine that was on it may return as well. In the case of deploying during an outage, this can result in one Machine running an older version of your code. In that case you should destroy the outdated Machine if it comes back.
+</div>
+
+## Apps with one Machine and an attached volume
+
+Volumes are pinned to physical hosts, so when there's a host outage the volume is unreachable. In most cases, you should be able to get your app running again by restoring from a snapshot into a new volume.
+
+<div class="warning icon">
+**Warning:** We take snapshots once every 24 hours. Any data stored between the time when the snapshot was taken and the time when the restore is made will not be included.
+</div>
+
+1. Run `fly volumes list` and copy the volume ID.
+
+1. Run `fly volumes snapshots list <volume id>` to list the volume’s snapshots and then copy the snapshot ID.
+
+1. Run `fly volumes create <volume name> --snapshot-id <snapshot id> -s <volume size in GB>`  to create a new volume from a stored snapshot.
+
+1. Run `fly scale count 1` to create a new Machine that will pick up the new volume.
+
+## Fly Postgres database apps
+
+If you're running a high availability Postgres cluster with multiple nodes, a host issue impacting one of your nodes shouldn't cause an issue; by default we run each node on a separate host. If the host your primary node is on goes down, the cluster will fail over to a healthy node. 
+
+However, if your database is running on a single Machine, and you don’t have any replicas to fail over to, then you won’t be able to connect during the host outage. Similar to the single volume steps above, you can create a new Postgres app from your most recent volume snapshot using `fly postgres create --snapshot-id <snapshot_id>`. See [Backup, restores, & snapshots](/docs/postgres/managing/backup-and-restore/) for details.
+
+## Prevent downtime when there's a single host issue
+
+Fly.io strongly recommends running at least two Machines per app in your primary region and we have features that can help make [app availability and resiliency](/docs/reference/app-availability/) more affordable. When possible, we place volumes on different hosts in the primary region. If one host goes down, then your app will still have a Machine and volume on a healthy host.
+
+## Related topics
+
+- [App availability and resiliency](/docs/reference/app-availability/)
+- [Resilient apps use multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/)
+- [Troubleshooting your deployment](/docs/getting-started/troubleshooting/)
+- [Fly.io error codes and troubleshooting](/docs/monitoring/error-codes/)

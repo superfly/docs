@@ -2,6 +2,7 @@
 title: Dockerfiles and fly.toml
 layout: framework_docs
 order: 4
+redirect_from: /rails/getting-started/dockerfiles/
 ---
 
 Once you have completed running `fly launch` you have some new files,
@@ -53,7 +54,7 @@ bin/rails generate dockerfile --add procps net-tools traceroute iputils-ping
 
 Every time you deploy you will start out with a fresh image.  If your database is on that image, it too will start fresh which undoubtedly is not what you want.
 
-The solution is to create a [Fly Volume](https://fly.io/docs/reference/volumes/).
+The solution is to create a [Fly Volume](https://fly.io/docs/volumes/).
 
 Once you have created a volume, you will need to set the `DATABASE_URL` environment variable to cause Rails to put your database on that volume.  The result will be the following lines in your `fly.toml` file:
 
@@ -70,7 +71,7 @@ Adjust the name of the source to match the name of the volume you created.
 
 ## Out of Memory
 
-RAM memory is a precious commodity - both to those on Hobby plans who want
+RAM is a precious commodity - both to those on Hobby plans who want
 to remain within or near the free allowances, and to apps that want to scale
 to be able to handle a large number of concurrent connections.
 
@@ -82,7 +83,7 @@ bin/rails generate dockerfile --fullstaq --jemalloc
 
 At some point you may find that you need more memory.  There are two types:
 real and virtual.  Real is faster, but more expensive.  Virtual is slower
-and often times free.
+but free.
 
 To scale your app to 1GB of real memory, use:
 
@@ -90,10 +91,10 @@ To scale your app to 1GB of real memory, use:
 fly scale memory 1024
 ```
 
-To allocate 512MB of swap space for use as virtual memory, use:
+To allocate 1GB of swap space for use as virtual memory, add the following to your [`fly.toml`](https://fly.io/docs/reference/configuration/#swap_size_mb-option):
 
 ```cmd
-bin/rails generate dockerfile --swap=512M
+swap_size_mb = 1024
 ```
 
 ## Scaling
@@ -122,7 +123,7 @@ Fly provides the ability to `ssh` into your application, and it would
 be convenient to run things like the Rails console in one line:
 
 ```cmd
-fly ssh console -C '/rails/bin/rails console'
+fly ssh console --pty -C '/rails/bin/rails console'
 ```
 
 To enable `bin/rails` commands to be run in this manner, adjust your
@@ -161,10 +162,13 @@ before you deploy them by running the following commands:
 
 ```sh
 bin/rails generate dockerfile --compose
-docker buildx build . -t rails-welcome
-docker run -p 3000:3000 -e RAILS_MASTER_KEY=$(cat config/master.key) rails-welcome
+export RAILS_MASTER_KEY=$(cat config/master.key)
+docker compose build
+docker compose up
 ```
 
-Change `rails-welcome` to the name of your application.
+Windows PowerShell users will want to use the following command instead of export:
 
-Add `--load` to the `buildx` command if you want to save the image to the local docker.
+```powershell
+$Env:RAILS_MASTER_KEY = Get-Content 'config\master.key'
+```

@@ -1,0 +1,31 @@
+---
+title: Upgrade Postgres
+objective: Upgrade Fly instances with the latest version of Postgres.
+layout: framework_docs
+order: 60
+toc: false
+---
+
+You can upgrade a Fly Postgres cluster across minor Postgres app versions with [`fly image update`](/docs/flyctl/image-update/). This updates your Machines to the [latest release](https://github.com/fly-apps/postgres-flex/releases) of the [postgres-flex](https://github.com/fly-apps/postgres-flex) app.
+
+Check your current image with [`fly status`](/docs/flyctl/status/):
+
+```cmd
+fly status -a <postgres-app-name>
+```
+
+And upgrade with:
+
+```cmd
+fly image update -a <postgres-app-name>
+```
+
+The update only works if the major Postgres version in your existing Postgres app matches that in the newest Postgres app release, for example `postgres-flex:15.2` to `postgres-flex:15.3`.
+
+Upgrading Postgres across major versions is more complicated, and right now the way to do this is to provision a new cluster and restore a backup of your database data into it.
+
+<div class="important note">
+**Important:** If you're running the legacy version of Fly Postgres, then you won't be able to use `fly image update` to upgrade to the new Postgres Flex app. You'll need to create a new Postgres app and import your data using the [`fly postgres import`](/docs/flyctl/postgres-import/) tool.
+
+To see your Postgres image and version, run `fly image show`. Legacy postgres images use the `flyio/postgres` repository, new Postgres Flex images use the `flyio/postgres-flex` repository.
+</div>

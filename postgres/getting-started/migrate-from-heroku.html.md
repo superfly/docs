@@ -7,7 +7,7 @@ status: beta
 
 This guide runs you through how to migrate a database off of Heroku and onto Fly.io, but before that, let's go over some major differences between Heroku's managed Postgres offering and Fly.io's Postgres offering.
 
-First and foremost, if you deploy your Postgres database to Fly.io you'll be responsible for monitoring, configuring, scaling, and tuning it. If you don't provision enough disk space, your database will run out of space and stop accepting write queries. If you don't put monitoring in place for for your database, a customer might alert you to an issue.
+First and foremost, if you deploy your Postgres database to Fly.io you'll be responsible for monitoring, configuring, scaling, and tuning it. If you don't provision enough disk space, your database will run out of space and stop accepting write queries. If you don't put monitoring in place for your database, a customer might alert you to an issue.
 
 Fly.io ships a set of tools that makes it easier to setup Postgres database instances, connect to their console, perform Postgres version upgrades, and create and restore snapshots of the volume where Postgres data is stored.
 

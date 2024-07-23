@@ -82,13 +82,13 @@ fly deploy
 When that's done, view your app in a browser:
 
 ```cmd
-fly open
+fly apps open
 ```
 
 There's still work to be done to move more Heroku stuff over, so don't worry if the app doesn't boot right away. There's a few commands that you'll find useful to configure your environment:
 
 * `fly logs` - Read error messages and stack traces emitted by your Rails application.
-* `fly ssh console -C "/rails/bin/rails console"` - Launches a Rails shell, which is useful to interactively test components of your Rails application.
+* `fly ssh console --pty -C "/rails/bin/rails console"` - Launches a Rails shell, which is useful to interactively test components of your Rails application.
 
 ### Transfer Heroku secrets
 
@@ -98,7 +98,7 @@ To see all of your Heroku env vars and secrets, run:
 heroku config -s | grep -v -e "RAILS_MASTER_KEY" -e "DATABASE_URL" -e "REDIS_URL" -e "REDIS_TLS_URL" | fly secrets import
 ```
 
-This command exports the following Heroku secrets: `RAILS_MASTER_KEY`, `DATABASE_URL` `REDIS_URL`, and `REDIS_TLS_URL`, and imports them into Fly.
+This command exports the Heroku secrets, excluding `RAILS_MASTER_KEY`, `DATABASE_URL` `REDIS_URL`, and `REDIS_TLS_URL`, and imports them into Fly.
 
 Verify your Heroku secrets are in Fly.
 
@@ -151,7 +151,7 @@ fly secrets unset HEROKU_DATABASE_URL
 Then launch your Heroku app to see if its running.
 
 ```
-fly open
+fly apps open
 ```
 
 If you have a Redis server, there's a good chance you need to set that up.
@@ -183,7 +183,7 @@ If you have a `release:` line in your Heroku Procfile, that will listed separate
   release_command = "bin/rails db:migrate"
 ```
 
-You will also want to want to prevent your release command from also being
+You will also want to prevent your release command from also being
 run during the deploy step.  To do so, regenerate your dockerfile using:
 
 ```shell
@@ -226,7 +226,7 @@ Fly commands are a bit different than Heroku, but you'll get use to them after a
 | Task         | Heroku     | Fly |
 |--------------|-----------|------------|
 | Deployments | `git push heroku` | `fly deploy` |
-| Rails console | `heroku console` | `fly ssh console -C "/app/bin/rails console"` |
+| Rails console | `heroku console` | `fly ssh console --pty -C "/app/bin/rails console"` |
 | Database migration | `heroku rake db:migrate` | `fly ssh console -C "/app/bin/rake db:migrate"` |
 | Postgres console | `heroku psql` | `fly postgres connect -a <name-of-database-app-server>`
 | Tail log files | `heroku logs` | `fly logs` |

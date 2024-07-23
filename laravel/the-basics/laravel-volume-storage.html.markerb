@@ -1,0 +1,123 @@
+---
+title: "Persisting the Storage Folder"
+layout: framework_docs
+objective: Mount a volume to a re-initialized storage folder 
+order: 7
+---
+
+The [storage folder](https://laravel.com/docs/9.x/filesystem#the-local-driver) by default, holds several "generated" essentials of your Laravel application. 
+
+It's the default burrow for session, cache, and file data amongst others. If you'd opt to persist data on this folder, you'll have to mount a [volume](/docs/volumes/) to it.
+
+<div class="warning icon">
+Fly Volumes do not automatically sync their data with each other. Please remember to create the appropriate data-replication logic if your Fly App will be using more than one volume instance, and if your app requires data available across its Volumes.
+</div>
+
+<div class="important icon">
+For file storage, you can utilize the S3-compatible [Tigris service](https://www.tigrisdata.com/docs/overview/)! 
+
+Aside from offering S3-compatible storage buckets, it handles data distribution and cache management for you, providing CDN-like behavior for your application's file storage with almost zero-configuration needed. 
+
+Check out its integration with Laravel [here](/docs/laravel/the-basics/laravel-tigris-file-storage/).
+</div> 
+
+## The Steps
+
+1.  Make sure you are in your Laravel Fly App's directory
+
+    ```cmd
+    cd <laravel-fly-configured-app>
+    ```
+
+2.  Then, check the number of machines currently available for your Fly App:
+
+    ```cmd
+    fly status
+    ```
+
+    In this example today, the app is deployed in the AMS region, and has the [default number of two machines](https://fly.io/docs/reference/app-availability/#two-machines-for-process-groups-with-services) created for it:
+    ```cmd
+
+    Machines
+    PROCESS ID              VERSION REGION  STATE   ROLE    CHECKS  LAST UPDATED         
+    app     5683945bd46448  1       ams     started                 2023-10-03T09:54:04Z
+    app     e82d922f010908  1       ams     started                 2023-10-03T09:54:25Z
+    ```
+
+    
+3.  To mount a volume named `"storage_vol"` to this Fly App, you'll have to create two `"storage_vol"` volumes in the AMS region, [one for each machine](https://fly.io/docs/volumes/overview/#volume-considerations):
+    ```cmd
+    fly volumes create storage_vol --region ams --count 2 
+    ```
+    Running the command above should create two separate volumes with the name "storage_vol", in the AMS region for your Laravel Fly App.
+   
+4.  Next, revise your Laravel Fly App's `fly.toml` file to mount the Volumes above to each machine's storage folder:
+
+    ```
+    [mounts]
+      source="storage_vol"
+      destination="/var/www/html/storage"
+    ```
+
+      <div class="callout">
+      Mounting a Volume to a folder will initially erase any item the folder contains during the first time the Volume is mounted for the folder.
+      <br><br>
+      For example, Laravel's storage folder contains subfolders: app, framework, and logs. 
+      Mounting a volume to the storage folder erases these directories, and leaves behind a sole item paradoxically named as "lost+found". 
+      <br><br>
+      But, you wouldn't want to only be left with "lost+found" in your storage folder. You'd want to still have the necessary files and directories in there for successful session, views, caching, and file storage compliance with Laravel's default configuration.
+      </div>
+
+
+5.  To fix the little storage-content-erasure issue as stated in the callout above, please go ahead and make a copy of your storage folder in a "backup" folder. You can name this directory "storage_".
+
+    ```cmd
+    cp -r storage storage_
+    ```
+
+    You'll later use this folder to copy over its contents to the volumized storage folder.
+
+6.  Next create a [Startup Script](/docs/laravel/the-basics/customizing-deployments/) that will initialize the volumized storage folder's contents.
+    ```cmd
+    touch .fly/scripts/1_storage_init.sh
+    ```
+
+    Start up scripts are run in numeric-alphabetical order. Naming `1\_storage\_init.sh` makes sure it is the first script run. Otherwise, naming the file as `storage_init.sh` alone would've moved the `caches.sh` script above it, and would've executed before storage initialization happened. One of the commands in the `caches.sh` will not have worked properly, due to a lack of properly initialized storage directory.
+
+    <b>On to the content of the Start Up script:</b>
+
+    ```bash
+    FOLDER=/var/www/html/storage/app
+    if [ ! -d "$FOLDER" ]; then
+        echo "$FOLDER is not a directory, copying storage_ content to storage"
+        cp -r /var/www/html/storage_/. /var/www/html/storage
+        echo "deleting storage_..."
+        rm -rf /var/www/html/storage_
+    fi
+    ```
+
+    So what happened above?
+    - The condition statement checks if the app folder does not exist in the volumized storage folder. If it does not exist, it copies over the contents of the storage_ folder to the volumized storage folder.
+
+7. <b>Finally, deploy your Laravel Fly App!</b>
+ 
+    ```cmd
+    fly deploy
+    ```
+
+
+
+#### **_Possible Errors_**
+
+```output
+Error not enough volumes named `<volume_name>` (1) to run `(<n>)` processes
+```
+
+The above error can come up after configuring your volume in `fly.toml` and executing `fly deploy`. 
+
+It can mean that there are `<n>` processes configured in your `fly.toml` trying to use the volume!
+Take note however, that a Volume can only be used by one at any given time. 
+
+One way to fix this issue is to separate each process into [different Fly.io apps](/docs/app-guides/multiple-processes/#maybe-you-want-multiple-apps-though). Of course, separate application per process might require inter-communication between the applications. 
+
+Fly.io applications can easily communicate with each other over a [private network](/docs/networking/private-networking/). Not only that, but Fly.io also offers the `fly-replay` [response header](/docs/networking/dynamic-request-routing/#the-fly-replay-response-header) which can be used to "redirect" request from one application to another, and return response from the correct application.

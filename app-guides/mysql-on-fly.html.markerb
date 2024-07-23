@@ -1,0 +1,190 @@
+---
+title: "Use a MySQL Database"
+layout: docs
+sitemap: false
+nav: firecracker
+author: fideloper
+categories:
+  - mysql
+  - guide
+  - database
+date: 2022-07-29
+---
+
+If you just want to run a quick, self-managed MySQL instance on Fly.io, here's how to do it. It's pretty basic, with one caveat around using a [Fly Volume](/docs/volumes/) to persist data.
+
+Most Fly apps use a `Dockerfile` to define an application and its dependencies. However, in this case we can use MySQL's official container directly - no need for a custom `Dockerfile`!
+
+Here's how to run MySQL.
+
+## Create the App
+
+We'll run MySQL as a new app:
+
+```bash
+# Make a directory for the mysql app
+mkdir my-mysql
+cd my-mysql
+
+# Run `fly launch` to create an app
+# Use the --no-deploy option since we'll make changes before first deploy
+# Use the --image option to specify a MySQL Docker image
+fly launch --no-deploy --image mysql:8
+```
+
+Type `y` when prompted to tweak the default app settings. Then, on the Fly Launch page:
+
+- Name the app whatever you'd like. The name will become a hostname our application uses to connect to the database, such as `my-mysql.internal`.
+- If you're using MySQL 8, it's a good idea to add some additional RAM to the VM: we recommend selecting 2GB of VM Memory.
+
+Confirm the settings and return to your terminal.
+
+## Configure the App
+
+Let's create a volume straight-away. If you don't create a volume, you'll lose all of your data on each deployment.
+
+```bash
+# Create a volume named "mysqldata" within our app "my-mysql"
+fly volumes create mysqldata --size 10 # gb
+```
+
+We also need to set some secrets required by the [MySQL container](https://hub.docker.com/_/mysql+external):
+
+```bash
+# Set secrets:
+# MYSQL_PASSWORD      - password set for user $MYSQL_USER
+# MYSQL_ROOT_PASSWORD - password set for user "root"
+fly secrets set MYSQL_PASSWORD=password MYSQL_ROOT_PASSWORD=password
+```
+
+Save these secrets somewhere, because they're not accessible after you set them.
+
+Finally, edit the `fly.toml` file that `fly launch` generated.
+
+```toml
+# Keep your own app name
+app = 'my-mysql'
+# Keep your own primary region
+primary_region = "bos"
+
+[build]
+  image = 'mysql:8'
+
+[[vm]]
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 2048
+
+# The [processes] section is different for 8+, 8.4, and 5.7. Use the one that matches your version.
+# Use the following for versions 8 to 8.3:
+[processes]
+  app = """--datadir /data/mysql \
+    --default-authentication-plugin mysql_native_password"""
+
+# Uncomment and use the following for 8.4:
+# [processes]
+#  app = """--datadir /data/mysql \
+#    --mysql-native-password=ON"""
+
+# Uncomment and use the following for 5.7:
+# [processes]
+#  app = "--datadir /data/mysql"
+
+# Add the following sections for all versions
+[mounts]
+  source = "mysqldata"
+  destination = "/data"
+
+[env]
+  MYSQL_DATABASE = "some_db"
+  MYSQL_USER = "non_root_user"
+```
+
+There are a few important things to note:
+
+1. We deleted the `[[http_service]]` block and everything under it. We don't need it!
+1. In the `[env]` section, we added two not-so-secret environment variables that MySQL will need to initialize itself.
+    * The `MYSQL_USER` here should be any user but `root`, which already exists.
+1. We added the `[processes]` section for the default `app` process, which lets us pass custom commands (overriding Docker's `CMD`).
+    * For MySQL 8+, you'll want to use the `mysql_native_password` authentication plugin. As shown in the fly.toml above, there are different syntax for setting this plugin based on the MySQL version.
+    * If you're using **MySQL 5.7**, your `app` process can be simplified as shown in the `fly.toml` example above, as it uses `mysql_native_password` [by default](https://dev.mysql.com/doc/refman/5.7/en/native-pluggable-authentication.html#:~:text=client%20programs%20use-,mysql_native_password,-by%20default.%20The).
+    * **MySQL 8 to 8.3** must explicitly set this with the `--default-authentication-plugin` flag.
+    * Starting from **MySQL 8.4**, the `--default-authentication-plugin` option is [deprecated](https://github.com/docker-library/mysql/issues/1048#issuecomment-2088836076). If you're using 8.4+, you can make use of the `--mysql-native-password` flag instead.
+   
+<div class="important icon">
+**Important**: Set MySQL's data directory to a subdirectory of your mounted volume. Mounting a disk in Linux usually results in a `lost+found` directory being created. However, MySQL won't initialize into a data directory unless it's completely empty. That's why you need to use a subdirectory of the mounted location: `/data/mysql`.
+</div>
+
+
+## Deploy the App
+
+We're now ready to deploy the MySQL app! Go ahead and run:
+
+```bash
+fly deploy
+```
+
+After a minute of MySQL initializing itself (on its first run), you should now have an app running MySQL! 
+
+Your other apps can access the MySQL service by its name. In my case, I would use `my-mysql.internal` as the hostname. Any app that needs to access the database should set the hostname and username as environment variables, and create a secret for the database password.
+
+## Debugging Possible Errors
+
+### `mysqld: Table 'mysql.plugin' doesn't exist`
+
+This error is an indicator that the [mysql System Schema](https://dev.mysql.com/doc/refman/8.4/en/system-schema.html) inside the [MySQL data directory](https://dev.mysql.com/doc/refman/8.4/en/data-directory.html) is empty. This can happen due to different reasons. One of them is when a MySQL app is previously deployed with `--default-authentication-plugin`, and it gets re-deployed with the updated syntax `--mysql-native-password=ON`.
+
+The quickest way to fix this is to revise the `--datadir` flag to a different directory from what was previously set:
+
+```toml
+# Please revise the MySQL data directory to another location
+
+# For example if you had:
+[processes]
+app = "--datadir /data/mysql"
+
+# You can change the path to a different directory
+[processes]
+app = "--datadir /data/mysql_
+```
+Changing the [MySQL data directory](https://dev.mysql.com/doc/refman/8.4/en/data-directory.html) will allow MySQL to completely initialize the new directory with a complete `mysql system schema.` Once done, redeploy your changes with `fly deploy`.
+
+
+## Access the database from outside
+
+To connect to your MySQL database from outside of your Fly organization, you need a WireGuard connection. However, `fly` on your local machine can connect using [user-mode WireGuard](/blog/our-user-mode-wireguard-year/) magic, without you having to set up your own WireGuard tunnel.
+
+You can forward the MySQL server port to your local machine using [`fly proxy`](/docs/flyctl/proxy/):
+
+```cmd
+flyctl proxy 3306 -a my-mysql
+```
+
+You can also set a different local port, if your `3306` port is already in use:
+
+```cmd
+flyctl proxy 13306:3306 -a my-mysql
+```
+
+Then connect to your MySQL server at `localhost:3306` and the username and password credentials from above:
+
+```cmd
+mysql -h localhost -P 3306 -u non_root_user -ppassword some_db
+```
+
+## Backups
+
+We'll take a snapshot of the created volume every day. We retain 5 days of snapshots.
+
+To restore a snapshot, make sure you have the latest version of the flyctl, and then create a new volume using the `--snapshot-id` flag.
+
+```bash
+# Get a volume ID
+fly volumes list -a my-mysql
+
+# List snapshots for a volume
+fly volumes snapshots list vol_xxx
+
+# Create a new volume from a snapshot
+fly volumes create --snapshot-id vs_xxx --size 10
+```

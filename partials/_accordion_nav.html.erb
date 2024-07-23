@@ -1,0 +1,53 @@
+<% 
+  def section_open?(section)
+    (!section[:path].nil? && current_page?(section[:path])) || (!section[:open].nil? && section[:open]) || section[:links].any? { |page| current_page?(page[:path]) }
+  end
+
+  nav.each { |nav| nav[:open] = section_open?(nav) unless nav[:title].nil? }
+  
+  nav.each do |nav| 
+%>
+  <% if nav[:text] %>
+    <%= nav_link nav[:text], nav[:path], class: "#{nav[:type]}-link" %>
+  <% elsif nav[:accordion] == false %>
+    <dl>
+      <dt>
+        <%= nav_link nav[:title], nav[:path], class: "index-link" %>
+      </dt>
+      <dd>
+        <ul>
+          <% nav[:links].each do |page| %>
+            <li><%= nav_link page[:text], page[:path], class: "subpage-link" %></li>
+          <% end %>
+        </ul>
+      </dd>
+    </dl>
+  <% else %>
+    <dl class="accordion<%= nav[:open] ? " open" : "" %>">
+      <dt class="accordion-header">
+        <% if nav[:title] && nav[:path] %>
+          <%= nav_link nav[:title], nav[:path], class: "title-link" %>
+          <button class="accordion-trigger" aria-expanded="<%= nav[:open] %>">
+            <span class="sr-only">Toggle <%= nav[:title] %> section</span>
+          </button>
+        <% else %>
+          <span class="accordion-title"><%= nav[:title] %></span>
+          <button class="accordion-trigger" aria-expanded="<%= nav[:open] %>">
+            <span class="sr-only">Toggle <%= nav[:title] %> section</span>
+          </button>
+        <% end %>
+      </dt>
+      <dd class="accordion-target">
+        <ul class="accordion-content" role="region" aria-label="<%= nav[:title] %>">
+          <% nav[:links].each do |page| %>
+            <% if page[:type] == "flyctl" %>
+              <li><%= flyctl_nav_link page[:text], page[:path] %></li>
+            <% else %>
+              <li><%= nav_link page[:text], page[:path] %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </dd>
+    </dl>
+  <% end %>
+<% end %>

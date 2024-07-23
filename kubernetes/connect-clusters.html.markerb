@@ -1,0 +1,53 @@
+---
+title: Connect to an FKS cluster
+layout: docs
+toc: false
+nav: firecracker
+---
+
+<div class= "important icon">
+Fly Kubernetes is in beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
+</div>
+
+Fly Kubernetes clusters are accessible over an organization's [private WireGuard network](/docs/reference/private-networking). To connect to a cluster, you need a WireGuard configuration. 
+Follow the [Private Network VPN instructions](/docs/networking/private-networking/#private-network-vpn) to set up a permanent WireGuard connection to your Fly.io IPv6 private network.
+
+To connect to your cluster, you need a kubeconfig file. These are generated when your [cluster is created](/docs/kubernetes/clusters/). They can also be retrieved using `flyctl`.
+First, we need our cluster name:
+
+```
+> fly ext k8s ls
+NAME                                    ORG             PRIMARY REGION
+fks-flyio-fksdemo                       flyio           iad
+```
+
+Then, we can use `flyctl` to save our kubeconfig to disk. It is automatically saved with the name `kubeconfig` in the current directory
+
+```
+> fly ext k8s save-kubeconfig
+> ls
+kubeconfig somefile.txt
+```
+
+With the kubeconfig file, you can connect to your cluster. To make life easier, you can move the kubeconfig file to the default location kubectl searches for it, `$HOME/.kube`, under the name `config`.
+Alternatively set the environment variable `KUBECONFIG` to the path to the kubeconfig file
+
+```
+export KUBECONFIG=/path/to/kubeconfig
+```
+
+Once set up, you can use `kubectl`:
+
+```
+> kubectl get ns
+NAME              STATUS   AGE
+kube-public       Active   22d
+kube-node-lease   Active   22d
+default           Active   22d
+kube-system       Active   22d
+```
+
+## Related topics
+
+- [Create an FKS cluster](/docs/kubernetes/clusters/)
+- [Configure FKS Services](/docs/kubernetes/services)

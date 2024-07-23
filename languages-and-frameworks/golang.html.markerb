@@ -1,0 +1,321 @@
+---
+title: "Run a Go App"
+layout: language-and-framework-docs
+redirect_from: /docs/getting-started/golang/
+---
+
+<%= partial "partials/intro", locals: { runtime: "Go" } %>
+
+<div class="note icon">
+Already have a Go Fly App? Integrate it with [Tigris for file storage!](https://www.tigrisdata.com/docs/concepts/architecture/)
+
+It's simple, it's scalable, it's secure&mdash;it's your bucket in the cloud with effortless CDN-magic. It's easy to integrate with Go, [try it out](docs/languages-and-frameworks/golang/#add-tigris-global-storage-optional).
+</div>
+
+## _The Example Application_
+
+You can get the code for the example from [the GitHub repository](https://github.com/fly-apps/go-example). Just `git clone https://github.com/fly-apps/go-example` to get a local copy.
+
+The `go-example` application is, as you'd expect for an example, small. It's a Go application that uses the http server and templates from the standard library. Here's all the code from `main.go`:
+
+```golang
+package main
+
+import (
+	"embed"
+	"html/template"
+	"log"
+	"net/http"
+	"os"
+)
+
+//go:embed templates/*
+var resources embed.FS
+
+var t = template.Must(template.ParseFS(resources, "templates/*"))
+
+func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		data := map[string]string{
+			"Region": os.Getenv("FLY_REGION"),
+		}
+
+		t.ExecuteTemplate(w, "index.html.tmpl", data)
+	})
+
+	log.Println("listening on", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
+}
+```
+
+The `main` function starts a server that responds with a html page showing the fly region that served the request. The template lives in `./templates/` and is embedded into the binary using the [embed](https://golang.org/pkg/embed/) package in go 1.16+.
+
+The template itself, `index.html.tmpl`, is very simple too:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+<h1>Hello from Fly</h1>
+{{ if .Region }}
+<h2>I'm running in the {{.Region}} region</h2>
+{{end}}
+</body>
+</html>
+```
+
+## _Building the Application_
+
+As with most Go applications, a simple `go build` will create a `hellofly` binary which we can run. It'll default to using port 8080 and you can view it on localhost:8080 with your browser. So, the raw application works. Now to package it up for Fly.
+
+## _Install Flyctl and Login_
+
+We are ready to start working with Fly and that means we need `flyctl`, our CLI app for managing apps on Fly. If you've already installed it, carry on. If not, hop over to [our installation guide](/docs/flyctl/install/). Once that's installed you'll want to [log in to Fly](/docs/getting-started/sign-up-sign-in/).
+
+## _Launch the app on Fly_
+
+To launch an app on fly, run `flyctl launch` in the directory with your source code. This will create and configure a fly app for you by inspecting your source code, then prompt you to deploy.
+
+```cmd
+flyctl launch
+```
+```output
+Scanning source code
+WARN no go.sum file found, please adjust your Dockerfile to remove references to go.sum
+Detected a Go app
+Creating app in /path/to/your/app
+We're about to launch your Go app on Fly.io. Here's what you're getting:
+
+Organization: Your                   (fly launch defaults to the personal org)
+Name:         hellofly               (derived from your directory name)
+Region:       Ashburn, Virginia (US) (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+
+? Do you want to tweak these settings before proceeding? n
+...
+Your app is ready! Deploy with `flyctl deploy`
+```
+
+First, this command scans your source code to determine how to build a deployment image as well as identify any other configuration your app needs, such as secrets and exposed ports.
+
+After your source code is scanned and the results are printed, you'll be prompted to ask if you want to change any of the defaults `flyctl` has set. 
+
+Choosing yes will bring you to a page in your browser where you can change any configuration, such as the region to deploy into or the size of the VM created.
+
+Once that is complete, `flyctl` will create a `fly.toml` file containing the configuration selected. It might then begin a deployment, or let you know you should start a deployment yourself via `flyctl deploy`.
+
+## _Inside `fly.toml`_
+
+The `fly.toml` file now contains a default configuration for deploying your app. In the process of creating that file, `flyctl` has also created a Fly-side application slot of the same name, "hellofly". If we look at the `fly.toml` file we can see the name in there:
+
+```toml
+app = 'hellofly'
+primary_region = 'iad'
+
+[build]
+  [build.args]
+    GO_VERSION = '1.21.5'
+
+[env]
+  PORT = '8080'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 1024
+```
+
+The `flyctl` command will always refer to this file in the current directory if it exists, specifically for the `app` name value at the start. That name will be used to identify the application to the Fly service. The rest of the file contains settings to be applied to the application when it deploys.
+
+You can see in the `[build]` section the builder image and the version of Go that was detected in your `go.mod` file. You can change or add build arguments to configure the build process using the `[build.args]` section.
+
+## _Inside `Dockerfile`_
+
+To keep Docker images small, [we use an Alpine base image](https://github.com/superfly/flyctl/blob/master/scanner/templates/go/Dockerfile). However, if you need `CGO` you may want to instead use Debian base images:
+
+```diff
+# ...
+
+- FROM golang:${GO_VERSION}-alpine as builder
++ FROM golang:${GO_VERSION}-bookworm as builder
+
+# ...
+
+- FROM alpine:latest
++ FROM debian:bookworm
+```
+
+If you want to use Alpine with `CGO` enabled, [read here](https://megamorf.gitlab.io/2019/09/08/alpine-go-builds-with-cgo-enabled/).
+
+## _Deploying to Fly_
+
+To deploy your app, just run:
+
+```cmd
+flyctl deploy
+```
+
+This will lookup our `fly.toml` file, and get the app name `hellofly` from there. Then `flyctl` will start the process of deploying our application to the Fly platform. Flyctl will return you to the command line when it's done.
+
+## _Viewing the Deployed App_
+
+Now the application has been deployed, let's find out more about its deployment. The command `flyctl status` will give you all the essential details.
+
+```cmd
+flyctl status
+```
+```output
+App
+  Name     = hellofly
+  Owner    = demo
+  Hostname = hellofly.fly.dev
+  Image    = hellofly:deployment-abcdefghxyz
+
+Machines
+PROCESS	 ID         VERSION	 REGION	 STATE  	ROLE  CHECKS	LAST UPDATED
+app      0ac9ed79   1        iad     running                2024-02-13T12:52:38Z
+app      1bd10fe8   1        iad     stopped                2024-02-13T12:52:38Z
+$
+```
+
+As you can see, the application has been deployed with a DNS hostname of hellofly.fly.dev, and an instance is running in Virginia. Your deployment's name will, of course, be different.
+
+## _Connecting to the App_
+
+The quickest way to browse your newly deployed application is with the `flyctl apps open` command.
+
+```cmd
+flyctl apps open
+```
+```output
+opening https://golang-example.fly.dev ...
+```
+
+Your browser will be sent to the displayed URL.
+
+## _Add Tigris Global Storage (Optional)_
+
+[Tigris](https://www.tigrisdata.com/docs/overview/) takes storage service a top-notch higher by providing CDN-like accessibility for your stored objects.
+It's [simple](https://www.tigrisdata.com/docs/api/s3/)&mdash;has S3-API compatibility, [scalable](https://www.tigrisdata.com/docs/concepts/architecture/)&mdash;automatically manages data replication and caching for you, and [secured](https://www.tigrisdata.com/docs/concepts/authnz/)&mdash;offers AuthN and AuthZ authentication mechanisms. Try it out!
+
+1. <b>Create a Tigris bucket</b>: run the create command inside your Go Fly App's directory. Afterwards, make sure to take note of the credentials received:
+
+	```cmd
+	fly storage create
+	```
+
+2. <b>Retrieve AWS SDK modules</b>: Tigris has an S3 compatible API service, thus, we can easily use [AWS SDK Go](https://aws.github.io/aws-sdk-go-v2/docs/getting-started/#install-the-aws-sdk-for-go-v2) modules to connect with the Tigris Bucket we've just created.
+	
+	```cmd
+	go get github.com/aws/aws-sdk-go-v2
+	go get github.com/aws/aws-sdk-go-v2/config
+	go get github.com/aws/aws-sdk-go-v2/service/s3
+	```
+
+3. <b>Create a [Client function](https://github.com/fly-apps/go-example-tigris/blob/main/tigris/tigris.go#L12)</b> that will return an instance ready to connect with a Tigris bucket:
+
+	```go
+	func Client(ctx context.Context) (*s3.Client, error) {
+		// 1. Create an aws.Config instance
+		cfg, err := config.LoadDefaultConfig(ctx)
+		if err != nil {
+			return nil, fmt.Errorf("failed to load Tigris config: %w", err)
+		}
+	
+		// 2. Create an Amazon S3 client using the AWS Config instance created, "cfg"
+		return s3.NewFromConfig(cfg, func(o *s3.Options){
+			o.BaseEndpoint = aws.String("https://fly.storage.tigris.dev")
+			o.Region = "auto"
+		}), nil
+	}
+	```
+	The `LoadDefaultConfig()` function will create an [aws.Config instance](https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/aws#Config) that can load [credentials from environment variables](https://aws.github.io/aws-sdk-go-v2/docs/configuring-sdk/#specifying-credentials).
+	Passing this instance to the `NewFromConfig()` [function](https://aws.github.io/aws-sdk-go-v2/docs/making-requests/#newfromconfig) creates an S3 service client we've configured to connect with the Tigris endpoint.
+
+
+4. <b>Set up Tigris Credentials</b>. 
+	To successfully connect with our Tigris Bucket, we can set our Tigris credentials as AWS SDK environment variables. 
+	
+	<b>In a local setup</b>, this should look something like:
+	```cmd
+	export AWS_ACCESS_KEY_ID=TIGRIS_ACCESS_KEY_ID
+	export AWS_SECRET_ACCESS_KEY=TIGRIS_SECRET_ACCESS_KEY
+	```
+	<b>For our Go Fly App</b>, these environment variables should have already been set as [secrets](https://fly.io/docs/flyctl/secrets/) during the running of `fly storage create`:
+	
+	```output
+	Setting the following secrets on ...:
+	AWS_ACCESS_KEY_ID: <AWS_ACCESS_KEY_ID_VALUE>
+	AWS_ENDPOINT_URL_S3: https://fly.storage.tigris.dev
+	AWS_REGION: auto
+	AWS_SECRET_ACCESS_KEY: <AWS_SECRET_ACCESS_KEY>
+	BUCKET_NAME: <BUCKET_NAME>
+	```
+	
+	Of course, this would only automatically happen if the create command was run in a directory containing a `fly.toml` for our Go Fly app. 
+	But if that wasn't the case, we can still manually set necessary [secrets](https://fly.io/docs/flyctl/secrets/) likeso:
+	```cmd
+	fly secrets set AWS_ACCESS_KEY_ID="<TIGRIS_ACCESS_KEY_ID>"
+	fly secrets set AWS_SECRET_ACCESS_KEY="<TIGRIS_SECRET_ACCESS_KEY>"
+	```
+
+5. <b>[Upload a file](https://github.com/fly-apps/go-example-tigris/blob/main/tigris/tigris.go#L26):</b> Aside from connecting with a Bucket, we can use other [AWS SDK functions](https://docs.aws.amazon.com/code-library/latest/ug/go_2_s3_code_examples.html). Let's use the `PutObject` function to  upload a text file on the go like so:
+
+```go
+  func Client( ctx context.Context ) (*s3.Client, error){}
+
+  func UploadText( ctx context.Context ) (string, error){
+      // 1. Create connection via client
+      conn, err := Client( ctx )
+
+      // 2. Upload sample file
+      if err==nil{
+        _, err = conn.PutObject(ctx, &s3.PutObjectInput{
+            Bucket: aws.String("<TIGRIS_BUCKET_NAME>"),
+            Key:    aws.String("sample.txt"),
+            Body:    strings.NewReader("testing content"),
+        })
+      }
+
+      if err!=nil{
+        return err.Error(), err
+      }else{
+        return "success",nil
+      }
+  }
+```
+For further reference, please see official Tigris [documentation for AWS SDK GO](https://www.tigrisdata.com/docs/sdks/s3/aws-go-sdk/), as well as [this compact package](https://github.com/Xe/x/blob/master/tigris/tigris.go) containing helpers for interacting with Tigris.
+
+## _Bonus Points_
+
+If you want to know what IP addresses the app is using, try `flyctl ips list`:
+
+```cmd
+flyctl ips list
+```
+```out
+TYPE ADDRESS                              CREATED AT
+v4   50.31.246.73                         23m42s ago
+v6   2a09:8280:1:3949:7ac8:fe55:d8ad:6b6f 23m42s ago
+```
+
+## _Arrived at Destination_
+
+You have successfully built, deployed, and connected to your first Go application on Fly.

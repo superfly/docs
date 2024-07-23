@@ -39,10 +39,10 @@ We can start an instance of our queue worker by adding another process. In this 
 [processes]
   app = ""
   cron = "cron -f"
-  worker = "php artisan queue:work"
+  worker = "php artisan queue:listen"
 ```
 
-Note that you may want to expand on the `queue:work` command. For example, you could run `php artisan queue:work sqs --sleep=3 --tries=3 --max-time=3600` to use the `sqs` driver and determine other behaviors.
+Note that you may want to expand on the `queue:listen` command. For example, you could run `php artisan queue:listen sqs --sleep=3 --tries=3 --max-time=3600` to use the `sqs` driver and determine other behaviors.
 
 ## Extra Credit
 
@@ -62,16 +62,16 @@ Lastly, don't forget that Fly.io builds a Docker image, and then converts that t
 
 ### Services
 
-The `[[services]]` section of the `fly.toml` should already contain the line `processes = ["app"]`, telling Fly to apply the service config to the application VM serving web requests. That will expose public ports and set health checks as you would want for the public-facing application.
+The `[http_service]` (or `[[services]]`) section of the `fly.toml` should already contain the line `processes = ["app"]`, telling Fly to apply the service config to the application VM serving web requests. That will expose public ports and set health checks as you would want for the public-facing application.
 
 ```toml
-[[services]]
-  http_checks = []
+[http_service]
   internal_port = 8080
-  processes = ["app"] # see! it's here!
-  protocol = "tcp"
-  script_checks = []
-  # and so on ...
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
 ```
 
 The queue and cron application instances don't need to expose public ports and don't support tcp-based health checks. Thus, we do not define any `services` for them.

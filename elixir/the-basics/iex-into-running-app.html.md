@@ -23,7 +23,7 @@ fly ssh issue --agent
 With SSH configured, let's open a console.
 
 ```cmd
-fly ssh console -C "app/bin/hello_elixir remote"
+fly ssh console --pty -C "/app/bin/hello_elixir remote"
 ```
 ```output
 Connecting to hello_elixir.internal... complete
@@ -38,8 +38,34 @@ You have a live IEx shell into your application!
 **Tip:** One of several ways to [exit the IEx shell](https://hexdocs.pm/iex/IEx.html#module-exiting-the-shell) is to hit `Ctrl+C, Ctrl+C`; to log out of the VM console, use `Ctrl+D` or `exit`.
 </div>
 
+<div class="callout">
+The `--pty` flag tells the SSH server to run the command in a pseudo-terminal. You will generally need this only when running interactive commands, like IEx.
+</div>
+
+## Creating a Shell Script for Convenience
+
+In UNIX-based operating system like Linux and Mac OS, we can create a shell script to make connecting to the server with an IEx terminal easy. The same can be done with a Windows PowerShell script or batch file.
+
+However we name the file will be our "command" for opening the IEx shell into the server. Here we'll use `fiex`, short for "Fly IEx".
+
+```shell
+#!/bin/bash
+
+set -e
+
+fly ssh console --pty --select -C "/app/bin/hello_elixir remote"
+```
+
+The `--pty` flag supports our interactive terminal and is needed to support the `--remsh` option used when we call `remote`.
+
+The `--select` flag will prompt for which instance to connect to. This is handy when deployed to multiple regions and we want to be explicit about where we connect.
+
+Remember to make the script executable: `chmod +x fiex`.
+
+Using a terminal from the app directory, type `./fiex` to quickly jump into an IEx shell on the server.
+
 ## What's Next?
 
 With another quick update we can prepare our application for clustering by naming our nodes differently.
 
-Next up, [Naming Your Elixir Node](/docs/elixir/the-basics/naming-your-elixir-node/)!
+Next up, [Clustering Your Application](/docs/elixir/the-basics/clustering/)!

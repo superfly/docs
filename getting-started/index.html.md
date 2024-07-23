@@ -1,29 +1,28 @@
 ---
-title: "Getting Started"
+title: "Getting started"
 layout: docs
-sitemap: false
 nav: firecracker
+toc: false
 ---
 
+Get up and running on Fly.io:
+
+- **[Quickstart](/docs/getting-started/launch/):** Launch your own app now.
+
+- **[Launch a demo app](/docs/hands-on/):** Walk through installing the flyctl command-line tool and creating an account, then launch a simple "hellofly" demo app.
+
+- **[Choose your language or framework](/docs/getting-started/get-started-by-framework/):** Get started on Fly.io with the tech _you_ love.
+
+- **[Fly.io essentials](/docs/getting-started/essentials):** A primer on Fly Machines and Fly Launch, plus the Fly.io glossary. It's all here.
+
 <figure>
-  <img src="/static/images/docs-guide.jpg" srcset="/static/images/docs-guide@2x.jpg 2x" alt="Illustration by Annie Ruygt of a chair and a small table holding a hot drink, on a rooftop, with a city skyline and hot-air balloons in the background">
+  <img src="/static/images/docs-guide.webp" srcset="/static/images/docs-guide@2x.webp 2x" alt="Illustration by Annie Ruygt of a chair and a small table holding a hot drink, on a rooftop, with a city skyline and hot-air balloons in the background">
 </figure>
 
-This section of the Fly.io docs is all about getting you up and running quickly.
+## Learn more
 
-If you’re new to Fly.io, our [Hands-on section](/docs/hands-on/) will take you through creating an account, installing `flyctl`, the Fly.io command-line tool, and launching a simple demo app.
-
-Once that's done, you can dive straight in and check out our [Language & Frameworks Guides](/docs/languages-and-frameworks/) for a demonstration matching your project, or stick around for a tour through the commands you'll need to work with Fly Apps through their entire lifecycle, and a troubleshooting section for those occasional moments when things don't go as expected.
-
-* [Working with Fly Apps](/docs/getting-started/working-with-fly-apps/) covers
-  * Finding out about your app - the `info` and `status` commands
-  * Viewing app logs
-  * Managing secrets for an app
-  * Adding hostnames and creating certificates
-* [Troubleshooting Deployments](/docs/getting-started/troubleshooting/) covers
-  * Port settings and checking them
-  * Reviewing deployment logs
-  * Checking your app's host binding
-
-
-We also have some [web-based launchers](https://fly.io/launch/), including [Turboku](https://fly.io/launch/heroku); a way to dip your toes in by cloning a Heroku app to Fly.io. Read about it in the [New Turboku launch post](https://fly.io/blog/new-turboku/).
+* [Fly Launch](/docs/apps): You've tried the `fly launch` command. Now learn how to use all the Fly Launch features that help you manage and run your apps.
+* [Fly.io Blueprints](/docs/blueprints/): A library of patterns and examples that you can apply in your own projects.
+* [Databases & Storage](/docs/database-storage-guides/): Options for persistent data storage on Fly.io.
+* [Fly Machines](/docs/machines/): Go deeper with our fast-launching VMs, and use them to run your projects and tasks.
+* [Networking](/docs/networking): How to connect to an app service, use a custom domain, and take advantage of private networking and dynamic request routing.

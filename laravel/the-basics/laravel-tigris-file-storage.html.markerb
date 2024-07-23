@@ -1,0 +1,103 @@
+---
+title: "Tigris for CDN File Storage"
+layout: framework_docs
+objective: Integrate Tigris Bucket using Laravel S3 driver
+order: 8
+---
+[Tigris is an S3-compatible](https://www.tigrisdata.com/docs/overview/) storage service built on Fly.io infrastructure. It provides an intelligent cache-managing, data replication service that offers CDN-like behavior for your object storage with almost-zero configuration needed. 
+
+The Laravel Flysystem integration provides a driver for working with Amazon S3-compatible services. Since Tigris supports the S3 API, Laravel's existing S3 driver can be used to connect with it. 
+
+It's really easy to get started with Tigris. Just create a bucket, plug in its credentials to your Laravel app, upload your files, and users from around the globe should be able to access your files closer and faster thanks to Tigris' automatic data distribution feature. Try it out!
+
+## The Tigris Bucket
+1. Create a Tigris Bucket
+    
+    You can create a Tigris bucket through the `flyctl` cli. Pro tip: run this command inside a Fly.io initialized project, doing so will allow `flyctl` to automatically set secrets on your Laravel Fly app using the credentials of your Tigris Bucket:
+
+    ```cli
+    // Open your project directory
+    cd my-laravel-fly-initialized-app
+
+    // Run the create command
+    fly storage create
+    ```
+    You'll be asked for a custom name for your bucket, but you can choose to create one with a random name. 
+    Once your bucket completes initialization, you'll receive its credentials in your console.
+
+    If you did run the create command inside your Laravel Fly app's project directory, these secrets will automatically get set for your Laravel Fly app:
+    ```cli
+    Setting the following secrets on <fly-app-name>:
+    AWS_ACCESS_KEY_ID: <AWS_ACCESS_KEY_ID_VALUE>
+    AWS_ENDPOINT_URL_S3: https://fly.storage.tigris.dev
+    AWS_REGION: auto
+    AWS_SECRET_ACCESS_KEY: <AWS_SECRET_ACCESS_KEY>
+    BUCKET_NAME: <BUCKET_NAME>
+    ```
+
+2. Visit your Bucket
+
+    Once you've taken note of the secrets set above, you can visit this newly created bucket by getting your console link using the `BUCKET_NAME` attribute received from above:
+
+    ```
+    fly storage dashboard <BUCKET_NAME>
+    ```
+    Running the command above should give you a link to your bucket's console dashboard:
+    ```
+    Opening https://console.tigris.dev/flyio/signin?org_id=6y84k....
+    ```
+    The link provided will lead straight to your Tigris console, where you should see the name of the bucket you've recently created. Of course, you'll have to be logged in via Fly.io to access this dashboard. 
+
+## Integrating Laravel with Tigris
+
+Now that we have our Tigris Bucket, let's connect it with our Laravel app.
+
+1. Configure Laravel with S3 driver using Tigris credentials:
+
+    Make sure you have the [Flysystem S3 package installed](https://laravel.com/docs/11.x/filesystem#s3-driver-configuration) for your Laravel project:
+    ```
+    composer require league/flysystem-aws-s3-v3 "^3.0" --with-all-dependencies
+    ```
+ 
+    Let's use the credentials of our Tigris bucket as values for our S3 driver:
+
+    | Tigris Credential | Laravel S3 Environment Variable |
+    |------|-------------|
+        AWS\_ACCESS\_KEY\_ID   | AWS\_ACCESS\_KEY\_ID
+        AWS\_SECRET\_ACCESS\_KEY   | AWS\_SECRET\_ACCESS\_KEY
+        AWS\_REGION | AWS\_DEFAULT\_REGION 
+        BUCKET\_NAME | AWS\_BUCKET
+        AWS\_ENDPOINT\_URL\_S3 | AWS\_ENDPOINT 
+
+    In a local setup, all we have to do is update our .env file with the values above:
+    ```
+    AWS_ACCESS_KEY_ID="<AWS_ACCESS_KEY_ID>"
+    AWS_ENDPOINT="https://fly.storage.tigris.dev"
+    AWS_REGION="auto"
+    AWS_SECRET_ACCESS_KEY="<AWS_SECRET_ACCESS_KEY>"
+    AWS_BUCKET="<BUCKET_NAME>"
+    ```
+
+    For a Laravel Fly app, the first two environment variables have already been set as secrets during the creation of the Tigris Bucket. What remains is to set the additional env variables that don't match:
+    
+    ```
+    // Please change the values enclosed in <> with the appropriate value received during the creation of the Tigris Bucket
+    fly secrets set AWS_DEFAULT_REGION="<AWS_REGION_VALUE>"
+    fly secrets set AWS_BUCKET="<AWS_BUCKET_VALUE>"
+    fly secrets set AWS_ENDPOINT="<AWS_ENDPOINT_URL_S3>"
+    ```
+
+
+2. Upload a file from the Controller:
+
+    To test out our connection to the Tigris bucket, we can create a sample function that uploads a text file to the bucket:
+
+    ```
+    use Illuminate\Support\Facades\Storage;
+
+    public function uploadTestFile()
+    {
+        Storage::disk('s3')->put('example.txt', 'Contents');
+    }
+    ```
+    Calling the function above should upload a new file in your bucket. 

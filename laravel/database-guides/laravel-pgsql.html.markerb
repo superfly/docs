@@ -1,0 +1,179 @@
+---
+title: Laravel and PostgreSQL
+layout: framework_docs
+objective: Notes and configurations on connecting with the object-relational database system, [PostgreSQL](https://www.postgresql.org/)
+order: 2
+--- 
+We have a <i>[whole section](/docs/postgres/)</i> dedicated to [PostgreSQL](https://www.postgresql.org/), we even have a `flyctl` integration to simplify both creation and interaction with your Postgres Fly Apps! 
+
+## _Laravel and PostgreSQL Fly App_
+
+To run PostgreSQL as a [Fly App](/docs/app-guides/mysql-on-fly/), follow our guide [here](/docs/postgres/getting-started/create-pg-cluster/). Afterwards you can connect it with your Laravel Fly App through various means:
+
+1. Connect From a Laravel Fly App by Attachment
+2. Connect From a Laravel Fly App Manually
+3. Connect From a Local Environment
+
+### _Connect From a Laravel Fly App by Attachment_
+1.  You can [Attach your Laravel Fly App to your Postgres Fly App](/docs/postgres/managing/attach-detach/) with `fly postgres attach`:
+    - This will create a database named after `<laravel-app-name>` in your Postgres Fly App
+    - This will create an env variable `DATABASE_URL` containing a connection string in your Laravel fly app
+    <br><br>
+
+2.  Please make sure the `fly.toml` of your Laravel Fly App uses the postgres driver by specifying it as the value of `DB_CONNECTION`:
+
+    ```toml
+    [env]
+    APP_ENV = "production"
+    DB_CONNECTION = "pgsql"
+    ```
+
+        Thanks to the attach command, Postgres connection will now be available to your Laravel Fly App using the auto-generated `DATABASE_URL` from the attachment process.
+
+
+3. If you are using Laravel version 11, it no longer uses the `DATABASE_URL` env variable name, instead it uses [DB_URL](https://laravel.com/docs/11.x/database#:~:text=(or%20corresponding-,DB_URL,-environment%20variable)%20configuration). So, please set an additional Fly secret, `DB_URL` with the value of the `DATABASE_URL`.
+
+    ```cmd
+    fly secrets set DB_URL="<DATABASE_URL_VALUE>"
+    ```
+
+### _Connect From a Laravel Fly App Manually_
+
+If you decide not to use the `fly postgres attach` command above and would want to connect to your Laravel Fly App in a manual, <i>grueling</i> step-by-step procedure, I hear you! You'll have to:
+
+1. Manually set up a Database in your Postgres Fly App
+2. Manually connect your Postgres Database with your Laravel Fly App
+
+#### _Manually set up a Database in your Postgres Fly App_
+Manually connecting with your Postgres Fly App also means manually creating your Postgres Database. 
+You can interact with your Postgres Fly App using `fly postgres connect`. 
+
+1.  Connect with your Postgres Fly App using its App name. 
+
+    ```cmd
+    fly postgres connect -a <postgres-fly-app>
+    ```
+    ```output
+    Connecting to <postgres-fly-app>.internal... complete
+    psql (14.4 (Debian 14.4-1.pgdg110+1))
+    Type "help" for help.
+
+    postgres=# 
+    ```
+
+    <small>In case you've forgotten about your app name, but managed to save the output from the Postgres Fly App creation (which you should've!), then check the value of the `Hostname`. The App name would simply be every little character before ".internal".</small>
+    <br /> 
+    <br /> 
+2.  Great, you're connected! Go ahead and complete your set-up with a new database:
+
+    ```sql
+    create database <DB_NAME>;
+    ```
+
+3.  Now if you check your database list, you should find the recent database created:
+    
+    ```cmd
+    SELECT datname FROM pg_database;
+    ```
+    ```output
+      datname  
+    ~-----------
+     postgres
+     testdb
+     template1
+     template0
+    (4 rows)
+    ```
+
+There are tons of ways to interact with your Postgres Fly App! If you want to get a bird's eye view of your Postgres database list outside of the `flyctl postgres connect` command, simply run the command below instead.
+
+```cmd 
+flyctl postgres db list -a <postgres-fly-app-name>
+```
+
+Now that you have a database in your Postgres Fly App, it's time to connect it with your Laravel Fly App. 
+
+
+#### _Manually connect to Laravel Fly App_ 
+Once you have your running and <i>[database configured](/docs/laravel/database-guides/laravel-pgsql/#manually-set-up-a-database-in-your-postgres-fly-app)</i> Postgres Fly App, it's time to connect with your Laravel Fly App:
+
+1.  Revise your Laravel Fly App's `fly.toml` file to connect with the `Hostname`( your Postgres Fly App's .internal Address ) from the configuration output, and the `DB_NAME` configured above:
+
+    ```toml
+    [env]
+      APP_ENV = "production"
+      DB_CONNECTION = "pgsql"
+      DB_HOST = "<Hostname>"
+      DB_DATABASE= "<DB_NAME>" 
+      DB_PORT = 5432
+    ```
+
+2.  Set your Laravel database `DB_USERNAME` and `DB_PASSWORD` with `fly secrets` based on the configuration output received during your Postgres Fly App creation:
+
+    ```cmd
+    fly secrets set DB_USERNAME=<Username> DB_PASSWORD=<PASSWORD>
+    ```
+
+3.  You've <i>finally</i> reached the last part. You can now rest easy and deploy:
+
+    ```cmd
+    fly deploy
+    ```
+
+### _Connect From a Local Environment_
+
+1. You can check out various ways to connect with your Postgres Fly App from your local environment, [here](/docs/postgres/connecting/connecting-with-flyctl/).
+
+2.  Once you're locally connected to your Postgres Fly App, setup your Laravel .env file to connect with the Postgres database:
+
+    ```sh
+    DB_CONNECTION=pgsql
+    DB_HOST=127.0.0.1
+    DB_PORT=5432
+    DB_DATABASE=<DB_NAME>
+    DB_USERNAME=<Username>
+    DB_PASSWORD=<Password>
+    ```
+
+#### _Laravel Possible PGSQL Errors_
+
+**If you get an error similar to, `"ERROR: could not find driver pgsql"`, make sure that your environment is configured properly with a pgsql driver:**
+
+1.  First up, check your php.ini file and make sure the driver for Postgres is available and <i>uncommented</i>:
+
+    ```
+    extension=pgsql
+    ```
+
+2. Next, make sure you have the correct <b>php-pgsql</b> installed for your PHP version. Let's assume you have a PHP 8.1 running locally, then you must also have the compatible php8.1-pgsql in your environment.
+
+**If you get an error similar to, `"pg_dump: error: server version: 14.x; pg_dump version: 12.x"`, the pgsql client running in the VM does not match the server version.**
+  - To fix this, update your `Dockerfile`. In there, you can install an updated version of the PostgreSQL clients by adding the following commands:
+
+```dockerfile
+# Install pgsql client for version 14
+RUN ...other stuff here... \
+    && apt-get -q install -y lsb-release wget \
+    && echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+    && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+    && apt-get -q update \
+    && apt-get -q install -y postgresql-client-14
+```
+
+## _Test Connection_
+To test whether you are connected to your sparkling new Postgres Fly App, a simple `php artisan migrate` should let you know.
+
+Once migration completes, you can check the tables migrated in your Postgres Fly App:
+
+```
+# Connect to your Postgres Fly App
+$ fly postgres connect -a <postgres-app-name>
+
+# Use the database created 
+postgres=# \c <database_name_created>
+
+You are now connected to database "<database_name_created>" as user "<user>".
+
+# List your current database's tables
+<database_name_created>=# \d
+```

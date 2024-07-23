@@ -1,0 +1,35 @@
+name: Check docs with Vale linter
+
+on: [pull_request]
+
+jobs:
+  vale:
+    name: Vale linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          fetch_depth: 2
+
+        # run reviewdog and the linter
+      - name: run reviewdog and linter
+        uses: errata-ai/vale-action@reviewdog
+        with:
+          files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
+          separator: ","
+          # added, diff_context, file, nofilter
+          filter_mode: file
+          # github-pr-check, github-pr-review, github-check
+          reporter: github-pr-check
+          fail_on_error: false
+        env:
+          # Required, set by GitHub actions automatically:
+          # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

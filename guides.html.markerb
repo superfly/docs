@@ -1,0 +1,12 @@
+---
+title: Guides and Examples
+layout: docs
+toc: false
+nav: firecracker
+---
+
+A collection of guides and examples for working with Fly.io.
+
+- <%= nav_link "Going to production", "/docs/going-to-production/" %>
+- <%= nav_link "Crontab with Supercronic", "/docs/app-guides/supercronic/" %>
+- <%= nav_link "Run an ssh server ", "/docs/app-guides/opensshd/" %>

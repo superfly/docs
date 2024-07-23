@@ -7,11 +7,11 @@ nav: firecracker
 
 Congrats! Your Postgres app is up and running on Fly.io. Now there are a few things you should know before moving forward.
 
-`fly pg create` helped you setup a PostgresSQL database cluster, but you can bring your own; this is an automated Postgres application. This is not a managed database. If Postgres crashes because it ran out of memory or disk space, you'll need to do a little work to get it back.
+`fly pg create` helped you setup a PostgreSQL database cluster, but you can bring your own; this is an automated Postgres application. This is not a managed database. If Postgres crashes because it ran out of memory or disk space, you'll need to do a little work to get it back.
 
 Fly Postgres is a Fly app with flyctl sugar on top to help you bootstrap your much-needed database. It comes with most commonly used functionality (replication, failover, metrics, monitoring and daily snapshots), but you can extend it anytime if needed.
 
-The app template is fully open source. Just fork [fly-apps/postgres-ha](https://github.com/fly-apps/postgres-ha) and add whatever meets your needs. Feel free to contribute it back too. One caveat, though, is that once you fork you won't be able to use `fly pg create` to bootstrap a cluster from your image. You can update your app with your new image using `fly deploy --image` right after, though.
+The app template is fully open source. Just fork [fly-apps/postgres-ha](https://github.com/fly-apps/postgres-flex) and add whatever meets your needs. Feel free to contribute it back too. One caveat, though, is that once you fork you won't be able to use `fly pg create` to bootstrap a cluster from your image. You can update your app with your new image using `fly deploy --image` right after, though.
 
 Usual reasons to fork the fly app:
 

@@ -1,0 +1,121 @@
+---
+title: "Deploy Livebook on Fly.io"
+layout: docs
+nav: firecracker
+categories:
+  - app-guides
+  - elixir
+---
+
+In this guide we'll deploy [Livebook](https://livebook.dev+external), the interactive Elixir notebook app, to a single Fly Machine using the [Fly Launch](/docs/launch/) approach. 
+
+We'll give Livebook a 1GB [persistent volume](/docs/volumes/) on which to store notebooks and other data.
+
+## Speedrun
+
+1. Create a `fly.toml` file with the contents in the next section.
+1. `fly launch --no-deploy`
+1. `fly secrets set LIVEBOOK_PASSWORD="<my-super-sekrit-password>"`
+1. `fly deploy --vm-size shared-cpu-2x --volume-initial-size 1`
+1. `fly apps open`
+
+
+## Prepare a Fly Launch config
+
+Fly Launch uses a TOML configuration file&mdash;called `fly.toml` by default.
+
+Prepare a directory for your Livebook app config and place a `fly.toml` file inside, with the following contents:
+
+```toml
+[build]
+  image = "ghcr.io/livebook-dev/livebook:0.13.0"
+                                               # use a prebuilt Livebook Docker image
+
+[env]
+  ERL_AFLAGS = "-proto_dist inet6_tcp"         # enable ipv6 for Fly.io private networking
+  LIVEBOOK_DATA_PATH = "/data"                 # /data is the mount point of the persistent volume
+  LIVEBOOK_HOME = "/data"
+  LIVEBOOK_ROOT_PATH = "/data"
+  LIVEBOOK_IP = "::"                           # listen on all ipv6 interfaces
+  PORT = "8080"                                # listen on port 8080
+
+[[mounts]]
+  source = "data"                              # first deployment creates a volume with this name
+  destination = "/data"                        # mount location on the Machine file system
+
+[http_service]
+  internal_port = 8080                         # the Livebook app listens on [::]:8080
+  force_https = true                           
+  auto_stop_machines = true                    # when no http connections, the Machine stops
+  auto_start_machines = true                   # Fly proxy restarts the Machine on request
+  min_machines_running = 0                     # allow all Machines to stop
+  processes = ["app"]                          # the default process group
+```
+
+This is the app-wide config that gets applied to all the Machines in the app when you run `fly deploy`. 
+
+## Create a new Fly app
+
+Create a new app by running `fly launch` from the directory containing the app's `fly.toml` config file. 
+
+```cmd
+fly launch --no-deploy
+```
+
+Follow the prompts. Respond `Y` to copy the configuration from your existing `fly.toml` to the new app. You'll be asked for an app name and a primary region, which will be added to your local `fly.toml`. The app name must be unique across Fly.io. The primary region is the region where Machines are created for this app when not otherwise specified.
+
+## Set a Livebook password
+
+Livebook stores your password in an environment variable. Set that variable securely using `fly secrets set`.
+
+```cmd
+fly secrets set LIVEBOOK_PASSWORD="<my-super-sekrit-password>"
+```
+
+Livebook requires that this password be at least 12 characters long. Don't use this example password as a real password.
+
+## Deploy the app
+
+Now that the app has been created and the `LIVEBOOK_PASSWORD` secret is set, you can deploy to a Machine.
+
+The `fly deploy` command creates a new release of an app using the `fly.toml` in your working directory, and rolls that out to its Machines. 
+
+The first time it's run on a given app, and when it's run on an app that currently doesn't have any Machines, `fly deploy` does some extra work. For our Livebook app, it provisions public IP addresses for the HTTP service and creates the volume referred to in the `mounts` section in `fly.toml`, before creating and starting the app's Machine(s).
+
+```
+fly deploy --vm-size shared-cpu-2x --volume-initial-size 1
+```
+
+The `fly deploy` command accepts some options to tune the initial resource provisioning.
+
+Livebook seems to want something a bit heftier than the default `shared-cpu-1x` Machine with 256MB RAM, so for the purpose of demonstration we chose a `shared-cpu-2x` size, which comes with 512MB. You can experiment with CPU and memory to see what you need for your project.
+
+We explicitly set the size of the volume to be created, although 1GB happens to be the default size for a new volume created on `fly deploy`.
+
+<div class="note icon">
+At the time of writing, you may see this error message as the first deployment finishes: 
+
+<code>WARNING The app is not listening on the expected address and will not be reachable by fly-proxy.</code>
+
+If you can reach your Livebook in the browser, then you can ignore this message. Occasionally, provisioning the storage volume can delay startup of Livebook until after this check times out.
+</div>
+
+## Visit your Livebook app
+
+To use your Livebook, visit `https://<your-app-name>.fly.dev` in the browser, or type `fly apps open`, and enter your password where prompted. Create a new notebook, and save it in the `/data` directory. 
+
+You can test that your notebook was saved onto the persistent volume by running `fly apps restart` and clicking "Open" on the Livebook home page to find and open it from storage.
+
+## A note on auto start and stop settings
+
+The `auto_stop_machines` and `auto_start_machines` config options are set to `true` in the app config. The Fly proxy will shut down the Machine when there's nobody connected to it. Livebook does try to save even "unsaved notebooks," but principle you can lose data if it shuts down and you have not saved your work.
+
+The proxy will also start the Machine when a connection is requested. This means bots may wake up your app. 
+
+When you visit the app when it's stopped, it will take a moment before it's running again.
+
+If you'd rather start and stop your Livebook app manually, you can do so directly with flyctl. Set `auto_stop_machines` and `auto_start_machines` both to `false`, and redeploy. Use the `fly machine stop` and `fly machine start` commands to stop the Machine when you're not using it and to start it up again when you're ready.
+
+## A note on persistent storage
+
+Fly volumes don't automatically synchronize across an app, so the simplest way to run Livebook with volume storage is as a single Machine, with the availability repercussions that implies. Other deployment configurations are beyond the scope of this guide, but Livebook does provide the option to connect with an object storage service.

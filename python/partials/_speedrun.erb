@@ -1,0 +1,7 @@
+The fastest way to get a basic <%= runtime.titleize %> server on Fly.io is to use our <%= runtime %> template:
+
+```cmd
+git clone git@github.com:fly-apps/<%= repo %>.git <%= runtime.downcase %>-app
+cd <%= runtime.downcase %>-app
+fly launch --generate-name
+```

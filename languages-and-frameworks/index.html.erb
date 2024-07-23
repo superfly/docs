@@ -5,7 +5,7 @@ toc: false
 ---
 
 <figure>
-  <img src="/static/images/docs-guide.jpg" srcset="/static/images/docs-guide@2x.jpg 2x" alt="">
+  <img src="/static/images/docs-guide.webp" srcset="/static/images/docs-guide@2x.webp 2x" alt="">
 </figure>
 
 <p>Fly.io can run pretty much any type of application. If you don't see it listed here, it's a matter of finding and configuring a Dockerfile that runs it.</p>
@@ -14,12 +14,16 @@ toc: false
   Comprehensive Guides
 </h2>
 
-<p>Fly supports all languages and frameworks, but you'll notice some have much more extensive documentation and support. That's because we have people at Fly.io who work full time on documenting and nurturing these frameworks.</p>
+<p>Fly.io supports all languages and frameworks, but you'll notice some have much more extensive documentation and support. That's because we have people at Fly.io who work full time on documenting and nurturing these frameworks.</p>
 
 <ul>
   <li><%=link_to_page find_page("/docs/elixir") %></li>
   <li><%=link_to_page find_page("/docs/rails") %></li>
   <li><%=link_to_page find_page("/docs/laravel") %></li>
+  <li><%=link_to_page find_page("/docs/django") %></li>
+  <li><%=link_to_page find_page("/docs/js") %></li>
+  <li><%=link_to_page find_page("/docs/rust") %></li>
+  <li><%=link_to_page find_page("/docs/python") %></li>
 </ul>
 
 <h2 id="supported" class="group flex items-center relative mt-14 sm:mt-16 mb-10 group text-navy font-heading pb-1 border-b">
@@ -28,10 +32,9 @@ toc: false
 
 <p>The following frameworks & languages are fully supported by Fly.io.</p>
 
-Each one of the language guides will take you through creating and deploying a simple application.
+<p>Each one of the language guides will take you through creating and deploying a simple application.</p>
 
 <ul>
-  <li><%=link_to_page find_page("/docs/django") %></li>
   <% current_page.children.each do |page| %>
     <li>
       <%= link_to_page page %>

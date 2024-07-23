@@ -1,0 +1,23 @@
+extends: spelling
+message: "Is '%s' a typo?"
+level: suggestion
+
+# This disables the built-in filters. If you omit this
+# key or set it to false, custom filters (see below) are
+# added on top of the built-in ones.
+#
+# By default, filters for acronyms, abbreviations, and
+# numbers are included.
+custom: false
+
+# A "filter" is a regular expression specifying words
+# to ignore during spell checking.
+# custom Fly.io filters:
+filters:
+
+  - '\w+_\w+' # ignore config option names
+  - '--.' # ignore command options
+  - 'v[0.9].' # ignore flyctl versions
+
+ignore:
+  - words2ignore.txt

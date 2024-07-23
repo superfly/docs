@@ -1,0 +1,82 @@
+---
+title: Working with the Machines API
+objective: Get started with the Fly Machines API.
+layout: docs
+nav: machines
+order: 1
+---
+
+The Fly Machines API provides resources to create, destroy, and manage Fly Apps, Fly Machines, and Fly Volumes. Refer to the following reference docs for the usage of each:
+
+**[Apps resource](/docs/machines/api/apps-resource/)** - Every Fly Machine belongs to a [Fly App](/docs/apps/overview/).
+
+**[Machines resource](/docs/machines/api/machines-resource/)** - Fly Machines are our fast-launching VMs.
+
+**[Tokens resource](/docs/machines/api/tokens-resource)** - Support for OpenID Connect tokens.
+
+**[Volumes resource](/docs/machines/api/volumes-resource/)** - [Fly Volumes](/docs/volumes/) are persistent storage for Machines.
+
+## Connecting to the API
+
+### API addresses
+
+There are two base URLs available to connect to the Machines API service.
+
+**Internal base URL:** `http://_api.internal:4280`
+
+**Public base URL:** `https://api.machines.dev`
+
+From within your Fly.io [private WireGuard network](/docs/networking/private-networking/), you can connect to the API directly using the internal endpoint. From outside the Fly.io WireGuard mesh, use the public endpoint; this proxies your request to the API.
+
+### Authentication
+
+All requests must include an API token in the HTTP headers as follows:
+
+```
+Authorization: Bearer <fly_api_token>
+```
+
+Replace `<fly_api_token>` with a Fly.io authentication token.
+
+## Environment setup
+
+The examples in the Machines API reference docs assume that you have two environment variables set: `FLY_API_TOKEN`, the authorization token to use with the API call; and `FLY_API_HOSTNAME`, the API base URL.
+
+For local development, you might set them as follows, assuming you have flyctl installed and have authenticated to Fly.io:
+
+```bash
+$ export FLY_API_HOSTNAME="https://api.machines.dev" # set to http://_api.internal:4280 when using WireGuard
+$ export FLY_API_TOKEN=$(fly auth token)
+```
+
+The `fly auth token` command returns the token currently in use by `flyctl`. You can also create a new auth token in the Tokens section of the Fly.io dashboard.
+
+To set an access token as an environment variable on Fly Machines, use a [secret](/docs/apps/secrets/); for example:
+
+```cmd
+fly secrets set FLY_API_TOKEN=$(fly auth token)
+```
+
+## Response Codes
+
+The Machines API uses conventional HTTP status codes to provide more information about the response.
+
+Typically, 2xx HTTP status codes denote successful operations, 4xx codes imply failures related to the user, and 5xx codes suggest problems with the infrastructure.
+
+| Status | Description |
+| --- | --- |
+| 200 | Successful request. |
+| 201 | Created successfully. |
+| 202 | Accepted (success). |
+| 204 | Successful request. No content. |
+| 400 | Bad request. Check that the parameters were correct. |
+| 401 | The API key used was missing or invalid. |
+| 404 | The resource was not found. |
+| 408 | Request timed out. |
+| 5xx | Indicates an error with Fly.io API servers. |
+
+## Rate Limits
+
+Machines API rate limits apply _per-action_, _per-machine_. The limit is 1 request, per second, per action (i.e. Create Machine, Start Machine etc.) — with a short-term burst limit up to 3 req/s, per action.
+
+This applies to all actions except [Get Machine](/docs/machines/api/machines-resource/#get-a-machine) which is 5 req/s, with a short-term burst limit up to 10 req/s.

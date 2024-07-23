@@ -1,0 +1,74 @@
+---
+title: Going to production
+layout: docs
+nav: apps
+redirect_from:
+  - /docs/going-to-production/
+  - /docs/going-to-production/the-basics/
+  - /docs/going-to-production/the-basics/production-databases/
+  - /docs/reference/going-to-production/
+---
+
+This document lists important topics to consider when you set up a production environment on Fly.io. What makes an app production-ready can vary from one framework to another. The following topics and linked resources can help you understand when and why you might need specific features or configuration.
+
+<div class="important icon">
+**Important:** This list is neither exhaustive nor mandatory, and does not guarantee production-readiness for your app. Some apps might have unique requirements for production.
+</div>
+
+## Security
+
+- **Set up single sign-on for organizations:** Enable SSO on your organization to take advantage of Google or GitHub authentication security. See [Single sign-on for organizations](/docs/security/sso/).
+
+- **Use Arcjet application security for JavaScript apps:** Secure your app with rate limiting, bot protection, email validation, and defense against common attacks through our extension partner Arcjet. Currently [free in beta](/docs/reference/arcjet/#pricing), but pricing is subject to change. See [Application Security by Arcjet](/docs/reference/arcjet/).
+
+- **Protect sensitive information:** Set secrets to store sensitive data and make them available as environment variables to your app. See [Secrets and Fly Apps](/docs/apps/secrets/).
+
+- **Make sure private services are not exposed:** Check that your private apps with services don't have public IP addresses. Run `fly ips list` and use `fly ips release` to release unnecessary public IPs. See flyctl [`fly ips` commands](/docs/flyctl/ips/).
+
+- **Isolate staging and production environments:** Use organizations to limit access to your production environment. See [Blueprint: Staging and production isolation](/docs/blueprints/staging-prod-isolation/).
+
+## Databases
+
+- **Run "production-grade" Postgres:** For Fly Postgres, our unmanaged database, set up replication clusters of 3+ servers. See [High Availability & Global Replication](/postgres/advanced-guides/high-availability-and-global-replication/). You can also use an external database provider and configure it for redundancy.
+
+- **Set up offsite backups:** Consider offsite backups for your database.
+  
+- **LiteFS**: LiteFS is a distributed file system that transparently replicates SQLite databases. See the [LiteFS docs](/docs/litefs/).
+
+## Monitoring
+
+- **Export your logs:** Set up the Fly Log Shipper to aggregate your app’s logs to a service of your choice. See [Export logs](/docs/monitoring/exporting-logs/).
+
+- **Use Sentry for Error tracking**: An application monitoring platform that helps you identify and fix software problems before they impact your users from our extension partner Sentry.Fly.io organizations get a year's worth of [Team Plan](https://sentry.io/pricing/+external) credits. See [Application Monitoring by Sentry](/docs/reference/sentry/).
+
+
+## Availability and resiliency
+
+- **Use multiple Machines for resiliency:** Make your app resilient to single-host failures with multiple Machines that stay stopped until you need them. See [Blueprint: Resilient apps use multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/).
+
+- **Set up autoscaling by load or metric:** Use Fly Proxy autostart/autostop or the metrics-based autoscaler app. See [Autoscaling](/docs/reference/autoscaling/).
+
+## CI/CD
+
+- **Deploy with GitHub Actions:** Set up your app for continuous deployment to Fly.io from the app’s GitHub repository. See [Continuous Deployment with Fly.io and GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/).
+
+- **Generate review apps with GitHub Actions:** Automatically generate ephemeral review apps on Fly.io for each pull request (PR) using GitHub Actions. See [Blueprint: Git Branch Preview Environments on GitHub](/docs/blueprints/review-apps-guide/).
+
+## Networking
+
+- **Set up a custom domain:** Configure a certificate for your domain. See [Use a custom domain](/docs/networking/custom-domain/).
+
+- **Consider a dedicated IPv4 address:** Completely eliminate the chance of blacklisted spammers causing problems for your app. There is a small [added cost](/docs/about/pricing/#anycast-ip-addresses) for dedicated IPv4 addresses. See [Dedicated IPv4](/docs/networking/services/#dedicated-ipv4).
+
+
+## Fine-tuning your app
+
+- **Get Machine sizing right:** Most production apps require 2x or performance CPUs. Also make sure you have enough RAM for your app and/or enable [swapping to disk](https://fly.io/docs/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use. See [Machine sizing](docs/machines/guides-examples/machine-sizing/).
+
+- **Fine-tune and benchmark your app:** Learn about optimizing your app on Fly.io. See [Tips to fine-tune and (not) benchmark your app on Fly.io](/docs/reference/fine-tune-apps/).
+
+## Support
+
+Check out our [community](https://community.fly.io/) to get help and answers.
+
+Get email support with a [Launch, Scale, or Enterprise plan](https://fly.io/plans).

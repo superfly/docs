@@ -1,0 +1,16 @@
+---
+title: "Get started with your language or framework"
+layout: docs
+nav: firecracker
+toc: false
+---
+
+Fly Launch scanners detect and deploy the following kinds of apps automatically:
+
+<%= partial "/docs/languages-and-frameworks/partials/scanner_guides" %>
+
+Don't see your framework or language in the list? Fly Launch can deploy almost any app from a [Dockerfile](/docs/languages-and-frameworks/dockerfile/). Learn more about what [Fly Launch](/docs/launch/) does.
+
+<figure class="text-center">
+  <img src="/static/images/speedrun-guidebooks.webp" srcset="/static/images/speedrun-guidebooks@2x.webp 2x" alt="Illustration by Annie Ruygt of Frankie the Fly.io hot air balloon character with one hand on their hip and the other hand out, palm up, with images floating above the hand representing the Elixir, Ruby, Laravel, and Django programming languages">
+</figure>

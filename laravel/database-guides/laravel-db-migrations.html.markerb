@@ -1,0 +1,36 @@
+---
+title: Laravel Database Migration
+layout: framework_docs
+objective: Different ways to run the classic Laravel database migration command with Fly.io
+order: 5
+--- 
+
+Make sure you have a database connection with your Laravel Fly App. You can check out our various connection guides on [`MySQL`](/docs/laravel/database-guides/laravel-mysql/), [`Postgres`](/docs/laravel/database-guides/laravel-pgsql/), [`Redis`](/docs/laravel/database-guides/laravel-redis/), and [`SQLite`](/docs/laravel/database-guides/laravel-sqlite/).
+
+Once you're set up with a database connection, there are several ways to run the Laravel classic: "`php artisan migrate`" command at Fly.io:
+
+#1 Through the `fly.toml` [deploy] configuration ( which will run in every deployment )
+
+```toml
+[deploy]
+  release_command = "php /var/www/html/artisan migrate --force"
+```
+
+#2 Through a [Start Script](/docs/laravel/the-basics/customizing-deployments/#startup-scripts) in `.fly/scripts`:
+```cmd
+echo "/usr/bin/php /var/www/html/artisan migrate --force" > ".fly/scripts/db.sh"
+```
+
+#3 Through `fly ssh console` shortcut:
+
+```cmd
+fly ssh console -C "php /var/www/html/artisan migrate --force"
+```
+
+#4 Through `fly ssh console`:
+
+```cmd
+fly ssh console
+cd /var/www/html/
+php artisan migrate --force
+```

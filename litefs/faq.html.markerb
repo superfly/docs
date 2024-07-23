@@ -1,0 +1,104 @@
+---
+title: LiteFS FAQ
+layout: docs
+nav: litefs
+toc: true
+---
+
+LiteFS aims to work like running a single-server SQLite application as much as
+possible. However, since it is a distributed system, some things may work
+differently than you expect. This page is meant to provide answers for commonly
+asked questions about LiteFS, how it works, and how it differs from other
+similar database systems.
+
+
+## What is LiteFS used for?
+
+Typically, LiteFS is used for replicating your application data to servers that
+are close to users. This has a significant impact on reducing latency as
+application servers can process read requests from their local, on-disk
+database rather than communicating with a database server over the network.
+
+It can also be used for replicating auxillery databases to a fleet of servers so
+that changes on the primary are immediately visible to replicas. These
+databases can include configuration information or they can include supplemental
+data like geospatial lookups.
+
+
+## What tool(s) does LiteFS replace?
+
+LiteFS works similarly to Postgres or MySQL streaming replication so it can be
+used as an alternative to those tools when you are using SQLite as your
+database. SQLite read queries are extremely fast so some users find that they
+no longer need tools such as Redis or memcached.
+
+
+## What size databases can LiteFS handle?
+
+LiteFS doesn't have a hard limit for the size of individual SQLite databases.
+It is typically bound by network and disk I/O as well as the write throughput of
+the FUSE file system interface. In our testing we typically target SQLite
+databases that are 10GB or less as that makes up the majority of SQLite databases
+in real-world applications.
+
+Disk space is usually the limiting factor and we recommend that volumes have
+at least 20-50% extra disk space that LiteFS can use for storing temporary
+transaction files. So for a 10GB database, we recommend using a 12-15GB volume.
+
+
+## How many databases can a LiteFS cluster handle?
+
+Each database requires a small amount of memory to track the current state on
+the primary and each subscribing replica. You should be able to use tens or
+hundreds of databases on LiteFS without an issue. We have done limited testing
+on a high number of databases so thousands or hundreds of thousands databases
+may pose a problem.
+
+
+## What are the tradeoffs of using LiteFS?
+
+LiteFS' use of [FUSE] (https://en.wikipedia.org/wiki/Filesystem_in_Userspace) 
+limits the write throughput to about 100 transactions per second so write-heavy
+applications may not be a good fit. The operating system automatically caches
+pages in memory so read queries typically don't see much of a slowdown compared
+to other file systems.  We will be implementing a SQLite VFS implementation in
+the future which avoids FUSE and that will improve write speeds significantly.
+
+Compared to other replication tools, LiteFS has similar to tradeoffs to other
+asynchronous streaming replication methods. Asynchronous replication means that
+there can be a short window of data loss if the primary dies unexpectedly and a
+write has not been replicated to a replica yet. We will be supporting
+synchronous replication in the future.
+
+
+## Are LiteFS deploys zero downtime?
+
+Rolling deploys of a LiteFS cluster will not experience any read availability
+loss but may have a short window of a few milliseconds of write availability
+loss. LiteFS can handoff the role of primary to another candidate node
+automatically but the primary changes can take a few milliseconds to propagate
+to replica nodes so they may redirect to the old primary during this short
+window.
+
+In the event of a sudden failure of the primary node, a different candidate node
+will acquire primary status via a distributed lease from Consul. By default,
+the lease has a time-to-live (TTL) of 10 seconds so you could lose write
+availability for up to that amount of time. Your database will still be readable
+by all LiteFS nodes during this time though.
+
+
+## What's the difference between LiteFS & Litestream?
+
+[Litestream](https://litestream.io/) is intended as a single-node, disaster
+recovery tool. If you are only running a single server then it can be a great
+option. The main tradeoffs of using Litestream are that it cannot replicate
+data to other live servers and it does not support automatic failover.
+
+LiteFS was originally split off of Litestream in order to keep Litestream as a
+simple disaster recovery tool. LiteFS improves upon Litestream by adding live
+replication to replica servers and it provides failover by using
+[Consul](https://consul.io/) for distributed leases.
+
+When making a decision between the two tools, you'll typically choose Litestream
+for single-server deployments and LiteFS for multi-server deployments.
+

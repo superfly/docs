@@ -1,0 +1,3 @@
+curl -i -X DELETE \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/machines/9080e339b57798/metadata/foo-key" 

@@ -1,0 +1,21 @@
+---
+title: Fly.io and Open Source
+layout: docs
+nav: firecracker
+redirect_from: /open-source/
+
+---
+
+<figure>
+  <img src="/static/images/harbor-spot.webp" srcset="/static/images/harbor-spot@2x.webp 2x" alt="">
+</figure>
+
+Fly.io builds on the work of a tremendous open source infrastructure community. We want open source authors to benefit from their work because we think a healthy, thriving open source ecosystem will help us build better products.
+
+## Equity Grants
+
+There's a tradition of giving equity grants to startup advisors who help growing companies. We too give equity grants&mdash;with us, though, they go to open source authors whose projects we rely on such as  <a href="https://github.com/laverdet/isolated-vm" target="_blank" rel="nofollow noopener">isolated-vm</a> and <a href="https://github.com/unixcharles/acme-client" target="_blank" rel="nofollow noopener">acme-client</a>. Those projects are important to Fly.io and helped us build the developer experience we wanted.
+
+## Recurring donations
+
+We sponsor the developers behind our favorite open source projects. Some we use heavily, like the <a href="https://github.com/hyperium/hyper/">Hyper HTTP client for Rust</a>. Some are just cool, like the <a href="https://gleam.run" target="_blank" rel="nofollow noopener">Gleam language</a>.

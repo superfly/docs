@@ -1,0 +1,43 @@
+---
+title: Using GPUs with FKS
+layout: docs
+toc: false
+nav: firecracker
+---
+
+<div class= "important icon">
+Fly Kubernetes is in beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
+</div>
+
+GPUs are available on Fly Kubernetes. Information about our GPUs can be found in our [Fly GPUs documentation](https://fly.io/docs/gpus/#what-can-i-use-fly-gpus-for).
+
+GPUs are consumed by requesting a GPU resource, similarly to requesting `cpu` or `memory`. There is a custom resource `gpu.fly.io/<gpu type>` that is used to request
+GPUs. Note that:
+
+* The available GPU types are: `a10`, `l40s`, `a100-pcie-40gb` and `a100-sxm4-80gb`. Check the [documentation](https://fly.io/docs/gpus/#regions-with-gpus) for which regions they are available in.
+* Pods are deployed in the same region as your cluster. You can place your Pod in a particular region by adding a `fly.io/region: <region>` annotation to your Pod's metadata.
+* GPU resource requests should only specify the `limits` section.
+* You can specify CPU and memory resources alongside GPU resources. The minimum number of cores supported is 2 and the minimum amount of memory is 4096 MiB. The VMs
+deployed will always be performance Machines.
+* The valid number of GPUs you can request are: 1, 2, 4 and 8.
+* You can only request one type of GPU at a time
+
+Below is an example of a Pod with a GPU:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ollama
+  annotations:
+    fly.io/region: ams # optional
+spec:
+  containers:
+    - name: ollama
+      image: ollama/ollama:latest
+      resources:
+        limits:
+          gpu.fly.io/a100-80gb: 1
+```
+
+This will deploy a GPU Machine with the size `a100-80gb` with 1 GPU core in the region `ams`.

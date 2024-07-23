@@ -1,0 +1,56 @@
+---
+title: "Run an Axum App"
+layout: framework_docs
+objective: Axum is a web application framework that focuses on ergonomics and modularity.
+redirect_from:
+ - /docs/languages-and-frameworks/axum/
+ - /docs/getting-started/axum/
+order: 1
+---
+
+
+<%= partial "/docs/languages-and-frameworks/partials/intro", locals: { runtime: "Axum", link: "https://docs.rs/axum/latest/axum/" } %>
+
+Axum is a web application framework that focuses on ergonomics and modularity.
+
+Deploying an Axum app on Fly.io is really straightforward! With the help of the [cargo chef](https://github.com/LukeMathWalker/cargo-chef), we get great build times and small images.
+
+## _Speedrun_
+
+<%= partial "/docs/languages-and-frameworks/partials/flyctl" %>
+
+<%= partial "/docs/rust/partials/speedrun", locals: { runtime: "axum" }  %>
+
+## _Deploy an Axum App from scratch_
+
+<%= partial "/docs/rust/partials/cargo-new", locals: { runtime: "axum" }  %>
+
+
+Then we have to add some dependencies to the project:
+
+```cmd
+cargo add axum
+cargo add tokio -F macros -F rt-multi-thread
+```
+
+Now, let's create a simple Axum app in `src/main.rs`:
+
+```rust
+use axum::{routing::get, Router};
+
+#[tokio::main]
+async fn main() {
+    let app = Router::new().route("/", get(|| async { "Hello from fly.io!" }));
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+}
+```
+
+This will display a "Hello from fly.io!" message when you visit the root URL.
+Take note that we serve the app on port `8080`.
+
+We can confirm everything works fine by running `cargo run` and checking out `http://localhost:8080`.
+
+
+
+<%= partial "/docs/rust/partials/deploy", locals: { runtime: "axum" }  %>

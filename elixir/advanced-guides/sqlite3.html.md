@@ -57,7 +57,7 @@ Next remove the release step from the `[deploy]` section of your `fly.toml` and 
 ```
 
 This step is required because a volume may not be ready once your application release runs, so to fix this we need to run migrations on 
-application start. This can be accomplished by adding the following line to your `lib/name/application.ex:
+application start. This can be accomplished by adding the following line to your `lib/name/application.ex`:
 
 ```diff
   @impl true
@@ -197,7 +197,7 @@ gem install pg
 Next all we need to do is run the Sequel Copy command, where the first database is the source and the second database is the destination:
 
 ```cmd
-sequel -C postgres://localhost/database sqlite3://name.db
+sequel -C postgres://localhost/database sqlite://name.db
 ```
 
 And that's it! If you open up your SQLite database using the command line it should have your tables and data all moved over. If you get an error here about connecting you will need to figure out which ruby gem handles your adapter and install it like we did for pg. 
@@ -258,3 +258,15 @@ fly deploy
 ```
 
 Next time it boots it should use your new database! 
+
+### Download a local copy of your production database 
+
+You can use the [fly sftp get](https://fly.io/docs/flyctl/sftp-get/) command to download your database locally. 
+
+```elixir
+fly sftp get /mnt/name/name-prod.db prod.db
+```
+
+Replace `/mnt/name/name-prod.db` with the path to your database (DATABASE_PATH).
+
+

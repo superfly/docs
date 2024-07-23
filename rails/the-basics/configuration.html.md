@@ -2,7 +2,7 @@
 title: Environment Configuration
 layout: framework_docs
 objective: Add environment variables to your Rails applications, configure secrets, and use the encrypted `credentials.yml` file to manage your application's configuration on Fly.
-order: 4
+order: 1
 ---
 
 Rails applications are usually configured via the encrypted `credentials.yml` file or via environmental variables.
@@ -52,4 +52,10 @@ When deploying to production, the `RAILS_MASTER_KEY` that will decrypt the crede
 
 ```cmd
 fly secrets set RAILS_MASTER_KEY=$(cat config/master.key)
+```
+
+For Windows/PowerShell:
+
+```powershell
+$Env:RAILS_MASTER_KEY = Get-Content 'config\master.key'
 ```

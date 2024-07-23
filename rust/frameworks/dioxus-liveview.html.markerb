@@ -1,0 +1,76 @@
+---
+title: "Run a Dioxus Liveview App"
+layout: framework_docs
+objective: Dioxus Liveview allows apps to run on the server and render in the browser. It uses WebSockets to communicate between the server and the browser.
+redirect_from:
+ - /docs/languages-and-frameworks/dioxus-liveview/
+ - /docs/getting-started/dioxus-liveview/
+order: 6
+---
+
+
+<%= partial "/docs/languages-and-frameworks/partials/intro", locals: { runtime: "Dioxus Liveview", link: "https://dioxuslabs.com/learn/0.5/getting_started/liveview/" } %>
+
+Dioxus Liveview allows apps to run on the server and render in the browser. It uses WebSockets to communicate between the server and the browser.
+
+Bring Liveview app to life on Fly.io is a breeze! With the help of the [cargo chef](https://github.com/LukeMathWalker/cargo-chef), we get great build times and small images.
+
+## _Speedrun_
+
+<%= partial "/docs/languages-and-frameworks/partials/flyctl" %>
+
+<%= partial "/docs/rust/partials/speedrun", locals: { runtime: "dioxus-liveview" }  %>
+
+## _Deploy a Dioxus Liveview App from scratch_
+
+<%= partial "/docs/rust/partials/cargo-new", locals: { runtime: "dioxus-liveview" }  %>
+
+
+Then we have to add some dependencies to the project:
+
+```cmd
+cargo add dioxus axum
+cargo add dioxus-liveview
+cargo add tokio -F full
+```
+
+Now, let's create a simple count incrementing app in `src/main.rs`:
+
+```rust
+use axum::Router;
+use dioxus::prelude::*;
+use dioxus_liveview::LiveviewRouter;
+
+fn app() -> Element {
+    let mut num = use_signal(|| 0);
+
+    rsx! {
+        div {
+            "hello axum! {num}"
+            button { onclick: move |_| num += 1, "Increment" }
+        }
+    }
+}
+
+#[tokio::main]
+async fn main() {
+    let addr: std::net::SocketAddr = ([0, 0, 0 ,0], 8080).into();
+
+    let app = Router::new().with_app("/", app);
+
+    println!("Listening on http://{addr}");
+
+    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
+    axum::serve(listener, app.into_make_service())
+        .await
+        .unwrap();
+}
+```
+
+This will display a counter that can be incremented using a button. The value will be updated over a websocket. 
+
+We can confirm everything works fine by running `cargo run` and checking out `http://localhost:8080`.
+
+
+
+<%= partial "/docs/rust/partials/deploy", locals: { runtime: "dioxus-liveview" }  %>

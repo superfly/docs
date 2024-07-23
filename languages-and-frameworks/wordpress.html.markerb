@@ -1,0 +1,147 @@
+---
+title: Run a WordPress App
+layout: language-and-framework-docs
+---
+
+Setting up a WordPress application on Fly.io is quite simple. In this guide, we'll learn just how simple it is!
+
+There's one thing you need before setting up a WordPress application: a MySQL database. You can find out how to get one set up on Fly.io in [this handy guide](https://fly.io/docs/app-guides/mysql-on-fly/#main-content-start).
+Make sure you remember the hostname (this will be `<your-mysql-app-name>.internal`), the database name and the database credentials.
+
+Ready? Let's get started!
+
+## Launch a new WordPress application
+
+To launch a new WordPress application, we can use the [official WordPress docker image](https://hub.docker.com/_/wordpress). To do so, run the following command:
+```cmd
+flyctl launch -i wordpress --no-deploy
+```
+```output
+Using image wordpress
+Creating app in /Users/name/test/my-app-name
+We're about to launch your app on Fly.io. Here's what you're getting:
+
+Organization: MyOrg                  (fly launch defaults to the personal org)
+Name:         my-app-name            (derived from your directory name)
+Region:       Secaucus, NJ (US)      (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+
+? Do you want to tweak these settings before proceeding? Yes
+```
+
+Type `n` if you're happy with the defaults listed, otherwise type `y` to open the Fly Launch web page and edit your settings, including:
+
+* Name: Keep the default app name or enter your own. This name will be part of the URL for your app, unless you use a custom domain.
+
+* Region: Keep the fastest [region](/docs/reference/regions/) (the value of `primary_region` in the `fly.toml` file) as chosen by Fly Launch, or select a different region to deploy to.
+
+After you click **Confirm Settings**, Fly Launch creates your App and generates a `fly.toml` file for your project with the settings.
+
+The reason we added the `--no-deploy` flag is so that the App doesn't get deployed right away. This way, we can set up things like secrets and environment variables before the first deployment.
+
+## Configure & deploy the WordPress application
+
+Before deploying, we'll need to configure a couple of things. In your newly created fly.toml file, change the `internal_port` under `[http_service]` from 8080 to **80**. This setting lets Fly know on what port your App will respond, which is 80 in our case.
+
+After that, set up these environment variables by adding this to the end of your `fly.toml`:
+
+```toml
+[env]
+  WORDPRESS_DB_NAME= "wordpress_db"
+  WORDPRESS_DB_HOST= "<name-of-your-mysql-app>.internal"
+  WORDPRESS_CONFIG_EXTRA = "define( 'WP_HOME', 'https://<name-of-your-wordpress-app>.fly.dev' );define( 'WP_SITEURL', 'https://<name-of-your-wordpress-app>.fly.dev');"
+```
+
+The `WORDPRESS_DB_NAME` and `WORDPRESS_DB_HOST` are needed for the WordPress application to connect to the database. The `WORDPRESS_CONFIG_EXTRA` makes sure that the application serves everything from the `https://...` address.
+
+Here's how the total fly.toml should look now:
+```toml
+app = 'fly-wordpress'
+primary_region = 'fra'
+
+[build]
+  image = 'wordpress'
+
+[http_service]
+  internal_port = 80 # changed from 8080 to 80
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+# Add these environment variables
+[env]
+WORDPRESS_DB_NAME= "wordpress_db"
+WORDPRESS_DB_HOST= "db-wordpress.internal"
+WORDPRESS_CONFIG_EXTRA = "define( 'WP_HOME', 'https://fly-wordpress.fly.dev' );define( 'WP_SITEURL', 'https://fly-wordpress.fly.dev');"
+```
+
+Next, we need to set up the `WORDPRESS_DB_USER` and `WORDPRESS_DB_PASSWORD` variables. Since these are sensitive, let's use the [`fly secrets`](/docs/reference/secrets/#set-secrets) command:
+
+```cmd
+flyctl secrets set WORDPRESS_DB_USER=wordpress_user WORDPRESS_DB_PASSWORD=wordpress_password
+```
+```output
+Secrets are staged for the first deployment
+```
+
+You can list the secrets you've already set using `fly secrets list`. For example:
+
+```cmd
+fly secrets list
+```
+```
+NAME                    DIGEST                  CREATED AT
+WORDPRESS_DB_PASSWORD   92d2791e3f7ebd71        1m20s ago
+WORDPRESS_DB_USER       a2b707ef6e858717        1m20s ago
+```
+
+The values aren't displayed, since they're secret!
+
+### Deploy your app
+
+The last step is to deploy the App with the deploy command:
+
+```cmd
+flyctl deploy
+```
+```output
+==> Verifying app config
+Validating /Users/name/test/my-app-name/fly.toml
+✓ Configuration is valid
+--> Verified app config
+==> Building image
+Searching for image 'wordpress' remotely...
+image found: img_rlw04nnx6zzj4z2y
+
+
+Watch your deployment at https://fly.io/apps/my-app-name/monitoring
+
+-------
+Updating existing machines in 'my-app-name' with rolling strategy
+
+-------
+ ✔ [1/2] Machine 918543b477de83 [app] update succeeded
+ ✔ [2/2] Machine e28697ce6d3986 [app] update succeeded
+-------
+
+Visit your newly deployed app at https://my-app-name.fly.dev/
+```
+
+### Set up a custom domain
+
+You probably want to set up a custom domain for your WordPress application. You can find all you need to know (and more!) in [this handy guide](https://fly.io/docs/networking/custom-domain/).
+
+### Open your app
+
+Run `fly apps open`, or just go to the URL specified in the output of the deploy command, to open your deployed App in a browser.
+
+If you have any questions, need help, or want to talk about what you're building, visit our [community forum](https://community.fly.io).

@@ -1,0 +1,11 @@
+---
+title: LiteFS Releases
+layout: docs
+nav: litefs
+toc: true
+---
+
+If you're running on a Linux VPS without Docker, or as an alternative to installing
+from LiteFS Docker builds, you can download the latest
+version from our [LiteFS releases page](https://github.com/superfly/litefs/releases).
+LiteFS can run on either `amd64` or `arm64` architectures.

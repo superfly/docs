@@ -42,7 +42,7 @@ We&#39;re a product for developers, by developers. We have a [thriving community
 ## Leveling
 
 Levels at Fly.io are relatively informal. We're pretty flat, as companies
-go. Small teams, like we just said. Our current engineering leveling looks
+go. Small teams, like we just said. Our current [leveling](/docs/hiring/company-levels/) looks
 roughly like:
 
 * Level 1: Early-career or intern-level demonstrated aptitude. An L1 might need
@@ -60,7 +60,7 @@ EM is a separate track from line engineering.
 
 ## We&#39;re Ruthless About Doing Customer-Visible Work
 
-We want our teams to set their own direction as much as possible, but we&#39;ll shoot things down if they&#39;re not going to move the dials for our users. We&#39;re vigilant about tar pits and projects that spin our wheels and will do our best to keep you out of them. We&#39;re not big believers in &quot;tech debt&quot;. We have a 3-month &quot;no refactoring&quot; rule for new hires. This isn&#39;t everyone&#39;s preferred work style! We try to be up front about stuff.
+We want our teams to set their own direction as much as possible, but we&#39;ll shoot things down if they&#39;re not going to move the dials for our users. We&#39;re vigilant about tar pits and projects that spin our wheels and will do our best to keep you out of them. We&#39;re not big believers in "tech debt". We have a 3-month "no refactoring" rule for new hires. This isn&#39;t everyone&#39;s preferred work style! We try to be up front about stuff.
 
 ## Everyone Shares An On-Call Rotation
 
@@ -72,7 +72,7 @@ If you get socked with a rough on-call, we&#39;ll ask you to take the next day o
 
 ## Team Flexibility
 
-We get asked this a lot. Moving from a &quot;big&quot; category, like from Elixir UI to Rust platform work, will take some conversation and planning. But within a category, especially for platform work, you&#39;ll get opportunities to work on multiple things.
+We get asked this a lot. Moving from a "big" category, like from Elixir UI to Rust platform work, will take some conversation and planning. But within a category, especially for platform work, you&#39;ll get opportunities to work on multiple things.
 
 ## Open Source Work
 

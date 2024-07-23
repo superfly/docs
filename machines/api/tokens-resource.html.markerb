@@ -1,0 +1,68 @@
+---
+title: Tokens
+layout: docs
+nav: machines_toc
+toc: false
+---
+
+You can use the Tokens resource to request an OpenID Connect (OIDC) token from a 3rd-party service. Learn more about [using OpenID Connect](/docs/reference/openid-connect/) on Fly.io.
+   
+<div class="endpoints api-card">
+  <div class="api-card-header">
+    Endpoints
+  </div>
+  <div class="highlight">
+    <a class="endpoint">
+      <span class="post-badge">post</span>
+      <span>/v1/tokens/oidc</span>
+    </a>
+  </div>
+</div>
+
+## Request an OIDC token
+
+Request an Open ID Connect token for your Machine. Customize the audience claim with the `aud` parameter. This returns a JWT token.
+
+<div class="api-section" data-exclude-render>
+  <div>
+     <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OIDC token'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/tokens/oidc')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/tokens/oidc" \\
+  -d '{
+      "aud": "https://fly.io/my-org-slug",
+    }'
+      <% end %>
+      <% component.with_json do %>
+        {
+          "aud": ""
+        }
+      <% end %>
+      <% component.with_json_table do %>
+        | Property   | Type    | Required | Description                |
+        |-------------|---------|----------|----------------------------|
+        | `aud`  | string  | no      | The audience claim for the token (the recipient of this access token). |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+    <raw oidc token>
+    <% end %>
+  </div>
+</div>
+
+## Related topics
+
+- [Working with the Machines API](/docs/machines/api/working-with-machines-api/)
+- [Apps resource](/docs/machines/api/apps-resource/) reference
+- [Machines resource](/docs/machines/api/machines-resource/) reference
+- [Tokens resource](/docs/machines/api/tokens-resource) reference
+- [Volumes resource](/docs/machines/api/volumes-resource/) reference

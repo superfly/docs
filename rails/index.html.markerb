@@ -1,0 +1,26 @@
+---
+title: Rails on Fly.io
+layout: framework_docs
+toc: false
+blog_path: /ruby-dispatch
+---
+
+<div>
+  <img src="/static/images/rails-intro.webp" srcset="/static/images/rails-intro@2x.webp 2x" alt="Picture of a balloon floating through a Rails universe with a Ruby hanging from a single thread">
+</div>
+
+Fly is a great place to run Rails applications, especially if you plan on running them on multiple servers around the world so your users have a fast, snappy, low-latency experience. This becomes particularly important when deploying a Hotwire Rails app.
+
+If you have questions or comments about running Rails applications on Fly.io, create a new topic in [the Fly.io community Forum](https://community.fly.io/) and tag it with "rails" so the right people from Fly.io and our community can give you the support you need.
+
+## [Getting Started](./getting-started)
+
+Run through the [Starter Rails App](./getting-started/) guide to get a feel for what it's like to deploy to Fly. If you're short on time, just do the first section and you'll have a Rails app running in just a few minutes.
+
+## [The Basics](./the-basics)
+
+Covers everything you need to setup, run, and manage production Rails apps on Fly. These documents also identify some common problems you may encounter and provides some pointers on how to resolve them.
+
+## [Advanced Guides](./advanced-guides)
+
+The topics in these documents either apply to a subset of Rails applications or are things you'd do if your application demands scale.

@@ -1,11 +1,10 @@
 ---
-title: Builders and Fly
+title: Builders and Fly.io
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 
-When you deploy an app on Fly, the app has to be assembled into a deployable image. That's the job that builders take on. There are three kinds of Fly builders - **dockerfile**, **buildpacks**, and **image**.
+When you deploy an app on Fly.io, the app has to be assembled into a deployable image. That's the job that builders take on. There are three kinds of Fly builders - **dockerfile**, **buildpacks**, and **image**.
 
 ## Dockerfile
 
@@ -15,10 +14,9 @@ This is the most flexible of the options, but with that flexibility comes the ne
 
 ## Buildpacks
 
-Platforms like Heroku and Cloud Foundry have the idea of a buildpack, a building process that's run entirely in its own container, to construct their deployable images. These buildpacks are then bundled into a "builder" stack with an operating system and can be called upon to build an app. The buildpack idea has been standardized with [Cloud Native Buildpacks](https://buildpacks.io/). Buildpacks use several tests to detect if they can build the application and if they can, then proceed to run the scripts needed to create an image.
+Platforms like Heroku and Cloud Foundry have the idea of a buildpack, a building process that's run entirely in its own container, to construct their deployable images. These buildpacks are then bundled into a "builder" stack with an operating system and can be called upon to build an app. The buildpack idea has been standardized with [Cloud Native Buildpacks](https://buildpacks.io/+external). Buildpacks use several tests to detect if they can build the application and if they can, then proceed to run the scripts needed to create an image.
 
-A library of standardized buildpacks are available from [Paketo Buildpacks](https://paketo.io/) and it's from this library, Heroku's Heroku20 buildpack, and Fly's own buildpack (for Deno), that you can select from in Flyctl. If you want to use an unlisted buildpack, you can specify it by name using the
-`buildpacks` setting in `fly.toml`.
+A library of standardized buildpacks is available from [Paketo Buildpacks](https://paketo.io/+external) and it's from this library, Heroku's Heroku20 buildpack, and Fly's own buildpack (for Deno), that you can select from in flyctl. If you want to use an unlisted buildpack, you can specify it by name using the `buildpacks` setting in `fly.toml`.
 
 Buildpack configuration options - such as `YARN_PRODUCTION` in the [Heroku Nodejs Buildpack](https://devcenter.heroku.com/articles/nodejs-support#using-npm-install) - can be set via [Docker build arguments](https://fly.io/docs/reference/configuration/#specify-docker-build-arguments).
 

@@ -1,0 +1,30 @@
+---
+title: "Run a Nuxt App"
+layout: framework_docs
+redirect_from:
+ - /docs/languages-and-frameworks/nuxtjs/
+ - /docs/getting-started/nuxtjs/
+objective: Nuxt is the intuitive Vue Framework.
+order: 6
+---
+
+<% app_name = "hello-nuxt" %>
+<%= partial "partials/intro", locals: { runtime: "Nuxt", link: "https://nuxt.com" } %>
+
+You can deploy your [Nuxt](https://nuxt.com) app on Fly with minimal effort, our CLI will do the heavy lifting.
+
+## _Deploy a Nuxt app_
+
+<%= partial "partials/flyctl" %>
+
+If you don't already have a Nuxt app, you can create one:
+
+```cmd
+npx nuxi@latest init hello-nuxt
+```
+
+Now let's launch your Nuxt app.
+
+<%= partial "partials/launch", locals: { detected: "Nuxt", app_name: app_name } %>
+
+<%= partial "partials/launched" %>

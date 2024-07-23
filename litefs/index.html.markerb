@@ -1,0 +1,39 @@
+---
+title: LiteFS - Distributed SQLite
+layout: docs
+nav: litefs
+---
+
+LiteFS is a distributed file system that transparently replicates SQLite
+databases. You can run your application like it's running against a local
+on-disk SQLite database but behind the scenes the database is replicated to all
+the nodes in your cluster. With LiteFS, you can run your database right next to your
+application on the edge. You can run LiteFS anywhere!
+
+## Project status
+
+LiteFS is stable and running in production environments. The project is still
+pre-1.0 so APIs may change and features could be removed. Please remember that
+all software has bugs so we recommend you set up [regular off-site backups][backup] 
+in case of malfunction or disk corruption.
+
+[backup]: /docs/litefs/backup/
+
+
+## Exploring our guides
+
+You can get up and running quickly with one of our guides:
+
+- [Speedrun: Adding LiteFS to your app](/docs/litefs/speedrun) the fastest way to get started with LiteFS on Fly.io.
+
+- [Getting Started on Fly.io][] helps you add LiteFS to an existing application and deploy to Fly.io. This guide
+provides more details and explanation than the Speedrun.
+
+- [Getting Started with Docker][] helps you add LiteFS to an existing application that you want to run outside of Fly.io.
+
+- [How LiteFS Works][] explains the concepts behind LiteFS.
+
+[Getting Started on Fly.io]: /docs/litefs/getting-started-fly
+[Getting Started with Docker]: /docs/litefs/getting-started-docker
+[Using LiteFS Cloud for Backups]: /docs/litefs/cloud-backups
+[How LiteFS Works]: /docs/litefs/how-it-works

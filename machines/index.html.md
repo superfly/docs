@@ -1,24 +1,19 @@
 ---
 title: "Fly Machines"
-layout: framework_docs_overview
-toc: false
-redirect_from: /docs/reference/machines/
+layout: docs
+nav: machines
 ---
 
-Fly Machines are [Firecracker VMs](https://firecracker-microvm.github.io/) with a fast REST API that can boot instances in about 300ms, in any region supported by [Fly.io](https://fly.io/docs/reference/regions/).
+Fly Machines are fast-launching VMs; they can be started and stopped at subsecond speeds. We give you control of your Machine count and each Machine's lifecycle, resources, and region placement with a simple REST API or flyctl commands.
 
-The [Machines API](/docs/machines/working-with-machines/) gives you efficient, low-level control over VM provisioning, supported by Fly.io infrastructure and networking features.
+- [**Introduction to Fly Machines**:](/docs/machines/overview/) Learn whether you need low-level Machine control. Find out more about the lifecycle of Fly Machines and about scaling and placement.
 
-Machines are also the spawning ground for new platform features like *wake-on-request* (also known as *scale-to-zero*). You can
-stop a running machine to save on compute costs. It then may be started automatically when a request arrives at the Fly proxy.
+- [**Machines API:**](/docs/machines/api/) A simple and fast REST API for full control over our fast-launching Machines.
 
-[Read the Fly Machines announcement post.](https://fly.io/blog/fly-machines/)
+- **[Run a New Machine](/docs/machines/flyctl/fly-machine-run/) or [Update a Machine](/docs/machines/flyctl/fly-machine-update/) with flyctl:** Configure, build, and start new Machines with a single command or update some or all of a Machine's configuration.
 
-## Machine Features
+On the other hand, try [Fly Launch](/docs/reference/fly-launch/) if you prefer easy app-wide configuration and containerized deployment for your app.
 
-1. They can be managed by API
-1. They turn off automatically when a program exits
-1. They can be started very quickly
-1. Restarted machines are a blank slate - they are ephemeral
-1. They can be started manually, but can also wake on network access
-1. You can run multiple machines within an application
+<figure>
+  <img src="/static/images/docs-machines-fast.webp" alt="fast-launching hot air balloons against a green sky">
+</figure>

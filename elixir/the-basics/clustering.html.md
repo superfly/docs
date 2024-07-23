@@ -10,34 +10,64 @@ objective: Cluster your erlang nodes into a single distributed network!
 ---
 
 Elixir and the BEAM have the incredible ability to be clustered together and
-processes can pass messages seamlessly to each other between nodes. Fly makes
+processes can pass messages seamlessly to each other between nodes. Fly.io makes
 clustering easy! This extra (and totally optional) portion of the guide walks
 you through clustering your Elixir application.
 
-There are 2 parts to getting clustering quickly setup on Fly.
+There are 3 parts to getting clustering quickly setup on Fly.io.
 
-- Installing and using `libcluster`
+- Naming the Node(s)
+- Installing and using `dns_cluster`
 - Scaling our application to multiple VMs
 
-## _Adding `libcluster`_
+## Naming the Node(s)
 
-The widely adopted library [libcluster](https://github.com/bitwalker/libcluster) helps here.
+To make clustering easier, we want our Elixir nodes to be named using our Fly application name and the IPv6 address assigned to the node. Then later, our cluster can form up using DNS settings based on this naming scheme.
 
-Libcluster supports multiple strategies for finding and connecting with other nodes. The strategy we'll use is `DNSPoll` which was added in version 3.2.2 of `libcluster`, so make sure you're using that version or newer.
+If you've run `fly launch` already then you should have a `rel` folder with a `rel/env.sh.eex` file already.
 
-After installing `libcluster`, add it to the application like this:
+If not, run this command from your Elixir application:
+
+```cmd
+mix release.init
+```
+
+Then check the generated `rel/env.sh.eex` file and add ensure the lines looks similar:
+
+```shell
+# configure node for distributed erlang with IPV6 support
+export ERL_AFLAGS="-proto_dist inet6_tcp"
+export ECTO_IPV6="true"
+export DNS_CLUSTER_QUERY="${FLY_APP_NAME}.internal"
+export RELEASE_DISTRIBUTION="name"
+export RELEASE_NODE="${FLY_APP_NAME}-${FLY_IMAGE_REF##*-}@${FLY_PRIVATE_IP}"
+```
+
+This names our Elixir node's name (also known as RELEASE_NODE) using the Fly application name, the Docker image reference value, and the internal IPv6 address. Make sure to deploy after making this change!
+
+```cmd
+fly deploy
+```
+
+## Adding `dns_cluster`
+
+The Phoenix library [dns_cluster](https://github.com/phoenixframework/dns_cluster) helps here.
+
+The `dns_cluster` library lets you easily setup Erlang Clustering using DNS, and Fly.io has built in DNS support!
+
+After installing `dns_cluster`, add it to the application like this:
 
 ```elixir
 defmodule HelloElixir.Application do
   use Application
 
   def start(_type, _args) do
-    topologies = Application.get_env(:libcluster, :topologies) || []
-
     children = [
       # ...
       # setup for clustering
-      {Cluster.Supervisor, [topologies, [name: HelloElixir.ClusterSupervisor]]}
+      {Phoenix.PubSub, ...},
+      {DNSCluster, query: Application.get_env(:hello_elixir, :dns_cluster_query) || :ignore},
+      HelloElixirWeb.Endpoint
     ]
 
     # ...
@@ -47,41 +77,33 @@ defmodule HelloElixir.Application do
 end
 ```
 
-Our next step is to add the `topologies` configuration to the file `config/runtime.exs`.
+Our next step is to add the `dns_cluster_query` configuration to the file `config/runtime.exs`.
 
 ```elixir
-  app_name =
-    System.get_env("FLY_APP_NAME") ||
-      raise "FLY_APP_NAME not available"
+  config :hello_elixir, dns_cluster_query: System.get_env("DNS_CLUSTER_QUERY")
+```
 
-  config :libcluster,
-    debug: true,
-    topologies: [
-      fly6pn: [
-        strategy: Cluster.Strategy.DNSPoll,
-        config: [
-          polling_interval: 5_000,
-          query: "#{app_name}.internal",
-          node_basename: app_name
-        ]
-      ]
-    ]
+And finally add a key to our `fly.toml` file:
+
+```toml
+[env]
+  DNS_CLUSTER_QUERY = "hello-elixir.internal"
 ```
 
 **REMEMBER:** Deploy your updated app so the clustering code is available, with `fly deploy`.
 
-This configures `libcluster` to use the `DNSPoll` strategy and look for other deployed apps using the same `$FLY_APP_NAME` on the `.internal` private network.
+This configures `dns_cluster` to look for other deployed apps using the same `$FLY_APP_NAME` on the `.internal` private network.
 
 This assumes that your `rel/env.sh.eex` file is configured to name your Elixir node using the `$FLY_APP_NAME`. We did this earlier in the "Naming Your Elixir Node" section.
 
 Before this app can be clustered, we need more than one VM. We'll do that next!
 
-## _Running Multiple VMs_
+## Running multiple VMs
 
 There are two ways to run multiple VMs.
 
-1. Scale our application to have multiple VMs in one region.
-2. Add a VM to another region (multiple regions).
+1. Scale our application to have multiple Fly Machines in one region.
+2. Add a Machine to another region (multiple regions).
 
 Both approaches are valid and our Elixir application doesn't change at all for the approach you choose!
 
@@ -92,20 +114,17 @@ fly status
 ```
 ```output
 ...
-VMs
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-f9014bf7 26      sea    run     running 1 total, 1 passing 0        1h8m ago
+Machines
+PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPDATED
+app     6e82dd00f75687  20      sea     started 1 total, 1 passing      2023-03-16T22:01:45Z
 ```
 
-### Scaling in a Single Region
+### Scaling in a single region
 
 Let's scale up to 2 VMs in our current region.
 
 ```cmd
 fly scale count 2
-```
-```output
-Count changed to 2
 ```
 
 Checking on the status we can see what happened.
@@ -115,10 +134,10 @@ fly status
 ```
 ```output
 ...
-VMs
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-eb4119d3 27      sea    run     running 1 total, 1 passing 0        39s ago
-f9014bf7 27      sea    run     running 1 total, 1 passing 0        1h13m ago
+Machines
+PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPDATED
+app     5683d474b4658e  20      sea     started 1 total, 1 passing      2023-06-16T01:49:36Z
+app     6e82dd00f75687  20      sea     started 1 total, 1 passing      2023-03-16T22:01:45Z
 ```
 
 We now have two VMs in the same region! That was easy.
@@ -130,15 +149,14 @@ fly logs
 ```
 ```output
 ...
-app[eb4119d3] sea [info] 21:50:21.924 [info] [libcluster:fly6pn] connected to :"fly-elixir@fdaa:0:1da8:a7b:ac2:f901:4bf7:2"
+app[5683d474b4658e] sea [info] 21:50:21.924 [info] [libcluster:fly6pn] connected to :"fly-elixir@fdaa:0:1da8:a7b:ac2:f901:4bf7:2"
 ...
 ```
 
 But that's not as rewarding as seeing it from inside a node. From an IEx shell, we can ask the node we're connected to, what other nodes it can see.
 
-```
-fly ssh console
-/app/bin/hello_elixir remote
+```cmd
+fly ssh console --pty -C "/app/bin/hello_elixir remote"
 ```
 
 ```elixir
@@ -148,65 +166,33 @@ iex(fly-elixir@fdaa:0:1da8:a7b:ac2:f901:4bf7:2)1> Node.list
 
 I included the IEx prompt because it shows the IP address of the node I'm connected to. Then getting the `Node.list` returns the other node. Our two VMs are connected and clustered!
 
-### Scaling to Multiple Regions
+### Scaling to multiple regions
 
-Fly makes it super easy to run VMs of your applications physically closer to your users. Through the magic of DNS, users are directed to the nearest region where your application is located. You can read about [regions](/docs/reference/regions/#welcome-message) here and see the list of regions to choose from.
+Fly.io makes it super easy to run VMs of your applications physically closer to your users. Through the magic of DNS, users are directed to the nearest [region](/docs/reference/regions/) where your application is located.
 
-Starting back from our baseline of a single VM running in `sea` which is Seattle, Washington (US), I'll add the region `ewr` which is Parsippany, NJ (US). This puts a VM on both coasts of the US.
+Starting back from our baseline of a single VM running in `sea` which is Seattle, Washington (US), I'll add the region `ewr` which is NJ (US). I can do this by cloning the existing Fly Machine into my desired region:
 
 ```cmd
-fly regions add ewr
-```
-```output
-Region Pool:
-ewr
-sea
-Backup Region:
-iad
-lax
-sjc
-vin
+fly machine clone 6e82dd00f75687 --region ewr
 ```
 
-Looking at the status right now shows that we're only in 1 region because our count is set to 1.
+Now our status shows we have two Machines spread across 2 regions! This puts a VM on both coasts of the US.
 
 ```cmd
 fly status
 ```
 ```output
 ...
-VMs
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-cdf6c422 29      sea    run     running 1 total, 1 passing 0        58s ago
-```
-
-Let's add a 2nd VM and see it deploy to `ewr`.
-
-```cmd
-fly scale count 2
-```
-```output
-Count changed to 2
-```
-
-Now our status shows we have two VMs spread across 2 regions!
-
-```cmd
-fly status
-```
-```output
-...
-VMs
-ID       VERSION REGION DESIRED STATUS  HEALTH CHECKS      RESTARTS CREATED
-0a8e6666 30      ewr    run     running 1 total, 1 passing 0        16s ago
-cdf6c422 30      sea    run     running 1 total, 1 passing 0        6m47s ago
+Machines
+PROCESS ID              VERSION REGION  STATE   CHECKS                  LAST UPDATED
+app     0e2869ea63d486  20      ewr     started 1 total, 1 passing      2023-06-16T01:56:19Z
+app     6e82dd00f75687  20      sea     started 1 total, 1 passing      2023-03-16T22:01:45Z
 ```
 
 Let's ensure they are clustered together.
 
-```
-fly ssh console
-/app/bin/hello_elixir remote
+```cmd
+fly ssh console --pty -C "/app/bin/hello_elixir remote"
 ```
 
 ```elixir
@@ -216,44 +202,54 @@ iex(fly-elixir@fdaa:0:1da8:a7b:ac2:cdf6:c422:2)1> Node.list
 
 We have two VMs of our application deployed to the West and East coasts of the North American continent and they are clustered together! Our users will automatically be directed to the server nearest them. That is so cool!
 
-## _The Cookie Situation_
+## The cookie situation
 
-Before two Elixir nodes **can** cluster together, they must share a secret cookie. The cookie itself isn't meant to be a super secret encryption key or anything like that, it's designed to let us create multiple sets of small clusters on the same network that don't all just connect together. Different cookies means different clusters. For instance, only the nodes that all use the cookie "abc" will connect together.
+Before two Elixir nodes **can** cluster together, they must share a secret cookie. The cookie itself isn't meant to be a super secret encryption key or anything like that, it's designed to let us create multiple sets of small clusters on the same network that don't all just connect together. Different cookies means different clusters. For instance, only the nodes that all use the cookie `abc` will connect together.
 
 For us, this means that in order for `my_remote` node to connect to the cluster on Fly, we need to share the same cookie value used in production.
 
-### The Cookie Problem
+### The cookie problem
 
 When we build a `mix release`, it generates a long random string for the cookie value. When we **re-run** the `mix release` command, it keeps the same cookie value. That is, when we don't run it in Docker. The Dockerfile we're using is building a fresh release every time we run it. That's kind of the point of a Docker container. So **our cookie value is being randomly generated every time we deploy**. This means after every deploy, we would have to figure out what the new cookie value is so our local node can use it.
 
-### The Cookie Solution
+### The cookie solution
 
 The easiest solution here is to **specify** the value to use for our cookie. One that we will know outside of the build and that won't keep changing on us.
 
-## _Making the Cookie Changes_
+## Making the cookie changes
 
 If we read the [Mix.Tasks.Release docs](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-options), in the `:cookie` section we learn that if we provide an ENV named `RELEASE_COOKIE`, it will be used. If that ENV is not found, it falls back to the randomly generated one.
 
-To do this, we can create the cookie we want and store it in our `fly.toml` file like this:
+To generate the cookie string we will use this Elixir command:
+
+```elixir
+Base.url_encode64(:crypto.strong_rand_bytes(40))
+```
+
+To provide the ENV named `RELEASE_COOKIE` inside the running app, after generating the cookie, we can either:
+- [Put it as a secret](https://fly.io/docs/apps/secrets/#set-secrets) inside project settings under the `RELEASE_COOKIE` name, or
+- Store it in our `fly.toml` file like this:
 
 ```toml
 [env]
   RELEASE_COOKIE = "my-app-cookie"
 ```
 
-Also from the docs, we can generate the cookie string to use with this Elixir command:
+After setting up the ENV and deploying the application, we can verify that the cookie is being used by getting an [IEx shell into our running server](/docs/elixir/the-basics/iex-into-running-app/) and issuing the following command:
 
 ```elixir
-Base.url_encode64(:crypto.strong_rand_bytes(40))
-```
-
-After deploying the application, we can verify that the cookie is being used by getting an [IEx shell into our running server](/docs/elixir/the-basics/iex-into-running-app/) and issuing the following command:
-
-```
 Node.get_cookie()
 ```
 
 This shows the cookie being used at runtime.
+
+We can also check list of connected nodes by running the following command:
+
+```elixir
+Node.list()
+```
+
+An empty list means the node has no connections. If you are sure that there is more then one node running, you could proceed to [Troubleshooting](/docs/elixir/the-basics/troubleshooting/) documentation.
 
 With a known and unchanging cookie deployed in our application, we are ready for the next step!
 
@@ -274,3 +270,5 @@ Check for this If you encounter network related errors like this:
 ```
 Could not contact remote node my-app@fdaa:0:31d4:a5b:9d36:7c1e:f284:2, reason: :nodedown. Aborting...
 ```
+
+If you have non-empty list with all of your running nodes - congratulations, you have successfully set up the clustering!

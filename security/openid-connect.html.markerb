@@ -1,0 +1,122 @@
+---
+title: OpenID Connect
+layout: docs
+nav: firecracker
+redirect_from: /docs/reference/openid-connect/
+---
+
+Fly Machines sometimes need to access 3rd-party services or cloud providers like AWS, Azure, or GCP. To authenticate against these 3rd parties, your Machines need to supply credentials such as a password or token to the cloud provider; usually these are stored as `fly secrets` and then passed into your Machine's environment variables.
+
+However this approach involves creating hardcoded long-lived credentials on the 3rd party platform and involves either managing a lot of tokens or sharing the same token across multiple apps.
+
+Using OpenID Connect (OIDC) allows for a more secure approach by using short-lived access tokens directly from 3rd party platforms. The only caveat is that the 3rd party platform  needs to support OIDC tokens and you need to establish a trust between Fly.io and the 3rd party. Providers which currently support OIDC include Amazon Web Services, Azure, Google Cloud Platform, and HashiCorp Vault, among others.
+
+## Benefits of OpenID Connect (OIDC)
+
+Adopting OIDC to manage access to 3rd party services allows your apps to easily use good security practices like:
+* No hardcoded credentials, these are often shared across Machines and apps. OIDC allows for every Machine to have its own credential.
+* Granular control over Machines access to 3rd party resources through leveraging the authentication (authN) and authorization (authZ) tools of the 3rd party.
+* Rotating credentials: credentials issued from 3rd parties are only valid for 15 minutes before they expire.
+
+## Understanding OpenID Connect 
+
+Every request to the token endpoint generates a unique Json Web Token (JWT). When you give this JWT to a 3rd party they validate the token against the OIDC configuration hosted at the endpoint in the issuer (`iss`) claim. Below is an example of an issued OIDC token. A useful feature here is that the subject (`sub`) claim references the Machine's org name, app name and Machine name. This allows for regex checks to be built against the claim which can restrict accepted tokens to a specific app or Machine.
+
+```json
+{
+    "app_id": "11111111",
+    "app_name": "example-app",
+    "aud": "https://fly.io/exmaple-org",
+    "exp": 1712099653,
+    "iat": 1712099053,
+    "image": "docker-hub-mirror.fly.io/you/image:latest",
+    "image_digest": "sha256:2c1cdaded1b3820020c9dc9fdd1d6e798d6f6ca36861bb6ae64019fad6be9ee3",
+    "iss": "https://oidc.fly.io/exmaple-org",
+    "jti": "93ca09e1-70e0-477b-a260-1d8fcd4ef4f4",
+    "machine_id": "148e21ea7e46e8",
+    "machine_name": "example-machine",
+    "machine_version": "01HTGGC1TZ2JHK83J4AC0R3VET",
+    "nbf": 1712099053,
+    "org_id": "11111111",
+    "org_name": "example-org",
+    "region": "sea",
+    "sub": "example-org:example-app:example-machine"
+}
+```
+
+## Customizing OIDC token claims
+
+Customizing tokens allows for powerful authorization clauses in the platform you're authenticating against. For example, with AWS, you can require that a role can only be assumed by tokens which match certain `aud` and `sub` claims. This allows you to lock down and provide credentials only to a specific Fly.io app or Machine.
+
+You can customize the audience (aud) claim of your tokens by providing a value for aud in the body of the POST request. This lets you specify the recipient of the token. This is what it looks like in a curl request with the `aud` claim set to `sts.amazonaws.com`.
+
+```cmd
+curl --unix-socket /.fly/api -X POST "http://localhost/v1/tokens/oidc" --data '{"aud":"sts.amazonaws.com"}'
+```
+
+## OpenID Connect Trust Policies in AWS
+
+You can leverage the trust policy of an IAM role to restrict which Machines in your organisation can assume a role in AWS. For example the following policy would only allow Machines in the app `foo-bar` within your org to assume the role it’s attached to.
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::123456123456:oidc-provider/oidc.fly.io/<org-name>"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+              "StringEquals": {
+                "oidc.fly.io/<org-name>:aud": "sts.amazonaws.com",
+              },
+                "StringLike": {
+                "oidc.fly.io/<org-name>:sub": "org-name:foo-bar:*"
+              }
+            }
+        }
+    ]
+}
+```
+
+## Reading from an S3 Bucket on a Fly Machine
+
+To read from an S3 bucket using a Fly Machine you'll first need to set up a trust between AWS and Fly.io by creating an OIDC provider in AWS and then attaching a trust policy to the role policy your Machine will assume. If you've already packaged up your app in a Dockerfile, then you can follow these steps to read from an S3 bucket:
+
+1. Create a Fly.io app by running `fly launch` in the same directory as your Dockerfile.
+1. Find the slug for the organisation you want to launch your app in.
+
+    ```cmd
+    fly orgs list
+    ```
+
+1. Create an [OpenID Connect Identity provider](https://us-east-1.console.aws.amazon.com/iam/home?region=us-east-1#/identity_providers/create) in your AWS account with your org slug and the following settings:
+
+    ```
+    Provider URL: https://oidc.fly.io/<org-slug>
+    Audience: sts.amazonaws.com
+    ```
+
+1. Create an [IAM Role](https://us-east-1.console.aws.amazon.com/iam/home?region=us-east-1#/roles/create) with the following settings:
+ * Trusted Identity: `Web Identity -> Identity Provider -> oidc.fly.io` 
+ * Select the `AmazonS3ReadOnlyAccess` policy.
+
+1. Set the `AWS_ROLE_ARN` as an environment variable in your `fly.toml`.
+
+    ```toml
+    [env]
+      AWS_ROLE_ARN = "arn:aws:iam::<ACCOUNT_ID>:role/<ROLE_NAME>"
+    ```
+
+1. Deploy your app and let the AWS SDK will do the rest.
+
+    ```cmd
+    fly deploy
+    ```
+
+  <div class = "note icon">
+  **Notes**:
+  If you’re setting this up for your personal org the slug is a little harder to find but you can find it in the url when you click on “Apps” on the [dashboard](https://fly.io/dashboard)
+  </div>

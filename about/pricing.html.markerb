@@ -1,0 +1,305 @@
+---
+title: Fly.io Resource Pricing
+layout: docs
+sitemap: true
+nav: firecracker
+---
+
+<img src="/static/images/app-pricing.webp" srcset="/static/images/app-pricing@2x.webp 2x" alt="A landscape painting with hot air balloons flying over a mountain range.">
+
+## How it works
+
+Fly.io services are billed per organization. Every organization is on a [plan](https://fly.io/plans). If you want to scale beyond your plan, then you can upgrade, or just pay for what you need at the usage-based pricing listed below.
+
+<div class="callout">
+Organizations are administrative entities on Fly.io that let you add members, share app development environments, and manage billing separately. [Billing](/docs/about/billing/) is based on the resources provisioned for your apps, pro-rated for the time they are provisioned.
+</div>
+
+## Plans
+
+Check out our [plans and plan pricing](https://fly.io/plans).
+
+Every organization belongs to a plan. When you create a new organization, it starts on the [Pay As You Go plan](https://fly.io/plans). If you need more support or compliance options, then you can upgrade to a Launch, Scale, or Enterprise plan.
+
+Some usage is included with our Hobby (deprecated), Launch, Scale, and Enterprise plans. You can upgrade your plan at any time, or just pay for extra usage at the usage-based prices listed below.
+
+<div class="note icon">
+Organizations may be subject to automated scaling limits to prevent abuse or to help with capacity planning. Email the address in the error message if you run into such a limit and it's getting in your way.
+</div>
+
+All plans require a [credit card](/docs/about/billing/#payment-options) on file. For plan details, or to select a different plan, see [Plan Pricing](https://fly.io/plans).
+
+### New sign-ups
+
+When you sign up for a Fly.io account, we create a default ("personal") organization for you on the [Pay As You Go plan](https://fly.io/plans).
+
+### Discontinued plans
+
+The paid Hobby plan and the Legacy Hobby plan are not available for new sign-ups.
+
+#### Paid Hobby plan and free trial
+
+If you signed up for the now deprecated $5/month Hobby plan before the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit is used up, we automatically place your organization on the $5/month Hobby plan, which includes $5/month of usage and free allowances. There are no free allowances during the free trial. We’ll send you an email when your free trial credit is used up and you won't be charged before that. The free trial credit doesn't expire and applies only to the default (“personal”) organization that we created for you on sign-up.
+
+To change your plan to the Pay As You Go plan, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Choose Pay As You Go**. If you change your plan, you won't be able to return to the paid Hobby Plan.
+
+#### Legacy Hobby plan
+
+If you were on the free Hobby plan at the time that the paid Hobby plan became the default for new organizations, your plan is now called the Legacy Hobby plan. Your costs stay the same as they were, with no monthly subscription fee, and no included usage beyond the free resource allowances.
+
+If you change your plan, you won't be able to return to the Legacy Hobby Plan.
+
+## Free allowances
+
+There are no free allowances on the Pay As You Go plan or during free trial of the deprecated paid Hobby plan.
+
+Resources included for free on the Hobby (deprecated), Launch, and Scale plans:
+
+* Up to 3 shared-cpu-1x 256mb VMs
+* 3GB persistent volume storage (total)
+* Outbound data transfer:
+  * 100 GB North America & Europe
+  * 30 GB Asia Pacific, Oceania & South America
+  * 30 GB Africa & India
+
+Additional resources are billed at the usage-based pricing detailed below.
+
+## Compute
+
+We charge for started and stopped Machines differently. Attached GPUs are charged separately. For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing).
+
+### Started Fly Machines
+
+<% if Time.now.utc < '2024-11-01T00:00:00Z' %>
+<section class="callout">
+  **Machines pricing is changing!**
+
+  <p class="mt-2">
+    On July 1st, we're beginning a phased roll-out of per-region pricing. For the first month, prices will remain the same, but the lines on your invoice will be broken down by region. Each subsequent month, prices will be increase by 25% of the difference between the price in <span class="font-mono">iad</span> and the price listed for the region, until the listed price is reached in November.
+  </p>
+
+  <p class="my-4 w-full text-right"><button id="phased-roll-out-example-toggle-btn" toggle>See an example of how the phased roll-out works</button></p>
+
+  <ul id="phased-roll-out-example" class="hidden block overflow-hidden mt-2 text-sm leading-normal bg-white card" aria-label="show phased roll-out worked example" aria-hidden="true">
+
+    <li>The listed price for <span class="font-mono">shared-1x-256mb</span> Machines in <span class="font-mono">lax</span> is $2.33/month.</li>
+    <li>In July, <span class="font-mono">shared-1x-256mb</span> Machines in <span class="font-mono">lax</span> will cost the same as Machines in <span class="font-mono">iad</span>, roughly $1.94/month.</li>
+    <li>In August, they'll cost roughly $1.94 + 0.25\*($2.33 - $1.94) = $2.04/month.</li>
+    <li>In September, they'll cost roughly $1.94 + 0.5\*($2.33 - $1.94) = $2.14/month.</li>
+    <li>In October, they'll cost roughly $1.94 + 0.75\*($2.33 - $1.94) = $2.23/month.</li>
+    <li class="mb-0">Finally, in November they'll cost roughly $2.33/month, the listed price for Machines in <span class="font-mono">lax</span>.</li>
+
+  </ul>
+</section>
+
+<script type="text/javascript">
+  const phasedRollOutToggleBtn = document.getElementById("phased-roll-out-example-toggle-btn");
+  const phasedRollOutContent = document.getElementById("phased-roll-out-example");
+
+  phasedRollOutToggleBtn.addEventListener("click", function() {
+    phasedRollOutContent.classList.toggle("hidden");
+    phasedRollOutContent.ariaHidden = phasedRollOutContent.ariaHidden === "true" ? "false" : "true";
+  })
+</script>
+<% end %>
+
+<p>
+  <label for="region-select">Region: </label>
+  <select id="region-select" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+    <% data.pricing.regions.each do |r| %>
+      <option value="<%= r.code %>"><%= r.city %>, <%= r.country %> (<%= r.code %>)</option>
+    <% end %>
+  </select>
+</p>
+
+<script type="text/javascript">
+const regionMarkups = {
+  <% data.pricing.regions.each do |region| %>
+    "<%= region.code %>": <%= region.markup_ratio %>,
+  <% end %>
+};
+
+const regionSelect = document.getElementById("region-select");
+
+regionSelect.addEventListener("change", function () {
+  document.querySelectorAll(".started-machines-pricing-matrix").forEach((matrix) => matrix.classList.add("hidden"));
+  document.getElementById(`started-machines-pricing-matrix-${regionSelect.value}`).classList.remove("hidden");
+});
+</script>
+
+The price of a running [Fly Machine](/docs/machines/) VM is the price of a named CPU/RAM preset, plus about <span id="ram-price">$5</span> per 30 days per GB of additional RAM.
+
+Here's the pricing for named presets and a few standard additional RAM configurations:
+
+<%= partial("shared/cpu_mem_machines_pricing") %>
+
+<script type="text/javascript">
+const ramPriceSpan = document.getElementById("ram-price");
+const baselineRamPricePer30Days = 5;
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});
+
+
+regionSelect.addEventListener("change", function () {
+  const selectedRegion = regionSelect.value; // regionSelect defined in landing/pages/shared/_cpu_mem_machines_pricing.html.erb
+  ramPriceSpan.textContent = formatter.format(baselineRamPricePer30Days * regionMarkups[selectedRegion]);
+});
+</script>
+
+### Stopped Fly Machines
+
+For stopped Machines we charge only for the root file system (rootfs) needed for each Machine. Each 1GB of rootfs for a Machine stopped for 30 days is $0.15. The amount of rootfs needed is defined by your OCI image generated on your app plus a few [containerd](https://containerd.io/+external) tweaks on the underlying file system.
+
+### Machine reservation blocks
+
+You'll get a 40% discount when you reserve a block of compute time, either for `performance` Machines or `shared` Machines, in a specific region.
+Reservations apply to any number of Machines of the specified CPU class, in the specified region, in any of your organisation's apps.
+
+The available reservation sizes are:
+
+**Performance Machines**
+
+* $144/year for $20/month of usage
+* $1,440/year for $200/month of usage
+* $14,400/year for $2,000/month of usage
+
+**Shared Machines**
+
+* $36/year for $5/month of usage
+* $360/year for $50/month of usage
+* $3,600/year for $500/month of usage
+
+You pay the "per year" amount upfront, and each month receive a credit worth the "per month" amount. The credit does not rollover; it's only valid for the month in which it's granted.
+
+There's no limit on the number or combinations of blocks that can be purchased. Reservations are backdated to the first day of the month in which they're purchased.
+
+For example, if you purchase a $36/year `shared` Machines block in `cdg`, you'll pay $36 upfront and receive $5/month of credits applicable to `shared` Machines in `cdg` for 12 months, starting with the month of the purchase. Amortised over 12 months, the $36 upfront cost is $3/month, which is a 40% discount on the $5/month of credits you receive.
+
+Email reservations@fly.io with a list of the reservations you’d like to purchase along with which regions, and we’ll set them up for you.
+
+### GPUs and Fly Machines
+
+Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see above) plus the price of the attached GPU. Like Machines, GPUs are billed by the second when the attached Machine is running.
+
+On-demand GPU pricing:
+
+* A10: $1.50/hr per GPU
+* L40S: $2.50/hr per GPU
+* A100 40G PCIe: $2.50/hr per GPU
+* A100 80G SXM: $3.50/hr per GPU
+
+Usage terms:
+
+* No minimum usage requirements.
+* Customizable CPU, RAM, and storage options.
+
+Reserved and dedicated options:
+
+* Discounted rates for reserved GPU Machines and dedicated hosts.
+
+## Persistent Storage Volumes
+
+[Fly Volumes](/docs/volumes/) are local persistent storage for Machines.
+
+* $0.15/GB per month of provisioned capacity
+
+[Volume billing](/docs/about/billing/#volume-billing) is pro-rated to the hour.
+
+You'll be charged for volumes that you create, whether they are attached to a Machine or not, including when an attached Machine is stopped.
+
+## Network prices
+
+### Anycast IP addresses
+
+Each application receives a [shared IPv4 address](/docs/networking/services/#shared-ipv4) and unlimited [Anycast IPv6](/docs/networking/services/#ipv6) addresses for global load balancing.
+
+Dedicated IPv4 addresses are $2/mo.
+
+### Managed SSL certificates
+
+We use Lets Encrypt to issue certificates, and donate half of our SSL fees to them at the end of each calendar year.
+
+* Single hostname certificates: $0.10/mo
+* Wildcard certificates: $1/mo
+
+### Data transfer pricing
+
+Inbound data transfer is free.
+
+We bill for data leaving your app destined for the public internet or for apps or Machines in other regions.
+
+You're billed for data transfer to the public Internet and between regions on your private network:
+
+- data egress to the Internet, from Machine to edge server to Internet
+- data transfer over private network between regions, from Machine to edge server and edge server to Machine
+- data transfer to some [extensions](https://fly.io/docs/about/pricing/#extensions) like Supabase or Upstash Redis (excludes Tigris Object Storage)
+
+You're not billed for the following types of traffic:
+
+- all inbound data transfer
+- data transfer between apps or Machines in the same region (for organizations created after July 18 2024)
+- data transfer from apps without an assigned IP address (for organizations created before July 18 2024)
+- data transfer to [Tigris Object Storage](https://fly.io/docs/reference/tigris)
+
+Fly.io pricing is per region group for outbound data transfer. You'll see a more detailed breakdown of cost per region and per traffic type on your monthly invoice.
+
+<div class="important icon">
+**Important:** Organizations created after July 18 2024 are billed at a different rate for private network data transfer between regions, per the following table. Organizations created before July 18 2024 are billed for all data transfer (excluding that listed as free above) at the "Egress to public internet" rate.
+</div>
+
+| Region groups | Egress to public internet cost | Private network cross-region transfer cost |
+| --- | --- | --- |
+| - North America<br>- Europe | $0.02 per GB | $0.006 per GB |
+| - Asia Pacific<br>- Oceania<br>- South America | $0.04 per GB | $0.015 per GB |
+| - Africa<br>- India | $0.12 per GB | $0.050 per GB |
+
+
+## Fly Kubernetes
+
+[Fly Kubernetes](/docs/kubernetes/) (FKS) is a managed Kubernetes service that runs on Fly.io.
+
+- $75/month per cluster
+- Plus the cost of [compute](#compute) and [Fly volumes](#persistent-storage-volumes) that you create
+
+## Fly Postgres
+
+[Fly Postgres](/docs/postgres/) is a PostgreSQL database that you create and then manage yourself. Fly Postgres clusters are Fly Apps that consist of Machines, volumes, and any configured extra memory.
+
+The [Machine price](#compute) and [volume price](#persistent-storage-volumes) for Fly Postgres are the same as any other Machine and volume you’d run on Fly.io. Assuming the Machines are running all the time, the cost for the preset configurations is about $2/month for a single node cluster for dev projects and from about $82 to $164/month for a three-node production cluster. You don't need to keep the preset configurations, you can [scale your Fly Postgres Machines](https://fly.io/docs/postgres/managing/scaling/) to suit your workload at any time.
+
+## Extensions
+
+Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/docs/reference/tigris), [Supabase Postgres](/docs/reference/supabase) and [Upstash Redis](/docs/reference/redis).
+
+When you provision their services, you become their customer, and you pay their list prices via your monthly Fly.io bill. Charges are updated daily in your Fly.io dashboard.
+
+You will not be billed separately for:
+
+* Machines running the services, which are hosted in the provider's account
+* IP addresses associated with the service
+* Bandwidth to Tigris Object Storage
+
+You **will** be billed separately for data transfer to services other than Tigris Object Storage. See our [data transfer pricing](#data-transfer-pricing) for details.
+
+## LiteFS Cloud
+
+<%= partial "/docs/partials/docs/litefs_sunset" %>
+
+[LiteFS Cloud](/docs/litefs/cloud-backups) is a service that provides streaming
+backups and point-in-time restore for your SQLite-based applications that use
+[LiteFS](/docs/litefs).
+
+- $5 per month for up to 10GB of database storage.
+- Additional $0.50/GB per month for database storage above 10GB.
+
+## Support
+
+[Community support](https://community.fly.io) is included for all customers, regardless of usage level.
+
+Email support is included with our [Launch, Scale, and Enterprise plans](https://fly.io/plans).
+
+For more about Support, see [Support at Fly.io](https://fly.io/docs/about/support/).

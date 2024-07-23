@@ -1,0 +1,57 @@
+---
+title: "Run a Rocket App"
+layout: framework_docs
+objective: Rocket is a web framework for Rust that makes it simple to write fast, type-safe, secure web applications with incredible usability, productivity and performance.
+redirect_from:
+ - /docs/languages-and-frameworks/rocket/
+ - /docs/getting-started/rocket/
+order: 4
+---
+
+
+<%= partial "/docs/languages-and-frameworks/partials/intro", locals: { runtime: "Rocket", link: "https://rocket.rs/" } %>
+
+Rocket is a web framework for Rust that makes it simple to write fast, type-safe, secure web applications with incredible usability, productivity and performance.
+
+Launching a Rocket app on Fly.io is painless! With the help of the [cargo chef](https://github.com/LukeMathWalker/cargo-chef), we get great build times and small images.
+
+## _Speedrun_
+
+<%= partial "/docs/languages-and-frameworks/partials/flyctl" %>
+
+<%= partial "/docs/rust/partials/speedrun", locals: { runtime: "rocket" }  %>
+
+
+## _Deploy a Rocket App from scratch_
+
+<%= partial "/docs/rust/partials/cargo-new", locals: { runtime: "rocket" }  %>
+
+Then we have to add the `rocket` dependency to the project:
+
+```cmd
+cargo add rocket
+```
+
+Now, let's create a simple app in `src/main.rs`:
+
+```rust
+#[macro_use] extern crate rocket;
+
+#[get("/")]
+fn index() -> &'static str {
+    "Hello from fly.io!"
+}
+
+#[launch]
+fn rocket() -> _ {
+    rocket::build().mount("/", routes![index])
+}
+```
+
+This will display a "Hello from fly.io!" message when you visit the root URL.
+Take note that we serve the app on host `127.0.0.1` and port `8000`, these are the defaults for `rocket`. When deploying the app these defaults will be overridden using environment variables which you can find in the `fly.toml`.
+
+We can confirm everything works fine by running `cargo run` and checking out `http://localhost:8000`.
+
+
+<%= partial "/docs/rust/partials/deploy", locals: { runtime: "rocket" }  %>

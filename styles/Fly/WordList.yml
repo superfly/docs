@@ -1,0 +1,42 @@
+extends: substitution
+message: "Consider using '%s' instead of '%s'."
+level: suggestion
+ignorecase: false
+action:
+  name: replace
+swap:
+  "(?:e-mail|E-mail)": email
+  "(?:file ?path|path ?name)": path
+  "(?:ok|Okay)": OK|okay
+  "(?:WiFi|wifi)": Wi-Fi
+  "un(?:check|select)": clear
+  # above: preceding
+  Ajax: AJAX
+  a\.k\.a|aka: or|also known as
+  # application: app
+  approx\.: approximately
+  # below: later|in the following steps
+  check box: checkbox
+  click on: click|click in
+  data are: data is
+  datatype: data type
+  filesystem: file system
+  firewalls: firewall rules
+  free tier: free allowances
+  functionality: capability|feature
+  healthcheck: health check
+  healthchecks: health checks
+  HTTPs: HTTPS
+  in order to: to
+  # instance: Machine
+  k8s: Kubernetes
+  leverage: use
+  Nodejs: Node.js
+  open-source: open source
+  SHA1: SHA-1|HAS-SHA1
+  sign into: sign in to
+  synch: sync
+  # url: URL
+  utilize: use
+  vs\.: versus
+  World Wide Web: web

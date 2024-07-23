@@ -1,7 +1,6 @@
 ---
 title: The Fly.io Architecture
 layout: docs
-sitemap: false
 nav: firecracker
 ---
 
@@ -15,16 +14,16 @@ We make a best-effort attempt to dedicate hardware resources to only one microVM
 
 The virtualized applications run on dedicated physical servers with 8-32 physical CPU cores and 32-256GB of RAM.
 
-## Fly.io Networking
+## Fly.io networking
 
 ### BGP Anycast
 
 We broadcast and accept traffic from ranges of IP addresses (both IPv4 and IPv6) in all our datacenters. When we receive a connection on one of those IPs, we match it back to an active customer application, and then proxy the TCP connection to the closest available microVM.
 
-### Proxy
+### Fly Proxy
 
-Every server in our infrastructure runs a Rust-based proxy named `fly-proxy`. The proxy is responsible for accepting client connections, matching them to customer applications, applying [handlers](/docs/reference/services/#connection-handlers) (eg: TLS termination), and [backhaul](#backhaul) between servers.
+Every server in our infrastructure runs a Rust-based proxy named `fly-proxy`. The proxy is responsible for accepting client connections, matching them to customer applications, applying [handlers](/docs/networking/services/#connection-handlers) (eg: TLS termination), and [backhaul](#backhaul) between servers. For more information, see [Fly Proxy](/docs/reference/fly-proxy).
 
 ### Backhaul
 
-If you have users in Dallas, and an available MicroVM in Chicago, we will accept traffic in Dallas, terminate TLS (unless you've disabled that handler), and then connect to your MicroVM over a Wireguard tunnel between datacenters. Wireguard allows us to pass along almost any kind of network connection with very little additional latency.
+If you have users in Dallas, and an available MicroVM in Chicago, we will accept traffic in Dallas, terminate TLS (unless you've disabled that handler), and then connect to your MicroVM over a WireGuard tunnel between datacenters. WireGuard allows us to pass along almost any kind of network connection with very little additional latency.

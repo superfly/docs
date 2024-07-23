@@ -1,0 +1,59 @@
+---
+title: Run a Streamlit app
+layout: framework_docs
+objective: Streamlit turns data scripts into shareable web apps in minutes. All in pure Python. No front‑end experience required.
+redirect_from:
+  - /docs/languages-and-frameworks/streamlit/
+  - /docs/getting-started/streamlit/
+order: 3
+---
+
+<%= partial "/docs/languages-and-frameworks/partials/intro", locals: { runtime: "Streamlit", link: "https://streamlit.io/" } %>
+
+Streamlit turns data scripts into shareable web apps in minutes. All in pure Python. No front‑end experience required.
+
+Spinning up a `streamlit` app takes no time at all! 
+
+## _Speedrun_
+
+<%= partial "/docs/languages-and-frameworks/partials/flyctl" %>
+
+<%= partial "/docs/python/partials/speedrun", locals: { runtime: "streamlit", repo: "hello-streamlit" }  %>
+
+## _Deploy a Streamlit from scratch_
+
+<%= partial "/docs/python/partials/poetry_new", locals: { runtime: "Streamlit" }  %>
+
+
+Then we have to add the streamlit dependency:
+
+```cmd
+poetry add streamlit
+```
+
+Now, let's create a simple streamlit app in `main.py`:
+
+```python
+import streamlit as st
+
+st.write('hello from fly.io')
+```
+
+We can then serve the development version of the app using the `streamlit` cli tool:
+
+```cmd
+streamlit run main.py
+```
+
+This will display a 'hello from fly.io!' message when you visit the root URL.
+
+Before deploying, we must add a bit of configuration to `.streamlit/config.toml`:
+
+```toml
+[server]
+headless = true
+```
+
+This ensures that our app doesn't give a prompt when we ship it. 
+
+<%= partial "/docs/python/partials/deploy", locals: { runtime: "streamlit", repo: "hello-streamlit" }  %>

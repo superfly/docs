@@ -1,0 +1,23 @@
+---
+title: Blueprints
+layout: docs
+toc: false
+nav: firecracker
+---
+
+<figure>
+  <img src="/static/images/docs-blueprints.webp" alt="Frankie the hot air balloon operating a renaissance-era flying machine with flying machine plans and notes in the background">
+</figure>
+
+<p>
+    A new&mdash;and growing!&mdash;library of “blueprints” showing how to run, design, build, and deploy different kinds of apps on Fly.io. This isn’t just a showcase for stuff we’ve built, but a collection of patterns and examples that you can can apply in your own projects.
+</p>
+
+<ul>
+  <% current_page.children.each do |page| %>
+    <% next if page.data['published'] == false %>
+    <li>
+      <%= link_to_page page %>
+    </li>
+  <% end %>
+</ul>

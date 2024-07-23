@@ -1,134 +1,58 @@
-<ul class="outline-list">
-  <li>
-    <%= nav_link "Fly.io Reference", "/docs/reference/" %>
-    <ul>
-      <li>
-        <%= nav_link "Introducing Flyctl", "/docs/flyctl" %>
-      </li>
-      <li>
-        <%= nav_link "Install Flyctl", "/docs/hands-on/install-flyctl/" %>
-      </li>
-      <li>
-        <%= nav_link "Integrating Flyctl ", "/docs/flyctl/integrating/" %>
-      </li>
-    </ul>
-  </li>
-</ul>
+<%= partial "/docs/partials/back_to_docs" %>
 
-<ul class="outline-list">
-  <li>
-    <span>
-      Commands
-    </span>
-    <ul>
-      <li>
-        <%= flyctl_nav_link "Launch an App", "/docs/flyctl/launch/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Manage Apps", "/docs/flyctl/apps/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Manage Machines", "/docs/flyctl/machine/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Configure Autoscaling", "/docs/flyctl/autoscale/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Login and Authentication", "/docs/flyctl/auth/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Certificates for Apps", "/docs/flyctl/certs/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Manage health checks", "/docs/flyctl/checks/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Get or check App config", "/docs/flyctl/config/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Open web dashboard", "/docs/flyctl/dashboard/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Deploy an App", "/docs/flyctl/deploy/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Delete an App", "/docs/flyctl/destroy/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "View Fly docs", "/docs/flyctl/docs/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "View App history", "/docs/flyctl/history/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "View or update App image", "/docs/flyctl/image/" %>
-      </li>      
-      <li>
-        <%= flyctl_nav_link "Manage IP addresses", "/docs/flyctl/ips/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "List Apps and Orgs", "/docs/flyctl/list/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "View App logs", "/docs/flyctl/logs/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Monitor deployments", "/docs/flyctl/monitor/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Move an App", "/docs/flyctl/move/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "View App with browser", "/docs/flyctl/open/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Manage Organizations", "/docs/flyctl/orgs/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Ping your App", "/docs/flyctl/ping/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Platform information", "/docs/flyctl/platform/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Manage Postgres clusters", "/docs/flyctl/postgres/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Proxy connection to App", "/docs/flyctl/proxy/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Selecting Regions", "/docs/flyctl/regions/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Manage App releases", "/docs/flyctl/releases/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Scaling Apps", "/docs/flyctl/scale/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Manage App secrets", "/docs/flyctl/secrets/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "View services configured on an App", "/docs/flyctl/services/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Manage SSH", "/docs/flyctl/ssh/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Move files to or from a VM", "/docs/flyctl/sftp/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "About Flyctl versions", "/docs/flyctl/version/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Manage VM instances", "/docs/flyctl/vm/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "Manage Disks", "/docs/flyctl/volumes/" %>
-      </li>
-      <li>
-        <%= flyctl_nav_link "WireGuard VPN", "/docs/flyctl/wireguard/" %>
-      </li>
-    </ul>
-  </li>
-</ul>
+<% 
+  @nav = [
+    {
+      title: "flyctl - The Fly.io CLI",
+      path: "/docs/flyctl/",
+      accordion: false,
+      links: [
+        { text: "Install flyctl", path: "/docs/flyctl/install/" },
+        { text: "Integrate flyctl", path: "/docs/flyctl/integrating/" }
+      ]
+    },
+    {
+      title: "Commands",
+      open: true,
+      links: [
+        { text: "Launch an App", path: "/docs/flyctl/launch/", type: "flyctl" },
+        { text: "Manage Apps", path: "/docs/flyctl/apps/", type: "flyctl" },
+        { text: "Manage Machines", path: "/docs/flyctl/machine/", type: "flyctl" },
+        { text: "Login and Authentication", path: "/docs/flyctl/auth/", type: "flyctl" },
+        { text: "Certificates for Apps", path: "/docs/flyctl/certs/", type: "flyctl" },
+        { text: "Manage health checks", path: "/docs/flyctl/checks/", type: "flyctl" },
+        { text: "Get or check App config", path: "/docs/flyctl/config/", type: "flyctl" },
+        { text: "Run a console", path: "/docs/flyctl/console/", type: "flyctl" },
+        { text: "Manage Consul clusters", path: "/docs/flyctl/consul/", type: "flyctl" },
+        { text: "Open web dashboard", path: "/docs/flyctl/dashboard/", type: "flyctl" },
+        { text: "Deploy an App", path: "/docs/flyctl/deploy/", type: "flyctl" },
+        { text: "View Fly.io docs", path: "/docs/flyctl/docs/", type: "flyctl" },
+        { text: "View or update App image", path: "/docs/flyctl/image/", type: "flyctl" },
+        { text: "Manage IP addresses", path: "/docs/flyctl/ips/", type: "flyctl" },
+        { text: "LiteFS Cloud", path: "/docs/flyctl/litefs-cloud/", type: "flyctl" },
+        { text: "View App logs", path: "/docs/flyctl/logs/", type: "flyctl" },
+        { text: "Manage Organizations", path: "/docs/flyctl/orgs/", type: "flyctl" },
+        { text: "Ping your App", path: "/docs/flyctl/ping/", type: "flyctl" },
+        { text: "Platform information", path: "/docs/flyctl/platform/", type: "flyctl" },
+        { text: "Manage Postgres clusters", path: "/docs/flyctl/postgres/", type: "flyctl" },
+        { text: "Proxy connection to App", path: "/docs/flyctl/proxy/", type: "flyctl" },
+        { text: "Manage Redis instances", path: "/docs/flyctl/redis/", type: "flyctl" },
+        { text: "Manage App releases", path: "/docs/flyctl/releases/", type: "flyctl" },
+        { text: "Scaling Apps", path: "/docs/flyctl/scale/", type: "flyctl" },
+        { text: "Manage App secrets", path: "/docs/flyctl/secrets/", type: "flyctl" },
+        { text: "View services configured on an App", path: "/docs/flyctl/services/", type: "flyctl" },
+        { text: "Manage settings", path: "/docs/flyctl/settings/", type: "flyctl" },
+        { text: "Move files to or from a VM", path: "/docs/flyctl/sftp/", type: "flyctl" },
+        { text: "Manage SSH", path: "/docs/flyctl/ssh/", type: "flyctl" },
+        { text: "View App status", path: "/docs/flyctl/status/", type: "flyctl" },
+        { text: "Create a token", path: "/docs/flyctl/tokens/", type: "flyctl" },
+        { text: "Check flyctl version", path: "/docs/flyctl/version/", type: "flyctl" },
+        { text: "Manage Disks", path: "/docs/flyctl/volumes/", type: "flyctl" },
+        { text: "WireGuard VPN", path: "/docs/flyctl/wireguard/", type: "flyctl" }
+      ]
+    }
+  ]
+%>
+
+<%= partial "/docs/partials/accordion_nav", locals: { nav: @nav } %>
+      

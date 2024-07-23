@@ -1,0 +1,46 @@
+---
+title: "Fork a volume from a Postgres app"
+objective: Create a new Postgres app with the data from an existing Postgres app.
+layout: framework_docs
+order: 30
+---
+
+A volume fork is a new volume that contains an exact copy of the data from a source volume. For Postgres apps, you use the `--fork-from` flag to specify a source Postgres app when you create a new Postgres app. The new Postgres app has a new volume that contains a block-level snapshot of the data from the source app's volume.
+
+Use volume forking to create identical staging or test environments, troubleshoot issues, analyze data, or test database performance without impacting your production database. You can also use volume forks for PR review environments. A PR review environment is especially useful when a PR contains database migrations that you don’t want to run against your production database.
+
+<div class="important icon">
+**Important:** After you fork a volume, the new volume is independent of the source volume. The new volume and the source volume do not continue to sync.
+</div>
+
+## Fork a volume into a new Postgres app
+
+To create a new Postgres app with a volume fork, specify the Postgres app to fork using the `--fork-from` flag on provision:
+
+```cmd
+fly pg create --name <new postgres app name> --fork-from <source postgres app name>
+```
+
+For example:
+
+```cmd
+fly pg create --name my-staging-db --fork-from my-prod-db
+```
+
+## Fork a specific volume into a new Postgres app
+
+The `--fork-from` option creates the new volume in the same region as the source volume, but on a different physical host. Forking directly to a new region isn't supported yet.
+
+To fork a volume into a separate region from your primary volume, you can fork from a replica volume in another region.
+
+Choose a specific volume in an existing Postgres app to fork:
+
+```cmd
+fly pg create --name <new postgres app name> --fork-from <source postgres app name>:<volume ID>
+```
+
+For example:
+
+```cmd
+fly pg create --name my-staging-db --fork-from my-prod-db:vol_ke628r677pvwmnpy
+```

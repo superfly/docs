@@ -1,0 +1,184 @@
+---
+title: Custom domains
+layout: docs
+nav: firecracker
+redirect_from:
+  - /docs/apps/custom-domain/
+  - /docs/app-guides/custom-domains-with-fly/
+  - /docs/networking/custom-domains-with-fly/
+---
+
+<figure>
+  <img src="/static/images/docs-ui.webp" alt="">
+</figure>
+
+When you create a Fly App, it is automatically given a `fly.dev` subdomain, based on the app's name. This is great for testing, but when you want to go to full production you'll want your application to appear on your own domain and have HTTPS set up for you as it is with your `.fly.dev` domain. You can do this by setting DNS records through your DNS provider and adding a TLS certificate on Fly.io for your custom domain.
+
+## Add a custom domain for your app
+
+The order of the tasks to add a custom domain depends on when you want start directing traffic to your app:
+
+* When you want to start accepting traffic immediately on your custom domain, follow the sections below in order.
+
+* When you want to get certificates before your app starts accepting traffic, for example if you're cutting over from another platform to Fly.io, you should create the certificates and configure the ACME challenge first, and then add the DNS records when you're ready to send traffic to your app.
+
+### Add DNS records
+
+Direct traffic to your site by mapping your custom domain name to your Fly App through your DNS provider. Create either a CNAME (Option I) or A/AAAA (Option II) record. 
+
+#### Option I: Set a CNAME record
+
+In most cases, you can use a CNAME record, which points your custom domain at your `.fly.dev` host. If your DNS provider doesn't allow Apex, or root, hostnames to have CNAME records, then you can use *Option II: Set the A/AAAA records*. 
+
+Set the CNAME record with your DNS provider. For example, if you have a domain called `example.com` and an app called `exemplum`, then you can create a CNAME record for `example.com`'s DNS that would look like this:
+
+| Record Type | Host / Hostname / Name | Value / Content / Alias of |
+| --- | --- | ---|
+| CNAME | @ | exemplum.fly.dev |
+
+Different DNS providers might use different terms for the parts of the record and we've listed a few of them in the table above.
+
+For our example, with this CNAME record added, accessing `example.com` will tell the DNS system to look up `exemplum.fly.dev` and return its results.
+
+#### Option II: Set the A/AAAA records
+
+A and AAAA records use the app's IP addresses rather than the domain name. This option might be slightly faster than the CNAME record lookup.
+
+Get your app's IP addresses:
+
+```cmd
+fly ips list
+```
+```output
+VERSION	IP                    	TYPE              	REGION	CREATED AT
+v6     	2a09:8280:1::39:b14f:0	public (dedicated)	global	Jun 18 2024 17:09
+v4     	66.241.124.193        	public (shared)   	      	Jan 1 0001 00:00
+```
+
+Set the A and AAAA records with your DNS provider. Add an A record for your domain that points to the IPv4 address, and add an AAAA record for your domain that points to the IPv6 address.
+
+Once the A and AAAA records are added and propagated through the DNS system, you should be able to connect over unencrypted HTTP to the domain name. Continuing the preceding example, that's the domain name: `http://example.com`.
+
+<div class="important">
+**Important:** Hostname validation will fail without an IPv6 address&mdash;and we won't attempt to issue or renew a certificate&mdash;unless you're using a [CNAME `_acme-challenge` for domain verification](#optional-validate-with-an-acme-challenge). However, we still recommend having both an IPv4 and an IPv6 address allocated if your app is serving traffic. If your app doesn't have an IPv6 address, allocate one with `flyctl ips allocate-v6`.
+</div>
+
+### Get certified
+
+You'll need a TLS certificate for your domain if your app:
+
+* Should accept HTTPS connections, or
+* Uses a shared IPv4 [Anycast address](/docs/networking/services/#ip-addresses). Fly Proxy uses the certificate to associate the custom domain name with your app for routing purposes.
+
+You can add certificates with flyctl or in your app [dashboard](https://fly.io/dashboard/) under **Certificates**.
+
+Create a certificate for your custom domain with the `fly certs add` command. For example:
+
+```cmd
+fly certs add example.com
+```
+```output
+  Hostname                    = example.com
+  Configured                  = true
+  Issued                      =
+  Certificate Authority       = lets_encrypt
+  DNS Provider                = enom
+  DNS Validation Instructions =
+  DNS Validation Hostname     =
+  DNS Validation Target       = example.com.5xzw.flydns.net
+  Source                      = fly
+  Created At                  = 0001-01-01T00:00:00Z
+  Status                      =
+```
+
+If you need a wildcard domain, put quotes around the hostname to avoid shell expansion:
+
+```cmd
+fly certs add "*.example.com"
+```
+
+Running `fly certs add` starts the process of getting a certificate. `Configured` should be true and `Status` will change to `Ready` when the certificates are available. You can run `fly certs show <hostname>` to check the status.
+
+
+### (Optional) Validate with an ACME DNS-01 challenge
+
+Validate your domain with an ACME DNS-01 challenge if one or more of the following scenarios apply:
+
+- You want to issue a certificate before creating the CNAME or A/AAAA records to point to your app.
+- You're using a proxy like Cloudflare, [which prevents our systems from verifying the source IP addresses](#i-use-cloudflare-and-there-seems-to-be-a-problem-issuing-or-validating-my-flyio-tls-certificate).
+- You want to ensure no HTTPS connection errors occur during the short time (usually minutes) it takes to generate the first-ever certificate for your site.
+- You're using a wildcard certificate.
+
+1. Run the `fly certs show <hostname>` command. For example:
+
+    ```cmd
+    fly certs show example.com
+    ```
+    ```output
+      Hostname                    = example.com
+      Configured                  = true
+      Issued                      = ecdsa, rsa
+      Certificate Authority       = lets_encrypt
+      DNS Provider                = enom
+      DNS Validation Instructions = CNAME _acme-challenge.example.com => example.com.5xzw.flydns.net.
+      DNS Validation Hostname     = _acme-challenge.example.com
+      DNS Validation Target       = example.com.5xzw.flydns.net
+      Source                      = fly
+      Created At                  = 1m24s ago
+      Status                      = Ready
+    ```
+2. Reference the **DNS Validation Instructions** to create a `CNAME` DNS record for a subdomain, `_acme-challenge`, of your domain (**DNS Validation Hostname**) and point it at the **DNS Validation Target**.
+   
+Once complete, and the updated DNS data has propagated, that domain will be queried to confirm you have control of it. Certificates will be generated and installed.
+
+## Other `fly cert` commands
+
+* `fly certs list` - List the certificates associated with an app.
+* `fly certs check <hostname>` - Trigger a check on the domain validation and DNS configuration for the given hostname and return results in the same format as `fly certs show`.
+* `fly certs remove <hostname>` - Remove a certificate from an app for the given hostname.
+
+
+## Teaching your app about custom domains
+
+Your application code needs to know how to accept custom domains and adjust the responses accordingly. If you're hosting content on behalf of your users, this typically means mapping the incoming hostname to a particular ID in your application database.
+
+When users make requests, their browser sends a `Host` header you can use to alter the behavior of your application. When you run your app server on Fly.io directly, just get the contents of the `Host` header to identify a request.
+
+If you're running your application on another provider, you will need to create a proxy application, like NGINX to route traffic through Fly.io. Your application can then use the `X-Forwarded-Host` header to determine how to handle requests.
+
+## Supported top-level domains
+
+We support the top-level domains on the [IANA list](https://data.iana.org/TLD/tlds-alpha-by-domain.txt+external). Note that we only periodically update top-level domain support and there might be a delay before we add support for new top-level domains.
+
+## Troubleshoot certificate creation
+
+### Certificate creation or validation seems to hang, stall, or fail
+
+*Let's Encrypt™* is a free, automated, and open certificate authority that Fly.io uses to issue TLS certificates for custom domains. However, Let's Encrypt imposes certain rate limits to ensure fair usage. If you encounter issues when creating or validating a certificate for a custom domain on Fly.io, it's possible that you've hit these rate limits.
+
+The following [rate limits](https://letsencrypt.org/docs/rate-limits/) from Let's Encrypt apply:
+
+* Certificates per Registered Domain: 50 per week
+* Duplicate Certificate limit: 5 per week
+* Failed Validation limit: 5 failures per hostname, per hour
+
+Note that certificate renewals don’t count against your Certificates per Registered Domain limit.
+
+If you encounter issues when adding or validating a certificate for a custom domain on Fly.io, you can use the following methods to troubleshoot:
+
+* Use [Let's Debug](https://letsdebug.net/): A diagnostic tool/website to help figure out why you might not be able to issue a certificate for Let's Encrypt. Using a set of tests, it can identify a variety of issues, including: problems with basic DNS setup, problems with nameservers, rate limiting, networking issues, CA policy issues, and common website misconfigurations.
+* Wait and retry: If you've hit a rate limit, you'll need to wait until the rate limit window passes before you can successfully create or validate a certificate again. We don’t have a way to reset it.
+
+The best way to avoid hitting rate limits is to use staging environments and domains for testing and development, and to carefully plan your certificate issuance to stay within the limits. Avoid failed validation by ensuring that your DNS records are correctly configured, with no conflicting records.
+
+If you're building a platform on top of Fly.io, and you expect that your users will frequently delete and then recreate the same resources within a short window, consider implementing "soft delete" logic into your platform that retains the Fly.io resources for a period of time, negating the need to recreate certs frequently.
+
+### I use Cloudflare, and there seems to be a problem issuing or validating my Fly.io TLS certificate
+
+If you're using Cloudflare, you might be using their Universal SSL feature which inserts a TXT record of `_acme_challenge.<YOUR_DOMAIN>` for your domain. This can interfere with our certificate validation/challenge and you should [disable](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/disable-universal-ssl/#disable-universal-ssl-certificate+external) this feature.
+
+You can then verify that the change has propagated and the TXT record is no longer present by running `dig txt _acme-challenge.<YOUR_DOMAIN> +short`.
+
+## Related topics
+
+- [Automate the certificate process for custom domains with the GraphQL API](/docs/networking/custom-domain-api/)

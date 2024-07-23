@@ -2,7 +2,7 @@
 title: Deployments
 layout: framework_docs
 objective: Understand what it means to deploy a Rails application to Fly along with some common tasks you may want to run after deployments, like a database migration or script.
-order: 0
+order: 2
 ---
 
 Deploying applications to Fly can be as simple as running:
@@ -14,7 +14,7 @@ fly deploy
 When the application successfully deploys, you can quickly open it in the browser by running:
 
 ```cmd
-fly open
+fly apps open
 ```
 
 If all goes well, you should see a running application in your web browser. You can also view a history of deployments by running:
@@ -44,16 +44,20 @@ You may need to open another terminal window and deploy again while running `fly
 
 ## Running migrations
 
-Migrations are configured to automatically run after each deployment via the following task in your application's `lib/tasks/fly.rake` file:
+For Postgresql, migrations are configured to automatically run after each
+deployment via the following task in your application's `fly.toml`:
 
-```ruby
-task :release => 'db:migrate'
+```toml
+[deploy]
+  release_command = './bin/rails db:prepare'
 ```
 
-To disable automatic migrations for deploys, remove the dependency from the `:release` task. Then, to manually run migrations after a deployment, run:
+Sqlite3 migrations are done by the `bin/docker-entrypoint` script.
+
+To disable automatic migrations for deploys, remove `db:prepare` lines from these files. Then, to manually run migrations after a deployment, run:
 
 ```cmd
-fly ssh console -C "app/bin/rails db:migrate"
+fly ssh console -C "/rails/bin/rails db:migrate"
 ```
 
 ## Run ad-hoc tasks after deploying
@@ -67,13 +71,13 @@ fly ssh console
 Connecting to top1.nearest.of.my-rails-app.internal... complete
 ```
 ```cmd
-cd app
 ls
 ```
 ```output
-Aptfile       CHANGELOG.md  Dockerfile    LICENSE     README.md  app   config.ru  fly     package.json       pull_request_template.md  test    yarn.lock
-Brewfile      CODE_OF_CONDUCT.md  Gemfile       Procfile      Rakefile   bin   db     lib     postcss.config.js  resources           tmp
-Brewfile.lock.json  CONTRIBUTING.md Gemfile.lock  Procfile.dev  SECURITY.md  config  docs     node_modules  public       tailwind.config.js        vendor
+Dockerfile      README.md       config          lib             test
+Gemfile         Rakefile        config.ru       log             tmp
+Gemfile.lock    app             db              public          vendor
+Procfile.dev    bin             fly.toml        storage
 ```
 ```cmd
 bundle exec ruby my-hello-world-script.rb
@@ -81,13 +85,3 @@ bundle exec ruby my-hello-world-script.rb
 ```output
 hello world
 ```
-
-## Asset compilation and build commands
-
-The default Rails image is configured to run `assets:precompile` in your application's `lib/tasks/fly.rake` file:
-
-```ruby
-task :build => 'assets:precompile'
-```
-
-If you have additional build steps beyond the Rails asset precompiler, you may need to modify your application's `lib/tasks/fly.rake` file.
