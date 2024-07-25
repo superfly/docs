@@ -251,4 +251,24 @@ Node.list()
 
 An empty list means the node has no connections. If you are sure that there is more then one node running, you could proceed to [Troubleshooting](/docs/elixir/the-basics/troubleshooting/) documentation.
 
+With a known and unchanging cookie deployed in our application, we are ready for the next step!
+
+### Important IPv6 settings
+
+The `flyctl` command attempts to modify your project's Dockerfile and append the following lines:
+
+```Dockerfile
+# Appended by flyctl
+ENV ECTO_IPV6 true
+ENV ERL_AFLAGS "-proto_dist inet6_tcp"
+```
+
+If you customized your Dockerfile or launched without the Dockerfile, this setting may not have been set for you. These values are important and enable your Elixir app to work smoothly in Fly's private IPv6 network.
+
+Check for this If you encounter network related errors like this:
+
+```
+Could not contact remote node my-app@fdaa:0:31d4:a5b:9d36:7c1e:f284:2, reason: :nodedown. Aborting...
+```
+
 If you have non-empty list with all of your running nodes - congratulations, you have successfully set up the clustering!
