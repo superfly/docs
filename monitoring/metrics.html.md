@@ -405,7 +405,7 @@ Authorization: Bearer THE_TOKEN
 
 This kind of token or "[macaroon](https://fly.io/blog/macaroons-escalated-quickly/)" can be scoped to a single organization or configured to only allow read operations, which can be safer than using a full-blown read-write token that grants access to all organizations under your account.
 
-### Generating
+### Generating tokens
 An org-restricted token can be generated like so:
 
 ```
