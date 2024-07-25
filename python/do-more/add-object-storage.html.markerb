@@ -1,0 +1,8 @@
+---
+title: "Add Object Storage"
+layout: framework_docs
+objective: How to setup S3-compatible object storage and interact with it.
+order: 1
+---
+
+<%= partial "/docs/reference/partials/tigris-storage-create" %>
