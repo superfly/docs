@@ -105,7 +105,7 @@ The above video shows how you import a WireGuard config on macOS. For clarity's 
 - Click on the "Activate" button.
 - macOS will ask you if you want to allow the WireGuard app to manage VPN connections. Click "Allow" if you trust it.
 
-On a linux system you can use [wg-quick](https://www.man7.org/linux/man-pages/man8/wg-quick.8.html+external):
+On a Linux system you can use [wg-quick](https://www.man7.org/linux/man-pages/man8/wg-quick.8.html+external):
 
 ```sh
 wg-quick up camellia.conf
