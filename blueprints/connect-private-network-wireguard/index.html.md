@@ -20,7 +20,7 @@ This blueprint shows you how to create a WireGuard peer to your private network 
 To get started, you need to have the following:
 
 - A [fly.io](http://fly.io) account
-- Flyctl installed (https://fly.io/docs/hands-on/install-flyctl/)
+- `flyctl` installed (https://fly.io/docs/hands-on/install-flyctl/)
 - The [WireGuard client](https://www.wireguard.com/install/) installed
 
 ## Steps
