@@ -412,7 +412,7 @@ Create an org-restricted token:
 fly token create org -o THE_ORGANIZATION
 ```
 
-A read-only token is created like this:
+Create a read-only org-restricted token:
 
 ```
 fly token create readonly
