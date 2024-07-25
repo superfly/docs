@@ -6,7 +6,7 @@ objective: Create a new Fly Postgres cluster.
 toc: false
 ---
 
-<%= partial "/partials/postgres/pg-create" %>
+<%= partial "/docs/partials/postgres/pg-create" %>
 
 Connect to postgres
 Any app within the TestOrg organization can connect to this Postgres using the above connection string

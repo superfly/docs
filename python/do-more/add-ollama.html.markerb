@@ -5,7 +5,7 @@ objective: How to setup ollama and interact with its API.
 order: 1
 ---
 
-<%= partial "/partials/gpus/ollama-create" %>
+<%= partial "/docs/partials/gpus/ollama-create" %>
 
 Now that we have a functioning `ollama` with a model, we have to expose the ollama host to our app. One way to do this is to set the host as a secret:
 
