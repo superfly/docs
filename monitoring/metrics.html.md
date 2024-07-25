@@ -388,3 +388,48 @@ processes = ["proxy"]
 Instrument your app and expose your metrics on `0.0.0.0`.
 
 There are many supported [client libraries](https://prometheus.io/docs/instrumenting/clientlibs/) as well as off-the-shelf [exporters](https://prometheus.io/docs/instrumenting/exporters/) able to return Prometheus-formatted metrics.
+
+## Authentication
+
+Authenticating to the Prometheus API can be achieved a few different ways, depending on the level of access you want your token to have.
+
+### Fly Access Token
+
+As in the earlier example, a full access token can be generated with `flyctl auth token` and then passed as a bearer token in the `Authorization` header. The header looks like:
+
+```
+Authorization: Bearer THE_TOKEN
+```
+
+### Fly org-restricted or read-only token
+
+This kind of token or "[macaroon](https://fly.io/blog/macaroons-escalated-quickly/)" can be scoped to a single organization or configured to only allow read operations, which can be safer than using a full-blown read-write token that grants access to all organizations under your account.
+
+### Generating
+An org-restricted token can be generated like so:
+
+```
+fly token create org -o THE_ORGANIZATION
+```
+
+A read-only token is created like this:
+
+```
+fly token create readonly
+```
+
+Note that the read-only token still has access to all organizations in your account (although it cannot modify anything, only read data). These two can be combined to create a read-only token that is restricted to a single organization:
+
+```
+fly token create readonly --from-existing -t "$(fly token create org -o THE_ORGANIZATION)"
+```
+
+These tokens look like this once generated: `FlyV1 fm2_lJPECAAAAAAAAC7txBAzYI6PRWhHLT...(a lot of base64-encoded text)`.
+
+#### Using
+To use one of these tokens in an HTTP header, the "FlyV1" identifier replaces the "Bearer" token identifier. So it would look like this:
+
+
+```
+Authorization: FlyV1 fm2_lJPECAAAAAAAAC7txBAzYI6PRWhHLT...(a lot of base64-encoded text)
+```
