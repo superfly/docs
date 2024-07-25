@@ -426,7 +426,7 @@ fly token create readonly --from-existing -t "$(fly token create org -o THE_ORGA
 
 These tokens look like this once generated: `FlyV1 fm2_lJPECAAAAAAAAC7txBAzYI6PRWhHLT...(a lot of base64-encoded text)`.
 
-#### Using
+#### Using tokens
 To use one of these tokens in an HTTP header, the "FlyV1" identifier replaces the "Bearer" token identifier. So it would look like this:
 
 
