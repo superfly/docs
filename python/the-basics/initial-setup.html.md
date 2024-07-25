@@ -49,3 +49,16 @@ poetry add <dep>
 
 This will automatically create a virtual environment for you. 
 
+To interact with your virtual environment, you can prefix your commands with `poetry run`:
+
+```cmd
+poetry run python main.py
+```
+
+Alternatively, you can activate the environment:
+
+```cmd
+poetry shell
+python main.py
+```
+
