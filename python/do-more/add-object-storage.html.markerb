@@ -7,7 +7,7 @@ order: 1
 
 ## Create a Tigris Storage Buckets
 
-<%= partial "/docs/reference/partials/tigris-storage-create" %>
+<%= partial "/partials/tigris/tigris-storage-create" %>
 
 To verify that everything has gone well, we can check whether the appropriate secrets have been set for our app:
 

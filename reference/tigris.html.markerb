@@ -25,7 +25,7 @@ Creating and managing storage buckets happens exclusively via the [Fly CLI](/doc
 
 <aside class="callout">Running the following command in a Fly.io app context -- inside an app directory or specifying `-a yourapp` -- will automatically set secrets on your app.</aside>
 
-<%= partial "/docs/reference/partials/tigris-storage-create" %>
+<%= partial "/partials/tigris/tigris-storage-create" %>
 
 ### Migrating to Tigris with shadow buckets
 

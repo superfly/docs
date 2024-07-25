@@ -5,7 +5,7 @@ objective: How to setup and connect to a postgres database.
 order: 0
 ---
 
-<%= partial "/docs/postgres/partials/pg-create" %>
+<%= partial "/partials/postgres/pg-create" %>
 
 <div class="warning icon">
 Warning: Fly Postgres is not managed postgres. Read what that means [here](/docs/postgres/getting-started/what-you-should-know/).
