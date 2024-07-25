@@ -112,7 +112,7 @@ the user icon in the lower-left of the screen.
 
 ### External or self-hosted Grafana
 
-You can also configure your Prometheus endpoint with an existing Grafana installation, or [host one on Fly.io](https://github.com/fly-apps/grafana). Either way, you set it up thusly:
+You can also configure your Prometheus endpoint with an existing Grafana installation, or [host one on Fly.io](https://github.com/fly-apps/grafana). Either way, you can set it up like this:
 
 1. [Add](https://grafana.com/docs/grafana/latest/datasources/add-a-data-source/) a [Prometheus data source](https://grafana.com/docs/grafana/latest/datasources/prometheus/) (Settings -> Data Sources -> Add data source -> Prometheus)
 2. Fill the form with the following:
@@ -183,7 +183,7 @@ fly_app_tcp_disconnects_count
 
 ### Instance series - `fly_instance_`
 
-Derived from the [`/proc` filesystem](https://www.kernel.org/doc/html/latest/filesystems/proc.html) of your app VMs.
+Derived from the [`/proc` file system](https://www.kernel.org/doc/html/latest/filesystems/proc.html) of your app VMs.
 
 `fly_instance_up = 1` shows the VM is reporting correctly.
 
@@ -283,7 +283,7 @@ fly_instance_filefd_maximum
 Filesystem metrics derived from [VFS File System Information](https://man7.org/linux/man-pages/man0/sys_statvfs.h.0p.html).
 
 Labels:
-- `mount`: mountpoint name(s), `/` and if using [Volumes](https://fly.io/docs/volumes/), the destination name in fly.toml.
+- `mount`: mount point name(s), `/` and if using [Volumes](https://fly.io/docs/volumes/), the destination name in fly.toml.
 
 ```
 fly_instance_filesystem_blocks
@@ -388,3 +388,42 @@ processes = ["proxy"]
 Instrument your app and expose your metrics on `0.0.0.0`.
 
 There are many supported [client libraries](https://prometheus.io/docs/instrumenting/clientlibs/) as well as off-the-shelf [exporters](https://prometheus.io/docs/instrumenting/exporters/) able to return Prometheus-formatted metrics.
+
+## Authentication
+
+Authenticating to the Prometheus API can be achieved a few different ways, depending on the level of access you want your token to have.
+
+### Fly Access Token
+
+As in the earlier example, a full access token can be generated with `flyctl auth token` and then passed as a bearer token in the `Authorization` header. The header looks like:
+
+```
+Authorization: Bearer THE_TOKEN
+```
+
+### Fly org-restricted or read-only token
+
+This kind of token or "[macaroon](https://fly.io/blog/macaroons-escalated-quickly/)" can be scoped to a single organization or configured to only allow read operations, which can be safer than using a full-blown read-write token that grants access to all organizations under your account.
+
+### Generating tokens
+Create an org-restricted token:
+
+```
+fly token create org -o THE_ORGANIZATION
+```
+
+Create a read-only org-restricted token:
+
+```
+fly token create readonly
+```
+
+These tokens look like this once generated: `FlyV1 fm2_lJPECAAAAAAAAC7txBAzYI6PRWhHLT...(a lot of base64-encoded text)`.
+
+#### Using tokens
+To use one of these tokens in an HTTP header, the "FlyV1" identifier replaces the "Bearer" token identifier. So it would look like this:
+
+
+```
+Authorization: FlyV1 fm2_lJPECAAAAAAAAC7txBAzYI6PRWhHLT...(a lot of base64-encoded text)
+```

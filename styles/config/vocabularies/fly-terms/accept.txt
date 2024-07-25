@@ -13,6 +13,7 @@ bool
 buildpacks?\b
 bursty
 callouts?\b
+centiseconds
 cleartext
 containerd
 cron
