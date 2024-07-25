@@ -65,7 +65,7 @@ Finally you can deploy the app to see it in action:
 fly deploy
 ```
 
-You can check out [this gist](https://gist.github.com/fliepeltje/5a2b63d4b1169f5cb200a665cee3f926+external) for a complete example app.
+You can check out [this gist](https://gist.github.com/fliepeltje/5a2b63d4b1169f5cb200a665cee3f926+external) for the complete example app.
 
 ## Developing with Postgres Locally
 
