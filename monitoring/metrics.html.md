@@ -183,7 +183,7 @@ fly_app_tcp_disconnects_count
 
 ### Instance series - `fly_instance_`
 
-Derived from the [`/proc` filesystem](https://www.kernel.org/doc/html/latest/filesystems/proc.html) of your app VMs.
+Derived from the [`/proc` file system](https://www.kernel.org/doc/html/latest/filesystems/proc.html) of your app VMs.
 
 `fly_instance_up = 1` shows the VM is reporting correctly.
 
@@ -283,7 +283,7 @@ fly_instance_filefd_maximum
 Filesystem metrics derived from [VFS File System Information](https://man7.org/linux/man-pages/man0/sys_statvfs.h.0p.html).
 
 Labels:
-- `mount`: mountpoint name(s), `/` and if using [Volumes](https://fly.io/docs/volumes/), the destination name in fly.toml.
+- `mount`: mount point name(s), `/` and if using [Volumes](https://fly.io/docs/volumes/), the destination name in fly.toml.
 
 ```
 fly_instance_filesystem_blocks
