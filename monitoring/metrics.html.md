@@ -112,7 +112,7 @@ the user icon in the lower-left of the screen.
 
 ### External or self-hosted Grafana
 
-You can also configure your Prometheus endpoint with an existing Grafana installation, or [host one on Fly.io](https://github.com/fly-apps/grafana). Either way, you set it up thusly:
+You can also configure your Prometheus endpoint with an existing Grafana installation, or [host one on Fly.io](https://github.com/fly-apps/grafana). Either way, you set it up thus:
 
 1. [Add](https://grafana.com/docs/grafana/latest/datasources/add-a-data-source/) a [Prometheus data source](https://grafana.com/docs/grafana/latest/datasources/prometheus/) (Settings -> Data Sources -> Add data source -> Prometheus)
 2. Fill the form with the following:
