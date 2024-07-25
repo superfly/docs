@@ -418,12 +418,6 @@ Create a read-only org-restricted token:
 fly token create readonly
 ```
 
-Note that the read-only token still has access to all organizations in your account (although it cannot modify anything, only read data). These two can be combined to create a read-only token that is restricted to a single organization:
-
-```
-fly token create readonly --from-existing -t "$(fly token create org -o THE_ORGANIZATION)"
-```
-
 These tokens look like this once generated: `FlyV1 fm2_lJPECAAAAAAAAC7txBAzYI6PRWhHLT...(a lot of base64-encoded text)`.
 
 #### Using tokens
