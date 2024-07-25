@@ -7,6 +7,10 @@ order: 0
 
 <%= partial "/docs/postgres/partials/pg-create" %>
 
+<div class="warning icon">
+Warning: Fly Postgres is not managed postgres. Read what that means [here](/docs/postgres/getting-started/what-you-should-know/).
+</div>
+
 ## Connecting to the Database
 
 To connect to our database, we first have to communicate with our app what the connection string is.
