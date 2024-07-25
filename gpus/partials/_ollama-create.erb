@@ -36,6 +36,7 @@ There are a couple of things to note here:
 - Not all regions have GPUs available, refer to [region GPU availability](/docs/gpus/#regions-with-gpus) for more info
 - The `[[mounts]]` section is used to mount a volume to store the models. This is a good practice to keep the models separate from the app code.
 - The volume size in this config file is 10gb, that's enough for small models. Change this value if you need more.
+- The `--flycast` flag creates a private IPv6 address for the app.
 
 Finally, this _only_ starts the `ollama` server; at this point you cannot interact with any models yet.
 To do so, you will have to pull in a model with this one easy, short, intuitive command:
