@@ -20,7 +20,7 @@ This blueprint shows you how to create a WireGuard peer to your private network 
 To get started, you need to have the following:
 
 - A [fly.io](http://fly.io) account
-- Flyctl installed (https://fly.io/docs/hands-on/install-flyctl/)
+- `flyctl` installed (https://fly.io/docs/hands-on/install-flyctl/)
 - The [WireGuard client](https://www.wireguard.com/install/) installed
 
 ## Steps
@@ -104,6 +104,12 @@ The above video shows how you import a WireGuard config on macOS. For clarity's 
 - Select the configuration file you saved earlier.
 - Click on the "Activate" button.
 - macOS will ask you if you want to allow the WireGuard app to manage VPN connections. Click "Allow" if you trust it.
+
+On a Linux system you can use [wg-quick](https://www.man7.org/linux/man-pages/man8/wg-quick.8.html+external):
+
+```sh
+wg-quick up camellia.conf
+```
 
 To test it, ping `_api.internal` (on macOS you need to run `ping6 _api.internal` because it's an IPv6 address):
 
