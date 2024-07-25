@@ -1,0 +1,50 @@
+You can get an `ollama` image running on a GPU in a few minutes. Get started by adapting the following `fly.toml` file:
+
+```toml
+app = '<your-app>'
+primary_region = 'ams'
+
+[build]
+  image = 'ollama/ollama'
+
+[[mounts]]
+  source = 'models'
+  destination = '/root/.ollama'
+  initial_size = '10gb'
+
+[http_service]
+  internal_port = 11434
+  force_https = false
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  size = 'a100-80gb'
+```
+
+Modify the app name and region to suit your preferences and save the file as `fly.ollama.toml`.
+Then you can launch the app:
+
+```cmd
+fly launch -c fly.ollama.toml --flycast
+```
+
+There are a couple of things to note here:
+- The `ollama` image is a GPU image, so you need to specify a GPU size in the `[[vm]]` section.
+- Not all regions have GPUs available, refer to [region GPU availability](/docs/gpus/#regions-with-gpus) for more info
+- The `[[mounts]]` section is used to mount a volume to store the models. This is a good practice to keep the models separate from the app code.
+- The volume size in this config file is 10gb, that's enough for small models. Change this value if you need more.
+- The `--flycast` flag creates a private IPv6 address for the app.
+
+Finally, this _only_ starts the `ollama` server; at this point you cannot interact with any models yet.
+To do so, you will have to pull in a model with this one easy, short, intuitive command:
+
+```cmd
+fly m run -e OLLAMA_HOST=http://<your-app>.flycast --shell --command "ollama pull llama3.1" ollama/ollama
+```
+
+This command will pull in the `llama3.1` model. You can change the model name to suit your needs.
+At this point this model is now available to the internal network of the organization it is deployed in.
+You can access it using Flycast from this URL: `http://<your-app>.flycast`.

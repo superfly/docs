@@ -1,0 +1,31 @@
+
+```cmd
+fly storage create
+```
+```output
+? Select Organization: fly-ephemeral (fly-ephemeral)
+? Choose a name, use the default, or leave blank to generate one:
+Your project (summer-grass-2004) is ready.
+
+Set one or more of the following secrets on your target app.
+BUCKET_NAME: summer-grass-2004
+AWS_ENDPOINT_URL_S3: https://fly.storage.tigris.dev
+AWS_ACCESS_KEY_ID: tid_xxxxxx
+AWS_SECRET_ACCESS_KEY: tsec_xxxxxx
+```
+
+### Public buckets
+
+By default, buckets are private. If you need to serve public assets like images or JavaScript files, create a *public bucket*:
+
+```cmd
+fly storage create --public
+```
+
+You can also make a public bucket private.
+
+```cmd
+fly storage update mybucket --private
+```
+
+Currently, buckets must be public or private. ACL settings will be ignored by the Tigris API.

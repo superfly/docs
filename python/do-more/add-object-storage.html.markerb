@@ -1,0 +1,56 @@
+---
+title: "Add Object Storage"
+layout: framework_docs
+objective: How to setup S3-compatible object storage and interact with it.
+order: 1
+---
+
+## Create a Tigris Storage Buckets
+
+<%= partial "/docs/partials/tigris/tigris-storage-create" %>
+
+To verify that everything has gone well, we can check whether the appropriate secrets have been set for our app:
+
+```cmd
+fly secrets list
+```
+
+## Connecting to the Bucket
+
+The de-facto library for interacting with s3 storage is [boto3](https://pypi.org/project/boto3/+external), let's add it to the project:
+
+```cmd
+poetry add boto3
+```
+
+Now we can initialize the client:
+
+```python
+import boto3
+
+S3_URL = os.getenv("AWS_ENDPOINT_URL_S3")
+svc = boto3.client('s3', endpoint_url=S3_URL)
+```
+
+<div class="callout">
+The AWS credentials will be automatically extracted from the environment.
+</div>
+
+Let's plug that into our app:
+
+```python
+@app.get("/")
+async def read_root():
+    buckets = svc.list_buckets()
+    return {"buckets": [bucket["Name"] for bucket in buckets["Buckets"]]}
+```
+
+At this point you can interact with the bucket through the `boto3` interface; refer to [the docs](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html+external) for all the possibilities.
+
+When you re-deploy your app you should see a list of the buckets you have access to:
+
+```cmd
+fly deploy
+```
+
+Take a look at [the gist](https://gist.github.com/fliepeltje/5be7d0a6f1ada057b1eb3aa357cd4961+external) of this setup to get a full picture.

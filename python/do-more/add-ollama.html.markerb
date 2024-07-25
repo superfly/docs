@@ -1,0 +1,50 @@
+---
+title: "Add Ollama"
+layout: framework_docs
+objective: How to setup ollama and interact with its API.
+order: 1
+---
+
+<%= partial "/docs/partials/gpus/ollama-create" %>
+
+Now that we have a functioning `ollama` with a model, we have to expose the ollama host to our app. One way to do this is to set the host as a secret:
+
+```cmd
+fly secrets set OLLAMA_HOST=http://<your-app>.flycast
+```
+
+To interact with our new AI friend, we will have to install the `ollama` package:
+
+```cmd
+poetry add ollama
+```
+
+Now we can initialize the client:
+
+```python
+import os
+from ollama import AsyncClient
+
+OLLAMA_HOST = os.getenv('OLLAMA_HOST')
+ollama_client = AsyncClient(OLLAMA_HOST)
+```
+
+From here we can start integrating it into our app:
+
+```python
+@app.get("/")
+async def read_root():
+    resp = await ollama_client.generate(
+        model="llama3.1",
+        prompt="Why is the sky not green?",
+    )
+    return resp["response"]
+```
+
+When you re-deploy your app you should see llama's answer:
+
+```cmd
+fly deploy
+```
+
+You can check out [this gist](https://gist.github.com/fliepeltje/8a8ce9e364097ce61db67cd713799b24+external) for the complete example app.

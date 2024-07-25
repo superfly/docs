@@ -1,0 +1,58 @@
+To create a Postgres cluster, use the `fly postgres create` command. The command will walk you through the creation with prompts for name, region, and VM resources.
+
+<div class="callout">Because we keep adding shorter aliases, you can use any of the following and get the same result: `flyctl postgres`, `fly postgres`, `flyctl pg`, and `fly pg`.</div>
+
+```cmd
+fly postgres create
+```
+```output
+? Choose an app name (leave blank to generate one): pg-test
+? Select Organization: TestOrg (personal)
+Some regions require a paid plan (fra, maa).
+See https://fly.io/plans to set up a plan.
+
+? Select region: Toronto, Canada (yyz)
+```
+
+During this process, you get to choose from several preset resource configurations for the app:
+
+```
+? Select configuration:  [Use arrows to move, type to filter]
+> Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
+  Production (High Availability) - 3 nodes, 2x shared CPUs, 4GB RAM, 40GB disk
+  Production (High Availability) - 3 nodes, 4x shared CPUs, 8GB RAM, 80GB disk
+  Specify custom configuration
+```
+
+The "Production" options give you a three-node cluster in a leader-replica configuration. A single-node "Development" instance can readily be scaled and [expanded to more regions](/docs/postgres/advanced-guides/high-availability-and-global-replication/).
+
+If you select the "Development" single-node cluster configuration, then you can choose to scale down to zero if there are no open connections after one hour.
+
+```
+? Scale single node pg to zero after one hour? (y/N)
+```
+
+<div class="callout">
+You might need to configure any apps that connect to your Postgres app to scale to zero as well, otherwise your Postgres database will never have zero connections and will never scale down. Your app might also need to be able to wait for the database to start back up. Learn more about the [scale to zero feature](/docs/postgres/managing/scale-to-zero/), including how to turn it off.
+</div>
+
+```
+Creating postgres cluster in organization TestOrg
+Creating app...
+Setting secrets on pg-test...
+Provisioning 1 of 1 machines with image flyio/postgres-flex:15.2
+Waiting for machine to start...
+Machine 3287457df90185 is created
+==> Monitoring health checks
+  Waiting for 3287457df90185 to become healthy (started, 3/3)
+
+Postgres cluster pg-test created
+  Username:    postgres
+  Password:    45V1YkwVDUzbkHj
+  Hostname:    pg-test.internal
+  Flycast:     fdaa:2:45b:0:1::7
+  Proxy port:  5432
+  Postgres port:  5433
+  Connection string: postgres://postgres:45V1YkwVDUzbkHj@pg-test.flycast:5432
+
+Save your credentials in a secure place -- you won't be able to see them again!

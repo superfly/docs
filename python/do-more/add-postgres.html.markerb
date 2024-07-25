@@ -1,0 +1,94 @@
+---
+title: "Add Postgres"
+layout: framework_docs
+objective: How to setup and connect to a postgres database.
+order: 0
+---
+
+<%= partial "/docs/partials/postgres/pg-create" %>
+
+<div class="warning icon">
+Warning: Fly Postgres is not managed postgres. Read what that means [here](/docs/postgres/getting-started/what-you-should-know/).
+</div>
+
+## Connecting to the Database
+
+To connect to our database, we first have to communicate with our app what the connection string is.
+Copy the value after "Connection string" in the output and then set a new secret:
+
+```cmd
+fly secrets set DATABASE_URL=postgres://postgres:<password>@<db-name>.flycast:5432
+```
+
+<div class="callout">
+By default your postgres app is only available within your organization. Only apps within the fly organization are able to connect to it via the connection string above. 
+</div>
+
+Now we can access the `DATABASE_URL` from the environment:
+
+```python
+import os
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+```
+
+At this point you can use a database driver to interact with the database. You have some options here:
+
+- [psycopg2](https://www.psycopg.org/docs/+external) / [psycopg3](https://www.psycopg.org/psycopg3/+external)
+- [asyncpg](https://pypi.org/project/asyncpg/+external)
+- [aiosql](https://pypi.org/project/aiosql/+external)
+- [sqlalchemy](https://www.sqlalchemy.org/+external)
+
+Let's create a function to get some metadata about the database using `asyncpg`:
+
+```cmd
+poetry add asyncpg
+```
+
+```python
+import asyncpg
+
+async def get_db_meta() -> list[str]:
+    conn = await asyncpg.connect(DATABASE_URL)
+    records = await conn.fetch("select nspname from pg_namespace;")
+    return [x["nspname"] for x in records]
+```
+
+Then we can add this to our app:
+
+```python
+@app.get("/")
+async def read_root():
+    names = await get_db_meta()
+    return {"names": names}
+```
+
+Finally you can deploy the app to see it in action:
+
+```cmd
+fly deploy
+```
+
+You can check out [this gist](https://gist.github.com/fliepeltje/5a2b63d4b1169f5cb200a665cee3f926+external) for the complete example app.
+
+## Developing with Postgres Locally
+
+Often you will want to setup a local postgres to run against. One way to do this is to use `docker` and `direnv`. With the following command you can spin up a postgres database for your project:
+
+```cmd
+docker run --name <your-db-name> \
+  -e POSTGRES_DB=<your-db-name> \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=postgres \
+  -p 5432:5432 \
+  -d postgres
+```
+
+Then in your project you can specify an `.envrc` file:
+
+```bash
+export DATABASE_URL="postgres://postgres:postgres@localhost:5432/<your-db-name>"
+```
+
+If you run `direnv allow` the `DATABASE_URL` will be available to your app locally.
+
