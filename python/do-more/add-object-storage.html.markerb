@@ -5,6 +5,8 @@ objective: How to setup S3-compatible object storage and interact with it.
 order: 1
 ---
 
+## Create a Tigris Storage Buckets
+
 <%= partial "/docs/reference/partials/tigris-storage-create" %>
 
 To verify that everything has gone well, we can check whether the appropriate secrets have been set for our app:

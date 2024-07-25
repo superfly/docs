@@ -19,6 +19,12 @@ Language- and framework-specific guides for setting up Tigris:
 - [Laravel with Tigris for CDN File Storage](/docs/laravel/the-basics/laravel-tigris-file-storage/)
 - [JavaScript with S3Client](/docs/js/the-basics/object-storage/)
 
+## Create and manage a Tigris storage bucket
+
+Creating and managing storage buckets happens exclusively via the [Fly CLI](/docs/flyctl/install/). Install it, then [sign up for a Fly account](/docs/getting-started/sign-up-sign-in/).
+
+<aside class="callout">Running the following command in a Fly.io app context -- inside an app directory or specifying `-a yourapp` -- will automatically set secrets on your app.</aside>
+
 <%= partial "/docs/reference/partials/tigris-storage-create" %>
 
 ### Migrating to Tigris with shadow buckets
