@@ -14,8 +14,12 @@ In short, we split the process of building and compiling dependencies and runnin
 
 Let's make a multi-stage `Dockerfile` from scratch. Here's part 1:
 
+<div class="note icon">
+In this example we assume the use of `poetry`, however you can adapt the file to work with other dependency managers too.
+</div>
+
 ```dockerfile
-FROM python:3.11.9 AS builder
+FROM python:3.11.9-bookworm AS builder
 
 ENV PYTHONUNBUFFERED=1 \ 
     PYTHONDONTWRITEBYTECODE=1 
@@ -25,7 +29,6 @@ RUN pip install poetry && poetry config virtualenvs.in-project true
 WORKDIR /app
 
 COPY pyproject.toml poetry.lock ./
-COPY [python-app]/ ./[python-app]
 
 RUN poetry install
 ```
@@ -35,11 +38,12 @@ So what's going on here? First, we use a "fat" python 3.11.9 image and installin
 Part 2, the runtime, looks something like this:
 
 ```dockerfile
-FROM python:3.11.9-slim
+FROM python:3.11.9-slim-bookworm
 
 WORKDIR /app
 
 COPY --from=builder /app .
+COPY [python-app]/ ./[python-app]
 
 CMD ["/app/.venv/bin/python", "[python-app]/app.py"]
 ```
@@ -48,4 +52,7 @@ Here we see very little actually going on; instead of the "fat" image, we now pi
 
 With this setup our image will be around 200MB most of the time (depending on what else you include). This setup is used for nearly all Python apps you deploy on Fly.io.
 
+<div class="note icon">
+The image size is largely dependent on what files you add in the dockerfile; by default the entire working directory is copied in. If you do not want to add certain files, you can specify them in a `.dockerignore` file.
+</div>
 
