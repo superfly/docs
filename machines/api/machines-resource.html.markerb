@@ -583,7 +583,7 @@ Start a Machine.
 
 Stopped Machines that are restarted are completely reset to their original state so that they start clean on the next run.
 
-Suspended Machines that are started attempt to resume from the snapshot taken when they were suspended. If this is not possible, then they will perform a normal cold boot.
+Suspended Machines that are started attempt to resume from the snapshot taken when they were suspended. If this is not possible, then they will perform a cold boot, as though starting from the stopped state; however, their root file systems will not be reset.
 
 <div class="api-section" data-exclude-render>
   <div>
