@@ -25,7 +25,7 @@ And that's it! Any new pull requests will trigger the creation of review apps fo
 
 By default, review apps will be available at `https://pr-<PR number>-<repository owner>-<repository name>.fly.dev`.
 
-The workflow described above will spin up a **single application** without other resources; if datastores, multiple Fly Apps, or other resources are required, see [Customizing your workflow](#customize-your-workflow).
+The workflow described above will spin up a **single application** without other resources; if data stores, multiple Fly Apps, or other resources are required, see [Customizing your workflow](#customize-your-workflow).
 
 
 For more details about each step, follow the guide below.
@@ -34,7 +34,7 @@ For more details about each step, follow the guide below.
 
 ### Set your Fly API token
 
-Your GitHub Action will need a Fly API token in order to deploy and manage new review apps on Fly.io. You can get this token using the following [flyctl](/docs/flyctl/install/) command:
+Your GitHub Action will need a Fly API token to deploy and manage new review apps on Fly.io. You can get this token using the following [flyctl](/docs/flyctl/install/) command:
 
 ```cmd
 fly auth token
@@ -96,7 +96,7 @@ In the `deploy` step, `superfly/fly-pr-review` contains the custom Action with a
 
 ### Commit and push your workflow
 
-Finally, commit and push your changes to your GitHub repository. Once pushed, any new PR's will spin up a review app for you to preview your code on Fly.io.
+Finally, commit and push your changes to your GitHub repository. Once pushed, any new PRs will spin up a review app for you to preview your code on Fly.io.
 
 ## Customize your workflow
 
