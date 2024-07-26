@@ -14,18 +14,18 @@ failures.
 
 ## Capturing SQLite Transactions
 
-SQLite works by updating a subset of pages in the database file on every
+SQLite updates a subset of pages in the database file on every
 transaction. It does this by using the file system API and the exact steps
 depend on whether you're using a rollback journal or a write-ahead log.
 
-LiteFS acts as a passthrough file system which intercepts these API calls and
-copies out the page sets for each transaction. These page sets are stored in an
+LiteFS acts as a passthrough file system that intercepts these API calls and
+copies the page sets for each transaction. These page sets are stored in an
 internal format called [LTX](https://github.com/superfly/ltx) that performs
-extensive consistency checking to ensure correctness.
+extensive consistency checks to ensure correctness.
 
 By applying these page sets in the LTX files in order, we can reconstruct the
 state of our SQLite database at any point in time. We can also copy them to
-another nodes in order to replicate the changes in real-time to our cluster.
+other nodes to replicate the changes in real-time to our cluster.
 
 
 ### Rollback journal handling
@@ -35,12 +35,12 @@ The following steps occur when SQLite creates a transaction with either the
 
 1. Obtain an exclusive lock on the `RESERVED` byte.
 1. Create a journal file to start the transaction.
-1. Update page in the main database file while copying old pages to the journal.
+1. Update pages in the main database file while copying old pages to the journal.
 1. Invalidate the journal file to finish the transaction.
 1. Release the lock on the `RESERVED` byte.
 
 LiteFS maintains a set of dirty database pages based on `write(2)` calls to the
-database file. When the journal file is invalidated, LiteFS will copy out the
+database file. When the journal file is invalidated, LiteFS will copy the
 dirty pages in sequential order to an LTX transaction file.
 
 
@@ -64,7 +64,7 @@ of the WAL to the end to capture all new & changed pages into an LTX file.
 
 Each database within the LiteFS directory contains a replication position. This
 position is a combination of the transaction ID (TXID) and the rolling checksum
-of the database contents. The TXID is an integer that is incremented with every
+of the database contents. The TXID is an integer that increments with every
 write transaction that occurs. 
 
 You can track the relative position between nodes by reading from the database's
@@ -76,24 +76,24 @@ $ cat /mnt/db-pos
 00000000000003e8/a3b2b72f1147c9bc
 ```
 
-The output is a hex-encoded TXID followed by a slash and then the database
+The output is a hex-encoded TXID followed by a slash and the database
 rolling checksum.
 
 
 ## Cluster management using leases
 
 SQLite operates as a single-writer database which means only one transaction can
-write at a time. Because of this, we utilize a lease system whereby a single
+write at a time. Due to this limitation, we use a lease system whereby a single
 node acts as the "primary" node at any given time. All writes should be directed
 to that node and it will propagate changes to the rest of the cluster.
 
-However, nodes can die or become disconnected from the cluster so the primary
+However, nodes can die or become disconnected from the cluster, so the primary
 must be able to change dynamically. LiteFS is built to be run on ephemeral
 environments where cluster membership can change quickly and frequently so it
 utilizes leases via Consul to determine the current primary node.
 
-When a LiteFS node starts up, it checks a key within the Consul server for the
-current primary node. If no primary node exists, then the LiteFS node attempts
+When a LiteFS node starts, it checks a key within the Consul server for the
+current primary node. If no primary node exists, the LiteFS node attempts
 to obtain a lease from Consul to become a primary node itself. If successful,
 it updates the Consul key to share its API URL so other LiteFS nodes can connect
 to it.
@@ -101,14 +101,14 @@ to it.
 
 ### Handling split brain
 
-LiteFS uses _asynchronous replication_ which means that it does not confirm that
+LiteFS uses _asynchronous replication_, meaning that it does not confirm that
 writes are committed to other nodes before continuing to the next transaction.
-This tradeoff is made to increase write throughput at the cost of some
+This trade-off is made to increase write throughput at the cost of some
 durability.
 
 In the event of an unexpected primary node failure, the primary node may become
-out of sync with the rest of the cluster if it has unreplicated writes it has
-applied locally but have not been copied to the other nodes. If a new primary
+out of sync with the rest of the cluster if it has applied unreplicated writes
+locally that have not been copied to the other nodes. If a new primary
 is elected then the old primary could corrupt its data if it tried to apply
 transactions from the new primary.
 
