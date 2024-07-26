@@ -7,9 +7,7 @@ redirect_from: /docs/getting-started/golang/
 <%= partial "partials/intro", locals: { runtime: "Go" } %>
 
 <div class="note icon">
-Already have a Go Fly App? Integrate it with [Tigris for file storage!](https://www.tigrisdata.com/docs/concepts/architecture/)
-
-It's simple, it's scalable, it's secure&mdash;it's your bucket in the cloud with effortless CDN-magic. It's easy to integrate with Go, [try it out](docs/languages-and-frameworks/golang/#add-tigris-global-storage-optional).
+Already have a Go Fly App? Try adding [Tigris](https://www.tigrisdata.com/docs/overview/+external) for file storage. Tigris is scalable, secure, global object storage and you can [integrate it quickly with your Go app](#add-tigris-global-storage-optional).
 </div>
 
 ## _The Example Application_
@@ -212,8 +210,7 @@ Your browser will be sent to the displayed URL.
 
 ## _Add Tigris Global Storage (Optional)_
 
-[Tigris](https://www.tigrisdata.com/docs/overview/) takes storage service a top-notch higher by providing CDN-like accessibility for your stored objects.
-It's [simple](https://www.tigrisdata.com/docs/api/s3/)&mdash;has S3-API compatibility, [scalable](https://www.tigrisdata.com/docs/concepts/architecture/)&mdash;automatically manages data replication and caching for you, and [secured](https://www.tigrisdata.com/docs/concepts/authnz/)&mdash;offers AuthN and AuthZ authentication mechanisms. Try it out!
+Tigris provides CDN-like accessibility for your stored objects. Tigris has S3-API compatibility, automatically manages data replication and caching for you, and offers AuthN and AuthZ authentication mechanisms. Learn more about [Tigris Object Storage](https://www.tigrisdata.com/docs/overview/+external).
 
 1. <b>Create a Tigris bucket</b>: run the create command inside your Go Fly App's directory. Afterwards, make sure to take note of the credentials received:
 
