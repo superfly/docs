@@ -39,6 +39,10 @@ You can use the Machines resource to create, stop, start, update, and delete Fly
     </a>
     <a class="endpoint">
       <span class="post-badge">post</span>
+      <span>/v1/apps/{app\_name}/machines/{machine\_id}/suspend</span>
+    </a>
+    <a class="endpoint">
+      <span class="post-badge">post</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/start</span>
     </a>
     <a class="endpoint">
