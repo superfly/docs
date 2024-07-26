@@ -82,14 +82,13 @@ jobs:
       name: review
       # The script in the `deploy` sets the URL output for each review app.
       url: ${{ steps.deploy.outputs.url }}
-
     steps:
       - name: Get code
         uses: actions/checkout@v4
 
       - name: Deploy PR app to Fly.io
         id: deploy
-        uses: superfly/fly-pr-review-apps@1.2.0
+        uses: superfly/fly-pr-review-apps@1.2.1
 ```
 
 In the `deploy` step, `superfly/fly-pr-review` contains the custom Action with a shell script that creates and deploys your review apps. If you're curious, check out [entrypoint.sh](https://github.com/superfly/fly-pr-review-apps/blob/main/entrypoint.sh) for full details on how the script works.
