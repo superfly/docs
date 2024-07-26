@@ -2,7 +2,9 @@
 title: Scale the Number of Machines
 layout: docs
 nav: apps
-redirect_from: /docs/reference/scaling/
+redirect_from: 
+  - /docs/reference/scaling/
+  - /docs/apps/scale-count/
 ---
 
 <figure>
