@@ -14,19 +14,19 @@ You can use the Apps resource to create and manage Fly Apps. A Fly App is an abs
       Endpoints
     </div>
     <div class="highlight">
-      <a class="endpoint">
+      <a class="endpoint" href="#create-a-fly-app">
         <span class="post-badge">post</span>
         <span>/v1/apps</span>
       </a>
-      <a class="endpoint">
+      <a class="endpoint" href="#get-app-details">
         <span class="get-badge">get</span>
         <span>/v1/apps/{app\_name}</span>
       </a>
-      <a class="endpoint">
+      <a class="endpoint" href="#delete-a-fly-app">
         <span class="delete-badge">delete</span>
         <span>/v1/apps/{app\_name}</span>
       </a>
-      <a class="endpoint">
+      <a class="endpoint" href="#list-apps-in-an-organization">
         <span class="get-badge">get</span>
         <span>/v1/apps?org_slug=</span>
       </a>
