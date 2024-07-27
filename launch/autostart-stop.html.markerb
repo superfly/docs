@@ -17,7 +17,7 @@ The autostop/autostart feature also works well for apps that [shut down automati
 
 The autostop/autostart settings apply per service, and you set them within the services configured in the `fly.toml` file. See the [[[services]]](/docs/reference/configuration/#the-services-sections) or [[http_service]](/docs/reference/configuration/#the-http_service-section) docs for details.
 
-For example:
+Example configuration:
 
 ```toml
 ...
@@ -30,7 +30,9 @@ For example:
 ...
 ```
 
-The settings are:
+For this example, Fly Proxy will automatically stop Machines when the app has excess capacity and start them again when needed. The app will scale all the way down to zero Machines running if there's no traffic. 
+
+Autostop/autostart setting descriptions:
 
 * `auto_start_machines`: Whether Fly Proxy should automatically start Machines based on requests and capacity.
 * `auto_stop_machines`: The action, if any, that Fly Proxy should take when the app is idle for several minutes. Options are `"off"`, `"stop"`, or `"suspend"`.
