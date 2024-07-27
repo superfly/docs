@@ -34,8 +34,8 @@ For the preceding example, Fly Proxy will automatically stop Machines when the a
 
 Autostop/autostart setting descriptions:
 
-* `auto_start_machines`: Whether Fly Proxy should automatically start Machines based on requests and capacity.
 * `auto_stop_machines`: The action, if any, that Fly Proxy should take when the app is idle for several minutes. Options are `"off"`, `"stop"`, or `"suspend"`.
+* `auto_start_machines`: Whether Fly Proxy should automatically start Machines based on requests and capacity.
 * `min_machines_running`: The minimum number of Machines to keep running in the primary region when `auto_stop_machines` is set to `"stop"` or `"suspend"`.
 
 Concurrency limits configured for services also affect [how automatic starts and stops work](#how-it-works).
