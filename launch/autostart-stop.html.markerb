@@ -30,7 +30,7 @@ Example configuration:
 ...
 ```
 
-For this example, Fly Proxy will automatically stop Machines when the app has excess capacity and start them again when needed. The app will scale all the way down to zero Machines running if there's no traffic. 
+For the preceding example, Fly Proxy will automatically stop Machines when the app has excess capacity and start them again when needed. The app will eventually scale all the way down to zero running Machines if there's no traffic. 
 
 Autostop/autostart setting descriptions:
 
