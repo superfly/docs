@@ -13,71 +13,71 @@ You can use the Machines resource to create, stop, start, update, and delete Fly
     Endpoints
   </div>
   <div class="highlight">
-    <a class="endpoint">
+    <a class="endpoint" href="#list-machines">
       <span class="get-badge">get</span>
       <span>/v1/apps/{app\_name}/machines</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#create-a-machine">
       <span class="post-badge">post</span>
       <span>/v1/apps/{app\_name}/machines</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#wait-for-a-machine-to-reach-a-specified-state">
       <span class="get-badge">get</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/wait</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#get-a-machine">
       <span class="get-badge">get</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#update-a-machine">
       <span class="post-badge">post</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#stop-a-machine">
       <span class="post-badge">post</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/stop</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#suspend-a-machine">
       <span class="post-badge">post</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/suspend</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#start-a-machine">
       <span class="post-badge">post</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/start</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#delete-a-machine-permanently">
       <span class="delete-badge">delete</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#create-a-machine-lease">
       <span class="post-badge">post</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/lease</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#get-a-machine-lease">
       <span class="get-badge">get</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/lease</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#release-a-machine-lease">
       <span class="delete-badge">delete</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/lease</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#route-requests-away-from-or-back-to-a-machine">
       <span class="post-badge">post</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/cordon</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#route-requests-away-from-or-back-to-a-machine">
       <span class="post-badge">post</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/uncordon</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#get-a-machines-metadata">
       <span class="get-badge">get</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/metadata</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#add-or-update-machine-metadata">
       <span class="post-badge">post</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/metadata/{key}</span>
     </a>
-    <a class="endpoint">
+    <a class="endpoint" href="#delete-machine-metadata">
       <span class="delete-badge">delete</span>
       <span>/v1/apps/{app\_name}/machines/{machine\_id}/metadata/{key}</span>
     </a>
@@ -847,7 +847,7 @@ Release the lease of a specific Machine within an app. Machine leases can be use
   </div>
 </div>
 
-## Route requests away from or back to a Machine (cordon/uncordon)
+## Route requests away from or back to a Machine
 
 Given the name of a Fly App and the Machine ID of a Fly Machine, instruct the Fly Proxy not to send requests to a Machine or to start sending requests again to a previously cordoned Machine.
 
