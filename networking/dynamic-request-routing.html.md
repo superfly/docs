@@ -21,7 +21,7 @@ The content of the `fly-replay` header fields tells our proxy which magic to per
 |Field |Description |
 |---|---|
 |`region` | The 3-letter code for a region to which the request should be routed. |
-|`instance` | ID of a specific instance to which the request should be routed. |
+|`instance` | machine ID of a specific instance to which the request should be routed. |
 |`app` | The name of an app within the same organization, to which the request should be routed.<br>fly-proxy will choose the nearest instance if no region is specified.|
 |`state` | Optional arbitrary string to include in the `fly-replay-src` header appended to the request being replayed. |
 |`elsewhere` | Boolean. If `true`, the responding instance will be excluded from the next round of load-balancing. |
@@ -110,11 +110,14 @@ fly-prefer-region: ams
 
 ## The `fly-force-instance-id` request header
 
-Clients accessing Fly.io apps may set the `fly-force-instance-id` header to ensure that the request is sent directly to a desired machine instance only. 
+Clients accessing Fly.io apps may set the `fly-force-instance-id` header to ensure that the request is sent directly to a desired machine only.
 
-If the instance is down, no other instances will be tried.
+If the machine is deleted or not found, no other instances will be tried.
 
 Example:
 ```
 fly-force-instance-id: 90801679a10038
 ```
+
+**Note**: the value of this header is the machine id, which can be found
+as the `"id"` field in `fly machine list --json` output.
