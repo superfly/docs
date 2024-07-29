@@ -16,29 +16,24 @@ your state.
 
 In this doc, we'll show you how to add LiteFS Cloud to an existing LiteFS
 cluster. If you're not using LiteFS yet, take a look at the
-[getting started guide][], which walks you through setting LiteFS up for your
-app, including LiteFS Cloud.
+[getting started guide](/docs/litefs/getting-started-fly), which walks you
+through setting LiteFS up for your app, including LiteFS Cloud.
 
 If you'd rather implement your own backups, take a look at the
-[Backing up your LiteFS cluster][] docs.
-
-[getting started guide]: /docs/litefs/getting-started-fly
-[Backing up your LiteFS cluster]: /docs/litefs/backup
+[Backing up your LiteFS cluster](/docs/litefs/backup) docs.
 
 ## Creating a LiteFS Cloud cluster
 
 If you want to back up your database using LiteFS Cloud, you'll need to create
 a LiteFS Cloud cluster. You can do this in the Fly.io dashboard. First,
-[sign up for an account][Sign up] if you haven't already. After you're signed in,
+[sign up for an account](/docs/hands-on/sign-up-sign-in/) if you haven't already. After you're signed in,
 navigate to the LiteFS Cloud section on the left navbar, and then use the Create
 button to create a new cluster.
-[Here's a handy link to the LiteFS Cloud dashboard][LiteFS Cloud Dashboard] if you prefer!
+[Here's a handy link to the LiteFS Cloud dashboard](https://fly.io/dashboard/personal/litefs) if you prefer!
 
 When you create your LiteFS Cloud cluster, you'll be asked to save an auth token.
 Keep this handy - you'll use it below.
 
-[Sign up]: /docs/hands-on/sign-up-sign-in/
-[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
 
 ## Configuring LiteFS to use LiteFS Cloud
 
@@ -46,15 +41,14 @@ Keep this handy - you'll use it below.
 
 Before configuring LiteFS Cloud, you must update your LiteFS to a version that supports
 LiteFS Cloud. Update to `v0.5.0` or greater. You can do this by
-[installing the latest version][LiteFS Installation].
+[installing the latest version](/docs/litefs/getting-started-fly/#installing-litefs).
 
-[LiteFS Installation]: /docs/litefs/getting-started-fly/#installing-litefs
 
 ### LiteFS Cloud Configuration
 
 When you created your LiteFS Cloud cluster, you got a LiteFS Cloud API authentication
 token. (If you lost it, you can create a new one in
-[the LiteFS Cloud dashboard][LiteFS Cloud Dashboard].)
+[the LiteFS Cloud dashboard](https://fly.io/dashboard/personal/litefs).)
 
 This token should be made available to LiteFS via the `LITEFS_CLOUD_TOKEN` environment
 variable. If you're running on Fly.io, you can add a secret for it with:
@@ -82,4 +76,3 @@ systemctl restart litefs
 
 Remember that this needs to be run for every LiteFS node.
 
-[LiteFS Cloud Dashboard]: https://fly.io/dashboard/personal/litefs
