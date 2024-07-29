@@ -6,7 +6,7 @@ nav: firecracker
 
 You really can [get an app up and running in just minutes](https://fly.io/speedrun/) on Fly.io.
 
-But if you want to know a bit more about what's what on the Fly.io platform, then read on. You can skip to the [glossary](#fly-io-glossary) for the tl;dr.
+But if you want to know a bit more about what's what on the Fly.io platform, read on. You can skip to the [glossary](#fly-io-glossary) for the tl;dr.
 
 Two big concepts to know about how Fly.io works, and one small one: Fly Machines, Fly Launch, and Fly Apps.
 
@@ -24,7 +24,7 @@ Fly Launch is how you manage the whole lifecycle of an application on top of Mac
 
 Fly Launch is our built-from-scratch-for-Fly-Machines orchestrator:
 
-- Create your app with the `fly launch` command. Fly Launch detects your framework and gives you useful defaults.
+- Create your app with the `fly launch` command. Fly Launch detects your framework and provides useful defaults.
 - Configure your app's deployment and services with the [`fly.toml`](/docs/reference/configuration/) configuration file.
 - Deploy your app's Machines as a group with the `fly deploy` command.
 - Scale your app's Machines [horizontally](/docs/apps/scale-count/) or [vertically](/docs/apps/scale-machine/) with the `fly scale` command.
@@ -55,4 +55,4 @@ Learn more about [Fly Apps](/docs/apps/overview/).
 
 **[Fly Volumes](/docs/volumes/):** Local persistent storage for Fly Machines. Every Fly Volume can be attached to one Machine at a time and belongs to one Fly App.
 
-**Organizations**: Administrative entities on Fly.io that let you to manage billing separately, control access by adding and removing members, and share app development environments.
+**Organizations**: Administrative entities on Fly.io that let you manage billing separately, control access by adding and removing members, and share app development environments.

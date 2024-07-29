@@ -63,7 +63,7 @@ This document lists important topics to consider when you set up a production en
 
 ## Fine-tuning your app
 
-- **Get Machine sizing right:** Most production apps require 2x or performance CPUs. Also make sure you have enough RAM for your app and/or enable [swapping to disk](https://fly.io/docs/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use. See [Machine sizing](docs/machines/guides-examples/machine-sizing/).
+- **Get Machine sizing right:** Most production apps require 2x or more performance CPUs. Also make sure you have enough RAM for your app and/or enable [swapping to disk](https://fly.io/docs/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use. See [Machine sizing](docs/machines/guides-examples/machine-sizing/).
 
 - **Fine-tune and benchmark your app:** Learn about optimizing your app on Fly.io. See [Tips to fine-tune and (not) benchmark your app on Fly.io](/docs/reference/fine-tune-apps/).
 
