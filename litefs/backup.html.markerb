@@ -48,3 +48,83 @@ This backup can be run on any of your nodes as even the replicas should have
 minimal lag behind the primary. If you run this on multiple nodes (such as all
 your candidates), make sure they are backing up to different storage locations
 so they do not overwrite one another.
+
+
+## Continuous backup via Litestream
+
+[Litestream](https://litestream.io/) is a tool for continuously streaming
+incremental backups to S3-compatible object storage. You can use it on top of
+LiteFS to provide point-in-time recovery in case your cluster fails for any reason.
+
+<div class="warning">
+This approach only works if you are running a static lease on your cluster.
+</div>
+
+
+### Initialize your bucket
+
+First, you'll need to create a bucket on S3-compatible storage. In this example,
+we'll use [Tigris](https://www.tigrisdata.com/) since it integrates nicely with
+Fly.io.
+
+```sh
+fly storage create
+```
+
+This command will return several configuration variables and you'll need
+`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `BUCKET_NAME` later in this setup.
+
+### Set up your configuration file
+
+Once your bucket is created, you'll need to create a
+[Litestream configuration file](https://litestream.io/reference/config/). In
+this example, change `my.db` and `mybucket` to your respective database file and
+bucket names:
+
+```yml
+dbs:
+  - path: /litefs/my.db
+    meta-path: /var/lib/litefs/my.db-litestream
+    replicas:
+      - type: s3
+        bucket: "mybucket"
+        path: "my.db"
+        endpoint: "fly.storage.tigris.dev"
+        force-path-style: true
+```
+
+If you save this file to `/etc/litestream.yml` then Litestream will pick it up
+automatically for any Litestream commands you use.
+
+The `meta-path` should be a path on a persistent volume. In this example, we're
+assuming that `/var/lib/litefs` has been mounted from a volume.
+
+### Running Litestream
+
+Litestream should be run after LiteFS has been initialized so we can specify it
+in the LiteFS `exec`. Litestream can run its own `exec` so you should specify 
+your application there.
+
+```yml
+# litefs.yml
+
+exec: "litestream replicate -exec myapp"
+```
+
+Litestream should only be run on the primary node. It requires write access to
+the database so it will not run on read-only replicas.
+
+### Verifying your setup
+
+Once you have your application running, you should be able to run Litestream's
+[restore](https://litestream.io/reference/restore/) command to fetch the current
+version of the database:
+
+```sh
+litestream restore -o ~/myrestored.db /litefs/my.db
+```
+
+If you need to recover from a loss of the database, you'll need to restore your
+SQLite database to a file and then use [litefs import](/docs/litefs/import) to 
+import it into your cluster. Litestream cannot restore directly into your LiteFS
+mount.
