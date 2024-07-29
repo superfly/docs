@@ -71,8 +71,13 @@ Fly.io.
 fly storage create
 ```
 
-This command will return several configuration variables and you'll need
-`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `BUCKET_NAME` later in this setup.
+This command will return several configuration variables. Set the AWS access key
+ID and secret access key as secrets in your application:
+
+```sh
+fly secrets set AWS_ACCESS_KEY_ID=... AWS_SECRET_ACCESS_KEY=...
+```
+
 
 ### Set up your configuration file
 
