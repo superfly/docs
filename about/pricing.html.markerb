@@ -241,14 +241,14 @@ You're billed for data transfer to the public Internet and between regions on yo
 You're not billed for the following types of traffic:
 
 - all inbound data transfer
-- data transfer between apps or Machines in the same region (for organizations created after July 18 2024)
-- data transfer from apps without an assigned IP address (for organizations created before July 18 2024)
+- data transfer between apps or Machines in the same region (for organizations using granular data transfer rates)
+- data transfer from apps without an assigned IP address (for organizations not using granular data transfer rates)
 - data transfer to [Tigris Object Storage](https://fly.io/docs/reference/tigris)
 
 Fly.io pricing is per region group for outbound data transfer. You'll see a more detailed breakdown of cost per region and per traffic type on your monthly invoice.
 
 <div class="important icon">
-**Important:** Organizations created after July 18 2024 are billed at a different rate for private network data transfer between regions, per the following table. Organizations created before July 18 2024 are billed for all data transfer (excluding that listed as free above) at the "Egress to public internet" rate.
+**Important:** Organizations created after July 18 2024 are automatically opted-in to use the granular data transfer rates and are billed at a different rate for private network data transfer between regions, per the following table. Organizations not using granular data transfer rates are billed for all data transfer (excluding that listed as free above) at the "Egress to public internet" rate.
 </div>
 
 | Region groups | Egress to public internet cost | Private network cross-region transfer cost |
@@ -257,6 +257,7 @@ Fly.io pricing is per region group for outbound data transfer. You'll see a more
 | - Asia Pacific<br>- Oceania<br>- South America | $0.04 per GB | $0.015 per GB |
 | - Africa<br>- India | $0.12 per GB | $0.050 per GB |
 
+To opt-in to granular bandwidth pricing, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Switch to granular bandwidth pricing**. You won't be able to return back not using the granular data transfer rates once you opt-in.
 
 ## Fly Kubernetes
 
