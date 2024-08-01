@@ -257,7 +257,7 @@ Fly.io pricing is per region group for outbound data transfer. You'll see a more
 | - Asia Pacific<br>- Oceania<br>- South America | $0.04 per GB | $0.015 per GB |
 | - Africa<br>- India | $0.12 per GB | $0.050 per GB |
 
-To opt-in to use granular bandwidth pricing, go go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Switch to granular bandwidth pricing**. You won't be able to return back not using the granular data transfer rates once you opt-in.
+To opt-in to use granular bandwidth pricing, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Switch to granular bandwidth pricing**. You won't be able to return back not using the granular data transfer rates once you opt-in.
 
 ## Fly Kubernetes
 
