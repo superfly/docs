@@ -8,6 +8,7 @@ fly launch [flags]
 ## Options
 
 ~~~
+      --attach                           Attach this new application to the current application
       --build-arg stringArray            Set of build time variables in the form of NAME=VALUE pairs. Can be specified multiple times.
       --build-only                       Build but do not deploy
       --build-secret stringArray         Set of build secrets of NAME=VALUE pairs. Can be specified multiple times. See https://docs.docker.com/engine/reference/commandline/buildx_build/#secret
@@ -28,6 +29,8 @@ fly launch [flags]
                                          
   -c, --config string                    Path to application configuration file
       --copy-config                      Use the configuration file if present without prompting
+      --deploy-retries string            Number of times to retry a deployment if it fails (default "auto")
+      --depot                            Deploy using depot to build the image
       --detach                           Return immediately instead of monitoring deployment progress
       --dns-checks                       Perform DNS checks during deployment (default true)
       --dockerfile string                Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
@@ -38,6 +41,7 @@ fly launch [flags]
       --file-literal stringArray         Set of literals in the form of /path/inside/machine=VALUE pairs where VALUE is the content. Can be specified multiple times.
       --file-local stringArray           Set of files in the form of /path/inside/machine=<local/path> pairs. Can be specified multiple times.
       --file-secret stringArray          Set of secrets in the form of /path/inside/machine=SECRET pairs where SECRET is the name of the secret. Can be specified multiple times.
+      --flycast                          Allocate a private IPv6 addresses
       --from string                      A github repo URL to use as a template for the new app
       --generate-name                    Always generate a name for the app, without prompting
       --ha                               Create spare machines that increases app availability (default true)
@@ -48,6 +52,7 @@ fly launch [flags]
   -i, --image string                     The Docker image to deploy
       --image-label string               Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
       --internal-port int                Set internal_port for all services in the generated fly.toml (default -1)
+      --into string                      Destination directory for github repo specified with --from
       --json                             Generate configuration in JSON format
       --label stringArray                Add custom metadata to an image via docker labels
       --lease-timeout string             Time duration to lease individual machines while running deployment. All machines are leased at the beginning and released at the end.The lease is refreshed periodically for this same time, which is why it is short.flyctl releases leases in most cases. (default "13s")
@@ -57,6 +62,7 @@ fly launch [flags]
       --name string                      Name of the new app
       --nixpacks                         Deploy using nixpacks to build the image
       --no-cache                         Do not use the build cache when building the image
+      --no-create                        Do not create an app, only generate configuration files
       --no-deploy                        Do not immediately deploy the new app after fly launch creates and configures it
       --no-public-ips                    Do not allocate any new public IP addresses
       --now                              Deploy now without confirmation
@@ -75,7 +81,7 @@ fly launch [flags]
       --strategy string                  The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. The default strategy is rolling.
       --vm-cpu-kind string               The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                      Number of CPUs
-      --vm-gpu-kind string               If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10)
+      --vm-gpu-kind string               If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none)
       --vm-gpus int                      Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
       --vm-memory string                 Memory (in megabytes) to attribute to the VM
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values

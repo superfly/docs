@@ -1,8 +1,8 @@
-Delete one or more applications from the Fly platform.
+Permanently destroy a Kubernetes cluster
 
 ## Usage
 ~~~
-fly apps destroy <app name(s)> [flags]
+fly extensions kubernetes destroy [name] [flags]
 ~~~
 
 ## Options
@@ -22,5 +22,5 @@ fly apps destroy <app name(s)> [flags]
 
 ## See Also
 
-* [fly apps](/docs/flyctl/apps/)	 - Manage apps.
+* [fly extensions kubernetes](/docs/flyctl/extensions-kubernetes/)	 - Provision and manage Kubernetes clusters
 

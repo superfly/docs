@@ -28,6 +28,7 @@ fly [flags]
 * [litefs-cloud](/docs/flyctl/litefs-cloud/)	 - LiteFS Cloud management commands
 * [logs](/docs/flyctl/logs/)	 - View app logs
 * [machine](/docs/flyctl/machine/)	 - Manage Fly Machines.
+* [mysql](/docs/flyctl/mysql/)	 - Provision and manage MySQL databases
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 * [ping](/docs/flyctl/ping/)	 - Test connectivity with ICMP ping messages
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
@@ -43,6 +44,7 @@ fly [flags]
 * [ssh](/docs/flyctl/ssh/)	 - Use SSH to log into or run commands on Machines
 * [status](/docs/flyctl/status/)	 - Show app status
 * [storage](/docs/flyctl/storage/)	 - Provision and manage Tigris object storage buckets
+* [synthetics](/docs/flyctl/synthetics/)	 - Synthetic monitoring
 * [tokens](/docs/flyctl/tokens/)	 - Manage Fly.io API tokens
 * [version](/docs/flyctl/version/)	 - Show version information for the flyctl command
 * [volumes](/docs/flyctl/volumes/)	 - Manage Fly Volumes.

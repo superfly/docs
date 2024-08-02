@@ -1,8 +1,9 @@
-Show a single barman backup
+List backups
+
 
 ## Usage
 ~~~
-fly postgres barman show-backup <backup-id> [flags]
+fly postgres backup list [flags]
 ~~~
 
 ## Options
@@ -10,7 +11,7 @@ fly postgres barman show-backup <backup-id> [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for show-backup
+  -h, --help            help for list
 ~~~
 
 ## Global Options
@@ -23,5 +24,5 @@ fly postgres barman show-backup <backup-id> [flags]
 
 ## See Also
 
-* [fly postgres barman](/docs/flyctl/postgres-barman/)	 - Manage databases in a cluster
+* [fly postgres backup](/docs/flyctl/postgres-backup/)	 - Backup commands
 

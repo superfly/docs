@@ -16,6 +16,7 @@ fly proxy <local:remote> [remote_host] [flags]
   -o, --org string         The target Fly.io organization
   -q, --quiet              Don't print progress indicators for WireGuard
   -s, --select             Prompt to select from available Machines from the current application
+      --watch-stdin        Watches stdin and terminates once it gets closed
 ~~~
 
 ## Global Options

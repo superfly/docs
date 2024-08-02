@@ -1,6 +1,6 @@
 Move an application to another
 organization the current user belongs to.
-
+For details, see https://fly.io/docs/apps/move-app-org/.
 
 ## Usage
 ~~~
