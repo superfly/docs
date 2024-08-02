@@ -1,8 +1,8 @@
-Switch WAL to sync barman
+Permanently destroy a MySQL database
 
 ## Usage
 ~~~
-fly postgres barman switch-wal [flags]
+fly mysql destroy [name] [flags]
 ~~~
 
 ## Options
@@ -10,7 +10,8 @@ fly postgres barman switch-wal [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for switch-wal
+  -h, --help            help for destroy
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options
@@ -23,5 +24,5 @@ fly postgres barman switch-wal [flags]
 
 ## See Also
 
-* [fly postgres barman](/docs/flyctl/postgres-barman/)	 - Manage databases in a cluster
+* [fly mysql](/docs/flyctl/mysql/)	 - Provision and manage MySQL databases
 

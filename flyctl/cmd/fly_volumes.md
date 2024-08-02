@@ -1,4 +1,4 @@
-Manage Fly Volumes. Volumes are persistent storage for Fly Machines. Learn how how volumes work: https://fly.io/docs/reference/volumes/.
+Manage Fly Volumes. Volumes are persistent storage for Fly Machines. Learn how how volumes work: https://fly.io/docs/volumes/overview/.
 
 ## Usage
 ~~~

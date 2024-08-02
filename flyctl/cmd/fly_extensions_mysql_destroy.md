@@ -1,10 +1,8 @@
-Destroy one or more Fly machines.
-This command requires a machine to be in a stopped or suspended state unless the force flag is used.
-
+Permanently destroy a MySQL database
 
 ## Usage
 ~~~
-fly machine destroy [flags] ID ID ...
+fly extensions mysql destroy [name] [flags]
 ~~~
 
 ## Options
@@ -12,9 +10,8 @@ fly machine destroy [flags] ID ID ...
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -f, --force           force kill machine regardless of current state
   -h, --help            help for destroy
-  -i, --image string    remove all machines with the specified image hash
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options
@@ -27,5 +24,5 @@ fly machine destroy [flags] ID ID ...
 
 ## See Also
 
-* [fly machine](/docs/flyctl/machine/)	 - Manage Fly Machines.
+* [fly extensions mysql](/docs/flyctl/extensions-mysql/)	 - Provision and manage MySQL databases
 

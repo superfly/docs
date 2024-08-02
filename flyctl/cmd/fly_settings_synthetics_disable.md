@@ -1,15 +1,14 @@
-Delete one or more applications from the Fly platform.
+Disable synthetics
 
 ## Usage
 ~~~
-fly apps destroy <app name(s)> [flags]
+fly settings synthetics disable [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -h, --help   help for destroy
-  -y, --yes    Accept all confirmations
+  -h, --help   help for disable
 ~~~
 
 ## Global Options
@@ -22,5 +21,5 @@ fly apps destroy <app name(s)> [flags]
 
 ## See Also
 
-* [fly apps](/docs/flyctl/apps/)	 - Manage apps.
+* [fly settings synthetics](/docs/flyctl/settings-synthetics/)	 - Control synthetics agent execution
 

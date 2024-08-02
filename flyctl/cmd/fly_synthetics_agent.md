@@ -1,15 +1,14 @@
-Delete one or more applications from the Fly platform.
+Runs the Synthetics agent in the foreground.
 
 ## Usage
 ~~~
-fly apps destroy <app name(s)> [flags]
+fly synthetics agent [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -h, --help   help for destroy
-  -y, --yes    Accept all confirmations
+  -h, --help   help for agent
 ~~~
 
 ## Global Options
@@ -22,5 +21,5 @@ fly apps destroy <app name(s)> [flags]
 
 ## See Also
 
-* [fly apps](/docs/flyctl/apps/)	 - Manage apps.
+* [fly synthetics](/docs/flyctl/synthetics/)	 - Synthetic monitoring
 

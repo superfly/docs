@@ -12,6 +12,7 @@ fly postgres create [flags]
       --autostart                  Automatically start a stopped Postgres app when a network request is received
       --consul-url string          Opt into using an existing consul as the backend store by specifying the target consul url.
       --detach                     Return immediately instead of monitoring deployment progress
+      --enable-backups             Create a new tigris bucket and enable WAL-based backups
       --flex                       Create a postgres cluster that's managed by Repmgr (default true)
       --fork-from string           Specify a source Postgres application to fork from. Format: <app-name> or <app-name>:<volume-id>
   -h, --help                       help for create

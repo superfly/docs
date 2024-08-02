@@ -15,6 +15,7 @@ fly apps list [flags]
   -h, --help         help for list
   -j, --json         JSON output
   -o, --org string   The target Fly.io organization
+  -q, --quiet        Only list app names
 ~~~
 
 ## Global Options

@@ -31,6 +31,8 @@ fly deploy [WORKING_DIRECTORY] [flags]
                                          Repeat for each volume in order (comma-separated lists not accepted)
                                          
   -c, --config string                    Path to application configuration file
+      --deploy-retries string            Number of times to retry a deployment if it fails (default "auto")
+      --depot                            Deploy using depot to build the image
       --detach                           Return immediately instead of monitoring deployment progress
       --dns-checks                       Perform DNS checks during deployment (default true)
       --dockerfile string                Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
@@ -40,6 +42,7 @@ fly deploy [WORKING_DIRECTORY] [flags]
       --file-literal stringArray         Set of literals in the form of /path/inside/machine=VALUE pairs where VALUE is the content. Can be specified multiple times.
       --file-local stringArray           Set of files in the form of /path/inside/machine=<local/path> pairs. Can be specified multiple times.
       --file-secret stringArray          Set of secrets in the form of /path/inside/machine=SECRET pairs where SECRET is the name of the secret. Can be specified multiple times.
+      --flycast                          Allocate a private IPv6 addresses
       --ha                               Create spare machines that increases app availability (default true)
   -h, --help                             help for deploy
       --host-dedication-id string        The dedication id of the reserved hosts for your organization (if any)
@@ -70,7 +73,7 @@ fly deploy [WORKING_DIRECTORY] [flags]
       --update-only                      Do not create Machines for new process groups
       --vm-cpu-kind string               The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                      Number of CPUs
-      --vm-gpu-kind string               If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10)
+      --vm-gpu-kind string               If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none)
       --vm-gpus int                      Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
       --vm-memory string                 Memory (in megabytes) to attribute to the VM
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values

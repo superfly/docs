@@ -1,8 +1,9 @@
-Backup your database on barman
+Show details about a MySQL database
+
 
 ## Usage
 ~~~
-fly postgres barman backup [flags]
+fly extensions mysql status [name] [flags]
 ~~~
 
 ## Options
@@ -10,7 +11,8 @@ fly postgres barman backup [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for backup
+  -h, --help            help for status
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options
@@ -23,5 +25,5 @@ fly postgres barman backup [flags]
 
 ## See Also
 
-* [fly postgres barman](/docs/flyctl/postgres-barman/)	 - Manage databases in a cluster
+* [fly extensions mysql](/docs/flyctl/extensions-mysql/)	 - Provision and manage MySQL databases
 

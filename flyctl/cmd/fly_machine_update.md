@@ -11,7 +11,8 @@ fly machine update [machine_id] [flags]
 ~~~
   -a, --app string                  Application name
       --autostart                   Automatically start a stopped Machine when a network request is received (default true)
-      --autostop                    Automatically stop a Machine when there are no network requests for it (default true)
+      --autostop string[="stop"]    Automatically stop a Machine when there are no network requests for it. Options include 'off', 'stop', and 'suspend'. (default "off")
+      --build-depot                 Build your image with depot.dev
       --build-nixpacks              Build your image with nixpacks
   -C, --command string              Command to run
   -c, --config string               Path to application configuration file
@@ -40,7 +41,7 @@ fly machine update [machine_id] [flags]
       --standby-for strings         For Machines without services, a comma separated list of Machine IDs to act as standby for.
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
-      --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10)
+      --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none)
       --vm-gpus int                 Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
       --vm-memory string            Memory (in megabytes) to attribute to the VM
       --vm-size string              The VM size to set machines to. See "fly platform vm-sizes" for valid values

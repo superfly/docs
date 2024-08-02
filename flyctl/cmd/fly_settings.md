@@ -8,6 +8,7 @@ fly settings [command] [flags]
 ## Available Commands
 * [analytics](/docs/flyctl/settings-analytics/)	 - Control anonymized analytics collection
 * [autoupdate](/docs/flyctl/settings-autoupdate/)	 - Control automatic updates
+* [synthetics](/docs/flyctl/settings-synthetics/)	 - Control synthetics agent execution
 
 ## Options
 

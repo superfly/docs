@@ -1,8 +1,8 @@
-Check your barman connection
+Permanently destroy a Wafris WAF
 
 ## Usage
 ~~~
-fly postgres barman check [flags]
+fly extensions wafris destroy [name] [flags]
 ~~~
 
 ## Options
@@ -10,7 +10,8 @@ fly postgres barman check [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for check
+  -h, --help            help for destroy
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options
@@ -23,5 +24,5 @@ fly postgres barman check [flags]
 
 ## See Also
 
-* [fly postgres barman](/docs/flyctl/postgres-barman/)	 - Manage databases in a cluster
+* [fly extensions wafris](/docs/flyctl/extensions-wafris/)	 - Provision and manage Wafris WAFs (Web Application Firewalls)
 
