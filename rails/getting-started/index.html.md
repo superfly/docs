@@ -93,7 +93,7 @@ Tigris:       <none>                 (not requested)
 ```
 
 For demo purposes you can accept the defaults.  You can always change these later.
-So respond with "Y" (or simply press enter).
+So respond with "N" (or simply press enter).
 
 This will take a few seconds as it uploads your application, builds a machine image,
 deploys the images, and then monitors to ensure it starts successfully. Once complete
