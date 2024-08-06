@@ -124,7 +124,7 @@ Run `fly apps open`, or just go to the URL specified in the output, to open your
 
 ## Stateful apps
 
-Lots of apps have some state that they want to keep. Learn more about the options for [databases and storage](docs/database-storage-guides/) on Fly.io.
+Lots of apps have some state that they want to keep. Learn more about the options for [databases and storage](/docs/database-storage-guides/) on Fly.io.
 
 ## Grow and scale
 
