@@ -3,7 +3,7 @@ title: Export logs
 layout: docs
 objective: Aggregate your logs to a service of your choice.
 nav: firecracker
-redirect_from: 
+redirect_from:
   - /docs/going-to-production/monitoring/exporting-logs/
   - /docs/metrics-and-logs/exporting-logs/
 ---
@@ -38,8 +38,9 @@ fly launch --no-deploy --image ghcr.io/superfly/fly-log-shipper:latest
 
 # Set some secrets. The secret / env var you set
 # determines which "sinks" are configured
-fly secrets set ORG=personal
-fly secrets set ACCESS_TOKEN=$(fly auth token)
+ORG=personal
+fly secrets set ORG=$ORG
+fly secrets set ACCESS_TOKEN=$(fly tokens create readonly $ORG)
 fly secrets set LOGTAIL_TOKEN=<token provided by logtail source>
 ```
 

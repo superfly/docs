@@ -73,10 +73,10 @@ ENV PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 A good place to put these lines is immediately before the `# Deploy your application` comment.
 
-Next we need to make our Fly token available to our application:
+Next we need to make a Fly token available to our application:
 
 ```cmd
-fly secrets set FLY_API_TOKEN=$(fly auth token)
+fly secrets set FLY_API_TOKEN=$(fly tokens deploy)
 ```
 
 ## Add a controller
@@ -144,7 +144,7 @@ Overall the tasks to be performed by this job:
   * Specify a machine configuration.  For simplicity we will use the
     same Fly application name and the same Fly image as our Rails
     application.  The server command will be `curl` specifying the
-    URL that was passed as an argument to the job. 
+    URL that was passed as an argument to the job.
   * Start a machine using this configuration, and
     check for errors, and log the results.
   * Query the status of the machine every 10 seconds for a maximum

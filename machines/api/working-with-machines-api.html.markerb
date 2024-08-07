@@ -46,15 +46,15 @@ For local development, you might set them as follows, assuming you have flyctl i
 
 ```bash
 $ export FLY_API_HOSTNAME="https://api.machines.dev" # set to http://_api.internal:4280 when using WireGuard
-$ export FLY_API_TOKEN=$(fly auth token)
+$ export FLY_API_TOKEN=$(fly tokens deploy)
 ```
 
-The `fly auth token` command returns the token currently in use by `flyctl`. You can also create a new auth token in the Tokens section of the Fly.io dashboard.
+The `fly tokens deploy` command creates a token capable of managing the application in your current directory. See `fly tokens create --help` for information on other types of tokens you can generate.
 
 To set an access token as an environment variable on Fly Machines, use a [secret](/docs/apps/secrets/); for example:
 
 ```cmd
-fly secrets set FLY_API_TOKEN=$(fly auth token)
+fly secrets set FLY_API_TOKEN=$(fly tokens deploy)
 ```
 
 ## Response Codes
