@@ -1,6 +1,6 @@
-Shows the authentication token that is currently in use by flyctl.
-
-This can be used as an authentication token with API services. These tokens may expire quickly and shouldn't be used in places where the token needs to keep working for a long time. Use `fly tokens create` instead for creating narrowly scoped tokens that can have a custom expiry.
+Shows the authentication token that is currently in use.
+This can be used as an authentication token with API services,
+independent of flyctl.
 
 
 ## Usage
@@ -26,3 +26,4 @@ fly auth token [flags]
 ## See Also
 
 * [fly auth](/docs/flyctl/auth/)	 - Manage authentication
+
