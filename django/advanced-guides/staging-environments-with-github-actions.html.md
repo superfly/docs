@@ -32,10 +32,11 @@ repository page and open:
 next, create a new secret called `FLY_API_TOKEN` with a value from:
 
 ```cmd
-fly auth token
+fly tokens org <ORG NAME>
 ```
+
 <section class="callout">
-It's also possible to create a new token on the [dashboard](https://fly.io/user/personal_access_tokens).
+It's also possible to create a token from the organization dashboard, under the "Tokens" tab.
 </section>
 
 Now, we're ready to add a new flow. This is how we can define it in the

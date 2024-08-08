@@ -17,7 +17,7 @@ Review apps are a great way to preview new features, changes, and bug fixes. Thi
 
 If you've worked with GitHub Actions before and want to jump right in, here are the steps to take:
 
-1. Create a new repository secret on your GitHub repository called `FLY_API_TOKEN` and provide it with the returned value of `fly auth token`
+1. Create a new repository secret on your GitHub repository called `FLY_API_TOKEN` and provide it with the returned value of `fly tokens org <ORG NAME>`
 1. Create a new workflow in your project at `.github/workflows/fly-review.yml` and add the following [YAML code](https://gist.github.com/anniebabannie/3cb800f2a890a6f3ed3167c09a0234dd).
 1. Commit and push the changes containing your GitHub workflow.
 
@@ -37,10 +37,10 @@ For more details about each step, follow the guide below.
 Your GitHub Action will need a Fly API token to deploy and manage new review apps on Fly.io. You can get this token using the following [flyctl](/docs/flyctl/install/) command:
 
 ```cmd
-fly auth token
+fly tokens org <ORG NAME>
 ```
 
-This token is specific to a single Fly.io account and is valid for applications belonging the that account.
+This token is specific to a single Fly.io organization and is valid for applications belonging the that organization.
 
 Next, let's save our API token as a secret in our GitHub repository. Visit the Settings tab in your repository, then Secrets and variables → Actions. Alternatively, you can visit `https://github.com/<username or org>/<repository>/settings/secrets/actions`. There, create a new **Repository Secret** called `FLY_API_TOKEN` with the value of your token.
 

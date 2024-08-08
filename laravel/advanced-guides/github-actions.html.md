@@ -1,7 +1,7 @@
 ---
 title: "Laravel GitHub Actions: CICD"
 layout: framework_docs
-objective: Configure continuous integration and development on your Laravel Fly App through GitHub. 
+objective: Configure continuous integration and development on your Laravel Fly App through GitHub.
 order: 3
 ---
 
@@ -20,7 +20,7 @@ In this section, you'll create a new Laravel application, configure and deploy i
 composer create-project laravel/laravel fly-laravel
 cd fly-laravel
 
-# Auto generate your `fly.toml` configuration file: 
+# Auto generate your `fly.toml` configuration file:
 # Add in the ams region with --region
 # Auto deploy using --now while your at it!
 flyctl launch --region ams --now
@@ -43,11 +43,11 @@ git remote add origin git@github.com:<username>/<repository-name>.git
 
 ## GitHub CI Action: Auto Deploy to Fly.io
 
-Once you have your Laravel application set up with a github repository, you can configure some GitHub Actions to auto deploy your changes. 
+Once you have your Laravel application set up with a github repository, you can configure some GitHub Actions to auto deploy your changes.
 
 In this guide, you'll be using `Fly.io`'s very own [GitHub action template here](https://github.com/superfly/flyctl-actions) to help deploy your application.
 
-1) Generate a `Fly token` with `fly auth token`
+1) Generate a `Fly token` with `fly tokens deploy`
 
 2) Then save your newly generated `FLY_API_TOKEN` in your github repository either through the GitHub Console or GitHub CLI:
 
