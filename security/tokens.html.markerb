@@ -1,0 +1,101 @@
+---
+title: Access tokens
+layout: docs
+nav: firecracker
+redirect_from: 
+  - /docs/reference/deploy-tokens/
+  - /docs/security/deploy-tokens/
+---
+
+Whether you're deploying your app with GitHub Actions or running your own CD service, it's best to avoid configuring deployment infrastructure with all-powerful tokens. Our access tokens use macaroons, which can be easily attenuated to reduce access from org-wide all the way down to running specific commands on a Machine. If you want all the details, you can read about our decision to use macaroons in our [API Tokens: A Tedious Survey](https://fly.io/blog/api-tokens-a-tedious-survey/#macaroons) and [Macaroons escalated quickly](https://fly.io/blog/macaroons-escalated-quickly/) blog posts.
+
+<div class="important icon">
+**Important:** You might have seen us suggest in docs and community that you use the output of the `fly auth token` command as your API token for everything. Sometimes referred to as the "personal access token" or the "all-powerful auth token", this token is automatically created each time you log in with `fly auth login` and is used by flyctl to create, manage, configure, and deploy all the apps in any organization in your account. You don't need a token with that much scope in most cases, so we recommend using tokens created with `fly tokens deploy` or `fly tokens org` instead. It's always a good idea to use the token with the narrowest access that will work for your purpose.
+</div>
+
+You can create Fly.io access tokens with different pre-defined scopes using flyctl.
+
+## App-scoped access tokens
+
+Use an app-scoped token, sometimes just called a "deploy token", to limit access to a single app. App-scoped tokens are useful for CI/CD pipelines where you need to share a token with a 3rd party.
+
+You can create a standard app-scoped deploy token, a token to SSH into an app's Machines, or token to execute commands on an app's Machines.
+
+## Org-scoped access tokens
+
+Use an org-scoped token for access to manage all the apps within a single organization. An org-scoped token is the middle ground between the auth token and the more restricted app-scoped token, and is useful when you want to automate a single org.
+
+You can create a standard org-scoped token or a read-only org-scoped token.
+
+## Create and manage tokens
+
+Create and manage tokens using flyctl. `fly tokens create` commands have some useful options for customizing your token:
+
+- **token names:** If you're managing multiple tokens, then give the tokens custom names with the `--name` option to make them easier to find when you list them with flyctl or view them in your dashboard.
+
+- **token expiry:** When you create a token, include the duration that the token is valid for with the `--expiry` option. In general, you should specify the shortest possible duration for your use case so that you limit access by time as well as scope. Tokens are valid for 175200h0m0s (20 years) by default.
+
+For all options and commands, refer to the [`fly tokens` docs](/docs/flyctl/tokens/).
+
+### Create app-scoped access tokens
+
+App-scoped tokens are limited to managing a single app and its resources.
+
+If you don't specify a name with the `--name` option, then the default name is `flyctl deploy token`.
+
+Create an app-scoped deploy token with a custom name and expiry:
+
+```
+fly tokens create deploy --name <"my token name"> --expiry <duration>
+```
+
+This example creates an app-scoped deploy token called `staging one` that's valid for 48 hours:
+
+```
+fly tokens create deploy --name "staging one" --expiry 48h
+```
+
+### Create org-scoped access tokens
+
+Org-scoped tokens are limited to managing a single org and its resources, including apps.
+
+If you don't specify a name with the `--name` option, then the default name is `Org deploy token`.
+
+Create an org-scoped deploy token with a custom name and duration:
+
+```
+fly tokens create org --name <"my token name"> --expiry <duration>
+```
+
+This example creates an org-scoped deploy token called `prod` that's valid for one week:
+
+```
+fly tokens create org --name "prod" --expiry 168h
+```
+
+You can further limit an org-scoped deploy token by making it read-only, which limits the token access to reading a single org and its resources. 
+
+If you don't specify a name with the --name option, then the default name is Read-only org token.
+
+Create a read-only org-scoped deploy token with a custom name and expiry:
+
+```
+fly tokens create readonly --name <"my token name"> --expiry <duration>
+```
+
+Create a read-only token based on an existing org-scoped token:
+
+TODO: can the read-only token be crated based on any deploy token or only org-scoped tokens? TODO: link to ssh, machine exec, and 3p token pages from this page.
+Tokens to execute commands on Machines
+Create an API token that can execute a restricted set of commands on an app's Machines. Commands can be specified on the command line or with the command and command-prefix flags. If no command is provided, all commands are allowed. Tokens are valid for 20 years by default. We recommend using a shorter expiry if practical.
+TODO: what is this? Tim N added it - ask for details?
+App-scoped token for SSH
+Create a token to SSH into a single app. The SSH token is scoped to only allow SSH access to a specific app and nothing else.
+Note: To be able to SSH to an app, this token is also allowed to connect to the org’s WireGuard network.
+Create an SSH token for app access
+Run:
+Use the token to SSH into the app
+Run:
+TODO: Not sure about the format of the create command. What is my-app.token.ssh? A file? It's not clear in the flyctl --help.
+
+

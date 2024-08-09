@@ -105,6 +105,7 @@ São Paulo
 (?i)sequelize
 (?i)serverless
 Sidekiq
+signup
 (?i)speedrun
 SSH
 stdin
@@ -121,6 +122,8 @@ tracebacks?\b
 Turboku
 uncomment
 unencrypted
+unlinked
+unlinking
 unmanaged
 unmount
 Upstash
