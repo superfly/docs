@@ -7,17 +7,15 @@ redirect_from:
   - /docs/reference/private-networking/
 ---
 
-Fly Apps are connected by a mesh of WireGuard tunnels using IPv6.
+Fly Apps are connected by a mesh of WireGuard tunnels using IPv6. Private networking is always available to apps by default; you don't have to do anything special to get it.
 
 Applications within the same organization are assigned special addresses (6PN addresses) tied to the organization. Those applications can talk to each other because of their 6PN addresses, but applications from other organizations can't. The Fly.io platform won't forward packets between different 6PN networks.
-
-Private networking is always available to apps by default; you don't have to do anything special to get it.
 
 You can connect apps running outside of Fly.io to your 6PN network using WireGuard. You can even connect your dev laptop to your 6PN network. To do that, you'll use flyctl, the Fly.io CLI, to generate a WireGuard configuration that has a 6PN address.
 
 ## Fly.io `.internal` DNS
 
-A Fly Machine is configured to resolve domain names with a custom DNS server from the Fly Platform. This DNS server can resolve arbitrary DNS queries, so you can look up `google.com` with it. But it’s also aware of 6PN addresses, and will let you look up 6PN addresses for other apps in your organization. Those addresses live under the custom top-level domain `.internal`. You might want to use `.internal` domains to connect your app to databases, API servers, or other apps in your 6PN network.
+A Fly Machine is configured to resolve domain names with a custom DNS server from the Fly Platform. This DNS server can resolve arbitrary DNS queries, so you can look up `google.com` with it. But it’s also aware of 6PN addresses, and will let you look up 6PN addresses for other apps in your organization. Those addresses live under the custom top-level domain `.internal`. You might want to use `.internal` domains to connect your app to databases, API servers, or other apps in your 6PN network. If you don't need the second-level domains available with `.internal` and you want to use of Fly Proxy features for your internal apps, then you should use [Flycast](/docs/networking/flycast/) instead.
 
 Underneath `.internal` there are second-level domains for every app in your Fly organization. For example, if your app is in an organization with another app called `my-app-name`, then there will be a AAAA record at `my-app-name.internal`. The AAAA record will contain *all* the 6PN addresses of the started Fly Machines that make up the `my-app-name` Fly App. Note that different libraries and tools will use multi-address AAAA records differently; most will only use the first address that is returned, but others might round-robin between entries for every request -- if you'd like to know more, consult the documentation for the library or tool you are using for DNS lookup.
 
