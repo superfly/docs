@@ -54,7 +54,7 @@ The `fly tokens deploy` command creates a token capable of managing the applicat
 To set an access token as an environment variable on Fly Machines, use a [secret](/docs/apps/secrets/); for example:
 
 ```cmd
-fly secrets set FLY_API_TOKEN=$(fly tokens deploy)
+fly secrets set FLY_API_TOKEN="$(fly tokens deploy)"
 ```
 
 ## Response Codes
