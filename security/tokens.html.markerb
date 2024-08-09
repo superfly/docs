@@ -55,6 +55,32 @@ This example creates an app-scoped deploy token called `staging one` that's vali
 fly tokens create deploy --name "staging one" --expiry 48h
 ```
 
+#### Create an app-scoped token to execute commands on Machines
+
+A machine-exec token can execute a restricted set of commands on an app's Machines. You can specify commands on the command line or with the `--command` and `--command-prefix` options. If no command is provided, all commands are allowed.
+
+Create a machine exec token:
+
+```
+fly tokens create machine-exec --command "<exact command and arguments to run>"
+```
+
+#### Create an app-scoped token for SSH
+
+Create a token to SSH into a single app. The SSH token is scoped to only allow SSH access to a specific app and nothing else. To be able to SSH to an app, this token is also allowed to connect to the org’s WireGuard network.
+
+For example:
+
+```
+flyctl tokens create ssh -a my-app > my-app.token.ssh
+```
+
+Use the token to SSH into the app:
+
+```
+FLY_API_TOKEN=$(cat my-app.token.ssh) flyctl ssh console -a my-app
+```
+
 ### Create org-scoped access tokens
 
 Org-scoped tokens are limited to managing a single org and its resources, including apps.
@@ -85,17 +111,40 @@ fly tokens create readonly --name <"my token name"> --expiry <duration>
 
 Create a read-only token based on an existing org-scoped token:
 
-TODO: can the read-only token be crated based on any deploy token or only org-scoped tokens? TODO: link to ssh, machine exec, and 3p token pages from this page.
-Tokens to execute commands on Machines
-Create an API token that can execute a restricted set of commands on an app's Machines. Commands can be specified on the command line or with the command and command-prefix flags. If no command is provided, all commands are allowed. Tokens are valid for 20 years by default. We recommend using a shorter expiry if practical.
-TODO: what is this? Tim N added it - ask for details?
-App-scoped token for SSH
-Create a token to SSH into a single app. The SSH token is scoped to only allow SSH access to a specific app and nothing else.
-Note: To be able to SSH to an app, this token is also allowed to connect to the org’s WireGuard network.
-Create an SSH token for app access
-Run:
-Use the token to SSH into the app
-Run:
-TODO: Not sure about the format of the create command. What is my-app.token.ssh? A file? It's not clear in the flyctl --help.
+```
+fly tokens create readonly --name <"my token name"> --expiry <duration> --from-existing <token ID>
+```
 
+### List or view deploy tokens
 
+List all the tokens for current app, or use the `--app` option to specify an app:
+
+```
+fly tokens list
+```
+
+List all the tokens in an org, including org-scoped tokens:
+
+```
+fly tokens list --scope org
+```
+
+### Revoke deploy tokens
+
+1. List the tokens and copy the ID of the token to revoke. Include the `--scope org` to list org-scoped tokens.
+
+```
+fly tokens list
+```
+
+1. Revoke the token:
+
+```
+fly tokens revoke <token ID>
+```
+
+### Manage tokens in the dashboard
+
+To manage app-scoped tokens, click an app, then click **Tokens**. From here you can revoke tokens or create new tokens.
+
+To manage org-scoped tokens, choose an organization from the dropdown, then click **Tokens**. From here you can revoke tokens or create new tokens.
