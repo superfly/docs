@@ -72,7 +72,7 @@ Unified billing allows you to consolidate billing for multiple organizations und
 
 **Billing Organization**: a normal organization with a payment method linked to it. This organization is responsible for paying for the resources used by all organizations linked to it.
 
-**Linked Organization**: an organization that has its billing linked to a another organization. It otherwise functions a a normal organization
+**Linked Organization**: an organization that has its billing linked to a another organization. It otherwise functions a normal organization
 
 ### How Unified Billing Works
 
@@ -109,11 +109,11 @@ We process payments through Stripe. Paid plans and monthly invoicing require a c
 
 We require an active, valid credit card on file for most Fly.io accounts to do things like deploying multiple apps and deploying public images. This is primarily a means to prevent abuse and ensure that we can collect payment at the end of the month.
 
-### Preauthorization Requests
+### Pre-authorization Requests
 
-We may send a preauthorization request to the issuing bank to verify a bank will authorize charges. Some credit card companies present these as real charges, which may surprise you.
+We may send a pre-authorization request to the issuing bank to verify a bank will authorize charges. Some credit card companies present these as real charges, which may surprise you.
 
-A preauth is really just a hold on a credit card; it is not a real charge. We’ll typically preauthorize a small amount (usually less than $5) after signup, then cancel the authorization immediately. Banks may show the preauth for up to 7 days, even though we have not collected any money.
+A pre-auth is really just a hold on a credit card; it is not a real charge. We’ll typically pre-authorize a small amount (usually less than $5) after signup, then cancel the authorization immediately. Banks may show the pre-auth for up to 7 days, even though we have not collected any money.
 
 ### If you don't have a credit card
 
