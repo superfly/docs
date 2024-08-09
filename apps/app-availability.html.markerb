@@ -79,8 +79,6 @@ The standby Machine doesn't consume resources or start up until it's needed.
 
 #### Remove a standby Machine
 
-If you destroy a standby Machine, it is not recreated when you [scale up or back down](/docs/apps/scale-count/) using `fly scale count`.
-
 To remove a standby Machine, run `fly status` and copy the ID of the Machine that displays the `†` symbol beside the process group name. For example:
 
 ```
@@ -88,7 +86,9 @@ PROCESS	ID            	VERSION	REGION	STATE  	ROLE	CHECKS	LAST UPDATED
 task†  	784e469a443e38	43     	yul   	stopped	    	      	2024-08-06T20:48:10Z
 ```
 
-Then destroy the standby with `fly machine destroy <machine id>`.
+Then destroy the standby Machine with `fly machine destroy <machine id>`.
+
+If you destroy a standby Machine, it is not recreated when you [scale up or back down](/docs/apps/scale-count/) using `fly scale count`.
 
 If you add services for a process group in `fly.toml` that previously had no services, then the standby designation is removed from the standby Machine on the next deploy.
 
