@@ -24,7 +24,7 @@ The basic steps to set up Flycast:
 2. Make sure your app binds to `0.0.0.0:port`. Binding to `fly-local-6pn:<port>` won't work for Flycast.
 3. Expose services in your app's `fly.toml` with an [`[http_service]`](/docs/reference/configuration/#the-http_service-section) or [`[services]`](/docs/reference/configuration/#the-services-sections) section. Don't use `force_https`; Flycast is HTTP-only.
 4. Deploy your app.
-5. Access the services on the private IPv6 address, or with `my-app-name.flycast` from the target organization network.
+5. Access the services on the private IPv6 address, or with `my-app-name.flycast`, from the target organization network.
 
 <div class="warning icon">
 **Warning:** If you have a public IP address assigned to your app, then services in `fly.toml` are exposed to the public internet. Verify your app's IP addresses with `fly ips list`.
@@ -46,16 +46,6 @@ You can use Flycast to expose an app in one Fly.io organization to another Fly.i
 
 ```cmd
  fly ips allocate-v6 --private --org my-other-org
- ```
- ```output
-VERSION	IP                	TYPE   	REGION	CREATED AT
-v6     	fdaa:0:22b7:0:1::3	private	global	just now
-```
-
-You can also use Flycast to expose an app on one private network to another private network by using the `--network` option to specify the network from which requests will originate:
-
-```cmd
- fly ips allocate-v6 --private --network custom-network-name
  ```
  ```output
 VERSION	IP                	TYPE   	REGION	CREATED AT
