@@ -27,7 +27,7 @@ Fly Proxy gets all its information about apps and Machines and services from cor
 
 ## How Fly Proxy routes requests over your private network (6PN)
 
-Apps can communicate with each other by default on your [private network](/docs/networking/private-networking/) without Fly Proxy's help, but if you want to use Fly Proxy features, then you can do that with [Flycast](/docs/networking/private-networking/#flycast-private-fly-proxy-services).
+Apps can communicate with each other by default on your [private network](/docs/networking/private-networking/) without Fly Proxy's help, but if you want to use Fly Proxy features, then you can do that with [Flycast](/docs/networking/flycast/).
 
 When you assign a Flycast address to your app, the traffic gets routed through Fly Proxy while remaining entirely in your private network. When App 1 makes a request to App 2 in the same private network, Fly Proxy on the worker hosting App 1's Machines checks out the details of the request, adds the appropriate headers, and routes the request through the same WireGuard tunnel backhaul to the nearest healthy worker that hosts Machines for App 2. Fly Proxy on that server sends the request to a Machine running App 2.
 

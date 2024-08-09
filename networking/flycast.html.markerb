@@ -2,9 +2,7 @@
 title: "Flycast - Private Fly Proxy services"
 layout: docs
 nav: firecracker
-redirect_from:
-  - /docs/reference/privatenetwork/
-  - /docs/reference/private-networking/
+redirect_from: /docs/networking/private-networking/#flycast-private-fly-proxy-services
 ---
 
 Flycast is the Fly.io version of Anycast, but for private apps on private networks. With Flycast, requests to your private apps get routed through the Fly Proxy, rather than Machine-to-Machine using `.internal` addresses (the [private networking](/docs/networking/private-networking/) available by default on every app). Unlike `.internal` addresses, with a Flycast address, you don't need to keep Machines running for the app to be reachable.
