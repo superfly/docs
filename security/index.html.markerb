@@ -19,9 +19,9 @@ _Fly.io security practices and features._
 
 ## Tokens
 
-_Authentication tokens on Fly.io._
+_Tokens on Fly.io._
 
-- **[Deploy tokens](/docs/security/deploy-tokens/):** Create tokens to manage and deploy individual apps.
+- **[Access tokens](/docs/security/tokens/):** Learn about tokens and how to create them to manage access to organizations and apps.
 - **[OpenID Connect](/docs/security/openid-connect/):** Use OpenID Connect (OIDC) to manage access to 3rd party services.
 
 ---
