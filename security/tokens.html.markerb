@@ -35,7 +35,7 @@ Create and manage tokens using flyctl. `fly tokens create` commands have some us
 
 - **token expiry:** When you create a token, include the duration that the token is valid for with the `--expiry` option. You should specify the shortest possible duration for your use case so that you limit access by time as well as scope. Tokens are valid for 20 years (175200h0m0s) by default.
 
-For all options and commands, refer to the [`fly tokens` docs](/docs/flyctl/tokens/).
+For all options and commands, refer to the [`fly tokens` command docs](/docs/flyctl/tokens/).
 
 ### Create app-scoped tokens
 
@@ -55,7 +55,7 @@ This example creates an app-scoped deploy token called `staging one` that's vali
 fly tokens create deploy --name "staging one" --expiry 48h
 ```
 
-#### Create an app-scoped token for SSH
+#### Create an app-scoped token for SSH only
 
 Create a token to SSH into a single app. The SSH token is scoped to only allow SSH access to a specific app and nothing else. To be able to SSH to an app, this token is also allowed to connect to the org’s WireGuard network.
 
@@ -99,6 +99,8 @@ This example creates an org-scoped deploy token called `prod` that's valid for o
 fly tokens create org --name "prod" --expiry 168h
 ```
 
+#### Create an org-scoped read-only token
+
 You can further limit an org-scoped deploy token by making it read-only, which limits the token access to reading a single org and its resources. 
 
 If you don't specify a name with the --name option, then the default name is Read-only org token.
@@ -133,15 +135,15 @@ fly tokens list --scope org
 
 1. List the tokens and copy the ID of the token to revoke. Include the `--scope org` to list org-scoped tokens.
 
-```
-fly tokens list
-```
+    ```
+    fly tokens list
+    ```
 
 1. Revoke the token:
 
-```
-fly tokens revoke <token ID>
-```
+    ```
+    fly tokens revoke <token ID>
+    ```
 
 ### Manage tokens in the dashboard
 
