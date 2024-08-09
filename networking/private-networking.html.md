@@ -7,17 +7,15 @@ redirect_from:
   - /docs/reference/private-networking/
 ---
 
-Fly Apps are connected by a mesh of WireGuard tunnels using IPv6.
+Fly Apps are connected by a mesh of WireGuard tunnels using IPv6. Private networking is always available to apps by default; you don't have to do anything special to get it.
 
 Applications within the same organization are assigned special addresses (6PN addresses) tied to the organization. Those applications can talk to each other because of their 6PN addresses, but applications from other organizations can't. The Fly.io platform won't forward packets between different 6PN networks.
-
-Private networking is always available to apps by default; you don't have to do anything special to get it.
 
 You can connect apps running outside of Fly.io to your 6PN network using WireGuard. You can even connect your dev laptop to your 6PN network. To do that, you'll use flyctl, the Fly.io CLI, to generate a WireGuard configuration that has a 6PN address.
 
 ## Fly.io `.internal` DNS
 
-A Fly Machine is configured to resolve domain names with a custom DNS server from the Fly Platform. This DNS server can resolve arbitrary DNS queries, so you can look up `google.com` with it. But it’s also aware of 6PN addresses, and will let you look up 6PN addresses for other apps in your organization. Those addresses live under the custom top-level domain `.internal`. You might want to use `.internal` domains to connect your app to databases, API servers, or other apps in your 6PN network.
+A Fly Machine is configured to resolve domain names with a custom DNS server from the Fly Platform. This DNS server can resolve arbitrary DNS queries, so you can look up `google.com` with it. But it’s also aware of 6PN addresses, and will let you look up 6PN addresses for other apps in your organization. Those addresses live under the custom top-level domain `.internal`. You might want to use `.internal` domains to connect your app to databases, API servers, or other apps in your 6PN network. If you don't need the second-level domains available with `.internal` and you want to use of Fly Proxy features for your internal apps, then you should use [Flycast](/docs/networking/flycast/) instead.
 
 Underneath `.internal` there are second-level domains for every app in your Fly organization. For example, if your app is in an organization with another app called `my-app-name`, then there will be a AAAA record at `my-app-name.internal`. The AAAA record will contain *all* the 6PN addresses of the started Fly Machines that make up the `my-app-name` Fly App. Note that different libraries and tools will use multi-address AAAA records differently; most will only use the first address that is returned, but others might round-robin between entries for every request -- if you'd like to know more, consult the documentation for the library or tool you are using for DNS lookup.
 
@@ -81,7 +79,7 @@ In uncommon circumstances, such as having an unusual file system layout, or usin
 In most cases, connecting to other Machines via the `.internal` DNS is the most convenient and accessible way to connect your Fly Apps and Machines. 
 
 <div class="note icon">
-**Note:** 6PN addresses directly connect one Fly Machine with another, bypassing the Fly Proxy. To use Fly Proxy features like auto start and stop on your private network, you can use a [Flycast address](#flycast---private-fly-proxy-services).
+**Note:** 6PN addresses directly connect one Fly Machine with another, bypassing the Fly Proxy. To use Fly Proxy features like autostop/autostart on your private network, you can use [Flycast](/docs/networking/flycast/).
 </div>
 
 Most of the time, the `.internal` DNS is all you'll need for routing. If you need more complicated routing, you might be able to take advantage of the structure of 6PN addresses in your app's design. Rather than a single address, each Fly Machine is assigned a `/112` 6PN subnet, which is structured as follows:
@@ -98,57 +96,6 @@ Most of the time, the `.internal` DNS is all you'll need for routing. If you nee
 </div>
 
 The machine identifier portion of the 6PN address is not related to the 14 character Machine ID; the two are independent. A Fly Machine's current 6PN address can be found in the environment variable `FLY_PRIVATE_IP`. As noted above, a Machine's 6PN address is not static, so do not assume that a Fly Machine's Machine ID can be permanently mapped to a particular 6PN address. 6PN addresses will change when an app is moved into a new Fly Org, or when a Fly Machine is migrated onto a new host server. However, an 6PN address change can only happen on a reboot, so supplying a procedure to check for a change in 6PN address on Machine startup is sufficient to handle this event.
-
-## Flycast - Private Fly Proxy services
-
-A Flycast address is an app-wide IPv6 address that the Fly Proxy can route to privately. Use a Flycast address to direct private network traffic through the Fly Proxy to take advantage of features like geographically aware load balancing and autostart/autostop based on traffic. 
-
-Use Flycast to do the following entirely within your organization's private network:
-
-* [Autostart and/or autostop](/docs/launch/autostart-stop/) Machines based on network requests.
-* Use Fly Proxy's [geographically aware load balancing](/docs/reference/load-balancing/) for private services.
-* Connect to a service from another app that can't use DNS.
-* Connect from third-party software, like a database, that doesn't support round-robin DNS entries.
-* Access specific ports or services in your app from other Fly.io organizations.
-* Use advanced proxy features like TLS termination or PROXY protocol support.
-
-The general flow for setting up Flycast is:
-
-1. Allocate a private IPv6 address for your app on one of your Fly.io organization networks.
-2. Make sure your app binds to `0.0.0.0:port`. **Binding to `fly-local-6pn:<port>` is insufficient for Flycast.**
-3. Expose services in your app's `fly.toml` `[services]` or `[http_service]` block; **do not use `force_https` as Flycast is HTTP-only**.
-4. Deploy your app.
-5. Access the services on the private IP from the target organization network.
-
-<div class="warning icon">
-**Warning:** If you have a public IP address assigned to your app, then services in `fly.toml` are exposed to the public internet. Verify your app's IP addresses with `fly ips list`.
-</div>
-
-### Assign a Flycast address
-
-By default, the Flycast IP address is allocated on an app's parent organization network.
-
-```cmd
- fly ips allocate-v6 --private
- ```
- ```output
-VERSION	IP                	TYPE   	REGION	CREATED AT
-v6     	fdaa:0:22b7:0:1::3	private	global	just now
-```
-
-You can also use Flycast to expose an app in one Fly organization to another Fly organization by using the `--org` option when you allocate the Flycast address:
-
-```cmd
- fly ips allocate-v6 --private --org my-other-org
- ```
- ```output
-VERSION	IP                	TYPE   	REGION	CREATED AT
-v6     	fdaa:0:22b7:0:1::3	private	global	just now
-```
-
-### Flycast and Fly.io DNS
-
-Flycast addresses can also be found by using the Fly.io DNS. If an app has a Flycast address allocated to it, there will be an AAAA record at `<appname>.flycast`.
 
 ## Private Network VPN
 

@@ -10,7 +10,7 @@ To use the Fly Proxy autostart and autostop feature you need to configure servic
 
 This blueprint focuses on using autostart and autostop to control Machines based on incoming requests. But when you use Flycast for private apps you also get other Fly Proxy features like geographically aware load balancing.
 
-Learn more about [Flycast](/docs/networking/private-networking/#flycast-private-fly-proxy-services).
+Learn more about [Flycast](/docs/networking/flycast/).
 
 ## Create a new private app with a Flycast address
 
