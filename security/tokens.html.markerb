@@ -10,16 +10,16 @@ redirect_from:
 Whether you're deploying your app with GitHub Actions or running your own CD service, it's best to avoid configuring deployment infrastructure with all-powerful tokens. Our access tokens use macaroons, which can be easily attenuated to reduce access from org-wide all the way down to running specific commands on a Machine. If you want all the details, you can read about our decision to use macaroons in our [API Tokens: A Tedious Survey](https://fly.io/blog/api-tokens-a-tedious-survey/#macaroons) and [Macaroons escalated quickly](https://fly.io/blog/macaroons-escalated-quickly/) blog posts.
 
 <div class="important icon">
-**Important:** You might have seen us suggest in docs and community that you use the output of the `fly auth token` command as your API token for everything. Sometimes referred to as the "personal access token" or the "all-powerful auth token", this token is automatically created each time you log in with `fly auth login` and is used by flyctl to create, manage, configure, and deploy all the apps in any organization in your account. You don't need a token with that much scope in most cases, so we recommend using tokens created with `fly tokens deploy` or `fly tokens org` instead. It's always a good idea to use the token with the narrowest access that will work for your purpose.
+**Important:** We've previously suggested in docs and community that you should use the output of the `fly auth token` command as your API token for everything; this is no longer the best choice. Sometimes referred to as the "personal access token" or the "all-powerful auth token", this token is automatically created each time you log in with `fly auth login` and is used by flyctl to create, manage, configure, and deploy all the apps in any organization in your account. You don't need a token with that much scope in most cases, so we recommend using tokens created with `fly tokens deploy` or `fly tokens org` instead. It's always a good idea to use the token with the narrowest access that will work for your purpose.
 </div>
 
-You can create Fly.io access tokens with different pre-defined scopes using flyctl.
+You can create Fly.io access tokens with different predefined scopes using flyctl.
 
 ## App-scoped access tokens
 
 Use an app-scoped token, sometimes just called a "deploy token", to limit access to a single app. App-scoped tokens are useful for CI/CD pipelines where you need to share a token with a 3rd party.
 
-You can create a standard app-scoped deploy token, a token to SSH into an app's Machines, or token to execute commands on an app's Machines.
+You can create a standard app-scoped deploy token, a token to SSH into an app's Machines, or a token to execute commands on an app's Machines.
 
 ## Org-scoped access tokens
 
@@ -55,16 +55,6 @@ This example creates an app-scoped deploy token called `staging one` that's vali
 fly tokens create deploy --name "staging one" --expiry 48h
 ```
 
-#### Create an app-scoped token to execute commands on Machines
-
-A machine-exec token can execute a restricted set of commands on an app's Machines. You can specify commands on the command line or with the `--command` and `--command-prefix` options. If no command is provided, all commands are allowed.
-
-Create a machine exec token:
-
-```
-fly tokens create machine-exec --command "<exact command and arguments to run>"
-```
-
 #### Create an app-scoped token for SSH
 
 Create a token to SSH into a single app. The SSH token is scoped to only allow SSH access to a specific app and nothing else. To be able to SSH to an app, this token is also allowed to connect to the org’s WireGuard network.
@@ -79,6 +69,16 @@ Use the token to SSH into the app:
 
 ```
 FLY_API_TOKEN=$(cat my-app.token.ssh) flyctl ssh console -a my-app
+```
+
+#### Create an app-scoped token to execute commands on Machines
+
+A machine-exec token can execute a restricted set of commands on an app's Machines. You can specify commands on the command line or with the `--command` and `--command-prefix` options. If no command is provided, all commands are allowed.
+
+Create a machine exec token:
+
+```
+fly tokens create machine-exec --command "<exact command and arguments to run>"
 ```
 
 ### Create org-scoped access tokens
