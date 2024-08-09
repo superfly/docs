@@ -9,11 +9,13 @@ order: 10
 Networking on Fly.io.
 
 - **[Connect to an App Service](/docs/networking/app-services/):** An overview of how to connect to your app over the private WireGuard network (6PN), and how to make your app reachable from the internet.
- 
-- **[Private networking](/docs/networking/private-networking):** Learn about Fly.io's IPv6 private network (6PN), DNS on Fly Machines, and how to use Flycast for load balancing and other Fly Proxy features on a private network.
 
 - **[Public networking](/docs/networking/services):** Details about public network services on Fly.io, including allocating IP addresses, finding a Machine's outbound IP, connection handlers, and redirects.
 
+- **[Private networking](/docs/networking/private-networking):** Learn about Fly.io's IPv6 private network (6PN), DNS on Fly Machines, and how to use Flycast for load balancing and other Fly Proxy features on a private network.
+
+- **[Flycast - Private Fly Proxy Services](/docs/networking/flycast):** Route requests to private apps through Fly Proxy to take advantage of features like load balancing and autostop/autostart based on traffic.
+ 
 - **[Dynamic request routing](/docs/networking/dynamic-request-routing/):** Use the `fly-replay` response header to route requests to other apps and regions.
 
 - **[Custom domains](/docs/networking/custom-domain/):** Add a custom domain for your app and troubleshoot certificate creation.
