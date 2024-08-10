@@ -50,7 +50,7 @@ fly tokens create readonly -o my-org
 Copy the token and use it as a secret on your autoscaler app:
 
 ```cmd
-fly secrets set -o my-autoscaler --stage FAS_PROMETHEUS_TOKEN="FlyV1 ..."
+fly secrets set -a my-autoscaler --stage FAS_PROMETHEUS_TOKEN="FlyV1 ..."
 ```
 
 ### Configure your autoscaler `fly.toml`
