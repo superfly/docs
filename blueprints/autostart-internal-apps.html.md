@@ -65,7 +65,7 @@ fly ips release 2a09:8280:1::2d:1111 66.241.124.11
 
 Next steps: [Configure and deploy a private app](#configure-and-deploy-a-private-app) below.
 
-## Configure a private app
+## Configure and deploy a private app
 
 Whether you're creating a new app or making an existing app private, there are a few things you'll need to check or configure.
 
