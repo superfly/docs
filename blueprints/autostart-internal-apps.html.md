@@ -113,7 +113,7 @@ To be reachable by Fly Proxy, an app needs to listen on `0.0.0.0` and bind to th
 
 Run `fly deploy` for the configuration changes to take effect.
 
-Other apps in your organization can now reach your private app using the Flycast IP address or  [`<appname>.flycast`](/docs/networking/private-networking/#flycast-and-fly-io-dns).
+Other apps in your organization can now reach your private app using the [Flycast](/docs/networking/flycast/) IP address or  `<appname>.flycast`.
 
 ## Read more
 
