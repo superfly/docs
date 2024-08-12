@@ -310,6 +310,14 @@ The `http_service` concurrency section configures how to measure load for an app
 
 For more information about concurrency settings, see [Guidelines for concurrency settings](/docs/reference/concurrency/).
 
+### `http_service.http_options.idle_timeout`
+
+Configure an idle-timeout for connections to your app.
+ ```toml
+  [http_service.http_options]
+    idle_timeout = 600
+```
+
 ### `http_service.http_options.response.pristine`
 
 Configures Fly Proxy to not add any Fly headers to HTTP responses. The following response headers won't be added and won't be modified if returned by the app:
@@ -490,6 +498,14 @@ Instead of using multiple port definitions, you can specify a range of ports. Fo
   handlers = ["tls"]
   start_port = 8080
   end_port = 8085
+```
+
+### `services.ports.http_options.idle_timeout`
+
+Configure an idle-timeout for connections to your app.
+ ```toml
+  [services.ports.http_options]
+    idle_timeout = 600
 ```
 
 ### `services.ports.http_options.response.pristine`
