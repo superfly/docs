@@ -68,7 +68,7 @@ If you create a volume, you will be charged for it. You’re billed for volumes 
 
 ## Unified Billing
 
-Unified billing allows you to consolidate billing for multiple organizations under a single organization. This means  You'll receive a single invoice for all organizations under unified billing. This feature is useful for managing billing for multiple organizations, such as when you have multiple teams or projects.
+Unified billing allows you to consolidate billing for multiple organizations under a single organization. This means you'll receive a single invoice for all organizations under unified billing. This feature is useful for managing billing for multiple organizations, such as when you have multiple teams or projects.
 
 **Billing Organization**: a normal organization with a payment method linked to it. This organization is responsible for paying for the resources used by all organizations linked to it.
 
