@@ -15,7 +15,7 @@ date: 2024-06-17
 
 A lot of the time your applications are made to be public and shared with the world. Sometimes you need to be more careful. When you deploy your apps on Fly.io, you get a private network for your organization. This lets your applications in other continents contact each other like they were in the same room.
 
-Sometimes you need a middle ground between fully public apps and fully private apps. Flycast addresses are private but global IPv6 addresses inside your private network that go through the Fly Proxy, so you get all of the load management and Machine waking powers that you get for free with public apps.
+Sometimes you need a middle ground between fully public apps and fully private apps. [Flycast](/docs/networking/flycast/) addresses are private but global IPv6 addresses inside your private network that go through the Fly Proxy, so you get all of the load management and Machine waking powers that you get for free with public apps.
 
 This blueprint covers what Flycast is, when and why you’d want to use it, and shows you how to create an instance of Ollama that you can connect to over Flycast.
 

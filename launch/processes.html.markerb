@@ -44,7 +44,7 @@ Chances are, you only want user requests to hit one of your processes; in the ab
   ...
 ```
 
-You can define distinct services for each process that needs to accept connections from Fly Proxy (whether [publicly](/docs/networking/services/) or via [Flycast](/docs/networking/private-networking/#flycast-private-load-balancing)), by creating multiple `[[services]]` sections in `fly.toml`. 
+You can define distinct services for each process that needs to accept connections from Fly Proxy (whether [publicly](/docs/networking/services/) or via [Flycast](/docs/networking/flycast)), by creating multiple `[[services]]` sections in `fly.toml`. 
 
 <div class="important icon">
 **Important:** Make sure processes handle connections on different [external ports](/docs/reference/configuration/#services-ports). Fly Proxy doesn't know about process groups; it load-balances requests among all Machines with a service configured on the requested port.

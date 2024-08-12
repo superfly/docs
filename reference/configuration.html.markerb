@@ -416,7 +416,7 @@ You can use the same `machine_checks` section for HTTP services as for [`service
 
 ## The `services` sections
 
-The `services` sections define how Fly Proxy connects requests that hit an app's public [Anycast](/docs/networking/services/) or private [Flycast](/docs/networking/private-networking/#flycast-private-load-balancing) address to services running within Machines, and configure other Fly Proxy behavior for a service. If a service only needs HTTP and HTTPS on standard ports, you can use the less verbose [`http_service`](#the-http_service-section).
+The `services` sections define how Fly Proxy connects requests that hit an app's public [Anycast](/docs/networking/services/) or private [Flycast](/docs/networking/flycast) address to services running within Machines, and configure other Fly Proxy behavior for a service. If a service only needs HTTP and HTTPS on standard ports, you can use the less verbose [`http_service`](#the-http_service-section).
 
 A `services` section itself is a table of tables in TOML, so it is delimited with double square brackets. Tables within `[[services]]` configure additional features and behaviors for the service, and are described in subsequent sections. 
 
@@ -424,7 +424,7 @@ A `services` section itself is a table of tables in TOML, so it is delimited wit
 
 An app can have:
 
-* No `services` section (and no [`http_service` section](#the-http_service-section)): The application cannot be reached from the public internet, nor by a [Flycast](/docs/networking/private-networking/#flycast-private-load-balancing) address; this is typical of apps that talk only over [6PN private networking](/docs/networking/private-networking/) to other apps on the same network.
+* No `services` section (and no [`http_service` section](#the-http_service-section)): The application cannot be reached from the public internet, nor by a [Flycast](/docs/networking/flycast/) address; this is typical of apps that talk only over [6PN private networking](/docs/networking/private-networking/) to other apps on the same network.
 * One `services` section (or an [`http_service` section](#the-http_service-section)): One internal port mapped to one or more external ports.
 * Multiple `services` sections (or an [`http_service` section](#the-http_service-section) and one or more `services` sections): Mapping multiple internal ports to multiple external ports.
   

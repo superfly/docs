@@ -31,7 +31,7 @@ There's a bit more to the whole picture, which is why the rest of this document 
 
 All services reachable from the public internet via a Fly App's global Anycast address are routed by Fly Proxy.
 
-Fly Proxy can load-balance requests for both public and private ([Flycast](/docs/networking/private-networking/#flycast-private-load-balancing)) services among a Fly App's VMs. Routing to a service with Fly Proxy also enables other Fly Proxy features, such as [starting and stopping Machines](/docs/launch/autostart-stop/) in response to fluctuations in request traffic.
+Fly Proxy can load-balance requests for both public and private ([Flycast](/docs/networking/flycast)) services among a Fly App's VMs. Routing to a service with Fly Proxy also enables other Fly Proxy features, such as [starting and stopping Machines](/docs/launch/autostart-stop/) in response to fluctuations in request traffic.
 
 ### Get the service listening on the right address within the VM
 
@@ -48,7 +48,7 @@ Define a [service](/docs/reference/configuration/#the-http_service-section) in `
 
 #### Private (Flycast) apps
 
-Configure a service as for a public app, but in addition: [Flycast](/docs/networking/private-networking/#flycast-private-load-balancing) doesn't do HTTPS, so make sure you've defined a non-HTTPS service, and also ensure that `force_https = true` is **not** included in any HTTP service definition.
+Configure a service as for a public app, but in addition: [Flycast](/docs/networking/flycast/) doesn't do HTTPS, so make sure you've defined a non-HTTPS service, and also ensure that `force_https = true` is **not** included in any HTTP service definition.
 
 ### Allocate a public or private IP to the app
 
@@ -58,7 +58,7 @@ To have Fly Proxy route requests to an app from the public internet, provision a
 
 #### Private (Flycast) apps
 
-To have Fly Proxy load-balance among VMs on a non-public app, [allocate a _private_ (Flycast) IPv6 address](/docs/networking/private-networking/#assign-a-flycast-address) using `fly ips allocate-v6 --private`, and **remove any public IPs from the app** using `fly ips release <address>`. A Flycast IP can only be reached from within the private network it's allocated on, which must belong to the same Fly Organization as the Fly App it points to. 
+To have Fly Proxy load-balance among VMs on a non-public app, [allocate a _private_ (Flycast) IPv6 address](/docs/networking/flycast/) using `fly ips allocate-v6 --private`, and **remove any public IPs from the app** using `fly ips release <address>`. A Flycast IP can only be reached from within the private network it's allocated on, which must belong to the same Fly Organization as the Fly App it points to. 
 
 <section class="warning icon">
 If your configuration includes any services for Fly Proxy to route to, and the app has a public IP, that service is exposed to the whole internet.</section>
@@ -153,7 +153,7 @@ cURL is a useful tool for checking that a service is reachable where it should b
 
 [6] If the check within the VM succeeded, but this step fails, check everything in note [5], plus: Ensure that there's an HTTP service configured and `force_https` is not set to `true`; Flycast doesn't work over HTTPS.
 
-[7] A Flycast IP [can be allocated](/docs/networking/private-networking/#assign-a-flycast-address) on a different private network from the app it points to, if both networks belong to the same org. This lets your apps reach your service in a different 6PN, if the service is configured to be available over Flycast.
+[7] A Flycast IP [can be allocated](/docs/networking/flycast) on a different private network from the app it points to, if both networks belong to the same org. This lets your apps reach your service in a different 6PN, if the service is configured to be available over Flycast.
 
 [8] If this fails (i.e. you don't get the expected response from the service), then either (a) the service isn't functioning the way you expect, (b) it's not bound to the port you pointed cURL at, or (&#99;) it's not bound to its 6PN address, and won't be reachable via the private WireGuard network (including at `.internal` addresses).
 
