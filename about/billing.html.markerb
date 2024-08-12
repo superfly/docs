@@ -82,8 +82,9 @@ Unified billing allows you to consolidate billing for multiple organizations und
 
 ### How to use Unified Billing
 
-- A **Billing Organization** is just a normal organization on a plan. You can use an existing organization if you have one or create one from the [new organization page](/organizations/new).
-- A **Linked Organization** can be created from the [new organization page](/organizations/new).
+A **Linked Organization** can be created from the [new organization page](/organizations/new). When creating a new organization, you can choose an existing Organization to link it to.
+
+You can create multiple Linked Organizations for a single Billing Organization.
 
 ### Some things to consider
 
