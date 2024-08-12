@@ -310,6 +310,14 @@ The `http_service` concurrency section configures how to measure load for an app
 
 For more information about concurrency settings, see [Guidelines for concurrency settings](/docs/reference/concurrency/).
 
+### `http_service.http_options.idle_timeout`
+
+Configure an idle-timeout for connections to your app.
+ ```toml
+  [http_service.http_options]
+    idle_timeout = 600
+```
+
 ### `http_service.http_options.response.pristine`
 
 Configures Fly Proxy to not add any Fly headers to HTTP responses. The following response headers won't be added and won't be modified if returned by the app:
@@ -492,6 +500,14 @@ Instead of using multiple port definitions, you can specify a range of ports. Fo
   end_port = 8085
 ```
 
+### `services.ports.http_options.idle_timeout`
+
+Configure an idle-timeout for connections to your app.
+ ```toml
+  [services.ports.http_options]
+    idle_timeout = 600
+```
+
 ### `services.ports.http_options.response.pristine`
 
 Configures Fly Proxy to not add any Fly headers to HTTP responses. The following response headers won't be added and won't be modified if returned by the app:
@@ -665,7 +681,7 @@ This example uses the `curl` image to run a test. It checks that the Machine is 
 * `kill_signal`: The signal to send to the test process if it runs too long. Defaults to the signal of the image, if a custom image is set.
 * `kill_timeout`: The time to wait before sending the kill signal. Defaults to the timeout of the image, if a custom image is set.
 
-Machine checks are especially useful for canary deploys. `flyctl` will spawn a new Machine, ensure that all the functionality you'd expect is working, and then deploy the rest of the Machines in your app.
+Machine checks are especially useful for canary deploys. `flyctl` will spawn a new Machine, ensure all machine capabilities are functional, and then deploy the rest of the Machines in your app.
 
 ## The `mounts` section
 
