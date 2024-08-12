@@ -14,16 +14,10 @@ Learn more about [Flycast](/docs/networking/flycast/).
 
 ## Create a new private app with a Flycast address
 
-When you run `fly launch` to create a new app, it automatically assigns your app a public IPv6 address and a shared public IPv4 address. If you know your app won't need to be reachable from the Internet, you can inform Fly Launch with the following option:
+When you run `fly launch` to create a new app, it automatically assigns your app a public IPv6 address and a shared public IPv4 address. If you know your app won't need to be reachable from the Internet, you can inform Fly Launch to assign a Flycast private IPv6 address instead:
 
 ```
-fly launch --no-public-ips
-```
-
-Then allocate a Flycast address to your app:
-
-```
-fly ips allocate-v6 --private
+fly launch --flycast
 ```
 
 Next steps: [Configure and deploy a private app](#configure-and-deploy-a-private-app).
@@ -71,7 +65,7 @@ fly ips release 2a09:8280:1::2d:1111 66.241.124.11
 
 Next steps: [Configure and deploy a private app](#configure-and-deploy-a-private-app) below.
 
-## Configure and deploy a private app
+## Configure a private app
 
 Whether you're creating a new app or making an existing app private, there are a few things you'll need to check or configure.
 
