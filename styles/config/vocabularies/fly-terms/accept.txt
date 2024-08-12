@@ -7,6 +7,7 @@ automagically
 autosav\w+
 (?i)autostart\w+
 (?i)autostop\w+
+(?i)autosuspend\w+
 backhaul
 bluegreen
 bool
@@ -25,8 +26,10 @@ Debian
 dev
 (?i)Dockerfile
 Dyno
+enum
 (?i)env
 Escript
+Expr
 failover
 Fastify
 Fly.io
@@ -43,6 +46,7 @@ Hallpass
 HAProxy
 Hashicorp
 Hasura
+hellofly
 heredoc
 hostname
 Hotwire
@@ -52,17 +56,24 @@ incentivizes?\b
 initializer
 IPs
 IPSec
+ISPs?\b
+json
+JSON
 kubeconfig
 kubectl
 Laravel
 libs
 LiteFS
+Litestream
 Livebook
 Logtail
+lsvd
+LSVD
 microVMs?\b
 middleware
 Midjourney
 Minecraft
+MTUs?\b
 nameservers?\b
 namespaces?\b
 navbar
@@ -84,6 +95,7 @@ PCIe
 performant
 Phusion
 plaintext
+pooler
 PostgreSQL
 (?i)preauthorizations?\b
 precompile
@@ -178,4 +190,6 @@ vin
 waw
 
 Ashburn
+Rio de Janeiro
+São Paulo
 Secaucus
