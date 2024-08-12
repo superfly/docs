@@ -28,7 +28,7 @@ Deploying a FastAPI app on Fly.io is... well it's fast! You can be up and runnin
 Then we have to add the FastAPI dependency:
 
 ```cmd
-poetry add fastapi
+poetry add "fastapi[standard]"
 ```
 
 Now, let's create a simple FastAPI app in `main.py`:
