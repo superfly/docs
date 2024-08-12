@@ -62,10 +62,6 @@ You can use Flycast to expose an app in one Fly.io organization to another Fly.i
 ```cmd
  fly ips allocate-v6 --private --org my-other-org
  ```
- ```output
-VERSION	IP                	TYPE   	REGION	CREATED AT
-v6     	fdaa:0:22b7:0:1::3	private	global	just now
-```
 
 ### Access an app from another private network
 
@@ -73,10 +69,6 @@ You can also use Flycast to expose an app on one private network to another priv
 
 ```cmd
 fly ips allocate-v6 --private --network custom-network-name
-```
-```output
-VERSION IP                  TYPE    REGION  CREATED AT
-v6      fdaa:0:22b7:0:1::3  private global  just now
 ```
 
 ## Flycast and Fly.io DNS
