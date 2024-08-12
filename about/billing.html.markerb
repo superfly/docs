@@ -72,7 +72,7 @@ Unified billing allows you to consolidate billing for multiple organizations und
 
 **Billing Organization**: The organization that is responsible for paying for the resources used by all organizations linked to it. Any organization in good standing with an attached payment method can be a Billing Organization.
 
-**Linked Organization**: an organization that has its billing linked to a another organization. It otherwise functions a normal organization
+**Linked Organization**: An organization that is linked to another another organization for billing purposes. It otherwise functions as a normal organization.
 
 ### How Unified Billing Works
 
