@@ -85,7 +85,7 @@ Your Kafka cluster my-cluster was deleted
 
 Once provisioned, the cluster primary region cannot be changed.
 
-Your Upstash Kafka is accessible only via a [private IPv6 address](/docs/networking/private-networking/#flycast-private-load-balancing) restricted to your Fly.io organization's network.
+Your Upstash Kafka is accessible only via a [private IPv6 address](/docs/networking/flycast/) restricted to your Fly.io organization's network.
 
 **To ensure low latency connections, provision your cluster in the same region as your application.**
 
