@@ -78,7 +78,6 @@ Unified billing allows you to consolidate billing for multiple organizations und
 
 - You'll receive a single invoice for all organizations under unified billing
 - Billing Organization must have a payment method on file (credit card or Stripe Link)
-- Linked Organizations inherit the plan of their Billing Organization
 - Linked Organizations share credits with their Billing Organization
 
 ### How to use Unified Billing
