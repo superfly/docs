@@ -344,7 +344,7 @@ Update paratemeters on the volume.
   <div data-exclude-render>
     <%= render(CodeToggleComponent.new(badge: 'PUT', title: '/v1/apps/{app_name}/volumes/{volume_id}')) do |component| %>
       <% component.with_curl do %>
-      curl -i -X POST \\
+      curl -i -X PUT \\
       -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
       "${FLY_API_HOSTNAME}/v1/apps/my-app-name/volumes/vol_6r7ye90k98ynwk1r" \\
       -d '{
