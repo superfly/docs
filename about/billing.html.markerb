@@ -91,7 +91,7 @@ You can create multiple Linked Organizations for a single Billing Organization.
 - Each organization has its own [private network](/docs/networking/private-networking/). Organizations are isolated from each other, which might
 be advantageous from a security standpoint.
 - Detaching a Linked Organization from its Billing Organization is not possible at this time. Instead we suggest creating a new organization and moving resources there.
-- Linking an existing Organization to a Billing Organization is not possible at this time. Instead, create a new Linked Organization and move resources there.
+- Linking an existing Organization to a Billing Organization is not possible at this time. Instead, create a new Linked Organization and [move resources](/docs/apps/move-app-org/) there.
 
 ---
 
