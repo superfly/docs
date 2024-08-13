@@ -51,7 +51,7 @@ Fly Proxy can start and stop existing Machines based on incoming requests, so th
 
 Fly Proxy uses the same concurrency settings for autostart/autostop as for load balancing to determine when Machines have excess capacity and can be stopped.
 
-Learn more about [how autostart/autostop works](/docs/reference/fly-proxy-autostop-autostart/) and [how to configure it](/docs/apps/autoststop-autostart/).
+Learn more about [how autostart/autostop works](/docs/reference/fly-proxy-autostop-autostart/) and [how to configure it](/docs/apps/autostop-autostart/).
 
 ## Dynamic request routing with `fly-replay`
 

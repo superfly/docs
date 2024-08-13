@@ -13,11 +13,11 @@ Learn more about exactly how [Fly Proxy autostops and autostarts Machines](/docs
 
 ## When to use autostop/autostart
 
-You can reduce resource usage and costs by using autostop/autostart to manage your Fly Machines as demand decreases and increases. You'll never have to run excess Machines to handle peak load; you'll only run, and get charged for, the number of Machines that you need. Autostart/autostop works well for apps with highly variable workloads, for smaller apps with low or sporadic traffic, and for most apps that aren't accepting requests continuously. If you need to, you can keep one or more Machines running in your primary region.
+You can reduce resource usage and costs by using autostop/autostart to manage your Fly Machines as demand decreases and increases. You'll never have to run excess Machines to handle peak load; you'll only run, and get charged for, the number of Machines that you need. Autostart/autostop works well for apps with highly variable workloads, for smaller apps with low or sporadic traffic, and for most apps that aren't receiving requests continuously. If you need to, you can keep one or more Machines running in your primary region.
 
 ## Configure autostop/autostart
 
-The autostop/autostart settings apply per service in an app's `fly.toml` file. See the [[[services]]](/docs/reference/configuration/#the-services-sections) or [[http_service]](/docs/reference/configuration/#the-http_service-section) docs for details about services.
+The autostop/autostart settings apply per service in an app's `fly.toml` file. See the [[[services]]](/docs/reference/configuration/#the-services-sections) or [[http_service]](/docs/reference/configuration/#the-http_service-section) docs for details about service configuration.
 
 Autostop/autostart settings:
 
@@ -40,7 +40,7 @@ Example configuration:
 
 In the preceding example, Fly Proxy will automatically stop Machines when the app has excess capacity and start them again when needed based on traffic to the app. The app will eventually scale down to one running Machine in the primary region if there's no traffic.
 
-Concurrency limits configured for services in the `fly.toml` file also affect [how automatic starts and stops work](#how-it-works).
+Concurrency limits configured for services in the `fly.toml` file also affect [how autostop/autostart works](/docs/reference/fly-proxy-autostop-autostart/).
 
 ## Recommendations for autostop/autostart configuration
 
