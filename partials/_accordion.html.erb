@@ -1,0 +1,29 @@
+<% if nav.is_a?(Hash) %>
+  <% nav[:open] = section_open?(nav) %>
+  <dl class="accordion<%= nav[:open] ? " open" : "" %>">
+    <dt class="accordion-header">
+      <% title = nav[:title] || nav[:text] %>
+      <% if nav[:path] %>
+        <%= nav_link(nav[:path], class: "title-link") do %>
+          <span class="truncate pointer-events-none"><%= title %></span>
+        <% end %>
+      <% else %>
+        <span class="accordion-title"><%= title %></span>
+      <% end %>
+      <button class="accordion-trigger" aria-expanded="<%= nav[:open] %>">
+        <span class="sr-only">Toggle <%= title %> section</span>
+      </button>
+    </dt>
+    <dd class="accordion-target">
+      <ul class="accordion-content" role="region" aria-label="<%= title %>">
+        <% if nav[:links].is_a?(Array) %>
+          <% nav[:links].each do |page| %>
+            <li><%= render_accordion_item(page) %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </dd>
+  </dl>
+<% else %>
+  <%= render_accordion_item(nav) %>
+<% end %>

@@ -1,53 +1,43 @@
-<% 
+<%
   def section_open?(section)
-    (!section[:path].nil? && current_page?(section[:path])) || (!section[:open].nil? && section[:open]) || section[:links].any? { |page| current_page?(page[:path]) }
+    return false unless section.is_a?(Hash)
+    current_path = current_page.url
+    (!section[:path].nil? && current_page?(section[:path])) ||
+      (!section[:open].nil? && section[:open]) ||
+      (section[:links] && section[:links].any? do |page|
+        if page.is_a?(Hash)
+          current_page?(page[:path]) || (page[:links] && page[:links].any? { |subpage| current_page?(subpage[:path]) })
+        else
+          current_page?(page[:path])
+        end
+      end)
   end
 
-  nav.each { |nav| nav[:open] = section_open?(nav) unless nav[:title].nil? }
-  
-  nav.each do |nav| 
+  def render_accordion_item(item)
+    case item
+    when Hash
+      if item[:links].is_a?(Array) && item[:links].any?
+        render 'docs/partials/accordion', nav: item
+      elsif item[:title] || item[:text]
+        text = item[:title] || item[:text]
+        path = item[:path] || '#'
+        nav_link(text, path, class: item[:title] ? "title-link" : nil)
+      end
+    when String, Symbol
+      nav_link(item.to_s, "#", class: "title-link")
+    else
+      Rails.logger.warn "Unexpected item type in accordion: #{item.class}"
+      ""
+    end
+  end
 %>
-  <% if nav[:text] %>
-    <%= nav_link nav[:text], nav[:path], class: "#{nav[:type]}-link" %>
-  <% elsif nav[:accordion] == false %>
-    <dl>
-      <dt>
-        <%= nav_link nav[:title], nav[:path], class: "index-link" %>
-      </dt>
-      <dd>
-        <ul>
-          <% nav[:links].each do |page| %>
-            <li><%= nav_link page[:text], page[:path], class: "subpage-link" %></li>
-          <% end %>
-        </ul>
-      </dd>
-    </dl>
-  <% else %>
-    <dl class="accordion<%= nav[:open] ? " open" : "" %>">
-      <dt class="accordion-header">
-        <% if nav[:title] && nav[:path] %>
-          <%= nav_link nav[:title], nav[:path], class: "title-link" %>
-          <button class="accordion-trigger" aria-expanded="<%= nav[:open] %>">
-            <span class="sr-only">Toggle <%= nav[:title] %> section</span>
-          </button>
-        <% else %>
-          <span class="accordion-title"><%= nav[:title] %></span>
-          <button class="accordion-trigger" aria-expanded="<%= nav[:open] %>">
-            <span class="sr-only">Toggle <%= nav[:title] %> section</span>
-          </button>
-        <% end %>
-      </dt>
-      <dd class="accordion-target">
-        <ul class="accordion-content" role="region" aria-label="<%= nav[:title] %>">
-          <% nav[:links].each do |page| %>
-            <% if page[:type] == "flyctl" %>
-              <li><%= flyctl_nav_link page[:text], page[:path] %></li>
-            <% else %>
-              <li><%= nav_link page[:text], page[:path] %></li>
-            <% end %>
-          <% end %>
-        </ul>
-      </dd>
-    </dl>
+
+<% if nav.is_a?(Array) %>
+  <% nav.each do |item| %>
+    <%= render_accordion_item(item) %>
   <% end %>
+<% elsif nav.is_a?(Hash) %>
+  <%= render_accordion_item(nav) %>
+<% else %>
+  <% Rails.logger.warn "Unexpected nav type in accordion: #{nav.class}" %>
 <% end %>
