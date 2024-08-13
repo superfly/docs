@@ -7,7 +7,7 @@ fly apps [command] [flags]
 
 ## Available Commands
 * [create](/docs/flyctl/apps-create/)	 - Create a new application.
-* [destroy](/docs/flyctl/apps-destroy/)	 - Permanently destroy one or more appa.
+* [destroy](/docs/flyctl/apps-destroy/)	 - Permanently destroy one or more apps.
 * [errors](/docs/flyctl/apps-errors/)	 - View application errors on Sentry.io
 * [list](/docs/flyctl/apps-list/)	 - List applications.
 * [move](/docs/flyctl/apps-move/)	 - Move an app to another organization.

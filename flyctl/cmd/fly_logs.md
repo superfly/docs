@@ -16,13 +16,13 @@ fly logs [flags]
 ## Options
 
 ~~~
-  -a, --app string        Application name
-  -c, --config string     Path to application configuration file
-  -h, --help              help for logs
-  -i, --instance string   Filter by instance ID
-  -j, --json              JSON output
-  -n, --no-tail           Do not continually stream logs
-  -r, --region string     The target region (see 'flyctl platform regions')
+  -a, --app string       Application name
+  -c, --config string    Path to application configuration file
+  -h, --help             help for logs
+  -j, --json             JSON output
+      --machine string   Filter by machine ID
+  -n, --no-tail          Do not continually stream logs
+  -r, --region string    The target region (see 'flyctl platform regions')
 ~~~
 
 ## Global Options

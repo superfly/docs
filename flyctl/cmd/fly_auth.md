@@ -13,7 +13,7 @@ fly auth [command] [flags]
 * [login](/docs/flyctl/auth-login/)	 - Log in a user
 * [logout](/docs/flyctl/auth-logout/)	 - Logs out the currently logged in user
 * [signup](/docs/flyctl/auth-signup/)	 - Create a new fly account
-* [token](/docs/flyctl/auth-token/)	 - Show the current auth token
+* [token](/docs/flyctl/auth-token/)	 - Show the current auth token in use by flyctl.
 * [whoami](/docs/flyctl/auth-whoami/)	 - Displays the users email address/service identity currently
 authenticated and in use.
 
