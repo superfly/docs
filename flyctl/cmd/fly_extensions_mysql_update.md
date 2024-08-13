@@ -1,9 +1,9 @@
-Provision a MySQL database
+Update an existing MySQL database
 
 
 ## Usage
 ~~~
-fly mysql create [flags]
+fly extensions mysql update <database_name> [flags]
 ~~~
 
 ## Options
@@ -13,11 +13,9 @@ fly mysql create [flags]
   -c, --config string   Path to application configuration file
       --cpu int         The number of CPUs assigned to each cluster member
       --disk int        Disk size (in GB) assigned to each cluster member
-  -h, --help            help for create
+  -h, --help            help for update
       --memory int      Memory (in GB) assigned to each cluster member
-  -n, --name string     The name of your database
   -o, --org string      The target Fly.io organization
-  -r, --region string   The target region (see 'flyctl platform regions')
       --size int        The number of members in your cluster
   -y, --yes             Accept all confirmations
 ~~~
@@ -32,5 +30,5 @@ fly mysql create [flags]
 
 ## See Also
 
-* [fly mysql](/docs/flyctl/mysql/)	 - Provision and manage MySQL database clusters
+* [fly extensions mysql](/docs/flyctl/extensions-mysql/)	 - Provision and manage MySQL database clusters
 

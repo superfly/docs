@@ -24,5 +24,5 @@ fly mysql destroy [name] [flags]
 
 ## See Also
 
-* [fly mysql](/docs/flyctl/mysql/)	 - Provision and manage MySQL databases
+* [fly mysql](/docs/flyctl/mysql/)	 - Provision and manage MySQL database clusters
 

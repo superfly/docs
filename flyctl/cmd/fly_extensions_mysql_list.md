@@ -23,5 +23,5 @@ fly extensions mysql list [flags]
 
 ## See Also
 
-* [fly extensions mysql](/docs/flyctl/extensions-mysql/)	 - Provision and manage MySQL databases
+* [fly extensions mysql](/docs/flyctl/extensions-mysql/)	 - Provision and manage MySQL database clusters
 

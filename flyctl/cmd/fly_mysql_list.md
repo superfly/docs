@@ -23,5 +23,5 @@ fly mysql list [flags]
 
 ## See Also
 
-* [fly mysql](/docs/flyctl/mysql/)	 - Provision and manage MySQL databases
+* [fly mysql](/docs/flyctl/mysql/)	 - Provision and manage MySQL database clusters
 

@@ -28,7 +28,7 @@ fly [flags]
 * [litefs-cloud](/docs/flyctl/litefs-cloud/)	 - LiteFS Cloud management commands
 * [logs](/docs/flyctl/logs/)	 - View app logs
 * [machine](/docs/flyctl/machine/)	 - Manage Fly Machines.
-* [mysql](/docs/flyctl/mysql/)	 - Provision and manage MySQL databases
+* [mysql](/docs/flyctl/mysql/)	 - Provision and manage MySQL database clusters
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 * [ping](/docs/flyctl/ping/)	 - Test connectivity with ICMP ping messages
 * [platform](/docs/flyctl/platform/)	 - Fly platform information

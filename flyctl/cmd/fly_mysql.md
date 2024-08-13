@@ -1,4 +1,4 @@
-Provision and manage MySQL databases
+Provision and manage MySQL database clusters
 
 
 ## Usage
@@ -11,6 +11,7 @@ fly mysql [command] [flags]
 * [destroy](/docs/flyctl/mysql-destroy/)	 - Permanently destroy a MySQL database
 * [list](/docs/flyctl/mysql-list/)	 - List your MySQL databases
 * [status](/docs/flyctl/mysql-status/)	 - Show details about a MySQL database
+* [update](/docs/flyctl/mysql-update/)	 - Update an existing MySQL database
 
 ## Options
 
