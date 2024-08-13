@@ -1,5 +1,5 @@
 ---
-title: Tips to fine-tune and (not) benchmark your app on Fly.io
+title: Tips to fine-tune your app on Fly.io
 layout: docs
 nav: apps
 redirect_from: /docs/reference/fine-tune-apps/

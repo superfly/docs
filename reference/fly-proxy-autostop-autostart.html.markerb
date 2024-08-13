@@ -1,0 +1,53 @@
+---
+title: Fly Proxy autostop/autostart
+layout: docs
+nav: firecracker
+---
+
+<figure>
+  <img src="/static/images/docs-stop-start.webp" alt="">
+</figure>
+
+For Fly Apps with a service configured, [Fly Proxy](/docs/reference/fly-proxy) can automatically stop (or suspend) and start existing Machines based on incoming requests, so that your app can meet demand without keeping extra Machines running. Fly Machines are fast to start and stop, and you don't pay for their CPU and RAM when they're in a `stopped` or `suspended` state. You can also set a minimum number of machines to keep running at all times in your primary region.
+
+You can also use the autostop/autostart with apps that [shut down automatically when idle](#stop-a-machine-by-terminating-its-main-process). The Fly Proxy can still restart your app when there's traffic.
+
+Learn how to [configure autostop/autostart](/docs/launch/autostop-autostart/).
+
+## How Fly Proxy autostops and autostarts Machines
+
+The Fly Proxy runs a process to determine whether an app has excess capacity every few minutes.
+
+<div class="callout">
+The autostop/autostart feature only works on existing Machines and never creates or destroys Machines for you. The maximum number of running Machines is the number of Machines you've created for your app using `fly scale count` or `fly machine clone`. Learn more about [scaling the number of Machines](/docs/apps/scale-count/). 
+</div>
+
+### Fly Proxy process to stop or suspend Machines
+
+When `auto_stop_machines` is set to `"stop"` or `"suspend"` in your `fly.toml`, the proxy looks at Machines running in a single region and uses the concurrency [`soft_limit` setting](/docs/reference/configuration/#the-http_service-section) for each Machine to determine if there's excess capacity. If the proxy decides there's excess capacity, it stops or suspends exactly one Machine. The proxy repeats this process every few minutes, stopping or suspending only one Machine per region, if needed, each time.
+
+If you have the [`kill_signal` and `kill_timeout` options](/docs/reference/configuration/#runtime-options) configured in your `fly.toml` file, then Fly Proxy uses those settings when it stops a Machine.
+
+Fly Proxy determines excess capacity per region as follows:
+
+* If there's more than one Machine in the region:
+  * the proxy determines how many running Machines are over their `soft_limit` setting and then calculates excess capacity: `excess capacity = num of machines - (num machines over soft limit + 1)`
+  * if excess capacity is 1 or greater, then the proxy stops or suspends one Machine
+* If there's only one Machine in the region:
+  * the proxy checks if the Machine has any traffic
+  * if the Machine has no traffic (a load of 0), then the proxy stops or suspends the Machine
+
+### Fly Proxy process to start Machines
+
+When `auto_start_machines = true` in your `fly.toml`, the Fly Proxy restarts a Machine in the nearest region when required.
+
+Fly Proxy determines when to start a Machine as follows:
+
+* The proxy waits for a request to your app.
+* If all the running Machines are above their `soft_limit` setting, then the proxy starts a stopped or suspended Machine in the nearest region (if there are any stopped or suspended Machines).
+* The proxy routes the request to the newly started Machine.
+
+## Related topics
+
+- [Fly Proxy features](/docs/reference/fly-proxy)
+- [Configure autostop/autostart for Fly Launch apps](/docs/launch/autostop-autostart/)
