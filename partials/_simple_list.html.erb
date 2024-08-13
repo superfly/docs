@@ -1,0 +1,12 @@
+<dl>
+  <dt>
+    <%= nav_link nav[:title], nav[:path], class: "index-link" %>
+  </dt>
+  <dd>
+    <ul>
+      <% nav[:links].each do |page| %>
+        <li><%= render_accordion_item(page) %></li>
+      <% end %>
+    </ul>
+  </dd>
+</dl>
