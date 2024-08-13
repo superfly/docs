@@ -18,10 +18,10 @@
     when Hash
       if item[:links].is_a?(Array) && item[:links].any?
         render 'docs/partials/accordion', nav: item
-      elsif item[:text] || item[:title]
-        text = item[:text] || item[:title]
+      elsif item[:title] || item[:text]
+        text = item[:title] || item[:text]
         path = item[:path] || '#'
-        nav_link(text, path, class: "#{item[:type] || 'title'}-link")
+        nav_link(text, path, class: item[:title] ? "title-link" : nil)
       end
     when String, Symbol
       nav_link(item.to_s, "#", class: "title-link")
