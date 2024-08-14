@@ -12,7 +12,6 @@ fly mysql update <database_name> [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
       --cpu int         The number of CPUs assigned to each cluster member
-      --disk int        Disk size (in GB) assigned to each cluster member
   -h, --help            help for update
       --memory int      Memory (in GB) assigned to each cluster member
   -o, --org string      The target Fly.io organization
