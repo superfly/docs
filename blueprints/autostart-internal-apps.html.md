@@ -6,7 +6,7 @@ nav: firecracker
 
 You have a private, or internal, app that communicates only with other apps on your [private network](/docs/networking/private-networking/). This private app might be a database, authentication server, or any other "backend" app that you don't want exposed to the public Internet. You want the app's Machines to stop when they're not serving requests from your other apps, and start again automatically when needed.
 
-To use the Fly Proxy autostart and autostop feature you need to configure services in `fly.toml`, like you would for a public app. But instead of using a public Anycast address, you assign a Flycast address to expose those services only on your private network.
+To use Fly Proxy autostop/autostart you need to configure services in `fly.toml`, like you would for a public app. But instead of using a public Anycast address, you assign a Flycast address to expose those services only on your private network.
 
 This blueprint focuses on using autostart and autostop to control Machines based on incoming requests. But when you use Flycast for private apps you also get other Fly Proxy features like geographically aware load balancing.
 
@@ -97,7 +97,7 @@ Here's an example `fly.toml` snippet:
 **Important:** Set `force_https = false` since Flycast only works over HTTP.  HTTPS isn't necessary because all your private network traffic goes through encrypted WireGuard tunnels.
 </div>
 
-Learn more about [Fly Launch configuration](/docs/reference/configuration/) and the [autostart and autostop](/docs/apps/autostart-stop/) feature.
+Learn more about [Fly Launch configuration](/docs/reference/configuration/) and [Fly Proxy autostop/autostart](/docs/launch/autostop-autostart/).
 
 ### Make sure your app binds to `0.0.0.0:<port>`
 

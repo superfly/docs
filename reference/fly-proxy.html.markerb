@@ -16,7 +16,7 @@ A summary of things Fly Proxy does:
   - terminate TLS by default for most public apps
   - terminate TLS for Postgres connections
   - write PROXY protocol headers on TCP connections
-- autostart/autostop Machines based on traffic to your app
+- autostop/autostart Machines based on traffic to your app
 - dynamic request routing with the `fly-replay` response header
 
 ## How Fly Proxy routes incoming public requests
@@ -49,9 +49,9 @@ Learn more about [connection handlers](/docs/networking/services/#connection-han
 
 Fly Proxy can start and stop existing Machines based on incoming requests, so that your app can accommodate bursts in demand without keeping extra Machines running constantly.
 
-Fly Proxy uses the same concurrency settings for autostart/autostop as for load balancing to determine when Machines have excess capacity and can be stopped.
+Fly Proxy uses the same concurrency settings for autostop/autostart as for load balancing to determine when Machines have excess capacity and can be stopped.
 
-Learn more about [how autostart/autostop works and how to configure it](/docs/apps/autostart-stop/). 
+Learn more about [how autostop/autostart works](/docs/reference/fly-proxy-autostop-autostart/) and [how to configure it](/docs/apps/autostop-autostart/).
 
 ## Dynamic request routing with `fly-replay`
 

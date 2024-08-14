@@ -5,7 +5,7 @@ nav: apps
 redirect_from: /docs/apps/autoscale-by-metric/
 ---
 
-The metrics-based autoscaler scales an app's Machines based on any metric, such as pending work items or queue depth. Scaling on metrics other than requests or connections is useful for apps, like background workers, that aren't running web services. Apps with services that need to scale based on HTTP requests can use the built-in Fly Proxy [autostop/autostart feature](/docs/launch/autostart-stop/) for Machines.
+The metrics-based autoscaler scales an app's Machines based on any metric, such as pending work items or queue depth. Scaling on metrics other than requests or connections is useful for apps, like background workers, that aren't running web services. Apps with services that need to scale based on HTTP requests can use the built-in Fly Proxy [autostop/autostart feature](/docs/launch/autostop-autostart/) for Machines.
 
 The autoscaler works by collecting metrics from different sources, such as Prometheus or Temporal, and computing the number of required Machines based on those metrics. This reconciliation process happens on a loop every 15 seconds by default. The autoscaler uses the [Expr language](https://expr-lang.org/+external) for defining target Machine counts, which gives a rich set of built-in arithmetic functions.
 

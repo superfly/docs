@@ -8,7 +8,7 @@ Flycast provides network addressing and routing for private apps on Fly.io priva
 
 Use Flycast within your organization's private network to:
 
-* Have [Fly Proxy autostop/autostart](/docs/launch/autostart-stop/) Machines based on network requests.
+* Have [Fly Proxy autostop/autostart](/docs/launch/autostop-autostart/) Machines based on network requests.
 * Get Fly Proxy's [geographically aware load balancing](/docs/reference/load-balancing/) for private services.
 * Connect to a service from another app that can't use DNS.
 * Connect from third-party software, like a database, that doesn't support round-robin DNS entries.
@@ -40,7 +40,7 @@ To use Flycast for your app, you need:
 
 ## Allocate a Flycast address
 
-A Flycast address is an app-wide private IPv6 address that the Fly Proxy can route to over the private network. By default, the Flycast IP address is allocated on an app's default organization network.
+A Flycast address is an app-wide private IPv6 address that Fly Proxy can route to over the private network. By default, the Flycast IP address is allocated on an app's default organization network.
 
 There are a few ways to add a Flycast address to an existing app.
 

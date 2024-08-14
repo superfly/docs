@@ -46,7 +46,7 @@ This document lists important topics to consider when you set up a production en
 
 - **Use multiple Machines for resiliency:** Make your app resilient to single-host failures with multiple Machines that stay stopped until you need them. See [Blueprint: Resilient apps use multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/).
 
-- **Set up autoscaling by load or metric:** Use Fly Proxy autostart/autostop or the metrics-based autoscaler app. See [Autoscaling](/docs/reference/autoscaling/).
+- **Set up autoscaling by load or metric:** Use Fly Proxy autostop/autostart or the metrics-based autoscaler app. See [Autoscaling](/docs/reference/autoscaling/).
 
 ## CI/CD
 

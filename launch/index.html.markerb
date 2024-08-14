@@ -33,7 +33,7 @@ Learn how to work with Fly Launch:
 
 - [Scale Machine CPU and RAM](/docs/launch/scale-machine/)
 - [Scale the number of Machines in an app](/docs/launch/scale-count/)
-- [Auto start and stop Machines](/docs/launch/autostart-stop/)
+- [Autostop/autostart Machines](/docs/launch/autostop-autostart/)
 - [Autoscale Machines based on metrics](/docs/launch/autoscale-by-metric/)
 
 **Custom deployments**

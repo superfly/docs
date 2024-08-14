@@ -86,7 +86,7 @@ Machine learning tends to involve large quantities of data. We're working with a
 - The root file system of a Fly Machine is ephemeral -- it's reset from its Docker image on every restart. It's also limited to 50GB on GPU-enabled Machines.
 - Fly Volumes are limited to 500GB, and are attached to a physical server. The Machine must run on the same hardware as the volume it mounts.
 
-Unless you've got a constant workload, you'll likely want to shut down GPU Machines when they're not needed&mdash;you can do this manually with `fly machine stop`, [have the main process exit](/docs/launch/autostart-stop/#stop-a-machine-by-terminating-its-main-process) when idle, or use the Fly Proxy [autostop and autostart](/docs/launch/autostart-stop/#how-it-works) features&mdash;to save money. Saving data on a persistent Fly Volume means you don't have to download large amounts of data, or reconstitute a large Docker image into a rootfs, whenever the Machine restarts. You'll probably want to store models, at least, on a volume.
+Unless you've got a constant workload, you'll likely want to shut down GPU Machines when they're not needed&mdash;you can do this manually with `fly machine stop`, [have the main process exit](/docs/launch/autostop-autostart/#apps-that-shut-down-when-idle) when idle, or use the Fly Proxy [autostop and autostart](/docs/launch/autostop-autostart/) features&mdash;to save money. Saving data on a persistent Fly Volume means you don't have to download large amounts of data, or reconstitute a large Docker image into a rootfs, whenever the Machine restarts. You'll probably want to store models, at least, on a volume.
 
 ## Using swap
 
