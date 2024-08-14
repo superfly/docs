@@ -8,9 +8,9 @@ nav: firecracker
   <img src="/static/images/docs-stop-start.webp" alt="">
 </figure>
 
-Fly Proxy autostop/autostart automatically stops (or suspends) and starts existing Machines based on incoming requests to your app. You can scale your app for peak loads, and save on resource costs by only running those Machines when needed, since you [don't pay for Machine CPU and RAM](/docs/about/pricing/#stopped-fly-machines) when they're in a `stopped` or `suspended` state. You can set a minimum number of machines to keep running at all times in your primary region.
+Fly Proxy autostop/autostart automatically stops (or suspends) and starts existing Machines based on incoming requests to your app. You can scale your app for peak loads, and save on resource costs by running those Machines only when needed, since you [don't pay for Machine CPU and RAM](/docs/about/pricing/#stopped-fly-machines) when they're in a `stopped` or `suspended` state. You can set a minimum number of machines to keep running at all times in your primary region.
 
-Fly Proxy autostop/autostart works for Fly Apps with a service configured in the `fly.toml` file, which covers publicly available apps that accept requests from the internet. You can also use Fly Proxy autostart/autostart for private apps, by setting up services and using a Flycast private IPv6 address. See [Flycast - Private Fly Proxy Services](/docs/networking/flycast/) and [Autostop/autostart private apps](/docs/blueprints/autostart-internal-apps/).
+Fly Proxy autostop/autostart works for Fly Apps with a service configured in the `fly.toml` file, which covers publicly available apps that accept requests from the internet. But you can also use Fly Proxy autostart/autostart for private apps, by setting up services and using a Flycast private IPv6 address. See [Flycast - Private Fly Proxy Services](/docs/networking/flycast/) and [Autostop/autostart private apps](/docs/blueprints/autostart-internal-apps/).
 
 Autostop/autostart works well with apps that [shut down automatically when idle](/docs/launch/autostop-autostart/#apps-that-shut-down-when-idle). The Fly Proxy can still restart your app when there's traffic.
 
@@ -51,6 +51,6 @@ Fly Proxy determines when to start a Machine as follows:
 
 ## Related topics
 
-- [Fly Proxy features](/docs/reference/fly-proxy)
 - [Configure autostop/autostart for Fly Launch apps](/docs/launch/autostop-autostart/)
 - [Autostop/autostart private apps](/docs/blueprints/autostart-internal-apps/)
+- [Fly Proxy features](/docs/reference/fly-proxy)

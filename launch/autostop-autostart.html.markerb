@@ -9,11 +9,11 @@ redirect_from:
 
 For Fly Apps with a service configured, [Fly Proxy](/docs/reference/fly-proxy/) can automatically start and stop or suspend existing Machines based on incoming requests, so that your app can meet demand without keeping extra Machines running. Fly Machines are fast to start and stop, and you [don't pay for their CPU and RAM](/docs/about/pricing/#stopped-fly-machines) when they're in a `stopped` or `suspended` state.
 
-Learn the details of how [Fly Proxy autostops and autostarts Machines](/docs/reference/fly-proxy-autostop-autostart/).
+Learn the details of [how Fly Proxy autostop/autostart works](/docs/reference/fly-proxy-autostop-autostart/).
 
 ## When to use autostop/autostart
 
-Autostop/autostart works well for apps with highly variable workloads, for smaller apps with low or sporadic traffic, and for most apps that aren't receiving requests continuously. You can reduce resource usage and costs by using autostop/autostart to manage your Fly Machines as demand decreases and increases. You'll never have to run excess Machines to handle peak load; you'll only run, and get charged for, the number of Machines that you need. If you need to, you can keep one or more Machines running in your primary region.
+Autostop/autostart works well for apps with highly variable workloads, for smaller apps with low or sporadic traffic, and for most apps that aren't receiving requests continuously. You can reduce resource usage and costs by using autostop/autostart to manage your Fly Machines as demand decreases and increases. You'll never have to run excess Machines to handle peak load; you'll only run, and get charged for, the number of Machines that you need. You can choose to keep one or more Machines running in your primary region.
 
 ## Configure autostop/autostart
 
@@ -103,3 +103,9 @@ When you create a new app using the `fly launch` command, the default settings i
 ### Apps with no autostop/autostart settings
 
 For apps that don't explicitly specify any autostop/autostart settings in `fly.toml`, Fly Proxy will automatically start stopped Machines when needed, but won't automatically stop or suspend them.
+
+## Related topics
+
+- [How Fly Proxy autostop/autostart works](/docs/reference/fly-proxy-autostop-autostart/)
+- [Autostop/autostart private apps](/docs/blueprints/autostart-internal-apps/)
+- [Autoscale based on metrics](/docs/launch/autoscale-by-metric/)
