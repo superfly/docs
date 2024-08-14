@@ -9,7 +9,7 @@ redirect_from:
 
 For Fly Apps with a service configured, [Fly Proxy](/docs/reference/fly-proxy/) can automatically start and stop or suspend existing Machines based on incoming requests, so that your app can meet demand without keeping extra Machines running. Fly Machines are fast to start and stop, and you don't pay for their CPU and RAM when they're in a `stopped` or `suspended` state.
 
-Learn more about exactly how [Fly Proxy autostops and autostarts Machines](/docs/reference/fly-proxy-autostop-autostart/).
+Learn more about how [Fly Proxy autostops and autostarts Machines](/docs/reference/fly-proxy-autostop-autostart/).
 
 ## When to use autostop/autostart
 

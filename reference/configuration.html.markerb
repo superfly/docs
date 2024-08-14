@@ -292,12 +292,12 @@ As with the more verbose [`[[services]]`](#the-services-sections), you can speci
 * `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines` is `"stop"` or `"suspend"`. The default if not set is `0`.
 
 <div class="important icon">
-We recommend configuring `auto_stop_machines` and `auto_start_machines` so that they are both enabled or both disabled, to avoid having Machines that either never start or never stop. Learn more about [automatically starting and stopping Machines](/docs/launch/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
+We recommend configuring `auto_stop_machines` and `auto_start_machines` so that they are both enabled or both disabled, to avoid having Machines that either never start or never stop. Learn more about [how Fly Proxy autostop/autostart works](/docs/reference/fly-proxy-autostop-autostart/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
 </div>
 
 ### `http_service.concurrency`
 
-The `http_service` concurrency section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and [auto start and stop](/docs/launch/autostart-stop/). The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
+The `http_service` concurrency section configures how to measure load for an application to inform Fly Proxy [load balancing](/docs/reference/load-balancing) and [autostop/autostart](/docs/launch/autostop-autostart/). The `[http_service.concurrency]` section has the same settings as `[services.concurrency]`, which are:
 
 * `type` specifies what metric is used to determine when to auto start or stop, or when a given Machine should receive more or less traffic (load balancing). The two supported values are `connections` and `requests`.
 
@@ -306,7 +306,7 @@ The `http_service` concurrency section configures how to measure load for an app
 **requests**: Load balance and scale based on the number of HTTP requests. This is recommended for web services, because the Fly Proxy can pool and reuse connections for requests.
 
 * `hard_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that Machine. If unset, no `hard_limit` is enforced.
-* `soft_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that Machine and only send it to that Machine if all other Machines are also at or above their `soft_limit`. This setting is also used to determine excess capacity for the [auto start and stop feature](/docs/launch/autostart-stop/). If unset, the default is 20.
+* `soft_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that Machine and only send it to that Machine if all other Machines are also at or above their `soft_limit`. This setting is also used to determine excess capacity for the [autostop/autostart feature](/docs/launch/autostop-autostart/). If unset, the default is 20.
 
 For more information about concurrency settings, see [Guidelines for concurrency settings](/docs/reference/concurrency/).
 
@@ -450,7 +450,7 @@ Settings:
 * `min_machines_running`: The number of Machines to keep running, in the primary region only, when `auto_stop_machines` is `"stop"` or `"suspend"`. The default if not set is `0`.
 
 <div class="callout">
-We recommend configuring `auto_stop_machines` and `auto_start_machines` so that they are both enabled or both disabled, to avoid having Machines that either never start or never stop. Learn more about [automatically starting and stopping Machines](/docs/launch/autostart-stop/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
+We recommend configuring `auto_stop_machines` and `auto_start_machines` so that they are both enabled or both disabled, to avoid having Machines that either never start or never stop. Learn more about [how Fly Proxy autostop/autostart works](/docs/reference/fly-proxy-autostop-autostart/), including how Fly Proxy determines excess capacity in a region using the `soft_limit` setting.
 </div>
 
 ### `services.ports`
@@ -589,7 +589,7 @@ One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS 
 
 ### `services.concurrency`
 
-The services concurrency sub-section configures how to measure load for an application to inform [load balancing](/docs/reference/load-balancing) and [auto start and stop](/docs/launch/autostart-stop/).
+The services concurrency sub-section configures how to measure load for an application to inform Fly Proxy [load balancing](/docs/reference/load-balancing) and [autostop/autostart](/docs/launch/autostop-autostart/).
 
 This section is a simple list of key/values, so the section is denoted with single square brackets like so:
 
@@ -607,7 +607,7 @@ This section is a simple list of key/values, so the section is denoted with sing
 **requests**: Load balance and scale based on the number of HTTP requests. This is recommended for web services, because the Fly Proxy can pool and reuse connections for requests.
 
 * `hard_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will stop sending new traffic to that Machine. If unset, no `hard_limit` is enforced.
-* `soft_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that Machine and only send it to that Machine if all other Machines are also at or above their `soft_limit`. This setting is also used to determine excess capacity for the [auto start and stop feature](/docs/launch/autostart-stop/). If unset, the default is 20.
+* `soft_limit` : When a Fly Machine is at or over this number of concurrent connections or requests, the system will deprioritize sending new traffic to that Machine and only send it to that Machine if all other Machines are also at or above their `soft_limit`. This setting is also used to determine excess capacity for the [autostop/autostart feature](/docs/launch/autostop-autostart/). If unset, the default is 20.
 
 For more information about concurrency settings, see [Guidelines for concurrency settings](/docs/reference/concurrency/).
 

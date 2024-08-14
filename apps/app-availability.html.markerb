@@ -135,7 +135,7 @@ Default settings for new apps created using the `fly launch` command: automatica
 
 Default settings for some existing apps (or any apps that don't have these settings in `fly.toml`): automatically start but don't automatically stop Fly Machines.
 
-Get all the details about [automatically stopping and starting Machines](/docs/launch/autostart-stop/).
+Learn more about [how Fly Proxy autostop/autostart works](/docs/reference/fly-proxy-autostop-autostart/) and [how to configure it](/docs/launch/autostop-autostart/).
 
 ## Health check-based routing
 

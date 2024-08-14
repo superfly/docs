@@ -222,9 +222,9 @@ fly machine run . --port 80/tcp:http \
 </div>
 
 
-## Set Fly Proxy auto start and auto stop
+## Set Fly Proxy autostop/autostart
 
-The `--autostart` and `--autostop` flags only work on Machines with Fly Proxy services configured. [Read more about Fly Proxy auto start and auto stop](/docs/launch/autostart-stop/#how-it-works).
+The `--autostart` and `--autostop` flags only work on Machines with Fly Proxy services configured. Learn more about [how Fly Proxy autostop/autostart works](/docs/reference/fly-proxy-autostop-autostart/) and [how to configure it](/docs/launch/autostop-autostart/).
 
 In a Machine service's configuration, `autostop` and `autostart` settings are optional.
 
