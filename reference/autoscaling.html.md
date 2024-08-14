@@ -6,12 +6,12 @@ nav: firecracker
 
 Autoscaling adjusts the number of running or created Fly Machines dynamically. We support two forms of autoscaling:
 
-- Autostart/autostop Machines
+- Autostop/autostart Machines
 - Metrics-based autoscaling
 
-## Autostart/autostop Machines
+## Autostop/autostart Machines
 
-The Fly Proxy autostart/autostop feature starts and stops Machines based on load; Machines are never created or deleted. You create a "pool" of Machines in one or more regions and the Fly Proxy starts and stops them as needed. 
+Fly Proxy autostop/autostart starts and stops Machines based on load; Machines are never created or deleted. You create a "pool" of Machines in one or more regions and Fly Proxy starts and stops them as needed.
 
 For details about how it works, see [Fly Proxy autostop/autostart](/docs/launch/autostop-autostart/). To configure autostop/autostart for your app, see [Autostop/autostart Machines](/docs/launch/autostop-autostart/).
 

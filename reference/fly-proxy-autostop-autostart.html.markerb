@@ -8,18 +8,20 @@ nav: firecracker
   <img src="/static/images/docs-stop-start.webp" alt="">
 </figure>
 
-For Fly Apps with a service configured, [Fly Proxy](/docs/reference/fly-proxy) can automatically stop (or suspend) and start existing Machines based on incoming requests, so that your app can meet demand without keeping extra Machines running. Fly Machines are fast to start and stop, and you don't pay for their CPU and RAM when they're in a `stopped` or `suspended` state. You can also set a minimum number of machines to keep running at all times in your primary region.
+Fly Proxy autostop/autostart automatically stops (or suspends) and starts existing Machines based on incoming requests to your app. You can scale your app for peak loads, and save on resource costs by only running those Machines when needed, since you [don't pay for Machine CPU and RAM](/docs/about/pricing/#stopped-fly-machines) when they're in a `stopped` or `suspended` state. You can set a minimum number of machines to keep running at all times in your primary region.
 
-You can also use the autostop/autostart with apps that [shut down automatically when idle](#stop-a-machine-by-terminating-its-main-process). The Fly Proxy can still restart your app when there's traffic.
+Fly Proxy autostop/autostart works for Fly Apps with a service configured in the `fly.toml` file, which covers publicly available apps that accept requests from the internet. You can also use Fly Proxy autostart/autostart for private apps, by setting up services and using a Flycast private IPv6 address. See [Flycast - Private Fly Proxy Services](/docs/networking/flycast/) and [Autostop/autostart private apps](/docs/blueprints/autostart-internal-apps/).
+
+Autostop/autostart works well with apps that [shut down automatically when idle](/docs/launch/autostop-autostart/#apps-that-shut-down-when-idle). The Fly Proxy can still restart your app when there's traffic.
 
 Learn how to [configure autostop/autostart](/docs/launch/autostop-autostart/).
 
-## How Fly Proxy autostops and autostarts Machines
+## How Fly Proxy autostop/autostart works
 
-The Fly Proxy runs a process to determine whether an app has excess capacity every few minutes.
+Fly Proxy runs a process to determine whether an app has excess capacity every few minutes.
 
 <div class="callout">
-The autostop/autostart feature only works on existing Machines and never creates or destroys Machines for you. The maximum number of running Machines is the number of Machines you've created for your app using `fly scale count` or `fly machine clone`. Learn more about [scaling the number of Machines](/docs/apps/scale-count/). 
+Autostop/autostart only works on existing Machines and never creates or destroys Machines for you. The maximum number of running Machines is the number of Machines you've created for your app using `fly scale count` or `fly machine clone`. Learn more about [scaling the number of Machines](/docs/apps/scale-count/). 
 </div>
 
 ### Fly Proxy process to stop or suspend Machines

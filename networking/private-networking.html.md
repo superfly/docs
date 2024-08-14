@@ -22,7 +22,7 @@ A Fly Machine is configured to resolve domain names with a custom DNS server fro
 Underneath `.internal` there are second-level domains for every app in your Fly organization. For example, if your app is in an organization with another app called `my-app-name`, then there will be a AAAA record at `my-app-name.internal`. The AAAA record will contain all the 6PN addresses of the started Fly Machines that belong to the `my-app-name` Fly App. Note that different libraries and tools will use multi-address AAAA records differently; most will only use the first address that is returned, but others might round-robin between entries for every request -- if you'd like to know more, consult the documentation for the library or tool you are using for DNS lookup.
 
 <div class="important icon">
-**Important:** All queries to Fly.io `.internal` domains only return information for started (running) Machines. Any stopped Machines, including those autostopped by the Fly Proxy, are not included in the response to the DNS query.
+**Important:** All queries to Fly.io `.internal` domains only return information for started (running) Machines. Any stopped Machines, including those autostopped by Fly Proxy, are not included in the response to the DNS query.
 </div>
 
 Each `<appname>.internal` domain has further subdomains which can be used to return a more precise subset of the started Machines in that app. For example, you can add a region name qualifier to return the 6PN addresses of an app's Machines in a specific region: `iad.my-app-name.internal`. Querying this domain returns the 6PN addresses of `my-app-name` Machines in the `iad` region.

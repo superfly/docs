@@ -40,7 +40,7 @@ To use Flycast for your app, you need:
 
 ## Allocate a Flycast address
 
-A Flycast address is an app-wide private IPv6 address that the Fly Proxy can route to over the private network. By default, the Flycast IP address is allocated on an app's default organization network.
+A Flycast address is an app-wide private IPv6 address that Fly Proxy can route to over the private network. By default, the Flycast IP address is allocated on an app's default organization network.
 
 There are a few ways to add a Flycast address to an existing app.
 

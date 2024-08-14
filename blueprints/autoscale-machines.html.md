@@ -12,7 +12,7 @@ Machines during the period of low traffic.
 
 This blueprint will guide you through the process of configuring the
 [`fly-autoscaler` app](/docs/launch/autoscale-by-metric/) in conjunction with 
-the [Fly Proxy autostart/autostop](/docs/launch/autostop-autostart/) feature to 
+[Fly Proxy autostop/autostart](/docs/launch/autostop-autostart/) to 
 always keep a fixed number of stopped Machines ready to be quickly started 
 by Fly Proxy.
 
@@ -105,6 +105,6 @@ $ fly deploy --ha=false
 
 - [Autoscale based on metrics](/docs/launch/autoscale-by-metric/)
 
-- [Autostart/autostop Machines](/docs/launch/autostop-autostart/)
+- [Autostop/autostart Machines](/docs/launch/autostop-autostart/)
 
-- [Autostart/autostop private apps](/docs/blueprints/autostart-internal-apps/)
+- [Autostop/autostart private apps](/docs/blueprints/autostart-internal-apps/)

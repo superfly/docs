@@ -11,7 +11,7 @@ That settled, you can still use the following guidelines to gather data to fine-
 
 ## Fly.io metrics
 
-We have various ways to access metrics for the Fly Proxy, your app, and Fly Machines. Learn more about [Fly Metrics](/docs/reference/metrics/).
+We have various ways to access metrics for Fly Proxy, your app, and Fly Machines. Learn more about [Fly Metrics](/docs/reference/metrics/).
 
 - Edge HTTP response time is the total time it takes to respond with the first HTTP response headers.
 - App HTTP response time is the same, but only considers your app’s response time, not the overhead of routing, load balancing, retries, and so on.
@@ -78,7 +78,7 @@ Refer to our guidelines for [concurrency settings](/docs/reference/concurrency/)
 
 [Auto stop and start](/docs/launch/autostop-autostart/) can be turned off if you want to test the performance of your app without that variable.
 
-If you don’t turn off auto stop and start, then you’ll likely have some pretty high p99 values due to the initial cost of the Fly Proxy queueing connections while waiting for the Machine to start.
+If you don’t turn off auto stop and start, then you’ll likely have some pretty high p99 values due to the initial cost of Fly Proxy queueing connections while waiting for the Machine to start.
 
 ## Distributed systems
 

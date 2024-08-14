@@ -6,7 +6,7 @@ nav: firecracker
 
 Fly Machines are fast-launching VMs; they're the compute of the Fly.io platform. Every Machine runs on a single physical host. If that host fails, the Machine becomes unavailable; it does not automatically get rescheduled on another host.
 
-To make your app resilient to single-host failure, create at least two Machines per app or process. The Fly Proxy autostart/autostop feature and standby Machines are built-in platform features that you can use to start extra Machines only when needed.
+To make your app resilient to single-host failure, create at least two Machines per app or process. Fly Proxy autostop/autostart and standby Machines are built-in platform features that you can use to start extra Machines only when needed.
 
 ## Multiple Machines for apps with services
 
@@ -14,7 +14,7 @@ You can add more Machines for Fly Proxy to start and stop as needed, which is gr
 
 ### You get two Machines on first deploy
 
-When you deploy an app for the first time with the `fly launch` or `fly deploy` command, you automatically get two identical Machines for processes that have HTTP/TCP services configured in `fly.toml`. The Machines have autostart/autostop enabled so that Fly Proxy can start and stop them based on traffic to your app. You'll also get this default redundant Machine when you `fly deploy` after scaling to zero.
+When you deploy an app for the first time with the `fly launch` or `fly deploy` command, you automatically get two identical Machines for processes that have HTTP/TCP services configured in `fly.toml`. The Machines have autostop/autostart enabled so that Fly Proxy can start and stop them based on traffic to your app. You'll also get this default redundant Machine when you `fly deploy` after scaling to zero.
 
 <div class="important icon">
 **Volumes:** You'll only get one Machine with `fly launch` for processes or apps with volumes mounted. Volumes don't automatically replicate your data for you, so you'll need to set that up before intentionally creating more Machines with volumes.
@@ -22,11 +22,11 @@ When you deploy an app for the first time with the `fly launch` or `fly deploy` 
 
 ### Add more Machines yourself
 
-If your app doesn't already have multiple Machines with autostart/autostop, then you can set it up yourself. You can create any number of Machines to both meet user demand and provide redundancy against host failures.
+If your app doesn't already have multiple Machines with autostop/autostart configured, then you can set it up yourself. You can create any number of Machines to both meet user demand and provide redundancy against host failures.
 
-#### 1. Set up autostart/autostop
+#### 1. Set up autostop/autostart
 
-Use autostart/autostop to tell the Fly Proxy to start and stop Machines based on traffic. Keep one or more Machines running in your primary region if you want to. Example from `fly.toml` config:
+Use [Fly Proxy autostop/autostart](/docs/launch/autostop-autostart/#apps-that-shut-down-when-idle) to automatically stop and start Machines based on traffic. Keep one or more Machines running in your primary region if you want to. Example from `fly.toml` config:
 
 ```toml
 [http_service]
@@ -42,7 +42,7 @@ Use autostart/autostop to tell the Fly Proxy to start and stop Machines based on
 
 Fly Proxy uses the concurrency `soft_limit` to determine if Machines have capacity. Learn more about [how Fly Proxy autostop/autostart works](/docs/reference/fly-proxy-autostop-autostart/).
 
-**Using the Machines API:** To add or change the autostart/autostop settings with the Machines API, use the settings in the `services` object of the [Machine config](/docs/machines/api/machines-resource/#machine-config-object-properties) in your create or update calls.
+**Using the Machines API:** To add or change the autostop/autostart settings with the Machines API, use the settings in the `services` object of the [Machine config](/docs/machines/api/machines-resource/#machine-config-object-properties) in your create or update calls.
 
 #### 2. Create more Machines
 
@@ -66,7 +66,7 @@ Learn more about [scaling the number of Machines](/docs/apps/scale-count/).
 
 When apps or processes are running tools like cron that don't require local storage or accept external requests, it's common to run only one Machine. Since these Machines don't have services configured, they can't be automatically started and stopped by the Fly Proxy. To add redundancy against host failures for this kind of Machine, use a standby Machine; it stays stopped and ready to take over in case the original Machine becomes unavailable.
 
-Unlike the autostart/autostop feature, which starts Machines based on app traffic, a standby Machine watches the Machine it's paired to and starts only if that Machine becomes unavailable. Learn more about [standby Machines](https://fly.io/docs/reference/app-availability/#standby-machines-for-process-groups-without-services).
+Unlike Fly Proxy autostop/autostart, which starts Machines based on app traffic, a standby Machine watches the Machine it's paired to and starts only if that Machine becomes unavailable. Learn more about [standby Machines](https://fly.io/docs/reference/app-availability/#standby-machines-for-process-groups-without-services).
 
 ### You get a standby Machine on first deploy
 
