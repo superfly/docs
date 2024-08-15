@@ -17,7 +17,7 @@ Autostop/autostart works well for apps with highly variable workloads, for small
 
 ## Configure autostop/autostart
 
-The autostop/autostart settings apply per service in an app's `fly.toml` file. See the [[[services]]](/docs/reference/configuration/#the-services-sections) or [[http_service]](/docs/reference/configuration/#the-http_service-section) docs for details about service configuration. You can also add services to [private apps](#private-apps).
+The autostop/autostart settings are part of each service in an app's `fly.toml` file. See the [[[services]]](/docs/reference/configuration/#the-services-sections) or [[http_service]](/docs/reference/configuration/#the-http_service-section) docs for details about service configuration. You can also add services to [private apps](#private-apps).
 
 Autostop/autostart settings:
 
@@ -58,7 +58,7 @@ Fly Proxy autostop/autostart never creates or destroys Machines for you. The max
 
 ### Keep all Machines running continuously
 
-If you need all your app's Machines to run continuously, then you can set `auto_stop_machines` to `"off"` and `auto_start_machines` to `false`.
+If you need all your app's Machines to run continuously, then you can set `auto_stop_machines` to `"off"` and `auto_start_machines` to `false` to turn off autostop/autostart completely.
 
 If you only need a certain number of your app's Machines to run continuously, then you can set `auto_stop_machines` to `"suspend"` or `"stop"` and `min_machines_running` to `1` or higher. Note that `min_machines_running` only applies to your app's primary region.
 
