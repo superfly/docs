@@ -84,18 +84,25 @@ In rare cases, such as having an unusual file system layout, or using a networki
 
 Most of the time, the `.internal` DNS is all you'll need for routing. If you need more complicated routing, you might be able to take advantage of the structure of 6PN addresses in your app's design. Rather than a single address, each Fly Machine is assigned a `/112` 6PN subnet, which is structured as follows:
 
-| fdaa    | 16 bits | ULA prefix             |
+| &nbsp; | &nbsp; | &nbsp; |
 | ------- | ------- | ---------------------- |
+| `fdaa`  | 16 bits | ULA prefix             |
 | network | 32 bits | organization address   |
 | host    | 32 bits | host server identifier |
 | machine | 32 bits | fly machine identifier |
-|         | 16 bits | free space             |
+| &mdash; | 16 bits | free space             |
 
 <div class="warning icon">
 **Caution:** 6PN addresses are **not** static and will change over time, for various reasons. If you need an unchanging method to address an individual Fly Machine, you can use the domain `<machine_id>.vm.<appname>.internal`.
 </div>
 
 The machine identifier portion of the 6PN address is not related to the 14 character Machine ID; the two are independent. A Fly Machine's current 6PN address can be found in the environment variable `FLY_PRIVATE_IP`. A Machine's 6PN address is not static, so do not assume that a Fly Machine's Machine ID can be permanently mapped to a particular 6PN address. 6PN addresses will change when an app is moved into a new organization, or when a Fly Machine is migrated onto a new host server. However, a 6PN address change can only happen on a reboot, so supplying a procedure to check for a change in 6PN address on Machine startup is sufficient to handle this event.
+
+## Custom private networks
+
+You can create additional private networks within your organization. Custom private networks are useful when you need to isolate tenants or users for security purposes. For example, if you run a software-as-service platform on top of Fly.io, and your customers are running untrusted code on Machines or you want every customer to have their own secure app.
+
+Learn more about custom private networks and how to create them.
 
 ## Private Network VPN
 

@@ -1,0 +1,11 @@
+---
+title: "Custom private networks"
+layout: docs
+nav: firecracker
+---
+
+A custom network is a distinct 6PN network that you can create when you create a Fly App. Every organization gets a 6PN network and all the apps in the network can communicate by default.
+
+Each 6PN is identified by a "network ID", which is a 32-bit (IPv4-address-sized) identifier that is embedded in the IPv6 address of the 6PN.
+
+fdaa:2:45b:a7b:174:db43:d3c6:2
