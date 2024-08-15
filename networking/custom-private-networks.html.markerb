@@ -4,8 +4,86 @@ layout: docs
 nav: firecracker
 ---
 
-A custom network is a distinct 6PN network that you can create when you create a Fly App. Every organization gets a 6PN network and all the apps in the network can communicate by default.
+If you need to isolate users for security reasons, you can do that custom private networks. Every organization gets a private network (6PN) and all the apps in the default 6PN can communicate by default. A custom network is a distinct 6PN within the same organization that you can create when you create a new Fly App. Apps on separate 6PNs can never communicate unless explicitly configured to do so.
 
-Each 6PN is identified by a "network ID", which is a 32-bit (IPv4-address-sized) identifier that is embedded in the IPv6 address of the 6PN.
+Custom 6PNs are a good solution for tenant isolation within a single organization. If you run an anything-as-a-service platform on top of Fly.io, then you can create a custom 6PN for each customer instance of your service or for each Machine that's running untrusted user code. When you destroy an app that was the only app on the custom 6PN, then the network is also deleted. (TBD check this?)
 
-fdaa:2:45b:a7b:174:db43:d3c6:2
+Depending on your use case, creating separate organizations per customer might be another option for tenant isolation. You can create Linked Organizations under a single Billing Organization to manage billing. Learn more about [unified billing](https://fly.io/docs/about/billing/#unified-billing).
+
+## Create a custom private network
+
+With the Machines API:
+
+TBD
+
+
+With flyctl:
+
+```
+fly apps create <app name> --network <network name>
+```
+
+This creates an "empty" app with no Machines. You'll need to manually create Machines for the app using flyctl or the Machines API.
+
+## How apps on different 6PNs can connect
+
+Flycast
+Publicly
+???
+
+## Checking which network an app or Machine is on
+
+tbd some intro text
+
+### Retrieve network names
+
+It's a best practice to use a formula for naming custom 6PNs, especially if you're going to have a lot of them or if you need to add more than one app to each custom 6PN.
+
+Right now the only way to get an apps network name is by listing all the apps in an organization with the Machines API.
+
+`GET /v1/apps?org_slug=<org name>`
+
+**Response:**
+
+```json
+{
+    "total_apps": 22,
+    "apps": [
+        {
+            "id": "682kqp63x4k9d543",
+            "name": "aged-cherry-366",
+            "machine_count": 4,
+            "network": "default"
+        },
+        {
+            "id": "704e9387kyy13xgn",
+            "name": "muddy-violet-667",
+            "machine_count": 2,
+            "network": "test-network"
+        },
+...
+```
+
+See the [Machines API docs](https://fly.io/docs/machines/api/) for more information about using the API.
+
+### Network ID embedded in private IPv6 addresses
+
+Each 6PN is identified by a network ID, which is a 32-bit identifier that is embedded in the IPv6 address of the 6PN.
+
+You can confirm whether two Machines are on different networks by comparing their private IPv6 addresses. You can get a Machine's 6PN address in one of the following ways:
+
+- run `fly machines list -a my-app-name` 
+- run `fly machines status <machine id>`
+- from the Machine's `FLY_PRIVATE_IP` environment variable
+
+All Fly.io private IPv6 addresses start with `fdaa`. The 32-bits following `fdaa` identify the 6PN. For example, the following addresses belong to Machines on different 6PNs:
+
+```
+Machine 1: fdaa:2:45b:a7b:174:db43:d3c6:2
+Machine 2: fdaa:9:d844:a7b:e:33bd:e8b1:2
+```
+
+For Machine 1, the network ID is embedded in `:2:45b:` and for Machine 2 the network ID is embedded in `:9:d844:`. We convert the hexadecimal to decimal, which you probably don't need to know, since you'll use the network name to add more apps to a network.
+
+Learn about [6PN addresses in detail](/docs/networking/private-networking/#6pn-addresses-in-detail).
+

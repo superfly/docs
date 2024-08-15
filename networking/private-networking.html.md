@@ -87,7 +87,7 @@ Most of the time, the `.internal` DNS is all you'll need for routing. If you nee
 | &nbsp; | &nbsp; | &nbsp; |
 | ------- | ------- | ---------------------- |
 | `fdaa`  | 16 bits | ULA prefix             |
-| network | 32 bits | organization address   |
+| network | 32 bits | network identifier     |
 | host    | 32 bits | host server identifier |
 | machine | 32 bits | fly machine identifier |
 | &mdash; | 16 bits | free space             |
