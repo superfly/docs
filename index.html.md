@@ -2,6 +2,7 @@
 title: "Fly.io developer documentation"
 layout: docs
 toc: false
+breadcrumbs: false
 nav: firecracker
 ---
 
