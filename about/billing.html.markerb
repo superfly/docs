@@ -12,19 +12,15 @@ The amount you're charged depends on your plan. For the Pay As You Go plan, you 
 
 Refer to our [Plans page](https://fly.io/plans) and our resource [Pricing page](/docs/about/pricing/) for details.
 
----
-
 ## View invoices
 
 You can view and download invoices from the **Billing** section of your [dashboard](https://fly.io/dashboard/personal/billing) for each organization.
 
 To download a past invoice, click **View** for the relevant cycle. You'll be sent to the Stripe billing portal where you'll have the option to download the invoice.
 
----
-
 ## Plan billing
 
-You're charged for Launch, Scale, and Enterprise plans as soon as you sign up for them.
+You're charged for Launch, Scale, and Enterprise plans as soon as you sign up for them. 
 
 New customers that are automatically signed up for the Pay As You Go plan are billed monthly for resource usage. For existing Fly.io accounts, when you create a new organization, you're signing up for the Pay As You Go plan.
 
@@ -36,8 +32,6 @@ Plan billing, and any included usage, is pro-rated over the month. For example, 
 
 When you upgrade to a higher plan, your billing is pro-rated and adjusted accordingly.
 
----
-
 ## Machine billing
 
 Started Machines are billed per second that they're running (the time they spend in the `started` state), based on the price of a named CPU/RAM combination, plus the price of any additional RAM you specify.
@@ -48,15 +42,11 @@ Stopped Machines are billed based on their root file system (rootfs) usage per s
 
 For example, a Machine described in your dashboard as having 1GB of rootfs stopped for 10 days in the entire month will cost $0.05. If you have 3 stopped Machines of 1GB rootfs each stopped for 30 days it will cost $0.45 ($0.15 x 3).
 
----
-
 ## GPU billing
 
 GPUs are billed per second that the attached Fly Machine is running (the time they spend in the `started` state), based on the per hour cost of the GPU card. See [pricing for GPUs](/docs/about/pricing/#gpus-and-fly-machines).
 
 You're also billed for the Fly Machine separately from the GPU.
-
----
 
 ## Volume billing
 
@@ -64,42 +54,9 @@ Volume billing is pro-rated to the hour and we subtract the free allowances firs
 
 If you create a volume, you will be charged for it. You’re billed for volumes that aren’t attached to Machines, and for volumes that are attached to Machines in any state, including stopped Machines.
 
----
-
-## Unified Billing
-
-Unified billing allows you to consolidate billing for multiple organizations under a single organization. This means you'll receive a single invoice for all organizations under unified billing. This feature is useful for managing billing for multiple organizations, such as when you have multiple teams or projects.
-
-**Billing Organization**: The organization that is responsible for paying for the resources used by all organizations linked to it. Any organization in good standing with an attached payment method can be a Billing Organization.
-
-**Linked Organization**: An organization that is linked to another organization for billing purposes. It otherwise functions as a normal organization.
-
-### How Unified Billing Works
-
-- You'll receive a single invoice for all organizations under unified billing
-- Billing Organization must have a payment method on file (credit card or Stripe Link)
-- Linked Organizations share credits with their Billing Organization
-
-### How to use Unified Billing
-
-A **Linked Organization** can be created from the [new organization page](/organizations/new). When creating a new organization, you can choose an existing Organization to link it to.
-
-You can create multiple Linked Organizations for a single Billing Organization.
-
-### Some things to consider
-
-- Each organization has its own [private network](/docs/networking/private-networking/). Organizations are isolated from each other, which might
-be advantageous from a security standpoint.
-- Detaching a Linked Organization from its Billing Organization is not possible at this time. Instead we suggest creating a new organization and moving resources there.
-- Linking an existing Organization to a Billing Organization is not possible at this time. Instead, create a new Linked Organization and [move resources](/docs/apps/move-app-org/) there.
-
----
-
 ## Free resource allowances
 
 We subtract [free allowances](https://fly.io/docs/about/pricing/#free-allowances) off the top of your usage total for Launch, Scale, and Enterprise plans. Once your usage exceeds the free allowance on any given resource, we start metering usage of that resource for billing purposes.
-
----
 
 ## Payment options
 
@@ -109,11 +66,11 @@ We process payments through Stripe. Paid plans and monthly invoicing require a c
 
 We require an active, valid credit card on file for most Fly.io accounts to do things like deploying multiple apps and deploying public images. This is primarily a means to prevent abuse and ensure that we can collect payment at the end of the month.
 
-### Pre-authorization Requests
+### Preauthorization Requests
 
-We may send a pre-authorization request to the issuing bank to verify a bank will authorize charges. Some credit card companies present these as real charges, which may surprise you.
+We may send a preauthorization request to the issuing bank to verify a bank will authorize charges. Some credit card companies present these as real charges, which may surprise you.
 
-A pre-auth is really just a hold on a credit card; it is not a real charge. We’ll typically pre-authorize a small amount (usually less than $5) after signup, then cancel the authorization immediately. Banks may show the pre-auth for up to 7 days, even though we have not collected any money.
+A preauth is really just a hold on a credit card; it is not a real charge. We’ll typically preauthorize a small amount (usually less than $5) after signup, then cancel the authorization immediately. Banks may show the preauth for up to 7 days, even though we have not collected any money.
 
 ### If you don't have a credit card
 
@@ -122,8 +79,6 @@ While a credit card is the preferred payment method, if you don't have one, then
 ### Prepaid cards
 
 You can't use a prepaid card as a default (or saved) payment method. You can, however, use a prepaid card to add credits to your account.
-
----
 
 ## Understand charges beyond the free allowances
 
@@ -134,8 +89,6 @@ A common reason for additional charges is extra RAM usage.
 For a breakdown of charges, check out your invoice in the Billing section of the [dashboard](https://fly.io/dashboard/personal/billing).
 
 We’re happy to discuss a refund if you do create compute resources by mistake, or if your app receives unexpected traffic due to an attack and generates a surprisingly large bill. Just send an email to billing@fly.io.
-
----
 
 ## Delete your account
 
