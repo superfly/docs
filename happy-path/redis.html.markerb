@@ -1,0 +1,16 @@
+---
+title: Upstash Redis
+layout: framework_docs_overview
+order: 7
+---
+
+[Upstash Redis](https://fly.io/docs/reference/redis/) is used by this application for its [pubsub](https://redis.io/docs/latest/commands/?group=pubsub)
+capabilities, but it can do [so much more](https://upstash.com/docs/redis/overall/rediscompatibility).
+
+In particular, Redis is useful for caching:
+[Node](https://redis.io/learn/develop/node/nodecrashcourse/caching),
+[Rails](https://guides.rubyonrails.org/caching_with_rails.html#activesupport-cache-rediscachestore).
+
+In this application, updates are broadcast to all machines via Redis, and then each machine informs browser clients
+of the update via [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).  Client the request
+updated information from the application using HTTP GET.

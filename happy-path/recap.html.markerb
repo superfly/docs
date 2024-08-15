@@ -1,0 +1,29 @@
+---
+title: Recap
+layout: framework_docs_overview
+order: 9
+---
+
+We promised you that you could get through this in under an hour.  How did we do?  How much time did you have left over.
+
+You successfully deployed a full-stack application with both object storage and realtime requirements, and then went on to add AI functionality.
+
+Up front, we set some rather high goals:
+
+* You want to not only be up and running,
+  you want to feel confident that you are heading in the right direction.  A
+  direction that can both scale and support your present and future needs.
+* You want to be confident that you can
+  use services from other places and even eject entirely and move your entire
+  application elsewhere if things don't work out.
+
+Or to put it more succinctly.... did you find your happy path?
+
+Did we meet these goals?  You've seen the code, and you've seen it work.  You examined each component, and from there
+saw links to where you can find out more information.
+
+Now a few links:
+  * [Support](https://fly.io/docs/about/support/)
+  * [Pricing](https://fly.io/docs/about/pricing/)
+  * [Application Monitoring by Sentry](../../reference/sentry/)
+  * [Application Security by Arcjet](../../reference/arcjet/)
