@@ -2,13 +2,13 @@
   <a href="/docs/" class="hover:text-violet-600 transition-colors">Docs</a>
   <% 
     segments = current_page.request_path.split('/').drop(2)
-    if current_page.request_path.start_with?('/legal/')
-      segments = ['about'] + segments
-    end
     segments.each_with_index do |segment, index|
-      path = segment == 'about' ? "/docs/about/" : (segment == 'legal' ? "/legal" : "/docs/#{segments.take(index + 1).join('/')}")
-      page = Sitepress.site.resources.find { |r| r.request_path == path }
-      title = index == segments.size - 1 ? page_title : (segment == 'about' ? 'About' : (segment == 'legal' ? 'Legal' : page&.data&.title || segment.titleize))
+      path = "/docs/#{segments.take(index + 1).join('/')}"
+      title = if index == segments.size - 1
+                page_title
+              else
+                get_page_title(path)
+              end
       is_last = index == segments.size - 1
   %>
     <span class="flex items-center">
