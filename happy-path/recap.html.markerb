@@ -17,9 +17,13 @@ Up front, we set some rather high goals:
   use services from other places and even eject entirely and move your entire
   application elsewhere if things don't work out.
 
+Or to put it more succinctly.... did you find your happy path?
+
 Did we meet these goals?  You've seen the code, and you've seen it work.  You examined each component, and from there
 saw links to where you can find out more information.
 
 Now a few links:
   * [Support](https://fly.io/docs/about/support/)
   * [Pricing](https://fly.io/docs/about/pricing/)
+  * [Application Monitoring by Sentry](../../reference/sentry/)
+  * [Application Security by Arcjet](../../reference/arcjet/)
