@@ -8,7 +8,7 @@ You have a private, or internal, app that communicates only with other apps on y
 
 To use Fly Proxy autostop/autostart you need to configure services in `fly.toml`, like you would for a public app. But instead of using a public Anycast address, you assign a Flycast address to expose those services only on your private network.
 
-This blueprint focuses on using autostart and autostop to control Machines based on incoming requests. But when you use Flycast for private apps you also get other Fly Proxy features like geographically aware load balancing.
+This blueprint focuses on using autostop/autostart to control Machines based on incoming requests. But when you use Flycast for private apps you also get other [Fly Proxy features](/docs/reference/fly-proxy/) like geographically aware load balancing.
 
 Learn more about [Flycast](/docs/networking/flycast/).
 
@@ -49,9 +49,9 @@ v6     	fdaa:2:45b:0:1::11  	private           	global	Mar 16 2024 18:20
 v4     	66.241.124.11       	public (shared)   	      	Jan 1 0001 00:00
 ```
 
-This example app has public IPv4 and IPv6 addresses. These are the addresses automatically assigned to an app on first deploy.
+This example app has public IPv4 and IPv6 addresses. These public addresses are automatically assigned to an app with services on the first deploy.
 
-Copy the public IP addresses and run the `release` command to remove them from your app:
+Copy the public IP addresses and run the `fly ips release` command to remove them from your app:
 
 ```
 fly ips release <ip address> <ip address> ...
@@ -82,7 +82,7 @@ Here's an example `fly.toml` snippet:
   # must be false - Flycast is http-only
   force_https = false
   # Fly Proxy stops Machines based on traffic
-  auto_stop_machines = true
+  auto_stop_machines = "stop"
   # Fly Proxy starts Machines based on traffic
   auto_start_machines = true
   # Number of Machines to keep running in primary region
@@ -94,7 +94,7 @@ Here's an example `fly.toml` snippet:
 ```
 
 <div class="important icon">
-**Important:** Set `force_https = false` since Flycast only works over HTTP.  HTTPS isn't necessary because all your private network traffic goes through encrypted WireGuard tunnels.
+**Important:** Set `force_https = false`; Flycast only works over HTTP. HTTPS isn't necessary because all your private network traffic goes through encrypted WireGuard tunnels.
 </div>
 
 Learn more about [Fly Launch configuration](/docs/reference/configuration/) and [Fly Proxy autostop/autostart](/docs/launch/autostop-autostart/).
@@ -107,7 +107,7 @@ To be reachable by Fly Proxy, an app needs to listen on `0.0.0.0` and bind to th
 
 Run `fly deploy` for the configuration changes to take effect.
 
-Other apps in your organization can now reach your private app using the [Flycast](/docs/networking/flycast/) IP address or  `<appname>.flycast`.
+Other apps in your organization can now reach your private app using the [Flycast](/docs/networking/flycast/) IP address or the `<appname>.flycast` domain.
 
 ## Read more
 
