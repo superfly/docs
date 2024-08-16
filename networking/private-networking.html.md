@@ -7,15 +7,15 @@ redirect_from:
   - /docs/reference/private-networking/
 ---
 
-Fly Apps are connected by a mesh of WireGuard tunnels using IPv6. Private networking is always available to apps by default; you don't have to do anything special to get it.
+Fly Apps in an organization are connected by a mesh of WireGuard tunnels using IPv6 called a 6PN. Private networking over your 6PN is always available to apps by default; you don't have to do anything special to get it.
 
-Apps within the same organization are assigned special addresses (6PN addresses) tied to the organization. Those applications can talk to each other because of their 6PN addresses, but applications from other organizations can't. The Fly.io platform won't forward packets between different 6PN networks, unless you explicitly allow it when you [allocate a Flycast address](/docs/networking/flycast/#allocate-a-flycast-address).
+Apps within the same organization are assigned special addresses (6PN addresses) tied to 6PN. Those applications can talk to each other because of their 6PN addresses, but applications from other organizations can't. The Fly.io platform won't forward packets between different 6PNs, unless you explicitly allow it, for example when you [allocate a Flycast address](/docs/networking/flycast/#allocate-a-flycast-address).
 
-You can connect apps running outside of Fly.io to your 6PN network using WireGuard. You can even connect your dev laptop to your 6PN network. To do that, you'll use flyctl, the Fly.io CLI, to generate a [WireGuard configuration that has a 6PN address](#private-network-vpn).
+You can connect apps running outside of Fly.io to your 6PN using WireGuard. You can even connect your dev laptop to your 6PN. To do that, you'll use flyctl, the Fly.io CLI, to generate a [WireGuard configuration that has a 6PN address](#private-network-vpn).
 
 ## Fly.io `.internal` DNS
 
-You can use `.internal` domains to connect your app to databases, API servers, or other apps in your 6PN network. If you don't need the granular subdomains and routing available with `.internal`, and you want to use Fly Proxy features for your internal apps, then you should use [Flycast](/docs/networking/flycast/) instead.
+You can use `.internal` domains to connect your app to databases, API servers, or other apps in your 6PN. If you don't need the granular subdomains and routing available with `.internal`, and you want to use Fly Proxy features for your internal apps, then you should use [Flycast](/docs/networking/flycast/) instead.
 
 A Fly Machine is configured to resolve domain names with a custom DNS server from the Fly Platform. This DNS server can resolve arbitrary DNS queries, so you can look up `google.com` with it. But it’s also aware of 6PN addresses, and will let you look up 6PN addresses for other apps in your organization. Those addresses live under the custom top-level domain `.internal`. 
 
@@ -53,7 +53,7 @@ See the [fly-examples/privatenet](https://github.com/fly-apps/privatenet+externa
 
 When deploying a Fly Machine, we alias the 6PN address of the Machine to `fly-local-6pn` in the Machine's `/etc/hosts` file.
 
-Your app's service needs to bind to/listen on `fly-local-6pn` to be accessible via its 6PN address. For example, if you have a service running on port 8080, then you need to bind it to `fly-local-6pn:8080` for it to be accessible to other Machines over the 6PN network.
+Your app's service needs to bind to/listen on `fly-local-6pn` to be accessible via its 6PN address. For example, if you have a service running on port 8080, then you need to bind it to `fly-local-6pn:8080` for it to be accessible to other Machines over the 6PN.
 
 <div class="note icon">
 `fly-local-6pn` is to 6PN addresses as `localhost` is to 127.0.0.1, so you can also bind directly to the 6PN address itself.
