@@ -102,7 +102,7 @@ The machine identifier portion of the 6PN address is not related to the 14 chara
 
 You can create additional private networks within your organization. Custom private networks are useful when you need to isolate tenants or users for security purposes. For example, if you run a software-as-service platform on top of Fly.io, and your customers are running untrusted code on Machines or you want every customer to have their own secure app.
 
-Learn more about custom private networks and how to create them.
+Learn more about [custom private networks](/docs/networking/custom-private-networks/) and how to create them.
 
 ## Private Network VPN
 

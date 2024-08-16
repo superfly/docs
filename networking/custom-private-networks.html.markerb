@@ -140,6 +140,6 @@ Machine 2: fdaa:9:d844:a7b:e:33bd:e8b1:2
 
 Machine 1's network ID is embedded in `:2:45b:` and Machine 2's network ID is embedded in `:9:d844:`.
 
-Flycast addresses also include the network ID in the same 32-bit grouping. Run `fly ips list` to get an app's private IPv6 address.
+[Flycast](/docs/networking/flycast/) addresses also include the network ID in the same 32-bit grouping. Run `fly ips list` to get an app's private IPv6 address.
 
 Learn about [6PN addresses in detail](/docs/networking/private-networking/#6pn-addresses-in-detail).

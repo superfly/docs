@@ -36,7 +36,7 @@ Pick a unique name and create the required application to group machines togethe
 
 <%= partial "/docs/reference/machines/create_app" %>
 
-Note the `network` field. This is necessary to isolate the app from other private networks on the organization.
+Note the `network` field. This is necessary to isolate the app from other private networks on the organization. Learn more about [custom private networks](/docs/networking/custom-private-networks/).
 
 Allocate an IP address to the app. This makes our app accessible at the IP, and via `my-app-name.fly.dev`.
 

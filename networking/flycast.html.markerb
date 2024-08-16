@@ -65,11 +65,13 @@ You can use Flycast to expose an app in one Fly.io organization to another Fly.i
 
 ### Access an app from another private network
 
-You can also use Flycast to expose an app on one private network to another private network; the app won't be accessible via Flycast from its own network. Use the `--network` option to specify the network from which requests will originate:
+You can also use Flycast to expose an app on one private network to another private network in your organization; the app won't be accessible via Flycast from its own network. Use the `--network` option to specify the network from which requests will originate:
 
 ```cmd
 fly ips allocate-v6 --private --network custom-network-name
 ```
+
+Learn more about [custom private networks](/docs/networking/custom-private-networks/).
 
 ## Flycast and Fly.io DNS
 
