@@ -4,11 +4,19 @@ layout: docs
 nav: firecracker
 ---
 
-If you need to isolate users for security reasons, you can use custom private networks. Every organization gets a default [private network](https://fly.io/docs/networking/private-networking/) (6PN) and all the apps in that 6PN can communicate using `.internal` domains. A custom network is a distinct 6PN within your organization. Apps on separate 6PNs can never communicate unless explicitly configured to do so.
+When you need to isolate users for security reasons, you can use custom private networks. Every organization gets a default [private network](https://fly.io/docs/networking/private-networking/) (6PN) and all the apps in that 6PN can communicate using `.internal` domains. A custom network is a distinct 6PN within your organization. Apps on separate 6PNs can never communicate unless explicitly configured to do so.
 
-Custom 6PNs are a good solution for tenant isolation within a single organization. If you run an _Anything_-as-a-Service platform on top of Fly.io, then you can create custom 6PNs for secure isolation between customers, for example, a 6PN and app for each customer instance of your service or for each app with a Machine that's running untrusted customer code. When you destroy all the apps on a custom 6PN, then the network is also deleted. (TBD check this?)
+Custom 6PNs are a good solution for tenant isolation within a single organization. If you run an _Something_-as-a-Service platform on top of Fly.io, then you can create an app per customer on a custom 6PN for secure isolation between customers. For example, an app on a custom 6PN for each customer instance of your service, or for each customer running untrusted code on your platform. Customer Machines can communicate freely within their app (or between apps in their custom 6PN), but won't be able to reach Machines or apps on other custom 6PNs.
 
 Depending on your requirements for billing and app management, separate organizations per customer might be a better option for tenant or client isolation. You can use [unified billing](https://fly.io/docs/about/billing/#unified-billing) to manage billing for multiple organizations, or have each organization billed separately.
+
+## Network names and IDs
+
+Network names are unique within your organization. You can't reuse a network name to create a new network. We permanently associate a network ID with the network name the first time you specify the name and we never re-use that network ID within your organization. If you specify an existing network name when you create an app, we place the app on the associated network.
+
+If you destroy all the apps on a custom 6PN, the network technically still exists. 
+
+It's a best practice to use a formula for naming custom 6PNs, especially if you're going to have a lot of them or if you need to add more than one app to each custom 6PN. For example, `customerID-network` or `app-name-network`. Network names can have letters, numbers, and dashes, but must start with a letter.
 
 ## Create a custom private network
 
@@ -16,12 +24,24 @@ Depending on your requirements for billing and app management, separate organiza
 You can't add an existing app to a custom 6PN or change an app's 6PN. An app can only exist in one 6PN.
 </div>
 
-With the Machines API:
+Create a custom 6PN with the Machines API when you create an app with a `POST /v1/apps` request.
 
-TBD
+For example:
 
+```json
+curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps" \\
+  -d '{
+      "app_name": "my-app-name",
+      "org_slug": "personal",
+      "network": "my-custom-network-name"
+    }'
+```
 
-With flyctl:
+See the [Machines API docs](https://fly.io/docs/machines/api/) for more information about using the API.
+
+Create a custom 6PN with flyctl when you create an app:
 
 ```
 fly apps create <app name> --network <network name>
@@ -31,30 +51,49 @@ The `fly apps create` command creates an "empty" app with no Machines. You'll ne
 
 ## How apps on different 6PNs can connect
 
-Flycast
-Public IPs
-fly-replay apparently
+Private apps on different 6PNs can't communicate without being explicitly configured to do so.
+
+### Public apps
+
+If an app is public, then apps on different 6PNs can reach that app using the public IP addresses.
+
+### Private apps with Flycast
+
+You can use a Flycast private IPv6 address to expose an app on one private network to another private network; the app won't be accessible via Flycast from its own network. When you assign the Flycast address, use the `--network` option specify the network from which requests will originate. For example:
+
+```cmd
+fly ips allocate-v6 --private --network custom-network-name
+```
+
+Learn more about using [Flycast](/docs/networking/flycast/).
+
+### Forward requests with the `fly-replay` response header
+
+The `fly-replay` response header tells Fly Proxy to forward HTTP requests to another app or Machine in your organization. You can use `fly-replay` to deliver requests to customer apps or Machines on custom 6PNs without having to expose them publicly.
+
+For example, you could receive HTTP requests on a public router app and then forward the requests to specific apps or Machines on a customer's custom 6PN. The customer apps need to have services configured to expose a port on which to receive the requests. Make sure the customer apps don't have public IP addresses: apps created with the Machines API or with `fly apps create` don't get public IPs by default, but apps created with `fly launch` do.
+
+Learn more about using the [`fly-replay` response header](/docs/networking/dynamic-request-routing/#the-fly-replay-response-header).
 
 ## How to connect to Machines on custom 6PNs
 
-fly ssh console
-fly ssh sftp
-fly proxy
-???
+As an administrator with a multi-tenant setup, you might need to troubleshoot customer issues. You can use flyctl's networking commands to reach Machines on a customer's 6PN within your organization, including:
 
-## Checking which network an app or Machine is on
+- `fly ssh console --app <app name>` or `fly ssh console --machine <machine id>` to SSH into an app Machine. See the [`fly ssh console` docs](/docs/flyctl/ssh-console/).
+- `fly ssh sftp` commands to work with files on an app Machine. See the [`fly ssh sftp` docs](/docs/flyctl/ssh-sftp/).
+- `fly proxy <local:remote> [remote_host] --app <app name>` to create a WireGuard tunnel to an app Machine. See the [`fly proxy` docs](/docs/flyctl/proxy/).
 
-tbd some intro text
+## Check which network an app or Machine is on
+
+You can retrieve the network name for all apps in your organization and you can also verify that an apps or Machines are on different networks by examining the private IPv6 addresses.
 
 ### Retrieve network names
 
-It's a best practice to use a formula for naming custom 6PNs, especially if you're going to have a lot of them or if you need to add more than one app to each custom 6PN.
-
-Right now the only way to get an apps network name is by listing all the apps in an organization with the Machines API.
+Right now the only way to get an app's network name is by listing all the apps in an organization with the Machines API.
 
 `GET /v1/apps?org_slug=<org name>`
 
-**Response:**
+**Example response:**
 
 ```json
 {
@@ -79,7 +118,7 @@ See the [Machines API docs](https://fly.io/docs/machines/api/) for more informat
 
 ### Network ID embedded in private IPv6 addresses
 
-Each 6PN is identified by a network ID, which is a 32-bit identifier that is embedded in the IPv6 address of the 6PN.
+Each 6PN is identified by a network ID, which is encoded in 32-bits of each private IPv6 address.
 
 You can confirm whether two Machines are on different networks by comparing their private IPv6 addresses. You can get a Machine's 6PN address in one of the following ways:
 
@@ -94,7 +133,9 @@ Machine 1: fdaa:2:45b:a7b:174:db43:d3c6:2
 Machine 2: fdaa:9:d844:a7b:e:33bd:e8b1:2
 ```
 
-For Machine 1, the network ID is embedded in `:2:45b:` and for Machine 2 the network ID is embedded in `:9:d844:`. We convert the hexadecimal to decimal for the network ID.
+For Machine 1, the network ID is embedded in `:2:45b:`, and for Machine 2 the network ID is embedded in `:9:d844:`.
+
+Flycast addresses also include the network ID in the same 32-bit grouping.
 
 Learn about [6PN addresses in detail](/docs/networking/private-networking/#6pn-addresses-in-detail).
 
