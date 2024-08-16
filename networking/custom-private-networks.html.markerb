@@ -10,15 +10,15 @@ Every organization gets a default [private network](https://fly.io/docs/networki
 
 ## When to use custom 6PNs
 
-Custom 6PNs are a good solution for tenant isolation within a single organization. If you run an _Something_-as-a-Service platform on top of Fly.io, then you can create an app per customer on a custom 6PN for secure isolation between customers. For example, an app on a custom 6PN for each customer instance of your service, or for each customer running untrusted code on your platform. Customer Machines can communicate freely within their app (or between apps in their custom 6PN), but won't be able to reach Machines or apps on other custom 6PNs.
+Custom 6PNs are a good solution for tenant isolation within a single organization. If you run a _Something_-as-a-Service platform on top of Fly.io, then you can create an app per customer on a custom 6PN for isolate customers from one another. For example, you could have an app on a custom 6PN for each customer instance of your service, or for each customer running untrusted code on your platform. Customer Machines can communicate freely within their app (or between apps in their custom 6PN), but won't be able to reach Machines or apps on other custom 6PNs.
 
 Depending on your requirements for billing and app management, separate organizations per customer might be a better option for tenant or client isolation. You can use [unified billing](https://fly.io/docs/about/billing/#unified-billing) to manage billing for multiple organizations, or have each organization billed separately.
 
 ## Network names and IDs
 
-Network names are unique within your organization. You can't reuse a network name to create a new network. We permanently associate a network ID with the network name the first time you specify the name and we never re-use that network ID within your organization. If you specify an existing network name when you create an app, we place the app on the associated network.
+Network names are unique within your organization. We permanently associate a network ID with the network name the first time you specify the name and we never re-use that network ID within your organization. If you specify an existing network name when you create an app, we place the app on the associated network.
 
-If you destroy all the apps on a custom 6PN, the network technically still exists. 
+If you destroy all the apps on a custom 6PN, the network technically still exists.
 
 It's a best practice to use a formula for naming custom 6PNs, especially if you're going to have a lot of them or if you need to add more than one app to each custom 6PN. For example, `customerID-network` or `app-name-some-id-network`. Network names can have letters, numbers, and dashes, but must start with a letter.
 
@@ -63,7 +63,7 @@ If an app is public, then apps on different 6PNs can reach that app using the pu
 
 ### Private apps with Flycast
 
-You can use a Flycast private IPv6 address to expose an app on one private network to another private network; the app won't be accessible via Flycast from its own network. When you assign the Flycast address, use the `--network` option to specify the network from which requests will originate. For example:
+You can use a Flycast private IPv6 address to expose an app on one 6PN to another 6PN; the app won't be accessible via Flycast from its own network. When you assign the Flycast address, use the `--network` option to specify the name of the network from which requests will originate. For example:
 
 ```cmd
 fly ips allocate-v6 --private --network custom-network-name
@@ -75,7 +75,7 @@ Learn more about using [Flycast](/docs/networking/flycast/).
 
 The `fly-replay` response header tells Fly Proxy to forward HTTP requests to another app or Machine in your organization. You can use `fly-replay` to deliver requests to customer apps or Machines on custom 6PNs without having to expose them publicly.
 
-For example, you could receive HTTP requests on a public "router" app and then forward the requests to specific apps or Machines on a customer's custom 6PN. The customer apps need to have services configured to expose a port on which to receive the requests. Make sure the customer apps don't have public IP addresses: apps created with the Machines API or with `fly apps create` don't get public IPs by default, but most apps created with `fly launch` do.
+For example, you could receive HTTP requests on a public "router" app and then forward the requests to specific apps or Machines on  different customer 6PNs. The customer apps need to have services configured to expose a port on which to receive the requests. Make sure the customer apps don't have public IP addresses: apps created with the Machines API or with `fly apps create` don't get public IPs by default, but most apps created with `fly launch` do.
 
 Learn more about using the [`fly-replay` response header](/docs/networking/dynamic-request-routing/#the-fly-replay-response-header).
 
