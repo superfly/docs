@@ -188,9 +188,11 @@ Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (se
 On-demand GPU pricing:
 
 * A10: $1.50/hr per GPU
-* L40S: $1.25/hr per GPU
+* L40S: $1.25/hr per GPU*
 * A100 40G PCIe: $2.50/hr per GPU
 * A100 80G SXM: $3.50/hr per GPU
+
+<sup>*L40S GPUs prices were lowered starting Aug. 15, 2024. More details in [the blog post](https://fly.io/blog/cutting-prices-for-l40s-gpus-in-half/)<sub>
 
 Usage terms:
 
