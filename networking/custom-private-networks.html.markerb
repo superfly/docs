@@ -4,13 +4,13 @@ layout: docs
 nav: firecracker
 ---
 
-When you need to isolate users for security reasons, you can use custom private networks. 
+You can isolate users, data, or code using custom private networks. 
 
-Every organization gets a default [private network](https://fly.io/docs/networking/private-networking/) (6PN) and all the apps in that 6PN can communicate using `.internal` domains. A custom network is a distinct 6PN within your organization. Apps on separate 6PNs can never communicate unless explicitly configured to do so.
+Every organization gets a default [private network](https://fly.io/docs/networking/private-networking/) (6PN) and all the apps in that network can communicate privately using `.internal` domains. When you create a new app, you can choose to place it on a distinct custom 6PN within your organization. Apps on separate 6PNs can never communicate unless explicitly configured to do so.
 
-## When to use custom 6PNs
+## When to use custom private networks
 
-Custom 6PNs are a good solution for tenant isolation within a single organization. If you run a _Something_-as-a-Service platform on top of Fly.io, then you can create an app per customer on a custom 6PN for isolate customers from one another. For example, you could have an app on a custom 6PN for each customer instance of your service, or for each customer running untrusted code on your platform. Customer Machines can communicate freely within their app (or between apps in their custom 6PN), but won't be able to reach Machines or apps on other custom 6PNs.
+Custom private networks (6PNs) are a good solution for tenant isolation within a single organization. If you run a _Something_-as-a-Service platform on top of Fly.io, then you can create an app on a custom 6PN per customer for isolation. For example, you could have an app on a custom 6PN for each customer instance of your service, or for each customer running untrusted code on your platform. Customer Machines can communicate freely within their app (or between apps in their network), but won't be able to reach Machines or apps on other 6PNs.
 
 Depending on your requirements for billing and app management, separate organizations per customer might be a better option for tenant or client isolation. You can use [unified billing](https://fly.io/docs/about/billing/#unified-billing) to manage billing for multiple organizations, or have each organization billed separately.
 
@@ -20,7 +20,7 @@ Network names are unique within your organization. We permanently associate a ne
 
 If you destroy all the apps on a custom 6PN, the network technically still exists.
 
-It's a best practice to use a formula for naming custom 6PNs, especially if you're going to have a lot of them or if you need to add more than one app to each custom 6PN. For example, `customerID-network` or `app-name-some-id-network`. Network names can have letters, numbers, and dashes, but must start with a letter.
+It's a best practice to use a formula for naming custom 6PNs, especially if you're going to have a lot of them or if you need to add more than one app to each custom 6PN. For example, `customerID-network` or `appName-someID-network`. Network names can have letters, numbers, and dashes, but must start with a letter.
 
 ## Create a custom private network
 
@@ -59,7 +59,7 @@ Private apps on different 6PNs can't communicate without being explicitly config
 
 ### Public apps
 
-If an app is public, then apps on different 6PNs can reach that app using the public IP addresses.
+If an app has a publicly reachable service, then apps on different 6PNs can reach that service using the public IP addresses.
 
 ### Private apps with Flycast
 
