@@ -26,13 +26,13 @@ If your app doesn't already have multiple Machines with autostop/autostart confi
 
 #### 1. Set up autostop/autostart
 
-Use [Fly Proxy autostop/autostart](/docs/launch/autostop-autostart/#apps-that-shut-down-when-idle) to automatically stop and start Machines based on traffic. Keep one or more Machines running in your primary region if you want to. Example from `fly.toml` config:
+Use [Fly Proxy autostop/autostart](/docs/launch/autostop-autostart/) to automatically stop and start Machines based on traffic. Keep one or more Machines running in your primary region if you want to. Example from `fly.toml` config:
 
 ```toml
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = true # Fly Proxy stops Machines based on traffic
+  auto_stop_machines = "stop" # Fly Proxy stops Machines based on traffic
   auto_start_machines = true # Fly Proxy starts Machines based on traffic 
   min_machines_running = 0 # No. of Machines to keep running in primary region
   [http_service.concurrency]
