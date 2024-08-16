@@ -1,0 +1,14 @@
+---
+title: PostgreSQL
+layout: framework_docs_overview
+order: 5
+---
+
+Your application comes initially configured for a single [Fly Postgres](https://fly.io/docs/postgres/) machine.
+That is great for development, but for production we need redundancy and scalability.  With but a [few commands](https://fly.io/docs/postgres/advanced-guides/high-availability-and-global-replication/) we can create a HA cluster in my primary region and read only replicas elsewhere.
+
+If you are interested in a managed offering, [Supabase Postgres](https://fly.io/docs/reference/supabase/) is in public alpha.
+
+And there is no lock in here.  We have a list of [recommended external providers](https://fly.io/docs/postgres/getting-started/what-you-should-know/#recommended-external-providers), but you are free to host your database literally anywhere.
+
+Before moving on, one last observation on the relational DB. While you want and need your application to be on the internet, you are much better off if your relational database is NOT directly exposed to the internet, but can only be accessed via your application. That’s the value of an [internal private network](https://fly.io/docs/networking/private-networking/).  This too was configured automatically for you.
