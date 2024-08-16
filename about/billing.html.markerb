@@ -44,7 +44,7 @@ Started Machines are billed per second that they're running (the time they spend
 
 For example, a Machine described in your dashboard as "shared-1x-cpu@1024MB" is the “shared-cpu-1x” Machine size preset, which comes with 256MB RAM, plus additional RAM (1024MB - 256MB = 768MB). For pricing and available CPU/RAM combinations, see [Compute pricing](/docs/about/pricing/#compute).
 
-Stopped Machines are billed based on their root file system (rootfs) usage per second (the time they spend in the `stopped` state) by $0.15 per GB per month.
+Stopped Machines are billed based on their root file system (rootfs) usage per second (the time they spend in the `stopped` state) by $0.15 per GB per month. The same goes for `suspended` machines.
 
 For example, a Machine described in your dashboard as having 1GB of rootfs stopped for 10 days in the entire month will cost $0.05. If you have 3 stopped Machines of 1GB rootfs each stopped for 30 days it will cost $0.45 ($0.15 x 3).
 
