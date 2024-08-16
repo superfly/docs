@@ -39,5 +39,5 @@ When you have more than one org, flyctl prompts you to choose an organization wh
 
 ## Other kinds of isolation and access control
 
-- When you only need app isolation within an org, you can use [custom private networks](https://community.fly.io/t/fly-ssh-with-custom-network/19296) to isolate apps from one another by creating an app with `fly apps create` and the `--network` option. More on this feature coming soon.
+- When you only need app isolation within an org, you can use [custom private networks](/docs/networking/custom-private-networks/) to isolate apps from one another by creating an app with `fly apps create` and the `--network` option.
 - When you want user or 3rd-party access control, you can use [deploy](https://community.fly.io/t/deploy-tokens/11895) and [org-scoped tokens](https://community.fly.io/t/org-scoped-tokens/13194) to limit access to apps or orgs.
