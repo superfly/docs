@@ -57,7 +57,7 @@ Check out our blueprint for [Multi-region databases and fly-replay](/docs/bluepr
 
 `fly-replay` can replay requests across apps in the same organization. Think of a router app for a FaaS that wants to spin up a customer [Machine](/docs/machines/) on demand.
 
-To send the request to an instance of a different app in the same organization, in the nearest region that has one:
+To send the request to a different app in the same organization, in the nearest region that has a Machine:
 
 ```
 fly-replay: app=app-in-same-org
@@ -79,7 +79,7 @@ The request replay target may need to know why the request was routed to it:
 fly-replay: region=sjc;state=captured_write
 ```
 
-Fields can be stacked; for instance, to send the request on to an instance of the app "app-in-same-org" in the sjc region:
+Fields can be stacked; for instance, to send the request on to an Machine in the app "app-in-same-org" in the sjc region:
 
 ```
 fly-replay: region=sjc;app=app-in-same-org
