@@ -14,13 +14,15 @@ Networking on Fly.io.
 
 - **[Private networking](/docs/networking/private-networking):** Learn about Fly.io's IPv6 private network (6PN) and DNS on Fly Machines.
 
+- **[Custom Private Networks](/docs/networking/custom-private-networks):** Isolate users, data, and code on custom private networks.
+
 - **[Flycast - Private Fly Proxy Services](/docs/networking/flycast):** Route requests to private apps through Fly Proxy to take advantage of features like load balancing and autostop/autostart based on traffic.
  
-- **[Dynamic request routing](/docs/networking/dynamic-request-routing/):** Use the `fly-replay` response header to route requests to other apps and regions.
+- **[Dynamic request routing](/docs/networking/dynamic-request-routing/):** Use Fly.io request and response headers to customize request routing to regions, apps, and even specific Machines.
 
 - **[Custom domains](/docs/networking/custom-domain/):** Add a custom domain for your app and troubleshoot certificate creation.
 
-- **[Automate the certificate process with the GraphQL API](/docs/networking/custom-domain-api):** If you need to issue multiple certificates automatically for custom domains, you can do that with the GraphQL API.
+- **[Automate the certificate process with the GraphQL API](/docs/networking/custom-domain-api):** Issue multiple certificates automatically for custom domains with the GraphQL API.
 
 - **[HTTP request headers](/docs/networking/request-headers/):** Fly.io-specific and standard HTTP headers added by the HTTP connection handler.
 

@@ -12,7 +12,7 @@ Securing a public cloud platform like Fly.io is a hard problem, and we take it s
 _Fly.io security practices and features._ 
 
 - **[SSO for organizations](/docs/security/sso/):** Set up org-wide Single Sign-on with Google or GitHub.
-- **[Remove a member from an organization](/docs/security/remove-org-member/):** How to remove a user from an organization and the subsequent steps to help keep the organization secure.
+- **[Remove a member from an organization](/docs/security/remove-org-member/):** Remove a user from an organization and take steps to help keep the organization secure.
 - **[Built-in TLS termination](/docs/security/tls-termination/):** You get TLS termination by default for your web apps.
 - **[Fly.io security practices and compliance](/docs/security/security-at-fly-io/):** Learn about our security practices for the Fly.io platform.
 
@@ -22,7 +22,7 @@ _Fly.io security practices and features._
 
 _Tokens on Fly.io._
 
-- **[Access tokens](/docs/security/tokens/):** Learn about tokens and how to create them to manage access to organizations and apps.
+- **[Access tokens](/docs/security/tokens/):** Use tokens to manage access to organizations and apps.
 - **[OpenID Connect](/docs/security/openid-connect/):** Use OpenID Connect (OIDC) to manage access to 3rd party services.
 
 ---
