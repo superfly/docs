@@ -32,7 +32,7 @@ In the following diagram, the app is running one Machine in each of three region
 **Note:** To illustrate the `fly-replay` concept in our diagram, we show the replayed HTTP request going directly from Machines in Rio de Janeiro and Amsterdam to the Machine in Chicago. In real life, Fly Proxy routes the request back through an edge node first. The cost of this routing is small, but if extreme efficiency is important for your use case, you can run your app in more regions to mitigate that.
 </div>
 
-Your app is running on Fly.io, and the database can be hosted on Fly.io—in which case the regions will match up—or on another provider where you can pick regions close to the Fly.io region of your Machines.
+Your app is running on Fly.io. The database can also run on Fly.io—in which case the app and database regions will match—or on another provider where you can pick the region closest to the Fly.io region of your Machines.
 
 ## How to make it work for your app
 
