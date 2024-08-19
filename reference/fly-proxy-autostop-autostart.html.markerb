@@ -1,0 +1,56 @@
+---
+title: Fly Proxy autostop/autostart
+layout: docs
+nav: firecracker
+---
+
+<figure>
+  <img src="/static/images/docs-stop-start.webp" alt="">
+</figure>
+
+With Fly Proxy autostop/autostart, you can scale your app for peak loads and run those Machines only when needed to save on resource costs; you [don't pay for Machine CPU and RAM](/docs/about/pricing/#stopped-fly-machines) when they're in a `stopped` or `suspended` state. Fly Proxy automatically stops (or suspends) and starts existing Machines based on incoming requests to your app, and you have the option to keep a minimum number of machines running at all times in your primary region.
+
+Autostop/autostart works for Fly Apps with a service configured in the `fly.toml` file, which generally covers publicly available apps that accept requests from the internet. But you can also use autostart/autostart for private apps by setting up services and using a Flycast private IPv6 address. See [Flycast - Private Fly Proxy Services](/docs/networking/flycast/) and [Autostop/autostart private apps](/docs/blueprints/autostart-internal-apps/).
+
+For apps that [shut down automatically when idle](/docs/launch/autostop-autostart/#apps-that-shut-down-when-idle) and don't need autostop, the Fly Proxy can still restart your app's Machines when there's traffic.
+
+Learn how to [configure autostop/autostart](/docs/launch/autostop-autostart/).
+
+## How Fly Proxy autostop/autostart works
+
+Fly Proxy runs a process to determine whether an app has excess capacity every few minutes.
+
+<div class="callout">
+Autostop/autostart only works on existing Machines and never creates or destroys Machines for you. The maximum number of running Machines is the number of Machines you've created for your app using `fly scale count` or `fly machine clone`. Learn more about [scaling the number of Machines](/docs/apps/scale-count/). 
+</div>
+
+### Fly Proxy process to stop or suspend Machines
+
+When `auto_stop_machines` is set to `"stop"` or `"suspend"` in your `fly.toml`, the proxy looks at Machines running in a single region and uses the concurrency [`soft_limit` setting](/docs/reference/configuration/#the-http_service-section) for each Machine to determine if there's excess capacity. If the proxy decides there's excess capacity, it stops or suspends exactly one Machine. The proxy repeats this process every few minutes, stopping or suspending only one Machine per region, if needed, each time.
+
+If you have the [`kill_signal` and `kill_timeout` options](/docs/reference/configuration/#runtime-options) configured in your `fly.toml` file, then Fly Proxy uses those settings when it stops a Machine.
+
+Fly Proxy determines excess capacity per region as follows:
+
+* If there's more than one Machine in the region:
+  * the proxy determines how many running Machines are over their `soft_limit` setting and then calculates excess capacity: `excess capacity = num of machines - (num machines over soft limit + 1)`
+  * if excess capacity is 1 or greater, then the proxy stops or suspends one Machine
+* If there's only one Machine in the region:
+  * the proxy checks if the Machine has any traffic
+  * if the Machine has no traffic (a load of 0), then the proxy stops or suspends the Machine
+
+### Fly Proxy process to start Machines
+
+When `auto_start_machines = true` in your `fly.toml`, the Fly Proxy restarts a Machine in the nearest region when required.
+
+Fly Proxy determines when to start a Machine as follows:
+
+* The proxy waits for a request to your app.
+* If all the running Machines are above their `soft_limit` setting, then the proxy starts a stopped or suspended Machine in the nearest region (if there are any stopped or suspended Machines).
+* The proxy routes the request to the newly started Machine.
+
+## Related topics
+
+- [Configure autostop/autostart for Fly Launch apps](/docs/launch/autostop-autostart/)
+- [Autostop/autostart private apps](/docs/blueprints/autostart-internal-apps/)
+- [Fly Proxy features](/docs/reference/fly-proxy)

@@ -19,6 +19,7 @@ Next try capturing a new audio clip. It will be transcribed automatically.
 You provisioned a new Machine, this time with an [L40S](https://www.nvidia.com/en-us/data-center/l40s/) GPU.
 It will stop when not in use. It will restart when a new request comes in.
 It is only available on the private network using [Flycast](https://fly.io/docs/networking/flycast/).
+
 It runs [OpenAI Whisper](https://openai.com/index/whisper/) accessed via a [COG](https://github.com/replicate/cog) interface.
 
 This process involves taking audio clips from Tigris, passing them to Whisper, and updating Postgres with the results.

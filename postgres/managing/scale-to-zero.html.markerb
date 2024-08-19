@@ -14,7 +14,7 @@ If you select the Development configuration when you [create your Fly Postgres a
 After one hour, if there are no open connections, then the database shuts down and waits to restart until something tries to connect again. If there are open connections, then the database stays running and checks for open connections again in one hour.
 
 <div class="callout">
-You might need to configure any apps that connect to your Postgres app to scale to zero as well, otherwise your Postgres database will never have zero connections and will never scale down. Your app might also need to be able to wait for the database to start back up. You can learn more about [making apps exit when idle](/docs/launch/autostart-stop/#stop-a-machine-by-terminating-its-main-process).
+You might need to configure any apps that connect to your Postgres app to scale to zero as well, otherwise your Postgres database will never have zero connections and will never scale down. Your app might also need to be able to wait for the database to start back up. You can learn more about [making apps exit when idle](/docs/launch/autostop-autostart/#apps-that-shut-down-when-idle).
 </div>
 
 ## Turn off the scale to zero feature

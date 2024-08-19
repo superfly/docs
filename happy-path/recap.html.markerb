@@ -20,3 +20,5 @@ More info about Fly.io:
 
   * [Support](https://fly.io/docs/about/support/)
   * [Pricing](https://fly.io/docs/about/pricing/)
+  * [Application Monitoring by Sentry](../../reference/sentry/)
+  * [Application Security by Arcjet](../../reference/arcjet/)

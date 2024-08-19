@@ -20,7 +20,7 @@ When your app receives write requests, you can use the `fly-replay` response hea
 
 ## How it works
 
-The [`fly-replay` response header](/docs/networking/dynamic-request-routing/) instructs the Fly proxy to redeliver (replay) the original request to another region or Machine in your app, or even another app in your organization. In this case, you’ll be replaying write requests to the Machine in the primary region. Using `fly-replay` to replay write requests is a general pattern that can be applied in most languages and frameworks for databases with one primary and multiple read replicas.
+The [`fly-replay` response header](/docs/networking/dynamic-request-routing/) instructs Fly proxy to redeliver (replay) the original request to another region or Machine in your app, or even another app in your organization. In this case, you’ll be replaying write requests to the Machine in the primary region. Using `fly-replay` to replay write requests is a general pattern that can be applied in most languages and frameworks for databases with one primary and multiple read replicas.
 
 In the following diagram, the app is running one Machine in each of three regions. The primary region is Chicago, and this is where the read/write primary database resides. There are Machines in two other regions, Rio de Janeiro and Amsterdam, each of which has a read replica. This example uses three regions for simplicity, but you could deploy in more than three regions and have more than one Machine per region connecting to the same read replica.
 
@@ -32,7 +32,7 @@ In the following diagram, the app is running one Machine in each of three region
 **Note:** To illustrate the `fly-replay` concept in our diagram, we show the replayed HTTP request going directly from Machines in Rio de Janeiro and Amsterdam to the Machine in Chicago. In real life, Fly Proxy routes the request back through an edge node first. The cost of this routing is small, but if extreme efficiency is important for your use case, you can run your app in more regions to mitigate that.
 </div>
 
-Your app is running on Fly.io, and the database can be hosted on Fly.io—in which case the regions will match up—or on another provider where you can pick regions close to the Fly.io region of your Machines.
+Your app is running on Fly.io. The database can also run on Fly.io—in which case the app and database regions will match—or on another provider where you can pick the region closest to the Fly.io region of your Machines.
 
 ## How to make it work for your app
 
@@ -51,7 +51,7 @@ Your app can check the `FLY_REGION` against the `PRIMARY_REGION`, and modify the
 
 ### Replay write requests to the primary region
 
-Your app can detect write requests and send a response with the `fly-replay` header that tells the Fly Proxy to replay the whole request to the Fly Machine in the primary region.
+Your app can detect write requests and send a response with the `fly-replay` header that tells Fly Proxy to replay the whole request to the Fly Machine in the primary region.
 
 #### Detect write requests
 
