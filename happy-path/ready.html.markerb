@@ -1,20 +1,21 @@
 ---
-title: Beyond "hello fly"
-layout: docs
-nav: demo
+title: Ready
+layout: framework_docs_overview
 order: 1
 ---
 
-If you're not satisfied by a `hello world`, or even a `hello world` with a database application, it's because you know that a real-world application has at a minimum the following components:
+You are not satisfied by a `hello world` or even a `hello world` with a database application.
+You know that a real world application has at a minimum the following components:
 
-* An HTML form and a database; typically a relational database.
+* A HTML form and a database.  This database is typically a relational database.
 * The ability to handle media files or documents, generally using S3.
-* A multi-user and realtime component, where changes made by one person in one location are reflected instantly in the browser of another person.
+* A multi-user and realtime component, where changes made by one person in one location are relected instantly in the browser of another person.
 
-While this doesn't seem like a big ask, experience shows that to get a fully-functional app running smoothly, you need a whole bunch of things; here are a few examples: Anycast routing, load balancers, DNS certificates, WebSockets, an internal private network, a relational database, an object store, and an in-memory database. And the knowledge of how to connect them all together.
+While this doesn't seem like a tall ask, experience has shown that in order to get such an app running smoothly, you need a whole bunch of things; here are a few examples: anycast routing, load balancers, dns certificates, web sockets, an internal private network, a relational database, an object store, and an in-memory database. And the knowledge of how to connect them all together.
 
-Set up for a complete app typically takes a _minimum_ of an afternoon's worth of work, even by experts familiar with their target platform.  With emphasis on the word _minimum_ as there is almost always a surprise, and often several.
+Taken all together, this typically takes a **minimum** of an afternoon's worth of work, even by experts familiar with their target platform.  With emphasis on the word _minimum_ as there always is a surprise, and often several.
 
-In the next few minutes you'll have all this up and running, and can leisurely explore how the pieces fit together.  You'll even have enough time left over to integrate in AI functionality making use of GPUs.
+In the next few minutes we will have all this up and running, and can leisurely explore how the pieces fit together.  We even will have enough time left over
+to integrate in AI functionality making use of GPUs.
 
-**Next:** [What is this deep dive demo anyway?](../aim/)
+With that understanding of requirements in place, lets proceed on.... [Aim](../aim/)

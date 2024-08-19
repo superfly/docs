@@ -1,21 +1,33 @@
 ---
-title: Deep dive demo
-layout: docs
-nav: demo
+title: The Happy Path
+layout: framework_docs
 toc: false
 ---
 
-You probably landed on this page because somebody recommended Fly.io to you. You're curious, and you want to know more before you commit.
+You landed on this page because somebody recommended fly.io to you,
+you are a bit curious, but you want to know more before you commit.
 
-If you came from our [Speedrun](https://fly.io/speedrun) or [Getting started](https://fly.io/docs/getting-started/) pages, maybe you want to not only be up and running fast, you want to feel confident that you're making a good decision;  choosing a platform that can both support you now, and scale with you later on as you grow.
+You are aware that there is a [Speedrun](https://fly.io/speedrun) and
+a [Quick Start](../getting-started/launch/), but perhaps they feel a bit
+too _Ready!  Fire!  Aim!_ for you.  You want to not only be up and running,
+you want to feel confident that you are heading in the right direction.  A
+direction that can both scale and support your present and future needs.
 
-Maybe you're concerned about lock in. You want to know that you can
+You are concerned about lock in.  You want to be confident that you can
 use services from other places and even eject entirely and move your entire
 application elsewhere if things don't work out.
 
-If you want to explore more deeply but in a time-boxed way, then you're in the right place. You should be up and running within minutes, and have enough of the hour left over to spend some time understanding what you just did and run a few commands and see what they do.
+But most of all, you want to explore in a time boxed way as you are
+a busy person.  If you don't get a good feeling within an hour, you are out
+of here.  If you do have a good feeling, then perhaps you'd consider
+sticking around for even deeper dives into areas that interest you.
 
-If you don't get a good feeling within an hour, you're out of here. If you do get a good feeling, then consider
-sticking around to experiment and learn more about features that interest you. And when you're done, you can delete everything and launch the application that you brought here to launch.
+If so, you have come to the right place.  You should be up and
+running within minutes, and have enough of the hour left over so
+that you can spend some time understanding what you just did and
+run a few commands and see what they do.
 
-**Next:** [Beyond `hello fly`](/docs/happy-path/ready/)
+And when you are done, you can delete everything and then launch the
+application that you came here for.
+
+Let's get started... [Ready](./ready/) ... [Aim](./aim/) ... [Fire](./fire/)!
