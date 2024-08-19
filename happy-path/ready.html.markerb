@@ -2,6 +2,7 @@
 title: Beyond "hello fly"
 layout: docs
 nav: demo
+toc: false
 order: 1
 ---
 
@@ -16,5 +17,7 @@ While this doesn't seem like a big ask, experience shows that to get a fully-fun
 Set up for a complete app typically takes a _minimum_ of an afternoon's worth of work, even by experts familiar with their target platform.  With emphasis on the word _minimum_ as there is almost always a surprise, and often several.
 
 In the next few minutes you'll have all this up and running, and can leisurely explore how the pieces fit together.  You'll even have enough time left over to integrate in AI functionality making use of GPUs.
+
+---
 
 **Next:** [What is this deep dive demo anyway?](../aim/)

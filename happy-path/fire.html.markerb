@@ -35,6 +35,9 @@ Once you're back and/or rested up, explore app and add-on components. Feel free 
   * [Tigris](../tigris/)
   * [Redis](../redis/)
 
-Finally, as an added treat, you can add some AI functionality, in this case speech recognition using [Whisper](../whisper/).
+---
 
-When you're all done, visit the [recap](../recap).
+**Next:** 
+
+- As an extra treat, you can add some AI functionality: in this case speech recognition using [Whisper](../whisper/).
+- When you're all done, visit the [recap](../recap).

@@ -27,3 +27,5 @@ The Node code for this is about [two dozen lines of code](https://github.com/fly
 and for Rails is about a [dozen](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/jobs/whisper_transcribe_job.rb#L5-L16).
 
 And, as always, no lock in here. You can opt to replace this with a machine hosted by [Replicate](https://replicate.com/) or elsewhere.
+
+**Next:** [Recap](/docs/happy-path/recap)
