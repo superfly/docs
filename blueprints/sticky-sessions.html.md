@@ -7,8 +7,8 @@ date: 2024-07-17
 ---
 
 In a number of scenarios, it is important to ensure that certain requests are
-routed to a specific machine.  This frequently is expressed in the form of
-wanting an entire user's session to be processed by the same machine.
+routed to a specific Machine.  This frequently is expressed in the form of
+wanting an entire user's session to be processed by the same Machine.
 
 There are two basic approaches to addressing this with Fly.io:
   * [fly-force-instance-id](https://fly.io/docs/networking/dynamic-request-routing#the-fly-force-instance-id-request-header) request header
@@ -19,7 +19,7 @@ There are two basic approaches to addressing this with Fly.io:
 This is the preferred approach, but it does require you to have control over the client, typically a browser.  The example below uses Rails' Hotwire [Turbo](https://turbo.hotwired.dev/) with [Stimulus](https://stimulus.hotwired.dev/) to
 send the required header.
 
-For this to work, the client needs some way of knowing what machine to route requests to.  This can be accomplished by adding attributes to the `<body>` tag in HTML responses.  With Rails, those tags would be found in
+For this to work, the client needs some way of knowing what Machine to route requests to.  This can be accomplished by adding attributes to the `<body>` tag in HTML responses.  With Rails, those tags would be found in
 `app/views/layouts/application.html.erb`.
 
 An example `<body>` tag:
@@ -29,7 +29,7 @@ An example `<body>` tag:
    data-controller="sticky-session">
 ```
 
-These attributes identify the machine instance to direct future requests to, and the name of the Stimulus controller to be used to make this happen.
+These attributes identify the Machine instance to direct future requests to, and the name of the Stimulus controller to be used to make this happen.
 
 Place the following into `app/javascript/controllers/sticky-session.js`:
 
@@ -66,7 +66,7 @@ This code will subscribe and unsubscribe from
 
 This approach can be implemented entirely on the server.  This will require an additional "hop" to route requests and [is limited to payloads of 1 megabyte](https://fly.io/docs/networking/dynamic-request-routing/#limitations).
 
-The example below creates [Express Middleware](https://expressjs.com/en/guide/using-middleware.html) that creates cookies containing the desired machine id, and then replays requests that arrive at the wrong destination:
+The example below creates [Express Middleware](https://expressjs.com/en/guide/using-middleware.html) that creates cookies containing the desired Machine id, and then replays requests that arrive at the wrong destination:
 
 ```js
 
@@ -97,7 +97,7 @@ app.use((request, response, next) => {
   }
 });
 
-// For demonstration purposes: show the machine id that produced the response
+// For demonstration purposes: show the Machine id that produced the response
 app.get("/", (_request, response) => {
   response.send(`FLY_MACHINE_ID: ${JSON.stringify(process.env.FLY_MACHINE_ID)}`);
 });
@@ -111,12 +111,11 @@ app.listen(port, () => {
 
 The key code here appears directly after the `// Make sessions sticky` comment.
 
-If the `FLY_MACHINE_ID` environment variable is not set, this code is not running on a Fly.io machine, and this middleware immediately exits.
+If the `FLY_MACHINE_ID` environment variable is not set, this code is not running on a Fly.io Machine, and this middleware immediately exits.
 
 If the `fly-machine-id` cookie is not set, then this presumably is the first request of a session, and the cookie is
-set in order to ensure that future requests are routed to the same destination.
+set to ensure that future requests are routed to the same destination.
 
-If the cookie does not match the environment variable, then a response containing a `Fly-Replay` header is created.  This will cause the Fly.io proxy to replay the request to the desired machine.
+If the cookie does not match the environment variable, then a response containing a `Fly-Replay` header is created, which triggers the Fly Proxy to replay the request to the desired Machine.
 
 If none of these conditions is satisfied, the middleware passes on the request to the next handler.
-

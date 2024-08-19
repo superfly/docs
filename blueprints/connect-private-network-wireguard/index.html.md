@@ -25,7 +25,7 @@ To get started, you need to have the following:
 
 ## Steps
 
-When you create a WireGuard peer, you need the following information:
+To create a WireGuard peer, you need the following information:
 
 - The organization you want to create the peer in, such as your personal organization.
 - The [Fly.io region](/docs/reference/regions/) that’s closest to you.
@@ -46,7 +46,6 @@ You can figure out your list of organizations with `fly orgs list`:
 $ fly orgs list
 Name                 Slug                 Type
 ----                 ----                 ----
-fly-gpus             fly-gpus             SHARED
 Xe Iaso              personal             PERSONAL
 devrel-demos         devrel-demos         SHARED
 ```
@@ -98,7 +97,7 @@ Import the tunnel from the configuration file and then turn it on. macOS may pro
   Your browser does not support the video tag.
 </video>
 
-The above video shows how you import a WireGuard config on macOS. For clarity's sake, here are the steps:
+The above video shows how you import a WireGuard config on macOS. Here's a summary of the steps:
 
 - Click on the "Import tunnel(s) from file" button.
 - Select the configuration file you saved earlier.
@@ -111,7 +110,7 @@ On a Linux system you can use [wg-quick](https://www.man7.org/linux/man-pages/ma
 wg-quick up camellia.conf
 ```
 
-To test it, ping `_api.internal` (on macOS you need to run `ping6 _api.internal` because it's an IPv6 address):
+To test the connection, ping `_api.internal` (on macOS you need to run `ping6 _api.internal` because it's an IPv6 address):
 
 ```
 $ ping6 _api.internal -c4
@@ -126,7 +125,7 @@ PING6(56=40+8+8 bytes) fdaa:3:9018:a7b:9285:0:a:602 --> fdaa:3:9018::3
 round-trip min/avg/max/std-dev = 9.741/42.809/97.667/35.111 ms
 ```
 
-To test this with an instance of [Ollama](https://ollama.com), you can fire it up with the following commands in an empty folder (don't forget to delete it after!):
+To test the connection with an instance of [Ollama](https://ollama.com), you can fire it up with the following commands in an empty folder (don't forget to delete it after!):
 
 ```
 fly launch --from https://github.com/fly-apps/ollama-demo --no-deploy
