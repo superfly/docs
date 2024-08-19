@@ -1,25 +1,31 @@
 ---
 title: Whisper
-layout: framework_docs_overview
+layout: docs
+nav: demo
 order: 8
 ---
 
-Since you are now officially a fly.io expert, let's dive right in and run the following two commands in directory of your existing application:
+Since you are now officially a Fly.io expert, let's dive right in and run the following two commands in the project directory of your deep dive demo app:
 
 ```
 fly launch --attach --from https://github.com/rubys/cog-whisper
 fly deploy
 ```
 
-Now try capturing a new audio clip.  It will be transcribed automatically.
+Next try capturing a new audio clip. It will be transcribed automatically.
 
-Again, since you are now an expert, we can make this quick.  You provisioned a new machine, this time with a [L40S](https://www.nvidia.com/en-us/data-center/l40s/) GPU.
-It will stop when not in use.  It will restart when a new request comes in.
-It is only available on the private network using [FlyCast](https://fly.io/docs/networking/flycast/).
+## What just happened
+
+You provisioned a new Machine, this time with an [L40S](https://www.nvidia.com/en-us/data-center/l40s/) GPU.
+It will stop when not in use. It will restart when a new request comes in.
+It is only available on the private network using [Flycast](https://fly.io/docs/networking/flycast/).
+
 It runs [OpenAI Whisper](https://openai.com/index/whisper/) accessed via a [COG](https://github.com/replicate/cog) interface.
 
 This process involves taking audio clips from Tigris, passing them to Whisper, and updating Postgres with the results.
 The Node code for this is about [two dozen lines of code](https://github.com/fly-apps/node-dictaphone/blob/1e84a4dece6888dfc68880d146b46511d47391b3/app.js#L102-L129),
 and for Rails is about a [dozen](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/jobs/whisper_transcribe_job.rb#L5-L16).
 
-And, as always, no lock in here.  You can opt to replace this with a machine hosted by [Replicate](https://replicate.com/), or with a machine that you host this software elsewhere.
+And, as always, no lock in here. You can opt to replace this with a machine hosted by [Replicate](https://replicate.com/) or elsewhere.
+
+**Next:** [Recap](/docs/happy-path/recap)

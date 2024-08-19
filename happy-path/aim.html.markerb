@@ -1,34 +1,55 @@
 ---
-title: Aim
-layout: framework_docs_overview
+title: What is this deep dive demo?
+layout: docs
+nav: demo
 order: 2
 ---
 
-For this demo, we will start with [MDN's Web Dictaphone](https://github.com/mdn/dom-examples/tree/main/media/web-dictaphone#web-dictaphone).
-You can play with a [live demo](https://mdn.github.io/dom-examples/media/web-dictaphone/).  This is about as basic of an
-HTML form as you can get, and it has the added bonus of providing the ability to generate as many media files as you want using only your voice.
-
-Your app undoubtely has many forms, and more complex forms, but once you can see the basic flow, the rest should be easy.
-
-That demo as it currently stands is client side only, so to deploy it all you need is a web server that can deploy static assets (HTML, CSS, JS, images),
-like NGINX, Apache HTTPd, or Caddy.  In order to store the data in databases, we are going to need a server that can handle HTTP GET, POST, PUT, and DELETE requests.
-
-This demo application will come in two flavors.  For Node.js, we will select [Express.JS](https://expressjs.com/), and for Rails we will use [Puma](https://github.com/puma/puma).
-
-* The names of the clips will go into a [PostgreSQL](https://www.postgresql.org/) relational database.
-* The audio files themselves will be placed into a [Tigris bucket](https://www.tigrisdata.com/).
-* For Node.js, the bulk of this code is in [app.js](https://github.com/fly-apps/node-dictaphone/blob/main/app.js).  For Rails,
-[app/controller/clipController.rb](https://github.com/fly-apps/rails-dictaphone/blob/main/app/controllers/clips_controller.rb).
-
-To satisfy the realtime requirement, we will need [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
-and [Upstash for Redis](https://fly.io/docs/reference/redis/).  The Node.js implementation is in [pubsub.js](https://github.com/fly-apps/node-dictaphone/blob/main/pubsub.js).
-For Rails, the heavy lifting is done by [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html), so all that is needed is
-one line in [app/models/clip.rb](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/models/clip.rb#L2)
-and one line in [app/views/layouts/application.html.erb](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/views/layouts/application.html.erb#L9).
+To get the deep dive demo up and running on Fly.io, all you need is an empty directory and either Node or Ruby installed. But here are some more details about what the deep dive demo app actually is.
 
 The important thing to note is that this is all very straightforward stuff using industry standard components that you can run on your laptop, a VPS, AWS EC2, Google Compute Engine, or Azure.
 
-If you want to see this up and running on fly.io (and certainly you do or why else would you be here?), all you need
-is an empty directory and either Node or Ruby installed.
+## Web Dictaphone -- Fly.io edition
 
-Now that we know what we are intending to accomplish, let's proceed to the exciting step: [Fire!](../fire/)
+The deep dive demo is based on [MDN's Web Dictaphone](https://github.com/mdn/dom-examples/tree/main/media/web-dictaphone+external).
+You can play with a [live demo hosted on GitHub](https://mdn.github.io/dom-examples/media/web-dictaphone/+external). The Web Dictaphone app is about as basic of an HTML form as you can get, and it has the added bonus of providing the ability to generate as many media files as you want using only your voice.
+
+Your own app might have many forms, and more complex forms, but the dictaphone app demonstrates the the basic flow.
+
+The basic Web Dictaphone is client side only, requiring a web server that can deploy static assets (HTML, CSS, JS, images), like NGINX, Apache HTTPd, or Caddy. Storing the data in databases for our deep dive demo requires a server that can handle HTTP GET, POST, PUT, and DELETE requests. The choice of server varies depending on the language or framework.
+
+The demo uses the following:
+
+* A [PostgreSQL](https://www.postgresql.org/+external) relational database to store the names of the audio clips
+* A [Tigris bucket](https://www.tigrisdata.com/+external) to store the the audio files
+* [Upstash for Redis](https://fly.io/docs/reference/redis/) and [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API+external) to handle the connections for the realtime requirement
+
+## Demo flavors
+
+Our deep dive demo comes in two flavors (so far): 
+
+- Node.js ([node-dictaphone](https://github.com/fly-apps/node-dictaphone+external) GitHub repo)
+- Rails ([rails-dictaphone](https://github.com/fly-apps/rails-dictaphone+external) GitHub repo)
+
+### Node.js
+
+The Node.js flavor of the deep dive demo uses an [Express.JS](https://expressjs.com/+external) server.
+
+If you're looking for specific code:
+
+* The code to handle the clips and audio files is in [app.js](https://github.com/fly-apps/node-dictaphone/blob/main/app.js)
+* The realtime implementation code is in [pubsub.js](https://github.com/fly-apps/node-dictaphone/blob/main/pubsub.js)
+
+### Rails
+
+The Rails flavor of the deep dive demo uses a [Puma](https://github.com/puma/puma+external) server.
+
+If you're looking for specific code:
+
+* The code to handle the clips and audio files is in [app/controller/clipController.rb](https://github.com/fly-apps/rails-dictaphone/blob/main/app/controllers/clips_controller.rb)
+* The realtime implementation code is primarily in [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html), so all that is needed is one line in [app/models/clip.rb](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/models/clip.rb#L2)
+and one line in [app/views/layouts/application.html.erb](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/views/layouts/application.html.erb#L9)
+
+---
+
+**Next:** Now that you know what you're about to deploy, the next step is running [`fly launch`](../fire/).
