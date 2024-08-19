@@ -1,28 +1,23 @@
 ---
 title: Recap
-layout: framework_docs_overview
+layout: docs
+nav: demo
 order: 9
 ---
 
-We promised you that you could get through this in under an hour.  How did we do?  How much time did you have left over.
+We promised you that you could get through this in under an hour.
+You successfully deployed a full-stack app with both object storage and realtime requirements, and then went on to add AI functionality.
 
-You successfully deployed a full-stack application with both object storage and realtime requirements, and then went on to add AI functionality.
+Up front, we set some goals:
 
-Up front, we set some rather high goals:
-
-* You want to not only be up and running,
-  you want to feel confident that you are heading in the right direction.  A
-  direction that can both scale and support your present and future needs.
-* You want to be confident that you can
-  use services from other places and even eject entirely and move your entire
+* You want to not only be up and running quickly, you want to feel confident that you're making a good decision;  choosing a platform that can both support you now, and scale with you later on as you grow.
+* You want to know that you can still use services from other places and even eject entirely and move your entire
   application elsewhere if things don't work out.
 
-Or to put it more succinctly.... did you find your happy path?
+How did we do?
 
-Did we meet these goals?  You've seen the code, and you've seen it work.  You examined each component, and from there
-saw links to where you can find out more information.
+More info about Fly.io:
 
-Now a few links:
   * [Support](https://fly.io/docs/about/support/)
   * [Pricing](https://fly.io/docs/about/pricing/)
   * [Application Monitoring by Sentry](../../reference/sentry/)

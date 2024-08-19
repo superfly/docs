@@ -1,9 +1,10 @@
 ---
 title: Tigris
-layout: framework_docs_overview
+layout: docs
+nav: demo
 order: 6
 ---
 
-[Tigris](https://fly.io/docs/reference/tigris/) is truly a thing of beauty. It essentially requires no configuration, and seamlessly handles multi-regions. If you upload an audio file to a host in Virginia, you can access it from Amsterdam. Even better: subsequent accesses from regions other than the primary region are served locally. Unlike relational databases, there may be reasons why you want to make your object store available via the internet. In this demo, the object store starts out private, but you can make it [public](https://fly.io/docs/reference/tigris/#public-buckets) if you want.
+[Tigris](https://fly.io/docs/reference/tigris/) is a globally distributed object storag service. It essentially requires no configuration, and seamlessly handles multi-regions. If you upload an audio file to a host in Virginia, you can access it from Amsterdam. Even better: subsequent accesses from regions other than the primary region are served locally. Unlike relational databases, there may be reasons why you want to make your object store available via the internet. In this demo, the object store starts out private, but you can make it [public](https://fly.io/docs/reference/tigris/#public-buckets) if you want.
 
 And if you happen to have an existing S3 object store, check out [shadow buckets](https://fly.io/docs/reference/tigris/#migrating-to-tigris-with-shadow-buckets) which enable you to incrementally migrate your data.

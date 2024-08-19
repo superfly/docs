@@ -1,23 +1,20 @@
 ---
-title: Your Application
-layout: framework_docs_overview
+title: Your Fly App
+layout: docs
+nav: demo
 order: 4
 ---
 
-Your application is running by default on two [Machines](https://fly.io/docs/machines/).
+Your demo app is running by default on two [Machines](https://fly.io/docs/machines/).
 
-Don't worry about cost.  Both machines stop when not in use, and [autostart](https://fly.io/docs/launch/autostop-autostart/) when a new request comes in.
-This is entirely configurable.  You can chose to [suspend](https://community.fly.io/t/new-feature-in-preview-suspend-resume-for-machines/20672) instead of stop,
-configure a [minimum number](https://fly.io/docs/reference/configuration/#the-http_service-section) of machines to leave running, or even decide never to
-stop at all.
+Both Machines stop when not in use, and [autostart](https://fly.io/docs/launch/autostop-autostart/) when a new request comes in.
+This is entirely configurable. You can chose to [suspend](https://community.fly.io/t/new-feature-in-preview-suspend-resume-for-machines/20672) instead of stop, configure a [minimum number](https://fly.io/docs/reference/configuration/#the-http_service-section) of Machines to leave running, or even decide never to stop Machines at all.
 
-Familiarize yourself with [fly.toml](https://fly.io/docs/reference/configuration/).  Make a change there -- or in fact to any part of your application -- and run `fly deploy`.
+Familiarize yourself with the [fly.toml](https://fly.io/docs/reference/configuration/) config file.  Make a change there -- or in fact to any part of your application -- and run `fly deploy`.
 
-The purpose of two machines is twofold: redundancy and scalability. If the machine hosting one goes down, the other can continue on. If both are available, in times of high use both can be started to handle requests.
-You can [vertically scale](https://fly.io/docs/launch/scale-machine/) the CPU and RAM on each machine.
+The purpose of two Machines is twofold: redundancy and scalability. If the Machine hosting one goes down, the other can continue on. If both are available, in times of high use both can be started to handle requests.
+You can [vertically scale](https://fly.io/docs/launch/scale-machine/) the CPU and RAM on each Machine.
 
-You can also [horizontally scale](https://fly.io/docs/launch/scale-count/) to more machines.  Be sure to scroll down on that page far enough to see how to scale to
-multiple [regions](https://fly.io/docs/reference/regions/).  If you have a co-worker on another continent, create a machine there.
+You can also [horizontally scale](https://fly.io/docs/launch/scale-count/) to more Machines. Be sure to scroll down on that page far enough to see how to scale to multiple [regions](https://fly.io/docs/reference/regions/). If you have a co-worker on another continent, create a Machine there.
 
-And all this is made possible by [Anycast](https://fly.io/docs/networking/services/), a [load balancing proxy](https://fly.io/docs/reference/fly-proxy/), and [DNS certificates](https://fly.io/docs/networking/custom-domain/).
-Be sure to read the last link if you are interested in custom domains.
+All this is made possible by [Anycast](https://fly.io/docs/networking/services/), a [load balancing proxy](https://fly.io/docs/reference/fly-proxy/), and [DNS certificates](https://fly.io/docs/networking/custom-domain/). Be sure to read that last link if you're interested in custom domains.
