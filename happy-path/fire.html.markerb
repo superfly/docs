@@ -30,10 +30,10 @@ And then relax. We promised you it would be less than an hour. You're already up
 
 Once you're back and/or rested up, explore app and add-on components. Feel free to review the following in any order, or chose to skip ahead:
 
-  * [Your application](../application/)
+  * [The Fly App](../application/)
   * [PostgreSQL](../postgresql/)
-  * [Tigris](../tigris/)
-  * [Redis](../redis/)
+  * [Tigris Object Storage](../tigris/)
+  * [Upstash Redis](../redis/)
 
 ---
 
