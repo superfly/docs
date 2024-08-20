@@ -9,12 +9,22 @@ Securing a public cloud platform like Fly.io is a hard problem, and we take it s
 
 ## Fly.io platform security
 
-_Fly.io security practices and features._ 
+_Fly.io security practices and features._
 
-- **[SSO for organizations](/docs/security/sso/):** Set up org-wide Single Sign-on with Google or GitHub.
-- **[Remove a member from an organization](/docs/security/remove-org-member/):** Remove a user from an organization and take steps to help keep the organization secure.
-- **[Built-in TLS termination](/docs/security/tls-termination/):** You get TLS termination by default for your web apps.
+**Corporate security, compliance, and shared responsibility**
+
+- **[Shared responsibility model](/docs/security/shared-responsibility/):** An overview of the separation of responsibilities for security on Fly.io.
 - **[Fly.io security practices and compliance](/docs/security/security-at-fly-io/):** Learn about our security practices for the Fly.io platform.
+
+
+**Organization-level security**
+
+- **[Use SSO for organizations](/docs/security/sso/):** Set up org-wide Single Sign-on with Google or GitHub.
+- **[Remove a member from an organization](/docs/security/remove-org-member/):** Remove a user from an organization and take steps to help keep the organization secure.
+
+**App-level security**
+
+- **[Built-in TLS termination](/docs/security/tls-termination/):** You get TLS termination by default for your web apps.
 
 ---
 
