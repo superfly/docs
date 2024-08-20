@@ -28,6 +28,8 @@ Take your time and play with it. Open the application in multiple browser window
 
 And then relax. We promised you it would be less than an hour. You're already up and running. If you are so inclined, try bringing up this exact same application on another cloud provider. We don't mind. In fact, we encourage it. Just please don't count the time you spent there against the hour budget we asked you to allot to this activity.
 
+### What You Get
+
 Once you're back and/or rested up, explore app and add-on components. Feel free to review the following in any order, or chose to skip ahead:
 
   * [The Fly App](../application/)
@@ -35,9 +37,14 @@ Once you're back and/or rested up, explore app and add-on components. Feel free 
   * [Tigris Object Storage](../tigris/)
   * [Upstash Redis](../redis/)
 
----
+### Runtimes
 
-**Next:** 
+Optional, but deeper dives are provided for each runtime:
+
+  * [Node.js](../nodejs/)
+  * [Rails](../rails/)
+
+### Next 
 
 - As an extra treat, you can add some AI functionality: in this case speech recognition using [Whisper](../whisper/).
 - When you're all done, visit the [recap](../recap).

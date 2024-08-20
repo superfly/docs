@@ -1,0 +1,51 @@
+---
+title: Node.js demo
+layout: docs
+nav: demo
+---
+
+Source is on [GitHub](https://github.com/fly-apps/node-dictaphone).
+`fly launch` will provide a [`Dockerfile`](https://docs.docker.com/reference/dockerfile/)
+ and a [`fly.toml`](https://fly.io/docs/reference/configuration/).  As your application
+ changes, you can run `npx @flydotio/dockerfile` to produce updated Dockerfiles.
+
+How the pieces are put together:
+
+* The original web-dictaphone app is in the
+  [public](https://github.com/fly-apps/node-dictaphone/tree/main/public) directory,
+  and contains icons, scripts, styles, and a web manifest; all served as
+  static files.
+  [app.js](https://github.com/fly-apps/node-dictaphone/blob/main/public/scripts/app.js)
+  has been modified to make server requests at various points using
+  [the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+* [app.js](https://github.com/fly-apps/node-dictaphone/blob/main/app.js) contains
+  the server implementation, based on [Express.js](https://expressjs.com/).  There
+  are lots of JavaScript frameworks out there, this is perhaps the oldest and most
+  minimalist.
+* The [pg](https://www.npmjs.com/package/pg) module is used to access PostgreSQL.
+  Access to the database is through the `DATABASE_URL` secret.  This module is low level
+  which is sufficient for this demo, but most modern Node.js applications use
+  an [ORM](https://amplication.com/blog/top-6-orms-for-modern-nodejs-app-development).
+* The [AWS SDK for JavaScript](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/welcome.html)
+  is used to access Tigris.  The following secrets are used to
+  establish the connection: `AWS_ACCESS_KEY_ID`, `AWS_ENDPOINT_URL_S3`, `AWS_REGION`, `AWS_SECRET_ACCESS_KEY`, and `BUCKET_NAME`.
+* The [express-ws](https://github.com/HenningM/express-ws?tab=readme-ov-file#express-ws-)
+  module is used for [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) support.
+* The [redis](https://github.com/redis/node-redis?tab=readme-ov-file#node-redis) module
+  is used to access Redis.  The `REDIS_URL` secret isused to access the database.
+
+Key points of logic:
+
+* [app.js](https://github.com/fly-apps/node-dictaphone/blob/main/app.js) contains
+  the logic to build responses to requests for the index page, and to GET, PUT,
+  and DELETE audio clips.
+* [pubsub.js](https://github.com/fly-apps/node-dictaphone/blob/main/pubsub.js) contains
+  the logic to subscribe to a `dictaphone:timestamp` redis queue, and to
+  forward updates to all open websocket connections.
+* [websocket.js](https://github.com/fly-apps/node-dictaphone/blob/main/public/scripts/websocket.js)
+  contains the client implementation of web sockets.  When update notifications
+  are received, the index page is re-retrieved and the body of the DOM is
+  replaced with new contents.
+* When the `WHISPER_URL` secret is set, `PUT` requests will cause the audio clips
+  to be passed to the Whisper server, and responses will be used to update the
+  PostgreSQL database.  The code for this is [here](https://github.com/fly-apps/node-dictaphone/blob/1e84a4dece6888dfc68880d146b46511d47391b3/app.js#L102-L129).

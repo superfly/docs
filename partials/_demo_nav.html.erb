@@ -1,3 +1,6 @@
+<style>
+  .singleton-link {display: block; margin-top: 1em; margin-bottom: 1em }
+</style>
 <%= partial "/docs/partials/back_to_docs" unless current_page?('/docs') %>
 
 <% 
@@ -23,13 +26,15 @@
       ]
     },
     {
-      title: "More",
+      title: "Runtimes",
       open: true,
       links: [
-        { text: "Add Whisper", path: "/docs/happy-path/whisper/" },
-        { text: "Recap", path: "/docs/happy-path/recap" }
+        { text: "Node.js", path: "/docs/happy-path/nodejs/" },
+        { text: "Rails", path: "/docs/happy-path/rails/" },
       ]
     },
+    { text: "Add Whisper", path: "/docs/happy-path/whisper/", type: "singleton" },
+    { text: "Recap", path: "/docs/happy-path/recap", type: "singleton" }
   ]
 %>
 <%= partial "/docs/partials/accordion_nav", locals: { nav: @nav } %>

@@ -1,0 +1,42 @@
+---
+title: Rails demo
+layout: docs
+nav: demo
+---
+
+Source is on [GitHub](https://github.com/fly-apps/rails-dictaphone/).
+`fly launch` will provide a [`Dockerfile`](https://docs.docker.com/reference/dockerfile/)
+ and a [`fly.toml`](https://fly.io/docs/reference/configuration/).  `fly launch` will
+ also work with Rails provided Dockerfiles.  As your application changes, you can run
+ `bin/rails generate dockerfile` to generate updated dockerfiles.
+
+How the pieces are put together:
+
+* The original web-dictaphone app distributed throughout the application:
+    * [`app/javascript/controllers/main_controls_controller`](https://github.com/fly-apps/rails-dictaphone/blob/main/app/javascript/controllers/main_controls_controller.js)
+      and [`app/javascript/controllers/sound_clip_controller`](https://github.com/fly-apps/rails-dictaphone/blob/main/app/javascript/controllers/sound_clip_controller.js)
+      contain the JavaScript, implemented as [Stimulus](https://stimulus.hotwired.dev/handbook/origin) controllers.
+    * [`app/assets/stylesheets/dictaphone.css`](https://github.com/fly-apps/rails-dictaphone/blob/main/app/assets/stylesheets/dictaphone.css) contain
+      the stylesheets.
+    * [`app/views/clips/index.html.erb`](https://github.com/fly-apps/rails-dictaphone/blob/main/app/views/clips/index.html.erb) contains the HTML
+* [Active Record](https://guides.rubyonrails.org/active_record_basics.html) will run using Sqlite3 as the database in development mode, and
+PostgreSQL in production.
+  Access to the database is through the `DATABASE_URL` secret.
+* [Active Storage](https://guides.rubyonrails.org/active_storage_overview.html) is configured to write to the filesystem
+  in development and Tigris in production.  The following secrets are used to
+  establish the connection: `AWS_ACCESS_KEY_ID`, `AWS_ENDPOINT_URL_S3`, `AWS_REGION`, `AWS_SECRET_ACCESS_KEY`, and `BUCKET_NAME`.
+* [Action Cable](https://guides.rubyonrails.org/action_cable_overview.html) is configured to use an Async adapter
+  in development and the Redis adapter in production.
+
+Key points of logic:
+
+* [`app/controllers/clips_controller.rb`](https://github.com/fly-apps/rails-dictaphone/blob/main/app/controllers/clips_controller.rb) contains
+  the logic to build responses to requests for the index page, and to GET, PUT,
+  and DELETE audio clips.
+* The realtime implementation code is primarily in [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html), so all that is needed is one line in [app/models/clip.rb](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/models/clip.rb#L2)
+and one line in [app/views/layouts/application.html.erb](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/views/layouts/application.html.erb#L9)
+* When the `WHISPER_URL` secret is set, `PUT` requests will cause the audio clips
+  to be passed to the Whisper server, and responses will be used to update the
+  PostgreSQL database.  This is done using [Active Job](https://guides.rubyonrails.org/active_job_basics.html)
+  and [Sidekiq](https://sidekiq.org/).
+  The code for this is in [`app/jobs/whisper_transcribe_job.rb`](https://github.com/fly-apps/rails-dictaphone/blob/main/app/jobs/whisper_transcribe_job.rb).
