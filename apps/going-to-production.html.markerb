@@ -9,10 +9,10 @@ redirect_from:
   - /docs/reference/going-to-production/
 ---
 
-This checklist guides you through setting up a production environment on Fly.io. What makes an app production-ready can vary from one framework to another, so it's up to you to decide what checklist items will work for you. Not all of the checklist items will apply for your app and there may be other considerations not listed here.
+This checklist guides you through setting up a production environment on Fly.io. What makes an app production-ready can vary from one framework to another. You'll need to decide what checklist items will work for you; not all of the checklist items will apply for your app and there may be other considerations not listed here.
 
 <div class="important icon">
-**Important:** This list is neither exhaustive nor mandatory, and does not guarantee production-readiness for your app. Some apps might have unique requirements for production.
+**Important:** This list is neither exhaustive nor mandatory, and does not guarantee production-readiness for your app. Apps might have unique requirements for production.
 </div>
 
 ## Security
@@ -21,7 +21,7 @@ This checklist guides you through setting up a production environment on Fly.io.
 
 - **Isolate staging and production environments:** Use organizations to limit access to your production environment. See [Blueprint: Staging and production isolation](/docs/blueprints/staging-prod-isolation/).
 
-- **Enforce least privilege access:** Use access tokens to allow ony the minimum access required by team members to your organization, apps, and Machines. See [access tokens](https://fly.io/docs/security/tokens/).
+- **Enforce least privilege access:** Use access tokens to allow only the minimum access required by team members to your organization, apps, and Machines. See [access tokens](https://fly.io/docs/security/tokens/).
 
 - **Protect sensitive information:** Set secrets to store sensitive data and make them available as environment variables to your app. See [Secrets and Fly Apps](/docs/apps/secrets/).
 
@@ -58,7 +58,7 @@ This checklist guides you through setting up a production environment on Fly.io.
 
 - **Refine the default autostop/autostart settings**: Autostop/autostart lets you stop or suspend Machines when there's low traffic, saving on resource usage and costs. You get autostop/autostart by default with a new app, but you can configure it to optimize for your use case. See [Autostop/autostart Machines](/docs/launch/autostop-autostart/).
 
-- **Set up autoscaling by metric:** Use the autoscaler app to scale your app's Machines based on any metric, saving on resource usage and costs for apps that aren't running HTTP web services. See [Autoscale based on metrics](/docs/launch/autoscale-by-metric/).
+- **Set up autoscaling by metric:** For apps that aren't running web services, use the autoscaler app to scale your app's Machines based on any metric, saving on resource usage and costs. See [Autoscale based on metrics](/docs/launch/autoscale-by-metric/).
 
 ## App performance
 
