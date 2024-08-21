@@ -9,7 +9,7 @@ redirect_from:
   - /docs/reference/going-to-production/
 ---
 
-This checklist guides you through setting up a production environment on Fly.io. What makes an app production-ready can vary from one framework to another. You'll need to decide what checklist items will work for you; not all of the checklist items will apply for your app and there may be other considerations not listed here.
+This checklist guides you through setting up a production environment on Fly.io. What makes an app production-ready can vary from one framework to another. You'll need to decide what checklist items will work for you; not all of the items will apply to your app and there may be other considerations not listed here.
 
 <div class="important icon">
 **Important:** This list is neither exhaustive nor mandatory, and does not guarantee production-readiness for your app. Apps might have unique requirements for production.
@@ -37,12 +37,11 @@ This checklist guides you through setting up a production environment on Fly.io.
 
 - **Set up Flycast for private apps**: If you haven't already done so, give your private apps a Flycast address to communicate with them entirely on your private network. See [Flycast - Private Fly Proxy services](https://fly.io/docs/networking/flycast/).
 
-
 ## Databases
 
 - **Run "production-grade" Postgres:** For Fly Postgres, our unmanaged database, set up replication clusters of 3+ servers. See [High Availability & Global Replication](/postgres/advanced-guides/high-availability-and-global-replication/). You can also use an external database provider and configure it for redundancy.
 
-- **Set up offsite backups:** Consider offsite backups for your database.
+- **Set up offsite backups:** For all databases, it's essential to have a recovery plan that includes storing backups offsite.
   
 ## Monitoring
 
@@ -50,7 +49,7 @@ This checklist guides you through setting up a production environment on Fly.io.
 
 - **Use Sentry for Error tracking**: An application monitoring platform that helps you identify and fix software problems before they impact your users from our extension partner Sentry.Fly.io organizations get a year's worth of [Team Plan](https://sentry.io/pricing/+external) credits. See [Application Monitoring by Sentry](/docs/reference/sentry/).
 
-## Availability, resiliency, and cost control
+## Availability, resiliency, and costs
 
 - **Use multiple Machines for resiliency:** Make your app resilient to single-host failures with multiple Machines that stay stopped until you need them. See [Blueprint: Resilient apps use multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/).
 
@@ -72,8 +71,8 @@ This checklist guides you through setting up a production environment on Fly.io.
 
 - **Deploy with GitHub Actions:** Set up your app for continuous deployment to Fly.io from the app’s GitHub repository. See [Continuous Deployment with Fly.io and GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/).
 
-## Know where to get Support
+## Get support
 
-**Community:** Check out our [community](https://community.fly.io/) to get help and answers.
+- **Community:** Check out our [community](https://community.fly.io/) to get help and answers.
 
-**Consider a plan to receive email support:** You get email support with a [Launch, Scale, or Enterprise plan](https://fly.io/plans).
+- **Consider a plan for email support:** You get email support with a [Launch, Scale, or Enterprise plan](https://fly.io/plans).
