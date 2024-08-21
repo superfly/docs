@@ -14,8 +14,6 @@ There's also a lot of software involved, but the important ones are flyd which m
 
 ## Fly.io's responsibilities
 
-The following areas are managed by Fly.io.
-
 ### Hardening and protection of infrastructure systems
 
 Fly.io is solely responsible for the security of our infrastructure systems, including workers, edges and gateways. This includes managing access, applying security patches to the operating system, other 3rd-party software (e.g. firecracker), and mitigating hardware vulnerabilities where appropriate. Fly.io monitors these systems in both an operational and security capacity.
@@ -38,8 +36,6 @@ Fly.io provides features that you can use to secure your account and its assets,
 Fly.io was built with security front and centre. Visit our [Security](https://fly.io/security) page to learn more.
 
 ## Your responsibilities
-
-The following areas are managed by you.
 
 ### Everything within your Docker image and therefore Fly Machines
 
