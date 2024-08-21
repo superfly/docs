@@ -7,31 +7,37 @@ toc: false
 
 Securing a public cloud platform like Fly.io is a hard problem, and we take it seriously. The Fly.io platform comes with built-in security like hardware isolation, [private networking](/docs/networking/private-networking/) over WireGuard, and [TLS termination](/docs/networking/services/#tls-handler).
 
-## Fly.io platform security
-
-_Fly.io security practices and features._ 
-
-- **[SSO for organizations](/docs/security/sso/):** Set up org-wide Single Sign-on with Google or GitHub.
-- **[Remove a member from an organization](/docs/security/remove-org-member/):** Remove a user from an organization and take steps to help keep the organization secure.
-- **[Built-in TLS termination](/docs/security/tls-termination/):** You get TLS termination by default for your web apps.
-- **[Fly.io security practices and compliance](/docs/security/security-at-fly-io/):** Learn about our security practices for the Fly.io platform.
-
 ---
 
-## Tokens
+## Organization and app security 
 
-_Tokens on Fly.io._
+_Security for customer organizations and apps._
+
+- **[Use SSO for organizations](/docs/security/sso/):** Set up org-wide Single Sign-on with Google or GitHub.
+- **[Remove a member from an organization](/docs/security/remove-org-member/):** Remove a user from an organization and take steps to help keep the organization secure.
+- **[Built-in TLS termination](/docs/security/tls-termination/):** You get TLS termination by default for your web apps.
+
+#### Security extensions
+
+_Security add-ons from our extension partners._
+
+- **[Application Security by Arcjet](/docs/reference/arcjet/):** Use the Arcjet security layer to protect your JavaScript app with just a few lines of code.
+
+#### Tokens
+
+_Control access to your Fly.io organizations, apps, and Machines with tokens._
 
 - **[Access tokens](/docs/security/tokens/):** Use tokens to manage access to organizations and apps.
 - **[OpenID Connect](/docs/security/openid-connect/):** Use OpenID Connect (OIDC) to manage access to 3rd party services.
 
 ---
 
-## Security extensions
+## Fly.io platform security
 
-_Security add-ons from our extension partners._
+_Fly.io corporate security, compliance, and shared responsibility._
 
-- **[Application Security by Arcjet](/docs/reference/arcjet/):** Use the Arcjet security layer to protect your JavaScript app with just a few lines of code.
+- **[Shared responsibility model](/docs/security/shared-responsibility/):** An overview of the separation of responsibilities for security on Fly.io.
+- **[Fly.io security practices and compliance overview](/docs/security/security-at-fly-io/):** Learn about our security practices for the Fly.io platform.
 
 ---
 
