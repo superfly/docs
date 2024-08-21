@@ -8,6 +8,8 @@ order: 10
 
 Networking on Fly.io.
 
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/vU9xcRCX7-U?si=qqCbh2kwa7BN_xsO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></br>
+
 - **[Connect to an App Service](/docs/networking/app-services/):** An overview of how to connect to your app over the private WireGuard network (6PN), and how to make your app reachable from the internet.
 
 - **[Public networking](/docs/networking/services):** Details about public network services on Fly.io, including allocating IP addresses, finding a Machine's outbound IP, connection handlers, and redirects.

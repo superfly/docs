@@ -26,6 +26,8 @@ The content of the `fly-replay` header fields tells Fly Proxy which magic to per
 |`state` | Optional arbitrary string to include in the `fly-replay-src` header appended to the request being replayed. |
 |`elsewhere` | Boolean. If `true`, the responding Machine will be excluded from the next round of load-balancing. |
 
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/riCh9Xeuf0s?si=LCAOcK0_WEORBxDl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br/>
+
 ### Limitations
 
 Attempting to replay requests larger than 1MB will throw an error. If you need certain requests - like file uploads - to be handled by a specific region, consider the following workarounds.
