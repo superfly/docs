@@ -33,6 +33,7 @@ fly deploy [WORKING_DIRECTORY] [flags]
   -c, --config string                    Path to application configuration file
       --deploy-retries string            Number of times to retry a deployment if it fails (default "auto")
       --depot                            Deploy using depot to build the image
+      --depot-scope string               The scope of the Depot builder's cache to use (organization or app) (default "organization")
       --detach                           Return immediately instead of monitoring deployment progress
       --dns-checks                       Perform DNS checks during deployment (default true)
       --dockerfile string                Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
