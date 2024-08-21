@@ -4,7 +4,7 @@ layout: docs
 nav: firecracker
 ---
 
-Fly.io runs applications physically close to users: in datacenters around the world, on servers we run ourselves. You can currently deploy your apps in 38 regions, connected to a global Anycast network that makes sure your users hit our nearest server, whether they’re in Tokyo, São Paulo, or Amsterdam.
+Fly.io runs applications physically close to users: in datacenters around the world, on servers we run ourselves. You can currently deploy your apps in 35 regions, connected to a global Anycast network that makes sure your users hit our nearest server, whether they’re in Tokyo, São Paulo, or Amsterdam.
 
 <div class="callout">
 Run <code>fly platform regions</code> to get a list of regions.
