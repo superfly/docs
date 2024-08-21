@@ -10,7 +10,7 @@ We promised that you could get through this in under an hour. You successfully d
 
 Up front, we set a goal: **Find out if Fly.io is the right place for you.**
 
-Fly.io can support your apps now, with flexible built-in features, and scale with you later as you grow, with low-level control of Machines and powerful compute in 35 regions.
+Fly.io can support your apps now, with flexible built-in features, and scale with you later as you grow, with low-level control of Machines and powerful compute in 35 [regions](/docs/reference/regions/).
 
 You're never locked in; you can always eject entirely and move your entire application elsewhere if things don’t work out.
 
@@ -19,7 +19,7 @@ How did we do? Visit [community](https://community.fly.io/) and let us know.
 ## Learn more
 
   * [Going to production](/docs/apps/going-to-production/)
-  * [Support](https://fly.io/docs/about/support/)
-  * [Pricing](https://fly.io/docs/about/pricing/)
+  * [Support](/docs/about/support/)
+  * [Pricing](/docs/about/pricing/)
   * [Application Monitoring by Sentry](../../reference/sentry/)
   * [Application Security by Arcjet](../../reference/arcjet/)
