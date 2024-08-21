@@ -11,7 +11,6 @@
       accordion: false,
       links: [
         { text: "Beyond \"hello fly\"", path: "/docs/happy-path/ready/" },
-        { text: "What is this deep dive demo?", path: "/docs/happy-path/aim/" },
         { text: "Launch the demo", path: "/docs/happy-path/fire/" }
       ]
     },
@@ -19,22 +18,22 @@
       title: "What You Get",
       open: true,
       links: [
-        { text: "The Fly App", path: "/docs/happy-path/application/" },
-        { text: "PostgreSQL", path: "/docs/happy-path/postgresql/" },
+        { text: "Your Fly App", path: "/docs/happy-path/application/" },
+        { text: "PostgreSQL database", path: "/docs/happy-path/postgresql/" },
         { text: "Tigris Object Storage", path: "/docs/happy-path/tigris/" },
         { text: "Upstash Redis", path: "/docs/happy-path/redis/" },
       ]
     },
+    { text: "Add OpenAI Whisper", path: "/docs/happy-path/whisper/", type: "singleton" },
+    { text: "Recap", path: "/docs/happy-path/recap", type: "singleton" },
     {
-      title: "Runtimes",
+      title: "Runtimes reference",
       open: true,
       links: [
         { text: "Node.js", path: "/docs/happy-path/nodejs/" },
         { text: "Rails", path: "/docs/happy-path/rails/" },
       ]
-    },
-    { text: "Add Whisper", path: "/docs/happy-path/whisper/", type: "singleton" },
-    { text: "Recap", path: "/docs/happy-path/recap", type: "singleton" }
+    }
   ]
 %>
 <%= partial "/docs/partials/accordion_nav", locals: { nav: @nav } %>

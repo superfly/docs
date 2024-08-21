@@ -4,6 +4,20 @@ layout: docs
 nav: demo
 ---
 
+Details about the Rails flavor of the deep dive demo. 
+
+## The tl;dr
+
+The Rails demo uses a [Puma](https://github.com/puma/puma+external) server.
+
+If you're looking for specific code:
+
+* The code to handle the clips and audio files is in [app/controller/clipController.rb](https://github.com/fly-apps/rails-dictaphone/blob/main/app/controllers/clips_controller.rb)
+* The realtime implementation code is primarily in [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html), so all that is needed is one line in [app/models/clip.rb](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/models/clip.rb#L2)
+and one line in [app/views/layouts/application.html.erb](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/views/layouts/application.html.erb#L9)
+
+## The details
+
 Source is on [GitHub](https://github.com/fly-apps/rails-dictaphone/).
 `fly launch` will provide a [`Dockerfile`](https://docs.docker.com/reference/dockerfile/)
  and a [`fly.toml`](https://fly.io/docs/reference/configuration/).  `fly launch` will

@@ -7,15 +7,19 @@ toc: false
 
 You probably landed on this page because somebody recommended Fly.io to you. You're curious, and you want to know more before you commit.
 
-If you came from our [Speedrun](https://fly.io/speedrun) or [Getting started](https://fly.io/docs/getting-started/) pages, maybe you want to not only be up and running fast, you want to feel confident that you're making a good decision;  choosing a platform that can both support you now, and scale with you later on as you grow.
+Welcome to our deep dive demo, where you can explore Fly.io more thoroughly, but in a time-boxed way. In 60 minutes or less: get a fully-functioning app up and running in the first few minutes, and then have enough of the hour left over to understand what you just did, explore how the pieces fit together, and even integrate in AI functionality that makes use of GPUs.
 
-Maybe you're concerned about lock in. You want to know that you can
-use services from other places and even eject entirely and move your entire
+## Goals of the deep dive
+
+It's really just one goal:
+
+**Find out if Fly.io is the right place for you.**
+
+If you came from our [Speedrun](https://fly.io/speedrun) or [Getting started](https://fly.io/docs/getting-started/) pages, maybe you want to not only be up and running fast, you want to feel confident that you're making a good decision; choosing a platform that can both support you now, and scale with you later on as you grow.
+
+Maybe you're concerned about lock in. You want to know that you can use services from other places and even eject entirely and move your entire
 application elsewhere if things don't work out.
 
-If you want to explore more deeply but in a time-boxed way, then you're in the right place. You should be up and running within minutes, and have enough of the hour left over to spend some time understanding what you just did and run a few commands and see what they do.
-
-If you don't get a good feeling within an hour, you're out of here. If you do get a good feeling, then consider
-sticking around to experiment and learn more about features that interest you. And when you're done, you can delete everything and launch the application that you brought here to launch.
+If you don't get a good feeling within an hour, you're out of here. If you do get a good feeling, then stick around and try launching the app that you brought here to launch.
 
 **Next:** [Beyond `hello fly`](/docs/happy-path/ready/)

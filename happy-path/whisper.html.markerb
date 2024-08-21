@@ -12,7 +12,7 @@ fly launch --attach --from https://github.com/rubys/cog-whisper
 fly deploy
 ```
 
-Next try capturing a new audio clip. It will be transcribed automatically.
+Next try capturing a new audio clip. It will be transcribed automatically by OpenAI Whisper, an automatic speech recognition (ASR) program that converts speech into text.
 
 ## What just happened
 

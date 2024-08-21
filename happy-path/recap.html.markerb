@@ -6,19 +6,19 @@ toc: false
 order: 9
 ---
 
-We promised you that you could get through this in under an hour.
-You successfully deployed a full-stack app with both object storage and realtime requirements, and then went on to add AI functionality.
+We promised that you could get through this in under an hour. You successfully deployed a full-stack app with both object storage and realtime requirements, and then went on to add AI functionality.
 
-Up front, we set some goals:
+Up front, we set a goal: **Find out if Fly.io is the right place for you.**
 
-* You want to not only be up and running quickly, you want to feel confident that you're making a good decision;  choosing a platform that can both support you now, and scale with you later on as you grow.
-* You want to know that you can still use services from other places and even eject entirely and move your entire
-application elsewhere if things don't work out.
+Fly.io can support your apps now, with flexible built-in features, and scale with you later as you grow, with low-level control of Machines and powerful compute in 35 regions.
+
+You're never locked in; you can always eject entirely and move your entire application elsewhere if things don’t work out.
 
 How did we do? Visit [community](https://community.fly.io/) and let us know.
 
 ## Learn more
 
+  * [Going to production](/docs/apps/going-to-production/)
   * [Support](https://fly.io/docs/about/support/)
   * [Pricing](https://fly.io/docs/about/pricing/)
   * [Application Monitoring by Sentry](../../reference/sentry/)
