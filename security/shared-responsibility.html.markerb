@@ -43,7 +43,7 @@ The following areas are managed by you.
 
 ### Everything within your Docker image and therefore Fly Machines
 
-We generally consider our demarcation point the virtualization boundary between our worker (virtualization host) and the Fly Machine (virtualization guest). The Fly Machine is constructed from your instructions, and therefore its content are your responsibility. This includes: the system userspace, libraries your application code, your application environment, and the services you run.
+We generally consider our demarcation point the virtualization boundary between our worker (virtualization host) and the Fly Machine (virtualization guest). The Fly Machine is constructed from your instructions, and therefore its contents are your responsibility. This includes: the system userspace and libraries, your application code, your application environment, and the services you run.
 
 That being said, Fly.io is in a unique place to help you stay on top of things here, and we are committed to shipping features, such as container scanning, to make this painless for you.
 
