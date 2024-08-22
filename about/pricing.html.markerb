@@ -243,7 +243,7 @@ You're not billed for the following types of traffic:
 - all inbound data transfer
 - data transfer between apps or Machines in the same region (for organizations using granular data transfer rates)
 - data transfer from apps without an assigned IP address (for organizations not using granular data transfer rates)
-- data transfer to [Tigris Object Storage](https://fly.io/docs/reference/tigris)
+- data transfer to [Tigris Object Storage](https://fly.io/docs/tigris/)
 
 Fly.io pricing is per region group for outbound data transfer. You'll see a more detailed breakdown of cost per region and per traffic type on your monthly invoice.
 
@@ -274,7 +274,7 @@ The [Machine price](#compute) and [volume price](#persistent-storage-volumes) fo
 
 ## Extensions
 
-Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/docs/reference/tigris), [Supabase Postgres](/docs/reference/supabase) and [Upstash Redis](/docs/reference/redis).
+Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/docs/tigris), [Supabase Postgres](/docs/rsupabase/) and [Upstash Redis](/docs/upstash/redis/).
 
 When you provision their services, you become their customer, and you pay their list prices via your monthly Fly.io bill. Charges are updated daily in your Fly.io dashboard.
 

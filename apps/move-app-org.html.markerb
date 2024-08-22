@@ -36,4 +36,4 @@ The following app resources are transferred to the new org automatically:
 
 The following extension services need to be reconfigured for the app after the move:
 
-- **[Upstash for Redis](https://fly.io/docs/reference/redis/):** Upstash Redis is only available over an organization's private network. After you move the app, you'll need to provision a new database for the new org.
+- **[Upstash for Redis](https://fly.io/docs/upstash/redis//):** Upstash Redis is only available over an organization's private network. After you move the app, you'll need to provision a new database for the new org.

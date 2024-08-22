@@ -62,11 +62,11 @@ _Run GPU workloads on Fly Machines._
 
 _Services from Fly.io and our extension partners to help you run your entire stack near your users._
 
-[Upstash for Redis®](/docs/reference/redis/)
+[Upstash for Redis®](/docs/upstash/redis//)
 
-[Tigris object storage](/docs/reference/tigris/)
+[Tigris object storage](/docs/tigris/)
 
-[Supabase Postgres (public alpha)](/docs/reference/supabase/)
+[Supabase Postgres (public alpha)](/docs/supabase/)
 
 [LiteFS - Distributed SQLite](/docs/litefs/)
 
@@ -88,7 +88,7 @@ _Explore built-in and custom Prometheus metrics and Grafana dashboards. Live tai
 
 [Fly.io Metrics](/docs/monitoring/metrics/)
 
-[Error Monitoring by Sentry](/docs/reference/sentry/)
+[Error Monitoring by Sentry](/docs/monitoring/sentry//)
 
 [Logging on Fly.io](/docs/monitoring/logging-overview/)
 
@@ -100,6 +100,6 @@ _Built-in security and partner extensions._
 
 [Security](/docs/security/) on the Fly.io platform
 
-[Application security by Arcjet](/docs/reference/arcjet/) for JavaScript apps
+[Application security by Arcjet](/docs/security/arcjet/) for JavaScript apps
 
 </div>

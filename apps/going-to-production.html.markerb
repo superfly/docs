@@ -27,7 +27,7 @@ This checklist guides you through setting up a production environment on Fly.io.
 
 - **Make sure private services are not exposed:** Check that your private apps with services don't have public IP addresses. Run `fly ips list` and use `fly ips release` to release unnecessary public IPs. See flyctl [`fly ips` commands](/docs/flyctl/ips/). Assign private apps a [Flycast address](https://fly.io/docs/networking/flycast/) instead.
 
-- **Use Arcjet application security for JavaScript apps:** Secure your app with rate limiting, bot protection, email validation, and defense against common attacks through our extension partner Arcjet. Currently [free in beta](/docs/reference/arcjet/#pricing), but pricing is subject to change. See [Application Security by Arcjet](/docs/reference/arcjet/).
+- **Use Arcjet application security for JavaScript apps:** Secure your app with rate limiting, bot protection, email validation, and defense against common attacks through our extension partner Arcjet. Currently [free in beta](/docs/security/arcjet/#pricing), but pricing is subject to change. See [Application Security by Arcjet](/docs/security/arcjet/).
 
 ## Networking
 
@@ -47,7 +47,7 @@ This checklist guides you through setting up a production environment on Fly.io.
 
 - **Export your logs:** Set up the Fly Log Shipper to aggregate your app’s logs to a service of your choice. See [Export logs](/docs/monitoring/exporting-logs/).
 
-- **Use Sentry for Error tracking**: An application monitoring platform that helps you identify and fix software problems before they impact your users from our extension partner Sentry.Fly.io organizations get a year's worth of [Team Plan](https://sentry.io/pricing/+external) credits. See [Application Monitoring by Sentry](/docs/reference/sentry/).
+- **Use Sentry for Error tracking**: An application monitoring platform that helps you identify and fix software problems before they impact your users from our extension partner Sentry.Fly.io organizations get a year's worth of [Team Plan](https://sentry.io/pricing/+external) credits. See [Application Monitoring by Sentry](/docs/monitoring/sentry//).
 
 ## Availability, resiliency, and costs
 

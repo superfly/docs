@@ -31,7 +31,7 @@ fly redis create
 ? Optionally, choose one or more replica regions (can be changed later):
 
 Upstash Redis can evict objects when memory is full. This is useful when caching in Redis. This setting can be changed later.
-Learn more at https://fly.io/docs/reference/redis/#memory-limits-and-object-eviction-policies
+Learn more at https://fly.io/docs/upstash/redis//#memory-limits-and-object-eviction-policies
 ? Would you like to enable eviction? No
 ? Select an Upstash Redis plan Free: 100 MB Max Data Size
 

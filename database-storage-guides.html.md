@@ -19,7 +19,7 @@ The Fly Machines in your app provide ephemeral storage, so you get a blank slate
 
 _Object storage service from our extension partners._
 
-- **[Tigris Global Object Storage](/docs/reference/tigris/)** - [Tigris](https://www.tigrisdata.com/+external) is a globally distributed S3-compatible object storage service on Fly.io infrastructure.
+- **[Tigris Global Object Storage](/docs/tigris/)** - [Tigris](https://www.tigrisdata.com/+external) is a globally distributed S3-compatible object storage service on Fly.io infrastructure.
 
 ---
 
@@ -27,9 +27,9 @@ _Object storage service from our extension partners._
 
 _Managed database services from our extension partners._
 
-- **[Supabase Postgres (public alpha)](/docs/reference/supabase/)** - [Supabase](https://supabase.com/database+external) Postgres is a full-featured and fully-managed Postgres database on Fly.io infrastructure.
+- **[Supabase Postgres (public alpha)](/docs/supabase/)** - [Supabase](https://supabase.com/database+external) Postgres is a full-featured and fully-managed Postgres database on Fly.io infrastructure.
 
-- **[Upstash for Redis](/docs/reference/redis/)** - [Redis](https://redis.io/+external) is an in-memory database commonly used for caching. A managed service by [Upstash](https://upstash.com/+external).
+- **[Upstash for Redis](/docs/upstash/redis//)** - [Redis](https://redis.io/+external) is an in-memory database commonly used for caching. A managed service by [Upstash](https://upstash.com/+external).
 
 ---
 

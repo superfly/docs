@@ -220,7 +220,7 @@ likely make use of one or more of the following:
    addresses many problems, it doesn't help deal with logs that are missing due
    to application or network problems.  Consider having applications emit a
    heartbeat, and write monitoring software that looks for missing heartbeats
-   and reports them as issues.  [Sentry](https://fly.io/docs/reference/sentry/)
+   and reports them as issues.  [Sentry](https://fly.io/docs/monitoring/sentry//)
    can help here.
  * While applying updates when all of the services for a single Machine are
    self contained is an easier problem then upgrading potentially
@@ -251,7 +251,7 @@ As mentioned above, backups are crucial.  Items to explore:
  * [Rsync](https://rsync.samba.org/) is a utility available with Linux
    distributions that can be used to efficiently copy changes between Machines.
  * Use a traditional database.
-   [Supabase](https://fly.io/docs/reference/supabase/), for example, supports
+   [Supabase](https://fly.io/docs/supabase/), for example, supports
    [custom
    claims](https://github.com/supabase-community/supabase-custom-claims) that
    can be used to build a multi-tenancy option for your database.

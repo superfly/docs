@@ -20,7 +20,7 @@ _Fully-managed metrics solutions to help you monitor your apps._
 
 _Error monitoring for your apps from our extension providers._
 
-- **[Sentry](/docs/reference/sentry/):** Use Sentry on Fly.io and get actionable insights to resolve the most important code-related issues. Fly.io organizations that use Sentry can claim a year’s worth of Team Plan credits.
+- **[Sentry](/docs/monitoring/sentry//):** Use Sentry on Fly.io and get actionable insights to resolve the most important code-related issues. Fly.io organizations that use Sentry can claim a year’s worth of Team Plan credits.
 
 ---
 

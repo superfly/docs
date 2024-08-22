@@ -22,7 +22,7 @@ The demo uses the following:
 
 * A [PostgreSQL](https://www.postgresql.org/+external) relational database to store the names of the audio clips
 * A [Tigris bucket](https://www.tigrisdata.com/+external) to store the the audio files
-* [Upstash for Redis](https://fly.io/docs/reference/redis/) and [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API+external) to handle the connections for the realtime requirement
+* [Upstash for Redis](https://fly.io/docs/upstash/redis//) and [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API+external) to handle the connections for the realtime requirement
 
 ## Demo flavors
 

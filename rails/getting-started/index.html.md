@@ -8,9 +8,9 @@ objective: Quickly get a very basic Rails app up and running on Fly.io. This gui
 related_pages:
   - /docs/flyctl/
   - /docs/reference/configuration/
-  - /docs/reference/redis
+  - /docs/upstash/redis/
   - /docs/postgres/
-  - /docs/reference/tigris/
+  - /docs/tigris/
 ---
 
 <div>

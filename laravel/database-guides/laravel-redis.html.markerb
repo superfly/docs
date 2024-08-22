@@ -153,7 +153,7 @@ The simplest way to connect your local Laravel application to a Redis Fly App is
 
 ## _Laravel with Upstash Managed Redis Fly App_
 
-Want a fully-managed Redis Fly App? Try [Upstash Redis](https://upstash.com/)! To set up, you can follow our-in-depth guide [here](/docs/reference/redis/) 
+Want a fully-managed Redis Fly App? Try [Upstash Redis](https://upstash.com/)! To set up, you can follow our-in-depth guide [here](/docs/upstash/redis//) 
 
 Once you've configured the necessary details through the flyctl prompts, and the app deployment completes, you should get a summary of the Redis cluster you've just deployed, like so:
 ```output
