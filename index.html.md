@@ -88,7 +88,7 @@ _Explore built-in and custom Prometheus metrics and Grafana dashboards. Live tai
 
 [Fly.io Metrics](/docs/monitoring/metrics/)
 
-[Error Monitoring by Sentry](/docs/monitoring/sentry//)
+[Error Monitoring by Sentry](/docs/monitoring/sentry/)
 
 [Logging on Fly.io](/docs/monitoring/logging-overview/)
 
