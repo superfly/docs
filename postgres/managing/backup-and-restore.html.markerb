@@ -101,10 +101,10 @@ Legacy postgres images use the `flyio/postgres` repository, while new Postgres
 
 ## Restoring from a snapshot
 
-To restore a Postgres application from a snapshot, simply specify the `--snapshot-id` argument and the `--image` argument when running the `create` command as shown below:
+To restore a Postgres application from a snapshot, simply specify the `--snapshot-id` argument and the `--image-ref` argument when running the `create` command as shown below:
 
 ```cmd
-fly postgres create --snapshot-id <snapshot-id> --image <image-version>
+fly postgres create --snapshot-id <snapshot-id> --image-ref <image-version>
 ```
 ```output
 ? App Name: my-app-db-restored
