@@ -2,6 +2,7 @@
 title: Upstash Kafka
 layout: docs
 nav: firecracker
+redirect_from: /docs/reference/kafka/
 ---
 
 <aside class="callout">

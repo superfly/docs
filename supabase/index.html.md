@@ -3,6 +3,7 @@ title: Supabase Postgres
 layout: docs
 status: alpha
 nav: firecracker
+redirect_from: /docs/reference/supabase/
 ---
 
 [Supabase](https://supabase.com) offers managed Postgres databases on Fly.io infrastructure. Provisioning Supabase on Fly.io ensures low-latency database access from applications hosted on Fly.io.

@@ -2,6 +2,7 @@
 title: "Continuous Deployment with Fly.io and GitHub Actions"
 layout: docs
 nav: apps
+redirect_from: /docs/app-guides/continuous-deployment-with-github-actions/
 categories:
   - ci
   - github
