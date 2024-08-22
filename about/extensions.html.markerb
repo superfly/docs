@@ -9,7 +9,7 @@ Fly.io is a global cloud service for running full stack apps close to users. We 
 
 We have two main goals: to deliver a slick developer experience, and to build the best possible platform for running full stack apps. We're looking for partners that share this goal, extending Fly.io with services our customers need.
 
-Services such as managed databases, exception handlers, CI runners or log aggregators are great examples. Check out our [managed Upstash for Redis](https://fly.io/docs/upstash/redis//) to get an idea of what's possible, and how we integrate services directly into our CLI.
+Services such as managed databases, exception handlers, CI runners or log aggregators are great examples. Check out our [managed Upstash for Redis](https://fly.io/docs/upstash/redis/) to get an idea of what's possible, and how we integrate services directly into our CLI.
 
 [Check out our documentation](https://fly.io/docs) to see what our platform has to offer. Contact us at [extensions@fly.io](mailto:extensions@fly.io) to discuss your case!
 

@@ -81,7 +81,7 @@ Since this isn't a Rails tutorial, an overview of the contents will suffice:
 
 Before we deploy this application, we need to
 create the redis database.  We will be using
-[Upstash for Redis](https://fly.io/docs/upstash/redis//), and creating
+[Upstash for Redis](https://fly.io/docs/upstash/redis/), and creating
 the database and connecting it to the demo application is a matter
 of issuing two commands:
 

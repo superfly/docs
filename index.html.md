@@ -62,7 +62,7 @@ _Run GPU workloads on Fly Machines._
 
 _Services from Fly.io and our extension partners to help you run your entire stack near your users._
 
-[Upstash for Redis®](/docs/upstash/redis//)
+[Upstash for Redis®](/docs/upstash/redis/)
 
 [Tigris object storage](/docs/tigris/)
 

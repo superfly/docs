@@ -5,7 +5,7 @@ nav: demo
 order: 7
 ---
 
-[Upstash Redis](https://fly.io/docs/upstash/redis//) is used by the deep dive demo app for its [pubsub](https://redis.io/docs/latest/commands/?group=pubsub) capabilities, but it can do [so much more](https://upstash.com/docs/redis/overall/rediscompatibility).
+[Upstash Redis](https://fly.io/docs/upstash/redis/) is used by the deep dive demo app for its [pubsub](https://redis.io/docs/latest/commands/?group=pubsub) capabilities, but it can do [so much more](https://upstash.com/docs/redis/overall/rediscompatibility).
 
 In particular, Redis is useful for caching:
 

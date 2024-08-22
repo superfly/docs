@@ -29,7 +29,7 @@ _Managed database services from our extension partners._
 
 - **[Supabase Postgres (public alpha)](/docs/supabase/)** - [Supabase](https://supabase.com/database+external) Postgres is a full-featured and fully-managed Postgres database on Fly.io infrastructure.
 
-- **[Upstash for Redis](/docs/upstash/redis//)** - [Redis](https://redis.io/+external) is an in-memory database commonly used for caching. A managed service by [Upstash](https://upstash.com/+external).
+- **[Upstash for Redis](/docs/upstash/redis/)** - [Redis](https://redis.io/+external) is an in-memory database commonly used for caching. A managed service by [Upstash](https://upstash.com/+external).
 
 ---
 
