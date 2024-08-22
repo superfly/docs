@@ -974,7 +974,7 @@ Each `[[statics]]` block maps a URL prefix to a path inside your container. You 
 
 The "guest path" --- the path inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
 
-Alternatively, you can serve statics directly from object storage using [Tigris](/docs/reference/tigris/). Similar to machine statics, requests under `url_prefix` are served from static assets in your Tigris bucket under `guest_path`. The same rules apply for overlapping URL prefixes.
+Alternatively, you can serve statics directly from object storage using [Tigris](/docs/tigris/). Similar to machine statics, requests under `url_prefix` are served from static assets in your Tigris bucket under `guest_path`. The same rules apply for overlapping URL prefixes.
 
 ```toml
 [[statics]]

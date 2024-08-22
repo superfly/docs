@@ -37,7 +37,7 @@ There are a lot of knobs to turn, but `fly pg config` only supports a few of the
 ## Fully managed Postgres
 
 <div class="important icon">
-Supabase Postgres, a fully managed Postgres database on Fly.io, is now in beta. Learn more about [Supabase Postgres](/docs/reference/supabase/) on Fly.io.
+Supabase Postgres, a fully managed Postgres database on Fly.io, is now in beta. Learn more about [Supabase Postgres](/docs/supabase/) on Fly.io.
 </div>
 
 ### Recommended External Providers

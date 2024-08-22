@@ -30,7 +30,7 @@ fly storage create
 ```
 ```output
 ? Choose a name, use the default, or leave blank to generate one: 
-Your Tigris project (xxx) is ready. See details and next steps with: https://fly.io/docs/reference/tigris/
+Your Tigris project (xxx) is ready. See details and next steps with: https://fly.io/docs/tigris/
 
 Setting the following secrets on xxx:
 AWS_ACCESS_KEY_ID: tid_xxx
@@ -83,4 +83,4 @@ Watch the app deploy and then upload, view, and download a few files!
 
 ## Find out more!
 
-Now that you are up and running, there is a lot more to explore on the [Tigris Global Object Storage](https://fly.io/docs/reference/tigris/) page. Highlights include public buckets, migrating to Tigris with shadow butckets, Pricing, and AWS API compatibility.
+Now that you are up and running, there is a lot more to explore on the [Tigris Global Object Storage](https://fly.io/docs/tigris/) page. Highlights include public buckets, migrating to Tigris with shadow butckets, Pricing, and AWS API compatibility.
