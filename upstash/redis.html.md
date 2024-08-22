@@ -2,6 +2,7 @@
 title: Upstash for Redis®*
 layout: docs
 nav: firecracker
+redirect_from: /docs/reference/redis/
 ---
 
 <aside class="callout">

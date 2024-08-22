@@ -3,6 +3,7 @@ title: Application Security by Arcjet
 layout: docs
 sitemap: true
 nav: firecracker
+redirect_from: /docs/reference/arcjet/
 ---
 
 [Arcjet](https://arcjet.com) is a security layer that allows developers to protect their apps with just a few lines of code. Implement rate limiting, bot protection, email validation, and defense against common attacks.

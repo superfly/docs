@@ -2,6 +2,7 @@
 title: Upstash Vector
 layout: docs
 nav: firecracker
+redirect_from: /docs/reference/vector/
 ---
 
 <aside class="callout">
