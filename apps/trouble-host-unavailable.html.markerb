@@ -76,7 +76,7 @@ Volumes are pinned to physical hosts, so when there's a host outage the volume i
 
 If you're running a high availability Postgres cluster with multiple nodes, a host issue impacting one of your nodes shouldn't cause an issue; by default we run each node on a separate host. If the host your primary node is on goes down, the cluster will fail over to a healthy node. 
 
-However, if your database is running on a single Machine, and you don’t have any replicas to fail over to, then you won’t be able to connect during the host outage. Similar to the single volume steps above, you can create a new Postgres app from your most recent volume snapshot using `fly postgres create --snapshot-id <snapshot_id>`. See [Backup, restores, & snapshots](/docs/postgres/managing/backup-and-restore/) for details.
+However, if your database is running on a single Machine, and you don’t have any replicas to fail over to, then you won’t be able to connect during the host outage. Similar to the single volume steps above, you can create a new Postgres app from your most recent volume snapshot using `fly postgres create --snapshot-id <snapshot_id> --image <image-version>`. See [Backup, restores, & snapshots](/docs/postgres/managing/backup-and-restore/) for details.
 
 ## Prevent downtime when there's a single host issue
 
