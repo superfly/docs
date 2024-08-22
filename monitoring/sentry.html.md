@@ -2,6 +2,7 @@
 title: Application Monitoring by Sentry
 layout: docs
 nav: firecracker
+redirect_from: /docs/reference/sentry/
 ---
 
 [Sentry](https://sentry.io) is a developer-first application monitoring platform that helps you identify and fix software problems before they impact your users. Through our partnerships with Sentry, each of your Fly organizations can claim a year's worth of [Team Plan](https://sentry.io/pricing) credits.
