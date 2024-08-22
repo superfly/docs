@@ -84,12 +84,25 @@ vs_OPQXXna6kA2Qnhz8 26 MiB 2 days ago
 
 The values under the `ID` columns are what will be used to restore a snapshot.
 
-## Restoring from a snapshot
-
-To restore a Postgres application from a snapshot, simply specify the `--snapshot-id` argument when running the `create` command as shown below:
+## Identifying your Postgres image version
+Depending on when you created your Postgres cluster, it may be running an older image than the default for newly clusters. Different Postgres major versions may not be fully compatible, so it's important to use the same version for your restored cluster.
+To see your Postgres image and version, run `fly image show`. 
 
 ```cmd
-fly postgres create --snapshot-id <snapshot-id>
+fly image show -a <postgres-app-name>
+```
+```output
+MACHINE ID      REGISTRY                REPOSITORY      TAG     VERSION DIGEST                        LABELS                                                                          
+e286004f696700  registry-1.docker.io    flyio/postgres  14.6    v0.0.41 sha256:3c25db96357a78e827ca7d fly.app_role=postgres_clusterfly.pg-version=14.6-1.pgdg110+1fly.version=v0.0.41
+```
+Take note of the REPOSITORY and TAG fields. Legacy postgres images use the `flyio/postgres` repository, while new Postgres Flex images use the flyio/`postgres-flex` repository. In the above example, the machine is running a legacy `flyio/postgres:14.6` image.
+
+## Restoring from a snapshot
+
+To restore a Postgres application from a snapshot, simply specify the `--snapshot-id` argument and the `--image` argument when running the `create` command as shown below:
+
+```cmd
+fly postgres create --snapshot-id <snapshot-id> --image <image-version>
 ```
 ```output
 ? App Name: my-app-db-restored
@@ -108,7 +121,7 @@ Postgres cluster my-app-db-restored created
 Save your credentials in a secure place, you won't be able to see them again!
 ```
 
-This provisions and launches a new Fly Postgres database server with the specified snapshot.
+This provisions and launches a new Fly Postgres database server with the specified snapshot and the same image as your existing database.
 
 <div class="important icon">
   <b>Important:</b> The size of the volume provisioned for the new Fly Postgres application must be equal to or greater than the volume from where the snapshot was taken.
