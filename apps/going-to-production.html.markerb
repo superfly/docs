@@ -110,7 +110,7 @@ This checklist guides you through setting up a production environment on Fly.io.
 
 <%= render ChecklistComponent.new(
   items: [
-    { id: "community", title: "Check out our [community](https://community.fly.io/) to get help and answers.", description: ""},
+    { id: "community", title: "Community", description: "Check out our [community](https://community.fly.io/) to get help and answers."},
     { id: "email-support", title: "Consider a plan for email support", description: "You get email support with a [Launch, Scale, or Enterprise plan](https://fly.io/plans)."}
   ],
   c: params[:c] || "",
