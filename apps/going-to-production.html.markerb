@@ -1,5 +1,5 @@
 ---
-title: Going to production checklist
+title: Going to Production
 layout: docs
 nav: apps
 redirect_from:
@@ -9,70 +9,115 @@ redirect_from:
   - /docs/reference/going-to-production/
 ---
 
-This checklist guides you through setting up a production environment on Fly.io. What makes an app production-ready can vary from one framework to another. You'll need to decide what checklist items will work for you; not all of the items will apply to your app and there may be other considerations not listed here.
+This document lists important topics to consider when you set up a production environment on Fly.io. What makes an app production-ready can vary from one framework to another. The following topics and linked resources can help you understand when and why you might need specific features or configuration.
 
 <div class="important icon">
-**Important:** This list is neither exhaustive nor mandatory, and does not guarantee production-readiness for your app. Apps might have unique requirements for production.
+**Important:** This list is neither exhaustive nor mandatory, and does not guarantee production-readiness for your app. Some apps might have unique requirements for production.
 </div>
 
 ## Security
 
-- **Set up single sign-on for organizations:** Enable SSO on your organization to take advantage of Google or GitHub authentication security. See [Single sign-on for organizations](/docs/security/sso/).
-
-- **Isolate staging and production environments:** Use organizations to limit access to your production environment. See [Blueprint: Staging and production isolation](/docs/blueprints/staging-prod-isolation/).
-
-- **Enforce least privilege access:** Use access tokens to allow only the minimum access required by team members to your organization, apps, and Machines. See [access tokens](https://fly.io/docs/security/tokens/).
-
-- **Protect sensitive information:** Set secrets to store sensitive data and make them available as environment variables to your app. See [Secrets and Fly Apps](/docs/apps/secrets/).
-
-- **Make sure private services are not exposed:** Check that your private apps with services don't have public IP addresses. Run `fly ips list` and use `fly ips release` to release unnecessary public IPs. See flyctl [`fly ips` commands](/docs/flyctl/ips/). Assign private apps a [Flycast address](https://fly.io/docs/networking/flycast/) instead.
-
-- **Use Arcjet application security for JavaScript apps:** Secure your app with rate limiting, bot protection, email validation, and defense against common attacks through our extension partner Arcjet. Currently [free in beta](/docs/security/arcjet/#pricing), but pricing is subject to change. See [Application Security by Arcjet](/docs/security/arcjet/).
-
-## Networking
-
-- **Set up a custom domain:** Configure a certificate for your domain. See [Use a custom domain](/docs/networking/custom-domain/).
-
-- **Consider a dedicated IPv4 address:** Completely eliminate the chance of blacklisted spammers causing problems for your app. There is a small [added cost](/docs/about/pricing/#anycast-ip-addresses) for dedicated IPv4 addresses. See [Dedicated IPv4](/docs/networking/services/#dedicated-ipv4).
-
-- **Set up Flycast for private apps**: If you haven't already done so, give your private apps a Flycast address to communicate with them entirely on your private network. See [Flycast - Private Fly Proxy services](https://fly.io/docs/networking/flycast/).
+<%= render ChecklistComponent.new(
+  items: [
+    { id: "sso", title: "Set up single sign-on for organizations", description: "Enable SSO on your organization to take advantage of Google or GitHub authentication security. See [Single sign-on for organizations](/docs/security/sso/)." },
+    { id: "arcjet", title: "Use Arcjet application security for JavaScript apps", description: "Secure your app with rate limiting, bot protection, email validation, and defense against common attacks through our extension partner Arcjet. Currently [free in beta](/docs/reference/arcjet/#pricing), but pricing is subject to change. See [Application Security by Arcjet](/docs/reference/arcjet/)." },
+    { id: "sensitive-info", title: "Protect sensitive information", description: "Set secrets to store sensitive data and make them available as environment variables to your app. See [Secrets and Fly Apps](/docs/apps/secrets/)." },
+    { id: "private-services", title: "Make sure private services are not exposed", description: "Check that your private apps with services don't have public IP addresses. Run `fly ips list` and use `fly ips release` to release unnecessary public IPs. See flyctl [`fly ips` commands](/docs/flyctl/ips/)." },
+    { id: "staging-prod", title: "Isolate staging and production environments", description: "Use organizations to limit access to your production environment. See [Blueprint: Staging and production isolation](/docs/blueprints/staging-prod-isolation/)." },
+    { id: "postgres", title: "Run 'production-grade' Postgres", description: "For Fly Postgres, our unmanaged database, set up replication clusters of 3+ servers. See [High Availability & Global Replication](/postgres/advanced-guides/high-availability-and-global-replication/). You can also use an external database provider and configure it for redundancy." },
+    { id: "backups", title: "Set up offsite backups", description: "Consider offsite backups for your database." },
+    { id: "litefs", title: "LiteFS", description: "LiteFS is a distributed file system that transparently replicates SQLite databases. See the [LiteFS docs](/docs/litefs/)." },
+    { id: "logs", title: "Export your logs", description: "Set up the Fly Log Shipper to aggregate your app's logs to a service of your choice. See [Export logs](/docs/monitoring/exporting-logs/)." },
+    { id: "sentry", title: "Use Sentry for Error tracking", description: "An application monitoring platform that helps you identify and fix software problems before they impact your users from our extension partner Sentry.Fly.io organizations get a year's worth of [Team Plan](https://sentry.io/pricing/+external) credits. See [Application Monitoring by Sentry](/docs/reference/sentry/)." },
+    { id: "resiliency", title: "Use multiple Machines for resiliency", description: "Make your app resilient to single-host failures with multiple Machines that stay stopped until you need them. See [Blueprint: Resilient apps use multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/)." },
+    { id: "autoscaling", title: "Set up autoscaling by load or metric", description: "Use Fly Proxy autostop/autostart or the metrics-based autoscaler app. See [Autoscaling](/docs/reference/autoscaling/)." },
+    { id: "github-actions", title: "Deploy with GitHub Actions", description: "Set up your app for continuous deployment to Fly.io from the app's GitHub repository. See [Continuous Deployment with Fly.io and GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/)." },
+    { id: "review-apps", title: "Generate review apps with GitHub Actions", description: "Automatically generate ephemeral review apps on Fly.io for each pull request (PR) using GitHub Actions. See [Blueprint: Git Branch Preview Environments on GitHub](/docs/blueprints/review-apps-guide/)." },
+    { id: "custom-domain", title: "Set up a custom domain", description: "Configure a certificate for your domain. See [Use a custom domain](/docs/networking/custom-domain/)." },
+    { id: "ipv4", title: "Consider a dedicated IPv4 address", description: "Completely eliminate the chance of blacklisted spammers causing problems for your app. There is a small [added cost](/docs/about/pricing/#anycast-ip-addresses) for dedicated IPv4 addresses. See [Dedicated IPv4](/docs/networking/services/#dedicated-ipv4)." },
+    { id: "machine-sizing", title: "Get Machine sizing right", description: "Most production apps require 2x or performance CPUs. Also make sure you have enough RAM for your app and/or enable [swapping to disk](https://fly.io/docs/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use. See [Machine sizing](docs/machines/guides-examples/machine-sizing/)." },
+    { id: "fine-tune", title: "Fine-tune and benchmark your app", description: "Learn about optimizing your app on Fly.io. See [Tips to fine-tune and (not) benchmark your app on Fly.io](/docs/reference/fine-tune-apps/)." }
+  ],
+  c: params[:c] || "",
+  o: params[:o] || "",
+  h: params[:h] || ""
+) %>
 
 ## Databases
 
-- **Run "production-grade" Postgres:** For Fly Postgres, our unmanaged database, set up replication clusters of 3+ servers. See [High Availability & Global Replication](/postgres/advanced-guides/high-availability-and-global-replication/). You can also use an external database provider and configure it for redundancy.
+<%= render ChecklistComponent.new(
+  items: [
+    { id: "postgres", title: "Run 'production-grade' Postgres", description: "For Fly Postgres, our unmanaged database, set up replication clusters of 3+ servers. See [High Availability & Global Replication](/postgres/advanced-guides/high-availability-and-global-replication/). You can also use an external database provider and configure it for redundancy." },
+    { id: "backups", title: "Set up offsite backups", description: "Consider offsite backups for your database." },
+    { id: "litefs", title: "LiteFS", description: "LiteFS is a distributed file system that transparently replicates SQLite databases. See the [LiteFS docs](/docs/litefs/)." }
+  ],
+  c: params[:c] || "",
+  o: params[:o] || "",
+  h: params[:h] || ""
+) %>
 
-- **Set up offsite backups:** For all databases, it's essential to have a recovery plan that includes storing backups offsite.
-  
 ## Monitoring
 
-- **Export your logs:** Set up the Fly Log Shipper to aggregate your app’s logs to a service of your choice. See [Export logs](/docs/monitoring/exporting-logs/).
+<%= render ChecklistComponent.new(
+  items: [
+    { id: "logs", title: "Export your logs", description: "Set up the Fly Log Shipper to aggregate your app's logs to a service of your choice. See [Export logs](/docs/monitoring/exporting-logs/)." },
+    { id: "sentry", title: "Use Sentry for Error tracking", description: "An application monitoring platform that helps you identify and fix software problems before they impact your users from our extension partner Sentry.Fly.io organizations get a year's worth of [Team Plan](https://sentry.io/pricing/+external) credits. See [Application Monitoring by Sentry](/docs/reference/sentry/)." }
+  ],
+  c: params[:c] || "",
+  o: params[:o] || "",
+  h: params[:h] || ""
+) %>
 
-- **Use Sentry for Error tracking**: An application monitoring platform that helps you identify and fix software problems before they impact your users from our extension partner Sentry.Fly.io organizations get a year's worth of [Team Plan](https://sentry.io/pricing/+external) credits. See [Application Monitoring by Sentry](/docs/monitoring/sentry/).
+## Availability and resiliency
 
-## Availability, resiliency, and costs
-
-- **Use multiple Machines for resiliency:** Make your app resilient to single-host failures with multiple Machines that stay stopped until you need them. See [Blueprint: Resilient apps use multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/).
-
-- **Add regions:** Scale your app in multiple regions closest to your app's users. See [Scale an app's regions](/docs/launch/scale-count/#scale-an-apps-regions).
-
-- **Refine the default autostop/autostart settings**: Autostop/autostart lets you stop or suspend Machines when there's low traffic, saving on resource usage and costs. You get autostop/autostart by default with a new app, but you can configure it to optimize for your use case. See [Autostop/autostart Machines](/docs/launch/autostop-autostart/).
-
-- **Set up autoscaling by metric:** For apps that aren't running web services, use the autoscaler app to scale your app's Machines based on any metric, saving on resource usage and costs. See [Autoscale based on metrics](/docs/launch/autoscale-by-metric/).
-
-## App performance
-
-- **Get Machine sizing right:** Most production apps require 2x or performance CPUs. Also make sure you have enough RAM for your app and/or enable [swapping to disk](https://fly.io/docs/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use. See [Machine sizing](docs/machines/guides-examples/machine-sizing/).
-
-- **Fine-tune your app:** Learn about optimizing your app on Fly.io. See [Tips to fine-tune and your app on Fly.io](/docs/reference/fine-tune-apps/).
+<%= render ChecklistComponent.new(
+  items: [
+    { id: "resiliency", title: "Use multiple Machines for resiliency", description: "Make your app resilient to single-host failures with multiple Machines that stay stopped until you need them. See [Blueprint: Resilient apps use multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/)." },
+    { id: "autoscaling", title: "Set up autoscaling by load or metric", description: "Use Fly Proxy autostop/autostart or the metrics-based autoscaler app. See [Autoscaling](/docs/reference/autoscaling/)." }
+  ],
+  c: params[:c] || "",
+  o: params[:o] || "",
+  h: params[:h] || ""
+) %>
 
 ## CI/CD
 
-- **Generate review apps with GitHub Actions:** Automatically generate ephemeral review apps on Fly.io for each pull request (PR) using GitHub Actions. See [Blueprint: Git Branch Preview Environments on GitHub](/docs/blueprints/review-apps-guide/).
+<%= render ChecklistComponent.new(
+  items: [
+    { id: "github-actions", title: "Deploy with GitHub Actions", description: "Set up your app for continuous deployment to Fly.io from the app's GitHub repository. See [Continuous Deployment with Fly.io and GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/)." },
+    { id: "review-apps", title: "Generate review apps with GitHub Actions", description: "Automatically generate ephemeral review apps on Fly.io for each pull request (PR) using GitHub Actions. See [Blueprint: Git Branch Preview Environments on GitHub](/docs/blueprints/review-apps-guide/)." }
+  ],
+  c: params[:c] || "",
+  o: params[:o] || "",
+  h: params[:h] || ""
+) %>
 
-- **Deploy with GitHub Actions:** Set up your app for continuous deployment to Fly.io from the app’s GitHub repository. See [Continuous Deployment with Fly.io and GitHub Actions](/docs/app-guides/continuous-deployment-with-github-actions/).
+## Networking
 
-## Get support
+<%= render ChecklistComponent.new(
+  items: [
+    { id: "custom-domain", title: "Set up a custom domain", description: "Configure a certificate for your domain. See [Use a custom domain](/docs/networking/custom-domain/)." },
+    { id: "ipv4", title: "Consider a dedicated IPv4 address", description: "Completely eliminate the chance of blacklisted spammers causing problems for your app. There is a small [added cost](/docs/about/pricing/#anycast-ip-addresses) for dedicated IPv4 addresses. See [Dedicated IPv4](/docs/networking/services/#dedicated-ipv4)." }
+  ],
+  c: params[:c] || "",
+  o: params[:o] || "",
+  h: params[:h] || ""
+) %>
 
-- **Community:** Check out our [community](https://community.fly.io/) to get help and answers.
+## Fine-tuning your app
 
-- **Consider a plan for email support:** You get email support with a [Launch, Scale, or Enterprise plan](https://fly.io/plans).
+<%= render ChecklistComponent.new(
+  items: [
+    { id: "machine-sizing", title: "Get Machine sizing right", description: "Most production apps require 2x or performance CPUs. Also make sure you have enough RAM for your app and/or enable [swapping to disk](https://fly.io/docs/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use. See [Machine sizing](docs/machines/guides-examples/machine-sizing/)." },
+    { id: "fine-tune", title: "Fine-tune and benchmark your app", description: "Learn about optimizing your app on Fly.io. See [Tips to fine-tune and (not) benchmark your app on Fly.io](/docs/reference/fine-tune-apps/)." }
+  ],
+  c: params[:c] || "",
+  o: params[:o] || "",
+  h: params[:h] || ""
+) %>
+
+## Support
+
+Check out our [community](https://community.fly.io/) to get help and answers.
+
+Get email support with a [Launch, Scale, or Enterprise plan](https://fly.io/plans).
