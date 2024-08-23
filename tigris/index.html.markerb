@@ -8,7 +8,7 @@ redirect_from: /docs/reference/tigris/
 
 [Tigris](https://tigrisdata.com) is a globally caching, S3-compatible object storage service built on Fly.io infrastructure.
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/cn2if9oInK0?si=LcWG4wle9DBBPf4F" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></br>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/cn2if9oInK0?si=LcWG4wle9DBBPf4F" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br/>
 
 Objects in Tigris are stored close to the region where they're written. Then, when requested, objects are cached close to the requesting user. This cache is intelligently managed by Tigris based on global traffic patterns. This behavior offers CDN-like behavior with zero configuration required.
 
