@@ -36,7 +36,7 @@ Build information is in the `build` section of `fly.toml`. `fly launch` will f
 
 Reference: [Builders and Fly.io](/docs/reference/builders/)
 
-## Fly Launch configuration
+## Fly App configuration
 
 On creation, an app gets a default configuration that will work for most basic web apps.
 
@@ -46,7 +46,7 @@ You can make configuration changes by editing an app's `fly.toml` and then runni
 
 The flyctl language-specific scanners make changes to app configuration as part of their work.
 
-Reference: [Fly Launch configuration (fly.toml)](/docs/reference/configuration/)
+Reference: [App configuration (fly.toml)](/docs/reference/configuration/)
 
 ## Platform resource provisioning
 

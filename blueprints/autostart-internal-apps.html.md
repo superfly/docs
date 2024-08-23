@@ -97,7 +97,7 @@ Here's an example `fly.toml` snippet:
 **Important:** Set `force_https = false`; Flycast only works over HTTP. HTTPS isn't necessary because all your private network traffic goes through encrypted WireGuard tunnels.
 </div>
 
-Learn more about [Fly Launch configuration](/docs/reference/configuration/) and [Fly Proxy autostop/autostart](/docs/launch/autostop-autostart/).
+Learn more about [app configuration](/docs/reference/configuration/) and [Fly Proxy autostop/autostart](/docs/launch/autostop-autostart/).
 
 ### Make sure your app binds to `0.0.0.0:<port>`
 

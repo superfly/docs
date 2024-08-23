@@ -31,9 +31,9 @@ _Store sensitive data, like usernames and passwords, as secrets in your app. Sec
 
 _Get your app ready for production on Fly.io._
 
-- [Going to production with your app](/docs/apps/going-to-production/)
+- [Going to production checklist](/docs/apps/going-to-production/)
 - [App availability and resiliency](/docs/apps/app-availability/)
-- [Tips to fine-tune and (not) benchmark your app on Fly.io](/docs/apps/fine-tune-apps/)
+- [Fine-tune your app](/docs/apps/fine-tune-apps/)
 - [Guidelines for concurrency settings](/docs/apps/concurrency/)
 
 ---

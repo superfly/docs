@@ -1,10 +1,10 @@
 ---
-title: Fly Launch configuration (fly.toml)
+title: App configuration (fly.toml)
 layout: docs
 nav: firecracker
 ---
 
-You can configure an app for deployment on Fly.io using a `fly.toml` file. Configuration of builds, environment variables, internet-exposed services, disk mounts, and release commands go here.
+You can configure an app for deployment on Fly.io using a `fly.toml` file. Configuration of builds, environment variables, internet-exposed services, disk mounts, and release commands go here. `fly.toml` configuration applies for apps managed by [Fly Launch commands](/docs/launch/).
 
 ## App configuration files
 

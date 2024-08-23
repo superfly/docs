@@ -9,7 +9,7 @@ Get up and running on Fly.io:
 
 - **[Quickstart](/docs/getting-started/launch/):** Launch your own app now.
 
-- **[Launch a demo app](/docs/hands-on/):** Walk through installing the flyctl command-line tool and creating an account, then launch a simple "hellofly" demo app.
+- **[Launch a demo app](/docs/getting-started/launch-demo):** Walk through installing the flyctl command-line tool and creating an account, then launch a simple "hellofly" demo app.
 
 - **[Choose your language or framework](/docs/getting-started/get-started-by-framework/):** Get started on Fly.io with the tech _you_ love.
 
@@ -22,6 +22,7 @@ Get up and running on Fly.io:
 ## Learn more
 
 * [Fly Launch](/docs/apps): You've tried the `fly launch` command. Now learn how to use all the Fly Launch features that help you manage and run your apps.
+* [Going to production checklist](/docs/apps/going-to-production/): Considerations for setting up a production environment on Fly.io.
 * [Fly.io Blueprints](/docs/blueprints/): A library of patterns and examples that you can apply in your own projects.
 * [Databases & Storage](/docs/database-storage-guides/): Options for persistent data storage on Fly.io.
 * [Fly Machines](/docs/machines/): Go deeper with our fast-launching VMs, and use them to run your projects and tasks.
