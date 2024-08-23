@@ -5,7 +5,7 @@ nav: demo
 toc: true
 ---
 
-Welcome to our deep dive demo, where you can explore Fly.io more thoroughly, but in a time-boxed way. In one hour or less: get a fully-functioning app running in the first few minutes, and then have enough time left over to understand what you just did, explore how the pieces fit together, and even integrate in AI functionality that makes use of GPUs.
+Welcome to our deep dive demo, where you can explore Fly.io more thoroughly, but in a time-boxed way. In one hour or less: get a fully-functioning app running in the first few minutes, and then have enough time left over to understand what you just did, explore how the pieces fit together, and even integrate AI functionality that makes use of GPUs.
 
 ## Goals of the deep dive
 
@@ -13,7 +13,7 @@ It's really just one goal:
 
 **Help you find out if Fly.io is the right place for you.**
 
-If you came from our [Speedrun](https://fly.io/speedrun) or [Getting started](https://fly.io/docs/getting-started/) pages, maybe you want to go beyond `hello world` and explore the platform so you can feel confident that you're choosing a platform that can support you now, and scale with you later on as you grow.
+If you came from our [Speedrun](https://fly.io/speedrun) or [Getting started](https://fly.io/docs/getting-started/) pages, maybe you want to go beyond `hello world` and explore the platform so you can feel confident that you're choosing a provider that can support you now, and scale with you later on as you grow.
 
 Maybe you're concerned about lock in. You want to use services from other places and even eject entirely and go elsewhere if things don't work out.
 
@@ -21,13 +21,13 @@ If you don't get a good feeling within an hour, you're out of here. If you do ge
 
 ## Beyond `hello fly`
 
-Our deep dive assumes that you're not satisfied by a `hello fly`, or even a `hello fly` with a database application. You know that a real-world application has at a minimum the following components:
+A real-world application has, at a minimum, the following components:
 
 * An HTML form and a database; typically a relational database.
 * The ability to handle media files or documents, generally using S3.
 * A multi-user and realtime component, where changes made by one person in one location are reflected instantly in the browser of another person.
 
-To get a fully-functional app running smoothly, you need a whole bunch of things; things like Anycast routing, load balancers, DNS certificates, WebSockets, an internal private network, a relational database, an object store, and an in-memory database. And the knowledge to to connect them all together.
+To get a fully-functional app running smoothly, you need a whole bunch of things; things like Anycast routing, load balancers, DNS certificates, WebSockets, an internal private network, a relational database, an object store, and an in-memory database. And the knowledge to connect them all together.
 
 We take a lot of this work off your plate with our [Fly Proxy routing](/docs/reference/fly-proxy/) and out-of-the-box [private networking](/docs/networking/private-networking/).
 
@@ -42,14 +42,12 @@ The deep dive demo uses industry standard components that you can run on your la
 The deep dive demo is based on [MDN's Web Dictaphone](https://github.com/mdn/dom-examples/tree/main/media/web-dictaphone+external).
 You can play with a [live demo hosted on GitHub](https://mdn.github.io/dom-examples/media/web-dictaphone/+external). The Web Dictaphone app is about as basic of an HTML form as you can get, and it has the added bonus of providing the ability to generate as many media files as you want using only your voice.
 
-The basic Web Dictaphone is client side only, requiring a web server that can deploy static assets (HTML, CSS, JS, images), like NGINX, Apache HTTPd, or Caddy. Storing the data in databases for our deep dive demo requires a server that can handle HTTP GET, POST, PUT, and DELETE requests. The choice of server varies depending on the language or framework.
-
-### Other demo components
+The basic Web Dictaphone is client side only, requiring a web server that can deploy static assets (HTML, CSS, JS, images), like nginx, Apache HTTPd, or Caddy. Storing the data in databases for our deep dive demo requires a server that can handle HTTP GET, POST, PUT, and DELETE requests. The choice of server varies depending on the language or framework.
 
 The demo includes the following components:
 
 * A [PostgreSQL](https://www.postgresql.org/+external) relational database to store the names of the audio clips
-* A [Tigris bucket](https://www.tigrisdata.com/+external) to store the the audio files
+* A [Tigris bucket](https://www.tigrisdata.com/+external) to store the audio files
 * [Upstash for Redis](https://fly.io/docs/reference/redis/) and [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API+external) to handle the connections for the realtime requirement
 
 ## Available runtimes
