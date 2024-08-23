@@ -21,7 +21,7 @@ If you don't get a good feeling within an hour, you're out of here. If you do ge
 
 ## Beyond `hello fly`
 
-Our deep dive assumes that you're not satisfied by a `hello fly`, or even a `hello fly` with a database application. You know that a real-world application has at a minimum the following components:
+A real-world application usually has, at a minimum, the following components:
 
 * An HTML form and a database; typically a relational database.
 * The ability to handle media files or documents, generally using S3.
@@ -43,8 +43,6 @@ The deep dive demo is based on [MDN's Web Dictaphone](https://github.com/mdn/dom
 You can play with a [live demo hosted on GitHub](https://mdn.github.io/dom-examples/media/web-dictaphone/+external). The Web Dictaphone app is about as basic of an HTML form as you can get, and it has the added bonus of providing the ability to generate as many media files as you want using only your voice.
 
 The basic Web Dictaphone is client side only, requiring a web server that can deploy static assets (HTML, CSS, JS, images), like NGINX, Apache HTTPd, or Caddy. Storing the data in databases for our deep dive demo requires a server that can handle HTTP GET, POST, PUT, and DELETE requests. The choice of server varies depending on the language or framework.
-
-### Other demo components
 
 The demo includes the following components:
 
