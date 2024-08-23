@@ -83,8 +83,6 @@ _Networking on Fly.io._
 
 [Custom domains](/docs/networking/custom-domain/)
 
-[More](/docs/networking/)
-
 ---
 
 ## Monitoring

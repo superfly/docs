@@ -33,7 +33,7 @@ _Get your app ready for production on Fly.io._
 
 - [Going to production checklist](/docs/apps/going-to-production/)
 - [App availability and resiliency](/docs/apps/app-availability/)
-- [Tips to fine-tune your app on Fly.io](/docs/apps/fine-tune-apps/)
+- [Fine-tune your app](/docs/apps/fine-tune-apps/)
 - [Guidelines for concurrency settings](/docs/apps/concurrency/)
 
 ---
