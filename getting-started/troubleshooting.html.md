@@ -42,7 +42,7 @@ Any failures in the `fly doctor` output point to where you can start troubleshoo
 
 ### Review your `fly.toml` configuration
 
-Double-check the formatting and configuration options in your `fly.toml` file. Besides [checking port numbers](#warning-the-app-is-listening-on-the-incorrect-address-host-and-port-checking), you should also review any recent changes and make sure you're following the conventions described in [Fly Launch configuration](/docs/reference/configuration/).
+Double-check the formatting and configuration options in your `fly.toml` file. Besides [checking port numbers](#warning-the-app-is-listening-on-the-incorrect-address-host-and-port-checking), you should also review any recent changes and make sure you're following the conventions described in the [app configuration](/docs/reference/configuration/) docs.
 
 ## Get more information about failures
 

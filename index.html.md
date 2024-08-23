@@ -8,7 +8,7 @@ nav: firecracker
 
 <div class="index-page">
 
-## Get started
+## Get started 
 
 Try our [quickstart or demo app](/docs/getting-started/)
 
@@ -20,7 +20,12 @@ Or choose your favorite [language or framework](/docs/getting-started/get-starte
 
 _Fly Launch is app configuration, provisioning, deployment, scaling, and orchestration with our flyctl CLI._
 
-[Work with your apps](/docs/apps/): create, configure, deploy, and scale with Fly Launch, set secrets, and prepare for production
+[Create and manage apps](/docs/apps/)
+
+[Going to production checklist](/docs/apps/going-to-production/)
+
+[App config (fly.toml)](/docs/reference/configuration/)
+
 
 ---
 
@@ -36,15 +41,9 @@ flyctl is [open source](https://github.com/superfly/flyctl+external)
 
 ## Fly Machines
 
-_Machines are fast-launching VMs—and the compute engine of the Fly.io platform._
+_Machines are fast-launching VMs—and the compute engine of the Fly.io platform. Get precise, low-level control of Machines with our REST API_
 
 Learn all about [Fly Machines](/docs/machines/)
-
----
-
-## Machines API
-
-_Get precise, low-level control of Machines with our REST API._
 
 [Machines API docs](/docs/machines/api/)
 
@@ -62,11 +61,11 @@ _Run GPU workloads on Fly Machines._
 
 _Services from Fly.io and our extension partners to help you run your entire stack near your users._
 
-[Upstash for Redis®](/docs/upstash/redis/)
-
 [Tigris object storage](/docs/tigris/)
 
 [Supabase Postgres (public alpha)](/docs/supabase/)
+
+[Upstash for Redis®](/docs/upstash/redis/)
 
 [LiteFS - Distributed SQLite](/docs/litefs/)
 
@@ -76,9 +75,15 @@ _Services from Fly.io and our extension partners to help you run your entire sta
 
 ## Networking
 
-_Private networking, public networking, custom domains and certificates, UDP apps, and routing._
+_Networking on Fly.io._
 
-[Networking](/docs/networking/) on Fly.io
+[Private networking](/docs/networking/private-networking)
+
+[Public networking](/docs/networking/services)
+
+[Custom domains](/docs/networking/custom-domain/)
+
+[More](/docs/networking/)
 
 ---
 

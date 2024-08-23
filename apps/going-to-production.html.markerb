@@ -9,10 +9,10 @@ redirect_from:
   - /docs/reference/going-to-production/
 ---
 
-This checklist guides you through setting up a production environment on Fly.io. What makes an app production-ready can vary from one framework to another. You'll need to decide which checklist items work for your app and setup; not all of the items will apply and there may be other considerations not listed here.
+Use this checklist to help you set up a production environment on Fly.io.
 
 <div class="important icon">
-**Important:** This list is neither exhaustive nor mandatory, and does not guarantee production-readiness for your app. Apps might have unique requirements for production.
+**Important:** The checklist is not exhaustive and does not guarantee production-readiness for your app. Apps can have unique requirements for production depending on the framework and type of app. Some items won't be applicable and there may be other considerations not listed here; you'll need to decide which checklist items work for your app.
 </div>
 
 ## Security

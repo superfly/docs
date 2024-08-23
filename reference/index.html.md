@@ -20,7 +20,7 @@ Quick references for often-used resources like flyctl and `fly.toml`. Or dig a l
 
 * **[flyctl](/docs/flyctl/):** The flyctl CLI reference documentation.
 
-* **[App Configuration (fly.toml)](/docs/reference/configuration/):** The settings for configuring your app in the `fly.toml` configuration file. The Fly Launch configuration includes how the app is built, its volume mounts, network services, and more.
+* **[App Configuration (fly.toml)](/docs/reference/configuration/):** The settings for configuring your app in the `fly.toml` configuration file. The app configuration includes how the app is built, its volume mounts, network services, and more.
 
 * **[Fly Launch](/docs/reference/fly-launch/):** A deeper dive into how Fly Launch creates and configures new apps.
 

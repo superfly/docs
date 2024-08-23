@@ -141,7 +141,7 @@ This step `uses` the [superfly/flyctl-actions action](https://github.com/marketp
 
 This pulls the API token from GitHub's secrets engine and puts it into the environmental variables passed to the action.
 
-**Step 9** pushes your two new files to the repository: `fly.toml`, the Fly Launch configuration file, and `fly.yml`, the GitHub action file. The push triggers your first automatic deploy. The GitHub action now triggers a redeploy each time you push changes to your repo.
+**Step 9** pushes your two new files to the repository: `fly.toml`, the app configuration file, and `fly.yml`, the GitHub action file. The push triggers your first automatic deploy. The GitHub action now triggers a redeploy each time you push changes to your repo.
 
 ## Conclusion and further reading
 

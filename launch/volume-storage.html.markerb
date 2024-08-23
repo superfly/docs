@@ -166,7 +166,7 @@ The volume is mounted in the directory specified by the `destination` field in t
 ## Related topics
 
 - [Fly Volumes overview](/docs/volumes/overview/)
-- [`mounts` section](/docs/reference/configuration/#the-mounts-section) in the `fly.toml` Fly Launch configuration file
+- [`mounts` section](/docs/reference/configuration/#the-mounts-section) in the `fly.toml` app configuration file
 - [Create and manage volumes](/docs/volumes/volume-manage/)
 - [Manage volume snapshots](/docs/volumes/snapshots/)
 - [Scale an app with volumes](/docs/apps/scale-count/#scale-an-app-with-volumes)
