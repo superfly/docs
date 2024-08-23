@@ -62,7 +62,7 @@ This checklist guides you through setting up a production environment on Fly.io.
 <%= render ChecklistComponent.new(
   items: [
     { id: "export-logs", title: "Export your logs", description: "Set up the Fly Log Shipper to aggregate your app’s logs to a service of your choice. See [Export logs](/docs/monitoring/exporting-logs/)."},
-    { id: "export-logs", title: "Monitor your app with fully-managed metrics", description: "Use managed Prometheus and the Grafana dashboard to monitor your app. See [Metrics on Fly.io](/docs/monitoring/metrics/)."},
+    { id: "metrics", title: "Monitor your app with fully-managed metrics", description: "Use managed Prometheus and the Grafana dashboard to monitor your app. See [Metrics on Fly.io](/docs/monitoring/metrics/)."},
     { id: "sentry", title: "Use Sentry for Error tracking", description: "An application monitoring platform that helps you identify and fix software problems before they impact your users from our extension partner Sentry.Fly.io organizations get a year's worth of [Team Plan](https://sentry.io/pricing/+external) credits. See [Application Monitoring by Sentry](/docs/monitoring/sentry/)."}
   ],
   c: params[:c] || "",
