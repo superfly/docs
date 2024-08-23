@@ -1,13 +1,14 @@
 ---
-title: Node.js demo
+title: Node.js demo reference
 layout: docs
 nav: demo
 ---
 
-Source is on [GitHub](https://github.com/fly-apps/node-dictaphone).
+
+
+The Node.js demo source is on [GitHub](https://github.com/fly-apps/node-dictaphone).
 `fly launch` will provide a [`Dockerfile`](https://docs.docker.com/reference/dockerfile/)
- and a [`fly.toml`](https://fly.io/docs/reference/configuration/).  As your application
- changes, you can run `npx @flydotio/dockerfile` to produce updated Dockerfiles.
+ and a [`fly.toml`](https://fly.io/docs/reference/configuration/) config file. When you make changes to your application, you can run `npx @flydotio/dockerfile` to produce updated Dockerfiles.
 
 How the pieces are put together:
 
@@ -32,7 +33,7 @@ How the pieces are put together:
 * The [express-ws](https://github.com/HenningM/express-ws?tab=readme-ov-file#express-ws-)
   module is used for [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) support.
 * The [redis](https://github.com/redis/node-redis?tab=readme-ov-file#node-redis) module
-  is used to access Redis.  The `REDIS_URL` secret isused to access the database.
+  is used to access Redis.  The `REDIS_URL` secret issued to access the database.
 
 Key points of logic:
 
@@ -48,4 +49,4 @@ Key points of logic:
   replaced with new contents.
 * When the `WHISPER_URL` secret is set, `PUT` requests will cause the audio clips
   to be passed to the Whisper server, and responses will be used to update the
-  PostgreSQL database.  The code for this is [here](https://github.com/fly-apps/node-dictaphone/blob/1e84a4dece6888dfc68880d146b46511d47391b3/app.js#L102-L129).
+  PostgreSQL database. The code for this is in [app.js](https://github.com/fly-apps/node-dictaphone/blob/1e84a4dece6888dfc68880d146b46511d47391b3/app.js#L102-L129).

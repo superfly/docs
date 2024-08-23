@@ -1,14 +1,14 @@
 ---
-title: Rails demo
+title: Rails demo reference
 layout: docs
 nav: demo
 ---
 
-Source is on [GitHub](https://github.com/fly-apps/rails-dictaphone/).
+The Rails source is on [GitHub](https://github.com/fly-apps/rails-dictaphone/).
 `fly launch` will provide a [`Dockerfile`](https://docs.docker.com/reference/dockerfile/)
- and a [`fly.toml`](https://fly.io/docs/reference/configuration/).  `fly launch` will
- also work with Rails provided Dockerfiles.  As your application changes, you can run
- `bin/rails generate dockerfile` to generate updated dockerfiles.
+ and a [`fly.toml`](/docs/reference/configuration/) config file.  `fly launch` will
+ also work with Rails-provided Dockerfiles. When you make changes to your application, you can run
+ `bin/rails generate dockerfile` to generate updated Dockerfiles.
 
 How the pieces are put together:
 

@@ -1,0 +1,51 @@
+---
+title: Launch the demo
+layout: docs
+nav: demo
+order: 3
+---
+
+This is the point where you might expect to see that the marketing hype promised by [Speedrun](https://fly.io/speedrun) doesn't quite cut it. But the fact is that Fly.io is built for an excellent developer experience (DX) for full stack applications with both realtime time and object storage requirements.
+
+**Step 0:** To get set up to run the deep dive demo on Fly.io, all you need to do is install Ruby or Node and create an empty project directory. 
+
+After that there are only two steps.
+
+**Step 1:** [Install flyctl](https://fly.io/docs/flyctl/install/).
+
+**Step 2:** Run: 
+```cmd
+fly launch --from https://github.com/fly-apps/node-dictaphone
+```
+-or-
+```cmd
+fly launch --from https://github.com/fly-apps/rails-dictaphone
+```
+
+If you're new to Fly.io, the second step will take you to a page where you can register before continuing. 
+
+The `fly launch` output describes what you'll be getting for the app, and gives you an opportunity to tweak the settings. (Suggestion: Don't. The defaults are fine for this demo and we'll walk you through how to adjust them later.) And then it will build and assemble and wire up your app.
+
+Take your time and play with it. Open the application in multiple browser windows. Send a link to a friend on another continent and watch your browser update in realtime.
+
+And then relax. We promised you it would be less than an hour. You're already up and running. If you are so inclined, try bringing up this exact same application on another cloud provider. We don't mind. In fact, we encourage it. Just please don't count the time you spent there against the hour you set aside for this demo!
+
+## Explore the result of `fly launch`
+
+Once you're back and/or rested up, explore the app and add-on components. Feel free to review the following in any order, or chose to skip ahead:
+
+  * [Your Fly App](../application/)
+  * [PostgreSQL database](../postgresql/)
+  * [Tigris Object Storage](../tigris/)
+  * [Upstash Redis](../redis/)
+
+## Runtimes
+
+Optional, but details are provided for each runtime:
+
+  * [Node.js](../nodejs/)
+  * [Rails](../rails/)
+
+--- 
+
+**Next:** Add [OpenAI Whisper](../whisper/) speech recognition as a bonus.

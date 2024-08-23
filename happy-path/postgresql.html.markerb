@@ -5,10 +5,10 @@ order: 5
 nav: demo
 ---
 
-Fly Postgres is deployed as a separate app, and that app comes initially configured with a single [Fly Postgres](https://fly.io/docs/postgres/) Machine. That's fine for development, but for production you need redundancy and scalability. With a [few commands](https://fly.io/docs/postgres/advanced-guides/high-availability-and-global-replication/) you can create an HA cluster in your primary region and read-only replicas elsewhere.
+Fly Postgres is deployed as a separate app, and that app comes initially configured with a single [Fly Postgres](/docs/postgres/) Machine. That's fine for development, but for production you need redundancy and scalability. With a [few commands](/docs/postgres/advanced-guides/high-availability-and-global-replication/) you can create an HA cluster in your primary region and read-only replicas elsewhere.
 
-If you're interested in a managed offering, [Supabase Postgres](https://fly.io/docs/supabase/) is in public alpha.
+If you're interested in a managed offering, [Supabase Postgres](/docs/supabase/) is in public alpha.
 
-And there is no lock in here. We have a list of [recommended external providers](https://fly.io/docs/postgres/getting-started/what-you-should-know/#recommended-external-providers), but you're free to host your database literally anywhere.
+And there is no lock in here. We have a list of [recommended external providers](/docs/postgres/getting-started/what-you-should-know/#recommended-external-providers), but you're free to host your database literally anywhere.
 
-Before moving on, one last observation on the relational database. While you want and need your application to be on the internet, you are much better off if your relational database is NOT directly exposed to the internet, but can only be accessed via your application. That’s the value of an [internal private network](https://fly.io/docs/networking/private-networking/). The private connection from the demo app to the Postgres app was configured automatically for you.
+Before moving on, one last observation on the relational database. While you want and need your application to be on the internet, you are much better off if your relational database is NOT directly exposed to the internet, but can only be accessed via your application. That’s the value of an [internal private network](/docs/networking/private-networking/). The private connection from the demo app to the Postgres app was configured automatically for you.
