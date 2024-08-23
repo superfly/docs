@@ -9,7 +9,7 @@ redirect_from:
   - /docs/reference/going-to-production/
 ---
 
-This checklist guides you through setting up a production environment on Fly.io. What makes an app production-ready can vary from one framework to another. You'll need to decide what checklist items will work for you; not all of the items will apply to your app and there may be other considerations not listed here.
+This checklist guides you through setting up a production environment on Fly.io. What makes an app production-ready can vary from one framework to another. You'll need to decide which checklist items work for your app and setup; not all of the items will apply and there may be other considerations not listed here.
 
 <div class="important icon">
 **Important:** This list is neither exhaustive nor mandatory, and does not guarantee production-readiness for your app. Apps might have unique requirements for production.
@@ -48,8 +48,9 @@ This checklist guides you through setting up a production environment on Fly.io.
 
 <%= render ChecklistComponent.new(
   items: [
-    { id: "production-grade-postgres", title: "Run 'production-grade' Postgres", description: "For Fly Postgres, our unmanaged database, set up replication clusters of 3+ servers. See [High Availability & Global Replication](/postgres/advanced-guides/high-availability-and-global-replication/). You can also use an external database provider and configure it for redundancy."},
-    { id: "offsite-backups", title: "Set up offsite backups", description: "For all databases, it's essential to have a recovery plan that includes storing backups offsite."}
+    { id: "production-grade-postgres", title: "Run \"production-grade\" Postgres", description: "For Fly Postgres, our unmanaged database, set up replication clusters of 3+ servers. See [High Availability & Global Replication](/postgres/advanced-guides/high-availability-and-global-replication/). You can also use an external database provider and configure it for redundancy."},
+    { id: "test-backups", title: "Periodically test your Fly Postgres backups", description: "Periodically [create a new Postgres app from a snapshot](/docs/postgres/managing/backup-and-restore/#restoring-from-a-snapshot) or clone the active app, then use `fly postgres connect` to log into the database and confirm that all the data is present." },
+    { id: "offsite-backups", title: "Set up offsite backups", description: "For all databases, it's essential to have a recovery plan that includes storing backups offsite. You can use volume snapshots as part of your plan, but you should also store copies of your backups in another location. See [Manage volume snapshots](https://fly.io/docs/volumes/snapshots/) and, for Fly Postgres, [Backup, Restores, & Snapshots](https://fly.io/docs/postgres/managing/backup-and-restore/)." }
   ],
   c: params[:c] || "",
   o: params[:o] || "",
@@ -61,6 +62,7 @@ This checklist guides you through setting up a production environment on Fly.io.
 <%= render ChecklistComponent.new(
   items: [
     { id: "export-logs", title: "Export your logs", description: "Set up the Fly Log Shipper to aggregate your app’s logs to a service of your choice. See [Export logs](/docs/monitoring/exporting-logs/)."},
+    { id: "metrics", title: "Monitor your app with fully-managed metrics", description: "Use managed Prometheus and the Grafana dashboard to monitor your app. See [Metrics on Fly.io](/docs/monitoring/metrics/)."},
     { id: "sentry", title: "Use Sentry for Error tracking", description: "An application monitoring platform that helps you identify and fix software problems before they impact your users from our extension partner Sentry.Fly.io organizations get a year's worth of [Team Plan](https://sentry.io/pricing/+external) credits. See [Application Monitoring by Sentry](/docs/monitoring/sentry/)."}
   ],
   c: params[:c] || "",
@@ -73,9 +75,9 @@ This checklist guides you through setting up a production environment on Fly.io.
 <%= render ChecklistComponent.new(
   items: [
     { id: "multiple-machines", title: "Use multiple Machines for resiliency", description: "Make your app resilient to single-host failures with multiple Machines that stay stopped until you need them. See [Blueprint: Resilient apps use multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/)."},
-    { id: "add-regions", title: "Add regions", description: "Scale your app in multiple regions closest to your app's users. See [Scale an app's regions](/docs/launch/scale-count/#scale-an-apps-regions)."},
-    { id: "autostop-autostart", title: "Refine the default autostop/autostart settings", description: "Autostop/autostart lets you stop or suspend Machines when there's low traffic, saving on resource usage and costs. You get autostop/autostart by default with a new app, but you can configure it to optimize for your use case. See [Autostop/autostart Machines](/docs/launch/autostop-autostart/)."},
-    { id: "autoscale-by-metric", title: "Set up autoscaling by metric", description: "For apps that aren't running web services, use the autoscaler app to scale your app's Machines based on any metric, saving on resource usage and costs. See [Autoscale based on metrics](/docs/launch/autoscale-by-metric/)."}
+    { id: "add-regions", title: "Scale your app into more regions", description: "Scale your app in multiple regions closest to your app's users. See [Scale an app's regions](/docs/launch/scale-count/#scale-an-apps-regions)."},
+    { id: "autostop-autostart", title: "Use autostop/autostart to reduce costs", description: "Autostop/autostart lets you stop or suspend Machines when there's low traffic, saving on resource usage and costs. You get autostop/autostart by default with a new app, but you can configure it to optimize for your use case. See [Autostop/autostart Machines](/docs/launch/autostop-autostart/)."},
+    { id: "autoscale-by-metric", title: "Set up autoscaling by metric to reduce costs", description: "For apps that aren't running web services, use the autoscaler app to scale your app's Machines based on any metric, saving on resource usage and costs. See [Autoscale based on metrics](/docs/launch/autoscale-by-metric/)."}
   ],
   c: params[:c] || "",
   o: params[:o] || "",
@@ -87,7 +89,7 @@ This checklist guides you through setting up a production environment on Fly.io.
 <%= render ChecklistComponent.new(
   items: [
     { id: "machine-sizing", title: "Get Machine sizing right", description: "Most production apps require 2x or performance CPUs. Also make sure you have enough RAM for your app and/or enable [swapping to disk](https://fly.io/docs/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use. See [Machine sizing](docs/machines/guides-examples/machine-sizing/)."},
-    { id: "fine-tune-app", title: "Fine-tune your app", description: "Learn about optimizing your app on Fly.io. See [Tips to fine-tune and your app on Fly.io](/docs/reference/fine-tune-apps/)."}
+    { id: "fine-tune-app", title: "Fine-tune your app", description: "Learn about optimizing your app on Fly.io. See [Tips to fine-tune your app on Fly.io](/docs/reference/fine-tune-apps/)."}
   ],
   c: params[:c] || "",
   o: params[:o] || "",
@@ -110,7 +112,7 @@ This checklist guides you through setting up a production environment on Fly.io.
 
 <%= render ChecklistComponent.new(
   items: [
-    { id: "community", title: "Community", description: "Check out our [community](https://community.fly.io/) to get help and answers."},
+    { id: "community", title: "Get answers in our community", description: "Check out our [community](https://community.fly.io/) to talk about your project and get help."},
     { id: "email-support", title: "Consider a plan for email support", description: "You get email support with a [Launch, Scale, or Enterprise plan](https://fly.io/plans)."}
   ],
   c: params[:c] || "",
