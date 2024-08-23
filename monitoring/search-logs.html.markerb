@@ -20,6 +20,6 @@ You can access searchable logs in Grafana:
 **Important:** If you’re already signed in to Grafana, then you'll need to log out and log back in.
 </div>
 
-Searchable logs are built on our [Tigris Storage](/docs/reference/tigris/) and [Supabase Postgres](/docs/reference/supabase/) extensions. 
+Searchable logs are built on our [Tigris Storage](/docs/tigris/) and [Supabase Postgres](/docs/supabase/) extensions. 
 
 For the beta period, log search is free and we retain logs for 30 days. Learn how to build more complex queries [Quickwit’s query language](https://quickwit.io/docs/get-started/query-language-intro+external).

@@ -3,6 +3,7 @@ title: Tigris Global Object Storage
 layout: docs
 status: beta
 nav: firecracker
+redirect_from: /docs/reference/tigris/
 ---
 
 [Tigris](https://tigrisdata.com) is a globally caching, S3-compatible object storage service built on Fly.io infrastructure.

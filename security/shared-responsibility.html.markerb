@@ -1,0 +1,64 @@
+---
+title: Shared responsibility model
+layout: docs
+nav: firecracker
+---
+
+Here at Fly.io, we want your apps to be secure. As part of that, we take a large helping of things off your plate and worry about them for you. Here is a high-level, non-exhaustive overview of the things we take responsibility for on our platform, and the parts that you, the customer, are responsible for yourself.
+
+## Brief infrastructure overview
+
+The three main types of systems that are involved in delivering your service are workers, edges, and gateways. A worker hosts Fly Machines, an edge proxies incoming network traffic and delivers it to a worker, a gateway terminates WireGuard connections that provide access to your private network, or 6PN.
+
+There's also a lot of software involved, but the important ones are flyd which manages Fly Machines on a worker, [Fly Proxy](https://fly.io/docs/reference/fly-proxy/) which is the frontend proxy service that runs on edges, and flyctl which runs on your client devices.
+
+## Fly.io's responsibilities
+
+### Hardening and protection of infrastructure systems
+
+Fly.io is solely responsible for the security of our infrastructure systems, including workers, edges and gateways. This includes managing access, applying security patches to the operating system, other 3rd-party software (e.g. firecracker), and mitigating hardware vulnerabilities where appropriate. Fly.io monitors these systems in both an operational and security capacity.
+
+### Using secure software development processes
+
+Fly.io ensures that any software we are responsible for developing meets an appropriate level of security. This includes ensuring the security of the software's supply chain, conducting regular audits and testing, as well as developing and maintaining a positive security culture within engineering teams.
+
+### Security of the underlying platform features involved in delivering your service
+
+Where Fly.io exposes a feature for your applications to use, we are responsible for the security of that features implementation. Two clear examples are:
+
+- We provide HTTP Proxy termination as a platform feature, therefore we are responsible for the security of the HTTP and TLS protocols. e.g. we are responsible for fixing protocol-level vulnerabilities such as HTTP response splitting, and H2 Rapid Reset.
+- We provide encrypted private networking to your applications, we are responsible for the security of that layer. For example, if Wireguard had a confidentiality issue, it would be our responsibility to address that in our infrastructure.
+
+### Provision and security of platform controls
+
+Fly.io provides features that you can use to secure your account and its assets, including authentication (e.g. tokens, SSO) and authorization (macaroons, roles). Fly.io is responsible for providing and ensuring the effectiveness of these controls, as well as provisioning secure default configurations.
+
+Fly.io was built with security front and centre. Visit our [Security](https://fly.io/security) page to learn more.
+
+## Your responsibilities
+
+### Everything within your Docker image and therefore Fly Machines
+
+We generally consider our demarcation point the virtualization boundary between our worker (virtualization host) and the Fly Machine (virtualization guest). The Fly Machine is constructed from your instructions, and therefore its contents are your responsibility. This includes: the system userspace and libraries, your application code, your application environment, and the services you run.
+
+That being said, Fly.io is in a unique place to help you stay on top of things here, and we are committed to shipping features, such as container scanning, to make this painless for you.
+
+### Configuration of security features of Fly.io
+
+Fly.io commits to providing secure defaults for platform features and configurations, and to thoroughly document and warn about any footguns that may lurk within.
+
+Ultimately, however, you are responsible for correct configuration of Fly.io's security features to restrict access as appropriate to Fly.io hosted resources. For example, membership of a Fly organization, and network services exposed by a Fly application.
+
+### Security of client devices and authentication material
+
+You are responsible for the security of the devices from which you use flyctl, the Machines API, or any other method to access Fly.io. You are also responsible for securing any authentication material used for accessing the Fly.io platform and services, including access tokens, Macaroons, WireGuard peer keys, and SSH keys.
+
+### Security of your identity provider
+
+Where Fly.io is configured to perform single sign-on (SSO) against your identity provider (and we strongly recommend that you do so), it is your responsibility to correctly configure and maintain that provider to ensure that only authorized users can access your Fly.io resources.
+
+### Application-layer network security of your services
+
+Two specific callouts: the Fly Proxy and the 6PN (private network). Fly.io is responsible for ensuring Fly Proxy is a secure server to your users, and a secure client to your service. You must ensure your service is a secure server to Fly Proxy, and that any sensitive application functionality is properly protected.
+
+Fly.io is responsible for the isolated network-layer for your applications, which protects confidentiality. You are responsible for the security of your applications on that network. For example, [protection from SSRF attacks](https://portswigger.net/web-security/ssrf+external) from other applications that may share that network segment.

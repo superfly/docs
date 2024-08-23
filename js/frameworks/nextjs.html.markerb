@@ -143,7 +143,7 @@ application.  If you still have questions, post on our [community forum](https:/
 
 ### Connecting to Supabase Postgres
 
-[Supabase](https://fly.io/docs/reference/supabase/#create-and-manage-a-supabase-postgres-database) is a managed Postgres service deployed at Fly.io infrastructure.
+[Supabase](https://fly.io/docs/supabase/#create-and-manage-a-supabase-postgres-database) is a managed Postgres service deployed at Fly.io infrastructure.
 
 You can create a Supabase Postgres instance at Fly.io and use the provided `DATABASE_URL`
 as described above. Alternatively, you can connect with a dedicated JavaScript client and leverage its API. In this section we'll help you to get started with such setup.
@@ -159,7 +159,7 @@ flyctl ext supabase create
 ? Choose a name, use the default, or leave blank to generate one: hello-nextjs-db
 ? Choose the primary region (can't be changed later) Warsaw, Poland (waw)
 
-Your Supabase database (hello-nextjs-db) in waw is ready. See details and next steps with: https://fly.io/docs/reference/supabase/
+Your Supabase database (hello-nextjs-db) in waw is ready. See details and next steps with: https://fly.io/docs/supabase/
 
 Setting the following secrets on hello-nextjs:
 DATABASE_POOLER_URL

@@ -409,7 +409,7 @@ You can use the same `machine_checks` section for HTTP services as for [`service
 [http_services.machine_checks]
   image = "curlimages/curl"
   entrypoint = ["/bin/sh", "-c"]
-  command = ["curl", "$FLY_TEST_MACHINE_IP", "|", "grep", "Hello, World!"]
+  command = ["curl http://[$FLY_TEST_MACHINE_IP] | grep 'Hello, World!'"]
   kill_signal = "SIGKILL"
   kill_timeout = "5s"
 ```
@@ -662,13 +662,13 @@ Times are in milliseconds unless units are specified.
 
 ### `services.machine_checks`
 
-Machine checks work a bit differently than the other checks. They run on each deploy, and if they fail, the deploy is stopped. A new Machine is spawned with the environment variable `FLY_TEST_MACHINE_IP` set to the IP address of the Machine being tested. This is useful for running integration tests on Machines before a deployment. Here's an example:
+Machine checks work a bit differently than the other checks. They run on each deploy, and if they fail, the deploy is stopped. A new Machine is spawned with the environment variable `FLY_TEST_MACHINE_IP` set to the [6PN IPv6 address](/docs/networking/private-networking/#6pn-addresses-in-detail) of the Machine being tested. This is useful for running integration tests on Machines before a deployment. Here's an example:
 
 ```toml
   [[services.machine_checks]]
     image = "curlimages/curl"
     entrypoint = ["/bin/sh", "-c"]
-    command = ["curl", "$FLY_TEST_MACHINE_IP", "|", "grep", "Hello, World!"]
+    command = ["curl http://[$FLY_TEST_MACHINE_IP] | grep 'Hello, World!'"]
     kill_signal = "SIGKILL"
     kill_timeout = "5s"
 ```
@@ -974,7 +974,7 @@ Each `[[statics]]` block maps a URL prefix to a path inside your container. You 
 
 The "guest path" --- the path inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
 
-Alternatively, you can serve statics directly from object storage using [Tigris](/docs/reference/tigris/). Similar to machine statics, requests under `url_prefix` are served from static assets in your Tigris bucket under `guest_path`. The same rules apply for overlapping URL prefixes.
+Alternatively, you can serve statics directly from object storage using [Tigris](/docs/tigris/). Similar to machine statics, requests under `url_prefix` are served from static assets in your Tigris bucket under `guest_path`. The same rules apply for overlapping URL prefixes.
 
 ```toml
 [[statics]]

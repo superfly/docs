@@ -37,7 +37,7 @@ A Fly Machine that does not require a volume will never attach itself to one. A 
 
 We try to keep individual Fly Machines up for as long as possible, but hardware failures happen. That's why we recommend running at least two Machines per app to increase availability. You can run two or more Machines in one region, or better yet, one or more Machines in multiple regions. If you only have one Machine and volume, then you'll have downtime if there's a host or network failure, and whenever you deploy your app. 
 
-You'll also need to replicate data between volumes. Some options for replicating databases include [LiteFS - Distributed SQLite](/docs/litefs/) and [Supabase Postgres](/docs/reference/supabase/).
+You'll also need to replicate data between volumes. Some options for replicating databases include [LiteFS - Distributed SQLite](/docs/litefs/) and [Supabase Postgres](/docs/supabase/).
 
 In a few cases, you can run a single Machine with an attached volume. For example, if your app is in development and you're not yet worried about downtime or if you're running an app that can handle downtime and has a custom backup procedure.
 
