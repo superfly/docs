@@ -46,8 +46,6 @@ Optional, but details are provided for each runtime:
   * [Node.js](../nodejs/)
   * [Rails](../rails/)
 
-## Next 
+--- 
 
-- Add [OpenAI Whisper](../whisper/) speech recognition as an extra treat.
-
-- When you're all done, visit the [recap](../recap).
+**Next:** Add [OpenAI Whisper](../whisper/) speech recognition as a bonus.
