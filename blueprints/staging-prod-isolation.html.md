@@ -11,7 +11,7 @@ All Fly.io accounts start with a "personal" organization. You can create as many
 
 Before you create a new organization, here's what you need to know:
 
-- We bill organizations separately and each org has its own [plan](https://fly.io/plans). When you create the new org, you need to enter a payment method and choose a plan. You'll be invoiced per organization at the end of each billing cycle.
+- You can consolidate billing for multiple organizations under a a single parent organization, or you can create regular organizations with separate payment methods and billing. Learn more about [unified billing](/docs/about/billing/#unified-billing).
 - You invite or remove members in each organization separately.
 - An organization can have multiple apps and those apps can communicate with each other securely over the org's private network.
 
