@@ -16,7 +16,7 @@ Sometimes it's useful, or necessary, to route requests to other regions, other a
 
 Apps may append a `fly-replay` header to responses. This instructs [Fly Proxy](/docs/reference/fly-proxy) to redeliver (replay) the original request in another region, or to replay it to another app in the same organization.
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/riCh9Xeuf0s?si=IxOEzTX_4Osv3OTo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br/>
+<%= youtube "https://www.youtube.com/watch?v=riCh9Xeuf0s" %>
 
 The content of the `fly-replay` header fields tells Fly Proxy which magic to perform, and the proxy takes it from there. If the target region doesn't host any healthy Machines for the target app, the proxy throws an error.
 
