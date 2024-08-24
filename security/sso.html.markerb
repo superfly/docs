@@ -4,7 +4,7 @@ layout: docs
 nav: firecracker
 ---
 
-Organizations are administrative entities on Fly.io that let you to manage billing separately, control access by adding and removing members, and share app development environments. You can, and usually should, require members of your organizations to use SSO. Fly.io supports Google and GitHub as Identity Providers, and you can use one or both. If you already use Google or GitHub, enabling SSO takes advantage of their built-in security, like 2FA/MFA and passkeys.
+Organizations are administrative entities on Fly.io that let you to manage billing, control access by adding and removing members, and share app development environments. You can, and usually should, require members of your organizations to use SSO. Fly.io supports Google and GitHub as Identity Providers, and you can use one or both. If you already use Google or GitHub, enabling SSO takes advantage of their built-in security, like 2FA/MFA and passkeys.
 
 ## Authenticating user accounts vs. organizations
 

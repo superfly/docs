@@ -9,10 +9,10 @@ nav: firecracker
 
 ## How it works
 
-Fly.io services are billed per organization. Every organization is on a [plan](https://fly.io/plans). If you want to scale beyond your plan, then you can upgrade, or just pay for what you need at the usage-based pricing listed below.
+Fly.io services are billed per organization. Every organization is on a [plan](https://fly.io/plans), with [linked organizations](/docs/about/billing/#unified-billing) sharing a plan with their parent billing organization. If you want to scale beyond your plan, then you can upgrade, or just pay for what you need at the usage-based pricing listed below.
 
 <div class="callout">
-Organizations are administrative entities on Fly.io that let you add members, share app development environments, and manage billing separately. [Billing](/docs/about/billing/) is based on the resources provisioned for your apps, pro-rated for the time they are provisioned.
+Organizations are administrative entities on Fly.io that let you add members, share app development environments, and manage billing. [Billing](/docs/about/billing/) is based on the resources provisioned for your apps, pro-rated for the time they are provisioned.
 </div>
 
 ## Plans
