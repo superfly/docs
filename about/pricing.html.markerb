@@ -274,7 +274,7 @@ The [Machine price](#compute) and [volume price](#persistent-storage-volumes) fo
 
 ## Extensions
 
-Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/docs/tigris), [Supabase Postgres](/docs/rsupabase/) and [Upstash Redis](/docs/upstash/redis/).
+Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/docs/tigris), [Supabase Postgres](/docs/supabase/) and [Upstash Redis](/docs/upstash/redis/).
 
 When you provision their services, you become their customer, and you pay their list prices via your monthly Fly.io bill. Charges are updated daily in your Fly.io dashboard.
 
