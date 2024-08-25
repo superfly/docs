@@ -221,7 +221,7 @@ Dedicated IPv4 addresses are $2/mo.
 
 ### Managed SSL certificates
 
-We use Lets Encrypt to issue certificates, and donate half of our SSL fees to them at the end of each calendar year.
+We use Let's Encrypt to issue certificates, and donate half of our SSL fees to them at the end of each calendar year.
 
 * Single hostname certificates: $0.10/mo
 * Wildcard certificates: $1/mo
