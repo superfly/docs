@@ -732,7 +732,8 @@ For example, the following config retains snapshots of volumes for 14 days:
 
 ### `auto_extend_size_threshold`
 
-Optional. The threshold of storage used on a volume, by percentage, that triggers extending the volume's size by the value of `auto_extend_size_increment`.
+Optional. The threshold of storage used on a volume, by percentage, that triggers extending the volume's size by the value of `auto_extend_size_increment`,
+unless the resulting size would exceed `auto_extend_size_limit`.
 
 ### `auto_extend_size_increment`
 
@@ -740,7 +741,7 @@ The increment, in GB, by which to extend the volume after reaching the `auto_ext
 
 ### `auto_extend_size_limit`
 
-The total amount, in GB, to extend a volume. Optional with `auto_extend_size_increment`.
+Maximum size, in GB, of a volume after an extension is completed. Required with `auto_extend_size_threshold`.
 
 ### Auto extend volume size configuration
 
