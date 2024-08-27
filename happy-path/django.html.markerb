@@ -16,13 +16,13 @@ How the pieces are put together:
     * [`static/styles/app.css`](https://github.com/fly-apps/django-dictaphone/blob/main/static/styles/app.css)
       contains the stylesheet.
     * [`clips/templates/clips/index.html`](https://github.com/fly-apps/django-dictaphone/blob/main/clips/templates/clips/index.html) contains the HTML
-* [Django Models and databases](https://docs.djangoproject.com/en/5.1/topics/db/) will run using Sqlite3 as the database in development mode, and
-PostgreSQL in production.
-  Access to the database is through the `DATABASE_URL` secret.
-* [Django Storages](https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html) is configured to write to the filesystem
+* [Django Models and databases](https://docs.djangoproject.com/en/5.1/topics/db/) is [configured](https://github.com/fly-apps/django-dictaphone/blob/2a9ec4ceb728e657aeec76477d87ea1a8627523a/dictaphone/settings.py#L89-L102) to use Sqlite3 as the database in development mode, and
+  PostgreSQL in production. Access to the database is through the `DATABASE_URL` secret.
+* [Django Storages](https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html) is [configured](https://github.com/fly-apps/django-dictaphone/blob/2a9ec4ceb728e657aeec76477d87ea1a8627523a/dictaphone/settings.py#L104-L117) to write to the filesystem
   in development and Tigris in production.  The following secrets are used to
   establish the connection: `AWS_ACCESS_KEY_ID`, `AWS_ENDPOINT_URL_S3`, `AWS_REGION`, `AWS_SECRET_ACCESS_KEY`, and `BUCKET_NAME`.
-* [Django Channels](https://channels.readthedocs.io/en/latest/) is configured to use Redis in production.
+* [Django Channels](https://channels.readthedocs.io/en/latest/) is [configured](https://github.com/fly-apps/django-dictaphone/blob/2a9ec4ceb728e657aeec76477d87ea1a8627523a/dictaphone/settings.py#L119-L135) to use an in memory channel in development and Redis in production
+  based using the `REDIS_URL` secret.
 
 Key points of logic:
 
@@ -30,7 +30,8 @@ Key points of logic:
   the logic to build responses to requests for the index page, and to GET, PUT,
   and DELETE audio clips.
 * The server side realtime implementation code is primarily in [Django Channels](https://channels.readthedocs.io/en/latest/), so all that is needed is a few lines in [`clips/models.py`](https://github.com/fly-apps/django-dictaphone/blob/b1bb70cc513bd4977dc74fd56dfff86b8f2d12ec/clips/models.py#L20-L25).
-The client side is provided by [`static/scripts/websocket.js`](https://github.com/fly-apps/django-dictaphone/blob/main/static/scripts/websocket.js)
+  The client side is provided by [`static/scripts/websocket.js`](https://github.com/fly-apps/django-dictaphone/blob/main/static/scripts/websocket.js).
+  When update notifications are received, the index page is re-retrieved and the body of the DOM is replaced with new contents.
 * When the `WHISPER_URL` secret is set, `PUT` requests will cause the audio clips
   to be passed to the Whisper server, and responses will be used to update the
   PostgreSQL database.  This is done using [Celery](https://docs.celeryq.dev/en/stable/django/first-steps-with-django.html).

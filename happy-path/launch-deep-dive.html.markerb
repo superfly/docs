@@ -21,10 +21,14 @@ fly launch --from https://github.com/fly-apps/node-dictaphone
 ```cmd
 fly launch --from https://github.com/fly-apps/rails-dictaphone
 ```
+-or-
+```cmd
+fly launch --from https://github.com/fly-apps/django-dictaphone
+```
 
 If you're new to Fly.io, the second step will take you to a page where you can register before continuing. 
 
-The `fly launch` output describes what you'll be getting for the app, and gives you an opportunity to tweak the settings. (Suggestion: Don't. The defaults are fine for this demo and we'll walk you through how to adjust them later.) And then it will build and assemble and wire up your app.
+The `fly launch` output describes what you'll be getting for the app, and gives you an opportunity to tweak the settings. (Suggestion: don't. The defaults are fine for this demo and we'll walk you through how to adjust them later.) And then it will build and assemble and wire up your app.
 
 Take your time and play with it. Open the application in multiple browser windows. Send a link to a friend on another continent and watch your browser update in realtime.
 
