@@ -33,8 +33,8 @@ Key points of logic:
 * [`app/controllers/clips_controller.rb`](https://github.com/fly-apps/rails-dictaphone/blob/main/app/controllers/clips_controller.rb) contains
   the logic to build responses to requests for the index page, and to GET, PUT,
   and DELETE audio clips.
-* The realtime implementation code is primarily in [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html), so all that is needed is one line in [app/models/clip.rb](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/models/clip.rb#L2)
-and one line in [app/views/layouts/application.html.erb](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/views/layouts/application.html.erb#L9)
+* The realtime implementation code is primarily in [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html), so all that is needed is one line in [`app/models/clip.rb`](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/models/clip.rb#L2)
+and one line in [`app/views/layouts/application.html.erb`](https://github.com/fly-apps/rails-dictaphone/blob/6bdf4f639640c9fb55530546dbbed682b65a7df9/app/views/layouts/application.html.erb#L9)
 * When the `WHISPER_URL` secret is set, `PUT` requests will cause the audio clips
   to be passed to the Whisper server, and responses will be used to update the
   PostgreSQL database.  This is done using [Active Job](https://guides.rubyonrails.org/active_job_basics.html)

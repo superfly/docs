@@ -7,15 +7,17 @@ nav: demo
 The Django source is on [GitHub](https://github.com/fly-apps/django-dictaphone/).
 `fly launch` will provide a [`Dockerfile`](https://docs.docker.com/reference/dockerfile/)
  and a [`fly.toml`](/docs/reference/configuration/) config file.
+ When you make changes to your application, you can use 
+ [dockerfile-django](https://github.com/fly-apps/dockerfile-django?tab=readme-ov-file#dockerfile-generator-for-django-projects)
+to produce updated Dockerfiles.
 
 How the pieces are put together:
 
-* The original web-dictaphone app distributed throughout the application:
-    * [`static/scripts/app.js`](https://github.com/fly-apps/django-dictaphone/blob/main/static/scripts/app.js)
-      contains the JavaScript.
-    * [`static/styles/app.css`](https://github.com/fly-apps/django-dictaphone/blob/main/static/styles/app.css)
-      contains the stylesheet.
-    * [`clips/templates/clips/index.html`](https://github.com/fly-apps/django-dictaphone/blob/main/clips/templates/clips/index.html) contains the HTML
+* The original web-dictaphone app (minus the HTML) is in the
+  [static](https://github.com/fly-apps/django-dictaphone/tree/main/static) directory,
+  and contains icons, scripts, styles, and a web manifest; all served as
+  static files.
+* [`clips/templates/clips/index.html`](https://github.com/fly-apps/django-dictaphone/blob/main/clips/templates/clips/index.html) contains the HTML template.
 * [Django Models and databases](https://docs.djangoproject.com/en/5.1/topics/db/) is [configured](https://github.com/fly-apps/django-dictaphone/blob/2a9ec4ceb728e657aeec76477d87ea1a8627523a/dictaphone/settings.py#L89-L102) to use Sqlite3 as the database in development mode, and
   PostgreSQL in production. Access to the database is through the `DATABASE_URL` secret.
 * [Django Storages](https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html) is [configured](https://github.com/fly-apps/django-dictaphone/blob/2a9ec4ceb728e657aeec76477d87ea1a8627523a/dictaphone/settings.py#L104-L117) to write to the filesystem
@@ -26,6 +28,9 @@ How the pieces are put together:
 
 Key points of logic:
 
+* [`static/scripts/app.js`](https://github.com/fly-apps/django-dictaphone/blob/main/static/scripts/app.js)
+  has been modified to make server requests at various points using
+  [the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
 * [`clips/views.py`](https://github.com/fly-apps/django-dictaphone/blob/main/clips/views.py) contains
   the logic to build responses to requests for the index page, and to GET, PUT,
   and DELETE audio clips.

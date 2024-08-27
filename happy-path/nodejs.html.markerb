@@ -12,13 +12,11 @@ The Node.js demo source is on [GitHub](https://github.com/fly-apps/node-dictapho
 
 How the pieces are put together:
 
-* The original web-dictaphone app is in the
+* The original web-dictaphone app (minus the HTML) is in the
   [public](https://github.com/fly-apps/node-dictaphone/tree/main/public) directory,
   and contains icons, scripts, styles, and a web manifest; all served as
   static files.
-  [app.js](https://github.com/fly-apps/node-dictaphone/blob/main/public/scripts/app.js)
-  has been modified to make server requests at various points using
-  [the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+* [`views/index.ejs`](https://github.com/fly-apps/node-dictaphone/blob/main/views/index.ejs) contains the HTML template.
 * [app.js](https://github.com/fly-apps/node-dictaphone/blob/main/app.js) contains
   the server implementation, based on [Express.js](https://expressjs.com/).  There
   are lots of JavaScript frameworks out there, this is perhaps the oldest and most
@@ -33,17 +31,20 @@ How the pieces are put together:
 * The [express-ws](https://github.com/HenningM/express-ws?tab=readme-ov-file#express-ws-)
   module is used for [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) support.
 * The [redis](https://github.com/redis/node-redis?tab=readme-ov-file#node-redis) module
-  is used to access Redis.  The `REDIS_URL` secret issued to access the database.
+  is used to access Redis.  The `REDIS_URL` secret is used to access the database.
 
 Key points of logic:
 
-* [app.js](https://github.com/fly-apps/node-dictaphone/blob/main/app.js) contains
+* [`public/scripts/app.js`](https://github.com/fly-apps/node-dictaphone/blob/main/public/scripts/app.js)
+  has been modified to make server requests at various points using
+  [the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+* [`app.js`](https://github.com/fly-apps/node-dictaphone/blob/main/app.js) contains
   the logic to build responses to requests for the index page, and to GET, PUT,
   and DELETE audio clips.
-* [pubsub.js](https://github.com/fly-apps/node-dictaphone/blob/main/pubsub.js) contains
+* [`pubsub.js`](https://github.com/fly-apps/node-dictaphone/blob/main/pubsub.js) contains
   the logic to subscribe to a `dictaphone:timestamp` redis queue, and to
   forward updates to all open websocket connections.
-* [websocket.js](https://github.com/fly-apps/node-dictaphone/blob/main/public/scripts/websocket.js)
+* [`websocket.js`](https://github.com/fly-apps/node-dictaphone/blob/main/public/scripts/websocket.js)
   contains the client implementation of web sockets.  When update notifications
   are received, the index page is re-retrieved and the body of the DOM is
   replaced with new contents.
