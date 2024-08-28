@@ -30,7 +30,7 @@ fly launch [flags]
   -c, --config string                    Path to application configuration file
       --copy-config                      Use the configuration file if present without prompting
       --deploy-retries string            Number of times to retry a deployment if it fails (default "auto")
-      --depot                            Deploy using depot to build the image
+      --depot string[="true"]            Deploy using depot to build the image (default "auto")
       --depot-scope string               The scope of the Depot builder's cache to use (org or app) (default "org")
       --detach                           Return immediately instead of monitoring deployment progress
       --dns-checks                       Perform DNS checks during deployment (default true)

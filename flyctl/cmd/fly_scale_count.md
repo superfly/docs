@@ -12,6 +12,7 @@ fly scale count [count] [flags]
 ~~~
   -a, --app string                  Application name
   -c, --config string               Path to application configuration file
+  -e, --env stringArray             Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
       --from-snapshot string        New volumes are restored from snapshot, use 'last' for most recent snapshot. The default is an empty volume
   -h, --help                        help for count
       --host-dedication-id string   The dedication id of the reserved hosts for your organization (if any)
