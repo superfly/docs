@@ -40,7 +40,7 @@ And you're done! Your Ollama app is now available for use.
 
 ## Connecting to your app
 
-This Ollama app will exist separate from whatever app you're building. Since our app is private (we don't randos eating up our Fly GPU usage), we'll need to connect to it over a secure WireGuard connection. When developing locally, the easiest method is to run:
+This Ollama app will exist separate from whatever app you're building. Since our app is private (we don't random people eating up our Fly GPU usage), we'll need to connect to it over a secure WireGuard connection. When developing locally, the easiest method is to run:
 
 ```cmd
 fly proxy 11434:80 -a <your-app>
