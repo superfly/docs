@@ -16,7 +16,7 @@ First, clone [this repository](https://github.com/fly-apps/self-host-ollama), an
 fly launch --flycast
 ```
 
-The `--flycast` flag will make your application private. To access your application, you'll use the address `http://<your-app>.flycast` and ensure you're connected over your Wireguard VPN. This will work in both production and local development. More on this later.
+The `--flycast` flag will make your application private. To access your application, you'll use the address `http://<your-app>.flycast` and ensure you're connected over your WireGuard VPN. This will work in both production and local development. More on this later.
 
 Now that your app is launched, let's download some Ollama models. First, SSH into one of your Fly Machines like so:
 
@@ -40,14 +40,14 @@ And you're done! Your Ollama app is now available for use.
 
 ## Connecting to your app
 
-This Ollama app will exist separate from whatever app you're building. Since our app is private (we don't randos eating up our Fly GPU usage), we'll need to connect to it over a secure Wireguard connection. When developing locally, the easiest method is to run:
+This Ollama app will exist separate from whatever app you're building. Since our app is private (we don't randos eating up our Fly GPU usage), we'll need to connect to it over a secure WireGuard connection. When developing locally, the easiest method is to run:
 
 ```cmd
 fly proxy 11434:80 -a <your-app>
 # you don't need -a if you're in the Ollama app directory
 ```
 
-This command proxies requests from a local port (`11434`) to port `80` on your Ollama Fly Machine, over a secure Wireguard tunnel.
+This command proxies requests from a local port (`11434`) to port `80` on your Ollama Fly Machine, over a secure WireGuard tunnel.
 
 When using Ollama in your app **locally**, you'll set the host to `http://localhost:11434`. Note that while `11434` is the standard port used by Ollama, since this is just a proxy, that number can really be anything.
 
