@@ -76,16 +76,25 @@ Unified billing allows you to consolidate billing for multiple organizations und
 
 ### How Unified Billing Works
 
-- You'll receive a single invoice for all organizations under unified billing
-- Billing Organization must have a payment method on file (credit card or Stripe Link)
-- Linked Organizations share credits with their Billing Organization
-- Billing Organizations can have a max of 100 Linked Organizations
+- You'll receive a single invoice for all organizations under unified billing.
+- Billing Organization must have a payment method on file (credit card or Stripe Link).
+- Linked Organizations share credits with their Billing Organization.
+- Billing Organizations can have a max of 100 Linked Organizations.
 
 ### How to use Unified Billing
 
+You can either create a new Linked Organization or link an existing one:
+
+##### New Organization
+
 A **Linked Organization** can be created from the [new organization page](/organizations/new). When creating a new organization, you can choose an existing Organization to link it to.
 
-You can create multiple Linked Organizations for a single Billing Organization.
+##### Link an existing Organization
+
+An existing organization can be converted to a **Linked Organization** from the organization's billing page by clicking the "Link billing to another Organization" button.
+
+- Only admins can link an organization to another organization.
+- We recommend saving any invoices you may need for account purposes before linking an organization.
 
 ### Some things to consider
 
@@ -93,7 +102,6 @@ You can create multiple Linked Organizations for a single Billing Organization.
 be advantageous from a security standpoint.
   - Cross organization networking is still possible with [Flycast](/docs/networking/flycast/)
 - Detaching a Linked Organization from its Billing Organization is not possible at this time. Instead we suggest creating a new organization and moving resources there.
-- Linking an existing Organization to a Billing Organization is not possible at this time. Instead, create a new Linked Organization and [move resources](/docs/apps/move-app-org/) there.
 
 ---
 
