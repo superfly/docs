@@ -16,7 +16,7 @@ How the pieces are put together:
     * [`app/javascript/controllers/main_controls_controller`](https://github.com/fly-apps/rails-dictaphone/blob/main/app/javascript/controllers/main_controls_controller.js)
       and [`app/javascript/controllers/sound_clip_controller`](https://github.com/fly-apps/rails-dictaphone/blob/main/app/javascript/controllers/sound_clip_controller.js)
       contain the JavaScript, implemented as [Stimulus](https://stimulus.hotwired.dev/handbook/origin) controllers.
-    * [`app/assets/stylesheets/dictaphone.css`](https://github.com/fly-apps/rails-dictaphone/blob/main/app/assets/stylesheets/dictaphone.css) contain
+    * [`app/assets/stylesheets/dictaphone.css`](https://github.com/fly-apps/rails-dictaphone/blob/main/app/assets/stylesheets/dictaphone.css) contains
       the stylesheets.
     * [`app/views/clips/index.html.erb`](https://github.com/fly-apps/rails-dictaphone/blob/main/app/views/clips/index.html.erb) contains the HTML
 * [Active Record](https://guides.rubyonrails.org/active_record_basics.html) will run using Sqlite3 as the database in development mode, and

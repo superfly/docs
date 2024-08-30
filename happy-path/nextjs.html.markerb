@@ -1,0 +1,53 @@
+---
+title: Node.js demo reference
+layout: docs
+nav: demo
+---
+
+
+
+The Next.js demo source is on [GitHub](https://github.com/fly-apps/nextjs-dictaphone).
+`fly launch` will provide a [`Dockerfile`](https://docs.docker.com/reference/dockerfile/)
+ and a [`fly.toml`](https://fly.io/docs/reference/configuration/) config file. When you make changes to your application, you can run `npx @flydotio/dockerfile` to produce updated Dockerfiles.
+
+How the pieces are put together:
+
+* The original web-dictaphone app is placed in the [Next.js app](https://nextjs.org/docs/app) directory:
+    * [`app/dictaphone.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/app/dictaphone.js)
+      contains the JavaScript.
+    * [`app/globals.css`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/app/globals.css) contains
+      the stylesheets.
+    * [`app/page.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/app/page.js) contains the HTML
+* [`server.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/server.js) and
+  [`app/audio/[name]/route.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/app/audio/%5Bname%5D/route.js) contain
+  the server implementation.
+* The [pg](https://www.npmjs.com/package/pg) module is used to access PostgreSQL.
+  Access to the database is through the `DATABASE_URL` secret.  This module is low level
+  which is sufficient for this demo, but most modern Node.js applications use
+  an [ORM](https://amplication.com/blog/top-6-orms-for-modern-nodejs-app-development).
+* The [AWS SDK for JavaScript](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/welcome.html)
+  is used to access Tigris.  The following secrets are used to
+  establish the connection: `AWS_ACCESS_KEY_ID`, `AWS_ENDPOINT_URL_S3`, `AWS_REGION`, `AWS_SECRET_ACCESS_KEY`, and `BUCKET_NAME`.
+* The [express-ws](https://github.com/HenningM/express-ws?tab=readme-ov-file#express-ws-)
+  module is used for [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) support.
+* The [redis](https://github.com/redis/node-redis?tab=readme-ov-file#node-redis) module
+  is used to access Redis.  The `REDIS_URL` secret is used to access the database.
+
+Key points of logic:
+
+* [`app/page.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/app/page.js) contains the
+  home page.  All of the clip data comes from web sockets.
+* [`app/dictaphone.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/app/dictaphone.js)
+  has been modified to make server requests at various points using
+  [the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch); the delete
+  and rename actions are split out so that they can be referenced by the React JSX Home page view.
+* [`server.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/server.js) contains all of
+  the WebSocket and Redis code, and delegates to Next.js to render the rest.
+* [`app/audio/[name]/route.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/app/audio/%5Bname%5D/route.js) contains
+  the logic to build responses to requests to GET, PUT,
+  and DELETE audio clips.
+* [`app/page.js`]https://github.com/fly-apps/nextjs-dictaphone/blob/ac1abcdc9cb1dfa7de08c682b26034e76ad34cc6/app/page.js#L12-L21)
+  contains the client implementation of web sockets.
+* When the `WHISPER_URL` secret is set, `PUT` requests will cause the audio clips
+  to be passed to the Whisper server, and responses will be used to update the
+  PostgreSQL database. The code for this is in [app.js](https://github.com/fly-apps/node-dictaphone/blob/1e84a4dece6888dfc68880d146b46511d47391b3/app.js#L102-L129).
