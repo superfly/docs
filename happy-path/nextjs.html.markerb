@@ -1,5 +1,5 @@
 ---
-title: Node.js demo reference
+title: Next.js demo reference
 layout: docs
 nav: demo
 ---
@@ -46,7 +46,7 @@ Key points of logic:
 * [`app/audio/[name]/route.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/app/audio/%5Bname%5D/route.js) contains
   the logic to build responses to requests to GET, PUT,
   and DELETE audio clips.
-* [`app/page.js`]https://github.com/fly-apps/nextjs-dictaphone/blob/ac1abcdc9cb1dfa7de08c682b26034e76ad34cc6/app/page.js#L12-L21)
+* [`app/page.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/ac1abcdc9cb1dfa7de08c682b26034e76ad34cc6/app/page.js#L12-L21)
   contains the client implementation of web sockets.
 * When the `WHISPER_URL` secret is set, `PUT` requests will cause the audio clips
   to be passed to the Whisper server, and responses will be used to update the
