@@ -17,6 +17,10 @@ If you came from our [Speedrun](https://fly.io/speedrun) or [Getting started](ht
 
 Maybe you're concerned about lock in. You want to use services from other places and even eject entirely and go elsewhere if things don't work out.
 
+Perhaps it is a simple as you feel it is easier to tune and evolve a working
+system than it is to debug why your application doesn’t launch on an unfamiliar
+platform.
+
 If you don't get a good feeling within an hour, you're out of here. If you do get a good feeling, then stick around and try launching the app that you brought here to launch.
 
 ## Beyond `hello fly`
@@ -53,11 +57,12 @@ The demo includes the following components:
 
 ### Available runtimes
 
-Our deep dive demo comes in three flavors (so far):
+Our deep dive demo comes in four flavors (so far):
 
+  * [Django](/docs/happy-path/django/)
+  * [Next.js](/docs/happy-path/nextjs/)
   * [Node.js](/docs/happy-path/nodejs/)
   * [Rails](/docs/happy-path/rails/)
-  * [Django](/docs/happy-path/django/)
 
 ---
 

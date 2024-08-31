@@ -15,4 +15,4 @@ You can also [horizontally scale](/docs/launch/scale-count/) the number of Machi
 
 Familiarize yourself with the [fly.toml](/docs/reference/configuration/) config file. Make a change there--or to any part of your app--and run `fly deploy` to update your app.
 
-Your Fly App takes advantage of [Anycast routing](/doc/networking/services/), a [load-balancing proxy](/docs/reference/fly-proxy/), and [private networking](/docs/networking/private-networking/). You can also create [DNS certificates for custom domains](/docs/networking/custom-domain/).
+Your Fly App takes advantage of [Anycast routing](/docs/networking/services/), a [load-balancing proxy](/docs/reference/fly-proxy/), and [private networking](/docs/networking/private-networking/). You can also create [DNS certificates for custom domains](/docs/networking/custom-domain/).
