@@ -41,8 +41,10 @@ Key points of logic:
   has been modified to make server requests at various points using
   [the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch); the delete
   and rename actions are split out so that they can be referenced by the React JSX Home page view.
-* [`server.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/server.js) contains all of
-  the WebSocket and Redis code, and delegates to Next.js to render the rest.
+* [`server.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/server.js) contains 
+  the WebSocket code, and delegates to Next.js to render the rest.
+* [`pubsub.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/pubsub.js) contains the
+  interface to Redis.  It is split out from the server to avoid circular dependencies.
 * [`app/audio/[name]/route.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/app/audio/%5Bname%5D/route.js) contains
   the logic to build responses to requests to GET, PUT,
   and DELETE audio clips.
@@ -50,4 +52,4 @@ Key points of logic:
   contains the client implementation of web sockets.
 * When the `WHISPER_URL` secret is set, `PUT` requests will cause the audio clips
   to be passed to the Whisper server, and responses will be used to update the
-  PostgreSQL database. The code for this is in [app.js](https://github.com/fly-apps/node-dictaphone/blob/1e84a4dece6888dfc68880d146b46511d47391b3/app.js#L102-L129).
+  PostgreSQL database. The code for this is in [`app/audio/[name]/route.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/459774ec9ebebdf6f991adaa6c88509854ffe34e/app/audio/%5Bname%5D/route.js#L90-L118).
