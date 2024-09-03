@@ -33,7 +33,7 @@ Customers also frequently help each other out and share insights on running thei
 
 Our Launch, Scale, and Enterprise plans have access to email support. These plans come with an organization-specific address for emailing support questions, typically &lt;org-name&gt;@support.fly.io.
 
-Your support address is in the [Fly.io dashboard](https://fly.io/dashboard). Select your organization, and look for your Support email address in the Billing section.
+You can find your support address is in the [Fly.io dashboard](https://fly.io/dashboard). Select your organization, and look for your unique email address in the Support section. You'll also find a form to submit new support tickets, as well as an overview of recent support interactions.
 
 ## Support metrics
 
