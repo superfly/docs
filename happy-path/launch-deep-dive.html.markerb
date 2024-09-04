@@ -7,7 +7,7 @@ order: 3
 
 Let's get right to it.
 
-**Step 0:** To get set up to run the deep dive demo on Fly.io, all you need to do is install Ruby, Node, or Python and create an empty project directory. 
+**Step 0:** To get set up to run the deep dive demo on Fly.io, all you need to do is install Node, Phoenix, Python, or Ruby and create an empty project directory. 
 
 After that there are only two steps.
 
@@ -24,6 +24,10 @@ fly launch --from https://github.com/fly-apps/node-dictaphone
 -or-
 ```cmd
 fly launch --from https://github.com/fly-apps/nextjs-dictaphone
+```
+-or-
+```cmd
+fly launch --from https://github.com/fly-apps/phoenix-dictaphone
 ```
 -or-
 ```cmd
