@@ -1,0 +1,51 @@
+---
+title: Phoenix demo reference
+layout: docs
+nav: demo
+---
+
+The Phoenix demo source is on [GitHub](https://github.com/fly-apps/phoenix-dictaphone).
+`fly launch` will provide a [`Dockerfile`](https://docs.docker.com/reference/dockerfile/)
+ and a [`fly.toml`](https://fly.io/docs/reference/configuration/) config file.
+
+How the pieces are put together:
+
+* The original web-dictaphone app is spread throughout your application:
+    * [`assets/js/dictaphone.js`](https://github.com/fly-apps/phoenix-dictaphone/blob/main/assets/js/dictaphone.js)
+      contains the JavaScript.
+    * [`assets/css/dictaphone.css`](https://github.com/fly-apps/phoenix-dictaphone/blob/main/assets/css/dictaphone.css) contains
+      the stylesheets.
+    * [`priv/static/favicon.ico`](https://github.com/fly-apps/phoenix-dictaphone/blob/main/priv/static/favicon.ico) contains your image
+    * [`lib/dictaphone_web/live/dictaphone.html.heex`](https://github.com/fly-apps/phoenix-dictaphone/blob/main/lib/dictaphone_web/live/dictaphone.html.heex) contains the HTML
+* [`lib/dictaphone_web/live/dictaphone.ex`](https://github.com/fly-apps/phoenix-dictaphone/blob/main/lib/dictaphone_web/live/dictaphone.ex) and
+  [`lib/dictaphone_web/controllers/audio_controller.ex`](https://github.com/fly-apps/phoenix-dictaphone/blob/main/lib/dictaphone_web/controllers/audio_controller.ex) contain
+  the server implementation.
+* [Ecto.Adapters.Postgres](Ecto.Adapters.Postgres) is used to access PostgreSQL.
+  Access to the database is through the `DATABASE_URL` secret.
+* [ExAws.S3](https://hexdocs.pm/ex_aws_s3/ExAws.S3.html)
+  is used to access Tigris.  The following secrets are used to
+  establish the connection: `AWS_ACCESS_KEY_ID`, `AWS_ENDPOINT_URL_S3`, `AWS_REGION`, `AWS_SECRET_ACCESS_KEY`, and `BUCKET_NAME`.
+* [Phoenix.LiveView](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html)
+  module is used for [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) support.
+* [Phoenix.PubSub.Redis](https://hexdocs.pm/phoenix_pubsub_redis/Phoenix.PubSub.Redis.html)
+  is used to access Redis.  The `REDIS_URL` secret is used to access the database.
+
+Key points of logic:
+
+* [`lib/dictaphone_web/live/dictaphone.html.heex`](https://github.com/fly-apps/phoenix-dictaphone/blob/main/lib/dictaphone_web/live/dictaphone.html.heex) contains the
+  home page.
+* [assets/js/dictaphone.js](https://github.com/fly-apps/phoenix-dictaphone/blob/main/assets/js/dictaphone.js)
+  has been modified to:
+    * upload clips using [the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+    * use [Click Events](https://hexdocs.pm/phoenix_live_view/bindings.html#click-events) for delete
+    * use [Client Hooks](https://hexdocs.pm/phoenix_live_view/js-interop.html#client-hooks-via-phx-hook) for rename actions
+  the WebSocket code, and delegates to Next.js to render the rest.
+* [`lib/dictaphone_web/live/dictaphone.ex`](https://github.com/fly-apps/phoenix-dictaphone/blob/main/lib/dictaphone_web/live/dictaphone.ex) contains the
+  interface to Redis.  It is split out from the server to avoid circular dependencies.
+* [`app/audio/[name]/route.js`](https://github.com/fly-apps/nextjs-dictaphone/blob/main/app/audio/%5Bname%5D/route.js) contains
+  the logic to respond to events from both browser clients, and redis pubsub.
+* [`lib/dictaphone_web/controllers/audio_controller.ex`](https://github.com/fly-apps/phoenix-dictaphone/blob/main/lib/dictaphone_web/controllers/audio_controller.ex)
+  contains the server access to `GET` and `PUT` audio clips.
+* When the `WHISPER_URL` secret is set, `PUT` requests will cause the audio clips
+  to be passed to the Whisper server, and responses will be used to update the
+  PostgreSQL database. The code for this is in [`lib/dictaphone_web/controllers/audio_controller.ex`](https://github.com/fly-apps/phoenix-dictaphone/blob/396d22a537b4f688f99ce88b707d6e045d828e6f/lib/dictaphone_web/controllers/audio_controller.ex#L42-L58).
