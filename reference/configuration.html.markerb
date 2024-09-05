@@ -401,12 +401,12 @@ Times are in milliseconds unless units are specified.
 * `tls_skip_verify`: When `true` (and using HTTPS protocol) skip verifying the certificates sent by the server.
 * `http_service.checks.headers`: This is a sub-section of `http_service.checks`. It uses the key/value pairs as a specification of header and header values that will get passed with the check call.
 
-### The `http_services.machine_checks` section
+### The `http_service.machine_checks` section
 
 You can use the same `machine_checks` section for HTTP services as for [`services`](#services-machine-checks). The `machine_checks` section defines parameters for checking the health of a service.
 
 ```toml
-[http_services.machine_checks]
+[http_service.machine_checks]
   image = "curlimages/curl"
   entrypoint = ["/bin/sh", "-c"]
   command = ["curl http://[$FLY_TEST_MACHINE_IP] | grep 'Hello, World!'"]
