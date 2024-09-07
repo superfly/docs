@@ -116,7 +116,7 @@ CMD [ "node", "server.js" ]
 
 ## Generating your Next.js Dockerfile
 
-While you're welcome to write your own Dockerfile, the easiest way to get started with this is to use the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile). Once installed, it can be run using `npx dockerfile` for Node applications or `bunx dockerfile` for Bun applications. You'll see it referenced throughout this article for various use cases.
+While you're welcome to write your own Dockerfile, the easiest way to get started with this is to use the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile). Once installed, it can be run using `npx @flydotio/dockerfile` for Node applications or `bunx @flydotio/dockerfile` for Bun applications. You'll see it referenced throughout this article for various use cases.
 
 ## Connecting to databases
 
