@@ -9,7 +9,9 @@ Get up and running on Fly.io:
 
 - **[Quickstart](/docs/getting-started/launch/):** Launch your own app now.
 
-- **[Launch a demo app](/docs/getting-started/launch-demo):** Walk through installing the flyctl command-line tool and creating an account, then launch a simple "hellofly" demo app.
+- **[Launch hellofly demo app](/docs/getting-started/launch-demo):** Walk through installing the flyctl command-line tool and creating an account, then launch a simple "hellofly" demo app.
+
+- **[Deep dive demo](/docs/deep-dive/):** get a fully-functioning app running in the first few minutes, explore how the pieces fit together, and even integrate AI functionality that makes use of GPUs
 
 - **[Choose your language or framework](/docs/getting-started/get-started-by-framework/):** Get started on Fly.io with the tech _you_ love.
 
