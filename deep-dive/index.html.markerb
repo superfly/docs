@@ -57,13 +57,14 @@ The demo includes the following components:
 
 ### Available runtimes
 
-Our deep dive demo comes in four flavors (so far):
+Our deep dive demo comes in five flavors (so far):
 
-  * [Django](/docs/happy-path/django/)
-  * [Next.js](/docs/happy-path/nextjs/)
-  * [Node.js](/docs/happy-path/nodejs/)
-  * [Rails](/docs/happy-path/rails/)
+  * [Django](/docs/deep-dive/django/)
+  * [Next.js](/docs/deep-dive/nextjs/)
+  * [Node.js](/docs/deep-dive/nodejs/)
+  * [Phoenix](/docs/deep-dive/phoenix/)
+  * [Rails](/docs/deep-dive/rails/)
 
 ---
 
-**Next:** [Launch the demo](/docs/happy-path/launch-deep-dive/)
+**Next:** [Launch the demo](/docs/deep-dive/launch-deep-dive/)
