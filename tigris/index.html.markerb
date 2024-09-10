@@ -113,7 +113,7 @@ Your Tigris bucket late-surf-5384 was destroyed
 
 ## Pricing and Billing
 
-Tigris buckets are billed by usage with no up-front costs. Check the official [Tigris Pricing](https://www.tigrisdata.com/docs/pricing/) page for details. This pricing can change as data transfer costs are worked out between Fly.io and Tigris.
+Tigris buckets are billed by usage with no up-front costs. Check the official [Tigris Pricing](https://www.tigrisdata.com/docs/pricing/) page for details.
 
 
 ## AWS API compatibility
