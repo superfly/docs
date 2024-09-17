@@ -36,7 +36,7 @@ cd hello-static
 
 Our example will be a simple static site. That can be as trivial as a single `index.html` file. Let's make it only slightly more complicated by writing two html files and having them link to each other.
 
-Put these html files into a subdirectory of their own, called `public`. Files in this directory are the ones our goStatic server will serve. Create the `hello-static/public` directory if needed.
+Put these html files into a subdirectory of their own, called `public`. Files in this directory are the ones our NGINX server will serve. Create the `hello-static/public` directory if needed.
 
 Here's `index.html`, which is the landing page:
 
@@ -97,31 +97,102 @@ The `hello-static` repository contains a `fly.toml` that will be detected by `fl
 flyctl launch
 ```
 ```output
-Creating app in /Users/chris/trystatic/hello-static
 Scanning source code
 Detected a Dockerfile app
-? App Name (leave blank to use an auto-generated name): gostatic-example
-Automatically selected personal organization: Chris Nicoll
-? Select region: ewr (Secaucus, NJ (US))
-Created app gostatic-example in organization personal
+Creating app in /Users/jphenow/workspace/hello-static
+We're about to launch your app on Fly.io. Here's what you're getting:
+
+Organization: Jon Phenow                         (fly launch defaults to the personal org)
+Name:         hello-static                       (generated)
+Region:       Denver, Colorado (US)              (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM             (most apps need about 1GB of RAM)
+Postgres:     <none>                             (not requested)
+Redis:        <none>                             (not requested)
+Tigris:       <none>                             (not requested)
+
+? Do you want to tweak these settings before proceeding? No
+Created app 'hello-static' in organization 'personal'
+Admin URL: https://fly.io/apps/hello-static
+Hostname: hello-static.fly.dev
+FlyV1 fm2_lJPECAAAAAAAAAflxBDoNlPNP12gqdavmuAzeq8vwrVodHRwczovL2FwaS5mbHkuaW8vdjGWAJLNnO0fC5O5aHR0cHM6Ly9hcGkuZmx5LmlvL2FhYS92McQ8YAn9zEdsVsdDp5dSutlStkANc3wsSR+Ia3GSMjH0y4xzjEtiQ5ZdqkkDX5+N7zRKERXbZACqZxKpwBesxErc6re5QejjrNRX5CxrTOW8TlHeIkdvg323uzOSrGmbxW43z5VHwkoU+odxjrvErGt5HHlPr+BZ/iocqcJXzcTkmeBLIAbcY5rHpw2SlAORgc4ARqkJHwWRgqdidWlsZGVyH6J3Zx8BxCAQrRLzv48YBLntZvJABNPRmUiQz6fluw2gDGe/KXtTDg==,fm2_lJPEStzqt7lB6OOs1FfkLGtM5bxOUd4iR2+Dfbe7M5KsaZvFbjfPlUfCShT6h3GOu8Ssa3kceU+v4Fn+KhypwlfNxOSZ4EsgBtxjmsenxBD+57oPifKpGFAGk3lRwDu0w7lodHRwczovL2FwaS5mbHkuaW8vYWFhL3YxmASSzmbplZzPAAAAAT19K6oXzZIICpHNkggMxBCHyIVCtTwkaQ2BwdA6Nd+RxCCX+5BSayFzBnxWRPmuoajjhFoD+5CBocVs1qYGtL7Ufg==
+Setting FLY_API_TOKEN secret in GitHub repository settings
+failed setting FLY_API_TOKEN secret in GitHub repository settings: %w exit status 1
 Wrote config file fly.toml
-? Would you like to setup a Postgresql database now? No
-? Would you like to deploy now? No
-Your app is ready. Deploy with `flyctl deploy`
+Validating /Users/jphenow/workspace/hello-static/fly.toml
+✓ Configuration is valid
+==> Building image
+Remote builder fly-builder-little-haze-7293 ready
+Remote builder fly-builder-little-haze-7293 ready
+==> Building image with Docker
+--> docker host: 24.0.7 linux x86_64
+[+] Building 0.4s (7/7) FINISHED
+ => [internal] load .dockerignore                                                                                                                                                                                                                                                                                                                                                0.2s
+ => => transferring context: 100B                                                                                                                                                                                                                                                                                                                                                0.2s
+ => [internal] load build definition from Dockerfile                                                                                                                                                                                                                                                                                                                             0.2s
+ => => transferring dockerfile: 90B                                                                                                                                                                                                                                                                                                                                              0.2s
+ => [internal] load metadata for docker.io/library/nginx:alpine                                                                                                                                                                                                                                                                                                                  0.1s
+ => [internal] load build context                                                                                                                                                                                                                                                                                                                                                0.1s
+ => => transferring context: 151B                                                                                                                                                                                                                                                                                                                                                0.1s
+ => [1/2] FROM docker.io/library/nginx:alpine@sha256:a5127daff3d6f4606be3100a252419bfa84fd6ee5cd74d0feaca1a5068f97dcf                                                                                                                                                                                                                                                            0.0s
+ => CACHED [2/2] COPY public /usr/share/nginx/html                                                                                                                                                                                                                                                                                                                               0.0s
+ => exporting to image                                                                                                                                                                                                                                                                                                                                                           0.0s
+ => => exporting layers                                                                                                                                                                                                                                                                                                                                                          0.0s
+ => => writing image sha256:1e96a09c0ae89bb9b8dc5dcdcfde700fb1ee2677c20dc9d5f324a5b768328dda                                                                                                                                                                                                                                                                                     0.0s
+ => => naming to registry.fly.io/hello-static:deployment-01J8071W7G3S6R2MC5JJX915CC                                                                                                                                                                                                                                                                                              0.0s
+--> Building image done
+==> Pushing image to fly
+The push refers to repository [registry.fly.io/hello-static]
+deployment-01J8071W7G3S6R2MC5JJX915CC: digest: sha256:2ba357ed3fcf6eeb3a5e4c7a6e2300040cf6f414db69ce2e3b7d6030507deb5e size: 2196
+--> Pushing image done
+image: registry.fly.io/hello-static:deployment-01J8071W7G3S6R2MC5JJX915CC
+image size: 43 MB
+
+Watch your deployment at https://fly.io/apps/hello-static/monitoring
+
+Provisioning ips for hello-static
+  Dedicated ipv6: 2a09:8280:1::46:a909:0
+  Shared ipv4: 66.241.124.149
+  Add a dedicated ipv4 with: fly ips allocate-v4
+
+This deployment will:
+ * create 2 "app" machines
+
+No machines in group app, launching a new machine
+
+WARNING The app is not listening on the expected address and will not be reachable by fly-proxy.
+You can fix this by configuring your app to listen on the following addresses:
+  - 0.0.0.0:8080
+Found these processes inside the machine with open listening sockets:
+  PROCESS                                    | ADDRESSES
+---------------------------------------------*----------------------------------------
+  nginx: master process nginx -g daemon off; | 0.0.0.0:80, [::]:80
+  /.fly/hallpass                             | [fdaa:0:7300:a7b:d827:5e53:ee2d:2]:22
+  nginx: worker process                      | 0.0.0.0:80, [::]:80
+
+Creating a second machine to increase service availability
+Finished launching new machines
+-------
+NOTE: The machines for [app] have services with 'auto_stop_machines = "stop"' that will be stopped when idling
+
+-------
+Checking DNS configuration for hello-static.fly.dev
+
+Visit your newly deployed app at https://hello-static.fly.dev/
+
 ```
 
-This has configured the app with some default parameters, and generated a `fly.toml` configuration file for us.
+This has configured the app with some default parameters, generated a `fly.toml`, attached a shared IPv4, created a dedicated IPv6, and deployed our image file for us.
 
-Before deploying, we need to do one more thing. NGINX listens on port 80 by default, but the default `fly.toml` assumes port 8080. Edit `internal_port` in the [`services`](/docs/reference/configuration/#the-http_service-section) section to reflect this:
+Before the app will work though, we need to do one more thing. NGINX listens on port 80 by default, but the default `fly.toml` assumes port 8080. Edit `internal_port` in the [`services`](/docs/reference/configuration/#the-http_service-section) section to reflect this:
 
 ```toml
 [http_service]
-auto_start_machines = true
-auto_stop_machines = 'stop'
-force_https = true
-internal_port = 80
-min_machines_running = 0
-processes = ['app']
+  internal_port = 80
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
   ```
 
 Now we're ready to deploy:
@@ -134,7 +205,7 @@ The output should end something like this, if everything has gone well:
 
 ```
 ==> Verifying app config
-Validating /Users/chris/trystatic/hello-static/fly.toml
+Validating /Users/jphenow/workspace/hello-static/fly.toml
 ✓ Configuration is valid
 --> Verified app config
 ==> Building image
@@ -142,24 +213,24 @@ Remote builder fly-builder-little-haze-7293 ready
 Remote builder fly-builder-little-haze-7293 ready
 ==> Building image with Docker
 --> docker host: 24.0.7 linux x86_64
-[+] Building 0.6s (7/7) FINISHED
- => [internal] load build definition from Dockerfile                                                                                                                                                   0.2s
- => => transferring dockerfile: 88B                                                                                                                                                                    0.2s
- => [internal] load .dockerignore                                                                                                                                                                      0.1s
- => => transferring context: 2B                                                                                                                                                                        0.1s
- => [internal] load metadata for docker.io/library/nginx:alpine                                                                                                                                        0.2s
- => [internal] load build context                                                                                                                                                                      0.2s
- => => transferring context: 161B                                                                                                                                                                      0.2s
- => [1/2] FROM docker.io/library/nginx:alpine@sha256:a5127daff3d6f4606be3100a252419bfa84fd6ee5cd74d0feaca1a5068f97dcf                                                                                  0.0s
- => CACHED [2/2] COPY html /usr/share/nginx/html                                                                                                                                                       0.0s
- => exporting to image                                                                                                                                                                                 0.0s
- => => exporting layers                                                                                                                                                                                0.0s
- => => writing image sha256:3136f78c9806eb2ec7a8e5e14bad387248efcb30b61563d5e36d84be13482bf4                                                                                                           0.0s
- => => naming to registry.fly.io/hello-static:deployment-01J8062W1W9Y1MPDDYVN0ENEN6                                                                                                                         0.0s
+[+] Building 0.4s (7/7) FINISHED
+ => [internal] load build definition from Dockerfile                                                                                                                                                                                                                                                                                                                             0.2s
+ => => transferring dockerfile: 90B                                                                                                                                                                                                                                                                                                                                              0.2s
+ => [internal] load .dockerignore                                                                                                                                                                                                                                                                                                                                                0.2s
+ => => transferring context: 100B                                                                                                                                                                                                                                                                                                                                                0.1s
+ => [internal] load metadata for docker.io/library/nginx:alpine                                                                                                                                                                                                                                                                                                                  0.1s
+ => [internal] load build context                                                                                                                                                                                                                                                                                                                                                0.1s
+ => => transferring context: 151B                                                                                                                                                                                                                                                                                                                                                0.1s
+ => [1/2] FROM docker.io/library/nginx:alpine@sha256:a5127daff3d6f4606be3100a252419bfa84fd6ee5cd74d0feaca1a5068f97dcf                                                                                                                                                                                                                                                            0.0s
+ => CACHED [2/2] COPY public /usr/share/nginx/html                                                                                                                                                                                                                                                                                                                               0.0s
+ => exporting to image                                                                                                                                                                                                                                                                                                                                                           0.0s
+ => => exporting layers                                                                                                                                                                                                                                                                                                                                                          0.0s
+ => => writing image sha256:1e96a09c0ae89bb9b8dc5dcdcfde700fb1ee2677c20dc9d5f324a5b768328dda                                                                                                                                                                                                                                                                                     0.0s
+ => => naming to registry.fly.io/hello-static:deployment-01J807A99M034C3P47SBXFZZVZ                                                                                                                                                                                                                                                                                              0.0s
 --> Building image done
 ==> Pushing image to fly
 The push refers to repository [registry.fly.io/hello-static]
-440de32cea3e: Layer already exists
+052eb83bbfc7: Layer already exists
 b0f60355fd52: Layer already exists
 027907faf592: Layer already exists
 11134cc97d7f: Layer already exists
@@ -168,9 +239,9 @@ aec1e8cf14f5: Layer already exists
 717b3a077b07: Layer already exists
 2ff96b2e5450: Layer already exists
 63ca1fbb43ae: Layer already exists
-deployment-01J8062W1W9Y1MPDDYVN0ENEN6: digest: sha256:d872b204e9f1ab0375078cde53eef3d220bbc01b56d5e08a7d8d4956f177414e size: 2196
+deployment-01J807A99M034C3P47SBXFZZVZ: digest: sha256:2ba357ed3fcf6eeb3a5e4c7a6e2300040cf6f414db69ce2e3b7d6030507deb5e size: 2196
 --> Pushing image done
-image: registry.fly.io/hello-static:deployment-01J8062W1W9Y1MPDDYVN0ENEN6
+image: registry.fly.io/hello-static:deployment-01J807A99M034C3P47SBXFZZVZ
 image size: 43 MB
 
 Watch your deployment at https://fly.io/apps/hello-static/monitoring
@@ -179,12 +250,13 @@ Watch your deployment at https://fly.io/apps/hello-static/monitoring
 Updating existing machines in 'hello-static' with rolling strategy
 
 -------
- ✔ [1/2] Cleared lease for 683dde4cd3d638
- ✔ [2/2] Cleared lease for 6830d47cded978
+ ✔ [1/2] Cleared lease for 3287eedf034558
+ ✔ [2/2] Cleared lease for 4d89447f4117d8
 -------
 Checking DNS configuration for hello-static.fly.dev
 
 Visit your newly deployed app at https://hello-static.fly.dev/
+
 ```
 
 ## _Viewing your static site_
