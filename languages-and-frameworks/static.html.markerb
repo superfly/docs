@@ -6,7 +6,7 @@ redirect_from: /docs/getting-started/static/
 
 <%= partial "partials/intro", locals: { runtime: "static", type: "site" } %>
 
-In this demonstration, we'll use [NGINX](https://nginx.org), the world's most popular web server to serve a few static files with very little configuration. We'll provide a Dockerfile and our content for Fly to transmogrify into a web server running in a VM.
+In this demonstration, we'll use [nginx](https://nginx.org), the world's most popular web server to serve a few static files with very little configuration. We'll provide a Dockerfile and our content for Fly to transmogrify into a web server running in a VM.
 
 You can clone all the files needed for this example from [the hello-static GitHub repository](https://github.com/fly-apps/hello-static) to a local directory:
 
@@ -36,7 +36,7 @@ cd hello-static
 
 Our example will be a simple static site. That can be as trivial as a single `index.html` file. Let's make it only slightly more complicated by writing two html files and having them link to each other.
 
-Put these html files into a subdirectory of their own, called `public`. Files in this directory are the ones our NGINX server will serve. Create the `hello-static/public` directory if needed.
+Put these html files into a subdirectory of their own, called `public`. Files in this directory are the ones our nginx server will serve. Create the `hello-static/public` directory if needed.
 
 Here's `index.html`, which is the landing page:
 
@@ -72,9 +72,9 @@ Here's `goodbye.html`.
 
 ### _The Dockerfile_
 
-NGINX can be run in a container, and the official NGINX image is available on [Docker Hub](https://hub.docker.com/_/nginx/). This is super convenient for us, because Fly apps use container images!
+nginx can be run in a container, and the official nginx image is available on [Docker Hub](https://hub.docker.com/_/nginx/). This is super convenient for us, because Fly apps use container images!
 
-We can use the NGINX image as a base image. We just have to copy our site's files to `/usr/share/nginx/html` in the image.
+We can use the nginx image as a base image. We just have to copy our site's files to `/usr/share/nginx/html` in the image.
 
 Here's our Dockerfile to do that:
 
@@ -183,7 +183,7 @@ Visit your newly deployed app at https://hello-static.fly.dev/
 
 This has configured the app with some default parameters, generated a `fly.toml`, attached a shared IPv4, created a dedicated IPv6, and deployed our image file for us.
 
-Before the app will work though, we need to do one more thing. NGINX listens on port 80 by default, but the default `fly.toml` assumes port 8080. Edit `internal_port` in the [`services`](/docs/reference/configuration/#the-http_service-section) section to reflect this:
+Before the app will work though, we need to do one more thing. nginx listens on port 80 by default, but the default `fly.toml` assumes port 8080. Edit `internal_port` in the [`services`](/docs/reference/configuration/#the-http_service-section) section to reflect this:
 
 ```toml
 [http_service]
