@@ -4,13 +4,9 @@ layout: language-and-framework-docs
 redirect_from: /docs/getting-started/static/
 ---
 
-<%= partial "/docs/partials/obsolete_doc" %>
-
 <%= partial "partials/intro", locals: { runtime: "static", type: "site" } %>
 
-To be fair, a static site isn't an app. So we're really talking about **deploying an app to serve some static content.**
-
-In this demonstration, we'll use [goStatic](https://github.com/PierreZ/goStatic), a tiny web server written in Go that lets us serve static files with very little configuration. We'll provide a Dockerfile and our content for Fly to transmogrify into a web server running in a VM.
+In this demonstration, we'll use [NGINX](https://nginx.org), the world's most popular web server to serve a few static files with very little configuration. We'll provide a Dockerfile and our content for Fly to transmogrify into a web server running in a VM.
 
 You can clone all the files needed for this example from [the hello-static GitHub repository](https://github.com/fly-apps/hello-static) to a local directory:
 
@@ -69,22 +65,23 @@ Here's `goodbye.html`.
   </head>
   <body>
     <h1>You say goodbye</h1>
-      <p>But I say <a href="index.html">hello.</a></p>
+      <p>But I say <a href="/">hello.</a></p>
   </body>
 </html>
 ```
 
 ### _The Dockerfile_
 
-goStatic is designed to run in a container, and the [image](https://hub.docker.com/r/pierrezemb/gostatic) is available at Docker Hub. This is super convenient for us, because Fly apps need container images too!
+NGINX can be run in a container, and the official NGINX image is available on [Docker Hub](https://hub.docker.com/_/nginx/). This is super convenient for us, because Fly apps use container images!
 
-We can use the goStatic image as a base image. We just have to copy our site's files to `/srv/http/` in the image.
+We can use the NGINX image as a base image. We just have to copy our site's files to `/usr/share/nginx/html` in the image.
 
 Here's our Dockerfile to do that:
 
 ```docker
-FROM pierrezemb/gostatic
-COPY ./public/ /srv/http/
+FROM nginx:alpine
+
+COPY public /usr/share/nginx/html
 ```
 
 The Dockerfile should be placed in the working directory (here, `hello-static`).
@@ -115,15 +112,16 @@ Your app is ready. Deploy with `flyctl deploy`
 
 This has configured the app with some default parameters, and generated a `fly.toml` configuration file for us.
 
-Before deploying, we need to do one more thing. goStatic listens on port 8043 by default, but the default `fly.toml` assumes port 8080. Edit `internal_port` in the [`services`](/docs/reference/configuration/#the-services-sections) section to reflect this:
+Before deploying, we need to do one more thing. NGINX listens on port 80 by default, but the default `fly.toml` assumes port 8080. Edit `internal_port` in the [`services`](/docs/reference/configuration/#the-http_service-section) section to reflect this:
 
 ```toml
-[[services]]
-  http_checks = []
-  internal_port = 8043
-  processes = ["app"]
-  protocol = "tcp"
-  script_checks = []
+[http_service]
+auto_start_machines = true
+auto_stop_machines = 'stop'
+force_https = true
+internal_port = 80
+min_machines_running = 0
+processes = ['app']
   ```
 
 Now we're ready to deploy:
@@ -135,10 +133,58 @@ flyctl deploy
 The output should end something like this, if everything has gone well:
 
 ```
-==> Monitoring deployment
+==> Verifying app config
+Validating /Users/chris/trystatic/hello-static/fly.toml
+✓ Configuration is valid
+--> Verified app config
+==> Building image
+Remote builder fly-builder-little-haze-7293 ready
+Remote builder fly-builder-little-haze-7293 ready
+==> Building image with Docker
+--> docker host: 24.0.7 linux x86_64
+[+] Building 0.6s (7/7) FINISHED
+ => [internal] load build definition from Dockerfile                                                                                                                                                   0.2s
+ => => transferring dockerfile: 88B                                                                                                                                                                    0.2s
+ => [internal] load .dockerignore                                                                                                                                                                      0.1s
+ => => transferring context: 2B                                                                                                                                                                        0.1s
+ => [internal] load metadata for docker.io/library/nginx:alpine                                                                                                                                        0.2s
+ => [internal] load build context                                                                                                                                                                      0.2s
+ => => transferring context: 161B                                                                                                                                                                      0.2s
+ => [1/2] FROM docker.io/library/nginx:alpine@sha256:a5127daff3d6f4606be3100a252419bfa84fd6ee5cd74d0feaca1a5068f97dcf                                                                                  0.0s
+ => CACHED [2/2] COPY html /usr/share/nginx/html                                                                                                                                                       0.0s
+ => exporting to image                                                                                                                                                                                 0.0s
+ => => exporting layers                                                                                                                                                                                0.0s
+ => => writing image sha256:3136f78c9806eb2ec7a8e5e14bad387248efcb30b61563d5e36d84be13482bf4                                                                                                           0.0s
+ => => naming to registry.fly.io/hello-static:deployment-01J8062W1W9Y1MPDDYVN0ENEN6                                                                                                                         0.0s
+--> Building image done
+==> Pushing image to fly
+The push refers to repository [registry.fly.io/hello-static]
+440de32cea3e: Layer already exists
+b0f60355fd52: Layer already exists
+027907faf592: Layer already exists
+11134cc97d7f: Layer already exists
+f7a5847cdca9: Layer already exists
+aec1e8cf14f5: Layer already exists
+717b3a077b07: Layer already exists
+2ff96b2e5450: Layer already exists
+63ca1fbb43ae: Layer already exists
+deployment-01J8062W1W9Y1MPDDYVN0ENEN6: digest: sha256:d872b204e9f1ab0375078cde53eef3d220bbc01b56d5e08a7d8d4956f177414e size: 2196
+--> Pushing image done
+image: registry.fly.io/hello-static:deployment-01J8062W1W9Y1MPDDYVN0ENEN6
+image size: 43 MB
 
- 1 desired, 1 placed, 1 healthy, 0 unhealthy [health checks: 1 total, 1 passing]
---> v0 deployed successfully
+Watch your deployment at https://fly.io/apps/hello-static/monitoring
+
+-------
+Updating existing machines in 'hello-static' with rolling strategy
+
+-------
+ ✔ [1/2] Cleared lease for 683dde4cd3d638
+ ✔ [2/2] Cleared lease for 6830d47cded978
+-------
+Checking DNS configuration for hello-static.fly.dev
+
+Visit your newly deployed app at https://hello-static.fly.dev/
 ```
 
 ## _Viewing your static site_
@@ -149,9 +195,7 @@ The quickest way to browse your newly deployed application is with the `flyctl a
 flyctl apps open
 ```
 ```output
-opening https://gostatic-example.fly.dev ...
+opening https://hello-static.fly.dev ...
 ```
 
 Your browser will be sent to the displayed URL.
-
-
