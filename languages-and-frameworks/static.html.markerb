@@ -34,9 +34,9 @@ cd hello-static
 
 ### _The Site_
 
-Our example will be a simple static site. That can be as trivial as a single `index.html` file. Let's make it only slightly more complicated by writing two html files and having them link to each other.
+Our example will be a simple static site. That can be as trivial as a single `index.html` file. Let's make it only slightly more complicated by writing two HTML files and having them link to each other.
 
-Put these html files into a subdirectory of their own, called `public`. Files in this directory are the ones our nginx server will serve. Create the `hello-static/public` directory if needed.
+Put these HTML files into a subdirectory of their own, called `public`. Files in this directory are the ones our nginx server will serve. Create the `hello-static/public` directory if needed.
 
 Here's `index.html`, which is the landing page:
 
