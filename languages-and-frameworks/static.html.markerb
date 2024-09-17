@@ -114,9 +114,6 @@ Tigris:       <none>                             (not requested)
 Created app 'hello-static' in organization 'personal'
 Admin URL: https://fly.io/apps/hello-static
 Hostname: hello-static.fly.dev
-FlyV1 fm2_lJPECAAAAAAAAAflxBDoNlPNP12gqdavmuAzeq8vwrVodHRwczovL2FwaS5mbHkuaW8vdjGWAJLNnO0fC5O5aHR0cHM6Ly9hcGkuZmx5LmlvL2FhYS92McQ8YAn9zEdsVsdDp5dSutlStkANc3wsSR+Ia3GSMjH0y4xzjEtiQ5ZdqkkDX5+N7zRKERXbZACqZxKpwBesxErc6re5QejjrNRX5CxrTOW8TlHeIkdvg323uzOSrGmbxW43z5VHwkoU+odxjrvErGt5HHlPr+BZ/iocqcJXzcTkmeBLIAbcY5rHpw2SlAORgc4ARqkJHwWRgqdidWlsZGVyH6J3Zx8BxCAQrRLzv48YBLntZvJABNPRmUiQz6fluw2gDGe/KXtTDg==,fm2_lJPEStzqt7lB6OOs1FfkLGtM5bxOUd4iR2+Dfbe7M5KsaZvFbjfPlUfCShT6h3GOu8Ssa3kceU+v4Fn+KhypwlfNxOSZ4EsgBtxjmsenxBD+57oPifKpGFAGk3lRwDu0w7lodHRwczovL2FwaS5mbHkuaW8vYWFhL3YxmASSzmbplZzPAAAAAT19K6oXzZIICpHNkggMxBCHyIVCtTwkaQ2BwdA6Nd+RxCCX+5BSayFzBnxWRPmuoajjhFoD+5CBocVs1qYGtL7Ufg==
-Setting FLY_API_TOKEN secret in GitHub repository settings
-failed setting FLY_API_TOKEN secret in GitHub repository settings: %w exit status 1
 Wrote config file fly.toml
 Validating /Users/jphenow/workspace/hello-static/fly.toml
 ✓ Configuration is valid
