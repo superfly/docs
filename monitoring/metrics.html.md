@@ -29,7 +29,6 @@ It [supports](https://docs.victoriametrics.com/#prometheus-querying-api-usage) m
 - [`/api/v1/labels`](https://prometheus.io/docs/prometheus/latest/querying/api/#getting-label-names)
 - [`/api/v1/label/<label_name>/values`](https://prometheus.io/docs/prometheus/latest/querying/api/#querying-label-values)
 - [`/api/v1/status/tsdb`](https://prometheus.io/docs/prometheus/latest/querying/api/#tsdb-stats)
-- [`/api/v1/targets`](https://prometheus.io/docs/prometheus/latest/querying/api/#targets)
 - [`/federate`](https://prometheus.io/docs/prometheus/latest/federation/)
 
 Note that [remote read](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_read) (`/api/v1/read`) [remote storage integration](https://prometheus.io/docs/prometheus/latest/storage/#remote-storage-integrations)
