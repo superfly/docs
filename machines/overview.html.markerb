@@ -119,10 +119,10 @@ are; we've already done the heavy lifting.
 
 ### Static Machine IPs
 
-Static egress IPs can be attached to a machine. These IPs survive a [machine migration].
+Static egress IPs can be attached to a machine. These IPs survive a [machine migration](https://fly.io/docs/reference/machine-migration/) and are not shared between machines.
 
 Static egress IPs are useful when your machine needs to connect to a service that requires allowlisting a specific set of IPs.
-If supported, it is recommended to use [Wireguard].
+If supported, it is recommended to use [Wireguard](https://fly.io/docs/networking/private-networking/#private-network-vpn) to connect to external services.
 
 You can attach a static egress IP to your machine with `fly machine egress-ip allocate <machine_id>`
 
