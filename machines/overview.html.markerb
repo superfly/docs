@@ -127,11 +127,15 @@ If supported, it is recommended to use [Wireguard].
 You can attach a static IP to your machine with `fly machine egress-ip allocate <machine_id>`
 
 ```cmd
-fly machine egress-ip allocate 7811373c095228
+fly machine egress-ip allocate e784e7d9a65208
 ```
 
 ```output
-TODO: Akshit
+? Looks like you're allocating a static egress (outgoing) IP. This is an advanced feature, and is not needed by most apps.
+Are you sure this is what you want? Yes
+Allocated egress IPs for machine e784e7d9a65208:
+IPv4: 209.71.93.224
+IPv6: 2a09:8280:e600::2e:951:0
 ```
 
 ### Placement
