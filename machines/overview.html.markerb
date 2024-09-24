@@ -119,12 +119,12 @@ are; we've already done the heavy lifting.
 
 ### Static Machine IPs
 
-Static IPs can be attached to a machine. Static machine IPs survive a [machine migration].
+Static egress IPs can be attached to a machine. These IPs survive a [machine migration].
 
-Static IPs are useful when your machine needs to connect to a service that requires allowlisting a specific set of IPs.
+Static egress IPs are useful when your machine needs to connect to a service that requires allowlisting a specific set of IPs.
 If supported, it is recommended to use [Wireguard].
 
-You can attach a static IP to your machine with `fly machine egress-ip allocate <machine_id>`
+You can attach a static egresss IP to your machine with `fly machine egress-ip allocate <machine_id>`
 
 ```cmd
 fly machine egress-ip allocate e784e7d9a65208
