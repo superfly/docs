@@ -117,6 +117,23 @@ Updating a Machine takes it down (like with `fly machine stop`), applies configu
 not changing the image, so we don't have to go fetch it from the global registry, this is fast, for the same reason `stop` and `start`
 are; we've already done the heavy lifting.
 
+### Static Machine IPs
+
+Static IPs can be attached to a machine. Static machine IPs survive a [machine migration].
+
+Static IPs are useful when your machine needs to connect to a service that requires allowlisting a specific set of IPs.
+If supported, it is recommended to use [Wireguard].
+
+You can attach a static IP to your machine with `fly machine egress-ip allocate <machine_id>`
+
+```cmd
+fly machine egress-ip allocate 7811373c095228
+```
+
+```output
+TODO: Akshit
+```
+
 ### Placement
 
 When you `create`, `run`, or `clone` a Machine, you can pick a Fly.io region to place it in. Our API will contact the Machines API
