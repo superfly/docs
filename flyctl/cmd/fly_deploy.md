@@ -54,7 +54,7 @@ fly deploy [WORKING_DIRECTORY] [flags]
       --label stringArray                Add custom metadata to an image via docker labels
       --lease-timeout string             Time duration to lease individual machines while running deployment. All machines are leased at the beginning and released at the end.The lease is refreshed periodically for this same time, which is why it is short.flyctl releases leases in most cases. (default "13s")
       --local-only                       Perform builds locally using the local docker daemon. The default is --remote-only.
-      --max-concurrent int               Maximum number of machines to operate on concurrently. (default 16)
+      --max-concurrent int               Maximum number of machines to operate on concurrently. (default 8)
       --max-unavailable float            Max number of unavailable machines during rolling updates. A number between 0 and 1 means percent of total machines (default 0.33)
       --nixpacks                         Deploy using nixpacks to build the image
       --no-cache                         Do not use the build cache when building the image
