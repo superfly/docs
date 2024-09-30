@@ -14,7 +14,7 @@ fly machine restart [<id>...] [flags]
       --force                Force stop the machine(s)
   -h, --help                 help for restart
   -s, --signal string        Signal to stop the machine with (default: SIGINT)
-      --skip-health-checks   Restarts app without waiting for health checks. ( Machines only )
+      --skip-health-checks   Restarts app without waiting for health checks.
       --time int             Seconds to wait before killing the machine
 ~~~
 
