@@ -13,7 +13,7 @@ fly image update [flags]
   -c, --config string        Path to application configuration file
   -h, --help                 help for update
       --image string         Target a specific image
-      --skip-health-checks   Skip waiting for health checks inbetween VM updates. (Machines only)
+      --skip-health-checks   Skip waiting for health checks inbetween VM updates.
   -y, --yes                  Accept all confirmations
 ~~~
 
