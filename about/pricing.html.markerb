@@ -11,7 +11,7 @@ nav: firecracker
 
 Fly.io services are billed per organization, with [Linked Organizations](/docs/about/billing/#unified-billing) reporting resource usage to their parent Billing Organization. Plans get complicated, so we just charge based on usage. Pick and choose which pieces you need for your application; that's all you'll see on your invoice.
 
-### Organizations
+## Organizations
 
 Organizations are administrative entities on Fly.io that let you add members, share app development environments, and manage billing. [Billing](/docs/about/billing/) is based on the resources provisioned for your apps, pro-rated for the time they are provisioned.
 
