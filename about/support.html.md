@@ -27,11 +27,11 @@ Customers also frequently help each other out and share insights on running thei
 
 ## Email support
 
-**Who can use this:** Customers on [Launch, Scale, and Enterprise plans](https://fly.io/plans).
+**Who can use this:** Customers who have purchased a Standard, Premium, or Enterprise Support package.
 
 **Use this for:**  Issues or questions specific to you.
 
-Our Launch, Scale, and Enterprise plans have access to email support. These plans come with an organization-specific address for emailing support questions, typically &lt;org-name&gt;@support.fly.io.
+Our Standard, Premium, and Enterprise packages have access to email support. These plans come with an organization-specific address for emailing support questions, typically &lt;org-name&gt;@support.fly.io.
 
 You can find your support address is in the [Fly.io dashboard](https://fly.io/dashboard). Select your organization, and look for your unique email address in the Support section. You'll also find a form to submit new support tickets, as well as an overview of recent support interactions.
 
