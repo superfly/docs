@@ -23,58 +23,58 @@ We charge for started and stopped Machines differently. Attached GPUs are charge
 
 <% if Time.now.utc < '2024-11-01T00:00:00Z' %>
 <section class="callout">
- **Machines pricing is changing!**
+  **Machines pricing is changing!**
 
- <p class="mt-2">
- On July 1st, we're beginning a phased roll-out of per-region pricing. For the first month, prices will remain the same, but the lines on your invoice will be broken down by region. Each subsequent month, prices will be increase by 25% of the difference between the price in <span class="font-mono">iad</span> and the price listed for the region, until the listed price is reached in November.
- </p>
+  <p class="mt-2">
+  On July 1st, we're beginning a phased roll-out of per-region pricing. For the first month, prices will remain the same, but the lines on your invoice will be broken down by region. Each subsequent month, prices will be increase by 25% of the difference between the price in <span class="font-mono">iad</span> and the price listed for the region, until the listed price is reached in November.
+  </p>
 
- <p class="my-4 w-full text-right"><button id="phased-roll-out-example-toggle-btn" toggle>See an example of how the phased roll-out works</button></p>
+  <p class="my-4 w-full text-right"><button id="phased-roll-out-example-toggle-btn" toggle>See an example of how the phased roll-out works</button></p>
 
- <ul id="phased-roll-out-example" class="hidden block overflow-hidden mt-2 text-sm leading-normal bg-white card" aria-label="show phased roll-out worked example" aria-hidden="true">
+  <ul id="phased-roll-out-example" class="hidden block overflow-hidden mt-2 text-sm leading-normal bg-white card" aria-label="show phased roll-out worked example" aria-hidden="true">
 
- <li>The listed price for <span class="font-mono">shared-1x-256mb</span> Machines in <span class="font-mono">lax</span> is $2.33/month.</li>
- <li>In July, <span class="font-mono">shared-1x-256mb</span> Machines in <span class="font-mono">lax</span> will cost the same as Machines in <span class="font-mono">iad</span>, roughly $1.94/month.</li>
- <li>In August, they'll cost roughly $1.94 + 0.25\*($2.33 - $1.94) = $2.04/month.</li>
- <li>In September, they'll cost roughly $1.94 + 0.5\*($2.33 - $1.94) = $2.14/month.</li>
- <li>In October, they'll cost roughly $1.94 + 0.75\*($2.33 - $1.94) = $2.23/month.</li>
- <li class="mb-0">Finally, in November they'll cost roughly $2.33/month, the listed price for Machines in <span class="font-mono">lax</span>.</li>
+  <li>The listed price for <span class="font-mono">shared-1x-256mb</span> Machines in <span class="font-mono">lax</span> is $2.33/month.</li>
+  <li>In July, <span class="font-mono">shared-1x-256mb</span> Machines in <span class="font-mono">lax</span> will cost the same as Machines in <span class="font-mono">iad</span>, roughly $1.94/month.</li>
+  <li>In August, they'll cost roughly $1.94 + 0.25\*($2.33 - $1.94) = $2.04/month.</li>
+  <li>In September, they'll cost roughly $1.94 + 0.5\*($2.33 - $1.94) = $2.14/month.</li>
+  <li>In October, they'll cost roughly $1.94 + 0.75\*($2.33 - $1.94) = $2.23/month.</li>
+  <li class="mb-0">Finally, in November they'll cost roughly $2.33/month, the listed price for Machines in <span class="font-mono">lax</span>.</li>
 
- </ul>
+  </ul>
 </section>
 
 <script type="text/javascript">
- const phasedRollOutToggleBtn = document.getElementById("phased-roll-out-example-toggle-btn");
- const phasedRollOutContent = document.getElementById("phased-roll-out-example");
+  const phasedRollOutToggleBtn = document.getElementById("phased-roll-out-example-toggle-btn");
+  const phasedRollOutContent = document.getElementById("phased-roll-out-example");
 
- phasedRollOutToggleBtn.addEventListener("click", function() {
- phasedRollOutContent.classList.toggle("hidden");
- phasedRollOutContent.ariaHidden = phasedRollOutContent.ariaHidden === "true" ? "false" : "true";
- })
+  phasedRollOutToggleBtn.addEventListener("click", function() {
+  phasedRollOutContent.classList.toggle("hidden");
+  phasedRollOutContent.ariaHidden = phasedRollOutContent.ariaHidden === "true" ? "false" : "true";
+  })
 </script>
 <% end %>
 
 <p>
- <label for="region-select">Region: </label>
- <select id="region-select" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
- <% data.pricing.regions.each do |r| %>
- <option value="<%= r.code %>"><%= r.city %>, <%= r.country %> (<%= r.code %>)</option>
- <% end %>
- </select>
+  <label for="region-select">Region: </label>
+  <select id="region-select" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+  <% data.pricing.regions.each do |r| %>
+  <option value="<%= r.code %>"><%= r.city %>, <%= r.country %> (<%= r.code %>)</option>
+  <% end %>
+  </select>
 </p>
 
 <script type="text/javascript">
 const regionMarkups = {
- <% data.pricing.regions.each do |region| %>
- "<%= region.code %>": <%= region.markup_ratio %>,
- <% end %>
+  <% data.pricing.regions.each do |region| %>
+  "<%= region.code %>": <%= region.markup_ratio %>,
+  <% end %>
 };
 
 const regionSelect = document.getElementById("region-select");
 
 regionSelect.addEventListener("change", function () {
- document.querySelectorAll(".started-machines-pricing-matrix").forEach((matrix) => matrix.classList.add("hidden"));
- document.getElementById(`started-machines-pricing-matrix-${regionSelect.value}`).classList.remove("hidden");
+  document.querySelectorAll(".started-machines-pricing-matrix").forEach((matrix) => matrix.classList.add("hidden"));
+  document.getElementById(`started-machines-pricing-matrix-${regionSelect.value}`).classList.remove("hidden");
 });
 </script>
 
@@ -88,15 +88,15 @@ Here's the pricing for named presets and a few standard additional RAM configura
 const ramPriceSpan = document.getElementById("ram-price");
 const baselineRamPricePer30Days = 5;
 const formatter = new Intl.NumberFormat('en-US', {
- style: 'currency',
- currency: 'USD',
- minimumFractionDigits: 0,
- maximumFractionDigits: 2,
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
 });
 
 regionSelect.addEventListener("change", function () {
- const selectedRegion = regionSelect.value; // regionSelect defined in landing/pages/shared/_cpu_mem_machines_pricing.html.erb
- ramPriceSpan.textContent = formatter.format(baselineRamPricePer30Days * regionMarkups[selectedRegion]);
+  const selectedRegion = regionSelect.value; // regionSelect defined in landing/pages/shared/_cpu_mem_machines_pricing.html.erb
+  ramPriceSpan.textContent = formatter.format(baselineRamPricePer30Days * regionMarkups[selectedRegion]);
 });
 </script>
 
@@ -129,7 +129,7 @@ There's no limit on the number or combinations of blocks that can be purchased. 
 
 For example, if you purchase a $36/year `shared` Machines block in `cdg`, you'll pay $36 upfront and receive $5/month of credits applicable to `shared` Machines in `cdg` for 12 months, starting with the month of the purchase. Amortised over 12 months, the $36 upfront cost is $3/month, which is a 40% discount on the $5/month of credits you receive.
 
-You can set up reservations via self-service in the billing section of your Fly.io dashboard ( <https://fly.io/dashboard/><org-name>/billing ). They apply to usage starting on the 1st, so setting up reservations any time in the month will give you the credits the entire month.
+You can set up reservations via self-service in the billing section of your Fly.io [dashboard](https://fly.io/dashboard). They apply to usage starting on the 1st, so setting up reservations any time in the month will give you the credits the entire month.
 
 ### GPUs and Fly Machines
 
@@ -179,15 +179,19 @@ We use Let's Encrypt to issue certificates, and donate half of our SSL fees to t
 ### Data transfer pricing
 
 We bill for data leaving your app destined for the public internet or for apps or Machines in other regions, including:
-data egress to the Internet, from Machine to edge server to Internet
-data transfer over private network between regions, from Machine to edge server and edge server to Machine
-data transfer to some extensions like Supabase or Upstash Redis (excludes Tigris Object Storage)
+
+* Data egress to the Internet, from Machine to edge server to Internet
+* Data transfer over private network between regions, from Machine to edge server and edge server to Machine
+* Data transfer to some extensions like Supabase or Upstash Redis (excludes Tigris Object Storage)
+
 The following types of traffic are free:
-all inbound data transfer
-data transfer between apps or Machines in the same region (for organizations using granular data transfer rates)
-data transfer from apps without an assigned IP address (for organizations not using granular data transfer rates)
-data transfer to Tigris Object Storage
-Fly.io pricing is per region group for outbound data transfer. You’ll see a more detailed breakdown of cost per region and per traffic type on your monthly invoice.
+
+* All inbound data transfer
+* Data transfer between apps or Machines in the same region (for organizations using granular data transfer rates)
+* Data transfer from apps without an assigned IP address (for organizations not using granular data transfer rates)
+* Data transfer to Tigris Object Storage
+
+Fly.io pricing is per region group for outbound data transfer. You'll see a more detailed breakdown of cost per region and per traffic type on your monthly invoice.
 
 <div class="important icon">
 **Important:** Organizations created after July 18 2024 are automatically opted-in to use the granular data transfer rates and are billed at a different rate for private network data transfer between regions, per the following table. Organizations not using granular data transfer rates are billed for all data transfer (excluding that listed as free above) at the "Egress to public internet" rate.
@@ -217,7 +221,7 @@ Machines do not have a static IP by default.
 
 [Fly Postgres](/docs/postgres/) is a PostgreSQL database that you create and then manage yourself. Fly Postgres clusters are Fly Apps that consist of Machines, volumes, and any configured extra memory.
 
-The [Machine price](#compute) and [volume price](#persistent-storage-volumes) for Fly Postgres are the same as any other Machine and volume you’d run on Fly.io. Assuming the Machines are running all the time, the cost for the preset configurations is about $2/month for a single node cluster for dev projects and from about $82 to $164/month for a three-node production cluster. You don't need to keep the preset configurations, you can [scale your Fly Postgres Machines](https://fly.io/docs/postgres/managing/scaling/) to suit your workload at any time.
+The [Machine price](#compute) and [volume price](#persistent-storage-volumes) for Fly Postgres are the same as any other Machine and volume you'd run on Fly.io. Assuming the Machines are running all the time, the cost for the preset configurations is about $2/month for a single node cluster for dev projects and from about $82 to $164/month for a three-node production cluster. You don't need to keep the preset configurations, you can [scale your Fly Postgres Machines](https://fly.io/docs/postgres/managing/scaling/) to suit your workload at any time.
 
 ## Extensions
 
@@ -246,8 +250,8 @@ backups and point-in-time restore for your SQLite-based applications that use
 
 ## Support
 
-[Community support] (<https://community.fly.io/>) is included for all customers, regardless of usage level.
-You can get access to additional support by purchasing a Standard ($29/month), Premium ($199), or Enterprise ($2500) support package in your dashboard. For more about Support, see [Support at Fly.io] (<https://fly.io/docs/about/support/>).
+[Community support](https://community.fly.io/) is included for all customers, regardless of usage level.
+You can get access to additional support by purchasing a Standard ($29/month), Premium ($199), or Enterprise ($2500) support package in your dashboard. For more about Support, see [Support at Fly.io](https://fly.io/docs/about/support/).
 
 ## Discontinued Plans
 
@@ -255,13 +259,15 @@ Fly.io no longer offers plans to new customers. If you purchased a Launch or Sca
 
 ### Legacy Free allowances
 
-The following resources were included for free on the Hobby (deprecated), Launch, and Scale plans, and are still honored for the folks who were on these plans when we deprecated them.
-Up to 3 shared-cpu-1x 256mb VMs
-3GB persistent volume storage (total)
+The following resources were included for free on the Hobby (deprecated), Launch, and Scale plans, and are still honored for any organizations that were on these plans before we sunset them:
+
+* Up to 3 shared-cpu-1x 256mb VMs
+* 3GB persistent volume storage (total)
+
 Outbound data transfer:
-100 GB North America & Europe
-30 GB Asia Pacific, Oceania & South America
-30 GB Africa & India
+* 100 GB North America & Europe
+* 30 GB Asia Pacific, Oceania & South America
+* 30 GB Africa & India
 
 <div class="note icon">
 Organizations may be subject to automated scaling limits to prevent abuse or to help with capacity planning. Email the address in the error message if you run into such a limit and it's getting in your way.
@@ -271,7 +277,7 @@ All organizations (except for Linked Organizations) require a [credit card](/doc
 
 #### Paid Hobby plan and free trial
 
-If you signed up for the now deprecated $5/month Hobby plan before the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit is used up, we automatically place your organization on the $5/month Hobby plan, which includes $5/month of usage and free allowances. There are no free allowances during the free trial. We’ll send you an email when your free trial credit is used up and you won't be charged before that. The free trial credit doesn't expire and applies only to the default (“personal”) organization that we created for you on sign-up.
+If you signed up for the now deprecated $5/month Hobby plan before the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit is used up, we automatically place your organization on the $5/month Hobby plan, which includes $5/month of usage and free allowances. There are no free allowances during the free trial. We'll send you an email when your free trial credit is used up and you won't be charged before that. The free trial credit doesn't expire and applies only to the default (“personal”) organization that we created for you on sign-up.
 
 To change your plan to the Pay As You Go plan, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Choose Pay As You Go**. If you change your plan, you won't be able to return to the paid Hobby Plan.
 
