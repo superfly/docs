@@ -92,7 +92,7 @@ An existing organization can be converted to a **Linked Organization** from the 
 
 - Each organization has its own [private network](/docs/networking/private-networking/). Organizations are isolated from each other, which might
 be advantageous from a security standpoint.
- - Cross organization networking is still possible with [Flycast](/docs/networking/flycast/)
+- Cross organization networking is still possible with [Flycast](/docs/networking/flycast/)
 - Detaching a Linked Organization from its Billing Organization is not possible at this time. Instead we suggest creating a new organization and moving resources there.
 
 ---
