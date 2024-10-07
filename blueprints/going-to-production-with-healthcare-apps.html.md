@@ -114,8 +114,8 @@ Once you've evaluated Fly.io and have a BAA, it's time to go to production. The 
 
 When you're ready to start deploying HIPAA apps, you'll need to do some paperwork (don't worry, we use digital signatures) to make sure everything is compliant.
 
-- [Choose a plan](https://fly.io/plans) that includes HIPAA/BAA documents.
-- Sign in to the dashboard and request a signed BAA at [https://fly.io/dashboard/personal/documents](https://fly.io/dashboard/personal/documents) or [contact us](mailto:sales@fly.io) and we'll help.
+- [Choose the Compliance Package](https://fly.io/compliance) that includes HIPAA/BAA documents.
+- Sign in to the dashboard and request a signed BAA at [https://fly.io/dashboard/personal/compliance](https://fly.io/dashboard/personal/compliance) or [contact us](mailto:sales@fly.io) and we'll help.
 
 ### Provision an isolated production environment
 

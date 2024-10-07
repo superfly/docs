@@ -9,60 +9,13 @@ nav: firecracker
 
 ## How it works
 
-Fly.io services are billed per organization. Every organization is on a [plan](https://fly.io/plans), with [linked organizations](/docs/about/billing/#unified-billing) sharing a plan with their parent billing organization. If you want to scale beyond your plan, then you can upgrade, or just pay for what you need at the usage-based pricing listed below.
+Fly.io services are billed per organization, with [Linked Organizations](/docs/about/billing/#unified-billing) reporting resource usage to their parent Billing Organization. Plans get complicated, so we just charge based on usage. Pick and choose which pieces you need for your application; that's all you'll see on your invoice.
 
-<div class="callout">
 Organizations are administrative entities on Fly.io that let you add members, share app development environments, and manage billing. [Billing](/docs/about/billing/) is based on the resources provisioned for your apps, pro-rated for the time they are provisioned.
-</div>
 
-## Plans
-
-Check out our [plans and plan pricing](https://fly.io/plans).
-
-Every organization belongs to a plan. When you create a new organization, it starts on the [Pay As You Go plan](https://fly.io/plans). If you need more support or compliance options, then you can upgrade to a Launch, Scale, or Enterprise plan.
-
-Some usage is included with our Hobby (deprecated), Launch, Scale, and Enterprise plans. You can upgrade your plan at any time, or just pay for extra usage at the usage-based prices listed below.
-
-<div class="note icon">
 Organizations may be subject to automated scaling limits to prevent abuse or to help with capacity planning. Email the address in the error message if you run into such a limit and it's getting in your way.
-</div>
 
-All plans require a [credit card](/docs/about/billing/#payment-options) on file. For plan details, or to select a different plan, see [Plan Pricing](https://fly.io/plans).
-
-### New sign-ups
-
-When you sign up for a Fly.io account, we create a default ("personal") organization for you on the [Pay As You Go plan](https://fly.io/plans).
-
-### Discontinued plans
-
-The paid Hobby plan and the Legacy Hobby plan are not available for new sign-ups.
-
-#### Paid Hobby plan and free trial
-
-If you signed up for the now deprecated $5/month Hobby plan before the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit is used up, we automatically place your organization on the $5/month Hobby plan, which includes $5/month of usage and free allowances. There are no free allowances during the free trial. We’ll send you an email when your free trial credit is used up and you won't be charged before that. The free trial credit doesn't expire and applies only to the default (“personal”) organization that we created for you on sign-up.
-
-To change your plan to the Pay As You Go plan, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Choose Pay As You Go**. If you change your plan, you won't be able to return to the paid Hobby Plan.
-
-#### Legacy Hobby plan
-
-If you were on the free Hobby plan at the time that the paid Hobby plan became the default for new organizations, your plan is now called the Legacy Hobby plan. Your costs stay the same as they were, with no monthly subscription fee, and no included usage beyond the free resource allowances.
-
-If you change your plan, you won't be able to return to the Legacy Hobby Plan.
-
-## Free allowances
-
-There are no free allowances on the Pay As You Go plan or during free trial of the deprecated paid Hobby plan.
-
-Resources included for free on the Hobby (deprecated), Launch, and Scale plans:
-
-* Up to 3 shared-cpu-1x 256mb VMs
-* 3GB persistent volume storage (total)
-* Outbound data transfer:
-  * 100 GB North America & Europe
-  * 30 GB Asia Pacific, Oceania & South America
-  * 30 GB Africa & India
-
-Additional resources are billed at the usage-based pricing detailed below.
+All organizations (except for Linked Organizations) require a [credit card](/docs/about/billing/#payment-options) on file.
 
 ## Compute
 
@@ -143,7 +96,6 @@ const formatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 2,
 });
 
-
 regionSelect.addEventListener("change", function () {
   const selectedRegion = regionSelect.value; // regionSelect defined in landing/pages/shared/_cpu_mem_machines_pricing.html.erb
   ramPriceSpan.textContent = formatter.format(baselineRamPricePer30Days * regionMarkups[selectedRegion]);
@@ -179,7 +131,7 @@ There's no limit on the number or combinations of blocks that can be purchased. 
 
 For example, if you purchase a $36/year `shared` Machines block in `cdg`, you'll pay $36 upfront and receive $5/month of credits applicable to `shared` Machines in `cdg` for 12 months, starting with the month of the purchase. Amortised over 12 months, the $36 upfront cost is $3/month, which is a 40% discount on the $5/month of credits you receive.
 
-Email reservations@fly.io with a list of the reservations you’d like to purchase along with which regions, and we’ll set them up for you.
+You can set up reservations via self-service in the billing section of your Fly.io [dashboard](https://fly.io/dashboard). They apply to usage starting on the 1st, so setting up reservations any time in the month will give you the credits the entire month.
 
 ### GPUs and Fly Machines
 
@@ -228,26 +180,22 @@ We use Let's Encrypt to issue certificates, and donate half of our SSL fees to t
 
 ### Data transfer pricing
 
-Inbound data transfer is free.
+We bill for data leaving your app destined for the public internet or for apps or Machines in other regions, including:
 
-We bill for data leaving your app destined for the public internet or for apps or Machines in other regions.
+* Data egress to the Internet, from Machine to edge server to Internet
+* Data transfer over private network between regions, from Machine to edge server and edge server to Machine
+* Data transfer to some extensions like Supabase or Upstash Redis (excludes Tigris Object Storage)
 
-You're billed for data transfer to the public Internet and between regions on your private network:
+The following types of traffic are free:
 
-- data egress to the Internet, from Machine to edge server to Internet
-- data transfer over private network between regions, from Machine to edge server and edge server to Machine
-- data transfer to some [extensions](https://fly.io/docs/about/pricing/#extensions) like Supabase or Upstash Redis (excludes Tigris Object Storage)
-
-You're not billed for the following types of traffic:
-
-- all inbound data transfer
-- data transfer between apps or Machines in the same region (for organizations using granular data transfer rates)
-- data transfer from apps without an assigned IP address (for organizations not using granular data transfer rates)
-- data transfer to [Tigris Object Storage](https://fly.io/docs/tigris/)
+* All inbound data transfer
+* Data transfer between apps or Machines in the same region (for organizations using granular data transfer rates)
+* Data transfer from apps without an assigned IP address (for organizations not using granular data transfer rates)
+* Data transfer to Tigris Object Storage
 
 Fly.io pricing is per region group for outbound data transfer. You'll see a more detailed breakdown of cost per region and per traffic type on your monthly invoice.
 
-<div class="important icon">
+<div class="note icon">
 **Important:** Organizations created after July 18 2024 are automatically opted-in to use the granular data transfer rates and are billed at a different rate for private network data transfer between regions, per the following table. Organizations not using granular data transfer rates are billed for all data transfer (excluding that listed as free above) at the "Egress to public internet" rate.
 </div>
 
@@ -261,21 +209,21 @@ To opt-in to granular bandwidth pricing, go to the [**Organizations** page](http
 
 ### Static Machine IP
 
-Static IPs for machines are $0.005 per hour.
+Static IPs for Machines are $0.005 per hour.
 Machines do not have a static IP by default.
 
 ## Fly Kubernetes
 
 [Fly Kubernetes](/docs/kubernetes/) (FKS) is a managed Kubernetes service that runs on Fly.io.
 
-- $75/month per cluster
-- Plus the cost of [compute](#compute) and [Fly volumes](#persistent-storage-volumes) that you create
+* $75/month per cluster
+* Plus the cost of [compute](#compute) and [Fly volumes](#persistent-storage-volumes) that you create
 
 ## Fly Postgres
 
 [Fly Postgres](/docs/postgres/) is a PostgreSQL database that you create and then manage yourself. Fly Postgres clusters are Fly Apps that consist of Machines, volumes, and any configured extra memory.
 
-The [Machine price](#compute) and [volume price](#persistent-storage-volumes) for Fly Postgres are the same as any other Machine and volume you’d run on Fly.io. Assuming the Machines are running all the time, the cost for the preset configurations is about $2/month for a single node cluster for dev projects and from about $82 to $164/month for a three-node production cluster. You don't need to keep the preset configurations, you can [scale your Fly Postgres Machines](https://fly.io/docs/postgres/managing/scaling/) to suit your workload at any time.
+The [Machine price](#compute) and [volume price](#persistent-storage-volumes) for Fly Postgres are the same as any other Machine and volume you'd run on Fly.io. Assuming the Machines are running all the time, the cost for the preset configurations is about $2/month for a single node cluster for dev projects and from about $82 to $164/month for a three-node production cluster. You don't need to keep the preset configurations, you can [scale your Fly Postgres Machines](/docs/postgres/managing/scaling/) to suit your workload at any time.
 
 ## Extensions
 
@@ -299,13 +247,38 @@ You **will** be billed separately for data transfer to services other than Tigri
 backups and point-in-time restore for your SQLite-based applications that use
 [LiteFS](/docs/litefs).
 
-- $5 per month for up to 10GB of database storage.
-- Additional $0.50/GB per month for database storage above 10GB.
+* $5 per month for up to 10GB of database storage.
+* Additional $0.50/GB per month for database storage above 10GB.
 
 ## Support
 
-[Community support](https://community.fly.io) is included for all customers, regardless of usage level.
+[Community support](https://community.fly.io/) is included for all customers, regardless of usage level.
+You can get access to additional support by purchasing a Standard ($29/month), Premium ($199/month), or Enterprise (starting at $2500/month) package in the **Support** section of your dashboard. For more about Support, see [Support at Fly.io](/docs/about/support/).
 
-Email support is included with our [Launch, Scale, and Enterprise plans](https://fly.io/plans).
+## Discontinued Plans
 
-For more about Support, see [Support at Fly.io](https://fly.io/docs/about/support/).
+Fly.io no longer offers plans to new customers. If you purchased a Launch or Scale plan before October 7, 2024, you can remain on those plans unless you upgrade, change your payment method, or otherwise stop using Fly.io.
+
+### Legacy Free allowances
+
+The following resources were included for free on the Hobby (deprecated), Launch, and Scale plans, and are still honored for any organizations that were on these plans before we sunset them:
+
+* Up to 3 shared-cpu-1x 256mb VMs
+* 3GB persistent volume storage (total)
+
+Outbound data transfer:
+* 100 GB North America & Europe
+* 30 GB Asia Pacific, Oceania & South America
+* 30 GB Africa & India
+
+#### Paid Hobby plan and free trial
+
+If you signed up for the now deprecated $5/month Hobby plan before the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit is used up, we automatically place your organization on the $5/month Hobby plan, which includes $5/month of usage and free allowances. There are no free allowances during the free trial. We'll send you an email when your free trial credit is used up and you won't be charged before that. The free trial credit doesn't expire and applies only to the default (“personal”) organization that we created for you on sign-up.
+
+To change your plan to the Pay As You Go plan, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Choose Pay As You Go**. If you change your plan, you won't be able to return to the paid Hobby Plan.
+
+#### Legacy Hobby plan
+
+If you were on the free Hobby plan at the time that the paid Hobby plan became the default for new organizations, your plan is now called the Legacy Hobby plan. Your costs stay the same as they were, with no monthly subscription fee, and no included usage beyond the free resource allowances.
+
+If you change your plan, you won't be able to return to the Legacy Hobby Plan.

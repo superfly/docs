@@ -8,9 +8,7 @@ redirect_from: /docs/about/credit-cards/
 
 Billing for Fly.io is monthly per organization. Organizations are administrative entities that enable you to add members, share app development environments, and manage billing.
 
-The amount you're charged depends on your plan. For the Pay As You Go plan, you pay for resource usage. For other plans, you pay for the cost of the plan plus your resource usage beyond the included usage and [free allowances](/docs/about/pricing/#free-allowances).
-
-Refer to our [Plans page](https://fly.io/plans) and our resource [Pricing page](/docs/about/pricing/) for details.
+New customers and all new organizations (including those created by previously existing customers) are billed monthly for resource usage. Refer to our resource [Pricing page](/docs/about/pricing/) for details. 
 
 ---
 
@@ -22,19 +20,13 @@ To download a past invoice, click **View** for the relevant cycle. You'll be sen
 
 ---
 
-## Plan billing
-
-You're charged for Launch, Scale, and Enterprise plans as soon as you sign up for them.
-
-New customers that are automatically signed up for the Pay As You Go plan are billed monthly for resource usage. For existing Fly.io accounts, when you create a new organization, you're signing up for the Pay As You Go plan.
+## Legacy Plan billing
 
 <div class="note icon">
 Customers who received a $5 free trial usage credit when signing up for the $5/mo Hobby plan will be billed monthly after that credit is used up.
 </div>
 
-Plan billing, and any included usage, is pro-rated over the month. For example, if you sign up for a Scale plan on September 15th, then you'll be charged $14.50 (half of the $29/mo plan cost) right away and you'll have $14.50 of usage included up to September 30th. Then you'll be charged $29 at the start of October and have $29/mo of usage included for that billing cycle.
-
-When you upgrade to a higher plan, your billing is pro-rated and adjusted accordingly.
+Legacy plan billing, and any included usage, is pro-rated over the month. For example, if you signed up for a Scale plan on September 15th, then you'd be charged $14.50 (half of the $29/mo plan cost) right away and you'll have $14.50 of usage included up to September 30th. Then you'll be charged $29 at the start of October and have $29/mo of usage included for that billing cycle.
 
 ---
 
@@ -60,7 +52,7 @@ You're also billed for the Fly Machine separately from the GPU.
 
 ## Volume billing
 
-Volume billing is pro-rated to the hour and we subtract the free allowances first for the Launch, Scale, and Enterprise plans. For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).
+Volume billing is pro-rated to the hour and we subtract the free allowances first for the  Launch, Scale, and Enterprise plans (all of which are now discontinued for new customers). For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).
 
 If you create a volume, you will be charged for it. You’re billed for volumes that aren’t attached to Machines, and for volumes that are attached to Machines in any state, including stopped Machines.
 
@@ -100,20 +92,20 @@ An existing organization can be converted to a **Linked Organization** from the 
 
 - Each organization has its own [private network](/docs/networking/private-networking/). Organizations are isolated from each other, which might
 be advantageous from a security standpoint.
-  - Cross organization networking is still possible with [Flycast](/docs/networking/flycast/)
+- Cross organization networking is still possible with [Flycast](/docs/networking/flycast/)
 - Detaching a Linked Organization from its Billing Organization is not possible at this time. Instead we suggest creating a new organization and moving resources there.
 
 ---
 
 ## Free resource allowances
 
-We subtract [free allowances](https://fly.io/docs/about/pricing/#free-allowances) off the top of your usage total for Launch, Scale, and Enterprise plans. Once your usage exceeds the free allowance on any given resource, we start metering usage of that resource for billing purposes.
+Fly.io has deprecated plans as of October 7, 2024, but is still honoring them for users who purchased them prior to that date. If your plan includes [free allowances](https://fly.io/docs/about/pricing/#free-allowances), we subtract them off the top of your usage total. Once your usage exceeds the free allowance on any given resource, we start metering usage of that resource for billing purposes.
 
 ---
 
 ## Payment options
 
-We process payments through Stripe. Paid plans and monthly invoicing require a credit card or credits.
+We process payments through Stripe. Monthly invoicing requires a credit card or credits.
 
 ### How we use credit cards
 
