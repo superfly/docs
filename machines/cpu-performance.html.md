@@ -29,3 +29,5 @@ The easiest way to see your CPU utilization, baseline quota, and throttling is o
 ![chart showing CPU utilization, steal, baseline, and throttling](../images/cpu-quota.webp)
 
 Here, we can see a machine that was running well bellow it's baseline quota. It had accumulated a 50s/vCPU runtime balance. Then, during a burst of activity, CPU utilization exceeded the baseline quota, causing the balance to drain. When the balance reached 0, the machine was briefly throttled. When CPU utilization went down, throttling was disabled and the balance accumulated again.
+
+A related and somewhat misleading metric is CPU steal. You can see this under the `mode=steal` label in the `fly_instance_cpu` metric. Steal is the amount of time your vCPUs are wanting to run, but our scheduler isn't allowing them to. This can happen due to throttling when your machine exceeds its quota, but it can also be a sign that other machines on the same host are competing for resources. We publish a separate `fly_instance_cpu_throttle` that only includes time your vCPUs were throttled for exceeding quota.
