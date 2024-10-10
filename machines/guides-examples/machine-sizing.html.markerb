@@ -77,7 +77,7 @@ curl -i -X POST \
 }'
 ```
 
-The `cpu_kind` parameter can be one of `shared` or `performance`.
+The `cpu_kind` parameter can be one of `shared` or `performance`. Learn more about CPU types and performance [here](/docs/machines/cpu-performance/).
 
 If you're using `flyctl`, the equivalent command looks like this:
 
