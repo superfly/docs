@@ -26,7 +26,7 @@ APIs and human-facing web applications are sensitive to latency and a 75ms pause
 
 The easiest way to see your CPU utilization, baseline quota, and throttling is on your app's [Managed Grafana](/docs/monitoring/metrics/#managed-grafana) `Fly Instance` dashboard.
 
-![chart showing CPU utilization, steal, baseline, and throttling](../images/cpu-quota.webp)
+![chart showing CPU utilization, steal, baseline, and throttling](/docs/images/cpu-quota.webp)
 
 Here, we can see a machine that was running well bellow it's baseline quota. It had accumulated a 50s/vCPU runtime balance. Then, during a burst of activity, CPU utilization exceeded the baseline quota, causing the balance to drain. When the balance reached 0, the machine was briefly throttled. When CPU utilization went down, throttling was disabled and the balance accumulated again.
 
