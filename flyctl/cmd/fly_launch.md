@@ -64,8 +64,11 @@ fly launch [flags]
       --nixpacks                         Deploy using nixpacks to build the image
       --no-cache                         Do not use the build cache when building the image
       --no-create                        Do not create an app, only generate configuration files
+      --no-db                            Skip automatically provisioning a database
       --no-deploy                        Do not immediately deploy the new app after fly launch creates and configures it
+      --no-object-storage                Skip automatically provisioning an object storage bucket
       --no-public-ips                    Do not allocate any new public IP addresses
+      --no-redis                         Skip automatically provisioning a Redis instance
       --now                              Deploy now without confirmation
       --only-machines strings            Deploy to machines only with these IDs. Multiple IDs can be specified with comma separated values or by providing the flag multiple times.
   -o, --org string                       The target Fly.io organization
