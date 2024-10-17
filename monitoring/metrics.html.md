@@ -217,13 +217,17 @@ fly_instance_memory_vmalloc_chunk
 and counts the amount of time each CPU (`cpu_id`) has spent performing different kinds of work (`mode`, which may be one of `user`, `nice`, `system`, `idle`, `iowait`, `irq`, `softirq`, `steal`, `guest`, `guest_nice`).
 The time unit is 'clock ticks' of centiseconds (0.01 seconds).
 
-- `cpu_baseline` is the baseline quota for CPU usage across all machine vCPUs. Learn more [here](/docs/machines/cpu-performance).
-
-- `cpu_balance` the the accrued balance of unused baseline CPU quota across all machine vCPUs. Learn more [here](/docs/machines/cpu-performance/).
+The following CPU metrics are related to [CPU Performance](/docs/machines/cpu-performance):
+- `cpu_baseline` is the baseline quota in number of CPUs, calculated from the CPU type and number of vCPUs.
+- `cpu_balance` is the accrued CPU burst balance in clock ticks (centiseconds).
+- `cpu_throttle` is derived from the `throttled_time` field of the cgroup [`cpu.stat`](https://docs.kernel.org/scheduler/sched-bwc.html#statistics), and counts the amount of time the CPU was throttled after exhausting its quota, in 'clock ticks' (centiseconds).
 
 ```
 fly_instance_load_average{minutes}
 fly_instance_cpu{cpu_id, mode} (Counter, centiseconds)
+fly_instance_cpu_baseline (CPUs)
+fly_instance_cpu_balance (centiseconds)
+fly_instance_cpu_throttle (Counter, centiseconds)
 ```
 #### Instance Disks - `fly_instance_disk_`
 
