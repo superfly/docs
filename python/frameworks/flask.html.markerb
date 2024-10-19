@@ -18,7 +18,7 @@ Spinning up a flask app is fun!
 
 <%= partial "/docs/languages-and-frameworks/partials/flyctl" %>
 
-<%= partial "/docs/python/partials/speedrun", locals: { runtime: "Flask", repo: "hello-flask-poetry" }  %>
+<%= partial "/docs/python/partials/speedrun", locals: { runtime: "Flask", repo: "hello-flask-uv" }  %>
 
 ## _Deploy a Flask app from scratch_
 
@@ -67,4 +67,4 @@ flask --app hello run
 
 If you open http://127.0.0.1:5000/ in your web browser, it should display `hello from fly.io`.
 
-<%= partial "/docs/python/partials/deploy", locals: { runtime: "Flask", repo: "hello-flask-poetry" }  %>
+<%= partial "/docs/python/partials/deploy", locals: { runtime: "Flask", repo: "hello-flask-uv" }  %>
