@@ -12,47 +12,54 @@ In short, we split the process of building and compiling dependencies and runnin
 - The resulting image is smaller in size
 - The 'attack surface' of your application is smaller
 
-Let's make a multi-stage `Dockerfile` from scratch. Here's part 1:
-
-<div class="note icon">
-In this example we assume the use of `poetry`, however you can adapt the file to work with other dependency managers too.
-</div>
+Let's make a multi-stage `Dockerfile` using uv, based on the [uv-docker-example](https://github.com/astral-sh/uv-docker-example/raw/refs/heads/main/multistage.Dockerfile). Here's part 1:
 
 ```dockerfile
-FROM python:3.11.9-bookworm AS builder
+# Builder stage
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS builder
 
-ENV PYTHONUNBUFFERED=1 \ 
-    PYTHONDONTWRITEBYTECODE=1 
-
-RUN pip install poetry && poetry config virtualenvs.in-project true
+ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock ./
+# Install dependencies
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --no-install-project --no-dev
 
-RUN poetry install
+# Copy the application code
+ADD . /app
+
+# Install the project
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev
 ```
 
-So what's going on here? First, we use a "fat" python 3.11.9 image and installing and building all dependencies. Defining it as `builder` gives us a way to interact with it later. What essentially happens here is exactly what happens when you install a project locally using poetry: a `.venv/` directory is created and in it are all your built dependencies and binaries. You can inspect your own `.venv/` folder to see what that looks like. This directory is the primary artifact that we want.
+So what's going on here? First, we use a slim Python image that includes `uv`. We set some environment variables and install all dependencies using `uv sync`. This stage is defined as `builder`, which gives us a way to interact with it later.
+
+What essentially happens here is similar to what happens when you install a project locally using a package manager: dependencies are installed and the project is set up. The primary artifact we want is the installed project with all its dependencies.
 
 Part 2, the runtime, looks something like this:
 
 ```dockerfile
-FROM python:3.11.9-slim-bookworm
+# Runtime stage
+FROM python:3.12-slim-bookworm
 
-WORKDIR /app
+# Copy the application from the builder
+COPY --from=builder --chown=app:app /app /app
 
-COPY --from=builder /app .
-COPY [python-app]/ ./[python-app]
+# Place executables in the environment at the front of the path
+ENV PATH="/app/.venv/bin:$PATH"
 
-CMD ["/app/.venv/bin/python", "[python-app]/app.py"]
+# Run the application
+CMD ["python", "/app/src/your_app_name/main.py"]
 ```
 
-Here we see very little actually going on; instead of the "fat" image, we now pick the slim variant. This one is about 5 times smaller in size, but is unable to compile many of the dependencies we would want compiled. We have already done that part though, so we can copy that `.venv/` folder over to this image without having to compile it again.
+Here we see very little actually going on; we use a slim Python image that matches the builder's Python version. We've already done the compilation and installation in the builder stage, so we can copy the entire `/app` directory (which includes the virtual environment) from the builder stage to this runtime image.
 
 With this setup our image will be around 200MB most of the time (depending on what else you include). This setup is used for nearly all Python apps you deploy on Fly.io.
 
 <div class="note icon">
 The image size is largely dependent on what files you add in the dockerfile; by default the entire working directory is copied in. If you do not want to add certain files, you can specify them in a `.dockerignore` file.
 </div>
-
