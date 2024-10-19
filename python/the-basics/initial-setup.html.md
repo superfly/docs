@@ -17,48 +17,35 @@ We recommend the latest [supported versions](https://devguide.python.org/version
 
 ## Dependency Management
 
-For project and dependency management we use [Poetry](https://python-poetry.org/). Like most package managers, Poetry combines multiple tools in one. 
+For project and dependency management we use [uv](https://docs.astral.sh/uv/). Like most package managers, uv combines multiple tools in one. 
 
 You have other options:
 - [venv](https://docs.python.org/3/library/venv.html) and [pip](https://pip.pypa.io/)
+- [Poetry](https://python-poetry.org/)
 - [Pipenv](https://github.com/pypa/pipenv)
 - [pyenv](https://github.com/pyenv/pyenv)
 - [pip-tools](https://pypi.org/project/pip-tools/)
 
-If you are just starting out, it is easiest to follow along using `poetry`. 
-After installing it, you will have to set 2 flags for virtual environment management.
-
-```cmd
-poetry config virtualenvs.create true
-poetry config virtualenvs.in-project true
-```
+If you are just starting out, it is easiest to follow along using `uv`. 
 
 This will make your development environment resemble what ends up happening inside the docker image. 
 
 You can create a new project using this command:
 
 ```cmd
-poetry new <app-name>
+uv init <app-name>
 ```
 
 Once inside the project, you can add packages with the add command:
 
 ```cmd
-poetry add <dep>
+uv add <dep>
 ```
 
 This will automatically create a virtual environment for you. 
 
-To interact with your virtual environment, you can prefix your commands with `poetry run`:
+To interact with your virtual environment, you can prefix your commands with `uv run`:
 
 ```cmd
-poetry run python main.py
+uv run python main.py
 ```
-
-Alternatively, you can activate the environment:
-
-```cmd
-poetry shell
-python main.py
-```
-
