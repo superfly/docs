@@ -30,7 +30,7 @@ To run this app we will need 2 dependencies:
 - gunicorn: the server
 
 ```cmd
-poetry add flask gunicorn
+uv add flask gunicorn
 ```
 
 Now let's create a basic app in `app.py`:

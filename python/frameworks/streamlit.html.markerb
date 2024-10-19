@@ -28,7 +28,7 @@ Spinning up a `streamlit` app takes no time at all!
 Then we have to add the streamlit dependency:
 
 ```cmd
-poetry add streamlit
+uv add streamlit
 ```
 
 Now, let's create a simple streamlit app in `main.py`:

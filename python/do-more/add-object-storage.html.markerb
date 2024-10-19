@@ -20,7 +20,7 @@ fly secrets list
 The de-facto library for interacting with s3 storage is [boto3](https://pypi.org/project/boto3/+external), let's add it to the project:
 
 ```cmd
-poetry add boto3
+uv add boto3
 ```
 
 Now we can initialize the client:

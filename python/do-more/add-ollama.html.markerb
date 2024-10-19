@@ -16,7 +16,7 @@ fly secrets set OLLAMA_HOST=http://<your-app>.flycast
 To interact with our new AI friend, we will have to install the `ollama` package:
 
 ```cmd
-poetry add ollama
+uv add ollama
 ```
 
 Now we can initialize the client:
