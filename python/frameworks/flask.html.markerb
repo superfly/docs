@@ -22,7 +22,7 @@ Spinning up a flask app is fun!
 
 ## _Deploy a Flask app from scratch_
 
-<%= partial "/docs/python/partials/poetry_new", locals: { runtime: "Flask" }  %>
+<%= partial "/docs/python/partials/uv_init", locals: { runtime: "Flask" }  %>
 
 To run this app we will need 2 dependencies:
 
