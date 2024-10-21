@@ -1,8 +1,8 @@
-used like: 'fly tokens revoke [ids]'
+Revoke one or more tokens.
 
 ## Usage
 ~~~
-fly tokens revoke [flags]
+fly tokens revoke [flags] ID ID ...
 ~~~
 
 ## Options
