@@ -7,7 +7,6 @@ curl -i -X POST \\
         "image": "flyio/fastify-functions",
         "env": {
           "APP_ENV": "production"
-        },
         "services": [
           {
             "ports": [
@@ -37,7 +36,8 @@ curl -i -X POST \\
                 "path": "/",
                 "interval": "15s",
                 "timeout": "10s"
+                }
             }
         }
-      }
-    }'
+    }
+}'
