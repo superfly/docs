@@ -9,12 +9,12 @@ We offer two kinds of virtual CPUs for Machines: `shared` and `performance`. Bot
 
 CPU Type      | Period<sup>1</sup> | Baseline Quota<sup>1</sup> | Max Quota Balance<sup>1</sup>
 --------      | ------ | -------------- | -----------------
-`shared`      | 80ms   | 5ms (1/16th)   | 500s
-`performance` | 80ms   | 50ms (10/16th) | 5000s
+`shared`      | 80ms   | 5ms (1/16 or 6.25%)   | 500s
+`performance` | 80ms   | 80ms (100%) | -
 
-We enforce limits using the [Linux `cpu.cfs_quota_us` cgroup](https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.rst). For each 80ms period of time, we instruct the Linux scheduler to run `shared` vCPUs for no more than 5ms and `performance` vCPUs no more than 50ms. If your application is working hard and reaches its quota, its vCPUs will be suspended for the remainder of the 80ms period.
+We enforce limits using the [Linux `cpu.cfs_quota_us` cgroup](https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.rst). For each 80ms period of time, we instruct the Linux scheduler to run `shared` vCPUs for no more than 5ms. If your application is working hard and reaches its quota, its vCPUs will be suspended for the remainder of the 80ms period.
 
-Quotas are shared between a machine's vCPUs. For example, a `shared-cpu-2x` machine is allowed to run for 10ms per 80ms period, regardless of which vCPU is using that time.
+Quotas are shared between a Machine's vCPUs. For example, a `shared-cpu-2x` Machine is allowed to run for 10ms per 80ms period, regardless of which vCPU is using that time.
 
 <sup>1</sup> We might change these specific numbers if we feel like it.
 
@@ -28,6 +28,6 @@ The easiest way to see your CPU utilization, baseline quota, and throttling is o
 
 ![chart showing CPU utilization, steal, baseline, and throttling](/docs/images/cpu-quota.webp)
 
-Here, we can see a machine that was running well bellow it's baseline quota. It had accumulated a 50s/vCPU runtime balance. Then, during a burst of activity, CPU utilization exceeded the baseline quota, causing the balance to drain. When the balance reached 0, the machine was briefly throttled. When CPU utilization went down, throttling was disabled and the balance accumulated again.
+Here, we can see a Machine that was running well bellow it's baseline quota. It had accumulated a 50s/vCPU runtime balance. Then, during a burst of activity, CPU utilization exceeded the baseline quota, causing the balance to drain. When the balance reached 0, the Machine was briefly throttled. When CPU utilization went down, throttling was disabled and the balance accumulated again.
 
-A related and somewhat misleading metric is CPU steal. You can see this under the `mode=steal` label in the `fly_instance_cpu` metric. Steal is the amount of time your vCPUs are wanting to run, but our scheduler isn't allowing them to. This can happen due to throttling when your machine exceeds its quota, but it can also be a sign that other machines on the same host are competing for resources. We publish a separate `fly_instance_cpu_throttle` that only includes time your vCPUs were throttled for exceeding quota.
+A related and somewhat misleading metric is CPU steal. You can see this under the `mode=steal` label in the `fly_instance_cpu` metric. Steal is the amount of time your vCPUs are wanting to run, but our scheduler isn't allowing them to. This can happen due to throttling when your Machine exceeds its quota, but it can also be a sign that other Machines on the same host are competing for resources. We publish a separate `fly_instance_cpu_throttle` that only includes time your vCPUs were throttled for exceeding quota.

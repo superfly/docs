@@ -15,6 +15,8 @@ buildpacks?\b
 bursty
 callouts?\b
 centiseconds
+cgroup
+cgroups
 cleartext
 containerd
 cron
