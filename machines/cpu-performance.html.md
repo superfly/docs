@@ -9,10 +9,10 @@ We offer two kinds of virtual CPUs for Machines: `shared` and `performance`. Bot
 
 CPU Type      | Period<sup>1</sup> | Baseline Quota<sup>1</sup> | Max Quota Balance<sup>1</sup>
 --------      | ------ | -------------- | -----------------
-`shared`      | 80ms   | 5ms (1/16th)   | 500s
-`performance` | 80ms   | 50ms (10/16th) | 5000s
+`shared`      | 80ms   | 5ms (1/16 or 6.25%)   | 500s
+`performance` | 80ms   | 80ms (100%) | -
 
-We enforce limits using the [Linux `cpu.cfs_quota_us` cgroup](https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.rst). For each 80ms period of time, we instruct the Linux scheduler to run `shared` vCPUs for no more than 5ms and `performance` vCPUs no more than 50ms. If your application is working hard and reaches its quota, its vCPUs will be suspended for the remainder of the 80ms period.
+We enforce limits using the [Linux `cpu.cfs_quota_us` cgroup](https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.rst). For each 80ms period of time, we instruct the Linux scheduler to run `shared` vCPUs for no more than 5ms. If your application is working hard and reaches its quota, its vCPUs will be suspended for the remainder of the 80ms period.
 
 Quotas are shared between a machine's vCPUs. For example, a `shared-cpu-2x` machine is allowed to run for 10ms per 80ms period, regardless of which vCPU is using that time.
 
