@@ -14,7 +14,7 @@ We offer two kinds of virtual CPUs for Machines: `shared` and `performance`. Bot
 
 We enforce limits through the [Linux scheduler's CPU bandwidth control](https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.rst) by adjusting the `cpu.cfs_quota_us` setting on each machine cgroup. For each 80ms period of time, we set a quota of 5ms for each `shared` vCPU, or the full 80ms period for each `performance` vCPU. If your machine cgroup's CPU usage reaches its quota, its tasks will be 'throttled' (not scheduled to run again) for the remainder of the 80ms period.
 
-Quotas are shared between a machine's vCPUs. For example, a `shared-cpu-2x` machine is allowed to run for 10ms per 80ms period, regardless of which vCPU is using that time.
+Quotas are shared between a Machine's vCPUs. For example, a `shared-cpu-2x` Machine is allowed to run for 10ms per 80ms period, regardless of which vCPU is using that time.
 
 <sup>1</sup> We might change these specific numbers over time.
 
@@ -30,8 +30,8 @@ We publish a number of [Instance Load and CPU](/docs/monitoring/metrics/#instanc
 
 ![chart showing CPU utilization, steal, baseline, and throttling](/docs/images/cpu-quota.webp)
 
-On the dashboard, utilization (0-100%) is displayed as a per-vCPU average, divided by the total number of vCPUs in the instance. (There is also a Per-CPU Utilization panel for a detailed breakdown of utilization across each individual vCPU, but because quotas are shared between a machine's vCPUs only the average matters to the enforced limits.)
+On the dashboard, utilization (0-100%) is displayed as a per-vCPU average, divided by the total number of vCPUs in the instance. (There is also a Per-CPU Utilization panel for a detailed breakdown of utilization across each individual vCPU, but because quotas are shared between a Machine's vCPUs only the average matters to the enforced limits.)
 
-Here, we can see a `performance` machine whose `utilization` was running well below its `baseline` quota of 65%, and had accumulated a 50-second burst `balance`. Then, during a burst of activity, CPU utilization exceeded the baseline quota, causing the balance to drain. When the balance reached 0, the machine was briefly `throttle`d. When CPU utilization went down, throttling ended and the balance accumulated again.
+Here, we can see a Machine whose `utilization` was running well below its `baseline` quota of 65%, and had accumulated a 50-second burst `balance`. Then, during a burst of activity, CPU utilization exceeded the baseline quota, causing the balance to drain. When the balance reached 0, the Machine was briefly `throttle`d. When CPU utilization went down, throttling ended and the balance accumulated again.
 
-A related and somewhat misleading metric is CPU steal. You can see this under the `mode=steal` label in the `fly_instance_cpu` metric. Steal is the amount of time your vCPUs are waiting to run, but the scheduler isn't allowing them to. This can happen when your machine exceeds its quota and is throttled, but it can also be a sign that other machines on the same host are competing for resources. In our dashboard panels, we visualize `steal` separately from other CPU utilization since it doesn't consume any CPU quota. We publish a separate `fly_instance_cpu_throttle` metric that only includes time your vCPUs were throttled for exceeding quota.
+A related and somewhat misleading metric is CPU steal. You can see this under the `mode=steal` label in the `fly_instance_cpu` metric. Steal is the amount of time your vCPUs are waiting to run, but the scheduler isn't allowing them to. This can happen when your Machine exceeds its quota and is throttled, but it can also be a sign that other Machines on the same host are competing for resources. In our dashboard panels, we visualize `steal` separately from other CPU utilization since it doesn't consume any CPU quota. We publish a separate `fly_instance_cpu_throttle` metric that only includes time your vCPUs were throttled for exceeding quota.
