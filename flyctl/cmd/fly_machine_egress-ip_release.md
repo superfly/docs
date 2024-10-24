@@ -11,6 +11,7 @@ fly machine egress-ip release <machine-id> [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for release
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options
