@@ -17,7 +17,7 @@ provision a new Postgres app using our TimescaleDB-adapted image.
 Specify the `postgres-flex-timescaledb` image with the `--image-ref` flag:
 
 ```cmd
-fly pg create --image-ref flyio/postgres-flex-timescaledb:15
+fly pg create --image-ref flyio/postgres-flex-timescaledb:16
 ```
 
 ## Create the extension
@@ -25,10 +25,15 @@ fly pg create --image-ref flyio/postgres-flex-timescaledb:15
 Connect to your postgres database:
 ```cmd
 # Connect to your target database
-fly pg connect --app <app-name> --database <db-name>
+fly pg connect --app <database-app-name>
 ```
 
 From the `postgres=# %` prompt, create the extension:
 ```sql
 CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
+```
+
+## (Optional) Attach to an app
+```
+ fly pg attach <database-app-name> --app <app-name>
 ```
