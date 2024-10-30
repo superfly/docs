@@ -1,4 +1,5 @@
-Manage volume snapshots. A snapshot is a point-in-time copy of a volume. You can use a volume snapshot to restore the data into a new volume.
+Manage volume snapshots. A snapshot is a point-in-time copy of a volume. Snapshots can be used to create new volumes or restore a volume to a previous state.
+
 ## Usage
 ~~~
 fly volumes snapshots [command] [flags]
