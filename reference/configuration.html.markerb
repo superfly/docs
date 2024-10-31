@@ -394,12 +394,14 @@ Times are in milliseconds unless units are specified.
 * `grace_period`: The time to wait after a Machine starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.
 * `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If it's long and your grace_period shorter than your app's startup time, health check will take too long adding you your deployment time.
 * `timeout`: The maximum time a connection can take before being reported as failing its health check.
-* `method`: The HTTP method to be used for the check.
+* `method`: The HTTP method to be used for the check. If omitted, the default is `get`.
 * `path`: The path of the URL to be requested.
-* `protocol`: The protocol to be used (`http` or `https`).
+* `protocol`: The protocol to be used (`http` or `https`). If omitted, the default is `http`.
 * `tls_server_name`: If the protocol is `https`, the hostname to use for TLS certificate validation.
 * `tls_skip_verify`: When `true` (and using HTTPS protocol) skip verifying the certificates sent by the server.
 * `http_service.checks.headers`: This is a sub-section of `http_service.checks`. It uses the key/value pairs as a specification of header and header values that will get passed with the check call.
+
+<section class="warning"> The health check will not automatically follow any `HTTP 301` or `302` redirect, so it will fail if it receives anything other than a `200 OK` response. This may be an issue if your heath check specifies `protocol = http` (the default) but your app forces https. You may be able to avoid this redirect and continue using http for your health check by adding `X-Forwarded-Proto = "https"` to the `[http_service.checks.headers]` sub-section. </section>
 
 ### The `http_service.machine_checks` section
 
