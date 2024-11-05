@@ -179,6 +179,8 @@ If you're using Cloudflare, you might be using their Universal SSL feature which
 
 You can then verify that the change has propagated and the TXT record is no longer present by running `dig txt _acme-challenge.<YOUR_DOMAIN> +short`.
 
+We've also noticed that Cloudflare's "Flexible" SSL mode can cause redirect loops for applications hosted on Fly.io. Thus, we recommend setting your Cloudflare SSL mode to "Full" or "Full (Strict)".
+
 ## Related topics
 
 - [Automate the certificate process for custom domains with the GraphQL API](/docs/networking/custom-domain-api/)
