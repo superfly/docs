@@ -26,6 +26,7 @@ fly machine create <image> [command] [flags]
       --host-dedication-id string   The dedication id of the reserved hosts for your organization (if any)
       --id string                   Machine ID, if previously known
       --kernel-arg stringArray      A list of kernel arguments to provide to the init. Can be specified multiple times.
+      --machine-config string       Read machine config from json file or string
   -m, --metadata stringArray        Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
   -n, --name string                 Machine name. Will be generated if omitted.
       --org string                  The organization that will own the app

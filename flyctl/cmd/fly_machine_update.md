@@ -27,6 +27,7 @@ fly machine update [machine_id] [flags]
       --host-dedication-id string   The dedication id of the reserved hosts for your organization (if any)
   -i, --image string                The Docker image to deploy
       --kernel-arg stringArray      A list of kernel arguments to provide to the init. Can be specified multiple times.
+      --machine-config string       Read machine config from json file or string
   -m, --metadata stringArray        Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
       --mount-point string          New volume mount point
   -p, --port strings                The external ports and handlers for services, in the format: port[:machinePort][/protocol[:handler[:handler...]]])
