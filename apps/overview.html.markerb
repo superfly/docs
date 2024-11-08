@@ -43,7 +43,7 @@ There might be an infinite number of potential apps you can run on Fly.io, but t
 
 ### Create and deploy with Fly Launch
 
-Fly Launch is perfect for most apps and databases. Use Fly Launch to create your app and then manage the whole lifecycle, from starting to scaling to changing and redeploying. [Get started](/docs/getting-started/) with Fly Launch or learn more about [using Fly Launch](/docs/apps/index-launch/) to create, configure, deploy, and scale your app.
+Fly Launch is perfect for most apps and databases. Use Fly Launch to create your app and then manage the whole lifecycle, from starting to scaling to changing and redeploying. [Get started](/docs/getting-started/) with Fly Launch or learn more about using [Fly Launch](/docs/launch/) to create, configure, deploy, and scale your app.
 
 ### Create an app manually
 
