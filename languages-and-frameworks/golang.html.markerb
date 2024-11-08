@@ -146,7 +146,7 @@ You can see in the `[build]` section the builder image and the version of Go tha
 
 ## _Inside `Dockerfile`_
 
-[We use an debian base image](https://github.com/superfly/flyctl/blob/master/scanner/templates/go/Dockerfile) which has `CGO` enabled by default. A minimal alternative without CGO is Alpine:
+[We use a Debian base image](https://github.com/superfly/flyctl/blob/master/scanner/templates/go/Dockerfile) which has `CGO` enabled by default. A minimal alternative without CGO is Alpine:
 
 ```diff
 # ...
