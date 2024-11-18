@@ -40,6 +40,7 @@ fly machine create <image> [command] [flags]
       --schedule string             Schedule a Machine run at hourly, daily and monthly intervals
       --skip-dns-registration       Do not register the machine's 6PN IP with the internal DNS system
       --standby-for strings         For Machines without services, a comma separated list of Machine IDs to act as standby for.
+      --use-zstd                    Enable zstd compression for the image
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
       --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none)
