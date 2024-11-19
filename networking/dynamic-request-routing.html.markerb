@@ -36,6 +36,7 @@ If your service is simply proxying uploads to object storage, some services like
 
 If you can perform uploads via `fetch` or `XMLHttpRequest`, you can prepend the [fly-prefer-region](#the-fly-prefer-region-request-header) or [fly-force-instance-id](#the-fly-force-instance-id-request-header) header to send the request directly to a specific region.
 
+Your app should use the [http handler](/docs/networking/services/#http-handler) in order to use fly-replay.
 
 ## `fly-replay` use cases
 
