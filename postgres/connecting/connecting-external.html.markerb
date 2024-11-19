@@ -78,10 +78,10 @@ Image Details
 Deploy your cluster, using `--image` with the `image:tag` found in the previous step:
 
 ```cmd
-fly deploy . --app <pg-app-name> --image flyio/postgres:<major-version>
+fly deploy . --app <pg-app-name> --image flyio/postgres-flex:<major-version>
 ```
 
-As an example, if you are running Postgres 14.x you would specify `flyio/postgres:14` as your target image.
+As an example, if you are running Postgres 14.x you would specify `flyio/postgres-flex:14` as your target image.
 
 After the deployment completes, you can verify your `services` configuration by running the `fly services list` command:
 
