@@ -1014,7 +1014,7 @@ This feature should not be compared directly with a CDN, for the following reaso
 
 ## The `files` section
 
-When `files` are set, the contents from one of `raw_value`, `local_path`, or `secret_name` will be written to the Machine at the provided `guest_path`. The contents of both `raw_value` and `secret_name` must be base64 encoded.
+When `files` are set, the contents from one of `raw_value`, `local_path`, or `secret_name` will be written to the Machine at the provided `guest_path`. The contents of `raw_value` or the value of the secret must be base64 encoded.
 
 Examples:
 
