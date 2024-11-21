@@ -88,7 +88,7 @@ Use this checklist to help you set up a production environment on Fly.io.
 
 <%= render ChecklistComponent.new(
   items: [
-    { id: "machine-sizing", title: "Get Machine sizing right", description: "Most production apps require 2x or performance CPUs. Also make sure you have enough RAM for your app and/or enable [swapping to disk](https://fly.io/docs/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use. See [Machine sizing](docs/machines/guides-examples/machine-sizing/)."},
+    { id: "machine-sizing", title: "Get Machine sizing right", description: "Most conventional production web apps require performance CPUs. Also make sure you have enough RAM for your app and/or enable [swapping to disk](https://fly.io/docs/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use. See [Machine sizing](docs/machines/guides-examples/machine-sizing/)."},
     { id: "fine-tune-app", title: "Fine-tune your app", description: "Learn about optimizing your app on Fly.io. See [Tips to fine-tune your app on Fly.io](/docs/reference/fine-tune-apps/)."}
   ],
   c: params[:c] || "",
