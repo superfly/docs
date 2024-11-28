@@ -9,6 +9,8 @@ fly extensions sentry [command] [flags]
 ## Available Commands
 * [create](/docs/flyctl/extensions-sentry-create/)	 - Provision a Sentry project for a Fly.io app
 * [dashboard](/docs/flyctl/extensions-sentry-dashboard/)	 - View application errors in the Sentry dashboard
+* [destroy](/docs/flyctl/extensions-sentry-destroy/)	 - Permanently destroy a Sentry project
+* [list](/docs/flyctl/extensions-sentry-list/)	 - List your Sentry projects
 
 ## Options
 
