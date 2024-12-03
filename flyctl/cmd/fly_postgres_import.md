@@ -6,6 +6,10 @@ Imports database from a specified Postgres URI
 fly postgres import <source-uri> [flags]
 ~~~
 
+~~~
+<source-uri> Can be a postgresql connection string. If your database is local beware that you may need to use a proxy to allow *fly* temporary machine to reach your local database.
+~~~
+
 ## Options
 
 ~~~
