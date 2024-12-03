@@ -71,7 +71,7 @@ The actual Docker image build (or image pull) for a Fly App takes place during d
 
 You can provide your own `fly.toml` and `fly launch` will offer to copy that configuration to a new app. `fly.toml` sets a starting point for the app configuration, and in some cases a framework launch scanner might overwrite parts of it.
 
-The `fly launch` command has plenty of [options]((/docs/flyctl/launch/)) you can use to control how your app gets created and provisioned.
+The `fly launch` command has plenty of [options](/docs/flyctl/launch/) you can use to control how your app gets created and provisioned.
 
 If `fly launch` doesn't have a scanner that can set up your app automatically, it will still initialize a new Fly App in your Fly.io organization and provide you with a default app configuration that's a reasonable starting point for a simple web app.
 
