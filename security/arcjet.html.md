@@ -169,6 +169,6 @@ Arcjet pricing will be based on the usage of features we intend to introduce in 
 
 Email: <support@arcjet.com>
 
-Discord: [Join](https://discord.gg/TPra6jqZDC).
+Discord: [Join](https://arcjet.com/discord).
 
 See the Arcjet docs for the [full support policy](https://docs.arcjet.com/support).
