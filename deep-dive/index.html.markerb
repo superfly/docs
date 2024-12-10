@@ -33,7 +33,7 @@ A real-world application has, at a minimum, the following components:
 
 To get a fully-functional app running smoothly, you need a whole bunch of things; things like Anycast routing, load balancers, DNS certificates, WebSockets, an internal private network, a relational database, an object store, and an in-memory database. And the knowledge to connect them all together.
 
-Connecting complex compoents together generally takes an unpredictable amount of time due to surprises.  Usually, set up for a complete app typically takes a _minimum_ of an afternoon's worth of work, even if you're familiar with a cloud platform.  We will be up and running in minutes.
+Connecting complex components together generally takes an unpredictable amount of time due to surprises.  Usually, set up for a complete app typically takes a _minimum_ of an afternoon's worth of work, even if you're familiar with a cloud platform.  We will be up and running in minutes.
 
 Fly.io minimizes surprises by taking a lot of work off your plate with our [Public Network Services](https://fly.io/docs/networking/services/), [Fly Proxy routing](/docs/reference/fly-proxy/), out-of-the-box [Private Networking](/docs/networking/private-networking/), and preconfigured databases.
 While we can't promise no surprises, we can show you how we'll partner with you to handle some of the dev ops complexities of working in a public cloud.
