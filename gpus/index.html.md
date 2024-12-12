@@ -7,6 +7,10 @@ toc: false
 
 Fly.io has GPUs! If you have workloads that would benefit from GPU acceleration, Fly GPU Machines may be for you.
 
+<figure class="flex justify-center">
+  <img src="/static/images/bullet.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon admiring a fast-pacing motor bike" class="max-w-lg">
+</figure>
+
 ## What can I use Fly GPUs for?
 
 Four models of GPU are available: A10, L40S, NVIDIA A100 40G PCIe and A100 80G SXM.
