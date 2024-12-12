@@ -3,10 +3,14 @@ title: "Monitoring on Fly.io"
 layout: docs
 nav: firecracker
 toc: false
-redirect_from: 
+redirect_from:
   - /docs/going-to-production/monitoring/
   - /docs/metrics-and-logs/
 ---
+
+<figure class="max-w-sm">
+  <img src="/static/images/spooky.webp" alt="Illustration by Annie Ruygt of a smirking ghost sitting infront of a laptop">
+</figure>
 
 ## Metrics
 
@@ -30,6 +34,6 @@ _Live tail and search your app’s logs, or ship them where you want them._
 
 - **[Logging overview](/docs/monitoring/logging-overview/):** How logs work on Fly.io.
 - **[Live tail logs](/docs/monitoring/live-tail-logs/):** Where to access live tail logs.
-- **[Search logs](/docs/monitoring/search-logs/):** Searchable app logs in Grafana (beta). 
+- **[Search logs](/docs/monitoring/search-logs/):** Searchable app logs in Grafana (beta).
 - **[Export logs](/docs/monitoring/exporting-logs/):** Aggregate your logs to a service of your choice.
 - **[Error codes and troubleshooting](/docs/monitoring/error-codes/):** Look up error codes and get tips for troubleshooting.
