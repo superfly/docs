@@ -19,15 +19,15 @@ To deploy your app on Fly.io for the first time:
 4. If prompted, run `fly deploy` to deploy your new app (or to redeploy after changes!).
 </div>
 
+<figure class="max-w-sm">
+  <img src="/static/images/moto-jump.png" alt="Illustration by Annie Ruygt of a phoenix jumping with a motor bike">
+</figure>
+
 ## Next steps
 
 1. Run `fly status` to show the status of your app and Machines.
 2. Run `fly apps open` to open your app in your browser.
 3. Learn some [Fly.io essentials](/docs/getting-started/essentials/) and continue to [explore what you can do with Fly Launch](/docs/launch/).
-
-<figure class="w:full mt:6">
-  <img src="/static/images/speedrun-next-steps.webp" srcset="/static/images/speedrun-next-steps@2x.webp 2x" alt="Illustration by Annie Ruygt of Frankie the Fly.io hot air balloon character pointing at a set of stairs">
-</figure>
 
 ## Grow and scale
 
@@ -36,7 +36,7 @@ Check out some of the ways you can increase availability, capacity, and performa
 * Follow the blueprint for [extra Machines for more resilient apps](/docs/blueprints/resilient-apps-multiple-machines/)
 * Read up on [App availability and resiliency](/docs/reference/app-availability/)
 * [Autoscale Machines based on load or custom metrics](/docs/reference/autoscaling/)
-* [Scale Machine CPU and RAM](/docs/apps/scale-machine/) 
+* [Scale Machine CPU and RAM](/docs/apps/scale-machine/)
 * [Scale Machine count](/docs/apps/scale-count/)
 * Try out [Fly GPUs](/docs/gpus/)
 

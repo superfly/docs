@@ -9,7 +9,11 @@ Securing a public cloud platform like Fly.io is a hard problem, and we take it s
 
 ---
 
-## Organization and app security 
+<figure class="flex justify-center">
+  <img src="/static/images/security.png" alt="Illustration by Annie Ruygt of a phoenix jumping with a motor bike" class="max-w-lg">
+</figure>
+
+## Organization and app security
 
 _Security for customer organizations and apps._
 

@@ -11,6 +11,10 @@ redirect_from:
 
 Use this checklist to help you set up a production environment on Fly.io.
 
+<figure class="flex justify-center">
+  <img src="/static/images/outlook.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon waving to a bird sitting on a hour roof" class="max-w-lg">
+</figure>
+
 <div class="important icon">
 **Important:** The checklist is not exhaustive and does not guarantee production-readiness for your app. Apps can have unique requirements for production depending on the framework and type of app. Some items won't be applicable and there may be other considerations not listed here; you'll need to decide which checklist items work for your app.
 </div>
