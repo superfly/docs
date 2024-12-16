@@ -69,10 +69,10 @@ fly image show --app <pg-app-name>
 ```
 ```out
 Image Details
-  Registry   = registry-1.docker.io
-  Repository = flyio/postgres
-  Tag        = 14.4
-  Version    = v0.0.32
+  Registry   = docker-hub-mirror.fly.io
+  Repository = flyio/postgres-flex
+  Tag        = 16.4
+  Version    = v0.0.62
 ```
 
 Deploy your cluster, using `--image` with the `image:tag` found in the previous step:
@@ -81,7 +81,7 @@ Deploy your cluster, using `--image` with the `image:tag` found in the previous 
 fly deploy . --app <pg-app-name> --image flyio/postgres-flex:<major-version>
 ```
 
-As an example, if you are running Postgres 14.x you would specify `flyio/postgres-flex:14` as your target image.
+As an example, if you are running Postgres 16.x you would specify `flyio/postgres-flex:16` as your target image.
 
 After the deployment completes, you can verify your `services` configuration by running the `fly services list` command:
 
