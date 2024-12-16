@@ -11,6 +11,10 @@ redirect_from:
 
 Use this checklist to help you set up a production environment on Fly.io.
 
+<figure class="flex justify-center">
+  <img src="/static/images/outlook.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon waving to a bird sitting on a hour roof" class="max-w-lg">
+</figure>
+
 <div class="important icon">
 **Important:** The checklist is not exhaustive and does not guarantee production-readiness for your app. Apps can have unique requirements for production depending on the framework and type of app. Some items won't be applicable and there may be other considerations not listed here; you'll need to decide which checklist items work for your app.
 </div>
@@ -88,7 +92,7 @@ Use this checklist to help you set up a production environment on Fly.io.
 
 <%= render ChecklistComponent.new(
   items: [
-    { id: "machine-sizing", title: "Get Machine sizing right", description: "Most production apps require 2x or performance CPUs. Also make sure you have enough RAM for your app and/or enable [swapping to disk](https://fly.io/docs/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use. See [Machine sizing](docs/machines/guides-examples/machine-sizing/)."},
+    { id: "machine-sizing", title: "Get Machine sizing right", description: "Most conventional production web apps require performance CPUs. Also make sure you have enough RAM for your app and/or enable [swapping to disk](https://fly.io/docs/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use. See [Machine sizing](/docs/machines/guides-examples/machine-sizing/)."},
     { id: "fine-tune-app", title: "Fine-tune your app", description: "Learn about optimizing your app on Fly.io. See [Tips to fine-tune your app on Fly.io](/docs/reference/fine-tune-apps/)."}
   ],
   c: params[:c] || "",

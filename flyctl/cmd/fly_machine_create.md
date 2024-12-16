@@ -26,6 +26,7 @@ fly machine create <image> [command] [flags]
       --host-dedication-id string   The dedication id of the reserved hosts for your organization (if any)
       --id string                   Machine ID, if previously known
       --kernel-arg stringArray      A list of kernel arguments to provide to the init. Can be specified multiple times.
+      --machine-config string       Read machine config from json file or string
   -m, --metadata stringArray        Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
   -n, --name string                 Machine name. Will be generated if omitted.
       --org string                  The organization that will own the app
@@ -39,6 +40,7 @@ fly machine create <image> [command] [flags]
       --schedule string             Schedule a Machine run at hourly, daily and monthly intervals
       --skip-dns-registration       Do not register the machine's 6PN IP with the internal DNS system
       --standby-for strings         For Machines without services, a comma separated list of Machine IDs to act as standby for.
+      --use-zstd                    Enable zstd compression for the image
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
       --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none)

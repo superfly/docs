@@ -6,6 +6,10 @@ toc: false
 nav: firecracker
 ---
 
+<figure>
+  <img src="/static/images/accident-forgiveness.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon holding an umbrella to protect a bird from the rain" class="max-w-lg">
+</figure>
+
 More details about using and working with the Fly.io platform.
 
 * **[Pricing](/docs/about/pricing/):** Pricing for compute, storage, and all the Fly.io platform services.

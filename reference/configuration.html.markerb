@@ -181,9 +181,19 @@ To run a command in a temporary Machine&mdash;using the app's successfully built
 
 The `release_command` value replaces `CMD` in the temporary Machine. This is useful for running database migrations before app Machines are created or updated with the new release. Note that the Docker image's `ENTRYPOINT` is not overridden by the `release_command`; `ENTRYPOINT` always runs.
 
-The temporary Machine has full access to the network, environment variables and secrets, but *not* to persistent volumes. Changes made to the file system on the temporary Machine will not be retained or deployed. The building/compiling of your project should be done in your Dockerfile. If you need to modify persistent volumes or configure your application, consider making use of `CMD` or `ENTRYPOINT` in your Dockerfile, or of a [process group command](#the-processes-section).
+By default, the temporary Machine has full access to the network, environment variables and secrets, but *not* to persistent volumes. Changes made to the file system on the temporary Machine will not be retained or deployed. The building/compiling of your project should be done in your Dockerfile. If you need to modify persistent volumes or configure your application, consider making use of `CMD` or `ENTRYPOINT` in your Dockerfile, or of a [process group command](#the-processes-section).
 
 The temporary Machine inherits the size from the largest Machine in the default process group of the app as of flyctl v0.0.508 (they also default larger on empty/new apps, using the Machine `shared-cpu-2x` preset). The default process group is defined as either the `app` process, or the first process group in alphabetical order (if an `app` process is not present).
+It is also possible to explicitly define the Machine size by setting `[deploy.release_command_vm]`  like in:
+
+```toml
+[deploy]
+  release_command = "bin/rails db:prepare"
+
+  [deploy.release_command_vm]
+    size = "performance-1x"
+    memory = "8gb"
+```
 
 A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
 
@@ -394,19 +404,21 @@ Times are in milliseconds unless units are specified.
 * `grace_period`: The time to wait after a Machine starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.
 * `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If it's long and your grace_period shorter than your app's startup time, health check will take too long adding you your deployment time.
 * `timeout`: The maximum time a connection can take before being reported as failing its health check.
-* `method`: The HTTP method to be used for the check.
+* `method`: The HTTP method to be used for the check. If omitted, the default is `get`.
 * `path`: The path of the URL to be requested.
-* `protocol`: The protocol to be used (`http` or `https`).
+* `protocol`: The protocol to be used (`http` or `https`). If omitted, the default is `http`.
 * `tls_server_name`: If the protocol is `https`, the hostname to use for TLS certificate validation.
 * `tls_skip_verify`: When `true` (and using HTTPS protocol) skip verifying the certificates sent by the server.
 * `http_service.checks.headers`: This is a sub-section of `http_service.checks`. It uses the key/value pairs as a specification of header and header values that will get passed with the check call.
+
+<section class="warning"> The health check will not automatically follow any `HTTP 301` or `302` redirect, so it will fail if it receives anything other than a `200 OK` response. This may be an issue if your heath check specifies `protocol = http` (the default) but your app forces `https`. You may be able to avoid this redirect and continue using `http` for your health check by adding `X-Forwarded-Proto = "https"` to the `[http_service.checks.headers]` sub-section. </section>
 
 ### The `http_service.machine_checks` section
 
 You can use the same `machine_checks` section for HTTP services as for [`services`](#services-machine-checks). The `machine_checks` section defines parameters for checking the health of a service.
 
 ```toml
-[http_service.machine_checks]
+[[http_service.machine_checks]]
   image = "curlimages/curl"
   entrypoint = ["/bin/sh", "-c"]
   command = ["curl http://[$FLY_TEST_MACHINE_IP] | grep 'Hello, World!'"]

@@ -30,10 +30,10 @@ The following app resources are transferred to the new org automatically:
 - environment variables and secrets
 - certificates and domain names
 - LiteFS databases (when `$FLY_APP_NAME` is used for your Consul key in `litefs.yml`)
-- Tigris object storage
 
 ## Resources that you need to manually reconfigure
 
 The following extension services need to be reconfigured for the app after the move:
 
 - **[Upstash for Redis](https://fly.io/docs/upstash/redis/):** Upstash Redis is only available over an organization's private network. After you move the app, you'll need to provision a new database for the new org.
+- **[Tigris object storage](https://fly.io/docs/tigris/):** Before moving the app, you'll need to delete the bucket, then recreate it in the new org and set the new secrets. Billing for the new bucket will be tied to the new org.

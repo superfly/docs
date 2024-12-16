@@ -35,6 +35,9 @@ author: rubys
 I’m Sam Ruby, and my day job is to make Fly.io better for Rails and JS. (Go try us out!) But today I’m talking about an app I wrote in my personal capacity as a ballroom dance nerd. This article is about how a serverful, stateful, shared-nothing architecture hit the spot for me when it came time to scale to multiple customers in different parts of the world.
 </div>
 
+<center><iframe width="600" height="315" src="https://www.youtube-nocookie.com/embed/_cT4Unk5RiU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></center><br />
+
+
 Once upon a time, I found myself double booked at a ballroom dance competition. Read that [story in more detail on my blog](http://intertwingly.net/blog/2022/08/13/Unretiring), but essentially: you’re only supposed to get one shot to dance in a given heat, and I ended up listed twice in the spreadsheet for that heat. I decided to write an app to take the load of manual entry and scheduling off of organizers, and so that no one would ever be asked to do something impossible and be at two places at one time.
 
 Showcase (that’s what I called it) started out as a Ruby on Rails app and a database; it kept track of competitors and their schedules for a single Showcase (that’s what these ballroom dance events are called). I ran it on a single Mac Mini in my home.

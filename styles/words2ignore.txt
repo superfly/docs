@@ -25,3 +25,5 @@ v1
 v2
 vm
 vms
+http
+youtube
