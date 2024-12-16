@@ -161,5 +161,5 @@ Once you have your secrets and environment variables set in GitHub, add each of 
         id: deploy
         uses: superfly/fly-pr-review-apps@1.2.0
         with:
-          secrets: FOOBAR={{ secrets.FOOBAR }} SOME_API_KEY={{ secrets.SOME_API_KEY}}
+          secrets: FOOBAR=${{ secrets.FOOBAR }} SOME_API_KEY=${{ secrets.SOME_API_KEY}}
 ```
