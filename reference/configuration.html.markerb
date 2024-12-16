@@ -416,7 +416,7 @@ Times are in milliseconds unless units are specified.
 You can use the same `machine_checks` section for HTTP services as for [`services`](#services-machine-checks). The `machine_checks` section defines parameters for checking the health of a service.
 
 ```toml
-[http_service.machine_checks]
+[[http_service.machine_checks]]
   image = "curlimages/curl"
   entrypoint = ["/bin/sh", "-c"]
   command = ["curl http://[$FLY_TEST_MACHINE_IP] | grep 'Hello, World!'"]
