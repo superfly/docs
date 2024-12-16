@@ -8,14 +8,14 @@ redirect_from:
   - /docs/reference/dynamic-request-routing/
 ---
 
-The `fly-replay` header is a powerful feature that gives you fine-grained control over request routing in your Fly.io applications. It allows you to dynamically route requests between regions, specific machines, or even different apps within your organization.
+The `fly-replay` header is a powerful feature that gives you fine-grained control over request routing in your Fly.io applications. It allows you to dynamically route requests between regions, specific Machines, or even different apps within your organization.
 
 ## How fly-replay Works
 
 When your app adds a `fly-replay` header to a response, [Fly Proxy](/docs/reference/fly-proxy) will automatically replay the original request according to your specified routing rules. This enables advanced patterns like:
 
 - Routing write operations to primary database regions
-- Load balancing between specific machines
+- Load balancing between specific Machines
 - Cross-app request routing within your organization
 - Implementing sticky sessions
 
@@ -40,7 +40,7 @@ Route to specific region:
 fly-replay: region=sjc
 ```
 
-Route to specific machine:
+Route to specific Machine:
 ```
 fly-replay: instance=00bb33ff
 ```
@@ -90,7 +90,7 @@ For cases where `fly-replay` isn't suitable, Fly.io provides two alternative req
 fly-prefer-region: ams
 ```
 
-Attempts to route directly to a specific region. Falls back to nearest region with healthy machines if target region is unavailable. Useful for large uploads that can't be replayed.
+Attempts to route directly to a specific region. Falls back to nearest region with healthy Machines if target region is unavailable. Useful for large uploads that can't be replayed.
 
 ### The fly-force-instance-id Header
 
@@ -98,10 +98,10 @@ Attempts to route directly to a specific region. Falls back to nearest region wi
 fly-force-instance-id: 90801679a10038
 ```
 
-Forces routing to a specific machine. No fallback if machine is unavailable.
+Forces routing to a specific Machine. No fallback if Machine is unavailable.
 
 <div class="note icon">
-**Note**: Get machine IDs using `fly status` or `fly machines list`.
+**Note**: Get Machine IDs using `fly status` or `fly Machines list`.
 </div>
 
 ## Common Use Cases
