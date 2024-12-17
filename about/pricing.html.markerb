@@ -19,7 +19,7 @@ All organizations (except for Linked Organizations) require a [credit card](/doc
 
 ## Compute
 
-We charge for started and stopped Machines differently. Attached GPUs are charged separately. For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing). To understand the difference between `performance` and `shared` CPU types in machines, see [CPU performance](/docs/machines/cpu-performance).
+We charge for started and stopped Machines differently. Attached GPUs are charged separately. For more details about how costs are calculated, see [Machine billing](/docs/about/billing/#machine-billing). To understand the difference between `performance` and `shared` CPU types in Machines, see [CPU performance](/docs/machines/cpu-performance).
 
 ### Started Fly Machines
 
