@@ -220,9 +220,9 @@ The available strategies are:
 
 **immediate**: Replace all Machines with new releases immediately without waiting for health checks to pass. This is useful in emergency situations where you're confident about release health and can't wait for health checks.
 
-**canary**: Boots a single, new Machine with the new release, verifies its health, and then proceeds with a `rolling` restart strategy.
+**canary**: Boots a single, new Machine with the new release, verifies its health, and then proceeds with a `rolling` restart strategy. The `canary` strategy cannot be used for Machines with attached volumes.
 
-**bluegreen**: For every running Machine, a new one is booted alongside it in the same region. Once all of the new Machines pass health checks, traffic gets migrated to the new Machines and the old Machines are destroyed. If your app is scaled to 2 or more Machines, this strategy can reduce deploy time by running tasks in parallel. You need to configure at least one health check to use the `bluegreen` strategy. The `bluegreen` strategy doesn't work if Machines have volumes attached.
+**bluegreen**: For every running Machine, a new one is booted alongside it in the same region. Once all of the new Machines pass health checks, traffic gets migrated to the new Machines and the old Machines are destroyed. If your app is scaled to 2 or more Machines, this strategy can reduce deploy time by running tasks in parallel. You need to configure at least one health check to use the `bluegreen` strategy. The `bluegreen` strategy cannot be used for Machines with attached volumes.
 
 <div class="note icon">
 **Note:** If `max-per-region` is set to 1, then the default strategy is set to `rolling`. This happens because `canary` needs to temporarily run more than one Machine to work correctly. The `bluegreen` strategy will behave similarly with `max-per-region` set to 1.
