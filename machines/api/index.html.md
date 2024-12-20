@@ -6,6 +6,10 @@ redirect_from: /docs/machines/working-with-machines/
 toc: false
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/machine-api.png" alt="Illustration by Annie Ruygt of a group of hovering servers with eyes" class="max-w-lg">
+</figure>
+
 The Fly Machines REST API provides resources to provision and manage Fly Apps, Fly Machines, and Fly Volumes.
 
 

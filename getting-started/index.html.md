@@ -5,6 +5,10 @@ nav: firecracker
 toc: false
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/get-started.png" alt="Illustration by Annie Ruygt of a bird reading from a book" class="max-w-lg">
+</figure>
+
 Get up and running on Fly.io:
 
 - **[Quickstart](/docs/getting-started/launch/):** Launch your own app now.
@@ -16,10 +20,6 @@ Get up and running on Fly.io:
 - **[Choose your language or framework](/docs/getting-started/get-started-by-framework/):** Get started on Fly.io with the tech _you_ love.
 
 - **[Fly.io essentials](/docs/getting-started/essentials):** A primer on Fly Machines and Fly Launch, plus the Fly.io glossary. It's all here.
-
-<figure>
-  <img src="/static/images/docs-guide.webp" srcset="/static/images/docs-guide@2x.webp 2x" alt="Illustration by Annie Ruygt of a chair and a small table holding a hot drink, on a rooftop, with a city skyline and hot-air balloons in the background">
-</figure>
 
 ## Learn more
 

@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<figure>
+  <img src="/static/images/dark-arts.png" alt="Illustration by Annie Ruygt of a dark magic book with headline Fly Security" class="max-w-lg">
+</figure>
+
 <div class="important icon">
 **Report an issue**: If you have a security concern, or believe you’ve found a vulnerability in any part of our infrastructure, please contact us. You can reach us at [**security@fly.io**](mailto:security@fly.io), and we can provide you with a Signal number if needed to convey sensitive information.
 </div>
