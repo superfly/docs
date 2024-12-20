@@ -6,9 +6,13 @@ breadcrumbs: false
 nav: firecracker
 ---
 
+<figure>
+  <img src="/static/images/doc-main.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon waving to a bird sitting on a hour roof" class="max-w-lg">
+</figure>
+
 <div class="index-page">
 
-## Get started 
+## Get started
 
 Try our [quickstart or demo app](/docs/getting-started/)
 

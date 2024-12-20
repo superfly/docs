@@ -5,6 +5,10 @@ nav: firecracker
 redirect_from: /docs/reference/openid-connect/
 ---
 
+<figure>
+  <img src="/static/images/key-hole.png" alt="Illustration by Annie Ruygt of a key hole revealing a pink sky" class="max-w-lg">
+</figure>
+
 Fly Machines sometimes need to access 3rd-party services or cloud providers like AWS, Azure, or GCP. To authenticate against these 3rd parties, your Machines need to supply credentials such as a password or token to the cloud provider; usually these are stored as `fly secrets` and then passed into your Machine's environment variables.
 
 However this approach involves creating hardcoded long-lived credentials on the 3rd party platform and involves either managing a lot of tokens or sharing the same token across multiple apps.
@@ -18,7 +22,7 @@ Adopting OIDC to manage access to 3rd party services allows your apps to easily 
 * Granular control over Machines access to 3rd party resources through leveraging the authentication (authN) and authorization (authZ) tools of the 3rd party.
 * Rotating credentials: credentials issued from 3rd parties are only valid for 15 minutes before they expire.
 
-## Understanding OpenID Connect 
+## Understanding OpenID Connect
 
 Every request to the token endpoint generates a unique Json Web Token (JWT). When you give this JWT to a 3rd party they validate the token against the OIDC configuration hosted at the endpoint in the issuer (`iss`) claim. Below is an example of an issued OIDC token. A useful feature here is that the subject (`sub`) claim references the Machine's org name, app name and Machine name. This allows for regex checks to be built against the claim which can restrict accepted tokens to a specific app or Machine.
 
@@ -100,7 +104,7 @@ To read from an S3 bucket using a Fly Machine you'll first need to set up a trus
     ```
 
 1. Create an [IAM Role](https://us-east-1.console.aws.amazon.com/iam/home?region=us-east-1#/roles/create) with the following settings:
- * Trusted Identity: `Web Identity -> Identity Provider -> oidc.fly.io` 
+ * Trusted Identity: `Web Identity -> Identity Provider -> oidc.fly.io`
  * Select the `AmazonS3ReadOnlyAccess` policy.
 
 1. Set the `AWS_ROLE_ARN` as an environment variable in your `fly.toml`.

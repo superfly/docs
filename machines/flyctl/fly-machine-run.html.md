@@ -6,6 +6,10 @@ nav: machines
 redirect_from: /docs/machines/run/
 ---
 
+<figure>
+  <img src="/static/images/moto-jump.png" alt="Illustration by Annie Ruygt of a phoenix jumping with a motor bike" class="max-w-lg">
+</figure>
+
 The [`fly machine run`](/docs/flyctl/machine-run/) command is a tool to configure, build, and start a new Machine in one line.
 
 Many, but not all, [Machine configuration](/docs/machines/api-machines-resource/#machine-config-object-properties) options are available to the `fly machine run` command through flags. The available flags are listed in the flyctl help and on the [`fly machine run` reference page](/docs/flyctl/machine-run/).
@@ -39,7 +43,7 @@ Here's the usage of `fly machine run`:
 ```cmd
 fly machine run <image> [command] [flags]
 ```
- 
+
 Here, `<image>` can point to a prebuilt image, or to the current directory (`.`) to build from a Dockerfile.
 
 
@@ -50,17 +54,17 @@ The default behavior of `fly machine run` is to create a new Fly App for the new
 1. Like many flyctl commands, `fly machine run` will pull an app name from a `fly.toml` file if one is present in the working directory. It disregards the rest of the configuration in the file.
 2. If you pass it an app name with `--app <app-name>`, flyctl prefers that name over any name it gets from a `fly.toml`.
 
-If the app name doesn't belong to an existing app in one of your orgs, flyctl asks if you want to create it. 
+If the app name doesn't belong to an existing app in one of your orgs, flyctl asks if you want to create it.
 
  It may be worth creating a `fly.toml` file with just the app name in it, to save using the `--app` option repeatedly. For example:
 
 ```toml
-# a fly.toml just to provide an app name to commands 
+# a fly.toml just to provide an app name to commands
 # run from the same directory
 
 app = my-app-name
 ```
- 
+
 Use `--org <org-name>` to specify which organization a newly created app should belong to. The `--org` flag is ignored when creating the new Machine in an existing app.
 
 ## Name the Machine
@@ -108,12 +112,12 @@ Any source files the Dockerfile uses should be present in the working directory.
 For example:
 
 ```cmd
-fly machine run ghcr.io/livebook-dev/livebook:0.11.4     
+fly machine run ghcr.io/livebook-dev/livebook:0.11.4
 ```
 
 ## Get a shell on a temporary Machine
 
-The following command creates a temporary Machine using the Dockerfile in the working directory, and logs you into an interactive shell on it: 
+The following command creates a temporary Machine using the Dockerfile in the working directory, and logs you into an interactive shell on it:
 
 ```cmd
 fly machine run . --shell
@@ -135,7 +139,7 @@ You can have the Fly.io `init` override the ENTRYPOINT and CMD (if any) of the M
 
 ### Custom CMD
 
-Override CMD by including the command to run at the end of the `fly machine run` invocation. This sets the [`config.init.cmd`](/docs/machines/api-machines-resource/#machine-config-object-properties) property on the Machine. 
+Override CMD by including the command to run at the end of the `fly machine run` invocation. This sets the [`config.init.cmd`](/docs/machines/api-machines-resource/#machine-config-object-properties) property on the Machine.
 
 This example simply spins up a Debian Linux Machine with a `sleep` task to keep it awake; you can shell into it or whatever:
 
@@ -203,18 +207,18 @@ For sensitive environment variables, [set secrets on the app](https://fly.io/doc
 
 The `--port` option defines a network service to allow the Fly Proxy to reach a local service on the Machine. This option gives you access to basic service configuration; the [Machines API](/docs/machines/api-machines-resource/) and [Fly Launch](/docs/launch/) both offer more control over the Machine's [`config.services`](/docs/machines/api-machines-resource/#machine-config-object-properties) properties.
 
-Map any external ports, where the proxy accepts requests directed at the app, to the internal port where the service is listening on IPv4. For each port combination, specify the protocol and [connection handler(s)](/docs/networking/services/#connection-handlers), using this format: 
+Map any external ports, where the proxy accepts requests directed at the app, to the internal port where the service is listening on IPv4. For each port combination, specify the protocol and [connection handler(s)](/docs/networking/services/#connection-handlers), using this format:
 
 ```plain
 port[:machinePort][/protocol[:handler[:handler...]]]
 ```
 
-For example, if your Machine runs a server on port 80, and the Fly Proxy should handle HTTP connections on port 80 and HTTPS connections on port 443, the port configuration would look like this: 
+For example, if your Machine runs a server on port 80, and the Fly Proxy should handle HTTP connections on port 80 and HTTPS connections on port 443, the port configuration would look like this:
 
 ```cmd
 fly machine run . --port 80/tcp:http \
                   --port 443:80/tcp:http:tls \
-                  --app my-app-name      
+                  --app my-app-name
 ```
 
 <div class="important icon">
@@ -284,7 +288,7 @@ The `--volume` flag on the `fly machine run` command sets a subset of the proper
 
 The Fly.io platform uses specific metadata, stored in a Machine's config, for its own purposes, such as assigning Machines to process groups. You can add custom metadata as well.
 
-The following starts a Machine that the `fly deploy` command will try to manage as part of the `app` process group, replacing its image and config with what, if anything, you have set up in the working directory for that app. 
+The following starts a Machine that the `fly deploy` command will try to manage as part of the `app` process group, replacing its image and config with what, if anything, you have set up in the working directory for that app.
 
 ```
 fly machine run . --metadata fly_platform_version=v2 \
@@ -292,7 +296,7 @@ fly machine run . --metadata fly_platform_version=v2 \
                   --metadata my_metadata=mineallmine
 ```
 
-You can see the [metadata in the Machine config](/docs/machines/api-machines-resource/#machine-config-object-properties): 
+You can see the [metadata in the Machine config](/docs/machines/api-machines-resource/#machine-config-object-properties):
 
 ```cmd
 fly machine status -d -a my-app-name
@@ -317,7 +321,7 @@ The [`files` property](/docs/machines/api-machines-resource/#machine-config-obje
 
 ### Copy a local file into the Machine file system
 
-Use the `--file-local` flag to copy a local file onto the Machine at your specified path: 
+Use the `--file-local` flag to copy a local file onto the Machine at your specified path:
 
 ```
 fly machine run . --file-local /path/inside/machine=local/path
@@ -337,7 +341,7 @@ fly machine run . --file-literal /path/inside/machine="Some text I want in a fil
 In a shell session on the Machine:
 
 ```cmd
-root@2865553aedd268:/# cat /path/inside/machine 
+root@2865553aedd268:/# cat /path/inside/machine
 Some text I want in a file
 ```
 
@@ -380,7 +384,7 @@ Use the `--file-secret` flag when creating the Machine with `fly machine run`. I
 
 ```cmd
 fly machine run . \
-  --file-secret /secret-file=MY_BASE64_SECRET 
+  --file-secret /secret-file=MY_BASE64_SECRET
 ```
 
 The secret is available in the specified file, and not in an environment variable, on that Machine. It's decoded from Base64 into plain text.
@@ -399,13 +403,13 @@ fly secrets set MY_SECRETS="$(base64 < local-secrets)" --stage
 Run a new Machine with the `MY_SECRETS` secret available in a file (`/secret-file`):
 
 ```cmd
-fly machine run ubuntu sleep inf --file-secret /secret-file=MY_SECRETS  
+fly machine run ubuntu sleep inf --file-secret /secret-file=MY_SECRETS
 ```
 
 Check it in a shell session:
 
 ```cmd
-root@d891116b465018:/# cat secret-file 
+root@d891116b465018:/# cat secret-file
 USER="my_name"
 PASSWORD="1a2s3d4f"
 MACARON="macaroon in French"
