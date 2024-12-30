@@ -138,7 +138,7 @@ Upstash offers a range of payment plans for different use cases.
 
 Upstash Redis databases start on the pay-as-you-go plan at **$0.20 per 100k requests**. This means you only pay for what you use. For most use cases, this is a good starting point.
 
-### Fixed price plans
+#### Fixed price plans
 
 Upstash also offers fixed price plans for when:
 
