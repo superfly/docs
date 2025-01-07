@@ -52,6 +52,31 @@ Here are some things to include in your ticket:
 - Prepending `LOG_LEVEL=debug` to any flyctl command will provide insight into the lower-level API calls being made.
 - If you are sending us error messages or log output, it's best to send that as plain text in the body of the email (or upload a `.txt` or `.log` file for longer outputs), rather than attached screenshots of your terminal window.
 
+## Scope of Support
+
+This section highlights the products we actively work on and maintain, and therefore, the ones we can provide support for. While we can't offer support for users' code, you can find [links to the most common frameworks](https://fly.io/docs/getting-started/get-started-by-framework/) used on Fly.io.
+### Supported Products
+- **Networking**
+- **Machines** (including GPUs)
+- **Apps**
+- **Launch/Deploy** (UI & CLI)
+- **Volumes**
+- **FKS**
+- **Security**
+- **Accounts & Billing**
+- **Extensions** (Tigris, Upstash, Depot)
+
+### Limited Support
+
+- **Monitoring** (metrics and logs)
+
+### Products We Don't Support
+
+- **LiteFS**
+- **Unmanaged Postgres**:  
+  Our current Postgres offering is [unmanaged](https://fly.io/docs/postgres/getting-started/what-you-should-know/), and we generally can't provide in-depth guidance for it. We understand this might be frustrating, and we're working on a managed offering. Until then, we recommend considering a managed provider like [Crunchy Bridge](https://www.crunchydata.com/products/crunchy-bridge) if you encounter consistent issues with our unmanaged Postgres.
+
+
 ## Other questions?
 
 For questions about a specific invoice or account management issues, email us at [billing@fly.io](mailto:billing@fly.io).
