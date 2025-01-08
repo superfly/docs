@@ -27,13 +27,29 @@ Customers also frequently help each other out and share insights on running thei
 
 ## Email support
 
-**Who can use this:** Customers who have purchased a Standard, Premium, or Enterprise Support package.
+**Who can use this:** Organizations who have purchased a Standard, Premium, or Enterprise Support package or organizations with legacy Launch or Scale plans.
 
-**Use this for:**  Issues or questions specific to you.
+**Use this for:**  Technical support for issues or questions specific to you.
 
 Our Standard, Premium, and Enterprise packages have access to email support. These plans come with an organization-specific address for emailing support questions, typically `<org-name>@support.fly.io`.
 
 You can find your support address is in the [Fly.io dashboard](https://fly.io/dashboard). Select your organization, and look for your unique email address in the **Support** section. You'll also find a form to submit new support tickets, as well as an overview of recent support interactions.
+
+## Support Portal
+
+**Who can use this:** Organizations who have purchased a Standard, Premium, or Enterprise Support package or organizations with legacy Launch or Scale plans.
+
+**Use this for:** Technical support for issues or questions specific to you.
+
+The Support Portal is a self-service portal for customers to submit support tickets, view recent support interactions, and track the status of their tickets. You can access it from your [Fly.io dashboard](https://fly.io/dashboard) by clicking the **Support** tab.
+
+## Billing and account support
+
+**Who can use this:** Everyone
+
+**Use this for:** Billing and account management issues.
+
+For questions about a specific invoice or account management issues, you can email us at [billing@fly.io](mailto:billing@fly.io).
 
 ## Support metrics
 
@@ -51,7 +67,3 @@ Here are some things to include in your ticket:
 - UTC timestamps for when the issue occurred.
 - Prepending `LOG_LEVEL=debug` to any flyctl command will provide insight into the lower-level API calls being made.
 - If you are sending us error messages or log output, it's best to send that as plain text in the body of the email (or upload a `.txt` or `.log` file for longer outputs), rather than attached screenshots of your terminal window.
-
-## Other questions?
-
-For questions about a specific invoice or account management issues, email us at [billing@fly.io](mailto:billing@fly.io).
