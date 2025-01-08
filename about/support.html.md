@@ -53,7 +53,7 @@ For questions about a specific invoice or account management issues, you can ema
 
 ## Support metrics
 
-The Fly.io Support team publishes our email support response time metrics in order to better set expectations regarding response times and help to you understand how we're doing. You can view these metrics in the public [Support Metrics Dashboard](https://fly.io/support).
+The Fly.io Support team publishes our email support metrics to better set expectations regarding response times and help to you understand how we're doing. You can view these metrics in the public [Support Metrics Dashboard](https://fly.io/support).
 
 ## Working with support
 
