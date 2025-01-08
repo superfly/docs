@@ -34,12 +34,6 @@ Deploying a Fly Postgres database means you may need to manage the following:
 There are a lot of knobs to turn, but `fly pg config` only supports a few of them out of the box. For more details, see [Postgres Configuration Tuning](https://fly.io/docs/postgres/managing/configuration-tuning/).
 - **Advanced customization** - TimescaleDB is included in the default image and can be enabled with these [instructions](https://fly.io/docs/postgres/managing/enabling-timescale/). If your application demands additional Postgres extensions or something else in the VM, you can [fork and maintain your own branch of Fly's open source Postgres Flex app](https://github.com/fly-apps/postgres-flex). 
 
-## Fully managed Postgres
-
-<div class="important icon">
-Supabase Postgres, a fully managed Postgres database on Fly.io, is now in beta. Learn more about [Supabase Postgres](/docs/supabase/) on Fly.io.
-</div>
-
 ### Recommended External Providers
 
 If you want a fully managed database solution for your Fly Apps, there are many great options, including:
