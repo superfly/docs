@@ -7,7 +7,7 @@ toc: false
 
 <img src="/static/images/postgres.webp" srcset="/static/images/postgres@2x.webp 2x" alt="A model airplane with the Fly.io logo painted on its side, sitting next to some paint and brushes.">
 
-<div class="important icon">**Important:** We are not able to provide support or guidance for this product. Use with caution as this is not [managed postgres](https://fly.io/docs/postgres/getting-started/what-you-should-know/)</div>
+<div class="important icon">**Important:** We are not able to provide support or guidance for this product. Use with caution as this is not [managed postgres](https://fly.io/docs/postgres/getting-started/what-you-should-know/).</div>
 
 [Postgres](https://www.postgresql.org/+external), formally known as PostgreSQL, is a powerful open source object relational database system that's used by many popular web frameworks to persist application data.
 
