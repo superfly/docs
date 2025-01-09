@@ -4,6 +4,8 @@ layout: docs
 nav: litefs
 ---
 
+<div class="important icon">**Important:** We are not able to provide support or guidance for this product. Use with caution.</div>
+
 LiteFS is a distributed file system that transparently replicates SQLite
 databases. You can run your application like it's running against a local
 on-disk SQLite database but behind the scenes the database is replicated to all
