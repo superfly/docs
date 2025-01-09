@@ -79,9 +79,9 @@ Here are some things to include in your ticket:
     Your code is yours alone to write. We're not able to provide direct support or guidance for the specific language or framework that you use. There are many of them out there and we can't be experts in all of them, but if we do know the answer we'll always let you know.
   </p>
 
-  <div class="border-2 border-gray-200 rounded-lg bg-white">
-    <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200">
-      <div class="p-6 border border-right">
+  <div class="border-2 border-gray-200 rounded-lg">
+    <div class="grid grid-cols-1 md:grid-cols-3 ">
+      <div class="p-6 border-r border-gray-200">
         <h3 class="text-lg font-bold mb-4">Supported Products</h3>
         <ul class="space-y-2">
           <li>**Networking**</li>
@@ -96,7 +96,7 @@ Here are some things to include in your ticket:
         </ul>
       </div>
 
-      <div class="p-6 border border-right">
+      <div class="p-6 border-r border-gray-200">
         <h3 class="text-lg font-bold mb-4">Limited Support</h3>
         <ul class="space-y-2">
           <li>**Monitoring** (metrics and logs)</li>
@@ -104,7 +104,7 @@ Here are some things to include in your ticket:
       </div>
 
       <div class="p-6">
-        <h3 class="text-lg font-bold mb-4">Products We Don't Support</h3>
+        <h3 class="text-lg font-bold mb-4">Not Supported</h3>
         <ul class="space-y-2">
           <li>**LiteFS**</li>
           <li>**Unmanaged Postgres**</li>
