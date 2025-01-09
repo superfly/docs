@@ -114,5 +114,5 @@ Here are some things to include in your ticket:
 <div class="max-w-4xl">
   <p class="mb-6 mt-8">
     Our current Postgres offering is [unmanaged](https://fly.io/docs/postgres/getting-started/what-you-should-know/). In general, [Fly.io](http://fly.io/) provides support for the automated provisioning, daily snapshots, global networking, and Prometheus metrics for Postgres databases, but unfortunately we're not able to provide in-depth guidance or troubleshooting for your unmanaged Postgres database apps.
-    We are working on a managed offering, but until then, we recommend folks look at a managed provider such as [Crunchy Bridge](https://www.crunchydata.com/products/crunchy-bridge) if they run into consistent issues with our unmanaged Postgres.
+    We are working on a managed offering, but until then, we recommend that you look at a managed provider such as [Crunchy Bridge](https://www.crunchydata.com/products/crunchy-bridge) if you're running into consistent issues with our unmanaged Postgres.
   </p>
