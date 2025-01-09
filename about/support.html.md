@@ -70,14 +70,11 @@ Here are some things to include in your ticket:
 
 ## Scope of Support
 
-<div class="max-w-4xl">
+<div>
   <p class="mb-6">
-    This section highlights the products we actively work on and maintain, and therefore, the ones we are able to provide support for. While we can't offer support for user's code, you can find [links to the most common frameworks](https://fly.io/docs/getting-started/get-started-by-framework/)</a> used on Fly.io.
+    This section highlights the products we actively work on and maintain, and therefore, the ones we are able to provide support for. While we can't offer direct support for your own code or the specific language or framework you use, here are some [guides to the most common frameworks](https://fly.io/docs/getting-started/get-started-by-framework/) used on Fly.io.
   </p>
 
-  <p class="mb-8">
-    Your code is yours alone to write. We're not able to provide direct support or guidance for the specific language or framework that you use. There are many of them out there and we can't be experts in all of them, but if we do know the answer we'll always let you know.
-  </p>
 
   <div class="border-2 border-gray-200 rounded-lg">
     <div class="grid grid-cols-1 md:grid-cols-3 ">
