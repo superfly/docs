@@ -71,18 +71,18 @@ Here are some things to include in your ticket:
 ## Scope of Support
 
 <div class="max-w-4xl">
-  <p class="text-lg mb-6">
+  <p class="mb-6">
     This section highlights the products we actively work on and maintain, and therefore, the ones we are able to provide support for. While we can't offer support for user's code, you can find [links to the most common frameworks](https://fly.io/docs/getting-started/get-started-by-framework/)</a> used on Fly.io.
   </p>
 
-  <p class="text-lg mb-8">
+  <p class="mb-8">
     Your code is yours alone to write. We're not able to provide direct support or guidance for the specific language or framework that you use. There are many of them out there and we can't be experts in all of them, but if we do know the answer we'll always let you know.
   </p>
 
   <div class="border-2 border-gray-200 rounded-lg">
     <div class="grid grid-cols-1 md:grid-cols-3 ">
       <div class="p-6 border-r border-gray-200">
-        <h3 class="text-lg font-bold mb-4">Supported Products</h3>
+        <h3 class="font-bold mb-4">Supported Products</h3>
         <ul class="space-y-2">
           <li>**Networking**</li>
           <li>**Machines** (including GPUs)</li>
@@ -97,14 +97,14 @@ Here are some things to include in your ticket:
       </div>
 
       <div class="p-6 border-r border-gray-200">
-        <h3 class="text-lg font-bold mb-4">Limited Support</h3>
+        <h3 class="font-bold mb-4">Limited Support</h3>
         <ul class="space-y-2">
           <li>**Monitoring** (metrics and logs)</li>
         </ul>
       </div>
 
       <div class="p-6">
-        <h3 class="text-lg font-bold mb-4">Not Supported</h3>
+        <h3 class="font-bold mb-4">Not Supported</h3>
         <ul class="space-y-2">
           <li>**LiteFS**</li>
           <li>**Unmanaged Postgres**</li>
@@ -115,11 +115,7 @@ Here are some things to include in your ticket:
 </div>
 
 <div class="max-w-4xl">
-  <p class="text-lg mb-6 mt-8">
+  <p class="mb-6 mt-8">
     Our current Postgres offering is [unmanaged](https://fly.io/docs/postgres/getting-started/what-you-should-know/). In general, [Fly.io](http://fly.io/) provides support for the automated provisioning, daily snapshots, global networking, and Prometheus metrics for Postgres databases, but unfortunately we're not able to provide in-depth guidance or troubleshooting for your unmanaged Postgres database apps.
     We are working on a managed offering, but until then, we recommend folks look at a managed provider such as [Crunchy Bridge](https://www.crunchydata.com/products/crunchy-bridge) if they run into consistent issues with our unmanaged Postgres.
   </p>
-
-## Other questions?
-
-For questions about a specific invoice or account management issues, email us at [billing@fly.io](mailto:billing@fly.io).
