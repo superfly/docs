@@ -65,58 +65,58 @@ Or framework. You know what we mean. Check out the docs specific to your tech so
   <div class="h-full">
     <div class="grid grid-cols-3 h-full gap-2">
       <a
-        href="/docs/getting-started/get-started-by-framework/"
+        href="/docs/elixir/getting-started/"
         class="btn h-full rounded-xl"
       >
         Phoenix
       </a>
       <a
-        href="/docs/getting-started/get-started-by-framework/"
+        href="/docs/languages-and-frameworks/static/"
         class="btn h-full rounded-xl"
       >
-        Svelte
+        Static
       </a>
       <a
-        href="/docs/getting-started/get-started-by-framework/"
+        href="/docs/rails/getting-started/"
         class="btn h-full rounded-xl"
       >
         Ruby on Rails
       </a>
       <a
-        href="/docs/getting-started/get-started-by-framework/"
+        href="/docs/languages-and-frameworks/dockerfile/"
         class="btn h-full rounded-xl"
       >
         Docker
       </a>
       <a
-        href="/docs/getting-started/get-started-by-framework/"
+        href="/docs/languages-and-frameworks/golang/"
         class="btn h-full rounded-xl"
       >
         Go
       </a>
       <a
-        href="/docs/getting-started/get-started-by-framework/"
+        href="/docs/rust/"
         class="btn h-full rounded-xl"
       >
         Rust
       </a>
       <a
-        href="/docs/getting-started/get-started-by-framework/"
+        href="/docs/django/getting-started/"
         class="btn h-full rounded-xl"
       >
         Django
       </a>
       <a
-        href="/docs/getting-started/get-started-by-framework/"
+        href="/docs/laravel/"
         class="btn h-full rounded-xl"
       >
         Laravel
       </a>
       <a
-        href="/docs/getting-started/get-started-by-framework/"
+        href="/docs/js/"
         class="btn h-full rounded-xl"
       >
-        Next.js
+        JavaScript
       </a>
     </div>
   </div>
