@@ -5,6 +5,10 @@ sitemap: true
 nav: firecracker
 ---
 
+<figure>
+  <img src="/static/images/healthcare.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon examining a green box with A written on it" class="w-full max-w-lg mx-auto">
+</figure>
+
 Fly.io is a great place to develop and host healthcare applications! You can get started for free and be up and running with a fully secure solution in minutes.
 
 We recognize that healthcare apps and data are different beasts and we're here to protect your patients' data (and keep your auditors happy). We're SOC2 (Type 2) audited, we'll sign BAAs, and we're available to answer questions you might have about how our platform meets your compliance needs [(just ask!)](mailto:sales@fly.io).
