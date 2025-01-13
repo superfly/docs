@@ -127,7 +127,7 @@ Or framework. You know what we mean. Check out the docs specific to your tech so
 </div>
 
 <figure>
-  <img src="/static/images/docs-books.webp" alt="" class="w-full">
+  <img src="/static/images/fly-map.png" alt="" class="w-full">
 </figure>
 
 <div class="grid grid-cols-2 items-center">
