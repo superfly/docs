@@ -142,7 +142,7 @@ Or framework. You know what we mean. Check out the docs specific to your tech so
     <ul class="ml-1">
       <li>Plans start at $29/month</li>
       <li>Guaranteed response time</li>
-      <li>Run by Fly.io engineers, not chatbots</li>
+      <li>Run by Fly.io engineers, not chat bots</li>
       <li>Technical architecture support</li>
       <li>Public metrics</li>
     </ul>
