@@ -6,7 +6,7 @@ order: 4
 ---
 
 <figure>
-  <img src="/static/images/docs-guide.webp" srcset="/static/images/docs-guide@2x.webp 2x" alt="">
+  <img src="/static/images/js-lander.png" alt="Illustration by Annie Ruygt of two 3-eyed humanoids relaxing with a drink" class="w-full mx-auto">
 </figure>
 
 <p>Each one of the language guides will take you through creating and deploying a simple application.</p>
