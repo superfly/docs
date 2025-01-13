@@ -6,107 +6,146 @@ breadcrumbs: false
 nav: firecracker
 ---
 
+<div class="grid grid-cols-2 items-center">
+  <div>
+## Ready to get started?
+
+Step 1: Install `flyctl`
+
+```cmd
+brew install flyctl
+```
+
+Step 2: Run `fly launch`
+  </div>
+
+  <figure>
+    <img src="/static/images/doc-main.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon waving to a bird sitting on a hour roof" class="w-full max-w-lg mx-auto">
+  </figure>
+</div>
+
+## Explore Fly.io by features
+
+<div class="note">
+  <ul class="grid grid-cols-2 sm:grid-cols-3 text-lg font-medium gap-6 px-4 py-6">
+    <li><a href="/docs/machines/">Fly Machines</a></li>
+    <li><a href="/docs/volumes/">Fly Volumes</a></li>
+    <li><a href="/docs/security/">Security</a></li>
+    <li><a href="/docs/gpus/">Fly GPUs</a></li>
+    <li><a href="/docs/networking/">Networking</a></li>
+    <li><a href="/docs/kubernetes/">Fly Kubernetes</a></li>
+    <li><a href="/docs/database-storage-guides/">Database & Storage</a></li>
+    <li><a href="/docs/moitoring/">Monitoring</a></li>
+  </ul>
+</div>
+
+
+<div class="grid grid-cols-2 py-8">
+  <div>
+## Get answers in your language
+
+Or framework. You know what we mean. Check out the docs specific to your tech so you can move faster.
+  </div>
+  <div class="h-full">
+    <div class="grid grid-cols-3 h-full gap-2">
+      <a
+        href="/docs/elixir/getting-started/"
+        class="btn h-full rounded-xl"
+      >
+        Phoenix
+      </a>
+      <a
+        href="/docs/languages-and-frameworks/static/"
+        class="btn h-full rounded-xl"
+      >
+        Static
+      </a>
+      <a
+        href="/docs/rails/getting-started/"
+        class="btn h-full rounded-xl"
+      >
+        Ruby on Rails
+      </a>
+      <a
+        href="/docs/languages-and-frameworks/dockerfile/"
+        class="btn h-full rounded-xl"
+      >
+        Docker
+      </a>
+      <a
+        href="/docs/languages-and-frameworks/golang/"
+        class="btn h-full rounded-xl"
+      >
+        Go
+      </a>
+      <a
+        href="/docs/rust/"
+        class="btn h-full rounded-xl"
+      >
+        Rust
+      </a>
+      <a
+        href="/docs/django/getting-started/"
+        class="btn h-full rounded-xl"
+      >
+        Django
+      </a>
+      <a
+        href="/docs/laravel/"
+        class="btn h-full rounded-xl"
+      >
+        Laravel
+      </a>
+      <a
+        href="/docs/js/"
+        class="btn h-full rounded-xl"
+      >
+        JavaScript
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="flex justify-center">
+## How does Fly.io work?
+</div>
+
 <figure>
-  <img src="/static/images/doc-main.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon waving to a bird sitting on a hour roof" class="w-full max-w-lg mx-auto">
+  <img src="/static/images/fly-map.png" alt="" class="w-full">
 </figure>
 
-<div class="index-page">
+<div class="grid grid-cols-2 items-center">
+  <figure>
+    <img src="/static/images/help.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon waving to a bird sitting on a hour roof" class="w-full max-w-lg mx-auto">
+  </figure>
+  <div class="space-y-2">
+    <h2>Could you use more help?</h2>
+    <p>Our Community forum and Support team have the answers.</p>
+  </div>
+</div>
 
-## Get started
+<div class="grid grid-cols-2 gap-6">
+  <div class="note">
+    <h3>Community Forum</h3>
+    <ul class="ml-1">
+      <li>Free to use</li>
+      <li>Discuss Fly.io with other users</li>
+      <li>See new Fly.io developments first</li>
+      <li>Searchable backlog</li>
+      <li>Quick answers to common issues</li>
+    </ul>
+    <a href="https://community.fly.io" class="btn mt-4">Learn more</a>
+  </div>
 
-Try our [quickstart or demo app](/docs/getting-started/)
-
-Or choose your favorite [language or framework](/docs/getting-started/get-started-by-framework/)
-
----
-
-## Apps on Fly.io
-
-_Fly Launch is app configuration, provisioning, deployment, scaling, and orchestration with our flyctl CLI._
-
-[Create and manage apps](/docs/apps/)
-
-[Going to production checklist](/docs/apps/going-to-production/)
-
-[App config (fly.toml)](/docs/reference/configuration/)
-
-
----
-
-## flyctl CLI
-
-_Use the `fly` command to create and deploy apps, control individual Machines, configure networking, and more._
-
-Install [flyctl](/docs/flyctl/install)
-
-flyctl is [open source](https://github.com/superfly/flyctl+external)
-
----
-
-## Fly Machines
-
-_Machines are fast-launching VMs—and the compute engine of the Fly.io platform. Get precise, low-level control of Machines with our REST API_
-
-Learn all about [Fly Machines](/docs/machines/)
-
-[Machines API docs](/docs/machines/api/)
-
----
-
-## GPU compute
-
-_Run GPU workloads on Fly Machines._
-
-[Fly GPUs](/docs/gpus/)
-
----
-
-## Supporting services
-
-_Services from Fly.io and our extension partners to help you run your entire stack near your users._
-
-[Tigris object storage](/docs/tigris/)
-
-[Supabase Postgres (public alpha)](/docs/supabase/)
-
-[Upstash for Redis®](/docs/upstash/redis/)
-
-[LiteFS - Distributed SQLite](/docs/litefs/)
-
-[Fly Kubernetes (private beta)](/docs/kubernetes/)
-
----
-
-## Networking
-
-_Networking on Fly.io._
-
-[Private networking](/docs/networking/private-networking)
-
-[Public networking](/docs/networking/services)
-
-[Custom domains](/docs/networking/custom-domain/)
-
----
-
-## Monitoring
-
-_Explore built-in and custom Prometheus metrics and Grafana dashboards. Live tail and search your app's logs, or ship them where you want them._
-
-[Fly.io Metrics](/docs/monitoring/metrics/)
-
-[Error Monitoring by Sentry](/docs/monitoring/sentry/)
-
-[Logging on Fly.io](/docs/monitoring/logging-overview/)
-
----
-
-## Security
-
-_Built-in security and partner extensions._
-
-[Security](/docs/security/) on the Fly.io platform
-
-[Application security by Arcjet](/docs/security/arcjet/) for JavaScript apps
-
+  <div class="note">
+    <h3>Support</h3>
+    <ul class="ml-1">
+      <li>Plans start at $29/month</li>
+      <li>Guaranteed response time</li>
+      <li>Run by Fly.io engineers, not chat bots</li>
+      <li>Technical architecture support</li>
+      <li>Public metrics</li>
+    </ul>
+    <a href="https://fly.io/support" class="btn mt-4">Learn more</a>
+  </div>
 </div>
