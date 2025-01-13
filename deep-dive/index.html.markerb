@@ -5,6 +5,10 @@ nav: demo
 toc: true
 ---
 
+<figure>
+  <img src="/static/images/deep-dive.png" alt="Illustration by Annie Ruygt of a bird in a diver costume, swimming under water" class="w-full max-w-lg mx-auto">
+</figure>
+
 Welcome to our deep dive demo, where you can explore Fly.io more thoroughly, but in a time-boxed way. In one hour or less: get a fully-functioning app running in the first few minutes, and then have enough time left over to understand what you just did, explore how the pieces fit together, and even integrate AI functionality that makes use of GPUs.
 
 ## Goals of the deep dive

@@ -5,7 +5,9 @@ nav: firecracker
 toc: false
 ---
 
-<img src="/static/images/support.webp" srcset="/static/images/support@2x.webp 2x" alt="An open laptop with a Fly.io sticker on it, sitting on the ground next to a coffee mug and a cute turtle.">
+<figure>
+  <img src="/static/images/help.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon wearing a fireman hat, putting a ladder on a tree to save a cat" class="w-full max-w-lg mx-auto">
+</figure>
 
 Need support? We can help! Here's where to look.
 

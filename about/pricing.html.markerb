@@ -5,7 +5,9 @@ sitemap: true
 nav: firecracker
 ---
 
-<img src="/static/images/app-pricing.webp" srcset="/static/images/app-pricing@2x.webp 2x" alt="A landscape painting with hot air balloons flying over a mountain range.">
+<figure>
+  <img src="/static/images/pricing.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon demonstrating a pricing chart on a whiteboard" class="w-full max-w-lg mx-auto">
+</figure>
 
 ## How it works
 
