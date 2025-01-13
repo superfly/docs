@@ -24,35 +24,19 @@ Step 2: Run `fly launch`
   </figure>
 </div>
 
-## Explore Fly.io by...
+## Explore Fly.io by features
 
 <div class="note">
-  <div class="grid grid-cols-3 text-lg font-medium gap-6 p-4">
-    <div>
-    [Fly Machines](/docs/machines/)
-    </div>
-    <div>
-    [Fly Volumes](/docs/machines/)
-    </div>
-    <div>
-    [Security](/docs/machines/)
-    </div>
-    <div>
-    [Fly GPUs](/docs/machines/)
-    </div>
-    <div>
-    [Networking](/docs/machines/)
-    </div>
-    <div>
-    [Fly Kubernetes](/docs/machines/)
-    </div>
-    <div>
-    [Database & Storage](/docs/machines/)
-    </div>
-    <div>
-    [Monitoring](/docs/machines/)
-    </div>
-  </div>
+  <ul class="grid grid-cols-2 sm:grid-cols-3 text-lg font-medium gap-6 px-4 py-6">
+    <li>[Fly Machines](/docs/machines/)</li>
+    <li>[Fly Volumes](/docs/volumes/)</li>
+    <li>[Security](/docs/security/)</li>
+    <li>[Fly GPUs](/docs/gpus/)</li>
+    <li>[Networking](/docs/networking/)</li>
+    <li>[Fly Kubernetes](/docs/kubernetes/)</li>
+    <li>[Database & Storage](/docs/database-storage-guides/)</li>
+    <li>[Monitoring](/docs/moitoring/)</li>
+  </ul>
 </div>
 
 
