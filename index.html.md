@@ -28,14 +28,30 @@ Step 2: Run `fly launch`
 
 <div class="note">
   <ul class="grid grid-cols-2 sm:grid-cols-3 text-lg font-medium gap-6 px-4 py-6">
-    <li>[Fly Machines](/docs/machines/)</li>
-    <li>[Fly Volumes](/docs/volumes/)</li>
-    <li>[Security](/docs/security/)</li>
-    <li>[Fly GPUs](/docs/gpus/)</li>
-    <li>[Networking](/docs/networking/)</li>
-    <li>[Fly Kubernetes](/docs/kubernetes/)</li>
-    <li>[Database & Storage](/docs/database-storage-guides/)</li>
-    <li>[Monitoring](/docs/moitoring/)</li>
+    <li>
+      [Fly Machines](/docs/machines/)
+    </li>
+    <li>
+      [Fly Volumes](/docs/volumes/)
+    </li>
+    <li>
+      [Security](/docs/security/)
+    </li>
+    <li>
+      [Fly GPUs](/docs/gpus/)
+    </li>
+    <li>
+      [Networking](/docs/networking/)
+    </li>
+    <li>
+      [Fly Kubernetes](/docs/kubernetes/)
+    </li>
+    <li>
+      [Database & Storage](/docs/database-storage-guides/)
+    </li>
+    <li>
+      [Monitoring](/docs/moitoring/)
+    </li>
   </ul>
 </div>
 
