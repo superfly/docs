@@ -6,7 +6,6 @@ redirect_from:
   - /docs/apps/autostart-stop/
   - /docs/launch/autostart-stop/
 --- 
-
 Your app can meet peak demand without keeping extra Machines running. Use autostop/autostart to automatically start and stop or suspend existing Machines based on incoming requests. Fly Machines are fast to start and stop, and you [don't pay for their CPU and RAM](/docs/about/pricing/#stopped-fly-machines) when they're in a `stopped` or `suspended` state.
 
 Get all the details of [how Fly Proxy autostop/autostart works](/docs/reference/fly-proxy-autostop-autostart/).
@@ -51,6 +50,10 @@ In general, unless your app shuts itself down when idle, we recommend setting `a
 ### Minimum number of Machines running
 
 To keep one or more Machines running all the time in your primary region, set `min_machines_running` to `1` or higher. If `min_machines_running = 1` and there's no traffic to your app, then Fly Proxy will stop Machines until eventually there is only one Machine running in your primary region. `min_machines_running` has no effect unless you set `auto_stop_machines` to `"stop"` or `"suspend"`.
+
+<div class="important">
+**`min_machines_running`:** This setting only maintains the specified minimum number of running Machines in your app's primary region. It has no effect on other regions where your app is deployed. If you need to maintain minimum running Machines in multiple regions, you'll need to manage those separately through other means like [`fly scale count`](https://fly.io/docs/flyctl/scale-count/#main-content-start).
+</div>
 
 ### Maximum number of Machines running
 
