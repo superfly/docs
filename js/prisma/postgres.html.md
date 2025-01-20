@@ -45,11 +45,12 @@ controlled by your [`fly.toml`](https://fly.io/docs/reference/configuration/#run
 If a [seed command](https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding) is found in your `package.json`, it will be run once, at `fly launch` time,
 immediately after the first migration.
 
-## Converson from SQLite
+## Conversion from SQLite
 
-Converting from SQLite starts by updating your `prisma/schema.prisma` to match what you see at the top of this post.  Next, remove all your existing migrations `prisma/migrations` and recreate them:
+Converting from SQLite starts by updating your `prisma/schema.prisma` to match what you see at the top of this post.  Next, remove all your existing migrations in your `prisma/migrations` directory and recreate them:
 
 ```
+rm -rf prisma/migrations
 export DATABASE_URL=postgres://$USER@localhost/localdb
 npx prisma migrate dev --name init
 ```
