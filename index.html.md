@@ -10,13 +10,15 @@ nav: firecracker
   <div>
 ## Ready to get started?
 
-Step 1: Install `flyctl`
+**Step 1:** Install `flyctl`
 
 ```cmd
 brew install flyctl
 ```
 
-Step 2: Run `fly launch`
+<small>Not using `brew`? Check out the [installation guide](/docs/flyctl/install/)</small>
+
+**Step 2:** Run `fly launch`
   </div>
 
   <figure>
