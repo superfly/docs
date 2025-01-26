@@ -34,7 +34,7 @@ fly launch --no-deploy --image mysql:8
 
 Type `y` when prompted to tweak the default app settings. Then, on the Fly Launch page:
 
-- Name the app whatever you'd like. The name will become a hostname our application uses to connect to the database, such as `my-mysql.internal`.
+- Name the app whatever you'd like. The name will become a hostname our application uses to connect to the database, such as `my-mysql` (app name must consist of only lowercase letters, numbers, and dashes).
 - If you're using MySQL 8, it's a good idea to add some additional RAM to the VM: we recommend selecting 2GB of VM Memory.
 
 Confirm the settings and return to your terminal.
