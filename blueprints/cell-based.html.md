@@ -250,11 +250,6 @@ As mentioned above, backups are crucial.  Items to explore:
    backups and have your application periodiacally POST copies there.
  * [Rsync](https://rsync.samba.org/) is a utility available with Linux
    distributions that can be used to efficiently copy changes between Machines.
- * Use a traditional database.
-   [Supabase](https://fly.io/docs/supabase/), for example, supports
-   [custom
-   claims](https://github.com/supabase-community/supabase-custom-claims) that
-   can be used to build a multi-tenancy option for your database.
  * Run multiple Machines per cell so that you get the full benefits of
    traditional high availability configurations.  If you have implemented an
    admin web UI, you can automate the deployment of new clusters easily.

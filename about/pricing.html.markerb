@@ -186,7 +186,7 @@ We bill for data leaving your app destined for the public internet or for apps o
 
 * Data egress to the Internet, from Machine to edge server to Internet
 * Data transfer over private network between regions, from Machine to edge server and edge server to Machine
-* Data transfer to some extensions like Supabase or Upstash Redis (excludes Tigris Object Storage)
+* Data transfer to some extensions like Upstash Redis (excludes Tigris Object Storage)
 
 The following types of traffic are free:
 
@@ -229,7 +229,7 @@ The [Machine price](#compute) and [volume price](#persistent-storage-volumes) fo
 
 ## Extensions
 
-Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/docs/tigris), [Supabase Postgres](/docs/supabase/) and [Upstash Redis](/docs/upstash/redis/).
+Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/docs/tigris) and [Upstash Redis](/docs/upstash/redis/).
 
 When you provision their services, you become their customer, and you pay their list prices via your monthly Fly.io bill. Charges are updated daily in your Fly.io dashboard.
 
