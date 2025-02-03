@@ -26,16 +26,16 @@ in case of malfunction or disk corruption.
 
 You can get up and running quickly with one of our guides:
 
-- [Speedrun: Adding LiteFS to your app](/docs/litefs/speedrun) the fastest way to get started with LiteFS on Fly.io.
+- [Speedrun: Adding LiteFS to your app][speedrun] the fastest way to get started with LiteFS on Fly.io.
 
-- [Getting Started on Fly.io][] helps you add LiteFS to an existing application and deploy to Fly.io. This guide
+- [Getting Started on Fly.io][getting-started-fly.io] helps you add LiteFS to an existing application and deploy to Fly.io. This guide
 provides more details and explanation than the Speedrun.
 
-- [Getting Started with Docker][] helps you add LiteFS to an existing application that you want to run outside of Fly.io.
+- [Getting Started with Docker][getting-started-docker] helps you add LiteFS to an existing application that you want to run outside of Fly.io.
 
-- [How LiteFS Works][] explains the concepts behind LiteFS.
+- [How LiteFS Works][how-it-works] explains the concepts behind LiteFS.
 
-[Getting Started on Fly.io]: /docs/litefs/getting-started-fly
-[Getting Started with Docker]: /docs/litefs/getting-started-docker
-[Using LiteFS Cloud for Backups]: /docs/litefs/cloud-backups
-[How LiteFS Works]: /docs/litefs/how-it-works
+[speedrun]: /docs/litefs/speedrun
+[getting-started-fly.io]: /docs/litefs/getting-started-fly
+[getting-started-docker]: /docs/litefs/getting-started-docker
+[how-it-works]: /docs/litefs/how-it-works
