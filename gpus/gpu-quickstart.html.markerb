@@ -23,7 +23,7 @@ nav: firecracker
     - `a10`: `ord`
     - `l40s`: `ord`
     - `a100-40gb`: `ord`
-    - `a100-80gb`: `ams`, `iad`, `mia`, `sjc`, `syd`
+    - `a100-80gb`: `iad`, `sjc`, `syd`
     </div>
 
 1. Create or modify the `fly.toml` config file in the project source directory, replacing values with your own:
