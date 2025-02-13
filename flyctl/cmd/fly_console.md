@@ -14,6 +14,7 @@ fly console [flags]
   -a, --app string                  Application name
   -C, --command string              command to run on SSH session
   -c, --config string               Path to application configuration file
+      --container string            Container to connect to
       --dockerfile string           Path to a Dockerfile. Defaults to the Dockerfile in the working directory.
       --entrypoint string           ENTRYPOINT replacement
   -e, --env stringArray             Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.

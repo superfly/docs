@@ -12,6 +12,7 @@ fly ssh sftp get <path> [flags]
   -a, --app string             Application name
   -C, --command string         command to run on SSH session
   -c, --config string          Path to application configuration file
+      --container string       Container to connect to
   -h, --help                   help for get
       --machine string         Run the console in the existing machine with the specified ID
   -o, --org string             The target Fly.io organization
