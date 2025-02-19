@@ -74,6 +74,7 @@ fly launch [flags]
       --only-machines strings            Deploy to machines only with these IDs. Multiple IDs can be specified with comma separated values or by providing the flag multiple times.
   -o, --org string                       The target Fly.io organization
       --path string                      Path to the app source root, where fly.toml file will be saved (default ".")
+      --primary-region string            Override primary region in fly.toml configuration.
       --process-groups strings           Deploy to machines only in these process groups
       --push                             Push image to registry after build is complete
       --recreate-builder                 Recreate the builder app, if it exists
