@@ -61,6 +61,7 @@ fly deploy [WORKING_DIRECTORY] [flags]
       --no-public-ips                    Do not allocate any new public IP addresses
       --now                              Deploy now without confirmation
       --only-machines strings            Deploy to machines only with these IDs. Multiple IDs can be specified with comma separated values or by providing the flag multiple times.
+      --primary-region string            Override primary region in fly.toml configuration.
       --process-groups strings           Deploy to machines only in these process groups
       --push                             Push image to registry after build is complete
       --recreate-builder                 Recreate the builder app, if it exists
