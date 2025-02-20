@@ -7,7 +7,7 @@ fly managed-postgres [command] [flags]
 ~~~
 
 ## Available Commands
-* [connect](/docs/flyctl/managed-postgres-connect/)	 - Connect to a Redis database using psql
+* [connect](/docs/flyctl/managed-postgres-connect/)	 - Connect to a MPG database using psql
 * [proxy](/docs/flyctl/managed-postgres-proxy/)	 - Proxy to a MPG database
 
 ## Options

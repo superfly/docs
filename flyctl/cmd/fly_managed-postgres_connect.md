@@ -1,4 +1,4 @@
-Connect to a Redis database using psql
+Connect to a MPG database using psql
 
 ## Usage
 ~~~
