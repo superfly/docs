@@ -20,6 +20,7 @@ fly volumes create <volume name> [flags]
   -s, --size int                    The size of volume in gigabytes (default 1)
       --snapshot-id string          Create the volume from the specified snapshot
       --snapshot-retention int      Snapshot retention in days (default 5)
+      --unique-zone-app-wide        Checks all volumes in app for unique zone handling, instead of only volumes with the same name (which is the default)
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
       --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none)
