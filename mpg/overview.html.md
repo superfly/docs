@@ -11,11 +11,11 @@ toc: false
 
 Fly.io's Managed Postgres is our database-as-a-service offering where we handle:
 
-- Automatic backups and point-in-time recovery
+- Automatic backups and point-in-time recovery (coming soon)
 - High availability and failover
 - Security patches and version upgrades
-- Performance monitoring and optimization
-- Scaling resources (CPU, RAM, storage)
+- Performance monitoring
+- Resource scaling (CPU, RAM, storage)
 - 24/7 support and incident response
 
 ### What's included
@@ -24,30 +24,31 @@ If you're enrolled in the Technical Preview, you'll be able to access:
 
 - A highly-available Postgres cluster from within your Fly.io organization's [private network](/docs/networking/private-networking/).
 - A single database on that cluster.
+- Fly.io Support Portal to log tickets and get help
 
 ### What's not there yet
 
-At the moment, backups are in-progress, but we haven't opened up access to them just yet. We're working out some finer details and establishing a solid security posture before turning them on.
+At the moment, backups are still under development and we haven't opened up access to them just yet. You also can't currently create more databases or schemas on a cluster (though you can create more clusters). You won't yet be able to add Postgres extensions, either.
 
-You also can't currently create more databases or schemas inside a cluster (though you can create more clusters). You won't yet be able to add Postgres extensions, either.
-
-We're working out how we can give you more access to these kinds of things. More to come on all this soon.
+We're working out how we can give you more access to these things and more..
 
 ## Creating a Managed Postgres Instance
 
-To create a new managed Postgres instance, visit your Fly dashboard and click the "Create Database" button in the Managed Postgres section.
+To create a new Managed Postgres instance, visit your Fly dashboard and click the "Create Database" button in the Managed Postgres section.
 
 During creation, you'll be prompted to choose:
-- Instance name
+
+- Cluster name
 - Region
 - Hardware resources (CPU, RAM, storage)
 
 <div>
     <img src="/static/images/create-mpg.webp" alt="A screenshot of the Managed Postgres page.">
 </div>
+
 ## Connecting to Your Managed Postgres Database
 
-To connect your Fly.io application to your managed Postgres instance:
+To connect your Fly.io application to your Managed Postgres instance:
 
 - After creation, the "Connection" tab will display your connection string
 - Set it as a secret in your Fly.io application:
@@ -72,6 +73,6 @@ The current regions available for deploying Fly.io Managed Postgres are fra, gru
 
 ## Database Storage
 
-Our Managed Postgres comes with an auto-grow disk, so you don't have to worry about manually scaling your storage. Storage grows automatically with your data, with an upper limit of **1 TB**. When you create a cluster, the maximum storage size you can set is 500GB.
+Our Managed Postgres comes with an auto-grow disk, so you don't have to worry about manually scaling your storage. Storage grows automatically with your data, with an upper limit of **1 TB**. When you create a cluster, the maximum storage size you can set is **500 GB**.
 
 Storage is **$0.30 per GB for a 30-day month** and each node (primary + each replica) will have its own cost.
