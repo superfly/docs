@@ -5,7 +5,7 @@ nav: firecracker
 toc: false
 ---
 
-<div class="important icon">Managed Postgres is currently in Technical Preview. To request access, please contact <a href="mailto:beta@Fly.io">beta@Fly.io</a></div>
+<div class="important icon">Managed Postgres is currently in Technical Preview. To request access, please contact <a href="mailto:beta@Fly.io">beta@fly.io</a></div>
 
 ## What is Managed Postgres?
 
