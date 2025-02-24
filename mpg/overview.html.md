@@ -22,8 +22,8 @@ Fly.io's Managed Postgres is our database-as-a-service offering where we handle:
 
 If you're enrolled in the Technical Preview, you'll be able to access:
 
-- A cluster, which consists of a primary and a replica that both sit behind a proxy so we can manage failovers for issues, updates, etc.
-- You'll get access to a single database on that cluster.
+- A highly-available Postgres cluster from within your Fly.io organization's [private network](/docs/networking/private-networking/).
+- A single database on that cluster.
 
 ### What's not there yet
 
