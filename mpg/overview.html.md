@@ -44,14 +44,14 @@ During creation, you'll be prompted to choose:
 
 To connect your Fly.io application to your managed Postgres instance:
 
-1. After creation, the "Connection" tab will display your connection string
-2. Set it as a secret in your Fly.io application:
+- After creation, the "Connection" tab will display your connection string
+- Set it as a secret in your Fly.io application:
 
-   ```cmd
-   fly secrets set DATABASE_URL="postgres://username:password@host:port/database"
-   ```
+```cmd
+fly secrets set DATABASE_URL="postgres://username:password@host:port/database"
+```
 
-3. Your application can now use the `DATABASE_URL` environment variable to connect
+- Your application can now use the `DATABASE_URL` environment variable to connect
 
 ## Pricing
 
