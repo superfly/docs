@@ -5,6 +5,8 @@ nav: firecracker
 toc: false
 ---
 
+<div class="important icon">**Important:** Managed Postgres is currently in Technical Preview. To request access, please contact <a href="mailto:beta@Fly.io">beta@Fly.io</a></div>
+
 ## What is Managed Postgres?
 
 Fly.io's Managed Postgres is our database-as-a-service offering where we handle:
@@ -44,9 +46,11 @@ To connect your Fly.io application to your managed Postgres instance:
 
 1. After creation, the "Connection" tab will display your connection string
 2. Set it as a secret in your Fly.io application:
-   ```console
+
+   ```cmd
    fly secrets set DATABASE_URL="postgres://username:password@host:port/database"
    ```
+
 3. Your application can now use the `DATABASE_URL` environment variable to connect
 
 ## Pricing
