@@ -35,6 +35,7 @@ brew install flyctl
     <li><a href="/docs/security/">Security</a></li>
     <li><a href="/docs/gpus/">Fly GPUs</a></li>
     <li><a href="/docs/networking/">Networking</a></li>
+    <li><a href="/docs/mpg/">Fly Managed Postgres</a></li>
     <li><a href="/docs/kubernetes/">Fly Kubernetes</a></li>
     <li><a href="/docs/database-storage-guides/">Database & Storage</a></li>
     <li><a href="/docs/monitoring/">Monitoring</a></li>
