@@ -1,5 +1,5 @@
 ---
-title: Fly Managed Postgres
+title: Managed Postgres
 layout: docs
 nav: firecracker
 toc: false
@@ -14,7 +14,7 @@ Fly.io's Managed Postgres is a service in which we take care of setting up, runn
 
 ### What's included
 
-If you're enrolled in the beta, you'll be able to access:
+If you're enrolled in the Technical Preview, you'll be able to access:
 
 - A cluster, which consists of a primary and a replica that both sit behind a proxy so we can manage failovers for issues, updates, etc. 
 - You'll get access to a single database on that cluster. 
@@ -27,7 +27,7 @@ We're working out how we can give you more access to these kinds of things.  Mor
 
 ## Pricing
 
-Currently, everyone with access to the beta has been given credits sufficient for two full months' worth of use of the "Launch" plan ($282/month).
+Currently, everyone with access to the Technical Preview has been given credits sufficient for two full months' worth of use of the "Launch" plan ($282/month).
 
 The price of running Fly.io Managed Postgres depends on the CPU/Memory you choose, and the region in which you're deploying.
 
@@ -41,6 +41,6 @@ The current regions available for deploying Fly.io Managed Postgres are FRA, GRU
 
 ## Database Storage
 
-Our Managed Postgres comes with an auto-grow disk, so you don't have to worry about manually scaling your storage. Storage grows automatically with your data, with an upper limit of **1 TB**.
+Our Managed Postgres comes with an auto-grow disk, so you don't have to worry about manually scaling your storage. Storage grows automatically with your data, with an upper limit of **1 TB**. When you create a cluster, the maximum storage size you can set is 500GB.
 
 Storage is **$0.30 per GB for a 30-day month** and each node (primary + each replica) will have its own cost.
