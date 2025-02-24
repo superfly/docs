@@ -40,6 +40,9 @@ During creation, you'll be prompted to choose:
 - Region
 - Hardware resources (CPU, RAM, storage)
 
+<div>
+    <img src="/static/images/create-mpg.webp" alt="A screenshot of the Managed Postgres page.">
+</div>
 ## Connecting to Your Managed Postgres Database
 
 To connect your Fly.io application to your managed Postgres instance:
