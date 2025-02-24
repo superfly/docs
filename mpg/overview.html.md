@@ -22,15 +22,15 @@ Fly.io's Managed Postgres is our database-as-a-service offering where we handle:
 
 If you're enrolled in the Technical Preview, you'll be able to access:
 
-- A highly-available Postgres cluster from within your Fly.io organization's [private network](/docs/networking/private-networking/).
-- A single database on that cluster.
+- A highly-available Postgres cluster within your Fly.io organization's [private network](/docs/networking/private-networking/)
+- A single database on that cluster
 - Fly.io Support Portal to log tickets and get help
 
 ### What's not there yet
 
 At the moment, backups are still under development and we haven't opened up access to them just yet. You also can't currently create more databases or schemas on a cluster (though you can create more clusters). You won't yet be able to add Postgres extensions, either.
 
-We're working out how we can give you more access to these things and more..
+We're working on expanding these capabilities and will provide updates as they become available.
 
 ## Creating a Managed Postgres Instance
 
@@ -43,7 +43,7 @@ During creation, you'll be prompted to choose:
 - Hardware resources (CPU, RAM, storage)
 
 <div>
-    <img src="/static/images/create-mpg.webp" alt="A screenshot of the Managed Postgres page.">
+    <img src="/static/images/create-mpg.webp" alt="A screenshot of the Managed Postgres creation page.">
 </div>
 
 ## Connecting to Your Managed Postgres Database
@@ -63,9 +63,9 @@ fly secrets set DATABASE_URL="postgres://username:password@host:port/database"
 
 Currently, everyone with access to the Technical Preview has been given credits sufficient for two full months' worth of use of the "Launch" plan ($282/month).
 
-The price of running Fly.io Managed Postgres depends on the CPU/Memory you choose, and the region in which you're deploying.
+The price of running Fly.io Managed Postgres depends on the CPU/Memory configuration you choose and the region in which you're deploying.
 
-The pricing for Database storage is $0.30 per GB for a 30-day month and each node (primary + each replica) will have its own cost.
+Database storage is priced at $0.30 per GB for a 30-day month, with each node (primary + each replica) incurring its own cost.
 
 ## Regions
 
@@ -75,4 +75,4 @@ The current regions available for deploying Fly.io Managed Postgres are fra, gru
 
 Our Managed Postgres comes with an auto-grow disk, so you don't have to worry about manually scaling your storage. Storage grows automatically with your data, with an upper limit of **1 TB**. When you create a cluster, the maximum storage size you can set is **500 GB**.
 
-Storage is **$0.30 per GB for a 30-day month** and each node (primary + each replica) will have its own cost.
+Storage is priced at **$0.30 per GB for a 30-day month**, and each node (primary + each replica) will have its own cost.
