@@ -22,12 +22,14 @@ Fly.io's Managed Postgres is our database-as-a-service offering where we handle:
 
 If you're enrolled in the Technical Preview, you'll be able to access:
 
-- A cluster, which consists of a primary and a replica that both sit behind a proxy so we can manage failovers for issues, updates, etc. 
+- A cluster, which consists of a primary and a replica that both sit behind a proxy so we can manage failovers for issues, updates, etc.
 - You'll get access to a single database on that cluster.
 
 ### What's not there yet
 
-At the moment, you can't create more databases or schemas inside a cluster (you can create more clusters). You can't add Postgres extensions. Database backups are in-progress, but we haven't opened up access to them just yet.
+At the moment, backups are in-progress, but we haven't opened up access to them just yet. We're working out some finer details and establishing a solid security posture before turning them on.
+
+You also can't currently create more databases or schemas inside a cluster (though you can create more clusters). You won't yet be able to add Postgres extensions, either.
 
 We're working out how we can give you more access to these kinds of things. More to come on all this soon.
 
