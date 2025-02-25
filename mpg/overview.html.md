@@ -59,6 +59,30 @@ fly secrets set DATABASE_URL="postgres://username:password@host:port/database"
 
 - Your application can now use the `DATABASE_URL` environment variable to connect
 
+## Using flyctl with Managed Postgres
+
+You can interact with your Managed Postgres instances using the Fly.io CLI (`flyctl`). Here are the key commands:
+
+### Connecting with psql
+
+To connect directly to your Managed Postgres database using psql:
+
+```cmd
+fly mpg connect [flags]
+```
+
+This command will establish a direct connection to your database using the psql client.
+
+### Setting up a Proxy Connection
+
+To create a proxy connection to your Managed Postgres database:
+
+```cmd
+fly mpg proxy [flags]
+```
+
+This command is useful when you want to connect to your database from your local machine using tools other than psql.
+
 ## Pricing
 
 Currently, everyone with access to the Technical Preview has been given credits sufficient for two full months' worth of use of the "Launch" plan ($282/month).
