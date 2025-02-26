@@ -7,14 +7,17 @@ order: 3
 
 Fly.io has built in support for [Shopify Remix applications](https://shopify.dev/docs/apps/build): simply [scaffold](https://shopify.dev/docs/apps/build/scaffold-app), [build](https://shopify.dev/docs/apps/build/build?framework=remix), and [launch](https://fly.io/shopify).
 
-As an example, the [Shopify tutorial app (qrcode)](https://shopify.dev/docs/apps/build/build?framework=remix) can be launched without any modification:
+To see this in action, [Scaffold an app](https://shopify.dev/docs/apps/build/scaffold-app) and immediately proceed to fly launch:
 
 ```
-git clone https://github.com/Shopify/example-app--qr-code--remix qrcode
-cd qrcode
-shopify app config link
+shopify app init
+cd app
 fly launch
 ```
+
+https://x.com/i/status/1892986447788966011
+
+(substitute the name you gave to your app for `app` in the `cd` line above)
 
 ## Configuration
 
