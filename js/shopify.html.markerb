@@ -7,6 +7,10 @@ order: 3
 
 Fly.io has built in support for [Shopify Remix applications](https://shopify.dev/docs/apps/build): simply [scaffold](https://shopify.dev/docs/apps/build/scaffold-app), [build](https://shopify.dev/docs/apps/build/build?framework=remix), and [launch](https://fly.io/shopify).
 
+<%= youtube "https://www.youtube.com/watch?v=F4qL3nCFg3E" %>
+
+-- [https://x.com/i/status/1892986447788966011](https://x.com/i/status/1892986447788966011)
+
 To see this in action, [Scaffold an app](https://shopify.dev/docs/apps/build/scaffold-app) and immediately proceed to fly launch:
 
 ```
@@ -14,8 +18,6 @@ shopify app init
 cd app
 fly launch
 ```
-
-https://x.com/i/status/1892986447788966011
 
 (substitute the name you gave to your app for `app` in the `cd` line above)
 
