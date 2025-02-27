@@ -108,7 +108,7 @@ There are a few important things to note:
 1. We added the `[processes]` section for the default `app` process, which lets us pass custom commands (overriding Docker's `CMD`).
     * For MySQL 8+, you'll want to use the `mysql_native_password` authentication plugin. As shown in the fly.toml above, there are different syntax for setting this plugin based on the MySQL version.
     * If you're using **MySQL 5.7**, your `app` process can be simplified as shown in the `fly.toml` example above, as it uses `mysql_native_password` [by default](https://dev.mysql.com/doc/refman/5.7/en/native-pluggable-authentication.html#:~:text=client%20programs%20use-,mysql_native_password,-by%20default.%20The).
-    * **MySQL 8 to 8.3** must explicitly set this with the `--default-authentication-plugin` flag.
+    * **MySQL 8.0.32 to 8.3** must explicitly set this with the `--default-authentication-plugin` flag.
     * Starting from **MySQL 8.4**, the `--default-authentication-plugin` option is [deprecated](https://github.com/docker-library/mysql/issues/1048#issuecomment-2088836076). If you're using 8.4+, you can make use of the `--mysql-native-password` flag instead.
    
 <div class="important icon">
@@ -169,7 +169,7 @@ flyctl proxy 13306:3306 -a my-mysql
 Then connect to your MySQL server at `localhost:3306` and the username and password credentials from above:
 
 ```cmd
-mysql -h localhost -P 3306 -u non_root_user -ppassword some_db
+mysql --protocol=tcp -h localhost -P 3306 -u non_root_user -ppassword some_db
 ```
 
 ## Backups
