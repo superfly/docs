@@ -7,6 +7,10 @@ toc: false
 
 <div class="important icon">Managed Postgres is currently in Technical Preview. To request access, please contact <a href="mailto:beta@Fly.io">beta@fly.io</a></div>
 
+<div>
+    <img src="/static/images/Managed_Postgres.png" alt="Managed Postgres Overview - A visual representation of Fly.io's managed PostgreSQL service">
+</div>
+
 ## What is Managed Postgres?
 
 Fly.io's Managed Postgres is our database-as-a-service offering where we handle:
