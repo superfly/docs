@@ -15,6 +15,7 @@ fly extensions [command] [flags]
 * [storage](/docs/flyctl/extensions-storage/)	 - Provision and manage Tigris object storage buckets
 * [supabase](/docs/flyctl/extensions-supabase/)	 - Provision and manage Supabase Postgres databases
 * [vector](/docs/flyctl/extensions-vector/)	 - Provision and manage Upstash Vector index
+* [wafris](/docs/flyctl/extensions-wafris/)	 - Provision and manage Wafris WAFs (Web Application Firewalls)
 
 ## Options
 
