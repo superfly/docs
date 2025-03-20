@@ -1026,7 +1026,11 @@ This feature should not be compared directly with a CDN, for the following reaso
 
 ## The `files` section
 
-When `files` are set, the contents from one of `raw_value`, `local_path`, or `secret_name` will be written to the Machine at the provided `guest_path`. The contents of both `raw_value` and `secret_name` must be base64 encoded.
+When a `files` section is set, the contents from one of `raw_value`, `local_path`, or `secret_name` will be written to the Machine at the provided `guest_path`.
+
+* `raw_value`: The raw file content to be written. Must be base64 encoded.
+* `local_path`: The path to a local file in your system that should be used. Does not need to be base64 encoded.
+* `secret_name`: The name of an app secret that's been set with `fly secrets set`. The value of the secret will be written to the file. The referenced secret's value must be base64 encoded.
 
 Examples:
 
@@ -1034,6 +1038,10 @@ Examples:
 [[files]]
   guest_path = "/path/to/hello.txt"
   raw_value = "aGVsbG8gd29ybGQK"
+
+[[files]]
+  guest_path = "/path/to/config.yaml"
+  local_path = "/local/path/config.yaml"
 
 [[files]]
   guest_path = "/path/to/secret.txt"
