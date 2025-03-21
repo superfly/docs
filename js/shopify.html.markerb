@@ -35,6 +35,10 @@ The value of `SHOPIFY_API_SECRET` will be set as a [fly secret](https://fly.io/d
   SHOPIFY_APP_URL = 'https://….fly.dev'
 ```
 
+<div class="important icon">
+  If you're using the Fly dashboard UI to launch your app directly from GitHub, you'll need to manually update the auto-generated `fly.toml` with these Shopify-related environment variables after the deployment completes.
+</div>
+
 ## Scaling
 
 By default, all machines will automatically be configured to stop when not in use, and restart on the next request; this is fine for development purposes, but for production you will need to adjust this to meet [Shopify performance requirements](https://shopify.dev/docs/apps/launch/built-for-shopify/requirements#performance).
