@@ -4,6 +4,9 @@ layout: docs
 nav: demo
 order: 6
 ---
+<figure>
+  <img src="/static/images/Tigris-doc.png" alt="Illustration by Annie Ruygt Bernard of a blue tiger reading a map with delight" class"w-full max-w-lg mx-auto">
+</figure>
 
 [Tigris](https://fly.io/docs/tigris/) is a globally distributed object storage service. It essentially requires no configuration, and seamlessly handles multi-regions. If you upload an audio file to a host in Virginia, you can access it from Amsterdam. Even better: subsequent accesses from regions other than the primary region are served locally. 
 
