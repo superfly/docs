@@ -8,7 +8,8 @@ fly wireguard create [org] [region] [name] [file] [flags]
 ## Options
 
 ~~~
-  -h, --help   help for create
+  -h, --help             help for create
+      --network string   Custom network name
 ~~~
 
 ## Global Options
