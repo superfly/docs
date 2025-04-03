@@ -17,7 +17,7 @@ Fly.io supports several types of health checks for different use cases. These ar
 You can view your app's current health check status using the `fly checks list` command. While checks run periodically, the Last Updated column shows when the check's status last changed, not when it was last executed.
 
 <div class="important icon">
-**Important:** A failing health check can affect request routing to your Machine but it will not result in an automatic Machine restart. Health checks are primarily for monitoring your Machines. While some checks can affect routing eligibility for your apps, a failing health check won't trigger any actions against the Machines themselves, like a restart or stop.
+**Important:** A failing health check can prevent request routing to your Machine. However your Machines won't automatically restart or stop due to failing their health checks, this needs to be done manually.
 </div>
 
 
