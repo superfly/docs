@@ -1,0 +1,58 @@
+---
+title: Health Checks
+layout: docs
+nav: firecracker
+---
+
+Health checks are a useful way to monitor the state of your app on Fly.io. When configured, they help the platform make decisions about routing traffic and managing deployments. For example, health checks can:
+
+- Confirm that Machines are ready before receiving traffic
+- Route around unhealthy Machines to maintain availability
+- Halt or roll back deployments when a new version isn't responding correctly
+
+Fly.io supports several types of health checks for different use cases. These are configured in your fly.toml file, in the relevant section depending on the type of check.
+
+## Monitoring your health checks
+
+You can view your app's current health check status using the `fly checks list` command. While checks run periodically, the Last Updated column shows when the check's status last changed, not when it was last executed.
+
+<div class="important icon">
+**Important:** A failing health check can prevent request routing to your Machine. However your Machines won't automatically restart or stop due to failing their health checks, this needs to be done manually.
+</div>
+
+
+## Top-level checks
+
+Top-level health checks, defined in the `[checks]` section of your fly.toml file, are designed for monitoring the overall health of your application, especially for non-public-facing services. Unlike service-level health checks (e.g., `services.http_checks` or `services.tcp_checks`), which can be used to direct traffic away from unhealthy Machines, top-level checks do not affect request routing. This makes them suitable for internal monitoring and alerting purposes without impacting how traffic is distributed across your Machines.
+
+### Custom Service Checks
+
+Use custom checks when you need specific configurations or headers, such as checking authenticated or private endpoints. You can configure custom checks for both TCP and HTTP service checks.
+
+For more information on custom checks, check out the [checks section](/docs/reference/configuration/#the-checks-section).
+
+## Service-level checks 
+
+Service-level checks let you define how the proxy determines if a Machine is ready to serve traffic. These checks run at the proxy level and prevent traffic from being sent to unhealthy or slow-starting Machines. TCP checks confirm that your app is listening on the expected port. HTTP checks go further by making a request to a specific path and expecting a 2xx HTTP response. This helps catch cases where the app has started but isn't ready to serve real traffic yet. Using both types of checks can help catch different kinds of issues: TCP for basic reachability, HTTP for readiness.
+
+The proxy uses service-level checks to determine whether a given Machine should be routed to. If a Machine fails its service check, it will be marked as unhealthy by the proxy, and it won't be routed to until its checks start passing. 
+
+While service-level checks affect routing availability, a failing check won't cause the Machine to restart or stop.
+
+Service-level checks are configured using the [`[[services.tcp_checks]]`](/docs/reference/configuration/#services-tcp_checks), [`[[services.http_checks]]`](/docs/reference/configuration/#services-http_checks) and [`[[http_service.checks]]`](/docs/reference/configuration/#http_service-checks) sections.
+
+## Machine checks 
+
+Machine health checks run only during deployments. They run a custom command inside an ephemeral Machine and can be used to verify app behavior beyond port or endpoint availability. They're useful for validating app readiness in more complex scenarios, such as confirming database connectivity or verifying that a key background service is up. These checks don't impact routing, but if a Machine check fails, the deployment will be stopped.
+
+Machine checks are configured using the [`[[services.machine_checks]]`](/docs/reference/configuration/#services-machine_checks) and [`[[http_service.machine_checks]]`](/docs/reference/configuration/#the-http_service-machine_checks-section) sections.
+
+## Bluegreen checks
+
+Bluegreen checks are an internal check used as part of bluegreen deployments. These run automatically when using a bluegreen deployment strategy, and you may see them listed in the output of `fly checks list` as `bg_deployment`.  
+
+You don't need to configure them yourself, and they don't impact routing after the deployment has completed.
+
+## Related topics
+
+- [App configuration (fly.toml)](/docs/reference/configuration/)
