@@ -10,12 +10,15 @@ nav: firecracker
 </figure>
 
 <p>
-    A new&mdash;and growing!&mdash;library of “blueprints” showing how to run, design, build, and deploy different kinds of apps on Fly.io. This isn’t just a showcase for stuff we’ve built, but a collection of patterns and examples that you can can apply in your own projects.
+    A new&mdash;and growing!&mdash;library of "blueprints" showing how to run, design, build, and deploy different kinds of apps on Fly.io. This isn't just a showcase for stuff we've built, but a collection of patterns and examples that you can can apply in your own projects.
 </p>
 
 <ul>
-  <% current_page.children.each do |page| %>
-    <% next if page.data['published'] == false %>
+  <%# Define a very old date for sorting pages without a date %>
+  <% default_date = Date.new(1970, 1, 1) %>
+
+  <%# Select published pages, sort by date descending (handling missing dates), then loop %>
+  <% current_page.children.select { |p| p.data['published'] != false }.sort_by { |p| p.data['date'] || default_date }.reverse.each do |page| %>
     <li>
       <%= link_to_page page %>
     </li>
