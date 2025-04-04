@@ -110,7 +110,7 @@ For options, refer to the [`fly volumes fork` docs](/docs/flyctl/volumes-fork/) 
 
 ## Add a volume to an unmanaged Machine
 
-For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`), you can create a volume and attach it when you clone a Machine. You can also [clone a Machine with a volume](/#clone-a-machine-with-a-volume) to get a new Machine with an empty volume.
+For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`), you can create a volume and attach it when you clone a Machine. You can also [clone a Machine with a volume](#clone-a-machine-with-a-volume) to get a new Machine with an empty volume.
 
 1. Create the volume in the same region as your app. For example:
 

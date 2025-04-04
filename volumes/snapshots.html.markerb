@@ -82,7 +82,7 @@ For options, refer to the [`fly volumes snapshots` docs](/docs/flyctl/volumes-sn
 
 ## Restore a volume from a snapshot
 
-To procedure to restore data from a deleted volume is very similar, see [Restore a deleted volume](/docs/volumes/volume-manage/#restore-a-deleted-volume). 
+The procedure to restore data from a deleted volume is very similar, see [Restore a deleted volume](/docs/volumes/volume-manage/#restore-a-deleted-volume). 
 
 Restore the data from a volume by creating a new volume from a snapshot:
 
