@@ -193,7 +193,6 @@ The following types of traffic are free:
 * All inbound data transfer
 * Data transfer between apps or Machines in the same region (for organizations using granular data transfer rates)
 * Data transfer from apps without an assigned IP address (for organizations not using granular data transfer rates)
-* Data transfer to Tigris Object Storage
 
 Fly.io pricing is per region group for outbound data transfer. You'll see a more detailed breakdown of cost per region and per traffic type on your monthly invoice.
 
