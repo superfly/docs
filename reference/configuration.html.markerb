@@ -778,6 +778,10 @@ The default Machine size is `shared-cpu-1x` but it is not enforced if not specif
 
 If you care about a predictable _scaling up from zero_ case, or if you have different compute requirements for different process groups, then it is highly recommended to add this section to `fly.toml`. Once compute requirements are set, `fly deploy` and `fly scale count` commands will enforce them. If you change the size of the Machines using `fly scale vm` (or its sibling `fly scale memory`) then it will be reset on next `fly deploy` unless `fly.toml` is updated accordingly. Learn more about [Machine size configuration precedence](/docs/apps/scale-machine/#machine-size-configuration-precedence).
 
+<div class="callout">
+If you update your Machine size using `fly scale vm` or `fly scale memory` but you still have a `[[vm]]` section in your `fly.toml` file, the next `fly deploy` will reset your Machines to the configuration in the file.  If you want to manually scale your Machines and keep those settings, remove the `[[vm]]` section from your `fly.toml` file.
+</div>
+
 All keys are optional and `size` has lower precedence than all other keys.
 
 ```toml

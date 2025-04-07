@@ -7,6 +7,7 @@ fly managed-postgres [command] [flags]
 ~~~
 
 ## Available Commands
+* [attach](/docs/flyctl/managed-postgres-attach/)	 - Attach a managed postgres cluster to an app
 * [connect](/docs/flyctl/managed-postgres-connect/)	 - Connect to a MPG database using psql
 * [proxy](/docs/flyctl/managed-postgres-proxy/)	 - Proxy to a MPG database
 
