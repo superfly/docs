@@ -44,10 +44,10 @@ fly secrets set -a my-autoscaler --stage FAS_API_TOKEN="FlyV1 ..."
 The next auth token you'll need is one that has permissions to read from your organization's Prometheus data on Fly:
 
 ```cmd
-fly tokens create readonly
+fly tokens create readonly my-org
 ```
 
-You'll be prompted to choose which org you want to create it for. Afterwards, copy the token and use it as a secret on your autoscaler app:
+Copy the token and use it as a secret on your autoscaler app:
 
 ```cmd
 fly secrets set -a my-autoscaler --stage FAS_PROMETHEUS_TOKEN="FlyV1 ..."
