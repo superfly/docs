@@ -44,7 +44,7 @@ fly secrets set -a my-autoscaler --stage FAS_API_TOKEN="FlyV1 ..."
 The next auth token you'll need is one that has permissions to read from your organization's Prometheus data on Fly:
 
 ```cmd
-fly tokens create readonly -o my-org
+fly tokens create readonly my-org
 ```
 
 Copy the token and use it as a secret on your autoscaler app:
@@ -126,7 +126,7 @@ You can scale multiple independent applications with the same autoscaler by usin
 To enable multi-app scaling, you will need to use an organization-wide auth token rather than an app-specific deploy token:
 
 ```cmd
-fly tokens create org -o my-org
+fly tokens create org my-org
 ```
 
 and then set the resulting token on your autoscaler application:
