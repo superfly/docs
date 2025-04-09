@@ -10,8 +10,10 @@ fly storage update <bucket_name> [flags]
 
 ~~~
   -a, --app string                 Application name
+      --clear-custom-domain        Remove a custom domain from a bucket
       --clear-shadow               Remove an existing shadow bucket
   -c, --config string              Path to application configuration file
+      --custom-domain string       A custom domain name pointing at your bucket
   -h, --help                       help for update
   -o, --org string                 The target Fly.io organization
       --private                    Set a public bucket to be private
