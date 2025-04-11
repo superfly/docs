@@ -18,7 +18,16 @@ nav: firecracker
   <% default_date = Date.new(1970, 1, 1) %>
 
   <%# Select published pages, sort by date descending (handling missing dates), then loop %>
-  <% current_page.children.select { |p| p.data['published'] != false }.sort_by { |p| p.data['date'] || default_date }.reverse.each do |page| %>
+  <% current_page.children.select { |p| p.data['published'] != false }.sort_by { |p| 
+    date_value = p.data['date']
+    if date_value.nil?
+      default_date
+    elsif date_value.is_a?(String)
+      Date.parse(date_value) rescue default_date
+    else
+      date_value
+    end
+  }.reverse.each do |page| %>
     <li>
       <%= link_to_page page %>
     </li>
