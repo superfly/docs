@@ -29,6 +29,7 @@ fly [flags]
 * [logs](/docs/flyctl/logs/)	 - View app logs
 * [machine](/docs/flyctl/machine/)	 - Manage Fly Machines.
 * [managed-postgres](/docs/flyctl/managed-postgres/)	 - Manage Managed Postgres clusters.
+* [mcp](/docs/flyctl/mcp/)	 - flyctl Model Content Protocol.
 * [mysql](/docs/flyctl/mysql/)	 - Provision and manage MySQL database clusters
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 * [ping](/docs/flyctl/ping/)	 - Test connectivity with ICMP ping messages
