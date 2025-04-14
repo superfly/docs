@@ -1,4 +1,4 @@
-[experimental] Wrap an MCP stdio program. Options passed after double dashes ("--") will be passed to the MCP program.
+[experimental] Wrap an MCP stdio program. Options passed after double dashes ("--") will be passed to the MCP program. If user is specified, HTTP authentication will be required.
 
 
 ## Usage
@@ -10,10 +10,10 @@ fly mcp wrap [flags]
 
 ~~~
   -h, --help              help for wrap
-  -m, --mcp string        Path to the MCP program
-      --password string   [optional] Password to authenticate with
-  -p, --port int          Port to listen on (default 8080)
-      --user string       [optional] User to authenticate with
+  -m, --mcp string        [required] Path to the stdio MCP program to be wrapped.
+      --password string   [optional] Password to authenticate with. Defaults to the value of the FLY_MCP_PASSWORD environment variable.
+  -p, --port int          [optional] Port to listen on.  Defaults to 8080. (default 8080)
+      --user string       [optional] User to authenticate with. Defaults to the value of the FLY_MCP_USER environment variable.
 ~~~
 
 ## Global Options
@@ -26,5 +26,5 @@ fly mcp wrap [flags]
 
 ## See Also
 
-* [fly mcp](/docs/flyctl/mcp/)	 - flyctl Model Content Protocol.
+* [fly mcp](/docs/flyctl/mcp/)	 - flyctl Model Context Protocol.
 

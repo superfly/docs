@@ -22,5 +22,5 @@ fly mcp server [flags]
 
 ## See Also
 
-* [fly mcp](/docs/flyctl/mcp/)	 - flyctl Model Content Protocol.
+* [fly mcp](/docs/flyctl/mcp/)	 - flyctl Model Context Protocol.
 

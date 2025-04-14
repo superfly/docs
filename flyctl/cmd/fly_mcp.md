@@ -1,4 +1,4 @@
-flyctl Model Content Protocol.
+flyctl Model Context Protocol.
 
 
 ## Usage
