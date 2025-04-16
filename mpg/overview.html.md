@@ -8,7 +8,7 @@ toc: false
 <div class="important icon">Managed Postgres is currently in Technical Preview. This means it's suitable for production workloads, but could be subject to unplanned maintenance or unexpected hiccups. Contact Fly.io support if you're having issues.</div>
 
 <figure class="flex justify-center">
-  <img src="/static/images/Managed_Postgres.png" alt="Illustration by Annie Ruygt of a balloon doing a lot of tasks" class="max-w-lg">
+  <img src="/static/images/Managed_Postgres.png" alt="Illustration by Annie Ruygt of a balloon doing a lot of tasks" class="w-full max-w-lg mx-auto">
 </figure>
 
 ## What is Managed Postgres?
