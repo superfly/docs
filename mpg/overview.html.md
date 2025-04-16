@@ -20,7 +20,7 @@ Fly.io's Managed Postgres is our database-as-a-service offering where we handle:
 - Performance monitoring and metrics
 - Resource scaling (CPU, RAM, storage)
 - 24/7 support and incident response
-- Network security and encryption
+- Automatic encryption of data at rest and in transit
 
 ### What's included
 
@@ -29,8 +29,6 @@ You'll be able to access:
 - A highly-available Postgres cluster within your Fly.io organization's [private network](/docs/networking/private-networking/)
 - A single database on that cluster
 - Fly.io Support Portal to log tickets and get help
-- Automatic encryption of data at rest and in transit
-- Basic performance metrics and monitoring
 
 ### What's not there yet
 
@@ -38,8 +36,8 @@ At the moment, the following features are under development:
 
 - Security patches and version upgrades
 - Multiple databases or schemas per cluster
-- Postgres extensions
-- Custom monitoring and alerting
+- Postgres extensions besides `pgvector`
+- Customer-facing monitoring and alerting
 - Database migration tools
 
 We're working on expanding these capabilities and will provide updates as they become available.
