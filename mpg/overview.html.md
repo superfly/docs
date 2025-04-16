@@ -5,7 +5,7 @@ nav: firecracker
 toc: false
 ---
 
-<div class="important icon">Managed Postgres is currently in Technical Preview. This means it's suitable for production workloads, but could be subject to unplanned maintenance or unexpected hiccups. Contact Fly.io support if you're having issues.
+<div class="important icon">Managed Postgres is currently in Technical Preview. This means it's suitable for production workloads, but could be subject to unplanned maintenance or unexpected hiccups. Contact Fly.io support if you're having issues.</div>
 
 <figure class="flex justify-center">
   <img src="/static/images/Managed_Postgres.png" alt="Illustration by Annie Ruygt of a balloon doing a lot of tasks" class="max-w-lg">
@@ -29,6 +29,7 @@ You'll be able to access:
 - A highly-available Postgres cluster within your Fly.io organization's [private network](/docs/networking/private-networking/)
 - A single database on that cluster
 - Fly.io Support Portal to log tickets and get help
+- The `pgvector` extension for vector similarity search
 
 ### What's not there yet
 
