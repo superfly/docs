@@ -735,7 +735,9 @@ This example uses the `curl` image to run a test. It checks that the Machine is 
 * `kill_signal`: The signal to send to the test process if it runs too long. Defaults to the signal of the image, if a custom image is set.
 * `kill_timeout`: The time to wait before sending the kill signal. Defaults to the timeout of the image, if a custom image is set.
 
-Machine checks are especially useful for canary deploys. `flyctl` will spawn a new Machine, ensure all machine capabilities are functional, and then deploy the rest of the Machines in your app.
+Machine checks are especially useful for `canary` deploys. `flyctl` will spawn a new Machine, ensure all machine capabilities are functional, and then deploy the rest of the Machines in your app.
+
+Machine checks are supported for apps using the `rolling` and `canary` deployment strategies.
 
 ## The `mounts` section
 
