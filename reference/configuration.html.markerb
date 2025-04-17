@@ -458,7 +458,7 @@ Times are in milliseconds unless units are specified.
 
 ### The `http_service.machine_checks` section
 
-You can use the same `machine_checks` section for HTTP services as for [`services`](#services-machine-checks). The `machine_checks` section defines parameters for checking the health of a service.
+You can use the same `machine_checks` section for HTTP services as for [`services`](#services-machine_checks). The `machine_checks` section defines parameters for checking the health of a service.
 
 ```toml
 [[http_service.machine_checks]]
