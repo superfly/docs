@@ -43,7 +43,7 @@ Service-level checks are configured using the [`[[services.tcp_checks]]`](/docs/
 
 ## Machine checks 
 
-Machine health checks run only during deployments. They run a custom command inside an ephemeral Machine and can be used to verify app behavior beyond port or endpoint availability. They're useful for validating app readiness in more complex scenarios, such as confirming database connectivity or verifying that a key background service is up. These checks don't impact routing, but if a Machine check fails, the deployment will be stopped.
+Machine health checks run only during deploys and are supported for apps using the `rolling` and `canary` deployment strategies. They run a custom command inside an ephemeral Machine and can be used to verify app behavior beyond port or endpoint availability. They're useful for validating app readiness in more complex scenarios, such as confirming database connectivity or verifying that a key background service is up. These checks don't impact routing, but if a Machine check fails, the deployment will be stopped.
 
 Machine checks are configured using the [`[[services.machine_checks]]`](/docs/reference/configuration/#services-machine_checks) and [`[[http_service.machine_checks]]`](/docs/reference/configuration/#the-http_service-machine_checks-section) sections.
 
