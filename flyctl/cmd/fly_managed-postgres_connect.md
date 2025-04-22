@@ -8,8 +8,9 @@ fly managed-postgres connect [flags]
 ## Options
 
 ~~~
-  -h, --help         help for connect
-  -o, --org string   The target Fly.io organization
+      --cluster string   The target cluster ID
+  -h, --help             help for connect
+  -o, --org string       The target Fly.io organization
 ~~~
 
 ## Global Options
