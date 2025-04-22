@@ -57,22 +57,23 @@ fly-replay: region=sjc;app=app-in-same-org
 
 ## Replay Caching
 
-In cases where the replay target does not change often under some path, you may use the `fly-replay-cache` mechanism to relieve the original app of some unnecessary load. Here's how it works:
+In cases where the replay target does not change often, you can use the `fly-replay-cache` mechanism to relieve the original app of some load. Here's how it works:
 - Issue a `fly-replay` header as usual
 - Set `fly-replay-cache: example.com/some/path/*`
-  - This needs to be a path-matching pattern ending with a wildcard `/*`. This is where the cached replay is applied to.
-  - The domain part should not include ports; i.e. use `example.com`, not `example.com:80` or `example.com:443`.
+  - This needs to be a path-matching pattern ending with a wildcard `/*`. This is where the cached replay is applied.
+  - The domain part should not include ports; use `example.com`, not `example.com:80`.
   - The pattern must also match the current path of the request.
 - Set `fly-replay-cache-ttl-secs: number_of_seconds`
-  - This is simply a TTL attached to the replay cache. It needs to be at least 10 seconds.
 
 If the replay target does eventually change, the replay target may proactively invalidate the cache by
 - Issuing a `fly-replay` back to the origin
 - Setting `fly-replay-cache: invalidate`
 
-It is also worth noting that replay caching is an optimization, not a guarantee. Your app should _not_ depend on this mechanism to function.
-The app issuing `fly-replay`s still serves as the ultimate source of truth, and we may decide to consult that app at any moment even if a replay cache has previously been set.
-To ensure reliable operation, the app issuing `fly-replay`s should still have multiple instances deployed in multiple regions.
+<div class="note icon">
+**Note**: Replay caching is an optimization, not a guarantee. Your app should _not_ depend on this mechanism to function.
+The app issuing `fly-replay` still serves as the ultimate source of truth, and we may decide to consult that app at any moment even if a replay cache has previously been set.
+To ensure reliable operation, the app issuing `fly-replay` should still have multiple instances deployed in multiple regions.
+</div>
 
 ## Implementation Details
 
@@ -88,6 +89,7 @@ For large uploads that exceed the 1MB limit, consider:
 
 For `fly-replay-cache`, the following limitations apply:
 - The `state` field cannot be set in the `fly-replay` intended to be cached
+- The TTL needs to be a minimum of 10 seconds
 - Only one step of lookup is performed in the cache; as such, if the target app issues another `fly-replay-cache`, the caching behavior in this case is undefined
 - The `fly-replay-src` header (described below) will _not_ be set for requests replayed through the cache
 
