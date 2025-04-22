@@ -1,0 +1,31 @@
+---
+title: One app per customer: why?
+layout: docs
+order: 15
+nav: machines
+---
+
+We recommend that you create one app, with one or more machines, **for each customer** you have. You'll gain a lot from this: 
+
+* you'll be able to leverage Fly.io proxy’s load balancing
+* the `fly.toml` config is app-level, so you can run Machines in different regions / different sizes in the same app
+* your secrets live at the app level: a compromised user app cannot see other user apps' secrets; whereas if all user projects are mashed together in a mega-app, they all have access to everyone else's secrets (plus the `env` would be ginormous and unwieldy)
+* auto start / auto stop runs at the app level
+* apps are easier to transfer between orgs if you ever need move things around
+* there's a cleaner separation of concerns in logs
+* apps get isolated networks (if you pass in a network name), and machines on the same app share a private network—more on this below!
+* each app can still scale independently—so if you've got a _very successful user_ who needs beefier machines, you can scale them up without affecting your other users
+
+A pattern where a single application has machines for all customers is _technically_ possible, but you'd lose the benefits of load balancing, and it would be challenging to make it resilient. Plus, our tooling is not really designed to list thousands of machines per app, so you'd get weird API behavior in some places.
+
+## Isolated networks
+
+Each Fly.io organization gets an isolated network that connects all machines in the organization using Wireguard. This is described in more detail [in our private networking docs](https://fly.io/docs/networking/private-networking/). This generally means that one can deploy, for example, one app for each service, and they will be able to connect to each other using the appropriate hostnames (`.internal` or `.flycast`) as explained in the document. 
+
+However, at application creation time, a `--network` parameter can be passed, to create a [custom private network](https://fly.io/docs/networking/custom-private-networks/) for that application. This subnet will not be connected to the organization’s, meaning this application will be isolated from others (although it can still provide a public internet-facing service as configured in `fly.toml`). 
+
+The [Custom private networks](https://fly.io/docs/networking/custom-private-networks/#private-apps-with-flycast) document details a few ways an isolated app can talk to other applications in a controlled manner, including:
+
+* Application A (non-isolated) can have a `.flycast` IP address in application B’s (isolated) subnet, so they can talk to each other over that IP address. You can do this using `fly ips allocate-v6 --private -a APP_A --network APP_B_NETWORK`. App A can then contact “app-b.flycast” directly.
+* Using the [fly-replay header](https://fly.io/docs/networking/dynamic-request-routing/), an application can direct requests to machines in another application, even if that one resides on a private subnet.
+* If application B (isolated) exposes a public service, then other applications (isolated or not) can access it over the Internet using its public name.
