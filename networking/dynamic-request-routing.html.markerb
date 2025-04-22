@@ -60,14 +60,15 @@ fly-replay: region=sjc;app=app-in-same-org
 In cases where the replay target does not change often under some path, you may use the `fly-replay-cache` mechanism to relieve the original app of some unnecessary load. Here's how it works:
 - Issue a `fly-replay` header as usual
 - Set `fly-replay-cache: example.com/some/path/*`
-  - This is a globbing pattern for the path under which the replay will be cached and used for subsequent requests.
+  - This is a pattern for the path under which the replay will be cached and used for subsequent requests.
+  - The pattern must end with a wildcard `/*`.
   - The domain part should not include ports; i.e. use `example.com`, not `example.com:80` or `example.com:443`.
   - The pattern must also match the current path of the request.
 - Set `fly-replay-cache-ttl-secs: number_of_seconds`
   - This is simply a TTL attached to the replay cache. It needs to be at least 10 seconds.
 
-If the replay target does eventually change, the replay target machine / app may proactively invalidate the cache by
-- Issuing a `fly-replay` back to the original app / machine
+If the replay target does eventually change, the replay target may proactively invalidate the cache by
+- Issuing a `fly-replay` back to the origin
 - Setting `fly-replay-cache: invalidate`
 
 It is also worth noting that replay caching is an optimization, not a guarantee. Your app should _not_ depend on this mechanism to function.
@@ -104,7 +105,7 @@ When a request is replayed, Fly Proxy adds a `fly-replay-src` header containing 
 
 This header is useful for tracking request paths and implementing consistency patterns. See the [official Ruby client](https://github.com/superfly/fly-ruby/blob/main/lib/fly-ruby/regional_database.rb#L74-L76+external) for an example of using these fields to prevent read-your-write inconsistency.
 
-This header is not set when the request is replayed through a cached `fly-replay` entry.
+This header is not set when the request is replayed through a cached `fly-replay` entry (`fly-replay-cache`).
 
 ## Alternative Routing Headers
 
