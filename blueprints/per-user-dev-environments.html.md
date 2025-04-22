@@ -33,6 +33,7 @@ Your router app handles all incoming wildcard traffic. Its responsibility is sim
 - Extract subdomains (like `alice.example.com` → `alice-123`).
 - Look up the correct app (and optionally machine ID) for that user.
 - Issue a `fly-replay` header directing the Fly Proxy to [internally redirect the request](https://fly.io/docs/networking/dynamic-request-routing) (this should add no more than ~10 milliseconds of latency).
+- When appropriate, use [replay caching](https://fly.io/docs/networking/dynamic-request-routing/#replay-caching) to further reduce latency and load on the router app.
 - Make sure you've added [a wildcard domain](https://fly.io/docs/networking/custom-domain/#get-certified) (*.example.com) to your router app (read more about the [certificate management endpoint here](https://fly.io/docs/networking/custom-domain-api/)).
 
 ### User apps
