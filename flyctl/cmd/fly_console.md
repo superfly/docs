@@ -29,7 +29,7 @@ fly console [flags]
                                     		i.e.: --port 80/tcp --port 443:80/tcp:http:tls --port 5432/tcp:pg_tls
                                     		To remove a port mapping use '-' as handler, i.e.: --port 80/tcp:-
   -r, --region string               The target region (see 'flyctl platform regions')
-  -s, --select                      Select the machine on which to execute the console from a list.
+  -s, --select                      Select the machine and container on which to execute the console from a list.
   -u, --user string                 Unix username to connect as (default "root")
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
