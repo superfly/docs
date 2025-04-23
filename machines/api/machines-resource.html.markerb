@@ -285,6 +285,106 @@ Create a Machine with services defined on app. Learn more about [services and ne
   </div>
 </div>
 
+## Create a Machine with containers
+
+Create a Machine that runs multiple containers. Each container runs independently within the Machine.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to create a Machine for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X POST \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+    "${FLY_API_HOSTNAME}/v1/apps/{app_name}/machines" \
+    -d '{
+      "config": {
+        "containers": [
+          {
+            "name": "web",
+            "image": "nginx:latest",
+            "command": ["nginx", "-g", "daemon off;"]
+          },
+          {
+            "name": "worker",
+            "image": "node:18",
+            "command": ["node", "worker.js"]
+          }
+        ]
+      }
+    }'
+      <% end %>
+      <% component.with_json do %>
+      {
+        "config": {
+          "containers": [
+            {
+              "name": "web",
+              "image": "nginx:latest",
+              "command": ["nginx", "-g", "daemon off;"]
+            },
+            {
+              "name": "worker",
+              "image": "node:18",
+              "command": ["node", "worker.js"]
+            }
+          ]
+        }
+      }
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | `config.containers` | array | yes | An array of container configurations to run within the Machine. |
+      | `config.containers[].name` | string | yes | The name of the container. |
+      | `config.containers[].image` | string | yes | The container registry path to the image for this container. |
+      | `config.containers[].command` | array | no | The command to run in the container. |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
+{
+  "id": "3d8d413b29d089",
+  "name": "quirky-rain-1234",
+  "state": "created",
+  "region": "lax",
+  "instance_id": "01GXSA8R7851294X9C4Q5J5P0M",
+  "private_ip": "fdaa:0:4:a:7b:1b:1b:2",
+  "config": {
+    "containers": [
+      {
+        "name": "web",
+        "image": "nginx:latest",
+        "command": ["nginx", "-g", "daemon off;"]
+      },
+      {
+        "name": "worker",
+        "image": "node:18",
+        "command": ["node", "worker.js"]
+      }
+    ]
+  },
+  "created_at": "2024-03-20T10:00:00Z",
+  "updated_at": "2024-03-20T10:00:00Z"
+}
+    <% end %>
+  </div>
+</div>
+
 ## Wait for a Machine to reach a specified state
 
 <div class="api-section" data-exclude-render>
