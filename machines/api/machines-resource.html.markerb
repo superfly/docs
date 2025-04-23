@@ -1068,6 +1068,65 @@ Delete a metadata key-value pair on a specific Machine's config.
   </div>
 </div>
 
+## List containers in a Machine
+
+List all containers running in a specific Machine.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to list containers for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app_name}/machines/{machine_id}/containers')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/{app_name}/machines/{machine_id}/containers"
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+{
+  "containers": [
+    {
+      "id": "container_123",
+      "name": "main",
+      "state": "running",
+      "created_at": "2024-03-20T10:00:00Z",
+      "updated_at": "2024-03-20T10:00:00Z"
+    }
+  ]
+}
+    <% end %>
+  </div>
+</div>
+
 ## Notes on networking
 
 Machines are closed to the public internet by default. To make them accessible via the associated application, you need to:
@@ -1146,7 +1205,6 @@ Properties of the `config` object for Machine configuration. See [Machine proper
   - `options`: Used for Fly Kubernetes.
   - `dns_forward_rules`: Used for dedicated hosts. 
   - `skip_registration`: boolean - If true, do not register the Machine's 6PN IP with the internal DNS system.
-  - 
 
 ---
 
@@ -1177,7 +1235,7 @@ Properties of the `config` object for Machine configuration. See [Machine proper
 ---
 
 **`guest`:** Configure the resources allocated for this Machine. An object with the following options:
-  - `cpu_kind`: string (nil) - The type of CPU reservation to make (”shared”, ”performance", and so on).
+  - `cpu_kind`: string (nil) - The type of CPU reservation to make ("shared", "performance", and so on).
   - `gpu_kind`: string (nil) - The type of GPU reservation to make.
   - `host_dedication_id`: The ID of the host dedication (group of dedicated hosts) on which to create this Machine. (beta)
   - `cpus`: int (nil) - The number of CPU cores this Machine should occupy when it runs. (default `1`)
@@ -1193,7 +1251,7 @@ Properties of the `config` object for Machine configuration. See [Machine proper
   - `cmd`: [string, string] ([]) - A command line to override the CMD of your Docker container; still another way to define the program that is going to start up when your Machine boots up.
   - `kernel_args`: Optional array of strings. Arguments passed to the kernel.
   - `tty`: bool (false) - Allocate a TTY for the process we start up.
-  - `swap_size_mb`: int (nil) -Swap space to reserve for the Fly Machine in, you guessed it, megabytes.
+  - `swap_size_mb`: int (nil) - Swap space to reserve for the Fly Machine in, you guessed it, megabytes.
 
 ---
 
@@ -1250,7 +1308,7 @@ Properties of the `config` object for Machine configuration. See [Machine proper
       + `hard_limit`: int (nil) - Maximum allowed concurrency. The limit of events at which we’ll stop routing to a Machine altogether, and, if configured to do so, potentially start up existing Machines to handle the load. Defaults to unlimited when unset.
   - `ports`: MachinePort - An array of objects defining the service's ports and associated handlers. Options:
       + `port`: int (nil) - The internet-exposed port to receive traffic on; if you want HTTP traffic routed to 8080/tcp on your Machine, this would be 80.
-      + `start_port`, `end-port`: int (nil) - Like `port``, but allocate a range of ports to route internally, for applications that want to occupy whole port ranges.
+      + `start_port`, `end-port`: int (nil) - Like `port`, but allocate a range of ports to route internally, for applications that want to occupy whole port ranges.
       + `handlers`: Array of protocol [handlers](/docs/networking/services/#connection-handlers) for this port. How should the Fly Proxy handle and terminate this connection. Options include `http`, `tcp`, `tls`.
       + `force_https`: bool (false) - If true, force HTTP to HTTPS redirects.
       + `http_options`: Fiddly HTTP options (if you don’t know you need them, you don’t), including:
