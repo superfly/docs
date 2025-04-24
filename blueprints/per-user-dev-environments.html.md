@@ -16,9 +16,9 @@ This blueprint explains how to use Fly Machines to securely host ephemeral devel
 Your architecture should include:
 
 - **Router app(s)**
-    - A Fly.io app to handle requests to wildcard subdomains (`*.example.com`). Uses `fly-replay` headers to transparently redirect each request to the correct app and machine. If you have clusters of users (or robots) in different geographic regions, you can spin up a router app in multiple region to increase reliability and reduce latency (you might also want to consider a globally distributed datastore like [Upstash for Redis](https://fly.io/docs/upstash/redis/#what-you-should-know)). 
+    - A Fly.io app to handle requests to wildcard subdomains (`*.example.com`). Uses `fly-replay` headers to transparently redirect each request to the correct app and machine. If you have clusters of users (or robots) in different geographic regions, you can spin up a router app in multiple regions to increase reliability and reduce latency (you might also want to consider a globally distributed datastore like [Upstash for Redis](https://fly.io/docs/upstash/redis/#what-you-should-know)). 
 - **User apps (pre-created)**
-    - Dedicated per-user (or per-robot) Fly apps, each containing isolated Fly Machines. App and Machine creation is not instantaneous, so we recommend provisioning a pool of these before you need them so you can quickly assign upon request.
+    - Dedicated per-user (or per-robot) Fly apps ([more about why you should create a dedicated app per customer/robot](https://fly.io/docs/machines/guides-examples/one-app-per-user-why)), each containing isolated Fly Machines. App and Machine creation is not instantaneous, so we recommend provisioning a pool of these before you need them so you can quickly assign upon request.
 - **Fly Machines (with optional volumes)**
     -  Fast-launching VMs that can be attached to persistent [Fly Volumes](https://fly.io/docs/volumes).
 

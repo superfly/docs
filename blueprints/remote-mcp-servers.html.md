@@ -27,7 +27,7 @@ There are broadly two patterns you might want to follow when deploying a remote 
 1. Multi-tenant MCP server (one app, many users)
 2. Single-tenant MCP servers (one app per user)
 
-We're partial to the single-tenant pattern – it ensures proper isolation, and also helps with minimize your Fly.io bill: unused Machines can stop and start as needed, so you won't waste resources on idle users. `fly-replay` makes it easy to route requests to the correct app / Fly Machine (see more detail about this pattern in [Per-user Dev Environments with Fly Machines](https://fly.io/docs/blueprints/per-user-dev-environments/)).
+We're partial to the single-tenant pattern – it ensures proper isolation, and also helps with minimize your Fly.io bill: unused Machines can stop and start as needed, so you won't waste resources on idle users (more about why we think one app per customer is the right pattern [here](https://fly.io/docs/machines/guides-examples/one-app-per-user-why/)). `fly-replay` makes it easy to route requests to the correct app / Fly Machine (see more detail about this pattern in [Per-user Dev Environments with Fly Machines](https://fly.io/docs/blueprints/per-user-dev-environments/)).
 
 ## Multi-tenant MCP Servers
 
