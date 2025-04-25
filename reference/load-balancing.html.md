@@ -25,6 +25,10 @@ The table below describes how traffic may or may not be routed to a Machine base
 | At or above `soft_limit`, below `hard_limit` | Traffic will only be sent to this Machine if all other Machines are also above their `soft_limit` |
 | Below `soft_limit` | Traffic will be sent to the Machine when it is the closest Machine that is under `soft_limit` |
 
+<div class="callout">
+Cross-region routing only happens when all Machines in the local region are unhealthy or at their `hard_limit`.
+</div>
+
 ### Closeness
 
 Closeness is determined by RTT (round-trip time) between the Fly.io edge server receiving a connection or request, and the worker server where your Machine runs. Even within the same region, we use different datacenters with different RTTs. These RTTs are measured constantly between all servers.
@@ -44,14 +48,14 @@ We have a hypothetical web service that we know can handle 25 concurrent request
 
 We set `type = "requests"` so Fly.io will use concurrent HTTP requests to determine when to adjust load. We prefer this to `type = "connections"`, because our web service does work for each request and our users may make multiple requests over a single connection (e.g., with HTTP/2). Fly Proxy will also pool connections to a Machine for a short time (about 4 seconds) when using `type = "requests"` to avoid frequent opening and closing of connections to your app.
 
-We set the `soft_limit` to 20, so we have a little room for Fly Proxy to shift load to other Machines before a single Machine becomes overwhelmed.
+We set the `soft_limit` to 20, so Fly Proxy has some headroom to prefer less-loaded Machines within the same region before distributing traffic more evenly. Soft limits only affect routing within a region. They do not cause the proxy to shift traffic to other regions.
 
 We deploy 10 Machines in four regions: `ams` (Amsterdam), `bom` (Mumbai), `sea` (Seattle), and `sin` (Singapore), with three of those in `ams`.
 
 In this contrived example, all of the users are currently in Amsterdam, so the traffic is arriving at one of the Fly.io edges in Amsterdam. Here's what happens as the number of concurrent HTTP requests from users in Amsterdam increases:
 
 - 60 concurrent requests: Requests are divided evenly between the 3 Machines in the `ams` region. Closeness of the worker and edge will determine which of the 3 Machines each request goes to.
-- 61+ concurrent requests: 60 of those requests will be sent to the 3 Machines in the `ams` region and the rest will be sent to the closest Machines in other regions.
+- 61+ concurrent requests: If all three Machines in `ams` are above their `soft_limit`, but still below their `hard_limit`, Fly Proxy continues routing to them. It does not route traffic to other regions based on soft limits alone.
 - 200+ concurrent requests: All Machines are at their `soft_limit`, so Fly Proxy will start routing requests to the `ams` Machines again. For example, the 201st concurrent request will go to a Machine in the `ams` region that is currently at its `soft_limit`.
 - 250 concurrent requests: All Machines are at their `hard_limit`. The 251st concurrent request will get queued by Fly Proxy until a Machine is below its `hard_limit`.
 
