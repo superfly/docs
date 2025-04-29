@@ -5,7 +5,6 @@ nav: firecracker
 toc: false
 ---
 
-<div class="important icon">Managed Postgres is currently in Technical Preview. This means it's suitable for production workloads, but could be subject to unplanned maintenance or unexpected hiccups. Contact Fly.io support if you're having issues.</div>
 
 <figure class="flex justify-center">
   <img src="/static/images/Managed_Postgres.png" alt="Illustration by Annie Ruygt of a balloon doing a lot of tasks" class="w-full max-w-lg mx-auto">
@@ -52,9 +51,9 @@ You'll be prompted to choose:
 - Cluster name (must be unique within your organization)
 - Region (see available regions below)
 - A plan with predefined hardware resources:
-  - Launch: 2 vCPUs, 4GB RAM
-  - Performance: 4 vCPUs, 8GB RAM
-  - Enterprise: 8 vCPUs, 16GB RAM
+  - Basic: 2 shared vCPUs, 1GB RAM
+  - Launch: 2 Performance vCPUs, 8GB RAM
+  - Scale: 4 Performance vCPUs, 32GB RAM
 - Storage size (up to 500GB at creation)
 
 <div>
