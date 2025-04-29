@@ -1,8 +1,5 @@
-Attach a managed Postgres cluster to an app. This command will grant the specified database user access to the
- specified database on the managed Postgres cluster. It will also
- add a secret to the app containing the connection string for the
- database. If either of the database or user do not exist, they will
- be created.
+Attach a managed Postgres cluster to an app. This command will add a secret to the specified app
+ containing the connection string for the database.
 
 ## Usage
 ~~~
@@ -14,11 +11,8 @@ fly managed-postgres attach <CLUSTER ID> [flags]
 ~~~
   -a, --app string             Application name
   -c, --config string          Path to application configuration file
-      --database-name string   The designated database name for this consuming app.
-      --database-user string   The database user to create. By default, we will use the name of the consuming app.
   -h, --help                   help for attach
-      --variable-name string   The environment variable name that will be added to the consuming app.  (default "DATABASE_URL")
-  -y, --yes                    Accept all confirmations
+      --variable-name string   The name of the environment variable that will be added to the attached app (default "DATABASE_URL")
 ~~~
 
 ## Global Options
