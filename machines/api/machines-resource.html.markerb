@@ -162,7 +162,7 @@ List all the Machines for an app.
 
 ## Create a Machine
 
-Given the name of a Fly App, create a Fly Machine, given the URI of a container image, in some region (or, by default, the region closest to you) on Fly.io’s platform. If successful, that Machine will boot up by default. Create a Machine without booting it by setting `skip_launch`.
+Given the name of a Fly App, create a Fly Machine, given the URI of a container image, in some region (or, by default, the region closest to you) on Fly.io's platform. If successful, that Machine will boot up by default. Create a Machine without booting it by setting `skip_launch`.
 
 You can configure the Machine characteristics, like its CPU and memory. You can also allow connections from the internet through the Fly Proxy by [creating a Machine with services](#create-a-machine-with-services). Learn more about this behavior in the [networking section](#notes-on-networking).
 
@@ -212,12 +212,12 @@ The only required parameter in the body is `image` in the `config` object.
       | --- | --- | --- | --- |
       | `name` | string | no | Unique name for this Machine. If omitted, one is generated for you. String. |
       | `region` | string | no | The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you). String. |
-      | `lease_ttl` | integer | no | Acquire a lease on the newly created Machine, waiting this many seconds before failing the request; use to create a Machine that can’t be updated by any other external process while waiting for it to come up and pass health checks. |
-      | `skip_launch` | boolean | no | Create a Fly Machine, but don’t boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as “warming the caches” on our hardware. (default: false) |
+      | `lease_ttl` | integer | no | Acquire a lease on the newly created Machine, waiting this many seconds before failing the request; use to create a Machine that can't be updated by any other external process while waiting for it to come up and pass health checks. |
+      | `skip_launch` | boolean | no | Create a Fly Machine, but don't boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as "warming the caches" on our hardware. (default: false) |
       | `lsvd` | boolean | no | Enable Log Structured Virtual Disks for this Machine. (default: false) |
-      | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
+      | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io's request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
       | `config` | object | yes | Required for `image`. An object defining the Machine configuration. See the [`config` object properties](#machine-config-object-properties) section. |
-      | `config.image` | string | yes | The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
+      | `config.image` | string | yes | The container registry path to the image that defines this Machine (for example, "registry-1.docker.io/library/ubuntu:latest").
       <% end %>
     <% end %>
     <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
@@ -270,17 +270,117 @@ Create a Machine with services defined on app. Learn more about [services and ne
       | --- | --- | --- | --- |
       | `name` | string | no | Unique name for this Machine. If omitted, one is generated for you. String. |
       | `region` | string | no | The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you). String. |
-      | `lease_ttl` | integer | no | Acquire a lease on the newly created Machine, waiting this many seconds before failing the request; use to create a Machine that can’t be updated by any other external process while waiting for it to come up and pass health checks. |
-      | `skip_launch` | boolean | no | Create a Fly Machine, but don’t boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as “warming the caches” on our hardware. (default: false) |
+      | `lease_ttl` | integer | no | Acquire a lease on the newly created Machine, waiting this many seconds before failing the request; use to create a Machine that can't be updated by any other external process while waiting for it to come up and pass health checks. |
+      | `skip_launch` | boolean | no | Create a Fly Machine, but don't boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as "warming the caches" on our hardware. (default: false) |
       | `lsvd` | boolean | no | Enable Log Structured Virtual Disks for this Machine. (default: false) |
-      | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
+      | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io's request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
       | `config` | object | yes | Required for `image`. An object defining the Machine configuration. See the [`config` object properties](#machine-config-object-properties) section. |
-      | `config.image` | string | yes | The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
-      | `config.services` | array | no | Defines how Fly Proxy connects requests to an app’s public Anycast or private Flycast address to services running within Machines, and configures other Fly Proxy behavior for a service.
+      | `config.image` | string | yes | The container registry path to the image that defines this Machine (for example, "registry-1.docker.io/library/ubuntu:latest").
+      | `config.services` | array | no | Defines how Fly Proxy connects requests to an app's public Anycast or private Flycast address to services running within Machines, and configures other Fly Proxy behavior for a service.
       <% end %>
     <% end %>
     <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
       <%= partial "/docs/reference/machines/machines_create_resp" %>
+    <% end %>
+  </div>
+</div>
+
+## Create a Machine with containers
+
+Create a Machine that runs multiple containers. Each container runs independently within the Machine.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App to create a Machine for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/{app_name}/machines')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X POST \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+    "${FLY_API_HOSTNAME}/v1/apps/{app_name}/machines" \
+    -d '{
+      "config": {
+        "containers": [
+          {
+            "name": "web",
+            "image": "nginx:latest",
+            "command": ["nginx", "-g", "daemon off;"]
+          },
+          {
+            "name": "worker",
+            "image": "node:18",
+            "command": ["node", "worker.js"]
+          }
+        ]
+      }
+    }'
+      <% end %>
+      <% component.with_json do %>
+      {
+        "config": {
+          "containers": [
+            {
+              "name": "web",
+              "image": "nginx:latest",
+              "command": ["nginx", "-g", "daemon off;"]
+            },
+            {
+              "name": "worker",
+              "image": "node:18",
+              "command": ["node", "worker.js"]
+            }
+          ]
+        }
+      }
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | `config.containers` | array | yes | An array of container configurations to run within the Machine. |
+      | `config.containers[].name` | string | yes | The name of the container. |
+      | `config.containers[].image` | string | yes | The container registry path to the image for this container. |
+      | `config.containers[].command` | array | no | The command to run in the container. |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
+{
+  "id": "3d8d413b29d089",
+  "name": "quirky-rain-1234",
+  "state": "created",
+  "region": "lax",
+  "instance_id": "01GXSA8R7851294X9C4Q5J5P0M",
+  "private_ip": "fdaa:0:4:a:7b:1b:1b:2",
+  "config": {
+    "containers": [
+      {
+        "name": "web",
+        "image": "nginx:latest",
+        "command": ["nginx", "-g", "daemon off;"]
+      },
+      {
+        "name": "worker",
+        "image": "node:18",
+        "command": ["node", "worker.js"]
+      }
+    ]
+  },
+  "created_at": "2024-03-20T10:00:00Z",
+  "updated_at": "2024-03-20T10:00:00Z"
+}
     <% end %>
   </div>
 </div>
@@ -469,10 +569,10 @@ This is, in particular, how you would update the running image of a Machine (whe
       | `current_version` | string | no | The latest `instance_id` value of the Machine. |
       | `name` | string | no | Unique name for this Machine. If omitted, one is generated for you. String. |
       | `region` | string | no | The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you). String. |
-      | `lease_ttl` | integer | no | Acquire a lease on the newly created Machine, waiting this many seconds before failing the request; use to create a Machine that can’t be updated by any other external process while waiting for it to come up and pass health checks. |
-      | `skip_launch` | boolean | no | Create a Fly Machine, but don’t boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as “warming the caches” on our hardware. (default: false) |
+      | `lease_ttl` | integer | no | Acquire a lease on the newly created Machine, waiting this many seconds before failing the request; use to create a Machine that can't be updated by any other external process while waiting for it to come up and pass health checks. |
+      | `skip_launch` | boolean | no | Create a Fly Machine, but don't boot it up, leaving it in a state where it can be quickly started in response to events. Think of this as "warming the caches" on our hardware. (default: false) |
       | `lsvd` | boolean | no | Enable Log Structured Virtual Disks for this Machine. (default: false) |
-      | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io’s request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
+      | `skip_service_registration` | boolean | no | Leave this Machine disconnected from Fly.io's request routing. This is like a combined Create and Cordon operation; register the Machine later with an Uncordon request. Useful for bluegreen deploys: bring a Machine up, test it healthy, and only then let user requests hit it. (default: false) |
       <% end %>
     <% end %>
     <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
@@ -1068,6 +1168,65 @@ Delete a metadata key-value pair on a specific Machine's config.
   </div>
 </div>
 
+## List containers in a Machine
+
+List all containers running in a specific Machine.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App the Machine belongs to.'
+    ) %>
+    <% api_info.add_info(
+      name: 'machine_id',
+      type: 'string',
+      required: true,
+      description: 'The ID of the Machine to list containers for.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    ) %>
+    <%= render(api_info) %>
+  </div>
+  <div> 
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/{app_name}/machines/{machine_id}/containers')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/{app_name}/machines/{machine_id}/containers"
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+{
+  "containers": [
+    {
+      "id": "container_123",
+      "name": "main",
+      "state": "running",
+      "created_at": "2024-03-20T10:00:00Z",
+      "updated_at": "2024-03-20T10:00:00Z"
+    }
+  ]
+}
+    <% end %>
+  </div>
+</div>
+
 ## Notes on networking
 
 Machines are closed to the public internet by default. To make them accessible via the associated application, you need to:
@@ -1093,7 +1252,7 @@ For example, to reach a Machine with ID `3d8d413b29d089` on an app called `my-ap
 
 Properties of the `config` object for Machine configuration. See [Machine properties](#machine-properties).
 
-**`image`:** string - Required. The container registry path to the image that defines this Machine (for example, ”registry-1.docker.io/library/ubuntu:latest”).
+**`image`:** string - Required. The container registry path to the image that defines this Machine (for example, "registry-1.docker.io/library/ubuntu:latest").
 
 ---
 
@@ -1146,7 +1305,6 @@ Properties of the `config` object for Machine configuration. See [Machine proper
   - `options`: Used for Fly Kubernetes.
   - `dns_forward_rules`: Used for dedicated hosts. 
   - `skip_registration`: boolean - If true, do not register the Machine's 6PN IP with the internal DNS system.
-  - 
 
 ---
 
@@ -1177,7 +1335,7 @@ Properties of the `config` object for Machine configuration. See [Machine proper
 ---
 
 **`guest`:** Configure the resources allocated for this Machine. An object with the following options:
-  - `cpu_kind`: string (nil) - The type of CPU reservation to make (”shared”, ”performance", and so on).
+  - `cpu_kind`: string (nil) - The type of CPU reservation to make ("shared", "performance", and so on).
   - `gpu_kind`: string (nil) - The type of GPU reservation to make.
   - `host_dedication_id`: The ID of the host dedication (group of dedicated hosts) on which to create this Machine. (beta)
   - `cpus`: int (nil) - The number of CPU cores this Machine should occupy when it runs. (default `1`)
@@ -1193,7 +1351,7 @@ Properties of the `config` object for Machine configuration. See [Machine proper
   - `cmd`: [string, string] ([]) - A command line to override the CMD of your Docker container; still another way to define the program that is going to start up when your Machine boots up.
   - `kernel_args`: Optional array of strings. Arguments passed to the kernel.
   - `tty`: bool (false) - Allocate a TTY for the process we start up.
-  - `swap_size_mb`: int (nil) -Swap space to reserve for the Fly Machine in, you guessed it, megabytes.
+  - `swap_size_mb`: int (nil) - Swap space to reserve for the Fly Machine in, you guessed it, megabytes.
 
 ---
 
@@ -1211,7 +1369,7 @@ Properties of the `config` object for Machine configuration. See [Machine proper
   - `volume`: string - Required. The volume ID, visible in `fly volumes list`. For example `vol_2n0l3vl60qpv635d`.  
   - `path`: string - Required. Absolute path on the Machine where the volume should be mounted. For example, `/data`.
   - `name`: string - The name of the Volume to attach.
-  - `extend_threshold_percent`: int - The threshold of storage used on a volume, by percentage, that triggers extending the volume’s size by the value of `add_size_gb`.
+  - `extend_threshold_percent`: int - The threshold of storage used on a volume, by percentage, that triggers extending the volume's size by the value of `add_size_gb`.
   - `add_size_gb`: int - The increment, in GB, by which to extend the volume after reaching the `auto_extend_size_threshold`. Required with `auto_extend_size_increment`. Required with `extend_threshold_percent`.
   - `size_gb_limit`: int - The total amount, in GB, to extend a volume. Optional with `auto_extend_size_increment`. Optional with `extend_threshold_percent`.
   - `encrypted`: boolean - Volume is encrypted. Default true.
@@ -1244,25 +1402,25 @@ Properties of the `config` object for Machine configuration. See [Machine proper
 
   - `protocol`: string - Required. `tcp` or `udp`. [Learn more about running raw TCP/UDP services](/docs/networking/udp-and-tcp/).
   - `internal_port`: int - Required. Port the Machine listens on.
-  - `concurrency`: Control Fly Proxy’s load balancing for this service.
+  - `concurrency`: Control Fly Proxy's load balancing for this service.
       + `type`: string - `connections` (TCP) or `requests` (HTTP). Default is `connections`. Determines which kind of event we count for load balancing.
-      + `soft_limit`: int (nil) - Ideal service concurrency. We will attempt to spread load to keep services at or below this limit. We’ll deprioritize a Machine to give other Machines a chance to absorb traffic. Defaults to 20 when unset.
-      + `hard_limit`: int (nil) - Maximum allowed concurrency. The limit of events at which we’ll stop routing to a Machine altogether, and, if configured to do so, potentially start up existing Machines to handle the load. Defaults to unlimited when unset.
+      + `soft_limit`: int (nil) - Ideal service concurrency. We will attempt to spread load to keep services at or below this limit. We'll deprioritize a Machine to give other Machines a chance to absorb traffic. Defaults to 20 when unset.
+      + `hard_limit`: int (nil) - Maximum allowed concurrency. The limit of events at which we'll stop routing to a Machine altogether, and, if configured to do so, potentially start up existing Machines to handle the load. Defaults to unlimited when unset.
   - `ports`: MachinePort - An array of objects defining the service's ports and associated handlers. Options:
       + `port`: int (nil) - The internet-exposed port to receive traffic on; if you want HTTP traffic routed to 8080/tcp on your Machine, this would be 80.
-      + `start_port`, `end-port`: int (nil) - Like `port``, but allocate a range of ports to route internally, for applications that want to occupy whole port ranges.
+      + `start_port`, `end-port`: int (nil) - Like `port`, but allocate a range of ports to route internally, for applications that want to occupy whole port ranges.
       + `handlers`: Array of protocol [handlers](/docs/networking/services/#connection-handlers) for this port. How should the Fly Proxy handle and terminate this connection. Options include `http`, `tcp`, `tls`.
       + `force_https`: bool (false) - If true, force HTTP to HTTPS redirects.
-      + `http_options`: Fiddly HTTP options (if you don’t know you need them, you don’t), including:
+      + `http_options`: Fiddly HTTP options (if you don't know you need them, you don't), including:
         - `compress`: bool (false) - If true, enable HTTP compression.
         - `h2_backend`: bool (false) - If true, inform Fly Proxy that your app supports HTTP/2 (h2c with prior knowledge), which enables HTTP/2 only workloads to work with the `http` handler.
         - `response`: Options for controlling HTTP response headers.
           - `headers`: ({"headers": {string:string}} (nil)) HTTP headers to set on responses.
-          - `pristine`: bool (false) - If true, do not add any Fly.io headers to HTTP responses. The following response headers won’t be added and won’t be modified if returned by the app: `Server`, `Via`, `Fly-Request-Id`, `Fly-Cache-Status`.
-      + `tls_options`:  Fiddly TLS options (if you don’t know you need to mess with these, you don’t need to), including:
-        - `alpn`: [string, string] ([]) : ALPN protocols to present TLS clients (for instance, [“h2”, “http/1.1”]).
+          - `pristine`: bool (false) - If true, do not add any Fly.io headers to HTTP responses. The following response headers won't be added and won't be modified if returned by the app: `Server`, `Via`, `Fly-Request-Id`, `Fly-Cache-Status`.
+      + `tls_options`:  Fiddly TLS options (if you don't know you need to mess with these, you don't need to), including:
+        - `alpn`: [string, string] ([]) : ALPN protocols to present TLS clients (for instance, ["h2", "http/1.1"]).
         - `default_self_signed`: bool (false) - If true, serve a self-signed certificate if no certificate exists.
-        - `versions`: [string, string] ([]) : TLS versions to allow (for instance, [“TLSv1.2”, “TLSv1.3”]).
+        - `versions`: [string, string] ([]) : TLS versions to allow (for instance, ["TLSv1.2", "TLSv1.3"]).
       + `proxy_proto_options`: Configure the version of the PROXY protocol that your app accepts. Version 1 is the default.
         - `version`: A string to indicate that the TCP connection uses PROXY protocol version 2. The default when not set is version 1.
   - `autostart`: bool (false) - If true, Fly Proxy starts Machines when requests for this service arrive.
