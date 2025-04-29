@@ -749,17 +749,21 @@ unless the resulting size would exceed `auto_extend_size_limit`.
 
 ### `auto_extend_size_increment`
 
-The increment, in GB, by which to extend the volume after reaching the `auto_extend_size_threshold`. Required with `auto_extend_size_threshold`.
+The increment, in GB, by which to extend the volume after reaching the `auto_extend_size_threshold`.
 
 ### `auto_extend_size_limit`
 
-Maximum size, in GB, of a volume after an extension is completed. Required with `auto_extend_size_threshold`.
+Maximum size, in GB, of a volume after an extension is completed.
+
+<div class="important">
+When using the auto-extension feature for volumes, both `auto_extend_size_increment` and `auto_extend_size_limit` are required. Without these values, the volume won't resize automatically, even if the usage threshold is reached.
+</div>
 
 ### Auto extend volume size configuration
 
 You can optionally configure volumes to automatically extend when they reach a usage threshold.
 
-For example, the following config extends the size of the volume by 1GB when it reaches 80% capacity. The volume extensions are limited to 5GB in total. `auto_extend_size_limit` is optional.
+For example, the following config extends the size of the volume by 1GB when it reaches 80% capacity. The volume extensions are limited to 5GB in total.
 
 ```toml
 [[mounts]]
