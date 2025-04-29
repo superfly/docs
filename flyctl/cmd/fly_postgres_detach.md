@@ -24,5 +24,5 @@ fly postgres detach <POSTGRES APP> [flags]
 
 ## See Also
 
-* [fly postgres](/docs/flyctl/postgres/)	 - Manage Postgres clusters.
+* [fly postgres](/docs/flyctl/postgres/)	 - Deprecated: Unmanaged Postgres cluster commands'
 

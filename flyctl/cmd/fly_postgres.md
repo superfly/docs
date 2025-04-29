@@ -1,4 +1,5 @@
-Manage Postgres clusters.
+DEPRECATED: Unmanaged Fly Postgres is deprecated in favor of 'fly mpg' (Managed Postgres).
+Please visit https://fly.io/docs/mpg/overview/ for more information about Managed Postgres.
 
 
 ## Usage
