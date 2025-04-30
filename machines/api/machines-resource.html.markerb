@@ -1212,8 +1212,8 @@ Properties of the `config` object for Machine configuration. See [Machine proper
   - `path`: string - Required. Absolute path on the Machine where the volume should be mounted. For example, `/data`.
   - `name`: string - The name of the Volume to attach.
   - `extend_threshold_percent`: int - The threshold of storage used on a volume, by percentage, that triggers extending the volume’s size by the value of `add_size_gb`.
-  - `add_size_gb`: int - The increment, in GB, by which to extend the volume after reaching the `auto_extend_size_threshold`. Required with `auto_extend_size_increment`. Required with `extend_threshold_percent`.
-  - `size_gb_limit`: int - The total amount, in GB, to extend a volume. Optional with `auto_extend_size_increment`. Optional with `extend_threshold_percent`.
+  - `add_size_gb`: int - The increment, in GB, by which to extend the volume after reaching the `extend_threshold_percent`. Required with `extend_threshold_percent`.
+  - `size_gb_limit`: int - The total amount, in GB, to extend a volume. Optional with `extend_threshold_percent`.
   - `encrypted`: boolean - Volume is encrypted. Default true.
 
 ---
