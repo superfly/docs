@@ -16,6 +16,7 @@ fly machine update [machine_id] [flags]
       --build-nixpacks              Build your image with nixpacks
   -C, --command string              Command to run
   -c, --config string               Path to application configuration file
+      --container string            Container to update with the new image, files, etc; defaults to "app" or the first container in the config.
       --detach                      Return immediately instead of monitoring deployment progress
       --dockerfile string           The path to a Dockerfile. Defaults to the Dockerfile in the working directory.
       --entrypoint string           The command to override the Docker ENTRYPOINT.
