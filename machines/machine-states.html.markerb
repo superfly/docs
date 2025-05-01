@@ -94,7 +94,7 @@ To troubleshoot:
 2. Try stopping and starting the Machine.
 3. If needed, contact Fly.io support with the Machine ID.
 
-## Special notes
+## Important Machine state considerations
 
 - `replaced` applies only to old versions and is terminal for that version. If you query an older version by ID, the API will always return `replaced` for that version, even if the Machine is currently running.
 - `migrated` indicates the Machine was moved to a new host and is no longer active.
