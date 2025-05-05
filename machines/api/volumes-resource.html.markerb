@@ -215,7 +215,7 @@ Create a volume for a specific app according to the configuration provided in th
         | `compute` | object | no | An optional object defining the compute specifications for the expected Machine size and type that the volume will attach to. |
         | `encrypted` | boolean | no | Whether to encrypt the volume. Default true. |
         | `name` | string | yes | The name for the new volume. |
-        | `region` | string | yes | The target region. Must be in the same region as the Machine you want to attach it to. |
+        | `region` | string | no | The region where the volume will be created. Defaults to the Machine's region if attached. If not attached, defaults to the app's primary region. |
         | `size_gb` | int | no | The size of the volume in GB. Default 3. |
         | `snapshot_id` | string | no | The ID of the volume snapshot to use to create the new volume. |
         | `source_volume_id` | string | no | The ID of the source volume for the volume fork. |
