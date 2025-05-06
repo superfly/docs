@@ -9,7 +9,8 @@ fly mcp server [flags]
 ## Options
 
 ~~~
-  -h, --help   help for server
+  -h, --help        help for server
+  -i, --inspector   Launch MCP inspector: a developer tool for testing and debugging MCP servers
 ~~~
 
 ## Global Options
