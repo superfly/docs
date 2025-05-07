@@ -1216,6 +1216,12 @@ Properties of the `config` object for Machine configuration. See [Machine proper
   - `size_gb_limit`: int - The total amount, in GB, to extend a volume. Optional with `extend_threshold_percent`.
   - `encrypted`: boolean - Volume is encrypted. Default true.
 
+<div class="callout">
+Volumes are tied to specific physical hosts. A Machine can only mount to a volume that exists on the same host. If you create a Machine first and then create a volume, even in the same region, there's a good chance they'll end up on different hosts. In that case, the volume attachment will fail.
+
+You cannot change which volume a Machine is attached to by updating the Machine's config. If you want to use a different volume, you'll need to destroy the Machine and create a new one that mounts to the desired volume.
+</div>
+
 ---
 
 **`processes`:** An optional array of objects defining multiple processes to run within a Machine. The Machine will stop if any process exits without error.
