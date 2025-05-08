@@ -49,6 +49,18 @@ Fly Proxy determines when to start a Machine as follows:
 * If all the running Machines are above their `soft_limit` setting, then the proxy starts a stopped or suspended Machine in the nearest region (if there are any stopped or suspended Machines).
 * The proxy routes the request to the newly started Machine.
 
+### How Fly Proxy behaves without autostart/autostop
+
+Fly Proxy still routes requests to your app’s Machines even when `auto_stop_machines` and `auto_start_machines` are not set in your `fly.toml` file.
+
+- Machines stay running unless they exit on their own or are stopped during a deploy or scaling operation.
+- Fly Proxy does not check for excess capacity or stop Machines automatically, even if they are idle.
+- The proxy only routes traffic to Machines that are already running. If a request arrives and no Machines are running, it does not start one. The request will fail.
+- After a Machine starts, there may be a short delay before all proxy nodes recognize that it is running. During this time, requests sent to the Machine might fail if the proxy tries to route traffic too early.
+- If a Machine becomes unreachable, such as failing repeated internal pings over Fly’s private IPv6 network, it may be marked as unhealthy and stopped. Any requests already routed to that Machine will fail, since it’s no longer considered valid for the app.
+
+We recommend setting `auto_start_machines = true` and `auto_stop_machines = "stop"` or `"suspend"` in your `fly.toml` file to reduce idle resource usage and improve availability for apps that need to scale based on demand.
+
 ## Related topics
 
 - [Configure autostop/autostart for Fly Launch apps](/docs/launch/autostop-autostart/)
