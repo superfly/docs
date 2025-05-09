@@ -49,7 +49,7 @@ Fly Proxy determines when to start a Machine as follows:
 * If all the running Machines are above their `soft_limit` setting, then the proxy starts a stopped or suspended Machine in the nearest region (if there are any stopped or suspended Machines).
 * The proxy routes the request to the newly started Machine.
 
-### How Fly Proxy behaves without autostart and autostop
+### How Fly Proxy behaves without autostart/autostop
 
 Fly Proxy still routes requests to your app’s Machines even when `auto_stop_machines` is not set, or when `auto_start_machines` is explicitly set to `false` in your `fly.toml` file.
 
