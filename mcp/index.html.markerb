@@ -1,0 +1,24 @@
+---
+title: Model Context Protocol
+layout: framework_docs
+toc: false
+---
+
+<%= youtube "https://www.youtube.com/watch?v=74c1ByGvFPE" %>
+
+Fly is a great place to run MCP servers, and we provide an MCP server that you can use to provision your application.
+
+---
+
+Anthropic [announced](https://www.anthropic.com/news/model-context-protocol) the [Model Context Protocol](https://modelcontextprotocol.io/introduction) on November 25, 2024, along with a number of [SDKs](https://modelcontextprotocol.io/sdk/java/mcp-overview) in a variety of languages,
+and two types of transports: [stdio and HTTP streaming](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports).
+
+There also is a large list of [existing servers](https://github.com/modelcontextprotocol/servers?tab=readme-ov-file#model-context-protocol-servers) that you can use.
+
+You can deploy servers on your own machine, on fly machines, into containers, or include them in your app.
+You can deploy using the Machines API, fly machine commands, or fly launch.
+You can access them over the internet or via a private network.
+
+---
+
+These pages will show you how to do each, and explore the various tradeoffs.
