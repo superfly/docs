@@ -6,7 +6,7 @@ toc: false
 
 <%= youtube "https://www.youtube.com/watch?v=74c1ByGvFPE" %>
 
-Fly is a great place to run MCP servers, and we provide an MCP server that you can use to provision your application.
+Fly.io is a great place to run MCP servers. We also provide an [MCP server](https://fly.io/docs/flyctl/mcp-server/) that you can use to provision your application.
 
 ---
 
@@ -15,9 +15,9 @@ and two types of transports: [stdio and HTTP streaming](https://modelcontextprot
 
 There also is a large list of [existing servers](https://github.com/modelcontextprotocol/servers?tab=readme-ov-file#model-context-protocol-servers) that you can use.
 
-You can deploy servers on your own machine, on fly machines, into containers, or include them in your app.
-You can deploy using the Machines API, fly machine commands, or fly launch.
-You can access them over the internet or via a private network.
+You can deploy servers on your own machine, on [Fly Machines](https://fly.io/docs/machines/), into [containers](https://community.fly.io/t/docker-without-docker-now-with-containers/22903), or include them in your app.
+You can deploy using the [Machines API](https://fly.io/docs/machines/api/), [`fly machine`](https://fly.io/docs/flyctl/machine/) commands, or [`fly launch`](https://fly.io/docs/flyctl/launch/).
+You can access them over the internet or via a [private network](https://fly.io/docs/networking/private-networking/).
 
 ---
 
