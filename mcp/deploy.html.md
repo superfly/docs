@@ -2,7 +2,7 @@
 title: Deploy on Fly.io
 layout: framework_docs_overview
 toc: false
-order: 1
+order: 2
 ---
 
 First we explore deploying a stdio MCP on Fly.io using your choice of the Machines API, `fly machine run`, and `fly launch`.
