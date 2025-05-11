@@ -23,7 +23,7 @@ fly apps create --generate-name --save
 
 If you prefer, you can replace `--generate-name` with a name of your choice.
 
-You can also specify the organization by passing in a `--org` parameter.
+You can also specify the organization by passing in a `--org` parameter, or let it prompt you.
 
 ## Create IP addresses for your application
 
@@ -45,14 +45,14 @@ fly ips allocate-v6 --private
 This demo uses a volume. If your application doesn't use a volume skip this step.
 
 ```sh
-fly volumes create data --region iad
+fly volumes create data --region iad --yes
 ```
 
 Adjust the [region](https://fly.io/docs/reference/regions/#fly-io-regions) as necessary.
 
 ## Create a machine
 
-This next part contains a lot of [properties](https://fly.io/docs/machines/api/machines-resource/#machine-config-object-properties), so first an overview:
+This next part contains a lot of [flags](https://fly.io/docs/flyctl/machine-run/), so first an overview:
 
 * The first parameter specifies the image we will be running. Fly.io provides an image capable of running `npx` and `uvx`, which is sufficient to run many MCPs. If you have a custom MCP with unique requirements, you can provide your own image. 
 * If you are using a volume, the `--region` selected must match a region in which you have an allocated but unattached volume.
@@ -62,7 +62,7 @@ This next part contains a lot of [properties](https://fly.io/docs/machines/api/m
 * `--auto*` and `--port` define what network services your application provides.
 
 ```sh
-flyctl machine run flyio/mcp:latest --region iad \
+fly machine run flyio/mcp:latest --region iad \
   --command "npx -f @modelcontextprotocol/server-filesystem /data/" \
   --vm-cpu-kind shared --vm-cpus 1 --vm-memory 1024 \
   --volume data:/data \
@@ -74,15 +74,19 @@ Note that this creates and starts a machine. If you want to only create the mach
 
 Once this command completes, you can update your `fly.toml` to include this new information using the following command:
 
-```
+```sh
 fly config save --yes
 ```
 
 ## Accessing the MCP via an inspector
 
+<div class="important">
+  As the MCP inspector is a Node.js application, you need to [Download and install Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) first. MacOS users can use [`brew install node`](https://formulae.brew.sh/formula/node).
+</div>
+
 You are test out your MCP server using the [MCP inspector](https://modelcontextprotocol.io/docs/tools/inspector):
 
-```
+```sh
 fly mcp proxy -i
 ```
 
@@ -92,7 +96,7 @@ Navigate to http://127.0.0.1:6274 ; click Connect; then List Tools; select any t
 
 Here’s an example `claude_desktop_config.json`:
 
-```
+```json
 {
   "mcpServers": {
     "filesystem": {

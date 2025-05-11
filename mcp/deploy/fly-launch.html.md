@@ -41,6 +41,10 @@ If you make any change to your `Dockerfile` or `fly.toml`, run [`fly deploy`](ht
 
 ## Accessing the MCP via an inspector
 
+<div class="important">
+  As the MCP inspector is a Node.js application, you need to [Download and install Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) first. MacOS users can use [`brew install node`](https://formulae.brew.sh/formula/node).
+</div>
+
 You are test out your MCP server using the [MCP inspector](https://modelcontextprotocol.io/docs/tools/inspector):
 
 ```sh
