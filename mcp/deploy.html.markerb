@@ -5,6 +5,8 @@ toc: false
 order: 2
 ---
 
+<%= youtube "https://www.youtube.com/watch?v=7zmg5PEnwR0" %>
+
 First we explore deploying a stdio MCP on Fly.io using your choice of the Machines API, `fly machine run`, and `fly launch`.
 The example we use in each is the same: the [FileSystem MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem) running the [flyio/mcp](https://hub.docker.com/r/flyio/mcp) image on DockerHub image on a Machine with a volume.
 

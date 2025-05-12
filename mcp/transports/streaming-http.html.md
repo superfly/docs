@@ -2,11 +2,13 @@
 title: Streaming HTTP
 layout: framework_docs
 objective: Streaming HTTP servers can be deployed as is.
-toc: false
+status: beta
 order: 3
 ---
 
 Streaming HTTP servers can be run as is, we just need to identify the port used and adjust the command, and disable the smoke checks as they will confuse the server.
+
+Start by cloning the MCP servers git repository and making a copy of the `Dockerfile`:
 
 ```sh
 git clone https://github.com/modelcontextprotocol/servers.git

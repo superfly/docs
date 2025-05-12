@@ -2,10 +2,17 @@
 title: stdio
 layout: framework_docs
 objective: This guide shows you how to wrap and proxy a stdio MCP server so that it can be deployed remotely.
+status: beta
 order: 1
 ---
 
 stdio MCP servers are not intended to be run remotely, but [`fly mcp`](https://fly.io/docs/flyctl/mcp/) provides the ability to proxy and wrap them.
+
+The data flow is tthat the proxy is a stdio MCP that forwards requests to a wrapper MCP (basically a slimmed down and streamlined Streamable HTTP server), which in turn forwards requests to a stdio MCP running on a remote server:
+
+![MCP Proxy/Wrapper data flow](/docs/images/mcp-proxy-wrap-flog.png)
+
+Start by cloning the MCP servers git repository and making a copy of the `Dockerfile`:
 
 ```sh
 git clone https://github.com/modelcontextprotocol/servers.git
