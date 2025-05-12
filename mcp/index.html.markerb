@@ -14,10 +14,22 @@ Anthropic [announced](https://www.anthropic.com/news/model-context-protocol) the
 There also is a large list of [existing servers](https://github.com/modelcontextprotocol/servers?tab=readme-ov-file#model-context-protocol-servers) that you can use.
 
 You can deploy MCP servers using three different transport types.
-You can deploy MCP servers on [Fly Machines](https://fly.io/docs/machines/), into [containers](https://community.fly.io/t/docker-without-docker-now-with-containers/22903), or include them in your app.
 You can deploy using the [Machines API](https://fly.io/docs/machines/api/), [`fly machine`](https://fly.io/docs/flyctl/machine/) commands, or [`fly launch`](https://fly.io/docs/flyctl/launch/).
+You can deploy MCP servers on [Fly Machines](https://fly.io/docs/machines/), into [containers](https://community.fly.io/t/docker-without-docker-now-with-containers/22903), or include them in your app.
 You can access your deployed MCP servers over the public internet or via a [private network](https://fly.io/docs/networking/private-networking/).
 
 ---
 
-These pages will show you how to do each.
+These pages linked on the left will show you how to do each.  Because of the number of combinations is large:
+  * Not every possible combination will be shown.  Deploy on...fly machines use `fly launch`.  Deploy with...machines API will show how to do the same thing using the machines API.
+    Deploying a Streaming HTTP MCP server in a container on a fly machine using `fly machine run` may require that you visit multiple pages.
+  * There will be a duplication. Deploy on...fly machines will use `fly launch`.  Deploy with...fly launch will describe deploying to a fly machine, and provides additional details on using `fly launch`.
+
+---
+
+General considerations that apply across these pages:
+
+  * Most guides presume that you have [flyctl installed](https://fly.io/docs/flyctl/install/), and have successfully run either
+[`fly auth signup`](https://fly.io/docs/flyctl/auth-signup/) or [`fly auth login`](https://fly.io/docs/flyctl/auth-login/).
+  * As the MCP protocol is both asynchronous and stateful, these examples will be run on a single machine (also known as a **non** highly available configuration). This enables MCP clients to fetch replies from the same server that they sent the request to.
+  * As the [MCP inspector](https://modelcontextprotocol.io/docs/tools/inspector) is a Node.js application, you need to [Download and install Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) before you use it. MacOS users can use [`brew install node`](https://formulae.brew.sh/formula/node).

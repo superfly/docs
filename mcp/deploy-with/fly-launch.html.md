@@ -57,7 +57,7 @@ Navigate to http://127.0.0.1:6274 ; click Connect; then List Tools; select any t
 
 Here’s an example `claude_desktop_config.json`:
 
-```
+```json
 {
   "mcpServers": {
     "filesystem": {
