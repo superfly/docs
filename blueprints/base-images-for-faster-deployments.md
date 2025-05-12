@@ -18,7 +18,7 @@ Most developers have a specific reason for using a base image in their project. 
 
 ## How to make a base image?
 
-Let's build an example application and deploy it!  We'll start with making an application called `go-fly-a-site` that runs a Go program as a webserver.  Once we have made the application, we'll make a base image from it with the parts that aren't specific to our application.  Once that's done, we'll make update our application to use the base image.
+Let's build an example application and deploy it!  We'll start with making an application called `go-fly-a-site` that runs a Go program as a web server.  Once we have made the application, we'll make a base image from it with the parts that aren't specific to our application.  Once that's done, we'll make update our application to use the base image.
 
 ### Making the app
 
@@ -95,7 +95,7 @@ $ curl https://go-fly-a-site.fly.dev/
 Hello, world!
 ```
 
-Now our app is built and running.  This is great, but each time we `fly deploy` we might be reinstalling golang through apt.  We probably want to do that much less often than we want to update our `main.go`, so we can make a base image that installs go for us.
+Now our app is built and running.  This is great, but each time we `fly deploy` we might be reinstalling Go through apt.  We probably want to do that much less often than we want to update our `main.go`, so we can make a base image that installs go for us.
 
 ### Make a base image
 
@@ -111,7 +111,7 @@ RUN apt-get update; apt-get upgrade; apt-get -y install golang
 CMD [ "sleep", "inf" ]
 ```
 
-We'll copy the `fly.toml` and make some modifications.  We will call this copy `fly-base.toml`.  We will append `-base` on the app name, explictly include `dockerfile` in the `[build]` section, and remove the `[http_service]` section.  We now have a file that looks like this:
+We'll copy the `fly.toml` and make some modifications.  We will call this copy `fly-base.toml`.  We will append `-base` on the app name, explicitly include `dockerfile` in the `[build]` section, and remove the `[http_service]` section.  We now have a file that looks like this:
 
 ```toml
 app = 'go-fly-a-site-base'
