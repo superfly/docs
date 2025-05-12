@@ -9,11 +9,13 @@ fly mcp wrap [flags]
 ## Options
 
 ~~~
-  -h, --help              help for wrap
-  -m, --mcp string        Path to the stdio MCP program to be wrapped.
-      --password string   Password to authenticate with. Defaults to the value of the FLY_MCP_PASSWORD environment variable.
-  -p, --port int          Port to listen on. (default 8080)
-      --user string       User to authenticate with. Defaults to the value of the FLY_MCP_USER environment variable.
+      --bearer-token string   Bearer token to authenticate with. Defaults to the value of the FLY_MCP_BEARER_TOKEN environment variable.
+  -h, --help                  help for wrap
+  -m, --mcp string            Path to the stdio MCP program to be wrapped.
+      --password string       Password to authenticate with. Defaults to the value of the FLY_MCP_PASSWORD environment variable.
+  -p, --port int              Port to listen on. (default 8080)
+      --private               Use private networking.
+      --user string           User to authenticate with. Defaults to the value of the FLY_MCP_USER environment variable.
 ~~~
 
 ## Global Options

@@ -9,13 +9,14 @@ fly mcp proxy [flags]
 ## Options
 
 ~~~
-  -a, --app string         Application name
-  -b, --bind-addr string   Local address to bind to (default "127.0.0.1")
-  -h, --help               help for proxy
-  -i, --inspector          Launch MCP inspector: a developer tool for testing and debugging MCP servers
-  -p, --password string    [optional] Password to authenticate with
-      --url string         URL of the MCP wrapper server
-  -u, --user string        [optional] User to authenticate with
+  -a, --app string            Application name
+      --bearer-token string   Bearer token to authenticate with
+  -b, --bind-addr string      Local address to bind to (default "127.0.0.1")
+  -h, --help                  help for proxy
+  -i, --inspector             Launch MCP inspector: a developer tool for testing and debugging MCP servers
+  -p, --password string       Password to authenticate with
+      --url string            URL of the MCP wrapper server
+  -u, --user string           User to authenticate with
 ~~~
 
 ## Global Options
