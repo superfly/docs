@@ -27,7 +27,7 @@ To see the same MCP server using an [MCP client](https://modelcontextprotocol.io
       "command": "/Users/rubys/.fly/bin/flyctl",
       "args": [
          "mcp",
-         "serever"
+         "server"
        ]
     }
   }
