@@ -4,7 +4,7 @@ layout: docs
 nav: firecracker
 ---
 
-This blueprint is going to explain how to use base images for faster deployments.  A base image is any image that is intended to be used as the `FROM` line in a Dockerfile.  Each app that is deployed on Fly.io can add an image to the Fly registery.
+This blueprint is going to explain how to use base images for faster deployments.  A base image is any image that is intended to be used as the `FROM` line in a Dockerfile.  Each app that is deployed on Fly.io can add an image to the Fly registry.
 
 Every app in the same organization can access the image for any other app and use it as the `FROM` line in their Dockerfile.  This means that it is very easy to make a base image by making a second app to use as the base image.
 
@@ -12,7 +12,7 @@ Every app in the same organization can access the image for any other app and us
 
 Most developers have a specific reason for using a base image in their project.  Usually it's one of the following:
 
-* The base image can be built with all of their app's dependencies.  Rebuilding the app ontop of this base image means the deploy process is only running the app-specific build processes, not the entire dependency tree.
+* The base image can be built with all of their app's dependencies.  Rebuilding the app on top of this base image means the deploy process is only running the app-specific build processes, not the entire dependency tree.
 * The same app is deployed for a number of different end users.  Each end user has some specific files or configurations to build into the image.  A base image can get *most of the way* to the final configuration, and their app can do the final steps.
 
 
@@ -99,7 +99,7 @@ Now our app is built and running.  This is great, but each time we `fly deploy` 
 
 ### Make a base image
 
-Let's make a new file called `base.Dockerfile`.  For this file, we will keep the Go install.  We will replace the previous `CMD` statement with `[ "sleep", "inf" ]` so that we can easily ssh into this image to inspect it if needed in the future. 
+Let's make a new file called `base.Dockerfile`.  For this file, we will keep the Go install.  We will replace the previous `CMD` statement with `[ "sleep", "inf" ]` so that we can easily SSH into this image to inspect it if needed in the future.
 
 
 ```Dockerfile
@@ -124,7 +124,7 @@ primary_region = 'lax'
   size = 'shared-cpu-1x'
 ```
 
-Next, we'll make the app!  The `--ha=false` makes sure we're only using one machine, and the `--config base.fly.toml` makes sure we're using the correct config file.  We must say `yes` when asked about the existing `fly.toml` file, and we don't want to tweak the settings.
+Next, we'll make the app!  The `--ha=false` makes sure we're only using one Machine, and the `--config base.fly.toml` makes sure we're using the correct config file.  We must say `yes` when asked about the existing `fly.toml` file, and we don't want to tweak the settings.
 
 ```bash
 $ fly launch --ha=false --config base.fly.toml
@@ -154,8 +154,8 @@ image size: 233 MB
 Some things to note:
 
 * We have the base image name we can use, it's the URL provided in `image:`.
-* When we go to the admin URL, we can click **Registery** and see the same image URL.
-* The **Registery** will have the list of images that have been created.
+* When we go to the admin URL, we can click **Registry** and see the same image URL.
+* The **Registry** will have the list of images that have been created.
 * Any app in your organization can use the image URL for a `FROM` statement in a Dockerfile.
 * Apps in any other organization will get an error if they try to use this image.
 
@@ -202,7 +202,7 @@ $ curl https://go-fly-a-site.fly.dev/
 Hello, world!
 ```
 
-We can shutdown the one machine for the base image:
+We can shutdown the one Machine for the base image:
 
 ```
 $ fly machine list --config base.fly.toml
@@ -214,7 +214,7 @@ ID            	NAME               	...
 d890175f6940e8	wandering-wave-6179	...
 ````
 
-Grab the machine ID and then run `fly machine stop` with the app and machine id:
+Grab the Machine ID and then run `fly machine stop` with the app and Machine id:
 
 ```bash
 $ fly machine stop d890175f6940e8 --config base.fly.toml
@@ -222,27 +222,27 @@ Sending kill signal to machine d890175f6940e8...
 d890175f6940e8 has been successfully stopped
 ```
 
-We won't be charged for the CPU and Memory usage for that small machine, we'll only encounter rootfs charged for the image that's being stored.
+We won't be charged for the CPU and Memory usage for that small Machine, we'll only encounter rootfs charged for the image that's being stored.
 
-Now we have a base image for our project!  We can modify and deploy our `main.go` code without having to reinstall Go.  If we ever need to add additional dependencies to the base image, we just modify the `base.Dockerfile`, deploy it again, and get the new `image:` from the deploy command or in the **Registery** section of the app's dashboard.
+Now we have a base image for our project!  We can modify and deploy our `main.go` code without having to reinstall Go.  If we ever need to add additional dependencies to the base image, we just modify the `base.Dockerfile`, deploy it again, and get the new `image:` from the deploy command or in the **Registry** section of the app's dashboard.
 
 ## Command Reference
 
-Get machines for the base image: `fly machine list --config base.fly.toml`
+Get Machines for the base image: `fly machine list --config base.fly.toml`
 
-Start machine for the base image: `fly machine start <ID_FROM_LIST>  --config base.fly.toml`
+Start Machine for the base image: `fly machine start <ID_FROM_LIST>  --config base.fly.toml`
 
-Stop machine for the base image: `fly machine stop <ID_FROM_LIST>  --config base.fly.toml`
+Stop Machine for the base image: `fly machine stop <ID_FROM_LIST>  --config base.fly.toml`
 
-Get SSH access to the base image: `fly ssh console --config base.fly.toml` (Make sure machine is started)
+Get SSH access to the base image: `fly ssh console --config base.fly.toml` (Make sure the Machine is started)
 
-Rebuild the base image: `fly deploy --config base.fly.toml` (Update `base.Dockerfile` with your changes first, and remember to stop the machine when you're done)
+Rebuild the base image: `fly deploy --config base.fly.toml` (Update `base.Dockerfile` with your changes first, and remember to stop the Machine when you're done)
 
 ## Additional Notes
 
 If you have a base image that many different apps will use, it can make sense to keep it all in its own app directory.  You can use `fly.toml` and `Dockerfile` like a normal app.
 
-The base image will stick around in the registry and as long as an image is associated with a machine -- even if the machine is stopped -- it won't be deleted.
+The base image will stick around in the registry and as long as an image is associated with a Machine -- even if the Machine is stopped -- it won't be deleted.
 
 You can find the registry URL of the images for your base image in the dashboard under the **Registry** tab for the app, or by running `fly releases --image`
 
