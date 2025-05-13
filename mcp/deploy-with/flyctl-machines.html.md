@@ -1,9 +1,9 @@
 ---
-title: flyctl machines
+title: fly machines run
 layout: framework_docs
 objective: This guide shows you how to use flyctl commands to create a Fly.io machine that runs an MCP server remotely.
 status: beta
-order: 2
+order: 3
 ---
 
 The [Fly.io command line interface](https://fly.io/docs/flyctl/help/) is a higher level interface that enables you to do much of what you can do via the Machines API. It is suitable for scripting and ad hoc exploration and updates.
@@ -23,7 +23,7 @@ fly apps create --generate-name --save
 
 If you prefer, you can replace `--generate-name` with a name of your choice.
 
-You can also specify the organization by passing in a `--org` parameter, or let it prompt you.
+You can also specify the organization by passing in a `--org` pparameter, or let it prompt you.
 
 ## Create IP addresses for your application
 
@@ -54,18 +54,20 @@ Adjust the [region](https://fly.io/docs/reference/regions/#fly-io-regions) as ne
 
 This next part contains a lot of [flags](https://fly.io/docs/flyctl/machine-run/), so first an overview:
 
-* The first parameter specifies the image we will be running. Fly.io provides an image capable of running `npx` and `uvx`, which is sufficient to run many MCPs. If you have a custom MCP with unique requirements, you can provide your own image. 
+* The first parameter specifies the image we will be running. Fly.io provides an image capable of running `npx` and `uvx`, which is sufficient to run many MCPs. If you have a custom MCP with unique requirements, you can provide your own image.
+* The next parameter specifies the command we will be running.
+* `--entrypoint` invokes `fly mcp wrap` passing the command we specified.
 * If you are using a volume, the `--region` selected must match a region in which you have an allocated but unattached volume.
-* `--command` specifies the command we will be running. 
-* The `--vm-*` parameters specify the size of the machine desired.
 * `--volume` specifies the volume, and where it is to be mounted.
+* The `--vm-*` parameters specify the size of the machine desired.
 * `--auto*` and `--port` define what network services your application provides.
 
 ```sh
-fly machine run flyio/mcp:latest --region iad \
-  --command "npx -f @modelcontextprotocol/server-filesystem /data/" \
+fly machine run flyio/mcp:latest \
+  "npx -f @modelcontextprotocol/server-filesystem /data/" \
+  --entrypoint "/usr/bin/flyctl mcp wrap --" \
+  --region iad --volume data:/data \
   --vm-cpu-kind shared --vm-cpus 1 --vm-memory 1024 \
-  --volume data:/data \
   --autostart=true --autostop=stop \
   --port 80:8080/tcp:http --port 443:8080/tcp:http:tls
 ```

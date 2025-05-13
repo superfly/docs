@@ -3,7 +3,7 @@ title: Machines API
 layout: framework_docs
 objective: This guide shows you how to use the Machines API to create a Fly.io machine that runs an MCP server remotely.
 status: beta
-order: 1
+order: 2
 ---
 
 The [Machines API](https://fly.io/docs/machines/api/) is a low level interface that provides access to the full range of platform services.

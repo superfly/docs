@@ -1,9 +1,9 @@
 ---
 title: Your application
 layout: framework_docs
-objective: Demonstrates running an MCP server in a container on a fly machine
+objective: Demonstrates running an MCP server inside your application
 status: beta
-order: 4
+order: 3
 ---
 
 [Tidewave](https://tidewave.ai/) is an example of a MCP server that runs inside your application. It currently is available for Phoenix and Rails.

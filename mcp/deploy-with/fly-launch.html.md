@@ -3,7 +3,7 @@ title: fly launch
 layout: framework_docs
 objective: This guide shows you how to use flyctl launch to create a Fly.io machine that runs an MCP server remotely.
 status: beta
-order: 3
+order: 1
 ---
 
 [Fly launch](https://fly.io/docs/reference/fly-launch/) is a bundle of features that take a lot of the work out of deploying and managing your Fly App.

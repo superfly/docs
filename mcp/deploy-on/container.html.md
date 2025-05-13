@@ -3,7 +3,7 @@ title: A container
 layout: framework_docs
 objective: Demonstrates running an MCP server in a container on a fly machine
 status: beta
-order: 3
+order: 2
 ---
 
 <div class="important">

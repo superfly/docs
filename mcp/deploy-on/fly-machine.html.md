@@ -1,9 +1,9 @@
 ---
-title: fly machine
+title: A Fly Machine
 layout: framework_docs
 objective: Demonstrates using flyctl launch to create a Fly.io machine that runs an MCP server remotely.
 status: beta
-order: 2
+order: 1
 ---
 
 [Fly Machines](https://fly.io/docs/machines/) are fast-launching VMs; they can be started and stopped at subsecond speeds. We give you control of your Machine count and each Machine’s lifecycle, resources, and region placement with a simple REST API or flyctl commands.
