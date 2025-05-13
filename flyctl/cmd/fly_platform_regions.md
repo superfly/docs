@@ -1,4 +1,5 @@
-View a list of regions where Fly has edges and/or datacenters
+View a list of regions where Fly has datacenters.
+'Capacity' shows how many performance-1x VMs can currently be launched in each region.
 
 
 ## Usage
