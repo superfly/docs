@@ -43,7 +43,7 @@ func HelloServer(w http.ResponseWriter, r *http.Request) {
 
 ```
 
-Create a Dockerfile based on debian:12.  Install curl and go, compile the Go code, and configure the image to run the compiled binary.
+Create a Dockerfile based on Debian 12.  Install curl and go, compile the Go code, and configure the image to run the compiled binary.
 
 ```Dockerfile
 FROM debian:12
@@ -232,7 +232,7 @@ Sending kill signal to machine d890175f6940e8...
 d890175f6940e8 has been successfully stopped
 ```
 
-You’ll only be charged for the root filesystem storage of the image that's being stored.
+You’ll only be charged for the root file system storage of the image that's being stored.
 
 Now we have a base image for our project!  We can modify and deploy our `main.go` code without having to reinstall Go.  If we ever need to add additional dependencies to the base image, we just modify the `base.Dockerfile`, deploy it again, and get the new `image:` from the deploy command or in the **Registry** section of the app's dashboard.
 
