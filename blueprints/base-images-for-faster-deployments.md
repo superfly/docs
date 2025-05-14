@@ -16,7 +16,7 @@ Most developers have a specific reason for using a base image in their project. 
 * The same app is deployed for a number of different end users.  Each end user has some specific files or configurations to build into the image.  A base image can get *most of the way* to the final configuration, and their app can do the final steps.
 
 
-## How to make a base image?
+## How to make a base image
 
 This guide walks through building and deploying an example application called go-fly-a-site, which runs a simple Go web server.  After deploying the app, you'll create a base image from its non-app-specific parts.  Finally, you'll update the app to use that base image.
 
@@ -71,7 +71,7 @@ Your app is ready! Deploy with `flyctl deploy`
 
 Now we have an additional file, `fly.toml` and have created the app `go-fly-a-site`.
 
-We'll Deploy the app:
+Deploy the app:
 
 ```bash
 $ fly deploy
