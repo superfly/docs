@@ -4,7 +4,7 @@ layout: docs
 nav: firecracker
 ---
 
-This blueprint is going to explain how to use base images for faster deployments.  A base image is any image that is intended to be used as the `FROM` line in a Dockerfile.  Each app that is deployed on Fly.io can add an image to the Fly registry.
+This blueprint explains how to use base images for faster deployments.  A base image is any image that is intended to be used as the `FROM` line in a Dockerfile.  Each app that is deployed on Fly.io can add an image to the Fly registry.
 
 Every app in the same organization can access the image for any other app and use it as the `FROM` line in their Dockerfile.  This means that it is very easy to make a base image by making a second app to use as the base image.
 
@@ -18,7 +18,7 @@ Most developers have a specific reason for using a base image in their project. 
 
 ## How to make a base image?
 
-Let's build an example application and deploy it!  We'll start with making an application called `go-fly-a-site` that runs a Go program as a web server.  Once we have made the application, we'll make a base image from it with the parts that aren't specific to our application.  Once that's done, we'll make update our application to use the base image.
+This guide walks through building and deploying an example application called go-fly-a-site, which runs a simple Go web server.  After deploying the app, you'll create a base image from its non-app-specific parts.  Finally, you'll update the app to use that base image.
 
 ### Making the app
 
@@ -43,7 +43,7 @@ func HelloServer(w http.ResponseWriter, r *http.Request) {
 
 ```
 
-Now we'll make a Dockerfile.  We're going to base the Dockerfile on `debian:12`, install `curl` and `go`, compile our Go code, and set it to run.
+Create a Dockerfile based on debian:12.  Install curl and go, compile the Go code, and configure the image to run the compiled binary.
 
 ```Dockerfile
 FROM debian:12
@@ -61,7 +61,7 @@ RUN go build -o /opt/server /opt/main.go
 CMD [ "/opt/server" ]
 ```
 
-Now we have the go code, `main.go` in this directory, and we have this `Dockerfile` as well.  We'll deploy the application:
+With `main.go` and the `Dockerfile` in your project directory, deploy the application:
 
 ```bash
 $ fly launch --name go-fly-a-site --vm-size shared-cpu-1x --no-deploy
@@ -71,7 +71,7 @@ Your app is ready! Deploy with `flyctl deploy`
 
 Now we have an additional file, `fly.toml` and have created the app `go-fly-a-site`.
 
-We'll deploy the app:
+We'll Deploy the app:
 
 ```bash
 $ fly deploy
@@ -110,8 +110,13 @@ RUN apt-get update; apt-get upgrade; apt-get -y install golang
 
 CMD [ "sleep", "inf" ]
 ```
+Copy `fly.toml` to `fly-base.toml` and make the following modification:
 
-We'll copy the `fly.toml` and make some modifications.  We will call this copy `fly-base.toml`.  We will append `-base` on the app name, explicitly include `dockerfile` in the `[build]` section, and remove the `[http_service]` section.  We now have a file that looks like this:
+* Append -base to the app name.
+* Explicitly include dockerfile in the `[build]` section.
+* Remove the `[http_service]` section.
+
+The resulting file looks like this:
 
 ```toml
 app = 'go-fly-a-site-base'
@@ -124,7 +129,12 @@ primary_region = 'lax'
   size = 'shared-cpu-1x'
 ```
 
-Next, we'll make the app!  The `--ha=false` makes sure we're only using one Machine, and the `--config base.fly.toml` makes sure we're using the correct config file.  We must say `yes` when asked about the existing `fly.toml` file, and we don't want to tweak the settings.
+Create the app using the following options:
+
+* `--ha=false` ensures the app uses a single Machine.
+* `--config base.fly.toml` specifies the correct config file.
+
+When prompted about the existing `fly.toml` file, select yes to copy its configuration. You can skip tweaking the settings.
 
 ```bash
 $ fly launch --ha=false --config base.fly.toml
@@ -162,7 +172,7 @@ Some things to note:
 
 ### Updating the app to use the base image
 
-Now that we have this base image done, let's update the Dockerfile for go-fly-a-site:
+After creating the base image, update the Dockerfile for go-fly-a-site:
 
 
 ```Dockerfile
@@ -178,7 +188,7 @@ RUN go build -o /opt/server /opt/main.go
 CMD [ "/opt/server" ]
 ```
 
-With the updated Dockerfile in place, we'll deploy with `fly deploy`
+With the updated Dockerfile in place, deploy the app with `fly deploy`.
 
 ```bash
 $ fly deploy
@@ -222,7 +232,7 @@ Sending kill signal to machine d890175f6940e8...
 d890175f6940e8 has been successfully stopped
 ```
 
-We won't be charged for the CPU and Memory usage for that small Machine, we'll only encounter rootfs charged for the image that's being stored.
+You’ll only be charged for the root filesystem storage of the image that's being stored.
 
 Now we have a base image for our project!  We can modify and deploy our `main.go` code without having to reinstall Go.  If we ever need to add additional dependencies to the base image, we just modify the `base.Dockerfile`, deploy it again, and get the new `image:` from the deploy command or in the **Registry** section of the app's dashboard.
 
