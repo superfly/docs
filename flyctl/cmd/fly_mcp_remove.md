@@ -14,8 +14,8 @@ fly mcp remove [flags]
       --config stringArray   Path to the MCP client configuration file (can be specified multiple times)
       --cursor               Remove MCP server from the Cursor client configuration
   -h, --help                 help for remove
-      --name string          Name to use for the MCP server in the MCP client configuration
       --neovim               Remove MCP server from the Neovim client configuration
+      --server string        Name to use for the MCP server in the MCP client configuration
       --vscode               Remove MCP server from the VS Code client configuration
       --windsurf             Remove MCP server from the Windsurf client configuration
       --zed                  Remove MCP server from the Zed client configuration
