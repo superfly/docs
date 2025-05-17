@@ -16,9 +16,9 @@ fly mcp add [flags]
       --cursor               Add MCP server to the Cursor client configuration
       --flycast              Use wireguard and flycast for access
   -h, --help                 help for add
-      --name string          Name to use for the MCP server in the MCP client configuration
       --neovim               Add MCP server to the Neovim client configuration
       --password string      Password to authenticate with
+      --server string        Name to use for the MCP server in the MCP client configuration
       --url string           URL of the MCP wrapper server
       --user string          User to authenticate with
       --vscode               Add MCP server to the VS Code client configuration
