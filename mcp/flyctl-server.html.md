@@ -1,8 +1,8 @@
 ---
-title: flyctl server
+title: flyctl mcp server
 layout: framework_docs_overview
 toc: false
-order: 5
+order: 6
 ---
 
 <a href="https://fly.io/blog/mcp-provisioning/">

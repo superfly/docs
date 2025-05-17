@@ -2,7 +2,7 @@
 title: MCP Transports
 layout: framework_docs_overview
 toc: false
-order: 1
+order: 2
 ---
 
 The MCP standard define two types of base transports:

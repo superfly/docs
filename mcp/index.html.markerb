@@ -13,7 +13,9 @@ Fly.io is a great place to run MCP servers. We also provide an [MCP server](./fl
 Anthropic [announced](https://www.anthropic.com/news/model-context-protocol) the [Model Context Protocol](https://modelcontextprotocol.io/introduction) on November 25, 2024, along with a number of [SDKs](https://modelcontextprotocol.io/sdk/java/mcp-overview) in a variety of languages.
 There also is a large list of [existing servers](https://github.com/modelcontextprotocol/servers?tab=readme-ov-file#model-context-protocol-servers) that you can use.
 
-Deploying a MCP server involves making four choices: [MCP transport](./transports), the interface you use to [deploy it with](./deploy-with), where you want to [deploy it on](./deploy-on), and [access control](./access-control).  In each case we present your choices, starting with our recommendation.
+Depoloying an `npx` or `uv` stdio MCP server into a Fly machine and configuring a MCP client to connect to it is made easy by [`fly mcp launch`](./launch).
+
+Deploying other MCP servers involves making four choices: [MCP transport](./transports), the interface you use to [deploy it with](./deploy-with), where you want to [deploy it on](./deploy-on), and [access control](./access-control).  In each case we present your choices, starting with our recommendation.
 
 ---
 
