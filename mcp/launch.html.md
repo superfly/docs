@@ -5,15 +5,13 @@ toc: false
 order: 1
 ---
 
-Launching an `npx` or `uv` stdio MCP server into a Fly machine and configuring a MCP client to connect to it is a one-step process. The `fly mcp launch` command will create a new Fly machine, install the MCP server, and configure the MCP client to connect to it.
+Launching an `npx` or `uvx` stdio MCP server into a Fly machine and configuring a MCP client to connect to it is a one-step process. The `fly mcp launch` command will create a new Fly machine, install the MCP server, and configure the MCP client to connect to it.
 
 ```sh
-fly mcp launch \
-  "npx -y @modelcontextprotocol/server-everything" \
-  --claude --server everything
+fly mcp launch "uvx mcp-server-time" --claude --server time
 ```
 
-The above command runs `fly mcp launch`, specifies the command to run in the machine, selects the `claude` client to be the one to be configured using the server name `everything`.
+The above command specifies the command to run in the machine, selects the `claude` client to be the one to be configured using the server name `time`.
 
 Support for Claude, Cursor, Neovim, VS Code, Windsurf, and Zed are built in.  You can also provide the path to the configuration file. You can also provide multiple clients and configuration files at once.
 
@@ -32,7 +30,7 @@ You can use the [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspe
 </div>
 
 ```
-fly mcp inspect --claude --server everything
+fly mcp inspect --claude --server time
 ```
 
 This command is simply a convenience, all it does is run the inspector set up to connect to the same machine, authentication, and arguments as the MCP client (in this case, Claude) would.
@@ -42,7 +40,7 @@ This command is simply a convenience, all it does is run the inspector set up to
 When you no longer need the MCP, you can destroy it:
 
 ```
-fly mcp destroy --claude --server everything
+fly mcp destroy --claude --server time
 ```
 
 This will also remove the configuration entry from the MCP client.
