@@ -9,7 +9,7 @@ fly launch [flags]
 
 ~~~
       --attach                           Attach this new application to the current application
-      --auto-stop string                 Automatically suspend the app after a period of inactivity. Valid values are 'off', 'stop', and 'suspend (default "stop")
+      --auto-stop string                 Automatically suspend the app after a period of inactivity. Valid values are 'off', 'stop', and 'suspend' (default "stop")
       --build-arg stringArray            Set of build time variables in the form of NAME=VALUE pairs. Can be specified multiple times.
       --build-only                       Build but do not deploy
       --build-secret stringArray         Set of build secrets of NAME=VALUE pairs. Can be specified multiple times. See https://docs.docker.com/engine/reference/commandline/buildx_build/#secret
@@ -28,6 +28,7 @@ fly launch [flags]
                                              - "volume-opt=<key>=<value>", can be specified more than once, takes a key-value pair consisting of the option name and its value.
                                          Repeat for each volume in order (comma-separated lists not accepted)
                                          
+      --command string                   The command to override the Docker CND.
   -c, --config string                    Path to application configuration file
       --copy-config                      Use the configuration file if present without prompting
       --deploy-retries string            Number of times to retry a deployment if it fails (default "auto")
@@ -91,6 +92,7 @@ fly launch [flags]
       --vm-gpus int                      Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
       --vm-memory string                 Memory (in megabytes) to attribute to the VM
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
+  -v, --volume strings                   Volume to mount, in the form of <volume_name>:/path/inside/machine[:<options>]
       --volume-initial-size int          The initial size in GB for volumes created on first deploy
       --wait-timeout string              Time duration to wait for individual machines to transition states and become healthy. (default "5m0s")
       --wg                               Determines whether communication with remote builders are conducted over wireguard or plain internet(https) (default true)

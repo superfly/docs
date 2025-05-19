@@ -9,7 +9,7 @@ fly mcp launch command [flags]
 ## Options
 
 ~~~
-      --auto-stop string            Automatically suspend the app after a period of inactivity. Valid values are 'off', 'stop', and 'suspend (default "stop")
+      --auto-stop string            Automatically suspend the app after a period of inactivity. Valid values are 'off', 'stop', and 'suspend' (default "suspend")
       --bearer-token                Use bearer token for authentication (default true)
       --claude                      Add MCP server to the Claude client configuration
       --config stringArray          Path to the MCP client configuration file (can be specified multiple times)
@@ -35,6 +35,7 @@ fly mcp launch command [flags]
       --vm-gpus int                 Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
       --vm-memory string            Memory (in megabytes) to attribute to the VM
       --vm-size string              The VM size to set machines to. See "fly platform vm-sizes" for valid values
+  -v, --volume strings              Volume to mount, in the form of <volume_name>:/path/inside/machine[:<options>]
       --vscode                      Add MCP server to the VS Code client configuration
       --windsurf                    Add MCP server to the Windsurf client configuration
       --zed                         Add MCP server to the Zed client configuration
