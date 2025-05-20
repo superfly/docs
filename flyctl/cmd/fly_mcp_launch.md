@@ -20,6 +20,7 @@ fly mcp launch command [flags]
       --flycast                     Use wireguard and flycast for access
   -h, --help                        help for launch
       --host-dedication-id string   The dedication id of the reserved hosts for your organization (if any)
+      --image string                The image to use for the app
   -i, --inspector                   Launch MCP inspector: a developer tool for testing and debugging MCP servers
       --name string                 Suggested name for the app
       --neovim                      Add MCP server to the Neovim client configuration
