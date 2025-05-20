@@ -161,9 +161,7 @@ Load the application and refresh the page a few times to see the rate limit in a
 
 ## Pricing
 
-Arcjet is currently in beta and is free to use. The current features available today will be unlimited and free to use. Our goal is to help developers protect their applications so we don’t want you to incur costs if you are attacked.
-
-Arcjet pricing will be based on the usage of features we intend to introduce in the future e.g. organization-wide rules, compliance tools, team management, etc.
+See [the Arcjet pricing page](https://arcjet.com/pricing).
 
 ## Support
 
