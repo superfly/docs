@@ -11,6 +11,7 @@ fly mcp [command] [flags]
 * [destroy](/docs/flyctl/mcp-destroy/)	 - [experimental] Destroy an MCP stdio server
 * [inspect](/docs/flyctl/mcp-inspect/)	 - [experimental] Inspect a MCP stdio server
 * [launch](/docs/flyctl/mcp-launch/)	 - [experimental] Launch an MCP stdio server
+* [list](/docs/flyctl/mcp-list/)	 - [experimental] List MCP servers
 * [proxy](/docs/flyctl/mcp-proxy/)	 - [experimental] Start an MCP proxy client
 * [remove](/docs/flyctl/mcp-remove/)	 - [experimental] Remove MCP proxy client from a MCP client configuration
 * [server](/docs/flyctl/mcp-server/)	 - [experimental] Start a flyctl MCP server

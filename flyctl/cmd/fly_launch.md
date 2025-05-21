@@ -68,6 +68,7 @@ fly launch [flags]
       --no-create                        Do not create an app, only generate configuration files
       --no-db                            Skip automatically provisioning a database
       --no-deploy                        Do not immediately deploy the new app after fly launch creates and configures it
+      --no-github-workflow               Skip automatically provisioning a GitHub fly deploy workflow
       --no-object-storage                Skip automatically provisioning an object storage bucket
       --no-public-ips                    Do not allocate any new public IP addresses
       --no-redis                         Skip automatically provisioning a Redis instance
