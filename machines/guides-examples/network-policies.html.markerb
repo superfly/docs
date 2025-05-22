@@ -55,7 +55,7 @@ Selectors determine which Machines your network policy applies to. You can targe
 
 ### All Machines in an app
 
-To apply a policy to every Machine in your application:
+To apply a policy to every Machine in your app:
 
 ```json
 { "all": true }
