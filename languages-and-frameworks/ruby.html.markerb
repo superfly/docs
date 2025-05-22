@@ -154,7 +154,7 @@ The values aren't displayed since they are secret!
 
 ## _Deploying to Fly_
 
-To deploy changes to your app, just run just run:
+To deploy changes to your app, just run:
 
 ```cmd
 fly deploy
