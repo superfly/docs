@@ -30,7 +30,7 @@ A typical setup includes two services:
 
 ### HTTP Request Processing
 
-![HTTP Request Flow](connecting-to-user-machines-http-flow.svg)
+![HTTP Request Flow](/docs/blueprints/connecting-to-user-machines-http-flow.svg)
 
 This diagram illustrates how HTTP requests are processed:
 - Public HTTP requests arrive at your router app, which issues a fly-replay to a specific user app. The Fly Proxy then replays the request to the target app, matching the service based on the inbound request port.
