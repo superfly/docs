@@ -24,6 +24,14 @@ fly mcp server --claude --server flyctl
 
 This will add the [flyctl MCP server](./flyctl-server.html.md) to the Claude configuration with the name of `flyctl`.
 
+## Fetch
+
+[Fetch MCP server](https://github.com/modelcontextprotocol/servers/tree/main/src/fetch#fetch-mcp-server)
+
+```sh
+fly mcp launch "uvx mcp-server-fetch" --claude --server fetch
+```
+
 ## Slack
 
 Look at the Slack [setup](https://github.com/modelcontextprotocol/servers/blob/main/src/slack/README.md#setup) instructions and obtain a _Bot User OAuth Token_ and _Team ID_, then run:
