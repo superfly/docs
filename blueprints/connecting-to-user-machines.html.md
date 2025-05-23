@@ -63,8 +63,14 @@ This pattern allows you to:
 
 ## Authentication
 
-- **Management Service**: Use simple `Authorization: Bearer <token>` with a pre-shared secret assigned to the app at creation time. No need for more complicated authentication mechanisms.
-- **Public Services**: Authenticate these through your coordinator or router app before issuing the `fly-replay` header.
+Validation of replayed requests should happen within the user machine. We recommend using the `state` mechanism in fly-replay for this purpose:
+
+1. **Create a preshared key for each user app** and set it as an app secret.
+2. When issuing a replay, set the header: `fly-replay: app=<app>,state=<key>`.
+3. On the user machine, parse the `fly-replay-src` header. This header contains fields such as `instance`, `region`, `t`, and `state` (see [fly-replay documentation](https://fly.io/docs/networking/dynamic-request-routing/#the-fly-replay-response-header)).
+4. Check the `state` value in `fly-replay-src` against the preshared key for the app. If it matches, the request is validated.
+
+See the [TypeScript example below](#example-authenticating-a-replayed-request-in-typescript) for a practical implementation of this validation.
 
 ## Antipatterns
 
@@ -105,4 +111,44 @@ Here's an example service configuration for a machine that includes both a manag
 This configuration sets up:
 - A management service listening internally on port 9090 and exposed on port 9090
 - A public service listening internally on port 8080 and exposed on port 80
-Both services will automatically start when needed and stop when idle. 
+Both services will automatically start when needed and stop when idle.
+
+### Example: Authenticating a Replayed Request in TypeScript
+
+Here's a simple example of how you might authenticate a replayed request in a TypeScript HTTP handler using the `fly-replay-src` header and a preshared key:
+
+```typescript
+// Example preshared key for the app (in practice, load from env or secret store)
+const PRESAHRED_KEY = process.env.PRESHARED_KEY;
+
+function parseFlyReplaySrc(header: string | undefined) {
+  if (!header) return {};
+  return Object.fromEntries(
+    header.split(',').map(pair => {
+      const [key, value] = pair.split('=');
+      return [key.trim(), value?.trim()];
+    })
+  );
+}
+
+async function authenticateReplay(request: Request): Promise<boolean> {
+  const flyReplaySrc = request.headers.get('fly-replay-src');
+  const params = parseFlyReplaySrc(flyReplaySrc);
+  return params.state === PRESAHRED_KEY;
+}
+
+// Example usage in a fetch handler
+addEventListener('fetch', (event) => {
+  event.respondWith(handleRequest(event.request));
+});
+
+async function handleRequest(request: Request): Promise<Response> {
+  if (!(await authenticateReplay(request))) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+  // ...handle the authenticated request...
+  return new Response('OK');
+}
+```
+
+This code checks the `fly-replay-src` header, parses out the `state` value, and compares it to the preshared key. If it matches, the request is authenticated. 
