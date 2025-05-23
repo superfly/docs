@@ -16,7 +16,7 @@ This blueprint explains how to use Fly Machines to securely host ephemeral devel
 Your architecture should include:
 
 - **Router app(s)**
-    - A Fly.io app to handle requests to wildcard subdomains (`*.example.com`). Uses `fly-replay` headers to transparently redirect each request to the correct app and machine. If you have clusters of users (or robots) in different geographic regions, you can spin up a router app in multiple regions to increase reliability and reduce latency (you might also want to consider a globally distributed datastore like [Upstash for Redis](https://fly.io/docs/upstash/redis/#what-you-should-know)). 
+    - A Fly.io app to handle requests to wildcard subdomains (`*.example.com`). Uses `fly-replay` headers to transparently redirect each request to the correct app and machine. If you have clusters of users (or robots) in different geographic regions, you can spin up a router app in multiple regions. See [Connecting to User Machines](/docs/blueprints/connecting-to-user-machines/) for details on how to implement the routing pattern.
 - **User apps (pre-created)**
     - Dedicated per-user (or per-robot) Fly apps ([more about why you should create a dedicated app per customer/robot](https://fly.io/docs/machines/guides-examples/one-app-per-user-why)), each containing isolated Fly Machines. App and Machine creation is not instantaneous, so we recommend provisioning a pool of these before you need them so you can quickly assign upon request.
 - **Fly Machines (with optional volumes)**
@@ -32,7 +32,7 @@ Your router app handles all incoming wildcard traffic. Its responsibility is sim
 
 - Extract subdomains (like `alice.example.com` → `alice-123`).
 - Look up the correct app (and optionally machine ID) for that user.
-- Issue a `fly-replay` header directing the Fly Proxy to [internally redirect the request](https://fly.io/docs/networking/dynamic-request-routing) (this should add no more than ~10 milliseconds of latency if the router app is deployed close to the user).
+- Issue a `fly-replay` header directing the Fly Proxy to [internally redirect the request](/docs/blueprints/connecting-to-user-machines/#using-fly-replay) (this should add no more than ~10 milliseconds of latency if the router app is deployed close to the user).
 - When appropriate, use [replay caching](https://fly.io/docs/networking/dynamic-request-routing/#replay-caching) to further reduce latency and load on the router app.
 - Make sure you've added [a wildcard domain](https://fly.io/docs/networking/custom-domain/#get-certified) (*.example.com) to your router app (read more about the [certificate management endpoint here](https://fly.io/docs/networking/custom-domain-api/)).
 
