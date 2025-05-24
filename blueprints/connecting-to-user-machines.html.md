@@ -119,7 +119,7 @@ Here's a simple example of how you might authenticate a replayed request in a Ty
 
 ```typescript
 // Example preshared key for the app (in practice, load from env or secret store)
-const PRESAHRED_KEY = process.env.PRESHARED_KEY;
+const PRESHARED_KEY = process.env.PRESHARED_KEY;
 
 function parseFlyReplaySrc(header: string | undefined) {
   if (!header) return {};
@@ -134,7 +134,7 @@ function parseFlyReplaySrc(header: string | undefined) {
 async function authenticateReplay(request: Request): Promise<boolean> {
   const flyReplaySrc = request.headers.get('fly-replay-src');
   const params = parseFlyReplaySrc(flyReplaySrc);
-  return params.state === PRESAHRED_KEY;
+  return params.state === PRESHARED_KEY;
 }
 
 // Example usage in a fetch handler
