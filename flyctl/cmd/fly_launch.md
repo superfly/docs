@@ -84,6 +84,7 @@ fly launch [flags]
       --regions strings                  Deploy to machines only in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times.
       --release-command-timeout string   Time duration to wait for a release command finish running, or 'none' to disable. (default "5m0s")
       --remote-only                      Perform builds on a remote builder instance instead of using the local docker daemon. This is the default. Use --local-only to build locally.
+      --secret stringArray               Set of secrets in the form of NAME=VALUE pairs. Can be specified multiple times.
   -s, --signal string                    Signal to stop the machine with for bluegreen strategy (default: SIGINT)
       --smoke-checks                     Perform smoke checks during deployment (default true)
       --strategy string                  The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. The default strategy is rolling.
