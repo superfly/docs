@@ -21,19 +21,8 @@ fly launch --from https://github.com/superfly/fly-telemetry \
   --copy-config\
   --org $ORG \
   --env ORG=$ORG \
-  --no-deploy
-```
-
-Stage an access token secret:
-
-```console
-fly secrets set ACCESS_TOKEN="$(fly tokens create readonly $ORG)" --stage
-```
-
-Now, deploy with a [Flycast]("/networking/flycast/) address:
-
-```console
-fly deploy --flycast
+  --secret ACCESS_TOKEN="$(fly tokens create readonly $ORG)"
+  --flycast
 ```
 
 After the deployment finishes, browse to the app's private URL [through WireGuard]("/blueprints/connect-private-network-wireguard/) or `fly proxy` and you have instant Grafana dashboards.
