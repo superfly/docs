@@ -62,19 +62,19 @@ When connecting from a Fly app in your org, you'll need to supply an access toke
 Logs in the NATS stream are organized by **subject**. The subject format for Fly logs is:
 
 ```console
-logs.<app_name>.<region>.<instance_id>
+logs.<app_name>.<region>.<machine_id>
 ```
 
-For example, if you have an application named `sandwich` and it's running in region `dfw`, you might see subjects like `logs.sandwich.dfw.abc123` (where `abc123` is the instance ID). You can subscribe at varying levels of granularity using NATS wildcards:
+For example, if you have an application named `sandwich` and it's running in region `dfw`, you might see subjects like `logs.sandwich.dfw.abc123` (where `abc123` is the Machine ID). You can subscribe at varying levels of granularity using NATS wildcards:
 
 | Subject Pattern | Description |
 |----------------|-------------|
-| `logs.>` | Subscribe to **all logs** from all apps in your org (every region, every instance) |
-| `logs.<app>.*.>` | Subscribe to all logs from a specific app (across all regions and instances) |
+| `logs.>` | Subscribe to **all logs** from all apps in your org (every region, every Machine) |
+| `logs.<app>.*.>` | Subscribe to all logs from a specific app (across all regions and Machine) |
 | `logs.*.<region>.>` | Subscribe to all logs from a specific region |
-| `logs.<app>.<region>.<instance>` | Subscribe to a single instance (full exact subject) |
+| `logs.<app>.<region>.<machine>` | Subscribe to a single Machine (full exact subject) |
 
-In practice, to stream all logs for a given user's app, you'll subscribe to the subject pattern `logs.<user-app-name>.>` – this will capture any log line from any instance of that app, in any region.
+In practice, to stream all logs for a given user's app, you'll subscribe to the subject pattern `logs.<user-app-name>.>` – this will capture any log line from any Machine of that app, in any region.
 
 ### A Real-World Example
 
