@@ -18,7 +18,7 @@ In an empty directory, run:
 ```console
 fly launch --from https://github.com/superfly/fly-telemetry \
   --yes \
-  --copy-config\
+  --copy-config \
   --org $ORG \
   --env ORG=$ORG \
   --secret ACCESS_TOKEN="$(fly tokens create readonly $ORG)"
