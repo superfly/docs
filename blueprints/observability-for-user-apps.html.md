@@ -5,9 +5,9 @@ nav: firecracker
 date: 2025-05-26
 ---
 
-When you run a platform for users to execute their own code on Fly.io —[think per-user development environments](https://fly.io/docs/blueprints/per-user-dev-environments/) or AI/LLM apps—it's a good idea to have real-time observability for those user's apps. You might _also_ want to stream logs from those apps back to the original developer (your end-user), so they can see what their code is doing.
+When you run a platform for users to execute their own code on Fly.io—[think per-user development environments](https://fly.io/docs/blueprints/per-user-dev-environments/) or AI/LLM apps—it's a good idea to have real-time observability for those user apps. You might _also_ want to stream logs from those apps back to the original developer (your end-user), so they can see what their code is doing.
 
-Fly.io offers built-in telemetry—based on [**NATS**](https://nats.io/)—that you can tap into to achieve this. At a high level, Fly.io captures everything your app writes to STDOUT and funnels it into an internal NATS log stream. A proxy in front of this NATS cluster ensures that each organization can only access its own applications' logs. Both the `flyctl logs` command and the our web dashboard's "Live Logs" use this pipeline under the hood. We can leverage the same system! By connecting a NATS client within your Fly organization's [private network](https://fly.io/docs/networking/private-networking/), we can subscribe to log subjects and stream logs out to wherever we need, in real-time.
+Fly.io offers built-in telemetry—based on [**NATS**](https://nats.io/) that you can tap into to achieve this. At a high level, Fly.io captures everything your app writes to STDOUT and funnels it into an internal NATS log stream. A proxy in front of this NATS cluster ensures that each organization can only access its own applications' logs. Both the `flyctl logs` command and the our web dashboard's "Live Logs" use this pipeline under the hood. We can leverage the same system! By connecting a NATS client within your Fly organization's [private network](https://fly.io/docs/networking/private-networking/), we can subscribe to log subjects and stream logs out to wherever we need, in real-time.
 
 ## Deploying the Fly Telemetry Forwarder
 
@@ -78,12 +78,16 @@ logs.<app_name>.<region>.<instance_id>
 
 For example, if you have an application named `sandwich` and it's running in region `dfw`, you might see subjects like `logs.sandwich.dfw.abc123` (where `abc123` is the instance ID). You can subscribe at varying levels of granularity using NATS wildcards:
 
-- `logs.>` – subscribe to **all logs** from all apps in your org (every region, every instance).
-- `logs.<app>.*.>` – subscribe to all logs from a specific app (across all regions and instances). For instance, `logs.sandwich.>` would get all logs from app "sandwich".
-- `logs.*.<region>.>` – subscribe to all logs from a specific region.
-- `logs.<app>.<region>.<instance>` – subscribe to a single instance (full exact subject).
+| Subject Pattern | Description | Example |
+|----------------|-------------|---------|
+| `logs.>` | Subscribe to **all logs** from all apps in your org (every region, every instance) | - |
+| `logs.<app>.*.>` | Subscribe to all logs from a specific app (across all regions and instances) | `logs.sandwich.>` gets all logs from app "sandwich" |
+| `logs.*.<region>.>` | Subscribe to all logs from a specific region | - |
+| `logs.<app>.<region>.<instance>` | Subscribe to a single instance (full exact subject) | - |
 
 In practice, to stream all logs for a given user's app, you'll subscribe to the subject pattern `logs.<user-app-name>.>` – this will capture any log line from any instance of that app, in any region.
+
+### A Real-World Example
 
 [**NATstream**](https://natstream.fly.dev/) is a reference Fly.io app that streams your Fly app's logs right back to end users from within your own product. It connects to Fly.io's internal NATS log stream and turns those events into a live feed at a simple HTTP `/logs` endpoint using Server-Sent Events (SSE). This means developers can open your product's log viewer and watch their app's logs flow in real time, without needing separate logging tools or the Fly CLI. The app keeps things high-level and lightweight—there's no deep framework complexity here, just a straightforward example of hooking into Fly's log pipeline and broadcasting events to the browser. You can run it as-is or fork it as a foundation for your own developer-facing live log streaming service.
 
