@@ -5,9 +5,9 @@ nav: firecracker
 date: 2025-05-26
 ---
 
-When you run a platform for users to execute their own code on Fly.io—[think per-user development environments](https://fly.io/docs/blueprints/per-user-dev-environments/) or AI/LLM apps—it's a good idea to have real-time observability for those user apps. You might _also_ want to stream logs from those apps back to the original developer (your end-user), so they can see what their code is doing.
+When you run a platform for users to execute their own code on Fly.io—[think per-user development environments]("/blueprints/per-user-dev-environments/) or AI/LLM apps—it's a good idea to have real-time observability for those user apps. You might _also_ want to stream logs from those apps back to the original developer (your end-user), so they can see what their code is doing.
 
-Fly.io offers built-in telemetry based on [**NATS**](https://nats.io/) that you can tap into to achieve this. At a high level, Fly.io captures everything your app writes to STDOUT and funnels it into an internal NATS log stream. A proxy in front of this NATS cluster ensures that each organization can only access its own applications' logs. Both the `flyctl logs` command and the our web dashboard's "Live Logs" use this pipeline under the hood. We can leverage the same system! By connecting a NATS client within your Fly organization's [private network](https://fly.io/docs/networking/private-networking/), we can subscribe to log subjects and stream logs out to wherever we need, in real-time.
+Fly.io offers built-in telemetry based on [**NATS**](https://nats.io/) that you can tap into to achieve this. At a high level, Fly.io captures everything your app writes to STDOUT and funnels it into an internal NATS log stream. A proxy in front of this NATS cluster ensures that each organization can only access its own applications' logs. Both the `flyctl logs` command and the our web dashboard's "Live Logs" use this pipeline under the hood. We can leverage the same system! By connecting a NATS client within your Fly organization's [private network]("/networking/private-networking/), we can subscribe to log subjects and stream logs out to wherever we need, in real-time.
 
 ## Deploying the Fly Telemetry Forwarder
 
@@ -30,13 +30,13 @@ Stage an access token secret:
 fly secrets set ACCESS_TOKEN="$(fly tokens create readonly $ORG)" --stage
 ```
 
-Now, deploy with a [Flycast](https://fly.io/docs/networking/flycast/) address:
+Now, deploy with a [Flycast]("/networking/flycast/) address:
 
 ```console
 fly deploy --flycast
 ```
 
-After the deployment finishes, browse to the app's private URL through WireGuard or `fly proxy` and you have instant Grafana dashboards.
+After the deployment finishes, browse to the app's private URL [through WireGuard]("/blueprints/connect-private-network-wireguard/) or `fly proxy` and you have instant Grafana dashboards.
 
 This is handy for SREs, but not necessary for your end‑users.
 
@@ -50,7 +50,7 @@ Streaming logs straight to your users gives them instant, first-person insight i
 
 Every Fly organization has access to **NATS** which carries the logs for its apps. The server is available at the well-known address `[fdaa::3]:4223`. To connect to this endpoint, you must do so from within the Fly network: for example, from code running in a Fly app (like your telemetry forwarder or router) or from your local machine over a WireGuard connection.
 
-Using the NATS JavaScript client in a Node.js application, you could connect as follows:
+Using the NATS JavaScript client, you could connect as follows:
 
 ```javascript
 import { connect, StringCodec } from "nats";
@@ -89,7 +89,7 @@ In practice, to stream all logs for a given user's app, you'll subscribe to the 
 
 ### A Real-World Example
 
-[**NATstream**](https://natstream.fly.dev/) is a reference Fly.io app that streams your Fly app's logs right back to end users from within your own product. It connects to Fly.io's internal NATS log stream and turns those events into a live feed at a simple HTTP `/logs` endpoint using Server-Sent Events (SSE). This means developers can open your product's log viewer and watch their app's logs flow in real time, without needing separate logging tools or the Fly CLI. The app keeps things high-level and lightweight—there's no deep framework complexity here, just a straightforward example of hooking into Fly's log pipeline and broadcasting events to the browser. You can run it as-is or fork it as a foundation for your own developer-facing live log streaming service.
+[**NATstream**](https://natstream.fly.dev/) is a reference app that streams logs from your Fly apps right back to the browser. It connects to NATS and turns those events into a live feed at a simple HTTP `/logs` endpoint using Server-Sent Events (SSE). Developers could log in to your product and watch their app's logs flow in real time, without needing separate logging tools or the Fly CLI. The app keeps things high-level and lightweight—there's no deep framework complexity here, just a straightforward example of hooking into Fly's log pipeline and broadcasting events to the browser. You can rip out the relevant parts, or fork it as a foundation for your own developer-facing live log streaming service.
 
 <figure class="flex ai:center jc:center w:full r:lg overflow:off mb:4 rounded">
   <img src="/static/images/natstream.webp" alt="Screenshot of the NATstream open-source app UI" class="w:full h:full fit:cover">
