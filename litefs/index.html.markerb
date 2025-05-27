@@ -16,7 +16,7 @@ application on the edge. You can run LiteFS anywhere!
 
 LiteFS is stable and running in production environments. The project is still
 pre-1.0 so APIs may change and features could be removed. Please remember that
-all software has bugs so we recommend you set up [regular off-site backups][backup] 
+all software has bugs so we recommend you set up [regular off-site backups](/docs/litefs/backup/) 
 in case of malfunction or disk corruption.
 
 [backup]: /docs/litefs/backup/
@@ -28,12 +28,12 @@ You can get up and running quickly with one of our guides:
 
 - [Speedrun: Adding LiteFS to your app](/docs/litefs/speedrun) the fastest way to get started with LiteFS on Fly.io.
 
-- [Getting Started on Fly.io][] helps you add LiteFS to an existing application and deploy to Fly.io. This guide
+- [Getting Started on Fly.io](/docs/litefs/getting-started-fly) helps you add LiteFS to an existing application and deploy to Fly.io. This guide
 provides more details and explanation than the Speedrun.
 
-- [Getting Started with Docker][] helps you add LiteFS to an existing application that you want to run outside of Fly.io.
+- [Getting Started with Docker](/docs/litefs/getting-started-docker) helps you add LiteFS to an existing application that you want to run outside of Fly.io.
 
-- [How LiteFS Works][] explains the concepts behind LiteFS.
+- [How LiteFS Works](/docs/litefs/how-it-works) explains the concepts behind LiteFS.
 
 [Getting Started on Fly.io]: /docs/litefs/getting-started-fly
 [Getting Started with Docker]: /docs/litefs/getting-started-docker
