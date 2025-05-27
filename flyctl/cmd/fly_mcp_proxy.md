@@ -14,6 +14,7 @@ fly mcp proxy [flags]
   -b, --bind-addr string      Local address to bind to (default "127.0.0.1")
   -h, --help                  help for proxy
   -i, --inspector             Launch MCP inspector: a developer tool for testing and debugging MCP servers
+      --instance string       Use fly-force-instance-id to connect to a specific instance
   -p, --password string       Password to authenticate with
       --url string            URL of the MCP wrapper server
   -u, --user string           User to authenticate with
