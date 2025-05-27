@@ -16,6 +16,7 @@ fly mcp inspect [flags]
       --config string         Path to the MCP client configuration file
       --cursor                Use the configuration for Cursor client
   -h, --help                  help for inspect
+      --instance string       Use fly-force-instance-id to connect to a specific instance
       --neovim                Use the configuration for Neovim client
   -p, --password string       Password to authenticate with
       --server string         Name of the MCP server in the MCP client configuration
