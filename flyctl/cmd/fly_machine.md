@@ -18,6 +18,7 @@ fly machine [command] [flags]
 * [kill](/docs/flyctl/machine-kill/)	 - Kill (SIGKILL) a Fly machine
 * [leases](/docs/flyctl/machine-leases/)	 - Manage machine leases
 * [list](/docs/flyctl/machine-list/)	 - List Fly machines
+* [place](/docs/flyctl/machine-place/)	 - Simulate Machine placements
 * [restart](/docs/flyctl/machine-restart/)	 - Restart one or more Fly machines
 * [run](/docs/flyctl/machine-run/)	 - Run a machine
 * [start](/docs/flyctl/machine-start/)	 - Start one or more Fly machines
