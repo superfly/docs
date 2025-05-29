@@ -33,11 +33,11 @@ This is handy for SREs, but not necessary for your end‑users.
 
 ## Streaming Fly app logs to your end users
 
-Streaming logs straight to your users gives them instant, first-person insight into what their code is doing—developers see exactly what the runtime sees, in real time, without leaving your product or juggling extra tooling.
+Streaming live logs straight to your users gives them insight into what their code is doing—developers see exactly what the runtime sees, in real time, without leaving your product or juggling extra tooling.
 
 ### Connecting to the NATS Log Stream
 
-Every Fly organization has access to **NATS** which carries the logs for its apps. The server is available at the well-known address `[fdaa::3]:4223`. To connect to this endpoint, you must do so from within the Fly network: for example, from code running in a Fly app (like your telemetry forwarder or router) or from your local machine over a WireGuard connection.
+Every Fly organization has access to **NATS** which carries the logs for its apps. The server is available at the well-known address `[fdaa::3]:4223`. To connect to this endpoint, you must do so from within the Fly network—for example, from code running in a Fly app (like your telemetry forwarder or router) or from your local machine over a WireGuard connection.
 
 Using the NATS JavaScript client, you could connect as follows:
 
@@ -46,7 +46,7 @@ import { connect, StringCodec } from "nats";
 
 const nc = await connect({
   servers: "[fdaa::3]:4223",
-  user: "sandwhich-expert",            // your Fly org slug (example)
+  user: "sandwich-expert",            // your Fly org slug (example)
   pass: process.env.ACCESS_TOKEN       // your Fly access token (read-only)
 });
 
@@ -65,7 +65,7 @@ Logs in the NATS stream are organized by **subject**. The subject format for Fly
 logs.<app_name>.<region>.<machine_id>
 ```
 
-For example, if you have an application named `sandwich` and it's running in region `dfw`, you might see subjects like `logs.sandwich.dfw.abc123` (where `abc123` is the Machine ID). You can subscribe at varying levels of granularity using NATS wildcards:
+For example, if you have an application named `panini-786` and it's running in region `dfw`, you might see subjects like `logs.panini-786.dfw.d896d7c609dd68` (where `d896d7c609dd68` is the Machine ID). You can subscribe at varying levels of granularity using NATS wildcards:
 
 | Subject Pattern | Description |
 |----------------|-------------|
@@ -78,22 +78,22 @@ In practice, to stream all logs for a given user's app, you'll subscribe to the 
 
 ### A Real-World Example
 
-[**NATstream**](https://natstream.fly.dev/) is a reference app that streams logs from your Fly apps right back to the browser. It connects to NATS and turns those events into a live feed at a simple HTTP `/logs` endpoint using Server-Sent Events (SSE). Developers could log in to your product and watch their app's logs flow in real time, without needing separate logging tools or the Fly CLI. The app keeps things high-level and lightweight—there's no deep framework complexity here, just a straightforward example of hooking into Fly's log pipeline and broadcasting events to the browser. You can rip out the relevant parts, or fork it as a foundation for your own developer-facing live log streaming service.
+[**NATstream**](https://natstream.fly.dev/) is a reference app that streams logs from your Fly apps right back to the browser. It connects to NATS and turns those events into a live feed at a simple HTTP `/logs` endpoint using Server-Sent Events (SSE). Developers could log in to your product and watch their app's logs flow in real time, without needing separate logging tools or the Fly CLI. The app keeps things high-level and lightweight—there's no deep framework complexity here, just a straightforward example of hooking into Fly's log pipeline and broadcasting events to the browser.
 
 <figure class="flex ai:center jc:center w:full r:lg overflow:off mb:4 rounded">
   <img src="/static/images/natstream.webp" alt="Screenshot of the NATstream open source app UI" class="w:full h:full fit:cover">
 </figure>
 
-You could build this logic into your existing app, using the NATstream implementation as a guide, or more robustly you could run a separate log "router" app that handles authentications and streaming on a per user, per app basis. This would be especially useful if streaming logs to a CLI.
+You can fork it as a foundation for your own developer-facing live log streaming service, or rip out the relevant parts and build this logic into your existing app, using the NATstream implementation as a guide. More robustly, you could run a separate log "router" app that handles authentications and streaming on a per user, per app basis. This would be especially useful if streaming logs to a CLI.
 
 ---
 
 ## Building a Central Log Router Service
 
-Create a Fly "log router" app that sits between Fly's NATS telemetry stream, your product and your developers. Because each customer already has their own Fly app, every user's logs appear on a unique subject (`logs.<app>.>`), so multi-tenancy is solved by design: subscribe only to the subject that matches the requesting developer's app and you'll never mix data between users.
+Create a Fly "log router" app that sits between Fly's NATS telemetry stream, your product and your developers. Because each customer already has their own Fly app, every user's logs appear on a unique subject (`logs.<app>.>`), so multi-tenancy is solved by design—subscribe only to the subject that matches the requesting developer's app and you'll never mix data between users.
 
 <div class="note icon">
-**Note**: Your router service should enforce that a user can only request the logs for the app(s) they own. This means your routing logic needs an access control check (e.g. based on the authenticated user's ID matching the app name or an internal mapping). Never trust the client to only ask for their own app – always validate on the server. Fortunately, if you've structured your platform as one Fly app per user, it's straightforward to maintain a mapping from user account to Fly app name and use that for authorization.
+**Note**: Your router service should enforce that a user can only request the logs for the app(s) they own. This means your routing logic needs an access control check (e.g. based on the authenticated user's ID matching the app name or an internal mapping). Fortunately, if you've structured your platform as one Fly app per user, it's straightforward to maintain a mapping from user account to Fly app name and use that for authorization.
 </div>
 
 On startup the router opens one NATS connection with an org-scoped read-only token. When a developer signs in through your dashboard or CLI, the router authenticates that user, determines their Fly app name, and, if not already listening, subscribes to that app's subject. As log entries arrive, the router forwards them over a live channel—typically a websocket or Server-Sent Events stream—directly to the developer's browser or CLI.
@@ -104,6 +104,6 @@ The router itself is a Fly app that does the following:
 - Wait for developers to request or connect for log streaming (e.g., a developer opens a web UI to view their app's live logs, or runs a command to view logs).
 - When a request for a specific app's logs is received, subscribe to that app's log subject (if not already subscribed).
 - Stream the incoming log messages to the requesting developer in real-time.
-- Ensure that each developer only receives their own app's logs. The router should use the mapping of app <-> user to publish the right data to the correct output channel (and not mix different users' data).
+- Ensure that each developer only receives their own app's logs. The router should use the mapping of app ← → user to publish the right data to the correct output channel (and not mix different users' data).
 
-The approach above uses one NATS subscription _per user app_ for clarity. The messages are forwarded verbatim to the user's websocket in this case (as JSON strings), but you could transform them (for example, format them nicely or filter out certain internal logs) before sending. On the client side, you would simply read from the websocket or SSE stream and append new log lines to a console view.
+This approach uses one NATS subscription _per user app_. The messages are forwarded verbatim to the user's websocket in this case (as JSON strings), but you could transform them (for example, format them nicely or filter out certain internal logs) before sending. On the client side, you would simply read from the websocket or SSE stream and append new log lines to a console view.
