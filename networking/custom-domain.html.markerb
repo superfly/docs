@@ -60,7 +60,7 @@ Set the A and AAAA records with your DNS provider. Add an A record for your doma
 Once the A and AAAA records are added and propagated through the DNS system, you should be able to connect over unencrypted HTTP to the domain name. Continuing the preceding example, that's the domain name: `http://example.com`.
 
 <div class="important">
-**Important:** Hostname validation will fail without an IPv6 address&mdash;and we won't attempt to issue or renew a certificate&mdash;unless you're using a [CNAME `_acme-challenge` for domain verification](#optional-validate-with-an-acme-challenge). However, we still recommend having both an IPv4 and an IPv6 address allocated if your app is serving traffic. If your app doesn't have an IPv6 address, allocate one with `flyctl ips allocate-v6`.
+**Important:** Hostname validation will fail without an IPv6 address&mdash;and we won't attempt to issue or renew a certificate&mdash;unless you're using a [CNAME `_acme-challenge` for domain verification](#optional-validate-with-an-acme-dns-01-challenge). However, we still recommend having both an IPv4 and an IPv6 address allocated if your app is serving traffic. If your app doesn't have an IPv6 address, allocate one with `flyctl ips allocate-v6`.
 </div>
 
 ### Get certified
