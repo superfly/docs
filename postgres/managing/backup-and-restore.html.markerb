@@ -13,35 +13,7 @@ Postgres databases on Fly.io are treated as Fly Apps, which you can [read more a
 
 ## Finding the database app instance
 
-If you set up your application using `fly launch`, the name of your database app might be `<app-name>-db`, or you might have given it a name during the initial configuration. To figure that out for sure, run the following from the root of the project:
-
-```cmd
-fly info
-```
-```output
-App
-  Name     = my-app
-  Owner    = personal
-  Version  = 40
-  Status   = running
-  Hostname = my-app.fly.dev
-```
-
-The `Name` key is the name of your app. In this case, the database app would be `my-app-db`. Let's see if that instance exists by appending the `-a` flag with the name of the database application:
-
-```cmd
-fly info -a my-app-db
-```
-```output
-App
-  Name     = my-app-db
-  Owner    = personal
-  Version  = 40
-  Status   = running
-  Hostname = my-app-db.fly.dev
-```
-
-If that doesn't work, then try to find the database instance by running:
+To find the name of your postgres instance, that is, <postgres-app-name> you will need to run the following command.
 
 ```cmd
 fly postgres list
@@ -51,7 +23,7 @@ NAME                       OWNER    STATUS  LATEST DEPLOY
 my-app-db       personal running 37m11s ago
 ```
 
-and look for the database instance under the `NAME` column on the list.
+Look for the database instance under the `NAME` column on the list, in this case, my-app-db is is the <postgres-app-name> value.
 
 ## Listing snapshots
 
@@ -97,14 +69,15 @@ MACHINE ID      REGISTRY                REPOSITORY      TAG     VERSION DIGEST  
 e286004f696700  registry-1.docker.io    flyio/postgres  14.6    v0.0.41 sha256:3c25db96357a78e827ca7d fly.app_role=postgres_clusterfly.pg-version=14.6-1.pgdg110+1fly.version=v0.0.41
 ```
 The values under the `REPOSITORY` and `TAG` columns reference the image you'll use to restore the snapshot. 
-Legacy postgres images use the `flyio/postgres` repository, while new Postgres Flex images use the `flyio/postgres-flex` repository. In the above example, the machine is running a legacy `flyio/postgres:14.6` image.
+Legacy postgres images use the `flyio/postgres` repository, while new Postgres Flex images use the `flyio/postgres-flex` repository. In the above example, the machine is running a legacy `flyio/postgres:14.6` image. Note that a colon is used to separate these values.
+
 
 ## Restoring from a snapshot
 
 To restore a Postgres application from a snapshot, simply specify the `--snapshot-id` argument and the `--image-ref` argument when running the `create` command as shown below:
 
 ```cmd
-fly postgres create --snapshot-id <snapshot-id> --image-ref <image-version>
+fly postgres create --snapshot-id <snapshot-id>  --image-ref $REPOSITORY:$TAG
 ```
 ```output
 ? App Name: my-app-db-restored
