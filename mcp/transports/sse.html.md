@@ -64,7 +64,10 @@ An example Cursor configuration:
 }
 ```
 
-
+With SSE transports, [`fly mcp proxy`](https://fly.io/docs/flyctl/mcp-proxy/) may not be required, but could be useful if:
+* Your MCP client doesn't support SSE
+* You need to set up a [wireguard tunnel](https://fly.io/docs/flyctl/proxy/) to access your MCP serever via an [`.internal`](https://fly.io/docs/networking/private-networking/) or [`.proxy`](https://fly.io/docs/networking/flycast/) address.
+* You need to [route the request to a specific machine](https://fly.io/docs/networking/dynamic-request-routing/#the-fly-force-instance-id-header).
 
 
 
