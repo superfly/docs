@@ -5,7 +5,7 @@ objective: Provision a Tigris Bucket and access it via a `S3Client`
 order: 4
 ---
 
-[Tigris](Tigris is a globally caching, S3-compatible object storage service built on Fly.io infrastructure.) is a globally caching, S3-compatible object storage service built on Fly.io infrastructure.
+[Tigris](https://tigrisdata.com) is a globally caching, S3-compatible object storage service built on Fly.io infrastructure.
 
 ## Launching a new Application?
 
