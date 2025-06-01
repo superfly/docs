@@ -371,3 +371,27 @@ if (config.use_env_variable) {
   }
 ```
 </details>
+
+## Connecting with .NET - EF Core & Npgsql
+[docs](https://www.npgsql.org/efcore/index.html?tabs=onconfiguring#configuring-the-project-file)
+
+Minimal setup using the `DATABASE_URL` environment variable provisioned automatically with attaching a pg app. In ```Program.cs```:
+
+```csharp
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+    if (!string.IsNullOrEmpty(databaseUrl))
+    {
+        var uri = new Uri(databaseUrl);
+        var userInfo = uri.UserInfo.Split(':');
+        var username = userInfo[0];
+        var password = userInfo.Length > 1 ? userInfo[1] : "";
+        var host = uri.Host;
+        var port = uri.Port > 0 ? uri.Port.ToString() : "5432";
+        var database = uri.AbsolutePath.TrimStart('/');
+        var connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+        options.UseNpgsql(connectionString);
+    }
+});
+```
