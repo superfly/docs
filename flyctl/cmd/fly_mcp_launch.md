@@ -29,6 +29,7 @@ fly mcp launch command [flags]
   -r, --region string               The target region. By default, the new volume will be created in the source volume's region.
       --secret stringArray          Set of secrets in the form of NAME=VALUE pairs. Can be specified multiple times.
       --server string               Name to use for the MCP server in the MCP client configuration
+      --setup strings               Additional setup commands to run before launching the MCP server
       --user string                 User to authenticate with
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs

@@ -16,6 +16,10 @@ fly mcp proxy [flags]
   -i, --inspector             Launch MCP inspector: a developer tool for testing and debugging MCP servers
       --instance string       Use fly-force-instance-id to connect to a specific instance
   -p, --password string       Password to authenticate with
+      --ping                  Enable ping for the MCP connection
+      --sse                   Use Server-Sent Events (SSE) for the MCP connection
+      --stream                Use streaming for the MCP connection
+      --timeout int           Timeout in seconds for the MCP connection
       --url string            URL of the MCP wrapper server
   -u, --user string           User to authenticate with
 ~~~
