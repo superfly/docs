@@ -63,7 +63,7 @@ You can extend a volume's size&mdash;either [manually](/docs/volumes/volume-mana
 
 ## Volume limits
 
-The following table outlines the maximum IOPs and bandwidth limits for Fly Volumes, determined by the machine type:
+The following table outlines the maximum IOPs and bandwidth for Fly Volumes, determined by the machine type:
 
 | VM Size | Max IOPs | Max Bandwidth |
 |---------|------------------------|----------------------------|
