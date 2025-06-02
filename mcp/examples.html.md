@@ -74,7 +74,7 @@ flyctl mcp launch --image ghcr.io/github/github-mcp-server \
 You can run [DesktopCommander](https://desktopcommander.app/) which requires a setup step:
 
 ```sh
-fly mcp launch  "npx @wonderwhy-er/desktop-commander@latest" \
+fly mcp launch "npx @wonderwhy-er/desktop-commander@latest" \
   --claude --server desktop-commander \
   --setup "RUN npx -y @wonderwhy-er/desktop-commander@latest setup"
 ```
