@@ -19,7 +19,11 @@ fly mcp inspect [flags]
       --instance string       Use fly-force-instance-id to connect to a specific instance
       --neovim                Use the configuration for Neovim client
   -p, --password string       Password to authenticate with
+      --ping                  Enable ping for the MCP connection
       --server string         Name of the MCP server in the MCP client configuration
+      --sse                   Use Server-Sent Events (SSE) for the MCP connection
+      --stream                Use streaming for the MCP connection
+      --timeout int           Timeout in seconds for the MCP connection
       --url string            URL of the MCP wrapper server
   -u, --user string           User to authenticate with
       --vscode                Use the configuration for VS Code client
