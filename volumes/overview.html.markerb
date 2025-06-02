@@ -6,9 +6,9 @@ order: 20
 redirect_from: /docs/reference/volumes/
 ---
 
-The root file systems of a Fly Machine are ephemeral and should only be used for temporary data, application code, and runtime files that can be rebuilt from scratch during deployments or restarts.  The performance of these ephemeral disks are heavily limited regardless of the machine type you choose, with the maximum of 2000 IOPs and 8MiB/s bandwidth.
+The root file systems of a Fly Machine are ephemeral and should only be used for temporary data, application code, and runtime files that can be rebuilt from scratch during deployments or restarts.  The performance of these ephemeral disks are heavily limited regardless of the Machine type you choose, with the maximum of 2000 IOPs and 8MiB/s bandwidth.
 
-Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can access and write to a volume on a Machine just like a regular directory. Use volumes to store your database files, to save your app's state, such as configuration and session or user data, or for any information that needs to persist after deploy or restart. Maximum volume performance varies by machine type and noted in [Volume limits](/docs/volumes/overview#volume-limits)
+Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can access and write to a volume on a Machine just like a regular directory. Use volumes to store your database files, to save your app's state, such as configuration and session or user data, or for any information that needs to persist after deploy or restart. Maximum volume performance varies by Machine type and noted in [Volume limits](/docs/volumes/overview#volume-limits)
 
 A Fly Volume is a slice of an NVMe drive on the same physical server as the Machine on which it's mounted and it's tied to that hardware. Fly Volumes are similar to the disk inside your laptop, accessible from a mount point in your file system. Using volumes tied to hardware has both advantages and disadvantages.
 
@@ -63,7 +63,7 @@ You can extend a volume's size&mdash;either [manually](/docs/volumes/volume-mana
 
 ## Volume limits
 
-The following table outlines the maximum IOPs and bandwidth for Fly Volumes, determined by the machine type:
+The following table outlines the maximum IOPs and bandwidth for Fly Volumes, determined by the Machine type:
 
 | VM Size | Max IOPs | Max Bandwidth |
 |---------|------------------------|----------------------------|
