@@ -5,7 +5,7 @@ toc: false
 order: 1
 ---
 
-Launching an `npx` or `uvx` stdio MCP server into a Fly machine and configuring a MCP client to connect to it is a one-step process. The `fly mcp launch` command will create a new Fly machine, install the MCP server, and configure the MCP client to connect to it.
+Launching an `npx`, `uvx`, or docker image stdio MCP server into a Fly machine and configuring a MCP client to connect to it is a one-step process. The `fly mcp launch` command will create a new Fly machine, install the MCP server, and configure the MCP client to connect to it.
 
 ```sh
 fly mcp launch "uvx mcp-server-time" --claude --server time
@@ -18,6 +18,8 @@ Support for Claude, Cursor, Neovim, VS Code, Windsurf, and Zed are built in.  Yo
 By default, bearer token authentication will be set up on both the server and client, though there are other options and this can be disabled.
 
 You can configure auto-stop, file contents, flycast, secrets, region, and vm sizes.
+
+See [Examples](../examples/) for a number of examples.
 
 See the [`fly mcp launch` documentation](https://fly.io/docs/flyctl/mcp-launch/) for more details on the command and its options.
 
