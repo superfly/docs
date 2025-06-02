@@ -16,13 +16,27 @@ Try some of the following commands.  After running them, restart Claude and ask 
 
 ## flyctl server
 
-We provide a MCP server for issuing flyctl commands:
+We provide a [flyctl MCP server](./flyctl-server.html.md) for issuing flyctl commands:
 
 ```sh
 fly mcp server --claude --server flyctl
 ```
 
-This will add the [flyctl MCP server](./flyctl-server.html.md) to the Claude configuration with the name of `flyctl`.
+## Fetch
+
+Run [Fetch MCP server](https://github.com/modelcontextprotocol/servers/tree/main/src/fetch#fetch-mcp-server) where it doesn't have access to your local servers:
+
+```sh
+fly mcp launch "uvx mcp-server-fetch" --claude --server fetch
+```
+
+## Fly.io internal DNS
+
+[mcp-internal-dns](https://github.com/fly-apps/mcp-internal-dns?tab=readme-ov-file#overview) enables your MCP client to query [Fly.io `.internal` DNS](https://fly.io/docs/networking/private-networking/#fly-io-internal-dns):
+
+```sh
+fly mcp launch "npx -y @flydotio/mcp-internal-dns" --claude --server dns
+```
 
 ## Slack
 

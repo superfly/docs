@@ -256,3 +256,7 @@ The base image will stick around in the registry and as long as an image is asso
 
 You can find the registry URL of the images for your base image in the dashboard under the **Registry** tab for the app, or by running `fly releases --image`
 
+## Related use case
+
+Want to skip the Fly builder and use Docker tools directly to manage your images?  See [Managing Docker Images with Fly.io's Private Registry](https://fly.io/docs/blueprints/using-the-fly-docker-registry/), a guide that walks through building, pushing, deploying, and managing images via Fly.io’s Docker registry!
+

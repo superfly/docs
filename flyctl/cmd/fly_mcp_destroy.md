@@ -18,6 +18,7 @@ fly mcp destroy [flags]
       --server string   Name of the MCP server in the MCP client configuration
       --vscode          Remove MCP server from to the VS Code client configuration
       --windsurf        Remove MCP server from to the Windsurf client configuration
+  -y, --yes             Accept all confirmations
       --zed             Remove MCP server from to the Zed client configuration
 ~~~
 

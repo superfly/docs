@@ -1,0 +1,142 @@
+---
+title: Network Policies
+layout: docs
+order: 25
+nav: machines
+---
+
+Network policies let you control traffic to and from your Machines. You can use policies to allow or restrict ingress and egress on specific ports and protocols. This is useful when you're running untrusted code or want to lock down what traffic is allowed.
+
+<div class="callout">
+Network policies only apply to traffic directly to and from Machines. They do not affect traffic routed through the Fly Proxy.
+
+</div>
+
+## How it works
+
+A network policy contains:
+
+* A `selector` to match which Machines the policy applies to.
+* A list of `rules` for ingress or egress, specifying allowed ports and protocols.
+
+Once you create a rule for a direction (ingress or egress), the default for that direction becomes "deny all." Only explicitly allowed traffic will be permitted.
+
+## Restricting egress traffic to HTTP/HTTPS
+
+For example, if you're running an app that should only make outbound HTTP and HTTPS requests, you can create a policy like this:
+
+```sh
+curl --location 'https://api.machines.dev/v1/apps/my-app-name/network_policies' \
+  --header 'Authorization: Bearer <FLY_API_TOKEN>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "specific-egress",
+    "selector": {
+      "all": true
+    },
+    "rules": [
+      {
+        "action": "allow",
+        "direction": "egress",
+        "ports": [
+          { "protocol": "tcp", "port": 80 },
+          { "protocol": "tcp", "port": 443 }
+        ]
+      }
+    ]
+  }'
+```
+
+Replace `<FLY_API_TOKEN>` and `my-app-name` with your actual values.
+
+## Selectors
+
+Selectors determine which Machines your network policy applies to. You can target Machines using one or more of the following methods:
+
+### All Machines in an app
+
+To apply a policy to every Machine in your app:
+
+```json
+{ "all": true }
+```
+
+### Specific Machine IDs
+
+To target individual Machines by their unique identifiers:
+
+```json
+{ "machines": [ { "id": "abc" }, { "id": "def" } ] }
+```
+
+### Metadata matching
+
+To select Machines based on their metadata attributes:
+
+```json
+{ "metadata": { "role": "web", "env": "production" } }
+```
+These selection methods can be combined to create more precise targeting rules that match Machines satisfying all specified criteria.
+
+## Rules
+
+Each rule has:
+
+* `action`: Only `allow` is supported.
+* `direction`: Either `ingress` or `egress`.
+* `ports`: A list of port and protocol objects.
+
+Example:
+
+```json
+{
+  "action": "allow",
+  "direction": "egress",
+  "ports": [
+    { "protocol": "tcp", "port": 443 }
+  ]
+}
+```
+
+Once a rule is defined, all other traffic in that direction is denied by default.
+
+## API summary
+
+### Create or update a policy
+
+```http
+POST /v1/apps/<app_name>/network_policies
+```
+
+Request body:
+
+```json
+{
+  "name": "policy-name",
+  "id": "optional-policy-id",  
+  "selector": { ... },
+  "rules": [ ... ]
+}
+```
+Include the `id` field to update an existing policy.
+
+### List policies
+
+```http
+GET /v1/apps/<app_name>/network_policies/
+```
+
+### Delete a policy
+
+```http
+DELETE /v1/apps/<app_name>/network_policies/<policy_id>
+```
+
+## Troubleshooting
+
+* After creating or updating a policy, restart or redeploy the Machines for changes to take effect.
+* Use direct IP addresses (not hostnames) to test blocked traffic to avoid DNS masking.
+* Make sure your `selector` is correct and matches the Machines you expect.
+* If traffic is still allowed unexpectedly, check if it's going through the Fly Proxy.
+
+
