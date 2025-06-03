@@ -8,10 +8,11 @@ fly managed-postgres proxy [flags]
 ## Options
 
 ~~~
-      --cluster string   The target cluster ID
-  -h, --help             help for proxy
-  -o, --org string       The target Fly.io organization
-  -r, --region string    The target region (see 'flyctl platform regions')
+  -b, --bind-addr string   Local address to bind to (default "127.0.0.1")
+      --cluster string     The target cluster ID
+  -h, --help               help for proxy
+  -o, --org string         The target Fly.io organization
+  -r, --region string      The target region (see 'flyctl platform regions')
 ~~~
 
 ## Global Options
