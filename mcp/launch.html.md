@@ -5,7 +5,7 @@ toc: false
 order: 1
 ---
 
-Launching an `npx`, `uvx`, or docker image stdio MCP server into a Fly machine and configuring a MCP client to connect to it is a one-step process. The `fly mcp launch` command will create a new Fly machine, install the MCP server, and configure the MCP client to connect to it.
+Launching an `npx`, `uvx`, `go run` or docker image stdio MCP server into a Fly machine and configuring a MCP client to connect to it is a one-step process. The `fly mcp launch` command will create a new Fly machine, install the MCP server, and configure the MCP client to connect to it.
 
 ```sh
 fly mcp launch "uvx mcp-server-time" --claude --server time
@@ -31,7 +31,7 @@ You can use the [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspe
   As the MCP inspector is a Node.js application, you need to [Download and install Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) first. MacOS users can use [`brew install node`](https://formulae.brew.sh/formula/node).
 </div>
 
-```
+```sh
 fly mcp inspect --claude --server time
 ```
 
@@ -41,7 +41,7 @@ This command is simply a convenience, all it does is run the inspector set up to
 
 When you no longer need the MCP, you can destroy it:
 
-```
+```sh
 fly mcp destroy --claude --server time
 ```
 

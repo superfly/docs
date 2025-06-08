@@ -59,9 +59,16 @@ fly mcp launch "npx -y @modelcontextprotocol/server-filesystem /data/" \
   --claude --server volume --volume data:/data:initial_size=1GB
 ```
 
+You can do the same thing with the [go mcp-filesystem-server](https://github.com/mark3labs/mcp-filesystem-server?tab=readme-ov-file#mcp-filesystem-server):
+
+```sh
+fly mcp launch "go run github.com/mark3labs/mcp-filesystem-server@latest /data/" \
+  --claude --server volume --volume data:/data:initial_size=1GB
+```
+
 ## GitHub
 
-If you have the Github CLI installed, you can launch the [GitHub MCP Server](https://github.com/github/github-mcp-server?tab=readme-ov-file#github-mcp-server):
+If you have the [Github CLI](https://cli.github.com/) installed, you can launch the [GitHub MCP Server](https://github.com/github/github-mcp-server?tab=readme-ov-file#github-mcp-server):
 
 ```sh
 flyctl mcp launch --image ghcr.io/github/github-mcp-server \
