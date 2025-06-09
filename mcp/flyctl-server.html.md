@@ -24,6 +24,7 @@ You can also specify `--cursor`, `--neovim`, `--vscode`, `--windsurf`, or `--zed
 * [machine](https://fly.io/docs/flyctl/machine/)
 * [orgs](https://fly.io/docs/flyctl/orgs/)
 * [platform](https://fly.io/docs/flyctl/platform/)
+* [secrets](https://fly.io/docs/flyctl/secrets/)
 * [status](https://fly.io/docs/flyctl/status/)
 * [volumes](https://fly.io/docs/flyctl/volumes/)
 
