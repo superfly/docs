@@ -40,4 +40,6 @@ Quick references for often-used resources like flyctl and `fly.toml`. Or dig a l
 
 * **[Load Balancing](/docs/reference/load-balancing/):** How Fly Proxy distributes traffic to your application instances based on load, closeness, and concurrency settings.
 
+* **[Migrating from AWS to Fly.io overview](/docs/reference/aws-to-fly-guide/):** A guide with considerations for moving from AWS to Fly.io.
+
 * **[Multiple processes inside a Fly.io app](/docs/app-guides/multiple-processes/):** The different ways to run multiple processes inside a Fly App.
