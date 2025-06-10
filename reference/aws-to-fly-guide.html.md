@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-06-09
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/migrating-from-aws.png" alt="Illustration by Annie Ruygt of a figure jumping from one mountian to another" class="w-full max-w-lg mx-auto">
+</figure>
+
 <div class="callout">
 **Fly.io runs apps close to your users, by giving you fast-starting VMs ("Fly Machines") in 30+ regions worldwide.** This guide is for folks moving apps from AWS. It walks through the major architectural differences you'll hit and how to adjust your deployment model.
 </div>
