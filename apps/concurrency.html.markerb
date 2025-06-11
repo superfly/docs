@@ -46,3 +46,5 @@ The decision to use `connections` or `requests` for concurrency depends on the t
 ## Concurrency limit tuning tips
 
 When tuning concurrency, try setting a relatively high `hard_limit`, or leave it unset to have no hard limit. If you do want to set a `hard_limit` to have more control over load balancing, then you might have to do an initial benchmark to estimate the maximum number of concurrent connections or requests that your app can handle. Then tune the `soft_limit` and [create more Machines](/docs/blueprints/resilient-apps-multiple-machines/) to optimize autostop/autostart and load balancing. Once your app is getting real-world traffic, you can continue to monitor your app and adjust the `soft_limit` further to suit your workload.
+
+Want a more detailed guide to concurrency limits? See this blueprint: [Setting Hard and Soft Concurrency Limits on Fly.io](/docs/blueprints/setting-concurrency-limits/).
