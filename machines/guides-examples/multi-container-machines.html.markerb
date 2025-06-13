@@ -264,7 +264,7 @@ To mitigate excessive traffic, you can run an NGINX container as a sidecar to li
         "files": [
           {
             "guest_path": "/etc/nginx/conf.d/default.conf",
-            "raw_value": "limit_req_zone $binary_remote_addr zone=my_zone:10m rate=1r/s;\n\nserver {\n  listen 8080;\n\n  location / {\n    limit_req zone=my_zone;\n    proxy_pass http://localhost:80;\n  }\n}"
+            "raw_value": "bGltaXRfcmVxX3pvbmUgJGJpbmFyeV9yZW1vdGVfYWRkciB6b25lPW15X3pvbmU6MTBtIHJhdGU9MXIvczsKCnNlcnZlciB7CiAgbGlzdGVuIDgwODA7CgogIGxvY2F0aW9uIC8gewogICAgbGltaXRfcmVxIHpvbmU9bXlfem9uZTsKICAgIHByb3h5X3Bhc3MgaHR0cDovL2xvY2FsaG9zdDo4MDsKICB9Cn0="
           }
         ]
       },
@@ -276,6 +276,23 @@ To mitigate excessive traffic, you can run an NGINX container as a sidecar to li
   }
 }
 ```
+
+The `raw_value` field must contain base64-encoded content when attaching files to containers. In the example above, the NGINX configuration string:
+
+```
+limit_req_zone $binary_remote_addr zone=my_zone:10m rate=1r/s;
+
+server {
+  listen 8080;
+
+  location / {
+    limit_req zone=my_zone;
+    proxy_pass http://localhost:80;
+  }
+}
+```
+
+has been base64-encoded to ensure proper transmission and handling by the Machines API. When the container starts, Fly will decode this value and write the original configuration to the specified `guest_path`.
 
 To complete this configuration, you should also include:
 
