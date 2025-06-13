@@ -277,7 +277,7 @@ To mitigate excessive traffic, you can run an nginx container as a sidecar to li
 }
 ```
 
-The `raw_value` field must contain base64-encoded content when attaching files to containers. In the example above, the NGINX configuration string:
+When attaching files to containers, the `raw_value` field must contain base64-encoded content. The nginx configuration shown in the JSON above corresponds to this configuration:
 
 ```
 limit_req_zone $binary_remote_addr zone=my_zone:10m rate=1r/s;
@@ -292,13 +292,13 @@ server {
 }
 ```
 
-has been base64-encoded to ensure proper transmission and handling by the Machines API. When the container starts, Fly will decode this value and write the original configuration to the specified `guest_path`.
+When the container starts, Fly will decode this value and write the original configuration to the specified `guest_path`.
 
 To complete this configuration, you should also include:
 
 - A `services` block that exposes internal port 8080 for Fly Proxy
 - A `guest` block specifying resources like CPU and memory
-- Optionally, `depends_on` fields or health checks if you want NGINX to wait for the app
+- Optionally, `depends_on` fields or health checks if you want nginx to wait for the app
 
 ### LiteFS Sidecar with Health Checks
 
