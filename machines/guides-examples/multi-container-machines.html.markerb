@@ -140,7 +140,7 @@ Each container specifies its own health checks. The system supports different ty
 
 ## Security Considerations
 
-Containers in a Machine share the same kernel and VM, but are isolated at the process and filesystem level. Failures in one container won't directly crash others, but you should not assume complete isolation like across VMs.
+Containers in a Machine share the same kernel and VM, but are isolated at the process and filesystem level. Failures in one container won't directly crash others, but they don't provide the same level of isolation as across VMs.
 
 ## Deploying Multi-container Machines
 
