@@ -257,22 +257,22 @@ To mitigate excessive traffic, you can run an NGINX container as a sidecar to li
 ```json
 {
   "config": {
-"containers": [
-  {
-    "name": "nginx",
-    "image": "nginx:latest",
-    "files": [
+    "containers": [
       {
-        "guest_path": "/etc/nginx/conf.d/default.conf",
-        "raw_value": "limit_req_zone $binary_remote_addr zone=my_zone:10m rate=1r/s;\n\nserver {\n  listen 8080;\n\n  location / {\n    limit_req zone=my_zone;\n    proxy_pass http://localhost:80;\n  }\n}"
+        "name": "nginx",
+        "image": "nginx:latest",
+        "files": [
+          {
+            "guest_path": "/etc/nginx/conf.d/default.conf",
+            "raw_value": "limit_req_zone $binary_remote_addr zone=my_zone:10m rate=1r/s;\n\nserver {\n  listen 8080;\n\n  location / {\n    limit_req zone=my_zone;\n    proxy_pass http://localhost:80;\n  }\n}"
+          }
+        ]
+      },
+      {
+        "name": "echo",
+        "image": "ealen/echo-server"
       }
     ]
-  },
-  {
-    "name": "echo",
-    "image": "ealen/echo-server"
-  }
-]
   }
 }
 ```
