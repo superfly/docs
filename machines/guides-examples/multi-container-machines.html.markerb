@@ -252,7 +252,7 @@ Here are some practical examples of multi-container setups you can use as a star
 
 ### Rate Limiter Sidecar
 
-To mitigate excessive traffic, you can run an NGINX container as a sidecar to limit requests per second using the `ngx_http_limit_req_module`. Below is a simplified container configuration that enables rate limiting:
+To mitigate excessive traffic, you can run an nginx container as a sidecar to limit requests per second using the `ngx_http_limit_req_module`. Below is a simplified container configuration that enables rate limiting:
 
 ```json
 {
