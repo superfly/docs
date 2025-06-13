@@ -234,7 +234,7 @@ The container value determines which container will be replaced by your app imag
 fly deploy
 ```
 
-This builds and replaces the `echo` container, runs both containers on the same machine, and configures traffic through NGINX.
+This builds and replaces the `echo` container, runs both containers on the same machine, and configures traffic through nginx.
 
 You can also inline the `machine_config` in your `fly.toml` using triple quotes. The first character inside the string must be `{`:
 
