@@ -15,7 +15,7 @@ Sidecars are a powerful way to co-locate supporting services alongside your appl
 - **Secrets Agents:** Use a sidecar to fetch secrets from a provider like Vault or cloud metadata services. This keeps your app container lightweight and secure.
 - **Load Smoothing:** Use nginx or Envoy as a reverse proxy for rate limiting, retries, or graceful error handling. This is great for handling bursts in traffic or external API instability.
 - **Storage or Sync Layers:** Mount and manage local state using sidecars like LiteFS or file sync daemons. You can keep persistent logic separated from your app's logic.
-- **AI Agents or Workers:** For agent-based or queued workloads, spin up workers or schedulers in separate containers and coordinate them using `depends_on`.
+- **AI Agents or Workers:** For agent-based or queued workloads, you can spin up workers or schedulers in separate containers and coordinate them using `depends_on`.
 
 These patterns mirror what we've seen from customers building production systems on Fly Machines with Pilot and the `containers` array. Each container runs in its own isolated process tree, and Pilot ensures the startup order and health status are respected. While containers share the same kernel and VM, they are isolated at the process and filesystem level.
 
