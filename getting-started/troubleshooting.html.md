@@ -233,6 +233,19 @@ That's because buildpacks come with lots of dependencies to build different stac
 
 That said, if the build used to work, then you can try using a previous, fixed buildpack version so it's back in a known good state.
 
+### Image Size Limit 
+
+If your deployment fails with the `Not enough space to unpack image, possibly exceeds maximum of 8GB uncompressed` error, this is because we do limit the image size you can use to run your Machine.
+
+For reference, our non-GPU Machines only have an 8GB maximum rootfs size, and you'll need images less than ~8GB to run in these. While we do have [Fly GPU Machines](https://fly.io/docs/gpus/) that provide 50GB rootfs size, this might not be your cup of tea. Hence, it is advisable to [either reduce the image size](/docs/blueprints/using-base-images-for-faster-deployments/) or store the image in a Fly volume or an object store:
+
+1. **Fly Volumes**: You can create [Fly volumes](/docs/volumes/) for your machines and download your image to the volumes from somewhere when the volume is empty. If you need to create more machines or volumes, you can fork from the already existing, populated volume.
+
+2. **Object Store**: Another option is to store the image in an object store such as [Tigris](/docs/tigris/), and mount the object storage read-only into a path inside your machine. This can be done through something like [S3FS](https://github.com/s3fs-fuse/s3fs-fuse).
+
+
+
+
 ## Related topics
 
 - [Troubleshoot apps when a host is unavailable](/docs/apps/trouble-host-unavailable/)
