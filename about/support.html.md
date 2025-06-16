@@ -116,5 +116,5 @@ Here are some things to include in your ticket:
 
 <div class="max-w-4xl">
   <p class="mb-6 mt-8">
-    We now offer [Managed Postgres (MPG)](https://fly.io/docs/mpg/overview/), a fully managed Postgres service with automated provisioning, daily snapshots, built-in high availability, global networking, and Prometheus-compatible metrics. MPG is currently available in a limited set of regions and supports up to 1 TB of storage, with an initial allocation cap of 500 GB. If you need to run in unsupported regions, require more storage, or need custom configuration, you may still need to use an unmanaged Postgres app for now.
+    We now offer [Managed Postgres (MPG)](https://fly.io/docs/mpg/overview/), a fully managed Postgres service with automated provisioning, daily snapshots, built-in high availability, global networking, and Prometheus-compatible metrics. MPG is currently available in a limited set of regions and supports up to 1 TB of storage, with an initial allocation cap of 500 GB. If you need to run in unsupported regions, require more storage, or need custom configuration, you may still need to use an [unmanaged Postgres](https://fly.io/docs/postgres/getting-started/what-you-should-know/) app for now.
   </p>
