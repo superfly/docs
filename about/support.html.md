@@ -85,6 +85,7 @@ Here are some things to include in your ticket:
         <ul class="space-y-2">
           <li>**Networking**</li>
           <li>**Machines** (including GPUs)</li>
+          <li>**Managed Postgres** (MPG)</li>
           <li>**Apps**</li>
           <li>**Launch/Deploy** (UI & CLI)</li>
           <li>**Volumes**</li>
@@ -115,6 +116,5 @@ Here are some things to include in your ticket:
 
 <div class="max-w-4xl">
   <p class="mb-6 mt-8">
-    Our current Postgres offering is [unmanaged](https://fly.io/docs/postgres/getting-started/what-you-should-know/). In general, [Fly.io](http://fly.io/) provides support for the automated provisioning, daily snapshots, global networking, and Prometheus metrics for Postgres databases, but unfortunately we're not able to provide in-depth guidance or troubleshooting for your unmanaged Postgres database apps.
-    We are working on a managed offering, but until then, we recommend that you look at a managed provider such as [Crunchy Bridge](https://www.crunchydata.com/products/crunchy-bridge) if you're running into consistent issues with our unmanaged Postgres.
+    We now offer [Managed Postgres (MPG)](https://fly.io/docs/mpg/overview/), a fully managed Postgres service with automated provisioning, daily snapshots, built-in high availability, global networking, and Prometheus-compatible metrics. MPG is currently available in a limited set of regions and supports up to 1 TB of storage, with an initial allocation cap of 500 GB. If you need to run in unsupported regions, require more storage, or need custom configuration, you may still need to use an [unmanaged Postgres](https://fly.io/docs/postgres/getting-started/what-you-should-know/) app for now.
   </p>
