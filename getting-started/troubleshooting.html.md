@@ -241,7 +241,7 @@ For our non-GPU Machines, there's an 8GB maximum rootfs size. This means your im
 
 1. **Fly Volumes**: You can create [Fly volumes](/docs/volumes/) for your machines and download your image to the volumes from somewhere when the volume is empty. If you need to create more machines or volumes, you can fork from the already existing, populated volume.
 
-2. **Object Store**: Another option is to store the image in an object store such as [Tigris](/docs/tigris/), and mount the object storage read-only into a path inside your machine. This can be done through something like [S3FS](https://github.com/s3fs-fuse/s3fs-fuse).
+2. **Object Store**: Another option is to store the image in an object store such as [Tigris](/docs/tigris/), and mount the object storage as read-only to a specified path within your machine. This can be done using something like [S3FS](https://github.com/s3fs-fuse/s3fs-fuse).
 
 
 
