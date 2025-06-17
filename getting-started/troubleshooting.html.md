@@ -235,7 +235,7 @@ That said, if the build used to work, then you can try using a previous, fixed b
 
 ### Image Size Limit 
 
-If your deployment fails with the `Not enough space to unpack image, possibly exceeds maximum of 8GB uncompressed` error, this is because we do limit the image size you can use to run your Machine.
+If your deployment fails with the `Not enough space to unpack image, possibly exceeds maximum of 8GB uncompressed` error, this is because we have limits on the image size you can use to run your Machine.
 
 For reference, our non-GPU Machines only have an 8GB maximum rootfs size, and you'll need images less than ~8GB to run in these. While we do have [Fly GPU Machines](https://fly.io/docs/gpus/) that provide 50GB rootfs size, this might not be your cup of tea. Hence, it is advisable to [either reduce the image size](/docs/blueprints/using-base-images-for-faster-deployments/) or store the image in a Fly volume or an object store:
 
