@@ -40,9 +40,9 @@ The proxy only compresses responses that don’t already include a `Content-Enco
 
 ### Configuration
 
-Configure the HTTP handler to enable proxy-level compression
+Configure the HTTP handler to enable proxy-level compression:
 
-The http handler must be used in your fly.toml file for the service. There are two ways to do this (choose only one!):
+The http handler must be used in your `fly.toml` file for the service. There are two ways to do this (choose only one!):
 
 - [http_service](/docs/reference/configuration/#the-http_service-section) preconfigures the most common options for a service speaking HTTP. It will use the http handler implicitly for both ports 80 and 443 (and additionally, of course, the tls handler for port 443).
 
