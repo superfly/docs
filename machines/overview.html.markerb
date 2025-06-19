@@ -119,10 +119,10 @@ are; we've already done the heavy lifting.
 
 ### Static Machine IPs
 
-Static egress IPs can be attached to a machine. These IPs survive a [machine migration](https://fly.io/docs/reference/machine-migration/) and are not shared between machines.
+Static egress IPs can be attached to a machine. These IPs survive a [machine migration](/docs/reference/machine-migration/) and are not shared between machines.
 
 Static egress IPs are useful when your machine needs to connect to a service that requires allowlisting a specific set of IPs.
-If supported, it is recommended to use [Wireguard](https://fly.io/docs/networking/private-networking/#private-network-vpn) to connect to external services.
+If supported, it is recommended to use [Wireguard](/docs/networking/private-networking/#private-network-vpn) to connect to external services.
 
 You can attach a static egress IP to your machine with `fly machine egress-ip allocate <machine_id>`
 
@@ -147,7 +147,9 @@ put the Machine in.
 
 You don't get to pick particular servers (there are ways to cheat and do it anyways, but you shouldn't want to), just the region. 
 
-If you pick a particular region, like `ord` or `yyz`, we will _only_ create the Machine in that region. 
+If you pick a particular region, like `ord` or `yyz`, we will _only_ create the Machine in that region.
+
+Read more about Machine placement and regional capacity in [this guide](/docs/machines/guides-examples/machine-placement/).
 
 <section class="warning icon">
 **Placement can fail!** It shouldn't happen often, but we can run out of capacity in particular regions. Both flyctl and the Fly Machines 
