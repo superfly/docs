@@ -1,9 +1,9 @@
 ---
 title: Machine Placement and Regional Capacity
 layout: docs
-nav: firecracker
+nav: machines
 author: kcmartin
-date: 2025-06-19
+date: 2025-06-20
 ---
 
 <div class="callout">
