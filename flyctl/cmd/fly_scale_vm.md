@@ -2,8 +2,8 @@ Change an application's VM size to one of the named VM sizes.
 
 For a full list of supported sizes use the command 'flyctl platform vm-sizes'
 
-Memory size can be set with --memory=number-of-MB
-e.g. flyctl scale vm shared-cpu-1x --memory=2048
+Memory size can be set with --vm-memory=number-of-MB
+e.g. flyctl scale vm shared-cpu-1x --vm-memory=2048
 
 For pricing, see https://fly.io/docs/about/pricing/
 
