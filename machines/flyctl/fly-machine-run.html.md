@@ -438,7 +438,7 @@ The `--standby-for` flag sets the [`config.standbys`](/docs/machines/api-machine
 
 ## Start a Machine on a schedule
 
-Use the `--schedule` flag to set the Machine's [`config.schedule`](/docs/machines/api-machines-resource/#machine-config-object-properties) property, which starts the Machine on a fuzzy `hourly`, `daily`, `weekly`, or `monthly` cycle. This is useful for running Machines that do a finite job, then exit. The Machine is started the first time when you run `fly machine run`, and again once per (approximate) hour, day, week, or month. Scheduled machines cannot be started via flyctl or Machines API commands, they will only run according to the schedule.
+Use the `--schedule` flag to set the Machine's [`config.schedule`](/docs/machines/api-machines-resource/#machine-config-object-properties) property, which starts the Machine on a fuzzy `hourly`, `daily`, `weekly`, or `monthly` cycle. This is useful for running Machines that do a finite job, then exit. The Machine is started the first time when you run `fly machine run`, and again once per (approximate) hour, day, week, or month. For machines created with `fly machine create --schedule`, the first run will need to be manually started, since `fly machine create` does not start machines itself. Scheduled machines cannot be started via flyctl or Machines API commands, they will only run according to the schedule. 
 
 <div class="important icon">
 **Important:** If the host on which a stopped Machine resides doesn't have the resources to start it when its scheduled time comes, you'll get an error back. It's up to you to build the appropriate level of redundancy into your apps.
