@@ -59,10 +59,11 @@ fly-replay: region=sjc;app=app-in-same-org
 
 In cases where the replay target does not change often, you can use the `fly-replay-cache` mechanism to relieve the original app of some load. Here's how it works:
 - Issue a `fly-replay` header as usual
-- Set `fly-replay-cache: example.com/some/path/*`
+- Set `fly-replay-cache: /some/path/*`
   - This needs to be a path-matching pattern ending with a wildcard `/*`. This is where the cached replay is applied.
+  - The cached replay is unique to the request domain. The domain may also be set explicitly: `example.com/some/path/*`
   - The domain part should not include ports; use `example.com`, not `example.com:80`.
-  - The pattern must also match the current path of the request.
+  - The pattern must also match the current request.
 - Set `fly-replay-cache-ttl-secs: number_of_seconds`
 
 If the replay target does eventually change, the replay target may proactively invalidate the cache by
