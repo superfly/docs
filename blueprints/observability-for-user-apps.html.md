@@ -5,9 +5,9 @@ nav: firecracker
 date: 2025-05-26
 ---
 
-When you run a platform for users to execute their own code on Fly.io—[think per-user development environments]("/blueprints/per-user-dev-environments/) or AI/LLM apps—it's a good idea to have real-time observability for those user apps. You might _also_ want to stream logs from those apps back to the original developer (your end-user), so they can see what their code is doing.
+When you run a platform for users to execute their own code on Fly.io—[think per-user development environments](/docs/blueprints/per-user-dev-environments/) or AI/LLM apps—it's a good idea to have real-time observability for those user apps. You might _also_ want to stream logs from those apps back to the original developer (your end-user), so they can see what their code is doing.
 
-Fly.io offers built-in telemetry based on [**NATS**](https://nats.io/) that you can tap into to achieve this. At a high level, Fly.io captures everything your app writes to stdout and funnels it into an internal NATS log stream. A proxy in front of this NATS cluster ensures that each organization can only access its own applications' logs. Both the `flyctl logs` command and the our web dashboard's "Live Logs" use this pipeline under the hood. We can use the same system! By connecting a NATS client within your Fly organization's [private network]("/networking/private-networking/), we can subscribe to log subjects and stream logs out to wherever we need, in real-time.
+Fly.io offers built-in telemetry based on [**NATS**](https://nats.io/) that you can tap into to achieve this. At a high level, Fly.io captures everything your app writes to stdout and funnels it into an internal NATS log stream. A proxy in front of this NATS cluster ensures that each organization can only access its own applications' logs. Both the `flyctl logs` command and the our web dashboard's "Live Logs" use this pipeline under the hood. We can use the same system! By connecting a NATS client within your Fly organization's [private network](/docs/networking/private-networking/), we can subscribe to log subjects and stream logs out to wherever we need, in real-time.
 
 ## Deploying the Fly Telemetry Forwarder
 
@@ -25,7 +25,7 @@ fly launch --from https://github.com/superfly/fly-telemetry \
   --flycast
 ```
 
-After the deployment finishes, browse to the app's private URL [through WireGuard]("/blueprints/connect-private-network-wireguard/) or `fly proxy` and you have instant Grafana dashboards.
+After the deployment finishes, browse to the app's private URL [through WireGuard](/docs/blueprints/connect-private-network-wireguard/) or `fly proxy` and you have instant Grafana dashboards.
 
 This is handy for SREs, but not necessary for your end‑users.
 
