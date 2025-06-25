@@ -402,7 +402,7 @@ Roughly translated, this section says every thirty seconds, perform an HTTP GET 
 Times are in milliseconds unless units are specified.
 
 * `grace_period`: The time to wait after a Machine starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.
-* `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If interval is long and grace_period is shorter than your app's startup time, health check will take too long, adding to your deployment time.
+* `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If interval is long and grace_period is shorter than your app's startup time, the health check will take too long, adding to your deployment time.
 * `timeout`: The maximum time a connection can take before being reported as failing its health check.
 * `method`: The HTTP method to be used for the check. If omitted, the default is `get`.
 * `path`: The path of the URL to be requested.
