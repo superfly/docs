@@ -52,7 +52,7 @@ Use this checklist to help you set up a production environment on Fly.io.
 
 <%= render ChecklistComponent.new(
   items: [
-    { id: "production-grade-postgres", title: "Run \"production-grade\" Postgres", description: "For Fly Postgres, our unmanaged database, set up replication clusters of 3+ servers. See [High Availability & Global Replication](/postgres/advanced-guides/high-availability-and-global-replication/). You can also use an external database provider and configure it for redundancy."},
+    { id: "production-grade-postgres", title: "Run \"production-grade\" Postgres", description: "For Fly Postgres, our unmanaged database, set up replication clusters of 3+ servers. See [High Availability & Global Replication](/docs/postgres/advanced-guides/high-availability-and-global-replication/). You can also use an external database provider and configure it for redundancy."},
     { id: "test-backups", title: "Periodically test your Fly Postgres backups", description: "Periodically [create a new Postgres app from a snapshot](/docs/postgres/managing/backup-and-restore/#restoring-from-a-snapshot) or clone the active app, then use `fly postgres connect` to log into the database and confirm that all the data is present." },
     { id: "offsite-backups", title: "Set up offsite backups", description: "For all databases, it's essential to have a recovery plan that includes storing backups offsite. You can use volume snapshots as part of your plan, but you should also store copies of your backups in another location. See [Manage volume snapshots](https://fly.io/docs/volumes/snapshots/) and, for Fly Postgres, [Backup, Restores, & Snapshots](https://fly.io/docs/postgres/managing/backup-and-restore/)." }
   ],
