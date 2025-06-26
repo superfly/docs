@@ -1,5 +1,6 @@
 Manage Fly Machines. Fly Machines are super-fast, lightweight VMs that can be created,
-and then quickly started and stopped as needed with flyctl commands or with the Machines REST API.
+and then quickly started and stopped as needed with flyctl commands or with the
+Machines REST fly.
 
 ## Usage
 ~~~
