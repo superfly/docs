@@ -1,17 +1,16 @@
-Proxy to a MPG database
+Destroy a managed Postgres cluster. This command will permanently destroy a managed Postgres cluster and all its data.
+This action is not reversible.
 
 ## Usage
 ~~~
-fly managed-postgres proxy [flags]
+fly managed-postgres destroy <CLUSTER ID> [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -b, --bind-addr string   Local address to bind to (default "127.0.0.1")
-      --cluster string     The target cluster ID
-  -h, --help               help for proxy
-  -r, --region string      The target region (see 'flyctl platform regions')
+  -h, --help   help for destroy
+  -y, --yes    Accept all confirmations
 ~~~
 
 ## Global Options
