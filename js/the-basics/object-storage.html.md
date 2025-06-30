@@ -53,4 +53,4 @@ fly launch --from https://github.com/fly-apps/node-dictaphone.git
 
 ## Find out more!
 
-Now that you are up and running, there is a lot more to explore on the [Tigris Global Object Storage](/docs/tigris/) page. Highlights include public buckets, migrating to Tigris with shadow butckets, Pricing, and AWS API compatibility.
+Now that you are up and running, there is a lot more to explore on the [Tigris Global Object Storage](/docs/tigris/) page. Highlights include public buckets, migrating to Tigris with shadow butckets, pricing, and AWS API compatibility.
