@@ -5,11 +5,11 @@ objective: Provision a Tigris Bucket and access it via a `S3Client`
 order: 4
 ---
 
-[Tigris](Tigris is a globally caching, S3-compatible object storage service built on Fly.io infrastructure.) is a globally caching, S3-compatible object storage service built on Fly.io infrastructure.
+[Tigris](https://tigrisdata.com) is a globally caching, S3-compatible object storage service built on Fly.io infrastructure.
 
 ## Launching a new Application?
 
-If `@aws-sdk/client-s3` is listed as a dependency in your `package.json`, Tigris will be automatically selected by fly launch. This can be overrided this in the launch UI:
+If `@aws-sdk/client-s3` is listed as a dependency in your `package.json`, Tigris will be automatically selected by fly launch. This can be overridden in the launch UI:
 
 ![Tigris Launch-UI](/docs/images/tigris-launch-ui.png)
 
@@ -53,4 +53,4 @@ fly launch --from https://github.com/fly-apps/node-dictaphone.git
 
 ## Find out more!
 
-Now that you are up and running, there is a lot more to explore on the [Tigris Global Object Storage](/docs/tigris/) page. Highlights include public buckets, migrating to Tigris with shadow butckets, Pricing, and AWS API compatibility.
+Now that you are up and running, there is a lot more to explore on the [Tigris Global Object Storage](/docs/tigris/) page. Highlights include public buckets, migrating to Tigris with shadow buckets, pricing, and AWS API compatibility.
