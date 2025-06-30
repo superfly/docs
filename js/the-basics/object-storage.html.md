@@ -9,7 +9,7 @@ order: 4
 
 ## Launching a new Application?
 
-If `@aws-sdk/client-s3` is listed as a dependency in your `package.json`, Tigris will be automatically selected by fly launch. This can be overrided this in the launch UI:
+If `@aws-sdk/client-s3` is listed as a dependency in your `package.json`, Tigris will be automatically selected by fly launch. This can be overridden in the launch UI:
 
 ![Tigris Launch-UI](/docs/images/tigris-launch-ui.png)
 
@@ -53,4 +53,4 @@ fly launch --from https://github.com/fly-apps/node-dictaphone.git
 
 ## Find out more!
 
-Now that you are up and running, there is a lot more to explore on the [Tigris Global Object Storage](/docs/tigris/) page. Highlights include public buckets, migrating to Tigris with shadow butckets, pricing, and AWS API compatibility.
+Now that you are up and running, there is a lot more to explore on the [Tigris Global Object Storage](/docs/tigris/) page. Highlights include public buckets, migrating to Tigris with shadow buckets, pricing, and AWS API compatibility.
