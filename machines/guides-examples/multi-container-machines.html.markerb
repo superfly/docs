@@ -151,7 +151,7 @@ There are several ways to deploy multi-container machines on Fly.io. Choose the 
 You can define your Machine configuration in a JSON file (e.g., `machine-config.json`) and create the Machine using the Fly CLI:
 
 ```bash
-flyctl machines create -f machine-config.json
+flyctl machines create --machine-config machine-config.json
 ```
 
 You can also launch a multi-container app interactively using `flyctl machine run`:
@@ -166,7 +166,7 @@ flyctl machine run --machine-config cli-config.json \
 Alternatively, you can make a direct API call using `curl`:
 
 ```bash
-curl -X POST "https://api.fly.io/v1/apps/your-app-name/machines" \
+curl -X POST "https://api.machines.dev/v1/apps/your-app-name/machines" \
   -H "Authorization: Bearer your-api-token" \
   -H "Content-Type: application/json" \
   -d @machine-config.json
