@@ -174,6 +174,10 @@ curl -X POST "https://api.machines.dev/v1/apps/your-app-name/machines" \
 
 Refer to the [Machines API documentation](https://docs.machines.dev/#tag/machines) for more details.
 
+<div class="callout">
+Note: When using `--machine-config`, your JSON file must include a containers array with at least one container defined
+</div>
+
 ### Using fly launch & fly deploy
 
 Starting with `flyctl v0.3.113`, you can run multiple containers using `fly deploy`. This example demonstrates using a nginx container as a rate limiter and a custom app container.
