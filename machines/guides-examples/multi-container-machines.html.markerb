@@ -151,7 +151,7 @@ There are several ways to deploy multi-container machines on Fly.io. Choose the 
 You can define your Machine configuration in a JSON file (e.g., `machine-config.json`) and create the Machine using the Fly CLI:
 
 ```bash
-flyctl machines create -f machine-config.json
+flyctl machines create --machine-config machine-config.json
 ```
 
 You can also launch a multi-container app interactively using `flyctl machine run`:
@@ -166,7 +166,7 @@ flyctl machine run --machine-config cli-config.json \
 Alternatively, you can make a direct API call using `curl`:
 
 ```bash
-curl -X POST "https://api.fly.io/v1/apps/your-app-name/machines" \
+curl -X POST "https://api.machines.dev/v1/apps/your-app-name/machines" \
   -H "Authorization: Bearer your-api-token" \
   -H "Content-Type: application/json" \
   -d @machine-config.json
@@ -174,9 +174,13 @@ curl -X POST "https://api.fly.io/v1/apps/your-app-name/machines" \
 
 Refer to the [Machines API documentation](https://docs.machines.dev/#tag/machines) for more details.
 
+<div class="callout">
+Note: When using `--machine-config`, your JSON file must include a containers array with at least one container defined
+</div>
+
 ### Using fly launch & fly deploy
 
-Starting with `flyctl v0.3.113`, you can run multiple containers using `fly deploy`. This example demonstrates using a nginx container as a rate limiter and a custom app container.
+Starting with `flyctl v0.3.147`, you can run multiple containers using `fly deploy`. This example demonstrates using a nginx container as a rate limiter and a custom app container.
 
 #### 1. Create cli-config.json
 
@@ -216,6 +220,8 @@ Starting with `flyctl v0.3.113`, you can run multiple containers using `fly depl
 ```
 
 #### 2. Update fly.toml
+
+**Note:** `flyctl` [version 0.3.147](https://github.com/superfly/flyctl/releases/tag/v0.3.147) or later is required to use this config
 
 ```
 [experimental]
