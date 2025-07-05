@@ -6,6 +6,10 @@ author: rubys
 date: 2024-07-17
 ---
 
+<div class="important">
+The methods described in this Blueprint won't work with a [Bluegreen deployment strategy](https://fly.io/docs/launch/deploy/#deployment-strategy) because all the Machines in your app are replaced—the old Machines are destroyed and their IDs are no longer relevant.
+</div>
+
 In a number of scenarios, it is important to ensure that certain requests are
 routed to a specific Machine.  This frequently is expressed in the form of
 wanting an entire user's session to be processed by the same Machine.
