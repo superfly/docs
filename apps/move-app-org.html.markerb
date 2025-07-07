@@ -35,5 +35,10 @@ The following app resources are transferred to the new org automatically:
 
 The following extension services need to be reconfigured for the app after the move:
 
-- **[Upstash for Redis](https://fly.io/docs/upstash/redis/):** Upstash Redis is only available over an organization's private network. After you move the app, you'll need to provision a new database for the new org.
-- **[Tigris object storage](https://fly.io/docs/tigris/):** Before moving the app, you'll need to delete the bucket, then recreate it in the new org and set the new secrets. Billing for the new bucket will be tied to the new org.
+- **[Upstash for Redis](/docs/upstash/redis/):** Upstash Redis is only available over an organization's private network. After you move the app, you'll need to provision a new database for the new org.
+- **[Tigris object storage](/docs/tigris/):** Before moving the app, you'll need to delete the bucket, then recreate it in the new org and set the new secrets. Billing for the new bucket will be tied to the new org.
+
+
+## Read more
+
+[App handover considerations and approaches](/docs/apps/app-handover-guide/)
