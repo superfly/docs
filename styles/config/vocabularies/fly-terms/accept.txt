@@ -26,6 +26,7 @@ datatypes?\b
 discoverability
 Debian
 dev
+devs
 (?i)Dockerfile
 Dyno
 enum
@@ -61,6 +62,7 @@ IPSec
 ISPs?\b
 json
 JSON
+kcmartin
 kubeconfig
 kubectl
 Laravel
