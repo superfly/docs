@@ -12,7 +12,7 @@ date: 2025-07-03
 
 ---
 
-### Option 1: Build in the customer’s Fly org from day one
+### Option 1: Build in the customer’s org from day one
 
 The cleanest handoff is no handoff at all. Have the customer create their own Fly.io organization before you start building.
 
@@ -54,6 +54,6 @@ If you know up front that your customer will own the app long-term, starting in 
 
 ### Related reading
 
-[Fly.io billing](https://fly.io/docs/about/billing)
+[Fly.io billing](/docs/about/billing)
 
-[Move an app between orgs](https://fly.io/docs/apps/move-app-org)
+[Move an app between orgs](/docs/apps/move-app-org)
