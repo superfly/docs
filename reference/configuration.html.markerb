@@ -984,18 +984,30 @@ Check out [Metrics on Fly.io](/docs/reference/metrics/) for more information abo
 
 ## The `statics` sections
 
-When `statics` are set, requests under `url_prefix` that are present as files in `guest_path` will be delivered directly to clients, bypassing your web server. These assets are extracted from your Docker image and delivered directly from our proxy on worker hosts.
+You can use the `[[statics]]` section in your `fly.toml` to serve static files such as images, CSS, or JavaScript for your application. There are two ways to serve statics. From your running Fly Machine or from a Tigris object storage bucket.
+
+### Serving statics from a Fly Machine
+
+When you add a `[[statics]]` section, the Fly Proxy intercepts requests matching your `url_prefix`. If the requested file exists in your `guest_path`, the request is routed to a static file server running inside your machine. This bypasses your main web server process. Your machine must be running for static files to be served.
+
+If your machine is stopped, static files will not be served. If `autostart` is enabled, the machine will be started during requests to statics as well as during normal requests to the app. Static assets are always served directly from your VM, not from the Fly edge or proxy host.
 
 ```toml
 [[statics]]
   guest_path = "/app/public"
   url_prefix = "/public"
 ```
-Each `[[statics]]` block maps a URL prefix to a path inside your container. You can have up to 10 mappings in an application.
 
-The "guest path" --- the path inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
+With this example, a request to `/public/image.png` is served from `/app/public/image.png` inside your running machine. You can define up to 10 `[[statics]]` mappings per application.
 
-Alternatively, you can serve statics directly from object storage using [Tigris](/docs/tigris/). Similar to machine statics, requests under `url_prefix` are served from static assets in your Tigris bucket under `guest_path`. The same rules apply for overlapping URL prefixes.
+The `guest_path` is the directory in your image to serve files from. It may overlap across mappings, but `url_prefix` values must not overlap. Only one static mapping is honored for a given prefix. For example, two mappings to `/public/foo` and `/public/bar` are allowed, but two mappings to `/public` are not.
+
+### Serving statics from Tigris object storage
+
+You can serve static files directly from a Tigris object storage bucket. This lets you host assets or full static sites from a bucket instead of baking them into your image. 
+
+Static files in Tigris buckets are always delivered through your application’s running VM, not directly from the Fly edge. If no machine is running, requests for Tigris statics will not be served.
+However, if `autostart` is enabled for your app, incoming requests for static assets will automatically start a machine as needed, just like for normal application traffic.
 
 ```toml
 [[statics]]
@@ -1004,7 +1016,9 @@ Alternatively, you can serve statics directly from object storage using [Tigris]
   tigris_bucket = "my-bucket"
 ```
 
-Serving statics from Tigris supports index documents. When an index document is specified, requests to the root or any of its subfolders serve the index document.
+With this configuration, requests under `/public` are served from files stored in `my-bucket` under the `/app/public` path. Your machine must be running for these files to be served. If your machine scales to zero, static assets will not be accessible.
+
+When handling trailing slashes, requests to a directory path such as `/public/dir/` look for an `index.html` if you specify one. Requests without a trailing slash such as `/public/dir` may not serve as expected. Consider using redirects or documenting this for your users. Tigris statics support the `index_document` key, which allows you to serve a default file for a directory path.
 
 ```toml
 [[statics]]
@@ -1014,23 +1028,23 @@ Serving statics from Tigris supports index documents. When an index document is 
   index_document = "index.html"
 ```
 
-In this configuration, a request to `https://example.com/public/` will serve the file `/app/public/index.html` stored in `my-bucket`. Similarly, a request to `https://example.com/public/assets/`, will serve the file `/app/public/assets/index.html`.
+With this configuration, a request to `https://example.com/public/` serves `/app/public/index.html` from the bucket. Similarly, `https://example.com/public/assets/` serves `/app/public/assets/index.html`.
+
+Tigris statics are billed at Tigris pricing. Data egress from Tigris may incur both Tigris and Fly Proxy egress charges. Do not overlap `url_prefix` values; only one static mapping will be honored for a given prefix.
+
 
 ### Caveats
 
 This feature should not be compared directly with a CDN, for the following reasons:
 
-* This feature does not exempt you from having to run a web service in your Machine.
+- This feature does not exempt you from having to run a web service in your Machine.
+- You must have a running machine for statics to be served. If your machine is stopped, static assets will not be served. If `auto_start_machines` is enabled, the machine will be started automatically in response to requests for statics, just as with normal application requests.
+- The Fly Proxy routes matching requests directly to the statics file server running inside your machine. Static requests do not go through your main application process, but are handled by the file server within the same VM.
+- Serving an index document is only supported for statics served directly from Tigris. The index document must have the same name in all the relevant locations in your Tigris bucket.
+- For statics served from your container, it will not find `index.html` at the root. The full path must be requested.
+- You cannot set `Cache-Control` or any other headers on assets. If you need those, deliver them from your application and set the relevant headers.
+- `statics` does not honor symlinks. For example, if `/app/public` in your container is a symlink to something like `/app-39403/public`, use the absolute original path in your statics configuration.
 
-* Serving an index document is only supported for statics served directly from Tigris. The index document must have the same name in all the relevant locations in your Tigris bucket.
-
-* For statics served from your container, it will not find `index.html` at the root. The full path must be requested.
-
-* You can't set `Cache-Control` or any other headers on assets. If you need those, you'll need to deliver them from your application and set the relevant headers.
-
-* Assets are not delivered, by default, from all edge Fly.io regions. Rather, assets are delivered from the regions the application is deployed in.
-
-* `statics` does not honor symlinks. So, if `/app/public` in your container is actually a symlink to something like `/app-39403/public`, you'll want to use the absolute original path in your statics configuration.
 
 ## The `files` section
 
