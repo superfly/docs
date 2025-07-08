@@ -4,8 +4,8 @@ layout: docs
 nav: firecracker
 ---
 
-<figure>
-  <img src="/static/images/docs-magnify.webp" alt="">
+<figure class="flex justify-center">
+  <img src="/static/images/troubleshooting.png" alt="Illustration by Annie Ruygt of a figure looking through a magnifying glass at a balloon" class="w-full max-w-lg mx-auto">
 </figure>
 
 This section gives you some ideas of how to start troubleshooting if your deployment doesn't work as expected. If you're still stuck after reading, then visit our [community forum](https://community.fly.io/) for more help.
