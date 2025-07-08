@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/getting-started.png" alt="Illustration by Annie Ruygt of a figure steering a ship" class="w-full max-w-lg mx-auto">
+</figure>
+
 You really can [get an app up and running in just minutes](https://fly.io/speedrun/) on Fly.io.
 
 But if you want to know a bit more about what's what on the Fly.io platform, then read on. You can skip to the [glossary](#fly-io-glossary) for the tl;dr.
