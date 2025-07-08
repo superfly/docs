@@ -60,3 +60,4 @@ You don't need to configure them yourself, and they don't impact routing after t
 ## Related topics
 
 - [App configuration (fly.toml)](/docs/reference/configuration/)
+- [Seamless/Zero-downtime deployments](/docs/blueprints/seamless-deployments/)
