@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/health-checks.png" alt="Illustration by Annie Ruygt of a balloon doctor examining a machine" class="w-full max-w-lg mx-auto">
+</figure>
+
 Health checks are a useful way to monitor the state of your app on Fly.io. When configured, they help the platform make decisions about routing traffic and managing deployments. For example, health checks can:
 
 - Confirm that Machines are ready before receiving traffic
