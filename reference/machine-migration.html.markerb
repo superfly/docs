@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/migrating-from-aws.png" alt="Illustration by Annie Ruygt of a figure jumping from one mountian to another" class="w-full max-w-lg mx-auto">
+</figure>
+
 Fly.io will migrate your Machines from problematic hosts to healthy hosts as required. Some of the reasons for migrating Machines include host overcrowding, deprecation, or scheduled maintenance. The migration process helps your applications run efficiently on the Fly.io platform. You don't need to take any action to migrate your Machines to another host and, if your app has [multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/), migration shouldn't result in any downtime for your app.
 
 ## Machine migration process
