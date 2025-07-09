@@ -1047,7 +1047,7 @@ This feature should not be compared directly with a CDN, for the following reaso
 - Serving an index document is only supported for statics served directly from Tigris. The index document must have the same name in all the relevant locations in your Tigris bucket.
 - For statics served from your container, it will not find `index.html` at the root. The full path must be requested.
 - You cannot set `Cache-Control` or any other headers on assets. If you need those, deliver them from your application and set the relevant headers.
-- `statics` does not honor symlinks. For example, if `/app/public` in your container is a symlink to something like `/app-39403/public`, use the absolute original path in your statics configuration.
+- `statics` does not honor symlinks. For example, if `/app/public` in your container is a symlink, such as `/app-39403/public`, use the absolute original path in your statics configuration.
 
 
 ## The `files` section
