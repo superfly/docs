@@ -115,7 +115,7 @@ Resque
 Rio de Janeiro
 rootfs
 RTT
-runtimes?\b
+[Rr]untimes?\b
 Ruygt
 São Paulo
 (?i)sequelize
