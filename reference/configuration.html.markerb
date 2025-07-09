@@ -1009,7 +1009,7 @@ The `guest_path` is the directory in your docker image to serve files from. It m
 You can serve static files directly from a Tigris object storage bucket. This lets you host assets or full static sites from a bucket instead of baking them into your docker image. 
 
 Static files in Tigris buckets are always delivered through your application’s running VM, not directly from the Fly edge. If no machine is running, requests for Tigris statics will not be served.
-However, if `autostart` is enabled for your app, incoming requests for static assets will automatically start a machine as needed, just like for normal application traffic.
+However, if `autostart` is enabled for your app, incoming requests for static assets will automatically start a machine as needed, the same as for normal application traffic.
 
 ```toml
 [[statics]]
