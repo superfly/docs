@@ -244,7 +244,7 @@ Fractional values, between zero and one, provide a percentage of Machines that c
 
 ### Dealing with timeout errors while deploying a new version
 
-Every time `fly deploy` runs, it builds a new docker image, pushes it to an internal registry, and then updates or creates Machines for the app. Sometimes the image is too large, or the platform is slower than usual pulling the new image layers, triggering the default 5 minute timeout waiting for the Machine to be in a started state.
+Every time `fly deploy` runs, it builds a new Docker image, pushes it to an internal registry, and then updates or creates Machines for the app. Sometimes the image is too large, or the platform is slower than usual pulling the new image layers, triggering the default 5 minute timeout waiting for the Machine to be in a started state.
 
 The good thing is that this timeout can be controlled in two ways, with the `--wait-timeout` option, for example `fly deploy --wait-timeout=10m`, or as a more permanent `fly.toml` setting:
 
@@ -868,7 +868,7 @@ processes = ["worker"]
   processes = ["app"]
 ```
 
-When a machine unexpectedly exits, our scheduling machinery follows a machine’s restart policy to restart it without your intervention. These policies are quite similar to docker’s container restart policies:
+When a machine unexpectedly exits, our scheduling machinery follows a machine’s restart policy to restart it without your intervention. These policies are quite similar to Docker’s container restart policies:
 
 - always: we’ll attempt to restart the machine no matter the exit code.
 - never: we won’t restart the machine even if it exits with a non-zero exit code.
@@ -1002,11 +1002,11 @@ If your machine is stopped, static files will not be served. If `autostart` is e
 
 In this example, a request to `/public/image.png` is served from `/app/public/image.png` inside your running machine. You can define up to 10 `[[statics]]` mappings per application.
 
-The `guest_path` is the directory in your docker image to serve files from. It may overlap across mappings, but `url_prefix` values must not overlap. Only one static mapping is honored for a given prefix. For example, two mappings to `/public/foo` and `/public/bar` are allowed, but two mappings to `/public` are not.
+The `guest_path` is the directory in your Docker image to serve files from. It may overlap across mappings, but `url_prefix` values must not overlap. Only one static mapping is honored for a given prefix. For example, two mappings to `/public/foo` and `/public/bar` are allowed, but two mappings to `/public` are not.
 
 ### Serving statics from Tigris object storage
 
-You can serve static files directly from a Tigris object storage bucket. This lets you host assets or full static sites from a bucket instead of baking them into your docker image. 
+You can serve static files directly from a Tigris object storage bucket. This lets you host assets or full static sites from a bucket instead of baking them into your Docker image. 
 
 Static files in Tigris buckets are always delivered through your application’s running VM, not directly from the Fly edge. If no machine is running, requests for Tigris statics will not be served.
 However, if `autostart` is enabled for your app, incoming requests for static assets will automatically start a machine as needed, the same as for normal application traffic.
