@@ -11,7 +11,7 @@ autosav\w+
 backhaul
 bluegreen
 bool
-buildpacks?\b
+[Bb]uildpacks?\b
 bursty
 callouts?\b
 centiseconds
