@@ -1042,7 +1042,7 @@ Do not overlap `url_prefix` values; only one static mapping will be honored for 
 This feature should not be compared directly with a CDN, for the following reasons:
 
 - This feature does not exempt you from having to run a web service in your Machine.
-- You must have a running machine for statics to be served. If your machine is stopped, static assets will not be served. If `auto_start_machines` is enabled, the machine will be started automatically in response to requests for statics, just as with normal application requests.
+- You must have a running machine for statics to be served. If your machine is stopped, static assets will not be served. If `auto_start_machines` is enabled, the machine will be started automatically in response to statics requests, the same as with normal application requests.
 - The Fly Proxy routes matching requests directly to the statics file server running inside your machine. Static requests do not go through your main application process, but are handled by the file server within the same VM.
 - Serving an index document is only supported for statics served directly from Tigris. The index document must have the same name in all the relevant locations in your Tigris bucket.
 - For statics served from your container, it will not find `index.html` at the root. The full path must be requested.
