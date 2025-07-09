@@ -992,7 +992,7 @@ You can use the `[[statics]]` section in your `fly.toml` to serve static files s
 
 When you add a `[[statics]]` section to `fly.toml`, the Fly Proxy intercepts requests matching your `url_prefix`. If the requested file exists in your `guest_path`, the request is routed to a static file server running inside your machine. This bypasses your main web server process. Your machine must be running for static files to be served.
 
-If your machine is stopped, static files will not be served. If `autostart` is enabled, the machine will be started during requests to statics as well as during normal requests to the app. Static assets are always served directly from your VM, not from the Fly edge or proxy host.
+If your machine is stopped, static files will not be served. If `autostart` is enabled, the machine will be started during statics requests as well as during normal requests to the app. Static assets are always served directly from your VM, not from the Fly edge or proxy host.
 
 ```toml
 [[statics]]
