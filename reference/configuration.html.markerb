@@ -1002,11 +1002,11 @@ If your machine is stopped, static files will not be served. If `autostart` is e
 
 In this example, a request to `/public/image.png` is served from `/app/public/image.png` inside your running machine. You can define up to 10 `[[statics]]` mappings per application.
 
-The `guest_path` is the directory in your image to serve files from. It may overlap across mappings, but `url_prefix` values must not overlap. Only one static mapping is honored for a given prefix. For example, two mappings to `/public/foo` and `/public/bar` are allowed, but two mappings to `/public` are not.
+The `guest_path` is the directory in your docker image to serve files from. It may overlap across mappings, but `url_prefix` values must not overlap. Only one static mapping is honored for a given prefix. For example, two mappings to `/public/foo` and `/public/bar` are allowed, but two mappings to `/public` are not.
 
 ### Serving statics from Tigris object storage
 
-You can serve static files directly from a Tigris object storage bucket. This lets you host assets or full static sites from a bucket instead of baking them into your image. 
+You can serve static files directly from a Tigris object storage bucket. This lets you host assets or full static sites from a bucket instead of baking them into your docker image. 
 
 Static files in Tigris buckets are always delivered through your application’s running VM, not directly from the Fly edge. If no machine is running, requests for Tigris statics will not be served.
 However, if `autostart` is enabled for your app, incoming requests for static assets will automatically start a machine as needed, just like for normal application traffic.
