@@ -1030,7 +1030,7 @@ When handling trailing slashes, requests to a directory path such as `/public/di
   index_document = "index.html"
 ```
 
-With this configuration, a request to `https://example.com/public/` serves `/app/public/index.html` from the bucket. Similarly, `https://example.com/public/assets/` serves `/app/public/assets/index.html`.
+In this configuration, a request to `https://example.com/public/` serves `/app/public/index.html` from the bucket. Similarly, `https://example.com/public/assets/` serves `/app/public/assets/index.html`.
 
 Tigris statics are billed at Tigris pricing. Data egress from Tigris may incur both Tigris and Fly Proxy egress charges. Do not overlap `url_prefix` values; only one static mapping will be honored for a given prefix.
 
