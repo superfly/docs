@@ -1000,7 +1000,7 @@ If your machine is stopped, static files will not be served. If `autostart` is e
   url_prefix = "/public"
 ```
 
-With this example, a request to `/public/image.png` is served from `/app/public/image.png` inside your running machine. You can define up to 10 `[[statics]]` mappings per application.
+In this example, a request to `/public/image.png` is served from `/app/public/image.png` inside your running machine. You can define up to 10 `[[statics]]` mappings per application.
 
 The `guest_path` is the directory in your image to serve files from. It may overlap across mappings, but `url_prefix` values must not overlap. Only one static mapping is honored for a given prefix. For example, two mappings to `/public/foo` and `/public/bar` are allowed, but two mappings to `/public` are not.
 
