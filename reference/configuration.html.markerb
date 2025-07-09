@@ -1020,7 +1020,7 @@ However, if `autostart` is enabled for your app, incoming requests for static as
 
 In this configuration, requests under `/public` are served from files stored in `my-bucket` under the `/app/public` path. Your machine must be running for these files to be served. If your machine scales to zero, static assets will not be accessible.
 
-When handling trailing slashes, requests to a directory path such as `/public/dir/` look for an `index.html` if you specify one. Requests without a trailing slash such as `/public/dir` may not serve as expected. Consider using redirects or documenting this for your users. Tigris statics support the `index_document` key, which allows you to serve a default file for a directory path.
+When handling trailing slashes, requests to a directory path such as `/public/dir/` look for an `index.html` file, if you specify one. Requests without a trailing slash such as `/public/dir` may not serve as expected. Consider using redirects or documenting this for your users. Tigris statics support the `index_document` key, which allows you to serve a default file for a directory path.
 
 ```toml
 [[statics]]
