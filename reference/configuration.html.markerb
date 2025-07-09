@@ -984,7 +984,9 @@ Check out [Metrics on Fly.io](/docs/reference/metrics/) for more information abo
 
 ## The `statics` sections
 
-You can use the `[[statics]]` section in your `fly.toml` to serve static files such as images, CSS, or JavaScript for your application. There are two ways to serve statics. From your running Fly Machine or from a Tigris object storage bucket.
+You can use the `[[statics]]` section in your `fly.toml` to serve static files such as images, CSS, or JavaScript for your application. There are two ways to serve statics: 
+- From a running Fly Machine
+- From a Tigris object storage bucket.
 
 ### Serving statics from a Fly Machine
 
