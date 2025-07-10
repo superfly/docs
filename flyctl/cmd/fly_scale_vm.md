@@ -1,6 +1,6 @@
 Change an application's VM size to one of the named VM sizes.
 
-For a full list of supported sizes use the command 'flyctl platform vm-sizes'
+For a full list of supported sizes use the command `flyctl platform vm-sizes`
 
 Memory size can be set with the `--vm-memory` flag followed by the number of MB.
 
