@@ -2,14 +2,16 @@
   def section_open?(section)
     (!section[:path].nil? && current_page?(section[:path])) ||
     (!section[:open].nil? && section[:open]) ||
-    section[:links].any? { |page| current_page?(page[:path]) || (page[:links] && section_open?(page)) }
+    (section[:links] && section[:links].any? { |page| current_page?(page[:path]) || (page[:links] && section_open?(page)) })
   end
 
   nav.each { |nav| nav[:open] = section_open?(nav) unless nav[:title].nil? }
 
   nav.each do |nav| 
 %>
-  <% if nav[:text] %>
+  <% if nav[:links].nil? %>
+    <%= nav_link nav[:title], nav[:path], class: "title-link" %>
+  <% elsif nav[:text] %>
     <%= nav_link nav[:text], nav[:path], class: "#{nav[:type]}-link" %>
   <% elsif nav[:accordion] == false %>
     <dl>
@@ -18,7 +20,7 @@
       </dt>
       <dd>
         <ul>
-          <% nav[:links].each do |page| %>
+          <% nav[:links]&.each do |page| %>
             <li><%= nav_link page[:text], page[:path], class: "subpage-link" %></li>
           <% end %>
         </ul>
@@ -32,13 +34,16 @@
         <% else %>
           <span class="accordion-title"><%= nav[:title] %></span>
         <% end %>
-        <button class="accordion-trigger" aria-expanded="<%= nav[:open] %>">
-          <span class="sr-only">Toggle <%= nav[:title] %> section</span>
-        </button>
+        <%# Only show the accordion trigger if there are real subpages %>
+        <% if nav[:links] && nav[:links].size > 0 %>
+          <button class="accordion-trigger" aria-expanded="<%= nav[:open] %>">
+            <span class="sr-only">Toggle <%= nav[:title] %> section</span>
+          </button>
+        <% end %>
       </dt>
       <dd class="accordion-target">
         <ul class="accordion-content" role="region" aria-label="<%= nav[:title] %>">
-          <% nav[:links].each do |page| %>
+          <% nav[:links]&.each do |page| %>
             <% if page[:links] %>
               <li>
                 <dl class="accordion<%= section_open?(page) ? " open" : "" %>">
@@ -54,7 +59,7 @@
                   </dt>
                   <dd class="accordion-target">
                     <ul class="accordion-content" role="region" aria-label="<%= page[:title] %>">
-                      <% page[:links].each do |subpage| %>
+                      <% page[:links]&.each do |subpage| %>
                         <li>
                           <% if subpage[:type] == "flyctl" %>
                             <%= flyctl_nav_link subpage[:text], subpage[:path] %>
