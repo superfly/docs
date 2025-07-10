@@ -3,6 +3,7 @@ title: Managed Postgres
 layout: docs
 nav: firecracker
 toc: false
+redirect_from: /docs/mpg/overview/
 ---
 
 <figure class="flex justify-center">
