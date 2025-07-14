@@ -76,6 +76,7 @@ mutation($appId: ID!, $hostname: String!) {
             configured
             acmeDnsConfigured
             acmeAlpnConfigured
+            isAcmeHttpConfigured
             certificateAuthority
             certificateRequestedAt
             dnsProvider
@@ -100,6 +101,7 @@ mutation($appId: ID!, $hostname: String!) {
       "configured": true,
       "acmeDnsConfigured": true,
       "acmeAlpnConfigured": true,
+      "isAcmeHttpConfigured": true,
       "certificateAuthority": "lets_encrypt",
       "certificateRequestedAt": "2020-03-06T12:26:36Z",
       "dnsProvider": "enom",
@@ -129,6 +131,7 @@ query($appName: String!, $hostname: String!) {
       configured
       acmeDnsConfigured
       acmeAlpnConfigured
+      isAcmeHttpConfigured
       certificateAuthority
       createdAt
       dnsProvider
@@ -159,6 +162,7 @@ query($appName: String!, $hostname: String!) {
       "configured": true,
       "acmeDnsConfigured": true,
       "acmeAlpnConfigured": true,
+      "isAcmeHttpConfigured": true,
       "certificateAuthority": "lets_encrypt",
       "createdAt": "2020-03-04T17:17:39Z",
       "dnsProvider": "enom",
@@ -202,6 +206,7 @@ query($appName: String!, $hostname: String!) {
         configured
         acmeDnsConfigured
         acmeAlpnConfigured
+        isAcmeHttpConfigured
         certificateAuthority
         createdAt
         dnsProvider
