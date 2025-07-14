@@ -2,7 +2,7 @@
 title: Supported Postgres Extensions
 layout: docs
 nav: firecracker
-toc: false
+date: 2025-07-11
 ---
 
 
