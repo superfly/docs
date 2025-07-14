@@ -13,7 +13,6 @@ fly certs [command] [flags]
 * [check](/docs/flyctl/certs-check/)	 - Checks DNS configuration
 * [list](/docs/flyctl/certs-list/)	 - List certificates for an app.
 * [remove](/docs/flyctl/certs-remove/)	 - Removes a certificate from an app
-* [setup](/docs/flyctl/certs-setup/)	 - Shows certificate setup instructions
 * [show](/docs/flyctl/certs-show/)	 - Shows certificate information
 
 ## Options

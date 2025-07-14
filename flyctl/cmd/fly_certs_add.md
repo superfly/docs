@@ -1,7 +1,5 @@
 Add a certificate for an application. Takes a hostname
-as a parameter for the certificate. After creating the certificate,
-the command will provide DNS setup instructions for configuring
-your domain to work with your Fly application.
+as a parameter for the certificate.
 
 ## Usage
 ~~~
@@ -28,5 +26,4 @@ fly certs add <hostname> [flags]
 ## See Also
 
 * [fly certs](/docs/flyctl/certs/)	 - Manage certificates
-* [fly certs setup](/docs/flyctl/certs-setup/)	 - Shows certificate setup instructions
 
