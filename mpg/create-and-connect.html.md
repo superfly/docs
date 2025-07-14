@@ -2,7 +2,7 @@
 title: Create and Connect to a Managed Postgres Cluster
 layout: docs
 nav: firecracker
-toc: false
+date: 2025-07-11
 ---
 
 
