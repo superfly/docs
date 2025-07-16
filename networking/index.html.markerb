@@ -24,6 +24,8 @@ Networking on Fly.io.
 
 - **[Custom domains](/docs/networking/custom-domain/):** Add a custom domain for your app and troubleshoot certificate creation.
 
+- **[Understanding Cloudflare](/docs/networking/understanding-cloudflare/):** How to use Cloudflare on Fly.io.
+
 - **[Automate the certificate process with the GraphQL API](/docs/networking/custom-domain-api):** Issue multiple certificates automatically for custom domains with the GraphQL API.
 
 - **[HTTP request headers](/docs/networking/request-headers/):** Fly.io-specific and standard HTTP headers added by the HTTP connection handler.
