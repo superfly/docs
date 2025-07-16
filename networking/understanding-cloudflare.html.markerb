@@ -2,6 +2,8 @@
 title: "Understanding Cloudflare"
 layout: docs
 nav: firecracker
+author: kaelyn
+date: 2025-07-16
 ---
 
 Many Fly.io apps use Cloudflare—sometimes just for DNS, sometimes with proxying enabled, and sometimes for both. This guide covers the supported configurations, how to set them up, and what to watch out for when using Cloudflare with Fly.io.
