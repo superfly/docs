@@ -2,16 +2,13 @@
 title: "Understanding Cloudflare"
 layout: docs
 nav: firecracker
-toc: false
 ---
 
 Many Fly.io apps use Cloudflare—sometimes just for DNS, sometimes with proxying enabled, and sometimes for both. This guide covers the supported configurations, how to set them up, and what to watch out for when using Cloudflare with Fly.io.
 
 ## DNS-only setup
 
-This is the simplest and most reliable way to use Cloudflare with Fly.io.
-
-To configure a DNS-only setup:
+This is the simplest and most reliable way to use Cloudflare with Fly.io. To configure a DNS-only setup:
 
 1. Point your domain to your Fly.io app using an `AAAA` record for the IPv6 address and an `A` record for the IPv4 address.
 1. Alternatively, use a `CNAME` record pointing to your app's `your-app.fly.dev` hostname.
@@ -22,9 +19,7 @@ To configure a DNS-only setup:
 
 Enabling Cloudflare's proxy gives you caching and DDoS protection, but it also changes how SSL certificates work. Cloudflare terminates TLS traffic, which interferes with Fly.io's default TLS-ALPN-01 certificate issuance process.
 
-The recommended approach for using Cloudflare’s CDN proxy is to configure it to forward HTTP requests, which allows HTTP-01 challenges to work properly.
-
-To configure a CDN proxy setup:
+The recommended approach for using Cloudflare's CDN proxy is to configure it to forward HTTP requests, which allows HTTP-01 challenges to work properly. To configure a CDN proxy setup:
 
 1. Create an `AAAA` record only pointing to your Fly.io app's IPv6 address.
 1. Do not add `A` or `CNAME` records.
