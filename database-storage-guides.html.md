@@ -5,6 +5,10 @@ toc: true
 nav: firecracker
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/database-storage.png" alt="Illustration by Annie Ruygt of a tiger sleeping next to a storage device" class="w-full max-w-lg mx-auto">
+</figure>
+
 The solution to persistent data storage is to usually connect your Fly App to a separate database or object store. If you need hardware-local disk storage on your Machines&mdash;for example, if your Fly App _is_ a database or if you want to use [LiteFS](/docs/litefs)&mdash;then you can use [Fly Volumes](/docs/volumes/).
 
 ## Fly Volumes - Disk storage

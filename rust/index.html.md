@@ -7,6 +7,10 @@ redirect_from:
   - /docs/getting-started/rust/
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/rust.png" alt="Illustration by Annie Ruygt of a crab sitting on a rock" class="w-full max-w-lg mx-auto">
+</figure>
+
 Fly is a great place to launch your Rust applications, especially if you plan on running them on multiple servers around the world so your users have a fast, snappy, low-latency experience.
 
 If you have questions or comments about running Rust applications on Fly.io, create a new topic in our [community forum](https://community.fly.io/) and tag it with "rust" so the right people can give you the support you need. 

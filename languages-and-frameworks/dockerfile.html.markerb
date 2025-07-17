@@ -1,8 +1,12 @@
 ---
-title: Deploy with a Dockerfile
+title: "Deploy with a Dockerfile"
 layout: language-and-framework-docs
 redirect_from: /docs/getting-started/dockerfile/
 ---
+
+<figure class="flex justify-center">
+  <img src="/static/images/docker.png" alt="Illustration by Annie Ruygt of a whale carrying containers with fish looking on" class="w-full max-w-lg mx-auto">
+</figure>
 
 Fly Launch can deploy your app from a [Dockerfile](https://docs.docker.com/reference/dockerfile/+external).
 
