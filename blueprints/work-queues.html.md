@@ -14,7 +14,7 @@ Whatever the reason, if your web app is sitting around waiting for that work to 
 
 Instead, you should offload that work to a background worker.
 
-This isn’t a new idea. The pattern’s been around forever, often called a **“work queue”** or **“job queue.”** Here’s the gist:
+This isn’t a new idea. The pattern’s been around forever, often called a **work queue,** **job queue,** or **task queue.** Here’s the gist:
 
 - The web app gets a request.
 - Instead of doing everything right away, it drops a job onto a queue.
@@ -48,7 +48,7 @@ Most of the tools in this guide use [Redis](https://redis.io/about/) as a messag
 
 ## Option 1: Celery (Python)
 
-[Celery](https://docs.celeryq.dev/en/latest/getting-started/introduction.html) is a full-featured task queue commonly used with Django and Flask.
+[Celery](https://docs.celeryq.dev/en/latest/getting-started/introduction.html) is a full-featured distributed task queue commonly used with Django and Flask.
 
 ### How it works
 
