@@ -6,6 +6,10 @@ order: 20
 redirect_from: /docs/reference/volumes/
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/volumes.png" alt="Illustration by Annie Ruygt of a filing cabinet" class="w-full max-w-lg mx-auto">
+</figure>
+
 The root file systems of a Fly Machine are ephemeral and should only be used for temporary data, application code, and runtime files that can be rebuilt from scratch during deployments or restarts.  The performance of these ephemeral disks are heavily limited regardless of the Machine type you choose, with the maximum of 2000 IOPs and 8MiB/s bandwidth.
 
 Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can access and write to a volume on a Machine just like a regular directory. Use volumes to store your database files, to save your app's state, such as configuration and session or user data, or for any information that needs to persist after deploy or restart. Maximum volume performance varies by Machine type and noted in [Volume limits](/docs/volumes/overview#volume-limits)

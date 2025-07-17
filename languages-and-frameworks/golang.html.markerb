@@ -4,6 +4,10 @@ layout: language-and-framework-docs
 redirect_from: /docs/getting-started/golang/
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/golang.png" alt="Illustration by Annie Ruygt of a seated gopher dreaming" class="w-full max-w-lg mx-auto">
+</figure>
+
 <%= partial "partials/intro", locals: { runtime: "Go" } %>
 
 <div class="note icon">
