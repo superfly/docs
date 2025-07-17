@@ -68,6 +68,16 @@ Both approaches are valid, but we recommend using the platform's built-in TLS te
 - Only one application should manage certificates for a domain. Using more than one can cause conflicts.
 - Let's Encrypt has limits. Check the certificate status tab in the Fly.io dashboard if issuance fails.
 
+<div class="callout">
+**Cloudflare Universal SSL Ghost Records Issue:** If you're using Cloudflare and Let's Encrypt can't issue a certificate, you may be encountering phantom _acme-challenge TXT records. This happens when Cloudflare's Universal SSL automatically inserts hidden ACME challenge TXT records that don't appear in your DNS dashboard but show up when you run `dig TXT _acme-challenge.yourdomain.com`. These ghost records interfere with Let's Encrypt's validation process.
+
+To resolve this:
+1. Go to Edge Certificates in Cloudflare's SSL/TLS settings and disable Universal SSL.
+2. Purge cache ("Purge Everything" in Cloudflare) and/or enable Development Mode.
+3. Wait several minutes for DNS cache to clear, then confirm with `dig` that only your intended TXT record is present.
+4. Retry certificate issuance from Fly.io.
+</div>
+
 ## Tools for debugging
 
 These tools can help when diagnosing certificate or DNS issues:
