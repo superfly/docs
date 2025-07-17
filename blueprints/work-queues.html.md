@@ -42,13 +42,13 @@ If you're already comfortable with queues, skip ahead. But if you’ve been stuf
 
 ## Redis and Valkey
 
-Most of the tools in this guide use [Redis](https://redis.io/about/) as a message broker—a fast, in-memory data store that's great for short-lived messages and task queues. If you're deploying on Fly.io, we recommend trying [Valkey](https://valkey.io/), a fork of Redis with a more active community and governance model. You can set up a Valkey cluster without needing an Enterprise license. It works the same way but gives you more flexibility and long-term stability. You can deploy either Redis or Valkey yourself or use a managed service like [Upstash Redis](https://fly.io/docs/upstash/redis/).
+Most of the tools in this guide use [Redis](https://redis.io/about/) as a message broker—a fast, in-memory data store that's great for short-lived messages and task queues. If you're deploying on Fly.io, we recommend trying [Valkey](https://valkey.io/), a fork of Redis with a more active community and governance model. You can set up a Valkey cluster without needing an Enterprise license. It works the same way but gives you more flexibility and long-term stability. You can deploy either Redis or Valkey yourself or use a managed service like [Upstash Redis](/docs/upstash/redis/).
 
 ---
 
 ## Option 1: Celery (Python)
 
-Celery is a full-featured task queue commonly used with Django and Flask.
+[Celery](https://docs.celeryq.dev/en/latest/getting-started/introduction.html) is a full-featured task queue commonly used with Django and Flask.
 
 ### How it works
 
