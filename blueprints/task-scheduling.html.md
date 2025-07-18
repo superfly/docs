@@ -72,7 +72,7 @@ Sometimes you don’t need a full orchestration layer—you just want a crontab 
 
 ### How It Works
 
-[Supercronic](https://fly.io/docs/blueprints/supercronic/) runs as a background process inside your app. You add a `crontab` file, install Supercronic in your Dockerfile, and define a `cron` process in `fly.toml`. Done.
+[Supercronic](/docs/blueprints/supercronic/) runs as a background process inside your app. You add a `crontab` file, install Supercronic in your Dockerfile, and define a `cron` process in `fly.toml`. Done.
 
 Well, almost done—remember to scale it correctly.
 
@@ -138,6 +138,6 @@ If you're not sure where to start, Cron Manager is the most production-hardened 
 ## Related Reading
 
 - [Cron Manager](https://github.com/fly-apps/cron-manager)
-- [Crontab with Supercronic](https://fly.io/docs/blueprints/supercronic/)
-- [Deferring long-running tasks to a work queue](https://fly.io/docs/blueprints/work-queues/)
+- [Crontab with Supercronic](/docs/blueprints/supercronic/)
+- [Deferring long-running tasks to a work queue](/docs/blueprints/work-queues/)
 
