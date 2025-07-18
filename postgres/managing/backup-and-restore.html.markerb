@@ -16,29 +16,24 @@ Postgres databases on Fly.io are treated as Fly Apps, which you can [read more a
 If you set up your application using `fly launch`, the name of your database app might be `<app-name>-db`, or you might have given it a name during the initial configuration. To figure that out for sure, run the following from the root of the project:
 
 ```cmd
-fly info
+fly status
 ```
 ```output
 App
   Name     = my-app
   Owner    = personal
-  Version  = 40
-  Status   = running
   Hostname = my-app.fly.dev
+  Image    = my-app:deployment-01K2MH7F9RETQV3C8KX5GA2N9S
 ```
 
 The `Name` key is the name of your app. In this case, the database app would be `my-app-db`. Let's see if that instance exists by appending the `-a` flag with the name of the database application:
 
 ```cmd
-fly info -a my-app-db
+fly status -a my-app-db
 ```
 ```output
-App
-  Name     = my-app-db
-  Owner    = personal
-  Version  = 40
-  Status   = running
-  Hostname = my-app-db.fly.dev
+ID            	STATE  	ROLE   	REGION	CHECKS            	IMAGE                           	CREATED             	UPDATED
+a7f3b9d5e2c641	started	primary	cdg   	3 total, 3 passing	flyio/postgres-flex:16 (v0.0.66)	2024-12-10T12:22:49Z	2025-05-27T15:31:16Z	
 ```
 
 If that doesn't work, then try to find the database instance by running:
