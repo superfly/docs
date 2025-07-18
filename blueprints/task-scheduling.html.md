@@ -116,7 +116,7 @@ This gives you full control and is technically elegant, though it does require s
 
 ## Additional Options
 
-In addition to the options above, you can use an external scheduling service, like [Github Actions schedule](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#schedule), or [easycron](https://www.easycron.com/), an online cron service which can send out API requests to wake machines up.
+In addition to the options above, you can use an external scheduling service, like [GitHub Actions schedule](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#schedule), or [easycron](https://www.easycron.com/), an online cron service which can send out API requests to wake machines up.
 
 ---
 
