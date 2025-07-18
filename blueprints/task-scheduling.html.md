@@ -137,7 +137,7 @@ If you're not sure where to start, Cron Manager is the most production-hardened 
 
 ## Related Reading
 
-[Cron Manager](https://github.com/fly-apps/cron-manager)
-[Crontab with Supercronic](https://fly.io/docs/blueprints/supercronic/)
-[Deferring long-running tasks to a work queue](https://fly.io/docs/blueprints/work-queues/)
+- [Cron Manager](https://github.com/fly-apps/cron-manager)
+- [Crontab with Supercronic](https://fly.io/docs/blueprints/supercronic/)
+- [Deferring long-running tasks to a work queue](https://fly.io/docs/blueprints/work-queues/)
 
