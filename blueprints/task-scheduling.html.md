@@ -8,7 +8,7 @@ date: 2025-07-18
 
 Running on a schedule: it's not just for trains. If your app needs to rebuild a cache every night, prune old data, or email a weekly newsletter to your users, Fly.io gives you a few ways to get it done.
 
-We’ll walk through the options for task scheduling, starting with the most robust and ending with the “it works, okay?” tier.
+We’ll walk through options for task scheduling, starting with the most robust and ending with the “it works, okay?” tier.
 
 ## Cron Manager
 
