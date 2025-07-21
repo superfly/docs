@@ -12,6 +12,7 @@ fly config validate [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for validate
+  -s, --strict          Enable strict validation to check for unrecognized sections and keys
 ~~~
 
 ## Global Options
