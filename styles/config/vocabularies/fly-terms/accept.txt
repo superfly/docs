@@ -125,6 +125,7 @@ RTT
 [Rr]untimes?\b
 Ruygt
 São Paulo
+SDKs?\b
 (?i)sequelize
 (?i)serverless
 Sidekiq
