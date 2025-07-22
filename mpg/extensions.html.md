@@ -48,7 +48,7 @@ This is a list of all bundled extensions included in MPG. As the default databas
 | `amcheck` | Provides functions to verify the logical consistency of the structure of indexes, such as B-trees. It's useful for detecting system catalog corruption and index corruption. |
 | `auth_delay` | Causes the server to pause briefly before reporting authentication failure, to make brute-force attacks on database passwords more difficult. |
 | `auto_explain` | Automatically logs execution plans of slow SQL statements. It helps in performance analysis by tracking down un-optimized queries in large applications that exceed a specified time threshold. |
-| `basebackup_to_shell` | Adds a custom basebackup target called shell. This enables an administartor to make a base backup of a running PostgreSQL server to a shell archive. |
+| `basebackup_to_shell` | Adds a custom basebackup target called shell. This enables an administrator to make a base backup of a running PostgreSQL server to a shell archive. |
 | `basic-archive` | An archive module that copies completed WAL segment files to the specified directory. Can be used as a starting point for developing own archive module. |
 | `bloom` | Provides an index access method based on Bloom filters.<br>A Bloom filter is a space-efficient data structure that is used to test whether an element is a member of a set. |
 | `btree_gin` | Provides GIN index operator classes with B-tree-like behavior. This allows you to use GIN indexes, which are typically used for full-text search, in situations where you might otherwise use a B-tree index, such as with integer or text data. |
