@@ -66,7 +66,7 @@ Flyd (our [in-house orchestrator](https://fly.io/blog/carving-the-scheduler-out-
       },
       "depends_on": [
         {
-          "container": "my-app",
+          "name": "my-app",
           "condition": "healthy"
         }
       ]
@@ -84,7 +84,7 @@ You can define dependencies between containers using the `depends_on` field. Sup
 ```json
 "depends_on": [
   {
-    "container": "sidecar1",
+    "name": "sidecar1",
     "condition": "healthy"
   }
 ]
@@ -199,7 +199,7 @@ Starting with `flyctl v0.3.147`, you can run multiple containers using `fly depl
       ],
       "depends_on": [
         {
-          "container": "echo",
+          "name": "echo",
           "condition": "healthy"
         }
       ]
