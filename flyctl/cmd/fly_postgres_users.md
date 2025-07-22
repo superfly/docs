@@ -25,5 +25,5 @@ fly postgres users [command] [flags]
 
 ## See Also
 
-* [fly postgres](/docs/flyctl/postgres/)	 - Deprecated: Unmanaged Postgres cluster commands'
+* [fly postgres](/docs/flyctl/postgres/)	 - Unmanaged Postgres cluster commands
 
