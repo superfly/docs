@@ -1,4 +1,4 @@
-DEPRECATED: Unmanaged Fly Postgres is deprecated in favor of 'fly mpg' (Managed Postgres).
+Unmanaged Fly Postgres is not supported by Fly.io Support and users are responsible for operations, management, and disaster recovery. If you'd like a managed, supported solution, try 'fly mpg' (Managed Postgres).
 Please visit https://fly.io/docs/mpg/overview/ for more information about Managed Postgres.
 
 

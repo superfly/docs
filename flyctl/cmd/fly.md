@@ -34,7 +34,7 @@ fly [flags]
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 * [ping](/docs/flyctl/ping/)	 - Test connectivity with ICMP ping messages
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
-* [postgres](/docs/flyctl/postgres/)	 - Deprecated: Unmanaged Postgres cluster commands'
+* [postgres](/docs/flyctl/postgres/)	 - Unmanaged Postgres cluster commands
 * [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a Fly Machine.
 * [redis](/docs/flyctl/redis/)	 - Launch and manage Redis databases managed by Upstash.com
 * [releases](/docs/flyctl/releases/)	 - List app releases
