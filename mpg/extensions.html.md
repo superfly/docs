@@ -58,7 +58,7 @@ This is a list of all bundled extensions included in MPG. As the default databas
 | `dblink` | Provides functions to connect to other PostgreSQL databases from within a database session. This allows for queries to be run across multiple databases as if they were on the same server. |
 | `dict_int` | An example of an add-on dictionary template for full-text search. It's used to demonstrate how to create custom dictionaries in PostgreSQL. |
 | `dict_xsyn` | Example synonym full-text search dictionary. This dictionary type replaces words with groups of their synonyms, and so makes it possible to search for a word using any of its synonyms. |
-| `earthdistance` | This module provides two different approaches to calculating great circle distances on the surface of the Earth. The fisrt one depends on the cube module. The second one is based on the built-in point data type, using longitude and latitude for the coordinates. |
+| `earthdistance` | This module provides two different approaches to calculating great circle distances on the surface of the Earth. The first one depends on the cube module. The second one is based on the built-in point data type, using longitude and latitude for the coordinates. |
 | `hstore` | Implements the hstore data type for storing sets of key/value pairs within a single PostgreSQL value. |
 | `intagg` | Integer aggregator and enumerator. |
 | `intarray` | Provides a number of useful functions and operators for manipulating null-free arrays of integers. |
