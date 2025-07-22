@@ -124,3 +124,15 @@ To use the local proxy connection you can modify the direct connection string fr
 ```out
 Connection String: postgres://fly-user:<password>@localhost:16380/fly-db
 ```
+
+## Alternative: Connect via WireGuard
+
+As an alternative to using flyctl proxy commands, you can connect to your MPG cluster directly through your organization's private network using WireGuard. 
+
+First, [set up a WireGuard connection to your private network](/docs/blueprints/connect-private-network-wireguard/). Once connected, you can use the direct connection string from your MPG dashboard:
+
+```cmd
+psql "postgresql://fly-user:<PASSWORD>@direct.<CLUSTER_HASH_ID>.flympg.net/fly-db"
+```
+
+This connection method is particularly useful for database management tools that need persistent connections or development environments where you want direct database access.
