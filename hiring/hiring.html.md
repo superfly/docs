@@ -76,7 +76,7 @@ you graduate, etc), you're generally welcome to run through our process and
 get a "soft yes" from us.
 
 When you're available to take an offer starting within a month, you can
-ping us, and we'll extend an offer.
+ping us, and we'll extend an offer if the role is still open.
 
 A word of warning: while we expect to be hiring most of our roles pretty
 much continuously, the economy can get spooky. We can't make promises about
