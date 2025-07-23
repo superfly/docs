@@ -2,7 +2,7 @@
 title: Supported Postgres Extensions
 layout: docs
 nav: firecracker
-date: 2025-07-11
+date: 2025-07-23
 ---
 
 
@@ -26,15 +26,17 @@ A full list included default extensions is [available here](/docs/mpg/extensions
 ## Supported Third Party Extensions
 Aside from the extensions bundled with the default Postgres distribution, we are working to support other commonly used third party extensions.
 
-Currently only [PGVector](https://github.com/pgvector/pgvector) is supported. To enable PGVector on your MPG cluster, it *must* be added when creating the cluster: 
+Currently only [PGVector](https://github.com/pgvector/pgvector) and [PostGIS](https://postgis.net) are supported. To enable either of these extensions on your MPG cluster, it *must* be added when creating the cluster: 
 
-- When creating a cluster via the dashboard, check the "Enable PGVector" option
+- When creating a cluster via the dashboard, check "Enable PGVector", "Enable PostGIS", or both options under the "Extensions" section
 
 - When creating a cluster via flyctl, pass the `--pgvector` flag:
 ```cmd
 flyctl mpg create --pgvector
 ```
-Unlike the other extensions, PGVector can not be added to an existing cluster if it was not enabled at creation time. 
+Support for adding PostGIS via Flyctl is coming shortly. 
+
+Unlike the other extensions, these extensions can not be added to an existing cluster if it was not enabled at creation time. 
 
 We plan on supporting additional third party extensions based on user feedback. If there's an extension you rely on or commonly use, please let us know! 
 
