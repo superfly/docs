@@ -30,6 +30,7 @@ You'll be able to access:
 - Fly.io Support Portal to log tickets and get help
 - Any modules and extensions included in the [default Postgres 16 distribution](https://www.postgresql.org/docs/16/contrib.html)
 - The third party `pgvector` extension for vector similarity search, if enabled when provisioning your database
+- The third party `PostGIS` extension for adding geospatial data support, if enabled when provisioning your database
 
 ### What's not there yet
 
@@ -37,68 +38,11 @@ At the moment, the following features are under development:
 
 - Security patches and version upgrades
 - Multiple databases or schemas per cluster
-- Third Party Postgres extensions besides `pgvector`
+- Third Party Postgres extensions besides `pgvector` or `postGIS`
 - Customer-facing monitoring and alerting
 - Database migration tools
 
 We're working on expanding these capabilities and will provide updates as they become available.
-
-## Creating a Managed Postgres Instance
-
-To create a new Managed Postgres cluster, visit your Fly.io dashboard and click the "Create new cluster" button in the Managed Postgres section.
-
-You'll be prompted to choose:
-
-- Cluster name (must be unique within your organization)
-- Region (see available regions below)
-- A plan with predefined hardware resources:
-  - Basic: 2 shared vCPUs, 1GB RAM
-  - Launch: 2 Performance vCPUs, 8GB RAM
-  - Scale: 4 Performance vCPUs, 32GB RAM
-- Storage size (up to 500GB at creation)
-
-<div>
-    <img src="/static/images/create-mpg.webp" alt="A screenshot of the Managed Postgres creation page.">
-</div>
-
-## Connecting to Your Managed Postgres Database
-
-To connect your Fly.io application to your Managed Postgres instance:
-
-1. After creation, the "Connection" tab will display your connection string
-2. Set it as a secret in your Fly.io application:
-
-```cmd
-fly secrets set DATABASE_URL="postgres://username:password@host:port/database"
-```
-
-3. Your application can now use the `DATABASE_URL` environment variable to connect
-
-For security, the connection string uses SSL by default. Make sure your application's Postgres client is configured to use SSL.
-
-## Using flyctl with Managed Postgres
-
-You can interact with your Managed Postgres instances using the Fly.io CLI (`flyctl`). Here are the key commands:
-
-### Connecting with psql
-
-To connect directly to your Managed Postgres database using psql:
-
-```cmd
-fly mpg connect [flags]
-```
-
-This command will establish a direct connection to your database using the psql client. You'll need psql installed locally.
-
-### Setting up a Proxy Connection
-
-To create a proxy connection to your Managed Postgres database:
-
-```cmd
-fly mpg proxy [flags]
-```
-
-This command is useful when you want to connect to your database from your local machine using tools other than psql, such as database management tools or your application in development.
 
 ## Regions
 
