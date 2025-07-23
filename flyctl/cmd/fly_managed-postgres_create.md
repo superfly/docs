@@ -14,6 +14,7 @@ fly managed-postgres create [flags]
   -o, --org string        The target Fly.io organization
       --pgvector          Enable PGVector for the Postgres cluster
       --plan string       The plan to use for the Postgres cluster (development, production, etc)
+      --postgis           Enable PostGIS for the Postgres cluster
   -r, --region string     The target region (see 'flyctl platform regions')
       --volume-size int   The volume size in GB (default 10)
 ~~~
