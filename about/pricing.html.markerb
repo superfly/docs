@@ -208,10 +208,12 @@ Fly.io pricing is per region group for outbound data transfer. You'll see a more
 
 To opt-in to granular bandwidth pricing, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Switch to granular bandwidth pricing**. You won't be able to return back not using the granular data transfer rates once you opt-in.
 
-### Static Machine IP
+### Static Egress IPs for Machines
 
-Static IPs for Machines are $0.005 per hour.
-Machines do not have a static IP by default.
+Static egress IPs for Machines provide dedicated outbound IP addresses for your Machines. When you allocate a static egress IP, you'll get both an IPv4 and IPv6 address for this single price.
+
+* $0.005 per hour (~$3.60/month)
+* Machines do not have a static IP by default
 
 ## Fly Kubernetes
 
