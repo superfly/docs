@@ -78,7 +78,7 @@ To ensure reliable operation, the app issuing `fly-replay` should still have mul
 
 ## Removing Headers
 
-Setting `fly-replay-delete-header` alongside `fly-replay` allows you to delete a header from the original request before it is replayed to the new target.
+Set `fly-replay-delete-header` alongside `fly-replay` to delete a header from the original request before it is replayed to the new target.
 
 More than one header may be deleted by specifying `fly-replay-delete-header` multiple times.
 
