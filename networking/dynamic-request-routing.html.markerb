@@ -104,6 +104,7 @@ For large uploads that exceed the 1MB limit, consider:
 
 For `fly-replay-cache`, the following limitations apply:
 - The `state` field cannot be set in the `fly-replay` intended to be cached
+- The `fly-replay-delete-header` header cannot be set
 - The TTL needs to be a minimum of 10 seconds
 - Only one step of lookup is performed in the cache; as such, if the target app issues another `fly-replay-cache`, the caching behavior in this case is undefined
 - The `fly-replay-src` header (described below) will _not_ be set for requests replayed through the cache
