@@ -7,7 +7,7 @@ order: 4
 
 Your demo app is running by default on two [Fly Machines](/docs/machines/), our fast-launching VMs.
 
-Both Machines stop when not in use, and automatically when a new request comes in. [Autostop/autostart](/docs/launch/autostop-autostart/) is entirely configurable. You can chose to suspend instead of stop, configure a minimum number of Machines to keep running, or even decide never to stop Machines at all.
+Both Machines stop when not in use, and starts automatically when a new request comes in. [Autostop/autostart](/docs/launch/autostop-autostart/) is entirely configurable. You can chose to suspend instead of stop, configure a minimum number of Machines to keep running, or even decide never to stop Machines at all.
 
 The purpose of two Machines is twofold: redundancy and scalability. If one Machine goes down, the other can continue on. If both are available, when your app has higher traffic, both can be started to handle requests. You can [vertically scale](/launch/scale-machine/) the CPU and RAM on Machines.
 
