@@ -97,9 +97,9 @@ be advantageous from a security standpoint.
 
 ---
 
-## Free resource allowances
+## Free resource allowances for Legacy Plan users
 
-Fly.io has deprecated plans as of October 7, 2024, but is still honoring them for users who purchased them prior to that date. If your plan includes [free allowances](https://fly.io/docs/about/pricing/#free-allowances), we subtract them off the top of your usage total. Once your usage exceeds the free allowance on any given resource, we start metering usage of that resource for billing purposes.
+Fly.io has deprecated plans as of October 7, 2024, but is still honoring them for users who purchased them prior to that date. If your plan includes [free allowances](https://fly.io/docs/about/pricing/#legacy-free-allowances), we subtract them off the top of your usage total. Once your usage exceeds the free allowance for any given resource, we start metering usage of that resource for billing purposes.
 
 ---
 
@@ -127,7 +127,7 @@ You can't use a prepaid card as a default (or saved) payment method. You can, ho
 
 ---
 
-## Understand charges beyond the free allowances
+## Understand your invoice charges
 
 The prices of provisioned services are mostly fixed. If you provision Machines and leave them running all month, we’ll charge you a predictable amount for that Machine.
 
