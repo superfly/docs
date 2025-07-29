@@ -274,9 +274,9 @@ Outbound data transfer:
 * 30 GB Asia Pacific, Oceania & South America
 * 30 GB Africa & India
 
-#### Legacy (Paid) Hobby plan and Free Trial credit
+#### Paid Hobby plan and Free Trial credit (deprecated)
 
-If you signed up for the now deprecated $5/month Hobby plan before the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit is used up, we automatically place your organization on the $5/month Hobby plan, which includes $5/month of usage and free allowances. There are no free allowances during the free trial. We'll send you an email when your free trial credit is used up and you won't be charged before that. The free trial credit doesn't expire and applies only to the default (“personal”) organization that we created for you on sign-up.
+If you signed up for the now deprecated $5/month paid Hobby plan prior the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit was used up, we automatically placed your organization on the $5/month Hobby plan, which included $5/month of usage and free allowances. There are no free allowances during the free trial. We'll send you an email when your free trial credit is used up and you won't be charged before that. The free trial credit doesn't expire and applies only to the default (“personal”) organization that we created for you on sign-up.
 
 To change your plan to the Pay As You Go plan, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Choose Pay As You Go**. If you change your plan, you won't be able to return to the paid Hobby Plan.
 
