@@ -631,7 +631,6 @@ When a service is running, Fly Proxy can check up on it by connecting to a port.
   [[services.tcp_checks]]
     grace_period = "1s"
     interval = "15s"
-    restart_limit = 0
     timeout = "2s"
 ```
 Times are in milliseconds unless units are specified.
