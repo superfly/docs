@@ -5,6 +5,10 @@ nav: firecracker
 redirect_from: /docs/blueprints/autoscale-machines-like-a-boss/
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/autoscale-machines.png" alt="Illustration by Annie Ruygt of two machines dancing and one standing still" class="w-full max-w-lg mx-auto">
+</figure>
+
 You have an app with services that's configured to [automatically start
 and stop Machines based on traffic demand]((/docs/launch/autostop-autostart/)). But the traffic to your app changes
 significantly during the day and you don't want to keep a lot of stopped

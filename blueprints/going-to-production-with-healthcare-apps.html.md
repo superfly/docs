@@ -5,6 +5,10 @@ nav: firecracker
 redirect_from: /docs/blueprints/going-to-production-with-hipaa-apps
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/production-healthcare.png" alt="Illustration by Annie Ruygt of a balloon doctor using stethescope on an app" class="w-full max-w-lg mx-auto">
+</figure>
+
 Fly.io was built by security researchers from the ground up to be both productive and secure, making it a great home for HIPAA-compliant production healthcare applications for productive teams that ship often.
 
 This blueprint runs a developer or operations engineer through the process of evaluating Fly.io's security for HIPAA healthcare apps, launching a pilot application, signing a Business Associate Agreement (BAA), and deploying to production.
@@ -20,7 +24,7 @@ Fly.io takes a "principle of least privilege" approach to security. Here are the
 HIPAA requires that PHI be encrypted both in transit and at rest to prevent unauthorized access:
 
 - **In Transit**: Fly.io uses [WireGuard](https://fly.io/blog/our-user-mode-wireguard-year/) to encrypt data as it moves between networks, ensuring compliance with HIPAA's transmission security requirements.
-- **At Rest**: Fly.io ensures data at rest is secured on [encrypted NVMe user volumes](https://fly.io/docs/volumes/), aligning with the encryption standards required by HIPAA for storage security.
+- **At Rest**: Fly.io ensures data at rest is secured on [encrypted NVMe user volumes](/docs/volumes/), aligning with the encryption standards required by HIPAA for storage security.
 
 ### Access Control
 
@@ -42,7 +46,7 @@ HIPAA demands that you implement hardware, software, and procedural mechanisms t
 
 To comply with HIPAA, entities must ensure that PHI is not altered or destroyed in an unauthorized manner:
 
-- **Data Storage and Backup**: Fly.io’s infrastructure provides robust data integrity controls, including [regular snapshots](https://fly.io/docs/volumes/volume-manage/) of [encrypted volumes](https://fly.io/docs/volumes/overview/#volume-encryption) to prevent data loss.
+- **Data Storage and Backup**: Fly.io’s infrastructure provides robust data integrity controls, including [regular snapshots](/docs/volumes/volume-manage/) of [encrypted volumes](/docs/volumes/overview/#volume-encryption) to prevent data loss.
 - **Reproducible Deployments**: Fly.io's use of Docker ensures that application deployments are reproducible and can be locked down to a mostly read-only state. This reduces the likelihood of unauthorized modifications to application environments, meeting HIPAA's requirements for protecting PHI from unauthorized alteration or destruction.
 
 ### Physical Security
