@@ -28,7 +28,7 @@ By default the `plpgsql`, `pg_stat_monitor`, and `pgaudit` extensions are enable
 
 ### Enable or Disable Extensions
 - Click the toggle switch next to any extension to enable or disable it
-- Extensions include a version badge to let you now which version is installed (or will be installed by enabling it)
+- Each extension displays its version number (e.g., v1.3) showing which version is installed when enabled, or which version will be installed when you enable it
 
 ### Additional notes
 
