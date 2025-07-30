@@ -63,14 +63,14 @@ target app up and down:
 
 ```
 $ fly tokens create deploy -a my-target-app
-$ fly secrets set -o my-autoscaler --stage FAS_API_TOKEN="FlyV1 ..."
+$ fly secrets set -a my-autoscaler --stage FAS_API_TOKEN="FlyV1 ..."
 ```
 
 Create a read-only token so that the autoscaler app has access to a Prometheus instance:
 
 ```
-$ fly tokens create readonly -o my-org
-$ fly secrets set -o my-autoscaler --stage FAS_PROMETHEUS_TOKEN="FlyV1 ..."
+$ fly tokens create readonly
+$ fly secrets set -a my-autoscaler --stage FAS_PROMETHEUS_TOKEN="FlyV1 ..."
 ```
 
 Configure your autoscaler `fly.toml` like this:
