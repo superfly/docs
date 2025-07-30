@@ -8,7 +8,7 @@ status: beta
 While Rails applications on [Fly.io](https://fly.io) normally run on Postgres databases, you can
 choose to run them on [sqlite3](https://www.sqlite.org/index.html).
 
-To make this work, you will need to place your databases on persistent [Volumes](https://www.sqlite.org/index.html)
+To make this work, you will need to place your databases on persistent [Volumes](/docs/volumes/overview/)
 as your deployment image will get overwritten the next time you deploy.
 
 Volumes are limited to one host, this currently means that fly.io hosted Rails applications that use
