@@ -7,7 +7,7 @@ date: 2025-07-23
 
 
 <figure class="flex justify-center">
-  <img src="/static/images/mpg-extensions.webp" alt="MPG Extensions UI" class="w-full max-w-lg mx-auto">
+  <img src="/static/images/Managed_Postgres.png" alt="Illustration by Annie Ruygt of a balloon doing a lot of tasks" class="w-full max-w-lg mx-auto">
 </figure>
 
 
