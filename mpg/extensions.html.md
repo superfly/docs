@@ -55,7 +55,7 @@ We plan on supporting additional third party extensions based on user feedback. 
 
 This is a list of all bundled extensions included in MPG. Not all of these can be enabled at this time, but we are working on adding support for as many extensions as possible.
 
-| Name | Description | Available |
+| Available | Name | Description |
 | --- | --- | --- |
 | | `adminpack` | Support toolpack for pgAdmin to provide additional functionality like remote management of server log files. |
 | ✓ | `amcheck` | Provides functions to verify the logical consistency of the structure of indexes, such as B-trees. It's useful for detecting system catalog corruption and index corruption. |
