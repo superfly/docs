@@ -9,7 +9,7 @@ order: 6
 ---
 
 
-<%= partial "/docs/languages-and-frameworks/partials/intro", locals: { runtime: "Dioxus Liveview", link: "https://dioxuslabs.com/learn/0.5/getting_started/liveview/" } %>
+<%= partial "/docs/languages-and-frameworks/partials/intro", locals: { runtime: "Dioxus Liveview", link: "https://dioxuslabs.com/learn/0.6/getting_started/" } %>
 
 Dioxus Liveview allows apps to run on the server and render in the browser. It uses WebSockets to communicate between the server and the browser.
 
