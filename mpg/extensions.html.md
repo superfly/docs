@@ -13,7 +13,7 @@ date: 2025-07-23
 
 ## Overview
 
-Fly.io Managed Postgres (MPG) clusters include all modules and extension provided with the default Postgres 16 distribution. This includes commonly used tools and utilities like `pgcrypto`, `pg_stat_monitor`, and `citext`. The PostgreSQL Extensions page allows you to enable or disable trusted PostgreSQL extensions for your managed database cluster. Extensions add extra functionality to your database, such as new data types, functions, or capabilities.
+Fly.io Managed Postgres (MPG) clusters include all modules and extensions provided with the default Postgres 16 distribution. This includes commonly used tools and utilities like `pgcrypto`, `pg_stat_monitor`, and `citext`. The PostgreSQL Extensions page allows you to enable or disable trusted PostgreSQL extensions for your managed database cluster. Extensions add extra functionality to your database, such as new data types, functions, or capabilities.
 
 By default the `plpgsql`, `pg_stat_monitor`, and `pgaudit` extensions are enabled and cannot be disabled.
 
@@ -32,8 +32,6 @@ By default the `plpgsql`, `pg_stat_monitor`, and `pgaudit` extensions are enable
 
 ### Additional notes
 
-- Each extension includes a "Docs" link to learn more about its features
-- The extension version is shown in the badge (e.g., v1.3)
 - If your cluster is still initializing or otherwise degraded, you'll need to wait before managing extensions
 
 ## Supported Third Party Extensions
@@ -72,12 +70,12 @@ This is a list of all bundled extensions included in MPG. Not all of these can b
 | `dict_int` | ✓ | An example of an add-on dictionary template for full-text search. It's used to demonstrate how to create custom dictionaries in PostgreSQL. |
 | `dict_xsyn` | | Example synonym full-text search dictionary. This dictionary type replaces words with groups of their synonyms, and so makes it possible to search for a word using any of its synonyms. |
 | `earthdistance` | | This module provides two different approaches to calculating great circle distances on the surface of the Earth. The first one depends on the cube module. The second one is based on the built-in point data type, using longitude and latitude for the coordinates. |
-| `fuzzystrmatch` | ✓ | determine similarities and distance between strings |
+| `fuzzystrmatch` | ✓ | Determine similarities and distance between strings |
 | `hstore` | ✓ | Implements the hstore data type for storing sets of key/value pairs within a single PostgreSQL value. |
 | `intagg` | | Integer aggregator and enumerator. |
 | `intarray` | ✓ | Provides a number of useful functions and operators for manipulating null-free arrays of integers. |
 | `isn` | ✓ | Provides data types for the following international product numbering standards: EAN13, UPC, ISBN (books), ISMN (music), and ISSN (serials). |
-| `jsonb_plperl` | | transform between jsonb and plperl |
+| `jsonb_plperl` | | Transform between jsonb and plperl |
 | `lo` | ✓ | Provides support for managing Large Objects (also called LOs or BLOBs). This includes a data type lo and a trigger lo_manage. |
 | `ltree` | ✓ | Implements a data type ltree for representing labels of data stored in a hierarchical tree-like structure. Extensive facilities for searching through label trees are provided. |
 | `oldsnapshot` | | Allows inspection of the server state that is used to implement old_snapshot_threshold. |
@@ -94,7 +92,7 @@ This is a list of all bundled extensions included in MPG. Not all of these can b
 | `pg_walinspect` | | Provides SQL functions that allow you to inspect the contents of write-ahead log of a running PostgreSQL database cluster at a low level, which is useful for debugging, analytical, reporting or educational purposes. |
 | `pgcrypto` | ✓ | Provides cryptographic functions for PostgreSQL. |
 | `pgrowlocks` | | Provides a function to show row locking information for a specified table. |
-| `pgstattuple` | | Povides various functions to obtain tuple-level statistics. It offers detailed information about tables and indexes, such as the amount of free space and the number of live and dead tuples. |
+| `pgstattuple` | | Provides various functions to obtain tuple-level statistics. It offers detailed information about tables and indexes, such as the amount of free space and the number of live and dead tuples. |
 | `plpgsql` | ✓ | PL/pgSQL procedural language |
 | `PostGIS` | ✓ | Geographic information system extension for PostgreSQL |
 | `postgis_raster` | ✓ | Raster data support for PostGIS |
