@@ -13,9 +13,9 @@ Many Fly.io apps use Cloudflare—sometimes just for DNS, sometimes with proxyin
 This is the simplest and most reliable way to use Cloudflare with Fly.io. To configure a DNS-only setup:
 
 1. Point your domain to your Fly.io app using an `AAAA` record for the IPv6 address and an `A` record for the IPv4 address.
-1. Alternatively, use a `CNAME` record pointing to your app's `your-app.fly.dev` hostname.
-1. Disable the Cloudflare proxy ("grey cloud") for these records.
-1. SSL certificates will be handled by Fly.io automatically using Let's Encrypt.
+2. Alternatively, use a `CNAME` record pointing to your app's `your-app.fly.dev` hostname.
+3. Disable the Cloudflare proxy ("grey cloud") for these records.
+4. SSL certificates will be handled by Fly.io automatically using Let's Encrypt.
 
 ## CDN proxy setup ("orange cloud")
 
@@ -24,10 +24,10 @@ Enabling Cloudflare's proxy gives you caching and DDoS protection, but it also c
 The recommended approach for using Cloudflare's CDN proxy is to configure it to forward HTTP requests, which allows HTTP-01 challenges to work properly. To configure a CDN proxy setup:
 
 1. Create an `AAAA` record only pointing to your Fly.io app's IPv6 address.
-1. Do not add `A` or `CNAME` records.
-1. Enable the Cloudflare proxy (orange cloud).
-1. Set SSL mode in Cloudflare to Full (strict).
-1. Enable Always Use HTTPS in Cloudflare.
+2. Do not add `A` or `CNAME` records. If you previously had an `A` record pointing elsewhere (such as a legacy server or placeholder), remove it, even if the correct `AAAA` record is present. Having any `A` record alongside the `AAAA` can confuse Let’s Encrypt validation and prevent certificate renewal.
+3. Enable the Cloudflare proxy (orange cloud).
+4. Set SSL mode in Cloudflare to Full (strict).
+5. Enable Always Use HTTPS in Cloudflare.
 
 <div class="callout">
 **Important:** This setup allows Fly.io to handle HTTP-01 validation and issue certificates automatically.
