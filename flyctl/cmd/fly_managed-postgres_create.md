@@ -9,14 +9,13 @@ fly managed-postgres create [flags]
 ## Options
 
 ~~~
-  -h, --help              help for create
-  -n, --name string       The name of your Postgres cluster
-  -o, --org string        The target Fly.io organization
-      --pgvector          Enable PGVector for the Postgres cluster
-      --plan string       The plan to use for the Postgres cluster (development, production, etc)
-      --postgis           Enable PostGIS for the Postgres cluster
-  -r, --region string     The target region (see 'flyctl platform regions')
-      --volume-size int   The volume size in GB (default 10)
+      --enable-postgis-support   Enable PostGIS for the Postgres cluster
+  -h, --help                     help for create
+  -n, --name string              The name of your Postgres cluster
+  -o, --org string               The target Fly.io organization
+      --plan string              The plan to use for the Postgres cluster (development, production, etc)
+  -r, --region string            The target region (see 'flyctl platform regions')
+      --volume-size int          The volume size in GB (default 10)
 ~~~
 
 ## Global Options
