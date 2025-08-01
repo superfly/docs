@@ -2,7 +2,7 @@
 title: Error codes and troubleshooting
 layout: docs
 nav: firecracker
-redirect_from: 
+redirect_from:
   - /docs/reference/error-codes/
   - /docs/metrics-and-logs/error-codes/
 ---
@@ -189,9 +189,9 @@ If a request grows larger than 10MB, buffering stops, making it impossible to re
 
 After a ['fly-replay' response header](https://fly.io/docs/networking/dynamic-request-routing/#the-fly-replay-response-header) replays a request, the application may respond normally, or it may issue another `fly-replay`, up to 10 times. `PA02` is emitted when `fly-replay` is returned more than 10 times.
 
-#### PA03: Malformed fly-replay header
+#### PA03: Invalid fly-replay
 
-Your app returned a malformed ['fly-replay' response header](https://fly.io/docs/networking/dynamic-request-routing/#the-fly-replay-response-header).
+Your app returned an invalid ['fly-replay' response](https://fly.io/docs/networking/dynamic-request-routing/#the-fly-replay-response-header).
 
 #### PA04: Replay target app not found
 

@@ -8,11 +8,11 @@ redirect_from:
   - /docs/reference/dynamic-request-routing/
 ---
 
-The `fly-replay` header is a powerful feature that gives you fine-grained control over request routing in your Fly.io applications. It allows you to dynamically route requests between regions, specific Machines, or even different apps within your organization.
+The `fly-replay` feature gives you fine-grained control over request routing in your Fly.io applications. It allows you to dynamically route requests between regions, specific Machines, or even different apps within your organization.
 
 ## How fly-replay Works
 
-When your app adds a `fly-replay` header to a response, [Fly Proxy](/docs/reference/fly-proxy) will automatically replay the original request according to your specified routing rules. This enables advanced patterns like:
+When your app responds to a request with a `fly-replay` response, [Fly Proxy](/docs/reference/fly-proxy) will automatically replay the original request according to your specified routing rules. This enables advanced patterns like:
 
 - Routing write operations to primary database regions
 - Load balancing between specific Machines
@@ -21,9 +21,9 @@ When your app adds a `fly-replay` header to a response, [Fly Proxy](/docs/refere
 
 <%= youtube "https://www.youtube.com/watch?v=riCh9Xeuf0s" %>
 
-## Header Fields Reference
+## Replay Header Format
 
-The `fly-replay` header accepts the following fields:
+Your app can add a `fly-replay` header to its response. The `fly-replay` header accepts the following fields:
 
 |Field |Description |
 |---|---|
@@ -55,6 +55,47 @@ You can combine multiple fields:
 fly-replay: region=sjc;app=app-in-same-org
 ```
 
+## Replay JSON Format
+
+Your app can set the response content-type to `application/vnd.fly.replay+json` and include replay instructions in the response body.
+For a complex replay the JSON body is easier to compose than the header format, and also supports more functionality.
+
+### JSON Structure
+
+The `application/vnd.fly.replay+json` replay body accepts the following fields:
+
+|Field |Description |
+|---|---|
+|`region` | The 3-letter code for the [region](/docs/reference/regions/) to route the request to |
+|`instance` | The ID of a specific Machine to route to |
+|`app` | The name of another app (in same organization) to route to |
+|`state` | Optional string included in `fly-replay-src` header on replay |
+|`elsewhere` | If `true`, excludes responding Machine from next load-balance |
+|`transform.path` | Rewrite the path and query parameters of the request |
+|`transform.delete_headers` | Delete headers from the request, hiding them from the replay target |
+|`transform.set_headers` | Set new headers on the request, overwriting headers of the same name |
+|`cache.prefix` | Cache the replay for matching requests (see [Replay Caching](#replay-caching)) |
+|`cache.ttl` | Cache the replay for this many seconds (see [Replay Caching](#replay-caching)) |
+|`cache.invalidate` | Invalidate the cache for the current route (see [Replay Caching](#replay-caching)) |
+
+### Example Usage
+
+Route to another app, and modify the request:
+
+```json
+{
+  "app": "target-app",
+  "transform": {
+    "path": "/new/path?param=value",
+    "delete_headers": ["x-unwanted-header", "cookie"],
+    "set_headers": [
+      { "name": "x-custom-header", "value": "new-value" },
+      { "name": "authorization", "value": "Bearer token123" }
+    ]
+  }
+}
+```
+
 ## Replay Caching
 
 In cases where the replay target does not change often, you can use the `fly-replay-cache` mechanism to relieve the original app of some load. Here's how it works:
@@ -70,25 +111,32 @@ If the replay target does eventually change, the replay target may proactively i
 - Issuing a `fly-replay` back to the origin
 - Setting `fly-replay-cache: invalidate`
 
+For apps using the JSON format, specify a `cache` object:
+
+```json
+{
+  "app": "target-app",
+  "cache": {
+    "prefix": "/some/path/*",
+    "ttl": 60
+  }
+}
+```
+
+```json
+{
+  "app": "origin-app",
+  "cache": {
+    "invalidate": true
+  }
+}
+```
+
 <div class="note icon">
 **Note**: Replay caching is an optimization, not a guarantee. Your app should _not_ depend on this mechanism to function.
 The app issuing `fly-replay` still serves as the ultimate source of truth, and we may decide to consult that app at any moment even if a replay cache has previously been set.
 To ensure reliable operation, the app issuing `fly-replay` should still have multiple instances deployed in multiple regions.
 </div>
-
-## Removing Headers
-
-Set `fly-replay-delete-header` alongside `fly-replay` to delete a header from the original request before it is replayed to the new target.
-
-More than one header may be deleted by specifying `fly-replay-delete-header` multiple times.
-
-### Example Usage
-
-Delete both the `authorization` and `x-tenant` headers when replaying:
-```
-fly-replay-delete-header: authorization
-fly-replay-delete-header: x-tenant
-```
 
 ## Implementation Details
 
@@ -104,7 +152,7 @@ For large uploads that exceed the 1MB limit, consider:
 
 For `fly-replay-cache`, the following limitations apply:
 - The `state` field cannot be set in the `fly-replay` intended to be cached
-- The `fly-replay-delete-header` header cannot be set
+- Transformations for the headers or path cannot be defined.
 - The TTL needs to be a minimum of 10 seconds
 - Only one step of lookup is performed in the cache; as such, if the target app issues another `fly-replay-cache`, the caching behavior in this case is undefined
 - The `fly-replay-src` header (described below) will _not_ be set for requests replayed through the cache
