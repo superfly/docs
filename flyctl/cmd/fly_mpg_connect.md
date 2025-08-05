@@ -2,7 +2,7 @@ Connect to a MPG database using psql
 
 ## Usage
 ~~~
-fly managed-postgres connect [flags]
+fly mpg connect [flags]
 ~~~
 
 ## Options
@@ -22,5 +22,5 @@ fly managed-postgres connect [flags]
 
 ## See Also
 
-* [fly managed-postgres](/docs/flyctl/managed-postgres/)	 - Manage Managed Postgres clusters.
+* [fly mpg](/docs/flyctl/mpg/)	 - Manage Managed Postgres clusters.
 

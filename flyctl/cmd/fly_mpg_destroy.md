@@ -3,7 +3,7 @@ This action is not reversible.
 
 ## Usage
 ~~~
-fly managed-postgres destroy <CLUSTER ID> [flags]
+fly mpg destroy <CLUSTER ID> [flags]
 ~~~
 
 ## Options
@@ -23,5 +23,5 @@ fly managed-postgres destroy <CLUSTER ID> [flags]
 
 ## See Also
 
-* [fly managed-postgres](/docs/flyctl/managed-postgres/)	 - Manage Managed Postgres clusters.
+* [fly mpg](/docs/flyctl/mpg/)	 - Manage Managed Postgres clusters.
 

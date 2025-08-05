@@ -3,7 +3,7 @@ If no organization is specified, the user's personal organization is used.
 
 ## Usage
 ~~~
-fly managed-postgres list [flags]
+fly mpg list [flags]
 ~~~
 
 ## Options
@@ -24,5 +24,5 @@ fly managed-postgres list [flags]
 
 ## See Also
 
-* [fly managed-postgres](/docs/flyctl/managed-postgres/)	 - Manage Managed Postgres clusters.
+* [fly mpg](/docs/flyctl/mpg/)	 - Manage Managed Postgres clusters.
 

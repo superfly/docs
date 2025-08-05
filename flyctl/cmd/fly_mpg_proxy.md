@@ -2,7 +2,7 @@ Proxy to a MPG database
 
 ## Usage
 ~~~
-fly managed-postgres proxy [flags]
+fly mpg proxy [flags]
 ~~~
 
 ## Options
@@ -24,5 +24,5 @@ fly managed-postgres proxy [flags]
 
 ## See Also
 
-* [fly managed-postgres](/docs/flyctl/managed-postgres/)	 - Manage Managed Postgres clusters.
+* [fly mpg](/docs/flyctl/mpg/)	 - Manage Managed Postgres clusters.
 
