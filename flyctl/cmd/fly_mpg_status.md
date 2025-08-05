@@ -2,7 +2,7 @@ Show status and details of a specific Managed Postgres cluster using its ID.
 
 ## Usage
 ~~~
-fly managed-postgres status [CLUSTER_ID] [flags]
+fly mpg status [CLUSTER_ID] [flags]
 ~~~
 
 ## Options
@@ -22,5 +22,5 @@ fly managed-postgres status [CLUSTER_ID] [flags]
 
 ## See Also
 
-* [fly managed-postgres](/docs/flyctl/managed-postgres/)	 - Manage Managed Postgres clusters.
+* [fly mpg](/docs/flyctl/mpg/)	 - Manage Managed Postgres clusters.
 
