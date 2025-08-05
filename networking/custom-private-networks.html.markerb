@@ -107,12 +107,14 @@ Right now the only way to get an app's network name is by listing all the apps i
             "id": "682kqp63x4k9d543",
             "name": "aged-cherry-366",
             "machine_count": 4,
+            "volume_count": 2,
             "network": "default"
         },
         {
             "id": "704e9387kyy13xgn",
             "name": "muddy-violet-667",
             "machine_count": 2,
+            "volume_count": 2,
             "network": "test-network"
         },
 ...
