@@ -2,7 +2,6 @@
 title: Support
 layout: docs
 nav: firecracker
-toc: false
 ---
 
 <figure>
@@ -27,9 +26,13 @@ All customers have access to our active [community forum](https://community.fly.
 
 Customers also frequently help each other out and share insights on running their apps on Fly.io. Especially helpful contributors can earn a special "Aeronaut" badge to signify their troubleshooting prowess, great advice, and exceptional kindness.
 
-## Email support
+## Paid support plans
 
-**Who can use this:** Organizations who have purchased a Standard, Premium, or Enterprise Support package or organizations with legacy Launch or Scale plans.
+**Find out more:** Want to learn more about our different support plans or ready to get started? Just head over to our [Support page](https://fly.io/support). We've got all the details there to help you choose what works best for you!
+
+### Email support
+
+**Who can use this:** Organizations who have purchased a Standard, Premium, or Enterprise Support package or organizations with legacy Launch or Scale plans. 
 
 **Use this for:**  Technical support for issues or questions specific to you.
 
@@ -37,7 +40,7 @@ Our Standard, Premium, and Enterprise packages have access to email support. The
 
 You can find your support address is in the [Fly.io dashboard](https://fly.io/dashboard). Select your organization, and look for your unique email address in the **Support** section. You'll also find a form to submit new support tickets, as well as an overview of recent support interactions.
 
-## Support Portal
+### Support Portal
 
 **Who can use this:** Organizations who have purchased a Standard, Premium, or Enterprise Support package or organizations with legacy Launch or Scale plans.
 
