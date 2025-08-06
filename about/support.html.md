@@ -2,7 +2,6 @@
 title: Support
 layout: docs
 nav: firecracker
-toc: false
 ---
 
 <figure>
@@ -29,7 +28,7 @@ Customers also frequently help each other out and share insights on running thei
 
 ## Email support
 
-**Who can use this:** Organizations who have purchased a Standard, Premium, or Enterprise Support package or organizations with legacy Launch or Scale plans.
+**Who can use this:** Organizations who have purchased a Standard, Premium, or Enterprise Support package or organizations with legacy Launch or Scale plans. 
 
 **Use this for:**  Technical support for issues or questions specific to you.
 
