@@ -26,6 +26,14 @@ All customers have access to our active [community forum](https://community.fly.
 
 Customers also frequently help each other out and share insights on running their apps on Fly.io. Especially helpful contributors can earn a special "Aeronaut" badge to signify their troubleshooting prowess, great advice, and exceptional kindness.
 
+## Billing and account support
+
+**Who can use this:** Everyone
+
+**Use this for:** Billing and account management issues.
+
+For questions about a specific invoice or account management issues, you can email us at [billing@fly.io](mailto:billing@fly.io).
+
 ## Paid support plans
 
 **Find out more:** Want to learn more about our different support plans or ready to get started? Just head over to our [Support page](https://fly.io/support). We've got all the details there to help you choose what works best for you!
@@ -42,19 +50,17 @@ You can find your support address is in the [Fly.io dashboard](https://fly.io/da
 
 ### Support Portal
 
-**Who can use this:** Organizations who have purchased a Standard, Premium, or Enterprise Support package or organizations with legacy Launch or Scale plans.
+**Who can use this:** Organizations who have purchased a Standard, Premium, or Enterprise Support package or organizations with legacy Launch or Scale plans. Organizations with a Managed Postgres (MPG) database cluster also have access to our Support Portal for issues related to MPG.
 
 **Use this for:** Technical support for issues or questions specific to you.
 
 The Support Portal is a self-service portal for customers to submit support tickets, view recent support interactions, and track the status of their tickets. You can access it from your [Fly.io dashboard](https://fly.io/dashboard) by clicking the **Support** tab.
 
-## Billing and account support
+## Managed Postgres Support
 
-**Who can use this:** Everyone
+We now offer [Managed Postgres (MPG)](https://fly.io/docs/mpg/overview/), a fully managed Postgres service with automated provisioning, daily snapshots, built-in high availability, global networking, and Prometheus-compatible metrics. MPG is currently available in a limited set of regions and supports up to 1 TB of storage, with an initial allocation cap of 500 GB. Managed Postgres customers have Support portal access for issues related to MPG.
 
-**Use this for:** Billing and account management issues.
-
-For questions about a specific invoice or account management issues, you can email us at [billing@fly.io](mailto:billing@fly.io).
+Note: If you need to run in unsupported regions, require more storage, or need custom configuration, you may still need to use an [unmanaged Postgres](https://fly.io/docs/postgres/getting-started/what-you-should-know/) app for now.
 
 ## Support metrics
 
@@ -116,8 +122,3 @@ Here are some things to include in your ticket:
     </div>
   </div>
 </div>
-
-<div class="max-w-4xl">
-  <p class="mb-6 mt-8">
-    We now offer [Managed Postgres (MPG)](https://fly.io/docs/mpg/overview/), a fully managed Postgres service with automated provisioning, daily snapshots, built-in high availability, global networking, and Prometheus-compatible metrics. MPG is currently available in a limited set of regions and supports up to 1 TB of storage, with an initial allocation cap of 500 GB. If you need to run in unsupported regions, require more storage, or need custom configuration, you may still need to use an [unmanaged Postgres](https://fly.io/docs/postgres/getting-started/what-you-should-know/) app for now.
-  </p>
