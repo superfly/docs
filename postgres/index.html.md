@@ -5,7 +5,9 @@ redirect_from: /docs/reference/postgres/
 toc: false
 ---
 
-<img src="/static/images/postgres.webp" srcset="/static/images/postgres@2x.webp 2x" alt="A model airplane with the Fly.io logo painted on its side, sitting next to some paint and brushes.">
+<figure class="flex justify-center">
+  <img src="/static/images/postgres.png" alt="Illustration by Annie Ruygt of a balloon disguised as an elephant" class="w-full max-w-lg mx-auto">
+</figure>
 
 <div class="important icon">**Important:** We are not able to provide support or guidance for this product. Use with caution as this is not [managed postgres](https://fly.io/docs/postgres/getting-started/what-you-should-know/).</div>
 

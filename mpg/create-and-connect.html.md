@@ -33,6 +33,11 @@ You'll be prompted to set your clusters:
 After configuring your cluster, select "Create Cluster" and wait a few moments for it to initialize. Once that's complete, you can now connect to your cluster
 
 ## Creating a Managed Postgres Cluster from Flyctl
+
+<figure class="flex justify-center">
+  <img src="/static/images/create-cluster.png" alt="Illustration by Annie Ruygt of a balloon holding a box of honey clusters cereal" class="w-full max-w-lg mx-auto">
+</figure>
+
 You can also create an MPG cluster using the flyctl command line tool. To begin, run:
 
 ```cmd
