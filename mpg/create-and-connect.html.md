@@ -57,7 +57,7 @@ fly mpg create [flags]
       --volume-size int   The volume size in GB (default 10)
 ```
 
-After all options are set the cluster will begin initalizing. Once that's complete, you can now connect to your cluster.
+After all options are set the cluster will begin initializing. Once that's complete, you can now connect to your cluster.
 
 ## Attach an application to your Managed Postgres Database 
 
