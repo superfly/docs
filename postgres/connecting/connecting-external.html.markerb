@@ -5,6 +5,10 @@ layout: framework_docs
 order: 2
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/factory.png" alt="Illustration by Annie Ruygt of bird workers on a factory assemmbly line" class="w-full max-w-lg mx-auto">
+</figure>
+
 Fly Postgres databases can be used by applications outside their Fly.io [internal private network](/docs/networking/private-networking/); this means in a different private network belonging to your organization, in another Fly organization, or outside Fly.io altogether.
 
 We don't expose Postgres apps to the internet by default. To get this working, you'll need to make two adaptations: configuring your Postgres app to accept connections from the Fly proxy, and providing a publicly-resolvable hostname to your app.
