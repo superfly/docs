@@ -26,6 +26,7 @@ containerd
 datacenters?\b
 datasource
 datatypes?\b
+declaratively
 discoverability
 Debian
 dev
@@ -41,7 +42,7 @@ Expr
 facto
 failover
 Fastify
-Fly.io
+[Ff]ly.io
 Flycast
 flyctl
 flyd
@@ -83,6 +84,7 @@ microVMs?\b
 middleware
 Midjourney
 Minecraft
+monorepo
 MTUs?\b
 nameservers?\b
 namespaces?\b
@@ -111,6 +113,7 @@ PostgreSQL
 (?i)preauthorizations?\b
 precompile
 preconfigured?\b
+(?i)prepend(ing)?
 Prisma
 (?i)procfiles?\b
 Prometheus
@@ -141,6 +144,8 @@ Supabase
 Supercronic
 swapfile
 Symfony
+templated
+Terraform('s)?\b
 Tigris
 toolkits?\b
 tracebacks?\b
