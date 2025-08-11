@@ -26,7 +26,7 @@ Fly.io's Managed Postgres is our fully-managed database service that handles all
 You'll be able to access:
 
 - A highly-available Postgres cluster within your Fly.io organization's [private network](/docs/networking/private-networking/)
-- A single database on that cluster
+- Multiple databases and schemas on that cluster
 - Fly.io Support Portal to log tickets and get help
 - Any modules and extensions included in the [default Postgres 16 distribution](https://www.postgresql.org/docs/16/contrib.html)
 - The third party `pgvector` extension for vector similarity search, if enabled when provisioning your database
@@ -37,7 +37,6 @@ You'll be able to access:
 At the moment, the following features are under development:
 
 - Security patches and version upgrades
-- Multiple databases or schemas per cluster
 - Third Party Postgres extensions besides `pgvector` or `postGIS`
 - Customer-facing monitoring and alerting
 - Database migration tools
@@ -78,8 +77,17 @@ Managed Postgres storage features:
 
 The price of running Fly.io Managed Postgres depends on:
 
-- CPU/Memory configuration (Launch, Performance, or Enterprise plans)
-- Region in which you're deploying
+- Your Managed Postgres Plan, which determines CPU
 - Storage usage
 
-Database storage is priced at **$0.30 per GB for a 30-day month**, with each node (primary + replica) incurring its own cost. You can view detailed pricing in your Fly.io dashboard.
+Database storage is priced at **$0.30 per provisioned GB for a 30-day month**, with each node (primary + replica) incurring its own cost. 
+
+Your plan determines the CPU and Memory configuration for your cluster. All plans include high availability, backups, and connection pooling. 
+The current monthly plan pricing is:
+| Plan | CPU | Memory | Monthly Price |
+| --- | --- | --- | --- |
+| Basic | Shared-2x | 512MB | $38.00 |
+| Launch | Performance-2x| 8GB | $282.00 |
+| Scale | Performance-4x | 16GB | $962.00 |
+
+Databases created or deleted mid-month will have their pricing prorated accordingly.
