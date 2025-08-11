@@ -27,6 +27,10 @@ to do is rerun the generator:
 bin/rails generate dockerfile
 ```
 
+<aside class="callout">
+If you run the command above and get a `Could not find generator 'dockerfile'.` error message, please add [dockerfiles-rails gem](https://github.com/fly-apps/dockerfile-rails) to your Gemfile.
+</aside>
+
 The generator will remember the options you selected before (these are
 stored in `config/dockerfile.yml`).  If you need to change a boolean
 option, add or remove a `no-` prefix before the option name.
