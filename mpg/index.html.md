@@ -83,6 +83,7 @@ The price of running Fly.io Managed Postgres depends on:
 Your MPG plan determines the CPU and Memory configuration for your cluster. All plans include high availability, backups, and connection pooling. 
 
 The current monthly plan pricing is:
+
 | Plan | CPU | Memory | Monthly Price |
 | --- | --- | --- | --- |
 | Basic | Shared-2x | 512MB | $38.00 |
