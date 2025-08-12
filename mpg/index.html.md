@@ -86,7 +86,8 @@ The current monthly plan pricing is:
 
 | Plan | CPU | Memory | Monthly Price |
 | --- | --- | --- | --- |
-| Basic | Shared-2x | 512MB | $38.00 |
+| Basic | Shared-2x | 1GB | $38.00 |
+| Starter | Shared-2x | 2GB | $72.00|
 | Launch | Performance-2x| 8GB | $282.00 |
 | Scale | Performance-4x | 16GB | $962.00 |
 
