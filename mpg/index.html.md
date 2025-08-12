@@ -77,8 +77,8 @@ Managed Postgres storage features:
 
 The price of running Fly.io Managed Postgres depends on:
 
-- Storage usage
-- Your Managed Postgres Plan
+- The amount of storage your cluster has 
+- Your selected Managed Postgres Plan
 
 
 Database storage is priced at **$0.30 per provisioned GB for a 30-day month**, with each node (primary + replica) incurring its own cost. For example, if you have 10GB of storage provisioned for your cluster, your monthly storage cost will be $6.00 ($0.30 * 10GB for the primary, $.30 * 10GB for the replica). 
