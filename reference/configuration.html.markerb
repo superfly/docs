@@ -68,6 +68,8 @@ For example, to set the timeout to two minutes:
 kill_timeout = 120
 ```
 
+<section class="warning">Note: `kill_timeout` times should be considered best-effort, and your app needs to be prepared to handle shorter stopping times</section>
+
 ## Console command
 
 The command to run when you run the [`fly console` command](/docs/flyctl/console/). Configure the `console_command` field with the command that opens your framework's console, and then `fly console` will run that command automatically in a new, dedicated Machine. The new Machine is configured with the image and environment from your app’s latest release, but your app isn’t started, and no traffic will be routed to it. The Machine gets destroyed when you exit the console.
