@@ -68,7 +68,7 @@ For example, to set the timeout to two minutes:
 kill_timeout = 120
 ```
 
-<section class="warning">Note: `kill_timeout` times should be considered best-effort, and your app needs to be prepared to handle shorter stopping times</section>
+<section class="warning">Note: `kill_timeout` settings should be considered best-effort, and your app needs to be prepared to handle shorter stopping times</section>
 
 ## Console command
 
