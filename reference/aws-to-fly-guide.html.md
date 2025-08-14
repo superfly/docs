@@ -11,7 +11,7 @@ date: 2025-06-09
 </figure>
 
 <div class="callout">
-**Fly.io runs apps close to your users, by giving you fast-starting VMs ("Fly Machines") in 30+ regions worldwide.** This guide is for folks moving apps from AWS. It walks through the major architectural differences you'll hit and how to adjust your deployment model.
+**Fly.io runs apps close to your users, by giving you fast-starting VMs ("Fly Machines") in regions worldwide.** This guide is for folks moving apps from AWS. It walks through the major architectural differences you'll hit and how to adjust your deployment model.
 </div>
 
 
@@ -43,15 +43,17 @@ Scaling works differently too. Machines are not created on-demand based on reque
 
 ### Deployments and Secrets
 
-Which brings us to Infrastructure-as-code (IaC). Most users glue things together with Bash scripts and `flyctl`, and manage state by convention. It's low-friction but low-abstraction. And it’s still less of a headache than CloudFormation.
+Which brings us to Infrastructure-as-code (IaC). Most users glue things together with Bash scripts and `flyctl`, and manage state by convention. It's low-friction but low-abstraction. And it’s still less of a headache than CloudFormation. More infrastructure automation ideas are [available here](/docs/blueprints/infra-automation-without-terraform/).
 
-On the plus side, deployments can be zero-downtime if you use [health checks](/docs/reference/health-checks/) and run multiple machines. Define those health checks in `fly.toml`, and the proxy will route around unhealthy nodes. You can even run DB migrations with a `release_command` before a deploy, and roll back by pushing a previous image tag.
+On the plus side, deployments can be [zero-downtime](/docs/blueprints/seamless-deployments/) if you use [health checks](/docs/reference/health-checks/) and run multiple machines. Define those health checks in `fly.toml`, and the proxy will route around unhealthy nodes. You can even run DB migrations with a `release_command` before a deploy, and roll back by pushing a previous image tag.
 
 Secrets? Use [Fly Secrets](/docs/apps/secrets/). They get mounted as env vars at runtime and stay encrypted at rest. Similar to AWS Secrets Manager or Parameter Store, but simpler. We also have a new Secrets API that works like AWS KMS to allow apps to encrypt/decrypt data with centrally-managed keys.
 
 ### Databases
 
-Databases? We offer [Fly Postgres](/docs/postgres/). The original offering is not a managed service like RDS—you manage backups, upgrades, and failovers—but creation is automated and it's tightly integrated with Fly.io networking. Other database options include managed Redis from our partner Upstash, running your own Redis or Valkey, distributed SQLite via LiteFS, or vector DBs like LanceDB with Tigris.
+Databases? We offer [Managed Postgres](/docs/mpg/), our fully-managed database service that handles all aspects of running production PostgreSQL databases, similar to RDS. We take care of automatic backups/recovery, high availability with automatic failover, performance monitoring and metrics, resource scaling, 24/7 support, and automatic data encryption. 
+ 
+Other database options include managed Redis from our partner Upstash, running your own Redis or Valkey, distributed SQLite via LiteFS, or vector DBs like LanceDB with Tigris.
 
 ### Monitoring
 
@@ -60,3 +62,10 @@ For [monitoring](/docs/monitoring/metrics/), you get Prometheus metrics and Graf
 ### In a nutshell
 
 AWS is a sprawling platform with deep abstractions. Fly.io strips a lot of that away. You get rawer access to your infra and better latency for your users, but you might trade some convenience. Migration is generally less about translating concepts and more about rethinking how your app is built and deployed.
+
+###  Related Reading
+
+- [Fly Apps](/docs/apps/overview/)
+- [Fly Volumes](/docs/volumes/overview/)
+- [Managed Postgres](/docs/mpg/)
+- [Going to Production Checklist](/docs/apps/going-to-production/)
