@@ -7,7 +7,7 @@ date: 2025-06-09
 ---
 
 <figure class="flex justify-center">
-  <img src="/static/images/migrating-from-aws.png" alt="Illustration by Annie Ruygt of a figure jumping from one mountian to another" class="w-full max-w-lg mx-auto">
+  <img src="/static/images/migrating-from-aws.png" alt="Illustration by Annie Ruygt of a figure jumping from one mountain to another" class="w-full max-w-lg mx-auto">
 </figure>
 
 <div class="callout">
