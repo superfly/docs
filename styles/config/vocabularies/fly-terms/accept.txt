@@ -1,5 +1,8 @@
-APIs?\b
+Alertmanager
+(?i)allowlist
+AMIs?\b
 Anycast
+APIs?\b
 (?i)Arcjet
 Astro
 [Aa]sync
@@ -27,6 +30,7 @@ datacenters?\b
 datasource
 datatypes?\b
 declaratively
+(?i)dbs?\b
 discoverability
 Debian
 dev
@@ -58,7 +62,7 @@ Hashicorp
 Hasura
 hellofly
 heredoc
-hostname
+hostnames?\b
 Hotwire
 idempotently
 IEx
@@ -85,6 +89,7 @@ middleware
 Midjourney
 Minecraft
 monorepo
+mothership
 MTUs?\b
 nameservers?\b
 namespaces?\b
@@ -102,7 +107,7 @@ Oban
 Ollama
 orgs?\b
 Paketo
-\bparam(eter)?s?\b
+(?i)param(eter)?s?\b
 passthrough
 PCIe
 performant
@@ -139,6 +144,7 @@ stdin
 stdout
 subcommands?\b
 subfolders?\b
+subnets?\b
 subsecond
 Supabase
 Supercronic
