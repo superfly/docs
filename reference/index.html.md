@@ -28,7 +28,9 @@ Quick references for often-used resources like flyctl and `fly.toml`. Or dig a l
 
 * **[Fly Proxy autostop/autostart](/docs/reference/fly-proxy-autostop-autostart/):** Learn how Fly Proxy determines excess capacity for an app to shut down or suspend Machines when they're not needed and start them back up when there's traffic.
 
-* **[Fly Proxy content encoding](/docs/reference/content-encoding/):** Learn how our proxy handles HTTP response compression, so you get better performance out of the box.
+* **[Fly Proxy Content Encoding](/docs/reference/content-encoding/):** Learn how our proxy handles HTTP response compression, so you get better performance out of the box.
+
+* **[Machine Suspend/Resume](/docs/reference/suspend-resume/):** How to pause a Fly Machine in place and resume it in milliseconds.
 
 * **[Health Checks](/docs/reference/health-checks/):** Learn how Fly monitors your apps health through HTTP, TCP, and custom checks to verify availability and trigger automatic restarts when needed.
 
