@@ -28,8 +28,8 @@ You'll be able to access:
 - A highly-available Postgres cluster within your Fly.io organization's [private network](/docs/networking/private-networking/)
 - Multiple databases and schemas on that cluster
 - Fly.io Support Portal to log tickets and get help
-- Any modules and extensions included in the [default Postgres 16 distribution](https://www.postgresql.org/docs/16/contrib.html)
-- The third party `pgvector` extension for vector similarity search, if enabled when provisioning your database
+- Any trusted extensions included in the [default Postgres 16 distribution](https://www.postgresql.org/docs/16/contrib.html)
+- The third party `pgvector` extension for vector similarity search
 - The third party `PostGIS` extension for adding geospatial data support, if enabled when provisioning your database
 
 ### What's not there yet
