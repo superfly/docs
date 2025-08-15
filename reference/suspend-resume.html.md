@@ -28,17 +28,17 @@ Suspend uses [Firecracker snapshots](https://firecracker-microvm.github.io/) to 
 
 ```bash
 # Suspend a machine
-fly machines suspend <machine-id>
+fly machine suspend <machine-id>
 
 # Check status (running, suspending, suspended, etc.)
-fly machines status <machine-id>
+fly machine status <machine-id>
 
 # Resume from snapshot
-fly machines start <machine-id>
+fly machine start <machine-id>
 
 # Force a cold start (discard snapshot)
-fly machines stop <machine-id>
-fly machines start <machine-id>
+fly machine stop <machine-id>
+fly machine start <machine-id>
 ```
 
 ### Automatically via Fly Proxy
@@ -85,7 +85,7 @@ A machine can use suspend if it has:
 If you have an older machine, or you’re not sure when it was last updated, you can bring it up to date with:
 
 ```bash
-fly machines update --yes <machine-id>
+fly machine update <machine-id> --yes 
 ```
 
 This updates the machine in place to the latest supported configuration for suspend, without changing your app code or image.
@@ -162,7 +162,7 @@ Suspended machines cost the same as stopped machines: storage only. There are no
 ## Monitoring & Debugging
 
 ```bash
-fly machines status <machine-id>
+fly machine status <machine-id>
 ```
 
 States:
@@ -182,8 +182,8 @@ If machines cold start unexpectedly:
 Test cold start:
 
 ```bash
-fly machines stop <machine-id>
-fly machines start <machine-id>
+fly machine stop <machine-id>
+fly machine start <machine-id>
 ```
 
 ---
