@@ -14,6 +14,7 @@ fly machine update [machine_id] [flags]
       --autostop string[="stop"]    Automatically stop a Machine when there are no network requests for it. Options include 'off', 'stop', and 'suspend'. (default "off")
       --build-depot                 Build your image with depot.dev
       --build-nixpacks              Build your image with nixpacks
+      --buildkit-addr string        Address of remote buildkit daemon (e.g. tcp://127.0.0.1:1234 or unix:///path/to/socket)
   -C, --command string              Command to run
   -c, --config string               Path to application configuration file
       --container string            Container to update with the new image, files, etc; defaults to "app" or the first container in the config.
