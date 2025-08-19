@@ -90,44 +90,6 @@ After your database is created, the "Connection" tab will display connection str
 fly secrets set DATABASE_URL="postgres://username:password@host:port/database"
 ```
 
-## Configuring Connection Pool Mode
-
-Your Managed Postgres cluster uses PGBouncer for connection pooling, which helps manage database connections efficiently. You can configure how PGBouncer assigns connections to clients by changing the pool mode.
-
-### Pool Mode Options
-
-There are two pool modes available:
-
-- **Session**: Connections are assigned to clients for the entire session. This is the default mode and provides the most compatibility with PostgreSQL features, including transactions, prepared statements, and advisory locks.
-- **Transaction**: Connections are assigned per transaction. This mode allows for higher connection reuse and better performance under high load, but has some limitations with certain PostgreSQL features.
-
-### Changing Pool Mode from the Dashboard
-
-To change the pool mode for your cluster:
-
-1. Navigate to your MPG cluster's "Connect" tab in the dashboard
-2. Click "View Pooler Settings" to expand the configuration options
-3. Select your desired pool mode.
-4. Click "Update Pool Mode"
-5. Confirm the change in the modal dialog
-
-**Note**: Changing the pool mode will restart the connection pooler nodes, which may cause brief connection interruptions. Your database itself will remain running.
-
-### When to Use Each Mode
-
-**Use Session mode when**:
-- Your application uses prepared statements
-- You need advisory locks or other session-specific features
-- You're unsure which mode to choose (Session is the safer default)
-- Your application has long-running transactions
-
-**Use Transaction mode when**:
-- You have a high-throughput application with many short transactions
-- You want to maximize connection reuse
-- Your application primarily uses simple queries without prepared statements
-- You need to support more concurrent connections with the same hardware
-- If you're using Elixir's Ecto library, you must use Transaction pool mode when connecting through the pooler, as Ecto's connection pooling behavior is incompatible with PGBouncer's Session mode.
-
 ## Connecting from a local machine using flyctl
 
 Because your MPG Cluster runs within your Fly.io private network, it's not accessible over the public internet. You can use flyctl to securely connect to your database from your local machine for development, manual DB work, or to connect to a local tool. All connections using flyctl are securely routed through your organizations [private wireguard network](/docs/networking/private-networking/)
