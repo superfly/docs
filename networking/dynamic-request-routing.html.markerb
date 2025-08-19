@@ -29,6 +29,7 @@ Your app can add a `fly-replay` header to its response. The `fly-replay` header 
 |---|---|
 |`region` | The 3-letter code for the [region](/docs/reference/regions/) to route the request to |
 |`instance` | The ID of a specific Machine to route to |
+|`prefer_instance` | The ID of a specific Machine to route to, if possible |
 |`app` | The name of another app (in same organization) to route to |
 |`state` | Optional string included in `fly-replay-src` header on replay |
 |`elsewhere` | If `true`, excludes responding Machine from next load-balance |
@@ -68,6 +69,7 @@ The `application/vnd.fly.replay+json` replay body accepts the following fields:
 |---|---|
 |`region` | The 3-letter code for the [region](/docs/reference/regions/) to route the request to |
 |`instance` | The ID of a specific Machine to route to |
+|`prefer_instance` | The ID of a specific Machine to route to, if possible |
 |`app` | The name of another app (in same organization) to route to |
 |`state` | Optional string included in `fly-replay-src` header on replay |
 |`elsewhere` | If `true`, excludes responding Machine from next load-balance |
@@ -172,6 +174,12 @@ This header is useful for tracking request paths and implementing consistency pa
 
 This header is not set when the request is replayed through a cached `fly-replay` entry (`fly-replay-cache`).
 
+### The fly-preferred-instance-unavailable Header
+
+If you replay with `prefer_instance` set, Fly Proxy will attempt to route to this Machine. This may not happen for a number of reasons, for example the Machine may not be found, or found but at its configured [hard_limit](/docs/reference/load-balancing/#load).
+
+In these cases, the request will be delivered to a different Machine that matches the remaining fields in your replay. Along with the other Fly.io-specific headers, a `fly-preferred-instance-unavailable` header will be set containing the ID of the instance that could not be reached.
+
 ## Alternative Routing Headers
 
 For cases where `fly-replay` isn't suitable, Fly.io provides two alternative request headers:
@@ -184,13 +192,23 @@ fly-prefer-region: ams
 
 Attempts to route directly to a specific region. Falls back to nearest region with healthy Machines if target region is unavailable. Useful for large uploads that can't be replayed.
 
+### The fly-prefer-instance-id Header
+
+```
+fly-prefer-instance-id: 90801679a10038
+```
+
+Attempts to route to a specific Machine. Falls back to any matching Machine if the target Machine cannot be found, or is unable to accept requests.
+
+If the request is delivered to a different Machine, the [fly-preferred-instance-unavailable](#the-fly-preferred-instance-unavailable-header) request header will be set.
+
 ### The fly-force-instance-id Header
 
 ```
 fly-force-instance-id: 90801679a10038
 ```
 
-Forces routing to a specific Machine. No fallback if Machine is unavailable.
+Forces routing to a specific Machine. The Fly Proxy will attempt to reach the Machine multiple times if the Machine is unhealthy. No fallback if Machine is ultimately unavailable.
 
 <div class="note icon">
 **Note**: Get Machine IDs using `fly status` or `fly Machines list`.

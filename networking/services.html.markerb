@@ -121,11 +121,18 @@ The HTTP handler adds a number of standard HTTP headers to requests, and a few F
 | `X-Forwarded-Port` | Original connection port, header may be set by client |
 | `Fly-Forwarded-Port` | Original connection port, always set by Fly.io |
 | `Fly-Region` | Original incoming connection region |
+| `Fly-Preferred-Instance-Unavailable` | The ID of a preferred instance that the proxy could not route to |
 
 You can set a preference on HTTP requests for which region you would like to connect to:
 
 ```
 Fly-Prefer-Region: region-code
+```
+
+You can set a preference for a specific machine instance:
+
+```
+Fly-Prefer-Instance-Id: instance-number
 ```
 
 You can force routing to a specific machine instance:
