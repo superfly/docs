@@ -5,6 +5,10 @@ nav: demo
 order: 7
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/redis-upstash.png" alt="Illustration by Annie Ruygt of a puzzle box figure holding two slices of cake" class="w-full max-w-lg mx-auto">
+</figure>
+
 [Upstash Redis](/docs/upstash/redis/) is used by the deep dive demo app for its [pubsub](https://redis.io/docs/latest/commands/?group=pubsub+external) capabilities, but it can do [so much more](https://upstash.com/docs/redis/overall/rediscompatibility+external).
 
 In particular, Redis is useful for caching:

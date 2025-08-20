@@ -5,6 +5,10 @@ order: 5
 nav: demo
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/postgresql.png" alt="Illustration by Annie Ruygt of elephant and a Fly balloon" class="w-full max-w-lg mx-auto">
+</figure>
+
 Fly Postgres is deployed as a separate app, and that app comes initially configured with a single [Fly Postgres](/docs/postgres/) Machine. That's fine for development, but for production you need redundancy and scalability. With a [few commands](/docs/postgres/advanced-guides/high-availability-and-global-replication/) you can create an HA cluster in your primary region and read-only replicas elsewhere.
 
 And there is no lock in here. We have a list of [recommended external providers](/docs/postgres/getting-started/what-you-should-know/#recommended-external-providers), but you're free to host your database literally anywhere.
