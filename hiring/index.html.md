@@ -6,6 +6,10 @@ toc: false
 nav: devjobs
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/engineering-jobs.png" alt="Illustration by Annie Ruygt of a bird working on a laptopn" class="w-full max-w-lg mx-auto">
+</figure>
+
 **We're psyched to talk to you about working with us!** Fly.io is doing
 something ambitious: we're building a new public cloud, one designed,
 from the jump, for developers, that runs code close to users wherever

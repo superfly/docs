@@ -5,6 +5,10 @@ nav: demo
 order: 4
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/your_fly_app.png" alt="Illustration by Annie Ruygt of an app cube flying near two Fly balloons" class="w-full max-w-lg mx-auto">
+</figure>
+
 Your demo app is running by default on two [Fly Machines](/docs/machines/), our fast-launching VMs.
 
 Both Machines stop when not in use, and start automatically when a new request comes in. [Autostop/autostart](/docs/launch/autostop-autostart/) is entirely configurable. You can chose to suspend instead of stop, configure a minimum number of Machines to keep running, or even decide never to stop Machines at all.

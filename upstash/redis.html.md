@@ -5,6 +5,10 @@ nav: firecracker
 redirect_from: /docs/reference/redis/
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/redis-upstash.png" alt="Illustration by Annie Ruygt of a puzzle box figure holding two slices of cake" class="w-full max-w-lg mx-auto">
+</figure>
+
 <aside class="callout">
   &#42;Redis is a registered trademark of Redis Ltd. Any rights therein are reserved to Redis Ltd. Any use by Fly.io is for referential purposes only and does not indicate any sponsorship, endorsement or affiliation between Redis and Fly.io.
 </aside>
