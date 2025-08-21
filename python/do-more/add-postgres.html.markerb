@@ -42,7 +42,7 @@ At this point you can use a database driver to interact with the database. You h
 Let's create a function to get some metadata about the database using `asyncpg`:
 
 ```cmd
-poetry add asyncpg
+uv add asyncpg
 ```
 
 ```python
