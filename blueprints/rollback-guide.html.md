@@ -84,10 +84,13 @@ Rollbacks are simple in Fly, but they aren’t magic. A few details are worth ke
 - **Database schema drift** → If a deploy ran destructive migrations (dropping a column, renaming a table), rolling back the app image might not help. Plan migrations so they’re safe both forward and backward.
 - **Image retention** → Images don’t live forever in Fly’s registry. For long-term rollback insurance, push builds to your own container registry.
 - **Config, Secrets and `fly.toml`** → Rollbacks don’t undo config changes. When you deploy an older image, Fly still uses your current `fly.toml`, along with whatever env vars and secrets are set now. If a past deploy depended on an older config, you’ll need to update those settings manually when rolling back.
-- **Regions** → By default, rollbacks redeploy globally. If you run in multiple regions (say `iad`, `lhr`, `syd`), You can do this with the `--region` flag: ```fly deploy --image registry.fly.io/myapp:v1.2.3 --region iad```
 - **Autoscaling** → If your app scaled up during the bad release (say traffic spiked and Fly added more machines), those extra machines don’t vanish the instant you roll back. They’ll hang around until autoscaling decides to scale them down. This is expected behavior and your rollback still worked; you just have more machines than usual for a while. Read more about [metrics-based autoscaling](https://fly.io/docs/launch/autoscale-by-metric/).
 - **Monitoring** → Always confirm a rollback stabilized things with logs , probes (`fly logs`, `fly status,` Grafana metrics), not just the success message from `fly deploy`.
+- **Regions** → By default, rollbacks redeploy globally. If you run in multiple regions (say `iad`, `lhr`, `syd`), you might test a rollback in just one region before rolling back everywhere. You can do this with the `--region` flag:
 
+```bash
+fly deploy --image registry.fly.io/myapp:v1.2.3 --region iad
+```
 ---
 
 ## Tip: Faster rollbacks with deploy strategies
