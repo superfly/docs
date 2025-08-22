@@ -110,7 +110,7 @@ This stops old machines and boots the rollback image as quickly as possible.
 ### Controlled speedup:
 
 ```bash
-fly deploy --image registry.fly.io/myapp:v1.2.3 --max-unavailable 50%
+fly deploy --image registry.fly.io/myapp:v1.2.3 --max-unavailable 0.5
 ```
 
 This lets you take down up to half your machines at once, moving faster than a cautious rolling deploy while avoiding a full stop.
