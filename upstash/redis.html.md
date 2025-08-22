@@ -122,7 +122,7 @@ Upstash Redis is available in all Fly regions via a [private IPv6 address](/docs
 
 ### Writing to replica regions
 
-**Replicas forward writes to the primary**. Replicas can't be written to. Writes are synchronous, and synchronous writes over geographical distance experience latency. Plan for this latency in your application design.
+**Replicas forward writes to the primary**. Replicas can't be written to. Writes are synchronous, and synchronous writes over geographic distance experience latency. Plan for this latency in your application design.
 
 If you're using Redis as region-local cache and don't require a shared cache, setup separate databases per-region and enable object eviction.
 
@@ -152,7 +152,7 @@ Upstash also offers fixed price plans for when:
 These fixed price plans are available via `flyctl redis update <dbname>`:
 
 * Starter: $10 per month, single region only. Includes 200MB storage, 100 req/sec
-* Standard: $50 per month, per region. Includes 3GB storage, 100 req/sec
+* Standard: $50 per month, $10 per replica region. Includes 3GB storage, 100 req/sec
 * Pro 2K: $280 per month, $100 per replica region. Includes 50GB storage, 10k req/sec
 
 Your usage is updated hourly on your monthly Fly.io bill. You can track database usage details in the [Upstash web console](#the-upstash-web-console) as well.
