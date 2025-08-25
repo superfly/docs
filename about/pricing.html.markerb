@@ -186,7 +186,7 @@ We bill for data leaving your app destined for the public internet or for apps o
 
 * Data egress to the Internet, from Machine to edge server to Internet
 * Data transfer over private network between regions, from Machine to edge server and edge server to Machine
-* Data transfer to some extensions like Upstash Redis (excludes Tigris Object Storage)
+* Data transfer to some extensions like Upstash Redis
 
 The following types of traffic are free:
 
@@ -240,7 +240,7 @@ You will not be billed separately for:
 * IP addresses associated with the service
 * Bandwidth to Tigris Object Storage
 
-You **will** be billed separately for data transfer to services other than Tigris Object Storage. See our [data transfer pricing](#data-transfer-pricing) for details.
+You **will** be billed separately for data transfer to these external third-party services. See our [data transfer pricing](#data-transfer-pricing) for details.
 
 ## LiteFS Cloud
 
