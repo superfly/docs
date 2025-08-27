@@ -1,12 +1,14 @@
 ---
-title: Task scheduling guide
+title: Task scheduling guide: Cron Manager and friends
 layout: docs
 nav: firecracker
 author: kcmartin
+categories:
+  - cron
 date: 2025-07-18
 ---
 
-Running on a schedule: it's not just for trains. If your app needs to rebuild a cache every night, prune old data, or email a weekly newsletter to your users, Fly.io gives you a few ways to get it done.
+Running on a schedule: it's not just for trains. If your app needs to rebuild a cache every night, prune old data, or email a weekly newsletter to your users, you’re probably looking for a way to run a cron job. Fly.io gives you a few ways to get that done.
 
 We’ll walk through options for task scheduling, starting with the most robust and ending with the “it works, okay?” tier.
 
