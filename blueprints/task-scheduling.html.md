@@ -1,5 +1,5 @@
 ---
-title: Task scheduling guide: Cron Manager and friends
+title: Task scheduling guide with Cron Manager and friends
 layout: docs
 nav: firecracker
 author: kcmartin
