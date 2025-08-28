@@ -31,7 +31,7 @@ Fly Launch is our built-from-scratch-for-Fly-Machines orchestrator:
 - Create your app with the `fly launch` command. Fly Launch detects your framework and gives you useful defaults.
 - Configure your app's deployment and services with the [`fly.toml`](/docs/reference/configuration/) configuration file.
 - Deploy your app's Machines as a group with the `fly deploy` command.
-- Scale your app's Machines [horizontally](/docs/apps/scale-count/) or [vertically](/docs/apps/scale-machine/) with the `fly scale` command.
+- Scale your app's Machines [horizontally](/docs/launch/scale-count/) or [vertically](/docs/launch/scale-machine/) with the `fly scale` command. [Scaling based on metrics](/docs/launch/autoscale-by-metric/) is also possible. 
 
 Again, Fly Launch is built on Machines: you can use Fly Launch to manage the scale of your application with a single command, or you can interact directly with Machines for fine-grained control.
 
@@ -59,4 +59,4 @@ Learn more about [Fly Apps](/docs/apps/overview/).
 
 **[Fly Volumes](/docs/volumes/):** Local persistent storage for Fly Machines. Every Fly Volume can be attached to one Machine at a time and belongs to one Fly App.
 
-**Organizations**: Administrative entities on Fly.io that let you to manage billing, control access by adding and removing members, and share app development environments.
+**[Organizations](/docs/security/org-roles-permissions/)**: Administrative entities on Fly.io that let you to manage billing, control access by adding and removing members, and share app development environments.
