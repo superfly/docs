@@ -15,7 +15,7 @@ When people talk about “**n-tier architecture**,” they’re describing a way
 ## Defining tiers
 
 - **Presentation tier**: the UI/frontend of your app — HTML/CSS/JS in a browser, or a mobile app interface — that the user interacts with
-- **Web tier**: the app servers/backend that [handle requests](https://fly.io/docs/networking/dynamic-request-routing/) and run business logic
+- **Web tier**: the app servers/backend that [handle requests](/docs/networking/dynamic-request-routing/) and run business logic
 - **Data tier**: stores, manages and provides access to application data
 
 ---
@@ -33,7 +33,7 @@ When people talk about “**n-tier architecture**,” they’re describing a way
 ### Mapping to Fly.io
 
 - **Web tier** → your app running on Fly Machines
-- **Data tier** → [Fly Managed Postgres](https://fly.io/docs/mpg/) (our hosted Postgres that handles the messy parts for you)
+- **Data tier** → [Fly Managed Postgres](/docs/mpg/) (our hosted Postgres that handles the messy parts for you)
 - **Optional presentation tier** → a separate frontend app (web or mobile) that talks to your Fly backend
 
 The idea is simple but powerful: the web tier doesn’t keep state. All shared state lives in the data tier, so you can add or remove servers at will without breaking anything. It’s the architecture you want if you care about **scalability** (handling more traffic by adding machines) and **reliability** (requests keep flowing even if one machine goes down).
@@ -44,7 +44,7 @@ The idea is simple but powerful: the web tier doesn’t keep state. All shared s
 
 - **Scale with one command**: Add more Web/App machines whenever traffic spikes.
 - **Keep requests flowing**: Fly’s proxy automatically balances load across your Machines.
-- **Let the database do its job**: With [Managed Postgres](https://fly.io/docs/mpg/), you don’t need to worry about setup, backups, or failover.
+- **Let the database do its job**: With [Managed Postgres](/docs/mpg/), you don’t need to worry about setup, backups, or failover.
 
 You could use Redis, Tigris, or other data stores here too, but if you’re not sure, start with Managed Postgres. It’s the default choice for good reason.
 
@@ -69,7 +69,7 @@ This gives you the **web tier**.
 
 ### 2. Add a database (Managed Postgres)
 
-Now create your **data tier** with [Fly Managed Postgres](https://fly.io/docs/mpg/):
+Now create your **data tier** with [Fly Managed Postgres](/docs/mpg/):
 
 ```cmd
 fly mpg create
@@ -88,7 +88,7 @@ fly secrets set DATABASE_URL=postgres://<user>:<password>@<host>/<dbname>
 
 Most frameworks (Rails, Django, Node, etc.) will automatically read `DATABASE_URL` from the environment. Once set, your app is ready to talk to Postgres.
 
-More details on creating and connecting a managed Postgres database can be found [here](https://fly.io/docs/mpg/create-and-connect/).
+More details on creating and connecting a managed Postgres database can be found [here](/docs/mpg/create-and-connect/).
 
 ---
 
@@ -100,7 +100,7 @@ If traffic grows, add more Machines:
 fly scale count 3
 ```
 
-[Fly’s proxy](https://fly.io/docs/reference/fly-proxy/) takes care of spreading requests across the machines (load balancing).
+[Fly’s proxy](/docs/reference/fly-proxy/) takes care of spreading requests across the machines (load balancing).
 
 **Note:** Scaling works best when your web tier is **stateless**. Any shared data like file uploads, user sessions/cookies, or cached state should live in your data tier (usually Managed Postgres, sometimes object storage or Redis). If your framework defaults to local disk or memory for these, configure it to use a shared store instead.
 
@@ -112,7 +112,7 @@ At this point you’ve got:
 
 - **Optional presentation tier**: a separate frontend app, if you use one (delivered to browsers or devices)
 - **Web tier**: Fly Machines running your app (stateless and load balanced)
-- **Data tier**: [Fly Managed Postgres](https://fly.io/docs/mpg/)
+- **Data tier**: [Fly Managed Postgres](/docs/mpg/)
 
 Every request can hit any Machine, and all Machines share the same Postgres. That’s an n-tier architecture in action, and it’s the foundation for most reliable web apps.
 
@@ -120,8 +120,7 @@ Every request can hit any Machine, and all Machines share the same Postgres. Tha
 
 ## Next steps and related reading:
 
-- Explore the features of [Fly Managed Postgres](https://fly.io/docs/mpg/) 
-- Find out how to [scale apps on Fly](https://fly.io/docs/machines/scaling/)
-- Read about [Fly networking](https://fly.io/docs/networking/) 
+- Explore the features of [Fly Managed Postgres](/docs/mpg/) 
+- Find out how to [scale apps on Fly](/docs/launch/scale-count/)
+- Read about [Fly networking](/docs/networking/) 
 - Learn more about [n-tier architecture](https://en.wikipedia.org/wiki/Multitier_architecture#Three-tier_architecture)
-
