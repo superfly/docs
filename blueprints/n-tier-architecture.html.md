@@ -46,7 +46,7 @@ The idea is simple but powerful: the web tier doesn’t keep state. All shared s
 - **Keep requests flowing**: Fly’s proxy automatically balances load across your Machines.
 - **Let the database do its job**: With [Managed Postgres](https://fly.io/docs/mpg/), you don’t need to worry about setup, backups, or failover.
 
-You could use sqlite, Redis, Tigris,  or other datastores here too, but if you’re not sure, start with Managed Postgres. It’s the default choice for good reason.
+You could use SQLite, Redis, Tigris, or other data stores here too, but if you’re not sure, start with Managed Postgres. It’s the default choice for good reason.
 
 ---
 
