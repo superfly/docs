@@ -1,4 +1,4 @@
-Provision and manage Enveloop projects
+Manage Enveloop projects
 
 
 ## Usage
@@ -7,7 +7,6 @@ fly extensions enveloop [command] [flags]
 ~~~
 
 ## Available Commands
-* [create](/docs/flyctl/extensions-enveloop-create/)	 - Provision an Enveloop project
 * [dashboard](/docs/flyctl/extensions-enveloop-dashboard/)	 - Open the Enveloop dashboard via your web browser
 * [destroy](/docs/flyctl/extensions-enveloop-destroy/)	 - Permanently destroy an Enveloop project
 * [list](/docs/flyctl/extensions-enveloop-list/)	 - List your Enveloop projects

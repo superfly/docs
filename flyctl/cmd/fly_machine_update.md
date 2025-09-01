@@ -15,6 +15,7 @@ fly machine update [machine_id] [flags]
       --build-depot                 Build your image with depot.dev
       --build-nixpacks              Build your image with nixpacks
       --buildkit-addr string        Address of remote buildkit daemon (e.g. tcp://127.0.0.1:1234 or unix:///path/to/socket)
+      --buildkit-image string       Image to use for remote buildkit daemon
   -C, --command string              Command to run
   -c, --config string               Path to application configuration file
       --container string            Container to update with the new image, files, etc; defaults to "app" or the first container in the config.
