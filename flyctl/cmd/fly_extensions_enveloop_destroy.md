@@ -24,5 +24,5 @@ fly extensions enveloop destroy [name] [flags]
 
 ## See Also
 
-* [fly extensions enveloop](/docs/flyctl/extensions-enveloop/)	 - Provision and manage Enveloop projects
+* [fly extensions enveloop](/docs/flyctl/extensions-enveloop/)	 - Manage Enveloop projects
 

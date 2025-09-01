@@ -23,5 +23,5 @@ fly extensions enveloop list [flags]
 
 ## See Also
 
-* [fly extensions enveloop](/docs/flyctl/extensions-enveloop/)	 - Provision and manage Enveloop projects
+* [fly extensions enveloop](/docs/flyctl/extensions-enveloop/)	 - Manage Enveloop projects
 
