@@ -6,6 +6,10 @@ status: alpha
 nav: firecracker
 ---
 
+<div class="warning">
+**Enveloop is shutting down, and the last day of service will be September 30, 2025**. We have removed the ability to provision the Enveloop extension for new and existing apps on Fly.io. If you have questions or need assistance with your existing installation, please contact the developer directly at hey@enveloop.com.
+</div>
+
 [Enveloop](https://enveloop.com) lets developers design, send, and track email and text messages from Fly applications using a simple API. They can store all message content, images, HTML, and CSS in Enveloop -- keeping Fly apps lightweight.
 
 <aside class="callout">
