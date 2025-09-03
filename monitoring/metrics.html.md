@@ -60,7 +60,7 @@ Queries can be sent to the following endpoint:
 https://api.fly.io/prometheus/<org-slug>/
 ```
 
-You’ll need to authenticate with a Fly Access Token. Depending on the token type, the header uses either the Bearer format (`Authorization: Bearer <token>`) or the FlyV1 format (`Authorization: FlyV1 <token>`). You may only query series scoped to your organizations.
+You’ll need to authenticate with a [Fly Access Token](https://fly.io/docs/security/tokens/). Depending on the token type, the header uses either the Bearer format (`Authorization: Bearer <token>`) or the FlyV1 format (`Authorization: FlyV1 <token>`). You may only query series scoped to your organizations.
 
 
 #### Manually
@@ -436,7 +436,7 @@ Use the correct scheme based on token type:
 - `Bearer <token>` → for `flyctl auth token`.
 - `FlyV1 <token>` → for all tokens created with `fly tokens create`.
 
-Example with a token created via `fly tokens create readonly`:
+Example with a token created via `fly tokens create`:
 ```
 Authorization: FlyV1 fm2_lJPECAAAAAAAAC7txBAzYI6PRWhHLT...(a lot of base64-encoded text)
 ```
