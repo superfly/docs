@@ -70,7 +70,7 @@ GET /v1/apps/{app_name}/machines/{machine_id}/wait?state=suspended
 POST /v1/apps/{app_name}/machines/{machine_id}/start
 ```
 
-While usage of the Machines API in general requires an API token, suspending your own machine using the `/.fly/api` Unix socket directly does not:
+Generally, you need an API token to use the Machines API. But if you're just suspending _your own_ machine, you can skip the token and hit the `/.fly/api` Unix socket directly:
 
 ```bash
 $ curl --unix-socket /.fly/api -X POST \
