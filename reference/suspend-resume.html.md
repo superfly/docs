@@ -70,6 +70,13 @@ GET /v1/apps/{app_name}/machines/{machine_id}/wait?state=suspended
 POST /v1/apps/{app_name}/machines/{machine_id}/start
 ```
 
+While usage of the Machines API in general requires an API token, suspending your own machine using the `/.fly/api` Unix socket directly does not:
+
+```bash
+$ curl --unix-socket /.fly/api -X POST \
+  http://flaps/v1/apps/$FLY_APP_NAME/machines/$FLY_MACHINE_ID/suspend
+```
+
 ---
 
 ## Requirements
