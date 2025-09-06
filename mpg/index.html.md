@@ -38,7 +38,7 @@ At the moment, the following features are under development:
 
 - Security patches and version upgrades
 - Third Party Postgres extensions besides `pgvector` or `postGIS`
-- Customer-facing monitoring and alerting
+- Customer-facing alerting
 - Database migration tools
 
 We're working on expanding these capabilities and will provide updates as they become available.
