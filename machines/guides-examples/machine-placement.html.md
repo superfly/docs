@@ -36,11 +36,12 @@ You can use geographic aliases like `us`, `eu`, or `sa` to fan out across a broa
 
 | Alias | Area|
 |---------|------------------------|
+| `apac` | Asia-Pacific |
 | `eu` | Europe |
 | `na` | North America |
 | `sa` | South America |
 | `us`, `usa` | United States |
- 
+
 
 ### Examples:
 
