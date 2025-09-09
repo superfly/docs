@@ -1,8 +1,8 @@
-The SFTP GET retrieves a file from a remote VM.
+The SFTP PUT uploads a file to a remote VM.
 
 ## Usage
 ~~~
-fly sftp get <remote-path> [local-path] [flags]
+fly sftp put <local-path> [remote-path] [flags]
 ~~~
 
 ## Options
@@ -13,13 +13,14 @@ fly sftp get <remote-path> [local-path] [flags]
   -C, --command string         command to run on SSH session
   -c, --config string          Path to application configuration file
       --container string       Container to connect to
-  -h, --help                   help for get
+  -h, --help                   help for put
       --machine string         Run the console in the existing machine with the specified ID
+  -m, --mode string            File mode/permissions for the uploaded file (default: 0644) (default "0644")
   -o, --org string             The target Fly.io organization
   -g, --process-group string   The target process group
       --pty                    Allocate a pseudo-terminal (default: on when no command is provided)
   -q, --quiet                  Don't print progress indicators for WireGuard
-  -R, --recursive              Download directories recursively
+  -R, --recursive              Upload directories recursively
   -r, --region string          The target region (see 'flyctl platform regions')
   -s, --select                 select available instances
   -u, --user string            Unix username to connect as (default "root")
