@@ -27,7 +27,7 @@ Your app can add a `fly-replay` header to its response. The `fly-replay` header 
 
 |Field |Description |
 |---|---|
-|`region` | The 3-letter code for the [region](/docs/reference/regions/) to route the request to |
+|`region` | The region(s) to route the request to. Accepts comma-separated list of [region codes](/docs/reference/regions/) |
 |`instance` | The ID of a specific Machine to route to |
 |`prefer_instance` | The ID of a specific Machine to route to, if possible |
 |`app` | The name of another app (in same organization) to route to |
@@ -36,9 +36,19 @@ Your app can add a `fly-replay` header to its response. The `fly-replay` header 
 
 ### Example Usage
 
-Route to specific region:
+Route to a specific region:
 ```
 fly-replay: region=sjc
+```
+
+Route to one of the given regions, in order of preference:
+```
+fly-replay: region="iad,ord,us,na"
+```
+
+Route to a preferred region, or fallback to any available machine:
+```
+fly-replay: region="sjc,any"
 ```
 
 Route to specific Machine:
@@ -53,8 +63,25 @@ fly-replay: app=app-in-same-org
 
 You can combine multiple fields:
 ```
-fly-replay: region=sjc;app=app-in-same-org
+fly-replay: region="sjc,any";app=app-in-same-org
 ```
+
+<div class="note icon">
+**Note**: A comma-separated list of regions must be quoted.
+</div>
+
+### Geographic groups and aliases
+
+When replaying to a region, you can use geographic aliases like `us`, `eu`, or `sa` to target a broader area.
+
+| Alias | Area|
+|---------|------------------------|
+| `apac` | Asia-Pacific |
+| `eu` | Europe |
+| `na` | North America |
+| `sa` | South America |
+| `us`, `usa` | United States |
+| `any` | Earth |
 
 ## Replay JSON Format
 
@@ -67,7 +94,7 @@ The `application/vnd.fly.replay+json` replay body accepts the following fields:
 
 |Field |Description |
 |---|---|
-|`region` | The 3-letter code for the [region](/docs/reference/regions/) to route the request to |
+|`region` | The region(s) to route the request to. Accepts comma-separated list of [region codes](/docs/reference/regions/) |
 |`instance` | The ID of a specific Machine to route to |
 |`prefer_instance` | The ID of a specific Machine to route to, if possible |
 |`app` | The name of another app (in same organization) to route to |
@@ -87,6 +114,7 @@ Route to another app, and modify the request:
 ```json
 {
   "app": "target-app",
+  "region": "iad,us",
   "transform": {
     "path": "/new/path?param=value",
     "delete_headers": ["x-unwanted-header", "cookie"],
@@ -190,7 +218,13 @@ For cases where `fly-replay` isn't suitable, Fly.io provides two alternative req
 fly-prefer-region: ams
 ```
 
-Attempts to route directly to a specific region. Falls back to nearest region with healthy Machines if target region is unavailable. Useful for large uploads that can't be replayed.
+Attempts to route directly to specific region(s). You can specify multiple regions as comma-separated values for fallback preferences:
+
+```
+fly-prefer-region: iad,ord,us
+```
+
+Falls back to the next region in the list, or to the nearest region with healthy Machines if none of the specified regions are available. Useful for large uploads that can't be replayed.
 
 ### The fly-prefer-instance-id Header
 

@@ -123,10 +123,16 @@ The HTTP handler adds a number of standard HTTP headers to requests, and a few F
 | `Fly-Region` | Original incoming connection region |
 | `Fly-Preferred-Instance-Unavailable` | The ID of a preferred instance that the proxy could not route to |
 
-You can set a preference on HTTP requests for which region you would like to connect to:
+You can set a preference on HTTP requests for which region you would like to connect to. You can specify a single region or multiple regions in order of preference:
 
 ```
-Fly-Prefer-Region: region-code
+Fly-Prefer-Region: iad
+```
+
+Or with multiple preferences (tries regions in order):
+
+```
+Fly-Prefer-Region: iad,ord,us,na
 ```
 
 You can set a preference for a specific machine instance:
