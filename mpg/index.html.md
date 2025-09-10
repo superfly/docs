@@ -47,20 +47,16 @@ We're working on expanding these capabilities and will provide updates as they b
 
 The current regions available for deploying Fly.io Managed Postgres are:
 
+- `ams` - Amsterdam, Netherlands
 - `fra` - Frankfurt, Germany
 - `gru` - São Paulo, Brazil
 - `iad` - Ashburn, Virginia, USA
 - `lax` - Los Angeles, California, USA
-- `ord` - Chicago, Illinois, USA
-- `syd` - Sydney, Australia
-
-These regions are coming soon:
-
-- `ams` - Amsterdam, Netherlands
 - `nrt` - Tokyo, Japan
+- `ord` - Chicago, Illinois, USA
 - `sin` - Singapore
 - `sjc` - San Jose, California, USA
-
+- `syd` - Sydney, Australia
 
 We'll be rolling out more regions as soon as we can. Choose a region close to your application for optimal performance.
 
@@ -78,9 +74,9 @@ Managed Postgres storage features:
 The price of running Fly.io Managed Postgres depends on:
 
 - Your selected Managed Postgres Plan
-- The amount of storage your cluster has 
+- The amount of storage your cluster has
 
-Your MPG plan determines the CPU and Memory configuration for your cluster. All plans include high availability, backups, and connection pooling. 
+Your MPG plan determines the CPU and Memory configuration for your cluster. All plans include high availability, backups, and connection pooling.
 
 The current monthly plan pricing is:
 
@@ -91,6 +87,6 @@ The current monthly plan pricing is:
 | Launch | Performance-2x| 8GB | $282.00 |
 | Scale | Performance-4x | 32GB | $962.00 |
 
-Database storage is priced at **$0.30 per provisioned GB for a 30-day month**, with each node (primary + replica) incurring its own cost. For example, if you have 10GB of storage provisioned for your cluster, your monthly storage cost will be $6.00 ($0.30 * 10GB for the primary, $.30 * 10GB for the replica). 
+Database storage is priced at **$0.30 per provisioned GB for a 30-day month**, with each node (primary + replica) incurring its own cost. For example, if you have 10GB of storage provisioned for your cluster, your monthly storage cost will be $6.00 ($0.30 * 10GB for the primary, $.30 * 10GB for the replica).
 
 Databases created or deleted mid-month will have their pricing prorated accordingly.
