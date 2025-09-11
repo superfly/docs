@@ -2,7 +2,7 @@
 title: Resilient apps use multiple Machines
 layout: docs
 nav: firecracker
-date: 2025-09-10
+date: 2025-09-12
 ---
 
 **Fly Machines are fast-launching VMs, the basic compute unit of the Fly.io platform. Each Machine runs on a single physical host. If that host fails, the Machine goes down and does not automatically start again on another host.**
