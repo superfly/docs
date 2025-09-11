@@ -170,17 +170,17 @@ To ensure reliable operation, the app issuing `fly-replay` should still have mul
 
 ### Bypassing the replay cache
 
-Occasionally it might be useful for clients of certain apps to be able to bypass a replay already present in the cache, without actually invalidating it.
-For example, if one of your API endpoints _mostly_ needs to be replayed to a "leader" instance, but depending on application-level logic, sometimes any other instance would be able to handle it.
+Sometimes, you might want a client to bypass a cached replay without actually invalidating the cache.
+For example, you might have an API endpoint that _mostly_ needs to be replayed to a "leader" instance. But depending on application logic, it could sometimes be handled by any instance.
 
-The recommended solution is always to cleanly separate your endpoints into ones that always need to be replayed and ones that don't.
+The recommended approach is to clearly separate endpoints that require replay from those that don't.
 However, when that is not possible, the replaying app can additionally set the header
 
 ```
 fly-replay-cache-allow-bypass: yes
 ```
 
-or the JSON field `"allow_bypass": true`. Then, when your client makes a request, it can set the header
+or set the JSON field `"allow_bypass": true`. Then, when your client makes a request, it can set the header:
 
 ```
 fly-replay-cache-control: skip
@@ -189,16 +189,16 @@ fly-replay-cache-control: skip
 to skip any cached replay that might be present.
 
 <div class="note icon">
-**Note**: This behavior is opt-in because allowing it by default may open your app up to malicious clients generating unexpected load on the replaying app / machine, since all it needs is setting a boolean HTTP header.
+**Note**: This behavior is opt-in because enabling it by default could make your app vulnerable to malicious clients creating unexpected load on the replaying machine. All it takes is setting a boolean HTTP header.
 </div>
 
 ### Was my request served by the cache?
 
-Your app might want to know about whether a given request is served by the replay cache. In this case, it can check the header `fly-replay-cache-status` sent to the replay _target_ app or machine. Below are the possible values:
+If your app needs to know whether a request was served from the replay cache, it can check the fly-replay-cache-status header. This header is sent to the replay _target_ app or machine.
 
 - Absent: the request was not replayed at all and instead was routed directly to the app / machine.
 - `miss`: the request didn't use replay cache; it first hit another machine and got replayed here.
-- `hit`: the request did use the replay cache! It never reached the source app / machine and was redirected straight to the target.
+- `hit`: the request did use the replay cache! It never reached the source app or machine and was redirected straight to the target.
 - `bypass`: even though the cache might have been set, it was explicitly skipped by setting the `fly-replay-cache-control: skip` header.
 
 ## Implementation Details
