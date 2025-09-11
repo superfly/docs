@@ -4,7 +4,7 @@ layout: docs
 nav: litefs
 ---
 
-<div class="important icon">**Important:** We are not able to provide support or guidance for this product. Use with caution.</div>
+<div class="important icon">**Important:** We are not able to provide support or guidance for this product. Use with caution. Do not combine LiteFS with Machines autostop/autostart. The Fly Proxy’s autoscaler can suspend or resume any machine in a service without awareness of LiteFS lease state or data freshness.</div>
 
 LiteFS is a distributed file system that transparently replicates SQLite
 databases. You can run your application like it's running against a local
