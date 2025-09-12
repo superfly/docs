@@ -5,7 +5,9 @@ nav: firecracker
 date: 2025-09-12
 ---
 
+<div class="callout">
 **Fly Machines are fast-launching VMs, the basic compute unit of the Fly.io platform. Each Machine runs on a single physical host. If that host fails, the Machine goes down and does not automatically start again on another host.**
+</div>
 
 To make your app resilient to single-host failure, create at least two Machines per app or process. Fly Proxy autostop/autostart and standby Machines are built-in platform features that you can use to start extra Machines only when needed.
 
@@ -93,7 +95,7 @@ Learn more about [scaling the number of Machines](/docs/apps/scale-count/).
 
 When apps or processes are running tools like cron that don't require local storage or accept external requests, it's common to run only one Machine. Since these Machines don't have services configured, they can't be automatically started and stopped by the Fly Proxy. To add redundancy against host failures for this kind of Machine, use a standby Machine; it stays stopped and ready to take over in case the original Machine becomes unavailable.
 
-Unlike Fly Proxy autostop/autostart, which starts Machines based on app traffic, a standby Machine watches the Machine it's paired to and starts only if that Machine becomes unavailable. Learn more about [standby Machines](https://fly.io/docs/reference/app-availability/#standby-machines-for-process-groups-without-services).
+Unlike Fly Proxy autostop/autostart, which starts Machines based on app traffic, a standby Machine watches the Machine it's paired to and starts only if that Machine becomes unavailable. Learn more about [standby Machines](/docs/reference/app-availability/#standby-machines-for-process-groups-without-services).
 
 ### You get a standby Machine on first deploy
 
