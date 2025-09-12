@@ -121,5 +121,6 @@ This is totally optional. Most folks will do this manually, or only once per rel
 
 - [Fly Volumes overview](/docs/volumes/overview/)
 - [Create and manage volumes](/docs/volumes/volume-manage/)
+- [Volume states](/docs/volumes/volume-states/)
 - `fly volumes fork` [reference](/docs/flyctl/volumes-fork/)
 
