@@ -52,7 +52,7 @@ The following options are available to control the lifecycle of a running applic
 
 ### `kill_signal` option
 
-When shutting down a Fly Machine, by default, Fly.io sends a `SIGINT` signal to the running process. Typically this triggers a hard shutdown option on most applications. The `kill_signal` option allows you to change what signal is sent so that you can trigger a softer, less disruptive shutdown. Options are `SIGINT` (default), `SIGTERM`, `SIGQUIT`, `SIGUSR1`, `SIGUSR2`, `SIGKILL`, or `SIGSTOP`. For example, to set the kill signal to SIGTERM, you would add:
+When shutting down a Fly Machine, Fly.io sends a `SIGINT` signal to the running process by default. Typically this triggers a hard shutdown option on most applications. The `kill_signal` option lets you override that with a different signal so that you can trigger a softer, less disruptive shutdown: `SIGTERM`, `SIGQUIT`, `SIGUSR1`, `SIGUSR2`, `SIGKILL`, or `SIGSTOP`. For example, to set the kill signal to SIGTERM, you would add:
 
 ```toml
 kill_signal = "SIGTERM"
@@ -60,7 +60,7 @@ kill_signal = "SIGTERM"
 
 ### `kill_timeout` option
 
-The time to wait, in seconds, before stopping a Machine after sending the `SIGINT` signal or the signal set by `kill_signal`. Set `kill_timeout` to a value that gives your app enough time to exit gracefully. The default setting is 5 seconds. The maximum `kill_timeout` is 300 seconds (five minutes). 
+This sets how long Fly.io waits (in seconds) after sending the `kill_signal` before moving on to a forced shutdown. Set `kill_timeout` to a value that gives your app enough time to exit gracefully. The default is 5 seconds. You can set it up to a maximum of 300 seconds (5 minutes). For example:
 
 For example, to set the timeout to two minutes:
 
@@ -69,6 +69,23 @@ kill_timeout = 120
 ```
 
 <section class="warning">Note: `kill_timeout` settings should be considered best-effort, and your app needs to be prepared to handle shorter stopping times</section>
+
+**How the shutdown sequence works**
+These options come into play during controlled shutdowns such as `fly deploy` or when a machine stops due to `auto_stop_machines`. The sequence looks like this:
+
+1. Fly sends the `kill_signal` to the main process (defined by your Dockerfile’s `ENTRYPOINT` or `CMD`, or overridden via `--entrypoint`).
+
+1. It waits for up to `kill_timeout` seconds.
+
+1. Then it sends `SIGTERM` unconditionally.
+
+This gives your app a chance to shut down cleanly: finish requests, close connections, stop taking new work. It's designed for apps that can wrap up in under five minutes.
+
+Many workers will re-queue unfinished jobs so another machine can pick them up. If your app doesn't support that, or needs longer to shut down, you'll want to plan around that.
+
+This sequence only runs during deploys or idle stops. If you stop a machine manually (fly machine stop) or destroy the app, Fly skips straight to `SIGTERM`.
+
+You can watch shutdown behavior by watching `fly logs` during a deploy or idle stop.
 
 ## Console command
 
