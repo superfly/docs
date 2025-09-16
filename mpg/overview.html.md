@@ -1,7 +1,7 @@
 ---
 title: Managed Postgres Overview
 layout: docs
-nav: firecracker
+nav: mpg
 toc: false
 ---
 

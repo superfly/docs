@@ -1,7 +1,7 @@
 ---
 title: Managed Postgres
 layout: docs
-nav: firecracker
+nav: mpg
 date: 2025-07-10
 redirect_from: /docs/mpg/overview/
 ---
