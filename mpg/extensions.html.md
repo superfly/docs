@@ -1,7 +1,7 @@
 ---
 title: Supported Postgres Extensions
 layout: docs
-nav: firecracker
+nav: mpg
 date: 2025-07-23
 ---
 

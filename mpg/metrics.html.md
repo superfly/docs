@@ -1,7 +1,7 @@
 ---
 title: Monitoring and Metrics
 layout: docs
-nav: firecracker
+nav: mpg
 ---
 
 <figure class="flex justify-center">

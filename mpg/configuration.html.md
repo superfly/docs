@@ -1,7 +1,7 @@
 ---
 title: Cluster configuration options
 layout: docs
-nav: firecracker
+nav: mpg
 date: 2025-08-18
 ---
 
