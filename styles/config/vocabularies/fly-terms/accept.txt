@@ -16,7 +16,7 @@ autosav\w+
 backhaul
 bluegreen
 bool
-boolean
+(?i)boolean
 [Bb]uildpacks?\b
 bursty
 callouts?\b
