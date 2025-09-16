@@ -13,7 +13,7 @@ This guide explains the key **Managed Postgres (MPG)-specific adjustments** you 
 3. Using Oban with MPG
 4. Troubleshooting and Common Issues
 
-We'll skip general Phoenix/Ecto configuration, assuming you already have that in place.
+This guide doesn’t cover Phoenix or Ecto setup—we assume you already have that in place.
 
 ## Connection Pooling with PgBouncer + Ecto
 
@@ -39,7 +39,7 @@ config :my_app, MyApp.Repo,
 
 ## Running Migrations
 
-While you'll need to use Transaction mode with Ecto for most cases, Migrations are a special case. Migrations rely on advisory locks and session stickiness, which PgBouncer's transaction mode doesn't support. For running migrations you'll need to configure your app to use the **direct database URL** instead.
+While you'll need to use Transaction mode with Ecto for most cases, Migrations are a special case. Migrations rely on [advisory locks](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS) and session stickiness, which PgBouncer's [transaction pooling mode](https://www.pgbouncer.org/usage.html#pool-modes) doesn't support. For running migrations you'll need to configure your app to use the **direct database URL** instead.
 
 Update your secrets to add a `DIRECT_DATABASE_URL`
 
@@ -64,7 +64,7 @@ fly ssh console -C '/bin/sh -lc "DATABASE_URL=\"$DIRECT_DATABASE_URL\" bin/migra
 
 ## Using Oban with MPG
 
-If you're using the Oban library for handling Job queues, you'll need to make a few adjustments as PgBouncer in transaction mode doesn't support `LISTEN/NOTIFY`, which Oban uses for job notifications. You have a few options:
+If you're using the [Oban library](https://hexdocs.pm/oban/Oban.html) for handling Job queues, you'll need to make a few adjustments as PgBouncer in transaction mode doesn't support `LISTEN/NOTIFY`, which Oban uses for job notifications. You have a few options:
 
 ### 1. Use a non-Postgres notifier
 
@@ -87,7 +87,7 @@ config :my_app, Oban,
 
 ### 2. Run Oban on a direct connection
 
-If you must use Postgres `LISTEN/NOTIFY`, you can set up Oban to use a direct database connection instead of using PG Bouncer
+If you have a requirement to use Postgres `LISTEN/NOTIFY`, you can set up Oban to use a direct database connection instead of using PG Bouncer
 
 ```elixir
 config :my_app, Oban,
