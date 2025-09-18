@@ -24,7 +24,7 @@ nav: firecracker
 
 The Fly Machines in your app provide ephemeral storage, so you get a blank slate on every startup. For hardware-local, persistent storage on Fly.io, use Fly Volumes. You can attach volumes on an app directly, or run a separate database app with volume storage and connect an app to that.
 
-**[Fly Volumes](/docs/volumes/):** A Fly Volume is a slice of NVMe disk storage attached to the server that hosts your Machine. Read the [Fly Volumes overview](/docs/volumes/overview/) to find out if volumes are the best solution for your use case.
+**[Fly Volumes](/docs/volumes/overview):** A Fly Volume is a slice of NVMe disk storage attached to the server that hosts your Machine. Read the [Fly Volumes overview](/docs/volumes/overview/) to find out if volumes are the best solution for your use case.
 
 ## Object storage service
 
