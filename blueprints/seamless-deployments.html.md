@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-06-26
 ---
 
+<figure>
+  <img src="/static/images/seamless-deployments.png" alt="Illustration by Annie Ruygt of a balloon doing a health check" class="w-full max-w-lg mx-auto">
+</figure>
+
 <div class="callout">
 **Zero-downtime deploys aren’t magic. They’re just health checks that work. Fly.io apps run on individual VMs, and we won’t start routing traffic to a new one until it proves it’s alive. Here's how to get seamless deploys without breaking things or relying on hope as a strategy.**
 </div>

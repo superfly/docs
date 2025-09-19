@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-05-15
 ---
 
+<figure>
+  <img src="/static/images/setting-limits.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon with two other balloon friends of different colors" class="w-full max-w-lg mx-auto">
+</figure>
+
 ## Introduction
 
 On Fly.io, machines aren’t created automatically based on traffic; you create them manually. But once a machine is created, it can be stopped when idle (meaning you’re not paying for it), and started again instantly when load picks up. Our “autostart/autostop” feature can drive this process for you — but it only works well if you’ve tuned `soft_limit` and `hard_limit` correctly. Those limits tell Fly when a machine is too busy and it's time to bring more machines online.

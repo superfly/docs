@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-08-29
 ---
 
+<figure>
+  <img src="/static/images/get-started-n-tier.png" alt="Illustration by Annie Ruygt of a bird slicing a loaf of bread-think app layers" class="w-full max-w-lg mx-auto">
+</figure>
+
 ## What is n-tier architecture?
 
 When people talk about “**n-tier architecture**,” they’re describing a way of splitting an app into layers (or “tiers”) that each have a specific job. The “**n**” just means there could be two, three, or more tiers depending on how you slice things.

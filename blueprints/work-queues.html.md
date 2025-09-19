@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-07-17
 ---
 
+<figure>
+  <img src="/static/images/work-queue.png" alt="Illustration by Annie Ruygt of a robot setting up a queue of boxes and tasks" class="w-full max-w-lg mx-auto">
+</figure>
+
 ## Overview
 
 Some things just take a while. Generating a PDF. Calling a slow third-party API. Running a machine learning model. Sending an email newsletter, and retrying if the mail server flakes out.

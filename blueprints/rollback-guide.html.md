@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-08-22
 ---
 
+<figure>
+  <img src="/static/images/rollback-guide.png" alt="Illustration by Annie Ruygt of a Frankie the hot air balloon helping his developer friend roll back a bad deploy" class="w-full max-w-lg mx-auto">
+</figure>
+
 ## Why rollback?
 
 Fly.io runs your apps close to your users, in VMs you can spin up and tear down in seconds. But what if you spin up something broken? If a deploy goes wrong, it’s easy to roll back: just tell Fly to redeploy a previous image. There’s no special `rollback` command because you don’t need one. Rollbacks use the same deploy mechanism you already know.

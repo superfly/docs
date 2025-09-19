@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-08-05
 ---
 
+<figure>
+  <img src="/static/images/building-infrastructure-automation.png" alt="Illustration by Annie Ruygt of a Frankie the balloon working on automation at his computer" class="w-full max-w-lg mx-auto">
+</figure>
+
 ## Overview
 
 We don’t have a Terraform provider anymore, and that’s intentional. It’s not a great fit for how our platform works. This guide is about how to get a Terraform-like experience using the tools that do fit.
