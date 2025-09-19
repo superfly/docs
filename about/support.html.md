@@ -88,7 +88,7 @@ Here are some things to include in your ticket:
 
 
   <div class="border-2 border-gray-200 rounded-lg">
-    <div class="grid grid-cols-1 md:grid-cols-3 ">
+    <div class="grid grid-cols-2">
       <div class="p-6 border-r border-gray-200">
         <h3 class="font-bold mb-4">Supported Products</h3>
         <ul class="space-y-2">
@@ -102,12 +102,6 @@ Here are some things to include in your ticket:
           <li>**Security**</li>
           <li>**Accounts & Billing**</li>
           <li>**Extensions** (Tigris, Upstash, Depot)</li>
-        </ul>
-      </div>
-
-      <div class="p-6 border-r border-gray-200">
-        <h3 class="font-bold mb-4">Limited Support</h3>
-        <ul class="space-y-2">
           <li>**Monitoring** (metrics and logs)</li>
         </ul>
       </div>
