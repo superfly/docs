@@ -122,7 +122,7 @@ Every request can hit any Machine, and all Machines share the same Postgres. Tha
 
 ---
 
-## Next steps and related reading:
+## Next steps and related reading
 
 - Explore the features of [Fly Managed Postgres](/docs/mpg/) 
 - Find out how to [scale apps on Fly](/docs/launch/scale-count/)

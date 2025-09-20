@@ -93,7 +93,7 @@ Deploying without downtime isn't automatic. But with a little help from your hea
 
 
 
-### Related reading:
+### Related reading
 
 - [Deploy an App](/docs/launch/deploy/)
 - [Health Checks](/docs/reference/health-checks/)
