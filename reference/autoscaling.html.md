@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/autoscaling.png" alt="Illustration by Annie Ruygt of several machines running" class="w-full max-w-lg mx-auto">
+</figure>
+
 Autoscaling adjusts the number of running or created Fly Machines dynamically. We support two forms of autoscaling:
 
 - Autostop/autostart Machines
