@@ -198,19 +198,24 @@ This section configures deployment-related settings such as the release command 
 
 ### Run one-off commands before releasing a deployment
 
-To run a command in a temporary Machine&mdash;using the app's successfully built Docker image&mdash;*before* the release is deployed, define a `release_command`:
+The `release_command` lets you run a one-off task, like a database migration, before any of your deployed Machines are created or updated. It runs in a temporary Machine using the newly built image, once per deploy attempt. This is a common pattern for frameworks like Rails or Phoenix, but it's not limited to them. You can use it for any setup task that needs to run once, not on every app boot.
+
+If the command fails, the deploy will stop. The goal is to make deployment safer: do the risky part first, and only continue if it succeeds.
+
+To run a command in a temporary Machine *before* the release is deployed, define a `release_command`:
 
 ```toml
 [deploy]
   release_command = "bin/rails db:prepare"
 ```
 
-The `release_command` value replaces `CMD` in the temporary Machine. This is useful for running database migrations before app Machines are created or updated with the new release. Note that the Docker image's `ENTRYPOINT` is not overridden by the `release_command`; `ENTRYPOINT` always runs.
+The `release_command` value replaces `CMD` in the temporary Machine. This is most commonly used for database migrations, but can be any task that prepares your app for the new release. Note that the Docker image's `ENTRYPOINT` is not overridden by the `release_command`; `ENTRYPOINT` always runs.
 
-By default, the temporary Machine has full access to the network, environment variables and secrets, but *not* to persistent volumes. Changes made to the file system on the temporary Machine will not be retained or deployed. The building/compiling of your project should be done in your Dockerfile. If you need to modify persistent volumes or configure your application, consider making use of `CMD` or `ENTRYPOINT` in your Dockerfile, or of a [process group command](#the-processes-section).
+By default, the temporary Machine has full access to the network, environment variables and secrets, but *not* to persistent volumes. Changes made to the file system on the temporary Machine will not persist. It has no volumes attached, and the Machine is destroyed after the command completes. The building/compiling of your project should be done in your Dockerfile. If you need to modify persistent volumes or configure your application, consider making use of `CMD` or `ENTRYPOINT` in your Dockerfile, or of a [process group command](#the-processes-section).
 
 The temporary Machine inherits the size from the largest Machine in the default process group of the app as of flyctl v0.0.508 (they also default larger on empty/new apps, using the Machine `shared-cpu-2x` preset). The default process group is defined as either the `app` process, or the first process group in alphabetical order (if an `app` process is not present).
-It is also possible to explicitly define the Machine size by setting `[deploy.release_command_vm]`  like in:
+
+It is also possible to explicitly define the Machine size by setting `[deploy.release_command_vm]`, for example:
 
 ```toml
 [deploy]
@@ -228,6 +233,18 @@ To ensure the command runs in a specific region, such as `dfw`, set `PRIMARY_REG
 The environment variable `RELEASE_COMMAND=1` is set within the temporary release Machine. You can use this to define behavior in your Dockerfile's `ENTRYPOINT`  that's conditional on being run on a release Machine.
 
 By default, the release command has 5 minutes to complete before it is killed. It is possible to increase or decrease the timeout with `fly deploy --release-command-timeout=10m` or by setting `release_command_timeout = "10m"` in `[deploy]` section of `fly.toml`.
+
+For more context, see our [Seamless Deployments guide](/docs/blueprints/seamless-deployments/#one-off-tasks-with-release_command).
+
+<div class="callout">
+**Things to know about `release_command`:**
+- Replaces `CMD`, but not `ENTRYPOINT`
+- Runs in a temporary Machine with no volumes
+- Inherits environment, secrets, and network config
+- Fails the deploy on a non-zero exit code
+- Times out after 5 minutes by default (configurable)
+- Logs are streamed to `fly deploy` and `fly logs`
+</div>
 
 ### Picking a deployment strategy
 

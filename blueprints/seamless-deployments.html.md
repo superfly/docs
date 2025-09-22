@@ -3,7 +3,7 @@ title: Seamless Deployments on Fly.io
 layout: docs
 nav: firecracker
 author: kcmartin
-date: 2025-06-26
+date: 2025-09-23
 ---
 
 <figure>
@@ -70,11 +70,19 @@ Fly.io supports a few deployment strategies in the `[deploy]` section of `fly.to
 - **Canary:** Start with one Machine. If it's healthy, continue with rolling. This can't be used with attached volumes.
 - **Bluegreen:** Boot new Machines alongside old ones. Only switch traffic after all new Machines pass checks. Fastest, safest, but also can't use attached volumes.
 
-You can also define a [`release_command`](/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment) to run before any Machines update. It gets a fresh Machine and your new image, but no volume. Use it for migrations or other one-off prep work.
-
 Every deploy also includes a smoke check: Fly watches Machines for \~10 seconds after they start. If they crash repeatedly, the deploy fails.
 
 Don't forget to set `wait_timeout` if your image is big or startup is slow. It's easy to hit timeouts before Machines even start.
+
+### One-off tasks with `release_command`
+
+Sometimes you need to run a script before your app is actually deployed, like a database migration or other one-off prep work. The `release_command` in your `fly.toml` lets you do exactly that. It spins up a fresh temporary Machine, runs your command, and then shuts it down. It doesn’t join your deployed Machines.
+
+This runs once per deploy attempt, using the built image and your app’s environment. It won’t have volumes attached, so it’s not for anything that needs persistent state.
+
+If `release_command` fails, the deploy won’t proceed. This is usually what you want. If the migration didn’t work, it's better to stop there.
+
+We’ve got more details, including how `ENTRYPOINT` and `CMD` are handled, in the [reference for `fly.toml`](/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment).
 
 ### Zero-downtime is a shared responsibility
 
@@ -90,8 +98,6 @@ Fixing this is on you. You need to design schema and app changes that can coexis
 Every framework has guidance for this. Read it. Follow it. Then health checks, deployment strategies, and the platform can do their jobs.
 
 Deploying without downtime isn't automatic. But with a little help from your health checks and some care in your app logic, it's well within reach.
-
-
 
 ### Related reading
 
