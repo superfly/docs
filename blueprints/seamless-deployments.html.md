@@ -76,7 +76,7 @@ Don't forget to set `wait_timeout` if your image is big or startup is slow. It's
 
 ### One-off tasks with `release_command`
 
-Sometimes you need to run a script before your app is actually deployed, like a database migration or other one-off prep work. The `release_command` in your `fly.toml` lets you do exactly that. It spins up a fresh temporary Machine, runs your command, and then shuts it down. It doesn’t join your deployed Machines.
+Sometimes you need to run a script before your app is actually deployed, like a database migration or other one-off prep work. The `release_command` in your `fly.toml` lets you do exactly that. It spins up a fresh temporary Machine, runs your command, then shuts it down and destroys it. It doesn’t join your deployed Machines.
 
 This runs once per deploy attempt, using the built image and your app’s environment. It won’t have volumes attached, so it’s not for anything that needs persistent state.
 
