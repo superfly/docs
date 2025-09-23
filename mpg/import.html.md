@@ -61,4 +61,4 @@ Some source databases may not be a good fit for importing into a Fly Managed Pos
 
 Note: While MPG supports up to 1 TB of storage, initial cluster creation is limited to 500 GB. For databases larger than 500 GB, you'll need to create your cluster with the maximum initial size and then expand storage after the import process.
 
-Multi-schema and multi-database imports are supported. If your app uses multiple schemas or databases, imports should work as expected when run with the default fly-user or another user with the schema_admin role.
+Multi-schema and multi-database imports are supported. If your app uses multiple schemas or databases, imports should work as expected when run with the default `fly-user` or another user with the `schema_admin` role.
