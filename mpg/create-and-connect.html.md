@@ -23,7 +23,7 @@ You'll be prompted to set your clusters:
   - Basic: 2 shared vCPUs, 1GB RAM
   - Launch: 2 Performance vCPUs, 8GB RAM
   - Scale: 4 Performance vCPUs, 32GB RAM
-- Storage size (up to 500GB)
+- Initial storage size: Up to 500 GB at creation
 - Optional Third Party Extensions to install (Currently only PGVector is supported)
 
 <div>
