@@ -1,5 +1,5 @@
 ---
-title: Blueprints
+title: Fly Guides (Blueprints)
 layout: docs
 toc: true
 nav: firecracker
