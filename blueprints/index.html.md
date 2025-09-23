@@ -1,7 +1,7 @@
 ---
 title: Blueprints
 layout: docs
-toc: false
+toc: true
 nav: firecracker
 ---
 
@@ -23,6 +23,7 @@ Guides for the structure your app on Fly.io. Layouts, tradeoffs, moving parts.
 - [Resilient apps use multiple Machines](/docs/blueprints/resilient-apps-use-multiple-machines/)
 - [Deploying Remote MCP Servers](/docs/blueprints/deploying-remote-mcp-servers/)
 
+
 ## Deployment & Developer Workflow
 
 Stuff you set up once and adjust when you ship code. Includes previews, base images, staging, and Docker wrangling.
@@ -35,13 +36,14 @@ Stuff you set up once and adjust when you ship code. Includes previews, base ima
 - [Using base images for faster deployments](/docs/blueprints/using-base-images/)
 - [Managing Docker Images with Fly.io's Private Registry](/docs/blueprints/managing-docker-images/)
 
+
 ## Networking & Connectivity
 
 Connecting things. Public apps, private services, bridging deployments, SSH, and WireGuard.
 
 - [Run private apps with Flycast](/docs/blueprints/run-private-apps-with-flycast/)
-- [Jack into your private network with WireGuard](/docs/blueprints/jack-into-private-network/)
-- [Bridge your other deployments to Fly.io](/docs/blueprints/bridge-your-other-deployments/)
+- [Jack into your private network with WireGuard](/docs/blueprints/jack-into-your-private-network-with-wireguard/)
+- [Bridge your other deployments to Fly.io](/docs/blueprints/bridge-your-other-deployments-to-fly-io/)
 - [Connecting to User Machines](/docs/blueprints/connecting-to-user-machines/)
 - [Run an SSH server](/docs/blueprints/run-an-ssh-server/)
 
@@ -50,18 +52,21 @@ Connecting things. Public apps, private services, bridging deployments, SSH, and
 Make it fast. Make it reliable. Monitor what's happening.
 
 - [Autoscale Machines](/docs/blueprints/autoscale-machines/)
-- [Using Fly Volume forks for faster startup times](/docs/blueprints/using-fly-volume-forks/)
-- [Setting Hard and Soft Concurrency Limits](/docs/blueprints/concurrency-limits/)
-- [Autostart and autostop private apps](/docs/blueprints/autostart-and-autostop/)
-- [Observability for User Apps](/docs/blueprints/observability/)
+- [Using Fly Volume forks for faster startup times](/docs/blueprints/using-fly-volume-forks-for-faster-startup-times/)
+- [Setting Hard and Soft Concurrency Limits](/docs/blueprints/setting-hard-and-soft-concurrency-limits-on-fly-io/)
+- [Autostart and autostop private apps](/docs/blueprints/autostart-and-autostop-private-apps/)
+- [Observability for User Apps](/docs/blueprints/observability-for-user-apps/)
+- [Going to Production with Healthcare Apps](/docs/blueprints/going-to-production-with-healthcare-apps/)
+
 
 ## Background Jobs & Automation
 
 How to run periodic tasks, long-running jobs, infrastructure automation, and the things that run when you’re asleep.
 
-- [Task scheduling guide with Cron Manager and friends](/docs/blueprints/task-scheduling-guide/)
-- [Deferring long-running tasks to a distributed work queue](/docs/blueprints/deferring-tasks-to-work-queue/)
+- [Task scheduling guide with Cron Manager and friends](/docs/blueprints/task-scheduling-guide-with-cron-manager-and-friends/)
+- [Deferring long-running tasks to a distributed work queue](/docs/blueprints/deferring-long-running-tasks-to-a-distributed-work-queue/)
 - [Crontab with Supercronic](/docs/blueprints/crontab-with-supercronic/)
 - [Building Infrastructure Automation without Terraform](/docs/blueprints/building-infrastructure-automation-without-terraform/)
+
 
 
