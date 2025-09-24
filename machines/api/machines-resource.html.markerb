@@ -1182,8 +1182,9 @@ Properties of the `config` object for Machine configuration. See [Machine proper
   - `host_dedication_id`: The ID of the host dedication (group of dedicated hosts) on which to create this Machine. (beta)
   - `cpus`: int (nil) - The number of CPU cores this Machine should occupy when it runs. (default `1`)
   - `gpus`: int (nil) - The number of GPU cores this Machine should occupy when it runs. (default `1`)
-  - `kernel_args`: Optional array of strings. Arguments passed to the kernel.
   - `memory_mb`: int (nil) - Memory in megabytes as multiples of 256 (default `256`)
+  - `kernel_args`: Optional array of strings. Arguments passed to the kernel.
+  - `perist_rootfs`: string (nil) - The root filesystem will be persisted across restarts and updates. Possible values are `never` (default), `restart`, and `always`.
 
 ---
 

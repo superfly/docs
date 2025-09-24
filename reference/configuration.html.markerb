@@ -840,6 +840,7 @@ All keys are optional and `size` has lower precedence than all other keys.
   gpu_kind = "a100-pcie-40gb"
   kernel_args = "no-hlt=true"
   host_dedication_id = "customer-id"
+  perist_rootfs = "never"
   processes = ["app"]
 ```
 
@@ -880,6 +881,14 @@ Additional kernel parameters provided to the kernel when booting the VM.
 ### `host_dedication_id`
 
 In the case of having a dedicated host, this is the value to set so Machines are launched on dedicated hardware.
+
+### persist_rootfs
+
+The persistence of the root filesystem across restarts and updates. Valid values are `never` (default), `restart`, and `always`.
+
+- `never`: The root filesystem is ephemeral and will not be persisted across restarts or updates.
+- `restart`: The root filesystem is persisted across restarts, but not across updates.
+- `always`: The root filesystem is persisted across restarts and updates.
 
 ### `processes`
 
