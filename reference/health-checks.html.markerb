@@ -45,6 +45,14 @@ While service-level checks affect routing availability, a failing check won't ca
 
 Service-level checks are configured using the [`[[services.tcp_checks]]`](/docs/reference/configuration/#services-tcp_checks), [`[[services.http_checks]]`](/docs/reference/configuration/#services-http_checks) and [`[[http_service.checks]]`](/docs/reference/configuration/#http_service-checks) sections.
 
+## Health checks for apps with no services
+
+Some apps don’t run long-lived services. Job runners, queue workers, and similar workloads might start up, do their work, and shut down, or run continuously without exposing a network service. These apps can't use Fly’s built-in service-level health checks, but you can still monitor them using indirect signals.
+
+One common approach is to alert on queue depth. If messages pile up, your workers might be down or in a stuck state. You can also poll the Machines API to check whether instances are up, or run a periodic watchdog job and verify it executes as expected. Tools like [Dead Man’s Snitch](https://deadmanssnitch.com/) can help here. 
+
+Some worker stacks, such as [Flower](https://flower.readthedocs.io/en/latest/) for Celery, Sidekiq with a [Prometheus exporter](https://github.com/Strech/sidekiq-prometheus-exporter), or BullMQ with [Prometheus metrics](https://docs.bullmq.io/guide/metrics/prometheus), expose internal health signals you can alert on. These don’t act as health checks in the Fly routing sense, but they give you observability into your worker fleet.
+
 ## Machine checks 
 
 Machine health checks run only during deployments. They run a custom command inside an ephemeral Machine and can be used to verify app behavior beyond port or endpoint availability. They're useful for validating app readiness in more complex scenarios, such as confirming database connectivity or verifying that a key background service is up. These checks don't impact routing, but if a Machine check fails, the deployment will be stopped.
