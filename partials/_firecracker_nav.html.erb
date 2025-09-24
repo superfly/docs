@@ -14,12 +14,12 @@
       ]
     },
     {
-      title: "Fly.io Blueprints",
+      title: "Guides (Blueprints)",
       path: "/docs/blueprints/",
       open: false,
-      links: site.get("docs/blueprints").children.reject{ |page| page.data.status == "alpha" || page.data.published == false }.map do |page|
-        { text: page.data.title, path: page.request_path }
-      end
+      links: [
+        { text: "Guides Overview", path: "/docs/blueprints/" }
+      ]
     },
     {
       title: "Apps on Fly.io",
