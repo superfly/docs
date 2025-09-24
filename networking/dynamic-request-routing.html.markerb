@@ -243,7 +243,7 @@ In these cases, the request will be delivered to a different Machine that matche
 
 ### Web Socket Considerations
 
-It is worth noting that an application returning `fly-replay` headers should not negotiate a web socket upgrade itself.  Some frameworks automatically handle this process.  The application or instance to which the requests are forwarded should handle the upgrade instead.
+It is worth noting that an application returning `fly-replay` headers should not negotiate a web socket upgrade itself.  Some frameworks automatically handle this process.  Instead, the application or instance receiving the requests should handle the upgrade.
 
 ## Alternative Routing Headers
 
