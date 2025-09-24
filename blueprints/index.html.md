@@ -1,5 +1,5 @@
 ---
-title: Fly Guides (Blueprints)
+title: Guides (Blueprints)
 layout: docs
 toc: true
 nav: firecracker
@@ -10,7 +10,7 @@ nav: firecracker
 </figure>
 
 
-A new&mdash;and growing!&mdash;library of "blueprints" showing how to run, design, build, and deploy different kinds of apps on Fly.io. This isn't just a showcase for stuff we've built, but a collection of patterns and examples that you can can apply in your own projects.
+A growing library of Guides for running, designing, and deploying all kinds of apps on Fly.io. Whether you're just getting started or looking for new ideas, these are real-world patterns you can learn from and build on.
 
 ## Architecture Patterns
 
