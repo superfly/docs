@@ -49,7 +49,9 @@ Service-level checks are configured using the [`[[services.tcp_checks]]`](/docs/
 
 Some apps don’t run long-lived services. Job runners, queue workers, and similar workloads might start up, do their work, and shut down, or run continuously without exposing a network service. These apps can't use Fly’s built-in service-level health checks, but you can still monitor them using indirect signals.
 
-One common approach is to alert on queue depth. If messages pile up, your workers might be down or in a stuck state. You can also poll the Machines API to check whether instances are up, or run a periodic watchdog job and verify it executes as expected. Tools like [Dead Man’s Snitch](https://deadmanssnitch.com/) can help here. Some worker stacks, such as Celery Flower or BullMQ with Prometheus metrics, expose internal health signals you can alert on. These don’t act as health checks in the Fly routing sense, but they give you observability into your worker fleet.
+One common approach is to alert on queue depth. If messages pile up, your workers might be down or in a stuck state. You can also poll the Machines API to check whether instances are up, or run a periodic watchdog job and verify it executes as expected. Tools like [Dead Man’s Snitch](https://deadmanssnitch.com/) can help here. 
+
+Some worker stacks, such as [Flower](https://flower.readthedocs.io/en/latest/) for Celery, Sidekiq with a [Prometheus exporter](https://github.com/Strech/sidekiq-prometheus-exporter), or BullMQ with [Prometheus metrics](https://docs.bullmq.io/guide/metrics/prometheus), expose internal health signals you can alert on. These don’t act as health checks in the Fly routing sense, but they give you observability into your worker fleet.
 
 ## Machine checks 
 
