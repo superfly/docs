@@ -840,7 +840,7 @@ All keys are optional and `size` has lower precedence than all other keys.
   gpu_kind = "a100-pcie-40gb"
   kernel_args = "no-hlt=true"
   host_dedication_id = "customer-id"
-  perist_rootfs = "never"
+  persist_rootfs = "never"
   processes = ["app"]
 ```
 
