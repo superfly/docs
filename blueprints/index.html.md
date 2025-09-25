@@ -2,7 +2,7 @@
 title: Guides (Blueprints)
 layout: docs
 toc: true
-nav: firecracker
+nav: guides
 ---
 
 <figure>

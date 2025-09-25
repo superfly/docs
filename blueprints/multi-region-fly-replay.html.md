@@ -1,7 +1,7 @@
 ---
 title: Multi-region databases and fly-replay
 layout: docs
-nav: firecracker
+nav: guides
 ---
 
 You want to run your app and database in multiple [regions](/docs/reference/regions/) close to your users, and deploying database read replicas will give you better performance on read requests. This is a good solution for apps with read-heavy database workloads. But you also want writes to be efficient, despite needing to write to a primary database on the other side of the world.

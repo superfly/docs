@@ -1,7 +1,7 @@
 ---
 title: Crontab with Supercronic
 layout: docs
-nav: firecracker
+nav: guides
 author: brad
 categories:
   - cron

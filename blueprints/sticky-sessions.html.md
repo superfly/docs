@@ -1,7 +1,7 @@
 ---
 title: Session Affinity (a.k.a. Sticky Sessions)
 layout: docs
-nav: firecracker
+nav: guides
 author: rubys
 date: 2024-07-17
 ---

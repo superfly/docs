@@ -1,7 +1,7 @@
 ---
 title: Getting Started with N-Tier Architecture
 layout: docs
-nav: firecracker
+nav: guides
 author: kcmartin
 date: 2025-08-29
 ---

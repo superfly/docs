@@ -1,7 +1,7 @@
 ---
 title: Setting Hard and Soft Concurrency Limits on Fly.io
 layout: docs
-nav: firecracker
+nav: guides
 author: kcmartin
 date: 2025-05-15
 ---

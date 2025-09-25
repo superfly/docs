@@ -1,7 +1,7 @@
 ---
 title: Task scheduling guide with Cron Manager and friends
 layout: docs
-nav: firecracker
+nav: guides
 author: kcmartin
 categories:
   - cron

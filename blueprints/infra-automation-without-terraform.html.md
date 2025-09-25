@@ -1,7 +1,7 @@
 ---
 title: Building Infrastructure Automation without Terraform
 layout: docs
-nav: firecracker
+nav: guides
 author: kcmartin
 date: 2025-08-05
 ---

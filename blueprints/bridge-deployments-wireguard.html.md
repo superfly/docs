@@ -2,7 +2,7 @@
 title: Bridge your other deployments to Fly.io
 layout: docs
 sitemap: true
-nav: firecracker
+nav: guides
 author: xe
 categories:
   - networking

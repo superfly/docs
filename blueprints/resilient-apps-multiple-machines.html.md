@@ -1,7 +1,7 @@
 ---
 title: Resilient apps use multiple Machines
 layout: docs
-nav: firecracker
+nav: guides
 date: 2025-09-12
 ---
 

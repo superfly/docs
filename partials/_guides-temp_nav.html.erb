@@ -1,0 +1,76 @@
+<%= partial "/docs/partials/back_to_docs" %>
+
+<%
+  @nav = [
+    {
+      title: "Guides (Blueprints)",
+      path: "/docs/blueprints/",
+      accordion: false,
+      links: [
+        { text: "Guides Overview", path: "/docs/blueprints/" }
+      ]
+    },
+    {
+      title: "Architecture Patterns",
+      open: true,
+      links: [
+        { text: "Resilient apps use multiple Machines", path: "/docs/blueprints/resilient-apps-multiple-machines/" },
+        { text: "Getting Started with N-Tier Architecture", path: "/docs/blueprints/n-tier-architecture/" },
+        { text: "Shared Nothing Architecture", path: "/docs/blueprints/shared-nothing/" },
+        { text: "Session Affinity (a.k.a. Sticky Sessions)", path: "/docs/blueprints/sticky-sessions/" },
+        { text: "Multi-region databases and fly-replay", path: "/docs/blueprints/multi-region-fly-replay/" },
+        { text: "Deploying Remote MCP Servers", path: "/docs/blueprints/remote-mcp-servers/" }
+      ]
+    },
+    {
+      title: "Deployment & Developer Workflow",
+      open: true,
+      links: [
+        { text: "Create and Connect to a Managed Postgres Cluster", path: "/docs/mpg/create-and-connect/" },
+        { text: "Seamless Deployments on Fly.io", path: "/docs/blueprints/seamless-deployments/" },
+        { text: "Rollback Guide", path: "/docs/blueprints/rollback-guide/" },
+        { text: "Git Branch Preview Environments on Github", path: "/docs/blueprints/review-apps-guide/" },
+        { text: "Staging and production isolation", path: "/docs/blueprints/staging-prod-isolation/" },
+        { text: "Per-User Dev Environments with Fly Machines", path: "/docs/blueprints/per-user-dev-environments/" },
+        { text: "Using base images for faster deployments", path: "/docs/blueprints/using-base-images-for-faster-deployments/" },
+        { text: "Managing Docker Images with Fly.io's Private Registry", path: "/docs/blueprints/using-the-fly-docker-registry/" }
+      ]
+    },
+    {
+      title: "Networking & Connectivity",
+      open: true,
+      links: [
+        { text: "Run private apps with Flycast", path: "/docs/blueprints/private-applications-flycast/" },
+        { text: "Jack into your private network with WireGuard", path: "/docs/blueprints/connect-private-network-wireguard/" },
+        { text: "Bridge your other deployments to Fly.io", path: "/docs/blueprints/bridge-deployments-wireguard/" },
+        { text: "Connecting to User Machines", path: "/docs/blueprints/connecting-to-user-machines/" },
+        { text: "Run an SSH server", path: "/docs/blueprints/opensshd/" }
+      ]
+    },
+    {
+      title: "Scaling, Performance & Observability",
+      open: true,
+      links: [
+        { text: "Observability for User Apps", path: "/docs/blueprints/observability-for-user-apps/" },
+        { text: "Autoscale Machines", path: "/docs/blueprints/autoscale-machines/" },
+        { text: "Autostart and autostop private apps", path: "/docs/blueprints/autostart-internal-apps/" },
+        { text: "Backing up your cluster", path: "/docs/litefs/backup" },
+        { text: "Setting Hard and Soft Concurrency Limits", path: "/docs/blueprints/setting-concurrency-limits/" },
+        { text: "Using Fly Volume forks for faster startup times", path: "/docs/blueprints/volume-forking/" },
+        { text: "Going to Production with Healthcare Apps", path: "/docs/blueprints/going-to-production-with-healthcare-apps/" }
+      ]
+    },
+    {
+      title: "Background Jobs & Automation",
+      open: true,
+      links: [
+        { text: "Building Infrastructure Automation without Terraform", path: "/docs/blueprints/infra-automation-without-terraform/" },
+        { text: "Deferring long-running tasks to a distributed work queue", path: "/docs/blueprints/work-queues/" },
+        { text: "Task scheduling guide with Cron Manager and friends", path: "/docs/blueprints/task-scheduling/" },
+        { text: "Crontab with Supercronic", path: "/docs/blueprints/supercronic/" }
+      ]
+    }
+  ]
+%>
+
+<%= partial "/docs/partials/accordion_nav", locals: { nav: @nav } %>

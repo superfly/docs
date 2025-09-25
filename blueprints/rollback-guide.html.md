@@ -1,7 +1,7 @@
 ---
 title: Rollback Guide
 layout: docs
-nav: firecracker
+nav: guides
 author: kcmartin
 date: 2025-08-22
 ---

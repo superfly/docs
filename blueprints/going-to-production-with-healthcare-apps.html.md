@@ -1,7 +1,7 @@
 ---
 title: Going to Production with Healthcare Apps
 layout: docs
-nav: firecracker
+nav: guides
 redirect_from: /docs/blueprints/going-to-production-with-hipaa-apps
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Staging and production isolation
 layout: docs
-nav: firecracker
+nav: guides
 redirect_from: /docs/going-to-production/the-basics/production-staging-isolation/
 ---
 

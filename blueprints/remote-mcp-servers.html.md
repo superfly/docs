@@ -1,7 +1,7 @@
 ---
 title: Deploying Remote MCP Servers
 layout: docs
-nav: firecracker
+nav: guides
 date: 2025-04-15
 ---
 The Model Context Protocol (MCP) is a fun new way to give LLMs new powers. Originally developed by Anthropic, the protocol has since been adopted by OpenAI (with Google Gemini support in the works at the time of writing).
