@@ -2,15 +2,10 @@
 title: Guides (Blueprints)
 layout: docs
 toc: true
-nav: firecracker
+nav: guides
 ---
 
-<figure>
-  <img src="/static/images/docs-blueprints.webp" alt="Frankie the hot air balloon operating a renaissance-era flying machine with flying machine plans and notes in the background">
-</figure>
-
-
-A growing library of Guides for running, designing, and deploying all kinds of apps on Fly.io. Whether you're just getting started or looking for new ideas, these are real-world patterns you can learn from and build on.
+A growing library of guides for running, designing, and deploying all kinds of apps on Fly.io. Whether you're just getting started or looking for new ideas, these are real-world patterns you can learn from and build on.
 
 ## Architecture Patterns
 

@@ -1,7 +1,7 @@
 ---
 title: Seamless Deployments on Fly.io
 layout: docs
-nav: firecracker
+nav: guides
 author: kcmartin
 date: 2025-09-23
 ---

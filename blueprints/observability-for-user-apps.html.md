@@ -1,7 +1,7 @@
 ---
 title: Observability for User Apps
 layout: docs
-nav: firecracker
+nav: guides
 date: 2025-05-26
 ---
 

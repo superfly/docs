@@ -1,7 +1,7 @@
 ---
 title: "Git Branch Preview Environments on Github"
 layout: docs
-nav: firecracker
+nav: guides
 categories:
   - ci
   - github

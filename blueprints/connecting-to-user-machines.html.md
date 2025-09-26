@@ -1,7 +1,7 @@
 ---
 title: Connecting to User Machines
 layout: docs
-nav: firecracker
+nav: guides
 date: 2025-04-02
 ---
 

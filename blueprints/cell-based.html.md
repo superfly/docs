@@ -1,7 +1,7 @@
 ---
 title: Cell-based architecture
 layout: docs
-nav: firecracker
+nav: guides
 author: rubys
 categories:
   - shared-nothing

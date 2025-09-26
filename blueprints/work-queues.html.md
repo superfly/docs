@@ -1,7 +1,7 @@
 ---
 title: Deferring long-running tasks to a distributed work queue
 layout: docs
-nav: firecracker
+nav: guides
 author: kcmartin
 date: 2025-07-17
 ---

@@ -1,7 +1,7 @@
 ---
 title: Autoscale Machines
 layout: docs
-nav: firecracker
+nav: guides
 redirect_from: /docs/blueprints/autoscale-machines-like-a-boss/
 ---
 
