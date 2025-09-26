@@ -1184,7 +1184,7 @@ Properties of the `config` object for Machine configuration. See [Machine proper
   - `gpus`: int (nil) - The number of GPU cores this Machine should occupy when it runs. (default `1`)
   - `memory_mb`: int (nil) - Memory in megabytes as multiples of 256 (default `256`)
   - `kernel_args`: Optional array of strings. Arguments passed to the kernel.
-  - `persist_rootfs`: string (nil) - The root filesystem will be persisted across restarts and updates. Possible values are `never` (default), `restart`, and `always`.
+  - `persist_rootfs`: string (nil) - The root filesystem will be persisted across restarts and updates. Possible values are `never` (default), `restart`, and `always`. See [here](/reference/configuration/#persist_rootfs) for details.
 
 ---
 
