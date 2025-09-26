@@ -87,6 +87,6 @@ The current monthly plan pricing is:
 | Launch | Performance-2x| 8GB | $282.00 |
 | Scale | Performance-4x | 32GB | $962.00 |
 
-Database storage is priced at **$0.30 per provisioned GB for a 30-day month**, with each node (primary + replica) incurring its own cost. For example, if you have 10GB of storage provisioned for your cluster, your monthly storage cost will be $6.00 ($0.30 * 10GB for the primary, $.30 * 10GB for the replica).
+Database storage is priced at **$0.28 per provisioned GB for a 30-day month**. For example, if you have 10GB of storage provisioned for your cluster, your monthly storage cost will be $2.80.
 
 Databases created or deleted mid-month will have their pricing prorated accordingly.
