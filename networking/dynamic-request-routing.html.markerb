@@ -241,6 +241,10 @@ If you replay with `prefer_instance` set, Fly Proxy will attempt to route to thi
 
 In these cases, the request will be delivered to a different Machine that matches the remaining fields in your replay. Along with the other Fly.io-specific headers, a `fly-preferred-instance-unavailable` header will be set containing the ID of the instance that could not be reached.
 
+### Web Socket Considerations
+
+It is worth noting that an application returning `fly-replay` headers should not negotiate a web socket upgrade itself.  Some frameworks automatically handle this process.  Instead, the application or instance receiving the requests should handle the upgrade.
+
 ## Alternative Routing Headers
 
 For cases where `fly-replay` isn't suitable, Fly.io provides two alternative request headers:
