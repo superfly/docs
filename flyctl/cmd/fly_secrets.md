@@ -13,6 +13,7 @@ fly secrets [command] [flags]
 * [import](/docs/flyctl/secrets-import/)	 - Set secrets as NAME=VALUE pairs from stdin
 * [list](/docs/flyctl/secrets-list/)	 - List application secret names, digests and creation times
 * [set](/docs/flyctl/secrets-set/)	 - Set one or more encrypted secrets for an application
+* [sync](/docs/flyctl/secrets-sync/)	 - Sync flyctl with the latest versions of app secrets, even if they were set elsewhere
 * [unset](/docs/flyctl/secrets-unset/)	 - Unset one or more encrypted secrets for an application
 
 ## Options

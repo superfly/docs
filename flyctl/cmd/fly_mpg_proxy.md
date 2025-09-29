@@ -9,7 +9,7 @@ fly mpg proxy [flags]
 
 ~~~
   -b, --bind-addr string   Local address to bind to (default "127.0.0.1")
-      --cluster string     The target cluster ID
+  -c, --cluster string     The target cluster ID
   -h, --help               help for proxy
   -r, --region string      The target region (see 'flyctl platform regions')
 ~~~

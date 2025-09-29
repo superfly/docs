@@ -8,8 +8,9 @@ fly mpg connect [flags]
 ## Options
 
 ~~~
-      --cluster string   The target cluster ID
-  -h, --help             help for connect
+  -c, --cluster string    The target cluster ID
+  -d, --database string   The database to connect to
+  -h, --help              help for connect
 ~~~
 
 ## Global Options
