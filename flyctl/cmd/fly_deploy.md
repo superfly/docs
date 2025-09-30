@@ -31,6 +31,8 @@ fly deploy [WORKING_DIRECTORY] [flags]
                                              - "volume-opt=<key>=<value>", can be specified more than once, takes a key-value pair consisting of the option name and its value.
                                          Repeat for each volume in order (comma-separated lists not accepted)
                                          
+      --compression string               Compression algorithm to use for the image. Options are "zstd" or "gzip". Defaults to "gzip". (default "gzip")
+      --compression-level int            Compression level to use for the image. Defaults to 7. (default 7)
   -c, --config string                    Path to application configuration file
       --deploy-retries string            Number of times to retry a deployment if it fails (default "auto")
       --depot string[="true"]            Deploy using depot to build the image (default "auto")
