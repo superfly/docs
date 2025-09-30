@@ -142,6 +142,8 @@ Disable automatic snapshots for an existing volume:
 fly volumes update <volume id> --scheduled-snapshots=false
 ```
 
+Disabling automatic snapshots will not remove any existing snapshots for the volume; snapshots are only removed at the end of their retention periods.
+
 ## Related topics
 
 - [Fly Volumes overview](/docs/volumes/overview/)
