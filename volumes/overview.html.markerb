@@ -94,6 +94,8 @@ You can also [create a snapshot of a volume](/docs/volumes/snapshots/#create-a-v
 
 You can [restore a volume snapshot](/docs/volumes/snapshots/#restore-a-volume-from-a-snapshot) into a new volume of equal or greater size.
 
+You can also [disable automatic daily snapshots](/docs/volumes/snapshots/#disable-automatic-daily-snapshots).
+
 ## When volumes are not available
 
 There are some instances where volumes are not available.

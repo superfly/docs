@@ -126,6 +126,22 @@ Restore the data from a volume by creating a new volume from a snapshot:
 
 For options, refer to the [`fly volumes create` docs](/docs/flyctl/volumes-create/) or run `fly volumes create --help`.
 
+## Disable automatic daily snapshots
+
+Automatic daily snapshots are enabled by default. To disable automatic snapshots, use the `--scheduled-snapshots=false` flag.
+
+Disable automatic snapshots when you create a volume:
+
+```
+fly volumes create <my_volume_name> --scheduled-snapshots=false
+```
+
+Disable automatic snapshots for an existing volume:
+
+```
+fly volumes update <volume id> --scheduled-snapshots=false
+```
+
 ## Related topics
 
 - [Fly Volumes overview](/docs/volumes/overview/)
