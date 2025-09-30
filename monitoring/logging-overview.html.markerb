@@ -19,6 +19,10 @@ Vector can act as a NATS client, read the logs, and ship them somewhere. An exam
 
 You can live tail logs from the dashboard or with the `fly logs` command. For more information, see [Live tail logs](/docs/monitoring/live-tail-logs/).
 
+## Logs API options
+
+Learn how to fetch, stream or export logs programmatically without touching the CLI. For more information, see [Logs API options](/docs/monitoring/logs-api-options/).
+
 ## Search logs
 
 We have an app log search feature in Grafana that retains logs for 30 days. For more information, see [Search logs](/docs/monitoring/search-logs/).

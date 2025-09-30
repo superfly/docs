@@ -30,9 +30,10 @@ _Error monitoring for your apps from our extension providers._
 
 ## Logging
 
-_Live tail and search your app’s logs, or ship them where you want them._
+_Live tail and search your app’s logs, access them via API, or ship them where you want them._
 
 - **[Logging overview](/docs/monitoring/logging-overview/):** How logs work on Fly.io.
+- **[Logs API options for programmatic access](/docs/monitoring/logs-api-options/)::** How to fetch, stream or export logs programmatically without touching the CLI.
 - **[Live tail logs](/docs/monitoring/live-tail-logs/):** Where to access live tail logs.
 - **[Search logs](/docs/monitoring/search-logs/):** Searchable app logs in Grafana (beta).
 - **[Export logs](/docs/monitoring/exporting-logs/):** Aggregate your logs to a service of your choice.
