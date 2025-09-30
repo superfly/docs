@@ -51,7 +51,6 @@ You can host your apps in any of the following regions.
 | sjc       | San Jose, California (US)     | ✓           |
 | syd       | Sydney, Australia             | ✓           |
 | waw       | Warsaw, Poland                |             |
-| yul       | Montreal, Canada              |             |
 | yyz       | Toronto, Canada               | ✓           |
 
 - **Gateway regions:** "Gateway" regions also have WireGuard gateways, through which you connect to your organization's private network.
