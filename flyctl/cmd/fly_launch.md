@@ -30,6 +30,8 @@ fly launch [flags]
                                          Repeat for each volume in order (comma-separated lists not accepted)
                                          
       --command string                   The command to override the Docker CND.
+      --compression string               Compression algorithm to use for the image. Options are "zstd" or "gzip". Defaults to "gzip". (default "gzip")
+      --compression-level int            Compression level to use for the image. Defaults to 7. (default 7)
   -c, --config string                    Path to application configuration file
       --copy-config                      Use the configuration file if present without prompting
       --db string[="true"]               Provision a Postgres database. Options: mpg (managed postgres), upg/legacy (unmanaged postgres), or true (default type)
