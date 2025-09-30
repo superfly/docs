@@ -89,4 +89,4 @@ The current monthly plan pricing is:
 
 Database storage is priced at **$0.28 per provisioned GB for a 30-day month**. For example, if you have 10GB of storage provisioned for your cluster, your monthly storage cost will be $2.80.
 
-Databases created or deleted mid-month will have their pricing prorated accordingly.
+Clusters created or deleted mid-month will have their pricing prorated accordingly.
