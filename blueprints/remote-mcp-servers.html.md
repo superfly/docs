@@ -4,6 +4,11 @@ layout: docs
 nav: guides
 date: 2025-04-15
 ---
+
+<figure>
+  <img src="/static/images/remote-mpc.png" alt="Illustration by Annie Ruygt of bird working at their computer while drinking coffee" class="w-full max-w-lg mx-auto">
+</figure>
+
 The Model Context Protocol (MCP) is a fun new way to give LLMs new powers. Originally developed by Anthropic, the protocol has since been adopted by OpenAI (with Google Gemini support in the works at the time of writing).
 
 The protocol defines a standardized way of connecting tools and providing additional context to LLMs, not dissimilar to the way USB provides a standardized way to connect computers to peripherals and devices. Fly Machines are tightly isolated VMs that are perfect for running MCP servers.

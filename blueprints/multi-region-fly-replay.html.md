@@ -4,6 +4,10 @@ layout: docs
 nav: guides
 ---
 
+<figure>
+  <img src="/static/images/multi-region.png" alt="Illustration by Annie Ruygt of Frankie looking out over the solar system" class="w-full max-w-lg mx-auto">
+</figure>
+
 You want to run your app and database in multiple [regions](/docs/reference/regions/) close to your users, and deploying database read replicas will give you better performance on read requests. This is a good solution for apps with read-heavy database workloads. But you also want writes to be efficient, despite needing to write to a primary database on the other side of the world.
 
 This blueprint will help you understand the concepts to implement an app, with a primary database and read replicas in multiple regions, that uses the `fly-replay` response header to re-route write requests to the primary region. Consider using this blueprint when:
