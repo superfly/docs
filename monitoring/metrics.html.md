@@ -189,6 +189,14 @@ Derived from the [`/proc` file system](https://www.kernel.org/doc/html/latest/fi
 
 `fly_instance_up = 1` shows the VM is reporting correctly.
 
+### Instance exit - `fly_instance_exit_`
+
+Information about instance exits. These metrics help you understand why your instances are terminating and can be used for alerting and debugging.
+
+- `fly_instance_exit_code`: The exit code of the main process when the instance terminates. A value of 0 typically indicates normal termination, while non-zero values indicate errors or abnormal termination.
+- `fly_instance_exit_oom`: A boolean flag (0 or 1) indicating whether the instance was killed due to out-of-memory (OOM). A value of 1 means the instance was terminated because it exceeded its memory limits.
+- `fly_instance_exit_vm_code`: The VM-level exit code, which may differ from the application exit code. This can help distinguish between application-level failures and VM-level issues.
+
 #### Instance memory - `fly_instance_memory_`
 
 Derived from [`/proc/meminfo`](https://www.kernel.org/doc/html/latest/filesystems/proc.html#meminfo). All units are in *bytes*.
