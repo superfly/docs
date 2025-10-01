@@ -784,6 +784,20 @@ For example, the following config retains snapshots of volumes for 14 days:
   snapshot_retention = 14
 ```
 
+### `scheduled_snapshots`
+
+Optional. Enable or disable automatic daily snapshots for a volume.
+
+The default is true (enabled) when unset.
+
+For example, the following config disables automatic daily snapshots:
+```toml
+[mounts]
+  source = "myapp_cache"
+  destination = "/cache"
+  scheduled_snapshots = false
+```
+
 ### `auto_extend_size_threshold`
 
 Optional. The threshold of storage used on a volume, by percentage, that triggers extending the volume's size by the value of `auto_extend_size_increment`,
