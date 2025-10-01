@@ -52,7 +52,7 @@ You can use the Volumes resource to create and delete volumes. A Fly Volume is p
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `auto_backup_enabled` | bool | Whether automatic daily snapshots are enabled. Default true. |
+| `auto_backup_enabled` | bool | Enable automatic daily snapshots. Default true. |
 | `attached_alloc_id` | string | n/a |
 | `attached_machine_id` | string | The ID of the Machine that’s attached to the volume. |
 | `block_size` | int | The size of each memory block in bytes. |
@@ -215,7 +215,7 @@ Create a volume for a specific app according to the configuration provided in th
       <% component.with_json_table do %>
         | Property | Type | Required | Description |
         | --- | --- | --- | --- |
-        | `auto_backup_enabled` | bool | no | Whether automatic daily snapshots are enabled. Default true. |
+        | `auto_backup_enabled` | bool | no | Enable automatic daily snapshots. Default true. |
         | `compute` | object | no | An optional object defining the compute specifications for the expected Machine size and type that the volume will attach to. |
         | `encrypted` | boolean | no | Whether to encrypt the volume. Default true. |
         | `name` | string | yes | The name for the new volume. |
@@ -385,7 +385,7 @@ Update paratemeters on the volume.
       <% component.with_json_table do %>
         | Property | Type | Required | Description |
         | --- | --- | --- | --- |
-        | `auto_backup_enabled` | bool | no | Whether automatic daily snapshots are enabled. Default true. |
+        | `auto_backup_enabled` | bool | no | Enable automatic daily snapshots. Default true. |
         | `snapshot_retention` | int | no | The number of days to retain snapshots. Defaults to 5 when not set. Min 1, max 60. |
       <% end %>
     <% end %>
