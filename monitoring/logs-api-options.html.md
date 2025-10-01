@@ -43,6 +43,8 @@ This endpoint isn’t officially documented, but it’s mostly stable: `flyctl` 
 
 Use this for quick fetches or simple polling scripts. If you hit rate limits or auth issues, check that your token has `read` access to the app.
 
+Importantly, this is the only option that gives you access to historical logs going back to the current retention window (about 15 days). The other options only start streaming from the moment they're connected.
+
 ### 2. Subscribe to logs via NATS (experimental)
 
 Logs are streamed through NATS under subjects like:
@@ -70,6 +72,7 @@ This gives you structured JSON log messages in real time.
 - You’ll need to handle reconnections: if the network drops or the proxy restarts, your subscriber needs to reconnect and resume without losing messages.
 - You’ll need to handle backpressure: if your app can’t process logs fast enough, messages might pile up and get dropped. Design your consumer to either keep up or fail gracefully.
 - If you want to dedupe across subscribers, use NATS queue groups.
+- NATS only streams logs from starting from the moment you connect. You won’t get any history unless you’ve been subscribed the whole time.
 
 For more details on connecting to Fly’s NATS log stream (authentication, subject patterns, example clients), head over to the [Observability for User Apps](/docs/blueprints/observability-for-user-apps/?utm_source=chatgpt.com#streaming-fly-app-logs-to-your-end-users) guide.
 
@@ -94,6 +97,8 @@ To control which logs get forwarded, set the `SUBJECT` environment variable when
 ```
 SUBJECT="logs.my-app.*.*"
 ```
+
+Like NATS, the log shipper only sees logs from the moment it connects onward. If you deploy it today, you won’t see logs from yesterday.
 
 The log shipper is the most robust option if you want long-term retention, full-text search, alerting, or integration with your existing observability stack.
 
