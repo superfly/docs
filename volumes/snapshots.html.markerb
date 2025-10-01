@@ -150,7 +150,7 @@ For Fly Launch apps, you can disable automatic snapshots in the `[mounts]` secti
 [mounts]
 source = "myapp_cache"
 destination = "/cache"
-scheduled_snapshots = true
+scheduled_snapshots = false
 ```
 
 ## Related topics
