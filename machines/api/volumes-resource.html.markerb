@@ -52,6 +52,7 @@ You can use the Volumes resource to create and delete volumes. A Fly Volume is p
 
 | Property | Type | Description |
 | --- | --- | --- |
+| `auto_backup_enabled` | bool | Enable automatic daily snapshots. Default true. |
 | `attached_alloc_id` | string | n/a |
 | `attached_machine_id` | string | The ID of the Machine that’s attached to the volume. |
 | `block_size` | int | The size of each memory block in bytes. |
@@ -65,7 +66,7 @@ You can use the Volumes resource to create and delete volumes. A Fly Volume is p
 | `name` | string | The volume name. |
 | `region` | string | The region where the volume resides, or the target region for volume create. |
 | `size_gb` | int | The size of the volume in GB. |
-| `snapshot_retention` | int | The number of days to retain daily snapshots. Defaults to 5 when not set. Min 1, max 60. |
+| `snapshot_retention` | int | The number of days to retain snapshots. Defaults to 5 when not set. Min 1, max 60. |
 | `state` | string | The state of the volume. |
 | `zone` | string | The hardware zone on which the volume resides. |
 
@@ -125,6 +126,7 @@ curl -i -X GET \\
         "blocks_avail": 730163,
         "fstype": "ext4",
         "snapshot_retention": 5,
+        "auto_backup_enabled": true,
         "host_dedication_key": ""
     },
     {
@@ -144,6 +146,7 @@ curl -i -X GET \\
         "blocks_avail": 708148,
         "fstype": "ext4",
         "snapshot_retention": 5,
+        "auto_backup_enabled": true,
         "host_dedication_key": ""
     }
 ]
@@ -212,6 +215,7 @@ Create a volume for a specific app according to the configuration provided in th
       <% component.with_json_table do %>
         | Property | Type | Required | Description |
         | --- | --- | --- | --- |
+        | `auto_backup_enabled` | bool | no | Enable automatic daily snapshots. Default true. |
         | `compute` | object | no | An optional object defining the compute specifications for the expected Machine size and type that the volume will attach to. |
         | `encrypted` | boolean | no | Whether to encrypt the volume. Default true. |
         | `name` | string | yes | The name for the new volume. |
@@ -220,7 +224,7 @@ Create a volume for a specific app according to the configuration provided in th
         | `snapshot_id` | string | no | The ID of the volume snapshot to use to create the new volume. |
         | `source_volume_id` | string | no | The ID of the source volume for the volume fork. |
         | `require_unique_zone` | boolean | no | If true, we will provision this volume on hardware that doesn't have another volume with the same name on it. The typical pattern is to create as many volumes as you need, all with the same name and `require_unique_zone: true`. This will keep your app available in case a host goes down. This flag can also cause volume creation to fail, in case we have used up all unique zones, in which case you probably want to set it to false. Default true. |
-        | `snapshot_retention` | int | no | The number of days to retain daily snapshots. Defaults to 5 when not set. Min 1, max 60. |
+        | `snapshot_retention` | int | no | The number of days to retain snapshots. Defaults to 5 when not set. Min 1, max 60. |
       <% end %>
     <% end %>
     <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
@@ -241,6 +245,7 @@ Create a volume for a specific app according to the configuration provided in th
     "blocks_avail": 0,
     "fstype": "",
     "snapshot_retention": 5,
+    "auto_backup_enabled": true,
     "host_dedication_key": ""
 }
     <% end %>
@@ -308,6 +313,7 @@ Retrieve details about a specific volume by its ID within an app.
     "blocks_avail": 730163,
     "fstype": "ext4",
     "snapshot_retention": 5,
+    "auto_backup_enabled": true,
     "host_dedication_key": ""
 }
     <% end %>
@@ -379,7 +385,8 @@ Update paratemeters on the volume.
       <% component.with_json_table do %>
         | Property | Type | Required | Description |
         | --- | --- | --- | --- |
-        | `snapshot_retention` | int | no | The number of days to retain daily snapshots. Defaults to 5 when not set. Min 1, max 60. |
+        | `auto_backup_enabled` | bool | no | Enable automatic daily snapshots. Default true. |
+        | `snapshot_retention` | int | no | The number of days to retain snapshots. Defaults to 5 when not set. Min 1, max 60. |
       <% end %>
     <% end %>
     <%= render(CodeSampleComponent.new(title: 'Status: 200 OK – Example response', language: 'json')) do %>
@@ -400,6 +407,7 @@ Update paratemeters on the volume.
     "blocks_avail": 0,
     "fstype": "",
     "snapshot_retention": 10,
+    "auto_backup_enabled": true,
     "host_dedication_key": ""
 }
     <% end %>
@@ -469,6 +477,7 @@ curl -i -X DELETE \\
     "blocks_avail": 0,
     "fstype": "",
     "snapshot_retention": 0,
+    "auto_backup_enabled": true,
     "host_dedication_key": ""
 }
     <% end %>
@@ -542,6 +551,7 @@ curl -i -X PUT \\
         "blocks_avail": 0,
         "fstype": "",
         "snapshot_retention": 5,
+        "auto_backup_enabled": true,
         "host_dedication_key": ""
     },
     "needs_restart": false

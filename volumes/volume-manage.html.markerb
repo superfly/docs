@@ -33,6 +33,8 @@ Use the `--count` option to create more than one volume.
 
 Use the `--snapshot-retention` option to change the number of days we retain snapshots (default is 5 days).
 
+Use the `--scheduled-snapshots=false` option to disable automatic daily snapshots.
+
 For more options, refer to the [`fly volumes create` docs](/docs/flyctl/volumes-create/) or run `fly volumes create --help`.
 
 ## Extend a volume
