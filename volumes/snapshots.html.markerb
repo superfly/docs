@@ -144,6 +144,15 @@ fly volumes update <volume id> --scheduled-snapshots=false
 
 Disabling automatic snapshots will not remove any existing snapshots for the volume; snapshots are only removed at the end of their retention periods.
 
+For Fly Launch apps, you can disable automatic snapshots in the `[mounts]` section of your app's `fly.toml` file. Any new Fly Volumes `fly deploy` creates will have automatic snapshots disabled:
+
+```toml
+[mounts]
+source = "myapp_cache"
+destination = "/cache"
+scheduled_snapshots = false
+```
+
 ## Related topics
 
 - [Fly Volumes overview](/docs/volumes/overview/)
