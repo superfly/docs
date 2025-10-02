@@ -5,6 +5,10 @@ nav: guides
 date: 2025-04-02
 ---
 
+<figure>
+  <img src="/static/images/per-user-dev.png" alt="Illustration by Annie Ruygt of different envrionments under glass domes" class="w-full max-w-lg mx-auto">
+</figure>
+
 Fly Machines are fast-launching VMs behind [a simple API](https://fly.io/docs/machines/api), enabling you to launch tightly isolated app instances in milliseconds [all over the world](https://fly.io/docs/reference/regions/).
 
 One interesting use case: running isolated dev environments for your users (or robots). Fly Machines are a safe execution sandbox for even the sketchiest user-generated (or LLM-generated) code.

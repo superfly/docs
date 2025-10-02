@@ -5,6 +5,10 @@ nav: guides
 date: 2025-09-12
 ---
 
+<figure>
+  <img src="/static/images/resilient-apps.png" alt="Illustration by Annie Ruygt of an armoured truck with a Fly balloon logo" class="w-full max-w-lg mx-auto">
+</figure>
+
 <div class="callout">
 **Fly Machines are fast-launching VMs, the basic compute unit of the Fly.io platform. Each Machine runs on a single physical host. If that host fails, the Machine goes down and does not automatically start again on another host.**
 </div>

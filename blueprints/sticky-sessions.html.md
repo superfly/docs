@@ -6,9 +6,11 @@ author: rubys
 date: 2024-07-17
 ---
 
-In a number of scenarios, it is important to ensure that certain requests are
-routed to a specific Machine.  This frequently is expressed in the form of
-wanting an entire user's session to be processed by the same Machine.
+<figure>
+  <img src="/static/images/session-affinity.png" alt="Illustration by Annie Ruygt of a machine sticking envelopes together" class="w-full max-w-lg mx-auto">
+</figure>
+
+In a number of scenarios, it is important to ensure that certain requests are routed to a specific Machine.  This frequently is expressed in the form of wanting an entire user's session to be processed by the same Machine.
 
 There are two basic approaches to addressing this with Fly.io:
   * [fly-force-instance-id](https://fly.io/docs/networking/dynamic-request-routing#the-fly-force-instance-id-request-header) request header

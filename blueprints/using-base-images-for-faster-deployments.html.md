@@ -4,6 +4,10 @@ layout: docs
 nav: guides
 ---
 
+<figure>
+  <img src="/static/images/using-base-images.png" alt="Illustration by Annie Ruygt of the Docker whale carrying some containers" class="w-full max-w-lg mx-auto">
+</figure>
+
 This blueprint explains how to use base images for faster deployments.  A base image is any image that is intended to be used as the `FROM` line in a Dockerfile.  Each app that is deployed on Fly.io can add an image to the Fly registry.
 
 Every app in the same organization can access the image for any other app and use it as the `FROM` line in their Dockerfile.  This means that it is very easy to make a base image by making a second app to use as the base image.
