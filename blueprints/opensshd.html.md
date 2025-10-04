@@ -9,6 +9,10 @@ date: 2024-01-14
 redirect_from: /docs/app-guides/opensshd/
 ---
 
+<figure>
+  <img src="/static/images/openssh.png" alt="Illustration by Annie Ruygt of a terminal window, a computer and some numbers" class="w-full max-w-lg mx-auto">
+</figure>
+
 A number of tools allow you to interact with your server over SSH. These tools are useful for tasks such as
 copying files ([rsync](https://rsync.samba.org/+external), [scp](https://en.wikipedia.org/wiki/Secure_copy_protocol+external), [sshfs](https://github.com/libfuse/sshfs#sshfs+external)), 
 editing ([emacs](https://www.gnu.org/software/emacs/manual/html_node/emacs/Remote-Files.html+external), [vim](https://www.vim.org/scripts/script.php?script_id=1075+external), [vscode](https://code.visualstudio.com/docs/remote/ssh+external)), and
