@@ -4,6 +4,10 @@ layout: docs
 nav: guides
 ---
 
+<figure>
+  <img src="/static/images/using-the-fly-docker-reg.png" alt="Illustration by Annie Ruygt of Frankie the balloon and the Docker whale playing a game of bean bag toss" class="w-full max-w-lg mx-auto">
+</figure>
+
 Fly.io lets you deploy Docker containers as lightweight Firecracker VMs, running globally. While `fly launch` supports many frameworks and auto-generates deployment configurations, you can also build and push your own Docker images to Fly.io’s private registry and deploy them manually.
 
 This guide walks through building, pushing, deploying, and managing images via Fly.io’s Docker registry.

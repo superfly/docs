@@ -5,6 +5,10 @@ nav: guides
 date: 2025-04-02
 ---
 
+<figure>
+  <img src="/static/images/connecting-to-users.png" alt="Illustration by Annie Ruygt of a bird holding hands with a computer" class="w-full max-w-lg mx-auto">
+</figure>
+
 # Connecting to User Machines
 
 When running machines for end users, a common challenge is efficiently managing and routing requests to these machines. This document outlines the recommended approach for connecting to user machines on Fly.io, focusing on the following key concepts:

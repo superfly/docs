@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-09-12
 ---
 
+<figure>
+  <img src="/static/images/volume-forking.png" alt="Illustration by Annie Ruygt of a blimp and a Fly rocket flying side by side" class="w-full max-w-lg mx-auto">
+</figure>
+
 <div class="callout">
 **This guide shows how to preload large files onto volumes using forking to improve startup performance. This is especially useful for apps with big model files, binaries, or databases.**
 </div>
