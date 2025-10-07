@@ -15,15 +15,14 @@ author: rubys
 ---
 
 <figure>
-  <img src="/static/images/dancing-clones-cover_sm.webp" alt="Illustration by Annie Ruygt of a number of couples dancing, including a two clones dancing with separate partners." class="w-full max-w-lg mx-auto">
+  <img src="/blog/2024-03-05/dancing-clones-cover_sm.webp" alt="Illustration by Annie Ruygt of a number of couples dancing, including a two clones dancing with separate partners." class="w-full max-w-lg mx-auto">
 </figure>
+
+<center><iframe width="600" height="315" src="https://www.youtube-nocookie.com/embed/_cT4Unk5RiU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></center><br />
 
 <div class="callout">
 This guide from Rails and JS expert Sam Ruby is based on his personal capacity as a ballroom dance nerd. It covers how a serverful, stateful, shared-nothing architecture hit the spot for him when it came time to scale to multiple customers in different parts of the world.
 </div>
-
-<center><iframe width="600" height="315" src="https://www.youtube-nocookie.com/embed/_cT4Unk5RiU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></center><br />
-
 
 Once upon a time, I found myself double booked at a ballroom dance competition. Read that [story in more detail on my blog](http://intertwingly.net/blog/2022/08/13/Unretiring), but essentially: you’re only supposed to get one shot to dance in a given heat, and I ended up listed twice in the spreadsheet for that heat. I decided to write an app to take the load of manual entry and scheduling off of organizers, and so that no one would ever be asked to do something impossible and be at two places at one time.
 
