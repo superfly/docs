@@ -65,7 +65,7 @@ An excerpt from DHH's [Majestic Monolith](https://signalvnoise.com/svn3/the-maje
 
 > Every time you extract a collaboration between objects to a collaboration between systems, you’re accepting a world of hurt with a myriad of liabilities and failure states. What to do when services are down, how to migrate in concert, and all the pain of running many services in the first place.
 
-Another way to look at this is: as needs grow, do you really want to share a database and redis instances between customers?  (Or, in this case, between events?)
+Another way to look at this is: as needs grow, do you really want to share a database and Redis instances between customers?  (Or, in this case, between events?)
 If "no" turns out to be a viable answer: go with it.  Put all of the services needed to support one customer in one Docker image and then repeat that set as often
 as needed.  Eliminating the need for a network in producing a response to a request both increases throughput and reliability.
 
@@ -80,7 +80,7 @@ and grows to 450MB when active.  That being said, I have seen machines fail due 
 each machine 1GB.  I also define an additional 2G of [swap](https://fly.io/docs/reference/configuration/#swap_size_mb-option) as
 I would rather the machine run slower under peak load than crash.
 
-Finally, invest the time to set up a [wireguard network](https://fly.io/docs/networking/private-networking/) that lets you VPN into your own private network of machines.
+Finally, invest the time to set up a [WireGuard network](https://fly.io/docs/networking/private-networking/) that lets you VPN into your own private network of machines.
 
 ## Multi-tenancy
 
@@ -113,7 +113,7 @@ still listed as todo, but the following is what I have been able to figure out:
 
 - One action cable process is allocated per server (i.e., listen port).
 - In order to share the action cable process, all apps on the same server will
-  need to share the same redis URL and channel prefix.  The [Rails
+  need to share the same Redis URL and channel prefix.  The [Rails
   documentation](https://guides.rubyonrails.org/action_cable_overview.html#redis-adapter)
   suggests that you use a different channel prefix for different applications
   on the same server -- **IGNORE THAT**.
