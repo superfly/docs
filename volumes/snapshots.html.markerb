@@ -66,14 +66,12 @@ We automatically take daily snapshots of your volume and keep them for 5 days by
     Example output:
     ```out
     Snapshots
-    ID                          	STATUS 	SIZE    	CREATED AT
-    vs_yAJylAAN83ZFna0A2yRA3J   	created	76082175	3 hours ago
-    vs_3NlZ9NNmpvoSP4yv3Om1gPm  	created	76082175	1 day ago
-    vs_Y49bw44Z6OocN8j4oXq6ww   	created	76082175	2 days ago
-    vs_gwMAXwwLjOVu1vPQVMN2w3N  	created	76082175	3 days ago
-    vs_Ql8xbllZOYDSmlKB0jxYVpg  	created	76082175	4 days ago
-    vs_plNk4llRGexSL22MOJYRpp   	created	76082175	5 days ago
-    vs_O9jqw997yvOuzyg1NVmmmjxhJ	running	0
+    ID                           STATUS   STORED SIZE  VOL SIZE  CREATED AT  RETENTION DAYS
+    vs_A1b2C3d4E5f6G7h8I9j0K1l2  created      2.0 GiB    10 GiB  5 days ago               5
+    vs_M3n4O5p6Q7r8S9t0U1v2W3x4  created      187 MiB    10 GiB  4 days ago               5
+    vs_Y5z6A7b8C9d0E1f2G3h4I5j6  created       45 MiB    10 GiB  3 days ago               5
+    vs_K7l8M9n0O1p2Q3r4S5t6U7v8  created      106 MiB    10 GiB  2 days ago               5
+    vs_O9jqw997yvOuzyg1NVmmmjxh  running          0 B    10 GiB
     ```
 
 The state of the new snapshot will go from `waiting` to `running` to `created`.
@@ -97,12 +95,12 @@ Restore the data from a volume by creating a new volume from a snapshot:
     Example output:
     ```out
     Snapshots
-    ID                 	SIZE    	CREATED AT
-    vs_1KRgwpDqZ2ll5tx 	17649006	1 day ago
-    vs_nymJyYMwXpjxqTzJ	17677766	2 days ago
-    vs_R3OPAz5jBqzogF16	17689473	3 days ago
-    vs_pZlGZvq3gkAlAcaZ	17655830	4 days ago
-    vs_A9k6age3bQov6twj	17631880	5 days ago
+    ID                           STATUS   STORED SIZE  VOL SIZE  CREATED AT  RETENTION DAYS
+    vs_A1b2C3d4E5f6G7h8I9j0K1l2  created      2.0 GiB    10 GiB  5 days ago               5
+    vs_M3n4O5p6Q7r8S9t0U1v2W3x4  created      187 MiB    10 GiB  4 days ago               5
+    vs_Y5z6A7b8C9d0E1f2G3h4I5j6  created       45 MiB    10 GiB  3 days ago               5
+    vs_K7l8M9n0O1p2Q3r4S5t6U7v8  created      106 MiB    10 GiB  2 days ago               5
+    vs_W9x0Y1z2A3b4C5d6E7f8G9h0  created       73 MiB    10 GiB  1 day ago                5
     ```
 
 1. Restore data from the volume snapshot into a new volume of equal or greater size:
