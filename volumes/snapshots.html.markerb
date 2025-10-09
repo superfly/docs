@@ -124,6 +124,31 @@ Restore the data from a volume by creating a new volume from a snapshot:
 
 For options, refer to the [`fly volumes create` docs](/docs/flyctl/volumes-create/) or run `fly volumes create --help`.
 
+## List snapshots and their stored sizes
+
+Snapshots for each volume are stored incrementally, so only data that has changed since the previously stored snapshot consumes additional storage. The total stored size of the snapshots is used for [Volume Snapshot billing](/docs/about/billing/#volume-snapshot-billing).
+
+1. Run `fly volumes list` and copy the ID of the volume.
+
+1. List the volume's snapshots:
+
+    ```cmd
+    fly volumes snapshots list <volume id>
+    ```
+
+    Example output:
+    ```out
+    Snapshots
+    ID                           STATUS   STORED SIZE  VOL SIZE  CREATED AT  RETENTION DAYS
+    vs_A1b2C3d4E5f6G7h8I9j0K1l2  created      2.0 GiB    10 GiB  5 days ago               5
+    vs_M3n4O5p6Q7r8S9t0U1v2W3x4  created      187 MiB    10 GiB  4 days ago               5
+    vs_Y5z6A7b8C9d0E1f2G3h4I5j6  created       45 MiB    10 GiB  3 days ago               5
+    vs_K7l8M9n0O1p2Q3r4S5t6U7v8  created      106 MiB    10 GiB  2 days ago               5
+    vs_W9x0Y1z2A3b4C5d6E7f8G9h0  created       73 MiB    10 GiB  1 day ago                5
+
+    Total stored size: 2.5 GiB
+    ```
+
 ## Disable automatic daily snapshots
 
 Automatic daily snapshots are enabled by default. To disable automatic snapshots, use the `--scheduled-snapshots=false` flag.
