@@ -53,8 +53,10 @@ You'll be prompted to choose:
 - Region (see available regions below)
 - A plan with predefined hardware resources:
   - Basic: 2 shared vCPUs, 1GB RAM
+  - Starter: 2 shared vCPUs, 2GB RAM
   - Launch: 2 Performance vCPUs, 8GB RAM
   - Scale: 4 Performance vCPUs, 32GB RAM
+  - Performance: 8 Performance vCPUs, 64GB RAM
 - Storage size (up to 500GB at creation)
 
 <div>
