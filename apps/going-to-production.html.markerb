@@ -43,7 +43,8 @@ Moving an app from staging to production can expose unexpected failure modes: se
 
 <%= render ChecklistComponent.new(
   items: [
-    { id: "production-grade-postgres", title: "Use Managed Postgres", description: "We recommend using [Fly.io's Managed Postgres](/docs/mpg/), our fully-managed database service that handles all aspects of running production PostgreSQL."}
+    { id: "production-grade-postgres", title: "Use Managed Postgres", description: "We recommend using [Fly.io's Managed Postgres](/docs/mpg/), our fully-managed database service that handles all aspects of running production PostgreSQL."},
+    { id: "test-backups", title: "Practice your disaster recovery plan", description: "Practice restoring your managed Postgres database from a backup before you actually need to. You can do this anytime from the Managed Postgres dashboard." }
   ],
   c: params[:c] || "",
   o: params[:o] || "",
