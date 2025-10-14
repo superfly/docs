@@ -1,0 +1,347 @@
+---
+title: Multi-container Machines
+layout: docs
+order: 28
+nav: machines
+---
+
+Fly Machines support running multiple containers per virtual machine using the `containers` array. This feature is currently available through the Machines API and requires using Pilot as the init system. This capability is useful for co-locating services such as your application server, log shippers, metrics collectors, or sidecars.
+
+## Common Sidecar Use Cases
+
+Sidecars are a powerful way to co-locate supporting services alongside your application. This pattern is especially helpful for apps built with multi-tenant or per-user architectures, such as AI agents, dev environments, or SaaS dashboards. Some practical uses include:
+
+- **Metrics and Logs:** Run a Prometheus exporter or a log shipper like Vector to forward application logs or metrics without bundling that logic into your app.
+- **Secrets Agents:** Use a sidecar to fetch secrets from a provider like Vault or cloud metadata services. This keeps your app container lightweight and secure.
+- **Load Smoothing:** Use nginx or Envoy as a reverse proxy for rate limiting, retries, or graceful error handling. This is great for handling bursts in traffic or external API instability.
+- **Storage or Sync Layers:** Mount and manage local state using sidecars like LiteFS or file sync daemons. You can keep persistent logic separated from your app's logic.
+- **AI Agents or Workers:** For agent-based or queued workloads, you can spin up workers or schedulers in separate containers and coordinate them using `depends_on`.
+
+These patterns mirror what we've seen from customers building production systems on Fly Machines with Pilot and the `containers` array. Each container runs in its own isolated process tree, and Pilot ensures the startup order and health status are respected. While containers share the same kernel and VM, they are isolated at the process and filesystem level.
+
+## Defining Containers
+
+When creating a Machine via the API, you can specify a `containers` array, each containing a [`ContainerConfig`](https://docs.machines.dev/#model/flycontainerconfig). Each container can have its own image, environment variables, health checks, startup commands, attached files, and dependencies.
+
+Flyd (our [in-house orchestrator](https://fly.io/blog/carving-the-scheduler-out-of-our-orchestrator/)), handles pulling images and making them accessible to Pilot, the init system responsible for running the containers and managing their lifecycle. Pilot builds a dependency graph using container startup conditions and runs containers accordingly.
+
+## Example Configuration
+
+```json
+{
+  "containers": [
+    {
+      "image": "registry.fly.io/my-app:latest",
+      "env": {
+        "PORT": "8080"
+      },
+      "services": [
+        {
+          "internal_port": 8080,
+          "protocol": "tcp",
+          "ports": [
+            {
+              "port": 80,
+              "handlers": ["http"]
+            }
+          ]
+        }
+      ],
+      "health_checks": [
+        {
+          "type": "http",
+          "path": "/health",
+          "interval": "10s",
+          "timeout": "5s",
+          "grace_period": "5s",
+          "success_threshold": 2,
+          "failure_threshold": 3
+        }
+      ]
+    },
+    {
+      "image": "registry.fly.io/log-shipper:latest",
+      "env": {
+        "LOG_LEVEL": "info"
+      },
+      "depends_on": [
+        {
+          "name": "my-app",
+          "condition": "healthy"
+        }
+      ]
+    }
+  ]
+}
+```
+
+In this configuration, the `log-shipper` container depends on the `my-app` container being healthy before starting.
+
+## Container Dependencies
+
+You can define dependencies between containers using the `depends_on` field. Supported conditions include:
+
+```json
+"depends_on": [
+  {
+    "name": "sidecar1",
+    "condition": "healthy"
+  }
+]
+```
+
+Valid values for `condition`:
+
+- `healthy`: Container will wait until the dependency container passes its health checks.
+- `started`: Container will start as soon as the dependency container has started.
+- `exited_successfully`: Container will wait until the dependency container has exited with a success code.
+
+Internally, Pilot models these dependencies as a directed graph and walks it to orchestrate the correct container startup order.
+
+## Health Checks
+
+Each container specifies its own health checks. The system supports different types of health checks:
+
+1. **TCP health checks**: Checks if a port is accepting connections
+
+```json
+"tcp": {
+  "port": 6379
+}
+```
+
+1. **HTTP health checks**: Makes HTTP requests to an endpoint
+
+```json
+"http": {
+  "port": 80,
+  "method": "GET",
+  "path": "/",
+  "scheme": "http"
+}
+```
+
+1. **Exec health checks**: Runs a command inside the container
+
+```json
+"exec": {
+  "command": ["sh", "-c", "pg_isready -U postgres"]
+}
+```
+
+### Health Check Configuration Options
+
+- `name`: Unique identifier for the health check
+- `interval`: How often to run the check (e.g., "10s")
+- `grace_period`: Initial period after container starts before checks begin
+- `timeout`: Maximum time to wait for a check to complete
+- `success_threshold`: Number of consecutive successful checks required to change status to healthy
+- `failure_threshold`: Number of consecutive failed checks before marking as unhealthy
+
+## Security Considerations
+
+Containers in a Machine share the same kernel and VM, but are isolated at the process and filesystem level. Failures in one container won't directly crash others, but they don't provide the same level of isolation as across VMs.
+
+## Deploying Multi-container Machines
+
+There are several ways to deploy multi-container machines on Fly.io. Choose the method that best fits your workflow:
+
+### Using flyctl
+
+You can define your Machine configuration in a JSON file (e.g., `machine-config.json`) and create the Machine using the Fly CLI:
+
+```bash
+flyctl machines create --machine-config machine-config.json
+```
+
+You can also launch a multi-container app interactively using `flyctl machine run`:
+
+```bash
+flyctl machine run --machine-config cli-config.json \
+  --autostart=true --autostop=suspend \
+  --port 80:8080/tcp:http --port 443:8080/tcp:http:tls \
+  --vm-cpu-kind shared --vm-cpus 1 --vm-memory 256
+```
+
+Alternatively, you can make a direct API call using `curl`:
+
+```bash
+curl -X POST "https://api.machines.dev/v1/apps/your-app-name/machines" \
+  -H "Authorization: Bearer your-api-token" \
+  -H "Content-Type: application/json" \
+  -d @machine-config.json
+```
+
+Refer to the [Machines API documentation](https://docs.machines.dev/#tag/machines) for more details.
+
+<div class="callout">
+Note: When using `--machine-config`, your JSON file must include a containers array with at least one container defined
+</div>
+
+### Using fly launch & fly deploy
+
+Starting with `flyctl v0.3.147`, you can run multiple containers using `fly deploy`. This example demonstrates using a nginx container as a rate limiter and a custom app container.
+
+#### 1. Create cli-config.json
+
+```json
+{
+  "config": {
+  "containers": [
+    {
+      "name": "nginx",
+      "image": "nginx:latest",
+      "files": [
+        {
+          "guest_path": "/etc/nginx/conf.d/default.conf",
+          "local_path": "nginx.conf"
+        }
+      ],
+      "depends_on": [
+        {
+          "name": "echo",
+          "condition": "healthy"
+        }
+      ]
+    },
+    {
+      "name": "echo",
+      "image": "ealen/echo-server",
+      "health_checks": [
+        {
+          "type": "exec",
+          "command": ["wget", "-q", "--spider", "http://localhost"]
+        }
+      ]
+    }
+  ]
+}
+}
+```
+
+#### 2. Update fly.toml
+
+**Note:** `flyctl` [version 0.3.147](https://github.com/superfly/flyctl/releases/tag/v0.3.147) or later is required to use this config
+
+```
+[experimental]
+machine_config = 'cli-config.json'
+container = 'echo'
+
+[http_service]
+internal_port = 8080
+```
+
+The container value determines which container will be replaced by your app image built by `fly deploy`.
+
+#### 3. Run fly deploy
+
+```bash
+fly deploy
+```
+
+This builds and replaces the `echo` container, runs both containers on the same machine, and configures traffic through nginx.
+
+You can also inline the `machine_config` in your `fly.toml` using triple quotes. The first character inside the string must be `{`:
+
+```
+machine_config = '''{
+  "containers": [
+    …
+  ]
+}'''
+```
+
+## Example Configurations
+
+Here are some practical examples of multi-container setups you can use as a starting point:
+
+### Rate Limiter Sidecar
+
+To mitigate excessive traffic, you can run an nginx container as a sidecar to limit requests per second using the `ngx_http_limit_req_module`. Below is a simplified container configuration that enables rate limiting:
+
+```json
+{
+  "config": {
+    "containers": [
+      {
+        "name": "nginx",
+        "image": "nginx:latest",
+        "files": [
+          {
+            "guest_path": "/etc/nginx/conf.d/default.conf",
+            "raw_value": "bGltaXRfcmVxX3pvbmUgJGJpbmFyeV9yZW1vdGVfYWRkciB6b25lPW15X3pvbmU6MTBtIHJhdGU9MXIvczsKCnNlcnZlciB7CiAgbGlzdGVuIDgwODA7CgogIGxvY2F0aW9uIC8gewogICAgbGltaXRfcmVxIHpvbmU9bXlfem9uZTsKICAgIHByb3h5X3Bhc3MgaHR0cDovL2xvY2FsaG9zdDo4MDsKICB9Cn0="
+          }
+        ]
+      },
+      {
+        "name": "echo",
+        "image": "ealen/echo-server"
+      }
+    ]
+  }
+}
+```
+
+When attaching files to containers, the `raw_value` field must contain base64-encoded content. The nginx configuration shown in the JSON above corresponds to this configuration:
+
+```
+limit_req_zone $binary_remote_addr zone=my_zone:10m rate=1r/s;
+
+server {
+  listen 8080;
+
+  location / {
+    limit_req zone=my_zone;
+    proxy_pass http://localhost:80;
+  }
+}
+```
+
+When the container starts, Fly will decode this value and write the original configuration to the specified `guest_path`.
+
+To complete this configuration, you should also include:
+
+- A `services` block that exposes internal port 8080 for Fly Proxy
+- A `guest` block specifying resources like CPU and memory
+- Optionally, `depends_on` fields or health checks if you want nginx to wait for the app
+
+### LiteFS Sidecar with Health Checks
+
+You can also run LiteFS as a sidecar with a health check configured to ensure it's operating correctly:
+
+```json
+{
+  "config": {
+    "containers": [
+      {
+        "name": "litefs",
+        "image": "flyio/litefs:latest",
+        "env": {
+          "LITEFS_DIR": "/data",
+          "LITEFS_CONFIG": "/etc/litefs.yml"
+        },
+        "health_checks": [
+          {
+            "type": "http",
+            "port": 8080,
+            "path": "/info",
+            "method": "GET",
+            "scheme": "http",
+            "grace_period": 500,
+            "interval": 1000,
+            "timeout": 1000,
+            "delay_start": 0,
+            "success_threshold": 1,
+            "failure_threshold": 5
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+<div class="important icon">
+For more information about container configuration options, refer to the [Machines API documentation](https://docs.machines.dev/#model/flycontainerconfig).
+</div>

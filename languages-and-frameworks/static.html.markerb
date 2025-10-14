@@ -4,6 +4,10 @@ layout: language-and-framework-docs
 redirect_from: /docs/getting-started/static/
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/static.png" alt="Illustration by Annie Ruygt of a flag depicting a Hello World app" class="w-full max-w-lg mx-auto">
+</figure>
+
 <%= partial "partials/intro", locals: { runtime: "static", type: "site" } %>
 
 In this demonstration, we'll use [nginx](https://nginx.org), the world's most popular web server to serve a few static files with very little configuration. We'll provide a Dockerfile and our content for Fly to transmogrify into a web server running in a VM.

@@ -6,6 +6,7 @@ fly ips [command] [flags]
 ~~~
 
 ## Available Commands
+* [allocate](/docs/flyctl/ips-allocate/)	 - Allocate recommended IP addresses
 * [allocate-v4](/docs/flyctl/ips-allocate-v4/)	 - Allocate an IPv4 address
 * [allocate-v6](/docs/flyctl/ips-allocate-v6/)	 - Allocate an IPv6 address
 * [list](/docs/flyctl/ips-list/)	 - List allocated IP addresses

@@ -1,0 +1,27 @@
+---
+title: Model Context Protocol
+layout: framework_docs
+toc: false
+---
+
+<%= youtube "https://www.youtube.com/watch?v=74c1ByGvFPE" %>
+
+<div class="important">
+Fly.io is a great place to run MCP servers. We also provide an [MCP server](./flyctl-server) that you can use to provision your application.
+</div>
+
+Anthropic [announced](https://www.anthropic.com/news/model-context-protocol) the [Model Context Protocol](https://modelcontextprotocol.io/introduction) on November 25, 2024, along with a number of [SDKs](https://modelcontextprotocol.io/sdk/java/mcp-overview) in a variety of languages.
+There also is a large list of [existing servers](https://github.com/modelcontextprotocol/servers?tab=readme-ov-file#model-context-protocol-servers) that you can use.
+
+Depoloying an `npx`, `uv`, `go run`, or docker image stdio MCP server into a Fly machine and configuring a MCP client to connect to it is made easy by [`fly mcp launch`](./launch). See [examples](./examples).
+
+Deploying other MCP servers involves making four choices: [MCP transport](./transports), the interface you use to [deploy it with](./deploy-with), where you want to [deploy it on](./deploy-on), and [access control](./access-control).  In each case we present your choices, starting with our recommendation.
+
+---
+
+General considerations that apply across these pages:
+
+  * Most guides presume that you have [flyctl installed](https://fly.io/docs/flyctl/install/), and have successfully run either
+[`fly auth signup`](https://fly.io/docs/flyctl/auth-signup/) or [`fly auth login`](https://fly.io/docs/flyctl/auth-login/).
+  * As the MCP protocol is both asynchronous and stateful, these examples will be run on a single machine (also known as a **non** highly available configuration). This enables MCP clients to fetch replies from the same server that they sent the request to.
+  * As the [MCP inspector](https://modelcontextprotocol.io/docs/tools/inspector) is a Node.js application, you need to [Download and install Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) before you use it. MacOS users can use [`brew install node`](https://formulae.brew.sh/formula/node).

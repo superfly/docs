@@ -24,5 +24,5 @@ fly postgres renew-certs [flags]
 
 ## See Also
 
-* [fly postgres](/docs/flyctl/postgres/)	 - Manage Postgres clusters.
+* [fly postgres](/docs/flyctl/postgres/)	 - Unmanaged Postgres cluster commands
 

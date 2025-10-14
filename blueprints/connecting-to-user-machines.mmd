@@ -1,0 +1,10 @@
+graph TD;
+    A[Public HTTP Request] -->|Arrives at| B[Router App: llm-router.fly.dev:443]
+    B -->|Sets fly-replay| C[Fly Proxy]
+    C -->|replay| D[User App: llm-user-1234]
+    D -->|match port 443| E[public:443]
+    
+    F[Private HTTP Request] -->|Arrives at| G[Management Gateway: llm-gateway.flycast:9090]
+    G -->|Sets fly-replay| C
+    C -->|replay| D
+    D -->|match port 9090| H[management:9090] 

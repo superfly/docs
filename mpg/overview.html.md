@@ -1,11 +1,10 @@
 ---
 title: Managed Postgres Overview
 layout: docs
-nav: firecracker
+nav: mpg
 toc: false
 ---
 
-<div class="important icon">Managed Postgres is currently in Technical Preview. This means it's suitable for production workloads, but could be subject to unplanned maintenance or unexpected hiccups. Contact Fly.io support if you're having issues.</div>
 
 <figure class="flex justify-center">
   <img src="/static/images/Managed_Postgres.png" alt="Illustration by Annie Ruygt of a balloon doing a lot of tasks" class="w-full max-w-lg mx-auto">
@@ -29,7 +28,8 @@ You'll be able to access:
 - A highly-available Postgres cluster within your Fly.io organization's [private network](/docs/networking/private-networking/)
 - A single database on that cluster
 - Fly.io Support Portal to log tickets and get help
-- The `pgvector` extension for vector similarity search
+- Any modules and extensions included in the [default Postgres 16 distribution](https://www.postgresql.org/docs/16/contrib.html)
+- The third party `pgvector` extension for vector similarity search, if enabled when provisioning your database
 
 ### What's not there yet
 
@@ -37,7 +37,7 @@ At the moment, the following features are under development:
 
 - Security patches and version upgrades
 - Multiple databases or schemas per cluster
-- Postgres extensions besides `pgvector`
+- Third Party Postgres extensions besides `pgvector`
 - Customer-facing monitoring and alerting
 - Database migration tools
 
@@ -52,9 +52,11 @@ You'll be prompted to choose:
 - Cluster name (must be unique within your organization)
 - Region (see available regions below)
 - A plan with predefined hardware resources:
-  - Launch: 2 vCPUs, 4GB RAM
-  - Performance: 4 vCPUs, 8GB RAM
-  - Enterprise: 8 vCPUs, 16GB RAM
+  - Basic: 2 shared vCPUs, 1GB RAM
+  - Starter: 2 shared vCPUs, 2GB RAM
+  - Launch: 2 Performance vCPUs, 8GB RAM
+  - Scale: 4 Performance vCPUs, 32GB RAM
+  - Performance: 8 Performance vCPUs, 64GB RAM
 - Storage size (up to 500GB at creation)
 
 <div>
@@ -130,4 +132,4 @@ The price of running Fly.io Managed Postgres depends on:
 - Region in which you're deploying
 - Storage usage
 
-Database storage is priced at **$0.30 per GB for a 30-day month**, with each node (primary + replica) incurring its own cost. You can view detailed pricing in your Fly.io dashboard.
+Database storage is priced at **$0.28 per GB for a 30-day month**. You can view detailed pricing in your Fly.io dashboard.

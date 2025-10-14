@@ -26,5 +26,5 @@ fly postgres events [command] [flags]
 
 ## See Also
 
-* [fly postgres](/docs/flyctl/postgres/)	 - Manage Postgres clusters.
+* [fly postgres](/docs/flyctl/postgres/)	 - Unmanaged Postgres cluster commands
 

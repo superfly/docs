@@ -28,13 +28,13 @@ fly [flags]
 * [litefs-cloud](/docs/flyctl/litefs-cloud/)	 - LiteFS Cloud management commands
 * [logs](/docs/flyctl/logs/)	 - View app logs
 * [machine](/docs/flyctl/machine/)	 - Manage Fly Machines.
-* [managed-postgres](/docs/flyctl/managed-postgres/)	 - Manage Managed Postgres clusters.
 * [mcp](/docs/flyctl/mcp/)	 - flyctl Model Context Protocol.
+* [mpg](/docs/flyctl/mpg/)	 - Manage Managed Postgres clusters.
 * [mysql](/docs/flyctl/mysql/)	 - Provision and manage MySQL database clusters
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 * [ping](/docs/flyctl/ping/)	 - Test connectivity with ICMP ping messages
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
-* [postgres](/docs/flyctl/postgres/)	 - Manage Postgres clusters.
+* [postgres](/docs/flyctl/postgres/)	 - Unmanaged Postgres cluster commands
 * [proxy](/docs/flyctl/proxy/)	 - Proxies connections to a Fly Machine.
 * [redis](/docs/flyctl/redis/)	 - Launch and manage Redis databases managed by Upstash.com
 * [releases](/docs/flyctl/releases/)	 - List app releases

@@ -1,6 +1,5 @@
 ---
 title: "This Is Not Managed Postgres"
-objective: Read our warnings about why we don't call Fly Postgres "managed"!
 layout: framework_docs
 order: 1
 ---
@@ -34,16 +33,18 @@ Deploying a Fly Postgres database means you may need to manage the following:
 There are a lot of knobs to turn, but `fly pg config` only supports a few of them out of the box. For more details, see [Postgres Configuration Tuning](https://fly.io/docs/postgres/managing/configuration-tuning/).
 - **Advanced customization** - TimescaleDB is included in the default image and can be enabled with these [instructions](https://fly.io/docs/postgres/managing/enabling-timescale/). If your application demands additional Postgres extensions or something else in the VM, you can [fork and maintain your own branch of Fly's open source Postgres Flex app](https://github.com/fly-apps/postgres-flex).
 
-### Recommended External Providers
+## Recommended Managed Postgres option
 
-If you want a fully managed database solution for your Fly Apps, there are many great options, including:
+- [Fly.io's Managed Postgres](/docs/mpg/) We recommend Fly.io Managed Postgres, a production-ready Postgres service that handles the hard parts for you: high availability, automatic failover, encrypted backups, monitoring and metrics, seamless scaling, and 24/7 support to keep your data fast, safe, and always online.
+
+## Other Managed Postgres providers
+
+Other providers:
 
 - [Crunchy Bridge Managed Postgres](https://www.crunchydata.com/products/crunchy-bridge+external) (on AWS, Azure, GCP, or Heroku)
 - [Neon Serverless Postgres](https://neon.tech/+external)
 - [PlanetScale Serverless MySQL](https://planetscale.com/+external) ([guide to use with Fly Apps](https://fly.io/docs/app-guides/planetscale/))
 - [Supabase Postgres](https://supabase.com/)
-
-### Other Places
 
 You can connect your Fly Apps to the usual suspects, too:
 

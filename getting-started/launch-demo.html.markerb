@@ -15,6 +15,10 @@ redirect_from:
   - /docs/hands-on/next/
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/launch-demo.png" alt="Illustration by Annie Ruygt of a rocket on the launch pad" class="w-full max-w-lg mx-auto">
+</figure>
+
 In this step-by-step guide you'll use Fly Launch to deploy a simple "hello fly" demo app to Fly.io. 
 
 The first step is installing all the tools you need to work with Fly Launch. Which is one tool: flyctl.

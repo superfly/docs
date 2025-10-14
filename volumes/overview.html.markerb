@@ -6,9 +6,13 @@ order: 20
 redirect_from: /docs/reference/volumes/
 ---
 
-Apps can store only ephemeral data on the root file systems of their Fly Machines, because a Machine’s file system gets rebuilt from scratch each time you deploy your app, or when the Machine is restarted.
+<figure class="flex justify-center">
+  <img src="/static/images/volumes.png" alt="Illustration by Annie Ruygt of a filing cabinet" class="w-full max-w-lg mx-auto">
+</figure>
 
-Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can access and write to a volume on a Machine just like a regular directory. Use volumes to store your database files, to save your app's state, such as configuration and session or user data, or for any information that needs to persist after deploy or restart.
+The root file systems of a Fly Machine are ephemeral and should only be used for temporary data, application code, and runtime files that can be rebuilt from scratch during deployments or restarts.  The performance of these ephemeral disks are heavily limited regardless of the Machine type you choose, with the maximum of 2000 IOPs and 8MiB/s bandwidth.
+
+Fly Volumes are local persistent storage for [Fly Machines](/docs/machines/). You can access and write to a volume on a Machine just like a regular directory. Use volumes to store your database files, to save your app's state, such as configuration and session or user data, or for any information that needs to persist after deploy or restart. Maximum volume performance varies by Machine type and noted in [Volume limits](/docs/volumes/overview#volume-limits)
 
 A Fly Volume is a slice of an NVMe drive on the same physical server as the Machine on which it's mounted and it's tied to that hardware. Fly Volumes are similar to the disk inside your laptop, accessible from a mount point in your file system. Using volumes tied to hardware has both advantages and disadvantages.
 
@@ -25,7 +29,7 @@ Explore other options for data storage in [Databases & Storage](/docs/database-s
 
 ## Volume attachment
 
-Fly Volumes and Fly Machines are meant to be paired together, but they are not always found in pairs. A Fly Volume can be created without a Fly Machine, or a Machine can be destroyed without destroying its volume. In these cases, the volume that’s left is called an "unattached" volume. 
+Fly Volumes and Fly Machines are meant to be paired together, but they are not always found in pairs. A Fly Volume can be created without a Fly Machine, or a Machine can be destroyed without destroying its volume. In these cases, the volume that's left is called an "unattached" volume. 
 
 A Fly Machine that does not require a volume will never attach itself to one. A Fly Machine that does require a volume will always be attached to one. When a volume is required according to the app or Machine configuration, any method of creating a new Fly Machine will pick up an unattached volume, create a new volume to attach, or it will fail (in the case of `fly machine` commands or create Machine API calls).
 
@@ -61,6 +65,23 @@ The default volume size is 1GB when you create a volume with the `fly volumes cr
 
 You can extend a volume's size&mdash;either [manually](/docs/volumes/volume-manage/#extend-a-volume) or [automatically](/docs/reference/configuration/#the-mounts-section)&mdash;to make it larger, but you can't shrink a volume.
 
+## Volume limits
+
+The following table outlines the maximum IOPs and bandwidth for Fly Volumes, determined by the Machine type:
+
+| VM Size | Max IOPs | Max Bandwidth |
+|---------|------------------------|----------------------------|
+| shared-cpu-1x | 4000 | 16MiB/s |
+| shared-cpu-2x | 4000 | 16MiB/s |
+| shared-cpu-4x | 8000 | 32MiB/s |
+| shared-cpu-8x | 8000 | 32MiB/s |
+| performance-1x | 12000 | 48MiB/s |
+| performance-2x | 16000 | 64MiB/s |
+| performance-4x | 16000 | 64MiB/s |
+| performance-8x | 32000 | 128MiB/s |
+| performance-16x | 32000 | 128MiB/s |
+
+
 ## Volume forks
 
 When you [fork a volume](/docs/volumes/volume-manage/#create-a-copy-of-a-volume-fork-a-volume), you create a new volume with an exact copy of the data from the source volume to use for testing, backups, or whatever you like. If you don't specify a region, then the new volume is in the same region, but on a different physical host. The forked volume isn't attached to a Machine until you scale or clone a new Machine in the same region. The new volume and the source volume are independent, and changes to their contents are not synchronized.
@@ -72,6 +93,8 @@ Fly.io takes daily block-level snapshots of volumes. We keep snapshots for five 
 You can also [create a snapshot of a volume](/docs/volumes/snapshots/#create-a-volume-snapshot) on demand.
 
 You can [restore a volume snapshot](/docs/volumes/snapshots/#restore-a-volume-from-a-snapshot) into a new volume of equal or greater size.
+
+You can also [disable automatic daily snapshots](/docs/volumes/snapshots/#disable-automatic-daily-snapshots).
 
 ## When volumes are not available
 

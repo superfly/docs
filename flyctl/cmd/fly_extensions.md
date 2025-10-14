@@ -7,8 +7,6 @@ fly extensions [command] [flags]
 
 ## Available Commands
 * [arcjet](/docs/flyctl/extensions-arcjet/)	 - Provision and manage Arcjet
-* [enveloop](/docs/flyctl/extensions-enveloop/)	 - Provision and manage Enveloop projects
-* [kafka](/docs/flyctl/extensions-kafka/)	 - Provision and manage Upstash Kafka clusters
 * [kubernetes](/docs/flyctl/extensions-kubernetes/)	 - Provision and manage Kubernetes clusters
 * [mysql](/docs/flyctl/extensions-mysql/)	 - Provision and manage MySQL database clusters
 * [sentry](/docs/flyctl/extensions-sentry/)	 - Setup a Sentry project for this app

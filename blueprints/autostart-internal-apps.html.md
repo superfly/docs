@@ -1,8 +1,12 @@
 ---
 title: Autostart and autostop private apps
 layout: docs
-nav: firecracker
+nav: guides
 ---
+
+<figure>
+  <img src="/static/images/autostart-internal-apps.png" alt="Illustration by Annie Ruygt of Frankie the balloon having a picnic with an app and eating strawberries" class="w-full max-w-lg mx-auto">
+</figure>
 
 You have a private, or internal, app that communicates only with other apps on your [private network](/docs/networking/private-networking/). This private app might be a database, authentication server, or any other "backend" app that you don't want exposed to the public Internet. You want the app's Machines to stop when they're not serving requests from your other apps, and start again automatically when needed.
 

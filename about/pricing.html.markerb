@@ -186,7 +186,7 @@ We bill for data leaving your app destined for the public internet or for apps o
 
 * Data egress to the Internet, from Machine to edge server to Internet
 * Data transfer over private network between regions, from Machine to edge server and edge server to Machine
-* Data transfer to some extensions like Upstash Redis (excludes Tigris Object Storage)
+* Data transfer to some extensions like Upstash Redis
 
 The following types of traffic are free:
 
@@ -208,10 +208,12 @@ Fly.io pricing is per region group for outbound data transfer. You'll see a more
 
 To opt-in to granular bandwidth pricing, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Switch to granular bandwidth pricing**. You won't be able to return back not using the granular data transfer rates once you opt-in.
 
-### Static Machine IP
+### Static Egress IPs for Machines
 
-Static IPs for Machines are $0.005 per hour.
-Machines do not have a static IP by default.
+Static egress IPs for Machines provide dedicated outbound IP addresses for your Machines. When you allocate a static egress IP, you'll get both an IPv4 and IPv6 address for this single price.
+
+* $0.005 per hour (~$3.60/month)
+* Machines do not have a static IP by default
 
 ## Fly Kubernetes
 
@@ -238,7 +240,7 @@ You will not be billed separately for:
 * IP addresses associated with the service
 * Bandwidth to Tigris Object Storage
 
-You **will** be billed separately for data transfer to services other than Tigris Object Storage. See our [data transfer pricing](#data-transfer-pricing) for details.
+You **will** be billed separately for data transfer to these external third-party services. See our [data transfer pricing](#data-transfer-pricing) for details.
 
 ## LiteFS Cloud
 
@@ -272,13 +274,13 @@ Outbound data transfer:
 * 30 GB Asia Pacific, Oceania & South America
 * 30 GB Africa & India
 
-#### Paid Hobby plan and free trial
+#### Paid Hobby plan and Free Trial credit (deprecated)
 
-If you signed up for the now deprecated $5/month Hobby plan before the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit is used up, we automatically place your organization on the $5/month Hobby plan, which includes $5/month of usage and free allowances. There are no free allowances during the free trial. We'll send you an email when your free trial credit is used up and you won't be charged before that. The free trial credit doesn't expire and applies only to the default (“personal”) organization that we created for you on sign-up.
+If you signed up for the now deprecated $5/month paid Hobby plan prior the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit was used up, we automatically placed your organization on the $5/month Hobby plan, which included $5/month of usage and free allowances. There are no free allowances during the free trial. We'll send you an email when your free trial credit is used up and you won't be charged before that. The free trial credit doesn't expire and applies only to the default (“personal”) organization that we created for you on sign-up.
 
 To change your plan to the Pay As You Go plan, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Choose Pay As You Go**. If you change your plan, you won't be able to return to the paid Hobby Plan.
 
-#### Legacy Hobby plan
+#### Legacy (Free) Hobby plan
 
 If you were on the free Hobby plan at the time that the paid Hobby plan became the default for new organizations, your plan is now called the Legacy Hobby plan. Your costs stay the same as they were, with no monthly subscription fee, and no included usage beyond the free resource allowances.
 

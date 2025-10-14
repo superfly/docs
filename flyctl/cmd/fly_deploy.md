@@ -16,6 +16,7 @@ fly deploy [WORKING_DIRECTORY] [flags]
       --build-only                       Build but do not deploy
       --build-secret stringArray         Set of build secrets of NAME=VALUE pairs. Can be specified multiple times. See https://docs.docker.com/engine/reference/commandline/buildx_build/#secret
       --build-target string              Set the target build stage to build if the Dockerfile has more than one stage
+      --buildkit                         Deploy using buildkit-based remote builder
       --buildpacks-docker-host string    Address to docker daemon that will be exposed to the build container.
                                          If not set (or set to empty string) the standard socket location will be used.
                                          Special value 'inherit' may be used in which case DOCKER_HOST environment variable will be used.
@@ -30,6 +31,8 @@ fly deploy [WORKING_DIRECTORY] [flags]
                                              - "volume-opt=<key>=<value>", can be specified more than once, takes a key-value pair consisting of the option name and its value.
                                          Repeat for each volume in order (comma-separated lists not accepted)
                                          
+      --compression string               Compression algorithm to use for the image. Options are "zstd" or "gzip". Defaults to "gzip". (default "gzip")
+      --compression-level int            Compression level to use for the image. Defaults to 7. (default 7)
   -c, --config string                    Path to application configuration file
       --deploy-retries string            Number of times to retry a deployment if it fails (default "auto")
       --depot string[="true"]            Deploy using depot to build the image (default "auto")

@@ -11,6 +11,7 @@ fly secrets import [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
       --detach          Return immediately instead of monitoring deployment progress
+      --dns-checks      Perform DNS checks during deployment (default true)
   -h, --help            help for import
       --stage           Set secrets but skip deployment for machine apps
 ~~~

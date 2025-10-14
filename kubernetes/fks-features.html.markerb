@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/k8s-features.png" alt="Illustration by Annie Ruygt of a ship's wheel" class="w-full max-w-lg mx-auto">
+</figure>
+
 Fly Kubernetes benefits from the features of the Fly.io platform.
 
 ## Fly.io infrastructure

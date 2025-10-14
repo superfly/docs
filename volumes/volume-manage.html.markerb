@@ -33,6 +33,8 @@ Use the `--count` option to create more than one volume.
 
 Use the `--snapshot-retention` option to change the number of days we retain snapshots (default is 5 days).
 
+Use the `--scheduled-snapshots=false` option to disable automatic daily snapshots.
+
 For more options, refer to the [`fly volumes create` docs](/docs/flyctl/volumes-create/) or run `fly volumes create --help`.
 
 ## Extend a volume
@@ -108,9 +110,11 @@ Create an exact copy of a volume, including its data. By default, we place the n
 
 For options, refer to the [`fly volumes fork` docs](/docs/flyctl/volumes-fork/) or run `fly volumes fork --help`.
 
+A detailed guide to [volume forking](/docs/blueprints/volume-forking/) is also available.
+
 ## Add a volume to an unmanaged Machine
 
-For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`), you can create a volume and attach it when you clone a Machine. You can also [clone a Machine with a volume](/#clone-a-machine-with-a-volume) to get a new Machine with an empty volume.
+For Machines that aren't managed with Fly Launch (`fly.toml` and `fly deploy`), you can create a volume and attach it when you clone a Machine. You can also [clone a Machine with a volume](#clone-a-machine-with-a-volume) to get a new Machine with an empty volume.
 
 1. Create the volume in the same region as your app. For example:
 
@@ -176,18 +180,33 @@ For options, refer to the [`fly machine clone` docs](/docs/flyctl/machine-clone/
 ## Destroy a volume
 
 <div class="warning icon">
-<b>Warning:</b> When you destroy a volume, you permanently delete all its data.
+<b>Warning:</b> When you destroy a volume, you permanently delete all its data. There is no undo. Make sure you've backed up any data you want to keep.
 </div>
 
-1. Run `fly volumes list` and copy the ID of volume to destroy.
+1. List volumes and find the ID for the one you want to destroy:
 
-2. Destroy the volume:
+```cmd
+fly volumes list
+```
+
+2. Destroy the volume using its ID:
 
 ```cmd
 fly volumes destroy <volume id>
 ```
 
 For options, refer to the [`fly volumes destroy` docs](/docs/flyctl/volumes-destroy/) or run `fly volumes destroy --help`.
+
+**Volumes attached to Machines**
+
+Volumes attached to Machines can’t be destroyed. You can check which Machine (if any) a volume is attached to by running `fly volumes list` First, stop and destroy the Machine, then the unattached volume can be destroyed.
+
+If you’re replacing the Machine, use `fly scale count` or `fly machine clone` to launch a new one. This will create and mount a fresh volume based on your `fly.toml` config.
+
+To stop using volumes entirely, remove any `[mounts]` from `fly.toml`, redeploy to detach them, and then destroy the volumes.
+
+**Note:** Snapshots taken before deletion may still be restorable for a limited time, provided you have the volume ID (default retention is 5 days).
+
 
 ## Restore a deleted volume
 

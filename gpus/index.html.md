@@ -33,7 +33,7 @@ Currently GPUs are available in the following regions:
 - `a10`: `ord`
 - `l40s`: `ord`
 - `a100-40gb`: `ord`
-- `a100-80gb`: `iad`, `sjc`, `syd`
+- `a100-80gb`: `iad`, `sjc`, `syd`, `ams`
 
 ## Examples
 

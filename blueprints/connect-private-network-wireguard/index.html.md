@@ -2,7 +2,7 @@
 title: Jack into your private network with WireGuard
 layout: docs
 sitemap: true
-nav: firecracker
+nav: guides
 author: xe
 categories:
   - networking

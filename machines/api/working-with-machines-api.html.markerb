@@ -80,3 +80,5 @@ Typically, 2xx HTTP status codes denote successful operations, 4xx codes imply f
 Machines API rate limits apply _per-action_, _per-machine_ and are scoped per identifier. That might be Machine ID or App ID, depending on the type of request. The limit is 1 request, per second, per action (i.e. Create Machine, Start Machine etc.) — with a short-term burst limit up to 3 req/s, per action.
 
 This applies to all actions except [Get Machine](/docs/machines/api/machines-resource/#get-a-machine) which is 5 req/s, with a short-term burst limit up to 10 req/s.
+
+Additionally, app deletions are limited to 100 per minute.

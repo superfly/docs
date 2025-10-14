@@ -1,17 +1,17 @@
 ---
-title: "Fly Postgres"
+title: "Fly Postgres (Unmanaged)"
 layout: framework_docs
 redirect_from: /docs/reference/postgres/
 toc: false
 ---
 
-<img src="/static/images/postgres.webp" srcset="/static/images/postgres@2x.webp 2x" alt="A model airplane with the Fly.io logo painted on its side, sitting next to some paint and brushes.">
-
-<div class="important icon">**Important:** We are not able to provide support or guidance for this product. Use with caution as this is not [managed postgres](https://fly.io/docs/postgres/getting-started/what-you-should-know/).</div>
+<figure class="flex justify-center">
+  <img src="/static/images/postgres.png" alt="Illustration by Annie Ruygt of a balloon disguised as an elephant" class="w-full max-w-lg mx-auto">
+</figure>
 
 [Postgres](https://www.postgresql.org/+external), formally known as PostgreSQL, is a powerful open source object relational database system that's used by many popular web frameworks to persist application data.
 
-Fly Postgres is a Fly app with flyctl sugar on top to help you bootstrap and manage a database cluster for your apps. It comes with most commonly used functionality (replication, failover, metrics, monitoring and daily snapshots).
+Fly Postgres (unmanaged) is a Fly app with flyctl sugar on top to help you bootstrap and manage a database cluster for your apps. It comes with most commonly used functionality (replication, failover, metrics, monitoring and daily snapshots).
 
 **[Read about why Fly Postgres is not the same thing as a managed database service](/docs/postgres/getting-started/what-you-should-know).**
 

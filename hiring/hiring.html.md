@@ -21,7 +21,7 @@ There are other good things about our process:
 
 - We don&#39;t time the challenges, and you can get them done in dribs and drabs of your spare time if that&#39;s best for you.
 - We don&#39;t look over your shoulder, can&#39;t see your typos, and aren&#39;t driving up your cortisol with loaded sighs and  "hmms" as you work. We want to see you in your best light.
-- You get to use your own dev setup, which, of course, includes Internet connectivity and the ability to Google things, because that is how all code in the industry is actually written.
+- You get to use your own dev setup, which, of course, includes Internet connectivity and the ability to Google things and work with LLMs, because that is how all code in the industry is actually written.
 
 Our challenges aren&#39;t artificial. There are no binary trees to invert. We just extract work we&#39;ve actually done ourselves, and simplify it to the point where we think it can get done in a few hours. Our challenges all have objective rubrics (that turns out to be the hard part of developing a work-sample challenge!) and we can usually grade them pretty mechanically.
 
@@ -34,7 +34,7 @@ A typical hiring process for an engineering job at Fly.io looks like this:
 1. You send us an email. There&#39;s an email address at the bottom of all our job descriptions.
 1. We say "hi", lay out our hiring challenges, and give you some time to ask us questions. We&#39;re happy to field questions!
 1. When you&#39;re ready, we deliver you a series of at-home challenges (usually 2-3). You knock them out one at a time. If things go roughly with any of them, we&#39;ll let you know.
-1. If you knock out all the challenges, we&#39;ll schedule a "work day", our last challenge. That&#39;s "day" as in "day in the life" — we don&#39;t ask for a full day of your time! During the work day, you&#39;ll collaborate with us on Slack on an engineering design project.
+1. If you knock out all the challenges, we&#39;ll schedule a 60-90 minute discussion in Slack with one of our team members, which we refer to internally as a structured interview. No coding, no video, no microphones; just a typed discussion in Slack so we can better understand how you think about and collaborate on the kinds of problems we tackle at Fly.io.
 1. That&#39;s it! If everything goes well, the next step is us working out an offer with you.
 
 ## What About Time Limits?
@@ -43,44 +43,44 @@ We don't take delivery time into account when grading challenges. Take a day, ta
 
 We have only two caveats to offer about the amount of time you spend on challenges:
 
-1. If you really do take a month to do the challenges, our staffing situation might change by the time you're done, and we 
+1. If you really do take a month to do the challenges, our staffing situation might change by the time you're done, and we
 won't be able to move forward immediately. So: if it's going to be a while before you can get to the challenges, let us know,
 and we'll be able to warn you if there's any time sensitivity on the role you're applying to. We don't want to have you doing
 challenges for a role that isn't open by the time you're done!
 
-2. We've said it already but we'll say it again: we've tried to calibrate these challenges (by running them many times) so 
+2. We've said it already but we'll say it again: we've tried to calibrate these challenges (by running them many times) so
 they take roughly the same amount of time as an interview would. You can put as much time into them as you'd like; we're not
-going to notice. But if you're getting sore about the amount of time they're taking, you should reach out to us and we 
-can try to figure out what's happening. Sometimes, you might be overthinking the challenge; other times, the role you're 
+going to notice. But if you're getting sore about the amount of time they're taking, you should reach out to us and we
+can try to figure out what's happening. Sometimes, you might be overthinking the challenge; other times, the role you're
 applying to might not be a perfect fit for where you're coming from.
 
 ## What If I Have Questions?
 
-You can't lose points by asking us questions. Generally, we look at questions as a positive indicator. 
+You can't lose points by asking us questions. Generally, we look at questions as a positive indicator.
 
 There are questions you might ask that we can't answer. That's fine; we'll just give evasive answers. Don't moderate
 your questions for our sake. You might be surprised at how much we're willing to cough up.
 
 A lot of hiring systems keep their cards close to the vest, and (deliberately or otherwise) evaluate candidates based
-on their ability to navigate a murky process. That's not us. 
+on their ability to navigate a murky process. That's not us.
 
 We want to predict how well you'll function on our team doing real work. In a real working week, if our processes were
-so murky that sniffing them out was a real test of your skill, on like a day-to-day basis, we'd have problems of our 
-own to fix. We want to see you in your best light. 
+so murky that sniffing them out was a real test of your skill, on like a day-to-day basis, we'd have problems of our
+own to fix. We want to see you in your best light.
 
 ## What About Start Dates?
 
 This is important: we can only make offers with start dates 1 month out or
 less. If you're looking for a role to start a couple months from now (when
 you graduate, etc), you're generally welcome to run through our process and
-get a "soft yes" from us. 
+get a "soft yes" from us.
 
-When you're available to take an offer starting within a month, you can 
-ping us, and we'll extend an offer. 
+When you're available to take an offer starting within a month, you can
+ping us, and we'll extend an offer if the role is still open.
 
 A word of warning: while we expect to be hiring most of our roles pretty
 much continuously, the economy can get spooky. We can't make promises about
-openings several months out from now. An offer is a commitment, and that's 
+openings several months out from now. An offer is a commitment, and that's
 the one thing we can't do if you're looking to start several months from
 now. We'll do our best to stay up-front about this stuff!
 

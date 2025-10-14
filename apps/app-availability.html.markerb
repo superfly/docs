@@ -5,6 +5,10 @@ nav: apps
 redirect_from: /docs/reference/app-availability/
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/migrating-from-aws.png" alt="Illustration by Annie Ruygt of a figure jumping from one mountian to another" class="w-full max-w-lg mx-auto">
+</figure>
+
 A resilient app is resistant to events like hardware failures or outages. Redundancy, supported by monitoring and scaling, is one of the ways to make your app more resilient, and we provide some built-in features to make this easier.
 
 ## What your app needs to do

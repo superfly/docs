@@ -2,7 +2,7 @@ The SFTP GET retrieves a file from a remote VM.
 
 ## Usage
 ~~~
-fly sftp get <path> [flags]
+fly sftp get <remote-path> [local-path] [flags]
 ~~~
 
 ## Options
@@ -19,6 +19,7 @@ fly sftp get <path> [flags]
   -g, --process-group string   The target process group
       --pty                    Allocate a pseudo-terminal (default: on when no command is provided)
   -q, --quiet                  Don't print progress indicators for WireGuard
+  -R, --recursive              Download directories recursively
   -r, --region string          The target region (see 'flyctl platform regions')
   -s, --select                 select available instances
   -u, --user string            Unix username to connect as (default "root")

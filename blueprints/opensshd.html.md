@@ -1,13 +1,17 @@
 ---
 title: Run an SSH server
 layout: docs
-nav: firecracker
+nav: guides
 author: rubys
 categories:
   - SSH
 date: 2024-01-14
 redirect_from: /docs/app-guides/opensshd/
 ---
+
+<figure>
+  <img src="/static/images/openssh.png" alt="Illustration by Annie Ruygt of a terminal window, a computer and some numbers" class="w-full max-w-lg mx-auto">
+</figure>
 
 A number of tools allow you to interact with your server over SSH. These tools are useful for tasks such as
 copying files ([rsync](https://rsync.samba.org/+external), [scp](https://en.wikipedia.org/wiki/Secure_copy_protocol+external), [sshfs](https://github.com/libfuse/sshfs#sshfs+external)), 

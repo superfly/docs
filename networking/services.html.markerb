@@ -121,11 +121,24 @@ The HTTP handler adds a number of standard HTTP headers to requests, and a few F
 | `X-Forwarded-Port` | Original connection port, header may be set by client |
 | `Fly-Forwarded-Port` | Original connection port, always set by Fly.io |
 | `Fly-Region` | Original incoming connection region |
+| `Fly-Preferred-Instance-Unavailable` | The ID of a preferred instance that the proxy could not route to |
 
-You can set a preference on HTTP requests for which region you would like to connect to:
+You can set a preference on HTTP requests for which region you would like to connect to. You can specify a single region or multiple regions in order of preference:
 
 ```
-Fly-Prefer-Region: region-code
+Fly-Prefer-Region: iad
+```
+
+Or with multiple preferences (tries regions in order):
+
+```
+Fly-Prefer-Region: iad,ord,us,na
+```
+
+You can set a preference for a specific machine instance:
+
+```
+Fly-Prefer-Instance-Id: instance-number
 ```
 
 You can force routing to a specific machine instance:
@@ -212,9 +225,11 @@ The `force_https` configuration option automatically redirects HTTP to HTTPS. Wh
 
 Fly Machines have IPv6 addresses from which they make requests to the wider internet without going through the Fly Proxy.
 
-We don’t offer static IPs or regional IP ranges, and we discourage the use of our outbound IPs to bypass firewalls. A Machine's outbound IP is liable to change without notice. This shouldn't be a daily occurrence, but it will happen if a Machine is moved for whatever reason, such as a load-balancing of Fly Machines between servers in one region.
+By default, we don’t offer static IPs or regional IP ranges, and we discourage the use of our outbound IPs to bypass firewalls. A Machine's outbound IP is liable to change without notice. This shouldn't be a daily occurrence, but it will happen if a Machine is moved for whatever reason, such as a load-balancing of Fly Machines between servers in one region.
 
-If you depend on knowing this address for some reason, it's up to you to monitor it for changes.
+If you do need a static outbound IP, you can assign one on a per-machine basis. You can allocate one to a machine with `fly machine egress-ip allocate <machine-id>. This will assign both an IPv4 and IPv6 address to the machine. Like dedicated IPv4 addresses, these are [billed](/docs/about/pricing/#static-machine-ip) monthly.
+
+You can also use the `fly machine egress-ip list` command to see all the IPs assigned to your machines, and release IPs with `fly machine egress-ip release <egress-ip>`.
 
 ### Find your Machine's outbound IP
 

@@ -17,6 +17,7 @@ Securing a public cloud platform like Fly.io is a hard problem, and we take it s
 
 _Security for customer organizations and apps._
 
+- **[Organization Roles and Permissions](/docs/security/org-roles-permissions/):** Understand what Members and Admins can do in a Fly.io organization, and how to manage access safely.
 - **[Use SSO for organizations](/docs/security/sso/):** Set up org-wide Single Sign-on with Google or GitHub.
 - **[Remove a member from an organization](/docs/security/remove-org-member/):** Remove a user from an organization and take steps to help keep the organization secure.
 - **[Built-in TLS termination](/docs/security/tls-termination/):** You get TLS termination by default for your web apps.

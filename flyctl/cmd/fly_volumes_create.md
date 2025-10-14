@@ -17,6 +17,7 @@ fly volumes create <volume name> [flags]
       --no-encryption               Do not encrypt the volume contents. Volume contents are encrypted by default.
   -r, --region string               The target region (see 'flyctl platform regions')
       --require-unique-zone         Place the volume in a separate hardware zone from existing volumes to help ensure availability (default true)
+      --scheduled-snapshots         Enable scheduled automatic snapshots (default true)
   -s, --size int                    The size of volume in gigabytes (default 1)
       --snapshot-id string          Create the volume from the specified snapshot
       --snapshot-retention int      Snapshot retention in days (default 5)

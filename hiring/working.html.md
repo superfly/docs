@@ -14,9 +14,9 @@ Like most companies, we do most of our daily work on a Slack. Slack isn&#39;t gr
 ## We're Committed To Diversity And Mutual Respect
 
 We believe in diverse and equitable teams. We're working together on a hard problem, the work
-itself gets challenging, and our teams won't work without mutual respect. Fly.io is used by people of 
+itself gets challenging, and our teams won't work without mutual respect. Fly.io is used by people of
 all skill levels, all over the world, from many different backgrounds and with many different goals.
-We're believers in the value of glue work and empathy, with each other and our users. 
+We're believers in the value of glue work and empathy, with each other and our users.
 
 ## Fly.io Hires Around The World
 
@@ -28,7 +28,7 @@ We have team members in Europe, Rwanda, South Africa, Mexico, Argentina, Canada,
 
 We'll do our best, but it's tricky. We've got access to some legal resources, but our luck, with H1Bs in particular, hasn't
 been great. Whatever we say about visas, remember that it's USCIS making the decisions, and USCIS has a different definition
-of "responsive" than we do. 
+of "responsive" than we do.
 
 So the short answer on visa sponsorships is: we'll try, but you should take a job here on the assumption that you'll be working
 remote indefinitely.
@@ -47,14 +47,14 @@ roughly like:
 
 * Level 1: Early-career or intern-level demonstrated aptitude. An L1 might need
   ongoing support from other team members to deliver work.
-  
+
 * Level 2: See Level 1 and Level 3, and interpolate.
 
 * Level 3: An L3 can lead a team. We use "L3" and "Senior" interchangeably.
 
 * Staff: We're still working out what this means here. We'll generally
-  call out staff roles individually. 
-  
+  call out staff roles individually.
+
 We also hire engineering management (EMs). Like most modern tech companies,
 EM is a separate track from line engineering.
 
@@ -66,7 +66,7 @@ We want our teams to set their own direction as much as possible, but we&#39;ll 
 
 It&#39;s a platform for shipping our customers apps. It&#39;s on 24/7/365.
 
-We made a decision early on not to stick ops teams with the whole on-call challenge. So we all share it. At our current team size, on-call is 2 days roughly every month and a half or so. Most on-call is quiet! Because we all share the rotation, noisy alarms would drive all of us batty.
+We made a decision early on not to stick ops teams with the whole on-call challenge. So we all share it. At our current team size, on-call is 1 week roughly every 9 months or so. Most on-call is quiet! Because we all share the rotation, noisy alarms would drive all of us batty.
 
 If you get socked with a rough on-call, we&#39;ll ask you to take the next day off.
 

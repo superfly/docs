@@ -1,9 +1,14 @@
 ---
 title: Deploying Remote MCP Servers
 layout: docs
-nav: firecracker
+nav: guides
 date: 2025-04-15
 ---
+
+<figure>
+  <img src="/static/images/remote-mpc.png" alt="Illustration by Annie Ruygt of bird working at their computer while drinking coffee" class="w-full max-w-lg mx-auto">
+</figure>
+
 The Model Context Protocol (MCP) is a fun new way to give LLMs new powers. Originally developed by Anthropic, the protocol has since been adopted by OpenAI (with Google Gemini support in the works at the time of writing).
 
 The protocol defines a standardized way of connecting tools and providing additional context to LLMs, not dissimilar to the way USB provides a standardized way to connect computers to peripherals and devices. Fly Machines are tightly isolated VMs that are perfect for running MCP servers.
@@ -27,7 +32,7 @@ There are broadly two patterns you might want to follow when deploying a remote 
 1. Multi-tenant MCP server (one app, many users)
 2. Single-tenant MCP servers (one app per user)
 
-We're partial to the single-tenant pattern – it ensures proper isolation, and also helps with minimize your Fly.io bill: unused Machines can stop and start as needed, so you won't waste resources on idle users. `fly-replay` makes it easy to route requests to the correct app / Fly Machine (see more detail about this pattern in [Per-user Dev Environments with Fly Machines](https://fly.io/docs/blueprints/per-user-dev-environments/)).
+We're partial to the single-tenant pattern – it ensures proper isolation, and also helps with minimize your Fly.io bill: unused Machines can stop and start as needed, so you won't waste resources on idle users (more about why we think one app per customer is the right pattern [here](https://fly.io/docs/machines/guides-examples/one-app-per-user-why/)). `fly-replay` makes it easy to route requests to the correct app / Fly Machine (see more detail about this pattern in [Per-user Dev Environments with Fly Machines](https://fly.io/docs/blueprints/per-user-dev-environments/)).
 
 ## Multi-tenant MCP Servers
 
@@ -44,7 +49,7 @@ You'll need two main components:
 
 There are three main components:
 
-1. **Router App**: Receives requests from the MCP client and handles auth, then routes requests to per-user apps + Fly Machines with `fly-replay`. Optionally handles user management and permissions. You can use the experimental `fly mcp wrap` command in the Dockerfile of your router app to instantiate a lightweight HTTP server to receive requests forwarded from a local MCP client (more details in [the docs](https://fly.io/docs/flyctl/mcp) and [the community forum](https://community.fly.io/t/running-mcps-on-and-with-fly-io/24588)). Note that `fly mcp wrap` does not handle request routing – you'll have to implement that separately.
+1. **Router App**: Receives requests from the MCP client and handles auth, then routes requests to per-user apps + Fly Machines with `fly-replay`. See [Connecting to User Machines](/docs/blueprints/connecting-to-user-machines/) for details on implementing the routing pattern. Optionally handles user management and permissions. You can use the experimental `fly mcp wrap` command in the Dockerfile of your router app to instantiate a lightweight HTTP server to receive requests forwarded from a local MCP client (more details in [the docs](https://fly.io/docs/flyctl/mcp) and [the community forum](https://community.fly.io/t/running-mcps-on-and-with-fly-io/24588)). Note that `fly mcp wrap` does not handle request routing – you'll have to implement that separately.
 2. **MCP Server Apps**: Per-user (or per-team) apps that run the actual MCP goodness. Should have a single streamable HTTP endpoint path for MCP client connections, as well as any specific business logic or other integrations. 
 3. **MCP-Remote Shim (optional)**: Tiny client-side proxy that connects local MCP clients to your remote servers (only needed if the MCP client doesn't support auth and / or streamable HTTP requests to a remote MCP server). Handles authentication via a secret shared between the shim and the router app (authentication could be a simple API token, username + password, or a full OAuth dance). Securely stores and refreshes tokens as needed. To see an example, try the experimental `fly mcp proxy` command in the `flyctl`, which sets up a local proxy that forwards MCP client requests to a remote URL (more details in [the docs](https://fly.io/docs/flyctl/mcp) and [the community forum](https://community.fly.io/t/running-mcps-on-and-with-fly-io/24588)).
 

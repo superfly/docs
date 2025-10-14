@@ -1,9 +1,13 @@
 ---
 title: Autoscale Machines
 layout: docs
-nav: firecracker
+nav: guides
 redirect_from: /docs/blueprints/autoscale-machines-like-a-boss/
 ---
+
+<figure class="flex justify-center">
+  <img src="/static/images/autoscale-machines.png" alt="Illustration by Annie Ruygt of two machines dancing and one standing still" class="w-full max-w-lg mx-auto">
+</figure>
 
 You have an app with services that's configured to [automatically start
 and stop Machines based on traffic demand]((/docs/launch/autostop-autostart/)). But the traffic to your app changes
@@ -59,14 +63,14 @@ target app up and down:
 
 ```
 $ fly tokens create deploy -a my-target-app
-$ fly secrets set -o my-autoscaler --stage FAS_API_TOKEN="FlyV1 ..."
+$ fly secrets set -a my-autoscaler --stage FAS_API_TOKEN="FlyV1 ..."
 ```
 
 Create a read-only token so that the autoscaler app has access to a Prometheus instance:
 
 ```
-$ fly tokens create readonly -o my-org
-$ fly secrets set -o my-autoscaler --stage FAS_PROMETHEUS_TOKEN="FlyV1 ..."
+$ fly tokens create readonly
+$ fly secrets set -a my-autoscaler --stage FAS_PROMETHEUS_TOKEN="FlyV1 ..."
 ```
 
 Configure your autoscaler `fly.toml` like this:

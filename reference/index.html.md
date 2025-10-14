@@ -28,6 +28,10 @@ Quick references for often-used resources like flyctl and `fly.toml`. Or dig a l
 
 * **[Fly Proxy autostop/autostart](/docs/reference/fly-proxy-autostop-autostart/):** Learn how Fly Proxy determines excess capacity for an app to shut down or suspend Machines when they're not needed and start them back up when there's traffic.
 
+* **[Fly Proxy Content Encoding](/docs/reference/content-encoding/):** Learn how our proxy handles HTTP response compression, so you get better performance out of the box.
+
+* **[Machine Suspend/Resume](/docs/reference/suspend-resume/):** How to pause a Fly Machine in place and resume it in milliseconds.
+
 * **[Health Checks](/docs/reference/health-checks/):** Learn how Fly monitors your apps health through HTTP, TCP, and custom checks to verify availability and trigger automatic restarts when needed.
 
 ---
@@ -39,5 +43,7 @@ Quick references for often-used resources like flyctl and `fly.toml`. Or dig a l
 * **[Builders](/docs/reference/builders/):** The different ways you can assemble applications into deployable images for Fly.io.
 
 * **[Load Balancing](/docs/reference/load-balancing/):** How Fly Proxy distributes traffic to your application instances based on load, closeness, and concurrency settings.
+
+* **[Migrating from AWS to Fly.io overview](/docs/reference/aws-to-fly-guide/):** A guide with considerations for moving from AWS to Fly.io.
 
 * **[Multiple processes inside a Fly.io app](/docs/app-guides/multiple-processes/):** The different ways to run multiple processes inside a Fly App.

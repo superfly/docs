@@ -12,8 +12,6 @@ redirect_from:
   <img src="/static/images/spooky.webp" alt="Illustration by Annie Ruygt of a smirking ghost sitting infront of a laptop">
 </figure>
 
-<div class="important icon">**Important:** Support for this feature is limited and best-effort. Use with caution.</div>
-
 ## Metrics
 
 _Fully-managed metrics solutions to help you monitor your apps._
@@ -32,9 +30,10 @@ _Error monitoring for your apps from our extension providers._
 
 ## Logging
 
-_Live tail and search your app’s logs, or ship them where you want them._
+_Live tail and search your app’s logs, access them via API, or ship them where you want them._
 
 - **[Logging overview](/docs/monitoring/logging-overview/):** How logs work on Fly.io.
+- **[Logs API options for programmatic access](/docs/monitoring/logs-api-options/)::** How to fetch, stream or export logs programmatically without touching the CLI.
 - **[Live tail logs](/docs/monitoring/live-tail-logs/):** Where to access live tail logs.
 - **[Search logs](/docs/monitoring/search-logs/):** Searchable app logs in Grafana (beta).
 - **[Export logs](/docs/monitoring/exporting-logs/):** Aggregate your logs to a service of your choice.

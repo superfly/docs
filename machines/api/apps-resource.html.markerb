@@ -262,6 +262,7 @@ no body
       "id": "682kqp6pdno9d543",
       "name": "my-app-1",
       "machine_count": 3,
+      "volume_count": 2,
       "network": "default"
     },
     ...

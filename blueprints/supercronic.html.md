@@ -1,7 +1,7 @@
 ---
 title: Crontab with Supercronic
 layout: docs
-nav: firecracker
+nav: guides
 author: brad
 categories:
   - cron
@@ -10,6 +10,10 @@ redirect_from:
   - /docs/app-guides/superchronic/
   - /docs/app-guides/supercronic/
 ---
+
+<figure>
+  <img src="/static/images/supercronic.png" alt="Illustration by Annie Ruygt of Framkie the balloon wearing a sash and a prize ribbon in a gymnasium hall while a bird looks with admiration" class="w-full max-w-lg mx-auto">
+</figure>
 
 `crontab` is a little too opinionated for containers—it's a great little tool, but when run inside of containers it doesn't grab `ENV` vars how we'd like it to. Fortunately there's a Go binary called `supercronic` that's a drop-in replacement for containers.
 

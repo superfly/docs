@@ -60,7 +60,8 @@ Queries can be sent to the following endpoint:
 https://api.fly.io/prometheus/<org-slug>/
 ```
 
-You'll need to authenticate with a Fly Access Token sent in the [standard](https://www.rfc-editor.org/rfc/rfc6750.html) Bearer Token format (e.g., an HTTP request header `Authorization: FlyV1 <TOKEN>`), and you may only query series scoped to your organizations.
+You’ll need to authenticate with a [Fly Access Token](https://fly.io/docs/security/tokens/). Depending on the token type, the header uses either the Bearer format (`Authorization: Bearer <token>`) or the FlyV1 format (`Authorization: FlyV1 <token>`). You may only query series scoped to your organizations.
+
 
 #### Manually
 
@@ -84,7 +85,7 @@ TOKEN=$(flyctl auth token)
 ```shell
 curl https://api.fly.io/prometheus/$ORG_SLUG/api/v1/query \
   --data-urlencode 'query=sum(increase(fly_edge_http_responses_count)) by (app, status)' \
-  -H "Authorization: FlyV1 $TOKEN"
+  -H "Authorization: Bearer $TOKEN"
 ```
 
 ## Dashboards
@@ -117,7 +118,9 @@ You can also configure your Prometheus endpoint with an existing Grafana install
 2. Fill the form with the following:
 - HTTP -> URL: `https://api.fly.io/prometheus/<org-slug>/`
 - Custom HTTP Headers -> + Add Header:
-   - Header: `Authorization`, Value: `Bearer <token>`
+   - Header: `Authorization`
+   - Value: `FlyV1 <token>` (for tokens created with `fly tokens create`)
+   - Value: `Bearer <token>` (only for tokens from `flyctl auth token`)
 
 You're all set.
 
@@ -185,6 +188,14 @@ fly_app_tcp_disconnects_count
 Derived from the [`/proc` file system](https://www.kernel.org/doc/html/latest/filesystems/proc.html) of your app VMs.
 
 `fly_instance_up = 1` shows the VM is reporting correctly.
+
+### Instance exit - `fly_instance_exit_`
+
+Information about instance exits. These metrics help you understand why your instances are terminating and can be used for alerting and debugging.
+
+- `fly_instance_exit_code`: The exit code of the main process when the instance terminates. A value of 0 typically indicates normal termination, while non-zero values indicate errors or abnormal termination.
+- `fly_instance_exit_oom`: A boolean flag (0 or 1) indicating whether the instance was killed due to out-of-memory (OOM). A value of 1 means the instance was terminated because it exceeded its memory limits.
+- `fly_instance_exit_vm_code`: The VM-level exit code, which may differ from the application exit code. This can help distinguish between application-level failures and VM-level issues.
 
 #### Instance memory - `fly_instance_memory_`
 
@@ -416,21 +427,24 @@ This kind of token or "[macaroon](https://fly.io/blog/macaroons-escalated-quickl
 Create an org-restricted token:
 
 ```
-fly token create org -o THE_ORGANIZATION
+fly tokens create org -o THE_ORGANIZATION
 ```
 
 Create a read-only org-restricted token:
 
 ```
-fly token create readonly
+fly tokens create readonly
 ```
 
 These tokens look like this once generated: `FlyV1 fm2_lJPECAAAAAAAAC7txBAzYI6PRWhHLT...(a lot of base64-encoded text)`.
 
 #### Using tokens
-To use one of these tokens in an HTTP header, the "FlyV1" identifier replaces the "Bearer" token identifier. So it would look like this:
+Use the correct scheme based on token type:
 
+- `Bearer <token>` → for `flyctl auth token`.
+- `FlyV1 <token>` → for all tokens created with `fly tokens create`.
 
+Example with a token created via `fly tokens create`:
 ```
 Authorization: FlyV1 fm2_lJPECAAAAAAAAC7txBAzYI6PRWhHLT...(a lot of base64-encoded text)
 ```

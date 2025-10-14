@@ -4,6 +4,10 @@ layout: framework_docs
 order: 2
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/migrate.png" alt="Illustration by Annie Ruygt of a bird carrying an app to a balloon who is welcoming the app to join his group" class="w-full max-w-lg mx-auto">
+</figure>
+
 This guide runs you through how to migrate a basic Rails application off of Heroku and onto Fly. It assumes you're running the following services on Heroku:
 
 * Puma web server

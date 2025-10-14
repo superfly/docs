@@ -19,10 +19,14 @@ Networking on Fly.io.
 - **[Custom Private Networks](/docs/networking/custom-private-networks):** Isolate users, data, and code on custom private networks.
 
 - **[Flycast - Private Fly Proxy Services](/docs/networking/flycast):** Route requests to private apps through Fly Proxy to take advantage of features like load balancing and autostop/autostart based on traffic.
+
+- **[Egress IP Addresses](/docs/networking/egress-ips/):** How to get stable outbound IPs from your Fly apps using machine-scoped assignments or a shared proxy setup.
  
 - **[Dynamic request routing](/docs/networking/dynamic-request-routing/):** Use Fly.io request and response headers to customize request routing to regions, apps, and even specific Machines.
 
 - **[Custom domains](/docs/networking/custom-domain/):** Add a custom domain for your app and troubleshoot certificate creation.
+
+- **[Understanding Cloudflare](/docs/networking/understanding-cloudflare/):** How to use Cloudflare on Fly.io.
 
 - **[Automate the certificate process with the GraphQL API](/docs/networking/custom-domain-api):** Issue multiple certificates automatically for custom domains with the GraphQL API.
 

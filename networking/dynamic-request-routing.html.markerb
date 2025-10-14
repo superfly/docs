@@ -8,11 +8,11 @@ redirect_from:
   - /docs/reference/dynamic-request-routing/
 ---
 
-The `fly-replay` header is a powerful feature that gives you fine-grained control over request routing in your Fly.io applications. It allows you to dynamically route requests between regions, specific Machines, or even different apps within your organization.
+The `fly-replay` feature gives you fine-grained control over request routing in your Fly.io applications. It allows you to dynamically route requests between regions, specific Machines, or even different apps within your organization.
 
 ## How fly-replay Works
 
-When your app adds a `fly-replay` header to a response, [Fly Proxy](/docs/reference/fly-proxy) will automatically replay the original request according to your specified routing rules. This enables advanced patterns like:
+When your app responds to a request with a `fly-replay` response, [Fly Proxy](/docs/reference/fly-proxy) will automatically replay the original request according to your specified routing rules. This enables advanced patterns like:
 
 - Routing write operations to primary database regions
 - Load balancing between specific Machines
@@ -21,23 +21,34 @@ When your app adds a `fly-replay` header to a response, [Fly Proxy](/docs/refere
 
 <%= youtube "https://www.youtube.com/watch?v=riCh9Xeuf0s" %>
 
-## Header Fields Reference
+## Replay Header Format
 
-The `fly-replay` header accepts the following fields:
+Your app can add a `fly-replay` header to its response. The `fly-replay` header accepts the following fields:
 
 |Field |Description |
 |---|---|
-|`region` | The 3-letter code for the [region](/docs/reference/regions/) to route the request to |
+|`region` | The region(s) to route the request to. Accepts comma-separated list of [region codes](/docs/reference/regions/) |
 |`instance` | The ID of a specific Machine to route to |
+|`prefer_instance` | The ID of a specific Machine to route to, if possible |
 |`app` | The name of another app (in same organization) to route to |
 |`state` | Optional string included in `fly-replay-src` header on replay |
 |`elsewhere` | If `true`, excludes responding Machine from next load-balance |
 
 ### Example Usage
 
-Route to specific region:
+Route to a specific region:
 ```
 fly-replay: region=sjc
+```
+
+Route to one of the given regions, in order of preference:
+```
+fly-replay: region="iad,ord,us,na"
+```
+
+Route to a preferred region, or fallback to any available machine:
+```
+fly-replay: region="sjc,any"
 ```
 
 Route to specific Machine:
@@ -52,8 +63,143 @@ fly-replay: app=app-in-same-org
 
 You can combine multiple fields:
 ```
-fly-replay: region=sjc;app=app-in-same-org
+fly-replay: region="sjc,any";app=app-in-same-org
 ```
+
+<div class="note icon">
+**Note**: A comma-separated list of regions must be quoted.
+</div>
+
+### Geographic groups and aliases
+
+When replaying to a region, you can use geographic aliases like `us`, `eu`, or `sa` to target a broader area.
+
+| Alias | Area|
+|---------|------------------------|
+| `apac` | Asia-Pacific |
+| `eu` | Europe |
+| `na` | North America |
+| `sa` | South America |
+| `us`, `usa` | United States |
+| `any` | Earth |
+
+## Replay JSON Format
+
+Your app can set the response content-type to `application/vnd.fly.replay+json` and include replay instructions in the response body.
+For a complex replay the JSON body is easier to compose than the header format, and also supports more functionality.
+
+### JSON Structure
+
+The `application/vnd.fly.replay+json` replay body accepts the following fields:
+
+|Field |Description |
+|---|---|
+|`region` | The region(s) to route the request to. Accepts comma-separated list of [region codes](/docs/reference/regions/) |
+|`instance` | The ID of a specific Machine to route to |
+|`prefer_instance` | The ID of a specific Machine to route to, if possible |
+|`app` | The name of another app (in same organization) to route to |
+|`state` | Optional string included in `fly-replay-src` header on replay |
+|`elsewhere` | If `true`, excludes responding Machine from next load-balance |
+|`transform.path` | Rewrite the path and query parameters of the request |
+|`transform.delete_headers` | Delete headers from the request, hiding them from the replay target |
+|`transform.set_headers` | Set new headers on the request, overwriting headers of the same name |
+|`cache.prefix` | Cache the replay for matching requests (see [Replay Caching](#replay-caching)) |
+|`cache.ttl` | Cache the replay for this many seconds (see [Replay Caching](#replay-caching)) |
+|`cache.invalidate` | Invalidate the cache for the current route (see [Replay Caching](#replay-caching)) |
+
+### Example Usage
+
+Route to another app, and modify the request:
+
+```json
+{
+  "app": "target-app",
+  "region": "iad,us",
+  "transform": {
+    "path": "/new/path?param=value",
+    "delete_headers": ["x-unwanted-header", "cookie"],
+    "set_headers": [
+      { "name": "x-custom-header", "value": "new-value" },
+      { "name": "authorization", "value": "Bearer token123" }
+    ]
+  }
+}
+```
+
+## Replay Caching
+
+In cases where the replay target does not change often, you can use the `fly-replay-cache` mechanism to relieve the original app of some load. Here's how it works:
+- Issue a `fly-replay` header as usual
+- Set `fly-replay-cache: /some/path/*`
+  - This needs to be a path-matching pattern ending with a wildcard `/*`. This is where the cached replay is applied.
+  - The cached replay is unique to the request domain. The domain may also be set explicitly: `example.com/some/path/*`
+  - The domain part should not include ports; use `example.com`, not `example.com:80`.
+  - The pattern must also match the current request.
+- Set `fly-replay-cache-ttl-secs: number_of_seconds`
+
+If the replay target does eventually change, the replay target may proactively invalidate the cache by
+- Issuing a `fly-replay` back to the origin
+- Setting `fly-replay-cache: invalidate`
+
+For apps using the JSON format, specify a `cache` object:
+
+```json
+{
+  "app": "target-app",
+  "cache": {
+    "prefix": "/some/path/*",
+    "ttl": 60
+  }
+}
+```
+
+```json
+{
+  "app": "origin-app",
+  "cache": {
+    "invalidate": true
+  }
+}
+```
+
+<div class="note icon">
+**Note**: Replay caching is an optimization, not a guarantee. Your app should _not_ depend on this mechanism to function.
+The app issuing `fly-replay` still serves as the ultimate source of truth, and we may decide to consult that app at any moment even if a replay cache has previously been set.
+To ensure reliable operation, the app issuing `fly-replay` should still have multiple instances deployed in multiple regions.
+</div>
+
+### Bypassing the replay cache
+
+Sometimes, you might want a client to bypass a cached replay without actually invalidating the cache.
+For example, you might have an API endpoint that _mostly_ needs to be replayed to a "leader" instance. But depending on application logic, it could sometimes be handled by any instance.
+
+The recommended approach is to clearly separate endpoints that require replay from those that don't.
+However, when that is not possible, the replaying app can additionally set the header
+
+```
+fly-replay-cache-allow-bypass: yes
+```
+
+or set the JSON field `"allow_bypass": true`. Then, when your client makes a request, it can set the header:
+
+```
+fly-replay-cache-control: skip
+```
+
+to skip any cached replay that might be present.
+
+<div class="note icon">
+**Note**: This behavior is opt-in because enabling it by default could make your app vulnerable to malicious clients creating unexpected load on the replaying machine. All it takes is setting a boolean HTTP header.
+</div>
+
+### Was my request served by the cache?
+
+If your app needs to know whether a request was served from the replay cache, it can check the fly-replay-cache-status header. This header is sent to the replay _target_ app or machine.
+
+- Absent: the request was not replayed and was delivered directly to the app or machine.
+- `miss`: the request didn't use replay cache; it first hit another machine and got replayed here.
+- `hit`: the request did use the replay cache! It never reached the source app or machine and was redirected straight to the target.
+- `bypass`: even though the cache might have been set, it was explicitly skipped by setting the `fly-replay-cache-control: skip` header.
 
 ## Implementation Details
 
@@ -66,6 +212,13 @@ fly-replay: region=sjc;app=app-in-same-org
 For large uploads that exceed the 1MB limit, consider:
 - Using direct-to-storage uploads where possible
 - Using the [fly-prefer-region](#the-fly-prefer-region-request-header) header instead
+
+For `fly-replay-cache`, the following limitations apply:
+- The `state` field cannot be set in the `fly-replay` intended to be cached
+- Transformations for the headers or path cannot be defined.
+- The TTL needs to be a minimum of 10 seconds
+- Only one step of lookup is performed in the cache; as such, if the target app issues another `fly-replay-cache`, the caching behavior in this case is undefined
+- The `fly-replay-src` header (described below) will _not_ be set for requests replayed through the cache
 
 ### The fly-replay-src Header
 
@@ -80,6 +233,18 @@ When a request is replayed, Fly Proxy adds a `fly-replay-src` header containing 
 
 This header is useful for tracking request paths and implementing consistency patterns. See the [official Ruby client](https://github.com/superfly/fly-ruby/blob/main/lib/fly-ruby/regional_database.rb#L74-L76+external) for an example of using these fields to prevent read-your-write inconsistency.
 
+This header is not set when the request is replayed through a cached `fly-replay` entry (`fly-replay-cache`).
+
+### The fly-preferred-instance-unavailable Header
+
+If you replay with `prefer_instance` set, Fly Proxy will attempt to route to this Machine. This may not happen for a number of reasons, for example the Machine may not be found, or found but at its configured [hard_limit](/docs/reference/load-balancing/#load).
+
+In these cases, the request will be delivered to a different Machine that matches the remaining fields in your replay. Along with the other Fly.io-specific headers, a `fly-preferred-instance-unavailable` header will be set containing the ID of the instance that could not be reached.
+
+### Web Socket Considerations
+
+It is worth noting that an application returning `fly-replay` headers should not negotiate a web socket upgrade itself.  Some frameworks automatically handle this process.  Instead, the application or instance receiving the requests should handle the upgrade.
+
 ## Alternative Routing Headers
 
 For cases where `fly-replay` isn't suitable, Fly.io provides two alternative request headers:
@@ -90,7 +255,23 @@ For cases where `fly-replay` isn't suitable, Fly.io provides two alternative req
 fly-prefer-region: ams
 ```
 
-Attempts to route directly to a specific region. Falls back to nearest region with healthy Machines if target region is unavailable. Useful for large uploads that can't be replayed.
+Attempts to route directly to specific region(s). You can specify multiple regions as comma-separated values for fallback preferences:
+
+```
+fly-prefer-region: iad,ord,us
+```
+
+Falls back to the next region in the list, or to the nearest region with healthy Machines if none of the specified regions are available. Useful for large uploads that can't be replayed.
+
+### The fly-prefer-instance-id Header
+
+```
+fly-prefer-instance-id: 90801679a10038
+```
+
+Attempts to route to a specific Machine. Falls back to any matching Machine if the target Machine cannot be found, or is unable to accept requests.
+
+If the request is delivered to a different Machine, the [fly-preferred-instance-unavailable](#the-fly-preferred-instance-unavailable-header) request header will be set.
 
 ### The fly-force-instance-id Header
 
@@ -98,7 +279,7 @@ Attempts to route directly to a specific region. Falls back to nearest region wi
 fly-force-instance-id: 90801679a10038
 ```
 
-Forces routing to a specific Machine. No fallback if Machine is unavailable.
+Forces routing to a specific Machine. The Fly Proxy will attempt to reach the Machine multiple times if the Machine is unhealthy. No fallback if Machine is ultimately unavailable.
 
 <div class="note icon">
 **Note**: Get Machine IDs using `fly status` or `fly Machines list`.

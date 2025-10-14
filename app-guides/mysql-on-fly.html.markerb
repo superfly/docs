@@ -29,7 +29,7 @@ cd my-mysql
 # Run `fly launch` to create an app
 # Use the --no-deploy option since we'll make changes before first deploy
 # Use the --image option to specify a MySQL Docker image
-fly launch --no-deploy --image mysql:8
+fly launch --no-deploy --image mysql:8.0.37
 ```
 
 Type `y` when prompted to tweak the default app settings. Then, on the Fly Launch page:

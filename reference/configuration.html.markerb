@@ -52,7 +52,9 @@ The following options are available to control the lifecycle of a running applic
 
 ### `kill_signal` option
 
-When shutting down a Fly Machine, by default, Fly.io sends a `SIGINT` signal to the running process. Typically this triggers a hard shutdown option on most applications. The `kill_signal` option allows you to change what signal is sent so that you can trigger a softer, less disruptive shutdown. Options are `SIGINT` (default), `SIGTERM`, `SIGQUIT`, `SIGUSR1`, `SIGUSR2`, `SIGKILL`, or `SIGSTOP`. For example, to set the kill signal to SIGTERM, you would add:
+When shutting down a Fly Machine, Fly.io sends a `SIGINT` signal to the running process by default. Typically this triggers a hard shutdown option on most applications. The `kill_signal` option lets you override that with a different signal so that you can trigger a softer, less disruptive shutdown: `SIGTERM`, `SIGQUIT`, `SIGUSR1`, `SIGUSR2`, `SIGKILL`, or `SIGSTOP`. 
+
+For example, to set the kill signal to SIGTERM, you would add:
 
 ```toml
 kill_signal = "SIGTERM"
@@ -60,13 +62,37 @@ kill_signal = "SIGTERM"
 
 ### `kill_timeout` option
 
-The time to wait, in seconds, before stopping a Machine after sending the `SIGINT` signal or the signal set by `kill_signal`. Set `kill_timeout` to a value that gives your app enough time to exit gracefully. The default setting is 5 seconds. The maximum `kill_timeout` is 300 seconds (five minutes). 
+<section class="warning">Note: `kill_timeout` settings should be considered best-effort, and your app needs to be prepared to handle shorter stopping times</section>
+
+This sets how long Fly.io waits (in seconds) after sending the `kill_signal` before moving on to a forced shutdown. Set `kill_timeout` to a value that gives your app enough time to exit gracefully. The default is 5 seconds. You can set it up to a maximum of 300 seconds (5 minutes).
 
 For example, to set the timeout to two minutes:
 
 ```toml
 kill_timeout = 120
 ```
+
+### How the shutdown sequence works
+
+These options come into play during controlled shutdowns such as:
+
+* When using `fly deploy`
+* When using `fly machine stop`
+* When a machine stops due to `auto_stop_machines`
+
+The sequence looks like this:
+
+1. Fly sends the `kill_signal` to the main process (defined by your Dockerfile’s `ENTRYPOINT` or `CMD`, or overridden via `--entrypoint`).
+
+1. It waits for up to `kill_timeout` seconds.
+
+1. Then it sends `SIGTERM` unconditionally.
+
+This gives your app a chance to shut down cleanly: finish requests, close connections, stop taking new work. It's designed for apps that can wrap up in under five minutes.
+
+Many workers will re-queue unfinished jobs so another machine can pick them up. If your app doesn't support that, or needs longer to shut down, you'll want to plan around that.
+
+You can watch shutdown behavior by watching `fly logs` during a deploy or idle stop.
 
 ## Console command
 
@@ -172,19 +198,24 @@ This section configures deployment-related settings such as the release command 
 
 ### Run one-off commands before releasing a deployment
 
-To run a command in a temporary Machine&mdash;using the app's successfully built Docker image&mdash;*before* the release is deployed, define a `release_command`:
+The `release_command` lets you run a one-off task, like a database migration, before any of your deployed Machines are created or updated. It runs in a temporary Machine using the newly built image, once per deploy attempt. This is a common pattern for frameworks like Rails or Phoenix, but it's not limited to them. You can use it for any setup task that needs to run once, not on every app boot.
+
+If the command fails, the deploy will stop. The goal is to make deployment safer: do the risky part first, and only continue if it succeeds.
+
+To run a command in a temporary Machine *before* the release is deployed, define a `release_command`:
 
 ```toml
 [deploy]
   release_command = "bin/rails db:prepare"
 ```
 
-The `release_command` value replaces `CMD` in the temporary Machine. This is useful for running database migrations before app Machines are created or updated with the new release. Note that the Docker image's `ENTRYPOINT` is not overridden by the `release_command`; `ENTRYPOINT` always runs.
+The `release_command` value replaces `CMD` in the temporary Machine. This is most commonly used for database migrations, but can be any task that prepares your app for the new release. Note that the Docker image's `ENTRYPOINT` is not overridden by the `release_command`; `ENTRYPOINT` always runs.
 
-By default, the temporary Machine has full access to the network, environment variables and secrets, but *not* to persistent volumes. Changes made to the file system on the temporary Machine will not be retained or deployed. The building/compiling of your project should be done in your Dockerfile. If you need to modify persistent volumes or configure your application, consider making use of `CMD` or `ENTRYPOINT` in your Dockerfile, or of a [process group command](#the-processes-section).
+By default, the temporary Machine has full access to the network, environment variables and secrets, but *not* to persistent volumes. Changes made to the file system on the temporary Machine will not persist. It has no volumes attached, and the Machine is destroyed after the command completes. The building/compiling of your project should be done in your Dockerfile. If you need to modify persistent volumes or configure your application, consider making use of `CMD` or `ENTRYPOINT` in your Dockerfile, or of a [process group command](#the-processes-section).
 
 The temporary Machine inherits the size from the largest Machine in the default process group of the app as of flyctl v0.0.508 (they also default larger on empty/new apps, using the Machine `shared-cpu-2x` preset). The default process group is defined as either the `app` process, or the first process group in alphabetical order (if an `app` process is not present).
-It is also possible to explicitly define the Machine size by setting `[deploy.release_command_vm]`  like in:
+
+It is also possible to explicitly define the Machine size by setting `[deploy.release_command_vm]`, for example:
 
 ```toml
 [deploy]
@@ -202,6 +233,18 @@ To ensure the command runs in a specific region, such as `dfw`, set `PRIMARY_REG
 The environment variable `RELEASE_COMMAND=1` is set within the temporary release Machine. You can use this to define behavior in your Dockerfile's `ENTRYPOINT`  that's conditional on being run on a release Machine.
 
 By default, the release command has 5 minutes to complete before it is killed. It is possible to increase or decrease the timeout with `fly deploy --release-command-timeout=10m` or by setting `release_command_timeout = "10m"` in `[deploy]` section of `fly.toml`.
+
+For more context, see our [Seamless Deployments guide](/docs/blueprints/seamless-deployments/#one-off-tasks-with-release_command).
+
+<div class="callout">
+**Things to know about `release_command`:**
+- Replaces `CMD`, but not `ENTRYPOINT`
+- Runs in a temporary Machine with no volumes
+- Inherits environment, secrets, and network config
+- Fails the deploy on a non-zero exit code
+- Times out after 5 minutes by default (configurable)
+- Logs are streamed to `fly deploy` and `fly logs`
+</div>
 
 ### Picking a deployment strategy
 
@@ -244,7 +287,7 @@ Fractional values, between zero and one, provide a percentage of Machines that c
 
 ### Dealing with timeout errors while deploying a new version
 
-Every time `fly deploy` runs, it builds a new docker image, pushes it to an internal registry, and then updates or creates Machines for the app. Sometimes the image is too large, or the platform is slower than usual pulling the new image layers, triggering the default 5 minute timeout waiting for the Machine to be in a started state.
+Every time `fly deploy` runs, it builds a new Docker image, pushes it to an internal registry, and then updates or creates Machines for the app. Sometimes the image is too large, or the platform is slower than usual pulling the new image layers, triggering the default 5 minute timeout waiting for the Machine to be in a started state.
 
 The good thing is that this timeout can be controlled in two ways, with the `--wait-timeout` option, for example `fly deploy --wait-timeout=10m`, or as a more permanent `fly.toml` setting:
 
@@ -402,7 +445,7 @@ Roughly translated, this section says every thirty seconds, perform an HTTP GET 
 Times are in milliseconds unless units are specified.
 
 * `grace_period`: The time to wait after a Machine starts before checking its health. Make sure this is long enough for your app to start up. For example, if your app takes 2 seconds to start up, give it some runway by setting `grace_period` to at least 3 seconds.
-* `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If it's long and your grace_period shorter than your app's startup time, health check will take too long adding you your deployment time.
+* `interval`: The time between connectivity checks. There should be a balance between the interval and the grace period. If interval is long and grace_period is shorter than your app's startup time, the health check will take too long, adding to your deployment time.
 * `timeout`: The maximum time a connection can take before being reported as failing its health check.
 * `method`: The HTTP method to be used for the check. If omitted, the default is `get`.
 * `path`: The path of the URL to be requested.
@@ -631,7 +674,6 @@ When a service is running, Fly Proxy can check up on it by connecting to a port.
   [[services.tcp_checks]]
     grace_period = "1s"
     interval = "15s"
-    restart_limit = 0
     timeout = "2s"
 ```
 Times are in milliseconds unless units are specified.
@@ -744,6 +786,20 @@ For example, the following config retains snapshots of volumes for 14 days:
   snapshot_retention = 14
 ```
 
+### `scheduled_snapshots`
+
+Optional. Enable or disable automatic daily snapshots for a volume.
+
+The default is true (enabled) when unset.
+
+For example, the following config disables automatic daily snapshots:
+```toml
+[mounts]
+  source = "myapp_cache"
+  destination = "/cache"
+  scheduled_snapshots = false
+```
+
 ### `auto_extend_size_threshold`
 
 Optional. The threshold of storage used on a volume, by percentage, that triggers extending the volume's size by the value of `auto_extend_size_increment`,
@@ -751,17 +807,21 @@ unless the resulting size would exceed `auto_extend_size_limit`.
 
 ### `auto_extend_size_increment`
 
-The increment, in GB, by which to extend the volume after reaching the `auto_extend_size_threshold`. Required with `auto_extend_size_threshold`.
+The increment, in GB, by which to extend the volume after reaching the `auto_extend_size_threshold`.
 
 ### `auto_extend_size_limit`
 
-Maximum size, in GB, of a volume after an extension is completed. Required with `auto_extend_size_threshold`.
+Maximum size, in GB, of a volume after an extension is completed.
+
+<div class="important">
+When using the auto-extension feature for volumes, both `auto_extend_size_increment` and `auto_extend_size_limit` are required. Without these values, the volume won't resize automatically, even if the usage threshold is reached.
+</div>
 
 ### Auto extend volume size configuration
 
 You can optionally configure volumes to automatically extend when they reach a usage threshold.
 
-For example, the following config extends the size of the volume by 1GB when it reaches 80% capacity. The volume extensions are limited to 5GB in total. `auto_extend_size_limit` is optional.
+For example, the following config extends the size of the volume by 1GB when it reaches 80% capacity. The volume extensions are limited to 5GB in total.
 
 ```toml
 [[mounts]]
@@ -796,6 +856,7 @@ All keys are optional and `size` has lower precedence than all other keys.
   gpu_kind = "a100-pcie-40gb"
   kernel_args = "no-hlt=true"
   host_dedication_id = "customer-id"
+  persist_rootfs = "never"
   processes = ["app"]
 ```
 
@@ -837,6 +898,14 @@ Additional kernel parameters provided to the kernel when booting the VM.
 
 In the case of having a dedicated host, this is the value to set so Machines are launched on dedicated hardware.
 
+### persist_rootfs
+
+The persistence of the root filesystem across restarts and updates. Valid values are `never` (default), `restart`, and `always`.
+
+- `never`: The root filesystem is ephemeral and will not be persisted across restarts or updates.
+- `restart`: The root filesystem is persisted across restarts, but not across updates.
+- `always`: The root filesystem is persisted across restarts and updates.
+
 ### `processes`
 
 Optionally, you can specify a list of [processes](#the-processes-section) to limit by process group. You can even specify two different `[[vm]]` sections to have different compute requirements per process group. Note the need to use double brackets if there are multiple `[[vm]]` sections defined.
@@ -866,7 +935,7 @@ processes = ["worker"]
   processes = ["app"]
 ```
 
-When a machine unexpectedly exits, our scheduling machinery follows a machine’s restart policy to restart it without your intervention. These policies are quite similar to docker’s container restart policies:
+When a machine unexpectedly exits, our scheduling machinery follows a machine’s restart policy to restart it without your intervention. These policies are quite similar to Docker’s container restart policies:
 
 - always: we’ll attempt to restart the machine no matter the exit code.
 - never: we won’t restart the machine even if it exits with a non-zero exit code.
@@ -982,18 +1051,32 @@ Check out [Metrics on Fly.io](/docs/reference/metrics/) for more information abo
 
 ## The `statics` sections
 
-When `statics` are set, requests under `url_prefix` that are present as files in `guest_path` will be delivered directly to clients, bypassing your web server. These assets are extracted from your Docker image and delivered directly from our proxy on worker hosts.
+You can use the `[[statics]]` section in your `fly.toml` to serve static files such as images, CSS, or JavaScript for your application. There are two ways to serve statics: 
+- From a running Fly Machine
+- From a Tigris object storage bucket.
+
+### Serving statics from a Fly Machine
+
+When you add a `[[statics]]` section to `fly.toml`, the Fly Proxy intercepts requests matching your `url_prefix`. If the requested file exists in your `guest_path`, the request is routed to a static file server running inside your machine. This bypasses your main web server process. Your machine must be running for static files to be served.
+
+If your machine is stopped, static files will not be served. If `autostart` is enabled, the machine will be started during statics requests as well as during normal requests to the app. Static assets are always served directly from your VM, not from the Fly edge or proxy host.
 
 ```toml
 [[statics]]
   guest_path = "/app/public"
   url_prefix = "/public"
 ```
-Each `[[statics]]` block maps a URL prefix to a path inside your container. You can have up to 10 mappings in an application.
 
-The "guest path" --- the path inside your container where the files to serve are located --- can overlap with other static mappings; the URL prefix should not (so, two mappings to `/public/foo` and `/public/bar` are fine, but two mappings to `/public` are not).
+In this example, a request to `/public/image.png` is served from `/app/public/image.png` inside your running machine. You can define up to 10 `[[statics]]` mappings per application.
 
-Alternatively, you can serve statics directly from object storage using [Tigris](/docs/tigris/). Similar to machine statics, requests under `url_prefix` are served from static assets in your Tigris bucket under `guest_path`. The same rules apply for overlapping URL prefixes.
+The `guest_path` is the directory in your Docker image to serve files from. It may overlap across mappings, but `url_prefix` values must not overlap. Only one static mapping is honored for a given prefix. For example, two mappings to `/public/foo` and `/public/bar` are allowed, but two mappings to `/public` are not.
+
+### Serving statics from Tigris object storage
+
+You can serve static files directly from a Tigris object storage bucket. This lets you host assets or full static sites from a bucket instead of baking them into your Docker image. 
+
+Static files in Tigris buckets are always delivered through your application’s running VM, not directly from the Fly edge. If no machine is running, requests for Tigris statics will not be served.
+However, if `autostart` is enabled for your app, incoming requests for static assets will automatically start a machine as needed, the same as for normal application traffic.
 
 ```toml
 [[statics]]
@@ -1002,7 +1085,9 @@ Alternatively, you can serve statics directly from object storage using [Tigris]
   tigris_bucket = "my-bucket"
 ```
 
-Serving statics from Tigris supports index documents. When an index document is specified, requests to the root or any of its subfolders serve the index document.
+In this configuration, requests under `/public` are served from files stored in `my-bucket` under the `/app/public` path. Your machine must be running for these files to be served. If your machine scales to zero, static assets will not be accessible.
+
+When handling trailing slashes, requests to a directory path such as `/public/dir/` look for an `index.html` file, if you specify one. Requests without a trailing slash such as `/public/dir` may not serve as expected. Consider using redirects or documenting this for your users. Tigris statics support the `index_document` key, which allows you to serve a default file for a directory path.
 
 ```toml
 [[statics]]
@@ -1012,23 +1097,25 @@ Serving statics from Tigris supports index documents. When an index document is 
   index_document = "index.html"
 ```
 
-In this configuration, a request to `https://example.com/public/` will serve the file `/app/public/index.html` stored in `my-bucket`. Similarly, a request to `https://example.com/public/assets/`, will serve the file `/app/public/assets/index.html`.
+In this configuration, a request to `https://example.com/public/` serves `/app/public/index.html` from the bucket. Similarly, `https://example.com/public/assets/` serves `/app/public/assets/index.html`.
+
+Tigris statics are billed at Tigris pricing. Data egress from Tigris may incur both Tigris and Fly Proxy egress charges. 
+
+Do not overlap `url_prefix` values; only one static mapping will be honored for a given prefix.
+
 
 ### Caveats
 
 This feature should not be compared directly with a CDN, for the following reasons:
 
-* This feature does not exempt you from having to run a web service in your Machine.
+- This feature does not exempt you from having to run a web service in your Machine.
+- You must have a running machine for statics to be served. If your machine is stopped, static assets will not be served. If `auto_start_machines` is enabled, the machine will be started automatically in response to statics requests, the same as with normal application requests.
+- The Fly Proxy routes matching requests directly to the statics file server running inside your machine. Static requests do not go through your main application process, but are handled by the file server within the same VM.
+- Serving an index document is only supported for statics served directly from Tigris. The index document must have the same name in all the relevant locations in your Tigris bucket.
+- For statics served from your container, it will not find `index.html` at the root. The full path must be requested.
+- You cannot set `Cache-Control` or any other headers on assets. If you need those, deliver them from your application and set the relevant headers.
+- `statics` does not honor symlinks. For example, if `/app/public` in your container is a symlink, such as `/app-39403/public`, use the absolute original path in your statics configuration.
 
-* Serving an index document is only supported for statics served directly from Tigris. The index document must have the same name in all the relevant locations in your Tigris bucket.
-
-* For statics served from your container, it will not find `index.html` at the root. The full path must be requested.
-
-* You can't set `Cache-Control` or any other headers on assets. If you need those, you'll need to deliver them from your application and set the relevant headers.
-
-* Assets are not delivered, by default, from all edge Fly.io regions. Rather, assets are delivered from the regions the application is deployed in.
-
-* `statics` does not honor symlinks. So, if `/app/public` in your container is actually a symlink to something like `/app-39403/public`, you'll want to use the absolute original path in your statics configuration.
 
 ## The `files` section
 

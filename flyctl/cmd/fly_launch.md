@@ -9,11 +9,12 @@ fly launch [flags]
 
 ~~~
       --attach                           Attach this new application to the current application
-      --auto-stop string                 Automatically suspend the app after a period of inactivity. Valid values are 'off', 'stop', and 'suspend (default "stop")
+      --auto-stop string                 Automatically suspend the app after a period of inactivity. Valid values are 'off', 'stop', and 'suspend' (default "stop")
       --build-arg stringArray            Set of build time variables in the form of NAME=VALUE pairs. Can be specified multiple times.
       --build-only                       Build but do not deploy
       --build-secret stringArray         Set of build secrets of NAME=VALUE pairs. Can be specified multiple times. See https://docs.docker.com/engine/reference/commandline/buildx_build/#secret
       --build-target string              Set the target build stage to build if the Dockerfile has more than one stage
+      --buildkit                         Deploy using buildkit-based remote builder
       --buildpacks-docker-host string    Address to docker daemon that will be exposed to the build container.
                                          If not set (or set to empty string) the standard socket location will be used.
                                          Special value 'inherit' may be used in which case DOCKER_HOST environment variable will be used.
@@ -28,8 +29,12 @@ fly launch [flags]
                                              - "volume-opt=<key>=<value>", can be specified more than once, takes a key-value pair consisting of the option name and its value.
                                          Repeat for each volume in order (comma-separated lists not accepted)
                                          
+      --command string                   The command to override the Docker CND.
+      --compression string               Compression algorithm to use for the image. Options are "zstd" or "gzip". Defaults to "gzip". (default "gzip")
+      --compression-level int            Compression level to use for the image. Defaults to 7. (default 7)
   -c, --config string                    Path to application configuration file
       --copy-config                      Use the configuration file if present without prompting
+      --db string[="true"]               Provision a Postgres database. Options: mpg (managed postgres), upg/legacy (unmanaged postgres), or true (default type)
       --deploy-retries string            Number of times to retry a deployment if it fails (default "auto")
       --depot string[="true"]            Deploy using depot to build the image (default "auto")
       --depot-scope string               The scope of the Depot builder's cache to use (org or app) (default "org")
@@ -67,6 +72,7 @@ fly launch [flags]
       --no-create                        Do not create an app, only generate configuration files
       --no-db                            Skip automatically provisioning a database
       --no-deploy                        Do not immediately deploy the new app after fly launch creates and configures it
+      --no-github-workflow               Skip automatically provisioning a GitHub fly deploy workflow
       --no-object-storage                Skip automatically provisioning an object storage bucket
       --no-public-ips                    Do not allocate any new public IP addresses
       --no-redis                         Skip automatically provisioning a Redis instance
@@ -82,6 +88,7 @@ fly launch [flags]
       --regions strings                  Deploy to machines only in these regions. Multiple regions can be specified with comma separated values or by providing the flag multiple times.
       --release-command-timeout string   Time duration to wait for a release command finish running, or 'none' to disable. (default "5m0s")
       --remote-only                      Perform builds on a remote builder instance instead of using the local docker daemon. This is the default. Use --local-only to build locally.
+      --secret stringArray               Set of secrets in the form of NAME=VALUE pairs. Can be specified multiple times.
   -s, --signal string                    Signal to stop the machine with for bluegreen strategy (default: SIGINT)
       --smoke-checks                     Perform smoke checks during deployment (default true)
       --strategy string                  The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. The default strategy is rolling.
@@ -91,6 +98,7 @@ fly launch [flags]
       --vm-gpus int                      Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
       --vm-memory string                 Memory (in megabytes) to attribute to the VM
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
+  -v, --volume strings                   Volume to mount, in the form of <volume_name>:/path/inside/machine[:<options>]
       --volume-initial-size int          The initial size in GB for volumes created on first deploy
       --wait-timeout string              Time duration to wait for individual machines to transition states and become healthy. (default "5m0s")
       --wg                               Determines whether communication with remote builders are conducted over wireguard or plain internet(https) (default true)

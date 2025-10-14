@@ -19,18 +19,18 @@ You can host your apps in any of the following regions.
 | Region ID | Region Location               | Gateway     |
 |-----------|-------------------------------|-------------|
 | ams       | Amsterdam, Netherlands        | ✓           |
-| arn       | Stockholm, Sweden             |             |
+| arn       | Stockholm, Sweden             | ✓           |
 | atl       | Atlanta, Georgia (US)         |             |
 | bog       | Bogotá, Colombia              |             |
-| bom       | Mumbai, India                 |             |
+| bom       | Mumbai, India                 | ✓           |
 | bos       | Boston, Massachusetts (US)    |             |
 | cdg       | Paris, France                 | ✓           |
 | den       | Denver, Colorado (US)         |             |
 | dfw       | Dallas, Texas (US)            | ✓           |
-| ewr       | Secaucus, NJ (US)             |             |
+| ewr       | Secaucus, NJ (US)             | ✓           |
 | eze       | Ezeiza, Argentina             |             |
 | fra       | Frankfurt, Germany            | ✓           |
-| gdl       | Guadalajara, Mexico           |             |
+| gdl       | Guadalajara, Mexico           | ✓           |
 | gig       | Rio de Janeiro, Brazil        |             |
 | gru       | Sao Paulo, Brazil             |             |
 | hkg       | Hong Kong, Hong Kong          | ✓           |
@@ -44,7 +44,7 @@ You can host your apps in any of the following regions.
 | ord       | Chicago, Illinois (US)        | ✓           |
 | otp       | Bucharest, Romania            |             |
 | phx       | Phoenix, Arizona (US)         |             |
-| qro       | Querétaro, Mexico             |             |
+| qro       | Querétaro, Mexico             | ✓           |
 | scl       | Santiago, Chile               | ✓           |
 | sea       | Seattle, Washington (US)      | ✓           |
 | sin       | Singapore, Singapore          | ✓           |
@@ -55,18 +55,6 @@ You can host your apps in any of the following regions.
 | yyz       | Toronto, Canada               | ✓           |
 
 - **Gateway regions:** "Gateway" regions also have WireGuard gateways, through which you connect to your organization's private network.
-
-## Edge-only regions
-
-Edge servers receive inbound traffic from the Internet destined for apps on the Fly.io platform and private traffic between Machines in different regions. [Fly Proxy](/docs/reference/fly-proxy/) routes traffic from edges to regional worker servers. Edge-only regions don't have any workers and therefore aren't available for app deployment.
-
-| Region ID | Region Location               |
-|-----------|-------------------------------|
-| dxb       | Dubai, United Arab Emirates   |
-| ist       | Istanbul, Turkey              |
-| mel       | Melbourne, Australia          |
-
-You might see an edge-only region code on your invoices for egress bandwidth or in the `Fly-Region` request header.
 
 ## Discovering your app's region
 

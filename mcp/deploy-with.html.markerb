@@ -1,0 +1,17 @@
+---
+title: Deploy with
+layout: framework_docs_overview
+toc: false
+order: 3
+---
+
+<%= youtube "https://www.youtube.com/watch?v=7zmg5PEnwR0" %>
+
+These pages show you how to deploy a stdio MCP on Fly.io using your choice of the `fly launch`, `fly machine run`, and the machines API.
+The example we use in each is the same: the [FileSystem MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem) running the [flyio/mcp](https://hub.docker.com/r/flyio/mcp) image on DockerHub image on a Machine with a volume.
+
+If you are looking to deploy a MCP stdio server for yourself, `fly launch` is generally what you need.
+
+If you are looking to deploy MCP servers for your users, the Machines API gives you more knobs and control.
+
+`fly machines run` was originally intended more for experimentation and familiarizing yourself with the platform, but to our surprise it has become popular for use in scripts.

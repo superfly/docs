@@ -5,6 +5,10 @@ nav: firecracker
 redirect_from: /docs/reference/redis/
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/redis-upstash.png" alt="Illustration by Annie Ruygt of a puzzle box figure holding two slices of cake" class="w-full max-w-lg mx-auto">
+</figure>
+
 <aside class="callout">
   &#42;Redis is a registered trademark of Redis Ltd. Any rights therein are reserved to Redis Ltd. Any use by Fly.io is for referential purposes only and does not indicate any sponsorship, endorsement or affiliation between Redis and Fly.io.
 </aside>
@@ -118,7 +122,7 @@ Upstash Redis is available in all Fly regions via a [private IPv6 address](/docs
 
 ### Writing to replica regions
 
-**Replicas forward writes to the primary**. Replicas can't be written to. Writes are synchronous, and synchronous writes over geographical distance experience latency. Plan for this latency in your application design.
+**Replicas forward writes to the primary**. Replicas can't be written to. Writes are synchronous, and synchronous writes over geographic distance experience latency. Plan for this latency in your application design.
 
 If you're using Redis as region-local cache and don't require a shared cache, setup separate databases per-region and enable object eviction.
 
@@ -138,7 +142,7 @@ Upstash offers a range of payment plans for different use cases.
 
 Upstash Redis databases start on the pay-as-you-go plan at **$0.20 per 100k requests**. This means you only pay for what you use. For most use cases, this is a good starting point.
 
-### Fixed price plans
+#### Fixed price plans
 
 Upstash also offers fixed price plans for when:
 
@@ -148,7 +152,7 @@ Upstash also offers fixed price plans for when:
 These fixed price plans are available via `flyctl redis update <dbname>`:
 
 * Starter: $10 per month, single region only. Includes 200MB storage, 100 req/sec
-* Standard: $50 per month, per region. Includes 3GB storage, 100 req/sec
+* Standard: $50 per month, $10 per replica region. Includes 3GB storage, 100 req/sec
 * Pro 2K: $280 per month, $100 per replica region. Includes 50GB storage, 10k req/sec
 
 Your usage is updated hourly on your monthly Fly.io bill. You can track database usage details in the [Upstash web console](#the-upstash-web-console) as well.

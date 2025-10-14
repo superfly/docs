@@ -8,35 +8,21 @@ artist: Annie Ruygt
 artist_link: https://annieruygtillustration.com/
 alt: A number of couples dancing, including a two clones dancing with separate partners.
 layout: docs
-nav: firecracker
+nav: guides
 redirect_from: "/blog/shared-nothing/"
 date: 2024-03-05
 author: rubys
 ---
 
-<figure class="relative">
-                <img class="post-cover" src="/blog/shared-nothing/assets/dancing-clones-cover.webp" alt="A number of couples dancing, including a two clones dancing with separate partners.">
-                <figcaption class="flex items-center absolute right-0 top-full pt-3 text-xs font-medium text-[#73739C]">
-                  <span class="sr-only">Image by</span>
-                  
-<svg role="img" class="mr-1.5" style="pointer-events: none; width: 17px; height: 17px;" viewBox="0 0 20 20" fill="currentColor" fill-rule="evenodd">
-  <g buffered-rendering="static">
-    <path fill-rule="evenodd" d="M1 8a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 018.07 3h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0016.07 6H17a2 2 0 012 2v7a2 2 0 01-2 2H3a2 2 0 01-2-2V8zm13.5 3a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM10 14a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
-  </g>
-</svg>
-
-                    <a href="https://annieruygtillustration.com/" target="_blank" class="text-navy-900 underline underline-offset-2 decoration-1 decoration-navy-900/30 hover:decoration-violet-600/30 hover:text-violet-600 transition-colors">
-                      Annie Ruygt
-                    </a>
-                </figcaption>
-            </figure>
-
-<div class="callout">
-I’m Sam Ruby, and my day job is to make Fly.io better for Rails and JS. (Go try us out!) But today I’m talking about an app I wrote in my personal capacity as a ballroom dance nerd. This article is about how a serverful, stateful, shared-nothing architecture hit the spot for me when it came time to scale to multiple customers in different parts of the world.
-</div>
+<figure>
+  <img src="/blog/2024-03-05/dancing-clones-cover_sm.webp" alt="Illustration by Annie Ruygt of a number of couples dancing, including a two clones dancing with separate partners." class="w-full max-w-lg mx-auto">
+</figure>
 
 <center><iframe width="600" height="315" src="https://www.youtube-nocookie.com/embed/_cT4Unk5RiU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></center><br />
 
+<div class="callout">
+This guide from Rails and JS expert Sam Ruby is based on his personal capacity as a ballroom dance nerd. It covers how a serverful, stateful, shared-nothing architecture hit the spot for him when it came time to scale to multiple customers in different parts of the world.
+</div>
 
 Once upon a time, I found myself double booked at a ballroom dance competition. Read that [story in more detail on my blog](http://intertwingly.net/blog/2022/08/13/Unretiring), but essentially: you’re only supposed to get one shot to dance in a given heat, and I ended up listed twice in the spreadsheet for that heat. I decided to write an app to take the load of manual entry and scheduling off of organizers, and so that no one would ever be asked to do something impossible and be at two places at one time.
 
@@ -79,7 +65,7 @@ An excerpt from DHH's [Majestic Monolith](https://signalvnoise.com/svn3/the-maje
 
 > Every time you extract a collaboration between objects to a collaboration between systems, you’re accepting a world of hurt with a myriad of liabilities and failure states. What to do when services are down, how to migrate in concert, and all the pain of running many services in the first place.
 
-Another way to look at this is: as needs grow, do you really want to share a database and redis instances between customers?  (Or, in this case, between events?)
+Another way to look at this is: as needs grow, do you really want to share a database and Redis instances between customers?  (Or, in this case, between events?)
 If "no" turns out to be a viable answer: go with it.  Put all of the services needed to support one customer in one Docker image and then repeat that set as often
 as needed.  Eliminating the need for a network in producing a response to a request both increases throughput and reliability.
 
@@ -94,7 +80,7 @@ and grows to 450MB when active.  That being said, I have seen machines fail due 
 each machine 1GB.  I also define an additional 2G of [swap](https://fly.io/docs/reference/configuration/#swap_size_mb-option) as
 I would rather the machine run slower under peak load than crash.
 
-Finally, invest the time to set up a [wireguard network](https://fly.io/docs/networking/private-networking/) that lets you VPN into your own private network of machines.
+Finally, invest the time to set up a [WireGuard network](https://fly.io/docs/networking/private-networking/) that lets you VPN into your own private network of machines.
 
 ## Multi-tenancy
 
@@ -127,7 +113,7 @@ still listed as todo, but the following is what I have been able to figure out:
 
 - One action cable process is allocated per server (i.e., listen port).
 - In order to share the action cable process, all apps on the same server will
-  need to share the same redis URL and channel prefix.  The [Rails
+  need to share the same Redis URL and channel prefix.  The [Rails
   documentation](https://guides.rubyonrails.org/action_cable_overview.html#redis-adapter)
   suggests that you use a different channel prefix for different applications
   on the same server -- **IGNORE THAT**.

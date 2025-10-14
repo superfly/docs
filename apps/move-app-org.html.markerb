@@ -4,6 +4,10 @@ layout: docs
 nav: apps
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/migrating-from-aws.png" alt="Illustration by Annie Ruygt of a figure jumping from one mountian to another" class="w-full max-w-lg mx-auto">
+</figure>
+
 You might want to move an app to a new org to hand off your completed work to a client, to take advantage of a new pricing model, or to move a production app out of your personal organization.
 
 You can move an entire app with its resources to another organization with the `fly apps move` command. You'll need to be a member of both organizations to move an app.
@@ -35,5 +39,10 @@ The following app resources are transferred to the new org automatically:
 
 The following extension services need to be reconfigured for the app after the move:
 
-- **[Upstash for Redis](https://fly.io/docs/upstash/redis/):** Upstash Redis is only available over an organization's private network. After you move the app, you'll need to provision a new database for the new org.
-- **[Tigris object storage](https://fly.io/docs/tigris/):** Before moving the app, you'll need to delete the bucket, then recreate it in the new org and set the new secrets. Billing for the new bucket will be tied to the new org.
+- **[Upstash for Redis](/docs/upstash/redis/):** Upstash Redis is only available over an organization's private network. After you move the app, you'll need to provision a new database for the new org.
+- **[Tigris object storage](/docs/tigris/):** Before moving the app, you'll need to delete the bucket, then recreate it in the new org and set the new secrets. Billing for the new bucket will be tied to the new org.
+
+
+## Read more
+
+[App handover considerations and approaches](/docs/apps/app-handover-guide/)

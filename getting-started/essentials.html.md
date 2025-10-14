@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/getting-started.png" alt="Illustration by Annie Ruygt of a figure steering a ship" class="w-full max-w-lg mx-auto">
+</figure>
+
 You really can [get an app up and running in just minutes](https://fly.io/speedrun/) on Fly.io.
 
 But if you want to know a bit more about what's what on the Fly.io platform, then read on. You can skip to the [glossary](#fly-io-glossary) for the tl;dr.
@@ -27,7 +31,7 @@ Fly Launch is our built-from-scratch-for-Fly-Machines orchestrator:
 - Create your app with the `fly launch` command. Fly Launch detects your framework and gives you useful defaults.
 - Configure your app's deployment and services with the [`fly.toml`](/docs/reference/configuration/) configuration file.
 - Deploy your app's Machines as a group with the `fly deploy` command.
-- Scale your app's Machines [horizontally](/docs/apps/scale-count/) or [vertically](/docs/apps/scale-machine/) with the `fly scale` command.
+- Scale your app's Machines [horizontally](/docs/launch/scale-count/) or [vertically](/docs/launch/scale-machine/) with the `fly scale` command. [Scaling based on metrics](/docs/launch/autoscale-by-metric/) is also possible. 
 
 Again, Fly Launch is built on Machines: you can use Fly Launch to manage the scale of your application with a single command, or you can interact directly with Machines for fine-grained control.
 
@@ -55,4 +59,4 @@ Learn more about [Fly Apps](/docs/apps/overview/).
 
 **[Fly Volumes](/docs/volumes/):** Local persistent storage for Fly Machines. Every Fly Volume can be attached to one Machine at a time and belongs to one Fly App.
 
-**Organizations**: Administrative entities on Fly.io that let you to manage billing, control access by adding and removing members, and share app development environments.
+**[Organizations](/docs/security/org-roles-permissions/)**: Administrative entities on Fly.io that let you to manage billing, control access by adding and removing members, and share app development environments.

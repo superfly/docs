@@ -21,7 +21,7 @@ swap:
   data are: data is
   datatype: data type
   datastore: data store
-  filesystem: file system
+  # filesystem: file system
   firewalls: firewall rules
   free tier: free allowances
   functionality: capability|feature

@@ -38,17 +38,52 @@ You should be able to visit `http://localhost:8000` and see the home page.
 
 ### Launch
 
-Next, we'll use the `launch` command to automagically configure your app for Fly.
-
-The `launch` command adds a few files to your code base. Don't worry, it will ask before overwriting anything.
+Next, we'll use the `launch` command to automagically configure your app for Fly and deploy it to the Fly cloud. This will add a few files to your code base--but, don't worry, it will ask before overwriting anything.
 
 **If you haven't already, go ahead and run `fly launch`!**
 
 ```cmd
 fly launch
 ```
+This would detect that your project is built with Laravel. Afterwhich it would provide a summary of the default configuration that would be given to your app.
 
-When asked if you want to deploy now, say **No**.
+```
+We're about to launch your Laravel app on Fly.io. Here's what you're getting:
+
+Organization: Personal                                                   (fly launch defaults to the personal org)
+Name:         fly-lara-app                                               (derived from your directory name)
+Region:       Paris, France                                              (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM                                     (most apps need about 1GB of RAM)
+Postgres:     <none>                                                     (not requested)
+Redis:        Pay-as-you-go Plan: 10 GB Max Data Size, eviction disabled (determined from app source)
+Tigris:       <none>                                                     (not requested)
+
+? Do you want to tweak these settings before proceeding? (y/N) 
+```
+
+Extensions like [Postgres](/docs/mpg/overview/) ( database ), [Redis](/docs/upstash/redis/) ( cache ), and [Tigris](/docs/tigris/#main-content-start) ( storage ) can also be added by default based on whether there's an existing, similar connection found for your Laravel project. 
+
+<div class="warning icon">
+**Please note** that these extension apps will also incur their own **usage costs**! You can select "y" in order to adjust the default settings and remove any extension you don't need.
+</div>
+
+#### Launch Configuration
+Once you accept the configuration, this would proceed with **adding [default secrets](https://github.com/superfly/flyctl/blob/master/scanner/laravel.go#L41-L50)**, **deploying the accepted extensions**, and **generating files** on your project:
+1. `.github/workflows/fly-deploy.yml`, `fly.toml` - Configurations specific to hosting on Fly
+2. [.fly directory](https://github.com/fly-apps/dockerfile-laravel/tree/main/resources/views/fly) - A directory containing configuration files for running Nginx/PHP in a container
+3. [Dockerfile](https://github.com/fly-apps/dockerfile-laravel/blob/main/resources/views/dockerfile.blade.php) -  Used to build a container image that is run in fly
+4. [.dockerignore](https://github.com/fly-apps/dockerfile-laravel/blob/main/resources/views/fly/dockerignore.blade.php) - Used to ensure certain files don’t make its way into your image
+
+
+With the configuration files and extenstion apps in place, an image is built for your app using your project and the Dockerfile generated for it. This image is then finally used to deploy your app.
+
+#### Success!
+You should be able to visit `https://your-app-name.fly.dev` and see the Laravel demo home page.
+
+<%= partial "docs/languages-and-frameworks/partials/launched" %>
+
+
+## Customizing your app 
 
 If you have other environment variables to set, you can edit the `fly.toml` file and add them.
 
@@ -67,28 +102,14 @@ For sensitive data, you can set **secrets** with the [`fly secrets set`](https:/
 fly secrets set SOME_SECRET_KEY=<the-value-from-your-env-file>
 ```
 
-<div class="callout">
-The `fly launch` command will generate a secret with a valid, random value for `APP_KEY`.
-</div>
+
 
 ### Deploy
 
-Finally, run `fly deploy` to build and deploy your application!
+Once you've made changes for your app locally, you can run `fly deploy` to deploy your changes.
 
-You should be able to visit `https://your-app-name.fly.dev` and see the Laravel demo home page.
-
-<%= partial "docs/languages-and-frameworks/partials/launched" %>
 
 ### Some Notes
-
-The `fly launch` adds some files to your code base.
-
-**Here is what gets added:**
-
-1. `Dockerfile` - Used to build a container image that is run in fly
-2. `.dockerignore` - Used to ensure certain files don't make its way into your repository
-3. `fly.toml` - Configuration specific to hosting on Fly
-4. `.fly` (formerly `docker`) - A directory containing configuration files for running Nginx/PHP in a container
 
 Running `fly launch` (and later `fly deploy`) uses the `Dockerfile` to build a container image, copying your application files into the resulting image.
 
