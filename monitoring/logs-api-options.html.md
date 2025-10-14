@@ -30,7 +30,7 @@ The Fly CLI hits an internal API to stream logs. You can use it too:
 
 ```
 GET /api/v1/apps/:app_name/logs
-Authorization: Bearer <your-token>
+Authorization: <your-token>
 ```
 
 You’ll get a stream of newline-delimited JSON log lines. You can pass query params like:
