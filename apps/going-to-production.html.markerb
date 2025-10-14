@@ -27,11 +27,11 @@ Moving an app from staging to production can expose unexpected failure modes: se
 
 <%= render ChecklistComponent.new(
   items: [
-    { id: "sso", title: "Set up single sign-on for organizations", description: "Enable SSO on your organization to take advantage of Google or GitHub authentication security. See [Single sign-on for organizations](/docs/security/sso/)." },
-    { id: "isolation", title: "Isolate staging and production environments", description: "Use organizations to limit access to your production environment. See [Blueprint: Staging and production isolation](/docs/blueprints/staging-prod-isolation/)." },
-    { id: "least-privilege", title: "Enforce least privilege access", description: "Use access tokens to allow only the minimum access level required by team members to your organization, apps, and Machines. See [access tokens](https://fly.io/docs/security/tokens/)." },
-    { id: "secrets", title: "Protect sensitive information", description: "Set secrets to store sensitive data and make them available as environment variables to your app. See [Secrets and Fly Apps](/docs/apps/secrets/)." },
-    { id: "exposure", title: "Make sure private services are not exposed", description: "Check that your private apps with services don't have public IP addresses. Run `fly ips list` and use `fly ips release` to release unnecessary public IPs. See flyctl [`fly ips` commands](/docs/flyctl/ips/). Assign private apps a [Flycast address](https://fly.io/docs/networking/flycast/) instead." },
+    { id: "sso", title: "Set up single sign-on for organizations", description: "Enable SSO on your organization to take advantage of Google or GitHub authentication security. Learn more about [Single sign-on for organizations](/docs/security/sso/)." },
+    { id: "isolation", title: "Isolate staging and production environments", description: "Use organizations to limit access to your production environment. Read this guide: [Staging and production isolation](/docs/blueprints/staging-prod-isolation/)." },
+    { id: "least-privilege", title: "Enforce least privilege access", description: "Use access tokens to allow only the minimum access level required by team members to your organization, apps, and Machines. Understand [access tokens](https://fly.io/docs/security/tokens/)." },
+    { id: "secrets", title: "Protect sensitive information", description: "Set secrets to store sensitive data and make them available as environment variables to your app. Read about [Secrets and Fly Apps](/docs/apps/secrets/)." },
+    { id: "exposure", title: "Make sure private services are not exposed", description: "Check that your private apps with services don't have public IP addresses. Run `fly ips list` and use `fly ips release` to release unnecessary public IPs. More detail is availablein this `flyctl` reference: [`fly ips` commands](/docs/flyctl/ips/). Assign private apps a [Flycast address](https://fly.io/docs/networking/flycast/) instead." },
     { id: "arcjet", title: "Use Arcjet application security for JavaScript apps", description: "Secure your app with rate limiting, bot protection, email validation, and defense against common attacks through our extension partner Arcjet. Read more about [Application Security by Arcjet](/docs/security/arcjet/)." }
   ],
   c: params[:c] || "",
@@ -81,9 +81,9 @@ Moving an app from staging to production can expose unexpected failure modes: se
 
 <%= render ChecklistComponent.new(
   items: [
-    { id: "custom-domain", title: "Set up a custom domain", description: "Configure a certificate for your domain. See [Use a custom domain](/docs/networking/custom-domain/)."},
-    { id: "ipv4", title: "Consider a dedicated IPv4 address", description: "Completely eliminate the chance of blacklisted spammers causing problems for your app. There is a small [added cost](/docs/about/pricing/#anycast-ip-addresses) for dedicated IPv4 addresses. See [Dedicated IPv4](/docs/networking/services/#dedicated-ipv4)."},
-    { id: "flycast", title: "Set up Flycast for private apps", description: "If you haven't already done so, give your private apps a Flycast address to communicate with them entirely on your private network. See [Flycast - Private Fly Proxy services](https://fly.io/docs/networking/flycast/)."}
+    { id: "custom-domain", title: "Set up a custom domain", description: "Configure a certificate for your domain. Learn how to [use a custom domain](/docs/networking/custom-domain/)."},
+    { id: "ipv4", title: "Consider using a dedicated IPv4 address", description: "Completely eliminate the chance of blacklisted spammers causing problems for your app. There is a small [added cost](/docs/about/pricing/#anycast-ip-addresses) for dedicated IPv4 addresses. Read more about [Dedicated IPv4](/docs/networking/services/#dedicated-ipv4)."},
+    { id: "flycast", title: "Set up Flycast for private apps", description: "If you haven't already done so, give your private apps a Flycast address to communicate with them entirely on your private network. Find out about [Flycast - Private Fly Proxy services](https://fly.io/docs/networking/flycast/)."}
   ],
   c: params[:c] || "",
   o: params[:o] || "",
