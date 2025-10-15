@@ -176,6 +176,10 @@ You'll be charged for volumes that you create, whether they are attached to a Ma
   <p class="mt-2">
     Starting January 1st 2026, we're introducing charges for [volume snapshot](/docs/volumes/snapshots/) storage.
   </p>
+
+  <p class="mt-2">
+    If you're an existing customer, you can check your usage in the **Billing** section of the [dashboard](https://fly.io/dashboard/personal/billing) on your Upcoming Invoice and in the Cost Explorer.
+  </p>
 </section>
 <% end %>
 
