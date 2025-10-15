@@ -188,7 +188,7 @@ You'll be charged for volumes that you create, whether they are attached to a Ma
 
 [Volume Snapshot billing](/docs/about/billing/#volume-snapshot-billing) is pro-rated to the hour.
 
-Automatic daily snapshots with 5 days retention are enabled by default on new volumes. This can be [adjusted or disabled](/docs/volumes/snapshots/#set-or-change-the-snapshot-retention-period).
+Automatic daily snapshots with 5 days retention are enabled by default on new volumes. This can be [adjusted](/docs/volumes/snapshots/#set-or-change-the-snapshot-retention-period) or [disabled](/docs/volumes/snapshots/#disable-automatic-daily-snapshots).
 
 Usage is calculated based on the total stored size of the snapshots, not the provisioned volume size. You're only charged for the actual data stored - if you've written 1GB to a 10GB volume, you'll be charged for around 1GB of snapshot storage.
 
