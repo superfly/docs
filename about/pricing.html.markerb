@@ -157,6 +157,8 @@ Reserved and dedicated options:
 
 ## Persistent Storage Volumes
 
+### Volumes
+
 [Fly Volumes](/docs/volumes/) are local persistent storage for Machines.
 
 * $0.15/GB per month of provisioned capacity
@@ -164,6 +166,33 @@ Reserved and dedicated options:
 [Volume billing](/docs/about/billing/#volume-billing) is pro-rated to the hour.
 
 You'll be charged for volumes that you create, whether they are attached to a Machine or not, including when an attached Machine is stopped.
+
+### Volume Snapshots
+
+<% if Time.now.utc < '2026-03-01T00:00:00Z' %>
+<section class="callout">
+  **New charges**
+
+  <p class="mt-2">
+    Starting January 1st 2026, we're introducing charges for [volume snapshot](/docs/volumes/snapshots/) storage.
+  </p>
+
+  <p class="mt-2">
+    If you're an existing customer, you can check your usage in the **Billing** section of the [dashboard](https://fly.io/dashboard/personal/billing) on your Upcoming Invoice and in the Cost Explorer.
+  </p>
+</section>
+<% end %>
+
+* $0.08/GB per month
+* First 10GB free each month
+
+[Volume Snapshot billing](/docs/about/billing/#volume-snapshot-billing) is pro-rated to the hour.
+
+Automatic daily snapshots with 5 days retention are enabled by default on new volumes. This can be [adjusted](/docs/volumes/snapshots/#set-or-change-the-snapshot-retention-period) or [disabled](/docs/volumes/snapshots/#disable-automatic-daily-snapshots).
+
+Usage is calculated based on the total stored size of the snapshots, not the provisioned volume size. You're only charged for the actual data stored - if you've written 1GB to a 10GB volume, you'll be charged for around 1GB of snapshot storage.
+
+Snapshots for each volume are stored incrementally, so you'll only be charged for data that has changed since the previously stored snapshot.
 
 ## Network prices
 
