@@ -31,22 +31,11 @@ Flyd (our [in-house orchestrator](https://fly.io/blog/carving-the-scheduler-out-
 {
   "containers": [
     {
+      "name": "my-app",
       "image": "registry.fly.io/my-app:latest",
       "env": {
         "PORT": "8080"
       },
-      "services": [
-        {
-          "internal_port": 8080,
-          "protocol": "tcp",
-          "ports": [
-            {
-              "port": 80,
-              "handlers": ["http"]
-            }
-          ]
-        }
-      ],
       "healthchecks": [
         {
           "http": {
@@ -64,6 +53,7 @@ Flyd (our [in-house orchestrator](https://fly.io/blog/carving-the-scheduler-out-
       ]
     },
     {
+      "name": "log-shipper",
       "image": "registry.fly.io/log-shipper:latest",
       "env": {
         "LOG_LEVEL": "info"
