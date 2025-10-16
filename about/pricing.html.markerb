@@ -25,39 +25,6 @@ We charge for started and stopped Machines differently. Attached GPUs are charge
 
 ### Started Fly Machines
 
-<% if Time.now.utc < '2024-11-01T00:00:00Z' %>
-<section class="callout">
-  **Machines pricing is changing!**
-
-  <p class="mt-2">
-    On July 1st, we're beginning a phased roll-out of per-region pricing. For the first month, prices will remain the same, but the lines on your invoice will be broken down by region. Each subsequent month, prices will be increase by 25% of the difference between the price in <span class="font-mono">iad</span> and the price listed for the region, until the listed price is reached in November.
-  </p>
-
-  <p class="my-4 w-full text-right"><button id="phased-roll-out-example-toggle-btn" toggle>See an example of how the phased roll-out works</button></p>
-
-  <ul id="phased-roll-out-example" class="hidden block overflow-hidden mt-2 text-sm leading-normal bg-white card" aria-label="show phased roll-out worked example" aria-hidden="true">
-
-    <li>The listed price for <span class="font-mono">shared-1x-256mb</span> Machines in <span class="font-mono">lax</span> is $2.33/month.</li>
-    <li>In July, <span class="font-mono">shared-1x-256mb</span> Machines in <span class="font-mono">lax</span> will cost the same as Machines in <span class="font-mono">iad</span>, roughly $1.94/month.</li>
-    <li>In August, they'll cost roughly $1.94 + 0.25\*($2.33 - $1.94) = $2.04/month.</li>
-    <li>In September, they'll cost roughly $1.94 + 0.5\*($2.33 - $1.94) = $2.14/month.</li>
-    <li>In October, they'll cost roughly $1.94 + 0.75\*($2.33 - $1.94) = $2.23/month.</li>
-    <li class="mb-0">Finally, in November they'll cost roughly $2.33/month, the listed price for Machines in <span class="font-mono">lax</span>.</li>
-
-  </ul>
-</section>
-
-<script type="text/javascript">
-  const phasedRollOutToggleBtn = document.getElementById("phased-roll-out-example-toggle-btn");
-  const phasedRollOutContent = document.getElementById("phased-roll-out-example");
-
-  phasedRollOutToggleBtn.addEventListener("click", function() {
-    phasedRollOutContent.classList.toggle("hidden");
-    phasedRollOutContent.ariaHidden = phasedRollOutContent.ariaHidden === "true" ? "false" : "true";
-  })
-</script>
-<% end %>
-
 <p>
   <label for="region-select">Region: </label>
   <select id="region-select" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -135,7 +102,7 @@ For example, if you purchase a $36/year `shared` Machines block in `cdg`, you'll
 
 You can set up reservations via self-service in the billing section of your Fly.io [dashboard](https://fly.io/dashboard). They apply to usage starting on the 1st, so setting up reservations any time in the month will give you the credits the entire month.
 
-### GPUs and Fly Machines
+### GPU-enabled Fly Machines
 
 Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see above) plus the price of the attached GPU. Like Machines, GPUs are billed by the second when the attached Machine is running.
 
@@ -154,6 +121,12 @@ Usage terms:
 Reserved and dedicated options:
 
 * Discounted rates for reserved GPU Machines and dedicated hosts.
+
+## Managed Postgres
+
+The price of running Fly.io Managed Postgres depends on your selected Managed Postgres Plan and the amount of storage your Postgres cluster has. 
+
+Current pricing for Managed Postgres plans and storage is available [here](/docs/mpg#pricing).
 
 ## Persistent Storage Volumes
 
@@ -235,7 +208,7 @@ Fly.io pricing is per region group for outbound data transfer. You'll see a more
 | - Asia Pacific<br>- Oceania<br>- South America | $0.04 per GB | $0.015 per GB |
 | - Africa<br>- India | $0.12 per GB | $0.050 per GB |
 
-To opt-in to granular bandwidth pricing, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Switch to granular bandwidth pricing**. You won't be able to return back not using the granular data transfer rates once you opt-in.
+To opt-in to granular bandwidth pricing, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Switch to granular bandwidth pricing**. You won't be able to return to using the non-granular data transfer rates once you opt in.
 
 ### Static Egress IPs for Machines
 
@@ -244,18 +217,17 @@ Static egress IPs for Machines provide dedicated outbound IP addresses for your 
 * $0.005 per hour (~$3.60/month)
 * Machines do not have a static IP by default
 
+## Support
+
+[Community support](https://community.fly.io/) is included for all customers, regardless of usage level.
+You can get access to a support plan by purchasing a Standard ($29/month), Premium ($199/month), or Enterprise (starting at $2500/month) package in the **Support** section of your dashboard. For more about Support, see [Support at Fly.io](/docs/about/support/).
+
 ## Fly Kubernetes
 
 [Fly Kubernetes](/docs/kubernetes/) (FKS) is a managed Kubernetes service that runs on Fly.io.
 
 * $75/month per cluster
 * Plus the cost of [compute](#compute) and [Fly volumes](#persistent-storage-volumes) that you create
-
-## Fly Postgres
-
-[Fly Postgres](/docs/postgres/) is a PostgreSQL database that you create and then manage yourself. Fly Postgres clusters are Fly Apps that consist of Machines, volumes, and any configured extra memory.
-
-The [Machine price](#compute) and [volume price](#persistent-storage-volumes) for Fly Postgres are the same as any other Machine and volume you'd run on Fly.io. Assuming the Machines are running all the time, the cost for the preset configurations is about $2/month for a single node cluster for dev projects and from about $82 to $164/month for a three-node production cluster. You don't need to keep the preset configurations, you can [scale your Fly Postgres Machines](/docs/postgres/managing/scaling/) to suit your workload at any time.
 
 ## Extensions
 
@@ -271,21 +243,13 @@ You will not be billed separately for:
 
 You **will** be billed separately for data transfer to these external third-party services. See our [data transfer pricing](#data-transfer-pricing) for details.
 
-## LiteFS Cloud
+## Unsupported Products
 
-<%= partial "/docs/partials/docs/litefs_sunset" %>
+### Unmanaged Fly Postgres (Unsupported)
 
-[LiteFS Cloud](/docs/litefs/cloud-backups) is a service that provides streaming
-backups and point-in-time restore for your SQLite-based applications that use
-[LiteFS](/docs/litefs).
+[Fly Postgres](/docs/postgres/) is a PostgreSQL database that you create and then manage yourself. Fly Postgres clusters are Fly Apps that consist of Machines, volumes, and any configured extra memory.
 
-* $5 per month for up to 10GB of database storage.
-* Additional $0.50/GB per month for database storage above 10GB.
-
-## Support
-
-[Community support](https://community.fly.io/) is included for all customers, regardless of usage level.
-You can get access to additional support by purchasing a Standard ($29/month), Premium ($199/month), or Enterprise (starting at $2500/month) package in the **Support** section of your dashboard. For more about Support, see [Support at Fly.io](/docs/about/support/).
+The [Machine price](#compute) and [volume price](#persistent-storage-volumes) for Fly Postgres are the same as any other Machine and volume you'd run on Fly.io. Assuming the Machines are running all the time, the cost for the preset configurations is about $2/month for a single node cluster for dev projects and from about $82 to $164/month for a three-node production cluster. You don't need to keep the preset configurations, you can [scale your Fly Postgres Machines](/docs/postgres/managing/scaling/) to suit your workload at any time.
 
 ## Discontinued Plans
 
@@ -303,13 +267,13 @@ Outbound data transfer:
 * 30 GB Asia Pacific, Oceania & South America
 * 30 GB Africa & India
 
-#### Paid Hobby plan and Free Trial credit (deprecated)
+### Paid Hobby plan with Free Trial credit 
 
 If you signed up for the now deprecated $5/month paid Hobby plan prior the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit was used up, we automatically placed your organization on the $5/month Hobby plan, which included $5/month of usage and free allowances. There are no free allowances during the free trial. We'll send you an email when your free trial credit is used up and you won't be charged before that. The free trial credit doesn't expire and applies only to the default (“personal”) organization that we created for you on sign-up.
 
 To change your plan to the Pay As You Go plan, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Choose Pay As You Go**. If you change your plan, you won't be able to return to the paid Hobby Plan.
 
-#### Legacy (Free) Hobby plan
+### Legacy (Free) Hobby plan
 
 If you were on the free Hobby plan at the time that the paid Hobby plan became the default for new organizations, your plan is now called the Legacy Hobby plan. Your costs stay the same as they were, with no monthly subscription fee, and no included usage beyond the free resource allowances.
 
