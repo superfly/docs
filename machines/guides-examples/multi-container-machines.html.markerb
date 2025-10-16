@@ -47,13 +47,17 @@ Flyd (our [in-house orchestrator](https://fly.io/blog/carving-the-scheduler-out-
           ]
         }
       ],
-      "health_checks": [
+      "healthchecks": [
         {
-          "type": "http",
-          "path": "/health",
-          "interval": "10s",
-          "timeout": "5s",
-          "grace_period": "5s",
+          "http": {
+            "port": 8080,
+            "method": "GET",
+            "path": "/health",
+            "scheme": "http"
+          },
+          "interval": 10,
+          "timeout": 5,
+          "grace_period": 5,
           "success_threshold": 2,
           "failure_threshold": 3
         }
@@ -102,7 +106,7 @@ Internally, Pilot models these dependencies as a directed graph and walks it to 
 
 Each container specifies its own health checks. The system supports different types of health checks:
 
-1. **TCP health checks**: Checks if a port is accepting connections
+**TCP health checks**: Checks if a port is accepting connections
 
 ```json
 "tcp": {
@@ -110,7 +114,7 @@ Each container specifies its own health checks. The system supports different ty
 }
 ```
 
-1. **HTTP health checks**: Makes HTTP requests to an endpoint
+**HTTP health checks**: Makes HTTP requests to an endpoint
 
 ```json
 "http": {
@@ -121,7 +125,7 @@ Each container specifies its own health checks. The system supports different ty
 }
 ```
 
-1. **Exec health checks**: Runs a command inside the container
+**Exec health checks**: Runs a command inside the container
 
 ```json
 "exec": {
@@ -131,12 +135,12 @@ Each container specifies its own health checks. The system supports different ty
 
 ### Health Check Configuration Options
 
-- `name`: Unique identifier for the health check
-- `interval`: How often to run the check (e.g., "10s")
-- `grace_period`: Initial period after container starts before checks begin
-- `timeout`: Maximum time to wait for a check to complete
-- `success_threshold`: Number of consecutive successful checks required to change status to healthy
-- `failure_threshold`: Number of consecutive failed checks before marking as unhealthy
+- `name`: string - Unique identifier for the health check
+- `interval`: int - How often to run the check, in seconds
+- `grace_period`: int - Time in seconds to wait after container starts before checks begin
+- `timeout`: int - Maximum time in seconds to wait for a check to complete
+- `success_threshold`: int - Number of consecutive successful checks required to change status to healthy
+- `failure_threshold`: int - Number of consecutive failed checks before marking as unhealthy
 
 ## Security Considerations
 
@@ -207,10 +211,11 @@ Starting with `flyctl v0.3.147`, you can run multiple containers using `fly depl
     {
       "name": "echo",
       "image": "ealen/echo-server",
-      "health_checks": [
+      "healthchecks": [
         {
-          "type": "exec",
-          "command": ["wget", "-q", "--spider", "http://localhost"]
+          "exec": {
+            "command": ["wget", "-q", "--spider", "http://localhost"]
+          }
         }
       ]
     }
@@ -321,17 +326,17 @@ You can also run LiteFS as a sidecar with a health check configured to ensure it
           "LITEFS_DIR": "/data",
           "LITEFS_CONFIG": "/etc/litefs.yml"
         },
-        "health_checks": [
+        "healthchecks": [
           {
-            "type": "http",
-            "port": 8080,
-            "path": "/info",
-            "method": "GET",
-            "scheme": "http",
+            "http": {
+              "port": 8080,
+              "method": "GET",
+              "path": "/info",
+              "scheme": "http"
+            },
             "grace_period": 500,
             "interval": 1000,
             "timeout": 1000,
-            "delay_start": 0,
             "success_threshold": 1,
             "failure_threshold": 5
           }
