@@ -10,8 +10,6 @@ Fly.io runs applications physically close to users: in datacenters around the wo
 Run <code>fly platform regions</code> to get a list of regions.
 </div>
 
-<img style="border-radius: 0.75rem;" src="/docs/images/fly-region-map.webp" alt="Map showing the Fly.io balloon in 34 locations across a world map"/>
-
 ## Fly.io Regions
 
 You can host your apps in any of the following regions.
