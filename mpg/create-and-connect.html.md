@@ -108,7 +108,7 @@ This command will create a direct connection to your database and open a psql se
 
 ### Setting up a Proxy Connection
 
-To create a proxy connection to your Managed Postgres database:
+You can create a proxy connection to your Managed Postgres database using the '[mpg proxy](https://fly.io/docs/flyctl/mpg-proxy/)' command:
 
 ```cmd
 fly mpg proxy [flags]
