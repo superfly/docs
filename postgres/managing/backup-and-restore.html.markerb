@@ -64,8 +64,8 @@ fly volumes list -a <postgres-app-name>
 ```
 ```output
 ID                   NAME    SIZE REGION ATTACHED VM CREATED AT
-vol_x915grn008vn70qy pg_data 10GB atl    b780ce3d    2 weeks ago
-vol_ke628r677pvwmnpy pg_data 10GB atl    359d0e24    2 weeks ago
+vol_x915grn008vn70qy pg_data 10GB sjc    b780ce3d    2 weeks ago
+vol_ke628r677pvwmnpy pg_data 10GB sjc    359d0e24    2 weeks ago
 ```
 
 The number of volumes varies depending on how many database replicas were elected when provisioning the database. One primary database and one replica yields 2 volumes.
