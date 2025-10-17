@@ -222,5 +222,6 @@ waw
 
 Ashburn
 Rio de Janeiro
+[Ss][ãa]o\b
 [Ss][ãa]o Paulo
 Secaucus
