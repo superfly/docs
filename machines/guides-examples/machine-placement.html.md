@@ -80,7 +80,7 @@ This only helps if your app actually works when deployed across multiple regions
 
 <div class="callout">
 Want to see where your app might run? 
-Here's the [current list](/docs/reference/regions/): ams, arn, atl, bog, bom, bos, cdg, den, dfw, ewr, eze, fra, gdl, gig, gru, hkg, iad, jnb, lax, lhr, mad, mia, nrt, ord, otp, phx, qro, scl, sea, sin, sjc, syd, waw, yul, yyz.
+Here's the [current list](/docs/reference/regions/): ams, arn, bom, cdg, dfw, ewr, fra, gru, iad, jnb, lax, lhr, nrt, ord, sin, sjc, syd, yyz.
 </div>
 
 

@@ -39,10 +39,12 @@ You can host your apps in any of the following regions.
 
 ## Discovering your app's region
 
-View the list of Fly.io regions with [`fly platform regions`](https://fly.io/docs/flyctl/platform-regions).
+View the list of Fly.io regions with [`fly platform regions`](/docs/flyctl/platform-regions).
 
-You can see which regions your app is running in with [`fly status`](https://fly.io/docs/flyctl/status/).
+You can see which regions your app is running in with [`fly status`](/docs/flyctl/status/).
 
 [Fly Volumes](/docs/volumes/) and [Fly Machines](/docs/machines/) are tied to the region they're created in.
+
+Learn more about Machine placement and regional capacity in this [guide](/docs/machines/guides-examples/machine-placement/).
 
 When an application instance is started, the three-letter name for the region it's running in is stored in the Machine's `FLY_REGION`  environment variable. This, along with other [Runtime Environment](/docs/machines/runtime-environment/) information, is visible to your app running on that instance.

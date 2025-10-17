@@ -72,19 +72,16 @@ If the default region is not where you want to host your application, run `fly p
 
 ```bash
 fly platform regions
-NAME                                          CODE  GATEWAY LAUNCH PLAN + ONLY  GPUS
-Amsterdam, Netherlands                        ams   ✓                           ✓
-Ashburn, Virginia (US)                        iad   ✓                           ✓
-Atlanta, Georgia (US)                         atl
-Bogotá, Colombia                              bog
-Boston, Massachusetts (US)                    bos
-Bucharest, Romania                            otp
-Chicago, Illinois (US)                        ord   ✓
-Dallas, Texas (US)                            dfw   ✓
-Denver, Colorado (US)                         den
-Ezeiza, Argentina                             eze
-Frankfurt, Germany                            fra   ✓       ✓
-Guadalajara, Mexico                           gdl
+NAME                        	CODE	GATEWAY	GPUS	CAPACITY	LAUNCH PLAN+
+
+North America
+Ashburn, Virginia (US)      	iad 	✓      	✓   	164
+Chicago, Illinois (US)      	ord 	✓      	      385
+Dallas, Texas (US)          	dfw 	✓      	      426
+Los Angeles, California (US)	lax 	✓      	      635
+San Jose, California (US)   	sjc 	✓      	✓     2399
+Secaucus, NJ (US)           	ewr                     233
+Toronto, Canada             	yyz 	✓      	      70
 # ... Lots more regions...
 ```
 
