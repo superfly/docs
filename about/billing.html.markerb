@@ -6,6 +6,8 @@ nav: firecracker
 redirect_from: /docs/about/credit-cards/
 ---
 
+## Overview
+
 Billing for Fly.io is monthly per organization. Organizations are administrative entities that enable you to add members, share app development environments, and manage billing.
 
 New customers and all new organizations (including those created by previously existing customers) are billed monthly for resource usage. Refer to our resource [Pricing page](/docs/about/pricing/) for details. 
@@ -20,13 +22,15 @@ To download a past invoice, click **View** for the relevant cycle. You'll be sen
 
 ---
 
-## Legacy Plan billing
+### Understand your invoice charges
 
-<div class="note icon">
-Customers who received a $5 free trial usage credit when signing up for the $5/mo Hobby plan will be billed monthly after that credit is used up.
-</div>
+The prices of provisioned services are mostly fixed. If you provision Machines and leave them running all month, we’ll charge you a predictable amount for that Machine.
 
-Legacy plan billing, and any included usage, is pro-rated over the month. For example, if you signed up for a Scale plan on September 15th, then you'd be charged $14.50 (half of the $29/mo plan cost) right away and you'll have $14.50 of usage included up to September 30th. Then you'll be charged $29 at the start of October and have $29/mo of usage included for that billing cycle.
+A common reason for additional charges is extra RAM usage.
+
+For a breakdown of charges, check out your invoice in the Billing section of the [dashboard](https://fly.io/dashboard/personal/billing).
+
+We’re happy to discuss a refund if you do create compute resources by mistake, or if your app receives unexpected traffic due to an attack and generates a surprisingly large bill. Just send an email to billing@fly.io.
 
 ---
 
@@ -34,7 +38,7 @@ Legacy plan billing, and any included usage, is pro-rated over the month. For ex
 
 Started Machines are billed per second that they're running (the time they spend in the `started` state), based on the price of a named CPU/RAM combination, plus the price of any additional RAM you specify.
 
-For example, a Machine described in your dashboard as "shared-1x-cpu@1024MB" is the “shared-cpu-1x” Machine size preset, which comes with 256MB RAM, plus additional RAM (1024MB - 256MB = 768MB). For pricing and available CPU/RAM combinations, see [Compute pricing](/docs/about/pricing/#compute).
+For example, a Machine described in your dashboard as "shared-1x-cpu@1024MB" is the “shared-cpu-1x” Machine size preset, which comes with 256MB RAM, plus additional RAM (1024MB - 256MB = 768MB). For pricing and available CPU/RAM combinations, read about [Compute pricing](/docs/about/pricing/#compute).
 
 Stopped and suspended Machines are billed based on their root file system (rootfs) usage per second (the time they spend in the `stopped` or `suspended` state) by $0.15 per GB per month.
 
@@ -44,7 +48,7 @@ For example, a Machine described in your dashboard as having 1GB of rootfs stopp
 
 ## GPU billing
 
-GPUs are billed per second that the attached Fly Machine is running (the time they spend in the `started` state), based on the per hour cost of the GPU card. See [pricing for GPUs](/docs/about/pricing/#gpus-and-fly-machines).
+GPUs are billed per second that the attached Fly Machine is running (the time they spend in the `started` state), based on the per hour cost of the GPU card. Learn more about [pricing for GPUs](/docs/about/pricing/#gpus-and-fly-machines).
 
 You're also billed for the Fly Machine separately from the GPU.
 
@@ -89,29 +93,25 @@ Unified billing allows you to consolidate billing for multiple organizations und
 
 You can either create a new Linked Organization or link an existing one:
 
-##### New Organization
+#### New Organization
 
 A **Linked Organization** can be created from the [new organization page](/organizations/new). When creating a new organization, you can choose an existing Organization to link it to.
 
-##### Link an existing Organization
+#### Link an existing Organization
 
 An existing organization can be converted to a **Linked Organization** from the organization's billing page by clicking the "Link billing to another Organization" button.
 
 - Only admins can link an organization to another organization.
 - We recommend saving any invoices you may need for account purposes before linking an organization.
 
-### Some things to consider
+---
+
+## Some things to consider
 
 - Each organization has its own [private network](/docs/networking/private-networking/). Organizations are isolated from each other, which might
 be advantageous from a security standpoint.
 - Cross organization networking is still possible with [Flycast](/docs/networking/flycast/)
 - Detaching a Linked Organization from its Billing Organization is not possible at this time. Instead we suggest creating a new organization and moving resources there.
-
----
-
-## Free resource allowances for Legacy Plan users
-
-Fly.io has deprecated plans as of October 7, 2024, but is still honoring them for users who purchased them prior to that date. If your plan includes [free allowances](https://fly.io/docs/about/pricing/#legacy-free-allowances), we subtract them off the top of your usage total. Once your usage exceeds the free allowance for any given resource, we start metering usage of that resource for billing purposes.
 
 ---
 
@@ -139,18 +139,6 @@ You can't use a prepaid card as a default (or saved) payment method. You can, ho
 
 ---
 
-## Understand your invoice charges
-
-The prices of provisioned services are mostly fixed. If you provision Machines and leave them running all month, we’ll charge you a predictable amount for that Machine.
-
-A common reason for additional charges is extra RAM usage.
-
-For a breakdown of charges, check out your invoice in the Billing section of the [dashboard](https://fly.io/dashboard/personal/billing).
-
-We’re happy to discuss a refund if you do create compute resources by mistake, or if your app receives unexpected traffic due to an attack and generates a surprisingly large bill. Just send an email to billing@fly.io.
-
----
-
 ## Delete your account
 
 To delete your Fly.io account, go to Account > Settings > [Delete Account](https://fly.io/user/deactivate) in your dashboard. You'll see a list of clean-up tasks that need to be done before you can delete the account, including:
@@ -161,3 +149,19 @@ To delete your Fly.io account, go to Account > Settings > [Delete Account](https
 - Remove extensions to ensure that you don't get billed by partners when you can no longer access your account.
 
 When you've completed the clean-up tasks, click **Delete** to permanently delete your Fly.io account.
+
+---
+
+## Discontinued/legacy plans
+
+### Legacy Plan billing
+
+<div class="note icon">
+Customers who received a $5 free trial usage credit when signing up for the $5/mo Hobby plan will be billed monthly after that credit is used up.
+</div>
+
+Legacy plan billing, and any included usage, is pro-rated over the month. For example, if you signed up for a Scale plan on September 15th, then you'd be charged $14.50 (half of the $29/mo plan cost) right away and you'll have $14.50 of usage included up to September 30th. Then you'll be charged $29 at the start of October and have $29/mo of usage included for that billing cycle.
+
+### Free resource allowances for Legacy Plan users
+
+Fly.io has deprecated plans as of October 7, 2024, but is still honoring them for users who purchased them prior to that date. If your plan includes [free allowances](/docs/about/pricing/#legacy-free-allowances), we subtract them off the top of your usage total. Once your usage exceeds the free allowance for any given resource, we start metering usage of that resource for billing purposes.
