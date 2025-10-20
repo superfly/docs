@@ -8,11 +8,13 @@ fly mpg [command] [flags]
 
 ## Available Commands
 * [attach](/docs/flyctl/mpg-attach/)	 - Attach a managed Postgres cluster to an app
+* [backup](/docs/flyctl/mpg-backup/)	 - Backup commands
 * [connect](/docs/flyctl/mpg-connect/)	 - Connect to a MPG database using psql
 * [create](/docs/flyctl/mpg-create/)	 - Create a new Managed Postgres cluster
 * [destroy](/docs/flyctl/mpg-destroy/)	 - Destroy a managed Postgres cluster
 * [list](/docs/flyctl/mpg-list/)	 - List MPG clusters.
 * [proxy](/docs/flyctl/mpg-proxy/)	 - Proxy to a MPG database
+* [restore](/docs/flyctl/mpg-restore/)	 - Restore MPG cluster from backup.
 * [status](/docs/flyctl/mpg-status/)	 - Show MPG cluster status.
 
 ## Options
