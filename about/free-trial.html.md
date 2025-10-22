@@ -3,6 +3,7 @@ title: Fly.io 7-day Free Trial
 layout: docs
 nav: firecracker
 author: kcmartin
+date: 2025-10-09
 ---
 
 **Fly.io runs your apps close to your users. This page explains how our 7-day free trial works and what resources you can use before you need to add a payment method.**
