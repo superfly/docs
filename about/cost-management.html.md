@@ -8,16 +8,10 @@ date: 2025-10-22
 
 ## Predicting your Fly.io bill and avoiding surprises
 
-We’ve done our best to make billing on Fly.io something you can reason about. Machines don’t appear out of nowhere. If something is running, it’s because you launched it, or you configured something that did. When we talk about **autoscaling**, we mean starting or stopping machines you’ve already defined. We don’t quietly spin up extras in the background that turn into mystery charges on your bill. The idea is that your bill should always be traceable to something you can see, name, and plausibly explain when someone asks. If it’s not, we’re happy to help you sort it out.
+We’ve done our best to make billing on Fly.io something you can reason about. Machines don’t appear out of nowhere. If something is running, it’s because you launched it, or you configured something that did. In general, when we talk about **autoscaling**, we mean starting or stopping machines you’ve already defined. We don’t quietly spin up extras in the background that turn into mystery charges on your bill. The idea is that your bill should always be traceable to something you can see, name, and plausibly explain when someone asks. If it’s not, we’re happy to help you sort it out.
 
 <div class="callout">
 **Need more help understanding your bill?** Reach out to us at [billing@fly.io](mailto:billing@fly.io).
-</div>
-
-That said: there _is_ one important exception. If you use the **metrics-based autoscaler** (for example, scaling a background worker on queue depth rather than HTTP traffic), the autoscaler **might create or destroy** machines automatically on your behalf.
-
-<div class="callout">
-**Metrics-based autoscaling _can_ create machines.** When you deploy and configure the [Fly Autoscaler](/docs/launch/autoscale-by-metric/), you're giving it permission to create and destroy machines on your behalf—based on metrics like queue depth or concurrent connections. It still uses the machine sizes and regions you specify, and anything it spins up counts toward your bill. Read more in the [docs](/docs/launch/autoscale-by-metric/).
 </div>
 
 ## A few examples
@@ -37,6 +31,12 @@ If your estimate seems high, the most predictable way to save money isn’t fidd
 **Want to play with numbers?** Try the [Fly.io pricing calculator](https://fly.io/calculator) to get a rough sense of what your setup might cost. For the full breakdown, here’s our [pricing page](/docs/about/pricing/).
 </div>
 
+## Metrics-based autoscaling can affect costs
+
+There is one important exception to the rule that Fly.io doesn’t create machines on your behalf. If you use the **metrics-based autoscaler**, for example to scale a background worker based on queue depth, it _can_ create or destroy machines automatically.
+
+**When can the metrics-based autoscaler create machines?** When you deploy and configure the [**Fly Autoscaler**](/docs/launch/autoscale-by-metric/), and use `FAS_CREATED_MACHINE_COUNT` instead of `FAS_STARTED_MACHINE_COUNT`, you're giving it permission to create and destroy machines on your behalf. It still uses the machine sizes and regions you specify, and anything it spins up counts toward your bill. [Read more in the docs](/docs/launch/autoscale-by-metric/).
+
 ## Other Stuff to Watch For
 
 A few more things that can quietly run up your bill if you're not paying attention:
@@ -52,6 +52,7 @@ A few more things that can quietly run up your bill if you're not paying attenti
 
 - **Free allowances don’t cap your bill.** We may give you free credits and usage allowances, especially when you’re starting out or have a legacy billing plan. But there’s no soft ceiling. If you go over, we’ll bill you. We don't support billing alerts (yet), so budget accordingly.
 - **There is no "free account/free tier" on Fly.io.** We do have a Free Trial program, which you can read about [here](/docs/about/free-trial/).
+- **Check your dashboard often.** To spot ballooning costs and overages before they become an issue, check the "current month to date bill" item in your dashboard.
 
 ## Related Reading
 
