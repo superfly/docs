@@ -59,5 +59,6 @@ A few more things that can quietly run up your bill if you're not paying attenti
 Want to go deeper on scaling strategies, autoscaling configuration, or controlling concurrency? These docs walk through the mechanics:
 
 - [Autoscale Fly Machines](/docs/blueprints/autoscale-machines/) A practical guide to getting basic autoscaling working with Fly Machines. Covers HTTP-based scaling triggers.
+- [Metrics-based Autoscaling](/docs/launch/autoscale-by-metric/) This is the one that _can_ create machines automatically, based on queue depth or another metric you specify. Use it wisely.
 - [Setting Concurrency Limits](/docs/blueprints/setting-concurrency-limits/) Shows how to keep your app from getting overwhelmed by too many concurrent requests. Especially useful if you’re scaling horizontally.
-- [Autoscale by Metric](/docs/launch/autoscale-by-metric/) This is the one that _can_ create machines automatically, based on queue depth, CPU, or concurrent connections. Use it wisely.
+
