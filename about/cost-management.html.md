@@ -3,7 +3,7 @@ title: Cost Management on Fly.io
 layout: docs
 nav: firecracker
 author: kcmartin
-date: 2025-10-22
+date: 2025-10-23
 ---
 
 ## Predicting your Fly.io bill and avoiding surprises
