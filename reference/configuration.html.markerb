@@ -849,7 +849,7 @@ All keys are optional and `size` has lower precedence than all other keys.
 ```toml
 [[vm]]
   size = "shared-cpu-2x"
-  memory = "2gb"
+  memory = "1gb"
   cpus = 2
   cpu_kind = "shared"
   gpus = 1
