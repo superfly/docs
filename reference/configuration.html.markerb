@@ -850,8 +850,8 @@ All keys are optional and `size` has lower precedence than all other keys.
 [[vm]]
   size = "shared-cpu-2x"
   memory = "2gb"
-  cpus = 4
-  cpu_kind = "performance"
+  cpus = 2
+  cpu_kind = "shared"
   gpus = 1
   gpu_kind = "a100-pcie-40gb"
   kernel_args = "no-hlt=true"
