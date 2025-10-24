@@ -128,20 +128,30 @@ Route to another app, and modify the request:
 
 ## Replay Caching
 
-In cases where the replay target does not change often, you can use the `fly-replay-cache` mechanism to relieve the original app of some load. Here's how it works:
+Replay caching allows Fly Proxy to remember and reuse replay decisions, reducing both load on your application and the latency of replayed requests. There are two types of replay caching:
+
+- **Path-based**: Cache replays for specific URL paths
+- **Session-based**: Cache replays for specific cookie or header values
+
+<div class="note icon">
+**Note**: Replay caching is an optimization, not a guarantee. Your app should _not_ depend on this mechanism to function.
+The app issuing `fly-replay` still serves as the ultimate source of truth, and we may decide to consult that app at any moment even if a replay cache has previously been set.
+To ensure reliable operation, the app issuing `fly-replay` should still have multiple instances deployed in multiple regions.
+</div>
+
+### Path-based Replay Caching
+
+Replay caching for paths is configured per-request during a replay. To cache a replay for a path:
+
 - Issue a `fly-replay` header as usual
 - Set `fly-replay-cache: /some/path/*`
-  - This needs to be a path-matching pattern ending with a wildcard `/*`. This is where the cached replay is applied.
+  - This needs to be a path-matching pattern, and implicitly ends with a wildcard `/*`. This is where the cached replay is applied.
   - The cached replay is unique to the request domain. The domain may also be set explicitly: `example.com/some/path/*`
   - The domain part should not include ports; use `example.com`, not `example.com:80`.
   - The pattern must also match the current request.
 - Set `fly-replay-cache-ttl-secs: number_of_seconds`
 
-If the replay target does eventually change, the replay target may proactively invalidate the cache by
-- Issuing a `fly-replay` back to the origin
-- Setting `fly-replay-cache: invalidate`
-
-For apps using the JSON format, specify a `cache` object:
+For apps using the JSON format, specify a `cache` object as part of the replay:
 
 ```json
 {
@@ -153,6 +163,58 @@ For apps using the JSON format, specify a `cache` object:
 }
 ```
 
+### Session-based Replay Caching
+
+If your app's sessions are identified by a cookie or authorization header, and should consistently route to the same target, Fly Proxy can cache that replay.
+
+Unlike path-based caching (which requires your app to return `fly-replay-cache` headers), session-based caching is configured in your `fly.toml`. When your app issues a `fly-replay` response for a request with a matching cookie or header, Fly Proxy will cache that replay decision and automatically apply it to subsequent requests with the same session identifier.
+
+#### Configuration
+
+Configure session-based replay caching in your `fly.toml`. This can be set under `http_service.http_options` or `services.ports.http_options`:
+
+```toml
+[http_service]
+  internal_port = 8080
+  force_https = true
+
+  [[http_service.http_options.replay_cache]]
+    path_prefix = "/"
+    ttl_seconds = 300
+    type = "cookie"
+    name = "session_id"
+
+  [[http_service.http_options.replay_cache]]
+    path_prefix = "/api"
+    ttl_seconds = 600
+    type = "header"
+    name = "Authorization"
+```
+
+In this example:
+- Replays for requests to `/` (and its subpaths) are cached for 5 minutes based on the `session_id` cookie value
+- Replays for requests to `/api` (and its subpaths) are cached for 10 minutes based on the `Authorization` header value
+- When multiple rules match, the longest matching path takes precedence
+
+If your app accepts requests for multiple hostnames, you can narrow the configuration by specifying a hostname in `path_prefix`:
+
+```toml
+  [[http_service.http_options.replay_cache]]
+    path_prefix = "api.example.com/api"
+```
+
+Caches are not shared between hostnames, even when `path_prefix` doesn't specify a hostname. Each hostname maintains its own cache.
+
+For more details on configuration options, see the [fly.toml configuration reference](/docs/reference/configuration/#http_service-http_options-replay_cache).
+
+### Invalidating the Replay Cache
+
+If the replay target does eventually change, the replay target may proactively invalidate the cache by:
+- Issuing a `fly-replay` back to the origin
+- Setting `fly-replay-cache: invalidate`
+
+Or, using the JSON format:
+
 ```json
 {
   "app": "origin-app",
@@ -162,25 +224,27 @@ For apps using the JSON format, specify a `cache` object:
 }
 ```
 
-<div class="note icon">
-**Note**: Replay caching is an optimization, not a guarantee. Your app should _not_ depend on this mechanism to function.
-The app issuing `fly-replay` still serves as the ultimate source of truth, and we may decide to consult that app at any moment even if a replay cache has previously been set.
-To ensure reliable operation, the app issuing `fly-replay` should still have multiple instances deployed in multiple regions.
-</div>
+This works for invalidating both the path-based cache, and the session-based cache.
 
-### Bypassing the replay cache
+### Bypassing Replay Cache
 
 Sometimes, you might want a client to bypass a cached replay without actually invalidating the cache.
 For example, you might have an API endpoint that _mostly_ needs to be replayed to a "leader" instance. But depending on application logic, it could sometimes be handled by any instance.
 
 The recommended approach is to clearly separate endpoints that require replay from those that don't.
-However, when that is not possible, the replaying app can additionally set the header
+However, when that is not possible, the replaying app can be configured to allow bypass.
+
+For path-based replay caching, additionally set the header:
 
 ```
 fly-replay-cache-allow-bypass: yes
 ```
 
-or set the JSON field `"allow_bypass": true`. Then, when your client makes a request, it can set the header:
+or set the JSON field `"allow_bypass": true`.
+
+For session-based replay caching, set [allow_bypass](/docs/reference/configuration/#http_service-http_options-replay_cache-allow_bypass) to `true` in your `fly.toml` configuration for your `replay_cache` rule.
+
+Then, when your client makes a request, it can set the header:
 
 ```
 fly-replay-cache-control: skip
@@ -189,7 +253,7 @@ fly-replay-cache-control: skip
 to skip any cached replay that might be present.
 
 <div class="note icon">
-**Note**: This behavior is opt-in because enabling it by default could make your app vulnerable to malicious clients creating unexpected load on the replaying machine. All it takes is setting a boolean HTTP header.
+**Note**: This behavior is opt-in because enabling it by default could make your app vulnerable to malicious clients creating unexpected load on the replaying machine.
 </div>
 
 ### Was my request served by the cache?

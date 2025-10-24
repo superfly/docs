@@ -410,6 +410,49 @@ In the following example, `h2_backend` is set to `true`, which allows the app to
     h2_backend = true
 ```
 
+### `http_service.http_options.replay_cache`
+
+Configures session-based replay caching. When your app issues a `fly-replay` response, Fly Proxy can cache that replay decision based on cookie or header values, automatically applying it to subsequent requests with the same identifier.
+
+Each `http_options.replay_cache` entry configures a caching rule:
+
+```toml
+[[http_service.http_options.replay_cache]]
+  path_prefix = "/"
+  ttl_seconds = 300
+  type = "cookie"
+  name = "session_id"
+  allow_bypass = false
+```
+
+For documentation on replays, and further explanation on caching, see [Session-based Replay Caching](/docs/networking/dynamic-request-routing/#session-based-replay-caching).
+
+#### `http_service.http_options.replay_cache.path_prefix`
+
+Path pattern where this caching rule applies. 
+
+This can be a path like `/api` (applies to any hostname) or include a hostname like `example.com/api`. When multiple rules match a request, the longest matching path takes precedence. 
+
+If including a hostname, do not include the protocol or the port. If no hostname is provided, the cache rule applies to all hostnames, but each hostname retains a separate cache.
+
+Implicitly ends with `/*`, meaning that `example.com/api`, `example.com/api/`, and `example.com/api/*` are all equivalent.
+
+#### `http_service.http_options.replay_cache.ttl_seconds`
+
+How many seconds to cache the replay decision. Minimum value is 10 seconds.
+
+#### `http_service.http_options.replay_cache.type`
+
+Either `"cookie"` or `"header"`. Specifies whether to key the cache on a cookie or request header.
+
+#### `http_service.http_options.replay_cache.name`
+
+Name of the cookie or header to use as the cache key.
+
+#### `http_service.http_options.replay_cache.allow_bypass`
+
+Optional boolean. When `true`, allows clients to bypass the cache by setting the `fly-replay-cache-control: skip` request header. Default is `false`.
+
 ### `http_service.tls_options`
 
 Configure the TLS versions and ALPN protocols that Fly's edge will use to terminate TLS for your application with:
@@ -601,6 +644,49 @@ In the following example, `h2_backend` is set to `true`, which allows the app to
   [services.ports.http_options]
     h2_backend = true
 ```
+
+### `services.ports.http_options.replay_cache`
+
+Configures session-based replay caching. When your app issues a `fly-replay` response, Fly Proxy can cache that replay decision based on cookie or header values, automatically applying it to subsequent requests with the same identifier.
+
+Each `http_options.replay_cache` entry configures a caching rule:
+
+```toml
+  [[services.ports.http_options.replay_cache]]
+    path_prefix = "/"
+    ttl_seconds = 300
+    type = "cookie"
+    name = "session_id"
+    allow_bypass = false
+```
+
+For documentation on replays, and further explanation on caching, see [Session-based Replay Caching](/docs/networking/dynamic-request-routing/#session-based-replay-caching).
+
+#### `services.ports.http_options.replay_cache.path_prefix`
+
+Path pattern where this caching rule applies. 
+
+This can be a path like `/api` (applies to any hostname) or include a hostname like `example.com/api`. When multiple rules match a request, the longest matching path takes precedence. 
+
+If including a hostname, do not include the protocol or the port. If no hostname is provided, the cache rule applies to all hostnames, but each hostname retains a separate cache.
+
+Implicitly ends with `/*`, meaning that `example.com/api`, `example.com/api/`, and `example.com/api/*` are all equivalent.
+
+#### `services.ports.http_options.replay_cache.ttl_seconds`
+
+How many seconds to cache the replay decision. Minimum value is 10 seconds.
+
+#### `services.ports.http_options.replay_cache.type`
+
+Either `"cookie"` or `"header"`. Specifies whether to key the cache on a cookie or request header.
+
+#### `services.ports.http_options.replay_cache.name`
+
+Name of the cookie or header to use as the cache key.
+
+#### `services.ports.http_options.replay_cache.allow_bypass`
+
+Optional boolean. When `true`, allows clients to bypass the cache by setting the `fly-replay-cache-control: skip` request header. Default is `false`.
 
 #### `services.ports.proxy_proto_options`
 
