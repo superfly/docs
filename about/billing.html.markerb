@@ -58,7 +58,7 @@ You're also billed for the Fly Machine separately from the GPU.
 
 Volume billing is pro-rated to the hour and we subtract the free allowances first for the  Launch, Scale, and Enterprise plans (all of which are now discontinued for new customers). For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).
 
-If you create a volume, you will be charged for it. You’re billed for volumes that aren’t attached to Machines, and for volumes that are attached to Machines in any state, including stopped Machines.
+If you create a volume, you will be charged for it. You're billed for volumes that aren't attached to Machines, and for volumes that are attached to Machines in any state, including stopped Machines. Volumes in `pending_destroy` state do not accrue charges.
 
 ---
 
