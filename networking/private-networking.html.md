@@ -17,35 +17,44 @@ You can connect apps running outside of Fly.io to your 6PN using WireGuard. You 
 
 You can use `.internal` domains to connect your app to databases, API servers, or other apps in your 6PN. If you don't need the granular subdomains and routing available with `.internal`, and you want to use Fly Proxy features for your internal apps, then you should use [Flycast](/docs/networking/flycast/) instead.
 
-A Fly Machine is configured to resolve domain names with a custom DNS server from the Fly Platform. This DNS server can resolve arbitrary DNS queries, so you can look up `google.com` with it. But it’s also aware of 6PN addresses, and will let you look up 6PN addresses for other apps in your organization. Those addresses live under the custom top-level domain `.internal`. 
+A Fly Machine is configured to resolve domain names with a custom DNS server from the Fly Platform. This DNS server can resolve arbitrary DNS queries, so you can look up `google.com` with it. But it’s also aware of 6PN addresses, and will let you look up 6PN addresses for other apps in your organization. Those addresses live under the custom top-level domain `.internal`.
 
 Underneath `.internal` there are second-level domains for every app in your Fly organization. For example, if your app is in an organization with another app called `my-app-name`, then there will be a AAAA record at `my-app-name.internal`. The AAAA record will contain all the 6PN addresses of the started Fly Machines that belong to the `my-app-name` Fly App. Note that different libraries and tools will use multi-address AAAA records differently; most will only use the first address that is returned, but others might round-robin between entries for every request -- if you'd like to know more, consult the documentation for the library or tool you are using for DNS lookup.
-
-<div class="important icon">
-**Important:** All queries to Fly.io `.internal` domains only return information for started (running) Machines. Any stopped Machines, including those autostopped by Fly Proxy, are not included in the response to the DNS query.
-</div>
 
 Each `<appname>.internal` domain has further subdomains which can be used to return a more precise subset of the started Machines in that app. For example, you can add a region name qualifier to return the 6PN addresses of an app's Machines in a specific region: `iad.my-app-name.internal`. Querying this domain returns the 6PN addresses of `my-app-name` Machines in the `iad` region.
 
 Some `.internal` domains do not contain an AAAA record, but instead contain a TXT record with Machine, app, or region information. For example, if you request the TXT records using `regions.my-app-name.internal`, then you'll get back a comma-separated list of regions that `my-app-name` is deployed in. And you can discover all the apps in the organization by requesting the TXT records associated with `_apps.internal`. This will return a comma-separated list of the app names.
 
-The following table lists the available `.internal` domains:
+<div class="important icon">
+**Important:** All AAAA queries to Fly.io `.internal` domains only return 6PN information for started (running) Machines. Any stopped Machines, including those autostopped by Fly Proxy, are not included in the response to the DNS query.
+</div>
 
-| Name | AAAA | TXT |
-| -- | --- | -- |
-|`<appname>.internal`|6PN addresses of all<br> Machines in any<br> region for the app|none
-|`top<number>.nearest.of.<appname>.internal`|6PN addresses of<br> top _number_ closest<br> Machines for the app|none
-|`<machine_id>.vm.<appname>.internal`|6PN address of<br> a specific Machine<br> for the app|none
-|`vms.<appname>.internal`|none|comma-separated list<br> of Machine ID and region<br>name for the app
-|`<process_group>.process.<appname>.internal`|6PN addresses of<br> Machines in process<br> group for the app|none
-|`<region>.<appname>.internal`|6PN addresses of<br> Machines in region<br> for the app|none
-|`global.<appname>.internal`|alias for<br>`<appname>.internal`|none
-|`regions.<appname>.internal`|none|comma-separated list<br> of region names where<br>Machines are deployed<br> for app|
-|`<value>.<key>.kv._metadata.<appname>.internal`|6PN addresses of<br> Machines with<br> matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|none|
-|`_apps.internal`|none|comma-separated list<br> of the names of all apps<br> in current organization|
-|`_peer.internal`|none|comma-separated list<br> of the names of all<br> WireGuard peers in<br> current organization|
-|`<peername>._peer.internal`|6PN address of peer|none|
-|`_instances.internal`|none|comma-separated list<br> of Machine ID, app name,<br>6PN address, and region for<br> all Machines in current<br> organization|
+The following table lists the available `.internal` domains for AAAA queries:
+
+| Name | AAAA Response |
+| -- | --- |
+|`<appname>.internal`|6PN addresses of all Machines<br> in any region for the app|
+|`top<number>.nearest.of.<appname>.internal`|6PN addresses of top _number_<br> closest Machines for the app|
+|`<machine_id>.vm.<appname>.internal`|6PN address of a specific<br> Machine for the app|
+|`<process_group>.process.<appname>.internal`|6PN addresses of Machines<br> in process group for the app|
+|`<region>.<appname>.internal`|6PN addresses of Machines<br> in region for the app|
+|`global.<appname>.internal`|alias for `<appname>.internal`|
+|`<value>.<key>.kv._metadata.<appname>.internal`|6PN addresses of Machines<br> with matching [metadata](https://community.fly.io/t/dynamic-machine-metadata/13115)|
+|`<peername>._peer.internal`|6PN address of peer|
+
+The following table lists the available `.internal` domains for TXT queries:
+
+| Name | TXT Response |
+| -- | -- |
+|`vms.<appname>.internal`|comma-separated list of Machine ID and<br> region name for started app Machines|
+|`all.vms.<appname>.internal`|comma-separated list of Machine ID and<br> region name for all deployed app Machines|
+|`regions.<appname>.internal`|comma-separated list of region names<br> where Machines are started for app|
+|`all.regions.<appname>.internal`|comma-separated list of region names<br> where Machines are deployed for app|
+|`_apps.internal`|comma-separated list of the names of all<br> apps in current organization|
+|`_peer.internal`|comma-separated list of the names of all<br> WireGuard peers in current organization|
+|`_instances.internal`|comma-separated list of Machine ID, app name,<br>6PN address, and region for all started Machines<br> in current organization|
+|`all._instances.internal`|comma-separated list of Machine ID, app name,<br>6PN address, and region for all deployed Machines<br> in current organization|
+
 
 See the [fly-examples/privatenet](https://github.com/fly-apps/privatenet+external) repo for examples that use the `.internal` domains.
 
