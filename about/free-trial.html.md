@@ -30,7 +30,7 @@ These are **not included** in the free trial:
 
 <div class="callout">You can add a credit card from the dashboard at any time during the trial. This lifts the resource limits and keeps your apps running without interruption. **Note: adding a card ends the free trial** and your usage starts counting toward your bill from that point on.</div>
 
-### Checking usage
+## Checking usage
 
 You can see what you’ve used and what’s left under **“Trial Status”** in the Fly.io dashboard. Machines usage (including memory) is tracked per second, while Volumes and Machine count are tracked per hour.
 
