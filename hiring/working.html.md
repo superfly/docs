@@ -55,9 +55,6 @@ roughly like:
 * Staff: We're still working out what this means here. We'll generally
   call out staff roles individually.
 
-We also hire engineering management (EMs). Like most modern tech companies,
-EM is a separate track from line engineering.
-
 ## We&#39;re Ruthless About Doing Customer-Visible Work
 
 We want our teams to set their own direction as much as possible, but we&#39;ll shoot things down if they&#39;re not going to move the dials for our users. We&#39;re vigilant about tar pits and projects that spin our wheels and will do our best to keep you out of them. We&#39;re not big believers in "tech debt". We have a 3-month "no refactoring" rule for new hires. This isn&#39;t everyone&#39;s preferred work style! We try to be up front about stuff.
