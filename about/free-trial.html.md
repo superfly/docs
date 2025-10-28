@@ -10,7 +10,7 @@ date: 2025-10-27
 
 ## Free Trial overview
 
-A free trial on Fly.io includes up to 2 hours of machine runtime or 7 days of access, whichever comes first. That’s just enough to get a real app up and running before you decide if it’s a fit for you.
+A free trial on Fly.io includes 2 hours of machine runtime or 7 days of access, whichever comes first. That’s just enough to get a real app up and running before you decide if it’s a fit for you.
 
 <div class="callout">If you hit any of the limits below before your 7 days are up, **your trial is considered exhausted**, and your apps will stop until you add a payment method.</div>
 
