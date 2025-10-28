@@ -166,7 +166,7 @@ The `config` object can also include other Machine fields like `guest` and `serv
 
 Refer to the [Machines API documentation](https://docs.machines.dev/#tag/machines) for complete configuration options.
 
-### Using flyctl
+### Using `fly machine run`
 
 Create a multi-container Machine by passing a JSON configuration file (e.g., `cli-config.json`) to `fly machine run`:
 
@@ -196,7 +196,7 @@ fly machine run --machine-config cli-config.json \
 Note: When using `--machine-config`, your JSON file must include a `containers` array with at least one container that specifies an `image`.
 </div>
 
-### Using fly launch & fly deploy
+### Using `fly launch` & `fly deploy`
 
 Starting with `flyctl v0.3.147`, you can run multiple containers using `fly deploy`. This example demonstrates using a nginx container as a rate limiter and a custom app container.
 
