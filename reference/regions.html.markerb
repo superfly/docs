@@ -52,3 +52,11 @@ You can see which regions your app is running in with [`fly status`](/docs/flyct
 Learn more about Machine placement and regional capacity in this [guide](/docs/machines/guides-examples/machine-placement/).
 
 When an application instance is started, the three-letter name for the region it's running in is stored in the Machine's `FLY_REGION`  environment variable. This, along with other [Runtime Environment](/docs/machines/runtime-environment/) information, is visible to your app running on that instance.
+
+## Related reading
+
+- [Scaling to multiple regions](/docs/blueprints/resilient-apps-multiple-machines/#scaling-to-multiple-regions) Read our guide for making your app resilient and globally distributed.
+- [Cost Management](/docs/about/cost-management/) Find out how region choice, scaling strategy, and app architecture affect your Fly.io bill.
+- [Machine Placement and Regional Capacity](/docs/machines/guides-examples/machine-placement/) Learn more about how the choice of region (and region capacity) affects where your Machines land.
+- [Dynamic Request Routing with fly‑replay](https:///docs/networking/dynamic-request-routing/) Check out our guide to routing requests to specific regions or fallbacks using region codes.
+ 

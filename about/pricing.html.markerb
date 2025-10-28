@@ -278,3 +278,11 @@ To change your plan to the Pay As You Go plan, go to the [**Organizations** page
 If you were on the free Hobby plan at the time that the paid Hobby plan became the default for new organizations, your plan is now called the Legacy Hobby plan. Your costs stay the same as they were, with no monthly subscription fee, and no included usage beyond the free resource allowances.
 
 If you change your plan, you won't be able to return to the Legacy Hobby Plan.
+
+## **Related reading**
+
+- [Billing for Fly.io](/docs/about/billing/) How invoicing, payment methods, and usage tracking work.
+- [Cost Management](/docs/about/cost-management/) Best practices for estimating, monitoring, and controlling your spend.
+- [Free Trial](/docs/about/free-trial/) What the Fly.io Free trial gives you and when billing begins.
+- [Organization Roles & Permissions](/docs/security/org-roles-permissions/) How org structure, permissions and billing interplay.
+- [Optimize Compute Costs: Fine‑tune your app](/docs/apps/fine-tune-apps/) Tuning machine size, memory/CPU, and stop‑/start behavior to reduce waste.

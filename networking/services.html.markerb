@@ -267,3 +267,10 @@ You may have to install software on the Machine to use `dig` or `curl`. On Debia
 ## Default-Deny security policy
 
 All requests to Fly.io apps are routed to our edge servers, where we use our memory-safe Rust proxy to direct traffic. The proxy listens on all ports and all Anycast addresses, so ports appear to be 'open' from the wider internet. However, nothing on your app is exposed unless you expose it via [services](/docs/networking/app-services/). You’re locked down by default.
+
+## Related reading
+
+- [Connect to an App Service](/docs/networking/app-services/) How to expose your Fly App’s processes publicly or privately through services.
+- [Dynamic Request Routing with fly‑replay](/docs/networking/dynamic-request-routing/) How to route requests between regions, apps, or machines using Fly‑specific headers.
+- [Connect Your Private Network with WireGuard](/docs/blueprints/connect-private-network-wireguard/) Set up secure access between Fly.io and your private infrastructure using WireGuard tunnels.
+- [Private Networking](/docs/networking/private-networking/) How services communicate securely over Fly.io’s private network without going through the public internet.

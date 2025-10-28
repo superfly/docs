@@ -84,7 +84,7 @@ Here's the [current list](/docs/reference/regions/): ams, arn, bom, cdg, dfw, ew
 </div>
 
 
-### Related reading:
+### Related reading
 
 - [An Introduction to Fly Machines](/docs/machines/overview/)
 - [Regions Reference](/docs/reference/regions/)

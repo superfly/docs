@@ -164,3 +164,11 @@ API are best-effort. If you're working with us at this level of control, it's on
 * Provide ephemeral storage, a blank slate on every startup 
 * Attach a volume for persistent storage
 * Place in any region
+
+## Related reading
+
+- [Machine states and lifecycle](/docs/machines/machine-states/) Find out how Machines move through states (created → started → stopped etc), what it means, how to detect issues.
+- [Machine placement and regional capacity](/docs/machines/guides-examples/machine-placement/) Learn more about how region and host capacity affect where your Machines land and what to do if placement fails.
+- [`fly machine` CLI reference](/docs/flyctl/machine/) Use this command‑line reference for managing Machines via `flyctl` (create, update, stop, clone, etc).
+- [Working with the Machines API](/docs/machines/api/working-with-machines-api/) Read a practical guide to creating, updating, and managing Machines via API calls.
+- [OpenAPI specification](http://docs.machines.dev/#description/introduction) Use this low-level reference for the Machines API runtime, straight from the source.

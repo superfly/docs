@@ -197,6 +197,9 @@ For this to work:
 
 Alternatively, you can use the [DNS-01 challenge method](#optional-use-an-acme-dns-01-challenge) instead of the automatic validation method, though this may conflict with Cloudflare's own certificate issuance.
 
-## Related topics
+## Related reading
 
-- [Automate the certificate process for custom domains with the GraphQL API](/docs/networking/custom-domain-api/)
+- [Automate the certificate process for custom domains](/docs/networking/custom-domain-api/) Use Fly.io's GraphQL API to automate cert provisioning and domain verification.
+- [Networking overview](/docs/networking/) Broader look at how Fly.io handles routing, DNS, IPs, and certificates.
+- [TLS/SSL Certificates](/docs/networking/certificates/) How Fly.io manages TLS for custom domains, including auto-renewal and manual certs.
+- [Understanding Cloudflare](/docs/networking/understanding-cloudflare/) What happens when you put Fly.io behind Cloudflare, and how to avoid common pitfalls.
