@@ -334,3 +334,10 @@ fly machine destroy --force 0e286039f42e86
 ```
 
 <div class="important"> If you destroy a Machine with a volume attached, the volume remains intact until you either explicitly destroy the volume or destroy the app it belongs to.</div>
+
+## Related reading
+
+- [Scale Machine CPU and RAM](/docs/launch/scale-machine/) How to use vertical scaling.
+- [Autoscale based on metrics](/docs/launch/autoscale-by-metric/) Learn about automatic scaling using metrics.
+- [flyctl scale — CLI reference](/docs/flyctl/scale/) Read a full breakdown of the scale subcommands. 
+- [Machine Placement and Regional Capacity](/docs/machines/guides-examples/machine-placement/) Find out how region choice and resource availability affect scaling success. 
