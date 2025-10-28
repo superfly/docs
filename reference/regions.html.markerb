@@ -58,5 +58,5 @@ When an application instance is started, the three-letter name for the region it
 - [Scaling to multiple regions](/docs/blueprints/resilient-apps-multiple-machines/#scaling-to-multiple-regions) Read our guide for making your app resilient and globally distributed.
 - [Cost Management](/docs/about/cost-management/) Find out how region choice, scaling strategy, and app architecture affect your Fly.io bill.
 - [Machine Placement and Regional Capacity](/docs/machines/guides-examples/machine-placement/) Learn more about how the choice of region (and region capacity) affects where your Machines land.
-- [Dynamic Request Routing with fly‑replay](https:///docs/networking/dynamic-request-routing/) Check out our guide to routing requests to specific regions or fallbacks using region codes.
+- [Dynamic Request Routing with fly‑replay](/docs/networking/dynamic-request-routing/) Check out our guide to routing requests to specific regions or fallbacks using region codes.
  
