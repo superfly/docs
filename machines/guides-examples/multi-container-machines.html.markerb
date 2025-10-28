@@ -23,7 +23,7 @@ These patterns mirror what we've seen from customers building production systems
 
 When creating a Machine via the API, you can specify a `containers` array, each containing a [`ContainerConfig`](https://docs.machines.dev/#model/flycontainerconfig). Each container can have its own image, environment variables, health checks, startup commands, attached files, and dependencies.
 
-Flyd (our [in-house orchestrator](https://fly.io/blog/carving-the-scheduler-out-of-our-orchestrator/)), handles pulling images and making them accessible to Pilot, the init system responsible for running the containers and managing their lifecycle. Pilot builds a dependency graph using container startup conditions and runs containers accordingly.
+`flyd` (our [in-house orchestrator](https://fly.io/blog/carving-the-scheduler-out-of-our-orchestrator/)) handles pulling images and making them accessible to Pilot, the init system responsible for running the containers and managing their lifecycle. Pilot builds a dependency graph using container startup conditions and runs containers accordingly.
 
 ## Example Configuration
 
@@ -31,35 +31,29 @@ Flyd (our [in-house orchestrator](https://fly.io/blog/carving-the-scheduler-out-
 {
   "containers": [
     {
+      "name": "my-app",
       "image": "registry.fly.io/my-app:latest",
       "env": {
         "PORT": "8080"
       },
-      "services": [
+      "healthchecks": [
         {
-          "internal_port": 8080,
-          "protocol": "tcp",
-          "ports": [
-            {
-              "port": 80,
-              "handlers": ["http"]
-            }
-          ]
-        }
-      ],
-      "health_checks": [
-        {
-          "type": "http",
-          "path": "/health",
-          "interval": "10s",
-          "timeout": "5s",
-          "grace_period": "5s",
+          "http": {
+            "port": 8080,
+            "method": "GET",
+            "path": "/health",
+            "scheme": "http"
+          },
+          "interval": 10,
+          "timeout": 5,
+          "grace_period": 5,
           "success_threshold": 2,
           "failure_threshold": 3
         }
       ]
     },
     {
+      "name": "log-shipper",
       "image": "registry.fly.io/log-shipper:latest",
       "env": {
         "LOG_LEVEL": "info"
@@ -102,7 +96,7 @@ Internally, Pilot models these dependencies as a directed graph and walks it to 
 
 Each container specifies its own health checks. The system supports different types of health checks:
 
-1. **TCP health checks**: Checks if a port is accepting connections
+**TCP health checks**: Checks if a port is accepting connections
 
 ```json
 "tcp": {
@@ -110,7 +104,7 @@ Each container specifies its own health checks. The system supports different ty
 }
 ```
 
-1. **HTTP health checks**: Makes HTTP requests to an endpoint
+**HTTP health checks**: Makes HTTP requests to an endpoint
 
 ```json
 "http": {
@@ -121,7 +115,7 @@ Each container specifies its own health checks. The system supports different ty
 }
 ```
 
-1. **Exec health checks**: Runs a command inside the container
+**Exec health checks**: Runs a command inside the container
 
 ```json
 "exec": {
@@ -131,12 +125,12 @@ Each container specifies its own health checks. The system supports different ty
 
 ### Health Check Configuration Options
 
-- `name`: Unique identifier for the health check
-- `interval`: How often to run the check (e.g., "10s")
-- `grace_period`: Initial period after container starts before checks begin
-- `timeout`: Maximum time to wait for a check to complete
-- `success_threshold`: Number of consecutive successful checks required to change status to healthy
-- `failure_threshold`: Number of consecutive failed checks before marking as unhealthy
+- `name`: string - Unique identifier for the health check
+- `interval`: int - How often to run the check, in seconds
+- `grace_period`: int - Time in seconds to wait after container starts before checks begin
+- `timeout`: int - Maximum time in seconds to wait for a check to complete
+- `success_threshold`: int - Number of consecutive successful checks required to change status to healthy
+- `failure_threshold`: int - Number of consecutive failed checks before marking as unhealthy
 
 ## Security Considerations
 
@@ -146,47 +140,70 @@ Containers in a Machine share the same kernel and VM, but are isolated at the pr
 
 There are several ways to deploy multi-container machines on Fly.io. Choose the method that best fits your workflow:
 
-### Using flyctl
+### Using the Machines API
 
-You can define your Machine configuration in a JSON file (e.g., `machine-config.json`) and create the Machine using the Fly CLI:
+You can create multi-container Machines by sending a POST request to the Machines API. For example, using `curl`:
 
 ```bash
-flyctl machines create --machine-config machine-config.json
+curl -X POST "https://api.machines.dev/v1/apps/<your-app-name>/machines" \
+  -H "Authorization: Bearer <your-api-token>" \
+  -H "Content-Type: application/json" \
+  -d @api-config.json
 ```
 
-You can also launch a multi-container app interactively using `flyctl machine run`:
+Here, the `api-config.json` file contains the request body for creating a Machine. Unlike the `flyctl` examples in the next sections, the API expects the JSON body to have a `config` wrapper with the `containers` array nested inside:
+
+```json
+{
+  "config": {
+    "containers": [...],
+    ...
+  }
+}
+```
+
+The `config` object can also include other Machine fields like `guest` and `services`.
+
+Refer to the [Machines API documentation](https://docs.machines.dev/#tag/machines) for complete configuration options.
+
+### Using `fly machine run`
+
+Create a multi-container Machine by passing a JSON configuration file (e.g., `cli-config.json`) to `fly machine run`:
 
 ```bash
-flyctl machine run --machine-config cli-config.json \
+fly machine run --machine-config cli-config.json
+```
+
+The file should define `containers` at the root level, alongside any additional Machine configuration:
+
+```json
+{
+  "containers": [...],
+  ...
+}
+```
+
+You can also pass Machine configuration options from the command line:
+
+```bash
+fly machine run --machine-config cli-config.json \
   --autostart=true --autostop=suspend \
   --port 80:8080/tcp:http --port 443:8080/tcp:http:tls \
   --vm-cpu-kind shared --vm-cpus 1 --vm-memory 256
 ```
 
-Alternatively, you can make a direct API call using `curl`:
-
-```bash
-curl -X POST "https://api.machines.dev/v1/apps/your-app-name/machines" \
-  -H "Authorization: Bearer your-api-token" \
-  -H "Content-Type: application/json" \
-  -d @machine-config.json
-```
-
-Refer to the [Machines API documentation](https://docs.machines.dev/#tag/machines) for more details.
-
 <div class="callout">
-Note: When using `--machine-config`, your JSON file must include a containers array with at least one container defined
+Note: When using `--machine-config`, your JSON file must include a `containers` array with at least one container that specifies an `image`.
 </div>
 
-### Using fly launch & fly deploy
+### Using `fly launch` & `fly deploy`
 
 Starting with `flyctl v0.3.147`, you can run multiple containers using `fly deploy`. This example demonstrates using a nginx container as a rate limiter and a custom app container.
 
-#### 1. Create cli-config.json
+#### 1. Create `cli-config.json`
 
 ```json
 {
-  "config": {
   "containers": [
     {
       "name": "nginx",
@@ -207,15 +224,15 @@ Starting with `flyctl v0.3.147`, you can run multiple containers using `fly depl
     {
       "name": "echo",
       "image": "ealen/echo-server",
-      "health_checks": [
+      "healthchecks": [
         {
-          "type": "exec",
-          "command": ["wget", "-q", "--spider", "http://localhost"]
+          "exec": {
+            "command": ["wget", "-q", "--spider", "http://localhost"]
+          }
         }
       ]
     }
   ]
-}
 }
 ```
 
@@ -262,24 +279,22 @@ To mitigate excessive traffic, you can run an nginx container as a sidecar to li
 
 ```json
 {
-  "config": {
-    "containers": [
-      {
-        "name": "nginx",
-        "image": "nginx:latest",
-        "files": [
-          {
-            "guest_path": "/etc/nginx/conf.d/default.conf",
-            "raw_value": "bGltaXRfcmVxX3pvbmUgJGJpbmFyeV9yZW1vdGVfYWRkciB6b25lPW15X3pvbmU6MTBtIHJhdGU9MXIvczsKCnNlcnZlciB7CiAgbGlzdGVuIDgwODA7CgogIGxvY2F0aW9uIC8gewogICAgbGltaXRfcmVxIHpvbmU9bXlfem9uZTsKICAgIHByb3h5X3Bhc3MgaHR0cDovL2xvY2FsaG9zdDo4MDsKICB9Cn0="
-          }
-        ]
-      },
-      {
-        "name": "echo",
-        "image": "ealen/echo-server"
-      }
-    ]
-  }
+  "containers": [
+    {
+      "name": "nginx",
+      "image": "nginx:latest",
+      "files": [
+        {
+          "guest_path": "/etc/nginx/conf.d/default.conf",
+          "raw_value": "bGltaXRfcmVxX3pvbmUgJGJpbmFyeV9yZW1vdGVfYWRkciB6b25lPW15X3pvbmU6MTBtIHJhdGU9MXIvczsKCnNlcnZlciB7CiAgbGlzdGVuIDgwODA7CgogIGxvY2F0aW9uIC8gewogICAgbGltaXRfcmVxIHpvbmU9bXlfem9uZTsKICAgIHByb3h5X3Bhc3MgaHR0cDovL2xvY2FsaG9zdDo4MDsKICB9Cn0="
+        }
+      ]
+    },
+    {
+      "name": "echo",
+      "image": "ealen/echo-server"
+    }
+  ]
 }
 ```
 
@@ -312,33 +327,31 @@ You can also run LiteFS as a sidecar with a health check configured to ensure it
 
 ```json
 {
-  "config": {
-    "containers": [
-      {
-        "name": "litefs",
-        "image": "flyio/litefs:latest",
-        "env": {
-          "LITEFS_DIR": "/data",
-          "LITEFS_CONFIG": "/etc/litefs.yml"
-        },
-        "health_checks": [
-          {
-            "type": "http",
+  "containers": [
+    {
+      "name": "litefs",
+      "image": "flyio/litefs:latest",
+      "env": {
+        "LITEFS_DIR": "/data",
+        "LITEFS_CONFIG": "/etc/litefs.yml"
+      },
+      "healthchecks": [
+        {
+          "http": {
             "port": 8080,
-            "path": "/info",
             "method": "GET",
-            "scheme": "http",
-            "grace_period": 500,
-            "interval": 1000,
-            "timeout": 1000,
-            "delay_start": 0,
-            "success_threshold": 1,
-            "failure_threshold": 5
-          }
-        ]
-      }
-    ]
-  }
+            "path": "/info",
+            "scheme": "http"
+          },
+          "grace_period": 500,
+          "interval": 1000,
+          "timeout": 1000,
+          "success_threshold": 1,
+          "failure_threshold": 5
+        }
+      ]
+    }
+  ]
 }
 ```
 
