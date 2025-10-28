@@ -10,7 +10,7 @@ redirect_from: /docs/blueprints/autoscale-machines-like-a-boss/
 </figure>
 
 You have an app with services that's configured to [automatically start
-and stop Machines based on traffic demand]((/docs/launch/autostop-autostart/)). But the traffic to your app changes
+and stop Machines based on traffic demand](/docs/launch/autostop-autostart/). But the traffic to your app changes
 significantly during the day and you don't want to keep a lot of stopped
 Machines during the period of low traffic.
 
