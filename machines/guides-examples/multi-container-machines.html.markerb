@@ -23,7 +23,7 @@ These patterns mirror what we've seen from customers building production systems
 
 When creating a Machine via the API, you can specify a `containers` array, each containing a [`ContainerConfig`](https://docs.machines.dev/#model/flycontainerconfig). Each container can have its own image, environment variables, health checks, startup commands, attached files, and dependencies.
 
-Flyd (our [in-house orchestrator](https://fly.io/blog/carving-the-scheduler-out-of-our-orchestrator/)), handles pulling images and making them accessible to Pilot, the init system responsible for running the containers and managing their lifecycle. Pilot builds a dependency graph using container startup conditions and runs containers accordingly.
+`flyd` (our [in-house orchestrator](https://fly.io/blog/carving-the-scheduler-out-of-our-orchestrator/)) handles pulling images and making them accessible to Pilot, the init system responsible for running the containers and managing their lifecycle. Pilot builds a dependency graph using container startup conditions and runs containers accordingly.
 
 ## Example Configuration
 
@@ -200,7 +200,7 @@ Note: When using `--machine-config`, your JSON file must include a `containers` 
 
 Starting with `flyctl v0.3.147`, you can run multiple containers using `fly deploy`. This example demonstrates using a nginx container as a rate limiter and a custom app container.
 
-#### 1. Create cli-config.json
+#### 1. Create `cli-config.json`
 
 ```json
 {
