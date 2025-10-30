@@ -12,6 +12,8 @@ date: 2025-07-18
   <img src="/static/images/task-scheuling.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon scheduling some tasks on his calendar" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 Running on a schedule: it's not just for trains. If your app needs to rebuild a cache every night, prune old data, or email a weekly newsletter to your users, you’re probably looking for a way to run a cron job. Fly.io gives you a few ways to get that done.
 
 We’ll walk through options for task scheduling, starting with the most robust and ending with the “it works, okay?” tier.
@@ -135,11 +137,9 @@ In addition to the options above, you can use an external scheduling service, li
 | **Scheduled Machines** | You want simple, low-frequency jobs (~1x/day) | Not for precise timing |
 | **In-App Scheduler** | You want full control and don't mind plumbing | Write your own orchestration |
 
----
-
 If you're not sure where to start, Cron Manager is the most production-hardened option. But Supercronic gets you 80% of the way with almost no setup, and sometimes that’s all you need.
 
-
+---
 
 ## Related Reading
 
