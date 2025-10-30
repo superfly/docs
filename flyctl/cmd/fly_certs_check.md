@@ -1,5 +1,5 @@
-Checks the DNS configuration for the specified hostname.
-Displays results in the same format as the SHOW command.
+Shows detailed certificate information and checks the DNS configuration
+for the specified hostname.
 
 ## Usage
 ~~~
