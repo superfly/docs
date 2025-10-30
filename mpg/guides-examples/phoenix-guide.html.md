@@ -118,3 +118,4 @@ Older versions required the Repeater plugin. Since Oban 2.14 (2023), polling fal
 - `FATAL 08P01 protocol_violation` on login — Set `prepare: :unnamed` and ensure PgBouncer is in Transaction mode.
 - Oban jobs not running — Use a non-Postgres notifier (PG or Phoenix) behind PgBouncer, or run Oban on a direct Repo. On Oban ≥ 2.14, do not add Repeater (polling fallback is automatic when PubSub isn't available).
 - Migrations hanging or failing — Run migrations with the direct database URL (via `release_command` or a one-off SSH command), not through PgBouncer.
+- `non-existing domain - :nxdomain` - Make sure [ipv6 is enabled](https://fly.io/docs/elixir/getting-started/#important-ipv6-settings)
