@@ -14,7 +14,7 @@ date: 2025-09-12
 **This guide shows how to preload large files onto volumes using forking to improve startup performance. This is especially useful for apps with big model files, binaries, or databases.**
 </div>
 
-## Background
+## Overview
 
 If your app needs large local files like ML models, SQLite databases, or game assets, you're probably copying them into place at boot. Maybe you bake them into your image, or have your app download them on first run. This works, but it has downsides:
 
