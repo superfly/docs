@@ -9,9 +9,11 @@ redirect_from: /docs/blueprints/going-to-production-with-hipaa-apps
   <img src="/static/images/production-healthcare.png" alt="Illustration by Annie Ruygt of a balloon doctor using stethescope on an app" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 Fly.io was built by security researchers from the ground up to be both productive and secure, making it a great home for HIPAA-compliant production healthcare applications for productive teams that ship often.
 
-This blueprint runs a developer or operations engineer through the process of evaluating Fly.io's security for HIPAA healthcare apps, launching a pilot application, signing a Business Associate Agreement (BAA), and deploying to production.
+This guiide runs a developer or operations engineer through the process of evaluating Fly.io's security for HIPAA healthcare apps, launching a pilot application, signing a Business Associate Agreement (BAA), and deploying to production.
 
 ## HIPAA and Fly.io Primer
 
@@ -178,3 +180,8 @@ Finally run `fly deploy --path fly.production.yml` to deploy your application, t
 ## Wrap-up
 
 Fly.io is a secure, productive platform for deploying HIPAA-compliant healthcare applications. The platform provides the necessary security controls and features to ensure that PHI is protected in accordance with HIPAA requirements while giving development teams the flexibility to ship often and scale quickly.
+
+## Related reading
+
+- [Healthcare apps on Fly.io](/docs/about/healthcare/) Overview of how Fly.io supports HIPAA‑compliant apps, including encryption, network isolation, and audit‑controls.
+- [Going to production checklist](/docs/apps/going-to-production/) A general production‑readiness checklist for apps on Fly.io.

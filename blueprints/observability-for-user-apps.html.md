@@ -9,6 +9,8 @@ date: 2025-05-26
   <img src="/static/images/observability.png" alt="Illustration by Annie Ruygt of a printed photo depicting a bird and a ghost backpacking through a forest" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 When you run a platform for users to execute their own code on Fly.io—[think per-user development environments](/docs/blueprints/per-user-dev-environments/) or AI/LLM apps—it's a good idea to have real-time observability for those user apps. You might _also_ want to stream logs from those apps back to the original developer (your end-user), so they can see what their code is doing.
 
 Fly.io offers built-in telemetry based on [**NATS**](https://nats.io/) that you can tap into to achieve this. At a high level, Fly.io captures everything your app writes to stdout and funnels it into an internal NATS log stream. A proxy in front of this NATS cluster ensures that each organization can only access its own applications' logs. Both the `flyctl logs` command and the our web dashboard's "Live Logs" use this pipeline under the hood. We can use the same system! By connecting a NATS client within your Fly organization's [private network](/docs/networking/private-networking/), we can subscribe to log subjects and stream logs out to wherever we need, in real-time.
@@ -111,3 +113,9 @@ The router itself is a Fly app that does the following:
 - Ensure that each developer only receives their own app's logs. The router should use the mapping of app ← → user to publish the right data to the correct output channel (and not mix different users' data).
 
 This approach uses one NATS subscription _per user app_. The messages are forwarded verbatim to the user's websocket in this case (as JSON strings), but you could transform them (for example, format them nicely or filter out certain internal logs) before sending. On the client side, you would simply read from the websocket or SSE stream and append new log lines to a console view.
+
+## Related reading
+
+- [Logging overview](/docs/monitoring/logging-overview/) How logs flow from your Fly apps into the platform’s NATS pipeline.
+- [Logs API options](/docs/monitoring/logs-api/) Guide with approaches for tapping directly into structured logs programmatically.
+- [fly-telemetry](https://github.com/superfly/fly-telemetry) Lightweight reference implementation for quick, out-of-the-box observability for deployments on Fly.io.

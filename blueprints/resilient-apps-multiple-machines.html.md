@@ -13,6 +13,8 @@ date: 2025-09-12
 **Fly Machines are fast-launching VMs, the basic compute unit of the Fly.io platform. Each Machine runs on a single physical host. If that host fails, the Machine goes down and does not automatically start again on another host.**
 </div>
 
+## Overview
+
 To make your app resilient to single-host failure, create at least two Machines per app or process. Fly Proxy autostop/autostart and standby Machines are built-in platform features that you can use to start extra Machines only when needed.
 
 ---

@@ -13,6 +13,8 @@ date: 2024-05-27
   <img src="/static/images/bridge-deployment.png" alt="Illustration by Annie Ruygt of a figure with wings and a ship some balloons and planes" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 Sometimes you can recreate production on Fly.io without any issues. Other times you need to be able to incrementally move things over. Fly.io [has private networking](/docs/networking/private-networking/) by default for apps in the same organization, but you can also easily connect your existing external servers to this private network. This lets you use your private network as a way to incrementally move services over.
 
 Say you have an existing service on AWS or a database with RDS that needs to be accessed over RDS. You can use that AWS instance to pivot traffic from your Fly Machines to those other services. You can also go the other way and access your Fly apps (such as [an instance of Ollama](https://fly.io/blog/scaling-llm-ollama/)) from AWS, your laptop, or any other self-hosted server you have in your arsenal. Or maybe you're making a tool for a support team, and it needs to hit that one database on prem.
@@ -109,3 +111,9 @@ Getting ping working should be good enough to get you started, but here's some o
 - Connect a few other computers to your private network. Install a Minecraft server on one of them and play together.
 
 Hint: you may need to allow private network addresses through your firewall. Check the documentation of your firewall tool of choice and allow traffic from `fly0` through as if it's an "internal" interface.
+
+## Related Reading
+
+- [Jack into your private network with WireGuard](https://fly.io/docs/blueprints/connect-private-network-wireguard/) A guide showing how to connect a laptop or external server to your Fly.io private network via WireGuard.  
+- [Private Networking](https://fly.io/docs/networking/private-networking/) Overview of Fly’s internal IPv6 mesh (6PN), how apps talk to each other privately, and how WireGuard‑based tunnels integrate.  
+- [Custom Private Networks](https://fly.io/docs/networking/custom-private-networks/) How to isolate tenants, apps, or services by creating separate private networks inside your organization — relevant when bridging external infrastructure.

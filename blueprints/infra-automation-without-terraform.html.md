@@ -164,3 +164,10 @@ The Machines API doesn’t lock you into a flow, we just give you the primitives
 We know it sucks when a tool you relied on gets deprecated. Terraform made a lot of things feel clean and declarative. But when it comes to the Machines API specifically, Terraform was always working at a bit of a mismatch since it tries to express an inherently imperative lifecycle in a declarative model. The Machines API gives you fine-grained control and flexibility that didn’t map cleanly to Terraform's abstractions. With a little effort, you can build exactly what you need, and avoid being boxed in by someone else’s idea of what an app should look like.
 
 If you're rebuilding that tooling now, let us know what you're working on. We might be able to help, or at least learn something from it.
+
+## Related Reading
+
+- [Continuous Deployment with flyctl and GitHub Actions](https://fly.io/docs/launch/continuous-deployment-with-github-actions/) Walk‑through on wiring CI/CD with Fly.io + GitHub Actions.
+- [Access Tokens for Fly.io](https://fly.io/docs/security/tokens/) Deep dive into token scopes, permissions, and best practices for automation workflows.
+- [Working with the Machines API](https://fly.io/docs/machines/api/working-with-machines-api/)  Reference guide for automating at the VM/“machine” level (the lower‑level alternative to flyctl).
+- [App Configuration (`fly.toml`)](https://fly.io/docs/reference/configuration/) Details on how your app config file works, which is often part of your automation setup.

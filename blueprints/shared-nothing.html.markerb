@@ -24,6 +24,8 @@ author: rubys
 This guide from Rails and JS expert Sam Ruby is based on his personal capacity as a ballroom dance nerd. It covers how a serverful, stateful, shared-nothing architecture hit the spot for him when it came time to scale to multiple customers in different parts of the world.
 </div>
 
+## Introduction
+
 Once upon a time, I found myself double booked at a ballroom dance competition. Read that [story in more detail on my blog](http://intertwingly.net/blog/2022/08/13/Unretiring), but essentially: you’re only supposed to get one shot to dance in a given heat, and I ended up listed twice in the spreadsheet for that heat. I decided to write an app to take the load of manual entry and scheduling off of organizers, and so that no one would ever be asked to do something impossible and be at two places at one time.
 
 Showcase (that’s what I called it) started out as a Ruby on Rails app and a database; it kept track of competitors and their schedules for a single Showcase (that’s what these ballroom dance events are called). I ran it on a single Mac Mini in my home.
@@ -446,3 +448,9 @@ But first, some useful approximations that characterize this app, many of which 
 * Transactions are generally a blend of reads and writes with neither dominating.
 
 This lends itself well to horizontal scaling, where every event effectively has a dedicated VM.  Again, this is a useful approximation - as not every event is "active", multiple events can share a VM.  As needs change, databases can be moved to different VMs.
+
+## Related reading
+
+- [Getting Started with N‑Tier Architecture](/docs/blueprints/n-tier-architecture/) A contrasting architecture pattern where state is shared across the data tier — useful for understanding when shared‑nothing *isn’t* the best fit.
+- [Session Affinity (a.k.a. Sticky Sessions)](/docs/blueprints/sticky-sessions/) Focused on routing and state‑isolation patterns that often come up when you adopt a shared‑nothing approach and need to keep state local to a machine.
+- [Networking](/docs/networking/) The comprehensive networking overview (private networks, Anycast, WireGuard tunnels, routing) — helpful when building globally distributed isolated nodes in a shared‐nothing architecture.

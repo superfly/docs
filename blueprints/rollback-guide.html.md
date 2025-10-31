@@ -10,7 +10,7 @@ date: 2025-08-22
   <img src="/static/images/rollback-guide.png" alt="Illustration by Annie Ruygt of a Frankie the hot air balloon helping his developer friend roll back a bad deploy" class="w-full max-w-lg mx-auto">
 </figure>
 
-## Why rollback?
+## Overview: Why rollback?
 
 Fly.io runs your apps close to your users, in VMs you can spin up and tear down in seconds. But what if you spin up something broken? If a deploy goes wrong, it’s easy to roll back: just tell Fly to redeploy a previous image. There’s no special `rollback` command because you don’t need one. Rollbacks use the same deploy mechanism you already know.
 
@@ -126,3 +126,9 @@ Use `--strategy immediate` when speed matters more than downtime, and `--max-una
 ## Summing up
 
 Rolling back on Fly is basically just _deploying an older image_. Once you’ve got the muscle memory for `fly releases --image` and `fly deploy --image`, it’s a quick, predictable way to recover from bad deploys. And if you start tagging images with human-readable labels, you’ll have an easier time remembering which one to trust when production is on fire.
+
+## Related reading
+
+- [Seamless Deployments on Fly.io](/docs/blueprints/seamless-deployments/) How to set up deploys that avoid downtime and make rollbacks less painful.  
+- [Using the Fly Docker Registry](/docs/blueprints/using-the-fly-docker-registry/) Details on image tagging and retention — key context for understanding how rollbacks work.  
+- [Staging and Production Isolation](/docs/blueprints/staging-prod-isolation/) Tips on environment isolation that reduce the blast radius of a bad release.
