@@ -119,5 +119,3 @@ This approach uses one NATS subscription _per user app_. The messages are forwar
 - [Logging overview](/docs/monitoring/logging-overview/) How logs flow from your Fly apps into the platform’s NATS pipeline.
 - [Logs API options](/docs/monitoring/logs-api/) Guide with approaches for tapping directly into structured logs programmatically.
 - [fly-telemetry](https://github.com/superfly/fly-telemetry) Lightweight reference implementation for quick, out-of-the-box observability for deployments on Fly.io.
-
-

@@ -15,6 +15,8 @@ redirect_from:
   <img src="/static/images/supercronic.png" alt="Illustration by Annie Ruygt of Framkie the balloon wearing a sash and a prize ribbon in a gymnasium hall while a bird looks with admiration" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 `crontab` is a little too opinionated for containers—it's a great little tool, but when run inside of containers it doesn't grab `ENV` vars how we'd like it to. Fortunately there's a Go binary called `supercronic` that's a drop-in replacement for containers.
 
 The good news is that it's pretty easy to get it running on Fly with a little bit of copy and pasting. Let's get to it.
@@ -95,7 +97,13 @@ $ fly scale count cron=1 web=
 
 That's it! If all went well you now have cron running in a `cron` process in a Fly virtual machine. When you `fly deploy` it will get the latest code changes and reboot the virtual machines.
 
-# Resources
+## Resources
 
 - [https://github.com/fly-apps/supercronic](https://github.com/fly-apps/supercronic+external)
 - [https://cron.help](https://cron.help+external)
+
+## Related Reading
+
+- [Task scheduling guide with Cron Manager and friends](/docs/blueprints/task-scheduling/) A broader look at scheduling jobs on Fly.io — covers Cron Manager, Supercronic, scheduled Machines, and more.
+- [Run multiple process groups in an app](/docs/launch/processes/) Explains how to define processes in `fly.toml`, run multiple programs (web, cron, workers), scale by group. 
+- [App Configuration (`fly.toml`)](/docs/reference/configuration/) In‑depth look at the config file that orchestrates your services, processes, health checks, etc.

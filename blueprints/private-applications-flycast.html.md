@@ -11,7 +11,7 @@ date: 2024-06-17
 
 <center><iframe width="600" height="315" src="https://www.youtube-nocookie.com/embed/PR0rzkwKwFA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></center><br />
 
-## Intro
+## Overview
 
 A lot of the time your applications are made to be public and shared with the world. Sometimes you need to be more careful. When you deploy your apps on Fly.io, you get a private network for your organization. This lets your applications in other continents contact each other like they were in the same room.
 
@@ -190,12 +190,10 @@ It took a moment for Ollama to get ready and download the image, then it downloa
 
 And there we go! We’ve covered what Flycast is, why you’d want to use it, and set up an instance of Ollama to show it off.
 
-## Read more
+## Related reading
 
 We've talked about Flycast in some past blog posts and blueprints:
 
 - [Autostart and autostop private apps](/docs/blueprints/autostart-internal-apps/)
-
 - [Deploy Your Own (Not) Midjourney Bot on Fly GPUs](https://fly.io/blog/not-midjourney-bot/)
-
 - [Scaling Large Language Models to zero with Ollama](https://fly.io/blog/scaling-llm-ollama/)

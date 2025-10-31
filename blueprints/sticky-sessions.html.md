@@ -10,6 +10,8 @@ date: 2024-07-17
   <img src="/static/images/session-affinity.png" alt="Illustration by Annie Ruygt of a machine sticking envelopes together" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 In a number of scenarios, it is important to ensure that certain requests are routed to a specific Machine.  This frequently is expressed in the form of wanting an entire user's session to be processed by the same Machine.
 
 There are two approaches to addressing this with Fly.io:
@@ -146,3 +148,9 @@ Caching is an optimization, not a guarantee, so your origin app still needs to h
 Replays can be cached on any existing cookie or request header. For sticky sessions with an API, for example, you might choose to cache based on the `Authorization` header.
 
 For complete details on replay caching configuration, see [Session-based Replay Caching](/docs/networking/dynamic-request-routing/#session-based-replay-caching).
+
+### Related Reading
+
+- [Dynamic Request Routing with `fly‑replay`](docs/networking/dynamic-request-routing/) Explains how `fly‑replay` lets you route requests to a specific machine or region—core technique for sticky sessions.
+- [Load Balancing](/docs/reference/load-balancing/) Details how the Fly Proxy routes traffic among Machines, which underpins how session‑affinity decisions get made.
+- [Networking](/docs/networking/) A broad overview of how Fly handles public/private networking, Anycast IPs, WireGuard mesh, domain routing, and more.

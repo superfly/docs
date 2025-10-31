@@ -8,6 +8,8 @@ nav: guides
   <img src="/static/images/using-the-fly-docker-reg.png" alt="Illustration by Annie Ruygt of Frankie the balloon and the Docker whale playing a game of bean bag toss" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 Fly.io lets you deploy Docker containers as lightweight Firecracker VMs, running globally. While `fly launch` supports many frameworks and auto-generates deployment configurations, you can also build and push your own Docker images to Fly.io’s private registry and deploy them manually.
 
 This guide walks through building, pushing, deploying, and managing images via Fly.io’s Docker registry.
@@ -120,3 +122,8 @@ This will only return images used in past deploys.
 ## Related use case
 
 Want to optimize your deploys with shared layers and pre-installed dependencies? See the [Using base images for faster deployments](https://fly.io/docs/blueprints/using-base-images-for-faster-deployments/#how-to-make-a-base-image+external) blueprint.
+
+## Related reading
+
+- [Deploy with a Dockerfile](https://fly.io/docs/languages-and-frameworks/dockerfile/) The general guide on how to deploy apps from Dockerfiles — useful context when you’re building a base image.
+- [App Configuration (`fly.toml`)](https://fly.io/docs/reference/configuration/) Details on how your `fly.toml` orchestrates builds, images, and deployments.

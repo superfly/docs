@@ -9,6 +9,8 @@ redirect_from: /docs/going-to-production/the-basics/production-staging-isolation
   <img src="/static/images/staging-prod-iso.png" alt="Illustration by Annie Ruygt of a gateway and buildings" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 You want to isolate your production environment from your test or staging environments by limiting production access to the smallest possible group. You can get dependable isolation by using multiple organizations. Organization access is invitation-only and orgs are isolated from one another at a low level by our private networking architecture: every organization has its own [private network](/docs/networking/private-networking/) by default.
 
 All Fly.io accounts start with a "personal" organization. You can create as many organizations as you need, not just for different environments, but also for different projects or clients.
@@ -45,3 +47,8 @@ When you have more than one org, flyctl prompts you to choose an organization wh
 
 - When you only need app isolation within an org, you can use [custom private networks](/docs/networking/custom-private-networks/) to isolate apps from one another by creating an app with `fly apps create` and the `--network` option.
 - When you want user or 3rd-party access control, you can use [deploy](https://community.fly.io/t/deploy-tokens/11895) and [org-scoped tokens](https://community.fly.io/t/org-scoped-tokens/13194) to limit access to apps or orgs.
+
+### Related Reading
+
+- [Going to production checklist](/docs/apps/going-to-production/) A broad checklist for production‑readiness that includes isolating environments and access control.  
+- [Staging environments with GitHub actions](/docs/django/advanced-guides/staging-environments-with-github-actions/) A practical guide focused on using GitHub Actions to deploy dedicated staging environments. Complements the isolation pattern nicely.

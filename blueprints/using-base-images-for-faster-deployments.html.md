@@ -8,7 +8,9 @@ nav: guides
   <img src="/static/images/using-base-images.png" alt="Illustration by Annie Ruygt of the Docker whale carrying some containers" class="w-full max-w-lg mx-auto">
 </figure>
 
-This blueprint explains how to use base images for faster deployments.  A base image is any image that is intended to be used as the `FROM` line in a Dockerfile.  Each app that is deployed on Fly.io can add an image to the Fly registry.
+## Overview
+
+This guide explains how to use base images for faster deployments.  A base image is any image that is intended to be used as the `FROM` line in a Dockerfile.  Each app that is deployed on Fly.io can add an image to the Fly registry.
 
 Every app in the same organization can access the image for any other app and use it as the `FROM` line in their Dockerfile.  This means that it is very easy to make a base image by making a second app to use as the base image.
 
@@ -264,3 +266,7 @@ You can find the registry URL of the images for your base image in the dashboard
 
 Want to skip the Fly builder and use Docker tools directly to manage your images?  See [Managing Docker Images with Fly.io's Private Registry](https://fly.io/docs/blueprints/using-the-fly-docker-registry/), a guide that walks through building, pushing, deploying, and managing images via Fly.io’s Docker registry!
 
+## Related reading
+
+- [Deploy with a Dockerfile](https://fly.io/docs/languages-and-frameworks/dockerfile/) The general guide on how to deploy apps from Dockerfiles — useful context when you’re building a base image.
+- [App Configuration (`fly.toml`)](https://fly.io/docs/reference/configuration/) Details on how your `fly.toml` orchestrates builds, images, and deployments.

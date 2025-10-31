@@ -13,6 +13,8 @@ redirect_from: /docs/app-guides/opensshd/
   <img src="/static/images/openssh.png" alt="Illustration by Annie Ruygt of a terminal window, a computer and some numbers" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 A number of tools allow you to interact with your server over SSH. These tools are useful for tasks such as
 copying files ([rsync](https://rsync.samba.org/+external), [scp](https://en.wikipedia.org/wiki/Secure_copy_protocol+external), [sshfs](https://github.com/libfuse/sshfs#sshfs+external)), 
 editing ([emacs](https://www.gnu.org/software/emacs/manual/html_node/emacs/Remote-Files.html+external), [vim](https://www.vim.org/scripts/script.php?script_id=1075+external), [vscode](https://code.visualstudio.com/docs/remote/ssh+external)), and
@@ -208,3 +210,8 @@ Additionally, if you want to avoid the fingerprint checking, you can add the fol
 ```config
 StrictHostKeyChecking no
 ```
+
+### Related Reading
+
+- [`flyctl` SSH commands](https://fly.io/docs/flyctl/ssh/) Official reference for how to use `fly ssh`/`fly ssh sftp` to access running machines. 
+- [Multiple processes inside a Fly.io app](https://fly.io/docs/app-guides/multiple-processes/) Explains how to run multiple process groups in a single machine/container. Relevant when you’re adding `sshd` alongside your main app.

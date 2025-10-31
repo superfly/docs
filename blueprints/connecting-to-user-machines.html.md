@@ -9,9 +9,9 @@ date: 2025-04-02
   <img src="/static/images/connecting-to-users.png" alt="Illustration by Annie Ruygt of a bird holding hands with a computer" class="w-full max-w-lg mx-auto">
 </figure>
 
-# Connecting to User Machines
+## Overview
 
-When running machines for end users, a common challenge is efficiently managing and routing requests to these machines. This document outlines the recommended approach for connecting to user machines on Fly.io, focusing on the following key concepts:
+When running machines for end users, a common challenge is efficiently managing and routing requests to these machines. This guide outlines the recommended approach for connecting to user machines on Fly.io.
 
 ## Typical Stack
 
@@ -156,3 +156,9 @@ async function handleRequest(request: Request): Promise<Response> {
 ```
 
 This code checks the `fly-replay-src` header, parses out the `state` value, and compares it to the preshared key. If it matches, the request is authenticated. 
+
+## Related reading
+
+- [Per‑User Dev Environments with Fly Machines](/docs/blueprints/per-user-dev-environments/) Find out how to run isolated, on‑demand environments for each user.
+- [Observability for User Apps](/docs/blueprints/observability-for-user-apps/) Learn about how to gather logs and telemetry from per‑user apps/machines once you’ve routed traffic to them.
+- [Dynamic Request Routing with fly‑replay](/docs/networking/dynamic-request-routing/) Learn about the `fly‑replay` header and dynamic request routing.
