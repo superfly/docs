@@ -9,22 +9,22 @@ date: 2025-04-02
   <img src="/static/images/per-user-dev.png" alt="Illustration by Annie Ruygt of different envrionments under glass domes" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 Fly Machines are fast-launching VMs behind [a simple API](https://fly.io/docs/machines/api), enabling you to launch tightly isolated app instances in milliseconds [all over the world](https://fly.io/docs/reference/regions/).
 
 One interesting use case: running isolated dev environments for your users (or robots). Fly Machines are a safe execution sandbox for even the sketchiest user-generated (or LLM-generated) code.
 
-This blueprint explains how to use Fly Machines to securely host ephemeral development and/or execution environments, complete with [dynamic subdomain routing](https://fly.io/docs/networking/dynamic-request-routing) using `fly-replay`.
+This guide explains how to use Fly Machines to securely host ephemeral development and/or execution environments, complete with [dynamic subdomain routing](/docs/networking/dynamic-request-routing) using `fly-replay`.
 
-## Overview
-
-Your architecture should include:
+## What your architecture should include
 
 - **Router app(s)**
     - A Fly.io app to handle requests to wildcard subdomains (`*.example.com`). Uses `fly-replay` headers to transparently redirect each request to the correct app and machine. If you have clusters of users (or robots) in different geographic regions, you can spin up a router app in multiple regions. See [Connecting to User Machines](/docs/blueprints/connecting-to-user-machines/) for details on how to implement the routing pattern.
 - **User apps (pre-created)**
-    - Dedicated per-user (or per-robot) Fly apps ([more about why you should create a dedicated app per customer/robot](https://fly.io/docs/machines/guides-examples/one-app-per-user-why)), each containing isolated Fly Machines. App and Machine creation is not instantaneous, so we recommend provisioning a pool of these before you need them so you can quickly assign upon request.
+    - Dedicated per-user (or per-robot) Fly apps ([more about why you should create a dedicated app per customer/robot](/docs/machines/guides-examples/one-app-per-user-why)), each containing isolated Fly Machines. App and Machine creation is not instantaneous, so we recommend provisioning a pool of these before you need them so you can quickly assign upon request.
 - **Fly Machines (with optional volumes)**
-    -  Fast-launching VMs that can be attached to persistent [Fly Volumes](https://fly.io/docs/volumes).
+    -  Fast-launching VMs that can be attached to persistent [Fly Volumes](/docs/volumes).
 
 ### Example Architecture Diagram
 
@@ -37,14 +37,14 @@ Your router app handles all incoming wildcard traffic. Its responsibility is sim
 - Extract subdomains (like `alice.example.com` → `alice-123`).
 - Look up the correct app (and optionally machine ID) for that user.
 - Issue a `fly-replay` header directing the Fly Proxy to [internally redirect the request](/docs/blueprints/connecting-to-user-machines/#using-fly-replay) (this should add no more than ~10 milliseconds of latency if the router app is deployed close to the user).
-- When appropriate, use [replay caching](https://fly.io/docs/networking/dynamic-request-routing/#replay-caching) to further reduce latency and load on the router app.
-- Make sure you've added [a wildcard domain](https://fly.io/docs/networking/custom-domain/#get-certified) (*.example.com) to your router app (read more about the [certificate management endpoint here](https://fly.io/docs/networking/custom-domain-api/)).
+- When appropriate, use [replay caching](/docs/networking/dynamic-request-routing/#replay-caching) to further reduce latency and load on the router app.
+- Make sure you've added [a wildcard domain](/docs/networking/custom-domain/#get-certified) (*.example.com) to your router app (read more about the [certificate management endpoint here](/docs/networking/custom-domain-api/)).
 
 ### User apps
 
 Creating apps dynamically for each user at request time can be slow. To ensure fast provisioning:
 
-- **Pre-create** a pool of Fly apps and machines ahead of time (using the [Fly Machines API or CLI](https://fly.io/docs/apps/overview/)).
+- **Pre-create** a pool of Fly apps and machines ahead of time (using the [Fly Machines API or CLI](/docs/apps/overview/)).
 - Store app details (e.g., app_name: `alice-123`) in a datastore accessible to your router app.
 - Assign apps to users at provisioning time.
 
@@ -54,10 +54,17 @@ You'll want to spin up at least one Machine per user app (but apps can have as m
 
 - Attach Fly Volumes to each machine at creation time.
 - Keep in mind that machine restarts clear temporary filesystem state but preserve volume data.
-- Learn more about the [Machines API resource](https://fly.io/docs/machines/api/machines-resource/) and the [Volumes API resource](https://fly.io/docs/machines/api/volumes-resource/). 
+- Learn more about the [Machines API resource](/docs/machines/api/machines-resource/) and the [Volumes API resource](/docs/machines/api/volumes-resource/). 
 
 ## Pointers & Footguns
 
-- **Machines & volumes are tied to physical hardware:** hardware failures can destroy machines and attached volumes. **Always persist important user data** (code, config, outputs) to external storage (like [Tigris Data](https://fly.io/docs/tigris/#main-content-start) or AWS S3).
+- **Machines & volumes are tied to physical hardware:** hardware failures can destroy machines and attached volumes. **Always persist important user data** (code, config, outputs) to external storage (like [Tigris Data](/docs/tigris/#main-content-start) or AWS S3).
 - **Your users will break their environments:** pre-create standby machines to handle hardware & runtime failures, or the inevitable user or robot poisoned environment. Pre-create standby machines that you can quickly activate in these scenarios.
 - **Machine restarts reset ephemeral filesystem:** the temporary Fly Machine filesystem state resets on Machine restarts, ensuring clean environments. However, volume data remains persistent, making it useful for retaining user progress or state.
+
+### Related reading
+
+- [Connecting to User Machines](/docs/blueprints/connecting-to-user-machines/) How to manage routing and networking when you spin up a fleet of machines dedicated to individual users.
+- [Multi‑container Machines](/docs/machines/guides-examples/multi-container-machines/) When your per‑user environment needs sidecars (logs, metric exporters, agent processes) alongside the main service.
+- [Automating Fly Machines with flyctl](/docs/machines/guides-examples/automate-with-flyctl/) Script machine lifecycle operations — useful when spinning up and tearing down per-user environments on demand.
+

@@ -9,11 +9,13 @@ date: 2025-04-15
   <img src="/static/images/remote-mpc.png" alt="Illustration by Annie Ruygt of bird working at their computer while drinking coffee" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 The Model Context Protocol (MCP) is a fun new way to give LLMs new powers. Originally developed by Anthropic, the protocol has since been adopted by OpenAI (with Google Gemini support in the works at the time of writing).
 
 The protocol defines a standardized way of connecting tools and providing additional context to LLMs, not dissimilar to the way USB provides a standardized way to connect computers to peripherals and devices. Fly Machines are tightly isolated VMs that are perfect for running MCP servers.
 
-This blueprint will help you understand, at a very high level, how to build, deploy, and connect remote MCP servers on Fly.io. Keep in mind that this is an nascent, still-emerging protocol – details are subject to change. For specific implementation details,  the [Model Context Protocol](https://modelcontextprotocol.io/) site is the authoritative source of truth (complete with [a handy .txt version for LLM prompting](https://modelcontextprotocol.io/llms-full.txt)).
+This guide will help you understand, at a very high level, how to build, deploy, and connect remote MCP servers on Fly.io. Keep in mind that this is an nascent, still-emerging protocol – details are subject to change. For specific implementation details,  the [Model Context Protocol](https://modelcontextprotocol.io/) site is the authoritative source of truth (complete with [a handy .txt version for LLM prompting](https://modelcontextprotocol.io/llms-full.txt)).
 
 We've also started to integrate some MCP tooling into the `flyctl` that should give you a more concrete sense of how you might deploy MCP servers on Fly.io (read more in [this community forum post](https://community.fly.io/t/running-mcps-on-and-with-fly-io/24588)). Note that our MCP implementation is experimental and may still have sharp edges!
 
@@ -65,3 +67,9 @@ From your users' perspective, the experience should be delightfully simple:
 ## Taking It Further
 
 If you'd like your MCP servers to connect to third party OAuth APIs without having to directly handle API tokens, consider using [ssokenizer](https://github.com/superfly/ssokenizer) (or [tokenizer](https://github.com/superfly/tokenizer) for generic, non-OAuth flows).
+
+## Related reading
+
+- [Model Context Protocol (MCP) Documentation](/docs/mcp/) Learn more in our reference for MCP: what it is, how it works, and how to deploy servers.  
+- [Connecting to User Machines](/docs/blueprints/connecting-to-user-machines/) Find out about patterns for routing from a central router app to per‑user apps/machines via `fly‑replay`, which is useful when you build single‑tenant MCP setups.  
+- [Launching MCP Servers with flyctl](/docs/flyctl/mcp-server/) Read about the experimental `fly mcp server` command: how to start a local or remote MCP server using `flyctl`, including flags and usage.  

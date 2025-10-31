@@ -10,7 +10,7 @@ date: 2025-05-15
   <img src="/static/images/setting-limits.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon with two other balloon friends of different colors" class="w-full max-w-lg mx-auto">
 </figure>
 
-## Introduction
+## Overview
 
 On Fly.io, machines aren’t created automatically based on traffic; you create them manually. But once a machine is created, it can be stopped when idle (meaning you’re not paying for it), and started again instantly when load picks up. Our “autostart/autostop” feature can drive this process for you — but it only works well if you’ve tuned `soft_limit` and `hard_limit` correctly. Those limits tell Fly when a machine is too busy and it's time to bring more machines online.
 
@@ -29,7 +29,7 @@ Now set your soft limit. The soft limit is there to give our proxy time to bring
 
 Once you’ve got your limits dialed in, turning on `auto_start_machines` and `auto_stop_machines` gives you hands-off scaling behavior that still respects the boundaries you’ve set. Your app shouldn’t need babysitting to handle spikes, and you won’t end up running more machines than you meant to. It’s a good balance between elasticity and control.
 
-### Capacity Planning: A Real Example
+## Capacity Planning: A Real Example
 
 Let’s say:
 
@@ -40,3 +40,9 @@ Let’s say:
 That means you need 75 concurrent request slots to keep up. So: 750 rps * 100ms = 75 concurrent requests. At 10 per machine, you’ll need 8 machines.
 
 In order to serve requests as they arrive (that is, dispatch 750 requests/second) with an average processing time per request of 100ms, 75 “workers”, or concurrent requests handled, are needed. Based on the above machine capacity of 10 requests, 8 machines should be able to handle the proposed load.
+
+## Related reading
+
+- [Guidelines for Concurrency Settings](/docs/apps/concurrency/) Read more in this reference for the `soft_limit`, `hard_limit`, and `type` settings you’ll use in your `fly.toml`.
+- [App Configuration: `http_service.concurrency`](/docs/reference/configuration/#http_service-concurrency)  Check out this section of the `fly.toml` config reference explaining concurrency parameters.
+- [Load Balancing on Fly.io](/docs/reference/load-balancing/) Find out how your concurrency limits affect how the Fly Proxy routes traffic across machines—and why your soft/hard limits matter.

@@ -9,12 +9,14 @@ redirect_from: /docs/blueprints/autoscale-machines-like-a-boss/
   <img src="/static/images/autoscale-machines.png" alt="Illustration by Annie Ruygt of two machines dancing and one standing still" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 You have an app with services that's configured to [automatically start
 and stop Machines based on traffic demand](/docs/launch/autostop-autostart/). But the traffic to your app changes
 significantly during the day and you don't want to keep a lot of stopped
 Machines during the period of low traffic.
 
-This blueprint will guide you through the process of configuring the
+This guide will take you through the process of configuring the
 [`fly-autoscaler` app](/docs/launch/autoscale-by-metric/) in conjunction with 
 [Fly Proxy autostop/autostart](/docs/launch/autostop-autostart/) to 
 always keep a fixed number of Machines ready to be quickly started 
@@ -108,10 +110,8 @@ And finally, deploy the autoscaler, using the `--ha` option to deploy only one M
 $ fly deploy --ha=false
 ```
 
-## Read more
+## Related reading
 
 - [Autoscale based on metrics](/docs/launch/autoscale-by-metric/)
-
 - [Autostop/autostart Machines](/docs/launch/autostop-autostart/)
-
 - [Autostop/autostart private apps](/docs/blueprints/autostart-internal-apps/)

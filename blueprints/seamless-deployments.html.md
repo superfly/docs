@@ -10,11 +10,13 @@ date: 2025-09-23
   <img src="/static/images/seamless-deployments.png" alt="Illustration by Annie Ruygt of a balloon doing a health check" class="w-full max-w-lg mx-auto">
 </figure>
 
+## Overview
+
 <div class="callout">
 **Zero-downtime deploys aren’t magic. They’re just health checks that work. Fly.io apps run on individual VMs, and we won’t start routing traffic to a new one until it proves it’s alive. Here's how to get seamless deploys without breaking things or relying on hope as a strategy.**
 </div>
 
-### Your deploy is only as good as your health checks
+## Your deploy is only as good as your health checks
 
 Fly.io deployments look like magic when health checks are working. New Machines boot. Old ones go down. Users never notice. But behind the scenes, the [Fly Proxy](/docs/reference/fly-proxy/) is watching your Machines and only sending them traffic if they pass your health checks.
 
@@ -59,7 +61,7 @@ Note: `machine_checks` run in a temporary Machine with the new image before it's
 
 If a Machine fails a health check, Fly Proxy pulls it out of the rotation. That Machine can still be running, logging, and debugging, but it's invisible to your users.
 
-### Deployment strategies: choose your own trade-offs
+## Deployment strategies: choose your own trade-offs
 
 Working with health checks and at least two Machines, you can avoid downtime. The platform won't kill a healthy Machine until a new one is up and running.
 
@@ -74,7 +76,7 @@ Every deploy also includes a smoke check: Fly watches Machines for \~10 seconds 
 
 Don't forget to set `wait_timeout` if your image is big or startup is slow. It's easy to hit timeouts before Machines even start.
 
-### One-off tasks with `release_command`
+## One-off tasks with `release_command`
 
 Sometimes you need to run a script before your app is actually deployed, like a database migration or other one-off prep work. The `release_command` in your `fly.toml` lets you do exactly that. It spins up a fresh temporary Machine, runs your command, then shuts it down and destroys it. It doesn’t join your deployed Machines.
 
@@ -84,7 +86,7 @@ If `release_command` fails, the deploy won’t proceed. This is usually what you
 
 We’ve got more details, including how `ENTRYPOINT` and `CMD` are handled, in the [reference for `fly.toml`](/docs/reference/configuration/#run-one-off-commands-before-releasing-a-deployment).
 
-### Zero-downtime is a shared responsibility
+## Zero-downtime is a shared responsibility
 
 The Fly.io platform will keep your Machines healthy and traffic flowing. But there's one thing it can't fix: application incompatibility during deploys.
 
@@ -99,7 +101,8 @@ Every framework has guidance for this. Read it. Follow it. Then health checks, d
 
 Deploying without downtime isn't automatic. But with a little help from your health checks and some care in your app logic, it's well within reach.
 
-### Related reading
+## Related reading
 
-- [Deploy an App](/docs/launch/deploy/)
 - [Health Checks](/docs/reference/health-checks/)
+- [Deploy an App](/docs/launch/deploy/)
+- [App Configuration (`fly.toml`)](https://fly.io/docs/reference/configuration/)

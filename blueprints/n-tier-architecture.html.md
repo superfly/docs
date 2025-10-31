@@ -10,7 +10,7 @@ date: 2025-08-29
   <img src="/static/images/get-started-n-tier.png" alt="Illustration by Annie Ruygt of a bird slicing a loaf of bread-think app layers" class="w-full max-w-lg mx-auto">
 </figure>
 
-## What is n-tier architecture?
+## Introduction: What is n-tier architecture?
 
 When people talk about “**n-tier architecture**,” they’re describing a way of splitting an app into layers (or “tiers”) that each have a specific job. The “**n**” just means there could be two, three, or more tiers depending on how you slice things.
 
@@ -122,7 +122,7 @@ Every request can hit any Machine, and all Machines share the same Postgres. Tha
 
 ---
 
-## Next steps and related reading
+## Related reading
 
 - Explore the features of [Fly Managed Postgres](/docs/mpg/) 
 - Find out how to [scale apps on Fly](/docs/launch/scale-count/)
