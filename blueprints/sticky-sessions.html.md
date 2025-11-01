@@ -149,8 +149,8 @@ Replays can be cached on any existing cookie or request header. For sticky sessi
 
 For complete details on replay caching configuration, see [Session-based Replay Caching](/docs/networking/dynamic-request-routing/#session-based-replay-caching).
 
-### Related Reading
+## Related reading
 
-- [Dynamic Request Routing with `fly‑replay`](docs/networking/dynamic-request-routing/) Explains how `fly‑replay` lets you route requests to a specific machine or region—core technique for sticky sessions.
+- [Dynamic Request Routing with `fly‑replay`](/docs/networking/dynamic-request-routing/) Explains how `fly‑replay` lets you route requests to a specific machine or region—core technique for sticky sessions.
 - [Load Balancing](/docs/reference/load-balancing/) Details how the Fly Proxy routes traffic among Machines, which underpins how session‑affinity decisions get made.
 - [Networking](/docs/networking/) A broad overview of how Fly handles public/private networking, Anycast IPs, WireGuard mesh, domain routing, and more.

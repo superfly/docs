@@ -62,9 +62,8 @@ You'll want to spin up at least one Machine per user app (but apps can have as m
 - **Your users will break their environments:** pre-create standby machines to handle hardware & runtime failures, or the inevitable user or robot poisoned environment. Pre-create standby machines that you can quickly activate in these scenarios.
 - **Machine restarts reset ephemeral filesystem:** the temporary Fly Machine filesystem state resets on Machine restarts, ensuring clean environments. However, volume data remains persistent, making it useful for retaining user progress or state.
 
-### Related reading
+## Related reading
 
 - [Connecting to User Machines](/docs/blueprints/connecting-to-user-machines/) How to manage routing and networking when you spin up a fleet of machines dedicated to individual users.
 - [Multi‑container Machines](/docs/machines/guides-examples/multi-container-machines/) When your per‑user environment needs sidecars (logs, metric exporters, agent processes) alongside the main service.
-- [Automating Fly Machines with flyctl](/docs/machines/guides-examples/automate-with-flyctl/) Script machine lifecycle operations — useful when spinning up and tearing down per-user environments on demand.
 
