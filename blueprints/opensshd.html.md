@@ -211,7 +211,7 @@ Additionally, if you want to avoid the fingerprint checking, you can add the fol
 StrictHostKeyChecking no
 ```
 
-### Related Reading
+## Related reading
 
 - [`flyctl` SSH commands](https://fly.io/docs/flyctl/ssh/) Official reference for how to use `fly ssh`/`fly ssh sftp` to access running machines. 
 - [Multiple processes inside a Fly.io app](https://fly.io/docs/app-guides/multiple-processes/) Explains how to run multiple process groups in a single machine/container. Relevant when you’re adding `sshd` alongside your main app.
