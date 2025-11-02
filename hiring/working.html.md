@@ -61,7 +61,7 @@ We want our teams to set their own direction as much as possible, but we&#39;ll 
 
 ## Everyone Shares An On-Call Rotation
 
-It&#39;s a platform for shipping our customers apps. It&#39;s on 24/7/365.
+It&#39;s a platform for shipping our customers' apps. It&#39;s on 24/7/365.
 
 We made a decision early on not to stick ops teams with the whole on-call challenge. So we all share it. At our current team size, on-call is 1 week roughly every 9 months or so. Most on-call is quiet! Because we all share the rotation, noisy alarms would drive all of us batty.
 
