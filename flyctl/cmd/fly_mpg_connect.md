@@ -2,13 +2,12 @@ Connect to a MPG database using psql
 
 ## Usage
 ~~~
-fly mpg connect [flags]
+fly mpg connect <CLUSTER ID> [flags]
 ~~~
 
 ## Options
 
 ~~~
-  -c, --cluster string    The target cluster ID
   -d, --database string   The database to connect to
   -h, --help              help for connect
 ~~~

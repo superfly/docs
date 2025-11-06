@@ -2,7 +2,7 @@ Create a backup for a Managed Postgres cluster.
 
 ## Usage
 ~~~
-fly mpg backup create [CLUSTER_ID] [flags]
+fly mpg backup create <CLUSTER_ID> [flags]
 ~~~
 
 ## Options
