@@ -2,7 +2,7 @@ List backups for a Managed Postgres cluster.
 
 ## Usage
 ~~~
-fly mpg backup list [CLUSTER_ID] [flags]
+fly mpg backup list <CLUSTER_ID> [flags]
 ~~~
 
 ## Options

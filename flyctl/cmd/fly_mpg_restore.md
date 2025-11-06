@@ -2,7 +2,7 @@ Restore a Managed Postgres cluster from a backup.
 
 ## Usage
 ~~~
-fly mpg restore [CLUSTER_ID] [flags]
+fly mpg restore <CLUSTER_ID> [flags]
 ~~~
 
 ## Options
