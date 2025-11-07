@@ -13,8 +13,8 @@ Many Fly.io apps use Cloudflare—sometimes just for DNS, sometimes with proxyin
 This is the simplest and most reliable way to use Cloudflare with Fly.io. To configure a DNS-only setup:
 
 1. Point your domain to your Fly.io app using an `AAAA` record for the IPv6 address and an `A` record for the IPv4 address.
-2. Alternatively, use a `CNAME` record pointing to your app's `your-app.fly.dev` hostname.
-3. Disable the Cloudflare proxy ("grey cloud") for these records.
+2. Alternatively, use a `CNAME` record pointing to your app's unique target, shown in your certificate setup instructions.
+3. Disable the Cloudflare proxy (select "grey cloud") for these records.
 4. SSL certificates will be handled by Fly.io automatically using Let's Encrypt.
 
 ## CDN proxy setup ("orange cloud")

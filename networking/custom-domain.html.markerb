@@ -12,136 +12,86 @@ redirect_from:
   <img src="/static/images/docs-ui.webp" alt="">
 </figure>
 
-When you create a Fly App, it is automatically given a `fly.dev` subdomain, based on the app's name. This is great for testing, but when you want to go to full production you'll want your application to appear on your own domain and have HTTPS set up for you as it is with your `.fly.dev` domain. You can do this by setting DNS records through your DNS provider and adding a TLS certificate on Fly.io for your custom domain.
+When you create a Fly App, it is automatically given a `fly.dev` subdomain, based on the app's name. This is great for testing, but when you want to go to full production you'll want your application to appear on your own domain and have HTTPS set up for you as it is with your `.fly.dev` domain. You can do this by adding your domain to your Fly App, then configuring DNS records through your DNS provider.
 
 ## Add a custom domain for your app
 
-The order of the tasks to add a custom domain depends on when you want start directing traffic to your app:
+To add a custom domain, first attach your domain to your Fly App to get DNS configuration instructions, then configure your DNS records with your DNS provider.
 
-* When you want to start accepting traffic immediately on your custom domain, follow the sections below in order.
+### Add your domain to your app
 
-* When you want to get certificates before your app starts accepting traffic, for example if you're cutting over from another platform to Fly.io, you should create the certificates and configure the ACME challenge first, and then add the DNS records when you're ready to send traffic to your app.
+Attach your domain to your Fly App. This prepares your app to generate TLS certificates and handle traffic for your custom domain, and shows you the DNS configuration options for your setup.
 
-### Add DNS records
+You can add your domain with flyctl or in your app [dashboard](https://fly.io/dashboard/) under **Certificates**.
 
-Direct traffic to your site by mapping your custom domain name to your Fly App through your DNS provider. Create either A/AAAA records (Option I) or a CNAME record (Option II).
-
-#### Option I: Set A/AAAA records
-
-A and AAAA records point your domain to your app's IP addresses.
-
-Get your app's IP addresses:
-
-```cmd
-fly ips list
-```
-```output
-VERSION	IP                    	TYPE              	REGION	CREATED AT
-v6     	2a09:8280:1::39:b14f:0	public (dedicated)	global	Jun 18 2024 17:09
-v4     	66.241.124.193        	public (shared)   	      	Jan 1 0001 00:00
-```
-
-Set the A and AAAA records with your DNS provider. Add an A record for your domain that points to the IPv4 address, and add an AAAA record for your domain that points to the IPv6 address.
-
-Once the A and AAAA records are added and propagated through the DNS system, you can connect to your domain name.
-
-<div class="important">
-**Important:** Hostname validation will fail without an IPv6 address&mdash;and we won't attempt to issue or renew a certificate&mdash;unless you're using a [CNAME `_acme-challenge` for domain verification](#optional-use-an-acme-dns-01-challenge). However, we still recommend having both an IPv4 and an IPv6 address allocated if your app is serving traffic. If your app doesn't have an IPv6 address, allocate one with `flyctl ips allocate-v6`.
-</div>
-
-#### Option II: Set a CNAME record
-
-In some cases, you can use a CNAME record, which points your custom domain at your `.fly.dev` host.
-
-Set the CNAME record with your DNS provider. For example, if you have a domain called `example.com` and an app called `exemplum` that you want available at `www.example.com`, then you can create a CNAME record for `example.com`'s DNS that would look like this:
-
-| Record Type | Host / Hostname / Name | Value / Content / Alias of |
-| --- | --- | ---|
-| CNAME | www | exemplum.fly.dev |
-
-Different DNS providers might use different terms for the parts of the record and we've listed a few of them in the table above.
-
-For our example, with this CNAME record added, accessing `www.example.com` will tell the DNS system to look up `exemplum.fly.dev` and return its results.
-
-Setting CNAME records for the apex domain can be problematic, and should be avoided unless your DNS provider supports CNAME flattening. Some providers use a special name for these records, such as ANAME or ALIAS, and some will flatten a CNAME at the apex automatically. In general, we recommend setting A/AAAA records on the apex domain.
-
-### Get certified
-
-You'll need a TLS certificate for your domain if your app:
-
-* Should accept HTTPS connections, or
-* Uses a shared IPv4 [Anycast address](/docs/networking/services/#ip-addresses). Fly Proxy uses the certificate to associate the custom domain name with your app for routing purposes.
-
-You can add certificates with flyctl or in your app [dashboard](https://fly.io/dashboard/) under **Certificates**.
-
-Create a certificate for your custom domain with the `fly certs add` command. For example:
+For example, using the CLI:
 
 ```cmd
 fly certs add example.com
 ```
-```output
-  Hostname                    = example.com
-  Configured                  = true
-  Issued                      =
-  Certificate Authority       = lets_encrypt
-  DNS Provider                = enom
-  DNS Validation Instructions =
-  DNS Validation Hostname     =
-  DNS Validation Target       = example.com.5xzw.flydns.net
-  Source                      = fly
-  Created At                  = 0001-01-01T00:00:00Z
-  Status                      =
-```
 
-If you need a wildcard domain, put quotes around the hostname to avoid shell expansion:
+This command will show you the applicable DNS configuration options for your setup, including:
+- A and AAAA records
+- CNAME records
+- Proxy setup (if using a CDN)
+- DNS-01 challenge (required for wildcards, optional for pre-traffic certificate generation)
+
+If you are adding a wildcard domain with the CLI, put quotes around the hostname to avoid shell expansion:
 
 ```cmd
 fly certs add "*.example.com"
 ```
 
-Running `fly certs add` starts the process of getting a certificate and provides instructions for adding DNS records. `Configured` should be true and `Status` will change to `Ready` when the certificates are available. You can run `fly certs show <hostname>` to check the status, or use `fly certs setup <hostname>` to view the setup instructions again.
+Use `fly certs check <hostname>` to check the certificate status and validation progress, or `fly certs setup <hostname>` to view the setup instructions again.
 
+### Configure DNS records
 
-### Certificate validation methods
+Now that you've added your domain to your app, configure DNS records with your DNS provider to direct traffic to your Fly App. The setup instructions in the dashboard, or from `fly certs add`, show the recommended DNS configuration for your situation.
 
-Fly.io supports multiple methods for validating your domain ownership when issuing certificates:
+Choose the DNS setup that matches your needs:
 
-1. **TLS-ALPN challenge**: Let's Encrypt validates domain ownership through a TLS handshake directly with the Fly Proxy. This is our preferred method and works automatically when your DNS records point directly to your Fly application.
+#### A and AAAA records (recommended)
 
-2. **HTTP-01 challenge**: Let's Encrypt validates domain ownership by requesting a specific file from your domain. This is used automatically when TLS-ALPN is not available, such as when your application is behind a proxy or CDN.
+Use A and AAAA records for most direct connections to your app. These records point your domain directly to your app's IP addresses.
 
-3. **DNS-01 challenge**: You manually add a DNS record to validate domain ownership. This is useful when you need to pre-generate certificates or when automatic validation methods cannot be used.
+The A and AAAA records you need to set will be shown in your dashboard, and in the output from `fly certs add`. If your app doesn't have an IPv6 address, allocate one with `fly ips allocate-v6`.
 
-#### (Optional) Use an ACME DNS-01 challenge
+<div class="important">
+**Important:** Hostname validation will fail without an IPv6 address&mdash;and we won't attempt to issue or renew a certificate&mdash;unless you're using a [CNAME `_acme-challenge` for domain verification](#dns-challenge). However, we still recommend having both an IPv4 and an IPv6 address allocated if your app is serving traffic.
+</div>
 
-Use a DNS-01 challenge if one or more of the following scenarios apply:
+#### CNAME records
 
-- You want to issue a certificate before creating the CNAME or A/AAAA records to point to your app.
-- You're using a proxy or CDN configuration where automatic validation methods (TLS-ALPN or HTTP-01) cannot be used.
-- You want to ensure no HTTPS connection errors occur during the short time (usually minutes) it takes to generate the first-ever certificate for your site.
-- You're using a wildcard certificate.
+CNAME records work well for subdomains (like `www.example.com` or `app.example.com`). A CNAME points your custom domain at a unique `.fly.dev` hostname for your app.
+CNAME records are also a good option if you have many IP addresses assigned to your app, or expect to change them in the future.
 
-1. Run the `fly certs show <hostname>` command. For example:
+Set the CNAME record with your DNS provider. Each app has a unique CNAME target that will be shown in the dashboard for your certificate, or in the output from `fly certs add`.
 
-    ```cmd
-    fly certs show example.com
-    ```
-    ```output
-      Hostname                    = example.com
-      Configured                  = true
-      Issued                      = ecdsa, rsa
-      Certificate Authority       = lets_encrypt
-      DNS Provider                = enom
-      DNS Validation Instructions = CNAME _acme-challenge.example.com => example.com.5xzw.flydns.net.
-      DNS Validation Hostname     = _acme-challenge.example.com
-      DNS Validation Target       = example.com.5xzw.flydns.net
-      Source                      = fly
-      Created At                  = 1m24s ago
-      Status                      = Ready
-    ```
-2. Reference the **DNS Validation Instructions** to create a `CNAME` DNS record for a subdomain, `_acme-challenge`, of your domain (**DNS Validation Hostname**) and point it at the **DNS Validation Target**.
+Setting CNAME records for the apex domain can be problematic, and should be avoided unless your DNS provider supports CNAME flattening. Some providers use a special name for these records, such as ANAME or ALIAS, and some will flatten a CNAME at the apex automatically. In general, we recommend setting A/AAAA records on the apex domain.
 
-Once complete, and the updated DNS data has propagated, that domain will be queried to confirm you have control of it. Certificates will be generated and installed.
+#### Proxy/CDN setup
+
+If you're using a proxy or CDN (like Cloudflare) in front of your Fly application, configure only an AAAA record pointing to your app's IPv6 address, as certificate generation requires IPv6 traffic.
+
+#### DNS Challenge
+
+Use the DNS-01 challenge when:
+
+- You need a wildcard certificate
+- You want to generate the certificate before directing traffic to your app
+- Automatic validation methods don't work for your setup
+
+This will require setting an `_acme-challenge` CNAME record on your domain. The required record will be shown in your dashboard, or in the output from `fly certs add`.
+
+### Certificate validation
+
+After you have configured your DNS, Fly.io automatically validates your domain ownership and issues certificates. This happens through one of these methods:
+
+- **TLS-ALPN challenge**: Validates through a TLS handshake with Fly Proxy. This is the preferred method and works automatically for direct connections.
+
+- **HTTP-01 challenge**: Validates by requesting a specific file from your domain. Used automatically when TLS-ALPN isn't available, such as with proxy/CDN configurations.
+
+- **DNS-01 challenge**: You manually add a DNS record to validate domain ownership. Required for wildcard certificates, or to generate certificates before directing traffic to your app.
 
 ## Other `fly cert` commands
 
@@ -195,7 +145,7 @@ For this to work:
 1. **Configure DNS records properly**: Create only an AAAA record pointing to your app's IPv6 address. Do not create an A record or CNAME when using Cloudflare's proxy.
 2. **Set SSL mode**: Use "Full" or "Full (Strict)" SSL mode in Cloudflare. "Flexible" mode can cause redirect loops.
 
-Alternatively, you can use the [DNS-01 challenge method](#optional-use-an-acme-dns-01-challenge) instead of the automatic validation method, though this may conflict with Cloudflare's own certificate issuance.
+Alternatively, you can use the [DNS-01 challenge method](#dns-challenge) instead of the automatic validation method, though this may conflict with Cloudflare's own certificate issuance.
 
 ## Related reading
 
