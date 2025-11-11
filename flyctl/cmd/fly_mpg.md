@@ -17,6 +17,7 @@ fly mpg [command] [flags]
 * [proxy](/docs/flyctl/mpg-proxy/)	 - Proxy to a MPG database
 * [restore](/docs/flyctl/mpg-restore/)	 - Restore MPG cluster from backup.
 * [status](/docs/flyctl/mpg-status/)	 - Show MPG cluster status.
+* [users](/docs/flyctl/mpg-users/)	 - Manage users in a managed postgres cluster
 
 ## Options
 

@@ -11,7 +11,9 @@ fly mpg attach <CLUSTER ID> [flags]
 ~~~
   -a, --app string             Application name
   -c, --config string          Path to application configuration file
+  -d, --database string        The database to connect to
   -h, --help                   help for attach
+  -u, --username string        The username to connect as
       --variable-name string   The name of the environment variable that will be added to the attached app (default "DATABASE_URL")
 ~~~
 

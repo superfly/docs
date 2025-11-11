@@ -10,6 +10,7 @@ fly mpg connect <CLUSTER ID> [flags]
 ~~~
   -d, --database string   The database to connect to
   -h, --help              help for connect
+  -u, --username string   The username to connect as
 ~~~
 
 ## Global Options
