@@ -9,8 +9,9 @@ fly volumes snapshots create <volume id> [flags]
 ## Options
 
 ~~~
-  -h, --help   help for create
-  -j, --json   JSON output
+  -a, --app string   Application name
+  -h, --help         help for create
+  -j, --json         JSON output
 ~~~
 
 ## Global Options
