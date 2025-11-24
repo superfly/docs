@@ -136,7 +136,9 @@ Once the user has been created, you can generate a connection string for them fr
 
 
 ## Databases
-Your Managed Postgres cluster is created with the default `fly-db` database. You can create additional databases from the dashboard--these databases can be accessed by existing users in your cluster, based on their role.
+Your Managed Postgres cluster is created with the default `fly-db` database. You can create additional databases from the dashboard.
+
+These databases can be accessed by existing users in your cluster, based on their role.
 
 #### Creating additional Databases
 To create additional databases:
