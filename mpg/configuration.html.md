@@ -66,7 +66,7 @@ During the configuration update, your database nodes will restart. You may see a
 
 ## Users and Roles
 
-Your Managed Postgres Cluster is created with one admin user named `fly-user`. You can create additional database users and set their roles from your dashboard. 
+Your Managed Postgres Cluster is created with one admin user named `fly-user`. You can create additional database users and set their roles from your dashboard or through `flyctl`.
 
 Currently MPG supports the following roles for users:
 
@@ -123,10 +123,13 @@ The Reader role provides read-only access to all data in the cluster. This role 
 
 ### Creating additional users
 
-To create additional users:
+To create additional users via the dashboard:
 1. Navigate to your MPG cluster's "Users" tab in the dashboard
 2. Enter a name for your new user
 3. Click "Create User" and wait for the user to be created.
+
+To create additional users via `flyctl`:
+1. Run `fly mpg users create` to create additional users for your MPG cluster
 
 Note: If your cluster was created before July 2025, you'll need to opt in to the new Role system before you can add new users. This can be done on the Users tab of your dashboard. 
 
@@ -136,12 +139,15 @@ Once the user has been created, you can generate a connection string for them fr
 
 
 ## Databases
-Your Managed Postgres cluster is created with the default `fly-db` database. You can create additional databases from the dashboard.
+Your Managed Postgres cluster is created with the default `fly-db` database. You can create additional databases from the dashboard or through `flyctl`.
 
 These databases can be accessed by existing users in your cluster, based on their role.
 
 #### Creating additional Databases
-To create additional databases:
+To create additional databases via the dashboard:
 1. Navigate to your MPG cluster's "Databases" tab in the dashboard
 2. Enter a name for your new database in the input field under the "Databases" section.
 3. Click "Create database" and wait for the database to be created.
+
+To create additional database via `flyctl`:
+1. Run `fly mpg databases create` to create a new database for your MPG cluster
