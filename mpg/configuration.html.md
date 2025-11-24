@@ -133,3 +133,13 @@ Note: If your cluster was created before July 2025, you'll need to opt in to the
 ### Authenticating with a custom user
 
 Once the user has been created, you can generate a connection string for them from the "Connect" tab of your dashboard. Select the user you'd like to authenticate as, and the connection string will be updated with their details. 
+
+
+## Databases
+Your Managed Postgres cluster is created with the default `fly-db` database. You can create additional databases from the dashboard--these databases can be accessed by existing users in your cluster, based on their role.
+
+#### Creating additional Databases
+To create additional databases:
+1. Navigate to your MPG cluster's "Databases" tab in the dashboard
+2. Enter a name for your new database in the input field under the "Databases" section.
+3. Click "Create database" and wait for the database to be created.
