@@ -129,7 +129,7 @@ To create additional users via the dashboard:
 3. Click "Create User" and wait for the user to be created.
 
 To create additional users via `flyctl`:
-1. Run `fly mpg users create` to create additional users for your MPG cluster
+1. Run `fly mpg users create` to create a new user for your MPG cluster
 
 Note: If your cluster was created before July 2025, you'll need to opt in to the new Role system before you can add new users. This can be done on the Users tab of your dashboard. 
 
@@ -150,4 +150,4 @@ To create additional databases via the dashboard:
 3. Click "Create database" and wait for the database to be created.
 
 To create additional database via `flyctl`:
-1. Run `fly mpg databases create` to create a new database for your MPG cluster
+1. Run `fly mpg databases create` to create a new database for your MPG cluster.
