@@ -144,7 +144,8 @@ Your Managed Postgres cluster is created with the default `fly-db` database. You
 
 These databases can be accessed by existing users in your cluster, based on their role.
 
-#### Creating additional Databases
+### Creating additional Databases
+
 To create additional databases via the dashboard:
 1. Navigate to your MPG cluster's "Databases" tab in the dashboard
 2. Enter a name for your new database in the input field under the "Databases" section.
