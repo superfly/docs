@@ -96,7 +96,7 @@ RUN --mount=type=secret,id=ALL_SECRETS \
     some_command
 ```
 
-Assuming your builder Dockerfile is named `Dockerfile.builder`, you can launch the emphemeral machine using the following command:
+Assuming your builder Dockerfile is named `Dockerfile.builder`, you can launch the ephemeral machine using the following command:
 
 ```cmd
 flyctl console --dockerfile Dockerfile.builder -C "/srv/deploy.sh" --env=FLY_API_TOKEN=$(fly auth token)
