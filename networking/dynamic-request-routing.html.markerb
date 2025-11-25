@@ -327,6 +327,20 @@ fly-prefer-region: iad,ord,us
 
 Falls back to the next region in the list, or to the nearest region with healthy Machines if none of the specified regions are available. Useful for large uploads that can't be replayed.
 
+### The fly-force-region Header
+
+```
+fly-force-region: ams
+```
+
+Attempts to route directly to specific region(s). Unlike `fly-prefer-region`, the Fly Proxy will not fall back to requesting the nearest region if it cannot reach any machine in the listed region(s).
+
+Like `fly-prefer-region`, you may also specify multiple regions in order of preference:
+
+```
+fly-force-region: iad,ord,us
+```
+
 ### The fly-prefer-instance-id Header
 
 ```
