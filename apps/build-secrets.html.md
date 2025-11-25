@@ -74,7 +74,7 @@ touch /srv/.secrets
 while read -r secret; do
   echo "export ${secret}=${!secret}" >> /srv/.secrets
   deploy+=(--build-secret "${secret}=${!secret}")
-done < <(flyctl secrets list --json | jq -r ".[].Name")
+done < <(flyctl secrets list --json | jq -r ".[].name")
 
 deploy+=(--build-secret "ALL_SECRETS=$(base64 --wrap=0 /srv/.secrets)")
 ${deploy[@]}
@@ -96,7 +96,7 @@ RUN --mount=type=secret,id=ALL_SECRETS \
     some_command
 ```
 
-Assuming your builder Dockerfile is named `Dockerfile.builder`, you can launch the emphemeral machine using the following command:
+Assuming your builder Dockerfile is named `Dockerfile.builder`, you can launch the ephemeral machine using the following command:
 
 ```cmd
 flyctl console --dockerfile Dockerfile.builder -C "/srv/deploy.sh" --env=FLY_API_TOKEN=$(fly auth token)
