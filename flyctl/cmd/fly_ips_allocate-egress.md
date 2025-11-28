@@ -1,8 +1,8 @@
-Releases one or more ingress IP addresses from the application
+(Beta) Allocates a pair of egress IP addresses for an app
 
 ## Usage
 ~~~
-fly ips release [flags] ADDRESS ADDRESS ...
+fly ips allocate-egress [flags]
 ~~~
 
 ## Options
@@ -10,7 +10,9 @@ fly ips release [flags] ADDRESS ADDRESS ...
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for release
+  -h, --help            help for allocate-egress
+  -r, --region string   The target region (see 'flyctl platform regions')
+  -y, --yes             Accept all confirmations
 ~~~
 
 ## Global Options

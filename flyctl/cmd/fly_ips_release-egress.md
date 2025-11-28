@@ -1,8 +1,8 @@
-Releases one or more ingress IP addresses from the application
+Releases one or more egress IP addresses from the application
 
 ## Usage
 ~~~
-fly ips release [flags] ADDRESS ADDRESS ...
+fly ips release-egress [flags] ADDRESS ADDRESS ...
 ~~~
 
 ## Options
@@ -10,7 +10,7 @@ fly ips release [flags] ADDRESS ADDRESS ...
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
-  -h, --help            help for release
+  -h, --help            help for release-egress
 ~~~
 
 ## Global Options
