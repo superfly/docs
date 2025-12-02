@@ -128,6 +128,10 @@ The price of running Fly.io Managed Postgres depends on your selected Managed Po
 
 Current pricing for Managed Postgres plans and storage is available [here](/docs/mpg#pricing).
 
+<div class="warning icon">
+<b>Important:</b> Managed Postgres lives outside your apps. Deleting an app won’t delete its database. Have a look in your Dashboard when you're cleaning up. A quick check can save you a surprise charge later.
+</div>
+
 ## Persistent Storage Volumes
 
 ### Volumes
