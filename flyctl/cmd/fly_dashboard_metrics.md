@@ -10,6 +10,7 @@ fly dashboard metrics [flags]
 ~~~
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
+  -g, --grafana         Open Grafana metrics dashboard directly
   -h, --help            help for metrics
 ~~~
 
