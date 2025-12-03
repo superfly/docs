@@ -10,9 +10,9 @@ nav: apps
 
 You might want to move an app to a new org to hand off your completed work to a client, to take advantage of a new pricing model, or to move a production app out of your personal organization.
 
-You can move an entire app with its resources to another organization with the `fly apps move` command. You'll need to be a member of both organizations to move an app.
+You can move an entire app with its resources to another organization with the `fly apps move` command in `flyctl`, or using the App Settings page of the Dashboard. You'll need to be a member of both organizations to move an app.
 
-To move an app from one organization to another:
+**Move an app from one organization to another via the CLI:**
 
 ```cmd
 fly apps move <app name> --org <target organization name>
@@ -21,6 +21,14 @@ fly apps move <app name> --org <target organization name>
 <div class="important">
 **Fly Postgres:** You can't use the `fly apps move` command for Fly Postgres apps. To move a Postgres app to another organization, create a new Postgres app under the target organization, and then [restore the data from your current Postgres app volume snapshot](/docs/postgres/managing/backup-and-restore/#restoring-from-a-snapshot).
 </div>
+
+**Move an app from one organization to another via the App Settings page:**
+
+Go to the App Settings page in your Dashboard, click Move app, pick the new organization, and wait for the deployment to finish. Your app will be up and running once the transfer is complete.
+
+<figure>
+  <img src="/static/images/move-app-ui-sm.png" alt="App settings page with Move app option" class="w-full">
+</figure>
 
 ## App downtime
 
@@ -45,4 +53,4 @@ The following extension services need to be reconfigured for the app after the m
 
 ## Read more
 
-[App handover considerations and approaches](/docs/apps/app-handover-guide/)
+[App handover guide: considerations and approaches](/docs/apps/app-handover-guide/)
