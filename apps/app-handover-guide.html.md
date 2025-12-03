@@ -32,15 +32,18 @@ Here’s how that works:
 
 1. **Build as usual in your organization.**
 1. **Have the customer invite one of your devs to their org.** This person needs to be in _both_ orgs to do the move.
-1. **Transfer the app** 
-1. Use `fly apps move <app-name> --org <target-org-name>` 
-1. Heads up: the move causes a couple minutes of downtime. It’s a good idea to schedule this when traffic is low, and inform your users of a maintenance window. 
-1. What moves automatically: 
+1. **Transfer the app:** Use the CLI command `fly apps move <app-name> --org <target-organization-name>`,
+or go to the App Settings page in your Dashboard, click Move app, pick the new organization, and wait for the deployment to finish.
+<figure>
+  <img src="/static/images/move-app-ui-sm.png" alt="App settings page with Move app option" class="w-full max-w-lg mx-auto">
+</figure>
+1. **Be aware:** the move causes a couple minutes of downtime. It’s a good idea to schedule this when traffic is low, and inform your users of a maintenance window. 
+1. **What moves automatically:** 
     - Machines and volumes (data included) 
     - Secrets and environment variables 
     - Certificates and domain names 
     - LiteFS databases (as long as you’re using `$FLY_APP_NAME` for the Consul key) 
-1. What doesn’t move automatically: 
+1. **What doesn’t move automatically:** 
     - **Postgres** **(unmanaged and managed):** Moving Postgres databases across orgs is not supported. You’ll need to spin up a new Fly Postgres app in the target org and restore from a volume snapshot. Or you can use `pgloader` to migrate the data. 
     - **Upstash Redis:** This is tied to an org’s private network. You’ll need to provision a new DB in the new org. 
     - **Tigris buckets:** You’ll have to delete the old Tigris bucket, recreate it in the new org, and copy the data over (try `s3sync`). Don’t forget to reset your app’s secrets. 
@@ -54,6 +57,6 @@ If you know up front that your customer will own the app long-term, starting in 
 
 ### Related reading
 
-[Fly.io billing](/docs/about/billing)
+- [Move an app between orgs](/docs/apps/move-app-org)
 
-[Move an app between orgs](/docs/apps/move-app-org)
+- [Fly.io billing](/docs/about/billing)
