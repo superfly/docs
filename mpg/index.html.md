@@ -92,6 +92,6 @@ Database storage is priced at **$0.28 per provisioned GB for a 30-day month**. F
 
 Clusters created or deleted mid-month will have their pricing prorated accordingly.
 
-Starting Feburary 2026, inter-region private network usage will be charged at the [same rate](/docs/about/pricing/#data-transfer-pricing) as machines.
+Starting February 2026, inter-region private network usage will be charged at the [same rate](/docs/about/pricing/#data-transfer-pricing) as machines.
 It will also share the same free quota as existing private network usage.
 There will be no charges for transfer within the same region.
