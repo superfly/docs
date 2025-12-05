@@ -140,7 +140,12 @@ Upstash offers a range of payment plans for different use cases.
 
 #### Pay-as-you-go plan
 
-Upstash Redis databases start on the pay-as-you-go plan at **$0.20 per 100k requests**. This means you only pay for what you use. For most use cases, this is a good starting point.
+Upstash Redis databases start on the pay-as-you-go plan at **$0.20 per 100k requests**. This means you only pay for what you use. For most use cases, this is a good starting point. Pay-as-you-go plan has following limits: 
+
+* Maximum Commands per Second: 10,000
+* Maximum Request Size: 10 MB (Customizable)
+* Maximum Entry Size: 100 MB (Customizable)
+* Storage Limit: 10 GB
 
 #### Fixed price plans
 
