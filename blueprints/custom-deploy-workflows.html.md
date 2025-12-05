@@ -152,6 +152,6 @@ Even if you're not restarting machines, some changes can still cause issues: env
 
 Want to go deeper on the ideas in this guide? Check out these Fly.io docs:
 
-- [Machines overview](docs/machines/): Learn how Machines work and what makes them different.
+- [Machines overview](/docs/machines/): Learn how Machines work and what makes them different.
 - [fly deploy CLI reference](/docs/flyctl/deploy/): Full list of deploy options including `--only-machines`, `--regions`, and `--process-groups`.
 - [Dynamic request routing](/docs/networking/dynamic-request-routing/): Use `fly-replay` to shift traffic between machines on the fly.
