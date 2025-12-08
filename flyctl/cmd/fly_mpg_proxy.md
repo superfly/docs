@@ -8,8 +8,9 @@ fly mpg proxy <CLUSTER ID> [flags]
 ## Options
 
 ~~~
-  -b, --bind-addr string   Local address to bind to (default "127.0.0.1")
-  -h, --help               help for proxy
+  -b, --bind-addr string    Local address to bind to (default "127.0.0.1")
+  -h, --help                help for proxy
+  -p, --local-port string   Local port to proxy on (default "16380")
 ~~~
 
 ## Global Options
