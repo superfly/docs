@@ -69,7 +69,6 @@ fly launch [flags]
       --name string                      Name of the new app
       --nixpacks                         Deploy using nixpacks to build the image
       --no-cache                         Do not use the build cache when building the image
-      --no-create                        Do not create an app, only generate configuration files
       --no-db                            Skip automatically provisioning a database
       --no-deploy                        Do not immediately deploy the new app after fly launch creates and configures it
       --no-github-workflow               Skip automatically provisioning a GitHub fly deploy workflow
