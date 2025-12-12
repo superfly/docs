@@ -23,6 +23,7 @@ Guides for the structure your app on Fly.io. Layouts, tradeoffs, moving parts.
 
 Stuff you set up once and adjust when you ship code. Includes previews, base images, staging, and Docker wrangling.
 
+- [Working with Docker on Fly.io](/docs/blueprints/working-with-docker/) **NEW!**
 - [Custom Deploy Workflows](/docs/blueprints/custom-deploy-workflows/) **NEW!**
 - [Seamless Deployments on Fly.io](/docs/blueprints/seamless-deployments/)
 - [Rollback Guide](/docs/blueprints/rollback-guide/)
