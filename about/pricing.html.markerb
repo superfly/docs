@@ -226,6 +226,8 @@ We use Lets Encrypt to issue certificates, and donate half of our SSL fees to th
 * Single hostname certificates: $0.10/mo
 * Wildcard certificates: $1/mo
 
+Every organization's first 10 single hostname certificates are free.
+
 ### Data transfer pricing
 
 Inbound data transfer is free.
