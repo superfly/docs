@@ -186,6 +186,8 @@ We use Let's Encrypt to issue certificates, and donate half of our SSL fees to t
 * Single hostname certificates: $0.10/mo
 * Wildcard certificates: $1/mo
 
+Every organization's first 10 single hostname certificates are free.
+
 ### Data transfer pricing
 
 We bill for data leaving your app destined for the public internet or for apps or Machines in other regions, including:
