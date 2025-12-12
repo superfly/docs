@@ -1,8 +1,11 @@
 ---
 title: "Setting up a Python Environment"
 layout: framework_docs
+fly_content_type: guide
+fly_framework: python
 objective: How to setup a functional python environment on your local machine.
 order: 0
+
 ---
 
 ## Initial Local Setup
@@ -50,15 +53,14 @@ poetry add <dep>
 This will automatically create a virtual environment for you. 
 
 To interact with your virtual environment, you can prefix your commands with `poetry run`:
-
 ```cmd
 poetry run python main.py
 ```
 
 Alternatively, you can activate the environment:
-
 ```cmd
-poetry shell
+poetry env activate
 python main.py
 ```
 
+**Note:** If you're using Poetry 2.0+ (the default when installed with `pipx`), the `poetry shell` command is not available by default. Use `poetry run` (recommended) or `poetry env activate` instead. If you need `poetry shell`, you can install it as a plugin: `poetry self add poetry-plugin-shell`
