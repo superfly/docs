@@ -52,11 +52,13 @@ The current regions available for deploying Fly.io Managed Postgres are:
 - `gru` - São Paulo, Brazil
 - `iad` - Ashburn, Virginia, USA
 - `lax` - Los Angeles, California, USA
+- `lhr` - London, United Kingdom
 - `nrt` - Tokyo, Japan
 - `ord` - Chicago, Illinois, USA
 - `sin` - Singapore
 - `sjc` - San Jose, California, USA
 - `syd` - Sydney, Australia
+- `yyz` - Toronto, Canada
 
 We'll be rolling out more regions as soon as we can. Choose a region close to your application for optimal performance.
 
