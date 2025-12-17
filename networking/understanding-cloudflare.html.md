@@ -24,7 +24,7 @@ Enabling Cloudflare's proxy gives you caching and DDoS protection, but it also c
 The recommended approach for using Cloudflare's CDN proxy is to configure it to forward HTTP requests, which allows HTTP-01 challenges to work properly. To configure a CDN proxy setup:
 
 1. Create an `AAAA` record only pointing to your Fly.io app's IPv6 address.
-2. Do not add `A` or `CNAME` records. If you previously had an `A` record pointing elsewhere (such as a legacy server or placeholder), remove it, even if the correct `AAAA` record is present. Having any `A` record alongside the `AAAA` can confuse Let’s Encrypt validation and prevent certificate renewal.
+2. Do not add `A` or `CNAME` records for the hostname. If you previously had an `A` record pointing elsewhere (such as a legacy server or placeholder), remove it, even if the correct `AAAA` record is present. Having any `A` record alongside the `AAAA` can confuse Let’s Encrypt validation and prevent certificate renewal.
 3. Enable the Cloudflare proxy (orange cloud).
 4. Set SSL mode in Cloudflare to Full (strict).
 5. Enable Always Use HTTPS in Cloudflare.
