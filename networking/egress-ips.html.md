@@ -69,7 +69,7 @@ Each app-scoped static egress IPv4 cost $3.60/mo, billed hourly. IPv6 is current
 ## Static Egress IPs (Machine-Scoped)
 
 <div class="warning icon">
-Machine-scoped static egress IPs are considered a legacy feature and may be removed in the future. This document section is kept for reference purposes only. New apps should use [app-scoped static egress IPs](#static-egress-ips-app-scoped).
+Machine-scoped static egress IPs are considered a legacy feature and may be removed in the future. This section is kept for reference purposes only. New apps should use [app-scoped static egress IPs](#static-egress-ips-app-scoped).
 </div>
 
 ### Allocate a Static Egress IP
