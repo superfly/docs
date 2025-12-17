@@ -139,16 +139,5 @@ Example implementation: [fly-apps/fly-fixed-egress-ip-proxy](https://github.com/
 ## Best Practices
 
 - Use static egress only when required.
-- Prefer the proxy pattern for maintainability.
 - Test connectivity after assigning egress IPs.
-- Avoid destroying machines unnecessarily.
 - Monitor for failures during deploy-time migrations.
-
----
-
-## Future Work
-
-App-scoped egress IPs are in development. These will simplify routing and avoid per-machine binding.
-
-Until then, static IPs and proxy patterns remain the best tools available.
-
