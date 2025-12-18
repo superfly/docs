@@ -10,9 +10,9 @@ date: 2025-10-02
 
 - By default, outbound (egress) IPs from Fly Machines are **unstable** and may change.
 - You can allocate **static egress IPs** for an app (both IPv4 and IPv6) via `fly ips allocate-egress`.
-- App-scoped Static egress IPs are per-region: you need one for every region where you have machines.
-- Static egress IPs come with trade-offs: cost, concurrent machines / connections.
-- Legacy machine-scoped static egress IPs are still availble, but no longer recommended due to their limitations and quirks.
+- App-scoped static egress IPs are per-region: you need one for each region where you have machines.
+- Static egress IPs come with trade-offs: they cost more, and limit how many machines you can run at once.
+- Legacy machine-scoped static egress IPs are still availble, but are no longer recommended due to their limitations and quirks.
 
 ---
 
@@ -28,7 +28,7 @@ Some external services—APIs, databases, payment providers—require allowlisti
 
 ## Static Egress IPs (App-Scoped)
 
-App-scoped static egress IPs can be shared between multiple machines in a region belonging to the same app, and will not be deleted when machines are recreated. They are recommended over our legacy, machine-scoped static egress IPs.
+App-scoped static egress IPs can be shared between multiple machines in a region belonging to the same app, and will not be deleted when machines are recreated. They are recommended over our legacy machine-scoped static egress IPs.
 
 ### Allocate an App-scoped Static Egress IP
 
@@ -36,13 +36,13 @@ App-scoped static egress IPs can be shared between multiple machines in a region
 fly ips allocate-egress --app <app-name> -r <region>
 ```
 
-This allocates a pair of static egress IPv4 and IPv6 for your app in a region.
+This allocates a pair of static egress addresses, IPv4 and IPv6, for your app in a region.
 
 If your app has Machines in multiple regions, you must allocate at least 1 app-scoped static egress IP address __per region__.
 Only machines located in the same region can use static egress IPs allocated in the region.
 
 <div class="note icon">
-You can allocate multiple pairs of static egress IPv4 and IPv6 in the same region. Machines will randomly choose a pair from all static Egress IPs available in the region.
+You can allocate multiple pairs of IPv4 and IPv6 static egress addresses in the same region. Machines will randomly choose a pair from all static egress IPs available in the region.
 </div>
 
 ### View and Manage
@@ -54,7 +54,7 @@ fly ips release-egress <ip-address>
 
 ### Billing
 
-Each app-scoped static egress IPv4 cost $3.60/mo, billed hourly. IPv6 is currently free, but must be allocated along with an IPv4.
+Each app-scoped IPv4 static egress address costs $3.60/mo, billed hourly. IPv6 addresses are currently free, but must be allocated along with an IPv4.
 
 ### Caveats
 
