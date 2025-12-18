@@ -14,6 +14,7 @@ fly orgs [command] [flags]
 * [invite](/docs/flyctl/orgs-invite/)	 - Invite user (by email) to organization
 * [list](/docs/flyctl/orgs-list/)	 - Lists organizations for current user
 * [remove](/docs/flyctl/orgs-remove/)	 - Remove a user from an organization
+* [replay-sources](/docs/flyctl/orgs-replay-sources/)	 - Manage allowed replay source organizations
 * [show](/docs/flyctl/orgs-show/)	 - Show information about an organization
 
 ## Options
