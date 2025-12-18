@@ -12,7 +12,7 @@ date: 2025-10-02
 - You can allocate **static egress IPs** for an app (both IPv4 and IPv6) via `fly ips allocate-egress`.
 - App-scoped static egress IPs are per-region: you need one for each region where you have machines.
 - Static egress IPs come with trade-offs: they cost more, and limit how many machines you can run at once.
-- Legacy machine-scoped static egress IPs are still availble, but are no longer recommended due to their limitations and quirks.
+- Legacy machine-scoped static egress IPs are still available, but are no longer recommended due to their limitations and quirks.
 
 ---
 
@@ -26,7 +26,7 @@ Some external services—APIs, databases, payment providers—require allowlisti
 
 ---
 
-## Static Egress IPs (App-Scoped)
+## Static Egress IPs (App-Scoped) (Beta)
 
 App-scoped static egress IPs can be shared between multiple machines in a region belonging to the same app, and will not be deleted when machines are recreated. They are recommended over our legacy machine-scoped static egress IPs.
 
@@ -52,17 +52,30 @@ fly ips list
 fly ips release-egress <ip-address>
 ```
 
+App-scoped egress IPs are only released when you explicitly run `fly ips release-egress`. They persist across Machine destruction and deployments.
+
 ### Billing
 
-Each app-scoped IPv4 static egress address costs $3.60/mo, billed hourly. IPv6 addresses are currently free, but must be allocated along with an IPv4.
+Each app-scoped IPv4 static egress address costs $3.60/mo, billed hourly. IPv6 addresses are currently free, but must be allocated along with an IPv4. During the beta period, app-scoped egress IPs are free. After the beta, app-scoped IPv4 egress IPs are expected to be billed at the same rate as machine-scoped egress IPs ($3.60/mo, billed hourly).
 
 ### Caveats
 
 - Each static egress IP can support up to 64 Machines. If you need more than 64 Machines in one region, you will need to allocate multiple static egress IPs.
-- When using App-scoped static egress IPs, a Machine can make up to 1000 connections to _each_ external IP address. There is no limit on the _total_ number of concurrent connections.
-  - We do not expect this to be a concern for most apps. However, feel free to talk to us if this limits your use case!
+- When using app-scoped static egress IPs, a Machine can make up to 1024 concurrent connections to _each_ destination IP address. There is no limit on the _total_ number of concurrent connections.
+- We do not expect this to be a concern for most apps. However, feel free to talk to us if this limits your use case!
 - When you have multiple static egress IPs assigned in one region, there is currently no way to specify exactly which IP each machine will use.
-- When new machines are created, there might be a brief window when an app-scoped egress IP is not applied to the machine. This may happen more often with more machines or during bluegreen deployment. Allocating multiple pairs of static egress IPs alleviates the issue.
+- There may be a short delay between allocating an egress IP (or creating a Machine) and the egress IP becoming usable. This is inherent to how the system applies IPs to new Machines. This delay may be more noticeable with more Machines or during bluegreen deployments. Allocating multiple pairs of static egress IPs alleviates the issue.
+- `flyctl` surfaces warnings when these limits are approached during Machine creation, deployments, and IP management.
+
+### Interaction with Machine-Scoped Egress IPs
+
+App-scoped and machine-scoped egress IPs are not intended to be used together.
+
+If a Machine has a machine-scoped egress IP, it takes precedence over any app-scoped egress IP in the same region. This behavior may change in the future.
+
+<div class="warning icon">
+When migrating from machine-scoped to app-scoped egress IPs, release machine-scoped IPs first to make sure that Machines use the app-scoped IPs.
+</div>
 
 ---
 
@@ -93,7 +106,7 @@ Because legacy static egress IPs are **per-machine**, not per-app:
 
 - IPs are released when a machine is destroyed.
 - IPs don’t automatically transfer across deploys.
-- Blue/green deployments will replace machines—and their IPs.
+- Bluegreen deployments will replace machines—and their IPs.
 - Deployment-time jobs may bypass egress routing.
 - Extra latency and connectivity issues are possible in some regions.
 
