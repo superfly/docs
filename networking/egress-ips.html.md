@@ -26,7 +26,7 @@ Some external services—APIs, databases, payment providers—require allowlisti
 
 ---
 
-## Static Egress IPs (App-Scoped) (Beta)
+## Static Egress IPs (App-Scoped)
 
 App-scoped static egress IPs can be shared between multiple machines in a region belonging to the same app, and will not be deleted when machines are recreated. They are recommended over our legacy machine-scoped static egress IPs.
 
@@ -56,7 +56,7 @@ App-scoped egress IPs are only released when you explicitly run `fly ips release
 
 ### Billing
 
-Each app-scoped IPv4 static egress address costs $3.60/mo, billed hourly. IPv6 addresses are currently free, but must be allocated along with an IPv4. During the beta period, app-scoped egress IPs are free. After the beta, app-scoped IPv4 egress IPs are expected to be billed at the same rate as machine-scoped egress IPs ($3.60/mo, billed hourly).
+Each app-scoped IPv4 static egress address costs $3.60/mo, billed hourly. IPv6 addresses are allocated alongside IPv4 and are not billed separately.
 
 ### Caveats
 
