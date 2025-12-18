@@ -30,7 +30,7 @@ Your app can add a `fly-replay` header to its response. The `fly-replay` header 
 |`region` | The region(s) to route the request to. Accepts comma-separated list of [region codes](/docs/reference/regions/) |
 |`instance` | The ID of a specific Machine to route to |
 |`prefer_instance` | The ID of a specific Machine to route to, if possible |
-|`app` | The name of another app (in same organization) to route to |
+|`app` | The name of another app to route to |
 |`state` | Optional string included in `fly-replay-src` header on replay |
 |`elsewhere` | If `true`, excludes responding Machine from next load-balance |
 
@@ -58,12 +58,16 @@ fly-replay: instance=00bb33ff
 
 Route to another app:
 ```
-fly-replay: app=app-in-same-org
+fly-replay: app=target-app
 ```
+
+<div class="note icon">
+By default, cross-app routing works within the same organization. To route to apps in other organizations, see [Cross-Organization Routing](#cross-organization-routing).
+</div>
 
 You can combine multiple fields:
 ```
-fly-replay: region="sjc,any";app=app-in-same-org
+fly-replay: region="sjc,any";app=target-app
 ```
 
 <div class="note icon">
@@ -97,7 +101,7 @@ The `application/vnd.fly.replay+json` replay body accepts the following fields:
 |`region` | The region(s) to route the request to. Accepts comma-separated list of [region codes](/docs/reference/regions/) |
 |`instance` | The ID of a specific Machine to route to |
 |`prefer_instance` | The ID of a specific Machine to route to, if possible |
-|`app` | The name of another app (in same organization) to route to |
+|`app` | The name of another app to route to |
 |`state` | Optional string included in `fly-replay-src` header on replay |
 |`elsewhere` | If `true`, excludes responding Machine from next load-balance |
 |`transform.path` | Rewrite the path and query parameters of the request |
@@ -383,4 +387,35 @@ Use `fly-replay` to implement routing layers or FaaS-style architectures:
 fly-replay: app=customer-function-app
 ```
 
-This allows you to build router apps that can dynamically route requests to other apps in your organization.
+This allows you to build router apps that can dynamically route requests to other apps.
+
+By default, cross-app routing works within the same organization. To route to apps in other organizations, see [Cross-Organization Routing](#cross-organization-routing).
+
+### Cross-Organization Routing
+
+By default, `fly-replay` with `app=` only works for apps within the same organization. To allow replay requests from apps in other organizations, you must configure an allowlist on the target organization.
+
+#### Configuring Allowed Replay Sources
+
+Only organization admins can manage the replay sources allowlist, and must also have read permissions or higher on the source organization being added. You can configure replay sources via the dashboard or CLI.
+
+**Dashboard:**
+
+Go to your organization's settings page and find the **Routing** section. Under **Cross-Organization Routing**, you can add or remove organizations that are allowed to send replay requests to apps in your organization.
+
+**CLI:**
+
+List organizations currently allowed to send replays:
+```cmd
+fly orgs replay-sources list --org <target-org>
+```
+
+Add organizations to the allowlist interactively:
+```cmd
+fly orgs replay-sources add --org <target-org>
+```
+
+Remove organizations from the allowlist interactively:
+```cmd
+fly orgs replay-sources remove --org <target-org>
+```
