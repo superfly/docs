@@ -12,6 +12,10 @@ Fly.io has public and private network services available. The public network ser
 
 IPv6 addresses and shared IPv4 Anycast addresses are free. Dedicated IPv4 addresses are [billed](/docs/about/pricing/#anycast-ip-addresses) monthly.
 
+<div class="note icon">
+Anycast IP addresses described on this page are __not used__ for outbound connections made from within a Machine. See [Egress IP Addresses](/docs/networking/egress-ips/) for details.
+</div>
+
 ### About Anycast
 
 We announce global IP blocks from all of our datacenters over BGP, otherwise known as Anycast. Anycast is a core internet routing mechanism that connects clients to the "nearest" server advertising a block of IPs. You can read [all about it on Wikipedia](https://en.wikipedia.org/wiki/Anycast+external).
