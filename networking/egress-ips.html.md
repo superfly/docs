@@ -62,9 +62,14 @@ Each app-scoped IPv4 static egress address costs $3.60/mo, billed hourly. IPv6 a
 
 - Each static egress IP can support up to 64 Machines. If you need more than 64 Machines in one region, you will need to allocate multiple static egress IPs.
 - When using app-scoped static egress IPs, a Machine can make up to 1024 concurrent connections to _each_ destination IP address. There is no limit on the _total_ number of concurrent connections.
-- We do not expect this to be a concern for most apps. However, feel free to talk to us if this limits your use case!
+
+<div class="note icon">
+We do not expect this to be a concern for most apps. However, feel free to talk to us if this limits your use case!
+</div>
 - When you have multiple static egress IPs assigned in one region, there is currently no way to specify exactly which IP each machine will use.
-- There may be a short delay between allocating an egress IP (or creating a Machine) and the egress IP becoming usable. This is inherent to how the system applies IPs to new Machines. This delay may be more noticeable with more Machines or during bluegreen deployments. Allocating multiple pairs of static egress IPs alleviates the issue.
+- There may be delays when egress IPs are applied to Machines:
+- Right after allocating a new egress IP, it will be applied to all existing Machines in the region after a short delay. Allocating multiple pairs of static egress IPs will not help in this case.
+- When creating a new Machine in an app that already has an egress IP assigned, there may be a delay before the Machine can use the egress IP. This delay may be more noticeable with more Machines or during bluegreen deployments. Allocating multiple pairs of static egress IPs can help alleviate this issue.
 - `flyctl` surfaces warnings when these limits are approached during Machine creation, deployments, and IP management.
 
 ### Interaction with Machine-Scoped Egress IPs
@@ -72,10 +77,6 @@ Each app-scoped IPv4 static egress address costs $3.60/mo, billed hourly. IPv6 a
 App-scoped and machine-scoped egress IPs are not intended to be used together.
 
 If a Machine has a machine-scoped egress IP, it takes precedence over any app-scoped egress IP in the same region. This behavior may change in the future.
-
-<div class="warning icon">
-When migrating from machine-scoped to app-scoped egress IPs, release machine-scoped IPs first to make sure that Machines use the app-scoped IPs.
-</div>
 
 ---
 
