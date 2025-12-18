@@ -39,7 +39,7 @@ fly ips allocate-egress --app <app-name> -r <region>
 This allocates a pair of static egress addresses, IPv4 and IPv6, for your app in a region.
 
 If your app has Machines in multiple regions, you must allocate at least 1 app-scoped static egress IP address __per region__.
-Only machines located in the same region can use static egress IPs allocated in the region.
+Machines can only use static egress IPs that were allocated in their own region.
 
 <div class="note icon">
 You can allocate multiple pairs of IPv4 and IPv6 static egress addresses in the same region. Machines will randomly choose a pair from all static egress IPs available in the region.
