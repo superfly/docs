@@ -39,7 +39,7 @@ fly machine run <image> [command] [flags]
       --restart string              Set the restart policy for a Machine. Options include 'no', 'always', and 'on-fail'.
                                     	Default is 'on-fail' for Machines created by 'fly deploy' and Machines with a schedule. Default is 'always' for Machines created by 'fly m run'.
       --rm                          Automatically remove the Machine when it exits. Sets the restart-policy to 'never' if not otherwise specified.
-      --schedule string             Schedule a Machine run at hourly, daily and monthly intervals
+      --schedule string             Schedule a Machine run at hourly, daily, weekly and monthly intervals
       --shell                       Open a shell on the Machine once created (implies --it --rm). If no app is specified, a temporary app is created just for this Machine and destroyed when the Machine is destroyed. See also --command and --user.
       --skip-dns-registration       Do not register the machine's 6PN IP with the internal DNS system
       --standby-for strings         For Machines without services, a comma separated list of Machine IDs to act as standby for.
