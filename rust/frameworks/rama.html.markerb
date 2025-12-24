@@ -1,0 +1,73 @@
+---
+title: "Run a Rama App"
+layout: framework_docs
+objective: Rama is a modular service framework to move and transform network packets.
+redirect_from:
+ - /docs/languages-and-frameworks/rama/
+ - /docs/getting-started/rama/
+order: 6
+---
+
+
+<%= partial "/docs/languages-and-frameworks/partials/intro", locals: { runtime: "Rama", link: "https://docs.rs/rama/latest/rama/" } %>
+
+Rama is a modular service framework to move and transform network packets.
+
+Deploying a Rama app on Fly.io is easy! With the help of the [cargo chef](https://github.com/LukeMathWalker/cargo-chef), we get great build times and small images.
+
+## _Speedrun_
+
+<%= partial "/docs/languages-and-frameworks/partials/flyctl" %>
+
+<%= partial "/docs/rust/partials/speedrun", locals: { runtime: "rama" }  %>
+
+## _Deploy a Rama App from scratch_
+
+<%= partial "/docs/rust/partials/cargo-new", locals: { runtime: "rama" }  %>
+
+Then we have to add some dependencies to the project:
+
+```cmd
+cargo add rama -F http-full
+cargo add tokio -F macros -F rt-multi-thread
+```
+
+Now, let's create an http server with Rama in `src/main.rs`:
+
+```rust
+use rama::http::{service::web::Router, server::HttpServer};
+
+#[tokio::main]
+async fn main() {
+    let app = Router::new().get("/", "Hello from fly.io!");
+    HttpServer::auto(Default::default()).listen(
+        "0.0.0.0:8080",
+        app,
+    ).await.unwrap();
+}
+```
+
+This will display a "Hello from fly.io!" message when you visit the root URL.
+Take note that we serve the app on port `8080`.
+
+We can confirm everything works fine by running `cargo run` and checking out `http://localhost:8080`.
+
+<%= partial "/docs/rust/partials/deploy", locals: { runtime: "rama" }  %>
+
+> The fly.io and Rama combo works great not only for Http services,
+> but also raw TCP/UDP services allowing you to operate directly on Layer 4,
+> or terminate TLS yourself!
+
+## _Learn more about Rama_
+
+Learn more about using Rama:
+
+- Website: <https://ramaproxy.org/>
+- Book: <https://ramaproxy.org/book/>
+- Examples: <https://github.com/plabayo/rama/tree/main/examples>
+
+Public services offered by Rama are also hosted on fly.io.
+You can find their `fly.toml` files at <https://github.com/plabayo/rama/tree/main/rama-fp/infra/deployments>.
+
+For example the public http(s) echo service <https://echo.ramaproxy.org> its
+`fly.toml` file can be found at: <https://github.com/plabayo/rama/blob/main/rama-fp/infra/deployments/echo/fly.toml>
