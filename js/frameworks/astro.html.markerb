@@ -107,4 +107,4 @@ This will install `@astrojs/node` and make the appropriate changes to your `astr
 
 ## Generating your Astro Dockerfile
 
-As discussed earlier, running `fly launch` will generate a Dockerfile for you if one does not already exist. Separately, you can also generate your Dockerfile using [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile). Once installed, it can be run using `npx dockerfile` for Node applications or `bunx dockerfile` for Bun applications. You'll see it referenced throughout this article for various use cases.
+As discussed earlier, running `fly launch` will generate a Dockerfile for you if one does not already exist. Separately, you can also generate your Dockerfile using [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile). Once installed, it can be run using `npx @flydotio/dockerfile` for Node applications or `bunx @flydotio/dockerfile` for Bun applications. You'll see it referenced throughout this article for various use cases.
