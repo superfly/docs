@@ -1,4 +1,4 @@
-Manage static egress (outgoing) IP addresses for machines
+(Deprecated) Manage static egress (outgoing) IP addresses for machines
 
 ## Usage
 ~~~
