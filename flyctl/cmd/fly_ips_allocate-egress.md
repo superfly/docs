@@ -1,4 +1,4 @@
-(Beta) Allocates a pair of egress IP addresses for an app
+Allocates a pair of egress IP addresses for an app
 
 ## Usage
 ~~~

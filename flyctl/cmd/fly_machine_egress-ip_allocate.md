@@ -1,4 +1,4 @@
-Allocate a pair of static egress IPv4 and IPv6 for a machine
+(Deprecated) Allocate a pair of static egress IPv4 and IPv6 for a machine
 
 ## Usage
 ~~~
