@@ -13,6 +13,7 @@ fly mpg [command] [flags]
 * [create](/docs/flyctl/mpg-create/)	 - Create a new Managed Postgres cluster
 * [databases](/docs/flyctl/mpg-databases/)	 - Manage databases in a managed postgres cluster
 * [destroy](/docs/flyctl/mpg-destroy/)	 - Destroy a managed Postgres cluster
+* [detach](/docs/flyctl/mpg-detach/)	 - Detach a managed Postgres cluster from an app
 * [list](/docs/flyctl/mpg-list/)	 - List MPG clusters.
 * [proxy](/docs/flyctl/mpg-proxy/)	 - Proxy to a MPG database
 * [restore](/docs/flyctl/mpg-restore/)	 - Restore MPG cluster from backup.
