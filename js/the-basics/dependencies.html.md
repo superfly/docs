@@ -38,7 +38,7 @@ the `package.json`.  An alternative when this isn't feasible or desired is to re
 dockerfile to include _all_ dependencies at deployment:
 
 ```cmd
-npx dockerfile --dev
+npx @flydotio/dockerfile --dev
 ```
 
 ## Legacy peer dependencies
@@ -50,7 +50,7 @@ necessary to indicate that these dependencies are _legacy_.  The way to do this 
 based on the package manager, and dockerfile-node can take care of this for you:
 
 ```cmd
-npx dockerfile --legacy-peer-deps
+npx @flydotio/dockerfile --legacy-peer-deps
 ```
 
 ## Native modules
@@ -59,9 +59,9 @@ Some npm modules are _native_ modules which may require additional libraries to 
 installed, either at build time, or at deploy time, or both.
 
 ```
-npx dockerfile --add-base=libxml2
-npx dockerfile --add-build=babel
-npx dockerfile --add-deploy=fontconfig
+npx @flydotio/dockerfile --add-base=libxml2
+npx @flydotio/dockerfile --add-build=babel
+npx @flydotio/dockerfile --add-deploy=fontconfig
 ```
 
 If you find yourself needing to do this, and your need is a consequence of using a
