@@ -1,9 +1,40 @@
 For managing our project, we use [Poetry](https://python-poetry.org/). 
 For more information on the initial setup with poetry, refer to [setting up a python environment](/docs/python/the-basics/initial-setup).
-We can initialize a new project like so:
 
+**Note:** If you're using Poetry 2.0+, the `poetry shell` command is not available by default. 
+This guide uses `poetry run` to execute commands, which works with all Poetry versions.
+
+We can initialize a new project like so:
 ```cmd
 poetry new <%= runtime.downcase %>-app
 cd <%= runtime.downcase %>-app
-poetry shell
+```
+
+This creates a basic project structure. For Fly.io deployment, ensure your `pyproject.toml` uses the Poetry format with dependencies under `[tool.poetry.dependencies]`:
+```cmd
+[tool.poetry]
+name = "<%= runtime.downcase %>-app"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = {extras = ["standard"], version = "^0.115.0"}
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"
+```
+
+Then we have to add the FastAPI dependency if it's not already included:
+
+```cmd
+poetry add "fastapi[standard]"
+```
+
+To run commands, use `poetry run`:
+```cmd
+poetry run uvicorn <%= runtime.downcase %>_app.main:app --reload
 ```
