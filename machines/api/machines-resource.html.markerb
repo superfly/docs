@@ -1267,7 +1267,7 @@ You cannot change which volume a Machine is attached to by updating the Machine'
           - `headers`: ({"headers": {string:string}} (nil)) HTTP headers to set on responses.
           - `pristine`: bool (false) - If true, do not add any Fly.io headers to HTTP responses. The following response headers won’t be added and won’t be modified if returned by the app: `Server`, `Via`, `Fly-Request-Id`, `Fly-Cache-Status`.
       + `tls_options`:  Fiddly TLS options (if you don’t know you need to mess with these, you don’t need to), including:
-        - `alpn`: [string, string] ([]) : ALPN protocols to present TLS clients (for instance, [“h2”, “http/1.1”]).
+        - `alpn`: [string, string] ([]) : ALPN protocols to present TLS clients (for instance, [“mqtt”]).
         - `default_self_signed`: bool (false) - If true, serve a self-signed certificate if no certificate exists.
         - `versions`: [string, string] ([]) : TLS versions to allow (for instance, [“TLSv1.2”, “TLSv1.3”]).
       + `proxy_proto_options`: Configure the version of the PROXY protocol that your app accepts. Version 1 is the default.

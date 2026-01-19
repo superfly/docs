@@ -719,13 +719,13 @@ Configure the TLS versions and ALPN protocols that Fly's edge will use to termin
 
 Fly.io can also terminate TLS only and pass through directly to your service. This works for a variety of applications that can benefit from offloading TLS termination and accept the unencrypted connection.
 
-One use case is applications using HTTP/2, like gRPC. Fly's edge terminates TLS and sends h2c (HTTP/2 without TLS) directly to your application through our backhaul. The config below will negotiate HTTP/2 with clients, and then send h2c to the application:
+One use case is transmitting messages over MQTT. Fly's edge terminates TLS and sends unencrypted MQTT directly to your application through our backhaul. The config below will negotiate MQTT over TLS with clients, and then send unencrypted MQTT to the application:
 
 ```toml
   [[services.ports]]
     handlers = ["tls"]
     port = 443
-    tls_options = { "alpn" = ["h2"] }
+    tls_options = { "alpn" = ["mqtt"] }
 ```
 
 ### `services.concurrency`

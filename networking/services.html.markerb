@@ -178,9 +178,9 @@ Configuration examples in `fly.toml`:
 [[services]]
 ...
   [[services.ports]]
-    handlers = ["tls", "http"]
+    handlers = ["tls"]
     port = 443
-    tls_options = { "alpn" = ["h2", "http/1.1"], "versions" = ["TLSv1.2", "TLSv1.3"] }
+    tls_options = { "alpn" = ["mqtt"], "versions" = ["TLSv1.2", "TLSv1.3"] }
 ```
 
 ```toml
