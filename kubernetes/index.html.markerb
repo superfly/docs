@@ -6,7 +6,7 @@ nav: firecracker
 ---
 
 <div class= "important icon">
-Fly Kubernetes is in beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
+Fly Kubernetes is in closed beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
 </div>
 
 Fly Kubernetes (FKS) is a fully managed Kubernetes service built on the Fly.io platform. Deploy Kubernetes clusters without the hassle of managing and operating the control plane. Learn more about [why and how we made FKS](https://fly.io/blog/fks/) in our blog.

@@ -6,7 +6,7 @@ nav: firecracker
 ---
 
 <div class= "important icon">
-Fly Kubernetes is in beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
+Fly Kubernetes is in closed beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
 </div>
 
 Fly Kubernetes clusters are accessible over an organization's [private WireGuard network](/docs/reference/private-networking). To connect to a cluster, you need a WireGuard configuration. 
