@@ -112,7 +112,7 @@ You can also configure [TLS options](/docs/reference/configuration/#http_service
 
 Many apps have limited HTTP support, the `http` handler normalizes HTTP connections and sends HTTP 1.1 requests to the application process. This is roughly how `nginx` and other reverse proxies work, and allows your app to globally accept modern HTTP protocols (like HTTP/2) without extra complexity.
 
-If your application stack requires HTTP/2 (like gRPC), enable the `h2_backend` to speak over HTTP/2 directly. Your app _does_ need to understand `h2c` for this to work, however.
+If your application needs HTTP/2 (like gRPC does), enable the `h2_backend` to talk directly over HTTP/2. Just make sure your app speaks `h2c` (that’s HTTP/2 without TLS), or it won’t work.
 
 The HTTP handler adds a number of standard HTTP headers to requests, and a few Fly.io-specific headers for convenience:
 
