@@ -112,7 +112,7 @@ You can also configure [TLS options](/docs/reference/configuration/#http_service
 
 Many apps have limited HTTP support, the `http` handler normalizes HTTP connections and sends HTTP 1.1 requests to the application process. This is roughly how `nginx` and other reverse proxies work, and allows your app to globally accept modern HTTP protocols (like HTTP/2) without extra complexity.
 
-If your application stack has good HTTP/2 support (like Go), you will get better performance accepting TCP connections directly, and using the TLS handler to terminate SSL. Your app _does_ need to understand `h2c` for this to work, however.
+If your application needs HTTP/2 (like gRPC does), enable the `h2_backend` to talk directly over HTTP/2. Just make sure your app speaks `h2c` (that’s HTTP/2 without TLS), or it won’t work.
 
 The HTTP handler adds a number of standard HTTP headers to requests, and a few Fly.io-specific headers for convenience:
 
@@ -151,7 +151,7 @@ You can force routing to a specific machine instance:
 Fly-Force-Instance-Id: instance-number
 ```
 
-Configuration example in `fly.toml`:
+Configuration examples in `fly.toml`:
 
 ```toml
 [[services]]
@@ -162,15 +162,18 @@ Configuration example in `fly.toml`:
     force_https = true  # optional
 ```
 
+```toml
+[http_service]
+...
+[http_service.http_options]
+  h2_backend = true
+```
+
 ### TLS handler
 
 The `tls` handler terminates TLS using Fly.io-managed application certificates, then forwards a plaintext connection to the application process. This is useful for running TCP services and offloading `TLS` to the Fly Proxy.
 
 For performance purposes, the Fly Proxy will terminate TLS on the host a client connects to, and then forward the connection to the nearest available Machine.
-
-<div class="note icon">
-**Note:** The TLS handler includes ALPN negotiation for HTTP/2. When possible, apps will connect to these kinds of Fly.io services using HTTP/2, and we will forward an unencrypted HTTP/2 connection (`h2c`) to the application process.
-</div>
 
 Configuration examples in `fly.toml`:
 
