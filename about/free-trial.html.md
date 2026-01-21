@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-10-27
 ---
 
+<figure>
+<img src="/static/images/free-trial.png" alt="Illustration by Annie Ruygt of a Frankie the hot air balloon showing a Free Trial banner to his developer friend who carries an app" class="w-full max-w-lg mx-auto">
+</figure>
+
 **Fly.io runs your apps close to your users. This page explains how our free trial works and what resources you can use before you need to add a payment method.**
 
 ## Free Trial overview

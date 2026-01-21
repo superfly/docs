@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-07-03
 ---
 
+<figure>
+<img src="/static/images/app-handover-guide.png" alt="Illustration by Annie Ruygt of a house with a Welcome sign and hot air balloons in the backgroud" class="w-full max-w-lg mx-auto">
+</figure>
+
 <div class="callout">
 **If you're building an app for someone else and they’re going to run it themselves on Fly.io, you’ve got two good options. You can either start development inside their Fly.io organization, or build it in yours and move it over later. Here’s how both paths work, and what can get messy during the move.**
 </div>

@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-10-23
 ---
 
+<figure>
+<img src="/static/images/cost-management.png" alt="Illustration by Annie Ruygt of a Frankie the hot air balloon tallying up a total on a paper-tape calculator" class="w-full max-w-lg mx-auto">
+</figure>
+
 ## Predicting your Fly.io bill and avoiding surprises
 
 We’ve done our best to make billing on Fly.io something you can reason about. Machines don’t appear out of nowhere. If something is running, it’s because you launched it, or you configured something that did. In general, when we talk about **autoscaling**, we mean starting or stopping machines you’ve already defined. We don’t quietly spin up extras in the background that turn into mystery charges on your bill. The idea is that your bill should always be traceable to something you can see, name, and plausibly explain when someone asks. If it’s not, we’re happy to help you sort it out.
