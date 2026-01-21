@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-10-02
 ---
 
+<figure>
+<img src="/static/images/Egress-IP.png" alt="Illustration by Annie Ruygt of two happy Machines sitting on clouds" class="w-full max-w-lg mx-auto">
+</figure>
+
 ## Overview
 
 - By default, outbound (egress) IPs from Fly Machines are **unstable** and may change.
