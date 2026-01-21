@@ -48,5 +48,5 @@ Useful if your app needs to launch Machine instances of itself to scale backgrou
 **Machine memory**: The memory allocated to the Machine, in MB. It's the same value you'll find under https://fly.io/dashboard/personal/machines and VM Memory in the output of `fly machine status`. Learn more about [Machine sizing](/docs/machines/guides-examples/machine-sizing/).
 
 ### `PRIMARY_REGION`
-**Primary region**: This is set in your `fly.toml` or with the `--region` flag during deploys. Learn more about [configuring the primary region](/docs/reference/configuration/#primary-region).
+**Primary region**: This is set in your `fly.toml` or with the `--region` flag when using `fly launch`. Learn more about [configuring the primary region](/docs/reference/configuration/#primary-region).
  
