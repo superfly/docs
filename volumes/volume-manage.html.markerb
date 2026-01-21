@@ -203,7 +203,7 @@ Volumes attached to Machines can’t be destroyed. You can check which Machine (
 
 If you’re replacing the Machine, use `fly scale count` or `fly machine clone` to launch a new one. This will create and mount a fresh volume based on your `fly.toml` config.
 
-To stop using volumes entirely, remove any `[mounts]` from `fly.toml`, redeploy to detach them, and then destroy the volumes.
+To stop using volumes entirely, remove any `[mounts]` from `fly.toml` and redeploy. The Machine will be replaced without the volumes. After redeploying, you can destroy the volumes.
 
 **Note:** Snapshots taken before deletion may still be restorable for a limited time, provided you have the volume ID (default retention is 5 days).
 
