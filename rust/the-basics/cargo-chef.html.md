@@ -26,7 +26,7 @@ COPY . .
 RUN cargo build --release --bin [rust-app]
 
 # We do not need the Rust toolchain to run the binary!
-FROM debian:bookworm-slim AS runtime
+FROM debian:trixie-slim AS runtime
 WORKDIR /app
 COPY --from=builder /app/target/release/[rust-app] /usr/local/bin
 ENTRYPOINT ["/usr/local/bin/[rust-app]"] 
