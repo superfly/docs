@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<figure>
+<img src="/static/images/request-headers.png" alt="Illustration by Annie Ruygt of flying ghosts carrying lanterns" class="w-full max-w-lg mx-auto">
+</figure>
+
 Request headers carry information that is specific to the incoming request and its path taken to the application. Request headers are added by the HTTP handler service.
 
 ## Request Headers

@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<figure>
+<img src="/static/images/flycast-private-proxy.png" alt="Illustration by Annie Ruygt of apps resting on clouds, all connected by pathways" class="w-full max-w-lg mx-auto">
+</figure>
+
 Flycast provides network addressing and routing for private apps on Fly.io private networks. With Flycast, requests to your private apps get routed through the Fly Proxy, rather than Machine-to-Machine via default [private networking](/docs/networking/private-networking/). And unlike private networking using `.internal` addresses you don't need to keep Machines running for the app to be reachable.
 
 Use Flycast within your organization's private network to:

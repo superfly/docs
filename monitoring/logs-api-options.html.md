@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-10-01
 ---
 
+<figure>
+<img src="/static/images/logs-api-options.png" alt="Illustration by Annie Ruygt of a rocket ship, a satellite dish, a cargo container, and a clock, all representing different options for logs" class="w-full max-w-lg mx-auto">
+</figure>
+
 ## Overview
 
 Fly.io apps run on Firecracker microVMs we call Machines. Each Machine captures `stdout`/`stderr`, ships those logs over NATS, and stores them for a period of time in a Quickwit-backed search index. Most users consume logs via `fly logs` or by setting up log shipping to an external sink.
