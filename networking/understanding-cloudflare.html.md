@@ -6,6 +6,10 @@ author: kaelyn
 date: 2025-07-16
 ---
 
+<figure>
+<img src="/static/images/understanding-cloudfare.png" alt="Illustration by Annie Ruygt of a big cloud with Fly balloons exiting from inside it" class="w-full max-w-lg mx-auto">
+</figure>
+
 Many Fly.io apps use Cloudflare—sometimes just for DNS, sometimes with proxying enabled, and sometimes for both. This guide covers the supported configurations, how to set them up, and what to watch out for when using Cloudflare with Fly.io.
 
 ## DNS-only setup

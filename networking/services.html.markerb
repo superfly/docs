@@ -6,6 +6,10 @@ redirect_from:
   - /docs/reference/services/
 ---
 
+<figure>
+<img src="/static/images/public_network_services.png" alt="Illustration by Annie Ruygt of a ship carrying apps" class="w-full max-w-lg mx-auto">
+</figure>
+
 Fly.io has public and private network services available. The public network services connect apps to the wider public internet, while the [private network services](/docs/reference/private-networking) allow apps to communicate with other apps within the Fly.io private network.
 
 ## Anycast IP addresses
