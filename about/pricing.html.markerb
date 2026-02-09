@@ -102,26 +102,6 @@ For example, if you purchase a $36/year `shared` Machines block in `cdg`, you'll
 
 You can set up reservations via self-service in the billing section of your Fly.io [dashboard](https://fly.io/dashboard). They apply to usage starting on the 1st, so setting up reservations any time in the month will give you the credits the entire month.
 
-### GPU-enabled Fly Machines
-
-Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see above) plus the price of the attached GPU. Like Machines, GPUs are billed by the second when the attached Machine is running.
-
-On-demand GPU pricing:
-
-* A10: $1.50/hr per GPU
-* L40S: $1.25/hr per GPU
-* A100 40G PCIe: $2.50/hr per GPU
-* A100 80G SXM: $3.50/hr per GPU
-
-Usage terms:
-
-* No minimum usage requirements.
-* Customizable CPU, RAM, and storage options.
-
-Reserved and dedicated options:
-
-* Discounted rates for reserved GPU Machines and dedicated hosts.
-
 ## Managed Postgres
 
 The price of running Fly.io Managed Postgres depends on your selected Managed Postgres Plan and the amount of storage your Postgres cluster has. 
@@ -256,6 +236,30 @@ You **will** be billed separately for data transfer to these external third-part
 [Fly Postgres](/docs/postgres/) is a PostgreSQL database that you create and then manage yourself. Fly Postgres clusters are Fly Apps that consist of Machines, volumes, and any configured extra memory.
 
 The [Machine price](#compute) and [volume price](#persistent-storage-volumes) for Fly Postgres are the same as any other Machine and volume you'd run on Fly.io. Assuming the Machines are running all the time, the cost for the preset configurations is about $2/month for a single node cluster for dev projects and from about $82 to $164/month for a three-node production cluster. You don't need to keep the preset configurations, you can [scale your Fly Postgres Machines](/docs/postgres/managing/scaling/) to suit your workload at any time.
+
+### GPU-enabled Fly Machines (Deprecated)
+
+<div class="warning icon">
+**GPUs are deprecated and will be unavailable after August 1.**
+</div>
+
+Pricing for a GPU-enabled Fly Machine is the price of a standard Fly Machine (see above) plus the price of the attached GPU. Like Machines, GPUs are billed by the second when the attached Machine is running.
+
+On-demand GPU pricing:
+
+* A10: $1.50/hr per GPU
+* L40S: $1.25/hr per GPU
+* A100 40G PCIe: $2.50/hr per GPU
+* A100 80G SXM: $3.50/hr per GPU
+
+Usage terms:
+
+* No minimum usage requirements.
+* Customizable CPU, RAM, and storage options.
+
+Reserved and dedicated options:
+
+* Discounted rates for reserved GPU Machines and dedicated hosts.
 
 ## Discontinued Plans
 
