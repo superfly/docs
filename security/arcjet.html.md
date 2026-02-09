@@ -88,7 +88,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Protecting your application with Arcjet
 
-Once you have set your `ARCJET_KEY` secret, you can start using Arcjet to protect your application. Arcjet supports many different web frameworks e.g. [Bun](https://docs.arcjet.com/get-started/bun), [Next.js](https://docs.arcjet.com/get-started/nextjs), [Node.js](https://docs.arcjet.com/get-started/nodejs), [SvelteKit](https://docs.arcjet.com/get-started/sveltekit)
+Once you have set your `ARCJET_KEY` secret, you can start using Arcjet to protect your application. Arcjet supports many different web frameworks e.g. [Bun](https://docs.arcjet.com/get-started/bun), [Next.js](https://docs.arcjet.com/get-started/nextjs), [Node.js](https://docs.arcjet.com/get-started/nodejs), [SvelteKit](https://docs.arcjet.com/get-started/sveltekit).
 
 ### Node.js example
 
