@@ -42,6 +42,7 @@ fly machine create <image> [command] [flags]
       --schedule string             Schedule a Machine run at hourly, daily, weekly and monthly intervals
       --skip-dns-registration       Do not register the machine's 6PN IP with the internal DNS system
       --standby-for strings         For Machines without services, a comma separated list of Machine IDs to act as standby for.
+      --swap-size string            Swap size in MB. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 1gb).
       --use-zstd                    Enable zstd compression for the image
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
