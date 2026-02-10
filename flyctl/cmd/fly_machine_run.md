@@ -45,6 +45,7 @@ fly machine run <image> [command] [flags]
       --shell                       Open a shell on the Machine once created (implies --it --rm). If no app is specified, a temporary app is created just for this Machine and destroyed when the Machine is destroyed. See also --command and --user.
       --skip-dns-registration       Do not register the machine's 6PN IP with the internal DNS system
       --standby-for strings         For Machines without services, a comma separated list of Machine IDs to act as standby for.
+      --swap-size string            Swap size in MB. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 1gb).
       --use-zstd                    Enable zstd compression for the image
       --user string                 Used with --shell. The username, if we're shelling into the Machine now. (default "root")
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')

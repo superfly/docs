@@ -44,6 +44,7 @@ fly machine update [machine_id] [flags]
       --skip-health-checks          Updates machine without waiting for health checks.
       --skip-start                  Updates machine without starting it.
       --standby-for strings         For Machines without services, a comma separated list of Machine IDs to act as standby for.
+      --swap-size string            Swap size in MB. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 1gb).
       --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
       --vm-cpus int                 Number of CPUs
       --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none)
