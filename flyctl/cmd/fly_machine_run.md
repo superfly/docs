@@ -39,8 +39,9 @@ fly machine run <image> [command] [flags]
       --restart string              Set the restart policy for a Machine. Options include 'no', 'always', and 'on-fail'.
                                     	Default is 'on-fail' for Machines created by 'fly deploy' and Machines with a schedule. Default is 'always' for Machines created by 'fly m run'.
       --rm                          Automatically remove the Machine when it exits. Sets the restart-policy to 'never' if not otherwise specified.
+      --rootfs-fs-size string       Root filesystem size in GB. Accepts a plain number (in GB) or a human-readable size (e.g. 2gb, 5gb). Sets the size of the filesystem itself, independent of the rootfs volume size. Set to 0 to unset.
       --rootfs-persist string       Whether to persist the root filesystem across restarts. Options include 'never', 'always', and 'restart'.
-      --rootfs-size int             Root filesystem size in GB. Uses an overlayfs to allow the root filesystem to exceed its default size.
+      --rootfs-size string          Root filesystem size in GB. Accepts a plain number (in GB) or a human-readable size (e.g. 2gb, 5gb). Uses an overlayfs to allow the root filesystem to exceed its default size. Set to 0 to unset.
       --schedule string             Schedule a Machine run at hourly, daily, weekly and monthly intervals
       --shell                       Open a shell on the Machine once created (implies --it --rm). If no app is specified, a temporary app is created just for this Machine and destroyed when the Machine is destroyed. See also --command and --user.
       --skip-dns-registration       Do not register the machine's 6PN IP with the internal DNS system
