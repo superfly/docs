@@ -5,6 +5,10 @@ toc: false
 nav: firecracker
 ---
 
+<div class="warning icon">
+**GPUs are deprecated and will be unavailable after August 1.**
+</div>
+
 <div class= "important icon">
 Fly Kubernetes is in closed beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
 </div>

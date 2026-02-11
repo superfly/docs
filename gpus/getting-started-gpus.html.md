@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<div class="warning icon">
+**GPUs are deprecated and will be unavailable after August 1.**
+</div>
+
 ## How do I run a GPU Machine on Fly.io?
 
 A Fly GPU Machine works very similarly to a CPU-only (or "normal") Fly Machine, and has access to the same platform features by default. It boots up with GPU drivers installed and you can run `nvidia-smi` right away. So running a Fly App that uses CUDA compute is a slight variation on running any Fly App. In a nutshell:

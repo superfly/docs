@@ -5,6 +5,10 @@ toc: false
 nav: firecracker
 ---
 
+<div class="warning icon">
+**GPUs are deprecated and will be unavailable after August 1.**
+</div>
+
 1. You can use any base image for your Dockerfile, but it is convenient to base it on `ubuntu:22.04` and install libraries from NVIDIA's official apt repository: `RUN apt install -y cuda-nvcc-12-2 libcublas-12-2 libcudnn8` is usually enough.
 
     <div class = "note icon">
