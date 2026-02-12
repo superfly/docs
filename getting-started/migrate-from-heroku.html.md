@@ -178,6 +178,7 @@ You'll see some errors about Heroku-specific extensions (pg_stat_statements, eve
 Attach the database to your app:
 
 ```bash
+# Replace CLUSTER_ID with the cluster ID from fly mpg create (or run fly mpg list)
 fly mpg attach CLUSTER_ID -a your-app-name
 ```
 
