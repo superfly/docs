@@ -6,6 +6,12 @@ toc: true
 redirect_from: /docs/rails/getting-started/migrate-from-heroku/
 ---
 
+<figure class="flex justify-center">
+  <img src="/static/images/migrate.png"
+       alt="Illustration by Annie Ruygt of a bird carrying an app to a balloon who is welcoming the app to join his group"
+       class="w-full max-w-lg mx-auto">
+</figure>
+
 This guide will walk you through migrating your Heroku app to Fly.io. Just follow the steps in order.
 
 **What this guide covers:**
@@ -18,6 +24,8 @@ This guide will walk you through migrating your Heroku app to Fly.io. Just follo
 
 **Time required:** Most apps can be migrated in under 30 minutes.
 
+Unlike Heroku's dyno-based tiers, Fly.io uses pay-as-you-go pricing - you only pay for the compute, storage, and bandwidth you actually use. There are no fixed plan tiers to choose from. See [fly.io/pricing](https://fly.io/pricing) for current rates.
+
 ## TL;DR - The Fast Path
 
 For experienced developers, here's the entire migration in 7 commands:
@@ -25,6 +33,7 @@ For experienced developers, here's the entire migration in 7 commands:
 ```bash
 # 1. Export secrets (excluding Heroku-managed vars)
 heroku config -s -a YOUR_HEROKU_APP | grep -v '^DATABASE_URL\|^REDIS_URL\|^HEROKU_' > secrets.txt
+# ⚠️ Don't commit secrets.txt to git!
 
 # 2. Create Fly app (generates Dockerfile automatically)
 cd your-app-directory
@@ -32,7 +41,8 @@ fly launch --no-deploy
 
 # 3. Create Managed Postgres and import data
 fly mpg create --name your-db --region iad
-# Note the CLUSTER_ID from output, then:
+# ⚠️ Replace CLUSTER_ID below with the cluster ID from the output above.
+# If you missed it, run: fly mpg list
 fly mpg proxy CLUSTER_ID --local-port 15432 &
 pg_dump --no-owner --no-acl "$(heroku config:get DATABASE_URL -a YOUR_HEROKU_APP)" | \
   PGPASSWORD=YOUR_FLY_DB_PASSWORD psql -h localhost -p 15432 -U fly-user -d fly-db
@@ -75,6 +85,7 @@ export HEROKU_APP="your-app-name"
 
 # Export environment variables (excluding Heroku-managed ones)
 heroku config -s -a $HEROKU_APP | grep -v '^HEROKU_' | grep -v '^DATABASE_URL' | grep -v '^REDIS_URL' > heroku-env.txt
+# ⚠️ This file contains secrets - don't commit it to git!
 
 # See what add-ons you have
 heroku addons -a $HEROKU_APP
@@ -144,10 +155,12 @@ Save the connection details it outputs! You'll see something like:
 Connection string: postgresql://fly-user:PASSWORD@pgbouncer.CLUSTER_ID.flympg.net/fly-db
 ```
 
+Note the cluster ID (the `CLUSTER_ID` part) - you'll need it for the next few commands. If you lose it, you can always find it with `fly mpg list`.
+
 To import your data, use `fly mpg proxy` to create a local tunnel, then `pg_dump` and `psql`:
 
 ```bash
-# Terminal 1: Start a proxy to your Fly database (use the cluster ID from the output above)
+# Terminal 1: Start a proxy to your Fly database (replace CLUSTER_ID with your cluster ID)
 fly mpg proxy CLUSTER_ID --local-port 15432
 
 # Terminal 2: Dump from Heroku and restore to Fly
@@ -214,10 +227,9 @@ If your app has multiple process types (web + worker), edit your `fly.toml`:
   worker = "npm run worker"
 
 # The web process gets the HTTP service
-[[services]]
+[http_service]
   internal_port = 8080
   processes = ["web"]
-  # ... rest of service config
 ```
 
 For a release command (like database migrations), add:
@@ -243,7 +255,7 @@ fly logs
 
 ```bash
 # Open your app in a browser
-fly open
+fly apps open
 
 # Check the status
 fly status
@@ -284,7 +296,6 @@ Once DNS propagates, Fly automatically provisions an SSL certificate.
 | `heroku pg:psql` | `fly mpg connect CLUSTER_ID` |
 | `heroku restart` | `fly apps restart` |
 | `heroku scale web=2` | `fly scale count web=2` |
-| `heroku maintenance:on` | See [maintenance mode docs](/docs/apps/maintenance/) |
 
 ## Common Add-on Replacements
 
