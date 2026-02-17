@@ -4,7 +4,9 @@ layout: docs
 nav: firecracker
 ---
 
-FLy Proxy provides TLS termination by default for web apps (services accepting traffic over HTTPS on port 443). With the built-in TLS handler, the Fly Proxy verifies your app with Fly.io-managed certificates authorized through Let's Encrypt, converts your TLS connection to unencrypted TCP, and forwards traffic to your app through our secure WireGuard mesh network.
+Fly Proxy provides TLS termination by default for web apps (services accepting traffic over HTTPS on port 443). With the built-in TLS handler, Fly Proxy uses your app's TLS certificates to terminate TLS connections, converts them to unencrypted TCP, and forwards traffic to your app through our secure WireGuard mesh network. Fly Proxy supports both Fly-managed certificates issued through Let's Encrypt, and your own uploaded certificates.
+
+To set up certificates for a custom domain, including importing your own certificates, see [Custom domains](/docs/networking/custom-domain/).
 
 You can [configure a specific TLS version and ALPN protocols](/docs/reference/configuration/#services-ports-tls_options) for your app in the `fly.toml` config file.
 
