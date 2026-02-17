@@ -1,0 +1,700 @@
+---
+title: Certificates
+layout: docs
+nav: machines_toc
+toc: false
+redirect_from:
+  - /docs/networking/custom-domain-api/
+---
+
+Use the Certificates resource to manage SSL/TLS certificates for custom domains on your Fly Apps. Fly.io can automatically issue Let's Encrypt certificates (ACME), or you can import your own custom certificates. When both exist for a hostname, the custom certificate is served as primary and the ACME certificate acts as an automatic fallback. Learn more about [custom domains](/docs/networking/custom-domain/).
+
+<div class="right-column">
+  <div class="endpoints api-card">
+    <div class="api-card-header">
+      Endpoints
+    </div>
+    <div class="highlight">
+      <a class="endpoint" href="#list-certificates">
+        <span class="get-badge">get</span>
+        <span>/v1/apps/{app\_name}/certificates</span>
+      </a>
+      <a class="endpoint" href="#request-acme-certificate">
+        <span class="post-badge">post</span>
+        <span>/v1/apps/{app\_name}/certificates/acme</span>
+      </a>
+      <a class="endpoint" href="#import-custom-certificate">
+        <span class="post-badge">post</span>
+        <span>/v1/apps/{app\_name}/certificates/custom</span>
+      </a>
+      <a class="endpoint" href="#get-certificate-details">
+        <span class="get-badge">get</span>
+        <span>/v1/apps/{app\_name}/certificates/{hostname}</span>
+      </a>
+      <a class="endpoint" href="#check-certificate-status">
+        <span class="post-badge">post</span>
+        <span>/v1/apps/{app\_name}/certificates/{hostname}/check</span>
+      </a>
+      <a class="endpoint" href="#delete-hostname-and-all-certificates">
+        <span class="delete-badge">delete</span>
+        <span>/v1/apps/{app\_name}/certificates/{hostname}</span>
+      </a>
+      <a class="endpoint" href="#delete-acme-certificates">
+        <span class="delete-badge">delete</span>
+        <span>/v1/apps/{app\_name}/certificates/{hostname}/acme</span>
+      </a>
+      <a class="endpoint" href="#delete-custom-certificate">
+        <span class="delete-badge">delete</span>
+        <span>/v1/apps/{app\_name}/certificates/{hostname}/custom</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+## List certificates
+
+`GET /apps/{app_name}/certificates`
+
+List all certificates for an app, with optional filtering and cursor-based pagination.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App.'
+    ) %>
+    <%= render(api_info) %>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Query parameters',
+      name: 'filter',
+      type: 'string',
+      required: false,
+      description: 'Filter certificates by hostname substring.'
+    ) %>
+    <% api_info.add_info(
+      name: 'cursor',
+      type: 'string',
+      required: false,
+      description: 'Pagination cursor from a previous response.'
+    ) %>
+    <% api_info.add_info(
+      name: 'limit',
+      type: 'integer',
+      required: false,
+      description: 'Maximum number of certificates to return.'
+    ) %>
+    <%= render(api_info) %>
+    <%= render(ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    )) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/\{app_name\}/certificates')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X GET \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates"
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+{
+  "certificates": [
+    {
+      "hostname": "example.com",
+      "status": "active",
+      "dns_provider": "enom",
+      "acme_dns_configured": true,
+      "acme_alpn_configured": true,
+      "acme_http_configured": true,
+      "ownership_txt_configured": true,
+      "configured": true,
+      "acme_requested": true,
+      "has_custom_certificate": false,
+      "has_fly_certificate": true,
+      "created_at": "2024-01-15T10:30:00Z",
+      "updated_at": "2024-01-15T12:00:00Z"
+    }
+  ],
+  "total_count": 1
+}
+    <% end %>
+  </div>
+</div>
+
+## Request ACME certificate
+
+`POST /apps/{app_name}/certificates/acme`
+
+Add a hostname to your app and request an automatic Let's Encrypt certificate. Fly.io will attempt to validate domain ownership and issue a certificate. Check the `dns_requirements` in the response to see what DNS records you need to configure.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <%= render(ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App.'
+    )) %>
+    <%= render(ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '201',
+      description: 'created'
+    )) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/\{app_name\}/certificates/acme')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X POST \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/acme" \
+  -d '{
+      "hostname": "example.com"
+    }'
+      <% end %>
+      <% component.with_json do %>
+        {
+          "hostname": "example.com"
+        }
+      <% end %>
+      <% component.with_json_table do %>
+        | Property   | Type    | Required | Description                |
+        |------------|---------|----------|----------------------------|
+        | `hostname` | string  | yes      | The domain to issue a certificate for. |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 201 created - Example response', language: 'json')) do %>
+{
+  "hostname": "example.com",
+  "configured": false,
+  "acme_requested": true,
+  "status": "pending_validation",
+  "dns_provider": "enom",
+  "rate_limited_until": null,
+  "certificates": [],
+  "validation": {
+    "dns_configured": false,
+    "alpn_configured": false,
+    "http_configured": false,
+    "ownership_txt_configured": false
+  },
+  "dns_requirements": {
+    "a": ["137.66.XXX.XXX"],
+    "aaaa": ["2a09:8280:1::XXXX"],
+    "cname": "my-app-name.fly.dev",
+    "acme_challenge": {
+      "name": "_acme-challenge.example.com",
+      "target": "example.com.XXXXX.flydns.net"
+    },
+    "ownership": {
+      "name": "_fly-ownership.example.com",
+      "app_value": "app-XXXXXXXXXX",
+      "org_value": "org-XXXXXXXXXX"
+    }
+  },
+  "validation_errors": []
+}
+    <% end %>
+  </div>
+</div>
+
+## Import custom certificate
+
+`POST /apps/{app_name}/certificates/custom`
+
+Upload your own certificate and private key in PEM format. The certificate must not be expired, the private key must match the certificate, and the hostname must appear in the certificate's Subject Alternative Names (SAN) or Common Name (CN). Wildcard certificates are supported.
+
+Domain ownership must be verified via a `_fly-ownership` DNS TXT record before the certificate becomes active. Check the `dns_requirements.ownership` field in the response for the required record.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <%= render(ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App.'
+    )) %>
+    <%= render(ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '201',
+      description: 'created'
+    )) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/\{app_name\}/certificates/custom')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X POST \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/custom" \
+  -d '{
+      "hostname": "example.com",
+      "fullchain": "-----BEGIN CERTIFICATE-----\nMIID...\n-----END CERTIFICATE-----",
+      "private_key": "-----BEGIN PRIVATE KEY-----\nMIIE...\n-----END PRIVATE KEY-----"
+    }'
+      <% end %>
+      <% component.with_json do %>
+        {
+          "hostname": "",
+          "fullchain": "",
+          "private_key": ""
+        }
+      <% end %>
+      <% component.with_json_table do %>
+        | Property      | Type    | Required | Description                |
+        |---------------|---------|----------|----------------------------|
+        | `hostname`    | string  | yes      | The domain for the certificate. |
+        | `fullchain`   | string  | yes      | PEM-encoded certificate chain. |
+        | `private_key` | string  | yes      | PEM-encoded private key. |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 201 created - Example response', language: 'json')) do %>
+{
+  "hostname": "example.com",
+  "configured": false,
+  "acme_requested": false,
+  "status": "pending_ownership",
+  "dns_provider": "enom",
+  "rate_limited_until": null,
+  "certificates": [
+    {
+      "source": "custom",
+      "status": "pending_ownership",
+      "created_at": "2024-01-15T10:30:00Z",
+      "expires_at": "2039-01-15T10:30:00Z",
+      "issuer": "Cloudflare Origin Certificate",
+      "issued": []
+    }
+  ],
+  "validation": {
+    "dns_configured": false,
+    "alpn_configured": false,
+    "http_configured": false,
+    "ownership_txt_configured": false
+  },
+  "dns_requirements": {
+    "a": ["137.66.XXX.XXX"],
+    "aaaa": ["2a09:8280:1::XXXX"],
+    "cname": "my-app-name.fly.dev",
+    "acme_challenge": {
+      "name": "_acme-challenge.example.com",
+      "target": "example.com.XXXXX.flydns.net"
+    },
+    "ownership": {
+      "name": "_fly-ownership.example.com",
+      "app_value": "app-XXXXXXXXXX",
+      "org_value": "org-XXXXXXXXXX"
+    }
+  },
+  "validation_errors": []
+}
+    <% end %>
+  </div>
+</div>
+
+## Get certificate details
+
+`GET /apps/{app_name}/certificates/{hostname}`
+
+Get detailed information about a hostname's certificates, including validation status, DNS requirements, and any validation errors.
+
+For wildcard hostnames, URL-encode the `*` character (e.g. `%2A.example.com`).
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App.'
+    ) %>
+    <% api_info.add_info(
+      name: 'hostname',
+      type: 'string',
+      required: true,
+      description: 'The hostname to get certificate details for.'
+    ) %>
+    <%= render(api_info) %>
+    <%= render(ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    )) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'GET', title: '/v1/apps/\{app_name\}/certificates/\{hostname\}')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X GET \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/example.com"
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+{
+  "hostname": "example.com",
+  "configured": true,
+  "acme_requested": true,
+  "status": "active",
+  "dns_provider": "enom",
+  "rate_limited_until": null,
+  "certificates": [
+    {
+      "source": "custom",
+      "status": "active",
+      "created_at": "2024-01-15T10:30:00Z",
+      "expires_at": "2039-01-15T10:30:00Z",
+      "issuer": "Cloudflare Origin Certificate",
+      "issued": []
+    },
+    {
+      "source": "fly",
+      "status": "active",
+      "created_at": "2024-01-15T12:00:00Z",
+      "expires_at": "2024-04-15T12:00:00Z",
+      "issuer": null,
+      "issued": [
+        {
+          "type": "ecdsa",
+          "expires_at": "2024-04-15T12:00:00Z",
+          "certificate_authority": "lets_encrypt"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "dns_configured": true,
+    "alpn_configured": true,
+    "http_configured": true,
+    "ownership_txt_configured": true
+  },
+  "dns_requirements": {
+    "a": ["137.66.XXX.XXX"],
+    "aaaa": ["2a09:8280:1::XXXX"],
+    "cname": "my-app-name.fly.dev",
+    "acme_challenge": {
+      "name": "_acme-challenge.example.com",
+      "target": "example.com.XXXXX.flydns.net"
+    },
+    "ownership": {
+      "name": "_fly-ownership.example.com",
+      "app_value": "app-XXXXXXXXXX",
+      "org_value": "org-XXXXXXXXXX"
+    }
+  },
+  "validation_errors": []
+}
+    <% end %>
+  </div>
+</div>
+
+## Check certificate status
+
+`POST /apps/{app_name}/certificates/{hostname}/check`
+
+Trigger a fresh DNS validation check for a hostname. Returns the same details as the get endpoint, plus actual DNS records resolved for the hostname. Use this to diagnose DNS configuration issues.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App.'
+    ) %>
+    <% api_info.add_info(
+      name: 'hostname',
+      type: 'string',
+      required: true,
+      description: 'The hostname to check.'
+    ) %>
+    <%= render(api_info) %>
+    <%= render(ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    )) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'POST', title: '/v1/apps/\{app_name\}/certificates/\{hostname\}/check')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X POST \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/example.com/check"
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+{
+  "hostname": "example.com",
+  "configured": true,
+  "acme_requested": true,
+  "status": "active",
+  "dns_provider": "enom",
+  "rate_limited_until": null,
+  "certificates": [
+    {
+      "source": "fly",
+      "status": "active",
+      "created_at": "2024-01-15T12:00:00Z",
+      "expires_at": "2024-04-15T12:00:00Z",
+      "issuer": null,
+      "issued": [
+        {
+          "type": "ecdsa",
+          "expires_at": "2024-04-15T12:00:00Z",
+          "certificate_authority": "lets_encrypt"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "dns_configured": true,
+    "alpn_configured": true,
+    "http_configured": true,
+    "ownership_txt_configured": true
+  },
+  "dns_requirements": {
+    "a": ["137.66.XXX.XXX"],
+    "aaaa": ["2a09:8280:1::XXXX"],
+    "cname": "my-app-name.fly.dev",
+    "acme_challenge": {
+      "name": "_acme-challenge.example.com",
+      "target": "example.com.XXXXX.flydns.net"
+    },
+    "ownership": {
+      "name": "_fly-ownership.example.com",
+      "app_value": "app-XXXXXXXXXX",
+      "org_value": "org-XXXXXXXXXX"
+    }
+  },
+  "validation_errors": [],
+  "dns_records": {
+    "a": ["137.66.XXX.XXX"],
+    "aaaa": ["2a09:8280:1::XXXX"],
+    "cname": [],
+    "resolved_addresses": ["137.66.XXX.XXX", "2a09:8280:1::XXXX"],
+    "soa": "ns1.example.com",
+    "acme_challenge_cname": "example.com.XXXXX.flydns.net",
+    "ownership_txt": "app-XXXXXXXXXX"
+  }
+}
+    <% end %>
+  </div>
+</div>
+
+## Delete hostname and all certificates
+
+`DELETE /apps/{app_name}/certificates/{hostname}`
+
+Remove a hostname and all associated certificates (both ACME and custom) from the app.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App.'
+    ) %>
+    <% api_info.add_info(
+      name: 'hostname',
+      type: 'string',
+      required: true,
+      description: 'The hostname to remove.'
+    ) %>
+    <%= render(api_info) %>
+    <%= render(ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '204',
+      description: 'no content'
+    )) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/\{app_name\}/certificates/\{hostname\}')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X DELETE \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/example.com"
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 204 no content', language: 'json')) do %>
+    no body
+    <% end %>
+  </div>
+</div>
+
+## Delete ACME certificates
+
+`DELETE /apps/{app_name}/certificates/{hostname}/acme`
+
+Stop ACME certificate issuance for a hostname. If a custom certificate exists, it will continue to be served. The hostname itself is not removed.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App.'
+    ) %>
+    <% api_info.add_info(
+      name: 'hostname',
+      type: 'string',
+      required: true,
+      description: 'The hostname to stop ACME issuance for.'
+    ) %>
+    <%= render(api_info) %>
+    <%= render(ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    )) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/\{app_name\}/certificates/\{hostname\}/acme')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X DELETE \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/example.com/acme"
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+{
+  "hostname": "example.com",
+  "configured": true,
+  "acme_requested": false,
+  "status": "active",
+  "certificates": [
+    {
+      "source": "custom",
+      "status": "active",
+      "created_at": "2024-01-15T10:30:00Z",
+      "expires_at": "2039-01-15T10:30:00Z",
+      "issuer": "Cloudflare Origin Certificate",
+      "issued": []
+    }
+  ],
+  "validation": {
+    "dns_configured": true,
+    "alpn_configured": false,
+    "http_configured": false,
+    "ownership_txt_configured": true
+  },
+  "dns_requirements": { "..." : "..." },
+  "validation_errors": []
+}
+    <% end %>
+  </div>
+</div>
+
+## Delete custom certificate
+
+`DELETE /apps/{app_name}/certificates/{hostname}/custom`
+
+Remove the custom certificate for a hostname. If ACME certificates are configured, they will continue to be served. The hostname itself is not removed.
+
+<div class="api-section" data-exclude-render>
+  <div>
+    <% api_info = ApiInfoComponent.new(
+      heading: 'Path parameters',
+      name: 'app_name',
+      type: 'string',
+      required: true,
+      description: 'The name of the Fly App.'
+    ) %>
+    <% api_info.add_info(
+      name: 'hostname',
+      type: 'string',
+      required: true,
+      description: 'The hostname to remove the custom certificate from.'
+    ) %>
+    <%= render(api_info) %>
+    <%= render(ApiInfoComponent.new(
+      heading: 'Responses',
+      name: '200',
+      description: 'OK'
+    )) %>
+  </div>
+  <div>
+    <%= render(CodeToggleComponent.new(badge: 'DELETE', title: '/v1/apps/\{app_name\}/certificates/\{hostname\}/custom')) do |component| %>
+      <% component.with_curl do %>
+        curl -i -X DELETE \
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/example.com/custom"
+      <% end %>
+      <% component.with_json do %>
+      no body
+      <% end %>
+      <% component.with_json_table do %>
+      | Property | Type | Required | Description |
+      | --- | --- | --- | --- |
+      | no body |  |  |  |
+      <% end %>
+    <% end %>
+    <%= render(CodeSampleComponent.new(title: 'Status: 200 OK - Example response', language: 'json')) do %>
+{
+  "hostname": "example.com",
+  "configured": true,
+  "acme_requested": true,
+  "status": "active",
+  "certificates": [
+    {
+      "source": "fly",
+      "status": "active",
+      "created_at": "2024-01-15T12:00:00Z",
+      "expires_at": "2024-04-15T12:00:00Z",
+      "issuer": null,
+      "issued": [
+        {
+          "type": "ecdsa",
+          "expires_at": "2024-04-15T12:00:00Z",
+          "certificate_authority": "lets_encrypt"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "dns_configured": true,
+    "alpn_configured": true,
+    "http_configured": true,
+    "ownership_txt_configured": true
+  },
+  "dns_requirements": { "..." : "..." },
+  "validation_errors": []
+}
+    <% end %>
+  </div>
+</div>
+
+## Related topics
+
+- [Custom domains](/docs/networking/custom-domain/)
+- [Using Cloudflare with Fly.io](/docs/networking/understanding-cloudflare/)
+- [Working with the Machines API](/docs/machines/api/working-with-machines-api/)
+- [Apps resource](/docs/machines/api/apps-resource/) reference
+- [Machines resource](/docs/machines/api/machines-resource/) reference
+- [OpenAPI specification](https://docs.machines.dev/+external)

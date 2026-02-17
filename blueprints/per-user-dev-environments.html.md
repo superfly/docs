@@ -38,7 +38,7 @@ Your router app handles all incoming wildcard traffic. Its responsibility is sim
 - Look up the correct app (and optionally machine ID) for that user.
 - Issue a `fly-replay` header directing the Fly Proxy to [internally redirect the request](/docs/blueprints/connecting-to-user-machines/#using-fly-replay) (this should add no more than ~10 milliseconds of latency if the router app is deployed close to the user).
 - When appropriate, use [replay caching](/docs/networking/dynamic-request-routing/#replay-caching) to further reduce latency and load on the router app.
-- Make sure you've added [a wildcard domain](/docs/networking/custom-domain/#get-certified) (*.example.com) to your router app (read more about the [certificate management endpoint here](/docs/networking/custom-domain-api/)).
+- Make sure you've added [a wildcard domain](/docs/networking/custom-domain/#add-your-domain-to-your-app) (*.example.com) to your router app (read more about the [Certificates API reference](/docs/machines/api/certificates-resource/)).
 
 ### User apps
 

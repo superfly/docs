@@ -23,84 +23,114 @@ This is the simplest and most reliable way to use Cloudflare with Fly.io. To con
 
 ## CDN proxy setup ("orange cloud")
 
-Enabling Cloudflare's proxy gives you caching and DDoS protection, but it also changes how SSL certificates work. Cloudflare terminates TLS traffic, which interferes with Fly.io's default TLS-ALPN-01 certificate issuance process.
+Enabling Cloudflare's proxy gives you caching and DDoS protection, but it also changes how SSL certificates work. Cloudflare terminates TLS traffic, which means Fly.io can't use its default TLS-ALPN-01 certificate issuance process. The key to a smooth setup is a `_fly-ownership` TXT record that proves domain ownership to Fly.io and allows certificate validation to work through Cloudflare's proxy.
 
-The recommended approach for using Cloudflare's CDN proxy is to configure it to forward HTTP requests, which allows HTTP-01 challenges to work properly. To configure a CDN proxy setup:
-
-1. Create an `AAAA` record only pointing to your Fly.io app's IPv6 address.
-2. Do not add `A` or `CNAME` records for the hostname. If you previously had an `A` record pointing elsewhere (such as a legacy server or placeholder), remove it, even if the correct `AAAA` record is present. Having any `A` record alongside the `AAAA` can confuse Let’s Encrypt validation and prevent certificate renewal.
-3. Enable the Cloudflare proxy (orange cloud).
-4. Set SSL mode in Cloudflare to Full (strict).
-5. Enable Always Use HTTPS in Cloudflare.
-
-<div class="callout">
-**Important:** This setup allows Fly.io to handle HTTP-01 validation and issue certificates automatically.
+<div class="important">
+**Important:** Wildcard certificates (e.g. `*.example.com`) cannot be issued automatically through Cloudflare's proxy, because Let's Encrypt requires a DNS-01 challenge for wildcards and Cloudflare's Universal SSL can interfere with it. To use a wildcard certificate behind Cloudflare's proxy, import a [Cloudflare Origin Certificate](#using-a-cloudflare-origin-certificate) instead.
 </div>
 
+### Recommended setup
 
-### Using the DNS-01 challenge (manual certificate setup)
-
-If the HTTP-01 challenge doesn't work for your setup, you can fall back to using a DNS-01 challenge to manually issue a certificate.
-
-To do this:
-1. Use the Fly.io dashboard or run:
+1. Add your domain to your Fly app:
 
 ```bash
-fly certs create <your-domain>
+fly certs add example.com
 ```
 
-2. Add the required TXT records to Cloudflare when prompted.
-3. The certificate will issue once DNS propagation is complete.
+2. Add a `_fly-ownership` TXT record in Cloudflare DNS. Run `fly certs setup` to see the required record:
 
-### How Fly.io handles TLS and certificate management
+```bash
+fly certs setup example.com
+```
 
-TLS certificates are provisioned automatically using Let’s Encrypt. We handle renewals in advance and manage rate limits carefully per hostname, so you don’t need to worry about expiration dates or throttling.
+Add the TXT record shown in the output. This record proves domain ownership to Fly.io.
 
-We don’t currently support bringing your own ACME provider like ZeroSSL or SSL.com into our provisioning flow. If you prefer to terminate TLS yourself and handle your own ACME HTTP challenges, you can do that by passing TCP through to your Fly app. The Fly Proxy won’t interfere with these challenges, and there's no IPv6 requirement if you're managing this independently.
+3. Configure your DNS records in Cloudflare:
+   - Add an `A` record pointing to your Fly app's IPv4 address.
+   - Add an `AAAA` record pointing to your Fly app's IPv6 address.
+   - Alternatively, use a `CNAME` record pointing to your app's `.fly.dev` target.
+   - Enable the Cloudflare proxy (orange cloud) for these records.
 
-Both approaches are valid, but we recommend using the platform's built-in TLS termination and certificate management, especially as certificate validity periods get shorter.
+4. Set SSL mode in Cloudflare to **Full (strict)**.
+
+5. Enable **Always Use HTTPS** in Cloudflare (recommended).
+
+Fly.io will automatically issue a Let's Encrypt certificate via the HTTP-01 challenge, which works through Cloudflare's proxy when the ownership TXT record is in place. Run `fly certs check example.com` to monitor validation progress.
+
+Some Cloudflare configurations will block HTTP-01 challenges altogether. If certificate issuance is not progressing, import a [Cloudflare Origin Certificate](#using-a-cloudflare-origin-certificate) instead.
+
+### Using a Cloudflare Origin Certificate
+
+If automatic certificate issuance doesn't work for your setup, or if you need a wildcard certificate (like `*.example.com`), you can import a Cloudflare Origin Certificate instead.
+
+1. Generate a Cloudflare Origin Certificate in the Cloudflare dashboard:
+   - Go to SSL/TLS > Origin Server > Create Certificate.
+   - Choose the hostnames to cover (for example, `example.com` and `*.example.com`).
+   - Choose a validity period (Cloudflare offers up to 15 years).
+   - Keep the page open — Cloudflare only shows the private key once.
+
+2. Import the certificate to Fly.io in your app dashboard under **Certificates**. You can paste the certificate and private key directly from Cloudflare. Alternatively, save them as files and use the CLI:
+
+```bash
+fly certs import example.com --fullchain cert.pem --private-key key.pem
+fly certs import "*.example.com" --fullchain cert.pem --private-key key.pem
+```
+
+3. Add the `_fly-ownership` TXT record shown in the certificate setup details, if you haven't already set one up.
+
+4. Configure your DNS records and Cloudflare SSL mode as described in the [recommended setup](#recommended-setup) above.
+
+<div class="callout">
+Custom and ACME certificates can coexist for the same hostname. The custom certificate is served as primary, and any ACME certificate acts as an automatic fallback.
+</div>
 
 ## Common issues to watch for
 
-- Cloudflare's Universal SSL may interfere with DNS-01 challenges. Disable it or use HTTP-01 instead to avoid this.
+### General issues
+
+- Always use "Full (strict)" in Cloudflare when connecting to Fly.io. Using "Flexible" mode may cause redirect loops.
+- Only one application should manage certificates for a subdomain or apex domain. Using more than one can cause conflicts.
+
+### ACME-specific issues
+
+These issues apply when using Let's Encrypt (ACME) certificates behind Cloudflare's proxy. They do not apply if you are using a [Cloudflare Origin Certificate](#using-a-cloudflare-origin-certificate).
+
 - Check that your domain allows Let's Encrypt with a CAA record like:
 
 ```
    example.com.  CAA  0 issue "letsencrypt.org"
 ```
 
-- Only one application should manage certificates for a domain. Using more than one can cause conflicts.
-- Let's Encrypt has limits. Check the certificate status tab in the Fly.io dashboard if issuance fails.
+- Let's Encrypt has rate limits. Check the certificate status tab in the Fly.io dashboard if issuance fails.
+- DNS-01 certificates will conflict with Cloudflare Universal SSL. This happens when Cloudflare's Universal SSL automatically inserts hidden ACME challenge TXT records that don't appear in your DNS dashboard. These ghost records interfere with Let's Encrypt's validation process. The best choice in this situation is to import a [Cloudflare Origin Certificate](#using-a-cloudflare-origin-certificate) instead.
 
-<div class="callout">
-**Cloudflare Universal SSL Ghost Records Issue:** If you're using Cloudflare and Let's Encrypt can't issue a certificate, you may be encountering phantom _acme-challenge TXT records. This happens when Cloudflare's Universal SSL automatically inserts hidden ACME challenge TXT records that don't appear in your DNS dashboard but show up when you run `dig TXT _acme-challenge.yourdomain.com`. These ghost records interfere with Let's Encrypt's validation process.
+### Custom certificate issues
 
-To resolve this:
-1. Go to Edge Certificates in Cloudflare's SSL/TLS settings and disable Universal SSL.
-2. Purge cache ("Purge Everything" in Cloudflare) and/or enable Development Mode.
-3. Wait several minutes for DNS cache to clear, then confirm with `dig` that only your intended TXT record is present.
-4. Retry certificate issuance from Fly.io.
-</div>
+- Unlike Let's Encrypt certificates, which renew automatically, custom certificates must be manually renewed and re-imported before they expire. Cloudflare Origin Certificates can be issued with long validity periods (up to 15 years), but you should still track expiry.
 
 ## Tools for debugging
 
 These tools can help when diagnosing certificate or DNS issues:
 
+- `fly certs check <hostname>`: Check ownership TXT status, custom certificate status, and ACME certificate status all in one place. This is the best starting point for debugging.
 - [crt.sh](https://crt.sh/): Check issued certificates.
 - [DNSChecker](https://dnschecker.org/): Confirm DNS propagation.
-- [Let's Debug](https://letsdebug.net/): Analyze certificate validation issues.
+- [Let's Debug](https://letsdebug.net/): Analyze Let's Encrypt certificate validation issues.
 - dig: Inspect DNS records from the command line.
 
 For example:
 
 ```bash
+fly certs check your-app.example.com
+
 dig AAAA your-app.example.com
 
-dig TXT _acme-challenge.your-app.example.com
+dig TXT _fly-ownership.your-app.example.com
 ```
 
 ## Related topics
 
-- [Custom domain guide](https://fly.io/docs/networking/custom-domain/)
-- [Custom domain API reference](https://fly.io/docs/networking/custom-domain-api/)
-- [flyctl certs commands](https://fly.io/docs/flyctl/certs/)
+- [Custom domain guide](/docs/networking/custom-domain/)
+- [Certificates API reference](/docs/machines/api/certificates-resource/)
+- [flyctl certs commands](/docs/flyctl/certs/)
+- [fly certs import reference](/docs/flyctl/certs-import/)

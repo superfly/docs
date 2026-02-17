@@ -85,7 +85,7 @@ The following steps should allow you to switch an app with a custom domain from 
 1. Add a shared IPv4 address with `flyctl ips allocate-v4 --shared`.
 2. If you don't use a CNAME to `.fly.dev`, [add the shared IPv4 as an A record](/docs/networking/custom-domain/#set-the-a-record).
 3. Confirm your app works via shared IP: `curl -Iv http://<your-hostname> --resolve <your-hostname>:80:<new-shared-ipv4>`. You should receive a 301 redirect response.
-4. If you are using a custom domain and don't already have an SSL certificate for this app, [create one](/docs/networking/custom-domain/#get-certified). The cert is required for routing to your app via the custom domain, even for HTTP connections.
+4. If you are using a custom domain and don't already have an SSL certificate for this app, [create one](/docs/networking/custom-domain/#add-your-domain-to-your-app). The cert is required for routing to your app via the custom domain, even for HTTP connections.
 5. Wait for DNS caches to clear. Five minutes is likely enough, but this varies wildly. This is determined by the larger of your DNS record’s TTL and that of our `<your-app>.fly.dev` record.
 6. Remove the dedicated IPv4 from the app using `fly ips release <ipv4-address-to-release>`. You can view your app's IP addresses using `fly ips list`.
 7. Remove the unwanted IPv4 address from your DNS if it was set manually as an A record.
