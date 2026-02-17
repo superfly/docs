@@ -147,6 +147,8 @@ Upstash Redis databases start on the pay-as-you-go plan at **$0.20 per 100k requ
 * Maximum Entry Size: 100 MB (Customizable)
 * Storage Limit: 10 GB
 
+Your usage is updated hourly on your monthly Fly.io bill. You can track database usage details in the [Upstash web console](#the-upstash-web-console) as well.
+
 #### Fixed price plans
 
 Upstash also offers fixed price plans for when:
@@ -156,11 +158,30 @@ Upstash also offers fixed price plans for when:
 
 These fixed price plans are available via `flyctl redis update <dbname>`:
 
-* Starter: $10 per month, single region only. Includes 200MB storage, 100 req/sec
-* Standard: $50 per month, $10 per replica region. Includes 3GB storage, 100 req/sec
-* Pro 2K: $280 per month, $100 per replica region. Includes 50GB storage, 10k req/sec
-
-Your usage is updated hourly on your monthly Fly.io bill. You can track database usage details in the [Upstash web console](#the-upstash-web-console) as well.
+| Plan | Max Data Size  | Monthly Bandwidth | Monthly Price | 
+| --- | --- | --- | --- |
+| Fixed 250MB  | 256 MB| 50 GB | $10/mo + $5/read region |
+| Fixed 1GB  | 1 GB | 100 GB | $20 + $10/read region |
+| Fixed 5GB | 5 GB| 500 GB | $100 + $50/read region |
+| Fixed 10GB  | 10 GB | 1 TB | $200 + $100/read region |
+| Fixed 50GB  | 50 GB| 5 TB | $400 + $20/read region |
 
 
 Check the official [Upstash Pricing](https://upstash.com/pricing) page for more information.
+
+## Add Ons
+
+Upstash offers two add-on features that can be enabled when provisioning a new DB, or on existing DBs using `fly redis update <dbname>` 
+
+#### Auto Upgrade
+On Fixed plans, Upstash will apply usage limits based on your current plan. When you reach these limits, behavior depends on the specific limit type - bandwidth limits will throttle your traffic, while storage limits will reject new write operations.
+
+The Auto Upgrade feature automatically upgrades your database to the next higher plan when you reach your usage limits, ensuring uninterrupted service. For more details see [Upstash's docs](https://upstash.com/docs/redis/features/auto-upgrade)
+
+AutoUpgrade can be enabled on fixed plan DBs using  `fly redis update <dbname>` or as an option when creating a DB on a fixed plan.
+
+#### Prod Pack - $200/mo
+
+Upstash offers a ProdPack add-on for enabled Enterprise level features on a per-database level. This add on unlocks additional monitoring, compliance, and availability features for your database. Prod Pack is available on both pay-as-you-go and fixed plans. For a full list of benefits, please see Upstash's official [ProdPack Documentation](https://upstash.com/docs/redis/overall/enterprise#prod-pack-and-enterprise)
+
+Prod Pack can be enabled when provisioning a new DB, and on existing DBs using `fly redis update <dbname>`, or from your Upstash dashboard. 
