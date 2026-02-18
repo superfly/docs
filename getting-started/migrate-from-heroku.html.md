@@ -32,7 +32,7 @@ For experienced developers, here's the entire migration in 7 commands:
 
 ```bash
 # 1. Export secrets (excluding Heroku-managed vars)
-heroku config -s -a YOUR_HEROKU_APP | grep -v '^DATABASE_URL\|^REDIS_URL\|^HEROKU_' > secrets.txt
+heroku config -s -a YOUR_HEROKU_APP | grep -v '^DATABASE_URL\|^REDIS_URL\|^HEROKU_' | sed "s/='\(.*\)'$/=\"\1\"/" > secrets.txt
 # ⚠️ Don't commit secrets.txt to git!
 
 # 2. Create Fly app (generates Dockerfile automatically)
@@ -84,7 +84,7 @@ First, let's capture everything about your Heroku app.
 export HEROKU_APP="your-app-name"
 
 # Export environment variables (excluding Heroku-managed ones)
-heroku config -s -a $HEROKU_APP | grep -v '^HEROKU_' | grep -v '^DATABASE_URL' | grep -v '^REDIS_URL' > heroku-env.txt
+heroku config -s -a $HEROKU_APP | grep -v '^HEROKU_' | grep -v '^DATABASE_URL' | grep -v '^REDIS_URL' | sed "s/='\(.*\)'$/=\"\1\"/" > heroku-env.txt
 # ⚠️ This file contains secrets - don't commit it to git!
 
 # See what add-ons you have
