@@ -160,11 +160,11 @@ These fixed price plans are available via `flyctl redis update <dbname>`:
 
 | Plan | Max Data Size  | Monthly Bandwidth | Monthly Price | 
 | --- | --- | --- | --- |
-| Fixed 250MB  | 256 MB| 50 GB | $10/mo + $5/read region |
+| Fixed 250MB  | 250 MB| 50 GB | $10/mo + $5/read region |
 | Fixed 1GB  | 1 GB | 100 GB | $20 + $10/read region |
 | Fixed 5GB | 5 GB| 500 GB | $100 + $50/read region |
 | Fixed 10GB  | 10 GB | 1 TB | $200 + $100/read region |
-| Fixed 50GB  | 50 GB| 5 TB | $400 + $20/read region |
+| Fixed 50GB  | 50 GB| 5 TB | $400 + $200/read region |
 
 
 Check the official [Upstash Pricing](https://upstash.com/pricing) page for more information.
