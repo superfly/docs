@@ -33,7 +33,7 @@ The default volume size is 3 gigabytes.
 Now set the following secret, again replacing the name with what you selected:
 
 ```cmd
-fly secrets set DATABASE_URL=sqlite3:///mnt/name/production.sqlite
+fly secrets set DATABASE_URL=sqlite3:////mnt/name/production.sqlite
 ```
 
 ## Mount and Prep for Deployment
