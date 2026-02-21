@@ -94,5 +94,5 @@ For databases other than Sqlite3, this is best done as a one-off command run in 
 For sqlite3, a different approach is required as the migration will need to be run on each machine that has a volume mounted.  This can be accomplished by creating a small script that first runs the migrate command then run the web server start script.  You can place this script in your source tree, and then use the following command to replace the CMD in the Dockerfile:
 
 ```cmd
-npx dockerfile --cmd=file
+npx @flydotio/dockerfile --cmd=file
 ```
