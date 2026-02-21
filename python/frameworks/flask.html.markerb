@@ -18,11 +18,11 @@ Spinning up a flask app is fun!
 
 <%= partial "/docs/languages-and-frameworks/partials/flyctl" %>
 
-<%= partial "/docs/python/partials/speedrun", locals: { runtime: "Flask", repo: "hello-flask-poetry" }  %>
+<%= partial "/docs/python/partials/speedrun", locals: { runtime: "Flask", repo: "hello-flask-uv" }  %>
 
 ## _Deploy a Flask app from scratch_
 
-<%= partial "/docs/python/partials/poetry_new", locals: { runtime: "Flask" }  %>
+<%= partial "/docs/python/partials/uv_init", locals: { runtime: "Flask" }  %>
 
 To run this app we will need 2 dependencies:
 
@@ -30,7 +30,7 @@ To run this app we will need 2 dependencies:
 - gunicorn: the server
 
 ```cmd
-poetry add flask gunicorn
+uv add flask gunicorn
 ```
 
 Now let's create a basic app in `app.py`:
@@ -67,4 +67,4 @@ flask --app hello run
 
 If you open http://127.0.0.1:5000/ in your web browser, it should display `hello from fly.io`.
 
-<%= partial "/docs/python/partials/deploy", locals: { runtime: "Flask", repo: "hello-flask-poetry" }  %>
+<%= partial "/docs/python/partials/deploy", locals: { runtime: "Flask", repo: "hello-flask-uv" }  %>

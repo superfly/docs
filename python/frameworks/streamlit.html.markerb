@@ -22,13 +22,13 @@ Spinning up a `streamlit` app takes no time at all!
 
 ## _Deploy a Streamlit from scratch_
 
-<%= partial "/docs/python/partials/poetry_new", locals: { runtime: "Streamlit" }  %>
+<%= partial "/docs/python/partials/uv_init", locals: { runtime: "Streamlit" }  %>
 
 
 Then we have to add the streamlit dependency:
 
 ```cmd
-poetry add streamlit
+uv add streamlit
 ```
 
 Now, let's create a simple streamlit app in `main.py`:

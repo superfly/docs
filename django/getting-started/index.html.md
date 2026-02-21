@@ -34,7 +34,11 @@ mkdir hello-django && cd hello-django
 
 ### Virtual Environment
 
-For this guide, we use [venv](https://docs.python.org/3/library/venv.html#module-venv) but any of the other popular choices such as [Poetry](https://python-poetry.org/), [Pipenv](https://github.com/pypa/pipenv), or [pyenv](https://github.com/pyenv/pyenv) work too.
+For this guide, we use [venv](https://docs.python.org/3/library/venv.html#module-venv) but any of the other popular choices such as
+[uv](https://docs.astral.sh/uv/),
+[Poetry](https://python-poetry.org/),
+[Pipenv](https://github.com/pypa/pipenv), or
+[pyenv](https://github.com/pyenv/pyenv) work too.
 
 ```shell
 # Unix/macOS
