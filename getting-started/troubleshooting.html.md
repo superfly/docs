@@ -66,11 +66,19 @@ If you can see messages about the app just exiting, then there's likely an issue
 
 Activate debug level logs on a command, like `fly deploy`:
 
+Linux/macOS:
+
 ```cmd
 LOG_LEVEL=debug fly <command>
 ```
 
-LOG_LEVEL=debug prints all the logs into the console as the command runs.
+Windows:
+
+```cmd
+cmd /C "set LOG_LEVEL=debug && fly <command>"
+```
+
+`LOG_LEVEL=debug` prints all the logs into the console as the command runs.
 
 ### Inspect with SSH
 
