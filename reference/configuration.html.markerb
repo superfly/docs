@@ -1205,27 +1205,46 @@ This feature should not be compared directly with a CDN, for the following reaso
 
 ## The `files` section
 
-When a `files` section is set, the contents from one of `raw_value`, `local_path`, or `secret_name` will be written to the Machine at the provided `guest_path`.
+The `files` section lets you place files inside your Machine at deploy time. This is useful for configuration files, credentials, or other data your app needs at a known path.
 
-* `raw_value`: The raw file content to be written. Must be base64 encoded.
-* `local_path`: The path to a local file in your system that should be used. Does not need to be base64 encoded.
-* `secret_name`: The name of an app secret that's been set with `fly secrets set`. The value of the secret will be written to the file. The referenced secret's value must be base64 encoded.
+Each `[[files]]` entry requires a `guest_path` and exactly one source (`raw_value`, `local_path`, or `secret_name`):
 
-Examples:
+* `guest_path`: The absolute path where the file will be created inside the Machine (e.g., `/app/config.yaml`). This should match wherever your app expects to find the file. To find your app's working directory, check the `WORKDIR` in your Dockerfile.
+* `raw_value`: Inline file content, base64 encoded. You can encode a value with `base64 < file.txt` on macOS/Linux, or `[Convert]::ToBase64String([IO.File]::ReadAllBytes("file.txt"))` in PowerShell.
+* `local_path`: Path to a file on your local machine (where you run `fly deploy`), relative to the `fly.toml` directory or as an absolute path. The file content does not need to be base64 encoded.
+* `secret_name`: The name of an app secret set with [`fly secrets set`](/docs/flyctl/secrets-set/). The secret value must be base64 encoded before being set (e.g., `fly secrets set SUPER_SECRET=$(base64 < secret.txt)`).
+
+### Examples
+
+Place a config file from your project into the Machine:
 
 ```toml
 [[files]]
-  guest_path = "/path/to/hello.txt"
-  raw_value = "aGVsbG8gd29ybGQK"
-
-[[files]]
-  guest_path = "/path/to/config.yaml"
-  local_path = "/local/path/config.yaml"
-
-[[files]]
-  guest_path = "/path/to/secret.txt"
-  secret_name = "SUPER_SECRET"
+  guest_path = "/app/config.yaml"
+  local_path = "config/production.yaml"
 ```
+
+For example, if your project contains `config/production.yaml`, this will copy its content to `/app/config.yaml` inside the Machine on each deploy.
+
+Inline a small file using base64-encoded content:
+
+```toml
+[[files]]
+  guest_path = "/app/hello.txt"
+  raw_value = "aGVsbG8gd29ybGQK"
+```
+
+The value `aGVsbG8gd29ybGQK` is the base64 encoding of `hello world\n`. This creates `/app/hello.txt` containing `hello world`.
+
+Write a secret to a file:
+
+```toml
+[[files]]
+  guest_path = "/app/credentials.json"
+  secret_name = "DB_CREDENTIALS"
+```
+
+This writes the (base64-decoded) content of the `DB_CREDENTIALS` secret to `/app/credentials.json`. Set the secret with: `fly secrets set DB_CREDENTIALS=$(base64 < credentials.json)`.
 
 You can optionally restrict which Machine(s) contain the file using the [processes](#the-processes-section) field. For example:
 
