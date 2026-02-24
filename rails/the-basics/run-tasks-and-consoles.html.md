@@ -21,6 +21,8 @@ Then start using the console, but be careful! You're in a production environment
 
 <div class="callout">The `--pty` flag tells the SSH server to run the command in a pseudo-terminal. You will generally need this only when running interactive commands, like the Rails console.</div>
 
+<div class="callout">If you get a `no such file or directory` error, your app may not be installed in the `/rails` directory. SSH in with `fly ssh console` and check your app's location, then adjust the path accordingly. Apps built with the [dockerfile generator](https://github.com/fly-apps/dockerfile-rails) use `/rails` as the working directory by default. You may also need to [set up your binstubs](#rails-tasks) with `bin/rails generate dockerfile --bin-cd`.</div>
+
 ## Interactive shell
 
 To access an interactive shell as the `root` user, run:
