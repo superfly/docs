@@ -12,7 +12,7 @@ date: 2025-10-01
 
 ## Overview
 
-Fly.io apps run on Firecracker microVMs we call Machines. Each Machine captures `stdout`/`stderr`, ships those logs over NATS, and stores them for a period of time in a Quickwit-backed search index. Most users consume logs via `fly logs` or by setting up log shipping to an external sink.
+Fly.io apps run on Firecracker microVMs we call Machines. Each Machine captures `stdout`/`stderr`, ships those logs over [NATS](https://en.wikipedia.org/wiki/NATS_Messaging), and stores them for a period of time in a Quickwit-backed search index. Most users consume logs via `fly logs` or by setting up log shipping to an external sink.
 
 But sometimes you want to grab logs directly, without a CLI or setting up an exporter, because you’re building a tool, automating something, or you just want to pipe logs into your own system.
 
