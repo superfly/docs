@@ -1,11 +1,8 @@
 ---
 title: "Setting up a Python Environment"
 layout: framework_docs
-fly_content_type: guide
-fly_framework: python
 objective: How to setup a functional python environment on your local machine.
 order: 0
-
 ---
 
 ## Initial Local Setup
@@ -20,7 +17,7 @@ We recommend the latest [supported versions](https://devguide.python.org/version
 
 ## Dependency Management
 
-For project and dependency management we use [Poetry](https://python-poetry.org/). Like most package managers, Poetry combines multiple tools in one. 
+For project and dependency management we use [Poetry](https://python-poetry.org/). Like most package managers, Poetry combines multiple tools in one.
 
 You have other options:
 - [venv](https://docs.python.org/3/library/venv.html) and [pip](https://pip.pypa.io/)
@@ -28,7 +25,7 @@ You have other options:
 - [pyenv](https://github.com/pyenv/pyenv)
 - [pip-tools](https://pypi.org/project/pip-tools/)
 
-If you are just starting out, it is easiest to follow along using `poetry`. 
+If you are just starting out, it is easiest to follow along using `poetry`.
 After installing it, you will have to set 2 flags for virtual environment management.
 
 ```cmd
@@ -36,7 +33,7 @@ poetry config virtualenvs.create true
 poetry config virtualenvs.in-project true
 ```
 
-This will make your development environment resemble what ends up happening inside the docker image. 
+This will make your development environment resemble what ends up happening inside the docker image.
 
 You can create a new project using this command:
 
@@ -50,17 +47,25 @@ Once inside the project, you can add packages with the add command:
 poetry add <dep>
 ```
 
-This will automatically create a virtual environment for you. 
+This will automatically create a virtual environment for you.
 
 To interact with your virtual environment, you can prefix your commands with `poetry run`:
+
 ```cmd
 poetry run python main.py
 ```
 
 Alternatively, you can activate the environment:
+
 ```cmd
 poetry env activate
+```
+
+This prints the activation command for your shell. To activate in one step:
+
+```cmd
+source $(poetry env activate)
 python main.py
 ```
 
-**Note:** If you're using Poetry 2.0+ (the default when installed with `pipx`), the `poetry shell` command is not available by default. Use `poetry run` (recommended) or `poetry env activate` instead. If you need `poetry shell`, you can install it as a plugin: `poetry self add poetry-plugin-shell`
+<div class="callout">If you're using Poetry 2.0+ (the default when installed via `pipx`), the `poetry shell` command is no longer built in. Use `poetry run` (recommended) or `poetry env activate` as shown above. If you prefer `poetry shell`, you can install it as a plugin: `poetry self add poetry-plugin-shell`.</div>
