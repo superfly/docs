@@ -33,7 +33,7 @@ poetry config virtualenvs.create true
 poetry config virtualenvs.in-project true
 ```
 
-This will make your development environment resemble what ends up happening inside the docker image.
+This will make your development environment resemble what ends up happening inside the Docker image.
 
 You can create a new project using this command:
 
