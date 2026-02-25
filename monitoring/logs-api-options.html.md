@@ -68,7 +68,7 @@ logs.my-app.lhr.*
 This gives you structured JSON log messages in real time.
 
 <div class="callout">
-**Note:** The NATS proxy is a dusty corner of Fly’s platform. It works, but it’s unofficial, experimental, and may change as we evolve our logging infrastructure. If you’re building something serious, we recommend exporting logs instead.
+**Note:** The NATS proxy is an internal transport without a versioned API or stability guarantee. It works, but may change as we evolve our logging infrastructure. If you’re building something serious, we recommend exporting logs via the log shipper instead.
 </div>
 
 **Things to know:**
@@ -104,7 +104,7 @@ SUBJECT="logs.my-app.*.*"
 
 Like NATS, the log shipper only sees logs from the moment it connects onward. If you deploy it today, you won’t see logs from yesterday.
 
-The log shipper is the most robust option if you want long-term retention, full-text search, alerting, or integration with your existing observability stack.
+The log shipper uses NATS internally. Since it's maintained by Fly, it's more likely to stay compatible with infrastructure changes than a custom NATS client. It's the most robust option if you want long-term retention, full-text search, alerting, or integration with your existing observability stack.
 
 More details:
 
