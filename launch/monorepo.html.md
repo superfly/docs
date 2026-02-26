@@ -45,6 +45,32 @@ fly deploy --build-target api
 fly deploy --build-target worker
 ```
 
+## Combining options
+
+When you specify a working directory, the `--config` and `--dockerfile` paths are relative to the working directory (build context), not your current directory.
+
+For example, given this structure:
+
+```
+repo/
+├── flyio/
+│   └── my-app.toml
+└── my-app/
+    └── Dockerfile
+```
+
+This won't work, because `./flyio/my-app.toml` doesn't exist inside `./my-app`:
+
+```cmd
+fly deploy ./my-app --config ./flyio/my-app.toml
+```
+
+Instead, use a path relative to the working directory:
+
+```cmd
+fly deploy ./my-app --config ../flyio/my-app.toml
+```
+
 ## Examples
 
 **Use a different fly.toml file per environment**
