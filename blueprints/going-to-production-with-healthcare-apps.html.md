@@ -74,16 +74,16 @@ If the default region is not where you want to host your application, run `fly p
 
 ```bash
 fly platform regions
-NAME                        	CODE	GATEWAY	GPUS	CAPACITY	LAUNCH PLAN+
+NAME                        	CODE	GATEWAY	CAPACITY	LAUNCH PLAN+
 
 North America
-Ashburn, Virginia (US)      	iad 	✓      	✓   	164
-Chicago, Illinois (US)      	ord 	✓      	      385
-Dallas, Texas (US)          	dfw 	✓      	      426
-Los Angeles, California (US)	lax 	✓      	      635
-San Jose, California (US)   	sjc 	✓      	✓     2399
-Secaucus, NJ (US)           	ewr                     233
-Toronto, Canada             	yyz 	✓      	      70
+Ashburn, Virginia (US)      	iad 	✓      	164
+Chicago, Illinois (US)      	ord 	✓      	385
+Dallas, Texas (US)          	dfw 	✓      	426
+Los Angeles, California (US)	lax 	✓      	635
+San Jose, California (US)   	sjc 	✓      	2399
+Secaucus, NJ (US)           	ewr            233
+Toronto, Canada             	yyz 	✓      	 70
 # ... Lots more regions...
 ```
 

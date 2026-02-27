@@ -51,8 +51,6 @@ Learn more about [Fly Apps](/docs/apps/overview/).
 
 **[Fly Apps](/docs/apps/):** The way Machines are grouped for admin and management on the Fly.io platform.
 
-**[Fly GPUs](/docs/gpus/):** Machines, but with GPUs. They boot up with GPU drivers installed and you can run `nvidia-smi` right away.
-
 **[Fly Launch](/docs/launch/):** Our orchestrator that includes some good stuff for app hosting, like the `fly launch` command to get started, `fly.toml` for configuration, the `fly deploy` command to deploy all your app's Machines into new versions/releases, and the `fly scale` command to scale Machines.
 
 **[Fly Machines](/docs/machines/):** [Firecracker microVMs](https://firecracker-microvm.github.io/) that launch quickly in any [region supported by Fly.io](/docs/reference/regions/). A VM, or virtual machine, functions like a physical computer, but is software-based. Multiple VMs can run, completely isolated, on one physical host. If you've deployed an app on Fly.io, then it's running on Fly Machines. There’s a fast [REST API](/docs/machines/api/) to manage Machines, but you can also use flyctl&mdash;the Fly CLI&mdash;to manage everything from the command line. And then there’s Fly Launch, which combines flyctl commands with a shared config to manage your app’s Machines as a group.
