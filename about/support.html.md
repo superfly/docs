@@ -93,7 +93,8 @@ Here are some things to include in your ticket:
         <h3 class="font-bold mb-4">Supported Products</h3>
         <ul class="space-y-2">
           <li>**Networking**</li>
-          <li>**Machines** (including GPUs)</li>
+          <li>**Machines**</li>
+          <li>**GPU Machines**-GPU support to end 08/01/26</li>
           <li>**Managed Postgres** (MPG)</li>
           <li>**Apps**</li>
           <li>**Launch/Deploy** (UI & CLI)</li>

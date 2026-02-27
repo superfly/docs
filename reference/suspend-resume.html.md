@@ -86,7 +86,7 @@ A machine can use suspend if it has:
 - **≤ 2 GB** memory (For larger memory sizes, suspend is discouraged due to increased suspend times)
 - **No** [**swap**](https://fly.io/docs/reference/configuration/#swap_size_mb-option) **configured**
 - **No** [**schedule**](https://fly.io/docs/machines/flyctl/fly-machine-run/#start-a-machine-on-a-schedule) **configured** 
-- **No GPU configured**
+- **No GPU configured** (GPUs will be deprecated as of 08/01/26)
 - Been updated since **June 20, 2024 20:00 UTC**
 
 If you have an older machine, or you’re not sure when it was last updated, you can bring it up to date with:

@@ -102,4 +102,3 @@ Check out some of the ways you can increase availability, capacity, and performa
 * [Autoscale Machines based on load or custom metrics](/docs/reference/autoscaling/)
 * [Scale Machine CPU and RAM](/docs/apps/scale-machine/) 
 * [Scale Machine count](/docs/apps/scale-count/)
-* Try out [Fly GPUs](/docs/gpus/)
