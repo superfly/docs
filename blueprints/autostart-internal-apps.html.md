@@ -115,9 +115,3 @@ Run `fly deploy` for the configuration changes to take effect.
 
 Other apps in your organization can now reach your private app using the [Flycast](/docs/networking/flycast/) IP address or the `<appname>.flycast` domain.
 
-## Related reading
-
-We've talked about Flycast in some past blog posts:
-
-- [Deploy Your Own (Not) Midjourney Bot on Fly GPUs](https://fly.io/blog/not-midjourney-bot/)
-- [Scaling Large Language Models to zero with Ollama](https://fly.io/blog/scaling-llm-ollama/)

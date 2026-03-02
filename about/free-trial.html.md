@@ -30,7 +30,7 @@ These are **not included** in the free trial:
 
 - Dedicated IPv4 addresses
 - Access to performance-optimized vCPUs
-- GPU machines
+- GPU machines (To be deprecated as of 08/01/26)
 
 <div class="callout">You can add a credit card from the dashboard at any time during the trial. This lifts the resource limits and keeps your apps running without interruption. **Note: adding a card ends the free trial** and your usage starts counting toward your bill from that point on.</div>
 
