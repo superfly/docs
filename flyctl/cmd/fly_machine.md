@@ -27,6 +27,7 @@ fly machine [command] [flags]
 * [suspend](/docs/flyctl/machine-suspend/)	 - Suspend one or more Fly machines
 * [uncordon](/docs/flyctl/machine-uncordon/)	 - Reactivate all services on a machine
 * [update](/docs/flyctl/machine-update/)	 - Update a machine
+* [wait](/docs/flyctl/machine-wait/)	 - Wait for a machine to reach a state
 
 ## Options
 
