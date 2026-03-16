@@ -97,7 +97,6 @@ failed to push registry: 401 Unauthorized
 This shows up during `fly deploy`. Two possible causes:
 
 1. **Your auth token is stale.** Fix it:
-
 ```
 fly auth logout
 fly auth login
@@ -350,19 +349,16 @@ Machines occasionally get stuck in a state (`replacing`, `starting`, `created`) 
 Try these in order:
 
 1. **Restart it:**
-
 ```
 fly machine restart <machine-id>
 ```
 
 1. **Force an update** (any metadata change can unstick the platform state)::
-
 ```
 fly machine update <machine-id> --yes --metadata foo=bar
 ```
 
 1. **Force destroy** (nuclear option — destroys the Machine):
-
 ```
 fly machine destroy --force <machine-id>
 ```
