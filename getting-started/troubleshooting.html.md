@@ -112,7 +112,7 @@ A 403 can come from different places:
 
 **From your app's CORS configuration:** The Fly proxy does not enforce CORS or act as a WAF. If you're seeing `403 Invalid CORS request`, that's coming from your application's CORS middleware, not from Fly. Check your app's CORS configuration and make sure the `Origin` header your client sends is in your allowed origins list.
 
-**From third-party APIs (outbound):** If your app calls external APIs and gets 403s, the third party may be blocking Fly's IP ranges. This is common with Cloudflare-protected services. Fix: allocate an app-scoped egress IP with `fly ips allocate-egress` so your outbound traffic comes from a consistent IP you can allowlist, or contact the third-party service.
+**From third-party APIs (outbound):** If your app calls external APIs and gets 403s, the third party may be blocking Fly's IP ranges. This is common with Cloudflare-protected services. Fix: allocate an app-scoped egress IP with `fly ips allocate-egress` so your outbound traffic comes from a consistent IP you can allowlist, or contact the third-party service. You can read more about [app-scoped egress IPs](/docs/networking/egress-ips/#static-egress-ips-app-scoped), as well as [some caveats](/docs/networking/egress-ips/#caveats).
 
 **From object storage:** S3-compatible storage returns 403 on permission issues. Double-check your bucket policy, access keys, and region configuration.
 
