@@ -46,14 +46,6 @@ For example, a Machine described in your dashboard as having 1GB of rootfs stopp
 
 ---
 
-## GPU billing
-
-GPUs are billed per second that the attached Fly Machine is running (the time they spend in the `started` state), based on the per hour cost of the GPU card. Learn more about [pricing for GPUs](/docs/about/pricing/#gpus-and-fly-machines).
-
-You're also billed for the Fly Machine separately from the GPU.
-
----
-
 ## Volume billing
 
 Volume billing is pro-rated to the hour and we subtract the free allowances first for the  Launch, Scale, and Enterprise plans (all of which are now discontinued for new customers). For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).

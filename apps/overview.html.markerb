@@ -19,7 +19,7 @@ From a developer point of view, a Fly App might be:
 * a fullstack application (or just part of one)
 * a database
 * a few Machines running tasks, or a bunch of Machines, all with different configs, doing things you want them to do
-* anything you can think of doing with fast-launching Machines, including [GPU Machines](/docs/gpus/) for AI/ML workloads
+* anything you can think of doing with fast-launching Machines
 
 All the apps in your organization can communicate over a [private network](/docs/networking/private-networking/), so it’s also possible to have multiple apps working together as one system.
 

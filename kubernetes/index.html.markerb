@@ -21,6 +21,4 @@ Fly Kubernetes (FKS) is a fully managed Kubernetes service built on the Fly.io p
 
 - **[Configure FKS Services](/docs/kubernetes/services):** Configure ClusterIP and LoadBalancer services.
 
-- **[Use GPUs with FKS](/docs/kubernetes/using-gpus/):** Use Fly GPU Machines in your FKS cluster.
-
 - **[Use volumes with FKS](/docs/kubernetes/using-volumes/):** Use Fly Volumes for PersistentVolumes in FKS.

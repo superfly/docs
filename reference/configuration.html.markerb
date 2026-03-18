@@ -938,8 +938,6 @@ All keys are optional and `size` has lower precedence than all other keys.
   memory = "1gb"
   cpus = 2
   cpu_kind = "shared"
-  gpus = 1
-  gpu_kind = "a100-pcie-40gb"
   kernel_args = "no-hlt=true"
   host_dedication_id = "customer-id"
   persist_rootfs = "never"
@@ -963,18 +961,6 @@ The number of vCPUs to request. Valid values are `1`, `2`, `4`, `8`, or `16`, bu
 ### `cpu_kind`
 
 The kind of CPU to request. Valid values are `shared` and `performance`.
-
-### `gpus`
-
-The number of GPUs to request. Valid values are `1`, `2`, `4`, `8`, but depends on `gpu_kind`. 
-
-Setting this value requires also setting `gpu_kind`.
-
-### `gpu_kind`
-
-The kind of GPU to request. Valid values are `a10`, `l40s`, `a100-pcie-40gb` and `a100-sxm4-80gb`.
-
-Setting this value assumes `gpus = 1` if not present.
 
 ### `kernel_args`
 
