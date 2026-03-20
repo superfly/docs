@@ -33,6 +33,8 @@ Your app can add a `fly-replay` header to its response. The `fly-replay` header 
 |`app` | The name of another app to route to |
 |`state` | Optional string included in `fly-replay-src` header on replay |
 |`elsewhere` | If `true`, excludes responding Machine from next load-balance |
+|`timeout` | Duration to attempt the replay before giving up (e.g. `10s`, `800ms`) |
+|`fallback` | If the replay fails, route back to the original Machine. `force_self` or `prefer_self` (see [Replay Timeout and Fallback](#replay-timeout-and-fallback)) |
 
 ### Example Usage
 
@@ -70,6 +72,11 @@ You can combine multiple fields:
 fly-replay: region="sjc,any";app=target-app
 ```
 
+Route to another app with a timeout and fallback to the original Machine:
+```
+fly-replay: app=my-worker;timeout=10s;fallback=force_self
+```
+
 <div class="note icon">
 **Note**: A comma-separated list of regions must be quoted.
 </div>
@@ -86,6 +93,23 @@ When replaying to a region, you can use geographic aliases like `us`, `eu`, or `
 | `sa` | South America |
 | `us`, `usa` | United States |
 | `any` | Earth |
+
+### Replay Timeout and Fallback
+
+You can set a `timeout` and `fallback` on a replay to handle cases where the replay target is unreachable.
+
+**`timeout`** sets how long the proxy tries to reach the replay target. The actual duration may slightly exceed this value. Accepts duration strings like `10s`, `500ms`. Without `fallback`, a timeout makes the replay error faster instead of waiting for the default error timeout.
+
+**`fallback`** tells the proxy to route the request back to the Machine that issued the replay if the replay fails due to timeout, exhausted retries, or no available candidate:
+
+- `force_self`: Route back to the exact Machine that issued the replay. Returns a proxy error if that Machine is no longer available.
+- `prefer_self`: Try the original Machine first, but fall back to any Machine in the original app if it is unavailable.
+
+When a fallback triggers, the original Machine receives the request again with a [`fly-replay-failed`](#the-fly-replay-failed-header) request header containing details about the failed replay attempt. Since this is still the original request, your app can respond with a useful error instead of the client receiving a generic proxy error.
+
+<div class="note icon">
+**Note**: Fallback requests cannot themselves issue `fly-replay` responses.
+</div>
 
 ## Replay JSON Format
 
@@ -104,6 +128,8 @@ The `application/vnd.fly.replay+json` replay body accepts the following fields:
 |`app` | The name of another app to route to |
 |`state` | Optional string included in `fly-replay-src` header on replay |
 |`elsewhere` | If `true`, excludes responding Machine from next load-balance |
+|`timeout` | Duration to attempt the replay before giving up (e.g. `"10s"`, `"800ms"`) |
+|`fallback` | If the replay fails, route back to the original Machine. `"force_self"` or `"prefer_self"` (see [Replay Timeout and Fallback](#replay-timeout-and-fallback)) |
 |`transform.path` | Rewrite the path and query parameters of the request |
 |`transform.delete_headers` | Delete headers from the request, hiding them from the replay target |
 |`transform.set_headers` | Set new headers on the request, overwriting headers of the same name |
@@ -127,6 +153,16 @@ Route to another app, and modify the request:
       { "name": "authorization", "value": "Bearer token123" }
     ]
   }
+}
+```
+
+Route to another app with a timeout and fallback:
+
+```json
+{
+  "app": "my-worker",
+  "timeout": "10s",
+  "fallback": "force_self"
 }
 ```
 
@@ -286,6 +322,7 @@ For `fly-replay-cache`, the following limitations apply:
 - Transformations for the headers or path cannot be defined.
 - The TTL needs to be a minimum of 10 seconds
 - Only one step of lookup is performed in the cache; as such, if the target app issues another `fly-replay-cache`, the caching behavior in this case is undefined
+- The `timeout` and `fallback` fields cannot be set in the `fly-replay` intended to be cached
 - The `fly-replay-src` header (described below) will _not_ be set for requests replayed through the cache
 
 ### The fly-replay-src Header
@@ -308,6 +345,26 @@ This header is not set when the request is replayed through a cached `fly-replay
 If you replay with `prefer_instance` set, Fly Proxy will attempt to route to this Machine. This may not happen for a number of reasons, for example the Machine may not be found, or found but at its configured [hard_limit](/docs/reference/load-balancing/#load).
 
 In these cases, the request will be delivered to a different Machine that matches the remaining fields in your replay. Along with the other Fly.io-specific headers, a `fly-preferred-instance-unavailable` header will be set containing the ID of the instance that could not be reached.
+
+### The fly-replay-failed Header
+
+When a replay [fallback](#replay-timeout-and-fallback) triggers, Fly Proxy delivers the request back to the original Machine with a `fly-replay-failed` request header. This header contains semicolon-separated metadata about the failed replay attempt:
+
+|Field |Description |
+|---|---|
+|`instance` | ID of Machine the replay was targeting |
+|`app` | App the replay was targeting |
+|`region` | Region the replay was targeting |
+|`replay_source` | ID of the Machine that originally issued the replay |
+|`reason` | Why the replay failed: `timeout`, `retries_exhausted`, or `no_candidate` |
+|`elapsed_ms` | Time in milliseconds spent attempting the replay |
+
+Example header value:
+```
+fly-replay-failed: instance=00bb33ff;app=target-app;region=iad;replay_source=11aa44ee;reason=timeout;elapsed_ms=10000
+```
+
+Your app can use this header to detect that a fallback occurred and respond accordingly, for example by serving a helpful error to the client.
 
 ### Web Socket Considerations
 
