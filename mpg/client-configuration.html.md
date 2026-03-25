@@ -11,11 +11,9 @@ For a quick summary of the essentials, see [Connect Your Client](/docs/mpg/conne
 
 ## Why client configuration matters
 
-Your application connects to Managed Postgres through Fly's edge proxy and PgBouncer. The proxy handles TLS termination and routes traffic across Fly's internal network. Periodically — typically during proxy deployments — the proxy needs to restart.
+Your Fly.io apps, as well as your Fly.io Postgres databases, sit behind Fly.io's proxy. Public and private traffic route through this proxy. Sometimes our proxy restarts and the proxy does its best to drain connections before restarting. Postgres doesn't have a protocol level mechanism to tell clients to stop sending queries on a particular connection, so we have to rely on client-side configuration to handle graceful handoff.
 
-For HTTP/2 and WebSocket connections, the proxy sends a `GOAWAY` frame that tells clients to gracefully finish in-flight requests and open new connections. The PostgreSQL wire protocol has no equivalent mechanism. When the proxy restarts, it waits for existing connections to drain, but it can't tell your Postgres client to stop sending queries on the current connection.
-
-The proxy's shutdown timeout is **15 minutes**. Any connection that remains open after that is terminated. If your application holds connections for longer than this — which is the default behavior of most connection pools — you'll see errors like `tcp recv (idle): closed` or `ECONNRESET` during proxy deployments.
+The proxy's shutdown timeout is **10 minutes**. Any connection that remains open after that is terminated. If your application holds connections for longer than this — which is the default behavior of most connection pools — you might run into errors like `tcp recv (idle): closed` or `ECONNRESET` during proxy deployments.
 
 The fix is straightforward: configure your connection pool to **proactively recycle connections** on a shorter interval than the proxy's timeout.
 
@@ -25,7 +23,7 @@ The fix is straightforward: configure your connection pool to **proactively recy
 |---------|-------------------|-----|
 | Max connection lifetime | **600s** (10 min) | Connections recycle before the proxy's 15-min shutdown timeout |
 | Idle connection timeout | **300s** (5 min) | Releases unused connections before they're forcibly closed |
-| Pool size | **5–10** (Basic/Starter), **10–20** (Launch+) | Match your plan's PgBouncer capacity |
+| Pool size | **5–10** | Match your plan's PgBouncer capacity (see Connection tab of your cluster's dashboard) |
 | Prepared statements | **Disabled** in transaction mode | PgBouncer can't track per-connection prepared statement state |
 | Connection retries | **Enabled** with backoff | Handle transient connection drops during proxy restarts |
 
