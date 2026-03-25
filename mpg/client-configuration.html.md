@@ -44,7 +44,8 @@ If your ORM or driver supports it, transaction mode with unnamed prepared statem
 
 ## Language-specific configuration
 
-### Node.js — pg (node-postgres)
+<details data-render="markdown">
+<summary>Node.js — pg (node-postgres)</summary>
 
 ```javascript
 const { Pool } = require('pg');
@@ -64,7 +65,10 @@ const pool = new Pool({
 
 `maxLifetimeMillis` was added in `pg-pool` 3.6.0 (included with `pg` 8.11+). If you're on an older version, upgrade — this setting is critical for reliable connections on Fly.
 
-### Node.js — Prisma
+</details>
+
+<details data-render="markdown">
+<summary>Node.js — Prisma</summary>
 
 Add `pgbouncer=true` and connection pool parameters to your connection string:
 
@@ -85,7 +89,10 @@ datasource db {
 
 Prisma manages its own connection pool internally. The `connection_limit` parameter controls the pool size per Prisma client instance. If you run multiple processes, keep total connections within your plan's capacity.
 
-### Python — SQLAlchemy
+</details>
+
+<details data-render="markdown">
+<summary>Python — SQLAlchemy</summary>
 
 ```python
 import os
@@ -114,7 +121,10 @@ engine = create_engine(
 
 `pool_pre_ping` issues a lightweight `SELECT 1` before each connection checkout. This adds a small round-trip but catches stale connections before your query fails.
 
-### Python — psycopg3 connection pool
+</details>
+
+<details data-render="markdown">
+<summary>Python — psycopg3 connection pool</summary>
 
 ```python
 import os
@@ -138,7 +148,10 @@ pool = ConnectionPool(
 )
 ```
 
-### Go — database/sql with pgx
+</details>
+
+<details data-render="markdown">
+<summary>Go — database/sql with pgx</summary>
 
 ```go
 import (
@@ -173,7 +186,10 @@ connStr := os.Getenv("DATABASE_URL") + "?default_query_exec_mode=exec"
 db, err := sql.Open("pgx", connStr)
 ```
 
-### Ruby — ActiveRecord (Rails)
+</details>
+
+<details data-render="markdown">
+<summary>Ruby — ActiveRecord (Rails)</summary>
 
 ```yaml
 # config/database.yml
@@ -200,7 +216,10 @@ production:
 
 On older Rails versions, connections will still be recycled by the idle timeout if your app has enough traffic. For low-traffic apps on older Rails, consider the [`activerecord-connection_reaper`](https://github.com/mperham/activerecord-connection_reaper) gem or a periodic reconnection task.
 
-### Elixir/Phoenix — Ecto
+</details>
+
+<details data-render="markdown">
+<summary>Elixir/Phoenix — Ecto</summary>
 
 ```elixir
 # config/runtime.exs
@@ -219,6 +238,8 @@ For comprehensive Phoenix setup including migrations, Oban configuration, and Ec
 </div>
 
 <!-- TODO: Update this section when postgrex adds max_lifetime support -->
+
+</details>
 
 ## Connection limits
 
