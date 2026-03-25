@@ -82,13 +82,13 @@ Your MPG plan determines the CPU and Memory configuration for your cluster. All 
 
 The current monthly plan pricing is:
 
-| Plan | CPU | Memory | Monthly Price |
-| --- | --- | --- | --- |
-| Basic | Shared-2x | 1GB | $38.00 |
-| Starter | Shared-2x | 2GB | $72.00|
-| Launch | Performance-2x| 8GB | $282.00 |
-| Scale | Performance-4x | 32GB | $962.00 |
-| Performance | Performance-8x | 64GB | $1,922.00 |
+| Plan | CPU | Memory | Direct Connections | Pooler Connections | Monthly Price |
+| --- | --- | --- | --- | --- | --- |
+| Basic | Shared-2x | 1GB | 50 | 200 | $38.00 |
+| Starter | Shared-2x | 2GB | 100 | 300 | $72.00 |
+| Launch | Performance-2x | 8GB | 150 | 500 | $282.00 |
+| Scale | Performance-4x | 32GB | 300 | 1000 | $962.00 |
+| Performance | Performance-8x | 64GB | 300 | 1000 | $1,922.00 |
 
 Database storage is priced at **$0.28 per provisioned GB for a 30-day month**. For example, if you have 10GB of storage provisioned for your cluster, your monthly storage cost will be $2.80.
 
