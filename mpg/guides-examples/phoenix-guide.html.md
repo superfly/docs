@@ -6,6 +6,8 @@ date: 2025-09-16
 author: Kaelyn
 ---
 
+For general connection configuration that applies to all languages — connection lifetime, idle timeouts, proxy restart behavior, and troubleshooting — see [Client-Side Connection Configuration](/docs/mpg/client-configuration/).
+
 This guide explains the key **Managed Postgres (MPG)-specific adjustments** you need when connecting a Phoenix app. We'll focus on:
 
 1. Connection Pooling Settings
@@ -114,7 +116,7 @@ Older versions required the Repeater plugin. Since Oban 2.14 (2023), polling fal
 
 ### Common errors and fixes
 
-- `tcp recv (idle): closed` or `tcp recv (idle): timeout` — These are idle connection reclaimed by the pooler, and don't represent an issue as Ecto reconnects automatically. To remove them, lower your pool size or ignore.
+- `tcp recv (idle): closed` or `tcp recv (idle): timeout` — These occur when the Fly proxy or PgBouncer closes an idle connection, often during routine proxy deployments. Ecto reconnects automatically, so these are transient. To reduce their frequency, lower your pool size so fewer connections sit idle. For a full explanation of why this happens and how to configure connection lifetime and idle timeouts, see [Client-Side Connection Configuration — Troubleshooting](/docs/mpg/client-configuration/#troubleshooting).
 - `FATAL 08P01 protocol_violation` on login — Set `prepare: :unnamed` and ensure PgBouncer is in Transaction mode.
 - Oban jobs not running — Use a non-Postgres notifier (PG or Phoenix) behind PgBouncer, or run Oban on a direct Repo. On Oban ≥ 2.14, do not add Repeater (polling fallback is automatic when PubSub isn't available).
 - Migrations hanging or failing — Run migrations with the direct database URL (via `release_command` or a one-off SSH command), not through PgBouncer.
