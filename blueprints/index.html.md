@@ -17,6 +17,7 @@ Guides for the structure your app on Fly.io. Layouts, tradeoffs, moving parts.
 - [Session Affinity (a.k.a. Sticky Sessions)](/docs/blueprints/sticky-sessions/)
 - [Multi-region databases and fly-replay](/docs/blueprints/multi-region-fly-replay/)
 - [Deploying Remote MCP Servers](/docs/blueprints/remote-mcp-servers/)
+- [Deploy OpenClaw on Fly.io](/docs/blueprints/deploy-openclaw/)
 
 
 ## Deployment & Developer Workflow
