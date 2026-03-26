@@ -23,7 +23,7 @@ Fly's edge proxy mediates connections between your app and your database. During
 
 | Setting | Recommended value | Why |
 |---------|-------------------|-----|
-| Max connection lifetime | **600 seconds** (10 min) | Connections recycle before the proxy's 15-min shutdown timeout |
+| Max connection lifetime | **600 seconds** (10 min) | Recycle connections before the proxy closes them |
 | Idle connection timeout | **300 seconds** (5 min) | Releases unused connections before they're forcibly closed |
 
 ## Keep your pool size modest
