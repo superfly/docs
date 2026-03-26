@@ -21,7 +21,7 @@ The fix is straightforward: configure your connection pool to **proactively recy
 
 | Setting | Recommended value | Why |
 |---------|-------------------|-----|
-| Max connection lifetime | **600s** (10 min) | Connections recycle before the proxy's 15-min shutdown timeout |
+| Max connection lifetime | **600s** (10 min) | Recycle connections before the proxy closes them |
 | Idle connection timeout | **300s** (5 min) | Releases unused connections before they're forcibly closed |
 | Pool size | **5–10** | Match your plan's PgBouncer capacity (see Connection tab of your cluster's dashboard) |
 | Prepared statements | **Disabled** in transaction mode | PgBouncer can't track per-connection prepared statement state |
@@ -278,7 +278,7 @@ Each MPG plan has a fixed number of PgBouncer connection slots shared across all
 
 ### `ECONNRESET` or "connection reset by peer"
 
-**Cause:** A long-lived connection was terminated during a proxy restart. The proxy's shutdown timeout is 15 minutes — any connection older than that is forcibly closed.
+**Cause:** A long-lived connection was terminated during a proxy restart. Connections that remain open too long during a proxy drain are forcibly closed.
 
 **Fix:** Set max connection lifetime to **600 seconds** (10 min) so connections are recycled before the proxy needs to kill them. Enable retry logic with backoff for transient failures.
 
