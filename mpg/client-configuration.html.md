@@ -23,7 +23,6 @@ The fix is straightforward: configure your connection pool to **proactively recy
 |---------|-------------------|-----|
 | Max connection lifetime | **600s** (10 min) | Recycle connections before the proxy closes them |
 | Idle connection timeout | **300s** (5 min) | Releases unused connections before they're forcibly closed |
-| Pool size | **5–10** | Match your plan's PgBouncer capacity (see Connection tab of your cluster's dashboard) |
 | Prepared statements | **Disabled** in transaction mode | PgBouncer can't track per-connection prepared statement state |
 | Connection retries | **Enabled** with backoff | Handle transient connection drops during proxy restarts |
 
@@ -87,7 +86,7 @@ datasource db {
 }
 ```
 
-Prisma manages its own connection pool internally. The `connection_limit` parameter controls the pool size per Prisma client instance. If you run multiple processes, keep total connections within your plan's capacity.
+Prisma manages its own connection pool internally. The `connection_limit` parameter controls the pool size per Prisma client instance.
 
 </details>
 
@@ -241,24 +240,7 @@ For comprehensive Phoenix setup including migrations, Oban configuration, and Ec
 
 </details>
 
-## Connection limits
-
-<!-- ============================================================
-     TODO FOR MPG TEAM: Replace placeholder values below with
-     actual PgBouncer connection limits per plan before publishing.
-     ============================================================ -->
-
-Each MPG plan has a fixed number of PgBouncer connection slots shared across all clients. If your total pool size (across all app processes) exceeds this limit, new connections will be queued or rejected.
-
-| Plan | PgBouncer max client connections | Direct max connections |
-|------|--------------------------------|----------------------|
-| Basic | _TBD_ | _TBD_ |
-| Starter | _TBD_ | _TBD_ |
-| Launch | _TBD_ | _TBD_ |
-| Scale | _TBD_ | _TBD_ |
-| Performance | _TBD_ | _TBD_ |
-
-### Common connection limit errors
+### Common connection errors
 
 **`FATAL: too many connections for role`** or **`remaining connection slots are reserved for roles with the SUPERUSER attribute`**: Your total pool size across all processes exceeds the PgBouncer connection limit. To fix:
 
@@ -266,7 +248,7 @@ Each MPG plan has a fixed number of PgBouncer connection slots shared across all
 - Switch to **transaction** pool mode for better connection reuse
 - Check for connection leaks (connections opened but never returned to the pool)
 
-**Calculating your total pool usage:** If you have 3 web processes with `pool_size: 10` and 2 worker processes with `pool_size: 5`, your total is `(3 × 10) + (2 × 5) = 40` connections. This must be within your plan's PgBouncer limit.
+**Calculating your total pool usage:** If you have 3 web processes with `pool_size: 10` and 2 worker processes with `pool_size: 5`, your total is `(3 × 10) + (2 × 5) = 40` connections.
 
 ## Troubleshooting
 
@@ -278,9 +260,9 @@ Each MPG plan has a fixed number of PgBouncer connection slots shared across all
 
 ### `ECONNRESET` or "connection reset by peer"
 
-**Cause:** A long-lived connection was terminated during a proxy restart. Connections that remain open too long during a proxy drain are forcibly closed.
+**Cause:** A long-lived connection was terminated during something like a proxy restart. Connections that remain open too long during a proxy drain may be forcibly closed.
 
-**Fix:** Set max connection lifetime to **600 seconds** (10 min) so connections are recycled before the proxy needs to kill them. Enable retry logic with backoff for transient failures.
+**Fix:** Set max connection lifetime to **600 seconds** (10 min) or less so connections are recycled before the proxy needs to kill them. Enable retry logic with backoff for transient failures.
 
 ### `FATAL 08P01 protocol_violation` on login
 
