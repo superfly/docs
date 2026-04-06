@@ -28,4 +28,18 @@ You can also make a public bucket private.
 fly storage update mybucket --private
 ```
 
+Objects in a public bucket can be accessed by anyone without authentication. Public content is served from dedicated domains using the bucket name as a subdomain:
+
+* `https://mybucket.t3.tigrisfiles.io/key-name` (primary)
+* `https://mybucket.t3.tigrisbucket.io/key-name`
+* `https://mybucket.t3.tigrisblob.io/key-name`
+
+No credentials or pre-signed URLs are needed. For production use, we recommend setting up a custom domain so your public URLs stay stable:
+
+```cmd
+flyctl storage update mybucket --custom-domain assets.example.com
+```
+
+Then create a CNAME record for `assets.example.com` pointing to `mybucket.t3.tigrisbucket.io`. See the [Tigris Custom Domain docs](https://www.tigrisdata.com/docs/buckets/custom-domain/) for full setup instructions and the [Tigris Public Bucket docs](https://www.tigrisdata.com/docs/buckets/public-bucket/) for details on all available public domains.
+
 Currently, buckets must be public or private. ACL settings will be ignored by the Tigris API.

@@ -100,4 +100,10 @@ Now that we have our Tigris Bucket, let's connect it with our Laravel app.
         Storage::disk('s3')->put('example.txt', 'Contents');
     }
     ```
-    Calling the function above should upload a new file in your bucket. 
+    Calling the function above should upload a new file in your bucket.
+
+## Serving public files
+
+If your bucket is [public](/docs/tigris/#public-buckets), uploaded objects are accessible without authentication at `https://bucket-name.t3.tigrisfiles.io/key-name`. You can use this URL directly in your Blade templates for images, CSS, JavaScript, and other assets. No credentials or pre-signed URLs are needed.
+
+For production use, we recommend setting up a [custom domain](https://www.tigrisdata.com/docs/buckets/custom-domain/) so your public URLs stay stable. See the [Tigris Public Bucket docs](https://www.tigrisdata.com/docs/buckets/public-bucket/) for details on all available public domains.
