@@ -34,9 +34,7 @@ Objects in a public bucket can be accessed by anyone without authentication. Pub
 * `https://mybucket.t3.tigrisbucket.io/key-name`
 * `https://mybucket.t3.tigrisblob.io/key-name`
 
-No credentials or pre-signed URLs are needed. Existing Fly.io accounts can also access public content at `mybucket.fly.storage.tigris.dev`, but this is not available for new accounts.
-
-For production use, we recommend setting up a custom domain so your public URLs stay stable:
+No credentials or pre-signed URLs are needed. For production use, we recommend setting up a custom domain so your public URLs stay stable:
 
 ```cmd
 flyctl storage update mybucket --custom-domain assets.example.com
