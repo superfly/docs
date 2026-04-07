@@ -185,7 +185,7 @@ Even if a Machine is the only one in its region, it can still be stopped. If it 
 
 ### Keep autostart and autostop in sync
 
-If you enable `autostop` but disable `autostart`, Machines will stop and never come back. Requests will return 503. If you enable `autostart` but disable `autostop`, Machines that get started will stay running indefinitely and never scale back down. In general, set both or neither
+If you enable `autostop` but disable `autostart`, Machines will stop and never come back. Requests will return 503. If you enable `autostart` but disable `autostop`, Machines that get started will stay running indefinitely and never scale back down. In general, set both or neither.
 
 ### Long-running background work
 
