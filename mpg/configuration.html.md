@@ -13,7 +13,9 @@ date: 2025-08-18
 
 ## Connection Pooling
 
-All Managed Postgres clusters come with PGBouncer for connection pooling, which helps manage database connections efficiently. You can configure how PGBouncer assigns connections to clients by changing the pool mode. 
+All Managed Postgres clusters come with PGBouncer for connection pooling, which helps manage database connections efficiently. You can configure how PGBouncer assigns connections to clients by changing the pool mode.
+
+For configuring your application's connection pool settings (lifetime, idle timeout, pool size, and language-specific examples), see [Client-Side Connection Configuration](/docs/mpg/client-configuration/).
 
 ### Pool Mode Options
 
