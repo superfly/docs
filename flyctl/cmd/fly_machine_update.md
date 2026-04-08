@@ -15,6 +15,7 @@ fly machine update [machine_id] [flags]
       --build-depot                 Build your image with depot.dev
       --build-nixpacks              Build your image with nixpacks
       --buildkit                    Deploy using buildkit-based remote builder
+      --cachedrive-size string      Cache drive size in MB. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 10gb). Set to 0 to disable.
   -C, --command string              Command to run
   -c, --config string               Path to application configuration file
       --container string            Container to update with the new image, files, etc; defaults to "app" or the first container in the config.
@@ -37,7 +38,6 @@ fly machine update [machine_id] [flags]
                                     	To remove a port mapping use '-' as handler. For example: --port 80/tcp:-
       --restart string              Set the restart policy for a Machine. Options include 'no', 'always', and 'on-failure'.
                                     	Default is 'on-failure' for Machines created by 'fly deploy' and Machines with a schedule. Default is 'always' for Machines created by 'fly m run'.
-      --rootfs-fs-size string       Root filesystem size in GB. Accepts a plain number (in GB) or a human-readable size (e.g. 2gb, 5gb). Sets the size of the filesystem itself, independent of the rootfs volume size. Set to 0 to unset.
       --rootfs-persist string       Whether to persist the root filesystem across restarts. Options include 'never', 'always', and 'restart'.
       --rootfs-size string          Root filesystem size in GB. Accepts a plain number (in GB) or a human-readable size (e.g. 2gb, 5gb). Uses an overlayfs to allow the root filesystem to exceed its default size. Set to 0 to unset.
       --schedule string             Schedule a Machine run at hourly, daily, weekly and monthly intervals
