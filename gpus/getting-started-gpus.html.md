@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<figure>
+  <img src="/static/images/gpus.png" alt="Illustration by Annie Ruygt of a developer sitting on a boombox" class="w-full max-w-lg mx-auto">
+</figure>
+
 <div class="warning icon">
 **GPUs are deprecated and will be unavailable after August 1.**
 </div>

@@ -6,6 +6,10 @@ date: 2025-09-16
 author: Kaelyn
 ---
 
+<figure>
+  <img src="/static/images/phoenix.png" alt="Illustration by Annie Ruygt of a Phoenix bird resting with Frankie the balloon looking on" class="w-full max-w-lg mx-auto">
+</figure>
+
 This guide explains the key **Managed Postgres (MPG)-specific adjustments** you need when connecting a Phoenix app. We'll focus on:
 
 1. Connection Pooling Settings

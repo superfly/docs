@@ -8,6 +8,10 @@ redirect_from:
   - /docs/metrics-and-logs/metrics
 ---
 
+<figure>
+  <img src="/static/images/monitor-machines.png" alt="Illustration by Annie Ruygt of some Machines strutting along" class="w-full max-w-lg mx-auto">
+</figure>
+
 The Fly.io platform includes a fully-managed metrics solution to help you easily monitor your Fly apps.
 It includes the following components:
 
