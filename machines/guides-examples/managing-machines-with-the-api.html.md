@@ -6,6 +6,10 @@ author: kcmartin
 date: 2026-04-06
 ---
 
+<figure>
+  <img src="/static/images/managing-machines-api.png" alt="Illustration by Annie Ruygt of a big book about the Machines API" class="w-full max-w-lg mx-auto">
+</figure>
+
 <div class="callout">
 **The [Machines resource API](/docs/machines/api/machines-resource/) documents every endpoint. This guide covers the patterns you'll actually need when building on it: cloning machines, keeping them in sync with `flyctl`, configuring services, managing auto-stop/start behavior, and updating config.**
 </div>
