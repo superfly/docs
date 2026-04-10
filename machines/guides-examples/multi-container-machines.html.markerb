@@ -140,6 +140,103 @@ Containers in a Machine share the same kernel and VM, but are isolated at the pr
 
 There are several ways to deploy multi-container machines on Fly.io. Choose the method that best fits your workflow:
 
+### Using Docker Compose
+
+If you already have a Docker Compose setup, you can deploy it to Fly Machines without rewriting your configuration. Fly builds and runs Compose services as containers within a single Machine.
+
+#### Requirements
+
+You need flyctl v0.3.149 or later:
+
+```bash
+fly version
+```
+
+If you're behind, update with `fly version update`.
+
+#### Configuration
+
+Add a `[build.compose]` section to your `fly.toml`:
+
+```toml
+[build.compose]
+```
+
+Fly auto-detects Compose files using the standard lookup order: `compose.yaml`, `compose.yml`, `docker-compose.yaml`, `docker-compose.yml`. If your file has a different name, specify it:
+
+```toml
+[build.compose]
+file = "docker-compose.prod.yml"
+```
+
+#### Routing traffic
+
+Set `internal_port` in your `fly.toml` `[[services]]` or `[http_service]` block to match the port exposed by the container that should receive traffic. Only one container handles inbound requests from the Fly proxy.
+
+```toml
+[http_service]
+  internal_port = 8080
+  force_https = true
+```
+
+#### Example
+
+A rate-limiting setup with nginx in front of a backend app.
+
+**compose.yml:**
+
+```yaml
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+
+  app:
+    build: .
+    expose:
+      - "3000"
+```
+
+**fly.toml:**
+
+```toml
+app = "my-rate-limited-app"
+primary_region = "ord"
+
+[build.compose]
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+```
+
+Deploy with:
+
+```bash
+fly deploy
+```
+
+#### Limitations
+
+- **One buildable service.** Only one service in the Compose file can specify `build`. All other services must use pre-built images.
+- **Secrets are global.** Secrets set with `fly secrets` are available to every container in the Machine. You can't scope a secret to a single service.
+- **Environment variable conflicts.** Fly injects runtime environment variables (like `FLY_APP_NAME`, `PRIMARY_REGION`, etc.) into all containers. These can overwrite values you define in your Compose file's `environment` block.
+
+#### Planned improvements
+
+The team is working on support for mapping Compose volumes to Fly volumes, replacing database services in Compose files with Fly-managed equivalents (like Fly Postgres), and auto-detecting Compose files during `fly launch`.
+
 ### Using the Machines API
 
 You can create multi-container Machines by sending a POST request to the Machines API. For example, using `curl`:
