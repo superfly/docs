@@ -11,7 +11,7 @@ date: 2026-03-25
 
 To deploy [OpenClaw](https://github.com/openclaw/openclaw) to Fly.io, download the deploy package and run the script. It handles everything — app creation, volumes, secrets, and deployment.
 
-<a href="https://github.com/superfly/Openclaw-Fly-Deploy/archive/refs/heads/main.zip" class="inline-flex items-center px-6 py-3 bg-violet-600 hover:bg-violet-700 text-white font-semibold rounded-lg transition-colors no-underline" download>Download Deploy Package</a>
+<a href="https://github.com/fly-apps/Openclaw-Fly-Deploy/archive/refs/heads/main.zip" class="inline-flex items-center px-6 py-3 bg-violet-600 hover:bg-violet-700 text-white font-semibold rounded-lg transition-colors no-underline" download>Download Deploy Package</a>
 
 ```bash
 unzip Openclaw-Fly-Deploy-main.zip
