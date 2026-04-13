@@ -181,31 +181,25 @@ Set `internal_port` in your `fly.toml` `[[services]]` or `[http_service]` block 
 
 #### Example
 
-A rate-limiting setup with nginx in front of a backend app.
+A web service with a Redis sidecar, both running in the same Machine.
 
 **compose.yml:**
 
 ```yaml
 services:
-  nginx:
-    image: nginx:latest
+  web:
+    image: nginxdemos/hello:plain-text
     ports:
-      - "8080:8080"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - app
+      - "8080:80"
 
-  app:
-    build: .
-    expose:
-      - "3000"
+  redis:
+    image: redis:latest
 ```
 
 **fly.toml:**
 
 ```toml
-app = "my-rate-limited-app"
+app = "my-compose-app"
 primary_region = "ord"
 
 [build.compose]
@@ -226,6 +220,8 @@ Deploy with:
 ```bash
 fly deploy
 ```
+
+The `web` container handles inbound traffic on port 8080, and the `redis` container runs alongside it as a sidecar. Your application code can reach Redis at `localhost:6379` because both containers share the same network namespace inside the Machine.
 
 #### Limitations
 
