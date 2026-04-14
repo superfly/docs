@@ -17,6 +17,10 @@ The proxy's shutdown timeout is **10 minutes**. Any connection that remains open
 
 The fix is straightforward: configure your connection pool to **proactively recycle connections** on a shorter interval than the proxy's timeout.
 
+## SSL
+
+SSL is enabled by default on all MPG connections. You do not need to set `sslmode` in your connection string or configure certificates — connections are encrypted automatically.
+
 ## Recommended settings
 
 | Setting | Recommended value | Why |
@@ -238,7 +242,21 @@ For comprehensive Phoenix setup including migrations, Oban configuration, and Ec
 
 </details>
 
-### Common connection errors
+## Connection limits
+
+Each MPG plan has a fixed number of PgBouncer connection slots shared across all clients. If your total pool size (across all app processes) exceeds this limit, new connections will be queued or rejected.
+
+| Plan | Max client connections | Max database connections | Reserve pool |
+|------|----------------------|------------------------|-------------|
+| Basic | 200 | 50 | 10 |
+| Starter | 200 | 50 | 10 |
+| Launch | 500 | 150 | 30 |
+| Scale | 1000 | 300 | 50 |
+| Performance | 1000 | 300 | 50 |
+
+**Max client connections** is the total number of client connections PgBouncer will accept. **Max database connections** is the number of actual connections PgBouncer opens to PostgreSQL. The reserve pool handles bursts above the normal pool size.
+
+### Common connection limit errors
 
 **`FATAL: too many connections for role`** or **`remaining connection slots are reserved for roles with the SUPERUSER attribute`**: Your total pool size across all processes exceeds the PgBouncer connection limit. To fix:
 
