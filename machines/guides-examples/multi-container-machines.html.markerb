@@ -146,7 +146,7 @@ If you already have a Docker Compose setup, you can deploy it to Fly Machines wi
 
 #### Requirements
 
-You need flyctl v0.3.149 or later:
+You need flyctl v0.3.152 or later:
 
 ```bash
 fly version
