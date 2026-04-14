@@ -196,7 +196,7 @@ services:
   web:
     build: .
     ports:
-      - "8080:80"
+      - "80:80"
 
   redis:
     image: redis:latest
@@ -211,7 +211,7 @@ primary_region = "ord"
 [build.compose]
 
 [http_service]
-  internal_port = 8080
+  internal_port = 80
   force_https = true
   auto_stop_machines = "stop"
   auto_start_machines = true
@@ -227,7 +227,7 @@ Deploy with:
 fly deploy
 ```
 
-The `web` container handles inbound traffic on port 8080, and the `redis` container runs alongside it as a sidecar. Your application code can reach Redis at `localhost:6379` because both containers share the same network namespace inside the Machine.
+The `web` container handles inbound traffic on port 80, and the `redis` container runs alongside it as a sidecar. Your application code can reach Redis at `localhost:6379` because both containers share the same network namespace inside the Machine.
 
 #### Limitations
 
