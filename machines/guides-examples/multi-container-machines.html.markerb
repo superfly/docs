@@ -181,14 +181,20 @@ Set `internal_port` in your `fly.toml` `[[services]]` or `[http_service]` block 
 
 #### Example
 
-A web service with a Redis sidecar, both running in the same Machine.
+A web service with a Redis sidecar, both running in the same Machine. `fly deploy` builds the `web` service from a `Dockerfile` in your project directory; `redis` runs as a pre-built sidecar.
+
+**Dockerfile:**
+
+```dockerfile
+FROM nginxdemos/hello:plain-text
+```
 
 **compose.yml:**
 
 ```yaml
 services:
   web:
-    image: nginxdemos/hello:plain-text
+    build: .
     ports:
       - "8080:80"
 
@@ -225,7 +231,7 @@ The `web` container handles inbound traffic on port 8080, and the `redis` contai
 
 #### Limitations
 
-- **One buildable service.** Only one service in the Compose file can specify `build`. All other services must use pre-built images.
+- **Exactly one buildable service.** `fly deploy` requires exactly one service in the Compose file to specify `build`. All other services must use pre-built images.
 - **Secrets are global.** Secrets set with `fly secrets` are available to every container in the Machine. You can't scope a secret to a single service.
 - **Environment variable conflicts.** Fly injects runtime environment variables (like `FLY_APP_NAME`, `PRIMARY_REGION`, etc.) into all containers. These can overwrite values you define in your Compose file's `environment` block.
 
