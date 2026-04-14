@@ -1,13 +1,49 @@
 ---
-title: "Client-Side Connection Configuration"
+title: "Connect Your Client"
 layout: docs
 nav: mpg
 date: 2026-03-25
 ---
 
-This guide covers how to configure your application's database client for reliable, performant connections to Fly Managed Postgres. It explains why certain settings matter and provides configuration examples for popular libraries across multiple languages.
+This guide covers how to connect your application to Fly Managed Postgres and configure your database client for reliable, performant connections.
 
-For a quick summary of the essentials, see [Connect Your Client](/docs/mpg/connect-your-client/).
+## Quick start
+
+After [creating your MPG cluster](/docs/mpg/create-and-connect/) and attaching your app, these are the essentials:
+
+**1. Your connection string.** When you attach an app with `fly mpg attach`, Fly sets a `DATABASE_URL` secret on your app automatically. You can customize the variable name during attachment. Your app receives this as an environment variable at runtime. Both pooled and direct URLs are available from the **Connect** tab in your cluster's dashboard.
+
+- **Pooled URL** (default): `postgresql://fly-user:<password>@pgbouncer.<cluster>.flympg.net/fly-db` — routes through PgBouncer. Use this for your application.
+- **Direct URL**: `postgresql://fly-user:<password>@direct.<cluster>.flympg.net/fly-db` — bypasses PgBouncer. Use this for migrations, advisory locks, or `LISTEN/NOTIFY`.
+
+SSL is enabled by default on all MPG connections. You do not need to set `sslmode` in your connection string.
+
+**2. Set connection lifetime and idle timeout in your code.** These are settings you configure in your application's database client or connection pool library — not on the database or cluster side. Not all client libraries support these settings directly — see the [language-specific examples](#language-specific-configuration) below.
+
+| Setting | Recommended value | Why |
+|---------|-------------------|-----|
+| Max connection lifetime | **600 seconds** (10 min) | Recycle connections before the proxy closes them |
+| Idle connection timeout | **300 seconds** (5 min) | Releases unused connections before they're forcibly closed |
+
+**3. Set up a direct URL for migrations.** Most frameworks run migrations on deploy. Migrations use advisory locks and other session-scoped features that require the direct URL, not the pooled one.
+
+```bash
+fly secrets set \
+  DATABASE_URL="postgresql://...@pgbouncer.<cluster>.flympg.net/fly-db" \
+  DIRECT_DATABASE_URL="postgresql://...@direct.<cluster>.flympg.net/fly-db"
+```
+
+```toml
+# fly.toml
+[deploy]
+  release_command = "/bin/sh -lc 'DATABASE_URL=$DIRECT_DATABASE_URL bin/migrate'"
+```
+
+See the [Phoenix guide](/docs/mpg/guides-examples/phoenix-guide/) for Elixir-specific migration setup.
+
+**4. Disable prepared statements in transaction mode.** If your PgBouncer pool mode is set to **Transaction** (required for Ecto; recommended for high-throughput apps), you must disable named prepared statements in your client. PgBouncer can't track prepared statements across transactions. See [Cluster Configuration](/docs/mpg/cluster-configuration/) for how to change your pool mode.
+
+---
 
 ## Why client configuration matters
 
@@ -17,22 +53,9 @@ The proxy's shutdown timeout is **10 minutes**. Any connection that remains open
 
 The fix is straightforward: configure your connection pool to **proactively recycle connections** on a shorter interval than the proxy's timeout.
 
-## SSL
-
-SSL is enabled by default on all MPG connections. You do not need to set `sslmode` in your connection string or configure certificates — connections are encrypted automatically.
-
-## Recommended settings
-
-| Setting | Recommended value | Why |
-|---------|-------------------|-----|
-| Max connection lifetime | **600s** (10 min) | Recycle connections before the proxy closes them |
-| Idle connection timeout | **300s** (5 min) | Releases unused connections before they're forcibly closed |
-| Prepared statements | **Disabled** in transaction mode | PgBouncer can't track per-connection prepared statement state |
-| Connection retries | **Enabled** with backoff | Handle transient connection drops during proxy restarts |
-
 ## PgBouncer mode and your client
 
-All MPG clusters include PgBouncer for connection pooling. The pool mode you choose on the cluster side affects what your client can do. See [Cluster Configuration Options](/docs/mpg/configuration/) for how to change modes.
+All MPG clusters include PgBouncer for connection pooling. The pool mode you choose on the cluster side affects what your client can do. See [Cluster Configuration](/docs/mpg/cluster-configuration/) for how to change modes.
 
 **Session mode** (default): A PgBouncer connection is held for the entire client session. Full PostgreSQL feature compatibility — prepared statements, advisory locks, `LISTEN/NOTIFY`, and multi-statement transactions all work normally. Lower connection reuse.
 

@@ -10,7 +10,7 @@ author: Kaelyn
   <img src="/static/images/phoenix.png" alt="Illustration by Annie Ruygt of a Phoenix bird resting with Frankie the balloon looking on" class="w-full max-w-lg mx-auto">
 </figure>
 
-For general connection configuration that applies to all languages — connection lifetime, idle timeouts, proxy restart behavior, and troubleshooting — see [Client-Side Connection Configuration](/docs/mpg/client-configuration/).
+For general connection configuration that applies to all languages — connection lifetime, idle timeouts, proxy restart behavior, and troubleshooting — see [Connect Your Client](/docs/mpg/client-configuration/).
 
 This guide explains the key **Managed Postgres (MPG)-specific adjustments** you need when connecting a Phoenix app. We'll focus on:
 
