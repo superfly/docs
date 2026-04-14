@@ -225,8 +225,6 @@ On older Rails versions, connections will still be recycled by the idle timeout 
 config :my_app, MyApp.Repo,
   url: System.fetch_env!("DATABASE_URL"),
   pool_size: 8,
-  queue_target: 5_000,
-  queue_interval: 5_000,
   prepare: :unnamed   # required for PgBouncer transaction mode
 ```
 
@@ -264,9 +262,9 @@ For comprehensive Phoenix setup including migrations, Oban configuration, and Ec
 
 **Fix:** Set max connection lifetime to **600 seconds** (10 min) or less so connections are recycled before the proxy needs to kill them. Enable retry logic with backoff for transient failures.
 
-### `FATAL 08P01 protocol_violation` on login
+### Prepared statement errors
 
-**Cause:** Your client is sending named prepared statements through PgBouncer in transaction mode. PgBouncer can't route prepared statements to the correct backend connection in this mode.
+Errors like `prepared statement "..." does not exist`, `prepared statement "..." already exists`, or `protocol_violation` on login all point to the same root cause: your client is sending named prepared statements through PgBouncer in transaction mode. PgBouncer assigns a different backend connection per transaction, so prepared statements created on one connection aren't available on the next.
 
 **Fix:** Disable named prepared statements in your client configuration:
 - **Node.js (pg):** This is the default behavior — no change needed
@@ -275,12 +273,6 @@ For comprehensive Phoenix setup including migrations, Oban configuration, and Ec
 - **Go (pgx):** Use `default_query_exec_mode=exec`
 - **Ruby (ActiveRecord):** Set `prepared_statements: false`
 - **Elixir (Ecto):** Set `prepare: :unnamed`
-
-### `prepared statement "..." does not exist`
-
-**Cause:** Same as above — named prepared statements being used with PgBouncer in transaction mode.
-
-**Fix:** Same as the `protocol_violation` fix above.
 
 ### Connection hangs on startup
 

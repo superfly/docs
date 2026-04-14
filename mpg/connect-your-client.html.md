@@ -26,17 +26,6 @@ Fly's edge proxy mediates connections between your app and your database. During
 | Max connection lifetime | **600 seconds** (10 min) | Recycle connections before the proxy closes them |
 | Idle connection timeout | **300 seconds** (5 min) | Releases unused connections before they're forcibly closed |
 
-## Keep your pool size modest
-
-Match your pool size to your plan's capacity. Oversized pools waste PgBouncer slots and can trigger connection limit errors.
-
-| Plan tier | Suggested pool size per process |
-|-----------|-------------------------------|
-| Basic / Starter | 5–10 |
-| Launch and above | 10–20 |
-
-If you run multiple processes (e.g., web + background workers), the total across all processes should stay within these ranges.
-
 ## Disable prepared statements in transaction mode
 
 If your PgBouncer pool mode is set to **Transaction** (required for Ecto; recommended for high-throughput apps), you must disable named prepared statements in your client. PgBouncer can't track prepared statements across transactions.
