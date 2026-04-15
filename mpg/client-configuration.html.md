@@ -83,13 +83,13 @@ const pool = new Pool({
   max: 10,
 
   // Connection lifecycle
-  idleTimeoutMillis: 300_000,      // 5 min — close idle connections
-  maxLifetimeMillis: 600_000,      // 10 min — recycle before proxy timeout
-  connectionTimeoutMillis: 5_000,  // 5s — fail fast on connection attempts
+  idleTimeoutMillis: 300_000,       // 5 min — close idle connections
+  maxLifetimeSeconds: 600,          // 10 min — recycle before proxy timeout
+  connectionTimeoutMillis: 5_000,   // 5s — fail fast on connection attempts
 });
 ```
 
-`maxLifetimeMillis` was added in `pg-pool` 3.6.0 (included with `pg` 8.11+). If you're on an older version, upgrade — this setting is critical for reliable connections on Fly.
+`maxLifetimeSeconds` was added in `pg-pool` 3.5.1 (included with `pg` 8.8+). If you're on an older version, upgrade — this setting is critical for reliable connections on Fly.
 
 </details>
 
@@ -138,7 +138,7 @@ engine = create_engine(
 
     # Disable prepared statements for PgBouncer transaction mode
     # (uncomment if using transaction mode)
-    # connect_args={"prepare_threshold": 0},  # for psycopg3
+    # connect_args={"prepare_threshold": None},  # for psycopg3
     # connect_args={"options": "-c plan_cache_mode=force_custom_plan"},  # alternative
 )
 ```
@@ -170,7 +170,7 @@ pool = ConnectionPool(
 
     # Disable prepared statements for PgBouncer transaction mode
     # (uncomment if using transaction mode)
-    # kwargs={"prepare_threshold": 0},
+    # kwargs={"prepare_threshold": None},
 )
 ```
 
@@ -227,20 +227,20 @@ production:
   prepared_statements: false  # required for PgBouncer transaction mode
 ```
 
-For connection max lifetime, Rails 7.2+ supports `max_lifetime` natively:
+For connection max lifetime, Rails 8.1+ supports `max_age` natively:
 
 ```yaml
-# config/database.yml (Rails 7.2+)
+# config/database.yml (Rails 8.1+)
 production:
   url: <%= ENV["DATABASE_URL"] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
-  max_lifetime: 600           # 10 min — recycle before proxy timeout
+  max_age: 600                # 10 min — recycle before proxy timeout
   idle_timeout: 300
   checkout_timeout: 5
   prepared_statements: false
 ```
 
-On older Rails versions, connections will still be recycled by the idle timeout if your app has enough traffic. For low-traffic apps on older Rails, consider the [`activerecord-connection_reaper`](https://github.com/mperham/activerecord-connection_reaper) gem or a periodic reconnection task.
+On older Rails versions, there is no built-in max connection age. Connections will still be recycled by the idle timeout if your app has enough traffic, but long-lived busy connections won't be recycled until they encounter an error.
 
 </details>
 
@@ -258,7 +258,7 @@ config :my_app, MyApp.Repo,
 For comprehensive Phoenix setup including migrations, Oban configuration, and Ecto-specific troubleshooting, see the [Phoenix with Managed Postgres](/docs/mpg/guides-examples/phoenix-guide/) guide.
 
 <div class="note icon">
-**Note on connection lifetime in Ecto:** Postgrex does not currently support a max connection lifetime setting. Connections are recycled only when they encounter errors or are explicitly disconnected. The idle timeout and PgBouncer's own `server_lifetime` setting (default 1800s) provide some protection, but for the most reliable behavior during proxy restarts, a `max_lifetime` option in Postgrex/DBConnection would be ideal. This is a known gap.
+**Note on connection lifetime in Ecto:** Postgrex does not currently support a max connection lifetime setting. Connections are recycled only when they encounter errors or are explicitly disconnected. The idle timeout and PgBouncer's own `server_lifetime` setting (default 3600s) provide some protection, but for the most reliable behavior during proxy restarts, a `max_lifetime` option in Postgrex/DBConnection would be ideal. This is a known gap.
 </div>
 
 <!-- TODO: Update this section when postgrex adds max_lifetime support -->
@@ -310,7 +310,7 @@ Errors like `prepared statement "..." does not exist`, `prepared statement "..."
 **Fix:** Disable named prepared statements in your client configuration:
 - **Node.js (pg):** This is the default behavior — no change needed
 - **Prisma:** Add `?pgbouncer=true` to your connection string
-- **Python (psycopg3):** Set `prepare_threshold=0`
+- **Python (psycopg3):** Set `prepare_threshold=None`
 - **Go (pgx):** Use `default_query_exec_mode=exec`
 - **Ruby (ActiveRecord):** Set `prepared_statements: false`
 - **Elixir (Ecto):** Set `prepare: :unnamed`
