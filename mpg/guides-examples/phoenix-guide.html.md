@@ -51,8 +51,8 @@ Update your secrets to add a `DIRECT_DATABASE_URL`
 
 ```bash
 fly secrets set \
-  DATABASE_URL="postgresql://...@pgbouncer.<cluster>.flympg.net/fly-db" \
-  DIRECT_DATABASE_URL="postgresql://...@direct.<cluster>.flympg.net/fly-db"
+  DATABASE_URL="postgresql://...@pgbouncer.YOUR_CLUSTER.flympg.net/fly-db" \
+  DIRECT_DATABASE_URL="postgresql://...@direct.YOUR_CLUSTER.flympg.net/fly-db"
 ```
 
 In your fly.toml, update your release command to use the direct connection for running your migration:

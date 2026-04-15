@@ -13,8 +13,8 @@ After [creating your MPG cluster](/docs/mpg/create-and-connect/) and attaching y
 
 **1. Your connection string.** When you attach an app with `fly mpg attach`, Fly sets a `DATABASE_URL` secret on your app automatically. You can customize the variable name during attachment. Your app receives this as an environment variable at runtime. Both pooled and direct URLs are available from the **Connect** tab in your cluster's dashboard.
 
-- **Pooled URL** (default): `postgresql://fly-user:<password>@pgbouncer.<cluster>.flympg.net/fly-db` — routes through PgBouncer. Use this for your application.
-- **Direct URL**: `postgresql://fly-user:<password>@direct.<cluster>.flympg.net/fly-db` — bypasses PgBouncer. Use this for migrations, advisory locks, or `LISTEN/NOTIFY`.
+- **Pooled URL** (default): `postgresql://fly-user:YOUR_PASSWORD@pgbouncer.YOUR_CLUSTER.flympg.net/fly-db` — routes through PgBouncer. Use this for your application.
+- **Direct URL**: `postgresql://fly-user:YOUR_PASSWORD@direct.YOUR_CLUSTER.flympg.net/fly-db` — bypasses PgBouncer. Use this for migrations, advisory locks, or `LISTEN/NOTIFY`.
 
 SSL is enabled by default on all MPG connections. You do not need to set `sslmode` in your connection string.
 
@@ -29,8 +29,8 @@ SSL is enabled by default on all MPG connections. You do not need to set `sslmod
 
 ```bash
 fly secrets set \
-  DATABASE_URL="postgresql://...@pgbouncer.<cluster>.flympg.net/fly-db" \
-  DIRECT_DATABASE_URL="postgresql://...@direct.<cluster>.flympg.net/fly-db"
+  DATABASE_URL="postgresql://...@pgbouncer.YOUR_CLUSTER.flympg.net/fly-db" \
+  DIRECT_DATABASE_URL="postgresql://...@direct.YOUR_CLUSTER.flympg.net/fly-db"
 ```
 
 ```toml
@@ -99,7 +99,7 @@ const pool = new Pool({
 Add `pgbouncer=true` and connection pool parameters to your connection string:
 
 ```env
-DATABASE_URL="postgresql://fly-user:<password>@pgbouncer.<cluster>.flympg.net/fly-db?pgbouncer=true&connection_limit=10&pool_timeout=30"
+DATABASE_URL="postgresql://fly-user:YOUR_PASSWORD@pgbouncer.YOUR_CLUSTER.flympg.net/fly-db?pgbouncer=true&connection_limit=10&pool_timeout=30"
 ```
 
 The `pgbouncer=true` parameter tells Prisma to disable prepared statements and adjust its connection handling for PgBouncer compatibility.
