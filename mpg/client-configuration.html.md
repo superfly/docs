@@ -98,7 +98,7 @@ const pool = new Pool({
 
 Add `pgbouncer=true` and connection pool parameters to your connection string:
 
-```env
+```
 DATABASE_URL="postgresql://fly-user:YOUR_PASSWORD@pgbouncer.YOUR_CLUSTER.flympg.net/fly-db?pgbouncer=true&connection_limit=10&pool_timeout=30"
 ```
 
