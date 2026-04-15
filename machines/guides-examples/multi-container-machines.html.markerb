@@ -235,10 +235,6 @@ The `web` container handles inbound traffic on port 80, and the `redis` containe
 - **Secrets are global.** Secrets set with `fly secrets` are available to every container in the Machine. You can't scope a secret to a single service.
 - **Environment variable conflicts.** Fly injects runtime environment variables (like `FLY_APP_NAME`, `PRIMARY_REGION`, etc.) into all containers. These can overwrite values you define in your Compose file's `environment` block.
 
-#### Planned improvements
-
-The team is working on support for mapping Compose volumes to Fly volumes, replacing database services in Compose files with Fly-managed equivalents (like Fly Postgres), and auto-detecting Compose files during `fly launch`.
-
 ### Using the Machines API
 
 You can create multi-container Machines by sending a POST request to the Machines API. For example, using `curl`:
