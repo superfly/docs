@@ -104,10 +104,6 @@ Add the following query parameters to your connection string:
 | `connection_limit` | `10` | Pool size per Prisma client instance |
 | `pool_timeout` | `30` | Seconds to wait for a connection |
 
-Your `DATABASE_URL` should look like:
-
-`postgresql://...@pgbouncer.YOUR_CLUSTER.flympg.net/fly-db?pgbouncer=true&connection_limit=10&pool_timeout=30`
-
 In your Prisma schema:
 
 ```prisma
