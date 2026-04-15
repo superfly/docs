@@ -220,8 +220,8 @@ db, err := sql.Open("pgx", connStr)
 ```yaml
 # config/database.yml
 production:
-  url: <%= ENV["DATABASE_URL"] %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  url: ENV["DATABASE_URL"]
+  pool: ENV.fetch("RAILS_MAX_THREADS", 5)
   idle_timeout: 300           # 5 min — close idle connections
   checkout_timeout: 5
   prepared_statements: false  # required for PgBouncer transaction mode
@@ -232,8 +232,8 @@ For connection max lifetime, Rails 8.1+ supports `max_age` natively:
 ```yaml
 # config/database.yml (Rails 8.1+)
 production:
-  url: <%= ENV["DATABASE_URL"] %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  url: ENV["DATABASE_URL"]
+  pool: ENV.fetch("RAILS_MAX_THREADS", 5)
   max_age: 600                # 10 min — recycle before proxy timeout
   idle_timeout: 300
   checkout_timeout: 5
