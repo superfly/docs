@@ -96,13 +96,17 @@ const pool = new Pool({
 <details data-render="markdown">
 <summary>Node.js — Prisma</summary>
 
-Add `pgbouncer=true` and connection pool parameters to your connection string:
+Add the following query parameters to your connection string:
 
-```
-DATABASE_URL="postgresql://fly-user:YOUR_PASSWORD@pgbouncer.YOUR_CLUSTER.flympg.net/fly-db?pgbouncer=true&connection_limit=10&pool_timeout=30"
-```
+| Parameter | Value | Purpose |
+|-----------|-------|---------|
+| `pgbouncer` | `true` | Disables prepared statements for PgBouncer compatibility |
+| `connection_limit` | `10` | Pool size per Prisma client instance |
+| `pool_timeout` | `30` | Seconds to wait for a connection |
 
-The `pgbouncer=true` parameter tells Prisma to disable prepared statements and adjust its connection handling for PgBouncer compatibility.
+Your `DATABASE_URL` should look like:
+
+`postgresql://...@pgbouncer.YOUR_CLUSTER.flympg.net/fly-db?pgbouncer=true&connection_limit=10&pool_timeout=30`
 
 In your Prisma schema:
 
