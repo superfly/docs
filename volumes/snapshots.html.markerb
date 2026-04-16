@@ -124,6 +124,18 @@ Restore the data from a volume by creating a new volume from a snapshot:
 
 For options, refer to the [`fly volumes create` docs](/docs/flyctl/volumes-create/) or run `fly volumes create --help`.
 
+## Create a Machine with a volume from a snapshot
+
+Create the volume and the Machine in one command:
+
+```cmd
+fly scale count --with-new-volumes --from-snapshot <snapshot id> 1
+```
+
+`--with-new-volumes` creates a new volume instead of reusing an existing one. `--from-snapshot` populates that volume from the snapshot. The trailing `1` is the Machine count.
+
+For options, refer to the [`fly scale count` docs](/docs/flyctl/scale-count/) or run `fly scale count --help`.
+
 ## List snapshots and their stored sizes
 
 Snapshots for each volume are stored incrementally, so only data that has changed since the previously stored snapshot consumes additional storage. The total stored size of the snapshots is used for [Volume Snapshot billing](/docs/about/billing/#volume-snapshot-billing).
