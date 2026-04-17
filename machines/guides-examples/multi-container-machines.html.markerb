@@ -229,6 +229,10 @@ fly deploy
 
 The `web` container handles inbound traffic on port 80, and the `redis` container runs alongside it as a sidecar. Your application code can reach Redis at `localhost:6379` because both containers share the same network namespace inside the Machine.
 
+<div class="warning icon">
+**Warning:** Fly ignores `volumes:` declarations in your Compose file and prints `Warning: Could not read volume file...` at deploy time. The deploy still succeeds, but any data your containers write is stored on an ephemeral overlay that's wiped on restart or redeploy. For persistent storage, attach a [Fly Volume](/docs/volumes/) and mount it via `[mounts]` in `fly.toml`.
+</div>
+
 #### Limitations
 
 - **Exactly one buildable service.** `fly deploy` requires exactly one service in the Compose file to specify `build`. All other services must use pre-built images.
