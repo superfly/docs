@@ -86,17 +86,11 @@ If a Machine has a machine-scoped egress IP, it takes precedence over any app-sc
 
 ## Static Egress IPs (Machine-Scoped)
 
-<div class="warning icon">
-Machine-scoped static egress IPs are considered a legacy feature and may be removed in the future. This section is kept for reference purposes only. New apps should use [app-scoped static egress IPs](#static-egress-ips-app-scoped).
-</div>
+In the past, we supported machine-scoped egress IPs that are statically bound to individual machines rather than apps.
+This feature is deprecated, and all new apps should use [app-scoped static egress IPs](#static-egress-ips-app-scoped) instead.
 
-### Allocate a Static Egress IP
-
-```bash
-fly machine egress-ip allocate <machine-id> --app <app-name>
-```
-
-- This assigns a stable IPv4 + IPv6 pair to the specified machine.
+However, if you already have machine-scoped static egress IPs assigned, they continue to work and you may still view and manage them.
+You can also "promote" them into app-scoped egress IPs.
 
 ### View and Manage
 
@@ -104,6 +98,23 @@ fly machine egress-ip allocate <machine-id> --app <app-name>
 fly machine egress-ip list --app <app-name>
 fly machine egress-ip release <machine-id> --app <app-name>
 ```
+
+### Migrate to App-scoped Egress IPs
+
+You can migrate from machine-scoped egress IPs to app-scoped egress IPs by "promoting" a subset of existing machine-scoped egress IPs to be app-scoped. This allows you to keep external allowlist configuration unchanged while switching to app-scoped egress IPs.
+
+The promotion process is mostly seamless, but a short window of downtime is possible while the egress IP is removed from the original machine and re-assigned to the app.
+
+```bash
+fly machine egress-ip promote <machine-id> --app <app-name>
+```
+
+<div class="note icon">
+A promoted app-scoped egress IP will retain the same region as the original machine it was associated with.
+If your app has machines in multiple regions, promote at least one for each region.
+
+You should also remove any remaining machine-scoped egress IPs that are no longer needed.
+</div>
 
 ### Caveats
 
@@ -117,39 +128,6 @@ Because legacy static egress IPs are **per-machine**, not per-app:
 
 <div class="callout">
 Machine-scoped static egress IPs are billed per hour per machine.
-</div>
-
----
-
-## The Proxy Pattern (for Machine-Scoped Static Egress IPs)
-
-<div class="warning icon">
-This section only applies to existing apps using machine-scoped static egress IPs. New apps should use [app-scoped static egress IPs](#static-egress-ips-app-scoped) instead.
-</div>
-
-To avoid assigning static IPs to every machine, route traffic through a shared proxy app.
-
-### How It Works
-
-1. Deploy a small Fly app (e.g. `egress-proxy`) with static egress IPs.
-1. Run a forward HTTP/HTTPS proxy on it.
-1. Set `http_proxy` / `https_proxy` env vars in consuming apps.
-1. Outbound traffic from those apps will route through the proxy.
-
-### Benefits
-
-- Fewer IPs to manage.
-- Primary app machines can be ephemeral.
-- Centralize allowlisting.
-
-### Downsides
-
-- Primarily supports HTTP/S traffic. Other protocols (like raw TCP or Postgres) may be possible with extra work, such as using SOCKS5 proxies, `haproxy` in TCP mode, or `socat`, but those setups are more complex and outside the scope of this guide. 
-- Adds some latency (~100ms typical).
-- Requires maintaining a separate proxy app.
-
-<div class="callout">
-Example implementation: [fly-apps/fly-fixed-egress-ip-proxy](https://github.com/fly-apps/fly-fixed-egress-ip-proxy)
 </div>
 
 ---
