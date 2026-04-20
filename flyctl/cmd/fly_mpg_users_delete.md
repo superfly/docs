@@ -10,7 +10,7 @@ fly mpg users delete <CLUSTER_ID> [flags]
 ~~~
   -h, --help              help for delete
   -u, --username string   The username to delete
-  -y, --yes               Accept all confirmations
+  -y, --yes               Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

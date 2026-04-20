@@ -9,7 +9,7 @@ fly apps destroy <app name(s)> [flags]
 
 ~~~
   -h, --help   help for destroy
-  -y, --yes    Accept all confirmations
+  -y, --yes    Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

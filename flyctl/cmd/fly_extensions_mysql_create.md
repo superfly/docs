@@ -19,7 +19,7 @@ fly extensions mysql create [flags]
   -o, --org string      The target Fly.io organization
   -r, --region string   The target region (see 'flyctl platform regions')
       --size int        The number of members in your cluster
-  -y, --yes             Accept all confirmations
+  -y, --yes             Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

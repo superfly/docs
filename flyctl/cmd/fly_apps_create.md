@@ -17,7 +17,7 @@ fly apps create <app name> [flags]
       --network string   Specify custom network id
   -o, --org string       The target Fly.io organization
       --save             Save the app name to the config file
-  -y, --yes              Accept all confirmations
+  -y, --yes              Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

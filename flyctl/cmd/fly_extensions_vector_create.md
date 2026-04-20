@@ -15,7 +15,7 @@ fly extensions vector create [flags]
   -n, --name string     The name of your cluster
   -o, --org string      The target Fly.io organization
   -r, --region string   The target region (see 'flyctl platform regions')
-  -y, --yes             Accept all confirmations
+  -y, --yes             Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options
