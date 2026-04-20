@@ -103,14 +103,14 @@ fly machine egress-ip release <machine-id> --app <app-name>
 
 You can migrate from machine-scoped egress IPs to app-scoped egress IPs by "promoting" a subset of existing machine-scoped egress IPs to be app-scoped. This allows you to keep external allowlist configuration unchanged while switching to app-scoped egress IPs.
 
-The promotion process is mostly seamless, but a short window of downtime is possible while the egress IP is removed from the original machine and re-assigned to the app.
+The promotion process is mostly seamless, but a short window of downtime is possible while the egress IP is removed from the original machine and reassigned to the app.
 
 ```bash
 fly machine egress-ip promote <machine-id> --app <app-name>
 ```
 
 <div class="note icon">
-A promoted app-scoped egress IP will retain the same region as the original machine it was associated with.
+Promoted egress IPs retain the original machine's region.
 If your app has machines in multiple regions, promote at least one for each region.
 
 You should also remove any remaining machine-scoped egress IPs that are no longer needed.
