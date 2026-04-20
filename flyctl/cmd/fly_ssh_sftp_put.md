@@ -17,7 +17,7 @@ fly ssh sftp put <local-path> [remote-path] [flags]
       --machine string         Run the console in the existing machine with the specified ID
   -m, --mode string            File mode/permissions for the uploaded file (default: 0644) (default "0644")
   -o, --org string             The target Fly.io organization
-  -g, --process-group string   The target process group
+  -g, --process-group string   The target process group (also --group)
       --pty                    Allocate a pseudo-terminal (default: on when no command is provided)
   -q, --quiet                  Don't print progress indicators for WireGuard
   -R, --recursive              Upload directories recursively

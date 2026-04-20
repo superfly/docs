@@ -10,7 +10,7 @@ fly mysql list [flags]
 ~~~
   -h, --help         help for list
   -o, --org string   The target Fly.io organization
-  -y, --yes          Accept all confirmations
+  -y, --yes          Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

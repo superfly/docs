@@ -11,7 +11,7 @@ fly volumes destroy <volume id> ... [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for destroy
-  -y, --yes             Accept all confirmations
+  -y, --yes             Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

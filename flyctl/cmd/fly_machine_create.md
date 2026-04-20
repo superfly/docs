@@ -45,11 +45,11 @@ fly machine create <image> [command] [flags]
       --standby-for strings         For Machines without services, a comma separated list of Machine IDs to act as standby for.
       --swap-size string            Swap size in MB. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 1gb).
       --use-zstd                    Enable zstd compression for the image
-      --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
-      --vm-cpus int                 Number of CPUs
-      --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none)
+      --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance') (also --vm-cpukind)
+      --vm-cpus int                 Number of CPUs (also --cpus)
+      --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none) (also --vm-gpukind)
       --vm-gpus int                 Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
-      --vm-memory string            Memory (in megabytes) to attribute to the VM
+      --vm-memory string            Memory (in megabytes) to attribute to the VM (also --memory)
       --vm-size string              The VM size to set machines to. See "fly platform vm-sizes" for valid values
   -v, --volume strings              Volume to mount, in the form of <volume_id_or_name>:/path/inside/machine[:<options>]
 ~~~

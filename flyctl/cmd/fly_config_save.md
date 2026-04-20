@@ -14,7 +14,7 @@ fly config save [flags]
   -h, --help            help for save
       --json            Output the configuration in JSON format
       --yaml            Output the configuration in YAML format
-  -y, --yes             Accept all confirmations
+  -y, --yes             Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

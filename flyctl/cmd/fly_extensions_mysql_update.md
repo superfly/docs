@@ -16,7 +16,7 @@ fly extensions mysql update <database_name> [flags]
       --memory int      Memory (in GB) assigned to each cluster member
   -o, --org string      The target Fly.io organization
       --size int        The number of members in your cluster
-  -y, --yes             Accept all confirmations
+  -y, --yes             Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

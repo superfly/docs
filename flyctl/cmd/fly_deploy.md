@@ -50,7 +50,7 @@ fly deploy [WORKING_DIRECTORY] [flags]
       --ha                               Create spare machines that increases app availability (default true)
   -h, --help                             help for deploy
       --host-dedication-id string        The dedication id of the reserved hosts for your organization (if any)
-      --https-failover                   Determines whether to failover to plain internet(https) communication with remote builders if wireguard fails (default true)
+      --https-failover                   Determines whether to failover to plain internet(https) communication with remote builders if wireguard fails (also --http-failover) (default true)
       --ignorefile string                Path to a Docker ignore file. Defaults to the .dockerignore file in the working directory.
   -i, --image string                     The Docker image to deploy
       --image-label string               Image label to use when tagging and pushing to the fly registry. Defaults to "deployment-{timestamp}".
@@ -76,16 +76,16 @@ fly deploy [WORKING_DIRECTORY] [flags]
       --smoke-checks                     Perform smoke checks during deployment (default true)
       --strategy string                  The strategy for replacing running instances. Options are canary, rolling, bluegreen, or immediate. The default strategy is rolling.
       --update-only                      Do not create Machines for new process groups
-      --vm-cpu-kind string               The kind of CPU to use ('shared' or 'performance')
-      --vm-cpus int                      Number of CPUs
-      --vm-gpu-kind string               If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none)
+      --vm-cpu-kind string               The kind of CPU to use ('shared' or 'performance') (also --vm-cpukind)
+      --vm-cpus int                      Number of CPUs (also --cpus)
+      --vm-gpu-kind string               If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none) (also --vm-gpukind)
       --vm-gpus int                      Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
-      --vm-memory string                 Memory (in megabytes) to attribute to the VM
+      --vm-memory string                 Memory (in megabytes) to attribute to the VM (also --memory)
       --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
       --volume-initial-size int          The initial size in GB for volumes created on first deploy
       --wait-timeout string              Time duration to wait for individual machines to transition states and become healthy. (default "5m0s")
       --wg                               Determines whether communication with remote builders are conducted over wireguard or plain internet(https) (default true)
-  -y, --yes                              Accept all confirmations
+  -y, --yes                              Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

@@ -11,7 +11,7 @@ fly extensions sentry dashboard [flags]
   -a, --app string      Application name
   -c, --config string   Path to application configuration file
   -h, --help            help for dashboard
-  -y, --yes             Accept all confirmations
+  -y, --yes             Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

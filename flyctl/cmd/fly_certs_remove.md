@@ -17,7 +17,7 @@ fly certs remove <hostname> [flags]
   -c, --config string   Path to application configuration file
       --custom          Remove only the custom certificate, keeping ACME certificates
   -h, --help            help for remove
-  -y, --yes             Accept all confirmations
+  -y, --yes             Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options
