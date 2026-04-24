@@ -2,7 +2,8 @@
 title: Integrating flyctl
 layout: docs
 nav: flyctl
-date: 2026-04-22
+author: kcmartin
+date: 2026-04-24
 ---
 
 flyctl is designed to work in scripted and automated environments. You can use it in CI/CD pipelines, deployment scripts, and custom tooling with the same commands you run locally.
@@ -17,7 +18,9 @@ Set the `FLY_API_TOKEN` environment variable to authenticate flyctl without inte
 export FLY_API_TOKEN="your-token-here"
 ```
 
-When this variable is set, flyctl skips all interactive auth prompts. Every flyctl command respects it.
+When this variable is set, flyctl skips all interactive auth prompts and uses the token for every command. It takes precedence over any credentials from a prior `fly auth login`. flyctl also honors `FLY_ACCESS_TOKEN` as an alternative name for the same value --- either works.
+
+If you're testing a token env var locally on a machine where you're also logged in to flyctl, run `fly auth logout` first. The env var wins for each command, but mixing it with a cached login session can cause confusing behavior: `fly auth whoami` shows a token identity rather than your user, and scope-limited tokens silently filter output from commands like `fly apps list` instead of erroring. In CI, this isn't an issue --- there's no cached login.
 
 ### Token types
 
@@ -51,7 +54,15 @@ fly tokens create ssh -a my-app -x 24h
 fly tokens create machine-exec -a my-app --command "/app/migrate" -x 1h
 ```
 
-The token can only execute the specified command. Good for one-off tasks like database migrations in CI.
+The token can only execute the specified command. Good for one-off tasks like database migrations in CI. The short form of `--command` is `-C` (uppercase).
+
+**Read-only org token** --- for automation that only needs to read state:
+
+```bash
+fly tokens create readonly -o my-org -x 720h
+```
+
+Scoped to the entire org (like `fly tokens create org`) but can't create, deploy, or modify anything. Good for monitoring scripts, status dashboards, or any workflow that only consumes data from the Fly API.
 
 ### Token management
 
@@ -61,18 +72,19 @@ List active tokens:
 fly tokens list
 ```
 
-Revoke a token by name or ID:
+Revoke one or more tokens by ID (get IDs from `fly tokens list`):
 
 ```bash
-fly tokens revoke "my-ci-token"
+fly tokens revoke <token-id>
 ```
 
 ### Least-privilege guidance
 
 - Use deploy tokens for CI. They can't access other apps or org-level resources.
+- Use read-only tokens (`fly tokens create readonly`) for any automation that only needs to read state --- monitoring, status checks, reporting. They can't deploy or modify resources, so they're safe to distribute more widely than deploy tokens.
 - Set expiry times. Short-lived tokens (`-x 24h`, `-x 720h`) limit the blast radius of a leaked secret.
 - Rotate tokens on a schedule. Revoke old ones; create new ones.
-- Never use `fly auth token` in CI --- it returns your full personal token with access to everything. Use a scoped [`fly tokens create`](#token-types) variant (deploy, org, ssh, or machine-exec) instead.
+- Never use `fly auth token` in CI --- it returns your full personal token with access to everything. This command is deprecated and hidden from flyctl's help output; use `fly tokens create` instead.
 
 ### FLY_APP
 
@@ -216,7 +228,7 @@ fly machines list --json | jq '.[] | select(.state == "started")'
 Get the current image tag:
 
 ```bash
-fly status --json | jq -r '.Machines[0].image_ref.tag'
+fly status --json | jq -r '.Machines[0].config.image'
 ```
 
 Count machines by region:
@@ -235,7 +247,7 @@ The `-e` flag makes `jq` exit with a non-zero status if the expression evaluates
 
 ## Remote builds
 
-By default, `fly deploy` builds your image remotely on Fly.io infrastructure using a Buildkit-based builder. You don't need Docker installed locally.
+By default, `fly deploy` builds your image remotely on Fly.io infrastructure. You don't need Docker installed locally.
 
 ### Build modes
 
@@ -245,15 +257,15 @@ By default, `fly deploy` builds your image remotely on Fly.io infrastructure usi
 fly deploy
 ```
 
-Builds run on Fly.io builders in your app's primary region. The first build in a region is slower because there's no layer cache. Subsequent builds use Docker layer caching and are significantly faster.
+The first build on a new [builder](/docs/reference/builders/) is slower because there's no layer cache. Subsequent builds reuse Docker layers and are significantly faster.
 
-**Remote build with the newer Buildkit builder:**
+**Remote build with the Buildkit builder (experimental):**
 
 ```bash
 fly deploy --buildkit
 ```
 
-Uses an updated builder that can be faster for some workloads.
+Deploys using the buildkit-based remote builder. Often faster than the default, but still experimental. If a build fails with `--buildkit`, try again without the flag before digging into the failure --- the classic remote builder is the supported path for now.
 
 **Local build:**
 
@@ -273,9 +285,18 @@ Deploys an existing image directly. Useful when your CI pipeline already builds 
 
 ### Notes on caching
 
-- First build in a region has no cache and takes longer.
+- The first build on a new builder has no cache and takes longer.
 - Subsequent builds reuse Docker layers. Structure your Dockerfile to maximize cache hits (dependencies before source code).
-- If you consistently see slow builds, check that your Dockerfile copies dependency files (like `package.json` or `requirements.txt`) before copying the rest of your source.
+- If you consistently see slow builds, check the order of your Dockerfile. Copy dependency manifests, install them, *then* copy the rest of your source:
+
+  ```dockerfile
+  COPY package.json package-lock.json ./
+  RUN npm install
+  COPY . .
+  ```
+
+  If the install runs *after* you copy the full source, any source change invalidates the install layer's cache and forces a reinstall on every build, negating the benefit.
+- Uncompressed images on standard Machines are limited to 8 GB, matching the maximum rootfs size. Larger images can't be deployed, so you'll need to reduce the image size.
 
 ## Other CI systems
 
