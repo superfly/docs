@@ -18,15 +18,15 @@ Set the `FLY_API_TOKEN` environment variable to authenticate flyctl without inte
 export FLY_API_TOKEN="your-token-here"
 ```
 
-When this variable is set, flyctl skips all interactive auth prompts and uses the token for every command. It takes precedence over any credentials from a prior `fly auth login`. flyctl also honors `FLY_ACCESS_TOKEN` as an alternative name for the same value --- either works.
+When this variable is set, flyctl skips all interactive auth prompts and uses the token for every command. It takes precedence over any credentials from a prior `fly auth login`. flyctl also honors `FLY_ACCESS_TOKEN` as an alternative name for the same value, and either will work.
 
-If you're testing a token env var locally on a machine where you're also logged in to flyctl, run `fly auth logout` first. The env var wins for each command, but mixing it with a cached login session can cause confusing behavior: `fly auth whoami` shows a token identity rather than your user, and scope-limited tokens silently filter output from commands like `fly apps list` instead of erroring. In CI, this isn't an issue --- there's no cached login.
+If you're testing a token env var locally on a machine where you're also logged in to flyctl, run `fly auth logout` first. The env var wins for each command, but mixing it with a cached login session can cause confusing behavior: `fly auth whoami` shows a token identity rather than your user, and scope-limited tokens silently filter output from commands like `fly apps list` instead of erroring. In CI, this isn't an issue because there's no cached login.
 
 ### Token types
 
 Use the narrowest scope that works for your use case.
 
-**Deploy token (single app)** --- the default choice for CI deploys:
+**Deploy token (single app)** This is the default choice for CI deploys:
 
 ```bash
 fly tokens create deploy -a my-app -x 720h
@@ -34,7 +34,7 @@ fly tokens create deploy -a my-app -x 720h
 
 This token can only deploy and manage the specified app. The `-x` flag sets expiry; `720h` is 30 days. Without `-x`, tokens default to 20 years.
 
-**Org deploy token** --- for multi-app pipelines or org-wide automation:
+**Org deploy token** For multi-app pipelines or org-wide automation:
 
 ```bash
 fly tokens create org -o my-org -x 720h
@@ -42,13 +42,13 @@ fly tokens create org -o my-org -x 720h
 
 Can manage any app in the organization. Use this when a single pipeline deploys multiple apps.
 
-**SSH token** --- SSH access to a single app's machines:
+**SSH token** For SSH access to a single app's machines:
 
 ```bash
 fly tokens create ssh -a my-app -x 24h
 ```
 
-**Machine exec token** --- restricted to running a specific command:
+**Machine exec token** These are restricted to running a specific command:
 
 ```bash
 fly tokens create machine-exec -a my-app --command "/app/migrate" -x 1h
@@ -56,7 +56,7 @@ fly tokens create machine-exec -a my-app --command "/app/migrate" -x 1h
 
 The token can only execute the specified command. Good for one-off tasks like database migrations in CI. The short form of `--command` is `-C` (uppercase).
 
-**Read-only org token** --- for automation that only needs to read state:
+**Read-only org token** For automation that only needs to read state:
 
 ```bash
 fly tokens create readonly -o my-org -x 720h
@@ -81,10 +81,10 @@ fly tokens revoke <token-id>
 ### Least-privilege guidance
 
 - Use deploy tokens for CI. They can't access other apps or org-level resources.
-- Use read-only tokens (`fly tokens create readonly`) for any automation that only needs to read state --- monitoring, status checks, reporting. They can't deploy or modify resources, so they're safe to distribute more widely than deploy tokens.
+- Use read-only tokens (`fly tokens create readonly`) for any automation that only needs to read state, such as monitoring, status checks, reporting. They can't deploy or modify resources, so they're safe to distribute more widely than deploy tokens.
 - Set expiry times. Short-lived tokens (`-x 24h`, `-x 720h`) limit the blast radius of a leaked secret.
 - Rotate tokens on a schedule. Revoke old ones; create new ones.
-- Never use `fly auth token` in CI --- it returns your full personal token with access to everything. This command is deprecated and hidden from flyctl's help output; use `fly tokens create` instead.
+- Never use `fly auth token` in CI, because it returns your full personal token with access to everything. This command is deprecated and hidden from flyctl's help output; use `fly tokens create` instead.
 
 ### FLY_APP
 
@@ -265,7 +265,7 @@ The first build on a new [builder](/docs/reference/builders/) is slower because 
 fly deploy --buildkit
 ```
 
-Deploys using the buildkit-based remote builder. Often faster than the default, but still experimental. If a build fails with `--buildkit`, try again without the flag before digging into the failure --- the classic remote builder is the supported path for now.
+Deploys using the buildkit-based remote builder. Often faster than the default, but still experimental. If a build fails with `--buildkit`, try again without the flag before digging into the failure. The classic remote builder is the supported path for now.
 
 **Local build:**
 
