@@ -223,6 +223,22 @@ If you're running multiple heavy-weight things in a single container, you might 
 
 Fly.io apps can talk to each other over a [private network](https://fly.io/docs/networking/private-networking/) that's always available. They can find each other under the `.internal` top-level domain (if your apps are `foo` and `bar`, they'll be in the DNS as `foo.internal` and `bar.internal`). Because the network connection is private and encrypted, you can generally just talk back and forth without extra authentication until you know you need it; in other words, you can keep things simple.
 
+The main conveniences you give up when splitting into separate apps are that secrets are shared across all process groups in a single app, and all process groups deploy from the same Docker image. There are also cases where separate apps are the only option — for instance, the [metrics-based autoscaler](/docs/launch/autoscale-by-metric/) operates on a whole app, so workloads that need independent scaling behavior have to live in their own apps.
+
+You can still share a single built image across several apps. Build it once without deploying:
+
+```cmd
+fly deploy --build-only --push
+```
+
+This outputs a tag of the form `registry.fly.io/app:deployment-xxxx`. Any app in the same organization can then deploy from that image:
+
+```cmd
+fly deploy --image registry.fly.io/app:deployment-xxxx
+```
+
+The main thing to watch out for is that secrets have to be set on each app individually, which can mean some duplication.
+
 ### Maybe you don't need multiple processes
 
 There are a bunch of reasons people want to run multiple things in a container that Fly.io already takes care of for you. For instance: [metrics are a built-in feature of the platform](https://fly.io/blog/hooking-up-fly-metrics/), as are logs. You might not need to run helper processes for this kind of stuff.
