@@ -15,6 +15,7 @@ fly postgres create [flags]
       --enable-backups              Create a new tigris bucket and enable WAL-based backups
       --flex                        Create a postgres cluster that's managed by Repmgr (default true)
       --fork-from string            Specify a source Postgres application to fork from. Format: <app-name> or <app-name>:<volume-id>
+      --generate-name               Generate an app name
   -h, --help                        help for create
       --host-dedication-id string   The dedication id of the reserved hosts for your organization (if any)
       --image-ref string            Specify a non-default base image for the Postgres app
