@@ -5,7 +5,7 @@ nav: guides
 date: 2026-04-28
 ---
 
-[Hermes](https://github.com/NousResearch/hermes-agent) is making waves right now, mostly because its self-improvement loop is pretty nifty. Rather than expecting the user to define and install tools to accomplish repeated tasks, Hermes pays attention to its own output, notices when it had to improvise or learn by trial and error, and then automatically writes that experience into a reusable skill it can call next time. The result is: Hermes gets better at one-shotting your workflows without you writing a single prompt template. Its value and utility increase based on usage history, so you really want to be running your Hermes on a computer, not in a sandbox.
+[Hermes](https://github.com/NousResearch/hermes-agent) is an AI agent from Nous Research with a built-in learning loop: it watches its own output, notices when it had to improvise to finish a task, and writes that experience back as a reusable skill it can call next time. The skill library grows with use, so Hermes works best when it runs continuously on a persistent host rather than a short-lived sandbox, which is exactly what a Fly Machine with an attached volume gives you.
 
 This guide walks you through running Hermes on a Fly Machine, configuring it, and reaching its web dashboard from your laptop.
 
