@@ -170,7 +170,9 @@ Increase RAM:
 fly scale memory 8192 --app <your-hermes-app>
 ```
 
-**Need to start fresh**, wipe the config files (skills, sessions, and memories survive):
+**Need to start fresh**
+
+Wipe the config files (skills, sessions, and memories survive):
 
 ```bash
 fly ssh console --app <your-hermes-app> -C \
