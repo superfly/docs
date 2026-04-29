@@ -42,4 +42,6 @@ flyctl storage update mybucket --custom-domain assets.example.com
 
 Then create a CNAME record for `assets.example.com` pointing to `mybucket.t3.tigrisbucket.io`. See the [Tigris Custom Domain docs](https://www.tigrisdata.com/docs/buckets/custom-domain/) for full setup instructions and the [Tigris Public Bucket docs](https://www.tigrisdata.com/docs/buckets/public-bucket/) for details on all available public domains.
 
-Currently, buckets must be public or private. ACL settings will be ignored by the Tigris API.
+### Object Level Access Control 
+By default, all objects inherit the access control settings of the bucket they are in. If a bucket is private, all objects in it are also private and vice versa. However, you can make individual objects in a bucket public-read (or private) by setting an object level ACL on them. 
+This lets you serve a public object from an otherwise private bucket, or a private object from an otherwise public bucket. For details on how to set this up see the [Tigris Object ACL docs](https://www.tigrisdata.com/docs/objects/acl/) 
