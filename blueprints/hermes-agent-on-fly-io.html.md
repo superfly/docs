@@ -191,7 +191,9 @@ fly volumes create data --app <your-hermes-app> --region <region> --size 3
 fly machine start <machine-id> --app <your-hermes-app>
 ```
 
-**Skills behaving unexpectedly**, list, view, and delete:
+**Skills behaving unexpectedly**
+
+List, view, and delete:
 
 ```bash
 fly ssh console --app <your-hermes-app>
