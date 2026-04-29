@@ -117,7 +117,7 @@ In a second terminal, open a Fly proxy from your laptop:
 fly proxy 9119:9119 --app <your-hermes-app>
 ```
 
-Now visit `http://localhost:9119` in your browser. The traffic goes over your authenticated Fly Wireguard tunnel; nothing is published.
+Now visit `http://localhost:9119` in your browser. Traffic goes over your authenticated WireGuard tunnel; the dashboard isn't published to the public internet, though it is reachable from other Machines on your organization's [private network](/docs/networking/private-networking/)
 
 When you're done, `Ctrl+C` both commands. The gateway keeps running on the machine.
 
