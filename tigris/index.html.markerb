@@ -6,11 +6,11 @@ nav: firecracker
 redirect_from: /docs/reference/tigris/
 ---
 
-[Tigris](https://tigrisdata.com) is a globally caching, S3-compatible object storage service built on Fly.io infrastructure.
+[Tigris](https://tigrisdata.com) is a globally distributed, multi-cloud object storage service with built-in support for the S3 API. Tigris is natively available as the object storage provider for Fly.io.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/cn2if9oInK0?si=LcWG4wle9DBBPf4F" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br/>
 
-Objects in Tigris are stored close to the region where they're written. Then, when requested, objects are cached close to the requesting user. This cache is intelligently managed by Tigris based on global traffic patterns. This behavior offers CDN-like behavior with zero configuration required.
+Objects in Tigris are stored close to the region where they're written. Then, when requested, objects are replicated close to the requesting user. This durable cross-region replication is intelligently managed by Tigris based on global traffic patterns. This automatic global replication can replace a CDN and makes all your data available at low latency with zero configuration required.
 
 Learn more from their [service overview](https://www.tigrisdata.com/docs/overview/) and [architecture docs](https://www.tigrisdata.com/docs/concepts/architecture/).
 
@@ -24,67 +24,29 @@ Language- and framework-specific guides for setting up Tigris:
 
 ## Create and manage a Tigris storage bucket
 
-Creating and managing storage buckets happens exclusively via the [Fly CLI](/docs/flyctl/install/). Install it, then [sign up for a Fly account](/docs/getting-started/sign-up-sign-in/).
+Provision Tigris storage buckets through the [Fly CLI](/docs/flyctl/install/). Install it, then [sign up for a Fly account](/docs/getting-started/sign-up-sign-in/). Once provisioned, you can also manage your buckets and objects with the [Tigris CLI](https://www.tigrisdata.com/docs/cli/) or any S3-compatible SDK — see [Connect to your bucket](#connect-to-your-bucket) below.
 
 <aside class="callout">Running the following command in a Fly.io app context -- inside an app directory or specifying `-a yourapp` -- will automatically set secrets on your app.</aside>
 
 <%= partial "/docs/partials/tigris/tigris-storage-create" %>
 
-### Migrating to Tigris with shadow buckets
+### Access keys
 
-A shadow bucket is an existing S3 (or compatible) bucket, assigned to your Tigris bucket via `flyctl`.
+`fly storage create` prints a Tigris access key ID and secret in its output (and sets them as `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` secrets on your Fly app, when run in an app context). Save them at that moment — `flyctl` can't retrieve them later, and `fly secrets list` only shows hashes.
 
-Shadow buckets enable transparent copying and writing of objects as they are requested or uploaded. This is helpful for a few scenarios, like:
-
-* Avoiding egress fees from large data migrations
-* Avoiding downtime by serving requests from Tigris while running a data migration
-* Testing Tigris global cache performance
-* Testing Tigris features with the option to switch back to your current provider
-
-#### How shadow buckets work
-
-Tigris follows this logic when a shadow bucket is set:
-
-* If a requested object is present in Tigris, it's served immediately
-* If not present, Tigris fetches it from the shadow bucket and stores it in a region close to the requesting user
-* Subsequent requests are served from Tigris and cached in the requesting user's region
-* Written objects are stored in Tigris close to the uploading user's region
-* Optionally, written objects are replicated to the shadow bucket
-* Deleted objects are removed from both the Tigris and shadow bucket
-
-#### Create a new bucket with a shadow bucket
-
-You must specify all shadow bucket attributes, including the endpoint and region. Check your provider docs to find these values. Here's the AWS S3 [list of regions and endpoints](https://docs.aws.amazon.com/general/latest/gr/s3.html).
-
-```cmd
-flyctl storage create -n mybucket -o myorg --shadow-access-key 123 --shadow-secret-key abc --shadow-endpoint https://s3.us-east-1.amazonaws.com --shadow-region us-east-1 --shadow-write-through
-```
-
-#### Add or remove a shadow bucket on an existing Tigris bucket
-
-You can also add and remove shadow buckets from existing Tigris buckets.
-
-```cmd
-flyctl storage update mybucket --shadow-access-key 123 --shadow-secret-key abc --shadow-endpoint https://s3.us-east-1.amazonaws.com --shadow-region us-east-1
-
-flyctl storage update mybucket --clear-shadow
-```
-
-`shadow-write-through` ensures that writes to Tigris buckets are replicated to the shadow bucket.
+To view or create new keys for an existing bucket, open the Tigris web console with `fly storage dashboard <bucket-name>` and manage keys there. For Tigris CLI use, the [Tigris CLI](#tigris-cli) sidesteps raw keys via `tigris login`.
 
 ### The Tigris web console
 
-To view more details about your buckets, sign in to the Tigris web console.
+The [Tigris web console](https://console.storage.dev) at `console.storage.dev` is a visual interface for managing buckets, objects, access keys, and usage. From a Fly account, open it either way:
 
-```cmd
-flyctl storage dashboard <bucket_name>
-```
+* Click the **Tigris Object Storage** tab in the [Fly Dashboard](https://fly.io/dashboard).
+* Run `flyctl storage dashboard <bucket_name>` from the command line to jump to a specific bucket, or `flyctl storage dashboard --org <org_name>` for the organization-level overview (billing, organization settings).
 
-Or, visit your organization-level overview for billing and organization settings:
+If you visit `console.storage.dev` directly, the Tigris sign-in page offers two paths:
 
-```cmd
-flyctl storage dashboard --org <org_name>
-```
+* **Sign in with Fly.io** — choose **Fly.io** on the Tigris login page to manage buckets created through `fly storage create`. Tigris reads your Fly organization, so the buckets shown match `flyctl storage list`.
+* **Sign in directly** — Tigris also supports standalone accounts (Google, GitHub, or email). These are independent of any Fly account and only see buckets created under that Tigris account.
 
 ### List your buckets
 Get a list of all of your Tigris buckets.
@@ -96,6 +58,12 @@ flyctl storage list
 NAME                  	ORG
 js-storage-1           	fly-ephemeral
 late-surf-5384        	fly-ephemeral
+```
+
+Or with the [Tigris CLI](#tigris-cli) (see [setup below](#tigris-cli)):
+
+```cmd
+tigris buckets list
 ```
 
 ### Delete a Tigris bucket
@@ -111,9 +79,128 @@ Destroying a Tigris bucket is not reversible.
 Your Tigris bucket late-surf-5384 was destroyed
 ```
 
+Or with the [Tigris CLI](#tigris-cli):
+
+```cmd
+tigris buckets delete late-surf-5384
+```
+
+## Connect to your bucket
+
+Buckets created with `fly storage create` are standard Tigris buckets. You can manage them three ways:
+
+* **`flyctl`** — for bucket lifecycle (create, list, destroy) and shadow buckets.
+* **[Tigris CLI](https://www.tigrisdata.com/docs/cli/)** — for day-to-day bucket and object management, plus Tigris-specific features like snapshots, forks, and shadow buckets.
+* **S3-compatible SDKs** — for application code in any language.
+
+All three target the same bucket and accept the credentials that `fly storage create` set on your Fly app.
+
+### Endpoint
+
+The canonical Tigris S3 endpoint is `https://t3.storage.dev`. We recommend using it for new code.
+
+`fly storage create` currently sets the `AWS_ENDPOINT_URL_S3` secret on your Fly app to `https://fly.storage.tigris.dev`. Both endpoints reach the same Tigris service and the same buckets, so existing code keeps working. To switch a Fly app to the canonical endpoint:
+
+```cmd
+fly secrets set AWS_ENDPOINT_URL_S3=https://t3.storage.dev
+```
+
+To configure an SDK or tool manually:
+
+* **Endpoint URL:** `https://t3.storage.dev`
+* **Region:** `auto`
+* **Access key ID:** from `AWS_ACCESS_KEY_ID`
+* **Secret access key:** from `AWS_SECRET_ACCESS_KEY`
+
+### Tigris CLI
+
+The [Tigris CLI](https://www.tigrisdata.com/docs/cli/) (`tigris`, also available as `t3`) manages Tigris buckets and objects from the command line. It targets `https://t3.storage.dev` by default.
+
+Install and sign in:
+
+```cmd
+npm install -g @tigrisdata/cli
+tigris login
+```
+
+When prompted, choose **As a user (OAuth2 flow)**, then select **Fly.io** on the login page that opens in your browser. This connects the CLI to buckets created through your Fly account. Then run commands like:
+
+```cmd
+tigris ls
+tigris cp ./photo.jpg t3://my-bucket/photo.jpg
+tigris presign t3://my-bucket/photo.jpg
+```
+
+### Tigris SDKs
+
+Tigris is S3-compatible, so any AWS SDK works — point it at `https://t3.storage.dev`. Tigris publishes language-specific guides for [Python](https://www.tigrisdata.com/docs/sdks/s3/aws-python-sdk/), [Node.js](https://www.tigrisdata.com/docs/sdks/s3/aws-js-sdk/), [Go](https://www.tigrisdata.com/docs/sdks/s3/aws-go-sdk/), [Ruby](https://www.tigrisdata.com/docs/sdks/s3/aws-ruby-sdk/), [PHP](https://www.tigrisdata.com/docs/sdks/s3/aws-php-sdk/), [.NET](https://www.tigrisdata.com/docs/sdks/s3/aws-net-sdk/), [Java](https://www.tigrisdata.com/docs/sdks/s3/aws-java-sdk/), and [Elixir](https://www.tigrisdata.com/docs/sdks/s3/aws-elixir-sdk/).
+
+### Snapshots and forks
+
+[Snapshots and forks](https://www.tigrisdata.com/docs/buckets/snapshots-and-forks/) are Tigris-only features that aren't exposed through `flyctl`. Snapshots must be enabled when the bucket is created — they cannot be turned on later, and forks require snapshots. Buckets created with `fly storage create` do not have snapshots enabled.
+
+To use snapshots and forks on Fly-provisioned buckets, install the [Tigris CLI](https://www.tigrisdata.com/docs/cli/) and sign in with your Fly.io account:
+
+```cmd
+npm install -g @tigrisdata/cli
+tigris login
+```
+
+When prompted, choose **As a user (OAuth2 flow)**, then select **Fly.io** on the login page that opens in your browser. The CLI then manages every Tigris bucket on your Fly account — `tigris buckets list` should show the same buckets as `flyctl storage list`.
+
+Snapshots can't be enabled on existing buckets, so create a new bucket with the `--enable-snapshots` flag, then migrate or write data into it:
+
+```cmd
+tigris buckets create my-bucket --enable-snapshots
+tigris snapshots take my-bucket
+tigris forks create my-bucket my-fork
+```
+
+You can also create snapshot-enabled buckets from a [Tigris SDK](https://www.tigrisdata.com/docs/sdks/) or the [Tigris web console](https://console.storage.dev).
+
+## Migrate from another S3-compatible provider with zero downtime
+
+Tigris supports **zero-downtime, lazy migration** from any S3-compatible storage provider — AWS S3, Cloudflare R2, Google Cloud Storage, MinIO, Backblaze B2, and others. Instead of copying everything up front, Tigris fetches objects from your old bucket as your application requests them and asynchronously stores copies in Tigris for future reads. Only data that's actually used moves over, so migration latency and egress costs stay low.
+
+The migration setup uses a **shadow bucket**: your existing source bucket, attached to a Tigris bucket through `flyctl`. Once attached, your application points at Tigris, and Tigris transparently fills in objects from the shadow bucket as needed. See the [Tigris migration guide](https://www.tigrisdata.com/docs/migration/) for provider-specific setup.
+
+### How shadow bucket migration works
+
+* **Reads:** Tigris checks its own bucket first. On a miss, it fetches the object from the shadow bucket, returns it to the caller, and asynchronously copies it into Tigris (in a region close to the user). Subsequent reads are served from Tigris with no shadow lookup.
+* **Writes (default):** Objects are written only to Tigris.
+* **Writes (write-through enabled):** Objects are written to both Tigris and the shadow bucket simultaneously, keeping both stores in sync.
+* **Deletes:** Removed from both Tigris and the shadow bucket.
+* **Listing:** With write-through enabled, `ListObjects` returns the full shadow bucket contents. Without write-through, only objects already migrated into Tigris are listed.
+
+### Write-through mode: zero-downtime cutover
+
+Write-through mode (the `--shadow-write-through` flag below) is what makes the migration zero-downtime and reversible. Because every new write also lands in your old bucket, your previous provider stays fully current while you run on Tigris in production. You can soak in this dual-write state for days, weeks, or months, validate behavior, and roll back to your old provider at any time without data loss. When you're ready, disable write-through and decommission the old bucket.
+
+### Create a new bucket with a shadow bucket
+
+You must specify all shadow bucket attributes, including the endpoint and region. Check your provider docs to find these values. Here's the AWS S3 [list of regions and endpoints](https://docs.aws.amazon.com/general/latest/gr/s3.html).
+
+```cmd
+flyctl storage create -n mybucket -o myorg --shadow-access-key 123 --shadow-secret-key abc --shadow-endpoint https://s3.us-east-1.amazonaws.com --shadow-region us-east-1 --shadow-write-through
+```
+
+### Add or remove a shadow bucket on an existing Tigris bucket
+
+You can also add and remove shadow buckets from existing Tigris buckets.
+
+```cmd
+flyctl storage update mybucket --shadow-access-key 123 --shadow-secret-key abc --shadow-endpoint https://s3.us-east-1.amazonaws.com --shadow-region us-east-1
+
+flyctl storage update mybucket --clear-shadow
+```
+
+`--shadow-write-through` enables zero-downtime cutover by replicating every new write back to the source bucket.
+
 ## Pricing and Billing
 
-Tigris buckets are billed by usage with no up-front costs. Check the official [Tigris Pricing](https://www.tigrisdata.com/docs/pricing/) page for details.
+Tigris buckets created through your Fly account are billed through Fly. Tigris usage appears on your regular Fly bill — there's no separate Tigris invoice or account to manage. This applies whether you create buckets with `fly storage create`, the Tigris CLI, or a Tigris SDK using the credentials Fly provisioned for you.
+
+Buckets are billed by usage with no up-front costs. Check the official [Tigris Pricing](https://www.tigrisdata.com/docs/pricing/) page for rates.
 
 
 ## AWS API compatibility
