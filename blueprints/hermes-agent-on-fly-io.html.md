@@ -52,7 +52,7 @@ primary_region = "<region>"
 A few notes:
 
 - **No `[build.dockerfile]`**, Fly pulls the image directly. Deploys take seconds, not minutes.
-- **`[experimental] cmd = ["gateway", "run"]`** is passed to the image's entrypoint, so the machine boots into `hermes gateway run` (the messaging gateway for Telegram, Discord, Slack, WhatsApp, etc.).
+- **`[processes] app = "gateway run"`** defines the single process group for this app, and its command is passed to the image's entrypoint, so the Machine boots into `hermes gateway run` (the messaging gateway for Telegram, Discord, Slack, WhatsApp, etc.).
 - **No `[[services]]` block.** The gateway talks *outbound* to chat platforms, so you don't need a public port. The dashboard exposes API keys and shouldn't be public; we'll reach it through a Fly proxy tunnel below.
 - **4 GB / 2 CPU** is the recommended size when browser tools (Playwright/Chromium) are active. If you don't use browser tools you can drop to `shared-cpu-1x` and 1–2 GB.
 
