@@ -6,7 +6,7 @@ nav: firecracker
 redirect_from: /docs/reference/tigris/
 ---
 
-[Tigris](https://tigrisdata.com) is a globally distributed, multi-cloud object storage service with built-in support for the S3 API. Tigris is natively available as the object storage provider for Fly.io.
+[Tigris](https://tigrisdata.com) is a globally distributed, multi-cloud object storage service with built-in support for the S3 API. Tigris is available natively as the object storage provider for Fly.io.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/cn2if9oInK0?si=LcWG4wle9DBBPf4F" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br/>
 
