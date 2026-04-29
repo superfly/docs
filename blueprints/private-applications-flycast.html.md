@@ -70,7 +70,7 @@ VERSION	IP                	TYPE   	REGION	CREATED AT
 v6     	fdaa:3:9018:0:1::7	private	global	23h12m ago
 ```
 
-Learn more about [Fly.io public, private, shared and dedicated IP addresses](/docs/reference/services/#ip-addresses).
+Learn more about [Fly.io public, private, shared and dedicated IP addresses](/docs/networking/services/#anycast-ip-addresses).
 
 This app only has one IP address: a private Flycast IPv6 address. If it had public IP addresses, it'd look like this:
 
