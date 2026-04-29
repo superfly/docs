@@ -137,7 +137,12 @@ Tigris is S3-compatible, so any AWS SDK works — point it at `https://t3.storag
 
 ### Snapshots and forks
 
-[Snapshots and forks](https://www.tigrisdata.com/docs/buckets/snapshots-and-forks/) are Tigris-only features that aren't exposed through `flyctl`. Snapshots must be enabled when the bucket is created — they cannot be turned on later, and forks require snapshots. Buckets created with `fly storage create` do not have snapshots enabled.
+[Snapshots and forks](https://www.tigrisdata.com/docs/buckets/snapshots-and-forks/) are Tigris-only features that aren't exposed through `flyctl`.
+
+* **Snapshots** are point-in-time references to a bucket's state. When snapshots are enabled, Tigris persists every write to the bucket, so the bucket's full history is restorable — not just the moments you took a manual snapshot. `tigris snapshots take` simply names a point in time for easy reference.
+* **Forks** are copy-on-write clones of a bucket from a chosen snapshot. Writes to a fork don't affect the source bucket, so they're useful for testing migrations, branching production data, or running experiments on isolated copies.
+
+Snapshots must be enabled when the bucket is created — they cannot be turned on later, and forks require snapshots. Buckets created with `fly storage create` do not have snapshots enabled.
 
 To use snapshots and forks on Fly-provisioned buckets, install the [Tigris CLI](https://www.tigrisdata.com/docs/cli/) and sign in with your Fly.io account:
 
