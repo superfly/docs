@@ -162,7 +162,9 @@ fly scale vm shared-cpu-4x --app <your-hermes-app>
 fly ssh console --app <your-hermes-app> -C "hermes doctor"
 ```
 
-**Out of memory**, increase RAM:
+**Out of memory**
+
+Increase RAM:
 
 ```bash
 fly scale memory 8192 --app <your-hermes-app>
