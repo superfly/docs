@@ -13,6 +13,7 @@ fly tokens create readonly [flags]
   -h, --help              help for readonly
   -j, --json              JSON output
   -n, --name string       Token name (default "Read-only org token")
+  -o, --org string        The target Fly.io organization
 ~~~
 
 ## Global Options
