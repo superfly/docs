@@ -64,7 +64,7 @@ fly-replay: app=target-app
 ```
 
 <div class="note icon">
-By default, cross-app routing works within the same organization. To route to apps in other organizations, see [Cross-Organization Routing](#cross-organization-routing).
+By default, cross-app routing works within the same organization and network. To route across networks, see [Cross-Network Routing](#cross-network-routing). To route to apps in other organizations, see [Cross-Organization Routing](#cross-organization-routing).
 </div>
 
 You can combine multiple fields:
@@ -446,7 +446,40 @@ fly-replay: app=customer-function-app
 
 This allows you to build router apps that can dynamically route requests to other apps.
 
-By default, cross-app routing works within the same organization. To route to apps in other organizations, see [Cross-Organization Routing](#cross-organization-routing).
+By default, cross-app routing works within the same organization and the same [private network](/docs/networking/private-networking/).
+
+### Cross-Network Routing
+
+By default, `fly-replay` with `app=` only routes to apps within the same private network. If you have multiple networks within your organization and need to replay requests across them, you can enable cross-network replays for your organization.
+
+<div class="note icon">
+**Note**: Cross-network replay restrictions only apply to same-org replays. Cross-organization replays (via the [allowlist](#cross-organization-routing)) are not affected by this setting.
+</div>
+
+#### Enabling Cross-Network Replays
+
+Only organization admins can manage this setting. You can enable cross-network replays via the dashboard or CLI.
+
+**Dashboard:**
+
+Go to your organization's settings page and find the **Routing** section. Use the **Cross-Network Replay** toggle to enable or disable cross-network replays.
+
+**CLI:**
+
+Check the current status:
+```cmd
+fly orgs cross-network-replays status --org <your-org>
+```
+
+Enable cross-network replays:
+```cmd
+fly orgs cross-network-replays enable --org <your-org>
+```
+
+Disable cross-network replays:
+```cmd
+fly orgs cross-network-replays disable --org <your-org>
+```
 
 ### Cross-Organization Routing
 
