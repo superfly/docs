@@ -12,6 +12,7 @@ A growing library of guides for running, designing, and deploying all kinds of a
 Guides for the structure your app on Fly.io. Layouts, tradeoffs, moving parts.
 
 - [Deploy OpenClaw on Fly.io](/docs/blueprints/deploy-openclaw/) NEW!!
+- [Run Hermes Agent on Fly.io](/docs/blueprints/hermes-agent-on-fly-io/) NEW!!
 - [Deploying Remote MCP Servers](/docs/blueprints/remote-mcp-servers/)
 - [Resilient apps use multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/)
 - [Getting Started with N-Tier Architecture](/docs/blueprints/n-tier-architecture/)
