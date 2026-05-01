@@ -10,6 +10,7 @@ fly orgs [command] [flags]
 
 ## Available Commands
 * [create](/docs/flyctl/orgs-create/)	 - Create an organization
+* [cross-network-replays](/docs/flyctl/orgs-cross-network-replays/)	 - Manage cross-network replay settings
 * [delete](/docs/flyctl/orgs-delete/)	 - Delete an organization
 * [invite](/docs/flyctl/orgs-invite/)	 - Invite user (by email) to organization
 * [list](/docs/flyctl/orgs-list/)	 - Lists organizations for current user
