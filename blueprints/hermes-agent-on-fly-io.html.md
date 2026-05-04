@@ -19,7 +19,7 @@ We'll use Nous Research's **official prebuilt image** (`nousresearch/hermes-agen
 
 ## Create the app and volume
 
-Hermes keeps all its state; config, API keys, sessions, skills, memories in `/opt/data` inside the container. We'll back that with a Fly volume so it persists across deploys and restarts.
+Hermes keeps all its state in `/opt/data` inside the container. That includes config, API keys, sessions, skills, and memories. You'll back that with a Fly volume so it persists across deploys and restarts.
 
 Pick an app name (must be globally unique on Fly) and a [region](https://fly.io/docs/reference/regions/) close to you, then:
 
@@ -57,7 +57,7 @@ A few notes:
 
 - **No `[build.dockerfile]`.** Fly pulls the image directly. Deploys take seconds, not minutes.
 - **`[processes] app = "gateway run"`** defines the single process group for this app, and its command is passed to the image's entrypoint, so the Machine boots into `hermes gateway run` (the messaging gateway for Telegram, Discord, Slack, WhatsApp, etc.).
-- **No `[[services]]` block.** The gateway talks *outbound* to chat platforms, so you don't need a public port. The dashboard exposes API keys and shouldn't be public; we'll reach it through a Fly proxy tunnel below.
+- **No `[[services]]` block.** The gateway talks *outbound* to chat platforms, so you don't need a public port. The dashboard exposes API keys and shouldn't be public; you'll reach it through a Fly proxy tunnel below.
 - **4 GB / 2 CPU** is the recommended size when browser tools (Playwright/Chromium) are active. If you don't use browser tools you can drop to `shared-cpu-1x` and 1–2 GB.
 
 ## Deploy
