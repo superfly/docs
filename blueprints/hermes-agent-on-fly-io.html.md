@@ -15,7 +15,7 @@ This guide walks you through running Hermes on a Fly Machine, configuring it, an
 
 You'll need **[flyctl](https://fly.io/docs/flyctl/install/)** installed, a **Fly.io account** ([free trial](https://fly.io/docs/about/free-trial/) works), and an **LLM API key** (Anthropic, OpenAI, Google Gemini, or [OpenRouter](https://openrouter.ai/) for access to 200+ models).
 
-We'll use Nous Research's **official prebuilt image** (`nousresearch/hermes-agent:latest`) so there's no Dockerfile to maintain and no remote builder to wait on; Fly pulls the image straight from Docker Hub.
+You'll use Nous Research's **official prebuilt image** (`nousresearch/hermes-agent:latest`) so there's no Dockerfile to maintain and no remote builder to wait on. Fly pulls the image straight from Docker Hub.
 
 ## Create the app and volume
 
