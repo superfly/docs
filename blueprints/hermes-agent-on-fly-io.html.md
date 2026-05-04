@@ -2,18 +2,18 @@
 title: Run Hermes Agent on Fly.io
 layout: docs
 nav: guides
-date: 2026-04-28
+date: 2026-05-04
 ---
 
 <figure>
-  <img src="/static/images/hermes-agent.png" alt="Illustration by Annie Ruygt of the Greek god Hermes mid-flight, depicted on a black-figure pottery bowl framed by olive branches" class="w-full max-w-lg mx-auto">
+  <img src="/static/images/Hermes_Agent.png" alt="Illustration by Annie Ruygt of the Greek god Hermes mid-flight, depicted on a black-figure pottery bowl framed by olive branches" class="w-full max-w-lg mx-auto">
 </figure>
 
 [Hermes](https://github.com/NousResearch/hermes-agent) is an AI agent from Nous Research with a built-in learning loop: it watches its own output, notices when it had to improvise to finish a task, and writes that experience back as a reusable skill it can call next time. The skill library grows with use, so Hermes works best when it runs continuously on a persistent host rather than a short-lived sandbox, which is exactly what a Fly Machine with an attached volume gives you.
 
 This guide walks you through running Hermes on a Fly Machine, configuring it, and reaching its web dashboard from your laptop.
 
-You'll need **[flyctl](https://fly.io/docs/flyctl/install/)** installed, a **Fly.io account** ([free trial](https://fly.io/docs/about/free-trial/) works), and an **LLM API key** (Anthropic, OpenAI, Google Gemini, or [OpenRouter](https://openrouter.ai/) for access to 200+ models).
+You'll need **[flyctl](/docs/flyctl/install/)** installed, a **Fly.io account** ([free trial](/docs/about/free-trial/) works), and an **LLM API key** (Anthropic, OpenAI, Google Gemini, or [OpenRouter](https://openrouter.ai/) for access to 200+ models).
 
 You'll use Nous Research's **official prebuilt image** (`nousresearch/hermes-agent:latest`) so there's no Dockerfile to maintain and no remote builder to wait on. Fly pulls the image straight from Docker Hub.
 
@@ -21,7 +21,7 @@ You'll use Nous Research's **official prebuilt image** (`nousresearch/hermes-age
 
 Hermes keeps all its state in `/opt/data` inside the container. That includes config, API keys, sessions, skills, and memories. You'll back that with a Fly volume so it persists across deploys and restarts.
 
-Pick an app name (must be globally unique on Fly) and a [region](https://fly.io/docs/reference/regions/) close to you, then:
+Pick an app name (must be globally unique on Fly) and a [region](/docs/reference/regions/) close to you, then:
 
 ```bash
 fly apps create <your-hermes-app>
