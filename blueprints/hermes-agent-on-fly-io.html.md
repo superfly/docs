@@ -80,7 +80,7 @@ You should see the bundled skills sync, then the gateway starting up.
 
 ## Configure Hermes
 
-SSH into the machine. The `hermes` binary lives at `/opt/hermes/.venv/bin/hermes` inside the image, but `fly ssh console` opens a login shell that resets PATH and won't find it there. Drop a symlink into `/usr/local/bin` (which is always on PATH) so `hermes` works as a bare command:
+SSH into the machine. The `hermes` binary lives at `/opt/hermes/.venv/bin/hermes` inside the image, but `fly ssh console` opens a login shell that resets PATH and won't find it there. Add a symlink into `/usr/local/bin` (which is always on PATH) so `hermes` works as a bare command:
 
 ```bash
 fly ssh console -a <your-hermes-app> -C \
