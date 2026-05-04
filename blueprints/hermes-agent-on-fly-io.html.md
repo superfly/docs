@@ -87,7 +87,7 @@ fly ssh console -a <your-hermes-app> -C \
   "ln -sf /opt/hermes/.venv/bin/hermes /usr/local/bin/hermes"
 ```
 
-Then drop into the machine and run the setup wizard:
+Then open a shell on the machine and run the setup wizard:
 
 ```bash
 fly ssh console -a <your-hermes-app>
