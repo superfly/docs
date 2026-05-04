@@ -160,7 +160,9 @@ fly scale vm shared-cpu-4x -a <your-hermes-app>
 
 ## Troubleshooting
 
-**Gateway won't start**, check `hermes doctor` for missing API keys or other diagnostics:
+**Gateway won't start**
+
+Check `hermes doctor` for missing API keys or other diagnostics:
 
 ```bash
 fly ssh console -a <your-hermes-app> -C "hermes doctor"
