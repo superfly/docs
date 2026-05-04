@@ -5,6 +5,10 @@ nav: guides
 date: 2026-04-28
 ---
 
+<figure>
+  <img src="/static/images/hermes-agent.png" alt="Illustration by Annie Ruygt of the Greek god Hermes mid-flight, depicted on a black-figure pottery bowl framed by olive branches" class="w-full max-w-lg mx-auto">
+</figure>
+
 [Hermes](https://github.com/NousResearch/hermes-agent) is an AI agent from Nous Research with a built-in learning loop: it watches its own output, notices when it had to improvise to finish a task, and writes that experience back as a reusable skill it can call next time. The skill library grows with use, so Hermes works best when it runs continuously on a persistent host rather than a short-lived sandbox, which is exactly what a Fly Machine with an attached volume gives you.
 
 This guide walks you through running Hermes on a Fly Machine, configuring it, and reaching its web dashboard from your laptop.
@@ -21,7 +25,7 @@ Pick an app name (must be globally unique on Fly) and a [region](https://fly.io/
 
 ```bash
 fly apps create <your-hermes-app>
-fly volumes create data --app <your-hermes-app> --region <region> --size 3
+fly volumes create data -a <your-hermes-app> --region <region> --size 3
 ```
 
 3 GB is comfortable headroom for sessions and the bundled skills directory.
@@ -59,7 +63,7 @@ A few notes:
 ## Deploy
 
 ```bash
-fly deploy --app <your-hermes-app> --ha=false
+fly deploy -a <your-hermes-app> --ha=false
 ```
 
 `--ha=false` keeps it to a single machine; Hermes is stateful and you don't want two gateway processes writing to the same volume.
@@ -69,7 +73,7 @@ When the deploy finishes, the machine boots, the entrypoint bootstraps `/opt/dat
 Confirm it's alive:
 
 ```bash
-fly logs --app <your-hermes-app>
+fly logs -a <your-hermes-app>
 ```
 
 You should see the bundled skills sync, then the gateway starting up.
@@ -79,14 +83,14 @@ You should see the bundled skills sync, then the gateway starting up.
 SSH into the machine. The `hermes` binary lives at `/opt/hermes/.venv/bin/hermes` inside the image, but `fly ssh console` opens a login shell that resets PATH and won't find it there. Drop a symlink into `/usr/local/bin` (which is always on PATH) so `hermes` works as a bare command:
 
 ```bash
-fly ssh console --app <your-hermes-app> -C \
+fly ssh console -a <your-hermes-app> -C \
   "ln -sf /opt/hermes/.venv/bin/hermes /usr/local/bin/hermes"
 ```
 
 Then drop into the machine and run the setup wizard:
 
 ```bash
-fly ssh console --app <your-hermes-app>
+fly ssh console -a <your-hermes-app>
 hermes setup
 ```
 
@@ -95,10 +99,10 @@ The wizard walks you through model selection, tool configuration, and connecting
 Restart the machine so the gateway picks up the new config:
 
 ```bash
-fly machine restart <machine-id> --app <your-hermes-app>
+fly machine restart <machine-id> -a <your-hermes-app>
 ```
 
-Get `<machine-id>` from `fly machine list --app <your-hermes-app>`.
+Get `<machine-id>` from `fly machine list -a <your-hermes-app>`.
 
 ## Web dashboard
 
@@ -107,14 +111,14 @@ Hermes has a web dashboard on port 9119 for managing sessions, skills, and confi
 In one terminal, start the dashboard inside the machine:
 
 ```bash
-fly ssh console --app <your-hermes-app> -C \
+fly ssh console -a <your-hermes-app> -C \
   "hermes dashboard --host 0.0.0.0 --no-open"
 ```
 
 In a second terminal, open a Fly proxy from your laptop:
 
 ```bash
-fly proxy 9119:9119 --app <your-hermes-app>
+fly proxy 9119:9119 -a <your-hermes-app>
 ```
 
 Now visit `http://localhost:9119` in your browser. Traffic goes over your authenticated WireGuard tunnel; the dashboard isn't published to the public internet, though it is reachable from other Machines on your organization's [private network](/docs/networking/private-networking/)
@@ -126,8 +130,8 @@ When you're done, `Ctrl+C` both commands. The gateway keeps running on the machi
 The image is stateless; your data lives on the volume. To pull the latest Hermes:
 
 ```bash
-fly deploy --app <your-hermes-app>
-fly ssh console --app <your-hermes-app> -C \
+fly deploy -a <your-hermes-app>
+fly ssh console -a <your-hermes-app> -C \
   "ln -sf /opt/hermes/.venv/bin/hermes /usr/local/bin/hermes"
 ```
 
@@ -138,8 +142,8 @@ The deploy pulls `nousresearch/hermes-agent:latest` again. The second command re
 If you're running heavy tool use or multiple concurrent sessions, scale up:
 
 ```bash
-fly scale memory 8192 --app <your-hermes-app>
-fly scale vm shared-cpu-4x --app <your-hermes-app>
+fly scale memory 8192 -a <your-hermes-app>
+fly scale vm shared-cpu-4x -a <your-hermes-app>
 ```
 
 ## Useful commands
@@ -147,19 +151,19 @@ fly scale vm shared-cpu-4x --app <your-hermes-app>
 | Command | Description |
 |---------|-------------|
 | `fly logs -a <your-hermes-app>` | Stream live logs |
-| `fly ssh console --app <your-hermes-app>` | SSH into the machine |
-| `fly ssh console --app <your-hermes-app> -C "hermes doctor"` | Health check |
-| `fly machine restart <id> --app <your-hermes-app>` | Restart after config changes |
-| `fly status --app <your-hermes-app>` | Check machine status |
-| `fly volumes list --app <your-hermes-app>` | List attached volumes |
-| `fly ssh console --app <your-hermes-app> -C "hermes skills list"` | List learned skills |
+| `fly ssh console -a <your-hermes-app>` | SSH into the machine |
+| `fly ssh console -a <your-hermes-app> -C "hermes doctor"` | Health check |
+| `fly machine restart <id> -a <your-hermes-app>` | Restart after config changes |
+| `fly status -a <your-hermes-app>` | Check machine status |
+| `fly volumes list -a <your-hermes-app>` | List attached volumes |
+| `fly ssh console -a <your-hermes-app> -C "hermes skills list"` | List learned skills |
 
 ## Troubleshooting
 
 **Gateway won't start**, check `hermes doctor` for missing API keys or other diagnostics:
 
 ```bash
-fly ssh console --app <your-hermes-app> -C "hermes doctor"
+fly ssh console -a <your-hermes-app> -C "hermes doctor"
 ```
 
 **Out of memory**
@@ -167,7 +171,7 @@ fly ssh console --app <your-hermes-app> -C "hermes doctor"
 Increase RAM:
 
 ```bash
-fly scale memory 8192 --app <your-hermes-app>
+fly scale memory 8192 -a <your-hermes-app>
 ```
 
 **Need to start fresh**
@@ -175,20 +179,20 @@ fly scale memory 8192 --app <your-hermes-app>
 Wipe the config files (skills, sessions, and memories survive):
 
 ```bash
-fly ssh console --app <your-hermes-app> -C \
+fly ssh console -a <your-hermes-app> -C \
   "sh -c 'rm -f /opt/data/config.yaml /opt/data/.env'"
-fly machine restart <machine-id> --app <your-hermes-app>
-fly ssh console --app <your-hermes-app>
+fly machine restart <machine-id> -a <your-hermes-app>
+fly ssh console -a <your-hermes-app>
 hermes setup
 ```
 
 To wipe everything including conversations, destroy and recreate the volume:
 
 ```bash
-fly machine stop <machine-id> --app <your-hermes-app>
-fly volumes destroy <volume-id> --app <your-hermes-app>
-fly volumes create data --app <your-hermes-app> --region <region> --size 3
-fly machine start <machine-id> --app <your-hermes-app>
+fly machine stop <machine-id> -a <your-hermes-app>
+fly volumes destroy <volume-id> -a <your-hermes-app>
+fly volumes create data -a <your-hermes-app> --region <region> --size 3
+fly machine start <machine-id> -a <your-hermes-app>
 ```
 
 **Skills behaving unexpectedly**
@@ -196,7 +200,7 @@ fly machine start <machine-id> --app <your-hermes-app>
 List, view, and delete:
 
 ```bash
-fly ssh console --app <your-hermes-app>
+fly ssh console -a <your-hermes-app>
 hermes skills list
 hermes skills view <skill-name>
 hermes skills delete <skill-name>
