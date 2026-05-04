@@ -37,8 +37,8 @@ primary_region = "<region>"
 [build]
   image = "nousresearch/hermes-agent:latest"
 
-[experimental]
-  cmd = ["gateway", "run"]
+[processes]
+  app = "gateway run"
 
 [[mounts]]
   source = "data"
