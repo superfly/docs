@@ -146,7 +146,7 @@ fly scale vm shared-cpu-4x --app <your-hermes-app>
 
 | Command | Description |
 |---------|-------------|
-| `fly logs --app <your-hermes-app>` | Stream live logs |
+| `fly logs -a <your-hermes-app>` | Stream live logs |
 | `fly ssh console --app <your-hermes-app>` | SSH into the machine |
 | `fly ssh console --app <your-hermes-app> -C "hermes doctor"` | Health check |
 | `fly machine restart <id> --app <your-hermes-app>` | Restart after config changes |
