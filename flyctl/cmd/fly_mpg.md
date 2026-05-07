@@ -3,7 +3,7 @@ Manage Managed Postgres clusters.
 
 ## Usage
 ~~~
-fly mpg [flags]
+fly mpg [command] [flags]
 ~~~
 
 ## Available Commands
