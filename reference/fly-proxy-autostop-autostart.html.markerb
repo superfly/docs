@@ -39,6 +39,10 @@ Fly Proxy determines excess capacity per region as follows:
   * the proxy checks if the Machine has any traffic
   * if the Machine has no traffic (a load of 0), then the proxy stops or suspends the Machine
 
+<div class="callout">
+**At scale**, the rate-limited loop becomes the constraint: with thousands of Machines in a single app, the proxy can't stop them fast enough to keep most idle Machines stopped. If that's your shape (for example, [per-user dev environments](/docs/blueprints/per-user-dev-environments/)), use [one app per user](/docs/machines/guides-examples/one-app-per-user-why/) with [dynamic routing](/docs/networking/dynamic-request-routing/), or have your app shut down when idle.
+</div>
+
 ### Fly Proxy process to start Machines
 
 When `auto_start_machines = true` in your `fly.toml`, the Fly Proxy restarts a Machine in the nearest region when required.
