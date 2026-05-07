@@ -2,7 +2,7 @@
 title: Per-User Dev Environments with Fly Machines
 layout: docs
 nav: guides
-date: 2025-05-07
+date: 2026-05-07
 ---
 
 <figure>
