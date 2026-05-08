@@ -2,7 +2,7 @@
 title: Per-User Dev Environments with Fly Machines
 layout: docs
 nav: guides
-date: 2025-04-02
+date: 2026-05-07
 ---
 
 <figure>
@@ -61,6 +61,7 @@ You'll want to spin up at least one Machine per user app (but apps can have as m
 - **Machines & volumes are tied to physical hardware:** hardware failures can destroy machines and attached volumes. **Always persist important user data** (code, config, outputs) to external storage (like [Tigris Data](/docs/tigris/#main-content-start) or AWS S3).
 - **Your users will break their environments:** pre-create standby machines to handle hardware & runtime failures, or the inevitable user or robot poisoned environment. Pre-create standby machines that you can quickly activate in these scenarios.
 - **Machine restarts reset ephemeral filesystem:** the temporary Fly Machine filesystem state resets on Machine restarts, ensuring clean environments. However, volume data remains persistent, making it useful for retaining user progress or state.
+- **One app per user:** Putting all user Machines into a single app and routing to them with dynamic routing works, but `auto_stop` won't behave the way you expect once you scale. The Fly Proxy's stop loop is rate-limited: it [stops or suspends at most one Machine per region each pass, and runs every few minutes](/docs/reference/fly-proxy-autostop-autostart/#fly-proxy-process-to-stop-or-suspend-machines). That's fine for a normal app; with thousands of Machines the loop can't keep up, and most of your idle Machines stay running. Machines in a single app also share app-level secrets and a flat [private network](/docs/networking/private-networking/). A compromised user environment can reach every other Machine in the app. If you do keep all user Machines in one app, implement stop-when-idle behavior in your app or orchestrator (see [apps that shut down when idle](/docs/launch/autostop-autostart/#apps-that-shut-down-when-idle)). Don't rely on the Fly Proxy to keep most Machines stopped.
 
 ## Related reading
 
