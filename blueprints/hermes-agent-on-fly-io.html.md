@@ -112,8 +112,10 @@ In one terminal, start the dashboard inside the machine:
 
 ```bash
 fly ssh console -a <your-hermes-app> -C \
-  "hermes dashboard --host 0.0.0.0 --no-open"
+  "hermes dashboard --host 0.0.0.0 --no-open --insecure"
 ```
+
+`--insecure` is required because `hermes dashboard` refuses to bind to a non-loopback interface without explicit acknowledgement. In this setup the dashboard isn't actually unprotected — Fly's authenticated WireGuard tunnel is the auth layer, not the dashboard's own check — but `hermes dashboard` can't see that, so it needs the flag to bind `0.0.0.0`.
 
 In a second terminal, open a Fly proxy from your laptop:
 
