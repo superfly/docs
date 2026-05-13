@@ -132,6 +132,12 @@ We publish our [Fly.io Dashboards](https://grafana.com/grafana/dashboards/14741)
 To install, just [import the dashboard](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard) using the listed IDs.
 If you'd like to contribute changes to the dashboards, we have created a [repository](https://github.com/superfly/dashboards) for them.
 
+### SigNoz
+
+[SigNoz](https://signoz.io) is an open source observability platform that can scrape your Fly.io Prometheus endpoint to visualize built-in metrics.
+
+A pre-built [Fly.io dashboard](https://github.com/SigNoz/dashboards/blob/main/fly/fly-prometheus-v1.json) is available, along with [setup instructions](https://signoz.io/docs/integrations/outposts/flyio/?signal=metrics) for configuring the Prometheus data source.
+
 ## Built-in metrics
 
 Fly apps automatically publish a number of built-in metrics.

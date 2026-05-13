@@ -10,7 +10,7 @@ redirect_from:
 
 The Fly Log Shipper app enables you to aggregate your app's logs to a service of your choice.
 
-Your app's output to `stdout` become logs in Fly.io. Live log tail and log search are good enough for most things. But if you need to export your logs to an external service, such as Datadog or AWS S3, then you can use the Log Shipper.
+Your app's output to `stdout` become logs in Fly.io. Live log tail and log search are good enough for most things. But if you need to export your logs to an external service, such as Datadog, [SigNoz](https://signoz.io+external), or AWS S3, then you can use the Log Shipper.
 
 ## The Fly Log Shipper
 
