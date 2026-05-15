@@ -99,10 +99,10 @@ v6     	2a09:8280:1::37:7312:0	public (dedicated)	global	May 30 2024 13:51
 v4     	66.241.124.113        	public (shared)   	      	Jan 1 0001 00:00
 ```
 
-Now that we've proven it's private, let’s open an interactive shell Machine to play around with Flycast. Create the shell Machine with `fly machine run`:
+Now that we've proven it's private, let’s open an interactive shell Machine to play around with Flycast. Create the shell Machine with `fly machine run`, giving it enough memory to install a few packages with `apt`:
 
 ```
-$ fly machine run --shell ubuntu
+$ fly machine run --shell --vm-memory 1024 ubuntu
 root@e784127b51e083:/#
 ```
 
