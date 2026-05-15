@@ -54,15 +54,31 @@ If you want to interact with your Flycast apps from your computer, you’ll need
 
 ## Steps
 
-Create a new folder on your computer called `flycast-demo` and open a terminal in it. We don't need any source code for this walkthrough — we'll launch the app directly from a public Docker image with the `--flycast` flag, which tells Fly Launch to allocate a private IPv6 address instead of public ones:
+Create a new folder on your computer called `flycast-demo` and open a terminal in it. We don't need any source code for this walkthrough — we'll launch the app directly from a public Docker image with the `--flycast` flag, which tells Fly Launch to allocate a private IPv6 address instead of public ones. We'll also pass `--no-deploy` so we can adjust one setting before the first deploy:
 
 ```
-fly launch --image nginxdemos/hello --flycast --internal-port 80
+fly launch --image nginxdemos/hello --flycast --internal-port 80 --no-deploy
 ```
 
 The name you choose for your app will be the hostname you use to reach it over Flycast (`<appname>.flycast`). When `fly launch` asks if you want to tweak the settings, you can accept the defaults.
 
 The `--internal-port 80` flag tells Fly Launch that our app listens on port 80 (the default for the `nginxdemos/hello` image). Fly Launch defaults to port 8080, so without this flag the Fly Proxy wouldn't be able to reach the app.
+
+Open the generated `fly.toml` in your editor, find the `[http_service]` block, and change `force_https` to `false`:
+
+```toml
+[http_service]
+  internal_port = 80
+  force_https = false
+```
+
+Fly Launch enables `force_https` by default, which makes the proxy return a 301 redirect from HTTP to HTTPS. That's a good default for public apps, but Flycast addresses don't have public TLS certificates, so the redirect would just break plain HTTP requests from inside your private network.
+
+Now deploy the app:
+
+```
+fly deploy
+```
 
 After deploy finishes, you can see the list of IP addresses associated to an app with `fly ips list`:
 
