@@ -57,10 +57,12 @@ If you want to interact with your Flycast apps from your computer, you’ll need
 Create a new folder on your computer called `flycast-demo` and open a terminal in it. We don't need any source code for this walkthrough — we'll launch the app directly from a public Docker image with the `--flycast` flag, which tells Fly Launch to allocate a private IPv6 address instead of public ones:
 
 ```
-fly launch --image nginxdemos/hello --flycast
+fly launch --image nginxdemos/hello --flycast --internal-port 80
 ```
 
 The name you choose for your app will be the hostname you use to reach it over Flycast (`<appname>.flycast`). When `fly launch` asks if you want to tweak the settings, you can accept the defaults.
+
+The `--internal-port 80` flag tells Fly Launch that our app listens on port 80 (the default for the `nginxdemos/hello` image). Fly Launch defaults to port 8080, so without this flag the Fly Proxy wouldn't be able to reach the app.
 
 After deploy finishes, you can see the list of IP addresses associated to an app with `fly ips list`:
 
