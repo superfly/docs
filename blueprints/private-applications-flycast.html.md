@@ -146,18 +146,18 @@ You should get back an HTML page with the server's hostname and address. Wait a 
 
 ```
 # time curl -o /dev/null -s http://flycast-demo.flycast
-real	0m2.411s
-user	0m0.003s
-sys		0m0.003s
+real	0m1.539s
+user	0m0.004s
+sys		0m0.012s
 ```
 
 It took a couple of seconds for the platform to wake the Machine up and make sure it was ready for your request. The next request is a lot faster:
 
 ```
 # time curl -o /dev/null -s http://flycast-demo.flycast
-real	0m0.043s
+real	0m0.018s
 user	0m0.003s
-sys		0m0.003s
+sys		0m0.008s
 ```
 
 And if you wait a few moments, it’ll spin back down.
