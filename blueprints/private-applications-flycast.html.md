@@ -3,10 +3,10 @@ title: Run private apps with Flycast
 layout: docs
 sitemap: true
 nav: guides
-author: xe
+author: kcmartin
 categories:
   - networking
-date: 2026-04-29
+date: 2026-05-19
 ---
 
 ## Overview
