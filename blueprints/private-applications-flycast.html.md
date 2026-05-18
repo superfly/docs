@@ -54,7 +54,7 @@ If you want to interact with your Flycast apps from your computer, you’ll need
 
 ## Steps
 
-Create a new folder on your computer called `flycast-demo` and open a terminal in it. We don't need any source code for this walkthrough — we'll launch the app directly from a public Docker image with the `--flycast` flag, which tells Fly Launch to allocate a private IPv6 address instead of public ones. We'll also pass `--no-deploy` so we can adjust one setting before the first deploy:
+Create a new folder on your computer called `flycast-demo` and open a terminal in it. We don't need any source code for this walkthrough. We'll launch the app directly from a public Docker image with the `--flycast` flag, which tells Fly Launch to allocate a private IPv6 address instead of public ones. We'll also pass `--no-deploy` so we can adjust one setting before the first deploy:
 
 ```
 fly launch --image nginxdemos/hello --flycast --internal-port 80 --no-deploy
@@ -167,5 +167,5 @@ And there we go! We’ve covered what Flycast is, why you’d want to use it, an
 ## Related reading
 
 - [Autostart and autostop private apps](/docs/blueprints/autostart-internal-apps/)
-- [Flycast — private Fly.io services](/docs/networking/flycast/)
+- [Flycast: private Fly.io services](/docs/networking/flycast/)
 - [Private networking](/docs/networking/private-networking/)
