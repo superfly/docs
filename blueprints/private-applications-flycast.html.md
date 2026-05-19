@@ -62,7 +62,7 @@ fly launch --image nginxdemos/hello --flycast --internal-port 80 --no-deploy
 
 The name you choose for your app will be the hostname you use to reach it over Flycast (`<appname>.flycast`). When `fly launch` asks if you want to tweak the settings, you can accept the defaults.
 
-The `--internal-port 80` flag tells Fly Launch that our app listens on port 80 (the default for the `nginxdemos/hello` image). Fly Launch defaults to port 8080, so without this flag the Fly Proxy wouldn't be able to reach the app.
+The `--internal-port 80` flag tells Fly Launch that our app listens on port 80 (the default for the `nginxdemos/hello` image). Fly Launch defaults to port 8080, so without this flag the Fly Proxy wouldn't be able to reach the app. You could also set `internal_port = 80` in `fly.toml` directly in the next step; the flag is just a shortcut so you don't have to edit the file twice.
 
 Open the generated `fly.toml` in your editor, find the `[http_service]` block, and change `force_https` to `false`:
 
