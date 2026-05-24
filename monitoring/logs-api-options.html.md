@@ -37,13 +37,13 @@ GET /api/v1/apps/:app_name/logs
 Authorization: <your-token>
 ```
 
-You’ll get a stream of newline-delimited JSON log lines. You can pass query params like:
+The response is a JSON:API document with a `data` array of log entries and a `meta.next_token` cursor for paging. By default, the most recent 100 logs from the last 24 hours are returned. You can pass these query params to filter logs or set a starting timestamp:
 
-- `region=cdg` (filter by region)
-- `instance=<id>` (filter by instance — sometimes flaky)
-- `start_time=2023-08-01T00:00:00Z` (to backfill)
+- `region`: three-letter region code. Returns only logs from this region
+- `instance`: a Machine ID. Returns only logs from this instance
+- `next_token`: a nanosecond Unix timestamp. Returns logs after this time. Each response includes a `meta.next_token` — pass it in your next request to page forward
 
-This endpoint isn’t officially documented, but it’s mostly stable: `flyctl` depends on it. That said, filters don’t always work as expected.
+This endpoint isn’t officially supported for external use, but it’s mostly stable: `flyctl` depends on it.
 
 Use this for quick fetches or simple polling scripts. If you hit rate limits or auth issues, check that your token has `read` access to the app.
 
@@ -78,7 +78,7 @@ This gives you structured JSON log messages in real time.
 - If you want to dedupe across subscribers, use NATS queue groups.
 - NATS only streams logs from starting from the moment you connect. You won’t get any history unless you’ve been subscribed the whole time.
 
-For more details on connecting to Fly’s NATS log stream (authentication, subject patterns, example clients), head over to the [Observability for User Apps](/docs/blueprints/observability-for-user-apps/?utm_source=chatgpt.com#streaming-fly-app-logs-to-your-end-users) guide.
+For more details on connecting to Fly’s NATS log stream (authentication, subject patterns, example clients), head over to the [Observability for User Apps](/docs/blueprints/observability-for-user-apps/#streaming-fly-app-logs-to-your-end-users) guide.
 
 ### 3. Log Shipper to External Sink
 
