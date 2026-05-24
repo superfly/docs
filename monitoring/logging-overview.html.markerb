@@ -25,7 +25,7 @@ Learn how to fetch, stream or export logs programmatically without touching the 
 
 ## Search logs
 
-We have an app log search feature in Grafana that retains logs for 30 days. For more information, see [Search logs](/docs/monitoring/search-logs/).
+We have an app log search feature in Grafana that retains logs for 7 days. For more information, see [Search logs](/docs/monitoring/search-logs/).
 
 ## Export logs
 

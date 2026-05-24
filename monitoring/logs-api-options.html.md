@@ -12,7 +12,7 @@ date: 2025-10-01
 
 ## Overview
 
-Fly.io apps run on Firecracker microVMs we call Machines. Each Machine captures `stdout`/`stderr`, ships those logs over NATS, and stores them for a period of time in a Quickwit-backed search index. Most users consume logs via `fly logs` or by setting up log shipping to an external sink.
+Fly.io apps run on Firecracker microVMs we call Machines. Each Machine captures `stdout`/`stderr`, ships those logs over NATS, and stores them for a period of time in a VictoriaLogs-backed search index. Most users consume logs via `fly logs` or by setting up log shipping to an external sink.
 
 But sometimes you want to grab logs directly, without a CLI or setting up an exporter, because you’re building a tool, automating something, or you just want to pipe logs into your own system.
 
@@ -47,7 +47,7 @@ This endpoint isn’t officially supported for external use, but it’s mostly s
 
 Use this for quick fetches or simple polling scripts. If you hit rate limits or auth issues, check that your token has `read` access to the app.
 
-Importantly, this is the only option that gives you access to historical logs going back to the current retention window (about 15 days). The other options only start streaming from the moment they're connected.
+Importantly, this is the only option that gives you access to historical logs going back to the current retention window (about 7 days). The other options only start streaming from the moment they're connected.
 
 ### 2. Subscribe to logs via NATS (experimental)
 
