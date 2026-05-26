@@ -41,7 +41,7 @@ The response is a JSON:API document with a `data` array of log entries and a `me
 
 - `region`: three-letter region code. Returns only logs from this region
 - `instance`: a Machine ID. Returns only logs from this instance
-- `next_token`: a nanosecond Unix timestamp. Returns logs after this time. Each response includes a `meta.next_token` — pass it in your next request to page forward
+- `next_token`: a nanosecond Unix timestamp (e.g `1779235200000000000`). Returns logs after this time. Each response includes a `meta.next_token` — pass it in your next request to page forward
 
 This endpoint isn’t officially supported for external use, but it’s mostly stable: `flyctl` depends on it.
 
