@@ -6,7 +6,7 @@ redirect_from: /docs/metrics-and-logs/search-logs/
 ---
 
 <div class="warning icon">
-Searchable application logs is a beta feature. During the beta period, log search is free.
+Searchable application logs are a beta feature. During the beta period, log search is free.
 </div>
 
 Log search on Fly.io is backed by our own instance of [VictoriaLogs](https://docs.victoriametrics.com/victorialogs+external) and is exposed through a Grafana interface. We currently retain logs for 7 days.
