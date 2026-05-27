@@ -9,6 +9,10 @@ categories:
 date: 2026-05-19
 ---
 
+<figure>
+  <img src="/static/images/campfire_apps.png" alt="Illustration by Annie Ruygt of some apps sitting around a campfire" class="w-full max-w-lg mx-auto">
+</figure>
+
 ## Overview
 
 A lot of the time your applications are made to be public and shared with the world. Sometimes you need to be more careful. When you deploy your apps on Fly.io, you get a private network for your organization. This lets your applications in other continents contact each other like they were in the same room.
