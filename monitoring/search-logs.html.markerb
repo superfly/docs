@@ -6,20 +6,14 @@ redirect_from: /docs/metrics-and-logs/search-logs/
 ---
 
 <div class="warning icon">
-Searchable application logs is a beta feature. Learn more and post your suggestions or issues in the community thread: [Searchable application logs in Grafana](https://community.fly.io/t/searchable-application-logs-in-grafana/18878+external)
+Searchable application logs are a beta feature. During the beta period, log search is free.
 </div>
 
-We’re working with [Quickwit](https://quickwit.io/docs+external) to bring you an application log cluster and search interface. 
+Log search on Fly.io is backed by our own instance of [VictoriaLogs](https://docs.victoriametrics.com/victorialogs+external) and is exposed through a Grafana interface. We currently retain logs for 7 days.
 
-You can access searchable logs in Grafana:
+To search logs from your Fly Apps:
 
-- Click **Log Search** in your Fly.io app dashboard, or
-- Go directly to your [Grafana metrics](https://fly-metrics.net/d/fly-logs/fly-logs+external)
+- Click **Search logs in Grafana** in your Fly.io app dashboard, or
+- Open your [Grafana dashboard](https://fly-metrics.net/d/fly-logs/fly-logs) directly
 
-<div class="important icon">
-**Important:** If you’re already signed in to Grafana, then you'll need to log out and log back in.
-</div>
-
-Searchable logs are built on our [Tigris Storage](/docs/tigris/) and [Supabase Postgres](/docs/supabase/) extensions. 
-
-For the beta period, log search is free and we retain logs for 30 days. Learn how to build more complex queries [Quickwit’s query language](https://quickwit.io/docs/get-started/query-language-intro+external).
+Learn how to build more complex queries using [LogsQL, the query language of VictoriaLogs](https://docs.victoriametrics.com/victorialogs/logsql+external).
