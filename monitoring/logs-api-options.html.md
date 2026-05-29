@@ -39,10 +39,10 @@ Authorization: <your-token>
 
 The response is a JSON:API document with a `data` array of log entries and a `meta.next_token` cursor for paging. By default, the most recent 100 logs from the last 24 hours are returned. You can pass these query params to filter logs or set a starting timestamp:
 
-- `region`: three-letter region code. Returns only logs from this region
-- `instance`: a Machine ID. Returns only logs from this instance
-- `next_token`: a nanosecond Unix timestamp (e.g `1779235200000000000`). Returns logs after this time. Each response includes a `meta.next_token` — pass it in your next request to page forward
-    - `next_token` replaces the previously-documented `start_time` (ISO 8601) param
+- `region`: three-letter region code. Returns only logs from this region.
+- `instance`: a Machine ID. Returns only logs from this instance.
+- `next_token`: a nanosecond Unix timestamp (e.g. `1779235200000000000`). Returns logs after this time, used either as a paging cursor or to backfill from a specific moment. Each response includes a `meta.next_token` that you can pass in your next request to page forward.
+    - `next_token` replaces the previously documented `start_time` (ISO 8601) param.
 
 This endpoint isn’t officially supported for external use, but it’s mostly stable: `flyctl` depends on it.
 
