@@ -37,12 +37,10 @@ Create a directory for the deployment config and drop a `fly.toml` in it:
 ```toml
 app = "<your-hermes-app>"
 primary_region = "<region>"
+machine_config = "machine_config.json"
 
 [build]
-  image = "nousresearch/hermes-agent:latest"
-
-[processes]
-  app = "gateway run"
+  image = "nousresearch/hermes-agent:latest"\
 
 [[mounts]]
   source = "data"
@@ -52,11 +50,23 @@ primary_region = "<region>"
   memory = "4gb"
   cpus = 2
 ```
+Create a machine config file (called `machine_config.json` in our example):
+```json
+    {
+      "containers": [
+        {
+          "name": "hermes",
+          "image": "nousresearch/hermes-agent:latest",
+          "cmd": ["gateway", "run"]
+        }
+      ]
+    }
+```
 
 A few notes:
 
 - **No `[build.dockerfile]`.** Fly pulls the image directly. Deploys take seconds, not minutes.
-- **`[processes] app = "gateway run"`** defines the single process group for this app, and its command is passed to the image's entrypoint, so the Machine boots into `hermes gateway run` (the messaging gateway for Telegram, Discord, Slack, WhatsApp, etc.).
+- ** Hermes images published from `v2026.5.28` onward use `s6-overlay` as the in-container supervisor. s6-overlay's `/init` calls `s6-overlay-suexec` which checks `getpid() == 1` before doing anything else and aborts otherwise. So we use multi-container machines (via the machine_config.json) to get our own namespace. 
 - **No `[[services]]` block.** The gateway talks *outbound* to chat platforms, so you don't need a public port. The dashboard exposes API keys and shouldn't be public; you'll reach it through a Fly proxy tunnel below.
 - **4 GB / 2 CPU** is the recommended size when browser tools (Playwright/Chromium) are active. If you don't use browser tools you can drop to `shared-cpu-1x` and 1–2 GB.
 
