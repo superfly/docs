@@ -128,7 +128,7 @@ Snapshots are tied to the exact code and state of the machine they were taken fr
 
 ---
 
-## Suspend and volumes
+## Volume behavior with suspend
 
 Suspend automatically saves a machine's memory state to persistent storage. You don't need to attach a [volume](/docs/volumes/) for suspend to work, and the snapshot isn't stored on a volume.
 
@@ -138,10 +138,6 @@ If your machine does have a volume attached, the volume and its data aren't affe
 - Your **volume** is your own persistent storage. Its data survives suspend, resume, and cold starts, just as it does across a normal stop and start.
 
 Even if a snapshot is discarded and the machine cold starts, the data on your volume is still there.
-
-<div class="note icon">
-A suspended machine releases the CPU and memory it was using, just like a stopped machine, so it frees up compute capacity in the region. It still exists and uses storage, though, so suspending isn't the same as deleting.
-</div>
 
 ---
 
@@ -182,6 +178,12 @@ Tips:
 Suspended machines cost the same as stopped machines: storage only. There are no CPU/RAM charges.
 
 If a suspended machine has a volume, you keep paying for that volume the whole time it exists. [Volume storage](/docs/about/pricing/#persistent-storage-volumes) is billed whether the machine is running, stopped, or suspended.
+
+---
+
+<div class="note icon">
+Suspending a machine lowers your cost (you're billed for storage only, with no CPU/RAM charges; see [Billing](#billing)), but it doesn't free up room in a region. A suspended machine still counts toward your regional capacity, so suspending isn't a way to fit more machines into a capacity-constrained region.
+</div>
 
 ---
 
