@@ -132,7 +132,7 @@ Snapshots are tied to the exact code and state of the machine they were taken fr
 
 Suspend automatically saves a machine's memory state to persistent storage. You don't need to attach a [volume](/docs/volumes/) for suspend to work, and the snapshot isn't stored on a volume.
 
-If your machine does have a volume attached, the volume and its data aren't affected by suspend and resume. It helps to keep two things separate:
+If your machine does have an attached volume, the volume and its data aren't affected by suspend and resume. It helps to think of the machine snapshot and the volume as separate things:
 
 - The **snapshot** is the saved CPU and memory state, managed by Fly. It can be discarded (for example, when you deploy new code), which forces a [cold start](#snapshot-behavior-with-suspend).
 - The **volume** is your persistent storage. Its data survives suspend, resume, and cold starts, just as it does across a normal stop and start.
