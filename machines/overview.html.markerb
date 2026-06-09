@@ -130,7 +130,7 @@ are; we've already done the heavy lifting.
 A machine-scoped static egress IP is attached to a single machine and isn't shared with other machines. It survives a [machine migration](/docs/reference/machine-migration/).
 
 Static egress IPs are useful when your machine needs to connect to a service that requires allowlisting a specific set of IPs.
-If supported, it is recommended to use [Wireguard](/docs/networking/private-networking/#private-network-vpn) to connect to external services.
+If supported, it is recommended to use [WireGuard](/docs/networking/private-networking/#private-network-vpn) to connect to external services.
 
 You can attach a static egress IP to your machine with `fly machine egress-ip allocate <machine_id>`
 
