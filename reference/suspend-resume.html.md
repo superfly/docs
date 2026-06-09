@@ -128,6 +128,19 @@ Snapshots are tied to the exact code and state of the machine they were taken fr
 
 ---
 
+## Volume behavior with suspend
+
+Suspend automatically saves a machine's memory state to persistent storage. You don't need to attach a [volume](/docs/volumes/) for suspend to work, and the snapshot isn't stored on a volume.
+
+If your machine does have an attached volume, the volume and its data aren't affected by suspend and resume. It helps to think of the machine snapshot and the volume as separate things:
+
+- The **snapshot** is the saved CPU and memory state, managed by Fly. It can be discarded, for example, during a deploy, which forces a [cold start](#snapshot-behavior-with-suspend).
+- The **volume** is your persistent storage. Its data survives suspend, resume, and cold starts, just as it does across a normal stop and start.
+
+Even if a snapshot is discarded and the machine cold starts, the data on your volume is still there.
+
+---
+
 ## Handling Network Connections After Resume
 
 On resume, the machine thinks its network connections are still live. External systems (databases, APIs) may disagree.
@@ -163,6 +176,12 @@ Tips:
 ## Billing
 
 Suspended machines cost the same as stopped machines: storage only. There are no CPU/RAM charges.
+
+If a suspended machine has a volume, you continue paying for the volume for as long as it exists [Volume storage](/docs/about/pricing/#persistent-storage-volumes) is billed whether the machine is running, stopped, or suspended.
+
+<div class="note icon">
+Suspending a machine lowers your costs, but it does not free capacity in a region. Suspended machines still reserve their resources, so suspension is not a way to fit more machines into a capacity-constrained region
+</div>
 
 ---
 
