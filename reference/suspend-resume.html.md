@@ -177,7 +177,7 @@ Tips:
 
 Suspended machines cost the same as stopped machines: storage only. There are no CPU/RAM charges.
 
-If a suspended machine has a volume, you keep paying for that volume the whole time it exists. [Volume storage](/docs/about/pricing/#persistent-storage-volumes) is billed whether the machine is running, stopped, or suspended.
+If a suspended machine has a volume, you continue paying for the volume for as long as it exists [Volume storage](/docs/about/pricing/#persistent-storage-volumes) is billed whether the machine is running, stopped, or suspended.
 
 <div class="note icon">
 Suspending a machine lowers your costs, but it does not free capacity in a region. Suspended machines still reserve their resources, so suspension is not a way to fit more machines into a capacity-constrained region
