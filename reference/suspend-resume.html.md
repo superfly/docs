@@ -134,7 +134,7 @@ Suspend automatically saves a machine's memory state to persistent storage. You 
 
 If your machine does have an attached volume, the volume and its data aren't affected by suspend and resume. It helps to think of the machine snapshot and the volume as separate things:
 
-- The **snapshot** is the saved CPU and memory state, managed by Fly. It can be discarded (for example, when you deploy new code), which forces a [cold start](#snapshot-behavior-with-suspend).
+- The **snapshot** is the saved CPU and memory state, managed by Fly. It can be discarded, for example, during a deploy, which forces a [cold start](#snapshot-behavior-with-suspend).
 - The **volume** is your persistent storage. Its data survives suspend, resume, and cold starts, just as it does across a normal stop and start.
 
 Even if a snapshot is discarded and the machine cold starts, the data on your volume is still there.
