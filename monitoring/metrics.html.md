@@ -92,6 +92,17 @@ curl https://api.fly.io/prometheus/$ORG_SLUG/api/v1/query \
   -H "Authorization: Bearer $TOKEN"
 ```
 
+## Retention, cost, and limits
+
+Prometheus on Fly.io retains metric data for approximately 15 days and is meant for operational monitoring. If you need longer retention, run your own monitoring stack (Fly's [Observability for User Apps](/docs/blueprints/observability-for-user-apps/) blueprint deploys a ready-made one) or federate from the Fly.io endpoint into your own Prometheus.
+
+There's currently no additional charge for the managed Prometheus and Grafana. Pricing could change in the future, and Fly will give advance notice.
+
+A couple of practical limits to be aware of:
+
+- Fly caps your app's metrics endpoint response at 16 KiB and drops anything larger.
+- Fly may drop very high-cardinality custom metrics.
+
 ## Dashboards
 
 For more advanced metrics monitoring, you can use dashboards to organize and visualize complex Prometheus
@@ -131,6 +142,15 @@ You're all set.
 We publish our [Fly.io Dashboards](https://grafana.com/grafana/dashboards/14741) to Grafana.com for use with external Grafana instances.
 To install, just [import the dashboard](https://grafana.com/docs/grafana/latest/dashboards/export-import/#import-dashboard) using the listed IDs.
 If you'd like to contribute changes to the dashboards, we have created a [repository](https://github.com/superfly/dashboards) for them.
+
+## Alerting
+
+Fly.io doesn't include built-in alerting on metrics, so you set up alerting yourself against the Prometheus endpoint. Two common approaches:
+
+- **Grafana alerting**: connect the Fly.io Prometheus data source to a Grafana instance (see the [External or self-hosted Grafana](#external-or-self-hosted-grafana) section), then create [Grafana alert rules](https://grafana.com/docs/grafana/latest/alerting/) on queries against the data source and send the alerts to a contact point such as email, Slack, or PagerDuty.
+- **Prometheus and Alertmanager**: run your own [Prometheus](https://prometheus.io/) that federates from the Fly.io endpoint and use [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) to send notifications.
+
+If you don't already run Grafana or Prometheus, Fly's [Observability for User Apps](/docs/blueprints/observability-for-user-apps/) blueprint deploys a ready-made stack (VictoriaMetrics and Grafana) you can build alerts on.
 
 ## Built-in metrics
 
