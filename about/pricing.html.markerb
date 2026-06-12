@@ -225,9 +225,8 @@ You will not be billed separately for:
 
 * Machines running the services, which are hosted in the provider's account
 * IP addresses associated with the service
-* Bandwidth to Tigris Object Storage
 
-You **will** be billed separately for data transfer to these external third-party services. See our [data transfer pricing](#data-transfer-pricing) for details.
+You **will** be billed separately for data transfer to these external third-party services, including Tigris Object Storage. See our [data transfer pricing](#data-transfer-pricing) for details.
 
 ## Unsupported Products
 
