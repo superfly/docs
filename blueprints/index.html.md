@@ -66,6 +66,7 @@ How to run periodic tasks, long-running jobs, infrastructure automation, and the
 - [Deferring long-running tasks to a distributed work queue](/docs/blueprints/work-queues/)
 - [Task scheduling guide with Cron Manager and friends](/docs/blueprints/task-scheduling/)
 - [Crontab with Supercronic](/docs/blueprints/supercronic/)
+- [Long-running tasks and machine lifecycle](/docs/blueprints/long-running-tasks/) NEW!!
 
 
 
