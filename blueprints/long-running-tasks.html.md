@@ -8,7 +8,7 @@ date: 2026-06-15
 
 This page covers what happens when your machine is busy doing work, but Fly thinks it's idle. Specifically: how `auto_stop_machines` decides what to stop, why a background task is invisible to that decision, and the two patterns that keep work from getting killed.
 
-If you're picking a queue technology or a cron runner, start with the [work queues](/docs/blueprints/work-queues/) or [task scheduling](/docs/blueprints/task-scheduling/) blueprints instead. This page is about the machine behavior underneath them.
+If you're picking a queue technology or a cron runner, start with the [work queues](/docs/blueprints/work-queues/) or [task scheduling](/docs/blueprints/task-scheduling/) guides instead. This page is about the machine behavior underneath them.
 
 ## The problem
 
@@ -173,7 +173,7 @@ fly scale count web=2 worker=1
 
 This is the pattern Sidekiq, Celery, and BullMQ workers actually want. The web tier scales to zero off-hours; the worker tier runs whenever there's work in the queue.
 
-Tradeoff: you're paying for at least one worker machine continuously. If your work is batchy enough that on-demand workers make sense, use the [work queues blueprint's on-demand worker pattern](/docs/blueprints/work-queues/) instead, as that spins up a fresh machine per job and lets it stop when done.
+Tradeoff: you're paying for at least one worker machine continuously. If your work is batchy enough that on-demand workers make sense, use the [work queues guide's on-demand worker pattern](/docs/blueprints/work-queues/) instead, as that spins up a fresh machine per job and lets it stop when done.
 
 ## Graceful shutdown: what Fly sends
 
@@ -231,8 +231,8 @@ Run `fly config validate --strict` before relying on any of this. By default, `f
 
 ## Where to go next
 
-- [Work queues blueprint](/docs/blueprints/work-queues/): Picking a queue technology
-- [Task scheduling blueprint](/docs/blueprints/task-scheduling/): cron-style triggers and scheduled machines
+- [Work queues guide](/docs/blueprints/work-queues/): Picking a queue technology
+- [Task scheduling guide](/docs/blueprints/task-scheduling/): cron-style triggers and scheduled machines
 - [Autostart and autostop reference](/docs/reference/fly-proxy-autostop-autostart/): The proxy's full decision logic
 - [Configuration reference](/docs/reference/configuration/): `kill_signal`, `kill_timeout`, `processes`, `auto_stop_machines`
 - [Machine states](/docs/machines/machine-states/):  what `stopping`, `stopped`, and `suspended` actually mean
