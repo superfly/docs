@@ -62,11 +62,11 @@ Make it fast. Make it reliable. Monitor what's happening.
 
 How to run periodic tasks, long-running jobs, infrastructure automation, and the things that run when you’re asleep.
 
+- [Long-running tasks and machine lifecycle](/docs/blueprints/long-running-tasks/) NEW!!
 - [Building Infrastructure Automation without Terraform](/docs/blueprints/infra-automation-without-terraform/)
 - [Deferring long-running tasks to a distributed work queue](/docs/blueprints/work-queues/)
 - [Task scheduling guide with Cron Manager and friends](/docs/blueprints/task-scheduling/)
 - [Crontab with Supercronic](/docs/blueprints/supercronic/)
-- [Long-running tasks and machine lifecycle](/docs/blueprints/long-running-tasks/) NEW!!
 
 
 
