@@ -183,7 +183,7 @@ The defaults are conservative:
 
 | Option | Default | Max | Notes |
 | --- | --- | --- | --- |
-| `kill_signal` | `SIGTERM` | — | Also accepts `SIGQUIT`, `SIGUSR1`, `SIGUSR2`, `SIGKILL`, `SIGSTOP` |
+| `kill_signal` | `SIGTERM` | n/a | Also accepts `SIGQUIT`, `SIGUSR1`, `SIGUSR2`, `SIGKILL`, `SIGSTOP` |
 | `kill_timeout` | `5s` | `300s` | The drain window before `SIGKILL` |
 
 Five seconds is enough for an HTTP server to close keepalives. It is not enough for a long-running job to finish. If you have any background work, set `kill_timeout` to a value that allows your typical job to complete. You'll need to determine this on your side. Both keys are top-level in `fly.toml`:
@@ -210,12 +210,12 @@ Run `fly config validate --strict` before relying on any of this. By default, `f
 | Situation | Pattern |
 | --- | --- |
 | Jobs are short (< 30 seconds) | Increase `kill_timeout`; everything else can stay as default |
-| Long-running jobs, steady web traffic | A — disable autostop, in-app drain |
-| Long-running jobs, bursty web traffic | B — split web/worker processes |
+| Long-running jobs, steady web traffic | A: disable autostop, in-app drain |
+| Long-running jobs, bursty web traffic | B: split web/worker processes |
 | Cron-style scheduled jobs | See [task scheduling](/docs/blueprints/task-scheduling/) |
-| Queue-driven workers | B — combine with [work queues](/docs/blueprints/work-queues/) |
-| One-off jobs (fire and forget per request) | On-demand workers — see [work queues](/docs/blueprints/work-queues/) |
-| Can't restructure right now | A — accept the continuous machine cost |
+| Queue-driven workers | B: combine with [work queues](/docs/blueprints/work-queues/) |
+| One-off jobs (fire and forget per request) | On-demand workers; see [work queues](/docs/blueprints/work-queues/) |
+| Can't restructure right now | A: accept the continuous machine cost |
 
 ## Common problems
 
