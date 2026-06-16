@@ -22,7 +22,7 @@ There are two ways to fix it. Pick one based on whether your work is bursty or s
 
 The Fly proxy evaluates machines every few minutes. The exact rule depends on how many machines you have:
 
-**Multiple machines.** The proxy uses your `soft_limit` concurrency setting to compute excess capacity:
+**Multiple machines.** The proxy uses your `soft_limit` [concurrency setting](/docs/blueprints/setting-concurrency-limits/) to compute excess capacity:
 
 ```
 excess = num_machines − (num_machines_over_soft_limit + 1)
@@ -34,7 +34,7 @@ If `excess ≥ 1`, the proxy stops one machine. The `+ 1` keeps a buffer of one 
 
 In both cases, "load" means traffic the proxy can see. Background work running inside the machine, whether that's async workers, cron-style loops, or anything else not driven by an inbound request, doesn't count. There's also no way for your application to tell the proxy, "I'm busy, leave me alone."
 
-This is the central fact for the rest of the page. Everything below is a way to work around it.
+This is the central fact for the rest of the guide. Everything below is a way to work around it.
 
 ### Stop vs. suspend
 
@@ -55,7 +55,7 @@ This is the central fact for the rest of the page. Everything below is a way to 
 
 Billing is the same for both: you pay for stopped machines like you pay for suspended ones.
 
-For the rest of this page, "stop" and "suspend" are interchangeable. The patterns work the same way for both.
+For the rest of this guide, "stop" and "suspend" are interchangeable. The patterns work the same way for both.
 
 ## Pattern A: disable autostop, manage shutdown in the app
 
@@ -147,7 +147,7 @@ Both patterns refuse new work as soon as `SIGTERM` arrives, then wait for in-fli
 
 ## Pattern B: split web and worker into separate process groups
 
-**Use this when** web traffic is bursty (good candidate for autostop) but background work is steady or long-running (bad candidate for autostop).
+**Use this when** web traffic is bursty (a good candidate for autostop) but background work is steady or long-running (a bad candidate for autostop).
 
 Split with `processes` in `fly.toml`:
 
