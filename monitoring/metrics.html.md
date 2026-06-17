@@ -94,7 +94,7 @@ curl https://api.fly.io/prometheus/$ORG_SLUG/api/v1/query \
 
 ## Retention, cost, and limits
 
-Prometheus on Fly.io retains metric data for approximately 15 days and is meant for operational monitoring. If you need longer retention, run your own monitoring stack (Fly's [Observability for User Apps](/docs/blueprints/observability-for-user-apps/) blueprint deploys a ready-made one) or federate from the Fly.io endpoint into your own Prometheus.
+Prometheus on Fly.io retains metric data for approximately 15 days and is intended for operational monitoring. If you need longer retention, run your own monitoring stack. Fly.io's [Observability for User Apps](/docs/blueprints/observability-for-user-apps/) guide deploys a ready-made stack, or you can federate from the Fly.io endpoint into your own Prometheus installation.
 
 There's currently no additional charge for the managed Prometheus and Grafana. Pricing could change in the future, and Fly will give advance notice.
 
