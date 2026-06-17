@@ -150,7 +150,7 @@ Fly.io doesn't include built-in alerting on metrics, so you'll need to set up al
 - **Grafana alerting**: connect the Fly.io Prometheus data source to a Grafana instance (see the [External or self-hosted Grafana](#external-or-self-hosted-grafana) section), then create [Grafana alert rules](https://grafana.com/docs/grafana/latest/alerting/) on queries against the data source and send the alerts to a contact point such as email, Slack, or PagerDuty.
 - **Prometheus and Alertmanager**: run your own [Prometheus](https://prometheus.io/) that federates from the Fly.io endpoint and use [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) to send notifications.
 
-If you don't already run Grafana or Prometheus, Fly's [Observability for User Apps](/docs/blueprints/observability-for-user-apps/) blueprint deploys a ready-made stack (VictoriaMetrics and Grafana) you can build alerts on.
+If you don't already run Grafana or Prometheus, Fly's [Observability for User Apps](/docs/blueprints/observability-for-user-apps/) guide deploys a ready-made stack (VictoriaMetrics and Grafana) you can build alerts on.
 
 ## Built-in metrics
 
