@@ -145,7 +145,7 @@ If you'd like to contribute changes to the dashboards, we have created a [reposi
 
 ## Alerting
 
-Fly.io doesn't include built-in alerting on metrics, so you set up alerting yourself against the Prometheus endpoint. Two common approaches:
+Fly.io doesn't include built-in alerting on metrics, so you'll need to set up alerting yourself against the Prometheus endpoint. Two common approaches:
 
 - **Grafana alerting**: connect the Fly.io Prometheus data source to a Grafana instance (see the [External or self-hosted Grafana](#external-or-self-hosted-grafana) section), then create [Grafana alert rules](https://grafana.com/docs/grafana/latest/alerting/) on queries against the data source and send the alerts to a contact point such as email, Slack, or PagerDuty.
 - **Prometheus and Alertmanager**: run your own [Prometheus](https://prometheus.io/) that federates from the Fly.io endpoint and use [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) to send notifications.
