@@ -119,7 +119,7 @@ We require an active, valid credit card on file for most Fly.io accounts to do t
 
 We may send a pre-authorization request to the issuing bank to verify a bank will authorize charges. Some credit card companies present these as real charges, which may surprise you.
 
-A pre-auth is really just a hold on a credit card; it is not a real charge. We’ll typically pre-authorize a small amount (usually less than US $10) after signup, then cancel the authorization immediately. Banks may show the pre-auth for up to 10 working days, even though we have not collected any money.
+A pre-auth is really just a hold on a credit card; it is not a real charge. We’ll typically pre-authorize a small amount (usually less than US $10) after signup, then cancel the authorization immediately. Banks may show the pre-auth for up to 10 business days, even though we have not collected any money.
 
 ### If you don't have a credit card
 
