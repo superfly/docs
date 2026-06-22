@@ -100,7 +100,7 @@ There's currently no additional charge for the managed Prometheus and Grafana. P
 
 A couple of practical limits to be aware of:
 
-- We cap your app's metrics endpoint response at 16 KiB and drop anything larger.
+- We cap your app's metrics endpoint response at 16 MB and drop anything larger.
 - We may drop very high-cardinality custom metrics.
 
 ## Dashboards
