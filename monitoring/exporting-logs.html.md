@@ -49,9 +49,17 @@ You can configure as many providers as you'd like by adding more secrets. The se
 Before launching your application, you should edit the generated `fly.toml` file and delete the entire `[[services]]` section. Replace it with this:
 
 ```toml
-[[services]]
-  http_checks = []
+[http_service]
   internal_port = 8686
+  auto_start_machines = true
+  auto_stop_machines = "off"
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    path = "/health"
+    timeout = "5s"
 ```
 
 Then you can deploy it:
