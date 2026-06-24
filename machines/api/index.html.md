@@ -1,3 +1,5 @@
+#flyctl machines
+
 ---
 title: "Machines API"
 layout: docs
