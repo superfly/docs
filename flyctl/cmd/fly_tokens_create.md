@@ -12,6 +12,7 @@ fly tokens create [command] [flags]
 * [org](/docs/flyctl/tokens-create-org/)	 - Create org deploy tokens
 * [readonly](/docs/flyctl/tokens-create-readonly/)	 - Create read-only org tokens
 * [ssh](/docs/flyctl/tokens-create-ssh/)	 - Create token for SSH'ing to a single app
+* [wireguard](/docs/flyctl/tokens-create-wireguard/)	 - Create a WireGuard token
 
 ## Options
 
