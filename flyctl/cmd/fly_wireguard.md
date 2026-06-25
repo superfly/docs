@@ -10,7 +10,6 @@ fly wireguard [command] [flags]
 * [list](/docs/flyctl/wireguard-list/)	 - List all WireGuard peer connections
 * [remove](/docs/flyctl/wireguard-remove/)	 - Remove a WireGuard peer connection
 * [reset](/docs/flyctl/wireguard-reset/)	 - Reset WireGuard peer connection for an organization
-* [token](/docs/flyctl/wireguard-token/)	 - Commands that managed WireGuard delegated access tokens
 * [websockets](/docs/flyctl/wireguard-websockets/)	 - Enable or disable WireGuard tunneling over WebSockets
 
 ## Options
