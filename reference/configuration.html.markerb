@@ -122,13 +122,19 @@ The optional build section contains key/values concerned with how the applicatio
 
 ```toml
 [build]
-  builder = "paketobuildpacks/builder:base"
-  buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
+  builder = "paketobuildpacks/builder-jammy-base"
 ```
 
 The builder "builder" uses CNB Buildpacks and Builders to create the application image. These are third party toolkits which can use Heroku compatible build processes or other tools. The tooling is all managed by the buildpacks and buildpacks are assembled into CNB Builders - images complete with the buildpacks and OS to run the tool chains.
 
-In our example above, the builder is being set to use [Paketo's all-purpose builder](https://paketo.io) with the NodeJS buildpack.
+In our example above, the builder is being set to use [Paketo's all-purpose builder](https://paketo.io) which automatically detects needed buildpacks.
+
+You can also explicitly define buildpacks:
+```toml
+[build]
+  builder = "paketobuildpacks/builder:base"
+  buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
+```
 
 ### Specify a Docker image
 
