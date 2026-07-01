@@ -46,19 +46,15 @@ fly secrets set LOGTAIL_TOKEN=<token provided by logtail source>
 
 You can configure as many providers as you'd like by adding more secrets. The secrets needed are determined by [which provider(s)](https://github.com/superfly/fly-log-shipper#provider-configuration+external) you want to use.
 
-Before launching your application, you should edit the generated `fly.toml` file and delete the entire `[[services]]` section. Replace it with this:
+The Log Shipper pulls logs from Fly.io's internal log stream and doesn't need to accept inbound connections, so it shouldn't have any public services or IP addresses. Before deploying, edit the generated `fly.toml` file and delete the entire `[[http_service]]` (or `[[services]]`) section.
 
-```toml
-[[services]]
-  http_checks = []
-  internal_port = 8686
-```
-
-Then you can deploy it:
+Then deploy without allocating a public IP address:
 
 ```cmd
-fly deploy
+fly deploy --no-public-ips
 ```
+
+If you already deployed a Log Shipper with a public IP address, list its addresses with `fly ips list` and remove them with `fly ips release <address>`.
 
 ## Shipping specific logs
 
