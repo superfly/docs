@@ -11,6 +11,7 @@ fly launch [flags]
       --attach                           Attach this new application to the current application
       --auto-stop string                 Automatically suspend the app after a period of inactivity. Valid values are 'off', 'stop', and 'suspend' (default "stop")
       --build-arg stringArray            Set of build time variables in the form of NAME=VALUE pairs. Can be specified multiple times.
+      --build-context-warn-size string   Warn when the Docker build context is larger than this. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 1gb). Set to 0 to disable. Also set with FLY_BUILD_CONTEXT_WARN_SIZE.
       --build-only                       Build but do not deploy
       --build-secret stringArray         Set of build secrets of NAME=VALUE pairs. Can be specified multiple times. See https://docs.docker.com/engine/reference/commandline/buildx_build/#secret
       --build-target string              Set the target build stage to build if the Dockerfile has more than one stage
