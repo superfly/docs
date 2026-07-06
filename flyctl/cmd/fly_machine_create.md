@@ -9,49 +9,50 @@ fly machine create <image> [command] [flags]
 ## Options
 
 ~~~
-  -a, --app string                  Application name
-      --autostart                   Automatically start a stopped Machine when a network request is received (default true)
-      --autostop string[="stop"]    Automatically stop a Machine when there are no network requests for it. Options include 'off', 'stop', and 'suspend'. (default "off")
-      --build-depot                 Build your image with depot.dev
-      --build-nixpacks              Build your image with nixpacks
-      --cachedrive-size string      Cache drive size in MB. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 10gb). Set to 0 to disable.
-  -c, --config string               Path to application configuration file
-      --detach                      Return immediately instead of monitoring deployment progress
-      --dockerfile string           The path to a Dockerfile. Defaults to the Dockerfile in the working directory.
-      --entrypoint string           The command to override the Docker ENTRYPOINT.
-  -e, --env stringArray             Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
-      --file-literal stringArray    Set of literals to write to the Machine, in the form of /path/inside/machine=VALUE pairs, where VALUE is the base64-encoded raw content. Can be specified multiple times.
-      --file-local stringArray      Set of files to write to the Machine, in the form of /path/inside/machine=<local/path> pairs. Can be specified multiple times.
-      --file-secret stringArray     Set of secrets to write to the Machine, in the form of /path/inside/machine=SECRET pairs, where SECRET is the name of the secret. The content of the secret must be base64 encoded. Can be specified multiple times.
-  -h, --help                        help for create
-      --host-dedication-id string   The dedication id of the reserved hosts for your organization (if any)
-      --id string                   Machine ID, if previously known
-      --kernel-arg stringArray      A list of kernel arguments to provide to the init. Can be specified multiple times.
-      --machine-config string       Read machine config from json file or string
-  -m, --metadata stringArray        Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
-  -n, --name string                 Machine name. Will be generated if omitted.
-      --org string                  The organization that will own the app
-  -p, --port strings                The external ports and handlers for services, in the format: port[:machinePort][/protocol[:handler[:handler...]]])
-                                    	For example: --port 80/tcp --port 443:80/tcp:http:tls --port 5432/tcp:pg_tls
-                                    	To remove a port mapping use '-' as handler. For example: --port 80/tcp:-
-  -r, --region string               The target region (see 'flyctl platform regions')
-      --restart string              Set the restart policy for a Machine. Options include 'no', 'always', and 'on-failure'.
-                                    	Default is 'on-failure' for Machines created by 'fly deploy' and Machines with a schedule. Default is 'always' for Machines created by 'fly m run'.
-      --rm                          Automatically remove the Machine when it exits. Sets the restart-policy to 'never' if not otherwise specified.
-      --rootfs-persist string       Whether to persist the root filesystem across restarts. Options include 'never', 'always', and 'restart'.
-      --rootfs-size string          Root filesystem size in GB. Accepts a plain number (in GB) or a human-readable size (e.g. 2gb, 5gb). Uses an overlayfs to allow the root filesystem to exceed its default size. Set to 0 to unset.
-      --schedule string             Schedule a Machine run at hourly, daily, weekly and monthly intervals
-      --skip-dns-registration       Do not register the machine's 6PN IP with the internal DNS system
-      --standby-for strings         For Machines without services, a comma separated list of Machine IDs to act as standby for.
-      --swap-size string            Swap size in MB. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 1gb).
-      --use-zstd                    Enable zstd compression for the image
-      --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance') (also --vm-cpukind)
-      --vm-cpus int                 Number of CPUs (also --cpus)
-      --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none) (also --vm-gpukind)
-      --vm-gpus int                 Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
-      --vm-memory string            Memory (in megabytes) to attribute to the VM (also --memory)
-      --vm-size string              The VM size to set machines to. See "fly platform vm-sizes" for valid values
-  -v, --volume strings              Volume to mount, in the form of <volume_id_or_name>:/path/inside/machine[:<options>]
+  -a, --app string                       Application name
+      --autostart                        Automatically start a stopped Machine when a network request is received (default true)
+      --autostop string[="stop"]         Automatically stop a Machine when there are no network requests for it. Options include 'off', 'stop', and 'suspend'. (default "off")
+      --build-context-warn-size string   Warn when the Docker build context is larger than this. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 1gb). Set to 0 to disable. Also set with FLY_BUILD_CONTEXT_WARN_SIZE.
+      --build-depot                      Build your image with depot.dev
+      --build-nixpacks                   Build your image with nixpacks
+      --cachedrive-size string           Cache drive size in MB. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 10gb). Set to 0 to disable.
+  -c, --config string                    Path to application configuration file
+      --detach                           Return immediately instead of monitoring deployment progress
+      --dockerfile string                The path to a Dockerfile. Defaults to the Dockerfile in the working directory.
+      --entrypoint string                The command to override the Docker ENTRYPOINT.
+  -e, --env stringArray                  Set of environment variables in the form of NAME=VALUE pairs. Can be specified multiple times.
+      --file-literal stringArray         Set of literals to write to the Machine, in the form of /path/inside/machine=VALUE pairs, where VALUE is the base64-encoded raw content. Can be specified multiple times.
+      --file-local stringArray           Set of files to write to the Machine, in the form of /path/inside/machine=<local/path> pairs. Can be specified multiple times.
+      --file-secret stringArray          Set of secrets to write to the Machine, in the form of /path/inside/machine=SECRET pairs, where SECRET is the name of the secret. The content of the secret must be base64 encoded. Can be specified multiple times.
+  -h, --help                             help for create
+      --host-dedication-id string        The dedication id of the reserved hosts for your organization (if any)
+      --id string                        Machine ID, if previously known
+      --kernel-arg stringArray           A list of kernel arguments to provide to the init. Can be specified multiple times.
+      --machine-config string            Read machine config from json file or string
+  -m, --metadata stringArray             Metadata in the form of NAME=VALUE pairs. Can be specified multiple times.
+  -n, --name string                      Machine name. Will be generated if omitted.
+      --org string                       The organization that will own the app
+  -p, --port strings                     The external ports and handlers for services, in the format: port[:machinePort][/protocol[:handler[:handler...]]])
+                                         	For example: --port 80/tcp --port 443:80/tcp:http:tls --port 5432/tcp:pg_tls
+                                         	To remove a port mapping use '-' as handler. For example: --port 80/tcp:-
+  -r, --region string                    The target region (see 'flyctl platform regions')
+      --restart string                   Set the restart policy for a Machine. Options include 'no', 'always', and 'on-failure'.
+                                         	Default is 'on-failure' for Machines created by 'fly deploy' and Machines with a schedule. Default is 'always' for Machines created by 'fly m run'.
+      --rm                               Automatically remove the Machine when it exits. Sets the restart-policy to 'never' if not otherwise specified.
+      --rootfs-persist string            Whether to persist the root filesystem across restarts. Options include 'never', 'always', and 'restart'.
+      --rootfs-size string               Root filesystem size in GB. Accepts a plain number (in GB) or a human-readable size (e.g. 2gb, 5gb). Uses an overlayfs to allow the root filesystem to exceed its default size. Set to 0 to unset.
+      --schedule string                  Schedule a Machine run at hourly, daily, weekly and monthly intervals
+      --skip-dns-registration            Do not register the machine's 6PN IP with the internal DNS system
+      --standby-for strings              For Machines without services, a comma separated list of Machine IDs to act as standby for.
+      --swap-size string                 Swap size in MB. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 1gb).
+      --use-zstd                         Enable zstd compression for the image
+      --vm-cpu-kind string               The kind of CPU to use ('shared' or 'performance') (also --vm-cpukind)
+      --vm-cpus int                      Number of CPUs (also --cpus)
+      --vm-gpu-kind string               If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none) (also --vm-gpukind)
+      --vm-gpus int                      Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
+      --vm-memory string                 Memory (in megabytes) to attribute to the VM (also --memory)
+      --vm-size string                   The VM size to set machines to. See "fly platform vm-sizes" for valid values
+  -v, --volume strings                   Volume to mount, in the form of <volume_id_or_name>:/path/inside/machine[:<options>]
 ~~~
 
 ## Global Options
