@@ -56,6 +56,24 @@ fly deploy --no-public-ips
 
 If you already deployed a Log Shipper with a public IP address, list its addresses with `fly ips list` and remove them with `fly ips release <address>`.
 
+## Add a health check
+
+The Log Shipper can occasionally stop shipping logs without exiting, so it's a good idea to add a health check. Vector serves a `/health` endpoint on port 8686. Since the app has no services, use a top-level [`[checks]` section](/docs/reference/configuration/#the-checks-section) in `fly.toml`, which doesn't require a public service or IP address:
+
+```toml
+[checks]
+  [checks.vector]
+    port = 8686
+    type = "http"
+    method = "get"
+    path = "/health"
+    grace_period = "10s"
+    interval = "30s"
+    timeout = "5s"
+```
+
+Check the health status with `fly checks list`.
+
 ## Shipping specific logs
 
 By default, the log shipper gets logs from every app running within your organization (organization is set by the `ORG` secret/environment variable).
