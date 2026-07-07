@@ -28,6 +28,7 @@ containerd
 [Cc]ron(jobs?|job)?\b
 [Cc]rontabs?\b
 datacenters?\b
+Datadog
 datasource
 datatypes?\b
 declaratively
