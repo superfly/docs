@@ -147,7 +147,7 @@ cURL is a useful tool for checking that a service is reachable where it should b
 
 [3] [Except UDP services.](#udp-is-special) 
 
-[4] If this fails, but the local check succeeded, the next thing to confirm is that the app or Machine config includes a properly configured `services` or `http_service` section, with `internal_port` matching `<port>` used in this test.
+[4] If this fails, but the local check succeeded, the next thing to confirm is that the app or Machine config includes a properly configured `services` or `http_service` section, with `internal_port` matching `<port>` used in this test. Also check `fly ips list`: if the app has only an IPv6 address, it won't be reachable from IPv4-only networks. You can [allocate a free shared IPv4 address](/docs/networking/services/#shared-ipv4) with `fly ips allocate-v4 --shared`.
 
 [5] The HTTP URL always elicits a 301 redirect, because the Fly Proxy upgrades HTTP connections to HTTPS. To get cURL to follow the redirect to see if there's anything there, use the `-L` flag. This example has the services configured to handle HTTP and HTTPS requests on the conventional ports 80 and 443 respectively; if you're using different ports, substitute those in.
 
