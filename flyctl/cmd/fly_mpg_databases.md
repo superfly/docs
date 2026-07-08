@@ -8,6 +8,7 @@ fly mpg databases [command] [flags]
 
 ## Available Commands
 * [create](/docs/flyctl/mpg-databases-create/)	 - Create a database in an MPG cluster.
+* [extensions](/docs/flyctl/mpg-databases-extensions/)	 - Manage Postgres extensions in a managed postgres cluster database
 * [list](/docs/flyctl/mpg-databases-list/)	 - List databases in an MPG cluster.
 
 ## Options
