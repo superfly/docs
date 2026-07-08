@@ -18,6 +18,7 @@ centiseconds
 cgroup
 cgroups
 cleartext
+configs?\b
 containerd
 cron
 datacenters?\b
@@ -56,6 +57,7 @@ idempotently
 IEx
 incentivizes?\b
 initializer
+IP('s)?\b
 IPs
 IPSec
 ISPs?\b
@@ -143,6 +145,7 @@ unmount
 Upstash
 Valkey
 vCPUs?\b
+VM('s)?\b
 virtualized
 Vite
 VSCode
