@@ -208,13 +208,6 @@ Static egress IPs for Machines provide dedicated outbound IP addresses for your 
 [Community support](https://community.fly.io/) is included for all customers, regardless of usage level.
 You can get access to a support plan by purchasing a Standard ($29/month), Premium ($199/month), or Enterprise (starting at $2500/month) package in the **Support** section of your dashboard. For more about Support, see [Support at Fly.io](/docs/about/support/).
 
-## Fly Kubernetes
-
-[Fly Kubernetes](/docs/kubernetes/) (FKS) is a managed Kubernetes service that runs on Fly.io.
-
-* $75/month per cluster
-* Plus the cost of [compute](#compute) and [Fly volumes](#persistent-storage-volumes) that you create
-
 ## Extensions
 
 Fly.io offers managed services operated by third parties, such as [Tigris Object Storage](/docs/tigris) and [Upstash Redis](/docs/upstash/redis/).
