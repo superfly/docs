@@ -21,10 +21,13 @@ Most of that work is generic. The app, the volume, the Machine, the boot: none o
 
 Each pool entry is a dedicated Fly app, not just a Machine in a shared app. [The app is your isolation boundary](/docs/machines/guides-examples/one-app-per-user-why): creating it with its own network name puts each entry on its own [private 6PN network](/docs/networking/private-networking/), so one user's Machine can never reach another's. A [Flycast address](/docs/networking/flycast/) gives your control plane private routing to the Machine without a public IP. And deleting the app cascades to its Machines and volumes, so teardown is a single API call, which matters more than it sounds, because crash-recovery cleanup uses the same call.
 
+This control plane creates and destroys apps continuously, so it needs an org-scoped API token (`fly tokens create org`), not an app-scoped deploy token. Keep it server-side and never expose it to a user Machine.
+
 ```bash
 # Create the app on its own private network
 curl -X POST "https://api.machines.dev/v1/apps" \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
+  -H "Content-Type: application/json" \
   -d '{
     "app_name": "pool-x7f3k2",
     "org_slug": "my-org",
@@ -34,6 +37,7 @@ curl -X POST "https://api.machines.dev/v1/apps" \
 # Allocate a Flycast (private) address
 curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/ip_assignments" \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
+  -H "Content-Type: application/json" \
   -d '{"type": "private_v6", "network": ""}'
 ```
 
@@ -51,7 +55,9 @@ The Machines API is your source of truth for infrastructure. A small table is yo
 | `volume_id`         | written as soon as the volume is created            |
 | `region`            | the concrete region Fly actually placed it in       |
 | `status`            | `provisioning` → `ready` → `failed`                 |
+| `provisioned_at`    | set when the entry becomes `ready`                  |
 | `allocated_at`      | `NULL` = available; set = claimed                   |
+| `allocated_to`      | the user or instance that claimed it                |
 | `provision_version` | bump to invalidate the pool when your image changes |
 
 Two rules make this crash-safe. First, insert the row *before* touching the Machines API, so nothing exists on Fly.io that your database can't see. Second, write resource IDs back incrementally: the volume ID right after volume creation, the Machine ID right after Machine creation. If the worker dies mid-provision, a sweeper can find the half-finished row, delete the app (cascading whatever got created), and move on.
@@ -64,16 +70,18 @@ The sequence for each entry: create app → allocate Flycast IP → create volum
 # Create the volume first; Fly resolves the region
 curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/volumes" \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
+  -H "Content-Type: application/json" \
   -d '{"name": "user_data", "region": "iad", "size_gb": 1}'
 
 # Create the Machine in the *volume's* region
 curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/machines" \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
+  -H "Content-Type: application/json" \
   -d '{
     "name": "pool",
     "region": "iad",
     "config": {
-      "image": "registry.fly.io/my-user-app:latest",
+      "image": "registry.fly.io/my-user-app@sha256:...",
       "guest": {"cpu_kind": "shared", "cpus": 1, "memory_mb": 2048},
       "init": {"swap_size_mb": 2048},
       "mounts": [{"volume": "vol_abc123", "path": "/data"}],
@@ -100,7 +108,9 @@ curl "https://api.machines.dev/v1/apps/pool-x7f3k2/machines/${MACHINE_ID}/wait?s
 
 A few settings in that config matter more than they look.
 
-**Volume and Machine must co-locate.** Create the volume first; the API resolves your requested region to a concrete one. Use the volume's returned region for the Machine, because the API rejects mismatches. Store the Machine's returned region in your database too, since that's where it actually landed.
+**Volume and Machine must co-locate.** A volume is pinned to one physical host, and the Machine that mounts it has to land on that same host. Create the volume first, then create the Machine with that volume ID in `config.mounts` and use the volume's returned region. The mount is what places the Machine on the volume's host; matching the region alone isn't enough, and creating the Machine first can fail to attach even in the right region. Store the Machine's returned region in your database too, since that's where it actually landed.
+
+**Pin the image by digest, not a tag.** `provision_version` is meant to mark a uniform pool generation. If you build on a moving tag like `:latest`, two entries with the same version can end up running different images. Reference an immutable digest (`@sha256:...`) and bump `provision_version` whenever it changes.
 
 **`autostop: "off"` is the point.** Pool Machines are idle by design. [Autostop](/docs/launch/autostop-autostart/) would helpfully shut them down, and a stopped pool Machine is a cold start with extra steps.
 
@@ -109,8 +119,11 @@ A few settings in that config matter more than they look.
 ```bash
 curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/machines/${MACHINE_ID}/exec" \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
-  -d '{"command": ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", "http://localhost:8080/healthz"]}'
+  -H "Content-Type: application/json" \
+  -d '{"command": ["curl", "--fail", "--silent", "--max-time", "5", "http://localhost:8080/healthz"]}'
 ```
+
+The exec call returns HTTP 200 even when the command inside failed, so check the response body's `exit_code`, not the API status. `--fail` makes the inner `curl` return non-zero on a 5xx, so a wedged app reads as unhealthy instead of ready. (Whatever probe you use has to exist in the image.)
 
 This is what makes claiming instant later. A `ready` entry is one whose app is already serving, so the only work left at claim time is configuration. Skip this and your "instant" claims hand users a Machine that's still booting.
 
@@ -121,7 +134,7 @@ Pool Machines don't know their user yet, so boot them with a minimal placeholder
 When a user signs up, claim an entry with one atomic statement:
 
 ```sql
-UPDATE pool SET allocated_at = NOW()
+UPDATE pool SET allocated_at = NOW(), allocated_to = $user_id
 WHERE id = (
   SELECT id FROM pool
   WHERE status = 'ready' AND allocated_at IS NULL
@@ -134,7 +147,9 @@ RETURNING *
 
 `FOR UPDATE SKIP LOCKED` is doing the heavy lifting: concurrent signups never grab the same entry and never wait on each other's locks. No advisory locks, no queue, no coordinator.
 
-Prefer the user's [region](/docs/reference/regions/), but don't insist on it. Run the query filtered to nearby regions first, then unfiltered. A warm Machine in the wrong region beats a cold start in the right one. If the query returns zero rows, provision directly using the same sequence as the background worker; the pool is an optimization, never a dependency. And if a downstream step fails after claiming, clear `allocated_at` so the entry goes back in the pool instead of leaking.
+Prefer the user's [region](/docs/reference/regions/), but don't insist on it. Run the query filtered to nearby regions first, then unfiltered. A warm Machine in the wrong region beats a cold start in the right one. If the query returns zero rows, provision directly using the same sequence as the background worker; the pool is an optimization, never a dependency.
+
+Be careful how you unwind a failed claim. If the claim fails *before* you write anything user-specific, clearing `allocated_at` safely returns the entry to the pool. Once you've written the user's config or secrets to the volume, that entry is contaminated: returning it to the pool can hand the next user the previous one's data. After any user-specific write, mark the entry `failed` and let the maintenance loop destroy it. Don't recycle it.
 
 ## Personalize with exec, not a Machine update
 
@@ -145,12 +160,14 @@ There are two ways to turn a generic pool Machine into *this user's* Machine, an
 | exec write | write the user's config to the volume via exec; the app hot-reloads it | ~1-2s |
 | Machine update | `POST /machines/{id}` with new config, full Machine restart | ~20s |
 
-If your app can watch a config file and reload it, write the file and you're done:
+If your app can watch a config file and reload it, write the file and you're done. Base64-encode the user's config, drop it in where the exec command decodes it, and write to a temp file before renaming so a reader never sees a half-written config:
 
 ```bash
+# CONFIG_B64 = base64 of the user's config; splice it into the command below
 curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/machines/${MACHINE_ID}/exec" \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
-  -d '{"command": ["sh", "-c", "echo '"'"'${CONFIG_BASE64}'"'"' | base64 -d > /data/config.json"]}'
+  -H "Content-Type: application/json" \
+  -d '{"command": ["sh", "-c", "umask 077; echo CONFIG_B64 | base64 -d > /data/config.json.tmp && mv /data/config.json.tmp /data/config.json"]}'
 ```
 
 This also decides where per-user secrets should live: in the config file on the volume, not in Machine env vars. Env changes require a Machine update and a restart. A file write doesn't.
@@ -164,7 +181,7 @@ A small worker, ideally its own [process group](/docs/apps/processes/), loops on
 1. **Cycle.** Delete unallocated entries whose `provision_version` doesn't match the current one. Bump the version whenever your image or Machine config changes, and the pool replaces itself over the next few ticks.
 2. **Clean.** For `failed` entries, delete the app and the row.
 3. **Validate.** `GET /machines/{id}` for each `ready` entry; discard anything whose `state` isn't `started`. Also discard rows stuck in `provisioning` for more than ~10 minutes. That's a crashed provisioner, and the incrementally-written IDs let you clean up whatever it left behind.
-4. **Replenish.** Count `ready` plus `provisioning` against your target and create the shortfall, spreading entries across regions by weight (say, 3 in `us`, 1 in `eu`, 1 in `apac`). Counting in-flight `provisioning` entries stops you from over-provisioning during a burst of claims. Guard against overlapping runs.
+4. **Replenish.** Count available entries (`status = 'ready' AND allocated_at IS NULL`) plus in-flight `provisioning` entries against your target, and create the shortfall. Counting claimed-but-still-`ready` rows here is the classic bug: the pool looks full and quietly stops refilling as users claim entries. Spread the new entries across regions by weight (say, 3 in `us`, 1 in `eu`, 1 in `apac`, where those are your own buckets of concrete Fly regions like `iad`, `ams`, and `sin`). Counting in-flight `provisioning` entries stops you from over-provisioning during a burst of claims. Guard against overlapping runs.
 
 ## Pointers & Footguns
 
