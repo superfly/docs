@@ -98,7 +98,7 @@ curl "https://api.machines.dev/v1/apps/pool-x7f3k2/machines/${MACHINE_ID}/wait?s
   -H "Authorization: Bearer ${FLY_API_TOKEN}"
 ```
 
-A few things in that config are load-bearing.
+A few settings in that config matter more than they look.
 
 **Volume and Machine must co-locate.** Create the volume first; the API resolves your requested region to a concrete one. Use the volume's returned region for the Machine, because the API rejects mismatches. Store the Machine's returned region in your database too, since that's where it actually landed.
 
