@@ -5,6 +5,10 @@ nav: guides
 date: 2026-07-10
 ---
 
+<figure>
+  <img src="/static/images/warm-pool-user-machines.webp" alt="Illustration of five smiling cube-shaped Machines relaxing together in a steaming hot tub" class="w-full max-w-lg mx-auto">
+</figure>
+
 This page covers how to make per-user infrastructure feel instant: pre-provision a pool of generic Fly Machines in the background, then claim one and personalize it when a user shows up. It's the "pre-create a pool of these" advice from [Per-User Dev Environments](/docs/blueprints/per-user-dev-environments/), worked out in full: the database schema, the API calls, the claim query, and the maintenance loop.
 
 ## The problem
