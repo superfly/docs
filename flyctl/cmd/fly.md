@@ -30,7 +30,6 @@ fly [flags]
 * [machine](/docs/flyctl/machine/)	 - Manage Fly Machines.
 * [mcp](/docs/flyctl/mcp/)	 - flyctl Model Context Protocol.
 * [mpg](/docs/flyctl/mpg/)	 - Manage Managed Postgres clusters.
-* [mysql](/docs/flyctl/mysql/)	 - Provision and manage MySQL database clusters
 * [orgs](/docs/flyctl/orgs/)	 - Commands for managing Fly organizations
 * [ping](/docs/flyctl/ping/)	 - Test connectivity with ICMP ping messages
 * [platform](/docs/flyctl/platform/)	 - Fly platform information
