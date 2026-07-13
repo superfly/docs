@@ -8,10 +8,8 @@ fly extensions [command] [flags]
 ## Available Commands
 * [arcjet](/docs/flyctl/extensions-arcjet/)	 - Provision and manage Arcjet
 * [kubernetes](/docs/flyctl/extensions-kubernetes/)	 - Provision and manage Kubernetes clusters
-* [mysql](/docs/flyctl/extensions-mysql/)	 - Provision and manage MySQL database clusters
 * [sentry](/docs/flyctl/extensions-sentry/)	 - Setup a Sentry project for this app
 * [storage](/docs/flyctl/extensions-storage/)	 - Provision and manage Tigris object storage buckets
-* [supabase](/docs/flyctl/extensions-supabase/)	 - Provision and manage Supabase Postgres databases
 * [vector](/docs/flyctl/extensions-vector/)	 - Provision and manage Upstash Vector index
 * [wafris](/docs/flyctl/extensions-wafris/)	 - Provision and manage Wafris WAFs (Web Application Firewalls)
 
