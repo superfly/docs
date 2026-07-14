@@ -2,6 +2,7 @@ List the applications currently
 available to this user. The list includes applications
 from all the organizations the user is a member of. The list shows
 the name, owner (org), status, and date/time of latest deploy for each app.
+Apps on a non-default network also show the network name.
 
 
 ## Usage
