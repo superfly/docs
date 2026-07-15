@@ -34,12 +34,14 @@ curl -X POST "https://api.machines.dev/v1/apps" \
     "network": "pool-x7f3k2"
   }'
 
-# Allocate a Flycast (private) address
+# Allocate a Flycast (private) address into the app's own network
 curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/ip_assignments" \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
   -H "Content-Type: application/json" \
-  -d '{"type": "private_v6", "network": ""}'
+  -d '{"type": "private_v6", "network": "pool-x7f3k2"}'
 ```
+
+Pass the same `network` name you created the app with. The `network` field on the allocation targets which 6PN network the Flycast address routes within, and it does not default to the app's own network. Leave it empty and the address lands in your organization's default network, where it cannot reach a Machine that lives in the app's isolated per-app network.
 
 App creation fails if the name is already taken. Your worker will retry after crashes, so treat creation as idempotent: on a name-collision error, `GET /v1/apps/{name}` to confirm the app exists and reuse it. If it doesn't exist, the failure was a real validation error, so rethrow it.
 
