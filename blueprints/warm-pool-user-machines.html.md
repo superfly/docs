@@ -34,12 +34,14 @@ curl -X POST "https://api.machines.dev/v1/apps" \
     "network": "pool-x7f3k2"
   }'
 
-# Allocate a Flycast (private) address
+# Allocate a Flycast (private) address into the app's own network
 curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/ip_assignments" \
   -H "Authorization: Bearer ${FLY_API_TOKEN}" \
   -H "Content-Type: application/json" \
-  -d '{"type": "private_v6", "network": ""}'
+  -d '{"type": "private_v6", "network": "pool-x7f3k2"}'
 ```
+
+Pass the same `network` name you created the app with. The `network` field on the allocation targets which 6PN network the Flycast address routes within, and it does not default to the app's own network. Leave it empty and the address lands in your organization's default network, where it cannot reach a Machine that lives in the app's isolated per-app network.
 
 App creation returns `422` if the name is taken. Your worker will retry after crashes, so treat that as idempotent: `GET /v1/apps/{name}` to confirm the app exists and reuse it. If it doesn't exist, the `422` was a real validation error, so rethrow it.
 
@@ -87,10 +89,9 @@ curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/machines" \
       "mounts": [{"volume": "vol_abc123", "path": "/data"}],
       "services": [{
         "internal_port": 8080,
-        "ports": [{"port": 443, "handlers": ["tls", "http"]}],
+        "ports": [{"port": 80, "handlers": ["http"]}],
         "autostart": true,
-        "autostop": "off",
-        "min_machines_running": 1
+        "autostop": "off"
       }],
       "checks": {
         "health": {"type": "tcp", "port": 8080, "interval": "15s",
@@ -101,7 +102,7 @@ curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/machines" \
     }
   }'
 
-# Wait for the VM to boot (max timeout is 60s)
+# Wait for the VM to boot (timeout defaults to 60s, which is also the max)
 curl "https://api.machines.dev/v1/apps/pool-x7f3k2/machines/${MACHINE_ID}/wait?state=started&timeout=60" \
   -H "Authorization: Bearer ${FLY_API_TOKEN}"
 ```
@@ -114,7 +115,7 @@ A few settings in that config matter more than they look.
 
 **`autostop: "off"` is the point.** Pool Machines are idle by design. [Autostop](/docs/launch/autostop-autostart/) would helpfully shut them down, and a stopped pool Machine is a cold start with extra steps.
 
-**`started` doesn't mean ready.** The `wait` endpoint tells you the VM booted, not that your app inside is serving. Poll your app's health endpoint through the [exec endpoint](/docs/machines/api/machines-resource/#execute-a-command-on-a-machine) before marking the entry `ready`:
+**`started` doesn't mean ready.** The `wait` endpoint tells you the VM booted, not that your app inside is serving. Poll your app's health endpoint through the [exec endpoint](https://docs.machines.dev/machines/Machines_exec+external) before marking the entry `ready`:
 
 ```bash
 curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/machines/${MACHINE_ID}/exec" \
@@ -172,18 +173,18 @@ curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/machines/${MACHINE_ID
 
 This also decides where per-user secrets should live: in the config file on the volume, not in Machine env vars. Env changes require a Machine update and a restart. A file write doesn't.
 
-When you do need a real Machine update (rename, metadata, env vars), use the [lease flow](/docs/machines/api/machines-resource/#machine-leases) so concurrent updaters can't clobber each other: acquire a lease, send the update with the `fly-machine-lease-nonce` header, release the lease in a `finally`. And know that Machine updates replace the entire config; they don't merge. `GET` the current Machine first and send back its full config with only your fields changed, or you'll silently wipe mounts, services, checks, and env.
+When you do need a real Machine update (rename, metadata, env vars), use the [lease flow](/docs/machines/api/machines-resource/#create-a-machine-lease) so concurrent updaters can't clobber each other: acquire a lease, send the update with the `fly-machine-lease-nonce` header, release the lease in a `finally`. And know that Machine updates replace the entire config; they don't merge. `GET` the current Machine first and send back its full config with only your fields changed, or you'll silently wipe mounts, services, checks, and env.
 
 ## Maintain the pool
 
-A small worker, ideally its own [process group](/docs/apps/processes/), loops on an interval. Each tick does four things, in order:
+A small worker, ideally its own [process group](/docs/launch/processes/), loops on an interval. Each tick does four things, in order:
 
 1. **Cycle.** Delete unallocated entries whose `provision_version` doesn't match the current one. Bump the version whenever your image or Machine config changes, and the pool replaces itself over the next few ticks.
 2. **Clean.** For `failed` entries, delete the app and the row.
 3. **Validate.** `GET /machines/{id}` for each `ready` entry; discard anything whose `state` isn't `started`. Also discard rows stuck in `provisioning` for more than ~10 minutes. That's a crashed provisioner, and the incrementally-written IDs let you clean up whatever it left behind.
 4. **Replenish.** Count available entries (`status = 'ready' AND allocated_at IS NULL`) plus in-flight `provisioning` entries against your target, and create the shortfall. Counting claimed-but-still-`ready` rows here is the classic bug: the pool looks full and quietly stops refilling as users claim entries. Spread the new entries across regions by weight (say, 3 in `us`, 1 in `eu`, 1 in `apac`, where those are your own buckets of concrete Fly regions like `iad`, `ams`, and `sin`). Counting in-flight `provisioning` entries stops you from over-provisioning during a burst of claims. Guard against overlapping runs.
 
-## Pointers & Footguns
+## Pointers and footguns
 
 - **Warm Machines cost money.** Pool size is a bet on your peak claim rate versus your tolerance for cold-start fallbacks. Start small (2-5), log ready/provisioning counts every tick, and grow only when you see fallbacks under real traffic. If your app boots fast, a pool of *stopped* Machines that you `start` on claim may be the better trade, since stopped Machines cost much less than running ones.
 - **Mint unique secrets per entry** (auth tokens, gateway passwords) at provision time and store them encrypted in your database. A claimed Machine should never be reachable with another entry's credentials.
@@ -193,7 +194,7 @@ A small worker, ideally its own [process group](/docs/apps/processes/), loops on
 
 ## Related reading
 
-- [Per-User Dev Environments with Fly Machines](/docs/blueprints/per-user-dev-environments/) The architecture this pattern plugs into, including routing with `fly-replay`.
-- [Connecting to User Machines](/docs/blueprints/connecting-to-user-machines/) How to get traffic to a fleet of per-user Machines once you've assigned them.
-- [Why one app per user?](/docs/machines/guides-examples/one-app-per-user-why) The isolation reasoning behind app-per-entry.
-- [Machines API reference](/docs/machines/api/) Apps, Machines, volumes, leases, and exec.
+- [Per-User Dev Environments with Fly Machines](/docs/blueprints/per-user-dev-environments/): The architecture this pattern plugs into, including routing with `fly-replay`.
+- [Connecting to User Machines](/docs/blueprints/connecting-to-user-machines/): How to get traffic to a fleet of per-user Machines once you've assigned them.
+- [Why one app per user?](/docs/machines/guides-examples/one-app-per-user-why): The isolation reasoning behind app-per-entry.
+- [Machines API reference](/docs/machines/api/): Apps, Machines, volumes, leases, and exec.
