@@ -115,7 +115,7 @@ A few settings in that config matter more than they look.
 
 **`autostop: "off"` is the point.** Pool Machines are idle by design. [Autostop](/docs/launch/autostop-autostart/) would helpfully shut them down, and a stopped pool Machine is a cold start with extra steps.
 
-**`started` doesn't mean ready.** The `wait` endpoint tells you the VM booted, not that your app inside is serving. Poll your app's health endpoint through the [exec endpoint](/docs/machines/api/machines-resource/) before marking the entry `ready`:
+**`started` doesn't mean ready.** The `wait` endpoint tells you the VM booted, not that your app inside is serving. Poll your app's health endpoint through the [exec endpoint](https://docs.machines.dev/machines/Machines_exec+external) before marking the entry `ready`:
 
 ```bash
 curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/machines/${MACHINE_ID}/exec" \
