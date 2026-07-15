@@ -102,7 +102,7 @@ curl -X POST "https://api.machines.dev/v1/apps/pool-x7f3k2/machines" \
     }
   }'
 
-# Wait for the VM to boot (timeout defaults to 60s)
+# Wait for the VM to boot (timeout defaults to 60s, which is also the max)
 curl "https://api.machines.dev/v1/apps/pool-x7f3k2/machines/${MACHINE_ID}/wait?state=started&timeout=60" \
   -H "Authorization: Bearer ${FLY_API_TOKEN}"
 ```
