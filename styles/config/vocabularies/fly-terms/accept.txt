@@ -166,6 +166,7 @@ Vue
 (?i)webpack
 websockets?\b
 WireGuard
+Yaeger
 
 ams
 iad
