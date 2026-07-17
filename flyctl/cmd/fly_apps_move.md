@@ -13,7 +13,7 @@ fly apps move <app name> [flags]
   -h, --help                 help for move
   -o, --org string           The target Fly.io organization
       --skip-health-checks   Update machines without waiting for health checks
-  -y, --yes                  Accept all confirmations
+  -y, --yes                  Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

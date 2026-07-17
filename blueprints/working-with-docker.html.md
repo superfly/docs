@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-12-12
 ---
 
+<figure>
+<img src="/static/images/Docker-With-Fly.png" alt="Illustration by Annie Ruygt of a Frankie the hot air balloon giving flowers to the Docker whale" class="w-full max-w-lg mx-auto">
+</figure>
+
 <div class="callout">
 **Fly.io runs apps close to your users by turning Docker images into VMs running in our global network. This is a practical guide for using Docker effectively on Fly.io.**
 </div>

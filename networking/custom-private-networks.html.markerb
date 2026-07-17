@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<figure>
+<img src="/static/images/custom-private-networks.png" alt="Illustration by Annie Ruygt of two apps sitting on clouds and talking to each other on the telephone" class="w-full max-w-lg mx-auto">
+</figure>
+
 You can isolate users, data, or code using custom private networks. 
 
 Every organization gets a default [private network](https://fly.io/docs/networking/private-networking/) (6PN) and all the apps in that network can communicate privately using `.internal` domains. When you create a new app, you can choose to place it on a distinct custom 6PN within your organization. Apps on separate 6PNs can never communicate unless explicitly configured to do so.

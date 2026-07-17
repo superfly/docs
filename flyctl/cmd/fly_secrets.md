@@ -11,7 +11,7 @@ fly secrets [command] [flags]
 ## Available Commands
 * [deploy](/docs/flyctl/secrets-deploy/)	 - Deploy staged secrets for an application
 * [import](/docs/flyctl/secrets-import/)	 - Set secrets as NAME=VALUE pairs from stdin
-* [list](/docs/flyctl/secrets-list/)	 - List application secret names, digests and creation times
+* [list](/docs/flyctl/secrets-list/)	 - List application secret names, digests and deployment status
 * [set](/docs/flyctl/secrets-set/)	 - Set one or more encrypted secrets for an application
 * [sync](/docs/flyctl/secrets-sync/)	 - Sync flyctl with the latest versions of app secrets, even if they were set elsewhere
 * [unset](/docs/flyctl/secrets-unset/)	 - Unset one or more encrypted secrets for an application

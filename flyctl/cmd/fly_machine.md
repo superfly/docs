@@ -13,7 +13,6 @@ fly machine [command] [flags]
 * [cordon](/docs/flyctl/machine-cordon/)	 - Deactivate all services on a machine
 * [create](/docs/flyctl/machine-create/)	 - Create, but don't start, a machine
 * [destroy](/docs/flyctl/machine-destroy/)	 - Destroy Fly machines
-* [egress-ip](/docs/flyctl/machine-egress-ip/)	 - Manage static egress IPs
 * [exec](/docs/flyctl/machine-exec/)	 - Execute a command on a machine
 * [kill](/docs/flyctl/machine-kill/)	 - Kill (SIGKILL) a Fly machine
 * [leases](/docs/flyctl/machine-leases/)	 - Manage machine leases
@@ -27,6 +26,7 @@ fly machine [command] [flags]
 * [suspend](/docs/flyctl/machine-suspend/)	 - Suspend one or more Fly machines
 * [uncordon](/docs/flyctl/machine-uncordon/)	 - Reactivate all services on a machine
 * [update](/docs/flyctl/machine-update/)	 - Update a machine
+* [wait](/docs/flyctl/machine-wait/)	 - Wait for a machine to reach a state
 
 ## Options
 

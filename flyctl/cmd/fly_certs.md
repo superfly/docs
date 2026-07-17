@@ -11,6 +11,7 @@ fly certs [command] [flags]
 ## Available Commands
 * [add](/docs/flyctl/certs-add/)	 - Add a certificate for an app
 * [check](/docs/flyctl/certs-check/)	 - Show certificate and DNS status
+* [import](/docs/flyctl/certs-import/)	 - Import a custom certificate
 * [list](/docs/flyctl/certs-list/)	 - List certificates for an app
 * [remove](/docs/flyctl/certs-remove/)	 - Removes a certificate from an app
 * [setup](/docs/flyctl/certs-setup/)	 - Shows certificate setup instructions

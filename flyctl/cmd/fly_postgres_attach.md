@@ -16,7 +16,7 @@ fly postgres attach <POSTGRES APP> [flags]
   -h, --help                   help for attach
       --superuser              Grants attached user superuser privileges (default true)
       --variable-name string   The environment variable name that will be added to the consuming app.  (default "DATABASE_URL")
-  -y, --yes                    Accept all confirmations
+  -y, --yes                    Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

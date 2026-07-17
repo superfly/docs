@@ -1,6 +1,7 @@
 ---
 title: "Add Ollama"
 layout: framework_docs
+published: false
 objective: How to setup ollama and interact with its API.
 order: 1
 ---

@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-10-27
 ---
 
+<figure>
+<img src="/static/images/free-trial.png" alt="Illustration by Annie Ruygt of a Frankie the hot air balloon showing a Free Trial banner to his developer friend who carries an app" class="w-full max-w-lg mx-auto">
+</figure>
+
 **Fly.io runs your apps close to your users. This page explains how our free trial works and what resources you can use before you need to add a payment method.**
 
 ## Free Trial overview
@@ -26,7 +30,7 @@ These are **not included** in the free trial:
 
 - Dedicated IPv4 addresses
 - Access to performance-optimized vCPUs
-- GPU machines
+- GPU machines (To be deprecated as of 08/01/26)
 
 <div class="callout">You can add a credit card from the dashboard at any time during the trial. This lifts the resource limits and keeps your apps running without interruption. **Note: adding a card ends the free trial** and your usage starts counting toward your bill from that point on.</div>
 

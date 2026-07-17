@@ -14,7 +14,7 @@ fly image update [flags]
   -h, --help                 help for update
       --image string         Target a specific image
       --skip-health-checks   Skip waiting for health checks between VM updates.
-  -y, --yes                  Accept all confirmations
+  -y, --yes                  Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

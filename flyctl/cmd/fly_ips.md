@@ -7,7 +7,7 @@ fly ips [command] [flags]
 
 ## Available Commands
 * [allocate](/docs/flyctl/ips-allocate/)	 - Allocate recommended IP addresses
-* [allocate-egress](/docs/flyctl/ips-allocate-egress/)	 - (Beta) Allocate app-scoped egress IPs
+* [allocate-egress](/docs/flyctl/ips-allocate-egress/)	 - Allocate app-scoped egress IPs
 * [allocate-v4](/docs/flyctl/ips-allocate-v4/)	 - Allocate an IPv4 address
 * [allocate-v6](/docs/flyctl/ips-allocate-v6/)	 - Allocate an IPv6 address
 * [list](/docs/flyctl/ips-list/)	 - List allocated IP addresses

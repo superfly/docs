@@ -7,6 +7,10 @@ redirect_from:
   - /docs/reference/private-networking/
 ---
 
+<figure>
+<img src="/static/images/private-networking.png" alt="Illustration by Annie Ruygt of computers that look like buildings connected through underground tunnels" class="w-full max-w-lg mx-auto">
+</figure>
+
 Fly Apps in an organization are connected by a mesh of WireGuard tunnels using IPv6 called a 6PN. Private networking over your 6PN is always available to apps by default; you don't have to do anything special to get it.
 
 Apps within the same organization are assigned special addresses (6PN addresses) tied to 6PN. Those applications can talk to each other because of their 6PN addresses, but applications from other organizations can't. The Fly.io platform won't forward packets between different 6PNs, unless you explicitly allow it, for example when you [allocate a Flycast address](/docs/networking/flycast/#allocate-a-flycast-address).

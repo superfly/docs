@@ -6,7 +6,7 @@ nav: firecracker
 ---
 
 <div class= "important icon">
-Fly Kubernetes is in beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
+Fly Kubernetes is in closed beta and not recommended for critical production usage. To report issues or provide feedback, email us at beta@fly.io.
 </div>
 
 To create a Kubernetes cluster, run:

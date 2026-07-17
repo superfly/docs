@@ -27,6 +27,10 @@ to do is rerun the generator:
 bin/rails generate dockerfile
 ```
 
+<div class="note icon">
+If you get a `Could not find generator 'dockerfile'.` error, your app predates the `dockerfile-rails` gem. Add [dockerfile-rails](https://github.com/rubys/dockerfile-rails) to your Gemfile and run `bundle install` first.
+</div>
+
 The generator will remember the options you selected before (these are
 stored in `config/dockerfile.yml`).  If you need to change a boolean
 option, add or remove a `no-` prefix before the option name.

@@ -1,4 +1,4 @@
-(Beta) Allocates a pair of egress IP addresses for an app
+Allocates a pair of egress IP addresses for an app
 
 ## Usage
 ~~~
@@ -12,7 +12,7 @@ fly ips allocate-egress [flags]
   -c, --config string   Path to application configuration file
   -h, --help            help for allocate-egress
   -r, --region string   The target region (see 'flyctl platform regions')
-  -y, --yes             Accept all confirmations
+  -y, --yes             Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

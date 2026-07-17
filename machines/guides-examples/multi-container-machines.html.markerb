@@ -140,6 +140,105 @@ Containers in a Machine share the same kernel and VM, but are isolated at the pr
 
 There are several ways to deploy multi-container machines on Fly.io. Choose the method that best fits your workflow:
 
+### Using Docker Compose
+
+If you already have a Docker Compose setup, you can deploy it to Fly Machines without rewriting your configuration. Fly builds and runs Compose services as containers within a single Machine.
+
+#### Requirements
+
+You need flyctl v0.3.152 or later:
+
+```bash
+fly version
+```
+
+If you're behind, update with `fly version update`.
+
+#### Configuration
+
+Add a `[build.compose]` section to your `fly.toml`:
+
+```toml
+[build.compose]
+```
+
+Fly auto-detects Compose files using the standard lookup order: `compose.yaml`, `compose.yml`, `docker-compose.yaml`, `docker-compose.yml`. If your file has a different name, specify it:
+
+```toml
+[build.compose]
+file = "docker-compose.prod.yml"
+```
+
+#### Routing traffic
+
+Set `internal_port` in your `fly.toml` `[[services]]` or `[http_service]` block to match the port exposed by the container that should receive traffic. Only one container handles inbound requests from the Fly proxy.
+
+```toml
+[http_service]
+  internal_port = 8080
+  force_https = true
+```
+
+#### Example
+
+A web service with a Redis sidecar, both running in the same Machine. `fly deploy` builds the `web` service from a `Dockerfile` in your project directory; `redis` runs as a pre-built sidecar.
+
+**Dockerfile:**
+
+```dockerfile
+FROM nginxdemos/hello:plain-text
+```
+
+**compose.yml:**
+
+```yaml
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+
+  redis:
+    image: redis:latest
+```
+
+**fly.toml:**
+
+```toml
+app = "my-compose-app"
+primary_region = "ord"
+
+[build.compose]
+
+[http_service]
+  internal_port = 80
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+```
+
+Deploy with:
+
+```bash
+fly deploy
+```
+
+The `web` container handles inbound traffic on port 80, and the `redis` container runs alongside it as a sidecar. Your application code can reach Redis at `localhost:6379` because both containers share the same network namespace inside the Machine.
+
+<div class="warning icon">
+**Warning:** Fly ignores `volumes:` declarations in your Compose file and prints `Warning: Could not read volume file...` at deploy time. The deploy still succeeds, but any data your containers write is stored on an ephemeral overlay that's wiped on restart or redeploy. For persistent storage, attach a [Fly Volume](/docs/volumes/) and mount it via `[mounts]` in `fly.toml`.
+</div>
+
+#### Limitations
+
+- **Exactly one buildable service.** `fly deploy` requires exactly one service in the Compose file to specify `build`. All other services must use pre-built images.
+- **Secrets are global.** Secrets set with `fly secrets` are available to every container in the Machine. You can't scope a secret to a single service.
+- **Environment variable conflicts.** Fly injects runtime environment variables (like `FLY_APP_NAME`, `PRIMARY_REGION`, etc.) into all containers. These can overwrite values you define in your Compose file's `environment` block.
+
 ### Using the Machines API
 
 You can create multi-container Machines by sending a POST request to the Machines API. For example, using `curl`:

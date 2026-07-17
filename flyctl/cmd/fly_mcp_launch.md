@@ -31,11 +31,11 @@ fly mcp launch command [flags]
       --server string               Name to use for the MCP server in the MCP client configuration
       --setup strings               Additional setup commands to run before launching the MCP server
       --user string                 User to authenticate with
-      --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance')
-      --vm-cpus int                 Number of CPUs
-      --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none)
+      --vm-cpu-kind string          The kind of CPU to use ('shared' or 'performance') (also --vm-cpukind)
+      --vm-cpus int                 Number of CPUs (also --cpus)
+      --vm-gpu-kind string          If set, the GPU model to attach (a100-pcie-40gb, a100-sxm4-80gb, l40s, a10, none) (also --vm-gpukind)
       --vm-gpus int                 Number of GPUs. Must also choose the GPU model with --vm-gpu-kind flag
-      --vm-memory string            Memory (in megabytes) to attribute to the VM
+      --vm-memory string            Memory (in megabytes) to attribute to the VM (also --memory)
       --vm-size string              The VM size to set machines to. See "fly platform vm-sizes" for valid values
   -v, --volume strings              Volume to mount, in the form of <volume_name>:/path/inside/machine[:<options>]
       --vscode                      Add MCP server to the VS Code client configuration

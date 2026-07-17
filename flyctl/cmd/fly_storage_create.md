@@ -21,7 +21,7 @@ fly storage create [flags]
       --shadow-region string       Shadow bucket region
       --shadow-secret-key string   Shadow bucket secret key
       --shadow-write-through       Write objects through to the shadow bucket
-  -y, --yes                        Accept all confirmations
+  -y, --yes                        Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

@@ -19,6 +19,8 @@ The Fly Machines REST API provides resources to provision and manage Fly Apps, F
 
 * **[Apps resource](/docs/machines/api/apps-resource):** Create and manage Fly Apps to group and administer your Machines.
 
+* **[Certificates resource](/docs/machines/api/certificates-resource):** Manage SSL/TLS certificates for custom domains.
+
 * **[Tokens resource](/docs/machines/api/tokens-resource):** Request an OpenID Connect token from a 3rd-party.
 
 * **[Volumes resource](/docs/machines/api/volumes-resource):** Create and manage persistent storage volumes for your Machines.

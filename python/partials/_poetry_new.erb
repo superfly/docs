@@ -1,9 +1,11 @@
-For managing our project, we use [Poetry](https://python-poetry.org/). 
+For managing our project, we use [Poetry](https://python-poetry.org/).
 For more information on the initial setup with poetry, refer to [setting up a python environment](/docs/python/the-basics/initial-setup).
+
 We can initialize a new project like so:
 
 ```cmd
 poetry new <%= runtime.downcase %>-app
 cd <%= runtime.downcase %>-app
-poetry shell
 ```
+
+<div class="callout">If you're using Poetry 2.0+ (the default when installed via `pipx`), the `poetry shell` command is no longer built in. Use `poetry run` to run commands (e.g., `poetry run python main.py`), or activate the environment with `poetry env activate`. See the [initial setup guide](/docs/python/the-basics/initial-setup) for more details.</div>

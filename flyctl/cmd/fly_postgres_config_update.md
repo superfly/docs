@@ -23,7 +23,7 @@ fly postgres config update [flags]
       --shared-preload-libraries string     Sets the shared libraries to preload. (comma separated string)
       --wal-level string                    Sets the level of information written to the WAL. (minimal, replica, logical).
       --work-mem string                     Sets the maximum amount of memory each Postgres query can use
-  -y, --yes                                 Accept all confirmations
+  -y, --yes                                 Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

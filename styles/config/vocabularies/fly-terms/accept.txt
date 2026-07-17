@@ -24,10 +24,12 @@ centiseconds
 cgroup
 cgroups
 cleartext
+configs?\b
 containerd
 [Cc]ron(jobs?|job)?\b
 [Cc]rontabs?\b
 datacenters?\b
+Datadog
 datasource
 datatypes?\b
 declaratively
@@ -70,6 +72,7 @@ idempotently
 IEx
 incentivizes?\b
 initializer
+IP('s)?\b
 IPs
 IPSec
 ISPs?\b
@@ -172,13 +175,16 @@ unmount
 Upstash
 Valkey
 vCPUs?\b
+VM('s)?\b
 virtualized
 Vite
 VSCode
 Vue
 (?i)webpack
+walkthrough
 websockets?\b
 WireGuard
+Yaeger
 
 ams
 iad

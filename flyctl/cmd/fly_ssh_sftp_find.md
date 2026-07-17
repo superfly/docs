@@ -16,7 +16,7 @@ fly ssh sftp find [path] [flags]
   -h, --help                   help for find
       --machine string         Run the console in the existing machine with the specified ID
   -o, --org string             The target Fly.io organization
-  -g, --process-group string   The target process group
+  -g, --process-group string   The target process group (also --group)
       --pty                    Allocate a pseudo-terminal (default: on when no command is provided)
   -q, --quiet                  Don't print progress indicators for WireGuard
   -r, --region string          The target region (see 'flyctl platform regions')

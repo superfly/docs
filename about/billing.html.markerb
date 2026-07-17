@@ -10,7 +10,7 @@ redirect_from: /docs/about/credit-cards/
 
 Billing for Fly.io is monthly per organization. Organizations are administrative entities that enable you to add members, share app development environments, and manage billing.
 
-New customers and all new organizations (including those created by previously existing customers) are billed monthly for resource usage. Refer to our resource [Pricing page](/docs/about/pricing/) for details. 
+New customers and all new organizations (including those created by previously existing customers) are billed monthly for resource usage. Refer to our resource [Pricing page](/docs/about/pricing/) for details.
 
 ---
 
@@ -43,14 +43,6 @@ For example, a Machine described in your dashboard as "shared-1x-cpu@1024MB" is 
 Stopped and suspended Machines are billed based on their root file system (rootfs) usage per second (the time they spend in the `stopped` or `suspended` state) by $0.15 per GB per month.
 
 For example, a Machine described in your dashboard as having 1GB of rootfs stopped for 10 days in the entire month will cost $0.05. If you have 3 stopped Machines of 1GB rootfs each stopped for 30 days it will cost $0.45 ($0.15 x 3).
-
----
-
-## GPU billing
-
-GPUs are billed per second that the attached Fly Machine is running (the time they spend in the `started` state), based on the per hour cost of the GPU card. Learn more about [pricing for GPUs](/docs/about/pricing/#gpus-and-fly-machines).
-
-You're also billed for the Fly Machine separately from the GPU.
 
 ---
 
@@ -127,7 +119,7 @@ We require an active, valid credit card on file for most Fly.io accounts to do t
 
 We may send a pre-authorization request to the issuing bank to verify a bank will authorize charges. Some credit card companies present these as real charges, which may surprise you.
 
-A pre-auth is really just a hold on a credit card; it is not a real charge. We’ll typically pre-authorize a small amount (usually less than $5) after signup, then cancel the authorization immediately. Banks may show the pre-auth for up to 7 days, even though we have not collected any money.
+A pre-auth is really just a hold on a credit card; it is not a real charge. We’ll typically pre-authorize a small amount (usually less than US $10) after signup, then cancel the authorization immediately. Banks may show the pre-auth for up to 10 business days, even though we have not collected any money.
 
 ### If you don't have a credit card
 

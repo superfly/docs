@@ -73,6 +73,7 @@ Typically, 2xx HTTP status codes denote successful operations, 4xx codes imply f
 | 401 | The API key used was missing or invalid. |
 | 404 | The resource was not found. |
 | 408 | Request timed out. |
+| 422 | Validation failed (for example, an app name that is already taken). |
 | 5xx | Indicates an error with Fly.io API servers. |
 
 ## Rate Limits

@@ -5,6 +5,10 @@ nav: firecracker
 toc: false
 ---
 
+<div class="warning icon">
+**GPUs are deprecated and will be unavailable after August 1.**
+</div>
+
 Fly.io has GPUs! If you have workloads that would benefit from GPU acceleration, Fly GPU Machines may be for you.
 
 <figure class="flex justify-center">

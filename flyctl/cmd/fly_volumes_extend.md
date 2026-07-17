@@ -13,7 +13,7 @@ fly volumes extend <volume id> [flags]
   -h, --help            help for extend
   -j, --json            JSON output
   -s, --size string     Target volume size in gigabytes
-  -y, --yes             Accept all confirmations
+  -y, --yes             Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

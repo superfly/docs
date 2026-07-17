@@ -11,20 +11,23 @@ A growing library of guides for running, designing, and deploying all kinds of a
 
 Guides for the structure your app on Fly.io. Layouts, tradeoffs, moving parts.
 
+- [Deploy OpenClaw on Fly.io](/docs/blueprints/deploy-openclaw/)
+- [Run Hermes Agent on Fly.io](/docs/blueprints/hermes-agent-on-fly-io/) NEW!!
+- [Warm pools of user Machines](/docs/blueprints/warm-pool-user-machines/) NEW!!
+- [Deploying Remote MCP Servers](/docs/blueprints/remote-mcp-servers/)
 - [Resilient apps use multiple Machines](/docs/blueprints/resilient-apps-multiple-machines/)
 - [Getting Started with N-Tier Architecture](/docs/blueprints/n-tier-architecture/)
 - [Shared Nothing Architecture](/docs/blueprints/shared-nothing/)
 - [Session Affinity (a.k.a. Sticky Sessions)](/docs/blueprints/sticky-sessions/)
 - [Multi-region databases and fly-replay](/docs/blueprints/multi-region-fly-replay/)
-- [Deploying Remote MCP Servers](/docs/blueprints/remote-mcp-servers/)
 
 
 ## Deployment & Developer Workflow
 
 Stuff you set up once and adjust when you ship code. Includes previews, base images, staging, and Docker wrangling.
 
-- [Working with Docker on Fly.io](/docs/blueprints/working-with-docker/) **NEW!**
-- [Custom Deploy Workflows](/docs/blueprints/custom-deploy-workflows/) **NEW!**
+- [Working with Docker on Fly.io](/docs/blueprints/working-with-docker/)
+- [Custom Deploy Workflows](/docs/blueprints/custom-deploy-workflows/)
 - [Seamless Deployments on Fly.io](/docs/blueprints/seamless-deployments/)
 - [Rollback Guide](/docs/blueprints/rollback-guide/)
 - [Git Branch Preview Environments on Github](/docs/blueprints/review-apps-guide/)
@@ -60,6 +63,7 @@ Make it fast. Make it reliable. Monitor what's happening.
 
 How to run periodic tasks, long-running jobs, infrastructure automation, and the things that run when you’re asleep.
 
+- [Long-running tasks and machine lifecycle](/docs/blueprints/long-running-tasks/) NEW!!
 - [Building Infrastructure Automation without Terraform](/docs/blueprints/infra-automation-without-terraform/)
 - [Deferring long-running tasks to a distributed work queue](/docs/blueprints/work-queues/)
 - [Task scheduling guide with Cron Manager and friends](/docs/blueprints/task-scheduling/)

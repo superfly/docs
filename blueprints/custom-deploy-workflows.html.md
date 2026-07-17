@@ -6,6 +6,10 @@ author: kcmartin
 date: 2025-12-05
 ---
 
+<figure>
+<img src="/static/images/custom-deploy-workflows.png" alt="Illustration by Annie Ruygt of a Frankie the hot air balloon writing on a notepad about different modes of transport including a jet a car and a truck" class="w-full max-w-lg mx-auto">
+</figure>
+
 ## Overview
 
 <div class="callout">

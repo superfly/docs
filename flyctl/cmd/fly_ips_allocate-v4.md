@@ -13,7 +13,7 @@ fly ips allocate-v4 [flags]
   -h, --help            help for allocate-v4
   -r, --region string   The target region (see 'flyctl platform regions')
       --shared          Allocates a shared IPv4
-  -y, --yes             Accept all confirmations
+  -y, --yes             Accept all confirmations (also --auto-confirm)
 ~~~
 
 ## Global Options

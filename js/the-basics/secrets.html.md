@@ -20,7 +20,7 @@ fly secrets set SECRET_KEY=YOURSECRETKEYGOESHERE
 Or you can import your dotenv file wholesale using [fly secrets import](https://fly.io/docs/flyctl/secrets-import/):
 
 ```
-fly secrets import < .dotenv
+cat .dotenv | fly secrets import
 ```
 
 Both commands will restart your application if it has previously been deployed.  Pass the `--stage` option if you would rather deploy these changes later.

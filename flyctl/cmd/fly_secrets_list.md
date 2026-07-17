@@ -1,6 +1,16 @@
 List the secrets available to the application. It shows each secret's
-name, a digest of its value and the time the secret was last set. The
+name, a digest of its value and the deployment status across machines. The
 actual value of the secret is only available to the application.
+
+Secrets that need deployment are prefixed with an indicator:
+  *  Staged secret (not deployed to any machines)
+  !  Partial deployment (deployed to some but not all machines)
+
+Deployment status:
+  Deployed     - Secret is deployed to all machines (secret updated_at <= machine release created_at)
+  Staged       - Secret is staged but not deployed to any machines
+  Partial      - Secret is deployed to some but not all machines (rolling deployment in progress)
+  Unknown      - Status cannot be determined (missing timestamps, too many machines, or API error)
 
 ## Usage
 ~~~

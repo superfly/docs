@@ -30,11 +30,7 @@ For example, using the CLI:
 fly certs add example.com
 ```
 
-This command will show you the applicable DNS configuration options for your setup, including:
-- A and AAAA records
-- CNAME records
-- Proxy setup (if using a CDN)
-- DNS-01 challenge (required for wildcards, optional for pre-traffic certificate generation)
+This command will show you the applicable DNS configuration options for your setup.
 
 If you are adding a wildcard domain with the CLI, put quotes around the hostname to avoid shell expansion:
 
@@ -42,7 +38,7 @@ If you are adding a wildcard domain with the CLI, put quotes around the hostname
 fly certs add "*.example.com"
 ```
 
-Use `fly certs check <hostname>` to check the certificate status and validation progress, or `fly certs setup <hostname>` to view the setup instructions again.
+Use `fly certs check <hostname>` to check the certificate status and validation progress, or `fly certs setup <hostname>` to view all setup options.
 
 ### Configure DNS records
 
@@ -50,38 +46,41 @@ Now that you've added your domain to your app, configure DNS records with your D
 
 Choose the DNS setup that matches your needs:
 
+<div class="important">
+**Important:** To issue or renew a certificate, Fly.io needs to verify your domain through at least one of: an IPv6 address (AAAA record) pointing to your app, a [CNAME `_acme-challenge`](#dns-challenge), or a [`_fly-ownership` TXT record](#domain-ownership-verification).
+</div>
+
 #### A and AAAA records (recommended)
 
 Use A and AAAA records for most direct connections to your app. These records point your domain directly to your app's IP addresses.
 
-The A and AAAA records you need to set will be shown in your dashboard, and in the output from `fly certs add`. If your app doesn't have an IPv6 address, allocate one with `fly ips allocate-v6`.
-
-<div class="important">
-**Important:** Hostname validation will fail without an IPv6 address&mdash;and we won't attempt to issue or renew a certificate&mdash;unless you're using a [CNAME `_acme-challenge` for domain verification](#dns-challenge). However, we still recommend having both an IPv4 and an IPv6 address allocated if your app is serving traffic.
-</div>
+The A and AAAA records you need to set will be shown in your dashboard, and in the output from `fly certs add`. If your app doesn't have IPv4 and IPv6 addresses, allocate them with `fly ips allocate`.
 
 #### CNAME records
 
 CNAME records work well for subdomains (like `www.example.com` or `app.example.com`). A CNAME points your custom domain at a unique `.fly.dev` hostname for your app.
 CNAME records are also a good option if you have many IP addresses assigned to your app, or expect to change them in the future.
 
-Set the CNAME record with your DNS provider. Each app has a unique CNAME target that will be shown in the dashboard for your certificate, or in the output from `fly certs add`.
+Set the CNAME record with your DNS provider. Each app has a unique CNAME target that will be shown in the dashboard for your certificate, or in the output from `fly certs setup`.
 
 Setting CNAME records for the apex domain can be problematic, and should be avoided unless your DNS provider supports CNAME flattening. Some providers use a special name for these records, such as ANAME or ALIAS, and some will flatten a CNAME at the apex automatically. In general, we recommend setting A/AAAA records on the apex domain.
 
-#### Proxy/CDN setup
-
-If you're using a proxy or CDN (like Cloudflare) in front of your Fly application, configure only an AAAA record pointing to your app's IPv6 address, as certificate generation requires IPv6 traffic.
-
 #### DNS Challenge
 
-Use the DNS-01 challenge when:
+Use the DNS-01 challenge when you need a wildcard certificate, or when you
+want to generate the certificate before directing traffic to your app.
 
-- You need a wildcard certificate
-- You want to generate the certificate before directing traffic to your app
-- Automatic validation methods don't work for your setup
+This will require setting an `_acme-challenge` CNAME record on your domain. The required record will be shown in your dashboard, or in the output from `fly certs setup`.
 
-This will require setting an `_acme-challenge` CNAME record on your domain. The required record will be shown in your dashboard, or in the output from `fly certs add`.
+#### Domain ownership verification
+
+Use a `_fly-ownership` TXT record to verify domain ownership when other validation methods aren't available for your setup. This is useful when:
+
+- Your domain is behind a CDN or proxy that prevents direct validation
+- You're importing a [custom certificate](#use-your-own-certificate)
+- You don't want to allocate or use IPv6 addresses
+
+The required record will be shown in your dashboard, or in the output from `fly certs setup`. You can include multiple values in a single TXT record by separating them with semicolons.
 
 ### Certificate validation
 
@@ -89,16 +88,31 @@ After you have configured your DNS, Fly.io automatically validates your domain o
 
 - **TLS-ALPN challenge**: Validates through a TLS handshake with Fly Proxy. This is the preferred method and works automatically for direct connections.
 
-- **HTTP-01 challenge**: Validates by requesting a specific file from your domain. Used automatically when TLS-ALPN isn't available, such as with proxy/CDN configurations.
+- **HTTP-01 challenge**: Validates by requesting a specific file from your domain. Used automatically when TLS-ALPN isn't available.
 
 - **DNS-01 challenge**: You manually add a DNS record to validate domain ownership. Required for wildcard certificates, or to generate certificates before directing traffic to your app.
+
+## Use your own certificate
+
+In addition to the automatic Let's Encrypt certificates that Fly.io manages for you, you can upload your own TLS certificate and private key. Upload your certificate and private key in PEM format using the CLI:
+
+```cmd
+fly certs import example.com --fullchain fullchain.pem --private-key private-key.pem
+```
+
+You can also import certificates from your app dashboard under **Certificates**.
+
+After uploading a custom certificate, it may show a status of `pending_ownership` until domain ownership is verified.
+Ownership is verified by an IPv6 DNS record pointing at your app, or by the `_fly-ownership` TXT record.
+
+Custom and Fly-managed (Let's Encrypt) certificates can coexist for the same hostname. When both are present, your custom certificate is served as the primary certificate, and the Fly-managed certificate acts as an automatic fallback.
 
 ## Other `fly cert` commands
 
 * `fly certs list` - List the certificates associated with an app.
 * `fly certs check <hostname>` - Trigger a check on the domain validation and DNS configuration for the given hostname and return results in the same format as `fly certs show`.
 * `fly certs setup <hostname>` - Shows setup instructions for configuring DNS records for an existing certificate.
-* `fly certs remove <hostname>` - Remove a certificate from an app for the given hostname.
+* `fly certs remove <hostname>` - Remove a certificate from an app for the given hostname. Use `--custom` to remove only a custom certificate, or `--acme` to stop ACME issuance only.
 
 
 ## Teaching your app about custom domains
@@ -138,18 +152,19 @@ If you're building a platform on top of Fly.io, and you expect that your users w
 
 ### I use Cloudflare, and there seems to be a problem issuing or validating my Fly.io TLS certificate
 
-If you're using Cloudflare's proxying feature (orange cloud), Fly.io can generate a certificate using the HTTP-01 challenge.
+If you're using Cloudflare's proxying feature (orange cloud), verify domain ownership by adding a [`_fly-ownership` TXT record](#domain-ownership-verification). Once ownership is verified, Fly.io can issue certificates using the HTTP-01 challenge through Cloudflare's proxy.
 
 For this to work:
 
-1. **Configure DNS records properly**: Create only an AAAA record pointing to your app's IPv6 address. Do not create an A record or CNAME when using Cloudflare's proxy.
+1. **Verify domain ownership**: Add a `_fly-ownership` TXT record with the values shown in your certificate details. See [Domain ownership verification](#domain-ownership-verification).
 2. **Set SSL mode**: Use "Full" or "Full (Strict)" SSL mode in Cloudflare. "Flexible" mode can cause redirect loops.
 
-Alternatively, you can use the [DNS-01 challenge method](#dns-challenge) instead of the automatic validation method, though this may conflict with Cloudflare's own certificate issuance.
+Depending on your Cloudflare configuration, HTTP-01 challenges may be blocked and generation may still fail.
+In these cases, you can bypass ACME certificate generation entirely by importing a [Cloudflare Origin Certificate](/docs/networking/understanding-cloudflare/#using-a-cloudflare-origin-certificate) and verifying ownership with the same `_fly-ownership` TXT record.
 
 ## Related reading
 
 - [Networking overview](/docs/networking/) Broader look at how Fly.io handles routing, DNS, IPs, and certificates.
-- [Automate the certificate process for custom domains](/docs/networking/custom-domain-api/) Use Fly.io's GraphQL API to automate cert provisioning and domain verification.
+- [Certificates API reference](/docs/machines/api/certificates-resource/) Use the Machines API to automate cert provisioning and domain verification.
 - [TLS termination by Fly Proxy](/docs/security/tls-termination/) — How Fly.io handles HTTPS for your apps and manages TLS certificates automatically behind the scenes.
 - [Understanding Cloudflare](/docs/networking/understanding-cloudflare/) What happens when you put Fly.io behind Cloudflare, and how to avoid common pitfalls.

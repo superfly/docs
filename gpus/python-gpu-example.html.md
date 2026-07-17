@@ -4,6 +4,10 @@ layout: docs
 nav: firecracker
 ---
 
+<div class="warning icon">
+**GPUs are deprecated and will be unavailable after August 1.**
+</div>
+
 This is a worked example for a CUDA-enabled Python template environment on a Fly GPU Machine, for working with ML models.
 
 We'll start with a minimal Ubuntu Linux, add a non-root user, and set up a Python virtual environment for a project, with Jupyter Notebook installed. NVIDIA libraries that the project uses can be installed to the persistent disk as needed, using pip.

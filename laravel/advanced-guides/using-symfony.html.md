@@ -29,6 +29,12 @@ To accomplish this, we'll create a custom `SymfonyRuntime` class and use that wh
 Create file `.fly/FlySymfonyRuntime.php` with the following contents:
 
 ```php
+<?php
+
+namespace App;
+
+use Symfony\Component\Runtime\SymfonyRuntime;
+
 class FlySymfonyRuntime extends SymfonyRuntime
 {
     public function __construct(array $options = [])
@@ -60,9 +66,14 @@ We also need to tell Symfony to use the `FlySymfonyRuntime` by setting an enviro
 
 ## The Fly Proxy
 
-Symfony needs to be aware of the Fly Proxy in order to generate links correctly (among other things). The Fly proxy is a routing layer (similar to a load balancer) that sits between your application server and the public internet.
+Symfony needs to be aware of the Fly Proxy to generate links correctly (among other things). The Fly proxy is a routing layer (similar to a load balancer) that sits between your application server and the public internet.
 
-The proxy terminates SSL connections, and sends "http" requests to your application. We need to tell Symfony to [trust this proxy](https://symfony.com/doc/current/deployment/proxies.html) by editing file `config/packages/framework.yaml` and adding `trusted_proxies: '127.0.0.1,REMOTE_ADDR'`.
+The proxy terminates SSL connections, and sends "http" requests to your application. We need to tell Symfony to [trust this proxy](https://symfony.com/doc/current/deployment/proxies.html) by editing file `config/packages/framework.yaml`:
+
+```yaml
+framework:
+    trusted_proxies: '127.0.0.1,REMOTE_ADDR'
+```
 
 ## Detail Work
 
