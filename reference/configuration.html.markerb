@@ -108,8 +108,8 @@ In our example above, the builder is being set to use [Paketo's all-purpose buil
 You can also explicitly define buildpacks:
 ```toml
 [build]
-  builder = "paketobuildpacks/builder:base"
-  buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
+  builder = "paketobuildpacks/builder-jammy-base"
+  buildpacks = ["docker.io/paketobuildpacks/nodejs"]
 ```
 
 ### Specify a Docker image
