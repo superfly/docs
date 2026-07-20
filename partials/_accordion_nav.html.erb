@@ -72,6 +72,13 @@
                   </dd>
                 </dl>
               </li>
+            <% elsif page[:cookie_prefs] %>
+              <%# Reopens the PostHog consent banner (posthog-consent.js wires
+                  #footer-cookie-prefs). Rendered only when PostHog is built in;
+                  hidden until the JS un-hides it for in-scope visitors. %>
+              <% if ENV["POSTHOG_API_KEY"].to_s.strip != "" %>
+                <li><a id="footer-cookie-prefs" href="#" hidden><span class="truncate pointer-events-none"><%= page[:text] %></span></a></li>
+              <% end %>
             <% else %>
               <li>
                 <% if page[:type] == "flyctl" %>
