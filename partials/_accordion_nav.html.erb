@@ -2,7 +2,7 @@
   def section_open?(section)
     (!section[:path].nil? && current_page?(section[:path])) ||
     (!section[:open].nil? && section[:open]) ||
-    (section[:links] && section[:links].any? { |page| current_page?(page[:path]) || (page[:links] && section_open?(page)) })
+    (section[:links] && section[:links].any? { |page| (!page[:path].nil? && current_page?(page[:path])) || (page[:links] && section_open?(page)) })
   end
 
   nav.each { |nav| nav[:open] = section_open?(nav) unless nav[:title].nil? }
