@@ -73,7 +73,7 @@ Machines must be associated with a Fly App. App names must be unique.
         | Property   | Type    | Required | Description                |
         |-------------|---------|----------|----------------------------|
         | `app_name`  | string  | yes      | Name of the app to create  |
-        | `enable_subdomains`  | boolean  | no      | Used for Fly Kubernetes. |
+        | `enable_subdomains`  | boolean  | no      | |
         | `org_slug`  | string  | yes      | Slug of the org in which to create the app |
         | `network`   | string  | no       | Name for an IPv6 private network to segment the app onto. |
       <% end %>
