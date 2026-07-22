@@ -16,7 +16,6 @@ fly mpg create [flags]
       --pg-major-version int     The major version of Postgres to use for the Postgres cluster. Supported versions are 16 and 17. (default 16)
       --plan string              The plan to use for the Postgres cluster: Basic, Starter, Launch, Scale, Performance
   -r, --region string            The target region (see 'flyctl platform regions')
-      --v2                       Create a Postgres cluster deployed on the V2 platform
       --volume-size int          The volume size in GB (default 10)
 ~~~
 
