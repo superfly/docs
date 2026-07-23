@@ -77,7 +77,7 @@ You can give the Machine a custom name with the `--name` flag:
 fly machine run . --name my-special-Machine
 ```
 
-## Choose a geographical region
+## Choose a region
 
 Tell the Fly.io platform which [region](/docs/reference/regions/) to create the Machine in with the `--region` flag; if for some reason it can't start a new Machine in that region, you'll get an error. If the `--region` flag is omitted, the platform chooses the region that's fastest to reach from your location.
 
