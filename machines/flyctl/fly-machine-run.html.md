@@ -77,7 +77,7 @@ You can give the Machine a custom name with the `--name` flag:
 fly machine run . --name my-special-Machine
 ```
 
-## Choose a geographical region
+## Choose a region
 
 Tell the Fly.io platform which [region](/docs/reference/regions/) to create the Machine in with the `--region` flag; if for some reason it can't start a new Machine in that region, you'll get an error. If the `--region` flag is omitted, the platform chooses the region that's fastest to reach from your location.
 
@@ -123,7 +123,7 @@ The following command creates a temporary Machine using the Dockerfile in the wo
 fly machine run . --shell
 ```
 
-If you don't specify an app, a temporary app is created for the Machine. When you log out of the shell, the Machine, and if applicable, the temporary app, is deleted.
+If you don't specify an app, flyctl creates or reuses an app for interactive shells. When you log out of the shell, the Machine is deleted; the app is retained for future shells.
 
 The default shell is Bash. The `--command` flag allows you to specify a different shell if Bash isn't present in the Machine's Docker image. Log in as a non-`root` user using the `--user` flag.
 
