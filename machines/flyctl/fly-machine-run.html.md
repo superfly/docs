@@ -123,7 +123,7 @@ The following command creates a temporary Machine using the Dockerfile in the wo
 fly machine run . --shell
 ```
 
-If you don't specify an app, a temporary app is created for the Machine. When you log out of the shell, the Machine, and if applicable, the temporary app, is deleted.
+If you don't specify an app, flyctl creates or reuses an app for interactive shells. When you log out of the shell, the Machine is deleted; the app is retained for future shells.
 
 The default shell is Bash. The `--command` flag allows you to specify a different shell if Bash isn't present in the Machine's Docker image. Log in as a non-`root` user using the `--user` flag.
 
