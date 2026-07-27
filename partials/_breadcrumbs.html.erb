@@ -1,29 +1,55 @@
-<%# Crumbs scroll sideways instead of each one truncating. With `truncate` on
-    every segment they all shrank together, so a three-level path rendered as
-    "D… › Fly Mac… › An introduction to Fly …" on a phone. %>
-<% wrapper = locals.key?(:wrapper_class) ? wrapper_class : "mb-11 flex" %>
-<nav aria-label="Breadcrumb" class="breadcrumbs <%= wrapper %> items-center space-x-2 text-sm font-semibold text-gray-500 overflow-x-auto scrollbar-hidden">
-  <a href="/docs/" class="hover:text-violet-600 transition-colors shrink-0">Docs</a>
+<%
+  # Two modes.
+  #
+  # :trail is the full path, used in the article on wide screens.
+  #
+  # :parent is one link to the level above, used in the mobile context bar. The
+  # full trail cannot fit a 44px bar next to the "On this page" chip — about
+  # 220px — so it either truncates to stubs ("D… > Fly Mac… > An introduction
+  # to Fly …") or turns the bar into a sideways scroller. Neither is worth it
+  # when the current page's own title is the h1 immediately below. Going up is
+  # the only thing the trail is actually needed for here.
+  mode     = locals.key?(:mode) ? mode : :trail
+  wrapper  = locals.key?(:wrapper_class) ? wrapper_class : "mb-11 flex"
+  segments = current_page.request_path.split('/').drop(2)
+%>
+<% if mode == :parent %>
   <%
-    segments = current_page.request_path.split('/').drop(2)
-    segments.each_with_index do |segment, index|
-      path = "/docs/#{segments.take(index + 1).join('/')}"
-      title = if index == segments.size - 1
-                page_title
-              else
-                get_page_title(path)
-              end
-      is_last = index == segments.size - 1
+    parent_segments = segments[0...-1] || []
+    parent_path     = parent_segments.empty? ? "/docs/" : "/docs/#{parent_segments.join('/')}/"
+    parent_title    = parent_segments.empty? ? "Docs" : get_page_title(parent_path)
   %>
-    <span data-lvl="<%= index %>" class="flex items-center shrink-0 whitespace-nowrap">
-      <svg class="w-4 h-4 text-gray-500/50 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+  <nav aria-label="Breadcrumb" class="breadcrumbs <%= wrapper %> items-center min-w-0 text-sm font-semibold text-gray-500">
+    <a href="<%= parent_path %>" class="flex items-center min-w-0 hover:text-violet-600 transition-colors">
+      <svg class="w-4 h-4 shrink-0 -ml-1 text-gray-500/70" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
       </svg>
-      <% if is_last %>
-        <span class="ml-2 text-navy-950"><%= title %></span>
-      <% else %>
-        <a href="<%= path %>" class="ml-2 hover:text-violet-600 transition-colors"><%= title %></a>
-      <% end %>
-    </span>
-  <% end %>
-</nav>
+      <span class="ml-1 truncate"><%= parent_title %></span>
+    </a>
+  </nav>
+<% else %>
+  <nav aria-label="Breadcrumb" class="breadcrumbs is-trail <%= wrapper %> items-center space-x-2 text-sm font-semibold text-gray-500 overflow-x-auto scrollbar-hidden">
+    <a href="/docs/" class="hover:text-violet-600 transition-colors shrink-0">Docs</a>
+    <%
+      segments.each_with_index do |segment, index|
+        path = "/docs/#{segments.take(index + 1).join('/')}"
+        title = if index == segments.size - 1
+                  page_title
+                else
+                  get_page_title(path)
+                end
+        is_last = index == segments.size - 1
+    %>
+      <span data-lvl="<%= index %>" class="flex items-center shrink-0 whitespace-nowrap">
+        <svg class="w-4 h-4 text-gray-500/50 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+        </svg>
+        <% if is_last %>
+          <span class="ml-2 text-navy-950"><%= title %></span>
+        <% else %>
+          <a href="<%= path %>" class="ml-2 hover:text-violet-600 transition-colors"><%= title %></a>
+        <% end %>
+      </span>
+    <% end %>
+  </nav>
+<% end %>
