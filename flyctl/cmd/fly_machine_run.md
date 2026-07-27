@@ -44,7 +44,7 @@ fly machine run <image> [command] [flags]
       --rootfs-persist string            Whether to persist the root filesystem across restarts. Options include 'never', 'always', and 'restart'.
       --rootfs-size string               Root filesystem size in GB. Accepts a plain number (in GB) or a human-readable size (e.g. 2gb, 5gb). Uses an overlayfs to allow the root filesystem to exceed its default size. Set to 0 to unset.
       --schedule string                  Schedule a Machine run at hourly, daily, weekly and monthly intervals
-      --shell                            Open a shell on the Machine once created (implies --it --rm). If no app is specified, a temporary app is created just for this Machine and destroyed when the Machine is destroyed. See also --command and --user.
+      --shell                            Open a shell on the Machine once created (implies --it --rm). If no app is specified, an app for interactive shells is created or reused. The Machine is destroyed when the shell exits; the app is retained for future shells. See also --command and --user.
       --skip-dns-registration            Do not register the machine's 6PN IP with the internal DNS system
       --standby-for strings              For Machines without services, a comma separated list of Machine IDs to act as standby for.
       --swap-size string                 Swap size in MB. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 1gb).
