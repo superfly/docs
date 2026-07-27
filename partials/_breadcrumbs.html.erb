@@ -1,7 +1,8 @@
 <%# Crumbs scroll sideways instead of each one truncating. With `truncate` on
     every segment they all shrank together, so a three-level path rendered as
     "D… › Fly Mac… › An introduction to Fly …" on a phone. %>
-<nav aria-label="Breadcrumb" class="breadcrumbs mb-11 flex items-center space-x-2 text-sm font-semibold text-gray-500 overflow-x-auto scrollbar-hidden">
+<% wrapper = locals.key?(:wrapper_class) ? wrapper_class : "mb-11 flex" %>
+<nav aria-label="Breadcrumb" class="breadcrumbs <%= wrapper %> items-center space-x-2 text-sm font-semibold text-gray-500 overflow-x-auto scrollbar-hidden">
   <a href="/docs/" class="hover:text-violet-600 transition-colors shrink-0">Docs</a>
   <%
     segments = current_page.request_path.split('/').drop(2)
