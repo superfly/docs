@@ -1,13 +1,29 @@
-<% 
+<%
   def section_open?(section)
     (!section[:path].nil? && current_page?(section[:path])) ||
     (!section[:open].nil? && section[:open]) ||
     (section[:links] && section[:links].any? { |page| (!page[:path].nil? && current_page?(page[:path])) || (page[:links] && section_open?(page)) })
   end
 
+  # Ties a trigger to the panel it controls via aria-controls.
+  def accordion_id(section, prefix)
+    slug = section[:title].to_s.downcase.gsub(/[^a-z0-9]+/, "-").gsub(/\A-+|-+\z/, "")
+    "#{prefix}-#{slug.empty? ? "section" : slug}"
+  end
+
+  # The section's own index page moves into the list as "Overview" so the header
+  # row has exactly one job instead of being half link, half toggle. Skipped
+  # when the links already include that page, which most sections do.
+  def overview_needed?(section)
+    return false if section[:path].nil?
+    target = section[:path].to_s.chomp("/")
+    !Array(section[:links]).any? { |page| page[:path].to_s.chomp("/") == target }
+  end
+
   nav.each { |nav| nav[:open] = section_open?(nav) unless nav[:title].nil? }
 
-  nav.each do |nav| 
+  nav.each_with_index do |nav, nav_index|
+    section_id = accordion_id(nav, "nav-#{nav_index}")
 %>
   <% if nav[:links].nil? %>
     <%= nav_link nav[:title], nav[:path], class: "title-link" %>
@@ -29,36 +45,42 @@
   <% else %>
     <dl class="accordion<%= nav[:open] ? " open" : "" %>">
       <dt class="accordion-header">
-        <% if nav[:title] && nav[:path] %>
+        <%# One control per row: the whole header toggles. Previously the title
+            navigated and only the remainder of the row toggled, with no visible
+            seam between the two. %>
+        <% if nav[:links] && nav[:links].size > 0 %>
+          <button class="accordion-trigger" id="<%= section_id %>-btn" aria-controls="<%= section_id %>-panel" aria-expanded="<%= nav[:open] %>">
+            <span class="accordion-title"><%= nav[:title] %></span>
+          </button>
+        <% elsif nav[:title] && nav[:path] %>
           <%= nav_link nav[:title], nav[:path], class: "title-link" %>
         <% else %>
           <span class="accordion-title"><%= nav[:title] %></span>
         <% end %>
-        <%# Only show the accordion trigger if there are real subpages %>
-        <% if nav[:links] && nav[:links].size > 0 %>
-          <button class="accordion-trigger" aria-expanded="<%= nav[:open] %>">
-            <span class="sr-only">Toggle <%= nav[:title] %> section</span>
-          </button>
-        <% end %>
       </dt>
-      <dd class="accordion-target">
-        <ul class="accordion-content" role="region" aria-label="<%= nav[:title] %>">
-          <% nav[:links]&.each do |page| %>
+      <%# inert keeps collapsed links out of the tab order and the accessibility
+          tree. Clipping them with grid-rows/opacity alone left every link in
+          every closed section focusable and announced. %>
+      <dd class="accordion-target" id="<%= section_id %>-panel"<%= " inert" unless nav[:open] %>>
+        <ul class="accordion-content">
+          <% if overview_needed?(nav) %>
+            <li><%= nav_link "Overview", nav[:path], class: "overview-link" %></li>
+          <% end %>
+          <% nav[:links]&.each_with_index do |page, page_index| %>
             <% if page[:links] %>
+              <% page_id = accordion_id(page, "#{section_id}-#{page_index}") %>
               <li>
                 <dl class="accordion<%= section_open?(page) ? " open" : "" %>">
                   <dt class="accordion-header">
-                    <% if page[:title] && page[:path] %>
-                      <%= nav_link page[:title], page[:path], class: "title-link" %>
-                    <% else %>
+                    <button class="accordion-trigger" id="<%= page_id %>-btn" aria-controls="<%= page_id %>-panel" aria-expanded="<%= section_open?(page) %>">
                       <span class="accordion-title"><%= page[:title] %></span>
-                    <% end %>
-                    <button class="accordion-trigger" aria-expanded="<%= section_open?(page) %>">
-                      <span class="sr-only">Toggle <%= page[:title] %> section</span>
                     </button>
                   </dt>
-                  <dd class="accordion-target">
-                    <ul class="accordion-content" role="region" aria-label="<%= page[:title] %>">
+                  <dd class="accordion-target" id="<%= page_id %>-panel"<%= " inert" unless section_open?(page) %>>
+                    <ul class="accordion-content">
+                      <% if overview_needed?(page) %>
+                        <li><%= nav_link "Overview", page[:path], class: "overview-link" %></li>
+                      <% end %>
                       <% page[:links]&.each do |subpage| %>
                         <li>
                           <% if subpage[:type] == "flyctl" %>
