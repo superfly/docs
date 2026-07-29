@@ -50,3 +50,13 @@ pwsh -Command "iwr https://fly.io/install.ps1 -useb | iex"
 ```
 
 If you encounter an error saying the `pwsh` command is not found, `powershell` can be used instead, though we recommend [installing the latest version of PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows).
+
+## Uninstall flyctl
+
+How you remove flyctl depends on how you installed it.
+
+**Homebrew (macOS):** Uninstall with `brew uninstall flyctl`.
+
+**Install script (macOS and Linux):** Remove the flyctl directory (`~/.fly` by default), then delete the lines the install script added to your shell rc file (for example `~/.bashrc` or `~/.zshrc`) to put flyctl on your `PATH`.
+
+**Windows (PowerShell):** Remove the flyctl install directory (`~\.fly` by default) and remove its entry from your `PATH`.
