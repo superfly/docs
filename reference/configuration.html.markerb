@@ -489,7 +489,7 @@ To configure health checks for your HTTP service, you can use the `http_service.
   path = "/"
 ```
 
-Roughly translated, this section says every thirty seconds, perform an HTTP GET on the root path (e.g. http://appname.fly.dev/) looking for it to return an HTTP 200 status within five seconds. The parameters of a `check` are listed below.
+Roughly translated, this section says every thirty seconds, perform an HTTP GET on the root path of the service, looking for it to return an HTTP 200 status within five seconds. The check runs against the service on the Machine over the app's private network, not against the public `appname.fly.dev` hostname, so it works even for services that aren't exposed publicly. The parameters of a `check` are listed below.
 
 Times are in milliseconds unless units are specified.
 
@@ -790,7 +790,7 @@ Another way of checking a service is running is through HTTP checks as defined i
     [services.http_checks.headers]
 ```
 
-Roughly translated, this section says every ten seconds, perform an HTTP GET on the root path (e.g. http://appname.fly.dev/) looking for it to return an HTTP 200 status within two seconds. The parameters of a `http_check` are listed below.
+Roughly translated, this section says every ten seconds, perform an HTTP GET on the root path of the service, looking for it to return an HTTP 200 status within two seconds. The check runs against the service on the Machine over the app's private network, not against the public `appname.fly.dev` hostname, so it works even for services that aren't exposed publicly. The parameters of a `http_check` are listed below.
 
 Times are in milliseconds unless units are specified.
 
