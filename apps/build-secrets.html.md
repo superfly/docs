@@ -27,6 +27,15 @@ RUN --mount=type=secret,id=MY_SUPER_SECRET \
 
 This creates a new file when running `docker build`. Secrets are stored in the `/run/secrets` directory. The file name is the `id` you passed when mounting the secret. The content of that file contains the value of the secret.
 
+To mount more than one secret, add a `--mount` line for each:
+
+```dockerfile
+RUN --mount=type=secret,id=SECRET_ONE \
+    --mount=type=secret,id=SECRET_TWO \
+    SECRET_ONE="$(cat /run/secrets/SECRET_ONE)" \
+    SECRET_TWO="$(cat /run/secrets/SECRET_TWO)" some_command
+```
+
 The `--mount` directive is not a shell command, so there's no need to add `&&` after it as you commonly see when chaining commands.
 
 ## Secret values
@@ -34,9 +43,16 @@ The `--mount` directive is not a shell command, so there's no need to add `&&` a
 You need to provide the values of the mounted secrets when running `fly deploy`:
 
 ```bash
-# Note: You can pass multiple secrets if you need
 fly deploy \
     --build-secret MY_SUPER_SECRET=some_value
+```
+
+To pass more than one secret, repeat the `--build-secret` flag:
+
+```bash
+fly deploy \
+    --build-secret SECRET_ONE=value_one \
+    --build-secret SECRET_TWO=value_two
 ```
 
 ## Testing build secrets locally
