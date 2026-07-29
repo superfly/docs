@@ -120,7 +120,7 @@ These inputs can be added to the `deploy` step in your workflow using the `with`
       # ...
       - name: Deploy PR app to Fly.io
         id: deploy
-        uses: superfly/fly-pr-review-apps@1.2.0
+        uses: superfly/fly-pr-review-apps@1.2.1
         with:
           name: my-app-name-pr-${{ github.event.number }}
           config: fly.review.toml
@@ -139,7 +139,7 @@ You probably won't need the same specifications for the Fly Machines used by rev
       # ...
       - name: Deploy PR app to Fly.io
         id: deploy
-        uses: superfly/fly-pr-review-apps@1.2.0
+        uses: superfly/fly-pr-review-apps@1.2.1
         with:
           config: fly.review.toml
 ```
@@ -165,7 +165,7 @@ Once you have your secrets and environment variables set in GitHub, add each of 
       # ...
       - name: Deploy PR app to Fly.io
         id: deploy
-        uses: superfly/fly-pr-review-apps@1.2.0
+        uses: superfly/fly-pr-review-apps@1.2.1
         with:
           secrets: FOOBAR=${{ secrets.FOOBAR }} SOME_API_KEY=${{ secrets.SOME_API_KEY}}
 ```
