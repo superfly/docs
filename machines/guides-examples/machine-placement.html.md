@@ -14,9 +14,9 @@ Let’s say you run `fly scale count` and tell it to drop 10 machines into `dfw`
 
 Most of the time this just works—`dfw` and `iad` are solid bets for region choices. But some regions, like `sjc`, `gru`, and `bom`, tend to be in high demand. If you hardcode your placement into one of those and cross your fingers, you might find yourself scaling to zero.
 
-### How to check available capacity
+### Where can you deploy?
 
-Run `fly platform regions`. You’ll get a list of regions and their available CPU cores. These aren’t guarantees, but they’re a decent snapshot of where you’re most likely to succeed.
+Run `fly platform regions` to see the regions where Fly.io has datacenters, along with their region codes. Use those codes to set region preferences for your Machines.
 
 ### Let the scheduler help
 
