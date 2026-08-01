@@ -1141,9 +1141,9 @@ Properties of the `config` object for Machine configuration. See [Machine proper
 
 **`dns`:**
 
-  - `nameservers`: Used for Fly Kubernetes.
-  - `searches`: Used for Fly Kubernetes.
-  - `options`: Used for Fly Kubernetes.
+  - `nameservers`: Nameservers option in resolve.conf, used to set the nameservers for DNS queries
+  - `searches`: Space-separated list of domains appended to unqualified hostnames until a lookup succeeds
+  - `options`: DNS resolver options. See [resolv.conf man page](https://www.man7.org/linux/man-pages/man5/resolv.conf.5.html)
   - `dns_forward_rules`: Used for dedicated hosts. 
   - `skip_registration`: boolean - If true, do not register the Machine's 6PN IP with the internal DNS system.
 
@@ -1228,7 +1228,7 @@ You cannot change which volume a Machine is attached to by updating the Machine'
   - `entrypoint`: An array of strings. The process that will run.
   - `cmd`: An array of strings. The arguments passed to the entrypoint.
   - `env`: An object filled with key/value pairs to be set as environment variables.
-  - `env_from` : An array of objects that define environment variables from Machine fields. Used for Fly Kubernetes.
+  - `env_from` : An array of objects that define environment variables from Machine fields.
   - `exec`: An array of strings. The command to run for Machines in this process group on startup.
   - `user`: string (nil) - An optional user that the process runs under.
   - `ignore_app_secrets`: boolean - If true, only use the secrets provided at the process level. Default false.
