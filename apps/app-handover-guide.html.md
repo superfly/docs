@@ -51,7 +51,6 @@ or go to the App Settings page in your Dashboard, click Move app, pick the new o
     - **Postgres** **(unmanaged and managed):** Moving Postgres databases across orgs is not supported. You’ll need to spin up a new Fly Postgres app in the target org and restore from a volume snapshot. Or you can use `pgloader` to migrate the data. 
     - **Upstash Redis:** This is tied to an org’s private network. You’ll need to provision a new DB in the new org. 
     - **Tigris buckets:** You’ll have to delete the old Tigris bucket, recreate it in the new org, and copy the data over (try `s3sync`). Don’t forget to reset your app’s secrets. 
-    - **Sentry and other extensions**: Be sure to create fresh ones in the new org and reconfigure the app to use them.
 
 ### Summary
 
