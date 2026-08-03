@@ -10,23 +10,11 @@ date: 2025-07-21
 **Heads up**: Provisioning new Sentry projects through Fly.io (`fly ext sentry create`) is no longer available. Existing projects keep working, and this page sticks around for the people using them. Need error tracking on a new app? [Sign up with Sentry directly](https://sentry.io/signup/) and set your `SENTRY_DSN` as an app secret — same result, one extra step.
 </div>
 
-[Sentry](https://sentry.io/) is a developer-first application monitoring platform that helps you identify and fix software problems before they impact your users. Through our partnership with Sentry, each of your Fly organizations can claim a year’s worth of [Team Plan](https://sentry.io/pricing) credits.
+[Sentry](https://sentry.io/) is a developer-first application monitoring platform that helps you identify and fix software problems before they impact your users. Through our former partnership with Sentry, organizations that provisioned Sentry through Fly.io received a year’s worth of [Team Plan](https://sentry.io/pricing) credits.
 
-## Set up Sentry for your Fly.io app
+## Access your Sentry project
 
-In your project source directory, run the following command:
-
-```
-fly ext sentry create
-```
-
-This command will:
-
-- Create a Sentry account using your Fly.io user email
-- Create a Sentry organization linked to your Fly.io organization
-- Set the `SENTRY_DSN` secret in your app
-
-Once this is complete, your app will have the `SENTRY_DSN` environment variable available at runtime. Most Sentry SDKs will automatically pick this up and begin sending events.
+Apps provisioned through Fly.io have the `SENTRY_DSN` secret set, so the environment variable is available at runtime. Most Sentry SDKs will automatically pick this up and begin sending events.
 
 You can open the Sentry dashboard for your app by running:
 
@@ -40,7 +28,7 @@ To start sending events to Sentry, you’ll need to instrument your app with the
 
 ## Sentry Plan details
 
-Your organization receives one year of Sentry’s Team plan, which includes monthly:
+Your organization received one year of Sentry’s Team plan, which includes monthly:
 
 - 50k errors
 - 100k [performance units](https://sentry.io/changelog/2023-5-9-introducing-performance-units/)
