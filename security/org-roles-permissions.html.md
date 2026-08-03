@@ -32,7 +32,7 @@ Admins have all the permissions of Members, plus a few critical ones:
 
 Use the admin role sparingly. Admins can burn the place down—on purpose or by accident.
 
-**Note**: For billing and user permission details for our extension partners (e.g. Tigris, Sentry, etc.) please check with the vendor directly.
+**Note**: For billing and user permission details for our extension partners (e.g. Tigris) please check with the vendor directly.
 
 ### Quick Comparison
 

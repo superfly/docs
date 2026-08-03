@@ -220,8 +220,7 @@ likely make use of one or more of the following:
    addresses many problems, it doesn't help deal with logs that are missing due
    to application or network problems.  Consider having applications emit a
    heartbeat, and write monitoring software that looks for missing heartbeats
-   and reports them as issues.  [Sentry](https://fly.io/docs/monitoring/sentry/)
-   can help here.
+   and reports them as issues.
  * While applying updates when all of the services for a single Machine are
    self contained is an easier problem then upgrading potentially
    interdependent services running live in production, it does come at a cost:

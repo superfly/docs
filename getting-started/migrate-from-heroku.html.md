@@ -307,7 +307,7 @@ Once DNS propagates, Fly automatically provisions an SSL certificate.
 | Heroku Scheduler | Use cron in your app, or a separate "cron" process |
 | Papertrail | `fly logs` built-in, or add a log drain |
 | SendGrid | Keep using SendGrid (just use API key) |
-| New Relic | `fly extensions sentry` or keep using New Relic |
+| New Relic | Keep using New Relic (just use license key) |
 | S3 / Bucketeer | `fly storage create` (Tigris) or keep using S3 |
 | Elasticsearch | Deploy Elasticsearch as a Fly app, or use a hosted service |
 | Memcached | Use Redis instead (`fly redis create`) |
