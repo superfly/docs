@@ -1,0 +1,81 @@
+<figure>
+<img src="/static/images/flycast-private-proxy.png" alt="Illustration by Annie Ruygt of apps resting on clouds, all connected by pathways" class="w-full max-w-lg mx-auto">
+</figure>
+
+Flycast provides network addressing and routing for private apps on Fly.io private networks. With Flycast, requests to your private apps get routed through the Fly Proxy, rather than Machine-to-Machine via default [private networking](/docs/networking/private-networking/). And unlike private networking using `.internal` addresses you don't need to keep Machines running for the app to be reachable.
+
+Use Flycast within your organization's private network to:
+
+* Have [Fly Proxy autostop/autostart](/docs/launch/autostop-autostart/) Machines based on network requests.
+* Get Fly Proxy's [geographically aware load balancing](/docs/reference/load-balancing/) for private services.
+* Connect to a service from another app that can't use DNS.
+* Connect from third-party software, like a database, that doesn't support round-robin DNS entries.
+* Access specific ports or services in your app from other Fly.io organizations.
+* Use advanced Fly Proxy features like TLS termination or PROXY protocol support.
+
+## Flycast quickstart
+
+The fastest way to create a new private app with a Flycast address:
+
+```
+fly launch --flycast
+```
+
+Access the services on the Flycast private IPv6 address, or with `my-app-name.flycast`, from other apps in the organization's default private network.
+
+## Flycast requirements
+
+To use Flycast for your app, you need:
+
+- A Flycast private IPv6 address for your app on one of your Fly.io organization networks.
+- Your app to bind to `0.0.0.0:port`. (Binding to `fly-local-6pn:<port>` won't work for Flycast.)
+- Services configured in your app's `fly.toml` with an [`[http_service]`](/docs/reference/configuration/#the-http_service-section) or [`[services]`](/docs/reference/configuration/#the-services-sections) section. Don't use `force_https`; Flycast is HTTP-only.
+
+<div class="warning icon">
+**Warning:** If you have public IP addresses assigned to your app, then services in `fly.toml` are exposed to the public internet. Verify your app's IP addresses with `fly ips list`, and remove public IP addresses as needed with: `fly ips release [ip address] [ip address] ...`.
+
+</div>
+
+## Allocate a Flycast address
+
+A Flycast address is an app-wide private IPv6 address that Fly Proxy can route to over the private network. By default, the Flycast IP address is allocated on an app's default organization network.
+
+There are a few ways to add a Flycast address to an existing app.
+
+Allocate a Flycast address on deploy:
+```
+fly deploy --flycast
+```
+
+Allocate a Flycast address without deploying:
+
+```cmd
+ fly ips allocate-v6 --private
+ ```
+ 
+### Access an app from another organization
+
+You can use Flycast to expose an app in one Fly.io organization to another Fly.io organization; the app won't be accessible via Flycast from its own organization. Use the `--org` option when you allocate the Flycast address:
+
+```cmd
+ fly ips allocate-v6 --private --org my-other-org
+ ```
+
+### Access an app from another private network
+
+You can also use Flycast to expose an app on one private network to another private network in your organization; the app won't be accessible via Flycast from its own network. Use the `--network` option to specify the network from which requests will originate:
+
+```cmd
+fly ips allocate-v6 --private --network custom-network-name
+```
+
+Learn more about [custom private networks](/docs/networking/custom-private-networks/).
+
+## Flycast and Fly.io DNS
+
+Flycast addresses can also be found by using the Fly.io DNS. If an app has a Flycast address allocated to it, there will be an AAAA record at `my-app-name.flycast`.
+
+## More Flycast
+
+- [Autostop/autostart for private apps](/docs/blueprints/autostart-internal-apps/)
+- [Run private apps with Flycast](/docs/blueprints/private-applications-flycast/)

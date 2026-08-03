@@ -1,0 +1,501 @@
+The `fly-replay` feature gives you fine-grained control over request routing in your Fly.io applications. It allows you to dynamically route requests between regions, specific Machines, or even different apps within your organization.
+
+## How fly-replay Works
+
+When your app responds to a request with a `fly-replay` response, [Fly Proxy](/docs/reference/fly-proxy) will automatically replay the original request according to your specified routing rules. This enables advanced patterns like:
+
+- Routing write operations to primary database regions
+- Load balancing between specific Machines
+- Cross-app request routing within your organization
+- Implementing sticky sessions
+
+<%= youtube "https://www.youtube.com/watch?v=riCh9Xeuf0s" %>
+
+## Replay Header Format
+
+Your app can add a `fly-replay` header to its response. The `fly-replay` header accepts the following fields:
+
+|Field |Description |
+|---|---|
+|`region` | The region(s) to route the request to. Accepts comma-separated list of [region codes](/docs/reference/regions/) |
+|`instance` | The ID of a specific Machine to route to |
+|`prefer_instance` | The ID of a specific Machine to route to, if possible |
+|`app` | The name of another app to route to |
+|`state` | Optional string included in `fly-replay-src` header on replay |
+|`elsewhere` | If `true`, excludes responding Machine from next load-balance |
+|`timeout` | Duration to attempt the replay before giving up (e.g. `10s`, `800ms`) |
+|`fallback` | If the replay fails, route back to the original Machine. `force_self` or `prefer_self` (see [Replay Timeout and Fallback](#replay-timeout-and-fallback)) |
+
+### Example Usage
+
+Route to a specific region:
+```
+fly-replay: region=sjc
+```
+
+Route to one of the given regions, in order of preference:
+```
+fly-replay: region="iad,ord,us,na"
+```
+
+Route to a preferred region, or fallback to any available machine:
+```
+fly-replay: region="sjc,any"
+```
+
+Route to specific Machine:
+```
+fly-replay: instance=00bb33ff
+```
+
+Route to another app:
+```
+fly-replay: app=target-app
+```
+
+<div class="note icon">
+By default, cross-app routing works within the same organization and network. To route across networks, see [Cross-Network Routing](#cross-network-routing). To route to apps in other organizations, see [Cross-Organization Routing](#cross-organization-routing).
+</div>
+
+You can combine multiple fields:
+```
+fly-replay: region="sjc,any";app=target-app
+```
+
+Route to another app with a timeout and fallback to the original Machine:
+```
+fly-replay: app=my-worker;timeout=10s;fallback=force_self
+```
+
+<div class="note icon">
+**Note**: A comma-separated list of regions must be quoted.
+</div>
+
+### Geographic groups and aliases
+
+When replaying to a region, you can use geographic aliases like `us`, `eu`, or `sa` to target a broader area.
+
+| Alias | Area|
+|---------|------------------------|
+| `apac` | Asia-Pacific |
+| `eu` | Europe |
+| `na` | North America |
+| `sa` | South America |
+| `us`, `usa` | United States |
+| `any` | Earth |
+
+### Replay Timeout and Fallback
+
+You can set a `timeout` and `fallback` on a replay to handle cases where the replay target is unreachable.
+
+**`timeout`** sets how long the proxy tries to reach the replay target. The actual duration may slightly exceed this value. Accepts duration strings like `10s`, `500ms`. Without `fallback`, a timeout makes the replay error faster instead of waiting for the default error timeout.
+
+**`fallback`** tells the proxy to route the request back to the Machine that issued the replay if the replay fails due to timeout, exhausted retries, or no available candidate:
+
+- `force_self`: Route back to the exact Machine that issued the replay. Returns a proxy error if that Machine is no longer available.
+- `prefer_self`: Try the original Machine first, but fall back to any Machine in the original app if it is unavailable.
+
+When a fallback triggers, the original Machine receives the request again with a [`fly-replay-failed`](#the-fly-replay-failed-header) request header containing details about the failed replay attempt. Since this is still the original request, your app can respond with a useful error instead of the client receiving a generic proxy error.
+
+<div class="note icon">
+**Note**: Fallback requests cannot themselves issue `fly-replay` responses.
+</div>
+
+## Replay JSON Format
+
+Your app can set the response content-type to `application/vnd.fly.replay+json` and include replay instructions in the response body.
+For a complex replay the JSON body is easier to compose than the header format, and also supports more functionality.
+
+### JSON Structure
+
+The `application/vnd.fly.replay+json` replay body accepts the following fields:
+
+|Field |Description |
+|---|---|
+|`region` | The region(s) to route the request to. Accepts comma-separated list of [region codes](/docs/reference/regions/) |
+|`instance` | The ID of a specific Machine to route to |
+|`prefer_instance` | The ID of a specific Machine to route to, if possible |
+|`app` | The name of another app to route to |
+|`state` | Optional string included in `fly-replay-src` header on replay |
+|`elsewhere` | If `true`, excludes responding Machine from next load-balance |
+|`timeout` | Duration to attempt the replay before giving up (e.g. `"10s"`, `"800ms"`) |
+|`fallback` | If the replay fails, route back to the original Machine. `"force_self"` or `"prefer_self"` (see [Replay Timeout and Fallback](#replay-timeout-and-fallback)) |
+|`transform.path` | Rewrite the path and query parameters of the request |
+|`transform.delete_headers` | Delete headers from the request, hiding them from the replay target |
+|`transform.set_headers` | Set new headers on the request, overwriting headers of the same name |
+|`cache.prefix` | Cache the replay for matching requests (see [Replay Caching](#replay-caching)) |
+|`cache.ttl` | Cache the replay for this many seconds (see [Replay Caching](#replay-caching)) |
+|`cache.invalidate` | Invalidate the cache for the current route (see [Replay Caching](#replay-caching)) |
+
+### Example Usage
+
+Route to another app, and modify the request:
+
+```json
+{
+  "app": "target-app",
+  "region": "iad,us",
+  "transform": {
+    "path": "/new/path?param=value",
+    "delete_headers": ["x-unwanted-header", "cookie"],
+    "set_headers": [
+      { "name": "x-custom-header", "value": "new-value" },
+      { "name": "authorization", "value": "Bearer token123" }
+    ]
+  }
+}
+```
+
+Route to another app with a timeout and fallback:
+
+```json
+{
+  "app": "my-worker",
+  "timeout": "10s",
+  "fallback": "force_self"
+}
+```
+
+## Replay Caching
+
+Replay caching allows Fly Proxy to remember and reuse replay decisions, reducing both load on your application and the latency of replayed requests. There are two types of replay caching:
+
+- **Path-based**: Cache replays for specific URL paths
+- **Session-based**: Cache replays for specific cookie or header values
+
+<div class="note icon">
+**Note**: Replay caching is an optimization, not a guarantee. Your app should _not_ depend on this mechanism to function.
+The app issuing `fly-replay` still serves as the ultimate source of truth, and we may decide to consult that app at any moment even if a replay cache has previously been set.
+To ensure reliable operation, the app issuing `fly-replay` should still have multiple instances deployed in multiple regions.
+</div>
+
+### Path-based Replay Caching
+
+Replay caching for paths is configured per-request during a replay. To cache a replay for a path:
+
+- Issue a `fly-replay` header as usual
+- Set `fly-replay-cache: /some/path/*`
+  - This needs to be a path-matching pattern, and implicitly ends with a wildcard `/*`. This is where the cached replay is applied.
+  - The cached replay is unique to the request domain. The domain may also be set explicitly: `example.com/some/path/*`
+  - The domain part should not include ports; use `example.com`, not `example.com:80`.
+  - The pattern must also match the current request.
+- Set `fly-replay-cache-ttl-secs: number_of_seconds`
+
+For apps using the JSON format, specify a `cache` object as part of the replay:
+
+```json
+{
+  "app": "target-app",
+  "cache": {
+    "prefix": "/some/path/*",
+    "ttl": 60
+  }
+}
+```
+
+### Session-based Replay Caching
+
+If your app's sessions are identified by a cookie or authorization header, and should consistently route to the same target, Fly Proxy can cache that replay.
+
+Unlike path-based caching (which requires your app to return `fly-replay-cache` headers), session-based caching is configured in your `fly.toml`. When your app issues a `fly-replay` response for a request with a matching cookie or header, Fly Proxy will cache that replay decision and automatically apply it to subsequent requests with the same session identifier.
+
+#### Configuration
+
+Configure session-based replay caching in your `fly.toml`. This can be set under `http_service.http_options` or `services.ports.http_options`:
+
+```toml
+[http_service]
+  internal_port = 8080
+  force_https = true
+
+  [[http_service.http_options.replay_cache]]
+    path_prefix = "/"
+    ttl_seconds = 300
+    type = "cookie"
+    name = "session_id"
+
+  [[http_service.http_options.replay_cache]]
+    path_prefix = "/api"
+    ttl_seconds = 600
+    type = "header"
+    name = "Authorization"
+```
+
+In this example:
+- Replays for requests to `/` (and its subpaths) are cached for 5 minutes based on the `session_id` cookie value
+- Replays for requests to `/api` (and its subpaths) are cached for 10 minutes based on the `Authorization` header value
+- When multiple rules match, the longest matching path takes precedence
+
+If your app accepts requests for multiple hostnames, you can narrow the configuration by specifying a hostname in `path_prefix`:
+
+```toml
+  [[http_service.http_options.replay_cache]]
+    path_prefix = "api.example.com/api"
+```
+
+Caches are not shared between hostnames, even when `path_prefix` doesn't specify a hostname. Each hostname maintains its own cache.
+
+For more details on configuration options, see the [fly.toml configuration reference](/docs/reference/configuration/#http_service-http_options-replay_cache).
+
+### Invalidating the Replay Cache
+
+If the replay target does eventually change, the replay target may proactively invalidate the cache by:
+- Issuing a `fly-replay` back to the origin
+- Setting `fly-replay-cache: invalidate`
+
+Or, using the JSON format:
+
+```json
+{
+  "app": "origin-app",
+  "cache": {
+    "invalidate": true
+  }
+}
+```
+
+This works for invalidating both the path-based cache, and the session-based cache.
+
+### Bypassing Replay Cache
+
+Sometimes, you might want a client to bypass a cached replay without actually invalidating the cache.
+For example, you might have an API endpoint that _mostly_ needs to be replayed to a "leader" instance. But depending on application logic, it could sometimes be handled by any instance.
+
+The recommended approach is to clearly separate endpoints that require replay from those that don't.
+However, when that is not possible, the replaying app can be configured to allow bypass.
+
+For path-based replay caching, additionally set the header:
+
+```
+fly-replay-cache-allow-bypass: yes
+```
+
+or set the JSON field `"allow_bypass": true`.
+
+For session-based replay caching, set [allow_bypass](/docs/reference/configuration/#http_service-http_options-replay_cache-allow_bypass) to `true` in your `fly.toml` configuration for your `replay_cache` rule.
+
+Then, when your client makes a request, it can set the header:
+
+```
+fly-replay-cache-control: skip
+```
+
+to skip any cached replay that might be present.
+
+<div class="note icon">
+**Note**: This behavior is opt-in because enabling it by default could make your app vulnerable to malicious clients creating unexpected load on the replaying machine.
+</div>
+
+### Was my request served by the cache?
+
+If your app needs to know whether a request was served from the replay cache, it can check the fly-replay-cache-status header. This header is sent to the replay _target_ app or machine.
+
+- Absent: the request was not replayed and was delivered directly to the app or machine.
+- `miss`: the request didn't use replay cache; it first hit another machine and got replayed here.
+- `hit`: the request did use the replay cache! It never reached the source app or machine and was redirected straight to the target.
+- `bypass`: even though the cache might have been set, it was explicitly skipped by setting the `fly-replay-cache-control: skip` header.
+
+## Implementation Details
+
+### Requirements and Limitations
+
+- Your app must use the [http handler](/docs/networking/services/#http-handler)
+- Requests larger than 1MB cannot be replayed
+- Field combinations must be logically valid (e.g., don't specify both app and instance if instance isn't in that app)
+
+For large uploads that exceed the 1MB limit, consider:
+- Using direct-to-storage uploads where possible
+- Using the [fly-prefer-region](#the-fly-prefer-region-request-header) header instead
+
+For `fly-replay-cache`, the following limitations apply:
+- The `state` field cannot be set in the `fly-replay` intended to be cached
+- Transformations for the headers or path cannot be defined.
+- The TTL needs to be a minimum of 10 seconds
+- Only one step of lookup is performed in the cache; as such, if the target app issues another `fly-replay-cache`, the caching behavior in this case is undefined
+- The `timeout` and `fallback` fields cannot be set in the `fly-replay` intended to be cached
+- The `fly-replay-src` header (described below) will _not_ be set for requests replayed through the cache
+
+### The fly-replay-src Header
+
+When a request is replayed, Fly Proxy adds a `fly-replay-src` header containing metadata about the original request:
+
+|Field |Description |
+|---|---|
+|`instance` | ID of Machine that sent fly-replay |
+|`region` | Region request was replayed from |
+|`t` | Timestamp (microseconds since Unix epoch) |
+|`state` | Contents of original state field, if any |
+
+This header is useful for tracking request paths and implementing consistency patterns. See the [official Ruby client](https://github.com/superfly/fly-ruby/blob/main/lib/fly-ruby/regional_database.rb#L74-L76+external) for an example of using these fields to prevent read-your-write inconsistency.
+
+This header is not set when the request is replayed through a cached `fly-replay` entry (`fly-replay-cache`).
+
+### The fly-preferred-instance-unavailable Header
+
+If you replay with `prefer_instance` set, Fly Proxy will attempt to route to this Machine. This may not happen for a number of reasons, for example the Machine may not be found, or found but at its configured [hard_limit](/docs/reference/load-balancing/#load).
+
+In these cases, the request will be delivered to a different Machine that matches the remaining fields in your replay. Along with the other Fly.io-specific headers, a `fly-preferred-instance-unavailable` header will be set containing the ID of the instance that could not be reached.
+
+### The fly-replay-failed Header
+
+When a replay [fallback](#replay-timeout-and-fallback) triggers, Fly Proxy delivers the request back to the original Machine with a `fly-replay-failed` request header. This header contains semicolon-separated metadata about the failed replay attempt:
+
+|Field |Description |
+|---|---|
+|`instance` | ID of Machine the replay was targeting |
+|`app` | App the replay was targeting |
+|`region` | Region the replay was targeting |
+|`replay_source` | ID of the Machine that originally issued the replay |
+|`reason` | Why the replay failed: `timeout`, `retries_exhausted`, or `no_candidate` |
+|`elapsed_ms` | Time in milliseconds spent attempting the replay |
+
+Example header value:
+```
+fly-replay-failed: instance=00bb33ff;app=target-app;region=iad;replay_source=11aa44ee;reason=timeout;elapsed_ms=10000
+```
+
+Your app can use this header to detect that a fallback occurred and respond accordingly, for example by serving a helpful error to the client.
+
+### Web Socket Considerations
+
+It is worth noting that an application returning `fly-replay` headers should not negotiate a web socket upgrade itself.  Some frameworks automatically handle this process.  Instead, the application or instance receiving the requests should handle the upgrade.
+
+## Alternative Routing Headers
+
+For cases where `fly-replay` isn't suitable, Fly.io provides two alternative request headers:
+
+### The fly-prefer-region Header
+
+```
+fly-prefer-region: ams
+```
+
+Attempts to route directly to specific region(s). You can specify multiple regions as comma-separated values for fallback preferences:
+
+```
+fly-prefer-region: iad,ord,us
+```
+
+Falls back to the next region in the list, or to the nearest region with healthy Machines if none of the specified regions are available. Useful for large uploads that can't be replayed.
+
+### The fly-force-region Header
+
+```
+fly-force-region: ams
+```
+
+Attempts to route directly to specific region(s). Unlike `fly-prefer-region`, the Fly Proxy will not fall back to requesting the nearest region if it cannot reach any machine in the listed region(s).
+
+Like `fly-prefer-region`, you may also specify multiple regions in order of preference:
+
+```
+fly-force-region: iad,ord,us
+```
+
+### The fly-prefer-instance-id Header
+
+```
+fly-prefer-instance-id: 90801679a10038
+```
+
+Attempts to route to a specific Machine. Falls back to any matching Machine if the target Machine cannot be found, or is unable to accept requests.
+
+If the request is delivered to a different Machine, the [fly-preferred-instance-unavailable](#the-fly-preferred-instance-unavailable-header) request header will be set.
+
+### The fly-force-instance-id Header
+
+```
+fly-force-instance-id: 90801679a10038
+```
+
+Forces routing to a specific Machine. The Fly Proxy will attempt to reach the Machine multiple times if the Machine is unhealthy. No fallback if Machine is ultimately unavailable.
+
+<div class="note icon">
+**Note**: Get Machine IDs using `fly status` or `fly Machines list`.
+</div>
+
+## Common Use Cases
+
+### Multi-Region Databases
+
+When using [global read replicas](/docs/postgres/high-availability-and-global-replication), use `fly-replay` to ensure write operations go to the primary region:
+
+```
+fly-replay: region=sjc
+```
+
+See our blueprint for [Multi-region databases and fly-replay](/docs/blueprints/multi-region-fly-replay/) for a complete implementation guide.
+
+### Cross-App Routing
+
+Use `fly-replay` to implement routing layers or FaaS-style architectures:
+
+```
+fly-replay: app=customer-function-app
+```
+
+This allows you to build router apps that can dynamically route requests to other apps.
+
+By default, cross-app routing works within the same organization and the same [private network](/docs/networking/private-networking/).
+
+### Cross-Network Routing
+
+By default, `fly-replay` with `app=` only routes to apps within the same private network. If you have multiple networks within your organization and need to replay requests across them, you can enable cross-network replays for your organization.
+
+<div class="note icon">
+**Note**: Cross-network replay restrictions only apply to same-org replays. Cross-organization replays (via the [allowlist](#cross-organization-routing)) are not affected by this setting.
+</div>
+
+#### Enabling Cross-Network Replays
+
+Only organization admins can manage this setting. You can enable cross-network replays via the dashboard or CLI.
+
+**Dashboard:**
+
+Go to your organization's settings page and find the **Routing** section. Use the **Cross-Network Replay** toggle to enable or disable cross-network replays.
+
+**CLI:**
+
+Check the current status:
+```cmd
+fly orgs cross-network-replays status --org <your-org>
+```
+
+Enable cross-network replays:
+```cmd
+fly orgs cross-network-replays enable --org <your-org>
+```
+
+Disable cross-network replays:
+```cmd
+fly orgs cross-network-replays disable --org <your-org>
+```
+
+### Cross-Organization Routing
+
+By default, `fly-replay` with `app=` only works for apps within the same organization. To allow replay requests from apps in other organizations, you must configure an allowlist on the target organization.
+
+#### Configuring Allowed Replay Sources
+
+Only organization admins can manage the replay sources allowlist, and must also have read permissions or higher on the source organization being added. You can configure replay sources via the dashboard or CLI.
+
+**Dashboard:**
+
+Go to your organization's settings page and find the **Routing** section. Under **Cross-Organization Routing**, you can add or remove organizations that are allowed to send replay requests to apps in your organization.
+
+**CLI:**
+
+List organizations currently allowed to send replays:
+```cmd
+fly orgs replay-sources list --org <target-org>
+```
+
+Add organizations to the allowlist interactively:
+```cmd
+fly orgs replay-sources add --org <target-org>
+```
+
+Remove organizations from the allowlist interactively:
+```cmd
+fly orgs replay-sources remove --org <target-org>
+```
