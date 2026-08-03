@@ -7,7 +7,7 @@ date: 2025-07-21
 ---
 
 <div class="warning icon">
-**Heads up**: Provisioning new Sentry projects through Fly.io (`fly ext sentry create`) is no longer available. Existing projects keep working, and this page sticks around for the people using them. Need error tracking on a new app? [Sign up with Sentry directly](https://sentry.io/signup/) and set your `SENTRY_DSN` as an app secret — same result, one extra step.
+**Heads up**: Provisioning new Sentry projects through Fly.io (`fly ext sentry create`) is no longer available. Existing projects keep working, and this page sticks around for the people using them. Need error tracking on a new app? [Sign up with Sentry directly](https://sentry.io/signup/) and set your `SENTRY_DSN` as an app secret.
 </div>
 
 [Sentry](https://sentry.io/) is a developer-first application monitoring platform that helps you identify and fix software problems before they impact your users. Through our former partnership with Sentry, organizations that provisioned Sentry through Fly.io received a year’s worth of [Team Plan](https://sentry.io/pricing) credits.
