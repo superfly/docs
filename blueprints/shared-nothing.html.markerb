@@ -206,8 +206,6 @@ and the code for that article can be found on [GitHub as fly-apps/pdf-appliance]
 
 This architectural pattern can be applied whenever there is a minority of requests that require an outsized amount
 of resources.  A second example that comes to mind: I've had requests for audio capture and transcription.
-Setting up a machine that [runs Whisper with Fly GPUs](https://news.ycombinator.com/item?id=39417197) is
-something I plan to explore.
 
 ## Backups
 

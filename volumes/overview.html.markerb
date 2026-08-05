@@ -53,7 +53,7 @@ Volumes exist on a single server in a single [region](/docs/reference/regions/).
 
 To prevent a single server hardware failure from taking down your app, it is better if each volume is placed in a separate hardware zone. A separate hardware zone is just another way of saying a different server. We default to separate hardware zones when you create volumes with the [`fly volumes create`](/docs/flyctl/volumes-create/) command, but this is not guaranteed when creating Fly Volumes through other methods. Note that having each volume in a separate hardware zone limits the number of volumes your app can have in a region. If you need more volumes in a region than there are distinct hardware zones, you can set `--require-unique-zone` to `false` when you run [`fly volumes create`](/docs/flyctl/volumes-create/).
 
-You can hint what type of compute load you expect to use the volume for by using the `--vm-XXX` options with the [`fly volumes create`](/docs/flyctl/volumes-create/) command. For example, to create a volume you want to use with an L40S GPU Machine, set `--vm-gpu-kind=l40s` to ensure that your new volume is placed on GPU hardware.
+You can hint what type of compute load you expect to use the volume for by using the `--vm-XXX` options with the [`fly volumes create`](/docs/flyctl/volumes-create/) command. For example, if you plan to attach a `performance-4x` Machine to the volume, set `--vm-size=performance-4x` to place the volume on a host that has capacity for that Machine. Without a hint, your volume can end up on a host with room for the volume but not for the Machine you want to attach to it.
 
 ## Volume encryption
 

@@ -104,7 +104,7 @@ fly auth login
 
 1. **A Fly registry incident.** Check [status.flyio.net](https://status.flyio.net). If there's an active incident, wait it out or subscribe for updates.
 
-Note the image size limits: **8GB** for standard Machines, **50GB** for GPU Machines. If your image exceeds these limits, the push fails.
+Note the image size limit of **8GB**. If your image exceeds this limit, the push fails.
 
 ### 403 Forbidden
 
@@ -199,7 +199,7 @@ Secrets set with `fly secrets set` are available as environment variables at run
 
 ### Image size limit
 
-Standard (non-GPU) Machines have an **8GB rootfs limit**. GPU Machines allow up to **50GB**.
+Machines have an **8GB rootfs limit**.
 
 If your image is too large:
 
