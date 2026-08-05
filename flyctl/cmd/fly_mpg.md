@@ -16,7 +16,7 @@ fly mpg [command] [flags]
 * [detach](/docs/flyctl/mpg-detach/)	 - Detach a managed Postgres cluster from an app
 * [list](/docs/flyctl/mpg-list/)	 - List MPG clusters.
 * [proxy](/docs/flyctl/mpg-proxy/)	 - Proxy to a MPG database
-* [restore](/docs/flyctl/mpg-restore/)	 - Restore MPG cluster from backup.
+* [restore](/docs/flyctl/mpg-restore/)	 - Restore MPG cluster from backup into a new cluster.
 * [status](/docs/flyctl/mpg-status/)	 - Show MPG cluster status.
 * [users](/docs/flyctl/mpg-users/)	 - Manage users in a managed postgres cluster
 
