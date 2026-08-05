@@ -1,4 +1,8 @@
-Restore a Managed Postgres cluster from a backup.
+Restore a Managed Postgres backup into a new cluster, leaving the source
+cluster unchanged. The restored cluster is provisioned asynchronously in the
+same organization and billed separately.
+
+Find backup IDs with 'fly mpg backup list'.
 
 ## Usage
 ~~~
