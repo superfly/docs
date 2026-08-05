@@ -20,14 +20,6 @@ Here we cover _why_ we might want to do this, _what_ is required to make it work
 
 Besides being really cool that we can do this, there are some practical reasons as well.
 
-### AI/ML development
-
-With a local Elixir application clustered to an application on Fly.io with a GPU attached, we can keep our local development workflow without having a large GPU in our development machine.
-
-When we leverage [Nx](https://github.com/elixir-nx/nx) and [Bumblebee](https://github.com/elixir-nx/bumblebee), we can easily have the clustered application do all the GPU accelerated AI work and return the processing results seamlessly to our local application.
-
-It really does feel like the GPU is local when we work this way.
-
 ### Develop and debug a distributed application
 
 Building a globally distributed application can be challenging to model locally. With [Fly.io Regions](https://fly.io/docs/reference/regions/), we can deploy our cluster-aware application where it makes sense. Then, our local application joins the global cluster, giving us a close-up view of how the application behaves in a truly globally distributed environment.
@@ -169,6 +161,6 @@ Now you're _really_ doing distributed Elixir!
 
 ## Summary
 
-When we couple Elixir's clustering ability with Fly.io's networking, VPN, and API discoverability, we can easily cluster a locally running Elixir application with a deployed Elixir application. This makes it easy to leverage hosted GPUs for developing AI/ML applications or working on distributed applications.
+When we couple Elixir's clustering ability with Fly.io's networking, VPN, and API discoverability, we can easily cluster a locally running Elixir application with a deployed Elixir application. This makes it easy to develop and debug distributed applications.
 
 The ready-to-use script automates much of the process.

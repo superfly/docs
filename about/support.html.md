@@ -94,7 +94,6 @@ Here are some things to include in your ticket:
         <ul class="space-y-2">
           <li>**Networking**</li>
           <li>**Machines**</li>
-          <li>**GPU Machines**-GPU support to end 08/01/26</li>
           <li>**Managed Postgres** (MPG)</li>
           <li>**Apps**</li>
           <li>**Launch/Deploy** (UI & CLI)</li>
