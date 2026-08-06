@@ -14,6 +14,7 @@ fly mpg restore <CLUSTER_ID> [flags]
 ~~~
       --backup-id string   The backup ID to restore from
   -h, --help               help for restore
+  -n, --name string        The name of the restored cluster (defaults to a generated name)
 ~~~
 
 ## Global Options
