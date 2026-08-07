@@ -97,7 +97,7 @@ Moving an app from staging to production can expose unexpected failure modes: se
   items: [
     
     { id: "metrics", title: "Monitor your app with fully-managed metrics", description: "Use managed Prometheus and managed Grafana dashboards to monitor your app. Read about [Metrics on Fly.io](/docs/monitoring/metrics/)."},
-    { id: "sentry", title: "Use Sentry for Error tracking", description: "Our extension partner Sentry provides an application monitoring platform that helps you identify and fix software problems before they impact your users. Fly.io organizations get a year's worth of [Sentry Team Plan](https://fly.io/docs/monitoring/sentry/#sentry-plan-details) credits. Read how to configure [Application Monitoring by Sentry](/docs/monitoring/sentry/)."},
+    { id: "sentry", title: "Use Sentry for error tracking", description: "Sentry is an application monitoring platform that helps you identify and fix software problems before they impact your users. [Sign up with Sentry](https://sentry.io/signup/), then set your `SENTRY_DSN` as an app secret. Read more about [Application Monitoring by Sentry](/docs/monitoring/sentry/)."},
     { id: "export-logs", title: "Export your logs", description: "Set up the Fly Log Shipper to aggregate your app’s logs to a service of your choice. Read more about [Exporting logs](/docs/monitoring/exporting-logs/)."}
   ],
   c: params[:c] || "",

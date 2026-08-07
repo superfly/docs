@@ -281,7 +281,7 @@ Two major additions since I wrote up that blog entry:
   * I have my log tracker query Sentry whenever I visit the web page to see if there are new events.  This
     serves as an additional reminder to go check for errors.
 
-I strongly encourage people to look into [Sentry](https://community.fly.io/t/integrated-sentry-error-tracking/15278).
+I strongly encourage people to look into [Sentry](https://sentry.io/).
 
 ## Applying updates
 
