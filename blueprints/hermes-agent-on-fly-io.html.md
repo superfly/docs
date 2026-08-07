@@ -40,7 +40,7 @@ primary_region = "<region>"
 machine_config = "machine_config.json"
 
 [build]
-  image = "nousresearch/hermes-agent:latest"\
+  image = "nousresearch/hermes-agent:latest"
 
 [[mounts]]
   source = "data"
