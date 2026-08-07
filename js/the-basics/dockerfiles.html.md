@@ -22,5 +22,5 @@ able to use one or more of the many [options](https://github.com/fly-apps/docker
 to make changes.  For example:
 
 ```cmd
-npx dockerfile --add=dnsutils
+npx @flydotio/dockerfile --add=dnsutils
 ```
