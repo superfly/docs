@@ -116,7 +116,7 @@ CMD [ "node", "server.js" ]
 
 ## Generating your Next.js Dockerfile
 
-While you're welcome to write your own Dockerfile, the easiest way to get started with this is to use the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile). Once installed, it can be run using `npx dockerfile` for Node applications or `bunx dockerfile` for Bun applications. You'll see it referenced throughout this article for various use cases.
+While you're welcome to write your own Dockerfile, the easiest way to get started with this is to use the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile). Once installed, it can be run using `npx @flydotio/dockerfile` for Node applications or `bunx @flydotio/dockerfile` for Bun applications. You'll see it referenced throughout this article for various use cases.
 
 ## Connecting to databases
 
@@ -157,7 +157,7 @@ for you.
 Next, you need to modify your Dockerfile to mount a secret. The easiest way to do this is using the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile), like so:
 
 ```cmd
-npx dockerfile --mount-secret=DATABASE_URL
+npx @flydotio/dockerfile --mount-secret=DATABASE_URL
 ```
 
 It is possible to mount multiple secrets, and you can read more about [mounting secrets](/docs/apps/build-secrets/#mounting-secrets) for further details.
@@ -185,7 +185,7 @@ You can let the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/d
 changes for you:
 
 ```
-npx dockerfile --build=defer
+npx @flydotio/dockerfile --build=defer
 ```
 
 Downsides of this approach:
@@ -214,7 +214,7 @@ ARG NEXT_PUBLIC_OTHER="Other value"
 Alternatively, if you'd prefer to use the Dockerfile generator, you can do so by running the following:
 
 ```cmd
-npx dockerfile "--arg-build=NEXT_PUBLIC_EXAMPLE:value" \
+npx @flydotio/dockerfile "--arg-build=NEXT_PUBLIC_EXAMPLE:value" \
   "--arg-build=NEXT_PUBLIC_OTHER=Other value"
 ```
 
@@ -232,7 +232,7 @@ https://nextjs.org/telemetry
 The following command can be used to modify your Dockerfile to disable telemetry:
 
 ```cmd
-npx dockerfile --env-base=NEXT_TELEMETRY_DISABLED:1
+npx @flydotio/dockerfile --env-base=NEXT_TELEMETRY_DISABLED:1
 ```
 
 

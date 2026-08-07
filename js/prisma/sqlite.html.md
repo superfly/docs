@@ -38,7 +38,7 @@ If you do have a pre-existing `Dockerfile`, the `CMD` to start your application 
 If at a later time you would like to replace your `Dockerfile`, you can do so by running:
 
 ```
-npx dockerfile
+npx @flydotio/dockerfile
 ```
 
 See [fly-apps/dockerfile-node](https://github.com/fly-apps/dockerfile-node?tab=readme-ov-file#overview) for a list of available options.
