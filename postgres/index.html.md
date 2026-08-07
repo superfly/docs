@@ -9,7 +9,7 @@ toc: false
   <img src="/static/images/postgres.png" alt="Illustration by Annie Ruygt of a balloon disguised as an elephant" class="w-full max-w-lg mx-auto">
 </figure>
 
-[Postgres](https://www.postgresql.org/+external), formally known as PostgreSQL, is a powerful open source object relational database system that's used by many popular web frameworks to persist application data.
+[Postgres](https://www.postgresql.org/+external), officially PostgreSQL, is a powerful open source object relational database system that's used by many popular web frameworks to persist application data.
 
 Fly Postgres (unmanaged) is a Fly app with flyctl sugar on top to help you bootstrap and manage a database cluster for your apps. It comes with most commonly used functionality (replication, failover, metrics, monitoring and daily snapshots).
 
