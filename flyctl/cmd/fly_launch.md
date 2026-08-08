@@ -30,7 +30,7 @@ fly launch [flags]
                                              - "volume-opt=<key>=<value>", can be specified more than once, takes a key-value pair consisting of the option name and its value.
                                          Repeat for each volume in order (comma-separated lists not accepted)
                                          
-      --command string                   The command to override the Docker CND.
+      --command string                   The command to override the Docker CMD.
       --compression string               Compression algorithm to use for the image. Options are "zstd" or "gzip". Defaults to "gzip". (default "gzip")
       --compression-level int            Compression level to use for the image. Defaults to 7. (default 7)
   -c, --config string                    Path to application configuration file
