@@ -45,7 +45,7 @@ We're working on expanding these capabilities and will provide updates as they b
 
 ## Regions
 
-See the [regions reference](/docs/reference/regions/) for where you can create a Managed Postgres cluster, or run `fly platform regions` for the current list.
+See the [regions reference](/docs/reference/regions/) for where you can create a Managed Postgres cluster, or run `fly platform regions`.
 
 We'll be rolling out more regions as soon as we can. Choose a region close to your application for optimal performance.
 
