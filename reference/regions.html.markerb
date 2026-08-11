@@ -18,28 +18,29 @@ Run <code>fly platform regions</code> to get a list of regions.
 
 You can host your apps in any of the following regions.
 
-| Region ID | Region Location               | Gateway     |
-|-----------|-------------------------------|-------------|
-| ams       | Amsterdam, Netherlands        | ✓           |
-| arn       | Stockholm, Sweden             | ✓           |
-| bom       | Mumbai, India                 | ✓           |
-| cdg       | Paris, France                 | ✓           |
-| dfw       | Dallas, Texas (US)            | ✓           |
-| ewr       | Secaucus, NJ (US)             | ✓           |
-| fra       | Frankfurt, Germany            | ✓           |
-| gru       | Sao Paulo, Brazil             |             |
-| iad       | Ashburn, Virginia (US)        | ✓           |
-| jnb       | Johannesburg, South Africa    |             |
-| lax       | Los Angeles, California (US)  | ✓           |
-| lhr       | London, United Kingdom        | ✓           |
-| nrt       | Tokyo, Japan                  | ✓           |
-| ord       | Chicago, Illinois (US)        | ✓           |
-| sin       | Singapore, Singapore          | ✓           |
-| sjc       | San Jose, California (US)     | ✓           |
-| syd       | Sydney, Australia             | ✓           |
-| yyz       | Toronto, Canada               | ✓           |
+| Region ID | Region Location               | Gateway     | MPG         |
+|-----------|-------------------------------|-------------|-------------|
+| ams       | Amsterdam, Netherlands        | ✓           | ✓           |
+| arn       | Stockholm, Sweden             | ✓           |             |
+| bom       | Mumbai, India                 | ✓           |             |
+| cdg       | Paris, France                 | ✓           |             |
+| dfw       | Dallas, Texas (US)            | ✓           | ✓           |
+| ewr       | Secaucus, NJ (US)             | ✓           |             |
+| fra       | Frankfurt, Germany            | ✓           | ✓           |
+| gru       | Sao Paulo, Brazil             |             | ✓           |
+| iad       | Ashburn, Virginia (US)        | ✓           | ✓           |
+| jnb       | Johannesburg, South Africa    |             |             |
+| lax       | Los Angeles, California (US)  | ✓           | ✓           |
+| lhr       | London, United Kingdom        | ✓           | ✓           |
+| nrt       | Tokyo, Japan                  | ✓           | ✓           |
+| ord       | Chicago, Illinois (US)        | ✓           | ✓           |
+| sin       | Singapore, Singapore          | ✓           | ✓           |
+| sjc       | San Jose, California (US)     | ✓           | ✓           |
+| syd       | Sydney, Australia             | ✓           | ✓           |
+| yyz       | Toronto, Canada               | ✓           | ✓           |
 
 - **Gateway regions:** "Gateway" regions also have WireGuard gateways, through which you connect to your organization's private network.
+- **MPG regions:** "MPG" regions can host [Managed Postgres](/docs/mpg/) clusters.
 
 ## Discovering your app's region
 

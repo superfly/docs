@@ -45,20 +45,7 @@ We're working on expanding these capabilities and will provide updates as they b
 
 ## Regions
 
-The current regions available for deploying Fly.io Managed Postgres are:
-
-- `ams` - Amsterdam, Netherlands
-- `fra` - Frankfurt, Germany
-- `gru` - São Paulo, Brazil
-- `iad` - Ashburn, Virginia, USA
-- `lax` - Los Angeles, California, USA
-- `lhr` - London, United Kingdom
-- `nrt` - Tokyo, Japan
-- `ord` - Chicago, Illinois, USA
-- `sin` - Singapore
-- `sjc` - San Jose, California, USA
-- `syd` - Sydney, Australia
-- `yyz` - Toronto, Canada
+See the [regions reference](/docs/reference/regions/) for where you can create a Managed Postgres cluster, or run `fly platform regions` for the current list.
 
 We'll be rolling out more regions as soon as we can. Choose a region close to your application for optimal performance.
 

@@ -18,7 +18,7 @@ date: 2025-07-11
 You'll be prompted to set your clusters:
 
 - Cluster name (must be unique within your organization)
-- Region (see [available MPG regions](/docs/mpg/overview/#regions))
+- Region (see [available MPG regions](/docs/reference/regions/))
 - A plan with predefined hardware resources:
   - Basic: 2 shared vCPUs, 1GB RAM
   - Starter: 2 shared vCPUs, 2GB RAM
