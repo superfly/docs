@@ -48,7 +48,7 @@ For example, a Machine described in your dashboard as having 1GB of rootfs stopp
 
 ## Volume billing
 
-Volume billing is pro-rated to the hour and we subtract the free allowances first for the  Launch, Scale, and Enterprise plans (all of which are now discontinued for new customers). For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).
+Volume billing is pro-rated to the hour. For details, see [Volume pricing](/docs/about/pricing/#persistent-storage-volumes).
 
 If you create a volume, you will be charged for it. You're billed for volumes that aren't attached to Machines, and for volumes that are attached to Machines in any state, including stopped Machines. Volumes in `pending_destroy` state do not accrue charges.
 
@@ -144,16 +144,6 @@ When you've completed the clean-up tasks, click **Delete** to permanently delete
 
 ---
 
-## Discontinued/legacy plans
+## Legacy plans
 
-### Legacy Plan billing
-
-<div class="note icon">
-Customers who received a $5 free trial usage credit when signing up for the $5/mo Hobby plan will be billed monthly after that credit is used up.
-</div>
-
-Legacy plan billing, and any included usage, is pro-rated over the month. For example, if you signed up for a Scale plan on September 15th, then you'd be charged $14.50 (half of the $29/mo plan cost) right away and you'll have $14.50 of usage included up to September 30th. Then you'll be charged $29 at the start of October and have $29/mo of usage included for that billing cycle.
-
-### Free resource allowances for Legacy Plan users
-
-Fly.io has deprecated plans as of October 7, 2024, but is still honoring them for users who purchased them prior to that date. If your plan includes [free allowances](/docs/about/pricing/#legacy-free-allowances), we subtract them off the top of your usage total. Once your usage exceeds the free allowance for any given resource, we start metering usage of that resource for billing purposes.
+On a legacy plan and wondering how it's billed? Read more about [Discontinued Plans](/docs/about/discontinued-plans/).

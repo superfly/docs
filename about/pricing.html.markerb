@@ -236,33 +236,9 @@ You **will** be billed separately for data transfer to these external third-part
 
 The [Machine price](#compute) and [volume price](#persistent-storage-volumes) for Fly Postgres are the same as any other Machine and volume you'd run on Fly.io. Assuming the Machines are running all the time, the cost for the preset configurations is about $2/month for a single node cluster for dev projects and from about $82 to $164/month for a three-node production cluster. You don't need to keep the preset configurations, you can [scale your Fly Postgres Machines](/docs/postgres/managing/scaling/) to suit your workload at any time.
 
-## Discontinued Plans
+## Legacy plans
 
-Fly.io no longer offers plans to new customers. If you purchased a Launch or Scale plan before October 7, 2024, you can remain on those plans unless you convert to Pay As You Go, delete your payment method, or otherwise stop using Fly.io.
-
-### Legacy Free allowances
-
-The following resources were included for free on the Hobby (deprecated), Launch, and Scale plans, and are still honored for any organizations that were on these plans before we sunset them:
-
-* Up to 3 shared-cpu-1x 256mb VMs
-* 3GB persistent volume storage (total)
-
-Outbound data transfer:
-* 100 GB North America & Europe
-* 30 GB Asia Pacific, Oceania & South America
-* 30 GB Africa & India
-
-### Paid Hobby plan with Free Trial credit 
-
-If you signed up for the now deprecated $5/month paid Hobby plan prior the release of the Pay As You Go plan, you got a one-time $5 free trial credit to let you test-drive Fly.io at no cost. When the free trial credit was used up, we automatically placed your organization on the $5/month Hobby plan, which included $5/month of usage and free allowances. There are no free allowances during the free trial. We'll send you an email when your free trial credit is used up and you won't be charged before that. The free trial credit doesn't expire and applies only to the default (“personal”) organization that we created for you on sign-up.
-
-To change your plan to the Pay As You Go plan, go to the [**Organizations** page](https://fly.io/organizations) in the dashboard, click the organization name to change, then click **Choose Pay As You Go**. If you change your plan, you won't be able to return to the paid Hobby Plan.
-
-### Legacy (Free) Hobby plan
-
-If you were on the free Hobby plan at the time that the paid Hobby plan became the default for new organizations, your plan is now called the Legacy Hobby plan. Your costs stay the same as they were, with no monthly subscription fee, and no included usage beyond the free resource allowances.
-
-If you change your plan, you won't be able to return to the Legacy Hobby Plan.
+On a legacy plan and wondering what that includes? Read more about [Discontinued Plans](/docs/about/discontinued-plans/).
 
 ## **Related reading**
 
