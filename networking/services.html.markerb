@@ -238,7 +238,7 @@ Fly Machines have IPv6 addresses from which they make requests to the wider inte
 
 By default, we don’t offer static IPs or regional IP ranges, and we discourage the use of our outbound IPs to bypass firewalls. A Machine's outbound IP is liable to change without notice. This shouldn't be a daily occurrence, but it will happen if a Machine is moved for whatever reason, such as a load-balancing of Fly Machines between servers in one region.
 
-If you do need a static outbound IP, you can assign one on a per-machine basis. You can allocate one to a machine with `fly machine egress-ip allocate <machine-id>. This will assign both an IPv4 and IPv6 address to the machine. Like dedicated IPv4 addresses, these are [billed](/docs/about/pricing/#static-machine-ip) monthly.
+If you do need a static outbound IP, you can assign one on a per-machine basis. You can allocate one to a machine with `fly machine egress-ip allocate <machine-id>. This will assign both an IPv4 and IPv6 address to the machine. Like dedicated IPv4 addresses, these are [billed](/docs/about/pricing/#static-egress-ips-for-machines) monthly.
 
 You can also use the `fly machine egress-ip list` command to see all the IPs assigned to your machines, and release IPs with `fly machine egress-ip release <egress-ip>`.
 

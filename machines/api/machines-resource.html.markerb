@@ -1277,7 +1277,7 @@ You cannot change which volume a Machine is attached to by updating the Machine'
 
 ---
 
-**`size`:** A [named size](/docs/about/pricing/#running-fly-machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
+**`size`:** A [named size](/docs/about/pricing/#started-fly-machines) for the VM, e.g. `performance-2x` or `shared-cpu-2x`. Note: `guest` and `size` are mutually exclusive.
 
 ---
 

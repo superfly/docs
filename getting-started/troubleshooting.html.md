@@ -291,7 +291,7 @@ Look for OOM kill events. Fix: add memory.
 fly scale memory 512
 ```
 
-For CPU-intensive apps, make sure you've selected an appropriate [Machine size](/docs/about/pricing/#machines). CPU and RAM scale together in preset combinations.
+For CPU-intensive apps, make sure you've selected an appropriate [Machine size](/docs/about/pricing/#started-fly-machines). CPU and RAM scale together in preset combinations.
 
 ### Grace period
 
