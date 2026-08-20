@@ -15,6 +15,7 @@ fly ssh sftp find [path] [flags]
       --container string       Container to connect to
   -h, --help                   help for find
       --machine string         Run the console in the existing machine with the specified ID
+      --no-container           Connect to the machine itself rather than to one of its containers
   -o, --org string             The target Fly.io organization
   -g, --process-group string   The target process group (also --group)
       --pty                    Allocate a pseudo-terminal (default: on when no command is provided)

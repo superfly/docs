@@ -16,6 +16,7 @@ fly sftp put <local-path> [remote-path] [flags]
   -h, --help                   help for put
       --machine string         Run the console in the existing machine with the specified ID
   -m, --mode string            File mode/permissions for the uploaded file (default: 0644) (default "0644")
+      --no-container           Connect to the machine itself rather than to one of its containers
   -o, --org string             The target Fly.io organization
   -g, --process-group string   The target process group (also --group)
       --pty                    Allocate a pseudo-terminal (default: on when no command is provided)

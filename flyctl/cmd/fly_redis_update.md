@@ -8,6 +8,8 @@ fly redis update <name> [flags]
 ## Options
 
 ~~~
+      --disable-prodpack         Disable the ProdPack add-on
+      --enable-prodpack          Enable ProdPack add-on for additional features ($200/mo)
   -h, --help                     help for update
   -o, --org string               The target Fly.io organization
   -r, --region string            The target region (see 'flyctl platform regions')
