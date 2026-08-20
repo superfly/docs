@@ -62,15 +62,24 @@ kill_signal = "SIGTERM"
 
 ### `kill_timeout` option
 
-<section class="warning">Note: `kill_timeout` settings should be considered best-effort, and your app needs to be prepared to handle shorter stopping times</section>
+This sets how long Fly.io waits after sending the `kill_signal` before moving on to a forced shutdown. Set `kill_timeout` to a value that gives your app enough time to exit gracefully. The default is 5 seconds. You can set it up to a maximum of 300 seconds (5 minutes).
 
-This sets how long Fly.io waits (in seconds) after sending the `kill_signal` before moving on to a forced shutdown. Set `kill_timeout` to a value that gives your app enough time to exit gracefully. The default is 5 seconds. You can set it up to a maximum of 300 seconds (5 minutes).
-
-For example, to set the timeout to two minutes:
+<section class="warning icon">**Accepted formats:** `kill_timeout` takes either an unquoted whole number of **seconds**, or a quoted duration string that includes a unit. A quoted number with no unit is a parse error, and a decimal number is silently truncated to `0`.</section>
 
 ```toml
-kill_timeout = 120
+kill_timeout = 120      # ✅ 120 seconds — unquoted, no unit
+kill_timeout = "2m"     # ✅ 2 minutes — quoted, with a unit
+kill_timeout = "120s"   # ✅ 120 seconds — quoted, with a unit
+
+kill_timeout = "120"    # ❌ error: missing unit in duration "120"
+kill_timeout = 1.5      # ❌ silently becomes 0 seconds — no grace period at all
 ```
+
+Valid units in the quoted form are the [Go duration units](https://pkg.go.dev/time#ParseDuration): `ns`, `us`, `ms`, `s`, `m`, and `h`. Only `s`, `m`, and `h` are meaningful here. Run `fly config validate` to confirm flyctl parses your value the way you expect.
+
+This top-level `kill_timeout` is the only place where an unquoted number means seconds. The separate `kill_timeout` key inside a [`machine_checks`](#services-machine_checks) section reads an unquoted number as **nanoseconds**, so it always needs the quoted, unit-bearing form.
+
+<section class="warning">Note: `kill_timeout` settings should be considered best-effort, and your app needs to be prepared to handle shorter stopping times</section>
 
 ### How the shutdown sequence works
 
@@ -825,7 +834,7 @@ This example uses the `curl` image to run a test. It checks that the Machine is 
 * `entrypoint`: The entrypoint for the test. Defaults to the entrypoint of the Machine being tested if not set
 * `command`: The command to run for the test.
 * `kill_signal`: The signal to send to the test process if it runs too long. Defaults to the signal of the image, if a custom image is set.
-* `kill_timeout`: The time to wait before sending the kill signal. Defaults to the timeout of the image, if a custom image is set.
+* `kill_timeout`: The time to wait before sending the kill signal. Defaults to the timeout of the image, if a custom image is set. Unlike the [top-level `kill_timeout`](#kill_timeout-option), this one must be a **quoted duration string with a unit** — `kill_timeout = "5s"`. An unquoted `5` here is read as 5 *nanoseconds*, not 5 seconds.
 
 Machine checks are especially useful for `canary` deploys. `flyctl` will spawn a new Machine, ensure all machine capabilities are functional, and then deploy the rest of the Machines in your app.
 
