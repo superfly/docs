@@ -13,6 +13,7 @@ fly machine list [flags]
   -c, --config string   Path to application configuration file
   -h, --help            help for list
   -j, --json            JSON output
+      --limit int       Number of machines to return per page; 0 returns all machines
   -q, --quiet           Only list machine ids
 ~~~
 
@@ -27,4 +28,3 @@ fly machine list [flags]
 ## See Also
 
 * [fly machine](/docs/flyctl/machine/)	 - Manage Fly Machines.
-
