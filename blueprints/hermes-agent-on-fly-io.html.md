@@ -122,7 +122,7 @@ In one terminal, start the dashboard inside the machine:
 
 ```bash
 fly ssh console -a <your-hermes-app> -C \
-  "hermes dashboard --host 0.0.0.0 --no-open"
+  "hermes dashboard --host 127.0.0.1 --no-open"
 ```
 
 In a second terminal, open a Fly proxy from your laptop:
