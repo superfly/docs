@@ -68,7 +68,7 @@ tigris buckets list
 
 ### Delete a Tigris bucket
 
-Deleting can't be undone. Empty buckets can't be deleted without the `--force` option.
+Deleting a bucket permanently deletes the bucket and all of its objects. This can't be undone. `fly storage destroy` asks for confirmation; use `--yes` to skip the prompt in automation.
 
 ```cmd
 fly storage destroy late-surf-5384
@@ -183,10 +183,10 @@ Write-through mode (the `--shadow-write-through` flag below) is what makes the m
 
 ### Create a new bucket with a shadow bucket
 
-You must specify all shadow bucket attributes, including the endpoint and region. Check your provider docs to find these values. Here's the AWS S3 [list of regions and endpoints](https://docs.aws.amazon.com/general/latest/gr/s3.html).
+You must specify all five shadow bucket attributes: bucket name, access key, secret key, endpoint, and region. Check your provider docs to find these values. Here's the AWS S3 [list of regions and endpoints](https://docs.aws.amazon.com/general/latest/gr/s3.html).
 
 ```cmd
-flyctl storage create -n mybucket -o myorg --shadow-access-key 123 --shadow-secret-key abc --shadow-endpoint https://s3.us-east-1.amazonaws.com --shadow-region us-east-1 --shadow-write-through
+flyctl storage create -n mybucket -o myorg --shadow-name source-bucket --shadow-access-key 123 --shadow-secret-key abc --shadow-endpoint https://s3.us-east-1.amazonaws.com --shadow-region us-east-1 --shadow-write-through
 ```
 
 ### Add or remove a shadow bucket on an existing Tigris bucket
@@ -194,7 +194,7 @@ flyctl storage create -n mybucket -o myorg --shadow-access-key 123 --shadow-secr
 You can also add and remove shadow buckets from existing Tigris buckets.
 
 ```cmd
-flyctl storage update mybucket --shadow-access-key 123 --shadow-secret-key abc --shadow-endpoint https://s3.us-east-1.amazonaws.com --shadow-region us-east-1
+flyctl storage update mybucket --shadow-name source-bucket --shadow-access-key 123 --shadow-secret-key abc --shadow-endpoint https://s3.us-east-1.amazonaws.com --shadow-region us-east-1
 
 flyctl storage update mybucket --clear-shadow
 ```
