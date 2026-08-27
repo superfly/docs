@@ -115,7 +115,7 @@ These parameters are sent with every provisioning request.
 | **read_regions** | array | An array of Fly.io region codes where read replicas should be provisioned | `["mad", "ord"]` |
 | **ip_address** | string | An IPv6 address on the customer network assigned to this extension | `fdaa:0:47fb:0:1::1d` |
 
-Your response should must contain a list of key/value pairs of secrets that that should be set on the associated Fly.io application. These secrets are available as environment variables. They aren't visible outside of an application VM.
+Your response must contain a list of key/value pairs of secrets that should be set on the associated Fly.io application. These secrets are available as environment variables. They aren't visible outside of an application VM.
 
 If your service is deployed on Fly, the response should also contain details about the target Fly.io application for the private IP address. See the following section for details about this.
 

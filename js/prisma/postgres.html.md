@@ -57,7 +57,7 @@ npx prisma migrate dev --name init
 
 Remove the `[processes]` and `[mounts]` sections from the `fly.toml` and add the `[deploy]` section you see above.
 
-Download your existing SQLite database and use [pgloader](https://pgloader.readthedocs.io/en/latest/ref/sqlite.html) to covert it to to postgres:
+Download your existing SQLite database and use [pgloader](https://pgloader.readthedocs.io/en/latest/ref/sqlite.html) to covert it to postgres:
 
 ```bash
 fly sftp get /data/dev.db

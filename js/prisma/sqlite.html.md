@@ -121,7 +121,7 @@ Depending on whether or not we generate a `Dockerfile` for you, an `ENTRYPOINT` 
 * Restore your database from LiteStream if it doesn't currently exist.
 * Run database migrations
 * Run your seed command if the database doesn't exist
-* Run [`litestream replicate`](https://litestream.io/reference/replicate/) to to monitor & continuously replicate SQLite database.
+* Run [`litestream replicate`](https://litestream.io/reference/replicate/) to monitor & continuously replicate SQLite database.
 * Launch your application
 
 Depending on your application and what framework it uses, this script may perform other functions.
