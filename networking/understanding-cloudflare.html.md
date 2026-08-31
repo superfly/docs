@@ -114,6 +114,7 @@ These tools can help when diagnosing certificate or DNS issues:
 
 - `fly certs check <hostname>`: Check ownership TXT status, custom certificate status, and ACME certificate status all in one place. This is the best starting point for debugging.
 - [crt.sh](https://crt.sh/): Check issued certificates.
+- [CertObserver CT search](https://certobserver.com/ct-search): Check issued certificates.
 - [DNSChecker](https://dnschecker.org/): Confirm DNS propagation.
 - [Let's Debug](https://letsdebug.net/): Analyze Let's Encrypt certificate validation issues.
 - dig: Inspect DNS records from the command line.
