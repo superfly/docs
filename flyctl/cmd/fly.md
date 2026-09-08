@@ -25,7 +25,6 @@ fly [flags]
 * [ips](/docs/flyctl/ips/)	 - Manage IP addresses for apps
 * [jobs](/docs/flyctl/jobs/)	 - Show jobs at Fly.io
 * [launch](/docs/flyctl/launch/)	 - Create and configure a new app from source code or a Docker image
-* [litefs-cloud](/docs/flyctl/litefs-cloud/)	 - LiteFS Cloud management commands
 * [logs](/docs/flyctl/logs/)	 - View app logs
 * [machine](/docs/flyctl/machine/)	 - Manage Fly Machines.
 * [mcp](/docs/flyctl/mcp/)	 - flyctl Model Context Protocol.
