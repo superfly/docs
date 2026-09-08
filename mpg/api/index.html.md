@@ -13,7 +13,7 @@ If you're not already familiar with the Machines API, start with [Working with t
 
 Cluster management:
 
-- `GET /v1/postgres` - List Managed Postgres clusters for an organization.
+- `GET /v1/postgres` - List Managed Postgres clusters for an organization. Requires an `org_slug` query parameter.
 - `POST /v1/postgres` - Create a Managed Postgres cluster.
 - `GET /v1/postgres/{postgres_cluster_id}` - Get details of a specific cluster.
 - `DELETE /v1/postgres/{postgres_cluster_id}` - Delete a cluster.
