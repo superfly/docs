@@ -27,6 +27,7 @@ You'll be able to access:
 
 - A highly-available Postgres cluster within your Fly.io organization's [private network](/docs/networking/private-networking/)
 - Multiple databases and schemas on that cluster
+- Programmatic access via the [Managed Postgres API](https://docs.machines.dev/+external), part of the Fly Machines API
 - Fly.io Support Portal to log tickets and get help
 - Any trusted extensions included in the [default Postgres 16 distribution](https://www.postgresql.org/docs/16/contrib.html)
 - The third party `pgvector` extension for vector similarity search
