@@ -286,5 +286,5 @@ Fly apps support an unlimited number of hostnames and SSL certificates. To set o
 
 ### Handle your own TLS
 
-Fly can take care of TLS + HTTPS for you, but it doesn't have to. If you'd prefer to terminate your own TLS, you can generate your own certificates, store them as encrypted Fly secrets, and tweak [the Dockerfile](#write-a-custom-dockerfile) to pull them from your app environment. We'll happily forwarded encrypted TCP to your app and let you worry about the rest.
+Fly can take care of TLS + HTTPS for you, but it doesn't have to. If you'd prefer to terminate your own TLS, you can generate your own certificates, store them as encrypted Fly secrets, and tweak [the Dockerfile](#write-a-custom-dockerfile) to pull them from your app environment. We'll happily forward encrypted TCP to your app and let you worry about the rest.
 
