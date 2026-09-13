@@ -63,7 +63,7 @@ be done as you still need to configure nginx.  We do that next.
 ## Configuring nginx
 
 The Dockerfile above contains three `ADD` commands.  These copy configuration
-files to the image.  The first two files configure ngix.  Place all three files
+files to the image.  The first two files configure nginx.  Place all three files
 in a `config/fly` directory.
 
 We start with `config/fly/rails.conf`:

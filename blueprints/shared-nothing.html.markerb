@@ -34,7 +34,7 @@ Over time, it grew out of my attic and onto VMs in the cloud. It supports more e
 
 If this approach isn’t the best one for your app, throw it out the window! I did. In my case, it made a lot of sense to put all the services into a single VM, and scale out by repeating that set into new VMs. This works great for me. Maybe it’s right for your app, too! Maybe not! Prepare to bathe in the gory details of my stateful, serverful, shared-nothing monolith.
 
-## Shared-nothing architecures
+## Shared-nothing architectures
 
 <p class="callout">
 A shared-nothing architecture is a distributed computing architecture in which each update request is satisfied by a single node (processor/memory/storage unit) in a computer cluster.

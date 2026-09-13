@@ -33,7 +33,7 @@ It's best if you use one Fly.io account to manage all your organizations, so you
 
 ### Manage organizations in your dashboard
 
-To create a new org from the [dashboard]((https://fly.io/dashboard/)), select **Create new organization** from the **Organization** dropdown.
+To create a new org from the [dashboard](https://fly.io/dashboard/), select **Create new organization** from the **Organization** dropdown.
 
 To view or send invites to members, use the **Organization** dropdown to choose an org, then go to **Team**.
 

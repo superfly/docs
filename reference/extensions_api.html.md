@@ -27,7 +27,7 @@ Note: If resources take more than 5 seconds to provision, `flyctl` can poll your
 
 ## Provisioning Accounts and Organizations
 
-We'd like customers to have full access to your platform features through their Fly.io-provisioned account. And you should be able to communicate with customers via email. To that end, all provisioning requests are acccompanied by:
+We'd like customers to have full access to your platform features through their Fly.io-provisioned account. And you should be able to communicate with customers via email. To that end, all provisioning requests are accompanied by:
 
 * A unique user ID and working email alias
 * A unique organization ID and working email alias that emails org admins
@@ -214,7 +214,7 @@ GET https://api.fly.io/oauth/authorize?client_id=123&response_type=code&redirect
 
 You should pass the organization ID and desired permissions scope. Currently, only the `read` scope is supported.
 
-Once we authenticate the user, we'll redirect to your OAUth `redirect_uri` with an authorization code you may exchange for an access token via a POST request.
+Once we authenticate the user, we'll redirect to your OAuth `redirect_uri` with an authorization code you may exchange for an access token via a POST request.
 
 ```
 POST https://api.fly.io/oauth/token
@@ -336,7 +336,7 @@ For `resource.created`, the request body should include the Fly.io `organization
 }
 ```
 
-Note: `resource` should contain the same parameters provided by `GET` endpoints for invdividual resources.
+Note: `resource` should contain the same parameters provided by `GET` endpoints for individual resources.
 
 ## Outbound Webhooks: Get notified about changes to provisioned accounts and resources
 

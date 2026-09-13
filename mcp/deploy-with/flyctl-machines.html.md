@@ -23,7 +23,7 @@ fly apps create --generate-name --save
 
 If you prefer, you can replace `--generate-name` with a name of your choice.
 
-You can also specify the organization by passing in a `--org` pparameter, or let it prompt you.
+You can also specify the organization by passing in a `--org` parameter, or let it prompt you.
 
 ## Create IP addresses for your application
 

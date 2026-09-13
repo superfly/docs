@@ -322,7 +322,7 @@ Retrieve details about a specific volume by its ID within an app.
 
 ## Update a volume
 
-Update paratemeters on the volume.
+Update parameters on the volume.
 
 <div class="api-section" data-exclude-render>
   <div data-exclude-render>
