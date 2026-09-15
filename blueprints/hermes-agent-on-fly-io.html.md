@@ -129,7 +129,7 @@ fly ssh console --pty -a <your-hermes-app> -C \
   "hermes dashboard --host [::] --no-open"
 ```
 
-Since you're using a tunnel via this setup, your dashboard isn't publicly exposed. But [hermes requires you to setup dashboard auth](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard) if you're binding to [::] (or 0.0.0.0, though this guide chooses [::] since 0.0.0.0 is already in use by hermes). 
+Since you're using a tunnel via this setup, your dashboard isn't publicly exposed. But [hermes requires you to setup dashboard auth](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard) if you're binding to [::]. 
 
 Setup auth (or use a shim to proxy from localhost, if that's your style). 
 In a second terminal, open a Fly proxy from your laptop:
