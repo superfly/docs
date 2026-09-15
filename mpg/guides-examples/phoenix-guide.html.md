@@ -37,7 +37,8 @@ You'll also need to update your repo config:
 config :my_app, MyApp.Repo,
   url: System.fetch_env!("DATABASE_URL"),
   pool_size: 8,
-  timeout: 15_000,
+  timeout: 15_000,                 # query timeout
+  max_lifetime: 540_000..600_000,  # max connection lifetime; the range staggers reconnects
   prepare: :unnamed
 ```
 
