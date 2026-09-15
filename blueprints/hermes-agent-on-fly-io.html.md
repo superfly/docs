@@ -126,7 +126,7 @@ In one terminal, start the dashboard inside the machine:
 
 ```bash
 fly ssh console --pty -a <your-hermes-app> -C \
-  "hermes dashboard --host [::] --no-open"
+  "HERMES_DASHBOARD_WS_HOST=127.0.0.1 hermes dashboard --host [::] --no-open"
 ```
 
 Since you're using a tunnel via this setup, your dashboard isn't publicly exposed. But [hermes requires you to setup dashboard auth](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard) if you're binding to [::]. 
