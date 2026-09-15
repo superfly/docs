@@ -164,7 +164,7 @@ pool = ConnectionPool(
     max_size=10,
 
     # Connection lifecycle
-    max_lifetime=600,       # 10 min — recycle before proxy timeout
+    max_lifetime=600,       # 10 min, stays ahead of PgBouncer's 600s idle timeout
     max_idle=300,           # 5 min — close idle connections
     reconnect_timeout=5,
 
@@ -252,16 +252,15 @@ On older Rails versions, there is no built-in max connection age. Connections wi
 config :my_app, MyApp.Repo,
   url: System.fetch_env!("DATABASE_URL"),
   pool_size: 8,
+  max_lifetime: 540_000..600_000,  # max connection lifetime; the range staggers reconnects
   prepare: :unnamed   # required for PgBouncer transaction mode
 ```
 
 For comprehensive Phoenix setup including migrations, Oban configuration, and Ecto-specific troubleshooting, see the [Phoenix with Managed Postgres](/docs/mpg/guides-examples/phoenix-guide/) guide.
 
 <div class="note icon">
-**Note on connection lifetime in Ecto:** Postgrex does not currently support a max connection lifetime setting. Connections are recycled only when they encounter errors or are explicitly disconnected. The idle timeout and PgBouncer's own `server_lifetime` setting (default 3600s) provide some protection, but for the most reliable behavior during proxy restarts, a `max_lifetime` option in Postgrex/DBConnection would be ideal. This is a known gap.
+**Note on connection lifetime in Ecto:** `:max_lifetime` requires DBConnection 2.10.0 or later (2.10.1+ if your connections sit idle). It takes a range in milliseconds rather than a single value, so reconnects are spread out instead of the whole pool expiring at once. MPG's PgBouncer closes client connections after 600s idle (`client_idle_timeout`) and retires its own server connections after 600s (`server_lifetime`). Recycling on a 9-10 minute schedule keeps your pool ahead of both, so connections are replaced on your terms instead of turning up closed mid-query.
 </div>
-
-<!-- TODO: Update this section when postgrex adds max_lifetime support -->
 
 </details>
 
@@ -293,15 +292,15 @@ Each MPG plan has a fixed number of PgBouncer connection slots shared across all
 
 ### `tcp recv (idle): closed` or `tcp recv (idle): timeout`
 
-**Cause:** The proxy or PgBouncer closed an idle connection. This happens during proxy deployments (the proxy drains connections on restart) or when PgBouncer's idle timeout is reached.
+**Cause:** PgBouncer or the proxy closed an idle connection. MPG's PgBouncer closes client connections after 600s idle (`client_idle_timeout`). Proxy deployments also drain connections when old instances shut down.
 
-**Fix:** Set your client's idle timeout to **300 seconds** (5 min) and max connection lifetime to **600 seconds** (10 min). Most connection pools reconnect automatically when a connection is closed — these errors are transient. If you're seeing them frequently outside of proxy deployments, reduce your pool size so fewer connections sit idle.
+**Fix:** Set your client's idle timeout to **300 seconds** (5 min) and max connection lifetime to **600 seconds** (10 min), which keeps your pool ahead of PgBouncer's own idle timeout. Most connection pools reconnect automatically when a connection is closed, so these errors are transient. If you see them often, reduce your pool size so fewer connections sit idle.
 
 ### `ECONNRESET` or "connection reset by peer"
 
-**Cause:** A long-lived connection was terminated during something like a proxy restart. Connections that remain open too long during a proxy drain may be forcibly closed.
+**Cause:** A long-lived connection was terminated by something upstream, such as a proxy restart draining its remaining connections.
 
-**Fix:** Set max connection lifetime to **600 seconds** (10 min) or less so connections are recycled before the proxy needs to kill them. Enable retry logic with backoff for transient failures.
+**Fix:** Set max connection lifetime to **600 seconds** (10 min) or less, so your pool recycles connections on its own schedule. Enable retry logic with backoff for transient failures.
 
 ### Prepared statement errors
 
