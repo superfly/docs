@@ -77,28 +77,28 @@ For stopped Machines we charge only for the root file system (rootfs) needed for
 
 ### Machine reservation blocks
 
-You'll get a 40% discount when you reserve a block of compute time, either for `performance` Machines or `shared` Machines, in a specific region.
+You'll get a 30% discount when you reserve a block of compute time, either for `performance` Machines or `shared` Machines, in a specific region.
 Reservations apply to any number of Machines of the specified CPU class, in the specified region, in any of your organisation's apps.
 
 The available reservation sizes are:
 
 **Performance Machines**
 
-* $144/year for $20/month of usage
-* $1,440/year for $200/month of usage
-* $14,400/year for $2,000/month of usage
+* $168/year for $20/month of usage
+* $1,680/year for $200/month of usage
+* $16,800/year for $2,000/month of usage
 
 **Shared Machines**
 
-* $36/year for $5/month of usage
-* $360/year for $50/month of usage
-* $3,600/year for $500/month of usage
+* $42/year for $5/month of usage
+* $420/year for $50/month of usage
+* $4,200/year for $500/month of usage
 
 You pay the "per year" amount upfront, and each month receive a credit worth the "per month" amount. The credit does not rollover; it's only valid for the month in which it's granted. The credit applies only to CPU and additional RAM charges.
 
 There's no limit on the number or combinations of blocks that can be purchased. Reservations are backdated to the first day of the month in which they're purchased.
 
-For example, if you purchase a $36/year `shared` Machines block in `cdg`, you'll pay $36 upfront and receive $5/month of credits applicable to `shared` Machines in `cdg` for 12 months, starting with the month of the purchase. Amortised over 12 months, the $36 upfront cost is $3/month, which is a 40% discount on the $5/month of credits you receive.
+For example, if you purchase a $42/year `shared` Machines block in `cdg`, you'll pay $42 upfront and receive $5/month of credits applicable to `shared` Machines in `cdg` for 12 months, starting with the month of the purchase. Amortised over 12 months, the $42 upfront cost is $3.50/month, which is a 30% discount on the $5/month of credits you receive.
 
 You can set up reservations via self-service in the billing section of your Fly.io [dashboard](https://fly.io/dashboard). They apply to usage starting on the 1st, so setting up reservations any time in the month will give you the credits the entire month.
 
