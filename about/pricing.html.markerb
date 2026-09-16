@@ -102,6 +102,27 @@ For example, if you purchase a $42/year `shared` Machines block in `cdg`, you'll
 
 You can set up reservations via self-service in the billing section of your Fly.io [dashboard](https://fly.io/dashboard). They apply to usage starting on the 1st, so setting up reservations any time in the month will give you the credits the entire month.
 
+<a id="global-cpuram-reservations"></a>
+### Global CPU/RAM reservations
+
+Global reservations give you a monthly CPU/RAM credit across all regions and Machine classes for a twelve-month commitment. You can pay upfront for a **20% discount**, or pay monthly for a **10% discount**.
+
+| Monthly CPU/RAM credit | Upfront payment (20% discount) | Monthly payment for twelve months (10% discount) |
+| --- | --- | --- |
+| $100 | $960 | $90 |
+| $500 | $4,800 | $450 |
+| $1,000 | $9,600 | $900 |
+
+For example, committing to $100/month of CPU/RAM credit provides $1,200 of total usage credit. You pay either $960 upfront or $90/month for twelve months ($1,080 total). Monthly payments are due even if your usage is below your monthly credit.
+
+Credits begin on the first day of the purchase month and expire at the end of each month. Unused credit does not roll over. Your first payment is invoiced shortly after purchase; later monthly payments are invoiced on the first of each month. An upfront purchase is invoiced once.
+
+These credits apply only to Machine CPU and additional RAM charges. They do not cover volumes, stopped-Machine root filesystems, snapshots, network, GPUs, Managed Postgres, Sprites, or other products. More specific region/class Machine reservations are applied first; global credits then cover remaining eligible CPU/RAM usage. Usage above your credit is billed at the applicable pay-as-you-go rate.
+
+Organization admins with eligible billing accounts can choose **Global CPU/RAM reservations** on the [Billing dashboard](https://fly.io/dashboard/billing). Select a credit amount and payment schedule, review the total twelve-month commitment, and confirm. Purchase setup can take a few minutes. Current balances appear under **Active Credits**, and the global reservations page shows purchase status and original terms. A scheduled reservation means billing is set up, not that every invoice has been paid.
+
+Existing reservations retain the prices, credits, and term purchased. New global reservations do not change or replace existing Machine reservations.
+
 ## Managed Postgres
 
 The price of running Fly.io Managed Postgres depends on your selected Managed Postgres Plan and the amount of storage your Postgres cluster has. 
