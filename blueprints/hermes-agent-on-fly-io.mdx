@@ -48,21 +48,25 @@ machine_config = "machine_config.json"
 ```
 Create a machine config file (called `machine_config.json` in our example):
 ```json
+{
+  "containers": [
     {
-      "containers": [
-        {
-          "name": "hermes",
-          "image": "nousresearch/hermes-agent:latest",
-          "cmd": ["gateway", "run"]
-        }
+      "name": "hermes",
+      "image": "nousresearch/hermes-agent:latest",
+      "cmd": ["gateway", "run"],
+      "secrets": [
+        { "env_var": "EXAMPLE_API_KEY" },
+        { "env_var": "EXAMPLE_TOKEN" }
       ]
     }
+  ]
+}
 ```
 
 A few notes:
 
 - **No `[build.dockerfile]`.** Fly pulls the image directly. Deploys take seconds, not minutes.
-- ** Hermes images published from `v2026.5.28` onward use `s6-overlay` as the in-container supervisor. s6-overlay's `/init` calls `s6-overlay-suexec` which checks `getpid() == 1` before doing anything else and aborts otherwise. So we use multi-container machines (via the machine_config.json) to get our own namespace. 
+- **Hermes images published from `v2026.5.28` onward use `s6-overlay` as the in-container supervisor. s6-overlay's `/init` calls `s6-overlay-suexec` which checks `getpid() == 1` before doing anything else and aborts otherwise. So we use multi-container machines (via the machine_config.json) to get our own namespace. 
 - **No `[[services]]` block.** The gateway talks *outbound* to chat platforms, so you don't need a public port. The dashboard exposes API keys and shouldn't be public; you'll reach it through a Fly proxy tunnel below.
 - **4 GB / 2 CPU** is the recommended size when browser tools (Playwright/Chromium) are active. If you don't use browser tools you can drop to `shared-cpu-1x` and 1–2 GB.
 
@@ -117,9 +121,13 @@ Hermes has a web dashboard on port 9119 for managing sessions, skills, and confi
 In one terminal, start the dashboard inside the machine:
 
 ```bash
-fly ssh console -a <your-hermes-app> -C \
-  "hermes dashboard --host 0.0.0.0 --no-open"
+fly ssh console --pty -a <your-hermes-app> -C \
+  "HERMES_DASHBOARD_WS_HOST=127.0.0.1 hermes dashboard --host [::] --no-open"
 ```
+
+Since you're using a tunnel via this setup, your dashboard isn't publicly exposed. But [hermes requires you to setup dashboard auth](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard) if you're binding to \[::].
+
+Setup auth (or use a shim to proxy from localhost, if that's your style).
 
 In a second terminal, open a Fly proxy from your laptop:
 

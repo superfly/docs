@@ -163,7 +163,7 @@ Snapshots for each volume are stored incrementally, so only data that has change
 
 ## Disable automatic daily snapshots
 
-Automatic daily snapshots are enabled by default. To disable automatic snapshots, use the `--scheduled-snapshots=false` flag.
+Automatic daily snapshots are enabled by default. To disable automatic snapshots, use the `--scheduled-snapshots=false` flag. Snapshots of encrypted volumes (defaults to `true`) are likewise encrypted at rest.
 
 Disable automatic snapshots when you create a volume:
 
