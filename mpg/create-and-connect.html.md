@@ -45,7 +45,7 @@ You can also create an MPG cluster using the flyctl command line tool. To begin,
 ```cmd
 fly mpg create
 ```
- Follow the prompts to configure your cluster name, plan, and region. By default your cluster will be created with a 10GB volume, but you can specify larger using the `--volume-size` flag:
+ Follow the prompts to configure your cluster name, plan, and region. By default your cluster will be created with a 10GB initial volume, which grows automatically with your data; you can start larger using the `--volume-size` flag:
 
 ```cmd 
 fly mpg create [flags]
@@ -56,7 +56,7 @@ fly mpg create [flags]
       --pgvector          Enable PGVector for the Postgres cluster
       --plan string       The plan to use for the Postgres cluster (basic, launch, scale)
  -r, --region string     The target region
-      --volume-size int   The volume size in GB (default 10)
+      --volume-size int   Initial volume size in GB (default 10)
 ```
 
 After all options are set the cluster will begin initializing. Once that's complete, you can now connect to your cluster.
