@@ -1,0 +1,24 @@
+---
+title: The Basics
+source_url: https://fly.io/docs/python/the-basics/
+---
+
+These guides will help you get through the basics of setting up your Python application with pieces of infrastructure commonly found in the wild. Most Python frameworks follow the same flow in terms of setup and vary only in their application code. For frameworks that also have a frontend component additional steps will be required.
+
+To develop Python applications, you will need to install python. We also recommend installing poetry to manage your dependencies. 
+
+## Install flyctl and log in
+
+In order to start working with Fly.io, you will need `flyctl`, our CLI app for managing apps. If you've already installed it, carry on. If not, hop over to [our installation guide](/flyctl/install). Once that's installed you'll want to [log in to Fly](/getting-started/sign-up-sign-in).
+
+For most popular frameworks you can deploy your app with just one command: 
+
+```bash
+fly launch
+```
+
+## Setting up a Python Environment
+How to setup a functional python environment on your local machine.
+
+## Multi-stage Builds
+A strategy to make your containers smaller in size and reduce attack surface.

@@ -1,0 +1,7 @@
+The fastest way to get a basic  server on Fly.io is to use our  template:
+
+```bash
+git clone git@github.com:fly-apps/<%= repo %>.git <%= runtime.downcase %>-app
+cd <%= runtime.downcase %>-app
+fly launch --generate-name
+```

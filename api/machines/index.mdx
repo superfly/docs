@@ -1,0 +1,57 @@
+---
+title: Overview
+icon: book-open
+---
+
+
+This site hosts the API reference generated from the Fly.io Machines API OpenAPI
+specification. For how to get started, deeper explanations of each endpoint, and
+examples, visit the complete [Machines API docs](/machines/api/).
+
+<SpecDownload />
+
+## Base URL
+
+All requests are made against:
+
+```
+https://api.machines.dev
+```
+
+## Authentication
+
+Authenticate every request with a Fly.io access token using the
+`Authorization: FlyV1 <token>` header. Generate one with
+[`fly tokens create`](/flyctl/cmd/fly_tokens_create) or the
+[Tokens](https://fly.io/tokens) page on the dashboard.
+
+```bash
+curl https://api.machines.dev/v1/apps?org_slug=personal \
+  -H "Authorization: Bearer $FLY_API_TOKEN"
+```
+
+## Resources
+
+<Columns cols={2}>
+  <Card title="Apps" href="/api/machines/apps/list-apps">
+  Group your Machines into apps.
+  </Card>
+  <Card title="Machines" href="/api/machines/machines/list-machines">
+  Launch and control fast-booting VMs.
+  </Card>
+  <Card title="Volumes" href="/api/machines/volumes/list-volumes">
+  Persistent storage for your Machines.
+  </Card>
+  <Card title="Postgres Clusters" href="/api/machines/postgres-clusters/list-postgres-clusters">
+  Create and manage Postgres clusters.
+  </Card>
+  <Card title="Secrets" href="/api/machines/secrets/list-secret-keys-belonging-to-an-app">
+  App secrets and encryption keys.
+  </Card>
+  <Card title="TLS Certificates" href="/api/machines/tls-certificates/list-certificates-for-app">
+  Certificates for custom hostnames.
+  </Card>
+  <Card title="Tokens" href="/api/machines/tokens/authenticate-token-header">
+  Authenticate and mint access tokens.
+  </Card>
+</Columns> 

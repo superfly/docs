@@ -1,0 +1,48 @@
+---
+title: Tokens
+---
+
+You can use the Tokens resource to request an OpenID Connect (OIDC) token from a 3rd-party service. Learn more about [using OpenID Connect](/security/openid-connect/) on Fly.io.
+
+<div className="rounded-xl bg-[#0d1526] border border-white/10 overflow-hidden not-prose">
+  <div className="px-5 py-3 border-b border-white/10">
+    <span className="text-white text-sm font-semibold">Endpoints</span>
+  </div>
+  <div className="px-5 py-4 flex flex-col gap-3">
+    <a href="#request-an-oidc-token" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-emerald-800/60 text-emerald-300 text-xs font-mono py-1">POST</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/tokens/oidc</span>
+    </a>
+  </div>
+</div>
+
+## Request an OIDC token
+
+Request an Open ID Connect token for your Machine. Customize the audience claim with the `aud` parameter. This returns a JWT token.
+
+#### Body parameters
+
+<ParamField body="aud" type="string">
+  The audience claim for the token (the recipient of this access token).
+</ParamField>
+
+```sh title="POST/v1/tokens/oidc"
+curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/tokens/oidc" \\
+  -d '{
+      "aud": "https://fly.io/my-org-slug",
+    }'
+```
+
+```txt title="Status: 200 OK - Example response"
+<raw oidc token>
+```
+
+## Related topics
+
+*   [Working with the Machines API](/machines/api/working-with-machines-api/)
+*   [Apps resource](/machines/api/apps-resource/) reference
+*   [Machines resource](/machines/api/machines-resource/) reference
+*   [Tokens resource](/machines/api/tokens-resource) reference
+*   [Volumes resource](/machines/api/volumes-resource/) reference

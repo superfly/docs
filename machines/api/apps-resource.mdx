@@ -1,0 +1,203 @@
+---
+title: Apps
+---
+
+You can use the Apps resource to create and manage Fly Apps. A Fly App is an abstraction for a group of Machines running your code, along with the configuration, provisioned resources, and data we need to keep track of to run and route to your Machines. Learn more about [Fly Apps](/apps/overview).
+
+<div className="rounded-xl bg-[#0d1526] border border-white/10 overflow-hidden not-prose">
+  <div className="px-5 py-3 border-b border-white/10">
+    <span className="text-white text-sm font-semibold">Endpoints</span>
+  </div>
+  <div className="px-5 py-4 flex flex-col gap-3">
+    <a href="#create-a-fly-app" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-emerald-800/60 text-emerald-300 text-xs font-mono py-1">POST</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps</span>
+    </a>
+    <a href="#get-app-details" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-sky-900/60 text-sky-300 text-xs font-mono py-1">GET</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps/{'{app_name}'}</span>
+    </a>
+    <a href="#delete-a-fly-app" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-rose-950/60 text-rose-300 text-xs font-mono py-1">DELETE</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps/{'{app_name}'}</span>
+    </a>
+    <a href="#list-apps-in-an-organization" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-sky-900/60 text-sky-300 text-xs font-mono py-1">GET</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps?org_slug=</span>
+    </a>
+  </div>
+</div>
+
+## Create a Fly App
+
+`POST /apps`
+
+Machines must be associated with a Fly App. App names must be unique.
+
+
+#### Body parameters
+
+<ParamField body="app_name" type="string" required>
+  Name of the app to create
+</ParamField>
+
+<ParamField body="enable_subdomains" type="boolean">
+  Used for Fly Kubernetes.
+</ParamField>
+
+<ParamField body="org_slug" type="string" required>
+  Slug of the org in which to create the app
+</ParamField>
+
+<ParamField body="network" type="string">
+  Name for an IPv6 private network to segment the app onto.
+</ParamField>
+
+```sh POST/v1/apps
+curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps" \\
+  -d '{
+      "app_name": "my-app-name",
+      "org_slug": "personal",
+      "network": "my-optional-network"
+    }'
+```
+
+```json title="Status: 201 created - Example response"
+{
+  "id":"z4k69dxd8r31p5mx",
+  "created_at":1708631799000
+}
+```
+
+To segment the app into its own network, you can pass a `network` argument in the JSON body, for example: `"network": "some-arbitrary-name"`. Any Machine started in such an app will not be able to access other apps within their organization over the private network. However, Machines within such an app can communicate to each other, and the [`fly-replay`](/networking/dynamic-request-routing) header can still be used to route requests to Machines within a segmented app.
+
+## Allocate an IP address for global request routing
+
+If you intend for Machines to be accessible to the internet, you’ll need to allocate an IP address to the app. Currently this is done using `flyctl` or the [Fly.io GraphQL API](https://api.fly.io/graphql). This offers your app automatic, global routing via [Anycast](https://fly.io/reference/services/#about-anycast). Read more about this in [the Networking section](https://fly.io/reference/services/#notes-on-networking).
+
+Example:
+
+<CodeGroup>
+```sh cmd
+fly ips allocate-v4 -a my-app-name
+```
+```output output
+TYPE ADDRESS    REGION CREATED AT
+v4   37.16.9.52 global 7s ago
+```
+</CodeGroup>
+
+The app will answer on this IP address, and after a small delay, at `my-app-name.fly.dev`.
+
+## Get app details
+
+`GET /apps/{app_name}`
+
+Get details about an app, like its organization slug and name. Also, to check if the app exists!
+
+#### Path parameters
+
+<ParamField path="app_name" type="string" required>
+The name of the Fly App to get the details of.
+</ParamField>
+
+```sh title="GET/v1/apps/{app_name}""
+curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name"
+```
+
+```json title="Status: 200 OK - Example response"
+{
+  "id": "jlyv9r5d56v18xrg",
+  "name": "my-app-name",
+  "status": "pending",
+  "organization": {
+    "name": "My Org",
+    "slug": "personal"
+  }
+}
+```
+
+## Set app secrets
+
+For sensitive environment variables, such as credentials, you can set [secrets](/apps/secrets/) on the app:
+
+```sh
+fly secrets set DATABASE_URL=postgres://example.com/mydb <my-app-name>
+```
+
+Machines inherit secrets from the app. Existing Machines must be [updated](/machines/api/machines-resource#update-a-machine) to pick up secrets set after the Machine was created.
+
+For non-sensitive information, you can configure environment variables per Machine when you create or update the Machine.
+
+## Delete a Fly App
+
+`DELETE /apps/{app_name}`
+
+Machines should be stopped before attempting deletion. Append `?force=true` to the URI to stop and delete immediately.
+
+#### Path parameters
+
+<ParamField path="app_name" type="string" required>
+The name of the Fly App to delete.
+</ParamField>
+
+#### Query parameters
+
+<ParamField query="force" type="Boolean">
+Stop all Machines and delete the app immediately.
+</ParamField>
+
+
+```sh title="DELETE/v1/apps/{app\_name}"
+curl -i -X DELETE \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name"
+```
+
+```txt title="Status: 202 accepted"
+no body
+```
+
+## List apps in an organization
+
+`GET /apps?org_slug=`
+
+#### Query parameters
+
+<ParamField query="org_slug" type="string" required>
+The organization to list apps for.
+</ParamField>
+
+
+```sh title="GET/v1/apps?org_slug="
+curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps?org_slug=personal"
+```
+
+```json title="Status: 200 OK - Example response"
+{
+  "total_apps": 4,
+  "apps": [
+    {
+      "id": "682kqp6pdno9d543",
+      "name": "my-app-1",
+      "machine_count": 3,
+      "volume_count": 2,
+      "network": "default"
+    },
+    ...
+  ]
+}
+```
+
+## Related topics
+
+*   [Working with the Machines API](/machines/api/working-with-machines-api/)
+*   [Machines resource](/machines/api/machines-resource/) reference
+*   [Tokens resource](/machines/api/tokens-resource) reference
+*   [Volumes resource](/machines/api/volumes-resource/) reference

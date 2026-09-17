@@ -1,0 +1,33 @@
+---
+title: fly ssh
+sidebarTitle: "Manage SSH (ssh)"
+source_url: https://fly.io/docs/flyctl/ssh/
+---
+
+Use SSH to log into or run commands on Machines
+
+## Usage
+```
+fly ssh [command] [flags]
+```
+## Available Commands
+* [console](/flyctl/cmd/fly_ssh_console)	 - Connect to a running instance of the current app.
+* [issue](/flyctl/cmd/fly_ssh_issue)	 - Issue a new SSH credential
+* [log](/flyctl/cmd/fly_ssh_log)	 - Log of all issued SSH certs
+* [sftp](/flyctl/cmd/fly_ssh_sftp)	 - Get or put files from a remote VM.
+
+## Options
+
+```
+  -h, --help   help for ssh
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly](/flyctl/cmd/fly_help)	 - The Fly.io command line interface

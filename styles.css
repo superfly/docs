@@ -1,0 +1,95 @@
+/* Fonts
+   - Bricolage Grotesque: request the variable axes so weight 325 / width 98.5% / opsz 24 resolve
+     (fixed-weight request from docs.json cannot deliver these; browsers pick the variable face
+     for any weight inside 200..800).
+   - P22 Mackinac Pro: all four licensed cuts, served same-origin from the private flyio-fonts source repo, mounted at /assets. */
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&display=swap");
+
+@font-face {
+  font-family: "P22 Mackinac Pro";
+  src: url("/assets/fonts/mackinac-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "P22 Mackinac Pro";
+  src: url("/assets/fonts/mackinac-medium-italic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "P22 Mackinac Pro";
+  src: url("/assets/fonts/mackinac-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "P22 Mackinac Pro";
+  src: url("/assets/fonts/mackinac-bold-italic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --default-mono-font-family: "Fragment Mono";
+}
+
+/* Body copy: match fly.io/docs (17px / 1.6, Bricolage weight 325, width 98.5%, opsz 24).
+   Bold runs at 575 / 97.5% rather than 700. */
+#content {
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 325;
+  font-variation-settings: "wdth" 98.5, "opsz" 24;
+}
+#content strong,
+#content b {
+  font-weight: 575;
+  font-variation-settings: "wdth" 97.5, "opsz" 24;
+}
+
+/* Headings: medium by default, bold only for h1 */
+#content h2,
+#content h3,
+#content h4,
+#content h5,
+#content h6 {
+  font-weight: 500;
+}
+
+/* Content column: 768px at large sizes (theme default is 672px throughout) */
+@media (min-width: 1536px) {
+  #content-area {
+    max-width: 48rem;
+  }
+}
+
+/* Existing helpers from the port */
+.hide_icon_card [data-component-part="card-icon"],
+.hide_icon_card h2 {
+  display: none;
+}
+
+div.frame_white > div > div > div.relative.rounded-xl.overflow-hidden.flex.justify-center {
+  background-color: #fff;
+  padding: 8px;
+}
+
+div.frame_purple > div > div > div.relative.rounded-xl.overflow-hidden.flex.justify-center {
+  background-color: #281950;
+  padding: 8px;
+}
+
+.small_img img {
+  max-width: 200px;
+  padding: 12px;
+}
+
+.homepage_cards .columns {
+  gap: calc(var(--spacing) * 4);
+}

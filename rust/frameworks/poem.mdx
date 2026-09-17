@@ -1,0 +1,111 @@
+---
+title: Run a Poem App
+og:description: Poem is a full-featured and easy-to-use web framework with the Rust programming language.
+source_url: https://fly.io/docs/rust/frameworks/poem/
+---
+
+import FlyctlSnippet from '/snippets/languages-and-frameworks/flyctl.mdx';
+
+Getting an application running on Fly.io is essentially working out how to package it as a deployable image. Once packaged, it can be deployed to the Fly.io platform.
+
+In this guide we’ll learn how to deploy a [Poem](https://docs.rs/poem/latest/poem/) application on Fly.io.
+
+Poem is a full-featured and easy-to-use web framework with the Rust programming language.
+
+Deploying a Poem app on Fly.io is simple! With the help of the [cargo chef](https://github.com/LukeMathWalker/cargo-chef), we get great build times and small images.
+
+## _Speedrun_
+
+<FlyctlSnippet />
+
+The fastest way to get a basic Poem server on Fly.io is to use our poem template:
+
+```sh
+git clone --single-branch --branch poem git@github.com:superfly/rust-templates.git poem-app
+cd poem-app
+fly launch --generate-name
+```
+
+## _Deploy a Poem App from scratch_
+
+If you don’t already have an existing Poem application, you can create one with `cargo`:
+```sh
+cargo new poem-on-fly
+cd poem-on-fly
+```
+
+Then we have to add some dependencies to the project:
+
+```bash
+cargo add poem
+cargo add tokio -F macros -F rt-multi-thread
+```
+
+Now, let's create a simple app in `src/main.rs`:
+
+```rust
+use poem::{get, handler, listener::TcpListener, Route, Server};
+
+#[handler]
+fn hello() -> String {
+    format!("hello from fly.io!")
+}
+
+#[tokio::main]
+async fn main() -> Result<(), std::io::Error> {
+    let app = Route::new().at("/", get(hello));
+    Server::new(TcpListener::bind("0.0.0.0:8080"))
+        .run(app)
+        .await
+}
+```
+
+This will display a "Hello from fly.io!" message when you visit the root URL.
+Take note that we serve the app on port `8080`.
+
+We can confirm everything works fine by running `cargo run` and checking out `http://localhost:8080`.
+
+
+And with that you can deploy the app!
+
+<CodeGroup>
+```bash cmd
+fly launch
+```
+
+```output output
+Scanning source code
+Detected a Poem app
+Warning: This organization has no payment method, turning off high availability
+Creating app in [redacted]/poem-on-fly
+We're about to launch your app on Fly.io. Here's what you're getting:
+
+Organization: Your Name              (fly launch defaults to the personal org)
+Name:         [app-name]             (derived from your directory name)
+Region:       Amsterdam, Netherlands (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+Sentry:       false                  (not requested)
+
+...
+
+==> Building image
+...
+==> Building image with Docker
+...
+
+Watch your deployment at https://fly.io/apps/[app-name]/monitoring
+...
+
+Visit your newly deployed app at https://[app-name].fly.dev/
+```
+</CodeGroup>
+
+This will generate a `fly.toml` file with the configuration for your app and a Dockerfile that uses [cargo chef](/rust/the-basics/cargo-chef).
+Refer to the [fly.toml docs](/reference/configuration) for more configuration options.
+
+To deploy a new version of your app, simply run `fly deploy` in the project directory.
+
+You can check out the full (yet minimal) example in [this GitHub repository](https://github.com/superfly/rust-templates/tree/) for a reference.
+

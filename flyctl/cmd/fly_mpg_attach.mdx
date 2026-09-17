@@ -1,0 +1,32 @@
+---
+title: fly mpg attach
+source_url: https://fly.io/docs/flyctl/mpg-attach/
+---
+
+Attach a managed Postgres cluster to an app. This command will add a secret to the specified app
+ containing the connection string for the database.
+
+## Usage
+```
+fly mpg attach <CLUSTER ID> [flags]
+```
+## Options
+
+```
+  -a, --app string             Application name
+  -c, --config string          Path to application configuration file
+  -d, --database string        The database to connect to
+  -h, --help                   help for attach
+  -u, --username string        The username to connect as
+      --variable-name string   The name of the environment variable that will be added to the attached app (default "DATABASE_URL")
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly mpg](/flyctl/cmd/fly_mpg)	 - Manage Managed Postgres clusters.

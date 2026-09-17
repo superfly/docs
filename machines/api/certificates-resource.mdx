@@ -1,0 +1,540 @@
+---
+title: Certificates
+---
+
+
+Use the Certificates resource to manage SSL/TLS certificates for custom domains on your Fly Apps. Fly.io can automatically issue Let's Encrypt certificates (ACME), or you can import your own custom certificates. When both exist for a hostname, the custom certificate is served as primary and the ACME certificate acts as an automatic fallback. Learn more about [custom domains](/networking/custom-domain/).
+
+<div className="rounded-xl bg-[#0d1526] border border-white/10 overflow-hidden not-prose">
+  <div className="px-5 py-3 border-b border-white/10">
+    <span className="text-white text-sm font-semibold">Endpoints</span>
+  </div>
+  <div className="px-5 py-4 flex flex-col gap-3">
+    <a href="#list-certificates" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-sky-900/60 text-sky-300 text-xs font-mono py-1">GET</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps/{'{app_name}'}/certificates</span>
+    </a>
+    <a href="#request-acme-certificate" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-emerald-800/60 text-emerald-300 text-xs font-mono py-1">POST</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps/{'{app_name}'}/certificates/acme</span>
+    </a>
+    <a href="#import-custom-certificate" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-emerald-800/60 text-emerald-300 text-xs font-mono py-1">POST</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps/{'{app_name}'}/certificates/custom</span>
+    </a>
+    <a href="#get-certificate-details" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-sky-900/60 text-sky-300 text-xs font-mono py-1">GET</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps/{'{app_name}'}/certificates/{'{hostname}'}</span>
+    </a>
+    <a href="#check-certificate-status" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-emerald-800/60 text-emerald-300 text-xs font-mono py-1">POST</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps/{'{app_name}'}/certificates/{'{hostname}'}/check</span>
+    </a>
+    <a href="#delete-hostname-and-all-certificates" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-rose-950/60 text-rose-300 text-xs font-mono py-1">DELETE</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps/{'{app_name}'}/certificates/{'{hostname}'}</span>
+    </a>
+    <a href="#delete-acme-certificates" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-rose-950/60 text-rose-300 text-xs font-mono py-1">DELETE</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps/{'{app_name}'}/certificates/{'{hostname}'}/acme</span>
+    </a>
+    <a href="#delete-custom-certificate" className="flex items-center gap-3 no-underline hover:opacity-80">
+      <span className="w-16 shrink-0 text-center rounded-full bg-rose-950/60 text-rose-300 text-xs font-mono py-1">DELETE</span>
+      <span className="text-slate-200 font-mono text-sm">/v1/apps/{'{app_name}'}/certificates/{'{hostname}'}/custom</span>
+    </a>
+  </div>
+</div>
+
+## List certificates
+
+`GET /apps/{app_name}/certificates`
+
+List all certificates for an app, with optional filtering and cursor-based pagination.
+
+#### Path parameters
+
+<ParamField path="app_name" type="string" required>
+The name of the Fly App.
+</ParamField>
+
+#### Query parameters
+
+<ParamField query="filter" type="string">
+Filter certificates by hostname substring.
+</ParamField>
+
+<ParamField query="cursor" type="string">
+Pagination cursor from a previous response.
+</ParamField>
+
+<ParamField query="limit" type="integer">
+Maximum number of certificates to return.
+</ParamField>
+
+```sh title="GET/v1/apps/{app_name}/certificates"
+curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates"
+```
+
+```json title="Status: 200 OK - Example response"
+{
+  "certificates": [
+    {
+      "hostname": "example.com",
+      "status": "active",
+      "dns_provider": "enom",
+      "acme_dns_configured": true,
+      "acme_alpn_configured": true,
+      "acme_http_configured": true,
+      "ownership_txt_configured": true,
+      "configured": true,
+      "acme_requested": true,
+      "has_custom_certificate": false,
+      "has_fly_certificate": true,
+      "created_at": "2024-01-15T10:30:00Z",
+      "updated_at": "2024-01-15T12:00:00Z"
+    }
+  ],
+  "total_count": 1
+}
+```
+
+## Request ACME certificate
+
+`POST /apps/{app_name}/certificates/acme`
+
+Add a hostname to your app and request an automatic Let's Encrypt certificate. Fly.io will attempt to validate domain ownership and issue a certificate. Check the `dns_requirements` in the response to see what DNS records you need to configure.
+
+#### Path parameters
+
+<ParamField path="app_name" type="string" required>
+The name of the Fly App.
+</ParamField>
+
+#### Body parameters
+
+<ParamField body="hostname" type="string" required>
+The domain to issue a certificate for.
+</ParamField>
+
+```sh title="POST/v1/apps/{app_name}/certificates/acme"
+curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/acme" \\
+  -d '{
+      "hostname": "example.com"
+    }'
+```
+
+```json title="Status: 201 created - Example response"
+{
+  "hostname": "example.com",
+  "configured": false,
+  "acme_requested": true,
+  "status": "pending_validation",
+  "dns_provider": "enom",
+  "rate_limited_until": null,
+  "certificates": [],
+  "validation": {
+    "dns_configured": false,
+    "alpn_configured": false,
+    "http_configured": false,
+    "ownership_txt_configured": false
+  },
+  "dns_requirements": {
+    "a": ["137.66.XXX.XXX"],
+    "aaaa": ["2a09:8280:1::XXXX"],
+    "cname": "my-app-name.fly.dev",
+    "acme_challenge": {
+      "name": "_acme-challenge.example.com",
+      "target": "example.com.XXXXX.flydns.net"
+    },
+    "ownership": {
+      "name": "_fly-ownership.example.com",
+      "app_value": "app-XXXXXXXXXX",
+      "org_value": "org-XXXXXXXXXX"
+    }
+  },
+  "validation_errors": []
+}
+```
+
+## Import custom certificate
+
+`POST /apps/{app_name}/certificates/custom`
+
+Upload your own certificate and private key in PEM format. The certificate must not be expired, the private key must match the certificate, and the hostname must appear in the certificate's Subject Alternative Names (SAN) or Common Name (CN). Wildcard certificates are supported.
+
+Domain ownership must be verified via a `_fly-ownership` DNS TXT record before the certificate becomes active. Check the `dns_requirements.ownership` field in the response for the required record.
+
+#### Path parameters
+
+<ParamField path="app_name" type="string" required>
+The name of the Fly App.
+</ParamField>
+
+#### Body parameters
+
+<ParamField body="hostname" type="string" required>
+The domain for the certificate.
+</ParamField>
+
+<ParamField body="fullchain" type="string" required>
+PEM-encoded certificate chain.
+</ParamField>
+
+<ParamField body="private_key" type="string" required>
+PEM-encoded private key.
+</ParamField>
+
+```sh title="POST/v1/apps/{app_name}/certificates/custom"
+curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/custom" \\
+  -d '{
+      "hostname": "example.com",
+      "fullchain": "-----BEGIN CERTIFICATE-----\\nMIID...\\n-----END CERTIFICATE-----",
+      "private_key": "-----BEGIN PRIVATE KEY-----\\nMIIE...\\n-----END PRIVATE KEY-----"
+    }'
+```
+
+```json title="Status: 201 created - Example response"
+{
+  "hostname": "example.com",
+  "configured": false,
+  "acme_requested": false,
+  "status": "pending_ownership",
+  "dns_provider": "enom",
+  "rate_limited_until": null,
+  "certificates": [
+    {
+      "source": "custom",
+      "status": "pending_ownership",
+      "created_at": "2024-01-15T10:30:00Z",
+      "expires_at": "2039-01-15T10:30:00Z",
+      "issuer": "Cloudflare Origin Certificate",
+      "issued": []
+    }
+  ],
+  "validation": {
+    "dns_configured": false,
+    "alpn_configured": false,
+    "http_configured": false,
+    "ownership_txt_configured": false
+  },
+  "dns_requirements": {
+    "a": ["137.66.XXX.XXX"],
+    "aaaa": ["2a09:8280:1::XXXX"],
+    "cname": "my-app-name.fly.dev",
+    "acme_challenge": {
+      "name": "_acme-challenge.example.com",
+      "target": "example.com.XXXXX.flydns.net"
+    },
+    "ownership": {
+      "name": "_fly-ownership.example.com",
+      "app_value": "app-XXXXXXXXXX",
+      "org_value": "org-XXXXXXXXXX"
+    }
+  },
+  "validation_errors": []
+}
+```
+
+## Get certificate details
+
+`GET /apps/{app_name}/certificates/{hostname}`
+
+Get detailed information about a hostname's certificates, including validation status, DNS requirements, and any validation errors.
+
+For wildcard hostnames, URL-encode the `*` character (e.g. `%2A.example.com`).
+
+#### Path parameters
+
+<ParamField path="app_name" type="string" required>
+The name of the Fly App.
+</ParamField>
+
+<ParamField path="hostname" type="string" required>
+The hostname to get certificate details for.
+</ParamField>
+
+```sh title="GET/v1/apps/{app_name}/certificates/{hostname}"
+curl -i -X GET \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/example.com"
+```
+
+```json title="Status: 200 OK - Example response"
+{
+  "hostname": "example.com",
+  "configured": true,
+  "acme_requested": true,
+  "status": "active",
+  "dns_provider": "enom",
+  "rate_limited_until": null,
+  "certificates": [
+    {
+      "source": "custom",
+      "status": "active",
+      "created_at": "2024-01-15T10:30:00Z",
+      "expires_at": "2039-01-15T10:30:00Z",
+      "issuer": "Cloudflare Origin Certificate",
+      "issued": []
+    },
+    {
+      "source": "fly",
+      "status": "active",
+      "created_at": "2024-01-15T12:00:00Z",
+      "expires_at": "2024-04-15T12:00:00Z",
+      "issuer": null,
+      "issued": [
+        {
+          "type": "ecdsa",
+          "expires_at": "2024-04-15T12:00:00Z",
+          "certificate_authority": "lets_encrypt"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "dns_configured": true,
+    "alpn_configured": true,
+    "http_configured": true,
+    "ownership_txt_configured": true
+  },
+  "dns_requirements": {
+    "a": ["137.66.XXX.XXX"],
+    "aaaa": ["2a09:8280:1::XXXX"],
+    "cname": "my-app-name.fly.dev",
+    "acme_challenge": {
+      "name": "_acme-challenge.example.com",
+      "target": "example.com.XXXXX.flydns.net"
+    },
+    "ownership": {
+      "name": "_fly-ownership.example.com",
+      "app_value": "app-XXXXXXXXXX",
+      "org_value": "org-XXXXXXXXXX"
+    }
+  },
+  "validation_errors": []
+}
+```
+
+## Check certificate status
+
+`POST /apps/{app_name}/certificates/{hostname}/check`
+
+Trigger a fresh DNS validation check for a hostname. Returns the same details as the get endpoint, plus actual DNS records resolved for the hostname. Use this to diagnose DNS configuration issues.
+
+#### Path parameters
+
+<ParamField path="app_name" type="string" required>
+The name of the Fly App.
+</ParamField>
+
+<ParamField path="hostname" type="string" required>
+The hostname to check.
+</ParamField>
+
+```sh title="POST/v1/apps/{app_name}/certificates/{hostname}/check"
+curl -i -X POST \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/example.com/check"
+```
+
+```json title="Status: 200 OK - Example response"
+{
+  "hostname": "example.com",
+  "configured": true,
+  "acme_requested": true,
+  "status": "active",
+  "dns_provider": "enom",
+  "rate_limited_until": null,
+  "certificates": [
+    {
+      "source": "fly",
+      "status": "active",
+      "created_at": "2024-01-15T12:00:00Z",
+      "expires_at": "2024-04-15T12:00:00Z",
+      "issuer": null,
+      "issued": [
+        {
+          "type": "ecdsa",
+          "expires_at": "2024-04-15T12:00:00Z",
+          "certificate_authority": "lets_encrypt"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "dns_configured": true,
+    "alpn_configured": true,
+    "http_configured": true,
+    "ownership_txt_configured": true
+  },
+  "dns_requirements": {
+    "a": ["137.66.XXX.XXX"],
+    "aaaa": ["2a09:8280:1::XXXX"],
+    "cname": "my-app-name.fly.dev",
+    "acme_challenge": {
+      "name": "_acme-challenge.example.com",
+      "target": "example.com.XXXXX.flydns.net"
+    },
+    "ownership": {
+      "name": "_fly-ownership.example.com",
+      "app_value": "app-XXXXXXXXXX",
+      "org_value": "org-XXXXXXXXXX"
+    }
+  },
+  "validation_errors": [],
+  "dns_records": {
+    "a": ["137.66.XXX.XXX"],
+    "aaaa": ["2a09:8280:1::XXXX"],
+    "cname": [],
+    "resolved_addresses": ["137.66.XXX.XXX", "2a09:8280:1::XXXX"],
+    "soa": "ns1.example.com",
+    "acme_challenge_cname": "example.com.XXXXX.flydns.net",
+    "ownership_txt": "app-XXXXXXXXXX"
+  }
+}
+```
+
+## Delete hostname and all certificates
+
+`DELETE /apps/{app_name}/certificates/{hostname}`
+
+Remove a hostname and all associated certificates (both ACME and custom) from the app.
+
+#### Path parameters
+
+<ParamField path="app_name" type="string" required>
+The name of the Fly App.
+</ParamField>
+
+<ParamField path="hostname" type="string" required>
+The hostname to remove.
+</ParamField>
+
+```sh title="DELETE/v1/apps/{app_name}/certificates/{hostname}"
+curl -i -X DELETE \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/example.com"
+```
+
+```txt title="Status: 204 no content"
+no body
+```
+
+## Delete ACME certificates
+
+`DELETE /apps/{app_name}/certificates/{hostname}/acme`
+
+Stop ACME certificate issuance for a hostname. If a custom certificate exists, it will continue to be served. The hostname itself is not removed.
+
+#### Path parameters
+
+<ParamField path="app_name" type="string" required>
+The name of the Fly App.
+</ParamField>
+
+<ParamField path="hostname" type="string" required>
+The hostname to stop ACME issuance for.
+</ParamField>
+
+```sh title="DELETE/v1/apps/{app_name}/certificates/{hostname}/acme"
+curl -i -X DELETE \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/example.com/acme"
+```
+
+```json title="Status: 200 OK - Example response"
+{
+  "hostname": "example.com",
+  "configured": true,
+  "acme_requested": false,
+  "status": "active",
+  "certificates": [
+    {
+      "source": "custom",
+      "status": "active",
+      "created_at": "2024-01-15T10:30:00Z",
+      "expires_at": "2039-01-15T10:30:00Z",
+      "issuer": "Cloudflare Origin Certificate",
+      "issued": []
+    }
+  ],
+  "validation": {
+    "dns_configured": true,
+    "alpn_configured": false,
+    "http_configured": false,
+    "ownership_txt_configured": true
+  },
+  "dns_requirements": { "..." : "..." },
+  "validation_errors": []
+}
+```
+
+## Delete custom certificate
+
+`DELETE /apps/{app_name}/certificates/{hostname}/custom`
+
+Remove the custom certificate for a hostname. If ACME certificates are configured, they will continue to be served. The hostname itself is not removed.
+
+#### Path parameters
+
+<ParamField path="app_name" type="string" required>
+The name of the Fly App.
+</ParamField>
+
+<ParamField path="hostname" type="string" required>
+The hostname to remove the custom certificate from.
+</ParamField>
+
+```sh title="DELETE/v1/apps/{app_name}/certificates/{hostname}/custom"
+curl -i -X DELETE \\
+    -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \\
+    "${FLY_API_HOSTNAME}/v1/apps/my-app-name/certificates/example.com/custom"
+```
+
+```json title="Status: 200 OK - Example response"
+{
+  "hostname": "example.com",
+  "configured": true,
+  "acme_requested": true,
+  "status": "active",
+  "certificates": [
+    {
+      "source": "fly",
+      "status": "active",
+      "created_at": "2024-01-15T12:00:00Z",
+      "expires_at": "2024-04-15T12:00:00Z",
+      "issuer": null,
+      "issued": [
+        {
+          "type": "ecdsa",
+          "expires_at": "2024-04-15T12:00:00Z",
+          "certificate_authority": "lets_encrypt"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "dns_configured": true,
+    "alpn_configured": true,
+    "http_configured": true,
+    "ownership_txt_configured": true
+  },
+  "dns_requirements": { "..." : "..." },
+  "validation_errors": []
+}
+```
+
+## Related topics
+
+*   [Custom domains](/networking/custom-domain/)
+*   [Using Cloudflare with Fly.io](/networking/understanding-cloudflare/)
+*   [Working with the Machines API](/machines/api/working-with-machines-api/)
+*   [Apps resource](/machines/api/apps-resource/) reference
+*   [Machines resource](/machines/api/machines-resource/) reference
+*   [OpenAPI specification](/api/machines)

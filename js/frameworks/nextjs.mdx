@@ -1,0 +1,291 @@
+---
+title: Run a Next.js App
+og:description: NextJS is the React Framework for the Web.
+source_url: https://fly.io/docs/js/frameworks/nextjs/
+---
+
+import FlyctlSnippet from '/snippets/js/frameworks/flyctl.mdx';
+import LaunchedSnippet from '/snippets/js/frameworks/launched.mdx';
+
+Getting an application running on Fly.io is essentially working out how to package it as a deployable image. Once packaged it can be deployed to the Fly.io platform.
+
+In this guide we’ll learn how to deploy a [Next.js](https://nextjs.org/) application on Fly.io.
+
+You can deploy your [Next.js](https://nextjs.org/) app on Fly with minimal effort, our CLI will do the heavy lifting. We'll be using a standard app generated with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app) CLI tool provided by Next.js.
+
+## _Generate the Next.js app_
+
+We'll assume you have NodeJS installed already and can run `npx`. Refer to the [documentation](https://nextjs.org/docs/pages/api-reference/create-next-app#interactive) if you would like to use `yarn`, `pnpm` or `bun`.
+
+Now let's create a new project by running the `create-next-app`. This will scaffold a new project asking you if you'd like to set up some basic tooling such as TypeScript.
+
+<CodeGroup>
+```bash cmd
+npx create-next-app@latest hello-nextjs
+```
+```output output
+✔ Would you like to use TypeScript? … No / Yes
+
+...
+
+Initializing project with template: app-tw
+
+Installing dependencies:
+- react
+
+...
+
+Installing devDependencies:
+- typescript
+
+...
+
+Success! Created hello-nextjs at /.../hello-nextjs
+```
+</CodeGroup>
+
+Great! You should be able to run our app locally with `cd hello-nextjs && npm run dev` and access it at http://localhost:3000.
+
+## _Deploy to Fly.io_
+
+<FlyctlSnippet />
+
+Now let's launch your Next.js app from the root of your application.
+
+<CodeGroup>
+```bash cmd
+cd hello-nextjs
+fly launch
+```
+```output output
+Scanning source code
+Detected a Next.js app
+Creating app in /Users/mentels/work/hello-nextjs
+We're about to launch your Next.js app on Fly.io. Here's what you're getting:
+
+Organization: mentels                (fly launch defaults to the personal org)
+Name:         hello-nextjs           (derived from your directory name)
+Region:       Warsaw, Poland         (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+Sentry:       false                  (not requested)
+
+? Do you want to tweak these settings before proceeding? No
+Created app 'hello-nextjs' in organization 'personal'
+Admin URL: https://fly.io/apps/hello-nextjs
+Hostname: hello-nextjs.fly.dev
+
+...
+
+Visit your newly deployed app at https://hello-nextjs.fly.dev/
+```
+</CodeGroup>
+
+<LaunchedSnippet />
+
+In the process we've generated a [`fly.toml`](/reference/configuration) and `Dockerfile` in the root of the project. Change them if you need to customize your deployment.
+****
+The following sections cover further steps you can apply for your Next.js app deployment.
+
+## Standalone builds (recommended)
+
+To reduce the size of the final image deployed to Fly.io, **we recommend using the [standalone output](https://nextjs.org/docs/app/api-reference/next-config-js/output#automatically-copying-traced-files)** in your `next.config.js` (or `next.config.mjs`) file:
+
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: "standalone"
+};
+
+export default nextConfig;
+```
+
+When running `fly launch` or using the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile), if this `"standalone"` value is set in your Next config, your Dockerfile will be updated such that only the files necessary for a production environment will be used in the final image. Using the standalone setting and updating your Dockerfile can reduce your total image size by ~400mb, so we highly recommend this approach!
+
+You can also manually update your Dockerfile to accommodate a standalone Next.js app. After running the build script (`npm run build`), there should typically be a final `COPY` instruction towards the end of one's Dockerfile. Replace that with the following:
+
+```dockerfile
+COPY --from=build /app/.next/standalone /app
+COPY --from=build /app/.next/static /app/.next/static
+COPY --from=build /app/public /app/public
+```
+
+Lastly, update your `CMD` to the following:
+
+```dockerfile
+CMD [ "node", "server.js" ]
+```
+
+
+## Generating your Next.js Dockerfile
+
+While you're welcome to write your own Dockerfile, the easiest way to get started with this is to use the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile). Once installed, it can be run using `npx @flydotio/dockerfile` for Node applications or `bunx @flydotio/dockerfile` for Bun applications. You'll see it referenced throughout this article for various use cases.
+
+## Connecting to databases
+
+Unlike some other frameworks, Next.js does not bundle a database adapter.
+Instead, you are free to choose the ORM or node module you wish.
+
+Fly.io will provide a `DATABASE_URL` that you can use at runtime to
+connect to your database.  How you will use this will depend on the
+database module you choose.  [Prisma](https://www.prisma.io/nextjs) is
+a popular choice, and connecting to your database using Prisma is done
+through your `prisma/schema.prisma` file.  An example:
+
+```
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+```
+
+If you are unsure how to connect using your favorite adapter, check out
+our [Vanilla with Candy Sprinkles](https://fly.io/blog/vanilla-candy-sprinkles/)
+blog entry and select the configuration that most closely matches your
+application.  If you still have questions, post on our [community forum](https://community.fly.io/).
+
+### Build time secrets
+
+This approach allows you to inject secrets (such as database URLs) that are only available at build time.
+
+<Info>
+**This approach will not work for SQLite3,** as the build Machine still won’t have access to your volume. However, it can be used with PostgreSQL, MySQL and other such databases.
+</Info>
+
+First, you need to obtain the secrets you will need to deploy.  Often this
+is only the value of `DATABASE_URL`.  If you don't know the value of this
+secret, `fly console` and `printenv DATABASE_URL` can obtain this value
+for you.
+
+Next, you need to modify your Dockerfile to mount a secret. The easiest way to do this is using the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile), like so:
+
+```bash
+npx @flydotio/dockerfile --mount-secret=DATABASE_URL
+```
+
+It is possible to mount multiple secrets, and you can read more about [mounting secrets](/apps/build-secrets#mounting-secrets) for further details.
+
+Finally, you need to pass the secret on each deploy:
+
+```bash
+fly deploy --build-secret DATABASE_URL=value
+```
+
+Replace _value_ above with the actual secret. It might be worth putting this command into a shell script or batch file.
+
+### Deferring static site generation
+
+An alternate approach, one that works with SQLite3 too, is to defer
+the running of the build step to just after deployment before your web server is
+started.  The upside is that your build has full access to all of
+your deployment secrets and environment variables.
+
+This involves replacing the entry point in your Dockerfile (typically your `CMD`) with a script
+and having that script run `npm build` (or equivalent) prior to starting
+your server.
+
+You can let the [Dockerfile generator](https://www.npmjs.com/package/@flydotio/dockerfile) take care of these
+changes for you:
+
+```
+npx @flydotio/dockerfile --build=defer
+```
+
+Downsides of this approach:
+
+* Your deployment Machines will need enough memory to run a build.  See:
+  [`fly scale memory`](/flyctl/cmd/fly_scale_memory) and
+  [`swap_size_mb`](/reference/configuration#swap_size_mb-option) for two options.
+* You may need to adjust the [grace_period](/reference/configuration#http_service-checks) for any HTTP service checks.
+* If you are only running one Machine there will be a period of time where
+  your server is inaccessible while the site is being statically generated.
+* If you run multiple Machines, the static site generation will be run on
+  each increasing the total time before any changes are fully deployed.
+
+## Exposing environment variables to the browser
+
+If you're a Next.js user you might know that it supports [exposing environment variables to the browser](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser) using variables with names starting with `NEXT_PUBLIC_`. **These variables are fixed at build time**, and unlike runtime environment variables (which are only available on the server), they can't be changed unless the application is built again.
+
+In order to make these `NEXT_PUBLIC_` variables available, you can add them as `ARG` variables in your Dockerfile, as seen in the example below. **This should come after any actual build steps** (if you've used the Dockerfile generator or the Dockerfile created from `fly launch`, this would be after the line `FROM base as build`).
+
+```dockerfile
+# Build arguments
+ARG NEXT_PUBLIC_EXAMPLE="value"
+ARG NEXT_PUBLIC_OTHER="Other value"
+```
+
+Alternatively, if you'd prefer to use the Dockerfile generator, you can do so by running the following:
+
+```bash
+npx @flydotio/dockerfile "--arg-build=NEXT_PUBLIC_EXAMPLE:value" \
+  "--arg-build=NEXT_PUBLIC_OTHER=Other value"
+```
+
+## Disabling telemetry in production
+
+During server startup, the following messages may appear in your log:
+
+```
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+```
+
+The following command can be used to modify your Dockerfile to disable telemetry:
+
+```bash
+npx @flydotio/dockerfile --env-base=NEXT_TELEMETRY_DISABLED:1
+```
+
+
+## _Common pitfalls_
+
+### Out of memory: Killed process
+
+If you should happen to see lines like the following in your logs:
+
+```
+Out of memory: Killed process
+```
+
+Two links that may be of help:
+
+  * [fly scale memory](/flyctl/cmd/fly_scale_memory)
+  * [swap_size_mb](/reference/configuration#swap_size_mb-option)
+
+
+### Fetch failure when optimizing images
+
+If your application uses the `<Image>` element and your images aren't showing and you are seeing the following in your logs:
+
+```
+TypeError: fetch failed
+```
+
+Scan backward in your logs for the following:
+
+```
+Warning: For production Image Optimization with Next.js, the optional 'sharp' package is strongly recommended. Run 'npm i sharp', and Next.js will use it automatically for Image Optimization.
+
+Read more: https://nextjs.org/docs/messages/sharp-missing-in-production
+```
+
+Follow the instructions in the message, and then redeploy:
+
+```bash
+npm i sharp
+fly deploy
+```
+
+### Cannot find module
+
+Your app doesn't start and you see an error like the following in your logs:
+```
+`Cannot find module 'typescript'`
+```
+
+Verify that the missing module appears in `package.json`'s `dependencies`, not just `devDependencies`. If you're using a Dockerfile generated by `dockerfile-node`, your image will be optimized for production and omit development dependencies by default.
+
+If the module is missing, add it to `dependencies` and re-deploy.

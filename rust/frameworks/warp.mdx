@@ -1,0 +1,107 @@
+---
+title: Run a Warp App
+og:description: Warp is a super-easy, composable, web server framework for warp speeds.
+source_url: https://fly.io/docs/rust/frameworks/warp/
+---
+
+import FlyctlSnippet from '/snippets/languages-and-frameworks/flyctl.mdx';
+
+Getting an application running on Fly.io is essentially working out how to package it as a deployable image. Once packaged, it can be deployed to the Fly.io platform.
+
+In this guide we’ll learn how to deploy a [Warp](https://docs.rs/warp/latest/warp/) application on Fly.io.
+
+Warp is a super-easy, composable, web server framework for warp speeds.
+
+Deploying a Warp app on Fly.io happens at the speed of light! With the help of the [cargo chef](https://github.com/LukeMathWalker/cargo-chef), we get great build times and small images.
+
+## _Speedrun_
+
+<FlyctlSnippet />
+
+The fastest way to get a basic Warp server on Fly.io is to use our warp template:
+```sh
+git clone --single-branch --branch warp git@github.com:superfly/rust-templates.git warp-app
+cd warp-app
+fly launch --generate-name
+```
+
+## _Deploy a Warp App from scratch_
+
+f you don’t already have an existing Warp application, you can create one with `cargo`:
+
+```sh
+cargo new warp-on-fly
+cd warp-on-fly
+```
+
+Then we have to add some dependencies to the project:
+
+```bash
+cargo add warp
+cargo add tokio -F full
+```
+
+Now, let's create a simple Warp app in `src/main.rs`:
+
+```rust
+use warp::Filter;
+
+#[tokio::main]
+async fn main() {
+    let hello = warp::path::end().map(|| "Hello from fly.io");
+
+    warp::serve(hello)
+        .run(([0, 0, 0, 0], 8080))
+        .await;
+}
+```
+
+This will display a "Hello from fly.io!" message when you visit the root URL.
+Take note that we serve the app on port `8080`.
+
+We can confirm everything works fine by running `cargo run` and checking out `http://localhost:8080`.
+
+
+And with that you can deploy the app!
+
+<CodeGroup>
+```bash cmd
+fly launch
+```
+
+```output output
+Scanning source code
+Detected a Warp app
+Warning: This organization has no payment method, turning off high availability
+Creating app in [redacted]/warp-on-fly
+We're about to launch your app on Fly.io. Here's what you're getting:
+
+Organization: Your Name              (fly launch defaults to the personal org)
+Name:         [app-name]             (derived from your directory name)
+Region:       Amsterdam, Netherlands (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+Sentry:       false                  (not requested)
+
+...
+
+==> Building image
+...
+==> Building image with Docker
+...
+
+Watch your deployment at https://fly.io/apps/[app-name]/monitoring
+...
+
+Visit your newly deployed app at https://[app-name].fly.dev/
+```
+</CodeGroup>
+
+This will generate a `fly.toml` file with the configuration for your app and a Dockerfile that uses [cargo chef](/rust/the-basics/cargo-chef).
+Refer to the [fly.toml docs](/reference/configuration) for more configuration options.
+
+To deploy a new version of your app, simply run `fly deploy` in the project directory.
+
+You can check out the full (yet minimal) example in [this GitHub repository](https://github.com/superfly/rust-templates/tree/) for a reference.
+

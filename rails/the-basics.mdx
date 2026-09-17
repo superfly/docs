@@ -1,0 +1,34 @@
+---
+title: The Basics
+source_url: https://fly.io/docs/rails/the-basics/
+---
+
+Most Rails applications require additional setup beyond provisioning a Postgres and Redis database. These guides will help you get through the basics of setting up your Rails application with pieces of infrastructure commonly found in medium-to-high complexity Rails applications.
+
+## Environment Configuration
+
+Add environment variables to your Rails applications, configure secrets, and use the encrypted `credentials.yml` file to manage your application’s configuration on Fly.
+
+## Deployments
+
+Understand what it means to deploy a Rails application to Fly along with some common tasks you may want to run after deployments, like a database migration or script.
+
+## Active Record
+
+Provision an application using a Postgres database
+
+## Turbo Streams & Action Cable
+
+Provision a Redis Server and configure Rails to run Turbo Streams.
+
+## Active Storage
+
+Provision a Tigris Bucket and configure Rails to run Active Storage.
+
+## Sidekiq Background Workers
+
+Deploy Rails applications that run in multiple processes to one Fly application, like Sidekiq background jobs.
+
+## Running Tasks & Consoles
+
+Access the Rails console, run rake tasks, and access the SSH shell of a running Rails application with these one-liners.
