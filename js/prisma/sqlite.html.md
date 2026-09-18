@@ -6,7 +6,7 @@ order: 1
 ---
 
 Most Prisma demos use [SQLite](https://www.sqlite.org/index.html), as it will get you up and running fast. As an embedded database, it will run fast in production also, some
-report anywhere from [10 to 600](https://www.youtube.com/watch?v=XcAYkriuQ1o) times faster that PostgreSQL. 
+report anywhere from [10 to 600](https://www.youtube.com/watch?v=XcAYkriuQ1o) times faster than PostgreSQL. 
 
 Sqlite publishes a page of [appropriate uses of SQLite](https://www.sqlite.org/whentouse.html). There are few downsides to be aware of:
 

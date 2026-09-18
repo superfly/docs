@@ -83,4 +83,4 @@ Watch the app deploy and then upload, view, and download a few files!
 
 ## Find out more!
 
-Now that you are up and running, there is a lot more to explore on the [Tigris Global Object Storage](https://fly.io/docs/tigris/) page. Highlights include public buckets, migrating to Tigris with shadow butckets, Pricing, and AWS API compatibility.
+Now that you are up and running, there is a lot more to explore on the [Tigris Global Object Storage](https://fly.io/docs/tigris/) page. Highlights include public buckets, migrating to Tigris with shadow buckets, Pricing, and AWS API compatibility.

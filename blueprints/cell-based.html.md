@@ -246,7 +246,7 @@ As mentioned above, backups are crucial.  Items to explore:
    supports failover situations naturally.  Additional [disaster
    recovery](https://fly.io/docs/litefs/backup/) options are available.
  * Sqlite3 databases are just files.  Build a separate application to host
-   backups and have your application periodiacally POST copies there.
+   backups and have your application periodically POST copies there.
  * [Rsync](https://rsync.samba.org/) is a utility available with Linux
    distributions that can be used to efficiently copy changes between Machines.
  * Run multiple Machines per cell so that you get the full benefits of

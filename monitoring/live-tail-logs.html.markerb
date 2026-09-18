@@ -15,7 +15,7 @@ The `fly logs` command prints the most recent app logs and then tails the curren
 fly logs --app my-app-name
 ```
 
-The logs continue to output until you close the terminal or stop it, for example with with `ctrl + c`.
+The logs continue to output until you close the terminal or stop it, for example with `ctrl + c`.
 
 You can filter the log output by Machine or region. For example, use the Machine ID with the `--instance` option to see logs for that Machine only:
 
