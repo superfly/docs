@@ -125,4 +125,4 @@ The price of running Fly.io Managed Postgres depends on:
 - Region in which you're deploying
 - Storage usage
 
-Database storage is priced at **$0.28 per GB for a 30-day month**. You can view detailed pricing in your Fly.io dashboard.
+Database storage is billed on usage, at **$0.28 per GB for a 30-day month**. v1 clusters are still billed on their provisioned storage. You can view detailed pricing in your Fly.io dashboard.
