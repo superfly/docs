@@ -380,8 +380,7 @@
                           "rails/cookbooks/build",
                           "rails/cookbooks/deploy"
                         ]
-                      },
-                      "rails/one-pager"
+                      }
                     ],
                     "root": "rails/index"
                   },
@@ -1680,7 +1679,7 @@
         ]
       },
       {
-        "sourceRef": "mintlify-onboarding/flyio-sprites-migration-preview"
+        "sourceRef": "superfly/sprites-docs"
       }
     ]
   },
@@ -3512,6 +3511,10 @@
     {
       "source": "/rails/getting-started/migrate-from-heroku/",
       "destination": "/getting-started/migrate-from-heroku"
+    },
+    {
+      "source": "/rails/one-pager/",
+      "destination": "/rails"
     },
     {
       "source": "/rails/the-basics/backup-and-restoring-data/",
