@@ -199,7 +199,7 @@ flyctl storage update mybucket --shadow-name source-bucket --shadow-access-key 1
 flyctl storage update mybucket --clear-shadow
 ```
 
-`--shadow-write-through` enables zero-downtime cutover by replicating every new write back to the source bucket.
+When setting or changing a shadow configuration, supply all five required attributes again. On update, omit `--shadow-write-through` to preserve its current setting; pass `--shadow-write-through` to enable it or `--shadow-write-through=false` to disable it. Write-through enables zero-downtime cutover by replicating every new write back to the source bucket.
 
 ## Pricing and Billing
 
