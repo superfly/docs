@@ -26,3 +26,13 @@ The Fly Machines REST API provides resources to provision and manage Fly Apps, F
 * **[Volumes resource](/docs/machines/api/volumes-resource):** Create and manage persistent storage volumes for your Machines.
 
 * **[OpenAPI spec](https://docs.machines.dev/+external):** OpenAPI 3.0 specification for the Machines API.
+
+## Client libraries
+
+You can call the Machines API from any HTTP client. The official packages from Fly.io:
+
+* **[fly-go](https://pkg.go.dev/github.com/superfly/fly-go+external):** Go client for the Machines API and the Fly.io GraphQL API. It's the library [flyctl](https://github.com/superfly/flyctl+external) is built on. Module `github.com/superfly/fly-go`.
+
+* **Other languages:** generate a client from the [OpenAPI spec](https://docs.machines.dev/openapi.json+external) with a tool like [openapi-generator](https://openapi-generator.tech/+external).
+
+[Fly Sprites](/sprites/) is a separate API (`api.sprites.dev`) with its own SDKs: [`@fly/sprites`](https://www.npmjs.com/package/@fly/sprites+external) for JavaScript and TypeScript, [`sprites-py`](https://pypi.org/project/sprites-py/+external) for Python, [`sprites-go`](https://pkg.go.dev/github.com/superfly/sprites-go+external) for Go, [`sprites`](https://hex.pm/packages/sprites+external) for Elixir, and an [MCP server](https://sprites.dev/mcp+external).
