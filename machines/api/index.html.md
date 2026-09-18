@@ -29,10 +29,10 @@ The Fly Machines REST API provides resources to provision and manage Fly Apps, F
 
 ## Client libraries
 
-You can call the API from any HTTP client. These are the official packages, published by Fly.io:
+You can call the Machines API from any HTTP client. The official packages from Fly.io:
 
-* **[fly-go](https://pkg.go.dev/github.com/superfly/fly-go+external):** Go client for the Machines API and the Fly.io GraphQL API. It's the library [flyctl](https://github.com/superfly/flyctl+external) itself is built on. Module `github.com/superfly/fly-go`.
+* **[fly-go](https://pkg.go.dev/github.com/superfly/fly-go+external):** Go client for the Machines API and the Fly.io GraphQL API. It's the library [flyctl](https://github.com/superfly/flyctl+external) is built on. Module `github.com/superfly/fly-go`.
 
-* **Any other language:** generate a client from the [OpenAPI spec](https://docs.machines.dev/openapi.json+external) with a tool like [openapi-generator](https://openapi-generator.tech/+external).
+* **Other languages:** generate a client from the [OpenAPI spec](https://docs.machines.dev/openapi.json+external) with a tool like [openapi-generator](https://openapi-generator.tech/+external).
 
-For [Fly Sprites](/sprites/), the ephemeral computers for agents, there are SDKs for [JavaScript and TypeScript](https://www.npmjs.com/package/@fly/sprites+external) (`@fly/sprites`), [Python](https://pypi.org/project/sprites-py/+external) (`sprites-py`), [Go](https://pkg.go.dev/github.com/superfly/sprites-go+external) (`github.com/superfly/sprites-go`), and [Elixir](https://hex.pm/packages/sprites+external) (`sprites`), plus an [MCP server](https://sprites.dev/mcp+external).
+[Fly Sprites](/sprites/) is a separate API (`api.sprites.dev`) with its own SDKs: [`@fly/sprites`](https://www.npmjs.com/package/@fly/sprites+external) for JavaScript and TypeScript, [`sprites-py`](https://pypi.org/project/sprites-py/+external) for Python, [`sprites-go`](https://pkg.go.dev/github.com/superfly/sprites-go+external) for Go, [`sprites`](https://hex.pm/packages/sprites+external) for Elixir, and an [MCP server](https://sprites.dev/mcp+external).
