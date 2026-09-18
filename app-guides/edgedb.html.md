@@ -107,7 +107,7 @@ Finally, our EdgeDB app is ready to deploy!
 flyctl deploy
 ```
 
-It make take a few minutes to fully deploy. Debug with `flyctl logs` and check the deployment status with `flyctl status`.
+It may take a few minutes to fully deploy. Debug with `flyctl logs` and check the deployment status with `flyctl status`.
 
 ```cmd
 flyctl status
