@@ -643,8 +643,7 @@
                     "pages": [
                       "postgres/getting-started/create-pg-cluster",
                       "postgres/getting-started/enabling-timescale",
-                      "postgres/getting-started/migrate-from-heroku",
-                      "postgres/getting-started/what-you-should-know"
+                      "postgres/getting-started/migrate-from-heroku"
                     ]
                   },
                   {
@@ -3491,6 +3490,10 @@
     {
       "source": "/open-source/",
       "destination": "/about/open-source"
+    },
+    {
+      "source": "/postgres/getting-started/what-you-should-know/",
+      "destination": "/postgres"
     },
     {
       "source": "/postgres/high-availability-and-global-replication/",
