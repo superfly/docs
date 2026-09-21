@@ -46,6 +46,11 @@
       }
     ]
   },
+  "seo": {
+    "metatags": {
+      "robots": "noindex"
+    }
+  },
   "navigation": {
     "tabs": [
       {
