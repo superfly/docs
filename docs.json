@@ -1613,6 +1613,8 @@
                   "POST /v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions",
                   "DELETE /v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions/{extension_name}",
                   "POST /v1/postgres/{postgres_cluster_id}/fork",
+                  "GET /v1/postgres/{postgres_cluster_id}/queries/active",
+                  "GET /v1/postgres/{postgres_cluster_id}/queries/slow",
                   "POST /v1/postgres/{postgres_cluster_id}/restore",
                   "GET /v1/postgres/{postgres_cluster_id}/users",
                   "POST /v1/postgres/{postgres_cluster_id}/users",
