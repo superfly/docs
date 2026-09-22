@@ -1518,7 +1518,7 @@
         "tab": "Machines API",
         "openapi": {
           "directory": "api/machines",
-          "source": "https://docs.machines.dev/openapi.json"
+          "source": "/machines-api/openapi.json"
         },
         "pages": [
           {
