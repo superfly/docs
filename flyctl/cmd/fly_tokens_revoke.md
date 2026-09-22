@@ -5,6 +5,9 @@ Revoke one or more tokens.
 fly tokens revoke [flags] ID ID ...
 ~~~
 
+## Available Commands
+* [supplied](/docs/flyctl/tokens-revoke-supplied/)	 - Revoke an access token supplied by flag or environment
+
 ## Options
 
 ~~~
