@@ -78,7 +78,7 @@ Revoke one or more tokens by ID (get IDs from `fly tokens list`):
 fly tokens revoke <token-id>
 ```
 
-Revoke an token supplied through `--access-token`, `FLY_ACCESS_TOKEN`, or `FLY_API_TOKEN` without looking up its ID:
+Revoke a token supplied through `--access-token`, `FLY_ACCESS_TOKEN`, or `FLY_API_TOKEN` without looking up its ID:
 
 ```bash
 fly tokens revoke supplied
