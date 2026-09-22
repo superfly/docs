@@ -18,9 +18,9 @@ Set the `FLY_API_TOKEN` environment variable to authenticate flyctl without inte
 export FLY_API_TOKEN="your-token-here"
 ```
 
-When this variable is set, flyctl skips all interactive auth prompts and uses the token for every command. It takes precedence over the access token saved by a prior `fly auth login`. flyctl also honors `FLY_ACCESS_TOKEN` as an alternative name for the same value. If both variables are set, `FLY_ACCESS_TOKEN` takes precedence.
+When this variable is set, flyctl skips all interactive auth prompts and uses the token for every command. It takes precedence over the token saved by a prior `fly auth login`. flyctl also honors `FLY_ACCESS_TOKEN` as an alternative name for the same value. If both variables are set, `FLY_ACCESS_TOKEN` takes precedence.
 
-If you're testing a token env var locally on a machine where you're also logged in to flyctl, run `fly auth logout` first. This command revokes and removes the access token saved by `fly auth login`; it doesn't revoke or unset tokens supplied through environment variables. The env var wins for each command, but mixing it with a saved login can cause confusing behavior: `fly auth whoami` shows a token identity rather than your user, and scope-limited tokens silently filter output from commands like `fly apps list` instead of erroring. In CI, this isn't an issue because there's no saved login.
+If you're testing a token env var locally on a machine where you're also logged in to flyctl, run `fly auth logout` first. This command revokes and removes the token saved by `fly auth login`; it doesn't revoke or unset tokens supplied through environment variables. The env var wins for each command, but mixing it with a saved login can cause confusing behavior: `fly auth whoami` shows a token identity rather than your user, and scope-limited tokens silently filter output from commands like `fly apps list` instead of erroring. In CI, this isn't an issue because there's no saved login.
 
 ### Token types
 
@@ -78,7 +78,7 @@ Revoke one or more tokens by ID (get IDs from `fly tokens list`):
 fly tokens revoke <token-id>
 ```
 
-Revoke an access token supplied through `--access-token`, `FLY_ACCESS_TOKEN`, or `FLY_API_TOKEN` without looking up its ID:
+Revoke an token supplied through `--access-token`, `FLY_ACCESS_TOKEN`, or `FLY_API_TOKEN` without looking up its ID:
 
 ```bash
 fly tokens revoke supplied
