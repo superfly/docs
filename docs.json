@@ -1374,7 +1374,13 @@
                               },
                               "flyctl/cmd/fly_tokens_debug",
                               "flyctl/cmd/fly_tokens_list",
-                              "flyctl/cmd/fly_tokens_revoke"
+                              {
+                                "group": "fly tokens revoke",
+                                "root": "flyctl/cmd/fly_tokens_revoke",
+                                "pages": [
+                                  "flyctl/cmd/fly_tokens_revoke_supplied"
+                                ]
+                              }
                             ]
                           },
                           {
@@ -3023,6 +3029,10 @@
     {
       "source": "/flyctl/tokens-list/",
       "destination": "/flyctl/cmd/fly_tokens_list"
+    },
+    {
+      "source": "/flyctl/tokens-revoke-supplied/",
+      "destination": "/flyctl/cmd/fly_tokens_revoke_supplied"
     },
     {
       "source": "/flyctl/tokens-revoke/",
