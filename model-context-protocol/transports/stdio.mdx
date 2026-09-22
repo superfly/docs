@@ -7,7 +7,7 @@ source_url: https://fly.io/docs/mcp/transports/stdio/
 
 stdio MCP servers are not intended to be run remotely, but [`fly mcp`](/flyctl/cmd/fly_mcp) provides the ability to proxy and wrap them.
 
-The data flow is tthat the proxy is a stdio MCP that forwards requests to a wrapper MCP (basically a slimmed down and streamlined Streamable HTTP server), which in turn forwards requests to a stdio MCP running on a remote server:
+The data flow is that the proxy is a stdio MCP that forwards requests to a wrapper MCP (basically a slimmed down and streamlined Streamable HTTP server), which in turn forwards requests to a stdio MCP running on a remote server:
 
 ![MCP Proxy/Wrapper data flow](/images/mcp-proxy-wrap-flog.png)
 

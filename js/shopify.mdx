@@ -50,7 +50,7 @@ You can also [Scale Machine CPU and RAM](/launch/scale-machine), and  [Scale the
 ## Database
 
 Shopify's template starts you off with SQLite using Prisma.  Of particular note:
-  * By virtue of only running on a single Machine, SQLlite3 apps will experience brief unavailabilty during deploys. For a typical application without any new migrations, this will be on the order of a few hundred milliseconds.
+  * By virtue of only running on a single Machine, SQLlite3 apps will experience brief unavailability during deploys. For a typical application without any new migrations, this will be on the order of a few hundred milliseconds.
   * For PostgreSQL applications without any volumes, [rolling deploys](/launch/deploy#deployment-strategy) are the default, avoiding any downtime.
 
 Additional information is available on [deploying Prisma apps on Fly.io](./prisma/).
