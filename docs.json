@@ -51,6 +51,11 @@
       "robots": "noindex"
     }
   },
+  "integrations": {
+    "telemetry": {
+      "enabled": false
+    }
+  },
   "navigation": {
     "tabs": [
       {
