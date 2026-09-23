@@ -1,2 +1,4 @@
 partials/github
 .DS_Store
+# Licensed webfonts are served from the private superfly/docs-fonts source
+public/fonts/mackinac-*.woff2

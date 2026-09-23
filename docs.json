@@ -1,0 +1,3988 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "maple",
+  "name": "Fly.io",
+  "colors": {
+    "primary": "#7C3BED",
+    "light": "#A78BFA",
+    "dark": "#5B21B6"
+  },
+  "logo": {
+    "dark": "/images/logo/dark.svg",
+    "light": "/images/logo/light.svg"
+  },
+  "favicon": "/images/logo/favicon.ico",
+  "background": {
+    "decoration": "windows"
+  },
+  "fonts": {
+    "body": {
+      "family": "Bricolage Grotesque"
+    },
+    "heading": {
+      "family": "P22 Mackinac Pro",
+      "source": "https://docs.fly.io/assets/fonts/mackinac-bold.woff2",
+      "format": "woff2"
+    }
+  },
+  "navbar": {
+    "primary": {
+      "href": "https://fly.io/app/sign-up/",
+      "label": "Sign Up",
+      "type": "button"
+    },
+    "links": [
+      {
+        "label": "Pricing",
+        "href": "https://fly.io/pricing/"
+      },
+      {
+        "label": "Support",
+        "href": "https://fly.io/docs/about/support/"
+      },
+      {
+        "label": "Sign In",
+        "href": "https://fly.io/app/sign-in/"
+      }
+    ]
+  },
+  "seo": {
+    "metatags": {
+      "robots": "noindex"
+    }
+  },
+  "integrations": {
+    "telemetry": {
+      "enabled": false
+    },
+    "plausible": {
+      "domain": "docs.fly.io"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Fly docs",
+        "groups": [
+          {
+            "group": "Fly docs",
+            "pages": [
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "getting-started/sign-up-sign-in",
+                  "getting-started/launch",
+                  "getting-started/launch-demo",
+                  {
+                    "group": "Deep Dive",
+                    "root": "deep-dive/index",
+                    "pages": [
+                      "deep-dive/launch-deep-dive",
+                      {
+                        "group": "What You Get",
+                        "pages": [
+                          "deep-dive/application",
+                          "deep-dive/postgresql",
+                          "deep-dive/tigris",
+                          "deep-dive/redis"
+                        ]
+                      },
+                      "deep-dive/whisper",
+                      "deep-dive/recap",
+                      {
+                        "group": "Runtimes reference",
+                        "pages": [
+                          "deep-dive/django",
+                          "deep-dive/nextjs",
+                          "deep-dive/nodejs",
+                          "deep-dive/phoenix",
+                          "deep-dive/rails"
+                        ]
+                      }
+                    ]
+                  },
+                  "getting-started/get-started-by-framework",
+                  "getting-started/essentials",
+                  "getting-started/migrate-from-heroku",
+                  "getting-started/troubleshooting",
+                  "guides",
+                  "containers"
+                ],
+                "root": "getting-started/index"
+              },
+              {
+                "group": "Guides (Blueprints)",
+                "pages": [
+                  "blueprints/index",
+                  {
+                    "group": "Architecture Patterns",
+                    "pages": [
+                      "blueprints/deploy-openclaw",
+                      "blueprints/hermes-agent-on-fly-io",
+                      "blueprints/warm-pool-user-machines",
+                      "blueprints/remote-mcp-servers",
+                      "blueprints/resilient-apps-multiple-machines",
+                      "blueprints/n-tier-architecture",
+                      "blueprints/shared-nothing",
+                      "blueprints/sticky-sessions",
+                      "blueprints/multi-region-fly-replay",
+                      "blueprints/cell-based"
+                    ]
+                  },
+                  {
+                    "group": "Deployment & Developer Workflow",
+                    "pages": [
+                      "blueprints/working-with-docker",
+                      "blueprints/custom-deploy-workflows",
+                      "blueprints/seamless-deployments",
+                      "blueprints/rollback-guide",
+                      "blueprints/review-apps-guide",
+                      "blueprints/staging-prod-isolation",
+                      "blueprints/per-user-dev-environments",
+                      "blueprints/using-base-images-for-faster-deployments",
+                      "blueprints/using-the-fly-docker-registry"
+                    ]
+                  },
+                  {
+                    "group": "Networking & Connectivity",
+                    "pages": [
+                      "blueprints/private-applications-flycast",
+                      "blueprints/connect-private-network-wireguard/index",
+                      "blueprints/bridge-deployments-wireguard",
+                      "blueprints/connecting-to-user-machines",
+                      "blueprints/opensshd"
+                    ]
+                  },
+                  {
+                    "group": "Scaling, Performance & Observability",
+                    "pages": [
+                      "blueprints/observability-for-user-apps",
+                      "blueprints/autoscale-machines",
+                      "blueprints/autostart-internal-apps",
+                      "blueprints/setting-concurrency-limits",
+                      "blueprints/volume-forking",
+                      "blueprints/going-to-production-with-healthcare-apps"
+                    ]
+                  },
+                  {
+                    "group": "Background Jobs & Automation",
+                    "pages": [
+                      "blueprints/long-running-tasks",
+                      "blueprints/infra-automation-without-terraform",
+                      "blueprints/work-queues",
+                      "blueprints/task-scheduling",
+                      "blueprints/supercronic",
+                      "blueprints/deno-kv-litefs"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Model Context Protocol (MCP)",
+                "root": "model-context-protocol/index",
+                "pages": [
+                  "model-context-protocol/launch",
+                  {
+                    "group": "Deploy with",
+                    "root": "model-context-protocol/deploy-with",
+                    "pages": [
+                      "model-context-protocol/deploy-with/fly-launch",
+                      "model-context-protocol/deploy-with/flyctl-machines",
+                      "model-context-protocol/deploy-with/machines-api"
+                    ]
+                  },
+                  {
+                    "group": "Deploy on",
+                    "root": "model-context-protocol/deploy-on",
+                    "pages": [
+                      "model-context-protocol/deploy-on/container",
+                      "model-context-protocol/deploy-on/fly-machine",
+                      "model-context-protocol/deploy-on/your-app"
+                    ]
+                  },
+                  {
+                    "group": "Transports",
+                    "root": "model-context-protocol/transports",
+                    "pages": [
+                      "model-context-protocol/transports/sse",
+                      "model-context-protocol/transports/stdio",
+                      "model-context-protocol/transports/streaming-http"
+                    ]
+                  },
+                  {
+                    "group": "Access control",
+                    "root": "model-context-protocol/access-control",
+                    "pages": [
+                      "model-context-protocol/access-control/flycast",
+                      "model-context-protocol/access-control/http-authorization",
+                      "model-context-protocol/access-control/reverse-proxy"
+                    ]
+                  },
+                  "model-context-protocol/flyctl-server",
+                  "model-context-protocol/examples"
+                ]
+              },
+              {
+                "group": "App Guides",
+                "pages": [
+                  "app-guides/6pndemochat",
+                  "app-guides/edgedb",
+                  "app-guides/fauna",
+                  "app-guides/git-gogs-server",
+                  "app-guides/global-nginx-proxy",
+                  "app-guides/graphql-edge-caching-apollo",
+                  "app-guides/graphql-on-fly-with-hasura",
+                  "app-guides/grpc-and-grpc-web-services",
+                  "app-guides/kong-api-gateway",
+                  "app-guides/livebook",
+                  "app-guides/minio",
+                  "app-guides/mqtt",
+                  "app-guides/mysql-on-fly",
+                  "app-guides/nats-cluster",
+                  "app-guides/node-red",
+                  "app-guides/openresty-nginx-plus-lua",
+                  "app-guides/planetscale",
+                  "app-guides/postgres",
+                  "app-guides/puppeteer-js-renderer",
+                  "app-guides/redis",
+                  "app-guides/redistls",
+                  "app-guides/run-a-global-image-service",
+                  "app-guides/run-a-private-dns-over-https-service",
+                  "app-guides/smokescreen",
+                  "app-guides/vscode-remote"
+                ]
+              },
+              {
+                "group": "Apps on Fly.io",
+                "pages": [
+                  {
+                    "group": "Apps on Fly.io",
+                    "root": "apps/index",
+                    "pages": [
+                      "apps/overview",
+                      "apps/info",
+                      "apps/restart",
+                      "apps/delete",
+                      "apps/move-app-org"
+                    ]
+                  },
+                  {
+                    "group": "Fly Launch",
+                    "root": "launch/index",
+                    "pages": [
+                      "launch/create",
+                      "launch/deploy",
+                      "launch/scale-machine",
+                      "launch/scale-count",
+                      "launch/autostop-autostart",
+                      "launch/autoscale-by-metric",
+                      "launch/volume-storage",
+                      "launch/processes",
+                      "launch/continuous-deployment-with-github-actions",
+                      "launch/monorepo",
+                      "apps/trouble-host-unavailable",
+                      "reference/configuration"
+                    ]
+                  },
+                  {
+                    "group": "Secrets",
+                    "pages": [
+                      "apps/secrets",
+                      "apps/build-secrets"
+                    ]
+                  },
+                  {
+                    "group": "Production Apps",
+                    "pages": [
+                      "apps/going-to-production",
+                      "apps/app-availability",
+                      "apps/fine-tune-apps",
+                      "apps/app-handover-guide",
+                      "apps/concurrency"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Language & Framework Guides",
+                "root": "languages-and-frameworks/index",
+                "pages": [
+                  {
+                    "group": "Elixir",
+                    "root": "elixir/index",
+                    "pages": [
+                      {
+                        "group": "Getting Started",
+                        "root": "elixir/getting-started/index",
+                        "pages": [
+                          "elixir/getting-started/migrate-from-heroku",
+                          "elixir/getting-started/existing",
+                          "elixir/getting-started/legacy"
+                        ]
+                      },
+                      {
+                        "group": "The Basics",
+                        "root": "elixir/the-basics",
+                        "pages": [
+                          "elixir/the-basics/iex-into-running-app",
+                          "elixir/the-basics/clustering",
+                          "elixir/the-basics/troubleshooting"
+                        ]
+                      },
+                      {
+                        "group": "Advanced guides",
+                        "root": "elixir/advanced-guides",
+                        "pages": [
+                          "elixir/advanced-guides/github-actions-elixir-ci-cd",
+                          "elixir/advanced-guides/connect-observer-to-your-app",
+                          "elixir/advanced-guides/connect-livebook-to-your-app",
+                          "elixir/advanced-guides/interesting-things-with-livebook",
+                          "elixir/advanced-guides/clustering-from-home-to-your-app-in-fly",
+                          "elixir/advanced-guides/sqlite3"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Rails",
+                    "pages": [
+                      {
+                        "group": "Getting Started",
+                        "root": "rails/getting-started/index",
+                        "pages": [
+                          "rails/getting-started/existing",
+                          "rails/getting-started/dockerfiles",
+                          "rails/getting-started/fly-rails"
+                        ]
+                      },
+                      {
+                        "group": "The Basics",
+                        "root": "rails/the-basics",
+                        "pages": [
+                          "rails/the-basics/configuration",
+                          "rails/the-basics/deployments",
+                          "rails/the-basics/active-record",
+                          "rails/the-basics/active-storage",
+                          "rails/the-basics/turbo-streams-and-action-cable",
+                          "rails/the-basics/sidekiq",
+                          "rails/the-basics/run-tasks-and-consoles"
+                        ]
+                      },
+                      {
+                        "group": "Advanced guides",
+                        "root": "rails/advanced-guides",
+                        "pages": [
+                          "rails/advanced-guides/anycable",
+                          "rails/advanced-guides/multiple-applications",
+                          "rails/advanced-guides/litefs",
+                          "rails/advanced-guides/machine",
+                          "rails/advanced-guides/multi-region",
+                          "rails/advanced-guides/sqlite3",
+                          "rails/advanced-guides/phusion-passenger"
+                        ]
+                      },
+                      {
+                        "group": "Cookbooks",
+                        "root": "rails/cookbooks/index",
+                        "pages": [
+                          "rails/cookbooks/minimal",
+                          "rails/cookbooks/databases",
+                          "rails/cookbooks/node",
+                          "rails/cookbooks/api",
+                          "rails/cookbooks/sources",
+                          "rails/cookbooks/build",
+                          "rails/cookbooks/deploy"
+                        ]
+                      }
+                    ],
+                    "root": "rails/index"
+                  },
+                  {
+                    "group": "Laravel",
+                    "root": "laravel/index",
+                    "pages": [
+                      {
+                        "group": "The Basics",
+                        "root": "laravel/the-basics",
+                        "pages": [
+                          "laravel/the-basics/php-node-version",
+                          "laravel/the-basics/customizing-deployments",
+                          "laravel/the-basics/post-deployment",
+                          "laravel/the-basics/logging-stack-traces",
+                          "laravel/the-basics/cron-and-queues",
+                          "laravel/the-basics/laravel-volume-storage",
+                          "laravel/the-basics/laravel-tigris-file-storage"
+                        ]
+                      },
+                      {
+                        "group": "Database guides",
+                        "root": "laravel/database-guides",
+                        "pages": [
+                          "laravel/database-guides/laravel-mysql",
+                          "laravel/database-guides/laravel-pgsql",
+                          "laravel/database-guides/laravel-redis",
+                          "laravel/database-guides/laravel-sqlite",
+                          "laravel/database-guides/laravel-db-migrations"
+                        ]
+                      },
+                      {
+                        "group": "Advanced guides",
+                        "root": "laravel/advanced-guides",
+                        "pages": [
+                          "laravel/advanced-guides/multiple-applications",
+                          "laravel/advanced-guides/global-sqlite-litefs",
+                          "laravel/advanced-guides/github-actions",
+                          "laravel/advanced-guides/using-symfony",
+                          "laravel/advanced-guides/using-inertia-ssr",
+                          "laravel/advanced-guides/customizing-dockerfile"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Django",
+                    "pages": [
+                      {
+                        "group": "Getting Started",
+                        "root": "django/getting-started/index",
+                        "pages": [
+                          "django/getting-started/existing"
+                        ]
+                      },
+                      {
+                        "group": "Advanced guides",
+                        "root": "django/advanced-guides",
+                        "pages": [
+                          "django/advanced-guides/staging-environments-with-github-actions"
+                        ]
+                      }
+                    ],
+                    "root": "django/index"
+                  },
+                  {
+                    "group": "Python",
+                    "root": "python/index",
+                    "pages": [
+                      {
+                        "group": "The Basics",
+                        "root": "python/the-basics",
+                        "pages": [
+                          "python/the-basics/initial-setup",
+                          "python/the-basics/multi-stage-builds"
+                        ]
+                      },
+                      {
+                        "group": "Python Framework Guides",
+                        "root": "python/frameworks",
+                        "pages": [
+                          "python/frameworks/fastapi",
+                          "python/frameworks/flask",
+                          "python/frameworks/streamlit"
+                        ]
+                      },
+                      {
+                        "group": "Do More",
+                        "root": "python/do-more",
+                        "pages": [
+                          "python/do-more/add-postgres",
+                          "python/do-more/add-object-storage",
+                          "python/do-more/add-ollama"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Javascript",
+                    "root": "js/index",
+                    "pages": [
+                      {
+                        "group": "The Basics",
+                        "root": "js/the-basics",
+                        "pages": [
+                          "js/the-basics/dockerfiles",
+                          "js/the-basics/dependencies",
+                          "js/the-basics/database",
+                          "js/the-basics/volumes",
+                          "js/the-basics/object-storage",
+                          "js/the-basics/listening-ports",
+                          "js/the-basics/secrets",
+                          "js/the-basics/scaling"
+                        ]
+                      },
+                      "js/shopify",
+                      {
+                        "group": "JS Framework Guides",
+                        "root": "js/frameworks",
+                        "pages": [
+                          "js/frameworks/astro",
+                          "js/frameworks/deno",
+                          "js/frameworks/meteor",
+                          "js/frameworks/nextjs",
+                          "js/frameworks/nuxtjs",
+                          "js/frameworks/redwood",
+                          "js/frameworks/remix",
+                          "js/frameworks/svelte"
+                        ]
+                      },
+                      {
+                        "group": "Prisma",
+                        "root": "js/prisma/index",
+                        "pages": [
+                          "js/prisma/sqlite",
+                          "js/prisma/postgres"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Rust",
+                    "root": "rust/index",
+                    "pages": [
+                      {
+                        "group": "The Basics",
+                        "root": "rust/the-basics",
+                        "pages": [
+                          "rust/the-basics/cargo-chef"
+                        ]
+                      },
+                      {
+                        "group": "Rust Framework Guides",
+                        "root": "rust/frameworks",
+                        "pages": [
+                          "rust/frameworks/axum",
+                          "rust/frameworks/actix-web",
+                          "rust/frameworks/warp",
+                          "rust/frameworks/rocket",
+                          "rust/frameworks/poem",
+                          "rust/frameworks/dioxus-liveview"
+                        ]
+                      }
+                    ]
+                  },
+                  "languages-and-frameworks/static",
+                  "languages-and-frameworks/dotnet",
+                  "languages-and-frameworks/golang",
+                  "languages-and-frameworks/dockerfile",
+                  "languages-and-frameworks/crystal",
+                  "languages-and-frameworks/wordpress",
+                  "languages-and-frameworks/ruby"
+                ]
+              },
+              {
+                "group": "Fly Machines",
+                "root": "machines/index",
+                "pages": [
+                  "machines/overview",
+                  {
+                    "group": "Machines API",
+                    "root": "machines/api/index",
+                    "pages": [
+                      "machines/api/working-with-machines-api",
+                      "machines/api/apps-resource",
+                      "machines/api/certificates-resource",
+                      "machines/api/machines-resource",
+                      "machines/api/tokens-resource",
+                      "machines/api/volumes-resource"
+                    ]
+                  },
+                  {
+                    "group": "Machines and flyctl",
+                    "pages": [
+                      "machines/flyctl/fly-machine-run",
+                      "machines/flyctl/fly-machine-update"
+                    ]
+                  },
+                  {
+                    "group": "Guides and Examples",
+                    "pages": [
+                      "machines/guides-examples/machines-app-using-flyctl",
+                      "machines/guides-examples/managing-machines-with-the-api",
+                      "machines/guides-examples/machine-placement",
+                      "machines/guides-examples/machine-restart-policy",
+                      "machines/guides-examples/machine-sizing",
+                      "machines/guides-examples/multi-container-machines",
+                      "machines/guides-examples/network-policies",
+                      "machines/guides-examples/functions-with-machines",
+                      "machines/guides-examples/one-app-per-user-why"
+                    ],
+                    "root": "machines/guides-examples"
+                  },
+                  {
+                    "group": "Reference",
+                    "pages": [
+                      "machines/machine-states",
+                      "machines/runtime-environment",
+                      "machines/cpu-performance"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Managed Postgres",
+                "root": "mpg/index",
+                "pages": [
+                  "mpg/overview",
+                  {
+                    "group": "Getting Started",
+                    "pages": [
+                      "mpg/create-and-connect",
+                      "mpg/client-configuration",
+                      "mpg/cluster-configuration"
+                    ]
+                  },
+                  {
+                    "group": "Guides and Examples",
+                    "pages": [
+                      "mpg/guides-examples/phoenix-guide"
+                    ]
+                  },
+                  {
+                    "group": "Management",
+                    "pages": [
+                      "mpg/metrics",
+                      "mpg/import",
+                      "mpg/extensions"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Fly Postgres",
+                "root": "postgres/index",
+                "pages": [
+                  {
+                    "group": "Getting Started",
+                    "root": "postgres/getting-started",
+                    "pages": [
+                      "postgres/getting-started/create-pg-cluster",
+                      "postgres/getting-started/enabling-timescale",
+                      "postgres/getting-started/migrate-from-heroku"
+                    ]
+                  },
+                  {
+                    "group": "Connecting",
+                    "root": "postgres/connecting",
+                    "pages": [
+                      "postgres/connecting/app-connection-examples",
+                      "postgres/connecting/connecting-external",
+                      "postgres/connecting/connecting-internal",
+                      "postgres/connecting/connecting-with-flyctl"
+                    ]
+                  },
+                  {
+                    "group": "Managing",
+                    "root": "postgres/managing",
+                    "pages": [
+                      "postgres/managing/attach-detach",
+                      "postgres/managing/backup-and-restore",
+                      "postgres/managing/cluster-resources",
+                      "postgres/managing/configuration-tuning",
+                      "postgres/managing/deleting",
+                      "postgres/managing/forking",
+                      "postgres/managing/horizontal-scaling",
+                      "postgres/managing/monitoring",
+                      "postgres/managing/scale-to-zero",
+                      "postgres/managing/scaling",
+                      "postgres/managing/upgrades",
+                      "postgres/managing/users-and-roles"
+                    ]
+                  },
+                  {
+                    "group": "Advanced Guides",
+                    "root": "postgres/advanced-guides",
+                    "pages": [
+                      "postgres/advanced-guides/high-availability-and-global-replication"
+                    ]
+                  },
+                  "reference/postgres-whats-next"
+                ]
+              },
+              {
+                "group": "Databases & Storage",
+                "pages": [
+                  "links/mpg",
+                  "tigris/index",
+                  "upstash/redis",
+                  "supabase/index",
+                  "upstash/vector"
+                ],
+                "root": "database-storage-guides"
+              },
+              {
+                "group": "Fly Volumes",
+                "pages": [
+                  "volumes/overview",
+                  "volumes/volume-manage",
+                  "volumes/snapshots",
+                  "volumes/volume-states"
+                ],
+                "root": "volumes/index"
+              },
+              {
+                "group": "Fly Kubernetes",
+                "pages": [
+                  "kubernetes/fks-quickstart",
+                  "kubernetes/fks-features",
+                  "kubernetes/clusters",
+                  "kubernetes/connect-clusters",
+                  "kubernetes/services",
+                  "kubernetes/using-volumes"
+                ],
+                "root": "kubernetes/index"
+              },
+              {
+                "group": "Networking",
+                "root": "networking/index",
+                "pages": [
+                  "networking/app-services",
+                  "networking/services",
+                  "networking/private-networking",
+                  "networking/custom-private-networks",
+                  "networking/flycast",
+                  "networking/egress-ips",
+                  "networking/dynamic-request-routing",
+                  "networking/custom-domain",
+                  "networking/understanding-cloudflare",
+                  "networking/request-headers",
+                  "networking/udp-and-tcp",
+                  "networking/tls"
+                ]
+              },
+              {
+                "group": "Monitoring",
+                "root": "monitoring/index",
+                "pages": [
+                  "monitoring/logging-overview",
+                  "monitoring/metrics",
+                  "monitoring/sentry",
+                  {
+                    "group": "Logging",
+                    "pages": [
+                      "monitoring/live-tail-logs",
+                      "monitoring/logs-api-options",
+                      "monitoring/search-logs",
+                      "monitoring/exporting-logs",
+                      "monitoring/error-codes"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Security",
+                "root": "security/index",
+                "pages": [
+                  "security/org-roles-permissions",
+                  "security/sso",
+                  "security/remove-org-member",
+                  "security/tls-termination",
+                  "security/arcjet",
+                  "security/tokens",
+                  "security/openid-connect",
+                  "security/shared-responsibility",
+                  "security/security-at-fly-io"
+                ]
+              },
+              {
+                "group": "Reference",
+                "pages": [
+                  {
+                    "group": "flyctl",
+                    "pages": [
+                      {
+                        "group": "flyctl - The Fly.io CLI",
+                        "root": "flyctl/index",
+                        "pages": [
+                          "flyctl/install",
+                          "flyctl/integrating"
+                        ]
+                      },
+                      {
+                        "group": "Commands",
+                        "pages": [
+                          "flyctl/cmd/fly",
+                          {
+                            "group": "fly agent",
+                            "root": "flyctl/cmd/fly_agent",
+                            "pages": [
+                              "flyctl/cmd/fly_agent_ping",
+                              "flyctl/cmd/fly_agent_restart",
+                              "flyctl/cmd/fly_agent_run",
+                              "flyctl/cmd/fly_agent_start",
+                              "flyctl/cmd/fly_agent_stop"
+                            ]
+                          },
+                          {
+                            "group": "fly apps",
+                            "root": "flyctl/cmd/fly_apps",
+                            "pages": [
+                              "flyctl/cmd/fly_apps_create",
+                              "flyctl/cmd/fly_apps_destroy",
+                              "flyctl/cmd/fly_apps_errors",
+                              "flyctl/cmd/fly_apps_list",
+                              "flyctl/cmd/fly_apps_move",
+                              "flyctl/cmd/fly_apps_open",
+                              "flyctl/cmd/fly_apps_releases",
+                              "flyctl/cmd/fly_apps_restart"
+                            ]
+                          },
+                          {
+                            "group": "fly auth",
+                            "root": "flyctl/cmd/fly_auth",
+                            "pages": [
+                              "flyctl/cmd/fly_auth_docker",
+                              "flyctl/cmd/fly_auth_login",
+                              "flyctl/cmd/fly_auth_logout",
+                              "flyctl/cmd/fly_auth_signup",
+                              "flyctl/cmd/fly_auth_whoami"
+                            ]
+                          },
+                          {
+                            "group": "fly certs",
+                            "root": "flyctl/cmd/fly_certs",
+                            "pages": [
+                              "flyctl/cmd/fly_certs_add",
+                              "flyctl/cmd/fly_certs_check",
+                              "flyctl/cmd/fly_certs_import",
+                              "flyctl/cmd/fly_certs_list",
+                              "flyctl/cmd/fly_certs_remove",
+                              "flyctl/cmd/fly_certs_setup"
+                            ]
+                          },
+                          {
+                            "group": "fly checks",
+                            "root": "flyctl/cmd/fly_checks",
+                            "pages": [
+                              "flyctl/cmd/fly_checks_list"
+                            ]
+                          },
+                          {
+                            "group": "fly config",
+                            "root": "flyctl/cmd/fly_config",
+                            "pages": [
+                              "flyctl/cmd/fly_config_env",
+                              "flyctl/cmd/fly_config_save",
+                              "flyctl/cmd/fly_config_show",
+                              "flyctl/cmd/fly_config_validate"
+                            ]
+                          },
+                          "flyctl/cmd/fly_console",
+                          {
+                            "group": "fly consul",
+                            "root": "flyctl/cmd/fly_consul",
+                            "pages": [
+                              "flyctl/cmd/fly_consul_attach",
+                              "flyctl/cmd/fly_consul_detach"
+                            ]
+                          },
+                          {
+                            "group": "fly dashboard",
+                            "root": "flyctl/cmd/fly_dashboard",
+                            "pages": [
+                              "flyctl/cmd/fly_dashboard_metrics"
+                            ]
+                          },
+                          "flyctl/cmd/fly_deploy",
+                          "flyctl/cmd/fly_dig",
+                          "flyctl/cmd/fly_docs",
+                          {
+                            "group": "fly doctor",
+                            "root": "flyctl/cmd/fly_doctor",
+                            "pages": [
+                              "flyctl/cmd/fly_doctor_diag"
+                            ]
+                          },
+                          {
+                            "group": "fly extensions",
+                            "root": "flyctl/cmd/fly_extensions",
+                            "pages": [
+                              {
+                                "group": "fly extensions arcjet",
+                                "root": "flyctl/cmd/fly_extensions_arcjet",
+                                "pages": [
+                                  "flyctl/cmd/fly_extensions_arcjet_create",
+                                  "flyctl/cmd/fly_extensions_arcjet_dashboard",
+                                  "flyctl/cmd/fly_extensions_arcjet_destroy",
+                                  "flyctl/cmd/fly_extensions_arcjet_list",
+                                  "flyctl/cmd/fly_extensions_arcjet_status"
+                                ]
+                              },
+                              {
+                                "group": "fly extensions kubernetes",
+                                "root": "flyctl/cmd/fly_extensions_kubernetes",
+                                "pages": [
+                                  "flyctl/cmd/fly_extensions_kubernetes_create",
+                                  "flyctl/cmd/fly_extensions_kubernetes_destroy",
+                                  "flyctl/cmd/fly_extensions_kubernetes_list",
+                                  "flyctl/cmd/fly_extensions_kubernetes_save-kubeconfig"
+                                ]
+                              },
+                              {
+                                "group": "fly extensions sentry",
+                                "root": "flyctl/cmd/fly_extensions_sentry",
+                                "pages": [
+                                  "flyctl/cmd/fly_extensions_sentry_create",
+                                  "flyctl/cmd/fly_extensions_sentry_dashboard",
+                                  "flyctl/cmd/fly_extensions_sentry_destroy",
+                                  "flyctl/cmd/fly_extensions_sentry_list"
+                                ]
+                              },
+                              {
+                                "group": "fly extensions storage",
+                                "root": "flyctl/cmd/fly_extensions_storage",
+                                "pages": [
+                                  "flyctl/cmd/fly_extensions_storage_create",
+                                  "flyctl/cmd/fly_extensions_storage_dashboard",
+                                  "flyctl/cmd/fly_extensions_storage_destroy",
+                                  "flyctl/cmd/fly_extensions_storage_list",
+                                  "flyctl/cmd/fly_extensions_storage_status",
+                                  "flyctl/cmd/fly_extensions_storage_update"
+                                ]
+                              },
+                              {
+                                "group": "fly extensions vector",
+                                "root": "flyctl/cmd/fly_extensions_vector",
+                                "pages": [
+                                  "flyctl/cmd/fly_extensions_vector_create",
+                                  "flyctl/cmd/fly_extensions_vector_dashboard",
+                                  "flyctl/cmd/fly_extensions_vector_destroy",
+                                  "flyctl/cmd/fly_extensions_vector_list",
+                                  "flyctl/cmd/fly_extensions_vector_status"
+                                ]
+                              },
+                              {
+                                "group": "fly extensions wafris",
+                                "root": "flyctl/cmd/fly_extensions_wafris",
+                                "pages": [
+                                  "flyctl/cmd/fly_extensions_wafris_create",
+                                  "flyctl/cmd/fly_extensions_wafris_dashboard",
+                                  "flyctl/cmd/fly_extensions_wafris_destroy"
+                                ]
+                              }
+                            ]
+                          },
+                          "flyctl/cmd/fly_help",
+                          {
+                            "group": "fly image",
+                            "root": "flyctl/cmd/fly_image",
+                            "pages": [
+                              "flyctl/cmd/fly_image_show",
+                              "flyctl/cmd/fly_image_update"
+                            ]
+                          },
+                          {
+                            "group": "fly incidents",
+                            "root": "flyctl/cmd/fly_incidents",
+                            "pages": [
+                              {
+                                "group": "fly incidents hosts",
+                                "root": "flyctl/cmd/fly_incidents_hosts",
+                                "pages": [
+                                  "flyctl/cmd/fly_incidents_hosts_list"
+                                ]
+                              },
+                              "flyctl/cmd/fly_incidents_list"
+                            ]
+                          },
+                          {
+                            "group": "fly ips",
+                            "root": "flyctl/cmd/fly_ips",
+                            "pages": [
+                              "flyctl/cmd/fly_ips_allocate",
+                              "flyctl/cmd/fly_ips_allocate-egress",
+                              "flyctl/cmd/fly_ips_allocate-v4",
+                              "flyctl/cmd/fly_ips_allocate-v6",
+                              "flyctl/cmd/fly_ips_list",
+                              "flyctl/cmd/fly_ips_private",
+                              "flyctl/cmd/fly_ips_release",
+                              "flyctl/cmd/fly_ips_release-egress"
+                            ]
+                          },
+                          {
+                            "group": "fly jobs",
+                            "root": "flyctl/cmd/fly_jobs",
+                            "pages": [
+                              "flyctl/cmd/fly_jobs_open"
+                            ]
+                          },
+                          "flyctl/cmd/fly_launch",
+                          {
+                            "group": "fly litefs-cloud",
+                            "root": "flyctl/cmd/fly_litefs-cloud",
+                            "pages": [
+                              {
+                                "group": "fly litefs-cloud clusters",
+                                "root": "flyctl/cmd/fly_litefs-cloud_clusters",
+                                "pages": [
+                                  "flyctl/cmd/fly_litefs-cloud_clusters_create",
+                                  "flyctl/cmd/fly_litefs-cloud_clusters_destroy",
+                                  "flyctl/cmd/fly_litefs-cloud_clusters_list"
+                                ]
+                              },
+                              "flyctl/cmd/fly_litefs-cloud_export",
+                              "flyctl/cmd/fly_litefs-cloud_import",
+                              "flyctl/cmd/fly_litefs-cloud_regions",
+                              "flyctl/cmd/fly_litefs-cloud_restore",
+                              "flyctl/cmd/fly_litefs-cloud_status"
+                            ]
+                          },
+                          "flyctl/cmd/fly_logs",
+                          {
+                            "group": "fly machine",
+                            "root": "flyctl/cmd/fly_machine",
+                            "pages": [
+                              "flyctl/cmd/fly_machine_api-proxy",
+                              "flyctl/cmd/fly_machine_clone",
+                              "flyctl/cmd/fly_machine_cordon",
+                              "flyctl/cmd/fly_machine_create",
+                              "flyctl/cmd/fly_machine_destroy",
+                              "flyctl/cmd/fly_machine_exec",
+                              "flyctl/cmd/fly_machine_kill",
+                              {
+                                "group": "fly machine leases",
+                                "root": "flyctl/cmd/fly_machine_leases",
+                                "pages": [
+                                  "flyctl/cmd/fly_machine_leases_clear",
+                                  "flyctl/cmd/fly_machine_leases_view"
+                                ]
+                              },
+                              "flyctl/cmd/fly_machine_list",
+                              "flyctl/cmd/fly_machine_place",
+                              "flyctl/cmd/fly_machine_restart",
+                              "flyctl/cmd/fly_machine_run",
+                              "flyctl/cmd/fly_machine_start",
+                              "flyctl/cmd/fly_machine_status",
+                              "flyctl/cmd/fly_machine_stop",
+                              "flyctl/cmd/fly_machine_suspend",
+                              "flyctl/cmd/fly_machine_uncordon",
+                              "flyctl/cmd/fly_machine_update",
+                              "flyctl/cmd/fly_machine_wait"
+                            ]
+                          },
+                          {
+                            "group": "fly mcp",
+                            "root": "flyctl/cmd/fly_mcp",
+                            "pages": [
+                              "flyctl/cmd/fly_mcp_add",
+                              "flyctl/cmd/fly_mcp_destroy",
+                              "flyctl/cmd/fly_mcp_inspect",
+                              "flyctl/cmd/fly_mcp_launch",
+                              "flyctl/cmd/fly_mcp_list",
+                              "flyctl/cmd/fly_mcp_logs",
+                              "flyctl/cmd/fly_mcp_proxy",
+                              "flyctl/cmd/fly_mcp_remove",
+                              "flyctl/cmd/fly_mcp_server",
+                              "flyctl/cmd/fly_mcp_wrap"
+                            ]
+                          },
+                          {
+                            "group": "fly mpg",
+                            "root": "flyctl/cmd/fly_mpg",
+                            "pages": [
+                              "flyctl/cmd/fly_mpg_attach",
+                              {
+                                "group": "fly mpg backup",
+                                "root": "flyctl/cmd/fly_mpg_backup",
+                                "pages": [
+                                  "flyctl/cmd/fly_mpg_backup_create",
+                                  "flyctl/cmd/fly_mpg_backup_list"
+                                ]
+                              },
+                              "flyctl/cmd/fly_mpg_connect",
+                              "flyctl/cmd/fly_mpg_create",
+                              {
+                                "group": "fly mpg databases",
+                                "root": "flyctl/cmd/fly_mpg_databases",
+                                "pages": [
+                                  "flyctl/cmd/fly_mpg_databases_create",
+                                  {
+                                    "group": "fly mpg databases extensions",
+                                    "root": "flyctl/cmd/fly_mpg_databases_extensions",
+                                    "pages": [
+                                      "flyctl/cmd/fly_mpg_databases_extensions_disable",
+                                      "flyctl/cmd/fly_mpg_databases_extensions_enable",
+                                      "flyctl/cmd/fly_mpg_databases_extensions_list"
+                                    ]
+                                  },
+                                  "flyctl/cmd/fly_mpg_databases_list"
+                                ]
+                              },
+                              "flyctl/cmd/fly_mpg_destroy",
+                              "flyctl/cmd/fly_mpg_detach",
+                              "flyctl/cmd/fly_mpg_list",
+                              "flyctl/cmd/fly_mpg_proxy",
+                              "flyctl/cmd/fly_mpg_restore",
+                              "flyctl/cmd/fly_mpg_status",
+                              {
+                                "group": "fly mpg users",
+                                "root": "flyctl/cmd/fly_mpg_users",
+                                "pages": [
+                                  "flyctl/cmd/fly_mpg_users_create",
+                                  "flyctl/cmd/fly_mpg_users_delete",
+                                  "flyctl/cmd/fly_mpg_users_list",
+                                  "flyctl/cmd/fly_mpg_users_set-role"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "group": "fly orgs",
+                            "root": "flyctl/cmd/fly_orgs",
+                            "pages": [
+                              "flyctl/cmd/fly_orgs_create",
+                              {
+                                "group": "fly orgs cross-network-replays",
+                                "root": "flyctl/cmd/fly_orgs_cross-network-replays",
+                                "pages": [
+                                  "flyctl/cmd/fly_orgs_cross-network-replays_disable",
+                                  "flyctl/cmd/fly_orgs_cross-network-replays_enable",
+                                  "flyctl/cmd/fly_orgs_cross-network-replays_status"
+                                ]
+                              },
+                              "flyctl/cmd/fly_orgs_delete",
+                              "flyctl/cmd/fly_orgs_invite",
+                              "flyctl/cmd/fly_orgs_list",
+                              "flyctl/cmd/fly_orgs_remove",
+                              {
+                                "group": "fly orgs replay-sources",
+                                "root": "flyctl/cmd/fly_orgs_replay-sources",
+                                "pages": [
+                                  "flyctl/cmd/fly_orgs_replay-sources_add",
+                                  "flyctl/cmd/fly_orgs_replay-sources_list",
+                                  "flyctl/cmd/fly_orgs_replay-sources_remove"
+                                ]
+                              },
+                              "flyctl/cmd/fly_orgs_show"
+                            ]
+                          },
+                          "flyctl/cmd/fly_ping",
+                          {
+                            "group": "fly platform",
+                            "root": "flyctl/cmd/fly_platform",
+                            "pages": [
+                              "flyctl/cmd/fly_platform_regions",
+                              "flyctl/cmd/fly_platform_status",
+                              "flyctl/cmd/fly_platform_vm-sizes"
+                            ]
+                          },
+                          {
+                            "group": "fly postgres",
+                            "root": "flyctl/cmd/fly_postgres",
+                            "pages": [
+                              "flyctl/cmd/fly_postgres_attach",
+                              {
+                                "group": "fly postgres backup",
+                                "root": "flyctl/cmd/fly_postgres_backup",
+                                "pages": [
+                                  {
+                                    "group": "fly postgres backup config",
+                                    "root": "flyctl/cmd/fly_postgres_backup_config",
+                                    "pages": [
+                                      "flyctl/cmd/fly_postgres_backup_config_show",
+                                      "flyctl/cmd/fly_postgres_backup_config_update"
+                                    ]
+                                  },
+                                  "flyctl/cmd/fly_postgres_backup_create",
+                                  "flyctl/cmd/fly_postgres_backup_enable",
+                                  "flyctl/cmd/fly_postgres_backup_list",
+                                  "flyctl/cmd/fly_postgres_backup_restore"
+                                ]
+                              },
+                              {
+                                "group": "fly postgres config",
+                                "root": "flyctl/cmd/fly_postgres_config",
+                                "pages": [
+                                  "flyctl/cmd/fly_postgres_config_show",
+                                  "flyctl/cmd/fly_postgres_config_update"
+                                ]
+                              },
+                              "flyctl/cmd/fly_postgres_connect",
+                              "flyctl/cmd/fly_postgres_create",
+                              {
+                                "group": "fly postgres db",
+                                "root": "flyctl/cmd/fly_postgres_db",
+                                "pages": [
+                                  "flyctl/cmd/fly_postgres_db_list"
+                                ]
+                              },
+                              "flyctl/cmd/fly_postgres_detach",
+                              {
+                                "group": "fly postgres events",
+                                "root": "flyctl/cmd/fly_postgres_events",
+                                "pages": [
+                                  "flyctl/cmd/fly_postgres_events_list"
+                                ]
+                              },
+                              "flyctl/cmd/fly_postgres_failover",
+                              "flyctl/cmd/fly_postgres_import",
+                              "flyctl/cmd/fly_postgres_list",
+                              "flyctl/cmd/fly_postgres_renew-certs",
+                              "flyctl/cmd/fly_postgres_restart",
+                              {
+                                "group": "fly postgres users",
+                                "root": "flyctl/cmd/fly_postgres_users",
+                                "pages": [
+                                  "flyctl/cmd/fly_postgres_users_list"
+                                ]
+                              }
+                            ]
+                          },
+                          "flyctl/cmd/fly_proxy",
+                          {
+                            "group": "fly redis",
+                            "root": "flyctl/cmd/fly_redis",
+                            "pages": [
+                              "flyctl/cmd/fly_redis_connect",
+                              "flyctl/cmd/fly_redis_create",
+                              "flyctl/cmd/fly_redis_dashboard",
+                              "flyctl/cmd/fly_redis_destroy",
+                              "flyctl/cmd/fly_redis_list",
+                              "flyctl/cmd/fly_redis_plans",
+                              "flyctl/cmd/fly_redis_proxy",
+                              "flyctl/cmd/fly_redis_reset",
+                              "flyctl/cmd/fly_redis_status",
+                              "flyctl/cmd/fly_redis_update"
+                            ]
+                          },
+                          "flyctl/cmd/fly_releases",
+                          {
+                            "group": "fly scale",
+                            "root": "flyctl/cmd/fly_scale",
+                            "pages": [
+                              "flyctl/cmd/fly_scale_count",
+                              "flyctl/cmd/fly_scale_memory",
+                              "flyctl/cmd/fly_scale_show",
+                              "flyctl/cmd/fly_scale_vm"
+                            ]
+                          },
+                          {
+                            "group": "fly secrets",
+                            "root": "flyctl/cmd/fly_secrets",
+                            "pages": [
+                              "flyctl/cmd/fly_secrets_deploy",
+                              "flyctl/cmd/fly_secrets_import",
+                              "flyctl/cmd/fly_secrets_list",
+                              "flyctl/cmd/fly_secrets_set",
+                              "flyctl/cmd/fly_secrets_sync",
+                              "flyctl/cmd/fly_secrets_unset"
+                            ]
+                          },
+                          {
+                            "group": "fly services",
+                            "root": "flyctl/cmd/fly_services",
+                            "pages": [
+                              "flyctl/cmd/fly_services_list"
+                            ]
+                          },
+                          {
+                            "group": "fly settings",
+                            "root": "flyctl/cmd/fly_settings",
+                            "pages": [
+                              {
+                                "group": "fly settings analytics",
+                                "root": "flyctl/cmd/fly_settings_analytics",
+                                "pages": [
+                                  "flyctl/cmd/fly_settings_analytics_disable",
+                                  "flyctl/cmd/fly_settings_analytics_enable"
+                                ]
+                              },
+                              {
+                                "group": "fly settings autoupdate",
+                                "root": "flyctl/cmd/fly_settings_autoupdate",
+                                "pages": [
+                                  "flyctl/cmd/fly_settings_autoupdate_disable",
+                                  "flyctl/cmd/fly_settings_autoupdate_enable"
+                                ]
+                              },
+                              {
+                                "group": "fly settings synthetics",
+                                "root": "flyctl/cmd/fly_settings_synthetics",
+                                "pages": [
+                                  "flyctl/cmd/fly_settings_synthetics_disable",
+                                  "flyctl/cmd/fly_settings_synthetics_enable"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "group": "fly sftp",
+                            "root": "flyctl/cmd/fly_sftp",
+                            "pages": [
+                              "flyctl/cmd/fly_sftp_find",
+                              "flyctl/cmd/fly_sftp_get",
+                              "flyctl/cmd/fly_sftp_put",
+                              "flyctl/cmd/fly_sftp_shell"
+                            ]
+                          },
+                          {
+                            "group": "fly ssh",
+                            "root": "flyctl/cmd/fly_ssh",
+                            "pages": [
+                              "flyctl/cmd/fly_ssh_console",
+                              "flyctl/cmd/fly_ssh_issue",
+                              "flyctl/cmd/fly_ssh_log",
+                              {
+                                "group": "fly ssh sftp",
+                                "root": "flyctl/cmd/fly_ssh_sftp",
+                                "pages": [
+                                  "flyctl/cmd/fly_ssh_sftp_find",
+                                  "flyctl/cmd/fly_ssh_sftp_get",
+                                  "flyctl/cmd/fly_ssh_sftp_put",
+                                  "flyctl/cmd/fly_ssh_sftp_shell"
+                                ]
+                              }
+                            ]
+                          },
+                          "flyctl/cmd/fly_status",
+                          {
+                            "group": "fly storage",
+                            "root": "flyctl/cmd/fly_storage",
+                            "pages": [
+                              "flyctl/cmd/fly_storage_create",
+                              "flyctl/cmd/fly_storage_dashboard",
+                              "flyctl/cmd/fly_storage_destroy",
+                              "flyctl/cmd/fly_storage_list",
+                              "flyctl/cmd/fly_storage_status",
+                              "flyctl/cmd/fly_storage_update"
+                            ]
+                          },
+                          {
+                            "group": "fly synthetics",
+                            "root": "flyctl/cmd/fly_synthetics",
+                            "pages": [
+                              "flyctl/cmd/fly_synthetics_agent"
+                            ]
+                          },
+                          {
+                            "group": "fly tokens",
+                            "root": "flyctl/cmd/fly_tokens",
+                            "pages": [
+                              {
+                                "group": "fly tokens 3p",
+                                "root": "flyctl/cmd/fly_tokens_3p",
+                                "pages": [
+                                  "flyctl/cmd/fly_tokens_3p_add",
+                                  "flyctl/cmd/fly_tokens_3p_add-discharge",
+                                  "flyctl/cmd/fly_tokens_3p_discharge",
+                                  "flyctl/cmd/fly_tokens_3p_ticket"
+                                ]
+                              },
+                              "flyctl/cmd/fly_tokens_attenuate",
+                              {
+                                "group": "fly tokens create",
+                                "root": "flyctl/cmd/fly_tokens_create",
+                                "pages": [
+                                  "flyctl/cmd/fly_tokens_create_deploy",
+                                  "flyctl/cmd/fly_tokens_create_litefs-cloud",
+                                  "flyctl/cmd/fly_tokens_create_machine-exec",
+                                  "flyctl/cmd/fly_tokens_create_org",
+                                  "flyctl/cmd/fly_tokens_create_readonly",
+                                  "flyctl/cmd/fly_tokens_create_ssh",
+                                  "flyctl/cmd/fly_tokens_create_wireguard"
+                                ]
+                              },
+                              "flyctl/cmd/fly_tokens_debug",
+                              "flyctl/cmd/fly_tokens_list",
+                              {
+                                "group": "fly tokens revoke",
+                                "root": "flyctl/cmd/fly_tokens_revoke",
+                                "pages": [
+                                  "flyctl/cmd/fly_tokens_revoke_supplied"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "group": "fly version",
+                            "root": "flyctl/cmd/fly_version",
+                            "pages": [
+                              "flyctl/cmd/fly_version_upgrade"
+                            ]
+                          },
+                          {
+                            "group": "fly volumes",
+                            "root": "flyctl/cmd/fly_volumes",
+                            "pages": [
+                              "flyctl/cmd/fly_volumes_create",
+                              "flyctl/cmd/fly_volumes_destroy",
+                              "flyctl/cmd/fly_volumes_extend",
+                              "flyctl/cmd/fly_volumes_fork",
+                              "flyctl/cmd/fly_volumes_list",
+                              "flyctl/cmd/fly_volumes_show",
+                              {
+                                "group": "fly volumes snapshots",
+                                "root": "flyctl/cmd/fly_volumes_snapshots",
+                                "pages": [
+                                  "flyctl/cmd/fly_volumes_snapshots_create",
+                                  "flyctl/cmd/fly_volumes_snapshots_list"
+                                ]
+                              },
+                              "flyctl/cmd/fly_volumes_update"
+                            ]
+                          },
+                          {
+                            "group": "fly wireguard",
+                            "root": "flyctl/cmd/fly_wireguard",
+                            "pages": [
+                              "flyctl/cmd/fly_wireguard_create",
+                              "flyctl/cmd/fly_wireguard_list",
+                              "flyctl/cmd/fly_wireguard_remove",
+                              "flyctl/cmd/fly_wireguard_reset",
+                              "flyctl/cmd/fly_wireguard_websockets"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "reference/configuration",
+                  "reference/architecture",
+                  "reference/autoscaling",
+                  "reference/aws-to-fly-guide",
+                  "reference/builders",
+                  "reference/content-encoding",
+                  "reference/fly-launch",
+                  "reference/health-checks",
+                  "reference/load-balancing",
+                  "reference/machine-migration",
+                  "app-guides/multiple-processes",
+                  "reference/fly-proxy",
+                  "reference/fly-proxy-autostop-autostart",
+                  "reference/regions",
+                  "reference/suspend-resume"
+                ],
+                "root": "reference/index"
+              },
+              {
+                "group": "About",
+                "pages": [
+                  "about/discontinued-plans",
+                  "about/pricing",
+                  "about/billing",
+                  "about/cost-management",
+                  "about/free-trial",
+                  "about/support",
+                  {
+                    "group": "Engineering Jobs",
+                    "root": "hiring/index",
+                    "pages": [
+                      "hiring/stack",
+                      "hiring/roles",
+                      "hiring/company-levels",
+                      "hiring/hiring",
+                      "hiring/questions",
+                      "hiring/working",
+                      "hiring/levels"
+                    ]
+                  },
+                  "about/healthcare",
+                  "about/extensions",
+                  "reference/extensions_api",
+                  "about/merch",
+                  "about/open-source",
+                  "about/brand"
+                ],
+                "root": "about/index"
+              },
+              {
+                "group": "LiteFS",
+                "pages": [
+                  {
+                    "group": "Get Started with LiteFS",
+                    "pages": [
+                      "litefs/index",
+                      "litefs/speedrun",
+                      "litefs/getting-started-fly",
+                      "litefs/getting-started-docker",
+                      "litefs/how-it-works",
+                      "litefs/faq"
+                    ]
+                  },
+                  {
+                    "group": "Using LiteFS",
+                    "pages": [
+                      "litefs/releases",
+                      "litefs/proxy",
+                      "litefs/migrations",
+                      "litefs/backup",
+                      "litefs/primary",
+                      "litefs/position",
+                      "litefs/events",
+                      "litefs/cloud-backups",
+                      "litefs/cloud-restore",
+                      "litefs/disaster-recovery"
+                    ]
+                  },
+                  {
+                    "group": "LiteFS Reference",
+                    "pages": [
+                      "litefs/export",
+                      "litefs/import",
+                      "litefs/mount",
+                      "litefs/run",
+                      "litefs/config"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Machines API",
+        "openapi": {
+          "directory": "api/machines",
+          "source": "/machines-api/openapi.json"
+        },
+        "pages": [
+          {
+            "group": "Machines API",
+            "pages": [
+              "api/machines/index",
+              {
+                "group": "Apps",
+                "icon": "grid-2",
+                "pages": [
+                  "GET /v1/apps",
+                  "POST /v1/apps",
+                  "GET /v1/apps/{app_name}",
+                  "DELETE /v1/apps/{app_name}",
+                  "POST /v1/apps/{app_name}/deploy_token",
+                  "GET /v1/apps/{app_name}/ip_assignments",
+                  "POST /v1/apps/{app_name}/ip_assignments",
+                  "DELETE /v1/apps/{app_name}/ip_assignments/{ip}"
+                ]
+              },
+              {
+                "group": "Machines",
+                "icon": "server",
+                "pages": [
+                  "GET /v1/apps/{app_name}/machines",
+                  "POST /v1/apps/{app_name}/machines",
+                  "GET /v1/apps/{app_name}/machines/{machine_id}",
+                  "POST /v1/apps/{app_name}/machines/{machine_id}",
+                  "DELETE /v1/apps/{app_name}/machines/{machine_id}",
+                  "POST /v1/apps/{app_name}/machines/{machine_id}/cordon",
+                  "GET /v1/apps/{app_name}/machines/{machine_id}/events",
+                  "POST /v1/apps/{app_name}/machines/{machine_id}/exec",
+                  "GET /v1/apps/{app_name}/machines/{machine_id}/lease",
+                  "POST /v1/apps/{app_name}/machines/{machine_id}/lease",
+                  "DELETE /v1/apps/{app_name}/machines/{machine_id}/lease",
+                  "GET /v1/apps/{app_name}/machines/{machine_id}/memory",
+                  "PUT /v1/apps/{app_name}/machines/{machine_id}/memory",
+                  "POST /v1/apps/{app_name}/machines/{machine_id}/memory/reclaim",
+                  "GET /v1/apps/{app_name}/machines/{machine_id}/metadata",
+                  "PUT /v1/apps/{app_name}/machines/{machine_id}/metadata",
+                  "PATCH /v1/apps/{app_name}/machines/{machine_id}/metadata",
+                  "GET /v1/apps/{app_name}/machines/{machine_id}/metadata/{key}",
+                  "POST /v1/apps/{app_name}/machines/{machine_id}/metadata/{key}",
+                  "DELETE /v1/apps/{app_name}/machines/{machine_id}/metadata/{key}",
+                  "GET /v1/apps/{app_name}/machines/{machine_id}/ps",
+                  "POST /v1/apps/{app_name}/machines/{machine_id}/restart",
+                  "POST /v1/apps/{app_name}/machines/{machine_id}/signal",
+                  "POST /v1/apps/{app_name}/machines/{machine_id}/start",
+                  "POST /v1/apps/{app_name}/machines/{machine_id}/stop",
+                  "POST /v1/apps/{app_name}/machines/{machine_id}/suspend",
+                  "POST /v1/apps/{app_name}/machines/{machine_id}/uncordon",
+                  "GET /v1/apps/{app_name}/machines/{machine_id}/versions",
+                  "GET /v1/apps/{app_name}/machines/{machine_id}/wait"
+                ]
+              },
+              {
+                "group": "Volumes",
+                "icon": "hard-drive",
+                "pages": [
+                  "GET /v1/apps/{app_name}/volumes",
+                  "POST /v1/apps/{app_name}/volumes",
+                  "GET /v1/apps/{app_name}/volumes/{volume_id}",
+                  "PUT /v1/apps/{app_name}/volumes/{volume_id}",
+                  "DELETE /v1/apps/{app_name}/volumes/{volume_id}",
+                  "PUT /v1/apps/{app_name}/volumes/{volume_id}/extend",
+                  "GET /v1/apps/{app_name}/volumes/{volume_id}/snapshots",
+                  "POST /v1/apps/{app_name}/volumes/{volume_id}/snapshots"
+                ]
+              },
+              {
+                "group": "Postgres Clusters",
+                "icon": "database",
+                "pages": [
+                  "GET /v1/postgres",
+                  "POST /v1/postgres",
+                  "GET /v1/postgres/{postgres_cluster_id}",
+                  "DELETE /v1/postgres/{postgres_cluster_id}",
+                  "POST /v1/postgres/{postgres_cluster_id}/attachments",
+                  "DELETE /v1/postgres/{postgres_cluster_id}/attachments/{app_name}",
+                  "GET /v1/postgres/{postgres_cluster_id}/backups",
+                  "POST /v1/postgres/{postgres_cluster_id}/backups",
+                  "GET /v1/postgres/{postgres_cluster_id}/databases",
+                  "POST /v1/postgres/{postgres_cluster_id}/databases",
+                  "DELETE /v1/postgres/{postgres_cluster_id}/databases/{database_name}",
+                  "GET /v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions",
+                  "POST /v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions",
+                  "DELETE /v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions/{extension_name}",
+                  "POST /v1/postgres/{postgres_cluster_id}/fork",
+                  "GET /v1/postgres/{postgres_cluster_id}/queries/active",
+                  "GET /v1/postgres/{postgres_cluster_id}/queries/slow",
+                  "POST /v1/postgres/{postgres_cluster_id}/restore",
+                  "GET /v1/postgres/{postgres_cluster_id}/users",
+                  "POST /v1/postgres/{postgres_cluster_id}/users",
+                  "DELETE /v1/postgres/{postgres_cluster_id}/users/{username}",
+                  "PATCH /v1/postgres/{postgres_cluster_id}/users/{username}",
+                  "GET /v1/postgres/{postgres_cluster_id}/users/{username}/credentials",
+                  "POST /v1/postgres/{postgres_cluster_id}/users/{username}/rotate_password"
+                ]
+              },
+              {
+                "group": "Secrets",
+                "icon": "lock",
+                "pages": [
+                  "GET /v1/apps/{app_name}/secretkeys",
+                  "GET /v1/apps/{app_name}/secretkeys/{secret_name}",
+                  "POST /v1/apps/{app_name}/secretkeys/{secret_name}",
+                  "DELETE /v1/apps/{app_name}/secretkeys/{secret_name}",
+                  "POST /v1/apps/{app_name}/secretkeys/{secret_name}/decrypt",
+                  "POST /v1/apps/{app_name}/secretkeys/{secret_name}/encrypt",
+                  "POST /v1/apps/{app_name}/secretkeys/{secret_name}/generate",
+                  "POST /v1/apps/{app_name}/secretkeys/{secret_name}/sign",
+                  "POST /v1/apps/{app_name}/secretkeys/{secret_name}/verify",
+                  "GET /v1/apps/{app_name}/secrets",
+                  "POST /v1/apps/{app_name}/secrets",
+                  "GET /v1/apps/{app_name}/secrets/{secret_name}",
+                  "POST /v1/apps/{app_name}/secrets/{secret_name}",
+                  "DELETE /v1/apps/{app_name}/secrets/{secret_name}"
+                ]
+              },
+              {
+                "group": "TLS Certificates",
+                "icon": "shield-check",
+                "pages": [
+                  "GET /v1/apps/{app_name}/certificates",
+                  "POST /v1/apps/{app_name}/certificates/acme",
+                  "POST /v1/apps/{app_name}/certificates/custom",
+                  "GET /v1/apps/{app_name}/certificates/{hostname}",
+                  "DELETE /v1/apps/{app_name}/certificates/{hostname}",
+                  "DELETE /v1/apps/{app_name}/certificates/{hostname}/acme",
+                  "POST /v1/apps/{app_name}/certificates/{hostname}/check",
+                  "DELETE /v1/apps/{app_name}/certificates/{hostname}/custom"
+                ]
+              },
+              {
+                "group": "Tokens",
+                "icon": "key",
+                "pages": [
+                  "POST /v1/tokens/authenticate",
+                  "POST /v1/tokens/authorize",
+                  "GET /v1/tokens/current",
+                  "POST /v1/tokens/kms",
+                  "POST /v1/tokens/oidc"
+                ]
+              },
+              {
+                "group": "Organizations",
+                "icon": "building",
+                "pages": [
+                  "GET /v1/orgs/{org_slug}/machines",
+                  "GET /v1/orgs/{org_slug}/volumes"
+                ]
+              },
+              {
+                "group": "Platform",
+                "icon": "globe",
+                "pages": [
+                  "POST /v1/platform/placements",
+                  "GET /v1/platform/regions"
+                ]
+              },
+              "api/machines/models"
+            ]
+          }
+        ]
+      },
+      {
+        "sourceRef": "superfly/sprites-docs"
+      }
+    ]
+  },
+  "redirects": [
+    {
+      "source": "/mcp/overview",
+      "destination": "/model-context-protocol"
+    },
+    {
+      "source": "/mcp/",
+      "destination": "/model-context-protocol"
+    },
+    {
+      "source": "/mcp/:slug*",
+      "destination": "/model-context-protocol/:slug*"
+    },
+    {
+      "source": "/mpg/configuration",
+      "destination": "/mpg/cluster-configuration"
+    },
+    {
+      "source": "/elixir/the-basics/oban",
+      "destination": "/elixir/the-basics"
+    },
+    {
+      "source": "/legal/privacy-policy",
+      "destination": "https://fly.io/legal/privacy-policy/"
+    },
+    {
+      "source": "/legal/terms-of-service",
+      "destination": "https://fly.io/legal/terms-of-service/"
+    },
+    {
+      "source": "/legal/supplemental-terms",
+      "destination": "https://fly.io/legal/supplemental-terms/"
+    },
+    {
+      "source": "/about/credit-cards/",
+      "destination": "/about/billing"
+    },
+    {
+      "source": "/app-guides/continuous-deployment-with-github-actions/",
+      "destination": "/launch/continuous-deployment-with-github-actions"
+    },
+    {
+      "source": "/app-guides/custom-domains-with-fly/",
+      "destination": "/networking/custom-domain"
+    },
+    {
+      "source": "/app-guides/elixir-livebook-connection-to-your-app/",
+      "destination": "/elixir/advanced-guides/connect-livebook-to-your-app"
+    },
+    {
+      "source": "/app-guides/elixir-observer-connection-to-your-app/",
+      "destination": "/elixir/advanced-guides/connect-observer-to-your-app"
+    },
+    {
+      "source": "/app-guides/elixir-static-cookie/",
+      "destination": "/elixir/the-basics/clustering"
+    },
+    {
+      "source": "/app-guides/functions-with-machines/",
+      "destination": "/machines/guides-examples/functions-with-machines"
+    },
+    {
+      "source": "/app-guides/nginx-at-the-edge/",
+      "destination": "/app-guides/global-nginx-proxy"
+    },
+    {
+      "source": "/app-guides/opensshd/",
+      "destination": "/blueprints/opensshd"
+    },
+    {
+      "source": "/app-guides/review-apps-guide/",
+      "destination": "/blueprints/review-apps-guide"
+    },
+    {
+      "source": "/app-guides/superchronic/",
+      "destination": "/blueprints/supercronic"
+    },
+    {
+      "source": "/app-guides/supercronic/",
+      "destination": "/blueprints/supercronic"
+    },
+    {
+      "source": "/app-guides/udp-and-tcp/",
+      "destination": "/networking/udp-and-tcp"
+    },
+    {
+      "source": "/apps/autoscale-by-metric/",
+      "destination": "/launch/autoscale-by-metric"
+    },
+    {
+      "source": "/apps/autostart-stop/",
+      "destination": "/launch/autostop-autostart"
+    },
+    {
+      "source": "/apps/custom-domain/",
+      "destination": "/networking/custom-domain"
+    },
+    {
+      "source": "/apps/deploy/",
+      "destination": "/launch/deploy"
+    },
+    {
+      "source": "/apps/launch/",
+      "destination": "/launch/create"
+    },
+    {
+      "source": "/apps/processes/",
+      "destination": "/launch/processes"
+    },
+    {
+      "source": "/apps/scale-count/",
+      "destination": "/launch/scale-count"
+    },
+    {
+      "source": "/apps/scale-machine/",
+      "destination": "/launch/scale-machine"
+    },
+    {
+      "source": "/apps/volume-manage/",
+      "destination": "/volumes/volume-manage"
+    },
+    {
+      "source": "/apps/volume-storage/",
+      "destination": "/launch/volume-storage"
+    },
+    {
+      "source": "/architecture/",
+      "destination": "/reference/architecture"
+    },
+    {
+      "source": "/blog/connecting-livebook-to-your-production-application/",
+      "destination": "/elixir/advanced-guides/connect-livebook-to-your-app"
+    },
+    {
+      "source": "/blog/shared-nothing/",
+      "destination": "/blueprints/shared-nothing"
+    },
+    {
+      "source": "/blueprints/autoscale-machines-like-a-boss/",
+      "destination": "/blueprints/autoscale-machines"
+    },
+    {
+      "source": "/blueprints/going-to-production-with-hipaa-apps/",
+      "destination": "/blueprints/going-to-production-with-healthcare-apps"
+    },
+    {
+      "source": "/configuration/",
+      "destination": "/reference/configuration"
+    },
+    {
+      "source": "/elixir/getting-started/clustering/",
+      "destination": "/elixir/the-basics/clustering"
+    },
+    {
+      "source": "/elixir/getting-started/iex-into-running-app/",
+      "destination": "/elixir/the-basics/iex-into-running-app"
+    },
+    {
+      "source": "/elixir/getting-started/troubleshooting/",
+      "destination": "/elixir/the-basics/troubleshooting"
+    },
+    {
+      "source": "/flyctl/agent-ping/",
+      "destination": "/flyctl/cmd/fly_agent_ping"
+    },
+    {
+      "source": "/flyctl/agent-restart/",
+      "destination": "/flyctl/cmd/fly_agent_restart"
+    },
+    {
+      "source": "/flyctl/agent-run/",
+      "destination": "/flyctl/cmd/fly_agent_run"
+    },
+    {
+      "source": "/flyctl/agent-start/",
+      "destination": "/flyctl/cmd/fly_agent_start"
+    },
+    {
+      "source": "/flyctl/agent-stop/",
+      "destination": "/flyctl/cmd/fly_agent_stop"
+    },
+    {
+      "source": "/flyctl/agent/",
+      "destination": "/flyctl/cmd/fly_agent"
+    },
+    {
+      "source": "/flyctl/apps-create/",
+      "destination": "/flyctl/cmd/fly_apps_create"
+    },
+    {
+      "source": "/flyctl/apps-destroy/",
+      "destination": "/flyctl/cmd/fly_apps_destroy"
+    },
+    {
+      "source": "/flyctl/apps-errors/",
+      "destination": "/flyctl/cmd/fly_apps_errors"
+    },
+    {
+      "source": "/flyctl/apps-list/",
+      "destination": "/flyctl/cmd/fly_apps_list"
+    },
+    {
+      "source": "/flyctl/apps-move/",
+      "destination": "/flyctl/cmd/fly_apps_move"
+    },
+    {
+      "source": "/flyctl/apps-open/",
+      "destination": "/flyctl/cmd/fly_apps_open"
+    },
+    {
+      "source": "/flyctl/apps-releases/",
+      "destination": "/flyctl/cmd/fly_apps_releases"
+    },
+    {
+      "source": "/flyctl/apps-restart/",
+      "destination": "/flyctl/cmd/fly_apps_restart"
+    },
+    {
+      "source": "/flyctl/apps/",
+      "destination": "/flyctl/cmd/fly_apps"
+    },
+    {
+      "source": "/flyctl/auth-docker/",
+      "destination": "/flyctl/cmd/fly_auth_docker"
+    },
+    {
+      "source": "/flyctl/auth-login/",
+      "destination": "/flyctl/cmd/fly_auth_login"
+    },
+    {
+      "source": "/flyctl/auth-logout/",
+      "destination": "/flyctl/cmd/fly_auth_logout"
+    },
+    {
+      "source": "/flyctl/auth-signup/",
+      "destination": "/flyctl/cmd/fly_auth_signup"
+    },
+    {
+      "source": "/flyctl/auth-whoami/",
+      "destination": "/flyctl/cmd/fly_auth_whoami"
+    },
+    {
+      "source": "/flyctl/auth/",
+      "destination": "/flyctl/cmd/fly_auth"
+    },
+    {
+      "source": "/flyctl/certs-add/",
+      "destination": "/flyctl/cmd/fly_certs_add"
+    },
+    {
+      "source": "/flyctl/certs-check/",
+      "destination": "/flyctl/cmd/fly_certs_check"
+    },
+    {
+      "source": "/flyctl/certs-import/",
+      "destination": "/flyctl/cmd/fly_certs_import"
+    },
+    {
+      "source": "/flyctl/certs-list/",
+      "destination": "/flyctl/cmd/fly_certs_list"
+    },
+    {
+      "source": "/flyctl/certs-remove/",
+      "destination": "/flyctl/cmd/fly_certs_remove"
+    },
+    {
+      "source": "/flyctl/certs-setup/",
+      "destination": "/flyctl/cmd/fly_certs_setup"
+    },
+    {
+      "source": "/flyctl/certs/",
+      "destination": "/flyctl/cmd/fly_certs"
+    },
+    {
+      "source": "/flyctl/checks-list/",
+      "destination": "/flyctl/cmd/fly_checks_list"
+    },
+    {
+      "source": "/flyctl/checks/",
+      "destination": "/flyctl/cmd/fly_checks"
+    },
+    {
+      "source": "/flyctl/config-env/",
+      "destination": "/flyctl/cmd/fly_config_env"
+    },
+    {
+      "source": "/flyctl/config-save/",
+      "destination": "/flyctl/cmd/fly_config_save"
+    },
+    {
+      "source": "/flyctl/config-show/",
+      "destination": "/flyctl/cmd/fly_config_show"
+    },
+    {
+      "source": "/flyctl/config-validate/",
+      "destination": "/flyctl/cmd/fly_config_validate"
+    },
+    {
+      "source": "/flyctl/config/",
+      "destination": "/flyctl/cmd/fly_config"
+    },
+    {
+      "source": "/flyctl/console/",
+      "destination": "/flyctl/cmd/fly_console"
+    },
+    {
+      "source": "/flyctl/consul-attach/",
+      "destination": "/flyctl/cmd/fly_consul_attach"
+    },
+    {
+      "source": "/flyctl/consul-detach/",
+      "destination": "/flyctl/cmd/fly_consul_detach"
+    },
+    {
+      "source": "/flyctl/consul/",
+      "destination": "/flyctl/cmd/fly_consul"
+    },
+    {
+      "source": "/flyctl/dashboard-metrics/",
+      "destination": "/flyctl/cmd/fly_dashboard_metrics"
+    },
+    {
+      "source": "/flyctl/dashboard/",
+      "destination": "/flyctl/cmd/fly_dashboard"
+    },
+    {
+      "source": "/flyctl/deploy/",
+      "destination": "/flyctl/cmd/fly_deploy"
+    },
+    {
+      "source": "/flyctl/dig/",
+      "destination": "/flyctl/cmd/fly_dig"
+    },
+    {
+      "source": "/flyctl/docs/",
+      "destination": "/flyctl/cmd/fly_docs"
+    },
+    {
+      "source": "/flyctl/doctor-diag/",
+      "destination": "/flyctl/cmd/fly_doctor_diag"
+    },
+    {
+      "source": "/flyctl/doctor/",
+      "destination": "/flyctl/cmd/fly_doctor"
+    },
+    {
+      "source": "/flyctl/extensions-arcjet-create/",
+      "destination": "/flyctl/cmd/fly_extensions_arcjet_create"
+    },
+    {
+      "source": "/flyctl/extensions-arcjet-dashboard/",
+      "destination": "/flyctl/cmd/fly_extensions_arcjet_dashboard"
+    },
+    {
+      "source": "/flyctl/extensions-arcjet-destroy/",
+      "destination": "/flyctl/cmd/fly_extensions_arcjet_destroy"
+    },
+    {
+      "source": "/flyctl/extensions-arcjet-list/",
+      "destination": "/flyctl/cmd/fly_extensions_arcjet_list"
+    },
+    {
+      "source": "/flyctl/extensions-arcjet-status/",
+      "destination": "/flyctl/cmd/fly_extensions_arcjet_status"
+    },
+    {
+      "source": "/flyctl/extensions-arcjet/",
+      "destination": "/flyctl/cmd/fly_extensions_arcjet"
+    },
+    {
+      "source": "/flyctl/extensions-kubernetes-create/",
+      "destination": "/flyctl/cmd/fly_extensions_kubernetes_create"
+    },
+    {
+      "source": "/flyctl/extensions-kubernetes-destroy/",
+      "destination": "/flyctl/cmd/fly_extensions_kubernetes_destroy"
+    },
+    {
+      "source": "/flyctl/extensions-kubernetes-list/",
+      "destination": "/flyctl/cmd/fly_extensions_kubernetes_list"
+    },
+    {
+      "source": "/flyctl/extensions-kubernetes-save-kubeconfig/",
+      "destination": "/flyctl/cmd/fly_extensions_kubernetes_save-kubeconfig"
+    },
+    {
+      "source": "/flyctl/extensions-kubernetes/",
+      "destination": "/flyctl/cmd/fly_extensions_kubernetes"
+    },
+    {
+      "source": "/flyctl/extensions-sentry-create/",
+      "destination": "/flyctl/cmd/fly_extensions_sentry_create"
+    },
+    {
+      "source": "/flyctl/extensions-sentry-dashboard/",
+      "destination": "/flyctl/cmd/fly_extensions_sentry_dashboard"
+    },
+    {
+      "source": "/flyctl/extensions-sentry-destroy/",
+      "destination": "/flyctl/cmd/fly_extensions_sentry_destroy"
+    },
+    {
+      "source": "/flyctl/extensions-sentry-list/",
+      "destination": "/flyctl/cmd/fly_extensions_sentry_list"
+    },
+    {
+      "source": "/flyctl/extensions-sentry/",
+      "destination": "/flyctl/cmd/fly_extensions_sentry"
+    },
+    {
+      "source": "/flyctl/extensions-storage-create/",
+      "destination": "/flyctl/cmd/fly_extensions_storage_create"
+    },
+    {
+      "source": "/flyctl/extensions-storage-dashboard/",
+      "destination": "/flyctl/cmd/fly_extensions_storage_dashboard"
+    },
+    {
+      "source": "/flyctl/extensions-storage-destroy/",
+      "destination": "/flyctl/cmd/fly_extensions_storage_destroy"
+    },
+    {
+      "source": "/flyctl/extensions-storage-list/",
+      "destination": "/flyctl/cmd/fly_extensions_storage_list"
+    },
+    {
+      "source": "/flyctl/extensions-storage-status/",
+      "destination": "/flyctl/cmd/fly_extensions_storage_status"
+    },
+    {
+      "source": "/flyctl/extensions-storage-update/",
+      "destination": "/flyctl/cmd/fly_extensions_storage_update"
+    },
+    {
+      "source": "/flyctl/extensions-storage/",
+      "destination": "/flyctl/cmd/fly_extensions_storage"
+    },
+    {
+      "source": "/flyctl/extensions-vector-create/",
+      "destination": "/flyctl/cmd/fly_extensions_vector_create"
+    },
+    {
+      "source": "/flyctl/extensions-vector-dashboard/",
+      "destination": "/flyctl/cmd/fly_extensions_vector_dashboard"
+    },
+    {
+      "source": "/flyctl/extensions-vector-destroy/",
+      "destination": "/flyctl/cmd/fly_extensions_vector_destroy"
+    },
+    {
+      "source": "/flyctl/extensions-vector-list/",
+      "destination": "/flyctl/cmd/fly_extensions_vector_list"
+    },
+    {
+      "source": "/flyctl/extensions-vector-status/",
+      "destination": "/flyctl/cmd/fly_extensions_vector_status"
+    },
+    {
+      "source": "/flyctl/extensions-vector/",
+      "destination": "/flyctl/cmd/fly_extensions_vector"
+    },
+    {
+      "source": "/flyctl/extensions-wafris-create/",
+      "destination": "/flyctl/cmd/fly_extensions_wafris_create"
+    },
+    {
+      "source": "/flyctl/extensions-wafris-dashboard/",
+      "destination": "/flyctl/cmd/fly_extensions_wafris_dashboard"
+    },
+    {
+      "source": "/flyctl/extensions-wafris-destroy/",
+      "destination": "/flyctl/cmd/fly_extensions_wafris_destroy"
+    },
+    {
+      "source": "/flyctl/extensions-wafris/",
+      "destination": "/flyctl/cmd/fly_extensions_wafris"
+    },
+    {
+      "source": "/flyctl/extensions/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/help/",
+      "destination": "/flyctl/cmd/fly_help"
+    },
+    {
+      "source": "/flyctl/image-show/",
+      "destination": "/flyctl/cmd/fly_image_show"
+    },
+    {
+      "source": "/flyctl/image-update/",
+      "destination": "/flyctl/cmd/fly_image_update"
+    },
+    {
+      "source": "/flyctl/image/",
+      "destination": "/flyctl/cmd/fly_image"
+    },
+    {
+      "source": "/flyctl/incidents-hosts-list/",
+      "destination": "/flyctl/cmd/fly_incidents_hosts_list"
+    },
+    {
+      "source": "/flyctl/incidents-hosts/",
+      "destination": "/flyctl/cmd/fly_incidents_hosts"
+    },
+    {
+      "source": "/flyctl/incidents-list/",
+      "destination": "/flyctl/cmd/fly_incidents_list"
+    },
+    {
+      "source": "/flyctl/incidents/",
+      "destination": "/flyctl/cmd/fly_incidents"
+    },
+    {
+      "source": "/flyctl/installing",
+      "destination": "/flyctl/install"
+    },
+    {
+      "source": "/flyctl/ips-allocate-egress/",
+      "destination": "/flyctl/cmd/fly_ips_allocate-egress"
+    },
+    {
+      "source": "/flyctl/ips-allocate-v4/",
+      "destination": "/flyctl/cmd/fly_ips_allocate-v4"
+    },
+    {
+      "source": "/flyctl/ips-allocate-v6/",
+      "destination": "/flyctl/cmd/fly_ips_allocate-v6"
+    },
+    {
+      "source": "/flyctl/ips-allocate/",
+      "destination": "/flyctl/cmd/fly_ips_allocate"
+    },
+    {
+      "source": "/flyctl/ips-list/",
+      "destination": "/flyctl/cmd/fly_ips_list"
+    },
+    {
+      "source": "/flyctl/ips-private/",
+      "destination": "/flyctl/cmd/fly_ips_private"
+    },
+    {
+      "source": "/flyctl/ips-release-egress/",
+      "destination": "/flyctl/cmd/fly_ips_release-egress"
+    },
+    {
+      "source": "/flyctl/ips-release/",
+      "destination": "/flyctl/cmd/fly_ips_release"
+    },
+    {
+      "source": "/flyctl/ips/",
+      "destination": "/flyctl/cmd/fly_ips"
+    },
+    {
+      "source": "/flyctl/jobs-open/",
+      "destination": "/flyctl/cmd/fly_jobs_open"
+    },
+    {
+      "source": "/flyctl/jobs/",
+      "destination": "/flyctl/cmd/fly_jobs"
+    },
+    {
+      "source": "/flyctl/launch/",
+      "destination": "/flyctl/cmd/fly_launch"
+    },
+    {
+      "source": "/flyctl/litefs-cloud-clusters-create/",
+      "destination": "/flyctl/cmd/fly_litefs-cloud_clusters_create"
+    },
+    {
+      "source": "/flyctl/litefs-cloud-clusters-destroy/",
+      "destination": "/flyctl/cmd/fly_litefs-cloud_clusters_destroy"
+    },
+    {
+      "source": "/flyctl/litefs-cloud-clusters-list/",
+      "destination": "/flyctl/cmd/fly_litefs-cloud_clusters_list"
+    },
+    {
+      "source": "/flyctl/litefs-cloud-clusters/",
+      "destination": "/flyctl/cmd/fly_litefs-cloud_clusters"
+    },
+    {
+      "source": "/flyctl/litefs-cloud-export/",
+      "destination": "/flyctl/cmd/fly_litefs-cloud_export"
+    },
+    {
+      "source": "/flyctl/litefs-cloud-import/",
+      "destination": "/flyctl/cmd/fly_litefs-cloud_import"
+    },
+    {
+      "source": "/flyctl/litefs-cloud-regions/",
+      "destination": "/flyctl/cmd/fly_litefs-cloud_regions"
+    },
+    {
+      "source": "/flyctl/litefs-cloud-restore/",
+      "destination": "/flyctl/cmd/fly_litefs-cloud_restore"
+    },
+    {
+      "source": "/flyctl/litefs-cloud-status/",
+      "destination": "/flyctl/cmd/fly_litefs-cloud_status"
+    },
+    {
+      "source": "/flyctl/litefs-cloud/",
+      "destination": "/flyctl/cmd/fly_litefs-cloud"
+    },
+    {
+      "source": "/flyctl/logs/",
+      "destination": "/flyctl/cmd/fly_logs"
+    },
+    {
+      "source": "/flyctl/machine-api-proxy/",
+      "destination": "/flyctl/cmd/fly_machine_api-proxy"
+    },
+    {
+      "source": "/flyctl/machine-clone/",
+      "destination": "/flyctl/cmd/fly_machine_clone"
+    },
+    {
+      "source": "/flyctl/machine-cordon/",
+      "destination": "/flyctl/cmd/fly_machine_cordon"
+    },
+    {
+      "source": "/flyctl/machine-create/",
+      "destination": "/flyctl/cmd/fly_machine_create"
+    },
+    {
+      "source": "/flyctl/machine-destroy/",
+      "destination": "/flyctl/cmd/fly_machine_destroy"
+    },
+    {
+      "source": "/flyctl/machine-exec/",
+      "destination": "/flyctl/cmd/fly_machine_exec"
+    },
+    {
+      "source": "/flyctl/machine-kill/",
+      "destination": "/flyctl/cmd/fly_machine_kill"
+    },
+    {
+      "source": "/flyctl/machine-leases-clear/",
+      "destination": "/flyctl/cmd/fly_machine_leases_clear"
+    },
+    {
+      "source": "/flyctl/machine-leases-view/",
+      "destination": "/flyctl/cmd/fly_machine_leases_view"
+    },
+    {
+      "source": "/flyctl/machine-leases/",
+      "destination": "/flyctl/cmd/fly_machine_leases"
+    },
+    {
+      "source": "/flyctl/machine-list/",
+      "destination": "/flyctl/cmd/fly_machine_list"
+    },
+    {
+      "source": "/flyctl/machine-place/",
+      "destination": "/flyctl/cmd/fly_machine_place"
+    },
+    {
+      "source": "/flyctl/machine-restart/",
+      "destination": "/flyctl/cmd/fly_machine_restart"
+    },
+    {
+      "source": "/flyctl/machine-run/",
+      "destination": "/flyctl/cmd/fly_machine_run"
+    },
+    {
+      "source": "/flyctl/machine-start/",
+      "destination": "/flyctl/cmd/fly_machine_start"
+    },
+    {
+      "source": "/flyctl/machine-status/",
+      "destination": "/flyctl/cmd/fly_machine_status"
+    },
+    {
+      "source": "/flyctl/machine-stop/",
+      "destination": "/flyctl/cmd/fly_machine_stop"
+    },
+    {
+      "source": "/flyctl/machine-suspend/",
+      "destination": "/flyctl/cmd/fly_machine_suspend"
+    },
+    {
+      "source": "/flyctl/machine-uncordon/",
+      "destination": "/flyctl/cmd/fly_machine_uncordon"
+    },
+    {
+      "source": "/flyctl/machine-update/",
+      "destination": "/flyctl/cmd/fly_machine_update"
+    },
+    {
+      "source": "/flyctl/machine-wait/",
+      "destination": "/flyctl/cmd/fly_machine_wait"
+    },
+    {
+      "source": "/flyctl/machine/",
+      "destination": "/flyctl/cmd/fly_machine"
+    },
+    {
+      "source": "/flyctl/mcp-add/",
+      "destination": "/flyctl/cmd/fly_mcp_add"
+    },
+    {
+      "source": "/flyctl/mcp-destroy/",
+      "destination": "/flyctl/cmd/fly_mcp_destroy"
+    },
+    {
+      "source": "/flyctl/mcp-inspect/",
+      "destination": "/flyctl/cmd/fly_mcp_inspect"
+    },
+    {
+      "source": "/flyctl/mcp-launch/",
+      "destination": "/flyctl/cmd/fly_mcp_launch"
+    },
+    {
+      "source": "/flyctl/mcp-list/",
+      "destination": "/flyctl/cmd/fly_mcp_list"
+    },
+    {
+      "source": "/flyctl/mcp-logs/",
+      "destination": "/flyctl/cmd/fly_mcp_logs"
+    },
+    {
+      "source": "/flyctl/mcp-proxy/",
+      "destination": "/flyctl/cmd/fly_mcp_proxy"
+    },
+    {
+      "source": "/flyctl/mcp-remove/",
+      "destination": "/flyctl/cmd/fly_mcp_remove"
+    },
+    {
+      "source": "/flyctl/mcp-server/",
+      "destination": "/flyctl/cmd/fly_mcp_server"
+    },
+    {
+      "source": "/flyctl/mcp-wrap/",
+      "destination": "/flyctl/cmd/fly_mcp_wrap"
+    },
+    {
+      "source": "/flyctl/mcp/",
+      "destination": "/flyctl/cmd/fly_mcp"
+    },
+    {
+      "source": "/flyctl/mpg-attach/",
+      "destination": "/flyctl/cmd/fly_mpg_attach"
+    },
+    {
+      "source": "/flyctl/mpg-backup-create/",
+      "destination": "/flyctl/cmd/fly_mpg_backup_create"
+    },
+    {
+      "source": "/flyctl/mpg-backup-list/",
+      "destination": "/flyctl/cmd/fly_mpg_backup_list"
+    },
+    {
+      "source": "/flyctl/mpg-backup/",
+      "destination": "/flyctl/cmd/fly_mpg_backup"
+    },
+    {
+      "source": "/flyctl/mpg-connect/",
+      "destination": "/flyctl/cmd/fly_mpg_connect"
+    },
+    {
+      "source": "/flyctl/mpg-create/",
+      "destination": "/flyctl/cmd/fly_mpg_create"
+    },
+    {
+      "source": "/flyctl/mpg-databases-create/",
+      "destination": "/flyctl/cmd/fly_mpg_databases_create"
+    },
+    {
+      "source": "/flyctl/mpg-databases-extensions-disable/",
+      "destination": "/flyctl/cmd/fly_mpg_databases_extensions_disable"
+    },
+    {
+      "source": "/flyctl/mpg-databases-extensions-enable/",
+      "destination": "/flyctl/cmd/fly_mpg_databases_extensions_enable"
+    },
+    {
+      "source": "/flyctl/mpg-databases-extensions-list/",
+      "destination": "/flyctl/cmd/fly_mpg_databases_extensions_list"
+    },
+    {
+      "source": "/flyctl/mpg-databases-extensions/",
+      "destination": "/flyctl/cmd/fly_mpg_databases_extensions"
+    },
+    {
+      "source": "/flyctl/mpg-databases-list/",
+      "destination": "/flyctl/cmd/fly_mpg_databases_list"
+    },
+    {
+      "source": "/flyctl/mpg-databases/",
+      "destination": "/flyctl/cmd/fly_mpg_databases"
+    },
+    {
+      "source": "/flyctl/mpg-destroy/",
+      "destination": "/flyctl/cmd/fly_mpg_destroy"
+    },
+    {
+      "source": "/flyctl/mpg-detach/",
+      "destination": "/flyctl/cmd/fly_mpg_detach"
+    },
+    {
+      "source": "/flyctl/mpg-list/",
+      "destination": "/flyctl/cmd/fly_mpg_list"
+    },
+    {
+      "source": "/flyctl/mpg-proxy/",
+      "destination": "/flyctl/cmd/fly_mpg_proxy"
+    },
+    {
+      "source": "/flyctl/mpg-restore/",
+      "destination": "/flyctl/cmd/fly_mpg_restore"
+    },
+    {
+      "source": "/flyctl/mpg-status/",
+      "destination": "/flyctl/cmd/fly_mpg_status"
+    },
+    {
+      "source": "/flyctl/mpg-users-create/",
+      "destination": "/flyctl/cmd/fly_mpg_users_create"
+    },
+    {
+      "source": "/flyctl/mpg-users-delete/",
+      "destination": "/flyctl/cmd/fly_mpg_users_delete"
+    },
+    {
+      "source": "/flyctl/mpg-users-list/",
+      "destination": "/flyctl/cmd/fly_mpg_users_list"
+    },
+    {
+      "source": "/flyctl/mpg-users-set-role/",
+      "destination": "/flyctl/cmd/fly_mpg_users_set-role"
+    },
+    {
+      "source": "/flyctl/mpg-users/",
+      "destination": "/flyctl/cmd/fly_mpg_users"
+    },
+    {
+      "source": "/flyctl/mpg/",
+      "destination": "/flyctl/cmd/fly_mpg"
+    },
+    {
+      "source": "/flyctl/orgs-create/",
+      "destination": "/flyctl/cmd/fly_orgs_create"
+    },
+    {
+      "source": "/flyctl/orgs-cross-network-replays-disable/",
+      "destination": "/flyctl/cmd/fly_orgs_cross-network-replays_disable"
+    },
+    {
+      "source": "/flyctl/orgs-cross-network-replays-enable/",
+      "destination": "/flyctl/cmd/fly_orgs_cross-network-replays_enable"
+    },
+    {
+      "source": "/flyctl/orgs-cross-network-replays-status/",
+      "destination": "/flyctl/cmd/fly_orgs_cross-network-replays_status"
+    },
+    {
+      "source": "/flyctl/orgs-cross-network-replays/",
+      "destination": "/flyctl/cmd/fly_orgs_cross-network-replays"
+    },
+    {
+      "source": "/flyctl/orgs-delete/",
+      "destination": "/flyctl/cmd/fly_orgs_delete"
+    },
+    {
+      "source": "/flyctl/orgs-invite/",
+      "destination": "/flyctl/cmd/fly_orgs_invite"
+    },
+    {
+      "source": "/flyctl/orgs-list/",
+      "destination": "/flyctl/cmd/fly_orgs_list"
+    },
+    {
+      "source": "/flyctl/orgs-remove/",
+      "destination": "/flyctl/cmd/fly_orgs_remove"
+    },
+    {
+      "source": "/flyctl/orgs-replay-sources-add/",
+      "destination": "/flyctl/cmd/fly_orgs_replay-sources_add"
+    },
+    {
+      "source": "/flyctl/orgs-replay-sources-list/",
+      "destination": "/flyctl/cmd/fly_orgs_replay-sources_list"
+    },
+    {
+      "source": "/flyctl/orgs-replay-sources-remove/",
+      "destination": "/flyctl/cmd/fly_orgs_replay-sources_remove"
+    },
+    {
+      "source": "/flyctl/orgs-replay-sources/",
+      "destination": "/flyctl/cmd/fly_orgs_replay-sources"
+    },
+    {
+      "source": "/flyctl/orgs-show/",
+      "destination": "/flyctl/cmd/fly_orgs_show"
+    },
+    {
+      "source": "/flyctl/orgs/",
+      "destination": "/flyctl/cmd/fly_orgs"
+    },
+    {
+      "source": "/flyctl/ping/",
+      "destination": "/flyctl/cmd/fly_ping"
+    },
+    {
+      "source": "/flyctl/platform-regions/",
+      "destination": "/flyctl/cmd/fly_platform_regions"
+    },
+    {
+      "source": "/flyctl/platform-status/",
+      "destination": "/flyctl/cmd/fly_platform_status"
+    },
+    {
+      "source": "/flyctl/platform-vm-sizes/",
+      "destination": "/flyctl/cmd/fly_platform_vm-sizes"
+    },
+    {
+      "source": "/flyctl/platform/",
+      "destination": "/flyctl/cmd/fly_platform"
+    },
+    {
+      "source": "/flyctl/postgres-attach/",
+      "destination": "/flyctl/cmd/fly_postgres_attach"
+    },
+    {
+      "source": "/flyctl/postgres-backup-config-show/",
+      "destination": "/flyctl/cmd/fly_postgres_backup_config_show"
+    },
+    {
+      "source": "/flyctl/postgres-backup-config-update/",
+      "destination": "/flyctl/cmd/fly_postgres_backup_config_update"
+    },
+    {
+      "source": "/flyctl/postgres-backup-config/",
+      "destination": "/flyctl/cmd/fly_postgres_backup_config"
+    },
+    {
+      "source": "/flyctl/postgres-backup-create/",
+      "destination": "/flyctl/cmd/fly_postgres_backup_create"
+    },
+    {
+      "source": "/flyctl/postgres-backup-enable/",
+      "destination": "/flyctl/cmd/fly_postgres_backup_enable"
+    },
+    {
+      "source": "/flyctl/postgres-backup-list/",
+      "destination": "/flyctl/cmd/fly_postgres_backup_list"
+    },
+    {
+      "source": "/flyctl/postgres-backup-restore/",
+      "destination": "/flyctl/cmd/fly_postgres_backup_restore"
+    },
+    {
+      "source": "/flyctl/postgres-backup/",
+      "destination": "/flyctl/cmd/fly_postgres_backup"
+    },
+    {
+      "source": "/flyctl/postgres-config-show/",
+      "destination": "/flyctl/cmd/fly_postgres_config_show"
+    },
+    {
+      "source": "/flyctl/postgres-config-update/",
+      "destination": "/flyctl/cmd/fly_postgres_config_update"
+    },
+    {
+      "source": "/flyctl/postgres-config/",
+      "destination": "/flyctl/cmd/fly_postgres_config"
+    },
+    {
+      "source": "/flyctl/postgres-connect/",
+      "destination": "/flyctl/cmd/fly_postgres_connect"
+    },
+    {
+      "source": "/flyctl/postgres-create/",
+      "destination": "/flyctl/cmd/fly_postgres_create"
+    },
+    {
+      "source": "/flyctl/postgres-db-list/",
+      "destination": "/flyctl/cmd/fly_postgres_db_list"
+    },
+    {
+      "source": "/flyctl/postgres-db/",
+      "destination": "/flyctl/cmd/fly_postgres_db"
+    },
+    {
+      "source": "/flyctl/postgres-detach/",
+      "destination": "/flyctl/cmd/fly_postgres_detach"
+    },
+    {
+      "source": "/flyctl/postgres-events-list/",
+      "destination": "/flyctl/cmd/fly_postgres_events_list"
+    },
+    {
+      "source": "/flyctl/postgres-events/",
+      "destination": "/flyctl/cmd/fly_postgres_events"
+    },
+    {
+      "source": "/flyctl/postgres-failover/",
+      "destination": "/flyctl/cmd/fly_postgres_failover"
+    },
+    {
+      "source": "/flyctl/postgres-import/",
+      "destination": "/flyctl/cmd/fly_postgres_import"
+    },
+    {
+      "source": "/flyctl/postgres-list/",
+      "destination": "/flyctl/cmd/fly_postgres_list"
+    },
+    {
+      "source": "/flyctl/postgres-renew-certs/",
+      "destination": "/flyctl/cmd/fly_postgres_renew-certs"
+    },
+    {
+      "source": "/flyctl/postgres-restart/",
+      "destination": "/flyctl/cmd/fly_postgres_restart"
+    },
+    {
+      "source": "/flyctl/postgres-users-list/",
+      "destination": "/flyctl/cmd/fly_postgres_users_list"
+    },
+    {
+      "source": "/flyctl/postgres-users/",
+      "destination": "/flyctl/cmd/fly_postgres_users"
+    },
+    {
+      "source": "/flyctl/postgres/",
+      "destination": "/flyctl/cmd/fly_postgres"
+    },
+    {
+      "source": "/flyctl/proxy/",
+      "destination": "/flyctl/cmd/fly_proxy"
+    },
+    {
+      "source": "/flyctl/redis-connect/",
+      "destination": "/flyctl/cmd/fly_redis_connect"
+    },
+    {
+      "source": "/flyctl/redis-create/",
+      "destination": "/flyctl/cmd/fly_redis_create"
+    },
+    {
+      "source": "/flyctl/redis-dashboard/",
+      "destination": "/flyctl/cmd/fly_redis_dashboard"
+    },
+    {
+      "source": "/flyctl/redis-destroy/",
+      "destination": "/flyctl/cmd/fly_redis_destroy"
+    },
+    {
+      "source": "/flyctl/redis-list/",
+      "destination": "/flyctl/cmd/fly_redis_list"
+    },
+    {
+      "source": "/flyctl/redis-plans/",
+      "destination": "/flyctl/cmd/fly_redis_plans"
+    },
+    {
+      "source": "/flyctl/redis-proxy/",
+      "destination": "/flyctl/cmd/fly_redis_proxy"
+    },
+    {
+      "source": "/flyctl/redis-reset/",
+      "destination": "/flyctl/cmd/fly_redis_reset"
+    },
+    {
+      "source": "/flyctl/redis-status/",
+      "destination": "/flyctl/cmd/fly_redis_status"
+    },
+    {
+      "source": "/flyctl/redis-update/",
+      "destination": "/flyctl/cmd/fly_redis_update"
+    },
+    {
+      "source": "/flyctl/redis/",
+      "destination": "/flyctl/cmd/fly_redis"
+    },
+    {
+      "source": "/flyctl/releases/",
+      "destination": "/flyctl/cmd/fly_releases"
+    },
+    {
+      "source": "/flyctl/scale-count/",
+      "destination": "/flyctl/cmd/fly_scale_count"
+    },
+    {
+      "source": "/flyctl/scale-memory/",
+      "destination": "/flyctl/cmd/fly_scale_memory"
+    },
+    {
+      "source": "/flyctl/scale-show/",
+      "destination": "/flyctl/cmd/fly_scale_show"
+    },
+    {
+      "source": "/flyctl/scale-vm/",
+      "destination": "/flyctl/cmd/fly_scale_vm"
+    },
+    {
+      "source": "/flyctl/scale/",
+      "destination": "/flyctl/cmd/fly_scale"
+    },
+    {
+      "source": "/flyctl/secrets-deploy/",
+      "destination": "/flyctl/cmd/fly_secrets_deploy"
+    },
+    {
+      "source": "/flyctl/secrets-import/",
+      "destination": "/flyctl/cmd/fly_secrets_import"
+    },
+    {
+      "source": "/flyctl/secrets-list/",
+      "destination": "/flyctl/cmd/fly_secrets_list"
+    },
+    {
+      "source": "/flyctl/secrets-set/",
+      "destination": "/flyctl/cmd/fly_secrets_set"
+    },
+    {
+      "source": "/flyctl/secrets-sync/",
+      "destination": "/flyctl/cmd/fly_secrets_sync"
+    },
+    {
+      "source": "/flyctl/secrets-unset/",
+      "destination": "/flyctl/cmd/fly_secrets_unset"
+    },
+    {
+      "source": "/flyctl/secrets/",
+      "destination": "/flyctl/cmd/fly_secrets"
+    },
+    {
+      "source": "/flyctl/services-list/",
+      "destination": "/flyctl/cmd/fly_services_list"
+    },
+    {
+      "source": "/flyctl/services/",
+      "destination": "/flyctl/cmd/fly_services"
+    },
+    {
+      "source": "/flyctl/settings-analytics-disable/",
+      "destination": "/flyctl/cmd/fly_settings_analytics_disable"
+    },
+    {
+      "source": "/flyctl/settings-analytics-enable/",
+      "destination": "/flyctl/cmd/fly_settings_analytics_enable"
+    },
+    {
+      "source": "/flyctl/settings-analytics/",
+      "destination": "/flyctl/cmd/fly_settings_analytics"
+    },
+    {
+      "source": "/flyctl/settings-autoupdate-disable/",
+      "destination": "/flyctl/cmd/fly_settings_autoupdate_disable"
+    },
+    {
+      "source": "/flyctl/settings-autoupdate-enable/",
+      "destination": "/flyctl/cmd/fly_settings_autoupdate_enable"
+    },
+    {
+      "source": "/flyctl/settings-autoupdate/",
+      "destination": "/flyctl/cmd/fly_settings_autoupdate"
+    },
+    {
+      "source": "/flyctl/settings-synthetics-disable/",
+      "destination": "/flyctl/cmd/fly_settings_synthetics_disable"
+    },
+    {
+      "source": "/flyctl/settings-synthetics-enable/",
+      "destination": "/flyctl/cmd/fly_settings_synthetics_enable"
+    },
+    {
+      "source": "/flyctl/settings-synthetics/",
+      "destination": "/flyctl/cmd/fly_settings_synthetics"
+    },
+    {
+      "source": "/flyctl/settings/",
+      "destination": "/flyctl/cmd/fly_settings"
+    },
+    {
+      "source": "/flyctl/sftp-find/",
+      "destination": "/flyctl/cmd/fly_sftp_find"
+    },
+    {
+      "source": "/flyctl/sftp-get/",
+      "destination": "/flyctl/cmd/fly_sftp_get"
+    },
+    {
+      "source": "/flyctl/sftp-put/",
+      "destination": "/flyctl/cmd/fly_sftp_put"
+    },
+    {
+      "source": "/flyctl/sftp-shell/",
+      "destination": "/flyctl/cmd/fly_sftp_shell"
+    },
+    {
+      "source": "/flyctl/sftp/",
+      "destination": "/flyctl/cmd/fly_sftp"
+    },
+    {
+      "source": "/flyctl/ssh-console/",
+      "destination": "/flyctl/cmd/fly_ssh_console"
+    },
+    {
+      "source": "/flyctl/ssh-issue/",
+      "destination": "/flyctl/cmd/fly_ssh_issue"
+    },
+    {
+      "source": "/flyctl/ssh-log/",
+      "destination": "/flyctl/cmd/fly_ssh_log"
+    },
+    {
+      "source": "/flyctl/ssh-sftp-find/",
+      "destination": "/flyctl/cmd/fly_ssh_sftp_find"
+    },
+    {
+      "source": "/flyctl/ssh-sftp-get/",
+      "destination": "/flyctl/cmd/fly_ssh_sftp_get"
+    },
+    {
+      "source": "/flyctl/ssh-sftp-put/",
+      "destination": "/flyctl/cmd/fly_ssh_sftp_put"
+    },
+    {
+      "source": "/flyctl/ssh-sftp-shell/",
+      "destination": "/flyctl/cmd/fly_ssh_sftp_shell"
+    },
+    {
+      "source": "/flyctl/ssh-sftp/",
+      "destination": "/flyctl/cmd/fly_ssh_sftp"
+    },
+    {
+      "source": "/flyctl/ssh/",
+      "destination": "/flyctl/cmd/fly_ssh"
+    },
+    {
+      "source": "/flyctl/status/",
+      "destination": "/flyctl/cmd/fly_status"
+    },
+    {
+      "source": "/flyctl/storage-create/",
+      "destination": "/flyctl/cmd/fly_storage_create"
+    },
+    {
+      "source": "/flyctl/storage-dashboard/",
+      "destination": "/flyctl/cmd/fly_storage_dashboard"
+    },
+    {
+      "source": "/flyctl/storage-destroy/",
+      "destination": "/flyctl/cmd/fly_storage_destroy"
+    },
+    {
+      "source": "/flyctl/storage-list/",
+      "destination": "/flyctl/cmd/fly_storage_list"
+    },
+    {
+      "source": "/flyctl/storage-status/",
+      "destination": "/flyctl/cmd/fly_storage_status"
+    },
+    {
+      "source": "/flyctl/storage-update/",
+      "destination": "/flyctl/cmd/fly_storage_update"
+    },
+    {
+      "source": "/flyctl/storage/",
+      "destination": "/flyctl/cmd/fly_storage"
+    },
+    {
+      "source": "/flyctl/synthetics-agent/",
+      "destination": "/flyctl/cmd/fly_synthetics_agent"
+    },
+    {
+      "source": "/flyctl/synthetics/",
+      "destination": "/flyctl/cmd/fly_synthetics"
+    },
+    {
+      "source": "/flyctl/tokens-3p-add-discharge/",
+      "destination": "/flyctl/cmd/fly_tokens_3p_add-discharge"
+    },
+    {
+      "source": "/flyctl/tokens-3p-add/",
+      "destination": "/flyctl/cmd/fly_tokens_3p_add"
+    },
+    {
+      "source": "/flyctl/tokens-3p-discharge/",
+      "destination": "/flyctl/cmd/fly_tokens_3p_discharge"
+    },
+    {
+      "source": "/flyctl/tokens-3p-ticket/",
+      "destination": "/flyctl/cmd/fly_tokens_3p_ticket"
+    },
+    {
+      "source": "/flyctl/tokens-3p/",
+      "destination": "/flyctl/cmd/fly_tokens_3p"
+    },
+    {
+      "source": "/flyctl/tokens-attenuate/",
+      "destination": "/flyctl/cmd/fly_tokens_attenuate"
+    },
+    {
+      "source": "/flyctl/tokens-create-deploy/",
+      "destination": "/flyctl/cmd/fly_tokens_create_deploy"
+    },
+    {
+      "source": "/flyctl/tokens-create-litefs-cloud/",
+      "destination": "/flyctl/cmd/fly_tokens_create_litefs-cloud"
+    },
+    {
+      "source": "/flyctl/tokens-create-machine-exec/",
+      "destination": "/flyctl/cmd/fly_tokens_create_machine-exec"
+    },
+    {
+      "source": "/flyctl/tokens-create-org/",
+      "destination": "/flyctl/cmd/fly_tokens_create_org"
+    },
+    {
+      "source": "/flyctl/tokens-create-readonly/",
+      "destination": "/flyctl/cmd/fly_tokens_create_readonly"
+    },
+    {
+      "source": "/flyctl/tokens-create-ssh/",
+      "destination": "/flyctl/cmd/fly_tokens_create_ssh"
+    },
+    {
+      "source": "/flyctl/tokens-create-wireguard/",
+      "destination": "/flyctl/cmd/fly_tokens_create_wireguard"
+    },
+    {
+      "source": "/flyctl/tokens-create/",
+      "destination": "/flyctl/cmd/fly_tokens_create"
+    },
+    {
+      "source": "/flyctl/tokens-debug/",
+      "destination": "/flyctl/cmd/fly_tokens_debug"
+    },
+    {
+      "source": "/flyctl/tokens-list/",
+      "destination": "/flyctl/cmd/fly_tokens_list"
+    },
+    {
+      "source": "/flyctl/tokens-revoke-supplied/",
+      "destination": "/flyctl/cmd/fly_tokens_revoke_supplied"
+    },
+    {
+      "source": "/flyctl/tokens-revoke/",
+      "destination": "/flyctl/cmd/fly_tokens_revoke"
+    },
+    {
+      "source": "/flyctl/tokens/",
+      "destination": "/flyctl/cmd/fly_tokens"
+    },
+    {
+      "source": "/flyctl/version-upgrade/",
+      "destination": "/flyctl/cmd/fly_version_upgrade"
+    },
+    {
+      "source": "/flyctl/version/",
+      "destination": "/flyctl/cmd/fly_version"
+    },
+    {
+      "source": "/flyctl/volumes-create/",
+      "destination": "/flyctl/cmd/fly_volumes_create"
+    },
+    {
+      "source": "/flyctl/volumes-destroy/",
+      "destination": "/flyctl/cmd/fly_volumes_destroy"
+    },
+    {
+      "source": "/flyctl/volumes-extend/",
+      "destination": "/flyctl/cmd/fly_volumes_extend"
+    },
+    {
+      "source": "/flyctl/volumes-fork/",
+      "destination": "/flyctl/cmd/fly_volumes_fork"
+    },
+    {
+      "source": "/flyctl/volumes-list/",
+      "destination": "/flyctl/cmd/fly_volumes_list"
+    },
+    {
+      "source": "/flyctl/volumes-show/",
+      "destination": "/flyctl/cmd/fly_volumes_show"
+    },
+    {
+      "source": "/flyctl/volumes-snapshots-create/",
+      "destination": "/flyctl/cmd/fly_volumes_snapshots_create"
+    },
+    {
+      "source": "/flyctl/volumes-snapshots-list/",
+      "destination": "/flyctl/cmd/fly_volumes_snapshots_list"
+    },
+    {
+      "source": "/flyctl/volumes-snapshots/",
+      "destination": "/flyctl/cmd/fly_volumes_snapshots"
+    },
+    {
+      "source": "/flyctl/volumes-update/",
+      "destination": "/flyctl/cmd/fly_volumes_update"
+    },
+    {
+      "source": "/flyctl/volumes/",
+      "destination": "/flyctl/cmd/fly_volumes"
+    },
+    {
+      "source": "/flyctl/wireguard-create/",
+      "destination": "/flyctl/cmd/fly_wireguard_create"
+    },
+    {
+      "source": "/flyctl/wireguard-list/",
+      "destination": "/flyctl/cmd/fly_wireguard_list"
+    },
+    {
+      "source": "/flyctl/wireguard-remove/",
+      "destination": "/flyctl/cmd/fly_wireguard_remove"
+    },
+    {
+      "source": "/flyctl/wireguard-reset/",
+      "destination": "/flyctl/cmd/fly_wireguard_reset"
+    },
+    {
+      "source": "/flyctl/wireguard-websockets/",
+      "destination": "/flyctl/cmd/fly_wireguard_websockets"
+    },
+    {
+      "source": "/flyctl/wireguard/",
+      "destination": "/flyctl/cmd/fly_wireguard"
+    },
+    {
+      "source": "/getting-started/actix-web/",
+      "destination": "/rust/frameworks/actix-web"
+    },
+    {
+      "source": "/getting-started/app-services/",
+      "destination": "/networking/app-services"
+    },
+    {
+      "source": "/getting-started/astro/",
+      "destination": "/js/frameworks/astro"
+    },
+    {
+      "source": "/getting-started/axum/",
+      "destination": "/rust/frameworks/axum"
+    },
+    {
+      "source": "/getting-started/crystal/",
+      "destination": "/languages-and-frameworks/crystal"
+    },
+    {
+      "source": "/getting-started/deno/",
+      "destination": "/js/frameworks/deno"
+    },
+    {
+      "source": "/getting-started/dioxus-liveview/",
+      "destination": "/rust/frameworks/dioxus-liveview"
+    },
+    {
+      "source": "/getting-started/django/",
+      "destination": "/django/getting-started"
+    },
+    {
+      "source": "/getting-started/dockerfile/",
+      "destination": "/languages-and-frameworks/dockerfile"
+    },
+    {
+      "source": "/getting-started/dotnet/",
+      "destination": "/languages-and-frameworks/dotnet"
+    },
+    {
+      "source": "/getting-started/edgedb/",
+      "destination": "/app-guides/edgedb"
+    },
+    {
+      "source": "/getting-started/elixir/",
+      "destination": "/elixir/getting-started"
+    },
+    {
+      "source": "/getting-started/fastapi/",
+      "destination": "/python/frameworks/fastapi"
+    },
+    {
+      "source": "/getting-started/flask/",
+      "destination": "/python/frameworks/flask"
+    },
+    {
+      "source": "/getting-started/golang/",
+      "destination": "/languages-and-frameworks/golang"
+    },
+    {
+      "source": "/getting-started/installing-flyctl/",
+      "destination": "/flyctl/install"
+    },
+    {
+      "source": "/getting-started/laravel/",
+      "destination": "/laravel"
+    },
+    {
+      "source": "/getting-started/launch-app/",
+      "destination": "/reference/fly-launch"
+    },
+    {
+      "source": "/getting-started/legacy_elixir/",
+      "destination": "/elixir/getting-started/legacy"
+    },
+    {
+      "source": "/getting-started/log-in-to-fly/",
+      "destination": "/getting-started/sign-up-sign-in"
+    },
+    {
+      "source": "/getting-started/multi-region-databases/",
+      "destination": "/postgres/advanced-guides/high-availability-and-global-replication"
+    },
+    {
+      "source": "/getting-started/nextjs/",
+      "destination": "/js/frameworks/nextjs"
+    },
+    {
+      "source": "/getting-started/node/",
+      "destination": "/js"
+    },
+    {
+      "source": "/getting-started/nuxtjs/",
+      "destination": "/js/frameworks/nuxtjs"
+    },
+    {
+      "source": "/getting-started/poem/",
+      "destination": "/rust/frameworks/poem"
+    },
+    {
+      "source": "/getting-started/python/",
+      "destination": "/python"
+    },
+    {
+      "source": "/getting-started/rails/",
+      "destination": "/rails/getting-started"
+    },
+    {
+      "source": "/getting-started/redwood/",
+      "destination": "/js/frameworks/redwood"
+    },
+    {
+      "source": "/getting-started/remix/",
+      "destination": "/js/frameworks/remix"
+    },
+    {
+      "source": "/getting-started/rocket/",
+      "destination": "/rust/frameworks/rocket"
+    },
+    {
+      "source": "/getting-started/ruby/",
+      "destination": "/languages-and-frameworks/ruby"
+    },
+    {
+      "source": "/getting-started/rust/",
+      "destination": "/rust"
+    },
+    {
+      "source": "/getting-started/static/",
+      "destination": "/languages-and-frameworks/static"
+    },
+    {
+      "source": "/getting-started/streamlit/",
+      "destination": "/python/frameworks/streamlit"
+    },
+    {
+      "source": "/getting-started/sveltekit/",
+      "destination": "/js/frameworks/svelte"
+    },
+    {
+      "source": "/getting-started/warp/",
+      "destination": "/rust/frameworks/warp"
+    },
+    {
+      "source": "/going-to-production/",
+      "destination": "/apps/going-to-production"
+    },
+    {
+      "source": "/going-to-production/monitoring/",
+      "destination": "/monitoring"
+    },
+    {
+      "source": "/going-to-production/monitoring/exporting-logs/",
+      "destination": "/monitoring/exporting-logs"
+    },
+    {
+      "source": "/going-to-production/monitoring/publishing-metrics/",
+      "destination": "/monitoring/metrics"
+    },
+    {
+      "source": "/going-to-production/the-basics/",
+      "destination": "/apps/going-to-production"
+    },
+    {
+      "source": "/going-to-production/the-basics/production-databases/",
+      "destination": "/apps/going-to-production"
+    },
+    {
+      "source": "/going-to-production/the-basics/production-staging-isolation/",
+      "destination": "/blueprints/staging-prod-isolation"
+    },
+    {
+      "source": "/hands-on/",
+      "destination": "/getting-started/launch-demo"
+    },
+    {
+      "source": "/hands-on/check-app-status/",
+      "destination": "/getting-started/launch-demo"
+    },
+    {
+      "source": "/hands-on/connecting-to-an-app/",
+      "destination": "/getting-started/launch-demo"
+    },
+    {
+      "source": "/hands-on/create-app/",
+      "destination": "/getting-started/launch-demo"
+    },
+    {
+      "source": "/hands-on/deploy-app/",
+      "destination": "/getting-started/launch-demo"
+    },
+    {
+      "source": "/hands-on/install-flyctl/",
+      "destination": "/flyctl/install"
+    },
+    {
+      "source": "/hands-on/installing/",
+      "destination": "/flyctl/install"
+    },
+    {
+      "source": "/hands-on/launch-app/",
+      "destination": "/getting-started/launch-demo"
+    },
+    {
+      "source": "/hands-on/next/",
+      "destination": "/getting-started/launch-demo"
+    },
+    {
+      "source": "/hands-on/open-app/",
+      "destination": "/getting-started/launch-demo"
+    },
+    {
+      "source": "/hands-on/sign-in/",
+      "destination": "/getting-started/sign-up-sign-in"
+    },
+    {
+      "source": "/hands-on/sign-up-sign-in/",
+      "destination": "/getting-started/sign-up-sign-in"
+    },
+    {
+      "source": "/hands-on/sign-up/",
+      "destination": "/getting-started/sign-up-sign-in"
+    },
+    {
+      "source": "/hands-on/start/",
+      "destination": "/getting-started/launch-demo"
+    },
+    {
+      "source": "/hands-on/view-app/",
+      "destination": "/getting-started/launch-demo"
+    },
+    {
+      "source": "/languages-and-frameworks/actix-web/",
+      "destination": "/rust/frameworks/actix-web"
+    },
+    {
+      "source": "/languages-and-frameworks/astro/",
+      "destination": "/js/frameworks/astro"
+    },
+    {
+      "source": "/languages-and-frameworks/axum/",
+      "destination": "/rust/frameworks/axum"
+    },
+    {
+      "source": "/languages-and-frameworks/deno/",
+      "destination": "/js/frameworks/deno"
+    },
+    {
+      "source": "/languages-and-frameworks/dioxus-liveview/",
+      "destination": "/rust/frameworks/dioxus-liveview"
+    },
+    {
+      "source": "/languages-and-frameworks/fastapi/",
+      "destination": "/python/frameworks/fastapi"
+    },
+    {
+      "source": "/languages-and-frameworks/flask/",
+      "destination": "/python/frameworks/flask"
+    },
+    {
+      "source": "/languages-and-frameworks/nextjs/",
+      "destination": "/js/frameworks/nextjs"
+    },
+    {
+      "source": "/languages-and-frameworks/node/",
+      "destination": "/js"
+    },
+    {
+      "source": "/languages-and-frameworks/nuxtjs/",
+      "destination": "/js/frameworks/nuxtjs"
+    },
+    {
+      "source": "/languages-and-frameworks/poem/",
+      "destination": "/rust/frameworks/poem"
+    },
+    {
+      "source": "/languages-and-frameworks/python/",
+      "destination": "/python"
+    },
+    {
+      "source": "/languages-and-frameworks/redwood/",
+      "destination": "/js/frameworks/redwood"
+    },
+    {
+      "source": "/languages-and-frameworks/remix/",
+      "destination": "/js/frameworks/remix"
+    },
+    {
+      "source": "/languages-and-frameworks/rocket/",
+      "destination": "/rust/frameworks/rocket"
+    },
+    {
+      "source": "/languages-and-frameworks/rust/",
+      "destination": "/rust"
+    },
+    {
+      "source": "/languages-and-frameworks/streamlit/",
+      "destination": "/python/frameworks/streamlit"
+    },
+    {
+      "source": "/languages-and-frameworks/sveltekit/",
+      "destination": "/js/frameworks/svelte"
+    },
+    {
+      "source": "/languages-and-frameworks/warp/",
+      "destination": "/rust/frameworks/warp"
+    },
+    {
+      "source": "/launch/autostart-stop/",
+      "destination": "/launch/autostop-autostart"
+    },
+    {
+      "source": "/litefs/example/",
+      "destination": "/litefs/getting-started-fly"
+    },
+    {
+      "source": "/litefs/getting-started/",
+      "destination": "/litefs/getting-started-fly"
+    },
+    {
+      "source": "/litefs/proxy/primary/",
+      "destination": "/litefs/primary"
+    },
+    {
+      "source": "/machines/api-apps-resource/",
+      "destination": "/machines/api/apps-resource"
+    },
+    {
+      "source": "/machines/api-machines-resource/",
+      "destination": "/machines/api/machines-resource"
+    },
+    {
+      "source": "/machines/api-volumes-resource/",
+      "destination": "/machines/api/volumes-resource"
+    },
+    {
+      "source": "/machines/run/",
+      "destination": "/machines/flyctl/fly-machine-run"
+    },
+    {
+      "source": "/machines/working-with-machines/",
+      "destination": "/machines/api"
+    },
+    {
+      "source": "/metrics-and-logs/",
+      "destination": "/monitoring"
+    },
+    {
+      "source": "/metrics-and-logs/error-codes/",
+      "destination": "/monitoring/error-codes"
+    },
+    {
+      "source": "/metrics-and-logs/exporting-logs/",
+      "destination": "/monitoring/exporting-logs"
+    },
+    {
+      "source": "/metrics-and-logs/live-tail-logs/",
+      "destination": "/monitoring/live-tail-logs"
+    },
+    {
+      "source": "/metrics-and-logs/logs/",
+      "destination": "/monitoring/logging-overview"
+    },
+    {
+      "source": "/metrics-and-logs/metrics/",
+      "destination": "/monitoring/metrics"
+    },
+    {
+      "source": "/metrics-and-logs/search-logs/",
+      "destination": "/monitoring/search-logs"
+    },
+    {
+      "source": "/mpg/overview/",
+      "destination": "/mpg"
+    },
+    {
+      "source": "/networking/custom-domain-api/",
+      "destination": "/machines/api/certificates-resource"
+    },
+    {
+      "source": "/networking/custom-domains-with-fly/",
+      "destination": "/networking/custom-domain"
+    },
+    {
+      "source": "/open-source/",
+      "destination": "/about/open-source"
+    },
+    {
+      "source": "/postgres/getting-started/what-you-should-know/",
+      "destination": "/postgres"
+    },
+    {
+      "source": "/postgres/high-availability-and-global-replication/",
+      "destination": "/postgres/advanced-guides/high-availability-and-global-replication"
+    },
+    {
+      "source": "/postgres/managing/enabling-timescale/",
+      "destination": "/postgres/getting-started/enabling-timescale"
+    },
+    {
+      "source": "/pricing/",
+      "destination": "/about/pricing"
+    },
+    {
+      "source": "/rails/advanced-guides/machine-api/",
+      "destination": "/rails/advanced-guides/machine"
+    },
+    {
+      "source": "/rails/getting-started/migrate-from-heroku/",
+      "destination": "/getting-started/migrate-from-heroku"
+    },
+    {
+      "source": "/rails/one-pager/",
+      "destination": "/rails"
+    },
+    {
+      "source": "/rails/the-basics/backup-and-restoring-data/",
+      "destination": "/postgres/managing/backup-and-restore"
+    },
+    {
+      "source": "/redis/",
+      "destination": "/upstash/redis"
+    },
+    {
+      "source": "/reference/app-availability/",
+      "destination": "/apps/app-availability"
+    },
+    {
+      "source": "/reference/apps/",
+      "destination": "/apps/overview"
+    },
+    {
+      "source": "/reference/arcjet/",
+      "destination": "/security/arcjet"
+    },
+    {
+      "source": "/reference/build-secrets/",
+      "destination": "/apps/build-secrets"
+    },
+    {
+      "source": "/reference/concurrency/",
+      "destination": "/apps/concurrency"
+    },
+    {
+      "source": "/reference/deploy-tokens/",
+      "destination": "/security/tokens"
+    },
+    {
+      "source": "/reference/dynamic-request-routing/",
+      "destination": "/networking/dynamic-request-routing"
+    },
+    {
+      "source": "/reference/error-codes/",
+      "destination": "/monitoring/error-codes"
+    },
+    {
+      "source": "/reference/fine-tune-apps/",
+      "destination": "/apps/fine-tune-apps"
+    },
+    {
+      "source": "/reference/fly-replay/",
+      "destination": "/networking/dynamic-request-routing"
+    },
+    {
+      "source": "/reference/going-to-production/",
+      "destination": "/apps/going-to-production"
+    },
+    {
+      "source": "/reference/machines/",
+      "destination": "/machines/overview"
+    },
+    {
+      "source": "/reference/metrics/",
+      "destination": "/monitoring/metrics"
+    },
+    {
+      "source": "/reference/monorepo/",
+      "destination": "/launch/monorepo"
+    },
+    {
+      "source": "/reference/openid-connect/",
+      "destination": "/security/openid-connect"
+    },
+    {
+      "source": "/reference/postgres/",
+      "destination": "/postgres"
+    },
+    {
+      "source": "/reference/private-networking/",
+      "destination": "/networking/private-networking"
+    },
+    {
+      "source": "/reference/privatenetwork/",
+      "destination": "/networking/private-networking"
+    },
+    {
+      "source": "/reference/redis/",
+      "destination": "/upstash/redis"
+    },
+    {
+      "source": "/reference/regional-request-routing/",
+      "destination": "/networking/dynamic-request-routing"
+    },
+    {
+      "source": "/reference/runtime-environment/",
+      "destination": "/machines/runtime-environment"
+    },
+    {
+      "source": "/reference/scaling/",
+      "destination": "/launch/scale-count"
+    },
+    {
+      "source": "/reference/secrets/",
+      "destination": "/apps/secrets"
+    },
+    {
+      "source": "/reference/sentry/",
+      "destination": "/monitoring/sentry"
+    },
+    {
+      "source": "/reference/services/",
+      "destination": "/networking/services"
+    },
+    {
+      "source": "/reference/supabase/",
+      "destination": "/supabase"
+    },
+    {
+      "source": "/reference/tigris/",
+      "destination": "/tigris"
+    },
+    {
+      "source": "/reference/tls/",
+      "destination": "/networking/tls"
+    },
+    {
+      "source": "/reference/vector/",
+      "destination": "/upstash/vector"
+    },
+    {
+      "source": "/reference/volumes/",
+      "destination": "/volumes/overview"
+    },
+    {
+      "source": "/regions/",
+      "destination": "/reference/regions"
+    },
+    {
+      "source": "/runtime-environment/",
+      "destination": "/machines/runtime-environment"
+    },
+    {
+      "source": "/scaling/",
+      "destination": "/launch/scale-count"
+    },
+    {
+      "source": "/secrets/",
+      "destination": "/apps/secrets"
+    },
+    {
+      "source": "/security/deploy-tokens/",
+      "destination": "/security/tokens"
+    },
+    {
+      "source": "/services/",
+      "destination": "/networking/services"
+    },
+    {
+      "source": "/support/",
+      "destination": "/about/support"
+    },
+    {
+      "source": "/about-us/support/",
+      "destination": "/about/support"
+    },
+    {
+      "source": "/about/privacy/",
+      "destination": "https://fly.io/legal/privacy-policy/"
+    },
+    {
+      "source": "/about/terms/",
+      "destination": "https://fly.io/legal/terms-of-service/"
+    },
+    {
+      "source": "/app-guides/dockerfile/",
+      "destination": "/languages-and-frameworks/dockerfile"
+    },
+    {
+      "source": "/app-guides/github-actions/",
+      "destination": "/launch/continuous-deployment-with-github-actions"
+    },
+    {
+      "source": "/launch/github-actions/",
+      "destination": "/launch/continuous-deployment-with-github-actions"
+    },
+    {
+      "source": "/app-guides/streamlit/",
+      "destination": "/python/frameworks/streamlit"
+    },
+    {
+      "source": "/apps/autostop-autostart/",
+      "destination": "/launch/autostop-autostart"
+    },
+    {
+      "source": "/reference/autostart-autostop/",
+      "destination": "/launch/autostop-autostart"
+    },
+    {
+      "source": "/apps/legacy-scaling/",
+      "destination": "/launch/scale-count"
+    },
+    {
+      "source": "/elixir/the-basics/naming-your-elixir-node/",
+      "destination": "/elixir/the-basics/clustering"
+    },
+    {
+      "source": "/hands-on/install-cli/",
+      "destination": "/flyctl/install"
+    },
+    {
+      "source": "/happy-path/",
+      "destination": "/getting-started"
+    },
+    {
+      "source": "/js/frameworks/bun/",
+      "destination": "/js/frameworks"
+    },
+    {
+      "source": "/litefs/files/",
+      "destination": "/litefs"
+    },
+    {
+      "source": "/postgres/postgres-on-nomad/",
+      "destination": "/postgres"
+    },
+    {
+      "source": "/rails/dockerfiles/",
+      "destination": "/rails/getting-started/dockerfiles"
+    },
+    {
+      "source": "/redis/getting-started/",
+      "destination": "/upstash/redis"
+    },
+    {
+      "source": "/reference/dynamic-ip-addresses/",
+      "destination": "/networking"
+    },
+    {
+      "source": "/reference/flyctl/",
+      "destination": "/flyctl"
+    },
+    {
+      "source": "/reference/logging/",
+      "destination": "/monitoring/logging-overview"
+    },
+    {
+      "source": "/reference/persistent-storage/",
+      "destination": "/volumes/overview"
+    },
+    {
+      "source": "/reference/registry/",
+      "destination": "/blueprints/using-the-fly-docker-registry"
+    },
+    {
+      "source": "/reference/scheduled-machines/",
+      "destination": "/machines/flyctl/fly-machine-run"
+    },
+    {
+      "source": "/reference/tokens/",
+      "destination": "/security/tokens"
+    },
+    {
+      "source": "/machines/guides-examples/reservations/",
+      "destination": "/about/pricing"
+    },
+    {
+      "source": "/apps/api/",
+      "destination": "/machines/api"
+    },
+    {
+      "source": "/flyctl/api/",
+      "destination": "/machines/api"
+    },
+    {
+      "source": "/reference/api/",
+      "destination": "/machines/api"
+    },
+    {
+      "source": "/machines/api-v1/",
+      "destination": "/machines/api"
+    },
+    {
+      "source": "/client-libraries/",
+      "destination": "/machines/api"
+    },
+    {
+      "source": "/libraries/",
+      "destination": "/machines/api"
+    },
+    {
+      "source": "/reference/sprites/",
+      "destination": "/sprites"
+    },
+    {
+      "source": "/sprites/getting-started/",
+      "destination": "/sprites"
+    },
+    {
+      "source": "/reference/terraform/",
+      "destination": "/blueprints/infra-automation-without-terraform"
+    },
+    {
+      "source": "/rails/advanced-guides/terraform/",
+      "destination": "/blueprints/infra-automation-without-terraform"
+    },
+    {
+      "source": "/machines/guides-examples/terraform-machines/",
+      "destination": "/blueprints/infra-automation-without-terraform"
+    },
+    {
+      "source": "/gpus/",
+      "destination": "https://fly.io/blog/wrong-about-gpu/"
+    },
+    {
+      "source": "/gpus/getting-started-gpus/",
+      "destination": "https://fly.io/blog/wrong-about-gpu/"
+    },
+    {
+      "source": "/gpus/gpu-quickstart/",
+      "destination": "https://fly.io/blog/wrong-about-gpu/"
+    },
+    {
+      "source": "/gpus/python-gpu-example/",
+      "destination": "https://fly.io/blog/wrong-about-gpu/"
+    },
+    {
+      "source": "/kubernetes/using-gpus/",
+      "destination": "https://fly.io/blog/wrong-about-gpu/"
+    },
+    {
+      "source": "/flyctl/auth-token/",
+      "destination": "/flyctl/cmd/fly_tokens"
+    },
+    {
+      "source": "/flyctl/info/",
+      "destination": "/flyctl/cmd/fly_status"
+    },
+    {
+      "source": "/flyctl/version-update/",
+      "destination": "/flyctl/cmd/fly_version_upgrade"
+    },
+    {
+      "source": "/flyctl/resume/",
+      "destination": "/flyctl"
+    },
+    {
+      "source": "/flyctl/dns-records/",
+      "destination": "/flyctl"
+    },
+    {
+      "source": "/flyctl/release-notes/",
+      "destination": "https://github.com/superfly/flyctl/releases"
+    },
+    {
+      "source": "/flyctl/machine-egress-ip/",
+      "destination": "/networking/egress-ips"
+    },
+    {
+      "source": "/flyctl/machine-egress-ip-list/",
+      "destination": "/networking/egress-ips"
+    },
+    {
+      "source": "/flyctl/machine-egress-ip-allocate/",
+      "destination": "/flyctl/cmd/fly_ips_allocate-egress"
+    },
+    {
+      "source": "/flyctl/machine-egress-ip-release/",
+      "destination": "/flyctl/cmd/fly_ips_release-egress"
+    },
+    {
+      "source": "/flyctl/wireguard-token/",
+      "destination": "/flyctl/cmd/fly_wireguard"
+    },
+    {
+      "source": "/flyctl/wireguard-token-create/",
+      "destination": "/flyctl/cmd/fly_wireguard"
+    },
+    {
+      "source": "/flyctl/wireguard-token-delete/",
+      "destination": "/flyctl/cmd/fly_wireguard"
+    },
+    {
+      "source": "/flyctl/wireguard-token-list/",
+      "destination": "/flyctl/cmd/fly_wireguard"
+    },
+    {
+      "source": "/flyctl/wireguard-token-start/",
+      "destination": "/flyctl/cmd/fly_wireguard"
+    },
+    {
+      "source": "/flyctl/wireguard-token-update/",
+      "destination": "/flyctl/cmd/fly_wireguard"
+    },
+    {
+      "source": "/flyctl/extensions-mysql/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/extensions-mysql-create/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/extensions-mysql-destroy/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/extensions-mysql-status/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/extensions-mysql-update/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/extensions-supabase/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/extensions-supabase-list/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/extensions-supabase-dashboard/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/mysql/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/mysql-destroy/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/mysql-list/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/mysql-status/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/mysql-update/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+The `flyctl apps create` command creates all the necessary infrastructure to deploy your application, and then writes a `fly.toml` file to your working directory.
+
+<CodeGroup>
+```bash cmd
+flyctl apps create<%= builder ? " --builder #{builder}" : ""%>
+```
+
+```output output
+<b><span className="text:dark-green">?</span> App Name (leave blank to use an auto-generated name)</b> 
+<b><span className="text:dark-green">?</span> Select organization:</b> <span className="text:dark-green">Fly (fly)</span>
+<b>New app created</b>
+  Name     = <span className="text:dark-green"><%= name %></span> 
+  Owner    = fly             
+  Version  = 0               
+  Status   =                 
+  Hostname = <empty>
+
+<b>Wrote config file fly.toml</b>
+```
+</CodeGroup>

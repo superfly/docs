@@ -1,0 +1,43 @@
+---
+title: fly mpg
+sidebarTitle: "Managed Postgres clusters (mpg)"
+source_url: https://fly.io/docs/flyctl/mpg/
+---
+
+Manage Managed Postgres clusters.
+
+
+## Usage
+```
+fly mpg [command] [flags]
+```
+## Available Commands
+* [attach](/flyctl/cmd/fly_mpg_attach)	 - Attach a managed Postgres cluster to an app
+* [backup](/flyctl/cmd/fly_mpg_backup)	 - Backup commands
+* [connect](/flyctl/cmd/fly_mpg_connect)	 - Connect to a MPG database using psql
+* [create](/flyctl/cmd/fly_mpg_create)	 - Create a new Managed Postgres cluster
+* [databases](/flyctl/cmd/fly_mpg_databases)	 - Manage databases in a managed postgres cluster
+* [destroy](/flyctl/cmd/fly_mpg_destroy)	 - Destroy a managed Postgres cluster
+* [detach](/flyctl/cmd/fly_mpg_detach)	 - Detach a managed Postgres cluster from an app
+* [list](/flyctl/cmd/fly_mpg_list)	 - List MPG clusters.
+* [proxy](/flyctl/cmd/fly_mpg_proxy)	 - Proxy to a MPG database
+* [restore](/flyctl/cmd/fly_mpg_restore)	 - Restore MPG cluster from a backup or a point in time into a new cluster.
+* [status](/flyctl/cmd/fly_mpg_status)	 - Show MPG cluster status.
+* [users](/flyctl/cmd/fly_mpg_users)	 - Manage users in a managed postgres cluster
+
+## Options
+
+```
+  -h, --help         help for mpg
+  -o, --org string   The target Fly.io organization
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly](/flyctl/cmd/fly_help)	 - The Fly.io command line interface

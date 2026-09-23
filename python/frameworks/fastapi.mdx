@@ -1,0 +1,130 @@
+---
+title: Run a FastAPI app
+og:description: FastAPI is a modern, fast (high-performance), web framework for building APIs with
+  Python based on standard Python type hints.
+source_url: https://fly.io/docs/python/frameworks/fastapi/
+---
+
+import FlyctlSnippet from '/snippets/languages-and-frameworks/flyctl.mdx';
+
+Getting an application running on Fly.io is essentially working out how to package it as a deployable image. Once packaged, it can be deployed to the Fly.io platform.
+
+In this guide we’ll learn how to deploy a [FastAPI](https://fastapi.tiangolo.com/) application on Fly.io.
+
+FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
+
+Deploying a FastAPI app on Fly.io is... well it's fast! You can be up and running in less than a minute. 
+
+## _Speedrun_
+
+<FlyctlSnippet />
+
+The fastest way to get a basic Fast Api server on Fly.io is to use our FastAPI template:
+
+```sh
+git clone git@github.com:fly-apps/hello-fastapi.git fastapi-app
+cd fastapi-app
+fly launch --generate-name
+```
+
+## _Deploy a FastAPI app from scratch_
+
+For managing our project, we use [Poetry](https://python-poetry.org/).
+For more information on the initial setup with poetry, refer to [setting up a python environment](/python/the-basics/initial-setup).
+
+We can initialize a new project like so:
+
+```bash
+poetry new fastapi-app
+cd fastapi-app
+```
+
+<Info>
+If you're using Poetry 2.0+ (the default when installed via `pipx`), the `poetry shell` command is no longer built in. Use `poetry run` to run commands (e.g., `poetry run python main.py`), or activate the environment with `poetry env activate`. See the [initial setup guide](/python/the-basics/initial-setup) for more details.
+</Info>
+
+
+Then we have to add the FastAPI dependency:
+
+```bash
+poetry add "fastapi[standard]"
+```
+
+Now, let's create a simple FastAPI app in `main.py`:
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+async def hello_fly():
+    return 'hello from fly.io'
+
+```
+
+We can then serve the development version of the app using the `fastapi` cli tool:
+
+```bash
+fastapi dev
+```
+
+This will display a 'hello from fly.io!' message when you visit the root URL.
+With the development environment we also get cool features like hot-reloading.
+
+To run in production mode, we can amend the command:
+
+```bash
+fastapi run
+```
+
+<Info>
+The `fastapi` assumes your app is stored in `main.py` or `app.py` - if this is not the case, you must specify that when running the app: 
+
+`fastapi run hello/entrypoint.py`
+</Info>
+
+And with that you can deploy the app!
+
+<CodeGroup>
+```bash cmd
+fly launch
+```
+
+```output output
+Scanning source code
+Detected a FastAPI app
+Warning: This organization has no payment method, turning off high availability
+Creating app in [redacted]/[app-name]
+We're about to launch your app on Fly.io. Here's what you're getting:
+
+Organization: Your Name              (fly launch defaults to the personal org)
+Name:         [app-name]             (derived from your directory name)
+Region:       Amsterdam, Netherlands (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+Sentry:       false                  (not requested)
+
+...
+
+==> Building image
+...
+==> Building image with Docker
+...
+
+Watch your deployment at https://fly.io/apps/[app-name]/monitoring
+...
+
+Visit your newly deployed app at https://[app-name].fly.dev/
+
+```
+</CodeGroup>
+
+This will generate a `fly.toml` file with the configuration for your app and a Dockerfile that uses [multi-stage builds](/python/the-basics/multi-stage-builds).
+Refer to the [fly.toml docs](/reference/configuration) for more configuration options.
+
+To deploy a new version of your app, simply run `fly deploy` in the project directory.
+
+You can check out the full (yet minimal) example in [this GitHub repository](https://github.com/fly-apps/) for a reference.
+

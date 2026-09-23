@@ -1,0 +1,30 @@
+---
+title: Create a Fly Postgres Cluster
+og:description: Create a new Fly Postgres cluster.
+source_url: https://fly.io/docs/postgres/getting-started/create-pg-cluster/
+---
+
+import PostgresWarning from "/snippets/postgres.mdx";
+
+<PostgresWarning />
+
+import PgCreateSnippet from '/snippets/postgres/pg-create.mdx';
+
+<PgCreateSnippet />
+
+```
+Connect to postgres
+Any app within the TestOrg organization can connect to this Postgres using the above connection string
+
+Now that you've set up Postgres, here's what you need to understand: https://fly.io/docs/postgres/getting-started/what-you-should-know/
+```
+
+After answering all the prompts, you'll see a message saying that the cluster is being created. Take heed of the reminder to save your password in a safe place!
+
+Once deployment is complete, you'll be looking to connect an app to your new Postgres cluster. There's a good chance you'll want to [attach a Fly app](/postgres/managing/attach-detach) next.
+
+Before going any further, a note: the automated Postgres creation process doesn't generate a `fly.toml` file in the working directory. This means that when you use `flyctl` commands that would otherwise look for an app name in `fly.toml`, you'll have to specify the app, like so:
+
+```bash
+flyctl <command> -a <postgres-app-name>
+```

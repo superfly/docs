@@ -1,0 +1,129 @@
+---
+title: Run a Dioxus Liveview App
+og:description: Dioxus Liveview allows apps to run on the server and render in the browser. It uses
+  WebSockets to communicate between the server and the browser.
+source_url: https://fly.io/docs/rust/frameworks/dioxus-liveview/
+---
+
+import FlyctlSnippet from '/snippets/languages-and-frameworks/flyctl.mdx';
+
+Getting an application running on Fly.io is essentially working out how to package it as a deployable image. Once packaged, it can be deployed to the Fly.io platform.
+
+In this guide we’ll learn how to deploy a [Dioxus Liveview](https://dioxuslabs.com/learn/0.6/getting_started/) application on Fly.io.
+
+Dioxus Liveview allows apps to run on the server and render in the browser. It uses WebSockets to communicate between the server and the browser.
+
+Bring Liveview app to life on Fly.io is a breeze! With the help of the [cargo chef](https://github.com/LukeMathWalker/cargo-chef), we get great build times and small images.
+
+## _Speedrun_
+
+<FlyctlSnippet />
+
+The fastest way to get a basic Dioxus Liveview server on Fly.io is to use our dioxus-liveview template:
+
+```sh
+git clone --single-branch --branch dioxus-liveview git@github.com:superfly/rust-templates.git dioxus-liveview-app
+cd dioxus-liveview-app
+fly launch --generate-name
+```
+
+## _Deploy a Dioxus Liveview App from scratch_
+
+If you don’t already have an existing Dioxus Liveview application, you can create one with `cargo`:
+
+```sh
+cargo new dioxus-liveview-on-fly
+cd dioxus-liveview-on-fly
+```
+
+
+Then we have to add some dependencies to the project:
+
+```bash
+cargo add dioxus axum
+cargo add dioxus-liveview
+cargo add tokio -F full
+```
+
+Now, let's create a simple count incrementing app in `src/main.rs`:
+
+```rust
+use axum::Router;
+use dioxus::prelude::*;
+use dioxus_liveview::LiveviewRouter;
+
+fn app() -> Element {
+    let mut num = use_signal(|| 0);
+
+    rsx! {
+        div {
+            "hello axum! {num}"
+            button { onclick: move |_| num += 1, "Increment" }
+        }
+    }
+}
+
+#[tokio::main]
+async fn main() {
+    let addr: std::net::SocketAddr = ([0, 0, 0 ,0], 8080).into();
+
+    let app = Router::new().with_app("/", app);
+
+    println!("Listening on http://{addr}");
+
+    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
+    axum::serve(listener, app.into_make_service())
+        .await
+        .unwrap();
+}
+```
+
+This will display a counter that can be incremented using a button. The value will be updated over a websocket. 
+
+We can confirm everything works fine by running `cargo run` and checking out `http://localhost:8080`.
+
+
+
+And with that you can deploy the app!
+
+<CodeGroup>
+```bash cmd
+fly launch
+```
+
+```output output
+Scanning source code
+Detected a Dioxus Liveview app
+Warning: This organization has no payment method, turning off high availability
+Creating app in [redacted]/dioxus-liveview-on-fly
+We're about to launch your app on Fly.io. Here's what you're getting:
+
+Organization: Your Name              (fly launch defaults to the personal org)
+Name:         [app-name]             (derived from your directory name)
+Region:       Amsterdam, Netherlands (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+Sentry:       false                  (not requested)
+
+...
+
+==> Building image
+...
+==> Building image with Docker
+...
+
+Watch your deployment at https://fly.io/apps/[app-name]/monitoring
+...
+
+Visit your newly deployed app at https://[app-name].fly.dev/
+```
+</CodeGroup>
+
+This will generate a `fly.toml` file with the configuration for your app and a Dockerfile that uses [cargo chef](/rust/the-basics/cargo-chef).
+Refer to the [fly.toml docs](/reference/configuration) for more configuration options.
+
+To deploy a new version of your app, simply run `fly deploy` in the project directory.
+
+You can check out the full (yet minimal) example in [this GitHub repository](https://github.com/superfly/rust-templates) for a reference.
+

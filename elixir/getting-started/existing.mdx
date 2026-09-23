@@ -1,0 +1,204 @@
+---
+title: Existing Elixir Apps
+og:description: Learn how to run your existing Elixir applications on Fly.
+source_url: https://fly.io/docs/elixir/getting-started/existing/
+---
+
+If you have an existing Elixir app that you want to move over to Fly, this guide walks you through the initial deployment process and shows you techniques you can use to troubleshoot issues you may encounter in a new environment.
+
+### Provision Elixir and Postgres Servers
+
+To configure and launch your Elixir app, you can use `fly launch` and follow the wizard.
+
+When you run `fly launch` from the newly-created project directory, the launcher provides some defaults for your new app, and gives you the option to tweak the settings.
+
+Run:
+
+```sh
+cd my-app-name
+fly launch
+```
+
+You'll get a summary of the defaults chosen for your app:
+
+```output
+Organization: MyOrgName              (fly launch defaults to the personal org)
+Name:         my-app-name            (derived from your directory name)
+Region:       Secaucus, NJ (US)      (this is the fastest region for you)
+App Machines: shared-cpu-1x, 1GB RAM (most apps need about 1GB of RAM)
+Postgres:     <none>                 (not requested)
+Redis:        <none>                 (not requested)
+
+? Do you want to tweak these settings before proceeding? Yes
+Opening https://fly.io/cli/launch/bea626e2d179a083a3ba622a367e24ec ...
+```
+
+Type `y` at the prompt to open the Fly Launch page, and make the following changes to your app config:
+
+* Change the default app name and region, if needed.
+* For Databases, select Fly Postgres, give the Postgres database app a name (for example, your app name with `-db` appended) and choose a configuration.
+
+Once you confirm your settings, you can return to the terminal, where the launcher will:
+
+* Run the  deployment setup task
+* Build the image
+* Set secrets required by  (`SECRET_KEY_BASE`, for example)
+* Deploy the application in your selected region
+
+```output
+Waiting for launch data... Done
+Created app 'my-app-name' in organization 'personal'
+Admin URL: https://fly.io/apps/my-app-name
+Hostname: my-app-name.fly.dev
+Set secrets on my-app-name: SECRET_KEY_BASE
+Creating postgres cluster in organization personal
+Creating app...
+Setting secrets on app my-app-name-db...
+Provisioning 1 of 1 machines with image flyio/postgres-flex:15.3@sha256:44b698752cf113110f2fa72443d7fe452b48228aafbb0d93045ef1e3282360a6
+Waiting for machine to start...
+Machine 2865550c7e96d8 is created
+==> Monitoring health checks
+  Waiting for 2865550c7e96d8 to become healthy (started, 3/3)
+
+Postgres cluster my-app-name-db created
+  Username:    postgres
+  Password:    EChe3BrhCjsPQEI
+  Hostname:    my-app-name-db.internal
+  Flycast:     fdaa:2:45b:0:1::1d
+  Proxy port:  5432
+  Postgres port:  5433
+  Connection string: postgres://postgres:EChe3BrhCjsPQEI@my-app-name-db.flycast:5432
+
+Save your credentials in a secure place -- you won't be able to see them again!
+
+Connect to postgres
+Any app within the MyOrgName organization can connect to this Postgres using the above connection string
+
+Now that you've set up Postgres, here's what you need to understand: https://fly.io/docs/postgres/getting-started/what-you-should-know/
+Checking for existing attachments
+Registering attachment
+Creating database
+Creating user
+
+Postgres cluster my-app-name-db is now attached to my-app-name
+The following secret was added to my-app-name:
+  DATABASE_URL=postgres://aa_hello_elixir2:Er6pLzUBuhKcbBl@my-app-name-db.flycast:5432/aa_hello_elixir2?sslmode=disable
+Postgres cluster my-app-name-db is now attached to my-app-name
+Generating rel/env.sh.eex for distributed Elixir support
+Preparing system for Elixir builds
+Installing application dependencies
+Running Docker release generator
+Wrote config file fly.toml
+Validating /Users/anderson/test-elixir-gs/hello_elixir2/fly.toml
+✓ Configuration is valid
+==> Building image
+Remote builder fly-builder-black-pine-7645 ready
+Remote builder fly-builder-black-pine-7645 ready
+==> Building image with Docker
+--> docker host: 20.10.12 linux x86_64
+
+...
+
+--> Pushing image done
+image: registry.fly.io/my-app-name:deployment-01HPMGHTG8XSYH3ZCV82SF5CEZ
+image size: 126 MB
+
+Watch your deployment at https://fly.io/apps/my-app-name/monitoring
+
+Provisioning ips for my-app-name
+  Dedicated ipv6: 2a09:8280:1::2a:bc0b:0
+  Shared ipv4: 66.241.124.79
+  Add a dedicated ipv4 with: fly ips allocate-v4
+
+Running my-app-name release_command: /app/bin/migrate
+
+-------
+ ✔ release_command 784eee4c294298 completed successfully
+-------
+This deployment will:
+ * create 2 "app" machines
+
+No machines in group app, launching a new machine
+Creating a second machine to increase service availability
+Finished launching new machines
+-------
+NOTE: The machines for [app] have services with 'auto_stop_machines = true' that will be stopped when idling
+
+-------
+Checking DNS configuration for my-app-name.fly.dev
+
+Visit your newly deployed app at https://my-app-name.fly.dev/
+```
+
+<Note>
+Make sure to note your Postgres credentials from the output.
+</Note>
+
+That's it! Run `fly apps open` to see your deployed app in action.
+
+Try a few other commands:
+
+* `fly logs` - Tail your application logs
+* `fly status` - App deployment details
+* `fly status -a postgres-database-app-name` - Database deployment details
+* `fly deploy` - Deploy the application after making changes
+
+
+## Troubleshooting your initial deployment
+
+Since this is an existing Elixir app, its highly likely it might not boot because you probably need to configure secrets or other service dependencies. Let's walk through how to troubleshoot these issues so you can get your app running.
+
+### View log files
+
+If your application didn't boot on the first deploy, run `fly logs` to see what's going on.
+
+```bash
+fly logs
+```
+
+This shows the past few log file entries and tails your production log files.
+
+### Open an IEx Session
+
+It can be helpful to open a IEx Session to run commands and diagnose production issues.
+
+To do this, we will [login with SSH](/flyctl/cmd/fly_ssh) to our
+application VM. There is a one-time setup task for using SSH. Follow the instructions.
+
+```
+fly ssh issue --agent
+```
+
+With SSH configured, let's open a console.
+
+<CodeGroup>
+```bash cmd
+fly ssh console --pty -C "/app/bin/hello_elixir remote"
+```
+```output output
+Connecting to hello_elixir.internal... complete
+Erlang/OTP 23 [erts-11.2.1] [source] [64-bit] [smp:1:1] [ds:1:1:10] [async-threads:1]
+
+Interactive Elixir (1.11.2) - press Ctrl+C to exit (type h() ENTER for help)
+iex(hello_elixir@fdaa:0:1da8:a7b:ac4:b204:7e29:2)1>
+```
+</CodeGroup>
+You have a live IEx shell into your application!
+
+## Deploy your application after changes
+
+Deploying your application is done with the following command:
+
+```bash
+fly deploy
+```
+
+This will take a few seconds as it uploads your application, builds a machine image,
+deploys the images, and then monitors to ensure it starts successfully. Once complete
+visit your app with the following command:
+
+```bash
+fly apps open
+```
+
+If all went well, you'll see your Elixir application homepage.

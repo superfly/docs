@@ -1,0 +1,50 @@
+---
+title: fly machine
+sidebarTitle: "Manage Machines (machine)"
+source_url: https://fly.io/docs/flyctl/machine/
+---
+
+Manage Fly Machines. Fly Machines are super-fast, lightweight VMs that can be created,
+and then quickly started and stopped as needed with flyctl commands or with the
+Machines REST fly.
+
+## Usage
+```
+fly machine [command] [flags]
+```
+## Available Commands
+* [api-proxy](/flyctl/cmd/fly_machine_api-proxy)	 - Establish a proxy to the Machine API through a Wireguard tunnel for local connections
+* [clone](/flyctl/cmd/fly_machine_clone)	 - Clone a Fly Machine
+* [cordon](/flyctl/cmd/fly_machine_cordon)	 - Deactivate all services on a machine
+* [create](/flyctl/cmd/fly_machine_create)	 - Create, but don't start, a machine
+* [destroy](/flyctl/cmd/fly_machine_destroy)	 - Destroy Fly machines
+* [exec](/flyctl/cmd/fly_machine_exec)	 - Execute a command on a machine
+* [kill](/flyctl/cmd/fly_machine_kill)	 - Kill (SIGKILL) a Fly machine
+* [leases](/flyctl/cmd/fly_machine_leases)	 - Manage machine leases
+* [list](/flyctl/cmd/fly_machine_list)	 - List Fly machines
+* [place](/flyctl/cmd/fly_machine_place)	 - Simulate Machine placements
+* [restart](/flyctl/cmd/fly_machine_restart)	 - Restart one or more Fly machines
+* [run](/flyctl/cmd/fly_machine_run)	 - Run a machine
+* [start](/flyctl/cmd/fly_machine_start)	 - Start one or more Fly machines
+* [status](/flyctl/cmd/fly_machine_status)	 - Show current status of a running machine
+* [stop](/flyctl/cmd/fly_machine_stop)	 - Stop one or more Fly machines
+* [suspend](/flyctl/cmd/fly_machine_suspend)	 - Suspend one or more Fly machines
+* [uncordon](/flyctl/cmd/fly_machine_uncordon)	 - Reactivate all services on a machine
+* [update](/flyctl/cmd/fly_machine_update)	 - Update a machine
+* [wait](/flyctl/cmd/fly_machine_wait)	 - Wait for a machine to reach a state
+
+## Options
+
+```
+  -h, --help   help for machine
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly](/flyctl/cmd/fly_help)	 - The Fly.io command line interface

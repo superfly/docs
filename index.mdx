@@ -1,0 +1,137 @@
+---
+title: Fly.io developer documentation
+source_url: https://fly.io/docs/
+---
+
+import {Small} from "/snippets/Small.jsx";
+
+<div className="grid grid-cols-2 items-center">
+  <div>
+## Ready to get started?
+
+**Step 1:** Install `flyctl`
+
+```bash
+brew install flyctl
+```
+
+<Small>Not using `brew`? Check out the [installation guide](/flyctl/install)</Small>
+<br/>
+<br/>
+**Step 2:** Run `fly launch`
+  </div>
+
+  <img src="/images/doc-main.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon waving to a bird sitting on a hour roof" />
+</div>
+
+## Explore Fly.io by features
+
+<Card>
+<ul className="grid grid-cols-2 sm:grid-cols-3 font-medium gap-2">
+  <li><a href="/machines">Fly Machines</a></li>
+  <li><a href="/volumes">Fly Volumes</a></li>
+  <li><a href="/security">Security</a></li>
+  <li><a href="/networking">Networking</a></li>
+  <li><a href="/mpg">Managed Postgres</a></li>
+  <li><a href="/kubernetes">Fly Kubernetes</a></li>
+  <li><a href="/database-storage-guides">Database & Storage</a></li>
+  <li><a href="/monitoring">Monitoring</a></li>
+</ul>
+</Card>
+
+
+## Get answers in your language
+
+Or framework. You know what we mean. Check out the docs specific to your tech so you can move faster.
+<div className="homepage_cards">
+  <Columns cols={3}>
+    <Card
+      href="/elixir/getting-started"
+      className="btn h-full rounded-xl"
+      title="Phoenix"
+    />
+    
+    <Card
+      href="/languages-and-frameworks/static"
+      className="btn h-full rounded-xl"
+      title="Static"
+    />
+    
+    <Card
+      href="/rails/getting-started"
+      className="btn h-full rounded-xl"
+      title="Ruby on Rails"
+    />
+    
+    <Card
+      href="/languages-and-frameworks/dockerfile"
+      className="btn h-full rounded-xl"
+      title="Docker"
+    />
+    
+    <Card
+      href="/languages-and-frameworks/golang"
+      className="btn h-full rounded-xl"
+      title="Go"
+    />
+    
+    <Card
+      href="/rust"
+      className="btn h-full rounded-xl"
+      title="Rust"
+    />
+    
+    <Card
+      href="/django/getting-started"
+      className="btn h-full rounded-xl"
+      title="Django"
+    />
+    
+    <Card
+      href="/laravel"
+      className="btn h-full rounded-xl"
+      title="Laravel"
+    />
+    
+    <Card
+      href="/js"
+      className="btn h-full rounded-xl"
+      title="JavaScript"
+    />
+    
+  </Columns>
+</div>
+
+## How does Fly.io work?
+
+  <img src="/images/fly-map.png" alt="" />
+
+<div className="grid grid-cols-2 items-center">
+  <img src="/images/help.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon waving to a bird sitting on a hour roof" />
+  <div className="space-y-2">
+    <h2>Could you use more help?</h2>
+    <p>Our Community forum and Support team have the answers.</p>
+  </div>
+</div>
+
+<div className="grid grid-cols-2 gap-6">
+<Card title="Community Forum">
+* Free to use
+* Discuss Fly.io with other users
+* See new Fly.io developments first
+* Searchable backlog
+* Quick answers to common issues
+
+[Learn more](https://community.fly.io)
+</Card>
+
+<Card title="Support">
+* Plans start at \$29/month
+* Guaranteed response time
+* Run by Fly.io engineers, not chat bots
+* Technical architecture support
+* Public metrics
+
+[Learn more](https://fly.io/support)
+</Card>
+</div>

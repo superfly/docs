@@ -1,0 +1,119 @@
+---
+title: Going to production checklist
+source_url: https://fly.io/docs/apps/going-to-production/
+---
+
+Use this checklist to help you set up a production environment on Fly.io.
+
+  <img src="/images/outlook.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon waving to a bird sitting on a hour roof" />
+
+## Overview
+
+Moving an app from staging to production can expose unexpected failure modes: security holes, performance and scaling issues, or data loss. This checklist is meant to catch common pitfalls for apps on Fly.io, but it’s not a guarantee of production readiness. Not every item here will apply to your app, and you may have additional requirements that aren't listed. Use this as a foundation and adapt it to your needs. Think of this list as a scaffold, not a silver bullet.
+
+<Note>
+**Important:** The checklist is not exhaustive and does not guarantee production-readiness for your app. Apps can have unique requirements for production depending on the framework and type of app. Some items won't be applicable and there may be other considerations not listed here; you'll need to decide which checklist items work for your app.
+</Note>
+
+## Security
+
+<AccordionGroup>
+  <Accordion title="Set up single sign-on for organizations">
+    Enable SSO on your organization to take advantage of Google or GitHub authentication security. Learn more about [Single sign-on for organizations](/security/sso).
+  </Accordion>
+  <Accordion title="Isolate staging and production environments">
+    Use organizations to limit access to your production environment. Read this guide: [Staging and production isolation](/blueprints/staging-prod-isolation).
+  </Accordion>
+  <Accordion title="Enforce least privilege access">
+    Use access tokens to allow only the minimum access level required by team members to your organization, apps, and Machines. Understand [access tokens](/security/tokens).
+  </Accordion>
+  <Accordion title="Protect sensitive information">
+    Set secrets to store sensitive data and make them available as environment variables to your app. Read about [Secrets and Fly Apps](/apps/secrets).
+  </Accordion>
+  <Accordion title="Make sure private services are not exposed">
+    Check that your private apps with services don’t have public IP addresses. Run `fly ips list` and use `fly ips release` to release unnecessary public IPs. More detail is available in this `flyctl` reference: [`fly ips` commands](/flyctl/cmd/fly_ips). Assign private apps a [Flycast address](/networking/flycast) instead.
+  </Accordion>
+  <Accordion title="Use Arcjet application security for JavaScript apps">
+    Secure your app with rate limiting, bot protection, email validation, and defense against common attacks through our extension partner Arcjet. Read more about [Application Security by Arcjet](/security/arcjet).
+  </Accordion>
+</AccordionGroup>
+
+## Databases
+
+<AccordionGroup>
+  <Accordion title="Use Managed Postgres">
+    We recommend using [Fly.io’s Managed Postgres](/mpg), our fully-managed database service that handles all aspects of running production PostgreSQL.
+  </Accordion>
+  <Accordion title="Practice your disaster recovery plan">
+    Practice restoring your managed Postgres database from a backup before you actually need to. You can do this anytime from the Managed Postgres dashboard.
+  </Accordion>
+</AccordionGroup>
+
+## App performance
+
+<AccordionGroup>
+  <Accordion title="Get Machine sizing right">
+    Most conventional production web apps require [performance CPUs](/machines/cpu-performance). Also make sure you have enough RAM for your app and/or enable [swapping to disk](/reference/configuration/#swap_size_mb-option) to deal with brief spikes in memory use. Find out more details in our [Machine sizing guide](/machines/guides-examples/machine-sizing).
+  </Accordion>
+  <Accordion title="Fine-tune your app">
+    Learn about optimizing your app on Fly.io. Read these tips to [fine-tune your app on Fly.io](/apps/fine-tune-apps).
+  </Accordion>
+</AccordionGroup>
+
+## Availability, resiliency, and costs
+
+<AccordionGroup>
+  <Accordion title="Use multiple Machines for resiliency">
+    Make your app resilient to single-host failures with multiple Machines that stay stopped until you need them. Learn more in our guide: [Resilient apps use multiple Machines](/blueprints/resilient-apps-multiple-machines).
+  </Accordion>
+  <Accordion title="Scale your app into more regions">
+    Scale your app in multiple regions closest to your app’s users. Find out how to [Scale an app’s regions](/launch/scale-count/#scale-an-apps-regions).
+  </Accordion>
+  <Accordion title="Use autostop/autostart to reduce costs">
+    Autostop/autostart lets you stop or suspend Machines when there’s low traffic, saving on resource usage and costs. You get autostop/autostart by default with a new app, but you can configure it to optimize for your use case. Find out more: [Autostop/autostart Machines](/launch/autostop-autostart).
+  </Accordion>
+  <Accordion title="Set up autoscaling by metric to reduce costs">
+    For apps that aren’t running web services, use the autoscaler app to scale your app’s Machines based on any metric, saving on resource usage and costs. Learn how to [Autoscale based on metrics](/launch/autoscale-by-metric).
+  </Accordion>
+</AccordionGroup>
+
+## Networking
+
+<AccordionGroup>
+  <Accordion title="Set up a custom domain">
+    Configure a certificate for your domain. Learn how to [use a custom domain](/networking/custom-domain).
+  </Accordion>
+  <Accordion title="Consider using a dedicated IPv4 address">
+    Completely eliminate the chance of blacklisted spammers causing problems for your app. There is a small [added cost](/about/pricing/#anycast-ip-addresses) for dedicated IPv4 addresses. Read more about [Dedicated IPv4](/networking/services/#dedicated-ipv4).
+  </Accordion>
+  <Accordion title="Set up Flycast for private apps">
+    If you haven’t already done so, give your private apps a Flycast address to communicate with them entirely on your private network. Find out about [Flycast - Private Fly Proxy services](/networking/flycast).
+  </Accordion>
+</AccordionGroup>
+
+## Monitoring
+
+<AccordionGroup>
+  <Accordion title="Monitor your app with fully-managed metrics">
+    Use managed Prometheus and managed Grafana dashboards to monitor your app. Read about [Metrics on Fly.io](/monitoring/metrics).
+  </Accordion>
+  <Accordion title="Use Sentry for error tracking">
+    Sentry is an application monitoring platform that helps you identify and fix software problems before they impact your users. [Sign up with Sentry](https://sentry.io/signup/), then set your `SENTRY_DSN` as an app secret. Read more about [Application Monitoring by Sentry](/monitoring/sentry).
+  </Accordion>
+  <Accordion title="Export your logs">
+    Set up the Fly Log Shipper to aggregate your app’s logs to a service of your choice. Read more about [Exporting logs](/monitoring/exporting-logs).
+  </Accordion>
+</AccordionGroup>
+
+## CI/CD {#ci-cd}
+
+<AccordionGroup>
+  <Accordion title="Generate review apps with GitHub Actions">
+    Automatically generate ephemeral review apps on Fly.io for each pull request (PR) using GitHub Actions. Learn more about [Git Branch Preview Environments on GitHub](/blueprints/review-apps-guide).
+  </Accordion>
+  <Accordion title="Deploy with GitHub Actions">
+    Set up your app for continuous deployment to Fly.io from the app’s GitHub repository. Find out how to use [Continuous Deployment with Fly.io and GitHub Actions](/launch/continuous-deployment-with-github-actions).
+  </Accordion>
+</AccordionGroup>
+
+## Get support

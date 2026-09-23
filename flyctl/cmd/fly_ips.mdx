@@ -1,0 +1,37 @@
+---
+title: fly ips
+sidebarTitle: "Manage IP addresses (ips)"
+source_url: https://fly.io/docs/flyctl/ips/
+---
+
+Commands for managing IP addresses associated with an application
+
+## Usage
+```
+fly ips [command] [flags]
+```
+## Available Commands
+* [allocate](/flyctl/cmd/fly_ips_allocate)	 - Allocate recommended IP addresses
+* [allocate-egress](/flyctl/cmd/fly_ips_allocate-egress)	 - Allocate app-scoped egress IPs
+* [allocate-v4](/flyctl/cmd/fly_ips_allocate-v4)	 - Allocate an IPv4 address
+* [allocate-v6](/flyctl/cmd/fly_ips_allocate-v6)	 - Allocate an IPv6 address
+* [list](/flyctl/cmd/fly_ips_list)	 - List allocated IP addresses
+* [private](/flyctl/cmd/fly_ips_private)	 - List instances private IP addresses
+* [release](/flyctl/cmd/fly_ips_release)	 - Release ingress IP addresses
+* [release-egress](/flyctl/cmd/fly_ips_release-egress)	 - Release egress IP addresses
+
+## Options
+
+```
+  -h, --help   help for ips
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly](/flyctl/cmd/fly_help)	 - The Fly.io command line interface

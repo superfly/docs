@@ -1,0 +1,31 @@
+---
+title: Run a Nuxt App
+og:description: Nuxt is the intuitive Vue Framework.
+source_url: https://fly.io/docs/js/frameworks/nuxtjs/
+---
+
+import FlyctlSnippet from '/snippets/js/frameworks/flyctl.mdx';
+import LaunchedSnippet from '/snippets/js/frameworks/launched.mdx';
+import LaunchSnippet from '/snippets/js/frameworks/launch.mdx';
+
+Getting an application running on Fly.io is essentially working out how to package it as a deployable image. Once packaged it can be deployed to the Fly.io platform.
+
+In this guide we’ll learn how to deploy a [Nuxt](https://nuxt.com) application on Fly.io.
+
+You can deploy your [Nuxt](https://nuxt.com) app on Fly with minimal effort, our CLI will do the heavy lifting.
+
+## _Deploy a Nuxt app_
+
+<FlyctlSnippet />
+
+If you don't already have a Nuxt app, you can create one:
+
+```bash
+npx nuxi@latest init hello-nuxt
+```
+
+Now let's launch your Nuxt app.
+
+<LaunchSnippet />
+
+<LaunchedSnippet />

@@ -1,0 +1,40 @@
+---
+title: fly orgs
+sidebarTitle: "Manage Organizations (orgs)"
+source_url: https://fly.io/docs/flyctl/orgs/
+---
+
+Commands for managing Fly organizations. list, create, show and
+destroy organizations.
+Organization admins can also invite or remove users from Organizations.
+
+
+## Usage
+```
+fly orgs [command] [flags]
+```
+## Available Commands
+* [create](/flyctl/cmd/fly_orgs_create)	 - Create an organization
+* [cross-network-replays](/flyctl/cmd/fly_orgs_cross-network-replays)	 - Manage cross-network replay settings
+* [delete](/flyctl/cmd/fly_orgs_delete)	 - Delete an organization
+* [invite](/flyctl/cmd/fly_orgs_invite)	 - Invite user (by email) to organization
+* [list](/flyctl/cmd/fly_orgs_list)	 - Lists organizations for current user
+* [remove](/flyctl/cmd/fly_orgs_remove)	 - Remove a user from an organization
+* [replay-sources](/flyctl/cmd/fly_orgs_replay-sources)	 - Manage allowed replay source organizations
+* [show](/flyctl/cmd/fly_orgs_show)	 - Show information about an organization
+
+## Options
+
+```
+  -h, --help   help for orgs
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly](/flyctl/cmd/fly_help)	 - The Fly.io command line interface
