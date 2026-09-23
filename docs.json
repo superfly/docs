@@ -46,11 +46,6 @@
       }
     ]
   },
-  "seo": {
-    "metatags": {
-      "robots": "noindex"
-    }
-  },
   "integrations": {
     "telemetry": {
       "enabled": false
