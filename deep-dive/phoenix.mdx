@@ -20,7 +20,7 @@ How the pieces are put together:
 * [`lib/dictaphone_web/live/dictaphone.ex`](https://github.com/fly-apps/phoenix-dictaphone/blob/main/lib/dictaphone_web/live/dictaphone.ex) and
   [`lib/dictaphone_web/controllers/audio_controller.ex`](https://github.com/fly-apps/phoenix-dictaphone/blob/main/lib/dictaphone_web/controllers/audio_controller.ex) contain
   the server implementation.
-* [Ecto.Adapters.Postgres](Ecto.Adapters.Postgres) is used to access PostgreSQL.
+* [Ecto.Adapters.Postgres](https://hexdocs.pm/ecto_sql/Ecto.Adapters.Postgres.html) is used to access PostgreSQL.
   Access to the database is through the `DATABASE_URL` secret.
 * [ExAws.S3](https://hexdocs.pm/ex_aws_s3/ExAws.S3.html)
   is used to access Tigris.  The following secrets are used to
