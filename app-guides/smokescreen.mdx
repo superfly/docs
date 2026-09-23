@@ -34,7 +34,7 @@ fly init smokescreen-example --import fly.source.toml
 
 Replace `smokescreen-example` with your preferred app name (`yourappname`) or omit it to have Fly generate a name for you. You may be prompted for which organization you want the app to run in. Ensure that it is running in the same organization as the apps you wish to manage their external calls.
 
-Smokescreen runs on port 4750 and applications wishing to connect to it from within your Fly organization should send their requests to `yourappname.internal`. To connect to Smokescreen from outside the Fly environment, use [Fly's Wireguard](/reference/wireguard) to create a VPN into your Fly organization. 
+Smokescreen runs on port 4750 and applications wishing to connect to it from within your Fly organization should send their requests to `yourappname.internal`. To connect to Smokescreen from outside the Fly environment, use [Fly's WireGuard](/blueprints/connect-private-network-wireguard) to create a VPN into your Fly organization. 
 
 This Smokescreen example includes support for a proxy password and an access control list.
 

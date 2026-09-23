@@ -61,7 +61,7 @@ Baby Shark Dance | Sing and Dance! | @Baby Shark Official | PINKFONG Songs for C
 
 To show the YouTube video views count, a small scraper written with [Axrio](https://www.npmjs.com/package/@geshan/axrio) npm package was executed. Axrio combines the popular [Axios](https://www.npmjs.com/package/axios) library and [Cheerio](https://www.npmjs.com/package/cheerio) to create a mini scraper. Axios is used to make requests and Cheerio acts like DOM navigator parsing the markup and giving us an API for traversing/manipulating the resulting data structure. You can kickstart a small scraper with Axrio too.
 
-The [yt-views.js](./yt-views) is a basic scraper which performs a GET request for the given YouTube URL with Puppeteer. This will return the final DOM after the page's JavaScript executes. Then it parses the title and views count out of the rendered page's markup and prints it on the console.
+The `yt-views.js` is a basic scraper which performs a GET request for the given YouTube URL with Puppeteer. This will return the final DOM after the page's JavaScript executes. Then it parses the title and views count out of the rendered page's markup and prints it on the console.
 
 It uses the puppeteer-js-renderer service that is already deployed and running on Fly.io. Have a look at he "[how to use it as a service](#how-to-use-it-as-a-service)" section for more information. To start your own instance on Fly.io jump to the "[how to deploy on fly.io](#how-to-deploy-it-on-flyio)" section.
 
@@ -100,7 +100,7 @@ Styles and images will look broken but the HTML tags will be there. Happy Web Sc
 
 [Fly.io](https://fly.io) is a platform for applications that need to run globally. It runs your code close to users and scales compute in cities where your app is busiest. Write your code, package it into a Docker image, deploy it to Fly's platform, and let that do all the work to keep your app snappy.
 
-Fly.io has great [documentation](/) to get started. You can find a quick speed run showing how to get your app running closer to your users with this [guide](/speedrun). 
+Fly.io has great [documentation](/) to get started. You can find a quick speed run showing how to get your app running closer to your users with this [guide](/getting-started/launch). 
 
 Please follow these steps to deploy your own puppeteer-js-renderer service on Fly.io:
 
