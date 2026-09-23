@@ -54,6 +54,9 @@
   "integrations": {
     "telemetry": {
       "enabled": false
+    },
+    "plausible": {
+      "domain": "docs.fly.io"
     }
   },
   "navigation": {
