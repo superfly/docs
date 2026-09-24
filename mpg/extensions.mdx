@@ -7,7 +7,7 @@ source_url: https://fly.io/docs/mpg/extensions/
 
 ## Overview
 
-Fly.io Managed Postgres (MPG) clusters include all modules and extensions provided with the default Postgres 16 distribution. This includes commonly used tools and utilities like `pgcrypto`, `pg_stat_monitor`, and `citext`. The PostgreSQL Extensions page allows you to enable or disable trusted PostgreSQL extensions for your managed database cluster. Extensions add extra functionality to your database, such as new data types, functions, or capabilities.
+Fly.io Managed Postgres (MPG) supports Postgres 16 and 17. Clusters include extensions for the Postgres version they run, including commonly used tools and utilities like `pgcrypto`, `pg_stat_monitor`, and `citext`. The PostgreSQL Extensions page allows you to enable or disable trusted PostgreSQL extensions for your managed database cluster. Extensions add extra functionality to your database, such as new data types, functions, or capabilities.
 
 By default the `plpgsql`, `pg_stat_monitor`, and `pgaudit` extensions are enabled and cannot be disabled.
 
@@ -45,7 +45,7 @@ We plan on supporting additional third party extensions based on user feedback. 
 
 ## Supported extensions
 
-This is a list of all bundled extensions included in MPG. Not all of these can be enabled at this time, but we are working on adding support for as many extensions as possible.
+The following table lists bundled extensions. Availability and extension versions depend on your cluster's Postgres version and configuration; check your cluster's Extensions page for the available extensions. Not all bundled extensions can be enabled at this time, but we are working on adding support for as many extensions as possible.
 
 | Name | Available | Description |
 | --- | --- | --- |

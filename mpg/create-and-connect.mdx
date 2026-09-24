@@ -20,7 +20,7 @@ You'll be prompted to set your clusters:
   - Scale: 4 Performance vCPUs, 32GB RAM
   - Performance: 8 Performance vCPUs, 64GB RAM
 - Initial storage size: Up to 500 GB at creation
-- Optional Third Party Extensions to install (Currently only PGVector is supported)
+- Optional PostGIS support. Other extensions, including pgvector, are enabled after creation from the [Extensions page](/mpg/extensions)
 
 <div>
     <img src="/images/create-mpg.webp" alt="A screenshot of the Managed Postgres creation page."/>
@@ -46,7 +46,6 @@ fly mpg create [flags]
 ```out out
  -n, --name string       The name of your Postgres cluster
  -o, --org string        The target Fly.io organization
-      --pgvector          Enable PGVector for the Postgres cluster
       --plan string       The plan to use for the Postgres cluster (basic, launch, scale)
  -r, --region string     The target region
       --volume-size int   The volume size in GB (default 10)
