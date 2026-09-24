@@ -22,7 +22,7 @@ CorpSec is the practice of making sure Fly.io team members have secure access to
 
 InfraSec is the practice of ensuring a hardened, minimal attack surface for components we deploy on our network. Conventionally, modern InfraSec centers on “cloud security”; of course, we are ourselves a cloud provider, which makes the job more interesting.
 
-- We run on our own hardware deployed in secure data centers like Equinix.
+- We run on our own hardware in leased datacenter space. Worker hosts, where your Machines and volumes run, are hosted by CacheFly, DataPacket, Latitude.sh, and Vultr; NetActuate hosts our gateways and edges. All of them are on our [sub-processor list](https://fly.io/legal/sub-processors).
 - Our platform networking runs over a WireGuard mesh with further BPF-based access controls. Everything is encrypted in transit, at multiple layers.
 - Remote management is largely automated, and fully audited; remote access is done through an IdP-backed cert-based SSH system with transcript-level audit trails.
 - Fly.io operates a large logging and metrics cluster (it’s a feature of our platform!).
@@ -52,11 +52,25 @@ Vulnerabilities that directly affect Fly.io's systems and services will be patch
 
 If there's a severity rating that accompanies a vulnerability disclosure, we'll generally rely on that as a starting point, but may upgrade or downgrade the severity in our best judgement.
 
+## Where your data lives
+
+- Your application data, meaning your Machines and the volumes attached to them, stays in the regions you deploy to.
+- Some data is held in the United States regardless of the region you deploy to: control plane data (accounts, organizations, app and release configuration, secrets), [volume snapshots](/volumes/snapshots#where-snapshots-are-stored), and container images.
+- Managed Postgres backups are stored in an AWS S3 bucket in the same geographic area as the cluster.
+- Fly Proxy terminates TLS at whichever edge Anycast routes the connection to, which is normally the edge nearest the client. There is no per-app restriction on which edges accept traffic, and nothing is stored at the edge. If plaintext must stay inside your Machine, [expose a raw TCP service without the `tls` handler](/networking/services) and terminate TLS in your app.
+
+## Compliance documents
+
+Fly.io, Inc. is the contracting party for all Fly.io services. We act as a processor for the data in your applications and as a controller for your account and billing data.
+
+- Our Data Processing Agreement (DPA), Business Associate Agreement (BAA), Tigris BAA, security questionnaire, and SOC2 Type 2 report are self-service in the [Trust Center](https://fly.io/dashboard/compliance) in your dashboard. The DPA and the questionnaire are available to every organization. The BAAs and the SOC2 report (under NDA) are part of the [Compliance Package](https://fly.io/compliance).
+- The DPA is pre-signed by Fly.io and becomes binding when your signed copy comes back. It can be re-executed under a new entity name from the Trust Center.
+- International transfers: Fly.io, Inc. is certified under the EU-U.S. Data Privacy Framework, including the UK Extension, and the Swiss-U.S. Data Privacy Framework ([participant 9027](https://www.dataprivacyframework.gov/participant/9027)). For any transfer the DPF does not cover, the DPA embeds the 2021 EU Standard Contractual Clauses (Module 2, controller to processor).
+- Breach notification: the DPA commits us to notify you without undue delay after we or a sub-processor become aware of a personal data breach affecting your data, with the content required by GDPR Article 33(3).
+
 ## SOC2 and HIPAA
 
 [We have our SOC2 Type 2](https://fly.io/blog/soc2-the-screenshots-will-continue-until-security-improves/) where we've documented a bunch of these controls. Additionally, we've detailed a number of controls for folks exploring [running HIPAA-compliant applications on our platform](/about/healthcare).
-
-You can get our security questionnaire, DPA, and BAA from the [Trust Center](https://fly.io/dashboard/compliance) in your dashboard. Organizations with the [Compliance Package](https://fly.io/compliance) can also download our SOC2 report there.
 
 ## Questions?
 

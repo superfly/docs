@@ -11,6 +11,12 @@ If the data stored on your volume updates frequently, then you should have other
 
 You can use a volume snapshot to [restore the data into a new volume](#restore-a-deleted-volume). You can even use the same process to [restore data from a deleted volume](/volumes/volume-manage#restore-a-deleted-volume).
 
+## Where snapshots are stored
+
+Automatic and on-demand snapshots are stored in AWS S3 in the United States (`us-east-1`), regardless of the region your volume is in. Volumes are encrypted with LUKS by default, and snapshots of encrypted volumes are stored as the encrypted block data; the plaintext is never written to S3. Snapshots of volumes created with `--no-encryption` are stored unencrypted.
+
+Snapshots are kept for 5 days by default and you can set retention anywhere from 1 to 60 days. If your data can't leave its region, [disable automatic snapshots](#disable-automatic-daily-snapshots) and use your own backup method.
+
 ## Set or change the snapshot retention period
 
 Snapshot retention is the length of time (in days) that we store a volume snapshot. The default is 5 days.
