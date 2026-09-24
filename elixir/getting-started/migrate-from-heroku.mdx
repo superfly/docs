@@ -259,7 +259,7 @@ Fly.io can be configured to deploy on git commits with the following techniques 
 
 ### Databases
 
-Fly.io and Heroku have different Postgres database offerings. The most important distinction to understand about using Fly.io is that it automates provisioning, maintenance, and snapshot tasks for your Postgres database, but it does not manage it. If you run out of disk space, RAM, or other resources on your Fly Postgres instances, you'll have to scale those virtual machines from the [Fly CLI](/postgres).
+Fly.io and Heroku have different Postgres database offerings. The most important distinction to understand about using Fly.io is that it automates provisioning, maintenance, and snapshot tasks for your Postgres database, but it does not manage it. If you run out of disk space, RAM, or other resources on your Fly Postgres instances, you'll have to scale those virtual machines from the [Fly CLI](/unmanaged-postgres).
 
 Contrast that with Heroku, which fully manages your database and includes an extensive suite of tools to provision, backup, snapshot, fork, patch, upgrade, and scale up/down your database resources.
 
@@ -278,11 +278,11 @@ This is a great way to get comfortable with Fly.io if you prefer a managed datab
 
 #### Fly Postgres
 
-The most important thing you'll want to be comfortable with using Fly.io's database offering is [backing up and restoring your database](/postgres/managing/backup-and-restore).
+The most important thing you'll want to be comfortable with using Fly.io's database offering is [backing up and restoring your database](/unmanaged-postgres/managing/backup-and-restore).
 
-As your application grows, you'll probably first [scale disk and RAM resources](/postgres#scaling-vertically-adding-more-vm-resources), then [scale out with multiple replicas](/postgres#scaling-horizontally-adding-more-replicas). Common maintenance tasks will include [upgrading Postgres](/postgres#upgrading-the-postgres-app) as new versions are released with new features and security updates.
+As your application grows, you'll probably first [scale disk and RAM resources](/unmanaged-postgres#scaling-vertically-adding-more-vm-resources), then [scale out with multiple replicas](/unmanaged-postgres#scaling-horizontally-adding-more-replicas). Common maintenance tasks will include [upgrading Postgres](/unmanaged-postgres#upgrading-the-postgres-app) as new versions are released with new features and security updates.
 
-[See here](/postgres) for a more comprehensive guide for what's required when running your Postgres databases on Fly.io.
+[See here](/unmanaged-postgres) for a more comprehensive guide for what's required when running your Postgres databases on Fly.io.
 
 ### Pricing
 

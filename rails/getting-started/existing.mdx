@@ -229,7 +229,7 @@ Accordingly:
 
 If you didn't initially deploy with a postgres database but want to add one
 later, you can create a database using [`fly postgres
-create`](/postgres/getting-started/create-pg-cluster).
+create`](/unmanaged-postgres/getting-started/create-pg-cluster).
 Next, update your dockerfile to include the postgres libraries using:
 
 ```shell
@@ -237,7 +237,7 @@ $ bin/rails generate dockerfile --postgresql
 ```
 
 Finally, attach the database to your application using
-<code>[fly postgres attach](/postgres/managing/attach-detach)</code>.
+<code>[fly postgres attach](/unmanaged-postgres/managing/attach-detach)</code>.
 
 Multiple Rails applications can use the same PostgresQL server.  Just take
 care to make sure that each Rails application uses a different database name.

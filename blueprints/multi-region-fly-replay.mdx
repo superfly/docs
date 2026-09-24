@@ -48,7 +48,7 @@ Your app has a configurable primary region and you'll also host your primary dat
 
 Each Machine exposes the region in which it's running in the `FLY_REGION` environment variable.
 
-Your app can check the `FLY_REGION` against the `PRIMARY_REGION`, and modify the `DATABASE_URL`, `DB_HOST`, or other database variables when the region codes don't match. In some cases this just means changing a port ([as for Postgres](/postgres/advanced-guides/high-availability-and-global-replication#connecting-to-read-replicas)) and in other cases it will be more complex if the database requires different variables for each read replica (like in this [Laravel example](https://fly.io/laravel-bytes/multi-region-laravel-with-planetscale/)).
+Your app can check the `FLY_REGION` against the `PRIMARY_REGION`, and modify the `DATABASE_URL`, `DB_HOST`, or other database variables when the region codes don't match. In some cases this just means changing a port ([as for Postgres](/unmanaged-postgres/advanced-guides/high-availability-and-global-replication#connecting-to-read-replicas)) and in other cases it will be more complex if the database requires different variables for each read replica (like in this [Laravel example](https://fly.io/laravel-bytes/multi-region-laravel-with-planetscale/)).
 
 ### Replay write requests to the primary region
 
@@ -56,7 +56,7 @@ Your app can detect write requests and send a response with the `fly-replay` hea
 
 #### Detect write requests
 
-First, you'll need a way to detect write requests so that you can forward them to the primary database. How you detect write requests will depend on your app and database. With Postgres databases, probably the simplest way to detect write requests is by [catching “read only transaction” errors](/postgres/advanced-guides/high-availability-and-global-replication#detecting-write-requests) when you attempt to write to a read replica.
+First, you'll need a way to detect write requests so that you can forward them to the primary database. How you detect write requests will depend on your app and database. With Postgres databases, probably the simplest way to detect write requests is by [catching “read only transaction” errors](/unmanaged-postgres/advanced-guides/high-availability-and-global-replication#detecting-write-requests) when you attempt to write to a read replica.
 
 You can also set up routes in middleware if your language provides support for splitting read and write connections. Or your app can handle GET, POST, DELETE, PUT, and PATCH requests differently, again likely in your app's middleware. For example, assuming HTTP requests using GET are read requests and everything else is a write request will work well most of the time.
 

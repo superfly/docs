@@ -8,10 +8,10 @@ import PostgresWarning from "/snippets/postgres.mdx";
 
 <PostgresWarning />
 
-See [Monitoring](/postgres/managing/monitoring) for how to check the current sizes of the VMs in your Postgres cluster.
+See [Monitoring](/unmanaged-postgres/managing/monitoring) for how to check the current sizes of the VMs in your Postgres cluster.
 
 <Warning>
-**Before scaling a Postgres VM:** Consider the [Postgres configuration parameters](/postgres/managing/configuration-tuning) of your cluster, and adjust the resources accordingly. In particular, if the `shared-buffers` value is proportionally too high for the VM RAM, then a Postgres VM might fail its health checks.
+**Before scaling a Postgres VM:** Consider the [Postgres configuration parameters](/unmanaged-postgres/managing/configuration-tuning) of your cluster, and adjust the resources accordingly. In particular, if the `shared-buffers` value is proportionally too high for the VM RAM, then a Postgres VM might fail its health checks.
 <br/><br/>
 If you're scaling your VMs up, then scale the VMs first before adjusting the Postgres config to match. If you're scaling down, then adjust the cluster's Postgres parameters to match the reduced resources before scaling the VMs.
 </Warning>
@@ -30,4 +30,4 @@ If you have more than one instance in the primary region cluster, scale these VM
 
 ## Postgres resource parameters
 
-When you created your Fly Postgres cluster, certain Postgres configuration parameters were set to sensible values for the resources being provisioned. This means you may want, or need, to change them if you scale your VM resources. Read [Configuration Tuning](/postgres/managing/configuration-tuning) before scaling down.
+When you created your Fly Postgres cluster, certain Postgres configuration parameters were set to sensible values for the resources being provisioned. This means you may want, or need, to change them if you scale your VM resources. Read [Configuration Tuning](/unmanaged-postgres/managing/configuration-tuning) before scaling down.

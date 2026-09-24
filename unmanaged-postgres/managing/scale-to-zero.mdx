@@ -13,7 +13,7 @@ import PostgresWarning from "/snippets/postgres.mdx";
 The scale to zero feature is only available for new Postgres clusters that use the Development configuration. The one hour timeout is not configurable.
 </Info>
 
-If you select the Development configuration when you [create your Fly Postgres app](/postgres/getting-started/create-pg-cluster), then you also get the option to have your database scale down to zero after one hour.
+If you select the Development configuration when you [create your Fly Postgres app](/unmanaged-postgres/getting-started/create-pg-cluster), then you also get the option to have your database scale down to zero after one hour.
 
 After one hour, if there are no open connections, then the database shuts down and waits to restart until something tries to connect again. If there are open connections, then the database stays running and checks for open connections again in one hour.
 

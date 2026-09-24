@@ -235,7 +235,7 @@ It is also possible to explicitly define the Machine size by setting `[deploy.re
 
 A non-zero exit status from this command will stop the deployment. `fly deploy` will display logs from the command. Logs are available via `fly logs` as well.
 
-To ensure the command runs in a specific region, such as `dfw`, set `PRIMARY_REGION = 'dfw'` in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if you're running [database replicas in multiple regions](/postgres/advanced-guides/high-availability-and-global-replication).
+To ensure the command runs in a specific region, such as `dfw`, set `PRIMARY_REGION = 'dfw'` in your application environment in `fly.toml` or with `fly deploy -e PRIMARY_REGION=dfw`. Setting `PRIMARY_REGION` is important if you're running [database replicas in multiple regions](/unmanaged-postgres/advanced-guides/high-availability-and-global-replication).
 
 The environment variable `RELEASE_COMMAND=1` is set within the temporary release Machine. You can use this to define behavior in your Dockerfile's `ENTRYPOINT`  that's conditional on being run on a release Machine.
 
