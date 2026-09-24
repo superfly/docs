@@ -46,18 +46,18 @@ machine_config = "machine_config.json"
   memory = "4gb"
   cpus = 2
 ```
-Create a machine config file (called `machine_config.json` in our example):
+
+The `machine_config` key points to a JSON Machine config file that defines the containers for a [multi-container Machine](/machines/guides-examples/multi-container-machines). Each entry in its `containers` array follows the [`ContainerConfig`](/api/machines/models#fly-containerconfig) schema from the Machines API.
+
+Create that file next to `fly.toml` (called `machine_config.json` in our example):
+
 ```json
 {
   "containers": [
     {
       "name": "hermes",
       "image": "nousresearch/hermes-agent:latest",
-      "cmd": ["gateway", "run"],
-      "secrets": [
-        { "env_var": "EXAMPLE_API_KEY" },
-        { "env_var": "EXAMPLE_TOKEN" }
-      ]
+      "cmd": ["gateway", "run"]
     }
   ]
 }
@@ -66,9 +66,36 @@ Create a machine config file (called `machine_config.json` in our example):
 A few notes:
 
 - **No `[build.dockerfile]`.** Fly pulls the image directly. Deploys take seconds, not minutes.
-- **Hermes images published from `v2026.5.28` onward use `s6-overlay` as the in-container supervisor. s6-overlay's `/init` calls `s6-overlay-suexec` which checks `getpid() == 1` before doing anything else and aborts otherwise. So we use multi-container machines (via the machine_config.json) to get our own namespace. 
+- **Multi-container Machine for `s6-overlay`.** Hermes images published from `v2026.5.28` onward use `s6-overlay` as the in-container supervisor. s6-overlay's `/init` calls `s6-overlay-suexec`, which checks `getpid() == 1` before doing anything else and aborts otherwise. Running Hermes as a container in a multi-container Machine (via `machine_config.json`) gives it its own PID namespace, so `/init` runs as PID 1.
 - **No `[[services]]` block.** The gateway talks *outbound* to chat platforms, so you don't need a public port. The dashboard exposes API keys and shouldn't be public; you'll reach it through a Fly proxy tunnel below.
 - **4 GB / 2 CPU** is the recommended size when browser tools (Playwright/Chromium) are active. If you don't use browser tools you can drop to `shared-cpu-1x` and 1–2 GB.
+
+### Optional: pass API keys as Fly secrets
+
+This guide enters API keys through `hermes setup` after the first deploy. If you'd rather manage keys with [Fly secrets](/apps/secrets), set the secrets before you deploy:
+
+```bash
+fly secrets set ANTHROPIC_API_KEY=sk-... -a <your-hermes-app>
+```
+
+Then list each one under the container's `secrets` array in `machine_config.json`. Each entry is `{ "env_var": "<NAME>" }`, where `<NAME>` must exactly match a secret that already exists on the app:
+
+```json
+{
+  "containers": [
+    {
+      "name": "hermes",
+      "image": "nousresearch/hermes-agent:latest",
+      "cmd": ["gateway", "run"],
+      "secrets": [
+        { "env_var": "ANTHROPIC_API_KEY" }
+      ]
+    }
+  ]
+}
+```
+
+If a listed secret doesn't exist, the Machine won't start. The deploy times out without any error in `fly logs`. Run `fly secrets list -a <your-hermes-app>` to check. See [`MachineSecret`](/api/machines/models#fly-machinesecret) for the full entry format.
 
 ## Deploy
 
@@ -181,6 +208,16 @@ Check `hermes doctor` for missing API keys or other diagnostics:
 ```bash
 fly ssh console -a <your-hermes-app> -C "hermes doctor"
 ```
+
+**Deploy times out with "timeout reached waiting for machine's state to change"**
+
+If `fly logs` stops after "Successfully prepared image" and the Machine never starts, check that every secret in `machine_config.json`'s `secrets` array exists:
+
+```bash
+fly secrets list -a <your-hermes-app>
+```
+
+A missing secret stops the Machine before Hermes runs, so Hermes itself logs nothing.
 
 **Out of memory**
 
