@@ -32,7 +32,7 @@ When people talk about “**n-tier architecture**,” they’re describing a way
 ### Mapping to Fly.io
 
 - **Web tier** → your app running on Fly Machines
-- **Data tier** → [Fly Managed Postgres](/mpg) (our hosted Postgres that handles the messy parts for you)
+- **Data tier** → [Fly Managed Postgres](/postgres) (our hosted Postgres that handles the messy parts for you)
 - **Optional presentation tier** → a separate frontend app (web or mobile) that talks to your Fly backend
 
 The idea is simple but powerful: the web tier doesn’t keep state. All shared state lives in the data tier, so you can add or remove servers at will without breaking anything. It’s the architecture you want if you care about **scalability** (handling more traffic by adding machines) and **reliability** (requests keep flowing even if one machine goes down).
@@ -43,7 +43,7 @@ The idea is simple but powerful: the web tier doesn’t keep state. All shared s
 
 - **Scale with one command**: Add more Web/App machines whenever traffic spikes.
 - **Keep requests flowing**: Fly’s proxy automatically balances load across your Machines.
-- **Let the database do its job**: With [Managed Postgres](/mpg), you don’t need to worry about setup, backups, or failover.
+- **Let the database do its job**: With [Managed Postgres](/postgres), you don’t need to worry about setup, backups, or failover.
 
 You could use Redis, Tigris, or other data stores here too, but if you’re not sure, start with Managed Postgres. It’s the default choice for good reason.
 
@@ -68,7 +68,7 @@ This gives you the **web tier**.
 
 ### 2. Add a database (Managed Postgres)
 
-Now create your **data tier** with [Fly Managed Postgres](/mpg):
+Now create your **data tier** with [Fly Managed Postgres](/postgres):
 
 ```bash
 fly mpg create
@@ -87,7 +87,7 @@ fly secrets set DATABASE_URL=postgres://<user>:<password>@<host>/<dbname>
 
 Most frameworks (Rails, Django, Node, etc.) will automatically read `DATABASE_URL` from the environment. Once set, your app is ready to talk to Postgres.
 
-More details on creating and connecting a managed Postgres database can be found [here](/mpg/create-and-connect).
+More details on creating and connecting a managed Postgres database can be found [here](/postgres/create-and-connect).
 
 ---
 
@@ -111,7 +111,7 @@ At this point you’ve got:
 
 - **Optional presentation tier**: a separate frontend app, if you use one (delivered to browsers or devices)
 - **Web tier**: Fly Machines running your app (stateless and load balanced)
-- **Data tier**: [Fly Managed Postgres](/mpg)
+- **Data tier**: [Fly Managed Postgres](/postgres)
 
 Every request can hit any Machine, and all Machines share the same Postgres. That’s an n-tier architecture in action, and it’s the foundation for most reliable web apps.
 
@@ -119,7 +119,7 @@ Every request can hit any Machine, and all Machines share the same Postgres. Tha
 
 ## Related reading
 
-- Explore the features of [Fly Managed Postgres](/mpg) 
+- Explore the features of [Fly Managed Postgres](/postgres) 
 - Find out how to [scale apps on Fly](/launch/scale-count)
 - Read about [Fly networking](/networking) 
 - Learn more about [n-tier architecture](https://en.wikipedia.org/wiki/Multitier_architecture#Three-tier_architecture)

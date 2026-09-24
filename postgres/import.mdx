@@ -50,7 +50,7 @@ For larger or more complex databases, you may need to break the dump and restore
 ## Limitations
 Some source databases may not be a good fit for importing into a Fly Managed Postgres cluster.  Some common cases that will prevent imports are if your source database:
 
-- Relies on a third party extension that [isn't supported by MPG](/mpg/extensions)
+- Relies on a third party extension that [isn't supported by MPG](/postgres/extensions)
 - Is larger than 1 TB (the maximum storage limit for MPG clusters)
 
 Note: While MPG supports up to 1 TB of storage, initial cluster creation is limited to 500 GB. For databases larger than 500 GB, you'll need to create your cluster with the maximum initial size and then expand storage after the import process.

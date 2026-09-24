@@ -614,29 +614,29 @@
               },
               {
                 "group": "Managed Postgres",
-                "root": "mpg/index",
+                "root": "postgres/index",
                 "pages": [
-                  "mpg/overview",
+                  "postgres/overview",
                   {
                     "group": "Getting Started",
                     "pages": [
-                      "mpg/create-and-connect",
-                      "mpg/client-configuration",
-                      "mpg/cluster-configuration"
+                      "postgres/create-and-connect",
+                      "postgres/client-configuration",
+                      "postgres/cluster-configuration"
                     ]
                   },
                   {
                     "group": "Guides and Examples",
                     "pages": [
-                      "mpg/guides-examples/phoenix-guide"
+                      "postgres/guides-examples/phoenix-guide"
                     ]
                   },
                   {
                     "group": "Management",
                     "pages": [
-                      "mpg/metrics",
-                      "mpg/import",
-                      "mpg/extensions"
+                      "postgres/metrics",
+                      "postgres/import",
+                      "postgres/extensions"
                     ]
                   }
                 ]
@@ -1700,10 +1700,6 @@
   },
   "redirects": [
     {
-      "source": "/postgres",
-      "destination": "/unmanaged-postgres"
-    },
-    {
       "source": "/postgres/advanced-guides",
       "destination": "/unmanaged-postgres/advanced-guides"
     },
@@ -1821,7 +1817,7 @@
     },
     {
       "source": "/mpg/configuration",
-      "destination": "/mpg/cluster-configuration"
+      "destination": "/postgres/cluster-configuration"
     },
     {
       "source": "/elixir/the-basics/oban",
@@ -3605,7 +3601,7 @@
     },
     {
       "source": "/mpg/overview/",
-      "destination": "/mpg"
+      "destination": "/postgres"
     },
     {
       "source": "/networking/custom-domain-api/",
@@ -4086,6 +4082,38 @@
     {
       "source": "/flyctl/mysql-update/",
       "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/mpg",
+      "destination": "/postgres"
+    },
+    {
+      "source": "/mpg/client-configuration",
+      "destination": "/postgres/client-configuration"
+    },
+    {
+      "source": "/mpg/cluster-configuration",
+      "destination": "/postgres/cluster-configuration"
+    },
+    {
+      "source": "/mpg/create-and-connect",
+      "destination": "/postgres/create-and-connect"
+    },
+    {
+      "source": "/mpg/extensions",
+      "destination": "/postgres/extensions"
+    },
+    {
+      "source": "/mpg/guides-examples/phoenix-guide",
+      "destination": "/postgres/guides-examples/phoenix-guide"
+    },
+    {
+      "source": "/mpg/import",
+      "destination": "/postgres/import"
+    },
+    {
+      "source": "/mpg/metrics",
+      "destination": "/postgres/metrics"
     }
   ]
 }
