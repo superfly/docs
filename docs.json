@@ -616,7 +616,6 @@
                 "group": "Managed Postgres",
                 "root": "postgres/index",
                 "pages": [
-                  "postgres/overview",
                   {
                     "group": "Getting Started",
                     "pages": [
@@ -4114,6 +4113,10 @@
     {
       "source": "/mpg/metrics",
       "destination": "/postgres/metrics"
+    },
+    {
+      "source": "/postgres/overview",
+      "destination": "/postgres"
     }
   ]
 }
