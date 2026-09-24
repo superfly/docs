@@ -1527,7 +1527,7 @@
         "tab": "Machines API",
         "openapi": {
           "directory": "api/machines",
-          "source": "/machines-api/openapi.json"
+          "source": "/api/machines/openapi.json"
         },
         "pages": [
           {
@@ -1699,6 +1699,14 @@
     ]
   },
   "redirects": [
+    {
+      "source": "/machines-api/openapi.json",
+      "destination": "/api/machines/openapi.json"
+    },
+    {
+      "source": "/machines-api",
+      "destination": "/api/machines"
+    },
     {
       "source": "/mcp/overview",
       "destination": "/model-context-protocol"
