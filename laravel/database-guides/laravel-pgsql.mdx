@@ -7,18 +7,18 @@ source_url: https://fly.io/docs/laravel/database-guides/laravel-pgsql/
 
 import {Small} from "/snippets/Small.jsx";
 
-We have a _[whole section](/postgres)_ dedicated to [PostgreSQL](https://www.postgresql.org/), we even have a `flyctl` integration to simplify both creation and interaction with your Postgres Fly Apps! 
+We have a _[whole section](/unmanaged-postgres)_ dedicated to [PostgreSQL](https://www.postgresql.org/), we even have a `flyctl` integration to simplify both creation and interaction with your Postgres Fly Apps! 
 
 ## _Laravel and PostgreSQL Fly App_
 
-To run PostgreSQL as a [Fly App](/app-guides/mysql-on-fly), follow our guide [here](/postgres/getting-started/create-pg-cluster). Afterwards you can connect it with your Laravel Fly App through various means:
+To run PostgreSQL as a [Fly App](/app-guides/mysql-on-fly), follow our guide [here](/unmanaged-postgres/getting-started/create-pg-cluster). Afterwards you can connect it with your Laravel Fly App through various means:
 
 1. Connect From a Laravel Fly App by Attachment
 2. Connect From a Laravel Fly App Manually
 3. Connect From a Local Environment
 
 ### _Connect From a Laravel Fly App by Attachment_
-1.  You can [Attach your Laravel Fly App to your Postgres Fly App](/postgres/managing/attach-detach) with `fly postgres attach`:
+1.  You can [Attach your Laravel Fly App to your Postgres Fly App](/unmanaged-postgres/managing/attach-detach) with `fly postgres attach`:
     - This will create a database named after `<laravel-app-name>` in your Postgres Fly App
     - This will create an env variable `DATABASE_URL` containing a connection string in your Laravel fly app
 
@@ -128,7 +128,7 @@ Once you have your running and _[database configured](/laravel/database-guides/l
 
 ### _Connect From a Local Environment_
 
-1. You can check out various ways to connect with your Postgres Fly App from your local environment, [here](/postgres/connecting/connecting-with-flyctl).
+1. You can check out various ways to connect with your Postgres Fly App from your local environment, [here](/unmanaged-postgres/connecting/connecting-with-flyctl).
 
 2.  Once you're locally connected to your Postgres Fly App, setup your Laravel .env file to connect with the Postgres database:
 

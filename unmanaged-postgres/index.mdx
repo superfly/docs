@@ -19,6 +19,6 @@ Flyctl also offers a single-instance "Development" config. If you choose this op
 
 In the single-instance "Development" config, you'll also be given the option to activate "automatic scale to zero". It's not magic: it's just [how our apps work](/launch/scale-count#scale-to-zero). If you have an app that connects to your database, make sure that [it also scales to zero](/launch/scale-count#scale-to-zero) (otherwise the connection remaining open will prevent it from "going to sleep").
 
-You can also add read-only replicas in other regions and take advantage of the Fly.io platform's proxy features to build a [Globally Distributed Postgres cluster](/postgres/advanced-guides/high-availability-and-global-replication).
+You can also add read-only replicas in other regions and take advantage of the Fly.io platform's proxy features to build a [Globally Distributed Postgres cluster](/unmanaged-postgres/advanced-guides/high-availability-and-global-replication).
 
 The Fly Postgres app is fully open source. Just fork [fly-apps/postgres-flex](https://github.com/fly-apps/postgres-flex) and add whatever meets your needs. You can even update an existing cluster with your new image using `fly deploy --image`. One caveat is that once you fork, you won't be able to use `fly postgres` commands to administer your app.

@@ -643,50 +643,50 @@
               },
               {
                 "group": "Fly Postgres",
-                "root": "postgres/index",
+                "root": "unmanaged-postgres/index",
                 "pages": [
                   {
                     "group": "Getting Started",
-                    "root": "postgres/getting-started",
+                    "root": "unmanaged-postgres/getting-started",
                     "pages": [
-                      "postgres/getting-started/create-pg-cluster",
-                      "postgres/getting-started/enabling-timescale",
-                      "postgres/getting-started/migrate-from-heroku"
+                      "unmanaged-postgres/getting-started/create-pg-cluster",
+                      "unmanaged-postgres/getting-started/enabling-timescale",
+                      "unmanaged-postgres/getting-started/migrate-from-heroku"
                     ]
                   },
                   {
                     "group": "Connecting",
-                    "root": "postgres/connecting",
+                    "root": "unmanaged-postgres/connecting",
                     "pages": [
-                      "postgres/connecting/app-connection-examples",
-                      "postgres/connecting/connecting-external",
-                      "postgres/connecting/connecting-internal",
-                      "postgres/connecting/connecting-with-flyctl"
+                      "unmanaged-postgres/connecting/app-connection-examples",
+                      "unmanaged-postgres/connecting/connecting-external",
+                      "unmanaged-postgres/connecting/connecting-internal",
+                      "unmanaged-postgres/connecting/connecting-with-flyctl"
                     ]
                   },
                   {
                     "group": "Managing",
-                    "root": "postgres/managing",
+                    "root": "unmanaged-postgres/managing",
                     "pages": [
-                      "postgres/managing/attach-detach",
-                      "postgres/managing/backup-and-restore",
-                      "postgres/managing/cluster-resources",
-                      "postgres/managing/configuration-tuning",
-                      "postgres/managing/deleting",
-                      "postgres/managing/forking",
-                      "postgres/managing/horizontal-scaling",
-                      "postgres/managing/monitoring",
-                      "postgres/managing/scale-to-zero",
-                      "postgres/managing/scaling",
-                      "postgres/managing/upgrades",
-                      "postgres/managing/users-and-roles"
+                      "unmanaged-postgres/managing/attach-detach",
+                      "unmanaged-postgres/managing/backup-and-restore",
+                      "unmanaged-postgres/managing/cluster-resources",
+                      "unmanaged-postgres/managing/configuration-tuning",
+                      "unmanaged-postgres/managing/deleting",
+                      "unmanaged-postgres/managing/forking",
+                      "unmanaged-postgres/managing/horizontal-scaling",
+                      "unmanaged-postgres/managing/monitoring",
+                      "unmanaged-postgres/managing/scale-to-zero",
+                      "unmanaged-postgres/managing/scaling",
+                      "unmanaged-postgres/managing/upgrades",
+                      "unmanaged-postgres/managing/users-and-roles"
                     ]
                   },
                   {
                     "group": "Advanced Guides",
-                    "root": "postgres/advanced-guides",
+                    "root": "unmanaged-postgres/advanced-guides",
                     "pages": [
-                      "postgres/advanced-guides/high-availability-and-global-replication"
+                      "unmanaged-postgres/advanced-guides/high-availability-and-global-replication"
                     ]
                   },
                   "reference/postgres-whats-next"
@@ -1699,6 +1699,106 @@
     ]
   },
   "redirects": [
+    {
+      "source": "/postgres",
+      "destination": "/unmanaged-postgres"
+    },
+    {
+      "source": "/postgres/advanced-guides",
+      "destination": "/unmanaged-postgres/advanced-guides"
+    },
+    {
+      "source": "/postgres/advanced-guides/high-availability-and-global-replication",
+      "destination": "/unmanaged-postgres/advanced-guides/high-availability-and-global-replication"
+    },
+    {
+      "source": "/postgres/connecting",
+      "destination": "/unmanaged-postgres/connecting"
+    },
+    {
+      "source": "/postgres/connecting/app-connection-examples",
+      "destination": "/unmanaged-postgres/connecting/app-connection-examples"
+    },
+    {
+      "source": "/postgres/connecting/connecting-external",
+      "destination": "/unmanaged-postgres/connecting/connecting-external"
+    },
+    {
+      "source": "/postgres/connecting/connecting-internal",
+      "destination": "/unmanaged-postgres/connecting/connecting-internal"
+    },
+    {
+      "source": "/postgres/connecting/connecting-with-flyctl",
+      "destination": "/unmanaged-postgres/connecting/connecting-with-flyctl"
+    },
+    {
+      "source": "/postgres/getting-started",
+      "destination": "/unmanaged-postgres/getting-started"
+    },
+    {
+      "source": "/postgres/getting-started/create-pg-cluster",
+      "destination": "/unmanaged-postgres/getting-started/create-pg-cluster"
+    },
+    {
+      "source": "/postgres/getting-started/enabling-timescale",
+      "destination": "/unmanaged-postgres/getting-started/enabling-timescale"
+    },
+    {
+      "source": "/postgres/getting-started/migrate-from-heroku",
+      "destination": "/unmanaged-postgres/getting-started/migrate-from-heroku"
+    },
+    {
+      "source": "/postgres/managing",
+      "destination": "/unmanaged-postgres/managing"
+    },
+    {
+      "source": "/postgres/managing/attach-detach",
+      "destination": "/unmanaged-postgres/managing/attach-detach"
+    },
+    {
+      "source": "/postgres/managing/backup-and-restore",
+      "destination": "/unmanaged-postgres/managing/backup-and-restore"
+    },
+    {
+      "source": "/postgres/managing/cluster-resources",
+      "destination": "/unmanaged-postgres/managing/cluster-resources"
+    },
+    {
+      "source": "/postgres/managing/configuration-tuning",
+      "destination": "/unmanaged-postgres/managing/configuration-tuning"
+    },
+    {
+      "source": "/postgres/managing/deleting",
+      "destination": "/unmanaged-postgres/managing/deleting"
+    },
+    {
+      "source": "/postgres/managing/forking",
+      "destination": "/unmanaged-postgres/managing/forking"
+    },
+    {
+      "source": "/postgres/managing/horizontal-scaling",
+      "destination": "/unmanaged-postgres/managing/horizontal-scaling"
+    },
+    {
+      "source": "/postgres/managing/monitoring",
+      "destination": "/unmanaged-postgres/managing/monitoring"
+    },
+    {
+      "source": "/postgres/managing/scale-to-zero",
+      "destination": "/unmanaged-postgres/managing/scale-to-zero"
+    },
+    {
+      "source": "/postgres/managing/scaling",
+      "destination": "/unmanaged-postgres/managing/scaling"
+    },
+    {
+      "source": "/postgres/managing/upgrades",
+      "destination": "/unmanaged-postgres/managing/upgrades"
+    },
+    {
+      "source": "/postgres/managing/users-and-roles",
+      "destination": "/unmanaged-postgres/managing/users-and-roles"
+    },
     {
       "source": "/machines-api/openapi.json",
       "destination": "/api/machines/openapi.json"
@@ -3213,7 +3313,7 @@
     },
     {
       "source": "/getting-started/multi-region-databases/",
-      "destination": "/postgres/advanced-guides/high-availability-and-global-replication"
+      "destination": "/unmanaged-postgres/advanced-guides/high-availability-and-global-replication"
     },
     {
       "source": "/getting-started/nextjs/",
@@ -3521,15 +3621,15 @@
     },
     {
       "source": "/postgres/getting-started/what-you-should-know/",
-      "destination": "/postgres"
+      "destination": "/unmanaged-postgres"
     },
     {
       "source": "/postgres/high-availability-and-global-replication/",
-      "destination": "/postgres/advanced-guides/high-availability-and-global-replication"
+      "destination": "/unmanaged-postgres/advanced-guides/high-availability-and-global-replication"
     },
     {
       "source": "/postgres/managing/enabling-timescale/",
-      "destination": "/postgres/getting-started/enabling-timescale"
+      "destination": "/unmanaged-postgres/getting-started/enabling-timescale"
     },
     {
       "source": "/pricing/",
@@ -3549,7 +3649,7 @@
     },
     {
       "source": "/rails/the-basics/backup-and-restoring-data/",
-      "destination": "/postgres/managing/backup-and-restore"
+      "destination": "/unmanaged-postgres/managing/backup-and-restore"
     },
     {
       "source": "/redis/",
@@ -3617,7 +3717,7 @@
     },
     {
       "source": "/reference/postgres/",
-      "destination": "/postgres"
+      "destination": "/unmanaged-postgres"
     },
     {
       "source": "/reference/private-networking/",
@@ -3765,7 +3865,7 @@
     },
     {
       "source": "/postgres/postgres-on-nomad/",
-      "destination": "/postgres"
+      "destination": "/unmanaged-postgres"
     },
     {
       "source": "/rails/dockerfiles/",

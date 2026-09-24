@@ -26,7 +26,7 @@ During this process, you get to choose from several preset resource configuratio
   Specify custom configuration
 ```
 
-The "Production" options give you a three-node cluster in a leader-replica configuration. A single-node "Development" instance can readily be scaled and [expanded to more regions](/postgres/advanced-guides/high-availability-and-global-replication).
+The "Production" options give you a three-node cluster in a leader-replica configuration. A single-node "Development" instance can readily be scaled and [expanded to more regions](/unmanaged-postgres/advanced-guides/high-availability-and-global-replication).
 
 If you select the "Development" single-node cluster configuration, then you can choose to scale down to zero if there are no open connections after one hour.
 
@@ -35,7 +35,7 @@ If you select the "Development" single-node cluster configuration, then you can 
 ```
 
 <Info>
-You might need to configure any apps that connect to your Postgres app to scale to zero as well, otherwise your Postgres database will never have zero connections and will never scale down. Your app might also need to be able to wait for the database to start back up. Learn more about the [scale to zero feature](/postgres/managing/scale-to-zero), including how to turn it off.
+You might need to configure any apps that connect to your Postgres app to scale to zero as well, otherwise your Postgres database will never have zero connections and will never scale down. Your app might also need to be able to wait for the database to start back up. Learn more about the [scale to zero feature](/unmanaged-postgres/managing/scale-to-zero), including how to turn it off.
 </Info>
 
 ```

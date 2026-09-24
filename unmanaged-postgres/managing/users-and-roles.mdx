@@ -14,7 +14,7 @@ A Postgres cluster is configured with three users when created:
 - `flypgadmin` - a role used internally by Fly.io to configure and query the Postgres cluster
 - `repmgr` - a role used by repmgr to manage replication for the Postgres cluster
 
-If you [attached a Fly App](/postgres/managing/attach-detach) to your Postgres cluster app with `fly postgres attach`, then you'll have a an additional database and user with the same name as the consuming app.
+If you [attached a Fly App](/unmanaged-postgres/managing/attach-detach) to your Postgres cluster app with `fly postgres attach`, then you'll have a an additional database and user with the same name as the consuming app.
 
 You can list users with flyctl. For example, for a Postgres cluster app named `pg-test`:
 

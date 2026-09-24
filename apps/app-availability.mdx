@@ -23,7 +23,7 @@ Fly Proxy does a lot of work in the background, applying handlers, managing traf
 
 For databases, you'll need to follow the specific recommendations for the database you're using, including how to set up clusters for replication and failover.
 
-If you're deploying Fly Postgres, our un-managed database app, then you need to [manage backups, recovery, replication, and scaling](/postgres) yourself. For information about high availability with Fly Postgres, refer to [High Availability & Global Replication](/postgres/advanced-guides/high-availability-and-global-replication).
+If you're deploying Fly Postgres, our un-managed database app, then you need to [manage backups, recovery, replication, and scaling](/unmanaged-postgres) yourself. For information about high availability with Fly Postgres, refer to [High Availability & Global Replication](/unmanaged-postgres/advanced-guides/high-availability-and-global-replication).
 
 When you use [Fly Volumes](/volumes) with your app, your app needs to implement replication and backups. Volumes are block devices that live on a single disk array and get mounted directly by your Machine. There's no magic. And there's no built-in replication between volumes. If your app provides a clustering mechanism with data replication, like most databases do, we recommend you take advantage of that and run multiple instances with attached volumes. When possible, we place your app's volumes in different hardware zones within a region to mitigate hardware failures.
 
