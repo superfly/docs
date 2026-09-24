@@ -616,7 +616,6 @@
                 "group": "Managed Postgres",
                 "root": "mpg/index",
                 "pages": [
-                  "mpg/overview",
                   {
                     "group": "Getting Started",
                     "pages": [
