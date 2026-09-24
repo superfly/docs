@@ -78,7 +78,7 @@ This guide enters API keys through `hermes setup` after the first deploy. If you
 fly secrets set ANTHROPIC_API_KEY=sk-... -a <your-hermes-app>
 ```
 
-Then list each one in the container's `secrets` array in `machine_config.json`. Each entry is `{ "env_var": "<NAME>" }`, where `<NAME>` must exactly match a secret that already exists on the app:
+Then list each one under the container's `secrets` array in `machine_config.json`. Each entry is `{ "env_var": "<NAME>" }`, where `<NAME>` must exactly match a secret that already exists on the app:
 
 ```json
 {
