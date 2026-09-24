@@ -16,41 +16,56 @@ To view metrics for your cluster:
 1. Navigate to your MPG cluster in the Fly.io dashboard
 2. Click the **Metrics** tab
 3. Optionally filter by specific database using the database dropdown
-4. Select your desired time range (15 minutes, 1 hour, 6 hours, 24 hours, or 2 days)
+4. Select your desired time range (5 minutes, 15 minutes, 1 hour, 6 hours, 24 hours, 2 days, or 7 days)
+
+On older v1 clusters, the Metrics tab may show a **New Metrics System Available** card instead of charts. Enabling the new metrics system restarts all Postgres nodes in your cluster to apply the monitoring configuration.
+
+On v2 clusters, if a database machine was recently throttled significantly, a **CPU throttling detected** or **Severe CPU throttling** banner appears at the top of the tab.
+
+### Metrics tiles
+
+The top of the **Metrics** tab shows four tiles with the cluster's current state:
+
+| Tile | Description |
+|------|-------------|
+| **Database Connections** | Current connections to the selected database, against the cluster-wide `max_connections` setting |
+| **Pooled Connections** | Current number of clients on the PGBouncer pool, active and waiting combined |
+| **Longest Query** | Duration of the longest-running active query in the selected database |
+| **Replication Lag** | Current maximum replay lag. The same measurement as the Replication Delay Seconds chart, as a single current value |
 
 ### Available Charts and Metrics
 
-The metrics dashboard provides detailed insights through various charts and gauges organized into categories:
+Below the tiles, each chart plots its series over the selected time range, with each series' average shown underneath. The charts are grouped into these categories:
 
 #### System Resource Metrics
 
 | Metric | Description |
 |--------|-------------|
-| **Database CPU Utilization** | CPU usage percentage for each database instance, labeled with Primary (P) and Replica (R) badges. Shows individual instance IDs and averages over the selected time period |
-| **Database Memory Utilization** | Memory usage for Primary and Replica database instances. Displays current usage and average consumption per instance |
+| **Database CPU Utilization** | CPU usage percentage for each database instance, labeled with Primary (P) and Replica (R) badges. On v2 clusters this chart also shades periods when the database was CPU-throttled. A throttled machine can otherwise appear to sit at a flat 100% CPU |
+| **Database Memory Utilization** | Memory usage over time for Primary and Replica database instances, labeled with instance IDs |
 | **Pooler CPU Utilization** | CPU usage percentage for PGBouncer connection pooler instances. Typically remains low under normal operations |
-| **Pooler Memory Utilization** | Memory consumption in MB for connection pooler instances. Shows usage for each pooler with instance IDs |
+| **Pooler Memory Utilization** | Memory consumption for connection pooler instances. Shows usage for each pooler with instance IDs |
 
 #### Connection Metrics
 
 | Metric | Description |
 |--------|-------------|
-| **Database Connections** | Shows active and idle database connections over time |
-| **Pooler Connections** | Tracks active and waiting connections through PGBouncer
- |
+| **Database Connections** | Active and idle database connections over time |
+| **Pooler Connections** | Tracks active and waiting connections through PGBouncer |
+
 #### Database Operations
 
 | Metric | Description |
 |--------|-------------|
-| **Database Operations** | Row-level operations per second broken down by type (inserts, updates, deletes, and fetches). Shows throughput patterns and workload distribution across operation types |
-| **Cache Hit Ratio** | Percentage of data requests served from memory versus disk. Higher percentages (95%+) indicate efficient memory usage. Lower values suggest queries are hitting disk frequently |
+| **Database Operations** | Row-level operations per second broken down into selects, inserts, updates, and deletes. Shows throughput patterns and workload distribution across operation types |
+| **Cache Hit Ratio** | Proportion of block accesses served from PostgreSQL's buffer cache. Reads outside that cache may still be served by the operating system's page cache. |
 | **Deadlocks** | Count of database deadlocks detected when two or more transactions are waiting for each other to release locks. Shows frequency and timing of these mutual blocking situations |
 
 #### Storage
 
 | Metric | Description |
 |--------|-------------|
-| **Database Size** | Current storage usage across databases |
+| **Database Size** | Database size over time. Use the database dropdown to view a specific database |
 
 #### Replication Metrics
 
@@ -58,3 +73,15 @@ The metrics dashboard provides detailed insights through various charts and gaug
 |--------|-------------|
 | **Replication Delay Bytes** | Amount of WAL (Write-Ahead Log) data in bytes that the replica is behind the primary. Measures the volume of changes waiting to be applied |
 | **Replication Delay Seconds** | Time in seconds that the replica lags behind the primary database. Represents how long ago the replica's current state reflects the primary |
+
+## Overview tiles (v2 clusters)
+
+The **Overview** page of a v2 cluster (marked **v2** next to the cluster name) shows summary tiles with the cluster's current state. v1 clusters do not have these tiles.
+
+| Tile | Description |
+|------|-------------|
+| **CPU Usage** | Current CPU use of the primary |
+| **Memory Usage** | Current memory use of the primary |
+| **Storage Usage** | Approximate storage consumed by user databases, shown against each node's allocated storage. Excludes WAL and system overhead, so it does not represent total volume usage or remaining capacity |
+| **Active Connections** | Open connections to your databases, including idle connections, against the cluster's `max_connections` setting |
+| **Uptime** | How long the cluster has continuously had a primary up, over the last 30 days |
