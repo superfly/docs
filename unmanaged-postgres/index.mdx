@@ -3,9 +3,11 @@ title: Fly Postgres (Unmanaged)
 source_url: https://fly.io/docs/postgres/
 ---
 
-import PostgresWarning from "/snippets/postgres.mdx";
+<Warning>
+  **These pages are archived.** Fly Postgres (unmanaged) is no longer maintained, and Fly.io Support is not able to provide support or guidance for it. We now offer [Fly.io Managed Postgres](/postgres), our fully-managed database service that handles all aspects of running production PostgreSQL databases.
 
-<PostgresWarning />
+  The pages below are kept for reference. They are no longer listed in the navigation or indexed by search engines, and this page is the way in.
+</Warning>
 
   <img src="/images/postgres.png" alt="Illustration by Annie Ruygt of a balloon disguised as an elephant" />
 
@@ -22,3 +24,42 @@ In the single-instance "Development" config, you'll also be given the option to 
 You can also add read-only replicas in other regions and take advantage of the Fly.io platform's proxy features to build a [Globally Distributed Postgres cluster](/unmanaged-postgres/advanced-guides/high-availability-and-global-replication).
 
 The Fly Postgres app is fully open source. Just fork [fly-apps/postgres-flex](https://github.com/fly-apps/postgres-flex) and add whatever meets your needs. You can even update an existing cluster with your new image using `fly deploy --image`. One caveat is that once you fork, you won't be able to use `fly postgres` commands to administer your app.
+
+## Archived pages
+
+### Getting started
+
+- [Getting Started](/unmanaged-postgres/getting-started)
+- [Create a Fly Postgres Cluster](/unmanaged-postgres/getting-started/create-pg-cluster)
+- [Enable TimescaleDB](/unmanaged-postgres/getting-started/enabling-timescale)
+- [Migrate a Postgres Database from Heroku](/unmanaged-postgres/getting-started/migrate-from-heroku)
+- [You've deployed Fly Postgres. Now what?](/reference/postgres-whats-next)
+
+### Connecting
+
+- [Connecting to Fly Postgres](/unmanaged-postgres/connecting)
+- [Connect With flyctl](/unmanaged-postgres/connecting/connecting-with-flyctl)
+- [Connect From a Fly App](/unmanaged-postgres/connecting/connecting-internal)
+- [External Connections](/unmanaged-postgres/connecting/connecting-external)
+- [App Connection Examples](/unmanaged-postgres/connecting/app-connection-examples)
+
+### Managing
+
+- [Managing Fly Postgres](/unmanaged-postgres/managing)
+- [Attach or Detach a Fly App](/unmanaged-postgres/managing/attach-detach)
+- [Backup, Restores, & Snapshots](/unmanaged-postgres/managing/backup-and-restore)
+- [Check Provisioned Resources](/unmanaged-postgres/managing/cluster-resources)
+- [Postgres Configuration Tuning](/unmanaged-postgres/managing/configuration-tuning)
+- [Delete a Postgres Cluster](/unmanaged-postgres/managing/deleting)
+- [Fork a volume from a Postgres app](/unmanaged-postgres/managing/forking)
+- [Horizontal Scaling](/unmanaged-postgres/managing/horizontal-scaling)
+- [Monitor a Postgres App](/unmanaged-postgres/managing/monitoring)
+- [Scale to zero for Postgres Development projects](/unmanaged-postgres/managing/scale-to-zero)
+- [Scale Postgres VMs](/unmanaged-postgres/managing/scaling)
+- [Upgrade Postgres](/unmanaged-postgres/managing/upgrades)
+- [Users & Roles](/unmanaged-postgres/managing/users-and-roles)
+
+### Advanced guides
+
+- [Advanced guides](/unmanaged-postgres/advanced-guides)
+- [High Availability & Global Replication](/unmanaged-postgres/advanced-guides/high-availability-and-global-replication)
