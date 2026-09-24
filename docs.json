@@ -640,57 +640,7 @@
                   }
                 ]
               },
-              {
-                "group": "Fly Postgres",
-                "root": "unmanaged-postgres/index",
-                "pages": [
-                  {
-                    "group": "Getting Started",
-                    "root": "unmanaged-postgres/getting-started",
-                    "pages": [
-                      "unmanaged-postgres/getting-started/create-pg-cluster",
-                      "unmanaged-postgres/getting-started/enabling-timescale",
-                      "unmanaged-postgres/getting-started/migrate-from-heroku"
-                    ]
-                  },
-                  {
-                    "group": "Connecting",
-                    "root": "unmanaged-postgres/connecting",
-                    "pages": [
-                      "unmanaged-postgres/connecting/app-connection-examples",
-                      "unmanaged-postgres/connecting/connecting-external",
-                      "unmanaged-postgres/connecting/connecting-internal",
-                      "unmanaged-postgres/connecting/connecting-with-flyctl"
-                    ]
-                  },
-                  {
-                    "group": "Managing",
-                    "root": "unmanaged-postgres/managing",
-                    "pages": [
-                      "unmanaged-postgres/managing/attach-detach",
-                      "unmanaged-postgres/managing/backup-and-restore",
-                      "unmanaged-postgres/managing/cluster-resources",
-                      "unmanaged-postgres/managing/configuration-tuning",
-                      "unmanaged-postgres/managing/deleting",
-                      "unmanaged-postgres/managing/forking",
-                      "unmanaged-postgres/managing/horizontal-scaling",
-                      "unmanaged-postgres/managing/monitoring",
-                      "unmanaged-postgres/managing/scale-to-zero",
-                      "unmanaged-postgres/managing/scaling",
-                      "unmanaged-postgres/managing/upgrades",
-                      "unmanaged-postgres/managing/users-and-roles"
-                    ]
-                  },
-                  {
-                    "group": "Advanced Guides",
-                    "root": "unmanaged-postgres/advanced-guides",
-                    "pages": [
-                      "unmanaged-postgres/advanced-guides/high-availability-and-global-replication"
-                    ]
-                  },
-                  "reference/postgres-whats-next"
-                ]
-              },
+              "unmanaged-postgres/index",
               {
                 "group": "Databases & Storage",
                 "pages": [
