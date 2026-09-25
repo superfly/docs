@@ -56,7 +56,7 @@ export const RegionPricingSelector = () => {
 
   const SECONDS_PER_HOUR = 3600;
   const SECONDS_PER_MONTH = 2592000; // 30 days
-  const BASELINE_RAM_PRICE_PER_30_DAYS = 5;
+  const BASELINE_RAM_PRICE_PER_30_DAYS = RAM_PRICE_PER_GB_SECOND * SECONDS_PER_MONTH;
 
   const currencyFormatter = (minimumFractionDigits) =>
     new Intl.NumberFormat("en-US", {
