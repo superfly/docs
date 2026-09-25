@@ -1745,10 +1745,6 @@
       "destination": "/unmanaged-postgres/managing/users-and-roles"
     },
     {
-      "source": "/machines-api/openapi.json",
-      "destination": "/api/machines/openapi.json"
-    },
-    {
       "source": "/machines-api",
       "destination": "/api/machines"
     },
