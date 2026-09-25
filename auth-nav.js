@@ -1,7 +1,7 @@
-// Sign In / Sign Up in the top right on desktop.
+// Log In / Sign Up in the top right on desktop.
 // The maple theme hides the desktop header and renders navbar links at the bottom of the
 // sidebar (see styles.css, which hides the sidebar copies). Mobile keeps the theme's own header.
-// Classes are the theme's own, copied from its header markup, so light/dark mode follow it.
+// Colors reuse the theme's own classes so light/dark mode follow it; layout lives in styles.css.
 (function () {
   var ID = "fly-auth-nav";
 
@@ -9,12 +9,12 @@
     var nav = document.createElement("nav");
     nav.id = ID;
     nav.setAttribute("aria-label", "Account");
-    nav.className = "hidden lg:flex items-center gap-x-5 text-sm";
+    nav.className = "text-sm";
     nav.innerHTML =
-      '<a href="https://fly.io/app/sign-in/" class="whitespace-nowrap font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">Sign In</a>' +
-      '<a href="https://fly.io/app/sign-up/?s=docs" class="group relative inline-flex items-center px-3 py-1.5 whitespace-nowrap font-medium">' +
+      '<a href="https://fly.io/app/sign-in/" class="fly-auth-nav-login font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">Log In</a>' +
+      '<a href="https://fly.io/app/sign-up/?s=docs" class="fly-auth-nav-signup group relative font-medium">' +
       '<span class="absolute inset-0 bg-primary-dark rounded-xl group-hover:opacity-[0.9]"></span>' +
-      '<span class="z-10 text-white">Sign Up</span>' +
+      '<span class="relative text-white">Sign Up</span>' +
       "</a>";
     return nav;
   }

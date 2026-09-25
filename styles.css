@@ -94,12 +94,34 @@ div.frame_purple > div > div > div.relative.rounded-xl.overflow-hidden.flex.just
   gap: calc(var(--spacing) * 4);
 }
 
-/* Account links: shown top right by auth-nav.js, so drop the maple theme's copies from the sidebar footer */
+/* Account links: shown top right by auth-nav.js, so drop the maple theme's copies from the sidebar footer.
+   Sits over the right end of the theme's fixed tab bar (#navbar-transition-maple: h-12, px-12), which
+   itself runs off-screen, so match its height and padding rather than living inside it. */
 #fly-auth-nav {
-  position: fixed;
-  top: 1rem;
-  right: 1.5rem;
-  z-index: 40;
+  display: none;
+}
+@media (min-width: 1024px) {
+  #fly-auth-nav {
+    position: fixed;
+    top: 0;
+    right: 3rem;
+    z-index: 30;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  [data-banner-state="visible"] #fly-auth-nav {
+    top: 2.5rem;
+  }
+}
+#fly-auth-nav a {
+  white-space: nowrap;
+}
+.fly-auth-nav-signup {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.875rem;
 }
 #sidebar li[id="https://fly.io/app/sign-in/"],
 #sidebar li[id="https://fly.io/app/sign-up/?s=docs"] {
