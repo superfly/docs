@@ -23,9 +23,9 @@ export const RegionPricingSelector = () => {
 
   // Ashburn rates in USD per second. Each vCPU includes 256MB (shared) or 2GB
   // (performance) of RAM; RAM above that is billed per GB.
-  const PRICE_PER_VCPU_SECOND = { shared: 0.00000075, performance: 0.00001196 };
+  const PRICE_PER_VCPU_SECOND = { shared: 0.0000008465, performance: 0.000012732 };
   const INCLUDED_RAM_GB_PER_VCPU = { shared: 0.25, performance: 2 };
-  const RAM_PRICE_PER_GB_SECOND = 0.00000193;
+  const RAM_PRICE_PER_GB_SECOND = 0.000002316;
 
   // The first RAM size in each preset is the one the preset includes.
   const presets = [
