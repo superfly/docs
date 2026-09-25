@@ -93,3 +93,15 @@ div.frame_purple > div > div > div.relative.rounded-xl.overflow-hidden.flex.just
 .homepage_cards .columns {
   gap: calc(var(--spacing) * 4);
 }
+
+/* Account links: shown top right by auth-nav.js, so drop the maple theme's copies from the sidebar footer */
+#fly-auth-nav {
+  position: fixed;
+  top: 1rem;
+  right: 1.5rem;
+  z-index: 40;
+}
+#sidebar li[id="https://fly.io/app/sign-in/"],
+#sidebar li[id="https://fly.io/app/sign-up/?s=docs"] {
+  display: none;
+}

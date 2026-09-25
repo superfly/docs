@@ -27,7 +27,7 @@
   },
   "navbar": {
     "primary": {
-      "href": "https://fly.io/app/sign-up/",
+      "href": "https://fly.io/app/sign-up/?s=docs",
       "label": "Sign Up",
       "type": "button"
     },
