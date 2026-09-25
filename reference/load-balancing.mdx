@@ -49,7 +49,7 @@ We set `type = "requests"` so Fly.io will use concurrent HTTP requests to determ
 
 We set the `soft_limit` to 20, so Fly Proxy has some headroom to prefer less-loaded Machines within the same region before distributing traffic more evenly. Soft limits only affect routing within a region. They do not cause the proxy to shift traffic to other regions.
 
-We deploy 10 Machines in four regions: `ams` (Amsterdam), `bom` (Mumbai), `sea` (Seattle), and `sin` (Singapore), with three of those in `ams`.
+We deploy 10 Machines in four regions: `ams` (Amsterdam), `nrt` (Tokyo), `sjc` (San Jose), and `sin` (Singapore), with three of those in `ams`.
 
 In this contrived example, all of the users are currently in Amsterdam, so the traffic is arriving at one of the Fly.io edges in Amsterdam. Here's what happens as the number of concurrent HTTP requests from users in Amsterdam increases:
 

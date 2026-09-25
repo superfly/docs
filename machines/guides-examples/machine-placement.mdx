@@ -9,7 +9,7 @@ source_url: https://fly.io/docs/machines/guides-examples/machine-placement/
 
 Let’s say you run `fly scale count` and tell it to drop 10 machines into `dfw` and 10 more into `iad`. If either of those regions is out of capacity, _the entire scale operation fails_. Nothing gets placed. It’s all or nothing.
 
-Most of the time this just works—`dfw` and `iad` are solid bets for region choices. But some regions, like `sjc`, `gru`, and `bom`, tend to be in high demand. If you hardcode your placement into one of those and cross your fingers, you might find yourself scaling to zero.
+Most of the time this just works—`dfw` and `iad` are solid bets for region choices. But some regions, like `sjc` and `gru`, tend to be in high demand. If you hardcode your placement into one of those and cross your fingers, you might find yourself scaling to zero.
 
 ### Where can you deploy?
 
@@ -77,7 +77,7 @@ This only helps if your app actually works when deployed across multiple regions
 
 <Info>
 Want to see where your app might run? 
-Here's the [current list](/reference/regions): ams, arn, bom, cdg, dfw, ewr, fra, gru, iad, jnb, lax, lhr, nrt, ord, sin, sjc, syd, yyz.
+Here's the [current list](/reference/regions): ams, arn, cdg, dfw, ewr, fra, gru, iad, jnb, lax, lhr, nrt, ord, sin, sjc, syd, yyz.
 </Info>
 
 
