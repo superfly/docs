@@ -94,7 +94,7 @@ div.frame_purple > div > div > div.relative.rounded-xl.overflow-hidden.flex.just
   gap: calc(var(--spacing) * 4);
 }
 
-/* Account links: shown top right by auth-nav.js, so drop the maple theme's copies from the sidebar footer.
+/* Account links: shown top right by auth-nav.js, so drop the maple theme's copies from the desktop sidebar footer.
    Sits over the right end of the theme's fixed tab bar (#navbar-transition-maple: h-12, px-12), which
    itself runs off-screen, so match its height and padding rather than living inside it. */
 #fly-auth-nav {
@@ -114,6 +114,12 @@ div.frame_purple > div > div > div.relative.rounded-xl.overflow-hidden.flex.just
   [data-banner-state="visible"] #fly-auth-nav {
     top: 2.5rem;
   }
+  /* Desktop only: below lg these are the only auth links, in the mobile drawer. Prefix match so a
+     query string change in docs.json doesn't leave a duplicate behind. */
+  #sidebar li[id^="https://fly.io/app/sign-in/"],
+  #sidebar li[id^="https://fly.io/app/sign-up/"] {
+    display: none;
+  }
 }
 #fly-auth-nav a {
   white-space: nowrap;
@@ -122,8 +128,4 @@ div.frame_purple > div > div > div.relative.rounded-xl.overflow-hidden.flex.just
   display: inline-flex;
   align-items: center;
   padding: 0.375rem 0.875rem;
-}
-#sidebar li[id="https://fly.io/app/sign-in/"],
-#sidebar li[id="https://fly.io/app/sign-up/?s=docs"] {
-  display: none;
 }

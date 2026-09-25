@@ -1,6 +1,6 @@
 // Log In / Sign Up in the top right on desktop.
 // The maple theme hides the desktop header and renders navbar links at the bottom of the
-// sidebar (see styles.css, which hides the sidebar copies). Mobile keeps the theme's own header.
+// sidebar (see styles.css, which hides the sidebar copies on desktop). Mobile keeps those.
 // Colors reuse the theme's own classes so light/dark mode follow it; layout lives in styles.css.
 (function () {
   var ID = "fly-auth-nav";
@@ -25,5 +25,11 @@
 
   ensure();
   // Client-side navigation can re-render <body>; put the nav back if it goes missing.
-  new MutationObserver(ensure).observe(document.documentElement, { childList: true, subtree: true });
+  // Watch only <html> and <body> children, not the whole tree.
+  var observer = new MutationObserver(function () {
+    ensure();
+    if (document.body) observer.observe(document.body, { childList: true });
+  });
+  observer.observe(document.documentElement, { childList: true });
+  if (document.body) observer.observe(document.body, { childList: true });
 })();
