@@ -9,7 +9,6 @@ export const RegionPricingSelector = () => {
     { code: "jnb", city: "Johannesburg", country: "South Africa", markup: 1.302884615 },
     { code: "lhr", city: "London", country: "United Kingdom", markup: 1.134615385 },
     { code: "lax", city: "Los Angeles, California (US)", country: "", markup: 1.199519231 },
-    { code: "bom", city: "Mumbai", country: "India", markup: 1.076923077 },
     { code: "cdg", city: "Paris", country: "France", markup: 1.134615385 },
     { code: "sjc", city: "San Jose, California (US)", country: "", markup: 1.192307692 },
     { code: "gru", city: "São Paulo", country: "Brazil", markup: 1.615384615 },
