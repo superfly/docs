@@ -103,7 +103,7 @@ If a listed secret doesn't exist, the Machine won't start. The deploy times out 
 fly deploy -a <your-hermes-app> --ha=false
 ```
 
-`--ha=false` keeps it to a single machine; Hermes is stateful and you don't want two gateway processes writing to the same volume.
+`--ha=false` keeps it to a single Machine. By default `fly deploy` creates two Machines for availability, but Fly volumes can't be shared between Machines, so a second Machine would get its own empty volume and run as a separate Hermes with its own config, sessions, and skills.
 
 When the deploy finishes, the machine boots, the entrypoint bootstraps `/opt/data` (creating `.env`, `config.yaml`, `SOUL.md`, `sessions/`, `skills/`, etc.), and `hermes gateway run` starts. It'll keep running but it has no API key yet, so it can't talk to a model.
 
