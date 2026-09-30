@@ -103,7 +103,7 @@ If a listed secret doesn't exist, the Machine won't start. The deploy times out 
 fly deploy -a <your-hermes-app> --ha=false
 ```
 
-`--ha=false` keeps it to a single machine; Hermes is stateful and you don't want two gateway processes writing to the same volume.
+`--ha=false` keeps it to a single Machine. By default, `fly deploy` creates two Machines for availability. Since Fly volumes can’t be shared between Machines, the second Machine would get an empty volume and run a separate Hermes instance with its own config, sessions, and skills.
 
 When the deploy finishes, the machine boots, the entrypoint bootstraps `/opt/data` (creating `.env`, `config.yaml`, `SOUL.md`, `sessions/`, `skills/`, etc.), and `hermes gateway run` starts. It'll keep running but it has no API key yet, so it can't talk to a model.
 
@@ -143,18 +143,34 @@ Get `<machine-id>` from `fly machine list -a <your-hermes-app>`.
 
 ## Web dashboard
 
-Hermes has a web dashboard on port 9119 for managing sessions, skills, and config. The dashboard reads your API keys, so the upstream guidance is to never expose it on a public port. Tunnel to it instead:
+Hermes has a web dashboard on port 9119 for managing sessions, skills, and config. The dashboard reads your API keys, so the upstream guidance is to never expose it on a public port. Tunnel to it instead.
 
-In one terminal, start the dashboard inside the machine:
+The Fly proxy reaches the Machine over its private IPv6 address, which requires the dashboard to listen on all interfaces, not only localhost. When Hermes binds to anything other than a loopback address, it [requires dashboard auth](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard#when-the-gate-engages). Set up a username and password first.
+
+Generate a session secret on your laptop:
 
 ```bash
-fly ssh console --pty -a <your-hermes-app> -C \
-  "HERMES_DASHBOARD_WS_HOST=127.0.0.1 hermes dashboard --host [::] --no-open"
+openssl rand -base64 32
 ```
 
-Since you're using a tunnel via this setup, your dashboard isn't publicly exposed. But [hermes requires you to setup dashboard auth](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard) if you're binding to \[::].
+Then open a shell on the machine and add the credentials to Hermes's `.env` on the volume, pasting the generated value as the secret:
 
-Setup auth (or use a shim to proxy from localhost, if that's your style).
+```bash
+fly ssh console -a <your-hermes-app>
+cat >> /opt/data/.env <<'ENV'
+HERMES_DASHBOARD_BASIC_AUTH_USERNAME=admin
+HERMES_DASHBOARD_BASIC_AUTH_PASSWORD=<a-strong-password>
+HERMES_DASHBOARD_BASIC_AUTH_SECRET=<generated-secret>
+ENV
+```
+
+Because they're on the volume, the credentials survive deploys and restarts.
+
+In the same shell (or a new `fly ssh console --pty` session), start the dashboard, bound to the IPv6 wildcard address. Pass `::` without square brackets:
+
+```bash
+hermes dashboard --no-open --host ::
+```
 
 In a second terminal, open a Fly proxy from your laptop:
 
@@ -162,7 +178,7 @@ In a second terminal, open a Fly proxy from your laptop:
 fly proxy 9119:9119 -a <your-hermes-app>
 ```
 
-Now visit `http://localhost:9119` in your browser. Traffic goes over your authenticated WireGuard tunnel; the dashboard isn't published to the public internet, though it is reachable from other Machines on your organization's [private network](/networking/private-networking)
+Now visit `http://localhost:9119` in your browser and sign in with the username and password you set. Traffic goes over your authenticated WireGuard tunnel; the dashboard isn't published to the public internet, though it is reachable from other Machines on your organization's [private network](/networking/private-networking)
 
 When you're done, `Ctrl+C` both commands. The gateway keeps running on the machine.
 
