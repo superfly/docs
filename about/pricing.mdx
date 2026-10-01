@@ -61,15 +61,15 @@ The app and database run in the same region, so data transfer between them is fr
 
 In this example, Managed Postgres accounts for most of the bill. The app Machine and its 10GB volume cost \$5.19 per month.
 
-### A Discord bot or background worker that runs 24/7
+### A small background worker running 24/7
 
 | Item | Monthly cost |
-| --- | --- |
-| One `shared-cpu-1x` 256MB Machine, auto-stop off | \$2.19 |
-| 1GB outbound data to the internet, North America (assumed) | \$0.02 |
+| --- | ---: |
+| One `shared-cpu-1x` 256MB Machine, running continuously | \$2.19 |
+| 1GB outbound data to the internet from North America (assumed) | \$0.02 |
 | **Total** | **\$2.21** |
 
-The bot needs no volume, public IP address or database. If it needs more memory, the same Machine with 512MB costs \$3.69.
+This example doesn't use a volume, database, or dedicated IPv4 address, so there's nothing else to pay for. If the worker needs more memory, a `shared-cpu-1x` Machine with 512MB costs \$3.69 per month when running continuously.
 
 ### An app running in three regions
 
