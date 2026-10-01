@@ -45,19 +45,21 @@ Here are three example apps and what they'd cost per month. We use Ashburn (`iad
 
 If your Machines [auto-stop](/launch/autostop-autostart) when they're idle, your compute costs can be lower. You pay for the time a Machine is running and for its rootfs while it's stopped. If the Machine runs all month, you'll pay the full always-on cost shown here. See [Cost Management](/about/cost-management) for more ways to estimate and control your bill.
 
-### A solo developer's SaaS app with a Postgres database
+### A small web app with Managed Postgres
 
 | Item | Monthly cost |
-| --- | --- |
-| One `shared-cpu-1x` 512MB Machine, always on | \$3.69 |
+| --- | ---: |
+| One `shared-cpu-1x` 512MB Machine, running continuously | \$3.69 |
 | 10GB volume | \$1.50 |
 | Managed Postgres, Basic plan | \$38.00 |
-| Managed Postgres storage, 1GB used (assumed) | \$0.28 |
-| Volume snapshots, under the 10GB free allowance (assumed) | \$0.00 |
-| 10GB outbound data to the internet, North America (assumed) | \$0.20 |
+| 1GB of Managed Postgres storage (assumed) | \$0.28 |
+| Volume snapshots, within the 10GB free allowance (assumed) | \$0.00 |
+| 10GB outbound data to the internet from North America (assumed) | \$0.20 |
 | **Total** | **\$43.67** |
 
-The app and database are in the same region, so traffic between them is free, and the app uses the free shared IPv4 address. The database is most of the bill; the app itself costs under \$5.
+The app and database run in the same region, so data transfer between them is free. The app also uses a shared IPv4 address, which is free.
+
+In this example, Managed Postgres accounts for most of the bill. The app Machine and its 10GB volume cost \$5.19 per month.
 
 ### A Discord bot or background worker that runs 24/7
 
