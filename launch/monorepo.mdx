@@ -96,3 +96,32 @@ fly deploy ./apps/api
 ```bash
 fly deploy --config fly.api.toml --build-target api
 ```
+
+**Deploy one app from a pnpm workspace**
+
+In a pnpm workspace, `pnpm deploy` copies one package and its production dependencies, including other workspace packages it uses, into a standalone directory. Build from the repository root so the lockfile is in the build context, and give each app its own final stage:
+
+```dockerfile
+FROM node:22-slim AS base
+RUN corepack enable
+
+FROM base AS build
+WORKDIR /app
+COPY . .
+RUN pnpm install --frozen-lockfile
+RUN pnpm --filter=api... run build
+RUN pnpm deploy --filter=api --prod /prod/api
+
+FROM base AS api
+WORKDIR /app
+COPY --from=build /prod/api .
+CMD ["pnpm", "start"]
+```
+
+Then deploy that stage with the app's own `fly.toml`:
+
+```bash
+fly deploy --config fly.api.toml --build-target api
+```
+
+On pnpm 10 and later, `pnpm deploy` requires `inject-workspace-packages: true` in `pnpm-workspace.yaml`. Without it, run `pnpm deploy --legacy`.

@@ -292,6 +292,27 @@ To remove a tunnel, run `fly wireguard remove`. You can specify the organization
 
 Having trouble connecting to a Fly.io hosted app? When you can't connect to something, it's helpful to establish a baseline of what is, or what is not, working.
 
+#### `wg-quick: resolvconf: command not found`
+
+If `wg-quick up` fails with:
+
+```output
+/usr/bin/wg-quick: line 32: resolvconf: command not found
+```
+
+your tunnel configuration sets a `DNS` server, and `wg-quick` needs a `resolvconf` command to apply it. Install `openresolv`, then bring the tunnel up again:
+
+```bash
+sudo apt install openresolv
+wg-quick up mypeer
+```
+
+If the machine uses `systemd-resolved`, link its `resolvectl` command in place of `resolvconf` instead:
+
+```bash
+sudo ln -s /usr/bin/resolvectl /usr/local/bin/resolvconf
+```
+
 #### Am I connected to Fly.io VPN?
 
 When connected locally, you can run a `dig` command to list all the apps your connection has access to.

@@ -49,6 +49,7 @@ If the error isn't obvious, start here.
 - **My Machine is stuck or behaving unexpectedly**
     - [Machine stuck in a state](#stuck-machines)
     - [Machine stops immediately after starting](#machines-stop-immediately-after-starting)
+    - [Exit code 126 or 127](#exit-code-126-or-127)
     - [Suspend vs stop tradeoffs](#suspend-vs-stop)
     - [What the /init process does](#the-init-process)
 - **I can't access the dashboard or my account**
@@ -373,6 +374,26 @@ If your Machine starts and immediately stops, your app's process is exiting. The
 - Make sure your Dockerfile has an explicit `CMD`. Don't rely on the base image default.
 - Test locally: `docker run <your-image>`. If it exits immediately in Docker, it'll exit immediately on Fly.
 - Check `fly logs` for your app's exit code and any error output.
+
+### Exit code 126 or 127
+
+If `fly logs` shows your app exiting with code 126 or 127, the Machine couldn't run your start command.
+
+- **126** means the command was found but couldn't be executed. Usually the file isn't executable (add `RUN chmod +x` for it in your Dockerfile), the binary was built for a different CPU architecture than the Machine, or a script has Windows (CRLF) line endings.
+- **127** means the command wasn't found. Usually a multi-stage build didn't copy the binary into the final stage, it's not on `PATH`, or a script's shebang names an interpreter the image doesn't have, such as `#!/bin/bash` on Alpine.
+
+To look inside the image, temporarily replace the start command with one that keeps the Machine running, deploy, and open a shell:
+
+```dockerfile
+CMD ["tail", "-f", "/dev/null"]
+```
+
+```bash
+fly deploy
+fly ssh console
+```
+
+From the console, check that the file exists with `ls -l`, and run your real start command by hand to see its error.
 
 ### Suspend vs stop
 
