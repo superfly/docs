@@ -325,7 +325,7 @@ For those who are curious, here's the [deployment script](https://github.com/rub
 
 <Info>
 This is a decent sized personal project, deployed across three continents.  Even with a
-significant amount of over-provisioning, the costs per month are around \$60, before taking
+significant amount of over-provisioning, the costs per month are around \$75, before taking
 into account plans and allowances.
 </Info>
 
@@ -336,16 +336,16 @@ I have two machines that will run puppeteer and Chrome on demand.
 keep things simple, I'm going to ignore all of that and just look at the total costs.
 From there, add your plan and subtract your allowances to see what this would cost for you.
 
-And be aware that things may change, the below numbers are current as of early March, 2024.
+And be aware that things may change, the below numbers are current as of October 2026.
 
-Let's start with compute.  9 shared-cpu-1x machines with 1GB each at \$5.70 per month total \$51.30.
-Two shared-cpu-1x machines with 512MB each at \$3.19 per month total \$6.38.
+Let's start with compute.  9 shared-cpu-1x machines with 1GB each at \$6.70 per month total \$60.30.
+Two shared-cpu-1x machines with 512MB each at \$3.69 per month total \$7.38.
 The print on demand machines are on bigger machines, but are only run when requested.
 I've configured them to stay up for 15 minutes when summoned.  Despite all of this the
-costs for a typical month are around \$0.03.  So we are up to \$57.71.
+costs for a typical month are around \$0.03.  So we are up to \$67.71.
 
 Next up volumes.  I have 9 machines with 3GB disks, and 2 machines that only need 1G each.
-29GB at \$0.15 per month is \$1.35.
+29GB at \$0.15 per month is \$4.35.
 
 I have a dedicated IPv4 address in order to use ssh.  This adds \$2.00 per month.
 
@@ -353,9 +353,9 @@ Outbound transfer is well under the free allowance, but for completeness I'm see
 which at \$0.02 per GB amounts to \$0.32.  And about 0.1GB in Asia Pacific, which at \$0.04 per GB adds less than a cent,
 but to be generous, let's accept a total of \$0.33.
 
-Adding up everything, this would be 57.71 + 1.35 + 2.00 + 0.33 for a total of \$61.39 per month.
+Adding up everything, this would be 67.71 + 4.35 + 2.00 + 0.33 for a total of \$74.39 per month.
 
-Again, this is before factoring in plans and allowances, and reflects the current pricing in March of 2023.
+Again, this is before factoring in plans and allowances, and reflects the current pricing in October 2026.
 
 For my needs to date, I'm clearly over-provisioning, but it is nice to have a picture of what
 a fully fleshed out system would cost per month to operate.

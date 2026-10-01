@@ -15,12 +15,12 @@ We’ve done our best to make billing on Fly.io something you can reason about. 
 
 ## A few examples
 
-So when you’re budgeting, you can look at what you’ve provisioned and do some quick math. Let’s say you’ve deployed three “shared-1x 1GB” machines in `sjc`. That’s \$20.37/month, tops. If you let them stop when idle, you might only pay for a few hours of compute—but the worst-case scenario is still capped at that monthly rate.
+So when you’re budgeting, you can look at what you’ve provisioned and do some quick math. Let’s say you’ve deployed three “shared-1x 1GB” machines in `sjc`. That’s \$23.95/month, tops. If you let them stop when idle, you might only pay for a few hours of compute—but the worst-case scenario is still capped at that monthly rate.
 
 Here are a few more grounded examples:
 
-- A **staging app** running in the  `sjc` region with one `shared-1x 256MB` machine that auto-stops when idle might cost less than **\$1/month**. If you leave it running full-time, it’s still only **\$2.32/month**.
-- A **queue worker** (also in `sjc`) that uses metrics-based autoscaling on `shared-1x 512MB` machines might average 3–5 machines running during busy hours. If those stay up for 50% of the month, you’re looking at **\$5.72–9.52/month**, worst-case around **\$19 month** if they all run 24/7.
+- A **staging app** running in the  `sjc` region with one `shared-1x 256MB` machine that auto-stops when idle might cost less than **\$1/month**. If you leave it running full-time, it’s still only **\$2.62/month**.
+- A **queue worker** (also in `sjc`) that uses metrics-based autoscaling on `shared-1x 512MB` machines might average 3–5 machines running during busy hours. If those stay up for 50% of the month, you’re looking at **\$6.61–11.01/month**, worst-case around **\$22 month** if they all run 24/7.
 
 We recommend budgeting for the “always-on” cost. You can get under that number with auto-stop or bursty usage, but don’t depend on it to hit your budget.
 
