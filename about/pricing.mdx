@@ -7,6 +7,103 @@ import { RegionPricingSelector } from "/snippets/RegionPricingSelector.jsx"
 
   <img src="/images/pricing.png" alt="Illustration by Annie Ruygt of Frankie the hot air balloon demonstrating a pricing chart on a whiteboard" />
 
+**Fly.io bills for the resources you use, with no monthly platform fee. The smallest always-on app costs \$2.19 per 30 days. A small web app with a Managed Postgres database costs about \$44 a month. The table below lists what we charge for, followed by a few examples of what real-ish apps cost.**
+
+## Everything we bill for
+
+Prices are in USD. Machine prices in this table are for Ashburn, Virginia (`iad`) and Secaucus, NJ (`ewr`), our lowest-priced regions. Machine prices vary by region; see [Started Fly Machines](#started-fly-machines) for the full list.
+
+Monthly Machine prices assume 30 days of continuous runtime. Machines are billed by the second while they're running, so an always-on Machine costs slightly more in a 31-day month.
+
+| What you pay for | Price | Notes |
+| --- | --- | --- |
+| Started Machine, `shared-cpu-1x` with 256MB RAM | \$2.19/month | Smallest Machine size. Billed by the second while running |
+| Started Machine, `shared-cpu-1x` with 512MB RAM | \$3.69/month | |
+| Started Machine, `shared-cpu-1x` with 1GB RAM | \$6.70/month | |
+| Started Machine, `shared-cpu-2x` with 2GB RAM | \$13.39/month | |
+| Started Machine, `performance-1x` with 2GB RAM | \$33.00/month | |
+| Started Machine, `performance-2x` with 4GB RAM | \$66.00/month | |
+| Additional Machine RAM | \$6.00/GB/month | RAM added beyond the amount included with the CPU preset |
+| Stopped or suspended Machine | \$0.15/GB/month of rootfs | Only the Machine's root file system is billed while it's stopped |
+| Volume | \$0.15/GB/month | Based on provisioned capacity, including while detached or attached to a stopped Machine |
+| Volume snapshots | \$0.08/GB/month | First 10GB free each month. Based on data stored, not provisioned volume size |
+| Dedicated IPv4 address | \$2/month | Optional. Apps get a shared IPv4 address and IPv6 addresses at no charge |
+| Static egress IP | \$0.005/hour (~\$3.60/month) | Optional |
+| SSL certificates | \$0.10/month per single hostname; \$1/month per wildcard | First 10 single-hostname certificates are free |
+| Outbound data to the internet | \$0.02/GB in North America and Europe<br/>\$0.04/GB in Asia Pacific, Oceania, and South America<br/>\$0.12/GB in Africa and India | Inbound data is free |
+| Private network data between regions | \$0.006/GB in North America and Europe<br/>\$0.015/GB in Asia Pacific, Oceania, and South America<br/>\$0.050/GB in Africa and India | Data transfer within a region is free. Different rates apply to some older organizations; see [data transfer pricing](#data-transfer-pricing) |
+| Managed Postgres | \$38/month (Basic) to \$1,922/month (Performance) | Storage is \$0.28/GB/month based on usage. See [Managed Postgres pricing](/postgres#pricing) |
+| Support | \$29/month Standard; \$199/month Premium; Enterprise starts at \$2,500/month | Optional. Community support is free |
+| Fly Kubernetes | \$75/month per cluster | Compute and volumes are billed separately |
+| Extensions such as Tigris and Upstash | Provider's list price | Pricing is set by the extension provider and charges appear on your Fly.io invoice |
+
+New organizations use Pay As You Go pricing. There's no monthly platform fee; you pay for the resources and services you use.
+
+## What does a typical app cost?
+
+Here are three example apps and what they'd cost per month. We use Ashburn (`iad`) for the examples unless otherwise noted, and assume the Machines run continuously. Traffic and storage marked "assumed" are example workloads, not included allowances. You can use the [pricing calculator](https://fly.io/calculator/) to estimate costs for your own app.
+
+If your Machines [auto-stop](/launch/autostop-autostart) when they're idle, your compute costs can be lower. You pay for the time a Machine is running and for its rootfs while it's stopped. If the Machine runs all month, you'll pay the full always-on cost shown here. See [Cost Management](/about/cost-management) for more ways to estimate and control your bill.
+
+### A small web app with Managed Postgres
+
+| Item | Monthly cost |
+| --- | ---: |
+| One `shared-cpu-1x` 512MB Machine, running continuously | \$3.69 |
+| 10GB volume | \$1.50 |
+| Managed Postgres, Basic plan | \$38.00 |
+| 1GB of Managed Postgres storage (assumed) | \$0.28 |
+| Volume snapshots, within the 10GB free allowance (assumed) | \$0.00 |
+| 10GB outbound data to the internet from North America (assumed) | \$0.20 |
+| **Total** | **\$43.67** |
+
+The app and database run in the same region, so data transfer between them is free. The app also uses a shared IPv4 address, which is free.
+
+In this example, Managed Postgres accounts for most of the bill. The app Machine and its 10GB volume cost \$5.19 per month.
+
+### A Discord bot or background worker running 24/7
+
+| Item | Monthly cost |
+| --- | ---: |
+| One `shared-cpu-1x` 256MB Machine, running continuously | \$2.19 |
+| 1GB outbound data to the internet from North America (assumed) | \$0.02 |
+| **Total** | **\$2.21** |
+
+This example doesn't use a volume, database, or dedicated IPv4 address, so there's nothing else to pay for. If the worker needs more memory, a `shared-cpu-1x` Machine with 512MB costs \$3.69 per month when running continuously.
+
+### An app running in three regions
+
+Suppose an app runs one 1GB Machine each in Ashburn (`iad`), Frankfurt (`fra`), and Singapore (`sin`). Each Machine serves 50GB of traffic to users and sends 10GB of private network traffic to Machines in other regions during the month.
+
+| Item | Monthly cost |
+| --- | ---: |
+| One `shared-cpu-1x` 1GB Machine in Ashburn (`iad`) | \$6.70 |
+| One `shared-cpu-1x` 1GB Machine in Frankfurt (`fra`) | \$7.73 |
+| One `shared-cpu-1x` 1GB Machine in Singapore (`sin`) | \$8.50 |
+| 100GB outbound data from `iad` and `fra` at \$0.02/GB (assumed) | \$2.00 |
+| 50GB outbound data from `sin` at \$0.04/GB (assumed) | \$2.00 |
+| 20GB cross-region private network data from `iad` and `fra` at \$0.006/GB (assumed) | \$0.12 |
+| 10GB cross-region private network data from `sin` at \$0.015/GB (assumed) | \$0.15 |
+| **Total** | **\$27.20** |
+
+Machine prices vary by region, which accounts for the different compute costs above.
+
+Cross-region private network traffic is billed in both directions. The request is billed at the rate for the region it leaves, and the response at the rate for the region it leaves. So if a small request returns a large response, most of the cost is at the responding region's rate.
+
+This example uses granular data transfer pricing. Organizations created before July 18, 2024 that haven't switched to granular pricing pay the public internet rate for cross-region traffic instead. See [data transfer pricing](#data-transfer-pricing).
+
+## Is there a free tier?
+
+No. New organizations don't have a free tier or a monthly free usage allowance.
+
+New accounts do get a [free trial](/about/free-trial), which lasts for up to 2 hours of Machine runtime or 7 days, whichever comes first. You don't need a credit card to start the trial. After the trial ends, you'll need to add a credit card to keep using billable resources.
+
+The cheapest always-on app is a `shared-cpu-1x` Machine with 256MB of RAM in Ashburn (`iad`) or Secaucus (`ewr`). It costs \$2.19 per 30 days of continuous runtime, plus any outbound data transfer (\$0.02/GB in North America and Europe).
+
+Some resources and allowances are free even after the trial ends. These include the first 10GB of volume snapshot storage each month, the first 10 single-hostname SSL certificates, inbound data transfer, shared IPv4 addresses, and IPv6 addresses.
+
+Organizations on plans discontinued in October 2024 keep the free allowances included with those plans. See [Discontinued Plans](/about/discontinued-plans).
+
 ## How it works
 
 Fly.io services are billed per organization, with [Linked Organizations](/about/billing#unified-billing) reporting resource usage to their parent Billing Organization. Plans get complicated, so we just charge based on usage. Pick and choose which pieces you need for your application; that's all you'll see on your invoice.
