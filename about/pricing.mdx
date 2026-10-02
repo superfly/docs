@@ -86,7 +86,9 @@ Suppose an app runs one 1GB Machine each in Ashburn (`iad`), Frankfurt (`fra`), 
 | 10GB cross-region private network data from `sin` at \$0.015/GB (assumed) | \$0.15 |
 | **Total** | **\$27.20** |
 
-Machine prices vary by region, which accounts for the different compute costs above. Cross-region private network traffic is also billed according to the region it leaves.
+Machine prices vary by region, which accounts for the different compute costs above.
+
+Cross-region private network traffic is billed in both directions. The request is billed at the rate for the region it leaves, and the response at the rate for the region it leaves. So if a small request returns a large response, most of the cost is at the responding region's rate.
 
 This example uses granular data transfer pricing. Organizations created before July 18, 2024 that haven't switched to granular pricing pay the public internet rate for cross-region traffic instead. See [data transfer pricing](#data-transfer-pricing).
 
