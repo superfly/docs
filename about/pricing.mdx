@@ -73,20 +73,24 @@ This example doesn't use a volume, database, or dedicated IPv4 address, so there
 
 ### An app running in three regions
 
+Suppose an app runs one 1GB Machine each in Ashburn (`iad`), Frankfurt (`fra`), and Singapore (`sin`). Each Machine serves 50GB of traffic to users and sends 10GB of private network traffic to Machines in other regions during the month.
+
 | Item | Monthly cost |
-| --- | --- |
+| --- | ---: |
 | One `shared-cpu-1x` 1GB Machine in Ashburn (`iad`) | \$6.70 |
 | One `shared-cpu-1x` 1GB Machine in Frankfurt (`fra`) | \$7.73 |
 | One `shared-cpu-1x` 1GB Machine in Singapore (`sin`) | \$8.50 |
-| 50GB outbound data to the internet from each of `iad` and `fra` at \$0.02/GB (assumed) | \$2.00 |
-| 50GB outbound data to the internet from `sin` at \$0.04/GB (assumed) | \$2.00 |
-| 10GB private network data to other regions from each of `iad` and `fra` at \$0.006/GB (assumed) | \$0.12 |
-| 10GB private network data to other regions from `sin` at \$0.015/GB (assumed) | \$0.15 |
+| 100GB outbound data from `iad` and `fra` at \$0.02/GB (assumed) | \$2.00 |
+| 50GB outbound data from `sin` at \$0.04/GB (assumed) | \$2.00 |
+| 20GB cross-region private network data from `iad` and `fra` at \$0.006/GB (assumed) | \$0.12 |
+| 10GB cross-region private network data from `sin` at \$0.015/GB (assumed) | \$0.15 |
 | **Total** | **\$27.20** |
 
 {/* TODO: confirm with the billing team that private network data between regions is charged at the rate of the region group the data leaves, as this example assumes. */}
 
-Regional prices account for the difference between the three Machines. Organizations created before July 18 2024 that haven't switched to granular data transfer rates pay the internet rate for traffic between regions too; see [data transfer pricing](#data-transfer-pricing).
+Machine prices vary by region, which accounts for the different compute costs above. Cross-region private network traffic is also billed according to the region it leaves.
+
+This example uses granular data transfer pricing. Organizations created before July 18, 2024 that haven't switched to granular pricing pay the public internet rate for cross-region traffic instead. See [data transfer pricing](#data-transfer-pricing).
 
 ## Is there a free tier?
 
