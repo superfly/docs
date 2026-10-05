@@ -949,26 +949,6 @@
                             ]
                           },
                           "flyctl/cmd/fly_launch",
-                          {
-                            "group": "fly litefs-cloud",
-                            "root": "flyctl/cmd/fly_litefs-cloud",
-                            "pages": [
-                              {
-                                "group": "fly litefs-cloud clusters",
-                                "root": "flyctl/cmd/fly_litefs-cloud_clusters",
-                                "pages": [
-                                  "flyctl/cmd/fly_litefs-cloud_clusters_create",
-                                  "flyctl/cmd/fly_litefs-cloud_clusters_destroy",
-                                  "flyctl/cmd/fly_litefs-cloud_clusters_list"
-                                ]
-                              },
-                              "flyctl/cmd/fly_litefs-cloud_export",
-                              "flyctl/cmd/fly_litefs-cloud_import",
-                              "flyctl/cmd/fly_litefs-cloud_regions",
-                              "flyctl/cmd/fly_litefs-cloud_restore",
-                              "flyctl/cmd/fly_litefs-cloud_status"
-                            ]
-                          },
                           "flyctl/cmd/fly_logs",
                           {
                             "group": "fly machine",
@@ -1316,7 +1296,6 @@
                                 "root": "flyctl/cmd/fly_tokens_create",
                                 "pages": [
                                   "flyctl/cmd/fly_tokens_create_deploy",
-                                  "flyctl/cmd/fly_tokens_create_litefs-cloud",
                                   "flyctl/cmd/fly_tokens_create_machine-exec",
                                   "flyctl/cmd/fly_tokens_create_org",
                                   "flyctl/cmd/fly_tokens_create_readonly",
@@ -2314,43 +2293,43 @@
     },
     {
       "source": "/flyctl/litefs-cloud-clusters-create/",
-      "destination": "/flyctl/cmd/fly_litefs-cloud_clusters_create"
+      "destination": "/litefs/cloud-backups"
     },
     {
       "source": "/flyctl/litefs-cloud-clusters-destroy/",
-      "destination": "/flyctl/cmd/fly_litefs-cloud_clusters_destroy"
+      "destination": "/litefs/cloud-backups"
     },
     {
       "source": "/flyctl/litefs-cloud-clusters-list/",
-      "destination": "/flyctl/cmd/fly_litefs-cloud_clusters_list"
+      "destination": "/litefs/cloud-backups"
     },
     {
       "source": "/flyctl/litefs-cloud-clusters/",
-      "destination": "/flyctl/cmd/fly_litefs-cloud_clusters"
+      "destination": "/litefs/cloud-backups"
     },
     {
       "source": "/flyctl/litefs-cloud-export/",
-      "destination": "/flyctl/cmd/fly_litefs-cloud_export"
+      "destination": "/litefs/cloud-backups"
     },
     {
       "source": "/flyctl/litefs-cloud-import/",
-      "destination": "/flyctl/cmd/fly_litefs-cloud_import"
+      "destination": "/litefs/cloud-backups"
     },
     {
       "source": "/flyctl/litefs-cloud-regions/",
-      "destination": "/flyctl/cmd/fly_litefs-cloud_regions"
+      "destination": "/litefs/cloud-backups"
     },
     {
       "source": "/flyctl/litefs-cloud-restore/",
-      "destination": "/flyctl/cmd/fly_litefs-cloud_restore"
+      "destination": "/litefs/cloud-backups"
     },
     {
       "source": "/flyctl/litefs-cloud-status/",
-      "destination": "/flyctl/cmd/fly_litefs-cloud_status"
+      "destination": "/litefs/cloud-backups"
     },
     {
       "source": "/flyctl/litefs-cloud/",
-      "destination": "/flyctl/cmd/fly_litefs-cloud"
+      "destination": "/litefs/cloud-backups"
     },
     {
       "source": "/flyctl/logs/",
@@ -3050,7 +3029,7 @@
     },
     {
       "source": "/flyctl/tokens-create-litefs-cloud/",
-      "destination": "/flyctl/cmd/fly_tokens_create_litefs-cloud"
+      "destination": "/litefs/cloud-backups"
     },
     {
       "source": "/flyctl/tokens-create-machine-exec/",
@@ -4063,6 +4042,50 @@
     {
       "source": "/postgres/overview",
       "destination": "/postgres"
+    },
+    {
+      "source": "/flyctl/cmd/fly_litefs-cloud",
+      "destination": "/litefs/cloud-backups"
+    },
+    {
+      "source": "/flyctl/cmd/fly_litefs-cloud_clusters",
+      "destination": "/litefs/cloud-backups"
+    },
+    {
+      "source": "/flyctl/cmd/fly_litefs-cloud_clusters_create",
+      "destination": "/litefs/cloud-backups"
+    },
+    {
+      "source": "/flyctl/cmd/fly_litefs-cloud_clusters_destroy",
+      "destination": "/litefs/cloud-backups"
+    },
+    {
+      "source": "/flyctl/cmd/fly_litefs-cloud_clusters_list",
+      "destination": "/litefs/cloud-backups"
+    },
+    {
+      "source": "/flyctl/cmd/fly_litefs-cloud_export",
+      "destination": "/litefs/cloud-backups"
+    },
+    {
+      "source": "/flyctl/cmd/fly_litefs-cloud_import",
+      "destination": "/litefs/cloud-backups"
+    },
+    {
+      "source": "/flyctl/cmd/fly_litefs-cloud_regions",
+      "destination": "/litefs/cloud-backups"
+    },
+    {
+      "source": "/flyctl/cmd/fly_litefs-cloud_restore",
+      "destination": "/litefs/cloud-backups"
+    },
+    {
+      "source": "/flyctl/cmd/fly_litefs-cloud_status",
+      "destination": "/litefs/cloud-backups"
+    },
+    {
+      "source": "/flyctl/cmd/fly_tokens_create_litefs-cloud",
+      "destination": "/litefs/cloud-backups"
     }
   ]
 }
