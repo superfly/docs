@@ -1,5 +1,5 @@
 ---
-title: Deploying Remote MCP Servers
+title: "Remote MCP Server Hosting: Deploy MCP Servers on Fly.io"
 source_url: https://fly.io/docs/blueprints/remote-mcp-servers/
 ---
 
@@ -7,7 +7,7 @@ source_url: https://fly.io/docs/blueprints/remote-mcp-servers/
 
 ## Overview
 
-The Model Context Protocol (MCP) is a fun new way to give LLMs new powers. Originally developed by Anthropic, the protocol has since been adopted by OpenAI (with Google Gemini support in the works at the time of writing).
+Hosting a remote MCP server on Fly.io means running it on a Fly Machine, a fast-booting isolated VM that any MCP client can reach over HTTP, and that can stop when idle and start again on the next request. The Model Context Protocol (MCP) gives LLMs new powers. It was originally developed by Anthropic and is now supported by most major LLM clients.
 
 The protocol defines a standardized way of connecting tools and providing additional context to LLMs, not dissimilar to the way USB provides a standardized way to connect computers to peripherals and devices. Fly Machines are tightly isolated VMs that are perfect for running MCP servers.
 
