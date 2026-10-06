@@ -1,0 +1,18 @@
+---
+title: Your Fly App
+source_url: https://fly.io/docs/deep-dive/application/
+---
+
+  <img src="/images/your_fly_app.png" alt="Illustration by Annie Ruygt of an app cube flying near two Fly balloons" />
+
+Your demo app is running by default on two [Fly Machines](/machines), our fast-launching VMs.
+
+Both Machines stop when not in use, and start automatically when a new request comes in. [Autostop/autostart](/launch/autostop-autostart) is entirely configurable. You can choose to suspend instead of stop, configure a minimum number of Machines to keep running, or even decide never to stop Machines at all.
+
+The purpose of two Machines is twofold: redundancy and scalability. If one Machine goes down, the other can continue on. If both are available, when your app has higher traffic, both can be started to handle requests. You can [vertically scale](/launch/scale-machine/) the CPU and RAM on Machines.
+
+You can also [horizontally scale](/launch/scale-count) the number of Machines. You can scale out to different regions with the `fly scale count` command too. If you have a co-worker on another continent, create a Machine there.
+
+Familiarize yourself with the [fly.toml](/reference/configuration) config file. Make a change there--or to any part of your app--and run `fly deploy` to update your app.
+
+Your Fly App takes advantage of [Anycast routing](/networking/services), a [load-balancing proxy](/reference/fly-proxy), and [private networking](/networking/private-networking). You can also create [DNS certificates for custom domains](/networking/custom-domain).

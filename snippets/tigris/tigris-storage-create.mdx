@@ -1,0 +1,49 @@
+<CodeGroup>
+```bash cmd
+fly storage create
+```
+```output output
+? Select Organization: fly-ephemeral (fly-ephemeral)
+? Choose a name, use the default, or leave blank to generate one:
+Your project (summer-grass-2004) is ready.
+
+Set one or more of the following secrets on your target app.
+BUCKET_NAME: summer-grass-2004
+AWS_ENDPOINT_URL_S3: https://fly.storage.tigris.dev
+AWS_ACCESS_KEY_ID: tid_xxxxxx
+AWS_SECRET_ACCESS_KEY: tsec_xxxxxx
+```
+</CodeGroup>
+
+### Public buckets
+
+By default, buckets are private. If you need to serve public assets like images or JavaScript files, create a *public bucket*:
+
+```bash
+fly storage create --public
+```
+
+You can also make a public bucket private.
+
+```bash
+fly storage update mybucket --private
+```
+
+Objects in a public bucket can be accessed by anyone without authentication. Public content is served from dedicated domains using the bucket name as a subdomain:
+
+* `https://mybucket.t3.tigrisfiles.io/key-name` (primary)
+* `https://mybucket.t3.tigrisbucket.io/key-name`
+* `https://mybucket.t3.tigrisblob.io/key-name`
+
+No credentials or pre-signed URLs are needed. For production use, we recommend setting up a custom domain so your public URLs stay stable:
+
+```bash
+flyctl storage update mybucket --custom-domain assets.example.com
+```
+
+Then create a CNAME record for `assets.example.com` pointing to `mybucket.t3.tigrisbucket.io`. See the [Tigris Custom Domain docs](https://www.tigrisdata.com/docs/buckets/custom-domain/) for full setup instructions and the [Tigris Public Bucket docs](https://www.tigrisdata.com/docs/buckets/public-bucket/) for details on all available public domains.
+
+### Object Level Access Control 
+By default, all objects inherit the access control settings of the bucket they are in. If a bucket is private, all objects in it are also private and vice versa. 
+However, you can make individual objects in a bucket public-read (or private) by setting an object level ACL on them. This lets you serve a public object from an otherwise private bucket, or a private object from an otherwise public bucket. 
+For details on how to set this up see the [Tigris Object ACL docs](https://www.tigrisdata.com/docs/objects/acl/)

@@ -1,0 +1,45 @@
+flyctl is a command-line utility that lets you work with Fly.io using `fly` commands, from creating your account to deploying your applications. It runs on your local device so you'll want to install the version that's appropriate for your operating system.
+
+### <Icon icon="apple" size="24"/> macOS
+
+If you have the [Homebrew](https://brew.sh) package manager installed, flyctl can be installed by running:
+
+```bash
+brew install flyctl
+```
+
+If not, you can run the install script:
+
+```bash
+curl -L https://fly.io/install.sh | sh
+```
+If you used curl to install flyctl, then you need to add the flyctl directory to your shell rc file. Check the output of the install script for the entries to copy and paste into the file. Now you can use the `fly` command from any directory.
+
+### <Icon icon="linux" size="24"/> Linux
+
+Run the install script:
+
+```bash
+curl -L https://fly.io/install.sh | sh
+```
+
+### <Icon icon="windows" size="24"/> Windows
+
+
+Run the PowerShell install script:
+
+```bash
+pwsh -Command "iwr https://fly.io/install.ps1 -useb | iex"
+```
+
+If you encounter an error saying the `pwsh` command is not found, `powershell` can be used instead, though we recommend [installing the latest version of PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows).
+
+## Uninstall flyctl
+
+How you remove flyctl depends on how you installed it.
+
+**Homebrew (macOS):** Uninstall with `brew uninstall flyctl`.
+
+**Install script (macOS and Linux):** Remove the flyctl directory (`~/.fly` by default), then delete the lines the install script added to your shell rc file (for example `~/.bashrc` or `~/.zshrc`) to put flyctl on your `PATH`.
+
+**Windows (PowerShell):** Remove the flyctl install directory (`~\.fly` by default) and remove its entry from your `PATH`.

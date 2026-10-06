@@ -1,0 +1,1584 @@
+---
+title: Models
+icon: boxes
+description: Schema reference for every object in the Fly Machines API.
+---
+
+
+These are the data models used across the Machines API requests and responses, generated from the OpenAPI specification.
+
+## AcmeChallenge
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | No |  |
+| `target` | `string` | No |  |
+
+## App
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | No |  |
+| `internal_numeric_id` | `integer` | No |  |
+| `machine_count` | `integer` | No |  |
+| `name` | `string` | No |  |
+| `network` | `string` | No |  |
+| `network_cidr` | `string` | No |  |
+| `organization` | `AppOrganizationInfo` | No |  |
+| `status` | `string` | No |  |
+| `volume_count` | `integer` | No |  |
+
+## AppOrganizationInfo
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `internal_numeric_id` | `integer` | No |  |
+| `name` | `string` | No |  |
+| `slug` | `string` | No |  |
+
+## AppSecret
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | No |  |
+| `digest` | `string` | No |  |
+| `name` | `string` | No |  |
+| `updated_at` | `string` | No |  |
+| `value` | `string` | No |  |
+
+## AppSecrets
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `secrets` | `AppSecret[]` | No |  |
+
+## AppSecretsUpdateRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `values` | `map<string, string>` | No |  |
+
+## AppSecretsUpdateResp
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `Version` | `integer` | No | DEPRECATED |
+| `secrets` | `AppSecret[]` | No |  |
+| `version` | `integer` | No |  |
+
+## assignIPRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `network` | `string` | No |  |
+| `org_slug` | `string` | No |  |
+| `region` | `string` | No |  |
+| `service_name` | `string` | No |  |
+| `type` | `string` | No |  |
+
+## authenticateTokenRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `header` | `string` | No |  |
+
+## authorizeResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `access` | `flyio.Access` | No |  |
+| `verified_token` | `root.VerifiedToken` | No |  |
+
+## authorizeTokenRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `access` | `main.TokenAccess` | No |  |
+| `header` | `string` | No |  |
+
+## CertificateCheckResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `acme_requested` | `boolean` | No |  |
+| `certificates` | `CertificateEntry[]` | No |  |
+| `configured` | `boolean` | No |  |
+| `dns_provider` | `string` | No |  |
+| `dns_records` | `DNSRecords` | No |  |
+| `dns_requirements` | `DNSRequirements` | No |  |
+| `hostname` | `string` | No |  |
+| `rate_limited_until` | `string` | No |  |
+| `status` | `string` | No |  |
+| `validation` | `CertificateValidation` | No |  |
+| `validation_errors` | `CertificateValidationError[]` | No |  |
+
+## CertificateDetail
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `acme_requested` | `boolean` | No |  |
+| `certificates` | `CertificateEntry[]` | No |  |
+| `configured` | `boolean` | No |  |
+| `dns_provider` | `string` | No |  |
+| `dns_requirements` | `DNSRequirements` | No |  |
+| `hostname` | `string` | No |  |
+| `rate_limited_until` | `string` | No |  |
+| `status` | `string` | No |  |
+| `validation` | `CertificateValidation` | No |  |
+| `validation_errors` | `CertificateValidationError[]` | No |  |
+
+## CertificateEntry
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | No |  |
+| `expires_at` | `string` | No |  |
+| `issued` | `IssuedCertificate[]` | No |  |
+| `issuer` | `string` | No |  |
+| `source` | `string` | No | Enum: custom, fly |
+| `status` | `string` | No | Enum: active, pending_ownership, pending_validation |
+
+## CertificateSummary
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `acme_alpn_configured` | `boolean` | No |  |
+| `acme_dns_configured` | `boolean` | No |  |
+| `acme_http_configured` | `boolean` | No |  |
+| `acme_requested` | `boolean` | No |  |
+| `configured` | `boolean` | No |  |
+| `created_at` | `string` | No |  |
+| `dns_provider` | `string` | No |  |
+| `has_custom_certificate` | `boolean` | No |  |
+| `has_fly_certificate` | `boolean` | No |  |
+| `hostname` | `string` | No |  |
+| `ownership_txt_configured` | `boolean` | No |  |
+| `status` | `string` | No |  |
+| `updated_at` | `string` | No |  |
+
+## CertificateValidation
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `alpn_configured` | `boolean` | No |  |
+| `dns_configured` | `boolean` | No |  |
+| `http_configured` | `boolean` | No |  |
+| `ownership_txt_configured` | `boolean` | No |  |
+
+## CertificateValidationError
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `code` | `string` | No |  |
+| `message` | `string` | No |  |
+| `remediation` | `string` | No |  |
+| `timestamp` | `string` | No |  |
+
+## CheckStatus
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | No |  |
+| `output` | `string` | No |  |
+| `status` | `string` | No |  |
+| `updated_at` | `string` | No |  |
+
+## createAcmeCertificateRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `hostname` | `string` | No |  |
+
+## CreateAppDeployTokenRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `expiry` | `string` | No |  |
+
+## CreateAppRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `enable_subdomains` | `boolean` | No |  |
+| `name` | `string` | No |  |
+| `network` | `string` | No |  |
+| `org_slug` | `string` | No |  |
+
+## CreateAppResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `token` | `string` | No |  |
+
+## createCustomCertificateRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `fullchain` | `string` | No |  |
+| `hostname` | `string` | No |  |
+| `private_key` | `string` | No |  |
+
+## CreateLeaseRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `description` | `string` | No |  |
+| `ttl` | `integer` | No | seconds lease will be valid |
+
+## CreateMachineRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `config` | `fly.MachineConfig` | No | An object defining the Machine configuration |
+| `lease_ttl` | `integer` | No |  |
+| `min_secrets_version` | `integer` | No |  |
+| `name` | `string` | No | Unique name for this Machine. If omitted, one is generated for you |
+| `region` | `string` | No | The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you). |
+| `skip_launch` | `boolean` | No |  |
+| `skip_secrets` | `boolean` | No |  |
+| `skip_service_registration` | `boolean` | No |  |
+
+## CreateOIDCTokenRequest
+
+Optional parameters
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `aud` | `string` | No |  |
+| `aws_principal_tags` | `boolean` | No |  |
+
+## createPostgresAttachmentRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `app_name` | `string` | Yes | Name of the Fly app to attach. |
+
+## createPostgresAttachmentResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresAttachment` | No |  |
+
+## createPostgresBackupRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `type` | `string` | Yes | Backup type. — Enum: full, incr, diff |
+
+## createPostgresClusterRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `disk_size_gb` | `integer` | No | Disk size in gigabytes. |
+| `name` | `string` | No | Name for the cluster. A name is generated when omitted. |
+| `org_slug` | `string` | Yes | Slug of the organization that will own the cluster. |
+| `pg_major_version` | `string` | No | Postgres major version. — Enum: 16, 17 |
+| `plan` | `string` | Yes | Plan slug selecting CPU, memory, and disk sizing. — Enum: basic, starter, launch, scale, Performance |
+| `pool_mode` | `string` | No | Connection pooler mode. — Enum: session, transaction |
+| `postgis_enabled` | `boolean` | No | Enable PostGIS support, required to later enable PostGIS extensions. |
+| `region` | `string` | Yes | Fly region code where the cluster's primary runs. |
+
+## createPostgresDatabaseRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | Yes | Name of the database to create. |
+
+## createPostgresUserRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `role` | `string` | Yes | Role to grant the user. — Enum: schema_admin, writer, reader |
+| `username` | `string` | Yes | Name for the new user. |
+
+## createPostgresUserResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresUser` | No |  |
+
+## CreateVolumeRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `auto_backup_enabled` | `boolean` | No | enable scheduled automatic snapshots. Defaults to `true` |
+| `compute` | `fly.MachineGuest` | No |  |
+| `compute_image` | `string` | No |  |
+| `encrypted` | `boolean` | No |  |
+| `fstype` | `string` | No |  |
+| `name` | `string` | No |  |
+| `region` | `string` | No |  |
+| `require_unique_zone` | `boolean` | No |  |
+| `size_gb` | `integer` | No |  |
+| `snapshot_id` | `string` | No | restore from snapshot |
+| `snapshot_retention` | `integer` | No |  |
+| `source_volume_id` | `string` | No | fork from remote volume |
+| `unique_zone_app_wide` | `boolean` | No |  |
+
+## CurrentTokenResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `tokens` | `main.tokenInfo[]` | No |  |
+
+## DecryptSecretkeyRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `associated_data` | `integer[]` | No |  |
+| `ciphertext` | `integer[]` | No |  |
+
+## DecryptSecretkeyResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `plaintext` | `integer[]` | No |  |
+
+## DeleteAppSecretResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `Version` | `integer` | No | DEPRECATED |
+| `version` | `integer` | No |  |
+
+## DeleteSecretkeyResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `Version` | `integer` | No | DEPRECATED |
+| `version` | `integer` | No |  |
+
+## destroyCustomCertificateResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `acme_requested` | `boolean` | No |  |
+| `certificates` | `CertificateEntry[]` | No |  |
+| `configured` | `boolean` | No |  |
+| `dns_provider` | `string` | No |  |
+| `dns_requirements` | `DNSRequirements` | No |  |
+| `hostname` | `string` | No |  |
+| `rate_limited_until` | `string` | No |  |
+| `status` | `string` | No |  |
+| `validation` | `CertificateValidation` | No |  |
+| `validation_errors` | `CertificateValidationError[]` | No |  |
+| `warning` | `string` | No |  |
+
+## DNSRecords
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `a` | `string[]` | No |  |
+| `aaaa` | `string[]` | No |  |
+| `acme_challenge_cname` | `string` | No |  |
+| `cname` | `string[]` | No |  |
+| `ownership_txt` | `string` | No |  |
+| `resolved_addresses` | `string[]` | No |  |
+| `soa` | `string` | No |  |
+
+## DNSRequirements
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `a` | `string[]` | No |  |
+| `aaaa` | `string[]` | No |  |
+| `acme_challenge` | `AcmeChallenge` | No |  |
+| `cname` | `string` | No |  |
+| `ownership` | `OwnershipVerification` | No |  |
+
+## enablePostgresExtensionRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `create_schema` | `boolean` | No | Create the schema first if it does not exist. |
+| `name` | `string` | Yes | Extension to enable. |
+| `schema` | `string` | No | Schema to install the extension into. Defaults to the database's default schema. |
+
+## EncryptSecretkeyRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `associated_data` | `integer[]` | No |  |
+| `plaintext` | `integer[]` | No |  |
+
+## EncryptSecretkeyResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `ciphertext` | `integer[]` | No |  |
+
+## ErrorResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `details` | `object` | No | Deprecated |
+| `error` | `string` | No |  |
+| `status` | `main.statusCode` | No |  |
+
+## ExtendVolumeRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `size_gb` | `integer` | No |  |
+
+## ExtendVolumeResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `needs_restart` | `boolean` | No |  |
+| `volume` | `Volume` | No |  |
+
+## fly.ContainerConfig
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `cmd` | `string[]` | No | CmdOverride is used to override the default command of the image. |
+| `depends_on` | `fly.ContainerDependency[]` | No | DependsOn can be used to define dependencies between containers. The container will only be started after all of its dependent conditions have been satisfied. |
+| `entrypoint` | `string[]` | No | EntrypointOverride is used to override the default entrypoint of the image. |
+| `env` | `map<string, string>` | No | ExtraEnv is used to add additional environment variables to the container. |
+| `env_from` | `fly.EnvFrom[]` | No | EnvFrom can be provided to set environment variables from machine fields. |
+| `exec` | `string[]` | No | Image Config overrides - these fields are used to override the image configuration. If not provided, the image configuration will be used. ExecOverride is used to override the default command of the image. |
+| `files` | `fly.File[]` | No | Files are files that will be written to the container file system. |
+| `healthchecks` | `fly.ContainerHealthcheck[]` | No | Healthchecks determine the health of your containers. Healthchecks can use HTTP, TCP or an Exec command. |
+| `image` | `string` | No | Image is the docker image to run. |
+| `name` | `string` | No | Name is used to identify the container in the machine. |
+| `restart` | `fly.MachineRestart` | No | Restart is used to define the restart policy for the container. NOTE: spot-price is not supported for containers. |
+| `secrets` | `fly.MachineSecret[]` | No | Secrets can be provided at the process level to explicitly indicate which secrets should be used for the process. If not provided, the secrets provided at the machine level will be used. |
+| `stop` | `fly.StopConfig` | No | Stop is used to define the signal and timeout for stopping the container. |
+| `user` | `string` | No | UserOverride is used to override the default user of the image. |
+
+## fly.ContainerDependency
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `condition` | `fly.ContainerDependencyCondition` | No |  |
+| `name` | `string` | No |  |
+
+## fly.ContainerDependencyCondition
+
+Type: `string`
+
+## fly.ContainerHealthcheck
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `exec` | `fly.ExecHealthcheck` | No |  |
+| `failure_threshold` | `integer` | No | The number of times the check must fail before considering the container unhealthy. |
+| `grace_period` | `integer` | No | The time in seconds to wait after a container starts before checking its health. |
+| `http` | `fly.HTTPHealthcheck` | No |  |
+| `interval` | `integer` | No | The time in seconds between executing the defined check. |
+| `kind` | `fly.ContainerHealthcheckKind` | No | Kind of healthcheck (readiness, liveness) |
+| `name` | `string` | No | The name of the check. Must be unique within the container. |
+| `success_threshold` | `integer` | No | The number of times the check must succeeed before considering the container healthy. |
+| `tcp` | `fly.TCPHealthcheck` | No |  |
+| `timeout` | `integer` | No | The time in seconds to wait for the check to complete. |
+| `unhealthy` | `fly.UnhealthyPolicy` | No | Unhealthy policy that determines what action to take if a container is deemed unhealthy |
+
+## fly.ContainerHealthcheckKind
+
+Type: `string`
+
+## fly.ContainerHealthcheckScheme
+
+Type: `string`
+
+## fly.DNSConfig
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `dns_forward_rules` | `fly.dnsForwardRule[]` | No |  |
+| `hostname` | `string` | No |  |
+| `hostname_fqdn` | `string` | No |  |
+| `nameservers` | `string[]` | No |  |
+| `options` | `fly.dnsOption[]` | No |  |
+| `searches` | `string[]` | No |  |
+| `skip_registration` | `boolean` | No |  |
+
+## fly.dnsForwardRule
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `addr` | `string` | No |  |
+| `basename` | `string` | No |  |
+
+## fly.dnsOption
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | No |  |
+| `value` | `string` | No |  |
+
+## fly.EnvFrom
+
+EnvVar defines an environment variable to be populated from a machine field, env_var
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `env_var` | `string` | No | EnvVar is required and is the name of the environment variable that will be set from the secret. It must be a valid environment variable name. |
+| `field_ref` | `string` | No | FieldRef selects a field of the Machine: supports id, version, app_name, private_ip, region, image. — Enum: id, version, app_name, private_ip, region, image |
+
+## fly.ExecHealthcheck
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `command` | `string[]` | No | The command to run to check the health of the container (e.g. ["cat", "/tmp/healthy"]) |
+
+## fly.File
+
+A file that will be written to the Machine. One of RawValue or SecretName must be set.
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `guest_path` | `string` | No | GuestPath is the path on the machine where the file will be written and must be an absolute path. For example: /full/path/to/file.json |
+| `image_config` | `string` | No | The name of an image to use the OCI image config as the file contents. |
+| `mode` | `integer` | No | Mode bits used to set permissions on this file as accepted by chmod(2). |
+| `raw_value` | `string` | No | The base64 encoded string of the file contents. |
+| `secret_name` | `string` | No | The name of the secret that contains the base64 encoded file contents. |
+
+## fly.HTTPHealthcheck
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `headers` | `fly.MachineHTTPHeader[]` | No | Additional headers to send with the request |
+| `method` | `string` | No | The HTTP method to use to when making the request |
+| `path` | `string` | No | The path to send the request to |
+| `port` | `integer` | No | The port to connect to, often the same as internal_port |
+| `scheme` | `fly.ContainerHealthcheckScheme` | No | Whether to use http or https |
+| `tls_server_name` | `string` | No | If the protocol is https, the hostname to use for TLS certificate validation |
+| `tls_skip_verify` | `boolean` | No | If the protocol is https, whether or not to verify the TLS certificate |
+
+## fly.HTTPOptions
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `compress` | `boolean` | No |  |
+| `h2_backend` | `boolean` | No |  |
+| `headers_read_timeout` | `integer` | No |  |
+| `idle_timeout` | `integer` | No |  |
+| `replay_cache` | `fly.ReplayCache[]` | No |  |
+| `response` | `fly.HTTPResponseOptions` | No |  |
+
+## fly.HTTPResponseOptions
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `headers` | `map<string, object>` | No |  |
+| `pristine` | `boolean` | No |  |
+
+## fly.MachineCacheDrive
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `size_mb` | `integer` | No |  |
+
+## fly.MachineCheck
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `grace_period` | `string` | No | The time to wait after a VM starts before checking its health |
+| `headers` | `fly.MachineHTTPHeader[]` | No |  |
+| `interval` | `string` | No | The time between connectivity checks |
+| `kind` | `string` | No | Kind of the check (informational, readiness) — Enum: informational, readiness |
+| `method` | `string` | No | For http checks, the HTTP method to use to when making the request |
+| `path` | `string` | No | For http checks, the path to send the request to |
+| `port` | `integer` | No | The port to connect to, often the same as internal_port |
+| `protocol` | `string` | No | For http checks, whether to use http or https |
+| `timeout` | `string` | No | The maximum time a connection can take before being reported as failing its health check |
+| `tls_server_name` | `string` | No | If the protocol is https, the hostname to use for TLS certificate validation |
+| `tls_skip_verify` | `boolean` | No | For http checks with https protocol, whether or not to verify the TLS certificate |
+| `type` | `string` | No | tcp or http |
+
+## fly.MachineConfig
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `auto_destroy` | `boolean` | No | Optional boolean telling the Machine to destroy itself once it’s complete (default false) |
+| `cache_drive` | `fly.MachineCacheDrive` | No |  |
+| `checks` | `map<string, fly.MachineCheck>` | No | An optional object that defines one or more named top-level checks. The key for each check is the check name. |
+| `containers` | `fly.ContainerConfig[]` | No | Containers are a list of containers that will run in the machine. Currently restricted to only specific organizations. |
+| `disable_machine_autostart` | `boolean` | No | Deprecated: use Service.Autostart instead |
+| `dns` | `fly.DNSConfig` | No |  |
+| `env` | `map<string, string>` | No | An object filled with key/value pairs to be set as environment variables |
+| `files` | `fly.File[]` | No |  |
+| `guest` | `fly.MachineGuest` | No |  |
+| `image` | `string` | No | The docker image to run |
+| `init` | `fly.MachineInit` | No |  |
+| `metadata` | `map<string, string>` | No |  |
+| `metrics` | `fly.MachineMetrics` | No |  |
+| `mounts` | `fly.MachineMount[]` | No |  |
+| `processes` | `fly.MachineProcess[]` | No |  |
+| `restart` | `fly.MachineRestart` | No |  |
+| `rootfs` | `fly.MachineRootfs` | No |  |
+| `schedule` | `string` | No |  |
+| `services` | `fly.MachineService[]` | No |  |
+| `size` | `string` | No | Deprecated: use Guest instead |
+| `spot` | `fly.MachineSpot` | No |  |
+| `standbys` | `string[]` | No | Standbys enable a machine to be a standby for another. In the event of a hardware failure, the standby machine will be started. |
+| `statics` | `fly.Static[]` | No |  |
+| `stop_config` | `fly.StopConfig` | No |  |
+
+## fly.MachineGuest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `cpu_kind` | `string` | No |  |
+| `cpus` | `integer` | No |  |
+| `gpu_kind` | `string` | No |  |
+| `gpus` | `integer` | No |  |
+| `host_dedication_id` | `string` | No |  |
+| `kernel_args` | `string[]` | No |  |
+| `max_memory_mb` | `integer` | No |  |
+| `memory_mb` | `integer` | No |  |
+| `persist_rootfs` | `string` | No | Deprecated: use MachineConfig.Rootfs instead — Enum: never, always, restart |
+
+## fly.MachineHTTPHeader
+
+For http checks, an array of objects with string field Name and array of strings field Values. The key/value pairs specify header and header values that will get passed with the check call.
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | No | The header name |
+| `values` | `string[]` | No | The header value |
+
+## fly.MachineInit
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `cmd` | `string[]` | No |  |
+| `entrypoint` | `string[]` | No |  |
+| `exec` | `string[]` | No |  |
+| `kernel_args` | `string[]` | No |  |
+| `swap_size_mb` | `integer` | No |  |
+| `tty` | `boolean` | No |  |
+
+## fly.MachineMetrics
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `https` | `boolean` | No |  |
+| `path` | `string` | No |  |
+| `port` | `integer` | No |  |
+
+## fly.MachineMount
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `add_size_gb` | `integer` | No |  |
+| `encrypted` | `boolean` | No |  |
+| `extend_threshold_percent` | `integer` | No |  |
+| `name` | `string` | No |  |
+| `path` | `string` | No |  |
+| `size_gb` | `integer` | No |  |
+| `size_gb_limit` | `integer` | No |  |
+| `volume` | `string` | No |  |
+
+## fly.MachinePort
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `end_port` | `integer` | No |  |
+| `force_https` | `boolean` | No |  |
+| `handlers` | `string[]` | No |  |
+| `http_options` | `fly.HTTPOptions` | No |  |
+| `port` | `integer` | No |  |
+| `proxy_proto_options` | `fly.ProxyProtoOptions` | No |  |
+| `start_port` | `integer` | No |  |
+| `tls_options` | `fly.TLSOptions` | No |  |
+
+## fly.MachineProcess
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `cmd` | `string[]` | No |  |
+| `entrypoint` | `string[]` | No |  |
+| `env` | `map<string, string>` | No |  |
+| `env_from` | `fly.EnvFrom[]` | No | EnvFrom can be provided to set environment variables from machine fields. |
+| `exec` | `string[]` | No |  |
+| `ignore_app_secrets` | `boolean` | No | IgnoreAppSecrets can be set to true to ignore the secrets for the App the Machine belongs to and only use the secrets provided at the process level. The default/legacy behavior is to use the secrets provided at the App level. |
+| `secrets` | `fly.MachineSecret[]` | No | Secrets can be provided at the process level to explicitly indicate which secrets should be used for the process. If not provided, the secrets provided at the machine level will be used. |
+| `user` | `string` | No |  |
+
+## fly.MachineRestart
+
+The Machine restart policy defines whether and how flyd restarts a Machine after its main process exits. See https://fly.io/docs/machines/guides-examples/machine-restart-policy/.
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `gpu_bid_price` | `number` | No | GPU bid price for spot Machines. |
+| `max_retries` | `integer` | No | When policy is on-failure, the maximum number of times to attempt to restart the Machine before letting it stop. |
+| `policy` | `string` | No | * no - Never try to restart a Machine automatically when its main process exits, whether that’s on purpose or on a crash. * always - Always restart a Machine automatically and never let it enter a stopped state, even when the main process exits cleanly. * on-failure - Try up to MaxRetries times to automatically restart the Machine if it exits with a non-zero exit code. Default when no explicit policy is set, and for Machines with schedules. * spot-price - Starts the Machine only when there is capacity and the spot price is less than or equal to the bid price. — Enum: no, always, on-failure, spot-price |
+
+## fly.MachineRootfs
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `persist` | `string` | No | Enum: never, always, restart |
+| `size_gb` | `integer` | No |  |
+
+## fly.MachineSecret
+
+A Secret needing to be set in the environment of the Machine. env_var is required
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `env_var` | `string` | No | EnvVar is required and is the name of the environment variable that will be set from the secret. It must be a valid environment variable name. |
+| `name` | `string` | No | Name is optional and when provided is used to reference a secret name where the EnvVar is different from what was set as the secret name. |
+
+## fly.MachineService
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `autostart` | `boolean` | No |  |
+| `autostop` | `string` | No | Accepts a string (new format) or a boolean (old format). For backward compatibility with older clients, the API continues to use booleans for "off" and "stop" in responses. * "off" or false - Do not autostop the Machine. * "stop" or true - Automatically stop the Machine. * "suspend" - Automatically suspend the Machine, falling back to a full stop if this is not possible. — Enum: off, stop, suspend |
+| `checks` | `fly.MachineServiceCheck[]` | No | An optional list of service checks |
+| `concurrency` | `fly.MachineServiceConcurrency` | No |  |
+| `force_instance_description` | `string` | No |  |
+| `force_instance_key` | `string` | No |  |
+| `internal_port` | `integer` | No |  |
+| `min_machines_running` | `integer` | No |  |
+| `ports` | `fly.MachinePort[]` | No |  |
+| `protocol` | `string` | No |  |
+
+## fly.MachineServiceCheck
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `grace_period` | `string` | No | The time to wait after a VM starts before checking its health |
+| `headers` | `fly.MachineHTTPHeader[]` | No |  |
+| `interval` | `string` | No | The time between connectivity checks |
+| `method` | `string` | No | For http checks, the HTTP method to use to when making the request |
+| `path` | `string` | No | For http checks, the path to send the request to |
+| `port` | `integer` | No | The port to connect to, often the same as internal_port |
+| `protocol` | `string` | No | For http checks, whether to use http or https |
+| `timeout` | `string` | No | The maximum time a connection can take before being reported as failing its health check |
+| `tls_server_name` | `string` | No | If the protocol is https, the hostname to use for TLS certificate validation |
+| `tls_skip_verify` | `boolean` | No | For http checks with https protocol, whether or not to verify the TLS certificate |
+| `type` | `string` | No | tcp or http |
+
+## fly.MachineServiceConcurrency
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `hard_limit` | `integer` | No |  |
+| `soft_limit` | `integer` | No |  |
+| `type` | `string` | No |  |
+
+## fly.MachineSpot
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `max_price_fraction` | `number` | No | MaxPriceFraction is the maximum fraction of the full Machine price you will pay for this Machine. Range: (0, 1.0] |
+
+## fly.ProxyProtoOptions
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `version` | `string` | No |  |
+
+## fly.ReplayCache
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `allow_bypass` | `boolean` | No |  |
+| `name` | `string` | No | Name of the cookie or header to key the cache on |
+| `path_prefix` | `string` | No |  |
+| `ttl_seconds` | `integer` | No |  |
+| `type` | `string` | No | Currently either "cookie" or "header" — Enum: cookie, header |
+
+## fly.Static
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `guest_path` | `string` | Yes |  |
+| `index_document` | `string` | No |  |
+| `tigris_bucket` | `string` | No |  |
+| `url_prefix` | `string` | Yes |  |
+
+## fly.StopConfig
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `signal` | `string` | No | Enum: SIGHUP, SIGINT, SIGQUIT, SIGKILL, SIGUSR1, SIGUSR2, SIGTERM |
+| `timeout` | `string` | No |  |
+
+## fly.TCPHealthcheck
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `port` | `integer` | No | The port to connect to, often the same as internal_port |
+
+## fly.TLSOptions
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `alpn` | `string[]` | No |  |
+| `default_self_signed` | `boolean` | No |  |
+| `versions` | `string[]` | No |  |
+
+## fly.UnhealthyPolicy
+
+Type: `string`
+
+## flydv1.ExecResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `exit_code` | `integer` | No |  |
+| `exit_signal` | `integer` | No |  |
+| `stderr` | `string` | No |  |
+| `stdout` | `string` | No |  |
+
+## flyio.Access
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `action` | `resset.Action` | No |  |
+| `app_feature` | `string` | No |  |
+| `appid` | `integer` | No |  |
+| `cluster` | `string` | No |  |
+| `command` | `string[]` | No |  |
+| `feature` | `string` | No |  |
+| `machine` | `string` | No |  |
+| `machine_feature` | `string` | No |  |
+| `mutation` | `string` | No |  |
+| `orgid` | `integer` | No |  |
+| `sourceApp` | `string` | No |  |
+| `sourceMachine` | `string` | No |  |
+| `sourceOrganization` | `string` | No |  |
+| `storage_object` | `string` | No |  |
+| `volume` | `string` | No |  |
+
+## forkPostgresClusterRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | No | Name for the forked cluster. Defaults to the source name with a -fork suffix. |
+
+## getPostgresUserCredentialsResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresUserCredentials` | No |  |
+
+## ImageRef
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `digest` | `string` | No |  |
+| `labels` | `map<string, string>` | No |  |
+| `registry` | `string` | No |  |
+| `repository` | `string` | No |  |
+| `tag` | `string` | No |  |
+
+## IPAssignment
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | No |  |
+| `ip` | `string` | No |  |
+| `region` | `string` | No |  |
+| `service_name` | `string` | No |  |
+| `shared` | `boolean` | No |  |
+
+## IssuedCertificate
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `certificate_authority` | `string` | No |  |
+| `expires_at` | `string` | No |  |
+| `type` | `string` | No | Enum: rsa, ecdsa |
+
+## Lease
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `description` | `string` | No | Description or reason for the Lease. |
+| `expires_at` | `integer` | No | ExpiresAt is the unix timestamp in UTC to denote when the Lease will no longer be valid. |
+| `nonce` | `string` | No | Nonce is the unique ID autogenerated and associated with the Lease. |
+| `owner` | `string` | No | Owner is the user identifier which acquired the Lease. |
+| `version` | `string` | No | Machine version |
+
+## ListAppsResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `apps` | `App[]` | No |  |
+| `total_apps` | `integer` | No |  |
+
+## listCertificatesResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `certificates` | `CertificateSummary[]` | No |  |
+| `next_cursor` | `string` | No |  |
+| `total_count` | `integer` | No |  |
+
+## ListenSocket
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `address` | `string` | No |  |
+| `proto` | `string` | No |  |
+
+## listIPAssignmentsResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `ips` | `IPAssignment[]` | No |  |
+
+## listPostgresBackupsResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresBackup[]` | No |  |
+
+## listPostgresClustersResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresClusterSummary[]` | No |  |
+
+## listPostgresDatabasesResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresDatabase[]` | No |  |
+
+## listPostgresExtensionsResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresExtension[]` | No |  |
+
+## listPostgresUsersResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresUser[]` | No |  |
+
+## macaroon.CaveatSet
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `caveats` | `object[]` | No |  |
+
+## macaroon.Nonce
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `kid` | `integer[]` | No |  |
+| `proof` | `boolean` | No |  |
+| `rnd` | `integer[]` | No |  |
+
+## Machine
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `checks` | `CheckStatus[]` | No |  |
+| `config` | `fly.MachineConfig` | No |  |
+| `cordoned` | `boolean` | No |  |
+| `created_at` | `string` | No |  |
+| `events` | `MachineEvent[]` | No |  |
+| `host_status` | `string` | No | Enum: ok, unknown, unreachable |
+| `id` | `string` | No |  |
+| `image_ref` | `ImageRef` | No |  |
+| `incomplete_config` | `fly.MachineConfig` | No |  |
+| `instance_id` | `string` | No | InstanceID is unique for each version of the machine |
+| `lease` | `StrippedLease` | No |  |
+| `name` | `string` | No |  |
+| `nonce` | `string` | No | Nonce is only every returned on machine creation if a lease_duration was provided. |
+| `private_ip` | `string` | No | PrivateIP is the internal 6PN address of the machine. |
+| `region` | `string` | No |  |
+| `state` | `string` | No |  |
+| `updated_at` | `string` | No |  |
+
+## MachineEvent
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | No |  |
+| `request` | `object` | No |  |
+| `source` | `string` | No |  |
+| `status` | `string` | No |  |
+| `timestamp` | `integer` | No |  |
+| `type` | `string` | No |  |
+
+## MachineExecRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `cmd` | `string` | No | Deprecated: use Command instead |
+| `command` | `string[]` | No |  |
+| `container` | `string` | No |  |
+| `machine` | `boolean` | No | Machine runs the command in the machine's own namespace instead of in a container. It is mutually exclusive with Container. |
+| `stdin` | `string` | No |  |
+| `timeout` | `integer` | No |  |
+
+## MachineOverviewConfig
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `guest` | `fly.MachineGuest` | No |  |
+| `image` | `string` | No |  |
+| `metadata` | `map<string, string>` | No |  |
+
+## MachineVersion
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `user_config` | `fly.MachineConfig` | No |  |
+| `version` | `string` | No |  |
+
+## main.getPlacementsRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `compute` | `fly.MachineGuest` | No | Resource requirements for the Machine to simulate. Defaults to a performance-1x machine |
+| `count` | `integer` | No | Number of machines to simulate placement. Defaults to 0, which returns the org-specific limit for each region. |
+| `org_slug` | `string` | Yes |  |
+| `region` | `string` | No | Region expression for placement as a comma-delimited set of regions or aliases. Defaults to "[region],any", to prefer the API endpoint's local region with any other region as fallback. |
+| `volume_name` | `string` | No |  |
+| `volume_size_bytes` | `integer` | No |  |
+| `weights` | `placement.Weights` | No | Optional weights to override default placement preferences. |
+
+## main.getPlacementsResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `regions` | `placement.RegionPlacement[]` | No |  |
+
+## main.memoryResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `available_mb` | `integer` | No |  |
+| `limit_mb` | `integer` | No |  |
+
+## main.reclaimMemoryRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `amount_mb` | `integer` | No |  |
+
+## main.reclaimMemoryResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `actual_mb` | `integer` | No |  |
+
+## main.regionResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `nearest` | `string` | No |  |
+| `regions` | `main.regionRow[]` | No |  |
+
+## main.regionRow
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `code` | `string` | No |  |
+| `deprecated` | `boolean` | No |  |
+| `gateway_available` | `boolean` | No |  |
+| `geo_region` | `string` | No |  |
+| `latitude` | `number` | No |  |
+| `longitude` | `number` | No |  |
+| `mpg_available` | `boolean` | No |  |
+| `name` | `string` | No |  |
+| `requires_paid_plan` | `boolean` | No |  |
+
+## main.setMemoryLimitRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `limit_mb` | `integer` | No |  |
+
+## main.statusCode
+
+Type: `string`
+
+## main.TokenAccess
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `action` | `resset.Action` | No | Action is the action being taken on the specified resource. This is the combination of individual action characters (e.g "rw") - r: read - w: write - c: create - d: delete - C: control |
+| `app_feature` | `string` | No | AppFeature is a named set of functionality associated with the app. If this is specified, the AppName field must be set. - images: images in the fly.io registry |
+| `app_name` | `string` | No | AppName is the name of the app being accessed. |
+| `command` | `string[]` | No | Command is the command being executed on a machine. If this is specified, the Machine must be set. |
+| `machine_feature` | `string` | No | MachineFeature is a named set of functionality associated with the machine. If this is specified, the Machine field must be set. - metadata: machine metadata service - oidc: OIDC tokens - kmstoken: Petsem tokens for KMS access |
+| `machine_id` | `string` | No | MachineID is the ID of the machine being accessed (e.g. 7811701f564258). |
+| `mutation` | `string` | No | Mutation is the GraphQL mutation being performed. |
+| `org_feature` | `string` | No | OrgFeature is a named set of functionality associated with the organization. If this is specified, the OrgSlug field must be set. - wg: WireGuard peers - builder: remote builders - addon: addons - membership: organization membership - billing: billing - litefs-cloud: LiteFS Cloud - authentication: authentication settings |
+| `org_slug` | `string` | No | OrgSlug is the slug of the organization being accessed. |
+| `source_machine` | `string` | No | SourceMachine is the machine ID of the actor attempting access. |
+| `storage_object` | `string` | No | StorageObject is the storage object being accessed. If this is specified, the OrgSlug must be set. |
+| `volume_id` | `string` | No | VolumeID is the encoded ID of the volume being accessed (e.g. vol_r1p6pln1k9m9j7zr). |
+
+## main.tokenInfo
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `apps` | `string[]` | No |  |
+| `org_slug` | `string` | No |  |
+| `organization` | `string` | No |  |
+| `restricted_to_machine` | `string` | No | Machine the token is restricted to (FromMachine caveat) |
+| `source_machine_id` | `string` | No | Machine making the request |
+| `token_id` | `string` | No |  |
+| `user` | `string` | No | User identifier if token is for a user |
+
+## metadataValueResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | No |  |
+
+## OrganizationRef
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | No | Organization name. |
+| `slug` | `string` | No | Organization slug. |
+
+## OrgMachine
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `app_name` | `string` | No |  |
+| `config` | `MachineOverviewConfig` | No |  |
+| `created_at` | `string` | No |  |
+| `id` | `string` | No |  |
+| `name` | `string` | No |  |
+| `private_ip` | `string` | No |  |
+| `region` | `string` | No |  |
+| `state` | `string` | No |  |
+| `updated_at` | `string` | No |  |
+| `version` | `string` | No |  |
+
+## OrgMachinesResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `error_regions` | `string[]` | No |  |
+| `last_machine_id` | `string` | No |  |
+| `last_updated_at` | `string` | No |  |
+| `machines` | `OrgMachine[]` | No |  |
+| `next_cursor` | `string` | No |  |
+
+## OrgVolume
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `app_name` | `string` | No |  |
+| `attached_alloc_id` | `string` | No |  |
+| `attached_machine_id` | `string` | No |  |
+| `auto_backup_enabled` | `boolean` | No |  |
+| `block_size` | `integer` | No |  |
+| `blocks` | `integer` | No |  |
+| `blocks_avail` | `integer` | No |  |
+| `blocks_free` | `integer` | No |  |
+| `bytes_total` | `integer` | No |  |
+| `bytes_used` | `integer` | No |  |
+| `created_at` | `string` | No |  |
+| `encrypted` | `boolean` | No |  |
+| `fstype` | `string` | No |  |
+| `host_status` | `string` | No | Enum: ok, unknown, unreachable |
+| `id` | `string` | No |  |
+| `name` | `string` | No |  |
+| `region` | `string` | No |  |
+| `size_gb` | `integer` | No |  |
+| `snapshot_retention` | `integer` | No |  |
+| `state` | `string` | No |  |
+| `type` | `string` | No | Enum: local, cache |
+| `updated_at` | `string` | No |  |
+| `zone` | `string` | No |  |
+
+## OrgVolumesResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `last_updated_at` | `string` | No |  |
+| `last_volume_id` | `string` | No |  |
+| `next_cursor` | `string` | No |  |
+| `volumes` | `OrgVolume[]` | No |  |
+
+## OwnershipVerification
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `app_value` | `string` | No |  |
+| `name` | `string` | No |  |
+| `org_value` | `string` | No |  |
+
+## placement.RegionPlacement
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `concurrency` | `integer` | No |  |
+| `count` | `integer` | No |  |
+| `region` | `string` | No |  |
+
+## placement.Weights
+
+Type: `map<string, integer>`
+
+## PostgresAttachedApp
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | No | Attached Fly app name. |
+
+## PostgresAttachment
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `app_name` | `string` | No | Attached Fly app name. |
+| `attached_at` | `string` | No | RFC 3339 timestamp when the attachment was created. |
+| `postgres_cluster_id` | `string` | No | Cluster ID the app is attached to. |
+
+## PostgresBackup
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `finished_at` | `string` | No | RFC 3339 stop timestamp. |
+| `id` | `string` | No | Backup ID. |
+| `size_bytes` | `integer` | No | Backup size in bytes. |
+| `started_at` | `string` | No | RFC 3339 start timestamp. |
+| `status` | `string` | No | Backup status. |
+| `type` | `string` | No | Backup type. — Enum: full, incr, diff |
+
+## PostgresCluster
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `attached_apps` | `PostgresAttachedApp[]` | No | Apps attached to the cluster. |
+| `cpu_kind` | `string` | No | CPU class. — Enum: shared, performance |
+| `cpus` | `integer` | No | vCPUs per node. |
+| `created_at` | `string` | No | RFC 3339 creation timestamp. |
+| `disk_size_gb` | `integer` | No | Disk size in gigabytes. |
+| `endpoints` | `PostgresClusterEndpoints` | No | Connection endpoints. Populated once the cluster is ready. |
+| `id` | `string` | No | Cluster ID. |
+| `memory_mb` | `integer` | No | Memory per node in megabytes. |
+| `name` | `string` | No | Cluster name. |
+| `organization` | `OrganizationRef` | No |  |
+| `pg_major_version` | `string` | No | Postgres major version. — Enum: 16, 17 |
+| `plan` | `string` | No | Plan slug. — Enum: basic, starter, launch, scale, Performance |
+| `postgis_enabled` | `boolean` | No | Whether PostGIS support is enabled. |
+| `region` | `string` | No | Fly region code. |
+| `replicas` | `integer` | No | Number of replicas. |
+| `status` | `string` | No | Current lifecycle status. — Enum: creating, initializing, ready, deleting, deleted, failed |
+
+## PostgresClusterEndpoints
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `primary` | `PostgresNodeEndpoints` | No | Endpoints for connecting to the primary node. |
+
+## PostgresClusterSummary
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `attached_apps` | `PostgresAttachedApp[]` | No | Apps attached to the cluster. |
+| `created_at` | `string` | No | RFC 3339 creation timestamp. |
+| `deleted_at` | `string` | No | RFC 3339 deletion timestamp; present for deleted clusters. |
+| `id` | `string` | No | Cluster ID. |
+| `name` | `string` | No | Cluster name. |
+| `plan` | `string` | No | Plan slug. — Enum: basic, starter, launch, scale, Performance |
+| `region` | `string` | No | Fly region code. |
+| `status` | `string` | No | Current lifecycle status. — Enum: creating, initializing, ready, deleting, deleted, failed |
+
+## PostgresDatabase
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | No | Database name. |
+
+## postgresDatabaseResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresDatabase` | No |  |
+
+## PostgresEndpoint
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `host` | `string` | No | Hostname to connect to. |
+| `port` | `integer` | No | TCP port. |
+
+## PostgresErrorResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `error` | `string` | No | Human-readable error message. |
+
+## PostgresExtension
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `default_version` | `string` | No | Default version installed when enabled. |
+| `description` | `string` | No | Human-readable description. |
+| `installed` | `PostgresInstalledExtension` | No | Installation details, or null when the extension is not installed. |
+| `name` | `string` | No | Extension name. |
+| `system` | `boolean` | No | Whether this is a system extension that cannot be disabled. |
+
+## PostgresInstalledExtension
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `schema` | `string` | No | Schema the extension is installed into. |
+| `version` | `string` | No | Installed version. |
+
+## PostgresNodeEndpoints
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `direct` | `PostgresEndpoint` | No | Unpooled connection to the cluster node. |
+| `pooler` | `PostgresEndpoint` | No | Pooled connection to the cluster node (through PgBouncer). |
+
+## PostgresUser
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `role` | `string` | No | User role. — Enum: schema_admin, writer, reader |
+| `username` | `string` | No | User name. |
+
+## PostgresUserCredentials
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `password` | `string` | No | User password. |
+| `username` | `string` | No | User name. |
+
+## ProcessStat
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `command` | `string` | No |  |
+| `cpu` | `integer` | No |  |
+| `directory` | `string` | No |  |
+| `listen_sockets` | `ListenSocket[]` | No |  |
+| `pid` | `integer` | No |  |
+| `rss` | `integer` | No |  |
+| `rtime` | `integer` | No |  |
+| `stime` | `integer` | No |  |
+
+## resset.Action
+
+Type: `integer`
+
+## restorePostgresClusterRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `backup_id` | `string` | No | Backup label to restore from, as returned by the backups list. Mutually exclusive with pitr_time. |
+| `name` | `string` | No | Name for the restored cluster. Defaults to a generated name derived from the source cluster and backup/point in time when omitted or blank. |
+| `pitr_time` | `string` | No | Point in time to restore to, as an RFC3339 timestamp with an explicit offset from UTC (e.g. Z or +02:00). Normalized to UTC and must fall within the cluster's PITR recovery window. Mutually exclusive with backup_id. |
+
+## root.VerifiedToken
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `caveats` | `macaroon.CaveatSet` | No |  |
+| `header` | `string` | No |  |
+| `nonce` | `macaroon.Nonce` | No |  |
+| `permission_token` | `integer[]` | No |  |
+
+## rotatePostgresPasswordRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `kill_sessions` | `boolean` | No | Terminate the user's existing sessions after rotating. |
+
+## rotatePostgresPasswordResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresUserCredentials` | No |  |
+
+## SecretKey
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | No |  |
+| `name` | `string` | No |  |
+| `public_key` | `integer[]` | No |  |
+| `type` | `string` | No |  |
+| `updated_at` | `string` | No |  |
+
+## SecretKeys
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `secret_keys` | `SecretKey[]` | No |  |
+
+## SetAppSecretRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | No |  |
+
+## SetAppSecretResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `Version` | `integer` | No | DEPRECATED |
+| `created_at` | `string` | No |  |
+| `digest` | `string` | No |  |
+| `name` | `string` | No |  |
+| `updated_at` | `string` | No |  |
+| `value` | `string` | No |  |
+| `version` | `integer` | No |  |
+
+## SetSecretkeyRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `type` | `string` | No |  |
+| `value` | `integer[]` | No |  |
+
+## SetSecretkeyResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `Version` | `integer` | No | DEPRECATED |
+| `created_at` | `string` | No |  |
+| `name` | `string` | No |  |
+| `public_key` | `integer[]` | No |  |
+| `type` | `string` | No |  |
+| `updated_at` | `string` | No |  |
+| `version` | `integer` | No |  |
+
+## showPostgresClusterResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresCluster` | No |  |
+
+## SignalRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `signal` | `string` | No | Enum: SIGABRT, SIGALRM, SIGFPE, SIGHUP, SIGILL, SIGINT, SIGKILL, SIGPIPE, SIGQUIT, SIGSEGV, SIGTERM, SIGTRAP, SIGUSR1, SIGUSR2 |
+
+## SignSecretkeyRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `plaintext` | `integer[]` | No |  |
+
+## SignSecretkeyResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `signature` | `integer[]` | No |  |
+
+## StopRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `signal` | `string` | No | Enum: SIGHUP, SIGINT, SIGQUIT, SIGKILL, SIGUSR1, SIGUSR2, SIGTERM |
+| `timeout` | `string` | No |  |
+
+## StrippedLease
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `description` | `string` | No |  |
+| `expires_at` | `integer` | No |  |
+| `owner` | `string` | No |  |
+
+## UpdateMachineRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `config` | `fly.MachineConfig` | No | An object defining the Machine configuration |
+| `current_version` | `string` | No |  |
+| `lease_ttl` | `integer` | No |  |
+| `min_secrets_version` | `integer` | No |  |
+| `name` | `string` | No | Unique name for this Machine. If omitted, one is generated for you |
+| `region` | `string` | No | The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you). |
+| `skip_launch` | `boolean` | No |  |
+| `skip_secrets` | `boolean` | No |  |
+| `skip_service_registration` | `boolean` | No |  |
+
+## updateMetadataRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `machine_version` | `string` | No |  |
+| `metadata` | `map<string, string>` | No |  |
+| `updated_at` | `string` | No |  |
+
+## updatePostgresUserRoleRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `role` | `string` | Yes | New role for the user. — Enum: schema_admin, writer, reader |
+
+## UpdateVolumeRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `auto_backup_enabled` | `boolean` | No |  |
+| `snapshot_retention` | `integer` | No |  |
+
+## upsertMetadataKeyRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `updated_at` | `string` | No |  |
+| `value` | `string` | No |  |
+
+## VerifySecretkeyRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `plaintext` | `integer[]` | No |  |
+| `signature` | `integer[]` | No |  |
+
+## Volume
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `attached_alloc_id` | `string` | No |  |
+| `attached_machine_id` | `string` | No |  |
+| `auto_backup_enabled` | `boolean` | No |  |
+| `block_size` | `integer` | No |  |
+| `blocks` | `integer` | No |  |
+| `blocks_avail` | `integer` | No |  |
+| `blocks_free` | `integer` | No |  |
+| `bytes_total` | `integer` | No |  |
+| `bytes_used` | `integer` | No |  |
+| `created_at` | `string` | No |  |
+| `encrypted` | `boolean` | No |  |
+| `fstype` | `string` | No |  |
+| `host_status` | `string` | No | Enum: ok, unknown, unreachable |
+| `id` | `string` | No |  |
+| `name` | `string` | No |  |
+| `region` | `string` | No |  |
+| `size_gb` | `integer` | No |  |
+| `snapshot_retention` | `integer` | No |  |
+| `state` | `string` | No |  |
+| `type` | `string` | No | Enum: local, cache |
+| `zone` | `string` | No |  |
+
+## VolumeSnapshot
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | No |  |
+| `digest` | `string` | No |  |
+| `id` | `string` | No |  |
+| `retention_days` | `integer` | No |  |
+| `size` | `integer` | No |  |
+| `status` | `string` | No |  |
+| `volume_size` | `integer` | No |  |
+
+## WaitMachineResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `event_id` | `string` | No |  |
+| `ok` | `boolean` | No |  |
+| `state` | `string` | No |  |
+| `version` | `string` | No |  |

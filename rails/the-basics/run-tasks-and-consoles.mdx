@@ -1,0 +1,113 @@
+---
+title: Running Tasks & Consoles
+og:description: Access the Rails console, run rake tasks, and access the SSH shell of a running Rails
+  application with these one-liners.
+source_url: https://fly.io/docs/rails/the-basics/run-tasks-and-consoles/
+---
+
+## Rails console
+
+To access an interactive Rails console, run:
+
+<CodeGroup>
+```bash cmd
+fly ssh console --pty -C "/rails/bin/rails console"
+```
+```output output
+Loading production environment (Rails 7.0.4.2)
+irb(main):001:0>
+```
+</CodeGroup>
+
+Then start using the console, but be careful! You're in a production environment.
+
+<Info>
+The `--pty` flag tells the SSH server to run the command in a pseudo-terminal. You will generally need this only when running interactive commands, like the Rails console.
+</Info>
+
+<Info>
+If you get a `no such file or directory` error, your app may not be installed in the `/rails` directory. SSH in with `fly ssh console` and check your app's location, then adjust the path accordingly. Apps built with the [dockerfile generator](https://github.com/fly-apps/dockerfile-rails) use `/rails` as the working directory by default. You may also need to [set up your binstubs](#rails-tasks) with `bin/rails generate dockerfile --bin-cd`.
+</Info>
+
+## Interactive shell
+
+To access an interactive shell as the `root` user, run:
+
+<CodeGroup>
+```bash cmd
+fly ssh console --pty -C '/bin/bash'
+```
+```output output
+#
+```
+</CodeGroup>
+
+To access an interactive shell as the `rails` user, requires a tiny bit of setup:
+
+```bash
+bin/rails generate dockerfile --sudo
+```
+
+Accept the changes to your Dockerfile, and then rerun `fly deploy`.
+
+Once this is complete, you can create an interactive shell:
+
+
+<CodeGroup>
+```bash cmd
+fly ssh console --pty -C 'sudo -iu rails'
+```
+```output output
+$
+```
+</CodeGroup>
+
+## Rails tasks
+
+In order to run other Rails tasks, a small change is needed to your Rails
+binstubs to set the current working directory.  The following command will
+make the adjustment for you:
+
+```bash
+bin/rails generate dockerfile --bin-cd
+```
+
+Accept the changes to your Dockerfile, and then rerun `fly deploy`.
+
+Once this is complete, you can execute other commands on Fly, for example:
+
+```bash
+fly ssh console -C "/rails/bin/rails db:migrate"
+```
+
+To list all the available tasks, run:
+
+```bash
+fly ssh console -C "/rails/bin/rails help"
+```
+
+## Custom Rake tasks
+
+You can create [Custom Rake Tasks](https://community.fly.io/) to
+automate frequently used commands.  As an example, add the
+following into `lib/tasks/fly.rake` to reduce the number of
+keystrokes it takes to launch a console:
+
+```ruby
+namespace :fly do
+  task :ssh do
+    sh 'fly ssh console --pty -C "sudo -iu rails"'
+  end
+
+  task :console do
+    sh 'fly ssh console --pty -C "/rails/bin/rails console"'
+  end
+
+  task :dbconsole do
+    sh 'fly ssh console --pty -C "/rails/bin/rails dbconsole"'
+  end
+end
+```
+
+You can run these tasks with `bin/rails fly:ssh`, `bin/rails fly:console`,
+and `bin/rails fly:dbconsole` respectively.

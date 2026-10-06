@@ -1,0 +1,17 @@
+---
+title: Upstash Redis
+source_url: https://fly.io/docs/deep-dive/redis/
+---
+
+  <img src="/images/redis-upstash.png" alt="Illustration by Annie Ruygt of a puzzle box figure holding two slices of cake" />
+
+[Upstash Redis](/upstash/redis) is used by the deep dive demo app for its [pubsub](https://redis.io/docs/latest/commands/?group=pubsub) capabilities, but it can do [so much more](https://upstash.com/docs/redis/overall/rediscompatibility).
+
+In particular, Redis is useful for caching:
+
+- [Node and Redis](https://redis.io/learn/develop/node/nodecrashcourse/caching)
+- [Rails and Redis](https://guides.rubyonrails.org/caching_with_rails.html#activesupport-cache-rediscachestore)
+
+In the deep dive demo app, updates are broadcast to all Machines via Redis, and then each Machine informs browser clients
+of the update via [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API). The client requests
+updated information from the application using HTTP GET.

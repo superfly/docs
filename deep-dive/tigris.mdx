@@ -1,0 +1,12 @@
+---
+title: Tigris
+source_url: https://fly.io/docs/deep-dive/tigris/
+---
+
+  <img src="/images/Tigris-doc.png" alt="Illustration by Annie Ruygt Bernard of a blue tiger reading a map with delight" />
+
+[Tigris](/tigris) is a globally distributed object storage service. It essentially requires no configuration, and seamlessly handles multi-regions. If you upload an audio file to a host in Virginia, you can access it from Amsterdam. Even better: subsequent accesses from regions other than the primary region are served locally. 
+
+Unlike relational databases, there may be reasons why you want to make your object store available via the internet. In this demo, the object store starts out private, but you can make it [public](/tigris#public-buckets) if you want. Public buckets serve objects without authentication at `https://bucket-name.t3.tigrisfiles.io/key-name`.
+
+And if you happen to have an existing S3 object store, check out [shadow buckets](/tigris#migrating-to-tigris-with-shadow-buckets), which enable you to incrementally migrate your data.

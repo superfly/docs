@@ -1,0 +1,661 @@
+---
+title: Rails with Node.js
+source_url: https://fly.io/docs/rails/cookbooks/node/
+---
+
+If your application is based on Rails 5.2 through 6.1, or is a Rails 7 app
+selecting one of the JavaScript options or many of the css options, you will
+require Node.js to be included in your deployment image.
+
+While it is unsurprising that the slim ruby image doesn't include Nodejs by
+default, what is surprising is that the most obvious way of installing
+node and yarn using the Debian packages included with the distribution
+results in seriously outdated versions being installed.  Specifically,
+nodejs version 12.22.12, and yarnpkg version 1.12.10.
+
+Active support for node 12 ended in 2020, and security support
+ended in 2022.
+
+Attempting to run anyway ends up with an error running 'yarn build',
+first because yarn is called yarnpkg, and second because the generated
+`package.json` has no build step.
+
+Fortunately, there are alternatives.
+
+## Nodesource
+
+We can start with the Node.js
+[recommendation](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions).
+
+
+```dockerfile
+# syntax = docker/dockerfile:1
+
+FROM ruby:slim as base
+
+RUN apt-get update &&\
+    apt-get install --yes git curl build-essential
+
+RUN curl -sL https://deb.nodesource.com/setup_current.x | bash - &&\
+    apt-get update && \
+    apt-get install --yes --no-install-recommends nodejs &&\
+    npm install -g yarn
+
+FROM base as build
+
+RUN gem install rails
+RUN rails new demo --skip-active-record --javascript esbuild
+
+FROM base
+
+WORKDIR demo
+COPY --from=build /demo /demo
+COPY --from=build /usr/local/bundle /usr/local/bundle
+
+COPY <<-"EOF" /demo/config/routes.rb
+Rails.application.routes.draw { root "rails/welcome#index" }
+EOF
+
+ENV RAILS_ENV=production
+RUN bin/rails assets:precompile
+EXPOSE 3000
+CMD bin/rails server
+```
+
+Unfortunately this results in a rather chonky image, clocking in at 750MB.  And
+attempting to reduce the size by installing packages such as `build-essentials`
+later results in failures.
+
+## merging images
+
+Another approach is merge files from the official node and ruby images.
+
+```dockerfile
+# syntax = docker/dockerfile:1
+
+FROM node:slim AS node
+FROM ruby:slim as base
+
+COPY --from=node /usr/lib /usr/lib
+COPY --from=node /usr/local/share /usr/local/share
+COPY --from=node /usr/local/lib /usr/local/lib
+COPY --from=node /usr/local/include /usr/local/include
+COPY --from=node /usr/local/bin /usr/local/bin
+COPY --from=node /opt /opt
+
+FROM base as build
+
+RUN apt-get update &&\
+    apt-get install --yes build-essential git
+
+RUN gem install rails
+RUN rails new demo --skip-active-record --javascript esbuild
+
+FROM base
+
+WORKDIR demo
+COPY --from=build /demo /demo
+COPY --from=build /usr/local/bundle /usr/local/bundle
+
+COPY <<-"EOF" /demo/config/routes.rb
+Rails.application.routes.draw { root "rails/welcome#index" }
+EOF
+
+ENV RAILS_ENV=production
+RUN bin/rails assets:precompile
+EXPOSE 3000
+CMD bin/rails server
+```
+
+The resulting images size is smaller at 465MB.  The danger here is that the node and
+ruby images may not be based on the same image.  At the current time both are based
+on Debian bullseye, but that may not always remain the case.  Both
+[ruby](https://hub.docker.com/_/ruby) and [node](https://hub.docker.com/_/node)
+provide multiple alternates so it shouldn't be difficult to find a match.
+
+## volta
+
+A third approach is to use a version manager.  Much like how Ruby has rvm,
+rbenv, chruby and others, Node has several.
+[Volta](https://docs.volta.sh/guide/) is one written in Rust that works well
+for this task.
+
+A minimal Dockerfile making use of Volta would look like the following:
+
+```dockerfile
+# syntax = docker/dockerfile:1
+
+FROM ruby:slim as base
+
+ENV VOLTA_HOME=/usr/local
+
+FROM base as build
+
+RUN apt-get update &&\
+    apt-get install --yes build-essential git curl
+
+RUN curl https://get.volta.sh | bash &&\
+    volta install node@lts yarn@latest
+
+RUN gem install rails
+RUN rails new demo --skip-active-record --javascript esbuild
+
+FROM base
+
+WORKDIR demo
+COPY --from=build $VOLTA_HOME/bin $VOLTA_HOME/bin
+COPY --from=build $VOLTA_HOME/tools $VOLTA_HOME/tools
+COPY --from=build /demo /demo
+COPY --from=build /usr/local/bundle /usr/local/bundle
+
+COPY <<-"EOF" /demo/config/routes.rb
+Rails.application.routes.draw { root "rails/welcome#index" }
+EOF
+
+ENV RAILS_ENV=production
+RUN bin/rails assets:precompile
+EXPOSE 3000
+CMD bin/rails server
+```
+
+The resulting image is slightly larger at 499 MB.  The advantage of this approach
+is that you don't have to worry about base images matching.
+
+## Node as the base
+
+A fourth option is to flip the script: start with node as the base and add ruby.
+Debian bullseye includes Ruby 2.7 which ended support on March 31, 2023.
+
+```dockerfile
+# syntax = docker/dockerfile:1
+
+FROM node:slim AS base
+
+RUN apt-get update &&\
+    apt-get install --yes ruby
+
+FROM base as build
+
+RUN apt-get install --yes ruby-dev build-essential git
+
+RUN gem install rails
+RUN rails new demo --skip-active-record --javascript esbuild
+
+FROM base
+
+WORKDIR demo
+COPY --from=build /demo /demo
+COPY --from=build /var/lib/gems /var/lib/gems
+
+COPY <<-"EOF" /demo/config/routes.rb
+Rails.application.routes.draw { root "rails/welcome#index" }
+EOF
+
+ENV RAILS_ENV=production
+RUN bin/rails assets:precompile
+EXPOSE 3000
+CMD bin/rails server
+```
+
+Node the change to the second `COPY --from=gems` line as the location of the
+gem directory has changed.
+
+This results in the smallest image yet, at 424 MB.  The downside is that you
+get a dated Ruby.
+
+Variations are possible, including copying Ruby from the base docker image
+or using a Ruby version manager such as
+[rvm](https://rvm.io/rvm/install),
+[rbenv](https://github.com/rbenv/rbenv#installation), or
+[chruby](https://github.com/postmodern/chruby#install).
+
+## Example application
+
+Below is an example application that demonstrates React.js working with esbuild.
+
+Start by adding the following lines immediately before the `FROM base` line:
+
+```
+WORKDIR demo
+RUN yarn add react react-dom
+```
+
+Replace the three lines starting with
+`COPY <<-"EOF" config/routes.rb` with the following:
+
+```dockerfile
+# syntax = docker/dockerfile:1
+
+FROM ruby:slim as base
+
+RUN apt-get update &&\
+    apt-get install --yes git curl build-essential
+
+RUN curl -sL https://deb.nodesource.com/setup_current.x | bash - &&\
+    apt-get update && \
+    apt-get install --yes --no-install-recommends nodejs &&\
+    npm install -g yarn
+
+FROM base as build
+
+RUN gem install rails
+RUN rails new demo --skip-active-record --javascript esbuild
+
+WORKDIR demo
+RUN yarn add react react-dom
+
+FROM base
+
+WORKDIR demo
+COPY --from=build /demo /demo
+COPY --from=build /usr/local/bundle /usr/local/bundle
+
+RUN bin/rails generate controller Time index
+
+RUN cat <<-"EOF" >> app/javascript/application.js 
+import "./components/counter"
+EOF
+
+RUN mkdir app/javascript/components
+
+COPY <<-"EOF" app/javascript/components/counter.jsx
+import React, { useState, useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
+
+const Counter = ({ arg }) => {
+  const [count, setCount] = useState(0);
+  const countRef = useRef(count);
+  countRef.current = count;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(countRef.current + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return <div>{`${arg} - counter = ${count}!`}</div>;
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("root");
+  const root = createRoot(container);
+  root.render(<Counter arg={`
+    Node ${container.getAttribute('node')}
+    Ruby ${container.getAttribute('ruby')}
+    Rails ${container.getAttribute('rails')}`} />);
+});
+EOF
+
+COPY <<-"EOF" app/views/time/index.html.erb
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  margin: 0;
+}
+
+svg {
+  height: 40vmin;
+  pointer-events: none;
+  margin-bottom: 1em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  svg {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+main {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
+</head>
+<body>
+<main>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-11.5 -10.23174 23 20.46348">
+  <title>React Logo</title>
+  <circle cx="0" cy="0" r="2.05" fill="#61dafb"/>
+  <g stroke="#61dafb" stroke-width="1" fill="none">
+    <ellipse rx="11" ry="4.2"/>
+    <ellipse rx="11" ry="4.2" transform="rotate(60)"/>
+    <ellipse rx="11" ry="4.2" transform="rotate(120)"/>
+  </g>
+</svg>
+<div id="root"
+  node=<%= `node -v`.strip.sub(/^v/, '') %>
+  ruby=<%= RUBY_VERSION %>
+  rails=<%= Rails::VERSION::STRING %>>
+</div>
+</main>
+</body>
+</html>
+EOF
+
+COPY <<-"EOF" config/routes.rb
+  Rails.application.routes.draw { root "time#index" }
+EOF
+
+ENV RAILS_ENV=production
+RUN bin/rails assets:precompile
+EXPOSE 3000
+CMD bin/rails server
+```
+
+Since this isn't a React or Rails tutorial, an overview of the contents will suffice:
+
+  * A counter component which extracts attributes from the root element and
+    displays a counter which increments every second.
+  * A time controller and view which includes an SVG image and sets 
+    HTML attributes containing the Ruby, Rails, and Node versions.
+
+## Recap
+
+There are multiple ways to build an image containing both Node.js and Ruby.
+Finding the right one for your application requires a bit of trial and error
+and personal preference.
+
+## Complete examples
+
+The variants above are shown in pieces. These two are complete, because they build Ruby
+from a node base image and the full multi-stage file is hard to follow in fragments.
+
+<CodeGroup>
+
+```docker node plus rbenv/ruby-build
+# syntax = docker/dockerfile:1
+
+FROM node:slim as build
+
+RUN apt-get update &&\
+    apt-get install -y autoconf bison patch build-essential \
+      libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libgmp-dev \
+      libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev uuid-dev \
+      git curl &&\
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &&\
+    export PATH=/root/.cargo/bin:$PATH &&\
+    git clone https://github.com/rbenv/ruby-build.git /opt/ruby-build &&\
+    /opt/ruby-build/install.sh &&\
+    ruby-build 3.2.0 /usr/local
+
+RUN gem install rails
+RUN rails new demo --skip-active-record --javascript esbuild
+
+WORKDIR demo
+RUN yarn add react react-dom
+
+FROM node:slim
+
+WORKDIR demo
+COPY --from=build /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu
+COPY --from=build /usr/local /usr/local
+COPY --from=build /demo /demo
+
+RUN bin/rails generate controller Time index
+
+RUN cat <<-"EOF" >> app/javascript/application.js 
+import "./components/counter"
+EOF
+
+RUN mkdir app/javascript/components
+
+COPY <<-"EOF" app/javascript/components/counter.jsx
+import React, { useState, useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
+
+const Counter = ({ arg }) => {
+  const [count, setCount] = useState(0);
+  const countRef = useRef(count);
+  countRef.current = count;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(countRef.current + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return <div>{`${arg} - counter = ${count}!`}</div>;
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("root");
+  const root = createRoot(container);
+  root.render(<Counter arg={`
+    Node ${container.getAttribute('node')}
+    Ruby ${container.getAttribute('ruby')}
+    Rails ${container.getAttribute('rails')}`} />);
+});
+EOF
+
+COPY <<-"EOF" app/views/time/index.html.erb
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  margin: 0;
+}
+
+svg {
+  height: 40vmin;
+  pointer-events: none;
+  margin-bottom: 1em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  svg {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+main {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
+</head>
+<body>
+<main>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-11.5 -10.23174 23 20.46348">
+  <title>React Logo</title>
+  <circle cx="0" cy="0" r="2.05" fill="#61dafb"/>
+  <g stroke="#61dafb" stroke-width="1" fill="none">
+    <ellipse rx="11" ry="4.2"/>
+    <ellipse rx="11" ry="4.2" transform="rotate(60)"/>
+    <ellipse rx="11" ry="4.2" transform="rotate(120)"/>
+  </g>
+</svg>
+<div id="root"
+  node=<%= `node -v`.strip.sub(/^v/, '') %>
+  ruby=<%= RUBY_VERSION %>
+  rails=<%= Rails::VERSION::STRING %>>
+</div>
+</main>
+</body>
+</html>
+EOF
+
+COPY <<-"EOF" config/routes.rb
+  Rails.application.routes.draw { root "time#index" }
+EOF
+
+ENV RAILS_ENV=production
+RUN bin/rails assets:precompile
+EXPOSE 3000
+CMD bin/rails server
+```
+
+```docker node plus rvm
+# syntax = docker/dockerfile:1
+
+FROM node:slim as build
+
+RUN apt-get update && \
+    apt-get install -y gnupg2 curl procps xz-utils git && \
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &&\
+    export PATH=/root/.cargo/bin:$PATH &&\
+    gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB &&\
+    curl -sSL https://get.rvm.io | bash -s stable && \
+    bash -c 'source /etc/profile.d/rvm.sh && rvm install 3.2.0'
+
+ENV PATH=/usr/local/rvm/wrappers/default:$PATH
+RUN gem install rails
+RUN rails new demo --skip-active-record --javascript esbuild
+
+WORKDIR demo
+RUN yarn add react react-dom
+
+FROM node:slim
+
+WORKDIR demo
+COPY --from=build /demo /demo
+COPY --from=build /usr/local/rvm /usr/local/rvm
+COPY --from=build /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu
+
+ENV PATH=/usr/local/rvm/wrappers/default:$PATH
+
+RUN bin/rails generate controller Time index
+
+RUN cat <<-"EOF" >> app/javascript/application.js 
+import "./components/counter"
+EOF
+
+RUN mkdir app/javascript/components
+
+COPY <<-"EOF" app/javascript/components/counter.jsx
+import React, { useState, useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
+
+const Counter = ({ arg }) => {
+  const [count, setCount] = useState(0);
+  const countRef = useRef(count);
+  countRef.current = count;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(countRef.current + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return <div>{`${arg} - counter = ${count}!`}</div>;
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("root");
+  const root = createRoot(container);
+  root.render(<Counter arg={`
+    Node ${container.getAttribute('node')}
+    Ruby ${container.getAttribute('ruby')}
+    Rails ${container.getAttribute('rails')}`} />);
+});
+EOF
+
+COPY <<-"EOF" app/views/time/index.html.erb
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  margin: 0;
+}
+
+svg {
+  height: 40vmin;
+  pointer-events: none;
+  margin-bottom: 1em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  svg {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+main {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
+</head>
+<body>
+<main>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-11.5 -10.23174 23 20.46348">
+  <title>React Logo</title>
+  <circle cx="0" cy="0" r="2.05" fill="#61dafb"/>
+  <g stroke="#61dafb" stroke-width="1" fill="none">
+    <ellipse rx="11" ry="4.2"/>
+    <ellipse rx="11" ry="4.2" transform="rotate(60)"/>
+    <ellipse rx="11" ry="4.2" transform="rotate(120)"/>
+  </g>
+</svg>
+<div id="root"
+  node=<%= `node -v`.strip.sub(/^v/, '') %>
+  ruby=<%= RUBY_VERSION %>
+  rails=<%= Rails::VERSION::STRING %>>
+</div>
+</main>
+</body>
+</html>
+EOF
+
+COPY <<-"EOF" config/routes.rb
+  Rails.application.routes.draw { root "time#index" }
+EOF
+
+ENV RAILS_ENV=production
+RUN bin/rails assets:precompile
+EXPOSE 3000
+CMD bin/rails server
+```
+
+</CodeGroup>

@@ -1,0 +1,28 @@
+---
+title: fly mpg destroy
+source_url: https://fly.io/docs/flyctl/mpg-destroy/
+---
+
+Destroy a managed Postgres cluster. This command will permanently destroy a managed Postgres cluster and all its data.
+This action is not reversible.
+
+## Usage
+```
+fly mpg destroy <CLUSTER ID> [flags]
+```
+## Options
+
+```
+  -h, --help   help for destroy
+  -y, --yes    Accept all confirmations (also --auto-confirm)
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly mpg](/flyctl/cmd/fly_mpg)	 - Manage Managed Postgres clusters.
