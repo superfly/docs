@@ -129,3 +129,8 @@ div.frame_purple > div > div > div.relative.rounded-xl.overflow-hidden.flex.just
   align-items: center;
   padding: 0.375rem 0.875rem;
 }
+
+/* Keep the frontmatter description as the meta description only, not a subtitle under the page title. */
+#header > .prose {
+  display: none;
+}
