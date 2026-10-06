@@ -743,7 +743,7 @@
                       {
                         "group": "Commands",
                         "pages": [
-                          "flyctl/cmd/fly",
+                          "flyctl/cmd/fly_help",
                           {
                             "group": "fly agent",
                             "root": "flyctl/cmd/fly_agent",
@@ -904,7 +904,6 @@
                               }
                             ]
                           },
-                          "flyctl/cmd/fly_help",
                           {
                             "group": "fly image",
                             "root": "flyctl/cmd/fly_image",
@@ -4086,6 +4085,10 @@
     {
       "source": "/flyctl/cmd/fly_tokens_create_litefs-cloud",
       "destination": "/litefs/cloud-backups"
+    },
+    {
+      "source": "/flyctl/cmd/fly",
+      "destination": "/flyctl/cmd/fly_help"
     }
   ]
 }
