@@ -54,6 +54,23 @@
       "domain": "docs.fly.io"
     }
   },
+  "footer": {
+    "links": [
+      {
+        "header": "Legal",
+        "items": [
+          {
+            "label": "Privacy Policy",
+            "href": "https://fly.io/legal/privacy-policy/"
+          },
+          {
+            "label": "Cookie preferences",
+            "href": "#cookie-preferences"
+          }
+        ]
+      }
+    ]
+  },
   "navigation": {
     "tabs": [
       {
