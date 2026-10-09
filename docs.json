@@ -1486,7 +1486,7 @@
                   "DELETE /v1/apps/{app_name}/machines/{machine_id}",
                   "POST /v1/apps/{app_name}/machines/{machine_id}/cordon",
                   "GET /v1/apps/{app_name}/machines/{machine_id}/events",
-                  "POST /v1/apps/{app_name}/machines/{machine_id}/exec",
+                  "api/machines/machines/execute-command",
                   "GET /v1/apps/{app_name}/machines/{machine_id}/lease",
                   "POST /v1/apps/{app_name}/machines/{machine_id}/lease",
                   "DELETE /v1/apps/{app_name}/machines/{machine_id}/lease",
