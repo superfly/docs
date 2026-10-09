@@ -7,6 +7,10 @@ Logs a user into the Fly platform. Supports browser-based,
 email/password and one-time-password authentication. Defaults to using
 browser-based authentication.
 
+Use --code to finish a browser login that is waiting for approval, with
+the one-time code the approval page shows: for example when the browser
+is on another machine, or the waiting command was stopped.
+
 
 ## Usage
 ```
@@ -15,6 +19,7 @@ fly auth login [flags]
 ## Options
 
 ```
+      --code string       Finish a login that is waiting for approval, with the one-time code its approval page shows
       --email string      Login email
   -h, --help              help for login
   -i, --interactive       Log in with an email and password interactively
