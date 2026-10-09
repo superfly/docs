@@ -55,7 +55,7 @@ node_modules
 .git
 ```
 
-The runtime image only copies `.farm/.output`, which already contains the server's dependencies. If you let `fly launch` generate a Dockerfile instead, it removes development dependencies before running `npm run start`, which removes the `farm` command that `start` calls.
+The runtime image only copies `.farm/.output`, which already contains the server's dependencies. If you let `fly launch` generate a Dockerfile instead, it removes development dependencies before running `npm run start`. That works when the `start` script is `node .farm/.output/server/index.mjs`, but not when it is `farm start`, because the `farm` command is a development dependency.
 
 Now you're ready to deploy:
 
