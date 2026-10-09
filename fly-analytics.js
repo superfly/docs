@@ -1,4 +1,4 @@
-// PostHog and Google (GA4/GTM) for docs.fly.io, behind the same consent gate as fly.io.
+// PostHog and Google (GA4) for docs.fly.io, behind the same consent gate as fly.io.
 // A port of landing's posthog-consent.js; keep the two in step.
 //
 // One self-contained file on purpose: Mintlify runs every .js in the content directory
@@ -22,7 +22,6 @@
   var POSTHOG_SRC = "https://fly.io/static/javascripts/posthog.js";
   var CONSENT_SCOPE_URL = "https://fly.io/api/consent-scope";
   var GA_ID = "G-EX6DMZ1DZV";
-  var GTM_ID = "GTM-M35Q2HRQ";
   var ANALYTICS_BASE = "https://analytics.fly.io";
   var CONSENT_KEY = "ph_consent"; // localStorage: "granted" | "denied" | null
   var PREFS_HASH = "#cookie-preferences";
@@ -59,10 +58,16 @@
       start(Boolean(data.eu_scope));
     });
 
+  // Tracking needs consent in the EEA/UK. Elsewhere it is on unless the visitor rejected it
+  // from the "Cookie preferences" link, which docs.json shows to everyone.
+  function trackingAllowed(euScope, consent) {
+    return consent === "granted" || (!euScope && consent !== "denied");
+  }
+
   function start(euScope) {
     started = true;
     var consent = storedConsent();
-    loadPosthog(euScope, consent);
+    loadPosthog(euScope);
     initGoogle(euScope, consent);
     if (euScope && consent === null) openBanner();
   }
@@ -71,9 +76,11 @@
   // Mintlify re-renders the footer on client-side navigation.
   document.addEventListener("click", function (e) {
     var link = e.target.closest && e.target.closest('a[href$="' + PREFS_HASH + '"]');
-    if (!link) return;
+    // Not started (logged in, preview, failed check): nothing to manage, so let the link
+    // fall through to the Privacy Policy.
+    if (!link || !started) return;
     e.preventDefault();
-    if (started) openBanner();
+    openBanner();
   });
 
   // Hosts we treat as "us" for referrer attribution: fly.io and any *.fly.io subdomain.
@@ -106,10 +113,11 @@
     return event;
   }
 
-  function loadPosthog(euScope, consent) {
+  function loadPosthog(euScope) {
     loadScript(POSTHOG_SRC, function () {
       if (typeof window.posthog === "undefined") return;
-      var startOptedOut = euScope && consent !== "granted";
+      // Read consent now, not in start(): the banner is up before this async load finishes.
+      var startOptedOut = !trackingAllowed(euScope, storedConsent());
       window.posthog.init(POSTHOG_KEY, {
         api_host: POSTHOG_HOST,
         ui_host: "https://eu.posthog.com",
@@ -133,7 +141,8 @@
     });
   }
 
-  // GA4 (gtag) + GTM through the first-party analytics.fly.io proxy, as on fly.io.
+  // GA4 (gtag) through the first-party analytics.fly.io proxy, as on fly.io. No GTM: ui-ex
+  // dropped it because it double-reported conversions to GA4.
   function initGoogle(euScope, consent) {
     window.dataLayer = window.dataLayer || [];
     window.gtag =
@@ -142,13 +151,12 @@
         window.dataLayer.push(arguments);
       };
 
-    // Consent Mode v2 default: granted outside EEA/UK or once accepted, denied otherwise.
-    window.gtag("consent", "default", consentPayload(!euScope || consent === "granted" ? "granted" : "denied"));
+    // Consent Mode v2 default.
+    window.gtag("consent", "default", consentPayload(trackingAllowed(euScope, consent) ? "granted" : "denied"));
     window.gtag("js", new Date());
     window.gtag("config", GA_ID, { transport_url: ANALYTICS_BASE, first_party_collection: true });
 
     loadScript(ANALYTICS_BASE + "/gtag/js?id=" + GA_ID);
-    loadScript(ANALYTICS_BASE + "/gtm.js?id=" + GTM_ID);
   }
 
   function updateGoogleConsent(state) {
@@ -176,8 +184,13 @@
   function grant() {
     persistConsent("granted");
     if (typeof window.posthog !== "undefined" && window.posthog.opt_in_capturing) {
+      var wasOptedOut = window.posthog.has_opted_out_capturing();
+      // Started opted out in memory. Mintlify navigates client-side, so without this the
+      // rest of the session would go to an id that's gone on the next full load.
+      window.posthog.set_config({ persistence: "localStorage+cookie" });
       window.posthog.opt_in_capturing({ captureEventName: false });
-      window.posthog.capture("$pageview");
+      // Already capturing (reopened from the footer): this page was counted.
+      if (wasOptedOut) window.posthog.capture("$pageview");
     }
     updateGoogleConsent("granted");
     closeBanner();
