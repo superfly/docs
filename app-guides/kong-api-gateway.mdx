@@ -19,7 +19,7 @@ Kong can be deployed to a central server, but this slows down your application b
 ![Running a distributed Kong API Gateway on Fly.io](https://raw.githubusercontent.com/fly-examples/kong-api-gateway/main/fly-2020-07-22-a.jpg)
 
 ## How to Deploy a Kong API Gateway to Fly
-In this tutorial, you'll see how to deploy a Kong API Gateway to Fly.io. You'll expose the free [JSON Placeholder](https://jsonplaceholder.typicode.com/) as a backend service and use Kong to add rate limiting and API key authentication. Finally, you'll see how to lock down the Kong Admin API so that only authenticated users can access it. You'll see all the steps required in this tutorial, but if you'd like to download the final working application, it's [available on Github](https://github.com/karllhughes/fly-kong).
+In this tutorial, you'll see how to deploy a Kong API Gateway to Fly.io. You'll expose the free [JSON Placeholder](https://jsonplaceholder.typicode.com/) as a backend service and use Kong to add rate limiting and API key authentication. Finally, you'll see how to lock down the Kong Admin API so that only authenticated users can access it. You'll see all the steps required in this tutorial, but if you'd like to download the final working application, it's [available on GitHub](https://github.com/karllhughes/fly-kong).
 
 ### Prerequisites
 - [Flyctl command line tool](/flyctl/install).
@@ -39,7 +39,7 @@ flyctl auth signup
 flyctl auth login
 ```
 
-You will be directed to a web page that will allow you to log in using your Github account or email and password.
+You will be directed to a web page that will allow you to log in using your GitHub account or email and password.
 
 Create a new directory called `fly-kong` and create your new app inside of it:
 

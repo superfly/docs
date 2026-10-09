@@ -25,6 +25,7 @@ swap:
   firewalls: firewall rules
   free tier: free allowances
   functionality: capability|feature
+  Github: GitHub
   healthcheck: health check
   healthchecks: health checks
   HTTPs: HTTPS
