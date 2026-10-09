@@ -62,10 +62,6 @@
           {
             "label": "Privacy Policy",
             "href": "https://fly.io/legal/privacy-policy/"
-          },
-          {
-            "label": "Cookie preferences",
-            "href": "https://fly.io/legal/privacy-policy/#cookie-preferences"
           }
         ]
       }
