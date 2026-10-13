@@ -1,12 +1,10 @@
 ---
-title: Run a Warp App
-og:description: Warp is a super-easy, composable, web server framework for warp speeds.
+title: Deploy a Warp App
+description: "Deploy a Warp app to Fly.io. Start from our template or your own project; cargo-chef keeps Rust builds fast and fly launch handles the rest."
 source_url: https://fly.io/docs/rust/frameworks/warp/
 ---
 
 import FlyctlSnippet from '/snippets/languages-and-frameworks/flyctl.mdx';
-
-Getting an application running on Fly.io is essentially working out how to package it as a deployable image. Once packaged, it can be deployed to the Fly.io platform.
 
 In this guide we’ll learn how to deploy a [Warp](https://docs.rs/warp/latest/warp/) application on Fly.io.
 
@@ -27,7 +25,7 @@ fly launch --generate-name
 
 ## _Deploy a Warp App from scratch_
 
-f you don’t already have an existing Warp application, you can create one with `cargo`:
+If you don’t already have an existing Warp application, you can create one with `cargo`:
 
 ```sh
 cargo new warp-on-fly
