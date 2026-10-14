@@ -634,6 +634,7 @@
                     "group": "Management",
                     "pages": [
                       "postgres/metrics",
+                      "postgres/maintenance-windows",
                       "postgres/import",
                       "postgres/extensions"
                     ]
