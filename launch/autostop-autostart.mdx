@@ -7,6 +7,37 @@ Your app can meet peak demand without keeping extra Machines running. Use autost
 
 Get all the details of [how Fly Proxy autostop/autostart works](/reference/fly-proxy-autostop-autostart).
 
+## Scale to zero {#scale-to-zero}
+
+This `fly.toml` section stops all of your app's Machines when there's no traffic, and starts one again when a request arrives. It's what `fly launch` writes by default. Set `internal_port` to the port your app listens on.
+
+```toml
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+```
+
+When a request arrives and no Machine is running, Fly Proxy starts a stopped Machine and routes the request to it. A cold start takes about 2 seconds or more for common apps. To wake faster, set `auto_stop_machines = "suspend"`. Resuming a suspended Machine takes a few hundred milliseconds. Check the [suspend requirements and caveats](/reference/suspend-resume) first.
+
+### What an idle app costs {#what-an-idle-app-costs}
+
+A stopped or suspended Machine isn't billed for CPU or RAM. You pay only for its root file system (rootfs), at \$0.15/GB for 30 days. A [volume](/volumes) is billed for its full provisioned size whether its Machine is running or not.
+
+For example, here's a `shared-cpu-1x` Machine with 512MB RAM in Ashburn (`iad`) that serves traffic 2 hours a day and is stopped the rest of the time:
+
+| Item | Monthly cost |
+| - | -: |
+| Machine running 2 hours a day (\$3.69/month if it ran all the time) | \$0.31 |
+| 1GB rootfs while stopped, 22 hours a day (assumed image size) | \$0.14 |
+| **Total without a volume** | **\$0.45** |
+| 10GB volume, billed all month | \$1.50 |
+| **Total with a volume** | **\$1.95** |
+
+On a mostly idle app, a volume can cost more than everything else combined. If your app doesn't need a local disk, keep files in object storage such as [Tigris](/tigris) instead. See [Resource pricing](/about/pricing) for all rates.
+
 ## When to use autostop/autostart {#when-to-use-autostop-autostart}
 
 Autostop/autostart works well for apps with highly variable workloads, for smaller apps with low or sporadic traffic, and for most apps that aren't receiving requests continuously. You can reduce resource usage and costs by using autostop/autostart to manage your Fly Machines as demand decreases and increases. You'll never have to run excess Machines to handle peak load; you'll only run, and get charged for, the number of Machines that you need. You can choose to keep one or more Machines running in your primary region.
@@ -91,18 +122,7 @@ The defaults differ for new apps created with `fly launch` and for apps with no 
 
 ### Apps created with `fly launch`
 
-When you create a new app using the `fly launch` command, the default settings in `fly.toml` are:
-
-```toml
-...
-[http_service]
-  internal_port = 8080
-  force_https = true
-  auto_stop_machines = "stop"
-  auto_start_machines = true
-  min_machines_running = 0
-...
-```
+When you create a new app using the `fly launch` command, `fly.toml` uses the [scale to zero](#scale-to-zero) settings.
 
 ### Apps with no autostop/autostart settings {#apps-with-no-autostop-autostart-settings}
 
