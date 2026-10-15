@@ -648,7 +648,6 @@
                   "links/mpg",
                   "tigris/index",
                   "upstash/redis",
-                  "supabase/index",
                   "upstash/vector"
                 ],
                 "root": "database-storage-guides"
