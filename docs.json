@@ -1452,10 +1452,6 @@
       },
       {
         "tab": "Machines API",
-        "openapi": {
-          "directory": "api/machines",
-          "source": "/api/machines/openapi.json"
-        },
         "pages": [
           {
             "group": "Machines API",
@@ -1463,6 +1459,13 @@
               "api/machines/index",
               "api/machines/models"
             ]
+          },
+          {
+            "group": "Endpoints",
+            "openapi": {
+              "directory": "api/machines",
+              "source": "/api/machines/openapi.json"
+            }
           }
         ]
       },
