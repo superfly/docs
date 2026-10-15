@@ -3988,6 +3988,18 @@
       "destination": "/flyctl/cmd/fly_extensions"
     },
     {
+      "source": "/flyctl/extensions-supabase-create/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/extensions-supabase-destroy/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/extensions-supabase-status/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
       "source": "/flyctl/mysql/",
       "destination": "/flyctl/cmd/fly_extensions"
     },
