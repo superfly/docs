@@ -1530,6 +1530,7 @@
                 "pages": [
                   "GET /v1/postgres",
                   "POST /v1/postgres",
+                  "GET /v1/postgres/plans",
                   "GET /v1/postgres/{postgres_cluster_id}",
                   "DELETE /v1/postgres/{postgres_cluster_id}",
                   "POST /v1/postgres/{postgres_cluster_id}/attachments",
