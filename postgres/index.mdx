@@ -29,16 +29,13 @@ You'll be able to access:
 - The third party `pgvector` extension for vector similarity search
 - The third party `PostGIS` extension for adding geospatial data support, if enabled when provisioning your database
 
-### What's not there yet {#whats-not-there-yet}
+### Current limitations {#whats-not-there-yet}
 
-At the moment, the following features are under development:
-
-- Security patches and version upgrades
-- Third Party Postgres extensions besides `pgvector` or `postGIS`
-- Customer-facing alerting
-- Database migration tools
-
-We're working on expanding these capabilities and will provide updates as they become available.
+- **Major version upgrades:** You choose Postgres 16 or 17 when you create a cluster, and you can't upgrade a cluster in place. To move to a newer major version, create a new cluster and copy your data with `pg_dump` and `pg_restore`. See [Import data](/postgres/import).
+- **Minor versions and security patches:** New Postgres images include the latest minor release. We roll out new images during your cluster's [maintenance window](/postgres/maintenance-windows), but not on a fixed schedule. PgBouncer and PostGIS versions are pinned and change only when we update them.
+- **Third-party extensions:** `pgvector` and `PostGIS` are supported, along with the bundled Postgres extensions marked as available on the [Extensions page](/postgres/extensions). To request another extension, [contact support](/about/support).
+- **Alerting:** We email your organization when maintenance starts and finishes, but there are no alerts for metrics like CPU or storage. Use [metrics](/postgres/metrics) to watch your cluster.
+- **Migration tools:** There's no automated migration from another database. Use `pg_dump` and `pg_restore`, as described in [Import data](/postgres/import).
 
 ## Regions
 
