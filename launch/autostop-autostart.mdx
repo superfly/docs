@@ -9,7 +9,7 @@ Get all the details of [how Fly Proxy autostop/autostart works](/reference/fly-p
 
 ## Scale to zero {#scale-to-zero}
 
-This `fly.toml` section stops all of your app's Machines when there's no traffic, and starts one again when a request arrives. It's what `fly launch` writes by default. Set `internal_port` to the port your app listens on.
+Scale to zero is autostop/autostart with no Machines kept running. With these settings in `fly.toml`, Fly Proxy stops all of your app's Machines when there's no traffic and starts one again when a request arrives. They're what `fly launch` writes by default. Set `internal_port` to the port your app listens on.
 
 ```toml
 [http_service]
@@ -19,6 +19,8 @@ This `fly.toml` section stops all of your app's Machines when there's no traffic
   auto_start_machines = true
   min_machines_running = 0
 ```
+
+Each setting is explained in [Configure autostop/autostart](#configure-autostop-autostart).
 
 When a request arrives and no Machine is running, Fly Proxy starts a stopped Machine and routes the request to it. A cold start takes about 2 seconds or more for common apps. To wake faster, set `auto_stop_machines = "suspend"`. Resuming a suspended Machine takes a few hundred milliseconds. Check the [suspend requirements and caveats](/reference/suspend-resume) first.
 
