@@ -1,13 +1,10 @@
 ---
-title: Run a Flask App
-og:description: Flask is a lightweight WSGI web application framework. It is designed to make getting
-  started quick and easy, with the ability to scale up to complex applications.
+title: Deploy a Flask App
+description: "Deploy a Flask app to Fly.io. fly launch detects Flask, generates a Dockerfile that serves it with Gunicorn, and deploys it to a Fly Machine."
 source_url: https://fly.io/docs/python/frameworks/flask/
 ---
 
 import FlyctlSnippet from '/snippets/languages-and-frameworks/flyctl.mdx';
-
-Getting an application running on Fly.io is essentially working out how to package it as a deployable image. Once packaged, it can be deployed to the Fly.io platform.
 
 In this guide we’ll learn how to deploy a [Flask](https://flask.palletsprojects.com/) application on Fly.io.
 

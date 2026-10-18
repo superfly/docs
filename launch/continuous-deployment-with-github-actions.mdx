@@ -1,5 +1,6 @@
 ---
 title: Continuous Deployment with Fly.io and GitHub Actions
+description: "Deploy to Fly.io automatically on every push with GitHub Actions: create a deploy token, store it as FLY_API_TOKEN, and add a workflow that runs flyctl deploy."
 source_url: https://fly.io/docs/launch/continuous-deployment-with-github-actions/
 ---
 
@@ -68,7 +69,7 @@ A note about `fly.toml` in repositories: Usually, when Fly.io ships examples, we
 ### API tokens
 
 **Step 5** is about getting an API token. You can generate a deploy token to use to authorize a specific application. That's what `flyctl tokens create deploy -x 999999h` gives you. Remember to copy the whole token from the output, including the `FlyV1` and space at the beginning.
-For a more powerful token that can manage multiple applications, run `flyctl auth token`.
+For a token that can deploy every app in an organization, create an org-scoped token with `fly tokens create org`. See [Access tokens](/security/tokens) for the options.
 
 **Steps 6 and 7** make your new token available to GitHub Actions that run against your repository. You'll add the token as a secret in the repository's settings. Under the **Settings** tab, go to **Secrets and variables** and select **Actions**. Click on the green "New repository secret" button, enter the name as `FLY_API_TOKEN`, and copy the token as the secret.
 

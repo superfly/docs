@@ -1,11 +1,45 @@
 ---
 title: Autostop/autostart Machines
+description: "Let Fly Proxy stop, suspend and restart your Machines based on traffic on Fly.io. Configure auto_stop_machines, auto_start_machines and min_machines_running."
 source_url: https://fly.io/docs/launch/autostop-autostart/
 ---
 
 Your app can meet peak demand without keeping extra Machines running. Use autostop/autostart to automatically start and stop or suspend existing Machines based on incoming requests. Fly Machines are fast to start and stop, and you [don't pay for their CPU and RAM](/about/pricing#stopped-fly-machines) when they're in a `stopped` or `suspended` state.
 
 Get all the details of [how Fly Proxy autostop/autostart works](/reference/fly-proxy-autostop-autostart).
+
+## Scale to zero {#scale-to-zero}
+
+Scale to zero is autostop/autostart with no Machines kept running. With these settings in `fly.toml`, Fly Proxy stops all of your app's Machines when there's no traffic and starts one again when a request arrives. They're what `fly launch` writes by default. Set `internal_port` to the port your app listens on.
+
+```toml
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+```
+
+Each setting is explained in [Configure autostop/autostart](#configure-autostop-autostart).
+
+When a request arrives and no Machine is running, Fly Proxy starts a stopped Machine and routes the request to it. A cold start takes about 2 seconds or more for common apps. To wake faster, set `auto_stop_machines = "suspend"`. Resuming a suspended Machine takes a few hundred milliseconds. Check the [suspend requirements and caveats](/reference/suspend-resume) first.
+
+### What an idle app costs {#what-an-idle-app-costs}
+
+A stopped or suspended Machine isn't billed for CPU or RAM. You pay only for its root file system (rootfs), at \$0.15/GB for 30 days. A [volume](/volumes) is billed for its full provisioned size whether its Machine is running or not.
+
+For example, here's a `shared-cpu-1x` Machine with 512MB RAM in Ashburn (`iad`) that runs 2 hours a day and is stopped the rest of the time:
+
+| Item | Monthly cost |
+| - | -: |
+| Machine running 2 hours a day (\$3.69/month if it ran all the time) | \$0.31 |
+| 1GB rootfs while stopped, 22 hours a day (assumed image size) | \$0.14 |
+| **Total without a volume** | **\$0.45** |
+| 10GB volume, billed all month | \$1.50 |
+| **Total with a volume** | **\$1.95** |
+
+On a mostly idle app, a volume can cost more than everything else combined. If your app doesn't need a local disk, keep files in object storage such as [Tigris](/tigris) instead. See [Resource pricing](/about/pricing) for all rates.
 
 ## When to use autostop/autostart {#when-to-use-autostop-autostart}
 
@@ -91,18 +125,7 @@ The defaults differ for new apps created with `fly launch` and for apps with no 
 
 ### Apps created with `fly launch`
 
-When you create a new app using the `fly launch` command, the default settings in `fly.toml` are:
-
-```toml
-...
-[http_service]
-  internal_port = 8080
-  force_https = true
-  auto_stop_machines = "stop"
-  auto_start_machines = true
-  min_machines_running = 0
-...
-```
+When you create a new app using the `fly launch` command, `fly.toml` uses the [scale to zero](#scale-to-zero) settings.
 
 ### Apps with no autostop/autostart settings {#apps-with-no-autostop-autostart-settings}
 

@@ -1,8 +1,7 @@
 ---
 title: Deploy an MCP Server with the Machines API
 sidebarTitle: Machines API
-og:description: This guide shows you how to use the Machines API to create a Fly.io machine that runs
-  an MCP server remotely.
+description: "Deploy an MCP server with the Machines API on Fly.io using curl and an org token to create the app, IP addresses, volume and Machine through REST calls."
 source_url: https://fly.io/docs/mcp/deploy-with/machines-api/
 ---
 
@@ -205,7 +204,7 @@ curl -i -X POST \
 
 Note: at this time the machine is created but not yet started. It will start once it receives its first request and stop when there is a period when there are no requests.
 
-# Accessing the MCP
+## Accessing the MCP
 
 Normally you would access the MCP using [`fly mcp proxy`](/flyctl/cmd/fly_mcp_proxy) to create a STDIO MCP server for your MCP client, even if you are using the Machines API to deploy an existing MCP server on a Fly Machine.
 

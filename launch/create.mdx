@@ -1,5 +1,6 @@
 ---
 title: Create an app with Fly Launch
+description: "Create an app on Fly.io with fly launch: when it generates a Dockerfile, how framework scanners work, the --image and --dockerfile options, and next steps."
 source_url: https://fly.io/docs/launch/create/
 ---
 
@@ -19,11 +20,28 @@ fly launch
 
 If you're in a hurry, you can also try our super-simple [demo app](/getting-started/launch-demo). Or get started with your favorite [language or framework](/getting-started/get-started-by-framework).
 
+## Does `fly launch` create a Dockerfile?
+
+Yes. For most languages and frameworks, `fly launch` generates a Dockerfile for your app and writes it to your project directory, usually along with a `.dockerignore` file. You don't need to write a Dockerfile before you launch.
+
+The generated Dockerfile is yours. Edit it to suit your app and commit it with the rest of your source code. `fly deploy` builds your app's image from it.
+
+| Your project | What `fly launch` does |
+|---|---|
+| No Dockerfile, supported language or framework | Generates a Dockerfile |
+| Already has a Dockerfile | Usually uses your Dockerfile. See [Point to an image or use a Dockerfile to build](#point-to-an-image-or-use-a-dockerfile-to-build). |
+| `--image` option | Deploys that image, no Dockerfile needed |
+| Elixir without Phoenix, or Python without Django, Flask, FastAPI, or Streamlit | Uses [buildpacks](/reference/builders#buildpacks) instead of a Dockerfile |
+
+<Note>
+If you're scripting a launch or using a coding agent, run `fly launch` first and then edit the generated Dockerfile. Writing a Dockerfile from scratch first isn't necessary, and it can stop `fly launch` from generating one that fits your framework.
+</Note>
+
 ## Ingredients for a successful `fly launch`
 
 The components of a successful launch, ready for the first deployment:
 
-* A way to get a Docker image that we can use to get your app running on a Machine.
+* A way to get a Docker image that we can use to get your app running on a Machine. Usually that's a Dockerfile, which `fly launch` can generate for you.
 * A `fly.toml` file, created by `fly launch` or provided by you, for your app's Fly.io-specific [configuration](/reference/configuration).
 * Optional resources such as [public IP addresses](/networking/services), [app secrets](/apps/secrets), and [databases and storage](/database-storage-guides) from Fly.io or extenstion partners.
 
@@ -31,7 +49,7 @@ The components of a successful launch, ready for the first deployment:
 
 Depending on your project, `fly launch` may be able to look at your app's source code and get through that [ingredient list](#ingredients-for-a-successful-fly-launch), straight to a ready-to-deploy Fly App. This is most likely to work for frameworks on which Fly.io has people specializing full time. Right now that's [Elixir/Phoenix](/elixir), [Laravel](/laravel), [Rails](/rails), and [Django](/django), but we also have launch guides for other [languages and frameworks](/languages-and-frameworks).
 
-Our best scanners furnish a Dockerfile from which your app's image will be built. Some of our terrible older scanners may invoke [buildpacks](/reference/builders#buildpacks), which tend to be slow and brittle.
+Most scanners generate a Dockerfile for your app, from a built-in template or by running a framework's own generator, such as `dockerfile-rails` for Rails, `@flydotio/dockerfile` for JavaScript frameworks, or `mix phx.gen.release --docker` for Phoenix. A couple of older scanners still use [buildpacks](/reference/builders#buildpacks), which tend to be slow and brittle.
 
 Running `fly launch` in a directory containing a working Django app (it happens to be the one from [our Django getting-started example](/django/getting-started)):
 
@@ -65,7 +83,13 @@ You can nudge `fly launch` to better suit your project.
 
 ### Point to an image or use a Dockerfile to build
 
-Tell `fly launch` how you want to get the Docker image for your app, using either the `--image` or `--dockerfile` option, or by catching the Dockerfile launch scanner's attention with the presence of a [Dockerfile](/languages-and-frameworks/dockerfile) in your project source directory. The Dockerfile scanner doesn't do a lot of configuration, but it prevents other scanners from taking over.
+Tell `fly launch` how you want to get the Docker image for your app, using either the `--image` or `--dockerfile` option, or by putting a [Dockerfile](/languages-and-frameworks/dockerfile) in your project source directory.
+
+If your project already has a Dockerfile, what `fly launch` does with it depends on what else it detects:
+
+* **Rails, Phoenix, JavaScript framework, and Laravel (PHP 8.1 or later) apps:** The framework scanner still configures your app, but keeps your Dockerfile and skips generating one.
+* **Django and RedwoodJS apps, and Laravel apps on older PHP versions:** The framework scanner offers to replace your Dockerfile with a generated one. It keeps yours if you decline or if `fly launch` runs non-interactively, and replaces it if you pass `--yes`.
+* **Everything else:** The Dockerfile scanner takes over. It doesn't do a lot of configuration, but it uses your Dockerfile as is and prevents the other scanners from taking over.
 
 The actual Docker image build (or image pull) for a Fly App takes place during deployment. `fly launch` sets the stage by recording how to build, or get, the image, and both the first and all later deploys use that information.
 

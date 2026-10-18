@@ -1,5 +1,6 @@
 ---
 title: Fly.io Resource Pricing
+description: "See what Fly.io bills for, from Machines and volumes to Managed Postgres, data transfer, IPs, SSL, support plans and extensions, with sample app costs."
 source_url: https://fly.io/docs/about/pricing/
 ---
 
@@ -177,18 +178,6 @@ You'll be charged for volumes that you create, whether they are attached to a Ma
 
 ### Volume Snapshots
 
-<Info>
-**New charges**
-
-  <p className="mt-2">
-    Starting January 1st 2026, we're introducing charges for [volume snapshot](/volumes/snapshots) storage. You'll see the first charges on the invoice issued at the start of February 2026.
-  </p>
-
-  <p className="mt-2">
-    If you're an existing customer, you can check your usage in the **Billing** section of the [dashboard](https://fly.io/dashboard/personal/billing) on your Upcoming Invoice and in the Cost Explorer.
-  </p>
-</Info>
-
 * \$0.08/GB per month
 * First 10GB free each month
 
@@ -199,6 +188,8 @@ Automatic daily snapshots with 5 days retention are enabled by default on new vo
 Usage is calculated based on the total stored size of the snapshots, not the provisioned volume size. You're only charged for the actual data stored - if you've written 1GB to a 10GB volume, you'll be charged for around 1GB of snapshot storage.
 
 Snapshots for each volume are stored incrementally, so you'll only be charged for data that has changed since the previously stored snapshot.
+
+You can check your snapshot usage in the **Billing** section of the [dashboard](https://fly.io/dashboard/personal/billing), on your Upcoming Invoice and in the Cost Explorer.
 
 ## Network prices
 

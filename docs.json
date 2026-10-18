@@ -635,6 +635,7 @@
                     "group": "Management",
                     "pages": [
                       "postgres/metrics",
+                      "postgres/maintenance-windows",
                       "postgres/import",
                       "postgres/extensions"
                     ]
@@ -648,7 +649,6 @@
                   "links/mpg",
                   "tigris/index",
                   "upstash/redis",
-                  "supabase/index",
                   "upstash/vector"
                 ],
                 "root": "database-storage-guides"
@@ -1531,6 +1531,7 @@
                 "pages": [
                   "GET /v1/postgres",
                   "POST /v1/postgres",
+                  "GET /v1/postgres/plans",
                   "GET /v1/postgres/{postgres_cluster_id}",
                   "DELETE /v1/postgres/{postgres_cluster_id}",
                   "POST /v1/postgres/{postgres_cluster_id}/attachments",
@@ -3985,6 +3986,18 @@
     },
     {
       "source": "/flyctl/extensions-supabase-dashboard/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/extensions-supabase-create/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/extensions-supabase-destroy/",
+      "destination": "/flyctl/cmd/fly_extensions"
+    },
+    {
+      "source": "/flyctl/extensions-supabase-status/",
       "destination": "/flyctl/cmd/fly_extensions"
     },
     {
