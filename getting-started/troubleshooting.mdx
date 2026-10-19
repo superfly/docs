@@ -26,6 +26,7 @@ If the error isn't obvious, start here.
     - [401 Unauthorized](#registry-401-errors) — registry auth failure during deploy
     - [403 Forbidden](#403-forbidden) — usually your app's CORS config or a third-party block
     - [520 with Cloudflare](#520-errors-with-cloudflare) — Cloudflare doesn't like the response
+    - [525 with Cloudflare](/networking/understanding-cloudflare#cloudflare-error-525-ssl-handshake-failed) — TLS handshake between Cloudflare and Fly.io failed
 - **My deploy failed**
     - [Build hangs at 'Waiting for depot builder...'](#build-hangs-waiting-for-depot-builder)
     - [Release command failures](#release-command-failures)
@@ -41,6 +42,9 @@ If the error isn't obvious, start here.
     - [Suspend vs stop (clock skew)](#suspend-vs-stop)
 - **I can't connect to something**
     - [Custom domain TLS errors](#custom-domains-and-tls)
+    - ["Client network socket disconnected before secure TLS connection was established"](#client-network-socket-disconnected-before-secure-tls-connection-was-established)
+    - ["ERR_CONNECTION_CLOSED" in the browser](#err-connection-closed)
+    - ["Error opening terminal: xterm-kitty" in `fly ssh console`](#error-opening-terminal-xterm-kitty)
     - [Flycast redirect loops or TCP issues](#flycast-internal-load-balancing)
     - [Outbound TCP connections failing](#outbound-connections)
     - [POST requests getting 403'd](#cors-issues)
@@ -123,6 +127,8 @@ If you're using Cloudflare:
 - Set SSL mode to **Full (strict)**
 - Check your [Cloudflare](/networking/understanding-cloudflare) proxy settings
 - If 520s are intermittent, they may correlate with specific response headers from your app
+
+Getting a 525 instead? That's a failed TLS handshake between Cloudflare and Fly.io. See [Cloudflare error 525](/networking/understanding-cloudflare#cloudflare-error-525-ssl-handshake-failed).
 
 Note: if Cloudflare itself goes down, your Fly-hosted apps behind Cloudflare go down too. Fly is still running — the CDN in front of it isn't.
 
@@ -430,6 +436,22 @@ You need either A **and** AAAA records, or a single CNAME record pointing to Fly
 
 **Using Cloudflare?** Most TLS issues on Fly involve domains behind Cloudflare. Read [Understanding Cloudflare](/networking/understanding-cloudflare) before debugging further. For all other setups, see [Custom domains](/networking/custom-domain).
 
+### Client network socket disconnected before secure TLS connection was established {#client-network-socket-disconnected-before-secure-tls-connection-was-established}
+
+This error comes from Node.js clients (and tools built on them) when the server closes the connection during the TLS handshake. When the server is a Fly.io app, check these in order:
+
+- **DNS points at the wrong IPs.** If you deleted and recreated the app, or released and allocated new IPs, your domain or a client's DNS cache may still point at the old addresses. Compare `fly ips list` with `dig A example.com` and `dig AAAA example.com`, update your DNS records, and flush any local DNS cache. Recreating an app on every deploy (for example from Terraform) gives it new IPs each time, so deploy to the same app instead.
+- **No certificate for the hostname.** Fly.io can only complete a handshake for hostnames it has a certificate for. Run `fly certs show <hostname>`, and `fly certs add <hostname>` if it's missing.
+- **No Machine can serve the request.** If every Machine is crashing or failing health checks, the handshake fails. Check `fly status` and [Health checks failing](#health-checks-failing).
+
+### ERR_CONNECTION_CLOSED {#err-connection-closed}
+
+Chrome shows `ERR_CONNECTION_CLOSED` when the connection to your site closes before a response arrives. When the site is a Fly.io app, check these in order:
+
+- **No certificate for the hostname.** Fly Proxy closes the connection during the TLS handshake for a hostname your app has no certificate for, and `curl -v https://<hostname>` fails with `SSL_ERROR_SYSCALL`. Run `fly certs check <hostname>`, and `fly certs add <hostname>` if it's missing. `example.com` and `www.example.com` need [a certificate each](/networking/custom-domain#ssl-error-access-denied-alert).
+- **Machines are being replaced.** If the error shows up while you deploy or scale, check which Machines are running with `fly status`, and read a specific Machine's logs with `fly logs --machine <machine-id>`.
+- **It works with curl or in a private window.** Then the difference is that browser's saved state for the site, such as cookies. Clear the site's data in the browser and retry.
+
 ### Flycast (internal load balancing)
 
 [Flycast](/networking/flycast) routes traffic between your Fly apps over the private network. Two gotchas:
@@ -476,6 +498,18 @@ If POST requests to your app return `403`, it's almost certainly your app's CORS
 - Check that the `Origin` header your client sends is in your app's allowed origins list
 - Make sure your app returns the correct `Access-Control-Allow-Origin`0 headers  on preflight (`OPTIONS`) responses
 - If it works via `curl` but fails in the browser, that confirms it's a CORS issue in your app, not a Fly issue
+
+### Error opening terminal: xterm-kitty {#error-opening-terminal-xterm-kitty}
+
+```
+Error opening terminal: xterm-kitty.
+'xterm-kitty': unknown terminal type.
+```
+
+`fly ssh console` passes your local `TERM` to the Machine. Terminals like Kitty and Alacritty set `TERM` to a value (`xterm-kitty`, `alacritty`) whose terminfo entry usually isn't installed in your app's image, so programs like `htop`, `clear`, and `vim` can't start. Either fix works:
+
+- Override `TERM` for the session: `TERM=xterm-256color fly ssh console`
+- Install the terminfo entry in your image, for example `apt-get install -y kitty-terminfo` on Debian or Ubuntu
 
 ---
 

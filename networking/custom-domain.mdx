@@ -143,6 +143,19 @@ The best way to avoid hitting rate limits is to use staging environments and dom
 
 If you're building a platform on top of Fly.io, and you expect that your users will frequently delete and then recreate the same resources within a short window, consider implementing "soft delete" logic into your platform that retains the Fly.io resources for a period of time, negating the need to recreate certs frequently.
 
+### SSL_ERROR_ACCESS_DENIED_ALERT {#ssl-error-access-denied-alert}
+
+Firefox shows `SSL_ERROR_ACCESS_DENIED_ALERT` when the server rejects the TLS handshake, and curl reports `tlsv1 alert access denied`. On Fly.io, this usually means the browser asked for a hostname your app has no certificate for.
+
+The common case is `www`. `example.com` and `www.example.com` are separate hostnames, and a certificate for one doesn't cover the other. Add a certificate for each hostname you serve:
+
+```bash
+fly certs add example.com
+fly certs add www.example.com
+```
+
+Then set up [DNS records](#configure-dns-records) for each hostname, and run `fly certs check <hostname>` to confirm each certificate is issued. `fly certs list` shows every hostname your app has a certificate for.
+
 ### I use Cloudflare, and there seems to be a problem issuing or validating my Fly.io TLS certificate
 
 If you're using Cloudflare's proxying feature (orange cloud), verify domain ownership by adding a [`_fly-ownership` TXT record](#domain-ownership-verification). Once ownership is verified, Fly.io can issue certificates using the HTTP-01 challenge through Cloudflare's proxy.
