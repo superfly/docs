@@ -51,6 +51,18 @@ Learn more about Machine placement and regional capacity in this [guide](/machin
 
 When an application instance is started, the three-letter name for the region it's running in is stored in the Machine's `FLY_REGION`  environment variable. This, along with other [Runtime Environment](/machines/runtime-environment) information, is visible to your app running on that instance.
 
+## Regions vs availability zones (coming from AWS) {#regions-vs-availability-zones}
+
+On AWS, a region is a geographic area and an availability zone (AZ) is an isolated group of datacenters inside it. You pick AZs explicitly and spread instances across them for redundancy.
+
+Fly.io has regions but no availability zone layer to choose from. Each region code in the table above is a single location. Redundancy within a region comes from running Machines and volumes on different physical servers:
+
+- **Machines:** `fly launch` and `fly deploy` create two Machines for process groups with services, and Fly.io places them on separate hosts when it can. See [App availability and resiliency](/apps/app-availability).
+- **Volumes:** [`fly volumes create`](/flyctl/cmd/fly_volumes_create) places each volume in a separate hardware zone (a different server) by default, so one host failure doesn't take out every copy of your data. Volumes don't replicate, so your app still needs to handle replication.
+- **Across regions:** For the protection you'd get from multiple AWS regions, run Machines in more than one Fly.io region, for example `fly scale count 2 --region iad,ord`. See [Scaling to multiple regions](/blueprints/resilient-apps-multiple-machines#scaling-to-multiple-regions).
+
+If you're mapping a multi-AZ AWS setup to Fly.io, think "at least two Machines per region" in place of "one instance per AZ", and add a second region when you need to survive a whole-region outage.
+
 ## Related reading
 
 - [Scaling to multiple regions](/blueprints/resilient-apps-multiple-machines#scaling-to-multiple-regions) Read our guide for making your app resilient and globally distributed.

@@ -87,6 +87,16 @@ Custom and ACME certificates can coexist for the same hostname. The custom certi
 - Always use "Full (strict)" in Cloudflare when connecting to Fly.io. Using "Flexible" mode may cause redirect loops.
 - Only one application should manage certificates for a subdomain or apex domain. Using more than one can cause conflicts.
 
+### Cloudflare error 525: SSL handshake failed {#cloudflare-error-525-ssl-handshake-failed}
+
+Error 525 means Cloudflare's proxy couldn't complete a TLS handshake with your Fly.io app. Cloudflare is reachable, and so is Fly.io, but the encrypted connection between them fails. Common causes:
+
+- **Fly.io has no certificate for the hostname.** With **Full** or **Full (strict)** SSL mode, Cloudflare connects to Fly.io over TLS using your domain name. If you haven't run `fly certs add` for that hostname, or the certificate hasn't been issued yet, the handshake fails. Run `fly certs check example.com` and follow the [recommended setup](#recommended-setup), or import a [Cloudflare Origin Certificate](#using-a-cloudflare-origin-certificate) if issuance is stuck.
+- **No Machine is available to serve the request.** If all of your app's Machines are crashing or failing health checks, Fly.io can't serve the connection. Run `fly status` and `fly logs`, and see [Troubleshoot your deployment](/getting-started/troubleshooting#health-checks-failing).
+- **Intermittent network resets.** Occasional 525s that clear on their own are usually connection resets between Cloudflare and Fly.io. Run at least two Machines so a single restarting Machine doesn't drop handshakes.
+
+Don't switch Cloudflare to **Flexible** mode to make a 525 go away. Flexible sends plain HTTP to Fly.io, which causes redirect loops when your app forces HTTPS.
+
 ### ACME-specific issues
 
 These issues apply when using Let's Encrypt (ACME) certificates behind Cloudflare's proxy. They do not apply if you are using a [Cloudflare Origin Certificate](#using-a-cloudflare-origin-certificate).
