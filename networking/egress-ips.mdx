@@ -1,5 +1,6 @@
 ---
-title: Egress IP addresses
+title: "Egress IP addresses: static outbound IPs for Fly Machines"
+sidebarTitle: Egress IP addresses
 description: "Allocate static egress IPs on Fly.io for third-party allowlists, with per-region app-scoped IPv4 and IPv6 pairs, caveats, and migration from machine-scoped IPs."
 source_url: https://fly.io/docs/networking/egress-ips/
 ---
@@ -7,6 +8,8 @@ source_url: https://fly.io/docs/networking/egress-ips/
   <img src="/images/Egress-IP.png" alt="Illustration by Annie Ruygt of two happy Machines sitting on clouds" />
 
 ## Overview
+
+An egress IP is the source address of outbound connections from your app: the IP that an external API, database or payment provider sees, and the one you add to its allowlist.
 
 - By default, outbound (egress) IPs from Fly Machines are **unstable** and may change.
 - You can allocate **static egress IPs** for an app (both IPv4 and IPv6) via `fly ips allocate-egress`.
