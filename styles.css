@@ -132,7 +132,9 @@ div.frame_purple > div > div > div.relative.rounded-xl.overflow-hidden.flex.just
 
 /* Mintlify only emits the meta description tag from the `description:` frontmatter key, and also
    renders that text as a subtitle under the page title. Hide the subtitle so descriptions are for
-   search only. Tested on the preview for #2538. */
-#header > .prose {
+   search only. Tested on the preview for #2538. OpenAPI endpoint pages put the operation's
+   description in the same slot, so keep it visible there; Mintlify wraps those pages in
+   #api-playground-2-operation-page. */
+#content-area:not(:has(#api-playground-2-operation-page)) #header > .prose {
   display: none;
 }
