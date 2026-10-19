@@ -204,6 +204,23 @@ Additionally, if you want to avoid the fingerprint checking, you can add the fol
 StrictHostKeyChecking no
 ```
 
+## Failed to set up dynamic port forwarding connection over SSH to the VS Code server {#failed-to-set-up-dynamic-port-forwarding-vs-code}
+
+VS Code Remote - SSH shows this error when you connect it to the SSH server that Fly.io runs on port 22 of every Machine, the one `fly ssh console` uses. The Remote - SSH log has a line like:
+
+```
+Failed to set up socket for dynamic port forward to remote port 37957: Socket closed. TCP port forwarding may be disabled, or the remote server may have crashed.
+```
+
+VS Code reaches the VS Code Server it installs on the Machine through SSH port forwarding, and Fly.io's built-in SSH server doesn't support port forwarding. It rejects the forwarding channel with `unexpected channel type type=direct-tcpip`.
+
+To fix it, run OpenSSH alongside the built-in server as this guide describes, and point VS Code at OpenSSH instead:
+
+- Over the public internet, connect to `<app-name>.fly.dev` on the external port you mapped in [Map internal port 2222 to external port 22](#map-internal-port-2222-to-external-port-22).
+- Over your [WireGuard private network](/networking/private-networking), connect to `<app-name>.internal` on port 2222, where `sshd` listens.
+
+You can add either one as a `Host` entry in your SSH config, as shown in the client configuration section above.
+
 ## Related reading
 
 - [`flyctl` SSH commands](/flyctl/cmd/fly_ssh) Official reference for how to use `fly ssh`/`fly ssh sftp` to access running machines. 

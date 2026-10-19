@@ -246,3 +246,16 @@ Another thing people run multiple programs to get is static asset HTTP service; 
 ```
 
 When Fly.io sees that in your `fly.toml`, it'll fish your static assets out of your container and serve them directly from our proxies at the `url_prefix` you specify. This is faster and, of course, doesn't demand you package an HTTP server into your container.
+
+## System has not been booted with systemd as init system (PID 1). Can't operate. {#system-has-not-been-booted-with-systemd-as-init-system}
+
+```
+System has not been booted with systemd as init system (PID 1). Can't operate.
+```
+
+This error comes from `systemctl`, usually called by a vendor install script or by a command like `systemctl start <service>` in your Dockerfile or entrypoint. On Fly.io, PID 1 in every Machine is Fly's own [init](/getting-started/troubleshooting#the-init-process), not systemd, and you can't replace it. Installing the `systemd` package doesn't change that, so systemd units never run.
+
+Start your programs without systemd instead:
+
+- **One program:** run it directly from `CMD` or `ENTRYPOINT`, in the foreground, instead of through `systemctl`. If an install script calls `systemctl`, change it to start the program directly.
+- **Several programs:** use [process groups](#process-groups) to run each one in its own Machines, or start them together with a [Bash script](#just-use-bash), [supervisord](#use-supervisord), or a [Procfile manager](#use-a-procfile-manager) as described above. These run under Fly's init rather than replacing it.
