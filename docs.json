@@ -4102,6 +4102,106 @@
     {
       "source": "/flyctl/cmd/fly",
       "destination": "/flyctl/cmd/fly_help"
+    },
+    {
+      "source": "/future",
+      "destination": "/"
+    },
+    {
+      "source": "/introduction",
+      "destination": "/"
+    },
+    {
+      "source": "/reference/ci-cd",
+      "destination": "/launch/continuous-deployment-with-github-actions"
+    },
+    {
+      "source": "/launch/continuous-deployment/github-actions",
+      "destination": "/launch/continuous-deployment-with-github-actions"
+    },
+    {
+      "source": "/flyctl/extensions-tigris-list",
+      "destination": "/flyctl/cmd/fly_storage_list"
+    },
+    {
+      "source": "/about/security",
+      "destination": "/security/security-at-fly-io"
+    },
+    {
+      "source": "/about/privacy",
+      "destination": "https://fly.io/legal/privacy-policy/"
+    },
+    {
+      "source": "/getting-started/login-to-fly",
+      "destination": "/getting-started/sign-up-sign-in"
+    },
+    {
+      "source": "/getting-help",
+      "destination": "/about/support"
+    },
+    {
+      "source": "/getting-started/deploying-your-app",
+      "destination": "/getting-started/launch"
+    },
+    {
+      "source": "/getting-started/installing-fly",
+      "destination": "/flyctl/install"
+    },
+    {
+      "source": "/hands-on/install-cli",
+      "destination": "/flyctl/install"
+    },
+    {
+      "source": "/cli",
+      "destination": "/flyctl"
+    },
+    {
+      "source": "/reference/config",
+      "destination": "/reference/configuration"
+    },
+    {
+      "source": "/reference/enveloop",
+      "destination": "/about/extensions"
+    },
+    {
+      "source": "/reference/machines-api",
+      "destination": "/machines/api"
+    },
+    {
+      "source": "/app-guides/axum-with-rust",
+      "destination": "/rust/frameworks/axum"
+    },
+    {
+      "source": "/app-guides/speed-up-a-heroku-app",
+      "destination": "https://fly.io/learn/heroku-alternatives/"
+    },
+    {
+      "source": "/apps/legacy-scaling",
+      "destination": "/launch/scale-count"
+    },
+    {
+      "source": "/elixir/the-basics/naming-your-elixir-node",
+      "destination": "/elixir/the-basics/clustering"
+    },
+    {
+      "source": "/languages-and-frameworks/django",
+      "destination": "/django"
+    },
+    {
+      "source": "/languages-and-frameworks/svelte",
+      "destination": "/js/frameworks/svelte"
+    },
+    {
+      "source": "/languages-and-frameworks/bun",
+      "destination": "/js"
+    },
+    {
+      "source": "/js/frameworks/bun",
+      "destination": "/js"
+    },
+    {
+      "source": "/about/sprites",
+      "destination": "/sprites"
     }
   ]
 }
