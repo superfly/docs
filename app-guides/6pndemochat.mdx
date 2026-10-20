@@ -71,7 +71,7 @@ let natsapphost=process.env.NATSAPPHOST
 const nc = NATS.connect(natsapphost+".internal");
 ```
 
-The combination of an app name and `.internal` in 6PN networking resolves to the IPV6 addresses of the first instance of all instances if that app currently running. So, if we set NATSAPP to `myclusterapp` then scaling and adding nodes to `myclusterapp` would automatically be reflected in `myclusterapp.internal`. 6PN has a number of `.internal` addresses an app can query which you can read about in the [6PN documentation](/networking/services#internal-addresses).
+The combination of an app name and `.internal` in 6PN networking resolves to the IPv6 addresses of the first instance of all instances if that app currently running. So, if we set NATSAPP to `myclusterapp` then scaling and adding nodes to `myclusterapp` would automatically be reflected in `myclusterapp.internal`. 6PN has a number of `.internal` addresses an app can query which you can read about in the [6PN documentation](/networking/services#internal-addresses).
 
 Once the chat server has connected to the NATS cluster, it subscribes to a topic `msg` and any message written to `msg` will be broadcast to all web socket clients that are connected. If any of those web socket clients sends a message to the chat server, then it will publish that message to the `msg` topic on the NATs cluster. It doesn't even try to echo it locally, relying on the NATS cluster to publish to subscribers.
 

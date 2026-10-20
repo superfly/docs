@@ -28,7 +28,7 @@ Not to be confused with the [environment variable](/machines/runtime-environment
 
 **Client and Proxy List**: A comma separated list of IP addresses including the address of the client that originated the request and the addresses of the proxy servers the request passed through. For example, "77.97.0.98, 77.83.142.33" contains the client and the one proxy it passed through. On the Fly.io platform, the last address (rightmost) in this list will be a shared or dedicated IP address assigned to your app.
 
-This header must be treated with caution to avoid spoofing attempts. Follow the directives in the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) for `X-Forwarded-For` to learn how parse the header safely. If you aren't using another reverse proxy in front of the Fly.io platform, the [`Fly-Client-IP` header](#fly-client-ip) might be a better choice to get client IP addresses.
+This header must be treated with caution to avoid spoofing attempts. Follow the directives in the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) for `X-Forwarded-For` to learn how to parse the header safely. If you aren't using another reverse proxy in front of the Fly.io platform, the [`Fly-Client-IP` header](#fly-client-ip) might be a better choice to get client IP addresses.
 
 ### `X-Forwarded-Proto`
 
