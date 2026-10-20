@@ -13,11 +13,11 @@ It's aimed at the cases where filing feedback by hand is the thing that stops yo
 POST https://api.fly.io/api/v1/feedback
 ```
 
-Authenticate with a Fly.io access token in an `Authorization: Bearer <token>` header. Any valid token works, including a narrowly scoped one, because filing feedback needs no organization or app permission. Create a token with [`fly tokens create`](/flyctl/cmd/fly_tokens_create) or on the [Tokens](https://fly.io/tokens) page.
+Authenticate with a Fly.io access token in an `Authorization: Bearer <token>` header. Create a token with [`fly tokens create`](/flyctl/cmd/fly_tokens_create) or on the [Tokens](https://fly.io/tokens) page.
+
+The token needs read access to an organization. A token scoped to one organization files the report under it; otherwise the report goes to your personal organization. The organization is what reports are attributed to and what the rate limit counts against, so a token narrowed to something else, or an expired one, is rejected. Ownership always comes from the token, never from the request body.
 
 Legacy `fo1_` OAuth tokens aren't accepted. Use a macaroon token, which starts with `fm2_`. See [Access tokens](/security/tokens).
-
-The report is attributed to the organization and user the token belongs to.
 
 ## Request
 
@@ -61,7 +61,7 @@ content-type: application/json; charset=utf-8
 | 200 | An identical report was already filed; `already_submitted` is `true`. |
 | 400 | A legacy `fo1_` OAuth token was used. Mint a `fm2_` token instead. |
 | 401 | The token was missing or invalid. |
-| 422 | Validation failed. Check the category value, and that a note and a request ID or URL are present. |
+| 422 | No organization resolved from the token, or validation failed. Check the category value, and that a note and a request ID or URL are present. |
 | 429 | Rate limited. |
 
 A successful response carries the new report's ID:
