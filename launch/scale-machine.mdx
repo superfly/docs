@@ -20,10 +20,11 @@ You can scale an app even if it has crashed. Its Machines are restarted with the
 
 Here's a simple web app with three Machines running in different regions: two in Toronto and one in Tokyo. All the app's Machines belong to the default process group, `app`, since no other [processes](/launch/processes) exist. 
 
-```bash
+<CodeGroup>
+```bash cmd
 fly status
 ```
-```out    
+```out out
 App
   Name     = testrun                                        
   Owner    = personal                                   
@@ -35,8 +36,8 @@ PROCESS	ID            	VERSION	REGION	STATE  	ROLE	CHECKS	                  LAST
 app    	17811943f031d8	3     	yyz   	stopped	    	1 total, 1 passing      	2024-02-07T15:34:57Z
 app    	328749d3c53958	3     	yyz   	stopped	    	1 total, 1 passing      	2024-01-23T19:39:50Z
 app   	908057ef21e487	3     	nrt   	started	    	1 total, 1 passing      	2024-01-23T19:39:51Z
-<CodeGroup>
 ```
+</CodeGroup>
 
 `fly scale show` shows the CPU and RAM settings for all the Machines deployed using `fly deploy` under this app.
 
@@ -107,17 +108,18 @@ Scaled VM Type to 'shared-cpu-2x'
 
 Check that the `app` process group has had this scale applied:
 
-```bash
-fly scale show   
+<CodeGroup>
+```bash cmd
+fly scale show
 ```
-```out         
+```out out
 VM Resources for app: testrun
 
 Groups
 NAME    COUNT   KIND    CPUS    MEMORY  REGIONS    
 app     3       shared  2       512 MB  nrt,yyz(2)
-<CodeGroup>
 ```
+</CodeGroup>
 
 You can also confirm that an individual Machine's config matches this, using `fly machine status <machine ID>`:
 
