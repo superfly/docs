@@ -27,12 +27,12 @@ Every request to the token endpoint generates a unique Json Web Token (JWT). Whe
 {
     "app_id": "11111111",
     "app_name": "example-app",
-    "aud": "https://fly.io/exmaple-org",
+    "aud": "https://fly.io/example-org",
     "exp": 1712099653,
     "iat": 1712099053,
     "image": "docker-hub-mirror.fly.io/you/image:latest",
     "image_digest": "sha256:2c1cdaded1b3820020c9dc9fdd1d6e798d6f6ca36861bb6ae64019fad6be9ee3",
-    "iss": "https://oidc.fly.io/exmaple-org",
+    "iss": "https://oidc.fly.io/example-org",
     "jti": "93ca09e1-70e0-477b-a260-1d8fcd4ef4f4",
     "machine_id": "148e21ea7e46e8",
     "machine_name": "example-machine",
@@ -57,7 +57,7 @@ curl --unix-socket /.fly/api -X POST "http://localhost/v1/tokens/oidc" --data '{
 
 ## OpenID Connect Trust Policies in AWS
 
-You can leverage the trust policy of an IAM role to restrict which Machines in your organisation can assume a role in AWS. For example the following policy would only allow Machines in the app `foo-bar` within your org to assume the role it’s attached to.
+You can leverage the trust policy of an IAM role to restrict which Machines in your organization can assume a role in AWS. For example the following policy would only allow Machines in the app `foo-bar` within your org to assume the role it’s attached to.
 
 ```json
 {
@@ -87,7 +87,7 @@ You can leverage the trust policy of an IAM role to restrict which Machines in y
 To read from an S3 bucket using a Fly Machine you'll first need to set up a trust between AWS and Fly.io by creating an OIDC provider in AWS and then attaching a trust policy to the role policy your Machine will assume. If you've already packaged up your app in a Dockerfile, then you can follow these steps to read from an S3 bucket:
 
 1. Create a Fly.io app by running `fly launch` in the same directory as your Dockerfile.
-1. Find the slug for the organisation you want to launch your app in.
+1. Find the slug for the organization you want to launch your app in.
 
     ```bash
     fly orgs list
@@ -111,7 +111,7 @@ To read from an S3 bucket using a Fly Machine you'll first need to set up a trus
       AWS_ROLE_ARN = "arn:aws:iam::<ACCOUNT_ID>:role/<ROLE_NAME>"
     ```
 
-1. Deploy your app and let the AWS SDK will do the rest.
+1. Deploy your app and let the AWS SDK do the rest.
 
     ```bash
     fly deploy

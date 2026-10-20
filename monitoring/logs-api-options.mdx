@@ -73,7 +73,7 @@ This gives you structured JSON log messages in real time.
 - You’ll need to handle reconnections: if the network drops or the proxy restarts, your subscriber needs to reconnect and resume without losing messages.
 - You’ll need to handle backpressure: if your app can’t process logs fast enough, messages might pile up and get dropped. Design your consumer to either keep up or fail gracefully.
 - If you want to dedupe across subscribers, use NATS queue groups.
-- NATS only streams logs from starting from the moment you connect. You won’t get any history unless you’ve been subscribed the whole time.
+- NATS only streams logs starting from the moment you connect. You won’t get any history unless you’ve been subscribed the whole time.
 
 For more details on connecting to Fly’s NATS log stream (authentication, subject patterns, example clients), head over to the [Observability for User Apps](/blueprints/observability-for-user-apps#streaming-fly-app-logs-to-your-end-users) guide.
 
