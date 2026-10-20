@@ -51,7 +51,7 @@ You can also configure a volume to extend automatically after a certain threshol
 1. Extend the volume size:
 
     ```bash
-    `fly volumes extend <volume id> -s <new size in GB>`
+    fly volumes extend <volume id> -s <new size in GB>
     ```
 
 1. (Optional) Check the new volume size in the Machine's file system:
@@ -108,7 +108,7 @@ Create an exact copy of a volume, including its data. By default, we place the n
 3. (Optional) Use [`fly scale count`](/launch/scale-count#scale-an-app-with-volumes) to create a new Machine that picks up the unattached volume, or attach the volume to a new Machine by cloning with the following command:
 
 ```bash
-`fly machine clone <machine id> --region <region code> --attach-volume <volume id>:<destination mount path>`
+fly machine clone <machine id> --region <region code> --attach-volume <volume id>:<destination mount path>
 ```
 
 For options, refer to the [`fly volumes fork` docs](/flyctl/cmd/fly_volumes_fork) or run `fly volumes fork --help`.
@@ -202,7 +202,7 @@ For options, refer to the [`fly volumes destroy` docs](/flyctl/cmd/fly_volumes_d
 
 **Volumes attached to Machines**
 
-Volumes attached to Machines can’t be destroyed. You can check which Machine (if any) a volume is attached to by running `fly volumes list` First, stop and destroy the Machine, then the unattached volume can be destroyed.
+Volumes attached to Machines can’t be destroyed. You can check which Machine (if any) a volume is attached to by running `fly volumes list`. First, stop and destroy the Machine, then the unattached volume can be destroyed.
 
 If you’re replacing the Machine, use `fly scale count` or `fly machine clone` to launch a new one. This will create and mount a fresh volume based on your `fly.toml` config.
 
