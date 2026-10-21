@@ -47,4 +47,8 @@ jobs:
           echo "--- mine for comparison ---"; /tmp/valebin/vale --version 2>/dev/null || curl -sL https://github.com/errata-ai/vale/releases/download/v3.24.0/vale_3.24.0_Linux_64-bit.tar.gz -o /tmp/v.tgz && mkdir -p /tmp/valebin && tar xzf /tmp/v.tgz -C /tmp/valebin && /tmp/valebin/vale --version
           echo "--- mine: checks loaded ---"; /tmp/valebin/vale ls-config 2>&1 | python3 -c "import json,sys; d=json.load(sys.stdin); print([c for c in d['Checks'] if c.startswith('Fly.')])" || true
           echo "--- sizes ---"; ls -l "$HOSTED" /tmp/valebin/vale
+          echo "--- cwd hypothesis: run from /tmp with relative paths ---"
+          (cd /tmp && $HOSTED --output=JSON litefs/how-it-works.mdx 2>&1 | head -c 120); echo
+          echo "--- and with absolute paths from /tmp ---"
+          (cd /tmp && $HOSTED --output=JSON "$GITHUB_WORKSPACE/litefs/how-it-works.mdx" 2>&1 | head -c 120); echo
           echo "--- exit marker ---"
