@@ -28,7 +28,10 @@ jobs:
           echo "--- vale sync ---"; /tmp/valebin/vale sync 2>&1 | tail -2
           echo "--- styles after sync ---"; ls styles/; ls styles/Fly 2>&1 | head -3
           echo "--- ls-config ---"; /tmp/valebin/vale ls-config 2>&1 | head -40
-          echo "--- direct run ---"; /tmp/valebin/vale --no-exit --output=line litefs/how-it-works.mdx 2>&1 | head -5
+          echo "--- direct run, line ---"; /tmp/valebin/vale --no-exit --output=line litefs/how-it-works.mdx 2>&1 | head -5
+          echo "--- action's exact args, our binary ---"; /tmp/valebin/vale --output=JSON .github/workflows/vale-docs-linter.yml litefs/how-it-works.mdx 2>&1 | head -c 300; echo
+          echo "--- hosted binary, if present ---"; ls /opt/hostedtoolcache/vale/*/x64/vale 2>/dev/null || echo "(not yet installed)"
+          echo "--- env that could affect vale ---"; env | grep -iE "^VALE|STYLES" || echo "(none)"
           echo "--- exit marker ---"
 
         # run reviewdog and the linter
