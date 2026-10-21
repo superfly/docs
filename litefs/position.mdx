@@ -4,6 +4,10 @@ title: Tracking LiteFS replication position
 source_url: https://fly.io/docs/litefs/position/
 ---
 
+import LitefsUnsupportedSnippet from '/snippets/docs/litefs-unsupported.mdx';
+
+<LitefsUnsupportedSnippet />
+
 Each database created in LiteFS maintains a position in their replication log.
 The position is a combination of a monotonically incrementing transaction ID
 (TXID) and a rolling checksum of the database contents.

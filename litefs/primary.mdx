@@ -4,6 +4,10 @@ sidebarTitle: Determining the primary
 source_url: https://fly.io/docs/litefs/primary/
 ---
 
+import LitefsUnsupportedSnippet from '/snippets/docs/litefs-unsupported.mdx';
+
+<LitefsUnsupportedSnippet />
+
 The LiteFS directory (typically `/litefs`) provides a `.primary` file that
 applications can read to determine the current primary node. This file only
 exists if the node is currently a replica _and_ it is connected to the primary

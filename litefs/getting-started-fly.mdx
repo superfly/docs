@@ -4,6 +4,11 @@ description: "Set up a LiteFS cluster on Fly.io: install litefs, configure litef
 source_url: https://fly.io/docs/litefs/getting-started-fly/
 ---
 
+import LitefsUnsupportedSnippet from '/snippets/docs/litefs-unsupported.mdx';
+import LitefsAutostopSnippet from '/snippets/docs/litefs-autostop.mdx';
+
+<LitefsUnsupportedSnippet />
+
 ## Overview
 
 This guide will walk you through the steps of getting a LiteFS cluster up and
@@ -243,6 +248,7 @@ Refer to the [`litefs import`](/litefs/import) documentation for more details.
 You should only interact with SQLite databases on LiteFS through
   a SQLite client or through the `litefs` tooling.
   <br/><br/>
+<LitefsAutostopSnippet />
   Do not use `cp` to copy a database into place.
 </Warning>
 

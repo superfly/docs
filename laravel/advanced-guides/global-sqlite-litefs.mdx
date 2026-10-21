@@ -4,6 +4,12 @@ description: "Replicate a Laravel app's SQLite database across Fly.io Machines w
 source_url: https://fly.io/docs/laravel/advanced-guides/global-sqlite-litefs/
 ---
 
+import LitefsUnsupportedSnippet from '/snippets/docs/litefs-unsupported.mdx';
+import LitefsAutostopSnippet from '/snippets/docs/litefs-autostop.mdx';
+
+<LitefsUnsupportedSnippet />
+<LitefsAutostopSnippet />
+
 This is a technology preview. ["LiteFS"](/litefs) is a `distributed file system` that enables you to sync SQLite data across instances of your application.
 
 Read further on the official [LiteFS documentation](/litefs/getting-started-fly) and follow along a LiteFS-configured [sample Laravel repository here](https://github.com/fly-apps/fly-laravel-litefs).
