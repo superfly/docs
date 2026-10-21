@@ -688,6 +688,7 @@
                   "networking/custom-domain",
                   "networking/understanding-cloudflare",
                   "networking/request-headers",
+                  "networking/websockets",
                   "networking/udp-and-tcp",
                   "networking/tls"
                 ]
