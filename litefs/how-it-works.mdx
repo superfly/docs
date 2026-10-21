@@ -85,7 +85,7 @@ rolling checksum.
 ## Cluster management using leases
 
 SQLite operates as a single-writer database which means only one transaction can
-write at a time. Because of this, we utilize a lease system whereby a single
+write at a time. Because of this, we use a lease system whereby a single
 node acts as the "primary" node at any given time. All writes should be directed
 to that node and it will propagate changes to the rest of the cluster.
 
