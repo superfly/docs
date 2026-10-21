@@ -23,10 +23,13 @@ jobs:
       - name: run reviewdog and linter
         uses: errata-ai/vale-action@reviewdog
         with:
-          # tj-actions/changed-files emits a space-separated list. Telling the
+          # tj-actions/changed-files emits a space-separated list, so telling the
           # action it is comma-separated made it pass Vale one argument holding
-          # every path, which Vale answers with an empty result and exit 0, so
-          # this check reported nothing at all. See docs-tracking#375.
+          # every path joined by spaces. That is a valid path only when a PR
+          # changed exactly one file, so from 2023 this check worked on
+          # single-file PRs and silently skipped every larger one: Vale answers
+          # an unmatched path with an empty result and exit 0. See
+          # docs-tracking#375.
           files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
           separator: " "
           # added, diff_context, file, nofilter
