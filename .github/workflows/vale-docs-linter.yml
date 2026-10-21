@@ -22,8 +22,10 @@ jobs:
         uses: tj-actions/changed-files@v46.0.5
         with:
           # Emit the list as a JSON array, which is the one shape vale-action
-          # parses without a separator. See the comment on the next step.
+          # parses without a separator. escape_json defaults to true, which
+          # backslash-escapes the quotes and makes the array unparseable.
           json: true
+          escape_json: false
 
         # run reviewdog and the linter
       - name: run reviewdog and linter
