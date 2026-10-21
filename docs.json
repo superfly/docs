@@ -1032,6 +1032,7 @@
                               },
                               "flyctl/cmd/fly_mpg_destroy",
                               "flyctl/cmd/fly_mpg_detach",
+                              "flyctl/cmd/fly_mpg_fork",
                               "flyctl/cmd/fly_mpg_list",
                               "flyctl/cmd/fly_mpg_proxy",
                               "flyctl/cmd/fly_mpg_restore",
@@ -1043,6 +1044,7 @@
                                   "flyctl/cmd/fly_mpg_users_create",
                                   "flyctl/cmd/fly_mpg_users_delete",
                                   "flyctl/cmd/fly_mpg_users_list",
+                                  "flyctl/cmd/fly_mpg_users_rotate-password",
                                   "flyctl/cmd/fly_mpg_users_set-role"
                                 ]
                               }
@@ -1350,6 +1352,7 @@
                               "flyctl/cmd/fly_wireguard_list",
                               "flyctl/cmd/fly_wireguard_remove",
                               "flyctl/cmd/fly_wireguard_reset",
+                              "flyctl/cmd/fly_wireguard_token-mode",
                               "flyctl/cmd/fly_wireguard_websockets"
                             ]
                           }
