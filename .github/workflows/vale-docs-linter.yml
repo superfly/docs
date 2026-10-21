@@ -23,6 +23,7 @@ jobs:
       - name: run reviewdog and linter
         uses: errata-ai/vale-action@reviewdog
         with:
+          debug: true
           files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
           separator: ","
           # added, diff_context, file, nofilter
