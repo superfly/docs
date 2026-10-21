@@ -10,14 +10,16 @@ jobs:
       - name: check out repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          # changed-files needs the commit where this branch split from main to
+          # work out what the PR changed. A shallow checkout usually doesn't
+          # reach it, so the step logged "Unable to find merge base" and fell
+          # back to a cruder comparison. See docs-tracking#377.
+          fetch-depth: 0
 
       - name: get changed files
         id: changed-files
 
         uses: tj-actions/changed-files@v46.0.5
-        with:
-          fetch_depth: 2
 
         # run reviewdog and the linter
       - name: run reviewdog and linter
