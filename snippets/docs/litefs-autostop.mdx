@@ -1,0 +1,3 @@
+<Warning>
+**Don't combine LiteFS with autostop/autostart on Fly Machines.** The Fly Proxy's autoscaler can shut down or restart Machines without any awareness of LiteFS lease ownership or data freshness, which can result in a stale Machine winning the lease and LiteFS discarding newer changes and LTX file data, risking rollback and data loss.
+</Warning>
