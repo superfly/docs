@@ -19,21 +19,6 @@ jobs:
         with:
           fetch_depth: 2
 
-        # TEMPORARY probe for docs-tracking#375
-      - name: probe vale directly
-        run: |
-          curl -sL https://github.com/errata-ai/vale/releases/download/v3.24.0/vale_3.24.0_Linux_64-bit.tar.gz -o /tmp/vale.tgz
-          mkdir -p /tmp/valebin && tar xzf /tmp/vale.tgz -C /tmp/valebin
-          echo "--- pwd and tree ---"; pwd; ls -la .vale.ini; ls styles/ || true
-          echo "--- vale sync ---"; /tmp/valebin/vale sync 2>&1 | tail -2
-          echo "--- styles after sync ---"; ls styles/; ls styles/Fly 2>&1 | head -3
-          echo "--- ls-config ---"; /tmp/valebin/vale ls-config 2>&1 | head -40
-          echo "--- direct run, line ---"; /tmp/valebin/vale --no-exit --output=line litefs/how-it-works.mdx 2>&1 | head -5
-          echo "--- action's exact args, our binary ---"; /tmp/valebin/vale --output=JSON .github/workflows/vale-docs-linter.yml litefs/how-it-works.mdx 2>&1 | head -c 300; echo
-          echo "--- hosted binary, if present ---"; ls /opt/hostedtoolcache/vale/*/x64/vale 2>/dev/null || echo "(not yet installed)"
-          echo "--- env that could affect vale ---"; env | grep -iE "^VALE|STYLES" || echo "(none)"
-          echo "--- exit marker ---"
-
         # run reviewdog and the linter
       - name: run reviewdog and linter
         uses: errata-ai/vale-action@reviewdog
@@ -50,3 +35,16 @@ jobs:
           # Required, set by GitHub actions automatically:
           # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # TEMPORARY probe for docs-tracking#375: compare the action's binary
+      - name: probe the action's own vale binary
+        if: always()
+        run: |
+          HOSTED=$(ls /opt/hostedtoolcache/vale/*/x64/vale | head -1)
+          echo "--- hosted binary ---"; echo "$HOSTED"; $HOSTED --version
+          echo "--- hosted: checks loaded ---"; $HOSTED ls-config 2>&1 | python3 -c "import json,sys; d=json.load(sys.stdin); print([c for c in d['Checks'] if c.startswith('Fly.')])" || true
+          echo "--- hosted: direct run ---"; $HOSTED --no-exit --output=line litefs/how-it-works.mdx 2>&1 | head -3
+          echo "--- mine for comparison ---"; /tmp/valebin/vale --version 2>/dev/null || curl -sL https://github.com/errata-ai/vale/releases/download/v3.24.0/vale_3.24.0_Linux_64-bit.tar.gz -o /tmp/v.tgz && mkdir -p /tmp/valebin && tar xzf /tmp/v.tgz -C /tmp/valebin && /tmp/valebin/vale --version
+          echo "--- mine: checks loaded ---"; /tmp/valebin/vale ls-config 2>&1 | python3 -c "import json,sys; d=json.load(sys.stdin); print([c for c in d['Checks'] if c.startswith('Fly.')])" || true
+          echo "--- sizes ---"; ls -l "$HOSTED" /tmp/valebin/vale
+          echo "--- exit marker ---"
