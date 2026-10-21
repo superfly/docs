@@ -19,6 +19,18 @@ jobs:
         with:
           fetch_depth: 2
 
+        # TEMPORARY probe for docs-tracking#375
+      - name: probe vale directly
+        run: |
+          curl -sL https://github.com/errata-ai/vale/releases/download/v3.24.0/vale_3.24.0_Linux_64-bit.tar.gz -o /tmp/vale.tgz
+          mkdir -p /tmp/valebin && tar xzf /tmp/vale.tgz -C /tmp/valebin
+          echo "--- pwd and tree ---"; pwd; ls -la .vale.ini; ls styles/ || true
+          echo "--- vale sync ---"; /tmp/valebin/vale sync 2>&1 | tail -2
+          echo "--- styles after sync ---"; ls styles/; ls styles/Fly 2>&1 | head -3
+          echo "--- ls-config ---"; /tmp/valebin/vale ls-config 2>&1 | head -40
+          echo "--- direct run ---"; /tmp/valebin/vale --no-exit --output=line litefs/how-it-works.mdx 2>&1 | head -5
+          echo "--- exit marker ---"
+
         # run reviewdog and the linter
       - name: run reviewdog and linter
         uses: errata-ai/vale-action@reviewdog
