@@ -100,8 +100,7 @@
                   "getting-started/essentials",
                   "getting-started/migrate-from-heroku",
                   "getting-started/troubleshooting",
-                  "guides",
-                  "containers"
+                  "guides"
                 ],
                 "root": "getting-started/index"
               },
@@ -4107,6 +4106,10 @@
     {
       "source": "/flyctl/cmd/fly",
       "destination": "/flyctl/cmd/fly_help"
+    },
+    {
+      "source": "/containers",
+      "destination": "/machines/guides-examples/multi-container-machines"
     }
   ]
 }

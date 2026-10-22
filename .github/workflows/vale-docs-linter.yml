@@ -36,7 +36,12 @@ jobs:
           # 'separator', so a space can't be passed that way, and an unparseable
           # value makes it lint the whole repo instead. A JSON array is the only
           # shape that reliably means "these files". See docs-tracking#375.
-          files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
+          #
+          # all_changed_files is ACMR. The ACMRDTUX output includes deleted
+          # paths, and Vale exits non-zero on a path that isn't there
+          # ("argument 'x.mdx' does not exist"), which fail_on_error does not
+          # cover because it isn't a lint finding.
+          files: ${{ steps.changed-files.outputs.all_changed_files }}
           # added, diff_context, file, nofilter
           filter_mode: file
           # github-pr-check, github-pr-review, github-check
