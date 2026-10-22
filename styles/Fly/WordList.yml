@@ -18,19 +18,16 @@ swap:
   # below: later|in the following steps
   check box: checkbox
   click on: click|click in
-  data are: data is
   datatype: data type
   datastore: data store
   # filesystem: file system
   firewalls: firewall rules
-  free tier: free allowances
   functionality: capability|feature
   healthcheck: health check
   healthchecks: health checks
   HTTPs: HTTPS
   in order to: to
   # instance: Machine
-  k8s: Kubernetes
   leverage: use
   Nodejs: Node.js
   open-source: open source
