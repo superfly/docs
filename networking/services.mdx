@@ -79,7 +79,7 @@ fly ips release <ip address to release>
 The following steps should allow you to switch an app with a custom domain from a dedicated IPv4 address to a free shared IPv4 without downtime.
 
 1. Add a shared IPv4 address with `flyctl ips allocate-v4 --shared`.
-2. If you don't use a CNAME to `.fly.dev`, [add the shared IPv4 as an A record](/networking/custom-domain#set-the-a-record).
+2. If you don't use a CNAME to `.fly.dev`, [add the shared IPv4 as an A record](/networking/custom-domain#a-and-aaaa-records-recommended).
 3. Confirm your app works via shared IP: `curl -Iv http://<your-hostname> --resolve <your-hostname>:80:<new-shared-ipv4>`. You should receive a 301 redirect response.
 4. If you are using a custom domain and don't already have an SSL certificate for this app, [create one](/networking/custom-domain#add-your-domain-to-your-app). The cert is required for routing to your app via the custom domain, even for HTTP connections.
 5. Wait for DNS caches to clear. Five minutes is likely enough, but this varies wildly. This is determined by the larger of your DNS record’s TTL and that of our `<your-app>.fly.dev` record.
@@ -104,7 +104,7 @@ Valid handler strings:
 * [`"http"`:](#http-handler) Convert TCP connection to HTTP
 * [`"tls"`](#tls-handler): Convert TLS connection to unencrypted TCP
 * [`"pg_tls"`](#postgres-tls-handler): Handle TLS for PostgreSQL connections
-* [`"proxy_proto"`](#proxy-protocol): Wrap TCP connection in PROXY protocol
+* [`"proxy_proto"`](#proxy-protocol-handler): Wrap TCP connection in PROXY protocol
 
 You can also configure [TLS options](/reference/configuration#http_service-tls_options) for the `[http_service]` section, which has a TLS (and HTTP) handler by default on port 443.
 

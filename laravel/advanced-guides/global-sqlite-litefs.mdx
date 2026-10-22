@@ -47,5 +47,5 @@ Take note of the following important steps in configuring your [Laravel Fly App]
     ```
 5. Include a ( [etc/fuse.conf](https://github.com/fly-apps/fly-laravel-litefs/blob/main/etc/fuse.conf) ) file to enable `allow-other` option above to work.
 6. Revise the generated [Dockerfile](https://github.com/fly-apps/fly-laravel-litefs#dockerfile) to include the `LiteFS` image, install required packages, and copy the configuration files `etc/litefs.yml` and `etc/fuse.conf` to a [proper location](/litefs/config#config-file-search-path) `LiteFS` can read.
-7. Create a [middleware](https://github.com/fly-apps/fly-laravel-litefs/blob/main/app/Http/Middleware/FlyReplayLiteFSWrite.php) to forward write requests to the [primary node](/litefs/primary) using [fly-replay](/networking/dynamic-request-routing#fly-replay)
+7. Create a [middleware](https://github.com/fly-apps/fly-laravel-litefs/blob/main/app/Http/Middleware/FlyReplayLiteFSWrite.php) to forward write requests to the [primary node](/litefs/primary) using [fly-replay](/networking/dynamic-request-routing#how-fly-replay-works)
 8. Use a non-file session driver to [allow fly-replay to work](https://github.com/fly-apps/fly-laravel-litefs#fly-replay-and-csrf-tokens) on Laravel CSRF protection.

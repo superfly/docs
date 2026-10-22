@@ -22,7 +22,7 @@ But here's the catch: unless you mount a volume, the root filesystem is ephemera
 
 [Fly Volumes](/volumes/overview) are our answer to persistent storage. They're slices of NVMe mounted directly on the physical host. They're not network-attached. This means they're fast and simple, but they're tied to a specific host. If your machine dies, you can boot another and reattach the volume. Think EBS, minus the network indirection and regional abstraction. You can also store large static assets like ML models in volumes, which keeps your Docker images lean and your deploys snappy.
 
-For object storage, we offer [Tigris](/tigris). It's S3-compatible and runs on Fly.io itself. If you're migrating from AWS S3, there's a handy [shadow bucket](/tigris#migrating-to-tigris-with-shadow-buckets) mode: Tigris can fall back to fetching from your existing S3 bucket if a file isn't yet copied over. First request pulls from S3; future requests hit local. Writes are synced, too, which makes a gradual migration painless.
+For object storage, we offer [Tigris](/tigris). It's S3-compatible and runs on Fly.io itself. If you're migrating from AWS S3, there's a handy [shadow bucket](/tigris#migrate-from-another-s3-compatible-provider-with-zero-downtime) mode: Tigris can fall back to fetching from your existing S3 bucket if a file isn't yet copied over. First request pulls from S3; future requests hit local. Writes are synced, too, which makes a gradual migration painless.
 
 ### Networking
 

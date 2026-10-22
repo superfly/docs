@@ -36,7 +36,7 @@ mkdir fly-openresty && cd fly-openresty
 ```
 
 ### Configuring the Dockerfile
-Fly will build and run your Docker image in a [Firecracker VM](/reference/architecture#microvms) on the edge, but you need to select and configure a Dockerfile first.
+Fly will build and run your Docker image in a [Firecracker VM](/reference/architecture#compute) on the edge, but you need to select and configure a Dockerfile first.
 
 OpenResty provides [several Docker images](https://github.com/openresty/docker-openresty) you can use for your application. I opted for Centos, but because of [an apparent bug in their Docker image](https://github.com/openresty/docker-openresty/issues/124), specified the `1.15.8.1-4-centos` tag.
 
@@ -195,7 +195,7 @@ server {
 }
 ```
 
-This configuration passes your request through using the `proxy_pass` directive at the end, as the previous version did. Before it does, it checks if the visitor has reached their request limit using the `Fly-Client-IP` header [attached to the request by Fly](/networking/services#http). If the IP address has called the endpoint in the past 2 seconds, it returns a 503 response and logs the error.
+This configuration passes your request through using the `proxy_pass` directive at the end, as the previous version did. Before it does, it checks if the visitor has reached their request limit using the `Fly-Client-IP` header [attached to the request by Fly](/networking/services#http-handler). If the IP address has called the endpoint in the past 2 seconds, it returns a 503 response and logs the error.
 
 You can re-deploy this configuration file to Fly (again using `flyctl deploy`) and call the endpoint twice in quick succession to test it.
 

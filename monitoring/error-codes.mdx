@@ -66,7 +66,7 @@ This indicates a problem with your application aborting a TCP connection prematu
 This indicates a problem with connections timing out to your application. Check the following to diagnose:
 
 * Application logs may indicate the cause of a timeout
-* Ensure your app isn't overloaded by properly set its [concurrency limits](/apps/concurrency#main-content-start)
+* Ensure your app isn't overloaded by properly set its [concurrency limits](/apps/concurrency)
 * Check [application metrics](/monitoring/metrics#managed-grafana) for signs of resource exhaustion (CPU, memory, disk I/O)
 
 #### PC06: Unidentified I/O error {#pc06-unidentified-i-o-error}
@@ -178,26 +178,26 @@ The current threshold for 'recently stopped' is 5 minutes.
 
 #### PA01: Replay/retry buffer exceeded {#pa01-replay-retry-buffer-exceeded}
 
-To prepare for the possibility of receiving [`fly-replay` response header](/networking/dynamic-request-routing#the-fly-replay-response-header), or for retrying failed requests, Fly edge proxies buffer requests up to 10MB.
+To prepare for the possibility of receiving [`fly-replay` response header](/networking/dynamic-request-routing#how-fly-replay-works), or for retrying failed requests, Fly edge proxies buffer requests up to 10MB.
 
 If a request grows larger than 10MB, buffering stops, making it impossible to replay or retry the request. When this happens, `PA01` is emitted.
 
 #### PA02: Excess fly-replay headers
 
-After a ['fly-replay' response header](/networking/dynamic-request-routing#the-fly-replay-response-header) replays a request, the application may respond normally, or it may issue another `fly-replay`, up to 10 times. `PA02` is emitted when `fly-replay` is returned more than 10 times.
+After a ['fly-replay' response header](/networking/dynamic-request-routing#how-fly-replay-works) replays a request, the application may respond normally, or it may issue another `fly-replay`, up to 10 times. `PA02` is emitted when `fly-replay` is returned more than 10 times.
 
 #### PA03: Invalid fly-replay
 
-Your app returned an invalid ['fly-replay' response](/networking/dynamic-request-routing#the-fly-replay-response-header).
+Your app returned an invalid ['fly-replay' response](/networking/dynamic-request-routing#how-fly-replay-works).
 
 #### PA04: Replay target app not found
 
-Your app returned a ['fly-replay' response header](/networking/dynamic-request-routing#the-fly-replay-response-header) targeting a non-existent application in the `app` parameter.
+Your app returned a ['fly-replay' response header](/networking/dynamic-request-routing#how-fly-replay-works) targeting a non-existent application in the `app` parameter.
 
 
 #### PA05: Unauthorized replay target app
 
-Your app returned a ['fly-replay' response header](/networking/dynamic-request-routing#the-fly-replay-response-header) targeting an application belonging to a different Fly.io organization. Only apps in the same
+Your app returned a ['fly-replay' response header](/networking/dynamic-request-routing#how-fly-replay-works) targeting an application belonging to a different Fly.io organization. Only apps in the same
 organization may replay requests to each other.
 
 ### Edge proxy errors
@@ -260,7 +260,7 @@ The proxy failed to retrieve a static file from the specified Tigris storage buc
 
 #### PL01: Bypassed connection concurrency limit
 
-[Concurrency limits](/apps/concurrency#main-content-start) set in `fly.toml` define how traffic should be balanced across machines in your app.
+[Concurrency limits](/apps/concurrency) set in `fly.toml` define how traffic should be balanced across machines in your app.
 
 This error occurs when concurrency is measured as the number of concurrent **connections**.
 
