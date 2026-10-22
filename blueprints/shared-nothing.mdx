@@ -132,7 +132,7 @@ This application use three separate techniques to route requests.
 
 The first technique is to [listen](https://github.com/rubys/showcase/blob/main/app/javascript/controllers/region_controller.js) for
 [turbo:before-fetch-requests](https://turbo.hotwired.dev/reference/events#http-requests) events and
-insert a [fly-prefer-region header](/networking/dynamic-request-routing#the-fly-prefer-region-request-header).
+insert a [fly-prefer-region header](/networking/dynamic-request-routing#the-fly-prefer-region-header).
 The region is extracted from a data attribute added to the [body](https://github.com/rubys/showcase/blob/aae08a6d57f92335b2cdbb94756e5416b7b50f83/app/views/layouts/application.html.erb#L16) tag.
 
 This all made possible by how [Turbo works](https://turbo.hotwired.dev/handbook/introduction#turbo-drive%3A-navigate-within-a-persistent-process):
@@ -158,7 +158,7 @@ location /showcase/2024/raleigh {
 
 This replays action cable (web socket) requests to the correct region, and
 [reverse proxies](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/)
-all other requests to the correct machine using its [`.internal` address](/networking/private-networking#fly-io-internal-addresses).  The latter is done because [fly-replay](/networking/dynamic-request-routing#limitations)
+all other requests to the correct machine using its [`.internal` address](/networking/private-networking#fly-io-internal-dns).  The latter is done because [fly-replay](/networking/dynamic-request-routing#requirements-and-limitations)
 is limited to 1MB requests, and uploading audio files may exceed this limit.
 
 ## Appliances

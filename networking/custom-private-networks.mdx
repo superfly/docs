@@ -79,7 +79,7 @@ The `fly-replay` response header tells Fly Proxy to forward HTTP requests to ano
 
 For example, you could receive HTTP requests on a public "router" app and then forward the requests to specific apps or Machines on  different customer 6PNs. The customer apps need to have services configured to expose a port on which to receive the requests. Make sure the customer apps don't have public IP addresses: apps created with the Machines API or with `fly apps create` don't get public IPs by default, but most apps created with `fly launch` do.
 
-Learn more about using the [`fly-replay` response header](/networking/dynamic-request-routing#the-fly-replay-response-header).
+Learn more about using the [`fly-replay` response header](/networking/dynamic-request-routing#how-fly-replay-works).
 
 ## Connect directly to Machines on custom 6PNs
 

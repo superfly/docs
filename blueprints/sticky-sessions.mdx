@@ -63,7 +63,7 @@ This code will subscribe and unsubscribe from
 
 ## Fly-Replay
 
-This approach is implemented entirely on the server. Your application examines each request, determines which Machine should handle it, and returns a `fly-replay` response header to route the request accordingly. Initial requests will require an additional "hop" to route, and [requests are limited to payloads of 1 megabyte](/networking/dynamic-request-routing#limitations).
+This approach is implemented entirely on the server. Your application examines each request, determines which Machine should handle it, and returns a `fly-replay` response header to route the request accordingly. Initial requests will require an additional "hop" to route, and [requests are limited to payloads of 1 megabyte](/networking/dynamic-request-routing#requirements-and-limitations).
 
 The example below creates [Express Middleware](https://expressjs.com/en/guide/using-middleware.html) that routes requests based on a session cookie:
 

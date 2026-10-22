@@ -87,7 +87,7 @@ fly machines list -q
 In order to prepare for a multiple Machine deployment, we are going to need to
 ensure that each request is routed to the correct Machine.  We can accomplish
 this via middleware that makes use of the
-[fly-replay](/networking/dynamic-request-routing#the-fly-replay-response-header)
+[fly-replay](/networking/dynamic-request-routing#how-fly-replay-works)
 response header.
 
 Place the following into `config/initializers/fly_router.rb`:

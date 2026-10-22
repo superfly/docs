@@ -224,7 +224,7 @@ If you have a Redis server, there's a good chance you need to set that up.
 
 After you finish deploying your application to Fly.io and have tested it extensively, [read through the Custom Domain docs](/networking/custom-domain) and point your domain at it.
 
-In addition to supporting [`CNAME` DNS records](/networking/custom-domain#option-i-cname-records), Fly.io also supports [`A` and `AAAA` records](/networking/custom-domain#option-ii-a-and-aaaa-records) for those who want to point `example.com` (without the `www.example.com`) directly at their App on Fly.io.
+In addition to supporting [`CNAME` DNS records](/networking/custom-domain#cname-records), Fly.io also supports [`A` and `AAAA` records](/networking/custom-domain#a-and-aaaa-records-recommended) for those who want to point `example.com` (without the `www.example.com`) directly at their App on Fly.io.
 
 ## Cheat Sheet
 
@@ -282,7 +282,7 @@ This is a great way to get comfortable with Fly.io if you prefer a managed datab
 
 The most important thing you'll want to be comfortable with using Fly.io's database offering is [backing up and restoring your database](/unmanaged-postgres/managing/backup-and-restore).
 
-As your application grows, you'll probably first [scale disk and RAM resources](/unmanaged-postgres#scaling-vertically-adding-more-vm-resources), then [scale out with multiple replicas](/unmanaged-postgres#scaling-horizontally-adding-more-replicas). Common maintenance tasks will include [upgrading Postgres](/unmanaged-postgres#upgrading-the-postgres-app) as new versions are released with new features and security updates.
+As your application grows, you'll probably first [scale disk and RAM resources](/unmanaged-postgres/managing/scaling), then [scale out with multiple replicas](/unmanaged-postgres/managing/horizontal-scaling). Common maintenance tasks will include [upgrading Postgres](/unmanaged-postgres/managing/upgrades) as new versions are released with new features and security updates.
 
 [See here](/unmanaged-postgres) for a more comprehensive guide for what's required when running your Postgres databases on Fly.io.
 

@@ -55,7 +55,7 @@ The [private-network-router](https://github.com/fly-apps/private-network-router)
 
 1. Receives requests on any port
 2. Determines the target app and machine based on the request
-3. Sends a `fly-replay` response header with parameters like `app` and `instance` to route the request to the correct app and machine. For more details on the parameters, see the [fly-replay documentation](/networking/dynamic-request-routing#the-fly-replay-response-header).
+3. Sends a `fly-replay` response header with parameters like `app` and `instance` to route the request to the correct app and machine. For more details on the parameters, see the [fly-replay documentation](/networking/dynamic-request-routing#how-fly-replay-works).
 
 This pattern allows you to:
 - Keep management APIs private by running them with flycast
@@ -68,7 +68,7 @@ Validation of replayed requests should happen within the user machine. We recomm
 
 1. **Create a preshared key for each user app** and set it as an app secret.
 2. When issuing a replay, set the header: `fly-replay: app=<app>,state=<key>`.
-3. On the user machine, parse the `fly-replay-src` header. This header contains fields such as `instance`, `region`, `t`, and `state` (see [fly-replay documentation](/networking/dynamic-request-routing#the-fly-replay-response-header)).
+3. On the user machine, parse the `fly-replay-src` header. This header contains fields such as `instance`, `region`, `t`, and `state` (see [fly-replay documentation](/networking/dynamic-request-routing#how-fly-replay-works)).
 4. Check the `state` value in `fly-replay-src` against the preshared key for the app. If it matches, the request is validated.
 
 See the [TypeScript example below](#example-authenticating-a-replayed-request-in-typescript) for a practical implementation of this validation.
