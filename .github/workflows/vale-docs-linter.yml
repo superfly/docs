@@ -47,6 +47,11 @@ jobs:
           # github-pr-check, github-pr-review, github-check
           reporter: github-pr-check
           fail_on_error: false
+          # Pinned so a new Vale release can't change what the check does
+          # without a PR. 3.24.0 is what "latest" resolved to on 22 Oct 2026.
+          version: 3.24.0
+          # .vale.ini lists no packages, so there is nothing to download.
+          sync: false
         env:
           # Required, set by GitHub actions automatically:
           # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
