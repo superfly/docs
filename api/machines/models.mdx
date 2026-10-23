@@ -223,11 +223,11 @@ These are the data models used across the Machines API requests and responses, g
 
 | Property | Type | Required | Description |
 | --- | --- | --- | --- |
-| `enable_subdomains` | `boolean` | No |  |
+| `enable_subdomains` | `boolean` | No | Request a wildcard TLS certificate for *.svc.<app-name>.fly.dev. Defaults to false. Certificate provisioning is asynchronous; this does not create services or configure their routing. |
 | `idempotency_key` | `string` | No | When set, makes a retry of this exact request safe: a second create with the same key and the same name (or no name) returns the app the first request created, instead of erroring on a false name conflict or creating a duplicate. A second create with the same key but a *different* name is rejected outright; it won't silently hand back the first app. |
-| `name` | `string` | No |  |
-| `network` | `string` | No |  |
-| `org_slug` | `string` | No |  |
+| `name` | `string` | No | Globally unique name for the app. Required. |
+| `network` | `string` | No | Name of the organization's private network to attach the app to. Creates the network if it does not exist. Omit, use an empty string, or use "default" to select the organization's default network. |
+| `org_slug` | `string` | No | Slug of the organization that will own the app, or "personal" for your personal organization. Required. |
 
 ## CreateAppResponse
 
