@@ -37,6 +37,7 @@ Monthly Machine prices assume 30 days of continuous runtime. Machines are billed
 | Support | \$29/month Standard; \$199/month Premium; Enterprise starts at \$2,500/month | Optional. Community support is free |
 | Fly Kubernetes | \$75/month per cluster | Compute and volumes are billed separately |
 | Extensions such as Tigris and Upstash | Provider's list price | Pricing is set by the extension provider and charges appear on your Fly.io invoice |
+| App builders and registry image storage | No charge | Building images with Depot or Fly builders, and storing images in the Fly.io registry, are currently free. See [App builders](#app-builders) |
 
 New organizations use Pay As You Go pricing. There's no monthly platform fee; you pay for the resources and services you use.
 
@@ -190,6 +191,20 @@ Usage is calculated based on the total stored size of the snapshots, not the pro
 Snapshots for each volume are stored incrementally, so you'll only be charged for data that has changed since the previously stored snapshot.
 
 You can check your snapshot usage in the **Billing** section of the [dashboard](https://fly.io/dashboard/personal/billing), on your Upcoming Invoice and in the Cost Explorer.
+
+## App builders
+
+Fly.io currently offers two types of builders that build Docker images from your app's source: Depot (the default) and Fly builders (`fly deploy --depot=false`). Builders run on Linux x86_64.
+
+**Builders currently have no cost.** You aren't charged for build time, build resources, or build cache, whether a build succeeds, fails, or is cancelled.
+
+**Image storage in the Fly.io registry is currently free,** and there's no data transfer charge when Machines pull images from the registry. Images used by an existing Fly Machine are kept; images that no existing Machine uses may be deleted.
+
+To build without deploying, use `fly deploy --build-only`. To build and push the image to the registry without deploying, use `fly deploy --build-only --push`.
+
+<Info>
+We may start charging for builders or registry storage in the future. If we do, we'll give ample notice before any charges apply.
+</Info>
 
 ## Network prices
 
