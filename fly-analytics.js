@@ -84,7 +84,7 @@
         capture_pageview: "history_change",
         capture_pageleave: true,
         persistence: "localStorage+cookie",
-        advanced_disable_decide: true,
+        advanced_disable_flags: true,
       });
     });
   }
