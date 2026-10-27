@@ -653,11 +653,10 @@
                   }
                 ]
               },
-              "unmanaged-postgres/index",
               {
                 "group": "Databases & Storage",
                 "pages": [
-                  "links/mpg",
+                  "unmanaged-postgres/index",
                   "tigris/index",
                   "upstash/redis",
                   "upstash/vector"
