@@ -66,9 +66,9 @@ On top of that, the path between a client and your app can cross links with smal
 
 Instead, your protocol should do path MTU discovery based on packet loss: start small, probe larger sizes, and back off when probes go missing ([RFC 8899](https://datatracker.ietf.org/doc/html/rfc8899) describes this for datagram protocols). Most QUIC servers and clients already do this. If you're building something custom on UDP, you need to do it yourself.
 
-## QUIC isn't supported
+## QUIC isn't supported {#quic-isnt-supported}
 
-QUIC isn't explicitly supported through Fly.io UDP services right now. There's no load balancing for QUIC, so expect it to break.
+QUIC isn't explicitly supported through Fly.io UDP services right now. There's no load balancing for QUIC, so expect it to break. That includes HTTP/3, which runs over QUIC: don't add a `udp` service on port 443 to try to serve it.
 
 Proper QUIC support at our edge is on the roadmap, but it isn't coming soon.
 
