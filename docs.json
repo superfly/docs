@@ -323,8 +323,7 @@
                         "root": "elixir/getting-started/index",
                         "pages": [
                           "elixir/getting-started/migrate-from-heroku",
-                          "elixir/getting-started/existing",
-                          "elixir/getting-started/legacy"
+                          "elixir/getting-started/existing"
                         ]
                       },
                       {
@@ -3242,7 +3241,11 @@
     },
     {
       "source": "/getting-started/legacy_elixir/",
-      "destination": "/elixir/getting-started/legacy"
+      "destination": "/elixir/getting-started"
+    },
+    {
+      "source": "/elixir/getting-started/legacy",
+      "destination": "/elixir/getting-started"
     },
     {
       "source": "/getting-started/log-in-to-fly/",
