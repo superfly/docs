@@ -70,7 +70,9 @@ Instead, your protocol should do path MTU discovery based on packet loss: start 
 
 ## There's no per-flow load balancing
 
-UDP services don't do per-flow load balancing. At any given time, a single Machine receives the packets from all clients near a region. That Machine can change, and when it does, all existing clients switch to the new Machine at the same time. So packets from the same flow can reach different Machines, and your app shouldn't rely on a flow staying on one Machine.
+UDP services don't do per-flow load balancing. At any given time, a single Machine receives all the packets from clients near a region, whether they belong to a new flow or an existing one. That Machine can change, and when it does, all existing clients switch to the new Machine at the same time. So packets from the same flow can reach different Machines, and your app shouldn't rely on a flow staying on one Machine.
+
+This is different from TCP. If a Machine reaches its load limit and can't accept new TCP connections, new connections go to other Machines and existing connections stay where they are.
 
 ## QUIC isn't supported {#quic-isnt-supported}
 
