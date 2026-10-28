@@ -1,6 +1,6 @@
 ---
 title: Running apps on UDP and TCP
-description: "Run UDP and TCP apps on Fly.io: get a dedicated IPv4, bind UDP to fly-global-services on the same external port, don't assume a fixed MTU, note QUIC isn't supported, and try a Go echo app."
+description: "Run UDP and TCP apps on Fly.io: get a dedicated IPv4, bind UDP to fly-global-services on the same external port, don't assume a fixed MTU or per-flow load balancing, note QUIC isn't supported, and try a Go echo app."
 source_url: https://fly.io/docs/networking/udp-and-tcp/
 ---
 
@@ -16,7 +16,9 @@ Before getting started, here's the summary of important points about using UDP o
 
 * Don't assume a particular MTU for UDP. We use some of each packet in transit, and your protocol should discover the path MTU on its own.
 
-* QUIC isn't supported through UDP services. There's no load balancing for it, so expect it to break.
+* There's no per-flow load balancing for UDP.
+
+* QUIC isn't supported through UDP services. You can technically get it working, but with a lot of caveats.
 
 ## You need a dedicated IPv4 address
 
@@ -66,9 +68,13 @@ On top of that, the path between a client and your app can cross links with smal
 
 Instead, your protocol should do path MTU discovery based on packet loss: start small, probe larger sizes, and back off when probes go missing ([RFC 8899](https://datatracker.ietf.org/doc/html/rfc8899) describes this for datagram protocols). Most QUIC servers and clients already do this. If you're building something custom on UDP, you need to do it yourself.
 
+## There's no per-flow load balancing
+
+UDP services don't do per-flow load balancing. Packets from the same client aren't guaranteed to reach the same Machine, so don't rely on a flow sticking to one Machine.
+
 ## QUIC isn't supported {#quic-isnt-supported}
 
-QUIC isn't explicitly supported through Fly.io UDP services right now. There's no load balancing for QUIC, so expect it to break. That includes HTTP/3, which runs over QUIC: don't add a `udp` service on port 443 to try to serve it.
+QUIC isn't explicitly supported through Fly.io UDP services right now. You can technically get it working, but with a lot of caveats: there's no per-flow load balancing, the MTU advice above applies, and you should expect breakage. The same goes for HTTP/3, which runs over QUIC.
 
 Proper QUIC support at our edge is on the roadmap, but it isn't coming soon.
 
