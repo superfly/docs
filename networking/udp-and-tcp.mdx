@@ -1,6 +1,6 @@
 ---
 title: Running apps on UDP and TCP
-description: "Run UDP and TCP apps on Fly.io: get a dedicated IPv4, bind UDP to fly-global-services on the same external port, mind MTU limits, and try a Go echo app."
+description: "Run UDP and TCP apps on Fly.io: get a dedicated IPv4, bind UDP to fly-global-services on the same external port, don't assume a fixed MTU or per-flow load balancing, note QUIC isn't supported, and try a Go echo app."
 source_url: https://fly.io/docs/networking/udp-and-tcp/
 ---
 
@@ -14,7 +14,11 @@ Before getting started, here's the summary of important points about using UDP o
 
 * The UDP side of your app needs to bind to the same port that is used externally. Fly will not rewrite the port; Fly only rewrites the IP address for UDP packets.
 
-* We swipe a couple dozen bytes from your MTU for UDP, which usually doesn't matter, but in rare cases might.
+* Don't assume a particular MTU for UDP. We use some of each packet in transit, and your protocol should discover the path MTU on its own.
+
+* There's no per-flow load balancing for UDP.
+
+* QUIC isn't supported through UDP services. You can technically get it working, but with a lot of caveats.
 
 ## You need a dedicated IPv4 address
 
@@ -50,7 +54,7 @@ If we didn't do this `fly-global-services` thing, our UDP proxying logic would a
 
 Fly will only rewrite the IP addresses for UDP packets. The destination port for inbound packets will not be rewritten. That means if your app receives UDP traffic on port 5000 externally, the app needs to bind to `fly-global-services:5000` to receive that UDP traffic.
 
-## You might need to be mindful of MTUs
+## Don't assume a fixed MTU
 
 An invariant on almost every network is the maximum packet size, the MTU. Typically, the MTU is 1500 bytes. If you exceed 1500 bytes, your packets will fragment. [You don't want to fragment](https://datatracker.ietf.org/doc/html/draft-mathis-frag-harmful-00).
 
@@ -60,9 +64,21 @@ Fly.io takes a bite out of your packets for two purposes:
 
 2. The UDP proxy forwarding system we use grabs another dozen bytes to record the original addresses of the packets --- the source address we saw when your client's packet hit our edge. You don't see these bytes; they're stripped off the packet before it's delivered to your app. But they're used in transit.
 
-In most cases this won't matter to you at all. Modern UDP protocols are designed to assume they have far less than 1500 bytes to work with, because there are all sorts of weird links on the Internet with smaller MTUs.
+On top of that, the path between a client and your app can cross links with smaller MTUs, so the space you actually have varies. Don't hardcode a packet size and expect it to fit.
 
-But if you're doing something super-custom, it's best to assume you've got something more like 1300 bytes to work with, not 1500.
+Instead, your protocol should do path MTU discovery based on packet loss: start small, probe larger sizes, and back off when probes go missing ([RFC 8899](https://datatracker.ietf.org/doc/html/rfc8899) describes this for datagram protocols). Most QUIC servers and clients already do this. If you're building something custom on UDP, you need to do it yourself.
+
+## There's no per-flow load balancing
+
+UDP services don't do per-flow load balancing. At any given time, a single Machine receives all the packets from clients near a region, whether they belong to a new flow or an existing one. That Machine can change, and when it does, all existing clients switch to the new Machine at the same time. So packets from the same flow can reach different Machines, and your app shouldn't rely on a flow staying on one Machine.
+
+This is different from TCP. If a Machine reaches its load limit and can't accept new TCP connections, new connections go to other Machines and existing connections stay where they are. UDP traffic never gets spread out like this.
+
+## QUIC isn't supported {#quic-isnt-supported}
+
+QUIC isn't explicitly supported through Fly.io UDP services right now. You can technically get it working, but with a lot of caveats: there's no per-flow load balancing, the MTU advice above applies, and you should expect breakage. The same goes for HTTP/3, which runs over QUIC: don't add a `udp` service on port 443 to try to serve it.
+
+Proper QUIC support at our edge is on the roadmap, but we don't have a timeline for it yet.
 
 ## Example UDP app
 
