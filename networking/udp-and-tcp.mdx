@@ -74,9 +74,9 @@ UDP services don't do per-flow load balancing. Packets from the same client aren
 
 ## QUIC isn't supported {#quic-isnt-supported}
 
-QUIC isn't explicitly supported through Fly.io UDP services right now. You can technically get it working, but with a lot of caveats: there's no per-flow load balancing, the MTU advice above applies, and you should expect breakage. The same goes for HTTP/3, which runs over QUIC.
+QUIC isn't explicitly supported through Fly.io UDP services right now. You can technically get it working, but with a lot of caveats: there's no per-flow load balancing, the MTU advice above applies, and you should expect breakage. The same goes for HTTP/3, which runs over QUIC: don't add a `udp` service on port 443 to try to serve it.
 
-Proper QUIC support at our edge is on the roadmap, but it isn't coming soon.
+Proper QUIC support at our edge is on the roadmap, but we don't have a timeline for it yet.
 
 ## Example UDP app
 

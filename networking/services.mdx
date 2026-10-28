@@ -114,7 +114,7 @@ Many apps have limited HTTP support, the `http` handler normalizes HTTP connecti
 
 If your application needs HTTP/2 (like gRPC does), enable the `h2_backend` to talk directly over HTTP/2. Just make sure your app speaks `h2c` (that’s HTTP/2 without TLS), or it won’t work.
 
-There's currently no HTTP/3 or QUIC support. If you really need QUIC right now, read the [caveats for running it over UDP services](/networking/udp-and-tcp#quic-isnt-supported) first.
+There's currently no HTTP/3 or QUIC support. Don't try to add it yourself with a `udp` service on port 443. If you really need QUIC right now, read the [caveats for running it over UDP services](/networking/udp-and-tcp#quic-isnt-supported) first.
 
 The HTTP handler adds a number of standard HTTP headers to requests, and a few Fly.io-specific headers for convenience:
 
