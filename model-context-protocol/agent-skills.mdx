@@ -73,9 +73,11 @@ The same flag works with `fly skills update`.
 
 ## How downloads are verified
 
-flyctl resolves `main` to a commit SHA through the GitHub API, then downloads the archive for that exact SHA over TLS from github.com, so the revision it records always matches the files it writes. It checks that the archive's top-level directory matches the resolved revision, and records the SHA, the archive's SHA-256, and a hash of every file written in `~/.fly/skills.json`. Those hashes are how `update` tells your edits apart from unchanged files.
+`flyctl` resolves the requested revision through the GitHub API and downloads the archive over HTTPS. It checks the archive structure before installing the skills.
 
-There is no separate signature. Trust rests on TLS to github.com and on write access to the superfly/skills repository, the same model as flyctl's own install script.
+`flyctl` also records hashes of the installed files. When you run `fly skills update`, it uses those hashes to identify files you've modified locally so it can preserve your changes.
+
+There is no separate cryptographic signature. Trust rests on TLS to `github.com` and write access to the `superfly/skills` repository, as it does with `flyctl`'s own install script.
 
 ## Other ways to install
 
