@@ -1,0 +1,32 @@
+---
+title: fly skills update
+source_url: https://fly.io/docs/flyctl/skills-update/
+---
+
+Re-download the Fly agent skills and refresh every file that is still as
+installed. Files you have edited are left alone and listed; pass --force to
+overwrite them. Only agents the skills were previously installed into are
+updated unless --agent is given.
+
+## Usage
+```
+fly skills update [flags]
+```
+## Options
+
+```
+      --agent strings   Only act on the named agent(s) instead of every detected one. One of: universal, claude-code, codex, cursor, opencode, copilot, factory-droid, pi, antigravity. Can be repeated or comma-separated.
+      --force           Overwrite files you have modified locally instead of skipping them
+  -h, --help            help for update
+      --ref string      Install from a branch, tag or commit SHA of superfly/skills instead of main. Use a tag or SHA to pin.
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly skills](/flyctl/cmd/fly_skills)	 - Manage the Fly agent skills installed into local coding agents

@@ -1,0 +1,29 @@
+---
+title: fly skills remove
+source_url: https://fly.io/docs/flyctl/skills-remove/
+---
+
+Delete the files fly skills install wrote, then any directories that became
+empty. Files you added inside a skill directory are left alone. Only agents the
+skills were installed into are touched unless --agent is given.
+
+## Usage
+```
+fly skills remove [flags]
+```
+## Options
+
+```
+      --agent strings   Only act on the named agent(s) instead of every detected one. One of: universal, claude-code, codex, cursor, opencode, copilot, factory-droid, pi, antigravity. Can be repeated or comma-separated.
+  -h, --help            help for remove
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly skills](/flyctl/cmd/fly_skills)	 - Manage the Fly agent skills installed into local coding agents

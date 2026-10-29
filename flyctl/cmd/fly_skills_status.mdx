@@ -1,0 +1,30 @@
+---
+title: fly skills status
+source_url: https://fly.io/docs/flyctl/skills-status/
+---
+
+Show, for every coding agent the Fly skills are installed into, the revision
+installed and any files modified since, and whether a newer revision is
+available upstream.
+
+## Usage
+```
+fly skills status [flags]
+```
+## Options
+
+```
+  -h, --help      help for status
+  -j, --json      JSON output
+      --offline   Do not contact GitHub to check for a newer revision
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly skills](/flyctl/cmd/fly_skills)	 - Manage the Fly agent skills installed into local coding agents

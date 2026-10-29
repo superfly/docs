@@ -1,0 +1,44 @@
+---
+title: fly skills install
+source_url: https://fly.io/docs/flyctl/skills-install/
+---
+
+Download the Fly agent skills from github.com/superfly/skills and install
+them into ~/.agents/skills plus the global skills directory of every detected
+coding agent (Claude Code, Codex, Cursor, OpenCode, GitHub Copilot, Factory
+Droid, Pi and Antigravity). Use --agent to pick agents explicitly.
+
+Files you have edited since the last install are left alone; pass --force to
+overwrite them.
+
+Skills are fetched from github.com/superfly/skills over TLS: main is resolved
+to a commit SHA through the GitHub API, the archive for that exact SHA is
+downloaded, and the SHA, the archive's SHA-256 and a hash of every file written
+are recorded in ~/.fly/skills.json. There is no separate signature, so trust
+rests on TLS to github.com and on write access to the superfly/skills
+repository, the same model as flyctl's own install script. Pass --ref with a
+tag or commit SHA to pin a revision instead of tracking main.
+
+## Usage
+```
+fly skills install [flags]
+```
+## Options
+
+```
+      --agent strings   Only act on the named agent(s) instead of every detected one. One of: universal, claude-code, codex, cursor, opencode, copilot, factory-droid, pi, antigravity. Can be repeated or comma-separated.
+      --force           Overwrite files you have modified locally instead of skipping them
+  -h, --help            help for install
+      --ref string      Install from a branch, tag or commit SHA of superfly/skills instead of main. Use a tag or SHA to pin.
+  -y, --yes             Accept all confirmations (also --auto-confirm)
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly skills](/flyctl/cmd/fly_skills)	 - Manage the Fly agent skills installed into local coding agents
