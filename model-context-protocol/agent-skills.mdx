@@ -1,0 +1,99 @@
+---
+title: Fly agent skills
+description: "Install the Fly agent skill into Claude Code, Codex, Cursor, and other coding agents with fly skills install, keep it current, pin a revision, and connect the Fly MCP server."
+sidebarTitle: Agent skills
+---
+
+The Fly agent skills teach coding agents how to work with Fly.io. A skill is a folder of Markdown instructions in the [Agent Skills](https://agentskills.io) format that an agent loads when a task calls for it. Fly publishes two in [superfly/skills](https://github.com/superfly/skills):
+
+* **`fly`** covers signing in, `fly launch` and `fly deploy`, `fly.toml`, scaling Machines across regions, volumes, secrets, networking, Managed Postgres, Tigris object storage, logs and troubleshooting, and Sprites. It routes the agent to flyctl first and to the Fly MCP server when the client has it connected.
+* **`brand`** covers the Fly.io logo, colors, type, and voice for anything that should look or sound like Fly.io.
+
+<Note>
+`fly skills` ships in flyctl releases after v0.5.0. If your `fly` does not have the command, run `fly version upgrade` or [install flyctl](/flyctl/install).
+</Note>
+
+## Install with flyctl
+
+```sh
+fly skills install
+```
+
+The command downloads the current skills from GitHub and writes them into `~/.agents/skills`, which many agents read, plus the global skills directory of every coding agent it detects on your computer. It lists the directories it is about to write and asks once before it does. Pass `--yes` to skip the prompt, for example in a setup script.
+
+| Agent | Slug | Directory |
+| --- | --- | --- |
+| Any agent that reads the universal location | `universal` | `~/.agents/skills` |
+| Claude Code | `claude-code` | `~/.claude/skills` |
+| OpenAI Codex | `codex` | `~/.codex/skills` |
+| Cursor | `cursor` | `~/.cursor/skills` |
+| OpenCode | `opencode` | `~/.config/opencode/skills` |
+| GitHub Copilot | `copilot` | `~/.copilot/skills` |
+| Factory Droid | `factory-droid` | `~/.factory/skills` |
+| Pi | `pi` | `~/.pi/agent/skills` |
+| Antigravity | `antigravity` | `~/.gemini/config/skills` |
+
+An agent is detected when its parent directory exists, for example `~/.claude`. To choose agents yourself, name them with `--agent`:
+
+```sh
+fly skills install --agent claude-code,codex
+```
+
+Restart your coding agent after installing. Most agents read their skills directory at startup.
+
+## Check and update
+
+`fly skills` on its own, or `fly skills status`, shows the revision installed for each agent, any files you have changed since, and whether a newer revision is available. Add `--json` for JSON output or `--offline` to skip the upstream check.
+
+```sh
+fly skills update
+```
+
+Update re-downloads the skills and refreshes every file that is still as installed. A file you have edited is kept and listed instead, so your local notes survive an update. Pass `--force` to overwrite edited files too. Only agents the skills were already installed into are updated unless you pass `--agent`.
+
+## Remove
+
+```sh
+fly skills remove
+```
+
+Remove deletes the files that `fly skills install` wrote, then any directories that became empty. Files you added inside a skill directory are left alone.
+
+## Pin a revision
+
+By default the commands track the `main` branch of superfly/skills. To stay on a known revision, pass a tag or commit SHA:
+
+```sh
+fly skills install --ref 5fb7159131eba50ba894ccc2bd933a4fa6e47d3c
+```
+
+The same flag works with `fly skills update`.
+
+## How downloads are verified
+
+flyctl resolves `main` to a commit SHA through the GitHub API, then downloads the archive for that exact SHA over TLS from github.com, so the revision it records always matches the files it writes. It checks that the archive's top-level directory matches the resolved revision, and records the SHA, the archive's SHA-256, and a hash of every file written in `~/.fly/skills.json`. Those hashes are how `update` tells your edits apart from unchanged files.
+
+There is no separate signature. Trust rests on TLS to github.com and on write access to the superfly/skills repository, the same model as flyctl's own install script.
+
+## Other ways to install
+
+Any agent that supports the Agent Skills format can install straight from the repository with the [skills CLI](https://skills.sh):
+
+```sh
+npx skills add superfly/skills
+```
+
+Claude Code users can install the skills as a plugin from the repository's marketplace:
+
+```text
+/plugin marketplace add superfly/skills
+/plugin install fly@fly-skills
+```
+
+The plugin adds two things the plain skill install does not. It configures the hosted Fly MCP server at `https://mcp.fly.io`, which signs in with browser OAuth and grants access per organization, app, and product. It also installs a confirmation hook that asks before destructive `fly` and `sprite` commands and MCP tools, such as destroying an app or a volume. With a skills-only install, your agent's normal permission prompts apply instead. The skill tells the agent to confirm before destructive operations either way.
+
+## What the agent can do
+
+With the `fly` skill loaded, an agent can take a project from `fly launch` through a verified deploy, edit `fly.toml`, scale and resize Machines, and manage volumes and secrets. It can set up custom domains and certificates, create and connect Managed Postgres, and read logs and status. It knows the common failures, such as health checks that never pass or a Machine that is out of memory. For Sprites, it can create a sprite, run commands and services in it, take checkpoints, and expose a preview URL. Before any destructive change it identifies the exact resource from a listing and explains the effect.
+
+The skill text is open source. Suggest changes or report mistakes in [superfly/skills](https://github.com/superfly/skills).
