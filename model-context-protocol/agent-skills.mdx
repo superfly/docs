@@ -96,7 +96,7 @@ Claude Code users can install the skills as a plugin from the repository's marke
 /plugin install fly@fly-skills
 ```
 
-The plugin adds two things the plain skill install does not. It configures the hosted Fly MCP server at `https://mcp.fly.io`, which signs in with browser OAuth and grants access per organization, app, and product. It also installs a confirmation hook that asks before destructive or billable `fly` and `sprite` commands and MCP tools, such as destroying an app or creating a volume. The hook runs with Python 3; without it, the hook reports an error on each command and adds no confirmations. With a skills-only install, your agent's normal permission prompts apply instead. The skill also asks the agent to confirm before destructive operations, but only the hook or your client's prompts enforce that.
+The plugin adds two things the plain skill install does not. It configures the hosted Fly MCP server at `https://mcp.fly.io`, which signs in with browser OAuth and grants access per organization, app, and product. It also installs a confirmation hook that asks before destructive or billable `fly` and `sprite` commands and MCP tools, such as destroying an app or creating a volume. The hook runs with Python 3. If `python3` is missing from `PATH`, the hook skips inspection and emits a warning; your agent's normal permissions still apply. A missing guard script or an unexpected guard error still blocks the command or tool call. With a skills-only install, your agent's normal permission prompts apply instead. The skill also asks the agent to confirm before destructive operations, but only the hook or your client's prompts enforce that.
 
 ## How the skills guide an agent
 
