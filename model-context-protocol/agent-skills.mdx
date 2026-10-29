@@ -6,7 +6,7 @@ sidebarTitle: Agent skills
 
 The Fly agent skills help coding agents deploy and manage apps on Fly.io. Install them once, and your agent gets instructions for working with Fly Machines, networking, storage, databases, and the `fly` CLI.
 
-A skill is a folder of Markdown instructions in the [[Agent Skills](https://agentskills.io/)](https://agentskills.io) format that an agent loads when a task calls for it. Fly publishes two in [[superfly/skills](https://github.com/superfly/skills)](https://github.com/superfly/skills):
+A skill is a folder of Markdown instructions in the [Agent Skills](https://agentskills.io) format that an agent loads when a task calls for it. Fly publishes two in [superfly/skills](https://github.com/superfly/skills):
 
 * **`fly`** covers signing in, `fly launch` and `fly deploy`, `fly.toml`, scaling Machines across regions, volumes, secrets, networking, Managed Postgres, Tigris object storage, logs and troubleshooting, and Sprites. It routes the agent to flyctl first and to the Fly MCP server when the client has it connected.
 * **`brand`** covers the Fly.io logo, colors, type, and voice for anything that should look or sound like Fly.io.
@@ -23,6 +23,16 @@ fly skills install
 
 The command downloads the current skills from GitHub and writes them into `~/.agents/skills`, which many agents read, plus the global skills directory of every coding agent it detects on your computer. It lists the directories it is about to write and asks once before it does. Pass `--yes` to skip the prompt, for example in a setup script.
 
+Restart your coding agent after installing. Most agents read their skills directory at startup.
+
+### Supported agents
+
+An agent is detected when its parent directory exists, for example `~/.claude`. To choose agents yourself, name them with `--agent`:
+
+```sh
+fly skills install --agent claude-code,codex
+```
+
 | Agent | Slug | Directory |
 | --- | --- | --- |
 | Any agent that reads the universal location | `universal` | `~/.agents/skills` |
@@ -34,14 +44,6 @@ The command downloads the current skills from GitHub and writes them into `~/.ag
 | Factory Droid | `factory-droid` | `~/.factory/skills` |
 | Pi | `pi` | `~/.pi/agent/skills` |
 | Antigravity | `antigravity` | `~/.gemini/config/skills` |
-
-An agent is detected when its parent directory exists, for example `~/.claude`. To choose agents yourself, name them with `--agent`:
-
-```sh
-fly skills install --agent claude-code,codex
-```
-
-Restart your coding agent after installing. Most agents read their skills directory at startup.
 
 ## Check and update
 
@@ -94,10 +96,18 @@ Claude Code users can install the skills as a plugin from the repository's marke
 /plugin install fly@fly-skills
 ```
 
-The plugin adds two things the plain skill install does not. It configures the hosted Fly MCP server at `https://mcp.fly.io`, which signs in with browser OAuth and grants access per organization, app, and product. It also installs a confirmation hook that asks before destructive `fly` and `sprite` commands and MCP tools, such as destroying an app or a volume. With a skills-only install, your agent's normal permission prompts apply instead. The skill tells the agent to confirm before destructive operations either way.
+The plugin adds two things the plain skill install does not. It configures the hosted Fly MCP server at `https://mcp.fly.io`, which signs in with browser OAuth and grants access per organization, app, and product. It also installs a confirmation hook that asks before destructive `fly` and `sprite` commands and MCP tools, such as destroying an app or a volume. With a skills-only install, your agent's normal permission prompts apply instead. The skill also asks the agent to confirm before destructive operations, but only the hook or your client's prompts enforce that.
 
-## What the agent can do
+## How the skills guide an agent
 
-With the `fly` skill loaded, an agent can take a project from `fly launch` through a verified deploy, edit `fly.toml`, scale and resize Machines, and manage volumes and secrets. It can set up custom domains and certificates, create and connect Managed Postgres, and read logs and status. It knows the common failures, such as health checks that never pass or a Machine that is out of memory. For Sprites, it can create a sprite, run commands and services in it, take checkpoints, and expose a preview URL. Before any destructive change it identifies the exact resource from a listing and explains the effect.
+The `fly` skill is written for agents that act on your behalf, so most of it is about method rather than commands. It asks the agent to:
+
+* Check who is signed in and read the current state with commands such as `fly status`, `fly machine list`, and `fly logs` before changing anything.
+* Pass the app name explicitly rather than trusting a `fly.toml` in the working directory, and identify the exact app, Machine, or volume from a listing before acting on it.
+* Explain the effect of a destructive, disruptive, or billable change and ask before running it, then verify the result afterwards.
+* Treat secret values as write-only and never repeat them in output or summaries.
+* Load detailed references only when a task needs them, so instructions for `fly.toml`, scaling, Postgres, or Sprites do not crowd out your own project context.
+
+These are instructions, not guarantees. An agent can still misread a situation, so keep your client's permission prompts on for destructive commands and review what it proposes.
 
 The skill text is open source. Suggest changes or report mistakes in [superfly/skills](https://github.com/superfly/skills).
