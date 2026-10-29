@@ -1,0 +1,41 @@
+---
+title: fly skills
+source_url: https://fly.io/docs/flyctl/skills/
+---
+
+Install, update and remove the Fly agent skills from github.com/superfly/skills.
+
+Skills are always installed into ~/.agents/skills and additionally into the
+global skills directory of every detected coding agent: Claude Code, Codex,
+Cursor, OpenCode, GitHub Copilot, Factory Droid, Pi and Antigravity.
+
+Without a subcommand this shows the installed revision per agent and whether
+a newer revision is available upstream.
+
+## Usage
+```
+fly skills [flags]
+```
+## Available Commands
+* [install](/flyctl/cmd/fly_skills_install)	 - Install the Fly agent skills into local coding agents
+* [remove](/flyctl/cmd/fly_skills_remove)	 - Remove the Fly agent skills from local coding agents
+* [status](/flyctl/cmd/fly_skills_status)	 - Show the installed Fly agent skills and whether an update is available
+* [update](/flyctl/cmd/fly_skills_update)	 - Update the installed Fly agent skills to the latest revision
+
+## Options
+
+```
+  -h, --help      help for skills
+  -j, --json      JSON output
+      --offline   Do not contact GitHub to check for a newer revision
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly](/flyctl/cmd/fly_help)	 - The Fly.io command line interface
