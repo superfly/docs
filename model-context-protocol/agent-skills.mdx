@@ -4,7 +4,9 @@ description: "Install the Fly agent skill into Claude Code, Codex, Cursor, and o
 sidebarTitle: Agent skills
 ---
 
-The Fly agent skills teach coding agents how to work with Fly.io. A skill is a folder of Markdown instructions in the [Agent Skills](https://agentskills.io) format that an agent loads when a task calls for it. Fly publishes two in [superfly/skills](https://github.com/superfly/skills):
+The Fly agent skills help coding agents deploy and manage apps on Fly.io. Install them once, and your agent gets instructions for working with Fly Machines, networking, storage, databases, and the `fly` CLI.
+
+A skill is a folder of Markdown instructions in the [[Agent Skills](https://agentskills.io/)](https://agentskills.io) format that an agent loads when a task calls for it. Fly publishes two in [[superfly/skills](https://github.com/superfly/skills)](https://github.com/superfly/skills):
 
 * **`fly`** covers signing in, `fly launch` and `fly deploy`, `fly.toml`, scaling Machines across regions, volumes, secrets, networking, Managed Postgres, Tigris object storage, logs and troubleshooting, and Sprites. It routes the agent to flyctl first and to the Fly MCP server when the client has it connected.
 * **`brand`** covers the Fly.io logo, colors, type, and voice for anything that should look or sound like Fly.io.
