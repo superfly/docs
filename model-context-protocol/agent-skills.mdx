@@ -51,7 +51,7 @@ Restart your coding agent after installing. Most agents read their skills direct
 fly skills update
 ```
 
-Update re-downloads the skills and refreshes every file that is still as installed. A file you have edited is kept and listed instead, so your local notes survive an update. Pass `--force` to overwrite edited files too. Only agents the skills were already installed into are updated unless you pass `--agent`.
+`fly skills update` downloads the latest skills and replaces files you haven't changed. If you've edited a file, the command leaves it alone and reports the change. Use `--force` to overwrite your edits. Only agents that already have the skills installed are updated unless you pass `--agent`.
 
 ## Remove
 
