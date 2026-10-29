@@ -1,6 +1,6 @@
 ---
 title: Fly agent skills
-description: "Install the Fly agent skill into Claude Code, Codex, Cursor, and other coding agents with fly skills install, keep it current, pin a revision, and connect the Fly MCP server."
+description: "Install the Fly.io agent skills into Claude Code, Codex, Cursor, and other coding agents with fly skills install, then update, pin, or remove them."
 sidebarTitle: Agent skills
 ---
 
@@ -27,10 +27,10 @@ Restart your coding agent after installing. Most agents read their skills direct
 
 ### Supported agents
 
-An agent is detected when its parent directory exists, for example `~/.claude`. To choose agents yourself, name them with `--agent`:
+An agent is detected when its parent directory exists, for example `~/.claude`. To choose agents yourself, name them with `--agent`. Only the agents you name are written, so include `universal` to keep `~/.agents/skills`:
 
 ```sh
-fly skills install --agent claude-code,codex
+fly skills install --agent universal,claude-code,codex
 ```
 
 | Agent | Slug | Directory |
@@ -61,7 +61,7 @@ fly skills update
 fly skills remove
 ```
 
-Remove deletes the files that `fly skills install` wrote, then any directories that became empty. Files you added inside a skill directory are left alone.
+Remove deletes the files that `fly skills install` wrote, including any you've edited, then any directories that became empty. Files you added inside a skill directory are left alone.
 
 ## Pin a revision
 
@@ -71,7 +71,7 @@ By default the commands track the `main` branch of superfly/skills. To stay on a
 fly skills install --ref 5fb7159131eba50ba894ccc2bd933a4fa6e47d3c
 ```
 
-The same flag works with `fly skills update`.
+flyctl remembers the pin. Later runs of `fly skills update` and `fly skills status` use the pinned revision, and status reports an update only when that revision moves. To track `main` again, pass `--ref main` once.
 
 ## How downloads are verified
 
@@ -89,14 +89,14 @@ Any agent that supports the Agent Skills format can install straight from the re
 npx skills add superfly/skills
 ```
 
-Claude Code users can install the skills as a plugin from the repository's marketplace:
+Claude Code users can install the skills as a plugin from the repository's marketplace. The repository also ships plugins for Codex, Cursor, Grok Build, and Antigravity; the [README](https://github.com/superfly/skills#plugins-and-marketplaces) has the install steps for each.
 
 ```text
 /plugin marketplace add superfly/skills
 /plugin install fly@fly-skills
 ```
 
-The plugin adds two things the plain skill install does not. It configures the hosted Fly MCP server at `https://mcp.fly.io`, which signs in with browser OAuth and grants access per organization, app, and product. It also installs a confirmation hook that asks before destructive `fly` and `sprite` commands and MCP tools, such as destroying an app or a volume. With a skills-only install, your agent's normal permission prompts apply instead. The skill also asks the agent to confirm before destructive operations, but only the hook or your client's prompts enforce that.
+The plugin adds two things the plain skill install does not. It configures the hosted Fly MCP server at `https://mcp.fly.io`, which signs in with browser OAuth and grants access per organization, app, and product. It also installs a confirmation hook that asks before destructive or billable `fly` and `sprite` commands and MCP tools, such as destroying an app or creating a volume. The hook runs with Python 3; without it, the hook reports an error on each command and adds no confirmations. With a skills-only install, your agent's normal permission prompts apply instead. The skill also asks the agent to confirm before destructive operations, but only the hook or your client's prompts enforce that.
 
 ## How the skills guide an agent
 
