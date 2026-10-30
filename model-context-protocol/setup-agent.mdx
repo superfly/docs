@@ -7,7 +7,7 @@ sidebarTitle: Agent setup
 `fly setup agent` prepares the coding agents on your computer to work with Fly.io. It installs the [Fly agent skills](./agent-skills) and adds the hosted Fly MCP server at `https://mcp.fly.io` to each agent it detects, then offers to sign you in.
 
 <Note>
-`fly setup agent` is available in flyctl v0.5.2 and later. If your `fly` does not have the command, run `fly version upgrade` or [install flyctl](/flyctl/install).
+`fly setup agent` ships in flyctl releases after v0.5.1. If your `fly` does not have the command, run `fly version upgrade` or [install flyctl](/flyctl/install).
 </Note>
 
 ## Run the setup
@@ -38,9 +38,18 @@ This will set up 3 agent(s):
 ? Set up 3 agent(s)? Yes
 ```
 
-When it finishes, it prints one line per agent, then reminds you to restart your agents. If you are not signed in to Fly.io, it offers `fly auth login` and `fly auth signup`, or lets you skip for now.
+It installs the skills first, reporting each one, then prints a summary line per agent and reminds you to restart your agents. If you are not signed in to Fly.io, it offers `fly auth login` and `fly auth signup`, or lets you skip for now.
 
 ```text
+✓ Universal (.agents): installed brand /Users/you/.agents/skills/brand
+✓ Universal (.agents): installed fly /Users/you/.agents/skills/fly
+✓ Claude Code: installed brand /Users/you/.claude/skills/brand
+✓ Claude Code: installed fly /Users/you/.claude/skills/fly
+✓ Cursor: installed brand /Users/you/.cursor/skills/brand
+✓ Cursor: installed fly /Users/you/.cursor/skills/fly
+
+✓ Fly skills installed at 32519ca.
+
 ✓ Universal (.agents): skills installed, MCP skipped (no MCP configuration for this agent)
 ✓ Claude Code: skills installed, MCP configured (/Users/you/.claude.json)
 ✓ Cursor: skills installed, MCP configured (/Users/you/.cursor/mcp.json)
@@ -48,6 +57,8 @@ When it finishes, it prints one line per agent, then reminds you to restart your
 Restart your coding agent(s) to load them.
 The first MCP call opens a browser to authorize https://mcp.fly.io.
 ```
+
+Running the command again is safe. Skills that are already current are reported as up to date, and an MCP entry the command wrote earlier is reported as already configured.
 
 Restart your coding agents after the setup. Most agents read their skills directory and MCP configuration at startup.
 
@@ -83,7 +94,7 @@ Anything else is reported as a conflict and left unchanged, for example an entry
 fly setup agent --force
 ```
 
-A configuration file that cannot be parsed is left untouched, and that agent is reported while the others are still set up. A `fly` entry that runs a local command instead of pointing at a URL is never overwritten, even with `--force`. Remove it yourself first.
+A configuration file that cannot be parsed is left untouched. That agent's MCP step is reported as failed with the parse error, and the other agents are still set up. A `fly` entry that runs a local command instead of pointing at a URL is never overwritten, even with `--force`. Remove it yourself first.
 
 If a configuration file is a symbolic link, the command updates the file it points to, as long as that file stays inside the agent's configuration directory or your home directory. A link that points anywhere else is left untouched.
 
@@ -115,7 +126,7 @@ An installer or setup script can run the command in embedded mode, which prints 
 FLY_SETUP_EMBEDDED=1 fly setup agent -y
 ```
 
-Pass `--json` to get the same summary as JSON. Each agent reports its `skills` and `mcp` status, and the `auth` object says whether you are signed in:
+Pass `--json` to get the same summary as JSON. Each agent reports its `skills` and `mcp` status with a human-readable `mcp_detail`, and the `auth` object says whether you are signed in or skipped sign-in:
 
 ```sh
 fly setup agent --json -y
@@ -131,7 +142,8 @@ fly setup agent --json -y
       "skills_dir": "/Users/you/.claude/skills",
       "skills": "installed",
       "mcp": "configured",
-      "mcp_path": "/Users/you/.claude.json"
+      "mcp_path": "/Users/you/.claude.json",
+      "mcp_detail": "configured (/Users/you/.claude.json)"
     }
   ],
   "auth": { "ok": true, "email": "you@example.com" },
