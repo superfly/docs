@@ -7,7 +7,7 @@ sidebarTitle: Agent setup
 `fly setup agent` configures your coding agents to work with Fly.io. It installs the [Fly agent skills](./agent-skills), adds the hosted Fly MCP server at `https://mcp.fly.io` to supported agents it detects, and offers to sign you in to Fly.io.
 
 <Note>
-`fly setup agent` ships in flyctl releases after v0.5.1. If your `fly` does not have the command, run `fly version upgrade` or [install flyctl](/flyctl/install).
+`fly setup agent` is available in flyctl releases after v0.5.1. If your `fly` does not have the command, run `fly version upgrade` or [install flyctl](/flyctl/install).
 </Note>
 
 ## Run the setup
@@ -40,25 +40,7 @@ This will set up 3 agent(s):
 
 It installs the skills first, reporting each one, then prints a summary line per agent and reminds you to restart your agents. If you are not signed in to Fly.io, it offers `fly auth login` and `fly auth signup`, or lets you skip for now.
 
-```text
-✓ Universal (.agents): installed brand /Users/you/.agents/skills/brand
-✓ Universal (.agents): installed fly /Users/you/.agents/skills/fly
-✓ Claude Code: installed brand /Users/you/.claude/skills/brand
-✓ Claude Code: installed fly /Users/you/.claude/skills/fly
-✓ Cursor: installed brand /Users/you/.cursor/skills/brand
-✓ Cursor: installed fly /Users/you/.cursor/skills/fly
-
-✓ Fly skills installed at 32519ca.
-
-✓ Universal (.agents): skills installed, MCP skipped (no MCP configuration for this agent)
-✓ Claude Code: skills installed, MCP configured (/Users/you/.claude.json)
-✓ Cursor: skills installed, MCP configured (/Users/you/.cursor/mcp.json)
-
-Restart your coding agent(s) to load them.
-The first MCP call opens a browser to authorize https://mcp.fly.io.
-```
-
-Running the command again is safe. Skills that are already current are reported as up to date, and an MCP entry the command wrote earlier is reported as already configured.
+Running the command again is safe. Individual skills that are already current are reported as "already up to date." The per-agent summary and JSON `skills` field still report `installed`. An unchanged MCP entry reports `already_configured`.
 
 Restart your coding agents after the setup. Most agents read their skills directory and MCP configuration at startup.
 
@@ -82,7 +64,9 @@ Restart your coding agents after the setup. Most agents read their skills direct
 
 An agent is detected when its parent directory exists, for example `~/.claude`. `CODEX_HOME`, `CLAUDE_CONFIG_DIR`, and `COPILOT_HOME` are honored when set, and OpenCode uses `$XDG_CONFIG_HOME/opencode` when that variable is set. The command prints the resolved path for each agent.
 
-**Sign-in.** The command installs the skills and configures the MCP server before checking whether you're signed in to Fly.io. If you skip or cancel sign-in, your agent configuration stays in place. When an agent first connects to the Fly MCP server, a browser opens for OAuth authorization. You choose which organizations, apps, and products the agent can access, and you can revoke that access later. See the [Fly MCP guide](https://mcp.fly.io/guide.md) for more about the server.
+While the command does install MCP configuration, it does not install the Claude Code plugin's confirmation hook for destructive or billable operations. You should review the permissions for any destructive tools or tools which create billable resources.
+
+**Sign-in.** The command installs the skills and configures the MCP server before checking whether you're signed in to Fly.io. If you skip or cancel sign-in, your agent configuration stays in place. When an agent first connects to the Fly MCP server, a browser opens for OAuth authorization. You choose which organizations, apps, and products the agent can access. See the [Fly MCP guide](https://mcp.fly.io/guide.md) for more about the server.
 
 ## Existing configuration
 
@@ -112,13 +96,15 @@ Skip a step you do not want:
 | --- | --- |
 | `--skip-skills` | Configure the MCP server without installing skills. |
 | `--skip-mcp` | Install skills without touching MCP configuration. |
-| `--skip-login` | Do not offer to sign in or sign up. |
+| `--skip-login` | Skip the sign-in check and browser login. |
 
 `--force` here only repairs MCP entries. To overwrite skill files you have edited, run `fly skills install --force`.
 
 ## Scripts and CI
 
-Pass `--yes` (or `-y`) to skip the confirmation. When standard input is not a terminal, the command does not prompt at all and does not open a browser to sign in. It still writes the skills and configuration, and it tells you to run `fly auth login` when you are ready.
+Pass `--yes` (or `-y`) to skip the setup confirmation. In an interactive terminal, if you are not signed in, it also starts `fly auth login` and opens a browser without asking. Add `--skip-login` to prevent this, including when using `--json`.
+
+When standard input is not a terminal, the command does not prompt or open a browser to sign in. It still writes the skills and configuration, and it tells you to run `fly auth login` when you are ready.
 
 An installer or setup script can run the command in embedded mode, which prints one line per agent and nothing else on standard output:
 
@@ -129,7 +115,7 @@ FLY_SETUP_EMBEDDED=1 fly setup agent -y
 Pass `--json` to get the same summary as JSON. Each agent reports its `skills` and `mcp` status with a human-readable `mcp_detail`, and the `auth` object says whether you are signed in or skipped sign-in:
 
 ```sh
-fly setup agent --json -y
+fly setup agent --json -y --skip-login
 ```
 
 ```json
@@ -146,13 +132,15 @@ fly setup agent --json -y
       "mcp_detail": "configured (/Users/you/.claude.json)"
     }
   ],
-  "auth": { "ok": true, "email": "you@example.com" },
+  "auth": { "ok": false, "skipped": true },
   "restart_hint": "Restart your coding agent(s) to load them.",
   "authorize_hint": "The first MCP call opens a browser to authorize https://mcp.fly.io."
 }
 ```
 
-The `skills` status is `installed`, `preserved_local_changes`, `incomplete`, `failed`, or `skipped`. The `mcp` status is `configured`, `already_configured`, `conflict`, `failed`, or `skipped`. The command exits non-zero when skills could not be installed for any agent, when an agent you named with `--agent` failed, or when nothing was installed or configured. A conflict, an entry that was left alone, or a failed sign-in does not fail the command on its own.
+The `skills` status is `installed`, `preserved_local_changes`, `incomplete`, `failed`, or `skipped`. The `mcp` status is `configured`, `already_configured`, `conflict`, `failed`, or `skipped`.
+
+The command exits non-zero when skills fail or are left incomplete for one or more agents. Locally deleted skill files are preserved as deletions and leave the installation `incomplete`. It also exits non-zero when MCP setup fails for an explicitly named agent or when no agent has successfully installed skills or configured MCP. If you have previously configured MCP entries, those will count as success. A conflict does not count as a failed MCP step. A failed sign-in does not change the exit status.
 
 ## Undo
 
@@ -160,4 +148,4 @@ The `skills` status is `installed`, `preserved_local_changes`, `incomplete`, `fa
 
 ## Permissions
 
-The skill asks the agent to confirm before destructive or billable operations, and the Fly MCP server enforces the grant you approve in the browser. Beyond that, your agent's own permission prompts apply. The confirmation hook that blocks destructive `fly` commands until you approve them is part of the Claude Code plugin, not this setup; see [Other ways to install](./agent-skills#other-ways-to-install).
+The skill asks the agent to confirm before destructive or billable operations and the Fly MCP server enforces the grant you approve in the browser. Beyond that, your agent's own permission prompts apply. For the plugin confirmation hook's coverage and Python requirements, see [Other ways to install](./agent-skills#other-ways-to-install).

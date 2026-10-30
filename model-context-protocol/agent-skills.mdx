@@ -75,7 +75,9 @@ By default the commands track the `main` branch of superfly/skills. To stay on a
 fly skills install --ref 5fb7159131eba50ba894ccc2bd933a4fa6e47d3c
 ```
 
-flyctl remembers the pin. Later runs of `fly skills update` and `fly skills status` use the pinned revision, and status reports an update only when that revision moves. To track `main` again, pass `--ref main` once.
+In flyctl releases after v0.5.1, flyctl remembers the pinned version. Later runs of `fly skills update` and `fly skills status` will use the pinned revision. Any status reports will update only when that revision moves. To track `main` again, pass `--ref main` once.
+
+With v0.5.1, pass `--ref` on every update to stay pinned. An update without `--ref` returns to `main`. Status check to look for updates will check against `main`.
 
 ## How downloads are verified
 
