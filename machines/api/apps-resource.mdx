@@ -43,7 +43,7 @@ Machines must be associated with a Fly App. App names must be unique.
 </ParamField>
 
 <ParamField body="enable_subdomains" type="boolean">
-  Used for Fly Kubernetes.
+  Request a wildcard TLS certificate for `*.svc.<app-name>.fly.dev`. Defaults to false. Certificate provisioning is asynchronous; this does not create services or configure their routing.
 </ParamField>
 
 <ParamField body="org_slug" type="string" required>
