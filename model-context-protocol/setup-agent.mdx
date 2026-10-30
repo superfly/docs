@@ -82,7 +82,7 @@ Restart your coding agents after the setup. Most agents read their skills direct
 
 An agent is detected when its parent directory exists, for example `~/.claude`. `CODEX_HOME`, `CLAUDE_CONFIG_DIR`, and `COPILOT_HOME` are honored when set, and OpenCode uses `$XDG_CONFIG_HOME/opencode` when that variable is set. The command prints the resolved path for each agent.
 
-**Sign-in.** The command writes the skills and configuration first, then checks whether you are signed in. A browser login can take a while, and a login you abandon should not leave your agents half configured. The first time an agent calls the Fly MCP server, the server opens a browser to authorize it with OAuth. You choose which organization, apps, and products that agent can reach, and you can revoke the grant later. The [Fly MCP guide](https://mcp.fly.io/guide.md) covers the server itself.
+**Sign-in.** The command installs the skills and configures the MCP server before checking whether you're signed in to Fly.io. If you skip or cancel sign-in, your agent configuration stays in place. When an agent first connects to the Fly MCP server, a browser opens for OAuth authorization. You choose which organizations, apps, and products the agent can access, and you can revoke that access later. See the [Fly MCP guide](https://mcp.fly.io/guide.md) for more about the server.
 
 ## Existing configuration
 
