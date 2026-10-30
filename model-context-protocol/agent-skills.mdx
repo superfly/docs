@@ -11,6 +11,10 @@ A skill is a folder of Markdown instructions in the [Agent Skills](https://agent
 * **`fly`** covers signing in, `fly launch` and `fly deploy`, `fly.toml`, scaling Machines across regions, volumes, secrets, networking, Managed Postgres, Tigris object storage, logs and troubleshooting, and Sprites. It routes the agent to flyctl first and to the Fly MCP server when the client has it connected.
 * **`brand`** covers the Fly.io logo, colors, type, and voice for anything that should look or sound like Fly.io.
 
+<Tip>
+[`fly setup agent`](./setup-agent) installs these skills and adds the hosted Fly MCP server to your agents in one step. Use the `fly skills` commands on this page to install the skills on their own, or to update, pin, or remove them later.
+</Tip>
+
 <Note>
 `fly skills` is available in flyctl v0.5.1 and later. If your `fly` does not have the command, run `fly version upgrade` or [install flyctl](/flyctl/install).
 </Note>

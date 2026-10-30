@@ -226,6 +226,7 @@
                     ]
                   },
                   "model-context-protocol/flyctl-server",
+                  "model-context-protocol/setup-agent",
                   "model-context-protocol/agent-skills",
                   "model-context-protocol/examples"
                 ]
