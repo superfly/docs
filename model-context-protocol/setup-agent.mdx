@@ -86,7 +86,7 @@ An agent is detected when its parent directory exists, for example `~/.claude`. 
 
 ## Existing configuration
 
-The command only writes an entry it owns. An existing `fly` entry counts as already configured when it has the right type, points at `https://mcp.fly.io`, and is not disabled. Extra keys you have added, such as headers, are kept.
+The command preserves existing MCP configuration unless it recognizes a `fly` entry it can manage. An entry counts as already configured if it has the expected type, points to `https://mcp.fly.io`, and isn't disabled. Any extra settings you've added, such as headers, are preserved.
 
 Anything else is reported as a conflict and left unchanged, for example an entry that points at a different URL. Pass `--force` to repair the keys the command owns while keeping your extra keys:
 
