@@ -673,18 +673,6 @@
                 "root": "volumes/index"
               },
               {
-                "group": "Fly Kubernetes",
-                "pages": [
-                  "kubernetes/fks-quickstart",
-                  "kubernetes/fks-features",
-                  "kubernetes/clusters",
-                  "kubernetes/connect-clusters",
-                  "kubernetes/services",
-                  "kubernetes/using-volumes"
-                ],
-                "root": "kubernetes/index"
-              },
-              {
                 "group": "Networking",
                 "root": "networking/index",
                 "pages": [
@@ -3909,6 +3897,14 @@
     {
       "source": "/kubernetes/using-gpus/",
       "destination": "https://fly.io/blog/wrong-about-gpu/"
+    },
+    {
+      "source": "/kubernetes/",
+      "destination": "/"
+    },
+    {
+      "source": "/kubernetes/:slug*",
+      "destination": "/"
     },
     {
       "source": "/flyctl/auth-token/",
