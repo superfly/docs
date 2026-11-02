@@ -70,7 +70,7 @@ While the command does install MCP configuration, it does not install the Claude
 
 ## Existing configuration
 
-The command preserves existing MCP configuration unless it recognizes a `fly` entry it can manage. An entry counts as already configured if it has the expected type, points to `https://mcp.fly.io`, and isn't disabled. Any extra settings you've added, such as headers, are preserved.
+The command adds a `fly` entry when there isn't one and leaves the rest of the file alone. It doesn't change an existing `fly` entry unless you pass `--force`. An entry counts as already configured if it has the expected type, points to `https://mcp.fly.io`, and isn't disabled. Any extra settings you've added, such as headers, are preserved.
 
 Anything else is reported as a conflict and left unchanged, for example an entry that points at a different URL. Pass `--force` to repair the keys the command owns while keeping your extra keys:
 
