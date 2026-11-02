@@ -1230,6 +1230,13 @@
                             ]
                           },
                           {
+                            "group": "fly setup",
+                            "root": "flyctl/cmd/fly_setup",
+                            "pages": [
+                              "flyctl/cmd/fly_setup_agent"
+                            ]
+                          },
+                          {
                             "group": "fly sftp",
                             "root": "flyctl/cmd/fly_sftp",
                             "pages": [
@@ -1237,6 +1244,16 @@
                               "flyctl/cmd/fly_sftp_get",
                               "flyctl/cmd/fly_sftp_put",
                               "flyctl/cmd/fly_sftp_shell"
+                            ]
+                          },
+                          {
+                            "group": "fly skills",
+                            "root": "flyctl/cmd/fly_skills",
+                            "pages": [
+                              "flyctl/cmd/fly_skills_install",
+                              "flyctl/cmd/fly_skills_remove",
+                              "flyctl/cmd/fly_skills_status",
+                              "flyctl/cmd/fly_skills_update"
                             ]
                           },
                           {
