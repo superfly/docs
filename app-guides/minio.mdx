@@ -1,5 +1,6 @@
 ---
 title: Deploy MinIO Object Storage to Fly.io
+description: "Self-host S3-compatible MinIO object storage on Fly.io with a volume, reach the console via fly proxy, use the mc client, and set up a 3-node cluster."
 source_url: https://fly.io/docs/app-guides/minio/
 ---
 
@@ -56,7 +57,7 @@ Your app is ready! Deploy with `flyctl deploy`
 
 ## (Un)configure networking
 
-There's no need for this app to be accessible from the public internet, if you run your object storage within the same [Fly IPV6 private network](/networking/private-networking) as the app(s) that want to connect to it.
+There's no need for this app to be accessible from the public internet, if you run your object storage within the same [Fly IPv6 private network](/networking/private-networking) as the app(s) that want to connect to it.
 
 Delete the `[http_service]` block in `fly.toml`. Now the Fly proxy won't pass any requests to the app from outside your private network.
 

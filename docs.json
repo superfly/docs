@@ -54,6 +54,19 @@
       "domain": "docs.fly.io"
     }
   },
+  "footer": {
+    "links": [
+      {
+        "header": "Legal",
+        "items": [
+          {
+            "label": "Privacy Policy",
+            "href": "https://fly.io/legal/privacy-policy/"
+          }
+        ]
+      }
+    ]
+  },
   "navigation": {
     "tabs": [
       {
@@ -100,8 +113,7 @@
                   "getting-started/essentials",
                   "getting-started/migrate-from-heroku",
                   "getting-started/troubleshooting",
-                  "guides",
-                  "containers"
+                  "guides"
                 ],
                 "root": "getting-started/index"
               },
@@ -214,6 +226,8 @@
                     ]
                   },
                   "model-context-protocol/flyctl-server",
+                  "model-context-protocol/setup-agent",
+                  "model-context-protocol/agent-skills",
                   "model-context-protocol/examples"
                 ]
               },
@@ -311,8 +325,7 @@
                         "root": "elixir/getting-started/index",
                         "pages": [
                           "elixir/getting-started/migrate-from-heroku",
-                          "elixir/getting-started/existing",
-                          "elixir/getting-started/legacy"
+                          "elixir/getting-started/existing"
                         ]
                       },
                       {
@@ -641,11 +654,10 @@
                   }
                 ]
               },
-              "unmanaged-postgres/index",
               {
                 "group": "Databases & Storage",
                 "pages": [
-                  "links/mpg",
+                  "unmanaged-postgres/index",
                   "tigris/index",
                   "upstash/redis",
                   "upstash/vector"
@@ -663,18 +675,6 @@
                 "root": "volumes/index"
               },
               {
-                "group": "Fly Kubernetes",
-                "pages": [
-                  "kubernetes/fks-quickstart",
-                  "kubernetes/fks-features",
-                  "kubernetes/clusters",
-                  "kubernetes/connect-clusters",
-                  "kubernetes/services",
-                  "kubernetes/using-volumes"
-                ],
-                "root": "kubernetes/index"
-              },
-              {
                 "group": "Networking",
                 "root": "networking/index",
                 "pages": [
@@ -688,6 +688,7 @@
                   "networking/custom-domain",
                   "networking/understanding-cloudflare",
                   "networking/request-headers",
+                  "networking/websockets",
                   "networking/udp-and-tcp",
                   "networking/tls"
                 ]
@@ -1031,6 +1032,7 @@
                               },
                               "flyctl/cmd/fly_mpg_destroy",
                               "flyctl/cmd/fly_mpg_detach",
+                              "flyctl/cmd/fly_mpg_fork",
                               "flyctl/cmd/fly_mpg_list",
                               "flyctl/cmd/fly_mpg_proxy",
                               "flyctl/cmd/fly_mpg_restore",
@@ -1042,6 +1044,7 @@
                                   "flyctl/cmd/fly_mpg_users_create",
                                   "flyctl/cmd/fly_mpg_users_delete",
                                   "flyctl/cmd/fly_mpg_users_list",
+                                  "flyctl/cmd/fly_mpg_users_rotate-password",
                                   "flyctl/cmd/fly_mpg_users_set-role"
                                 ]
                               }
@@ -1227,6 +1230,13 @@
                             ]
                           },
                           {
+                            "group": "fly setup",
+                            "root": "flyctl/cmd/fly_setup",
+                            "pages": [
+                              "flyctl/cmd/fly_setup_agent"
+                            ]
+                          },
+                          {
                             "group": "fly sftp",
                             "root": "flyctl/cmd/fly_sftp",
                             "pages": [
@@ -1234,6 +1244,16 @@
                               "flyctl/cmd/fly_sftp_get",
                               "flyctl/cmd/fly_sftp_put",
                               "flyctl/cmd/fly_sftp_shell"
+                            ]
+                          },
+                          {
+                            "group": "fly skills",
+                            "root": "flyctl/cmd/fly_skills",
+                            "pages": [
+                              "flyctl/cmd/fly_skills_install",
+                              "flyctl/cmd/fly_skills_remove",
+                              "flyctl/cmd/fly_skills_status",
+                              "flyctl/cmd/fly_skills_update"
                             ]
                           },
                           {
@@ -1349,6 +1369,7 @@
                               "flyctl/cmd/fly_wireguard_list",
                               "flyctl/cmd/fly_wireguard_remove",
                               "flyctl/cmd/fly_wireguard_reset",
+                              "flyctl/cmd/fly_wireguard_token-mode",
                               "flyctl/cmd/fly_wireguard_websockets"
                             ]
                           }
@@ -1369,6 +1390,7 @@
                   "app-guides/multiple-processes",
                   "reference/fly-proxy",
                   "reference/fly-proxy-autostop-autostart",
+                  "reference/feedback-api",
                   "reference/regions",
                   "reference/suspend-resume"
                 ],
@@ -3228,7 +3250,11 @@
     },
     {
       "source": "/getting-started/legacy_elixir/",
-      "destination": "/elixir/getting-started/legacy"
+      "destination": "/elixir/getting-started"
+    },
+    {
+      "source": "/elixir/getting-started/legacy",
+      "destination": "/elixir/getting-started"
     },
     {
       "source": "/getting-started/log-in-to-fly/",
@@ -3895,6 +3921,14 @@
       "destination": "https://fly.io/blog/wrong-about-gpu/"
     },
     {
+      "source": "/kubernetes/",
+      "destination": "/"
+    },
+    {
+      "source": "/kubernetes/:slug*",
+      "destination": "/"
+    },
+    {
       "source": "/flyctl/auth-token/",
       "destination": "/flyctl/cmd/fly_tokens"
     },
@@ -4105,6 +4139,10 @@
     {
       "source": "/flyctl/cmd/fly",
       "destination": "/flyctl/cmd/fly_help"
+    },
+    {
+      "source": "/containers",
+      "destination": "/machines/guides-examples/multi-container-machines"
     }
   ]
 }

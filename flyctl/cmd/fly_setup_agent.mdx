@@ -1,0 +1,108 @@
+---
+title: fly setup agent
+source_url: https://fly.io/docs/flyctl/setup-agent/
+---
+
+Detect the coding agents on this machine, install the Fly agent skills
+into each of them, and add the hosted Fly MCP server at https://mcp.fly.io.
+
+Skills are installed the same way as 'fly skills install': into ~/.agents/skills
+and into the global skills directory of every detected coding agent (Claude
+Code, Codex, Cursor, OpenCode, GitHub Copilot, Factory Droid, Pi and
+Antigravity). Use --agent to pick agents explicitly. Files you have edited
+are left alone. This command's --force does not overwrite those files; use
+'fly skills install --force' for that.
+
+Each agent gets its own skills result. A failed directory does not stop the
+other agents, and completed writes are recorded in the skills manifest.
+Preserved local edits are reported as preserved_local_changes, with the
+affected paths and reasons. Preserved local deletions leave the install
+incomplete and cause a non-zero exit; this command does not restore them.
+
+The MCP server entry is named "fly" and stores only the URL. No access
+tokens, client IDs or secrets are written. Config files are written before
+sign-in, so a login that waits on the browser cannot block them.
+
+An entry is already configured only when it matches the shape this command
+would write: the right type, the hosted URL (a trailing slash does not
+matter), Copilot's tools list when that client requires one, and not
+disabled or enabled: false. Extra keys such as headers are kept. Anything
+else is a conflict. --force repairs the keys this command owns and leaves
+the extra keys in place. A config file that cannot be parsed is left
+untouched and that agent is reported; the others are still set up. An empty
+or whitespace-only file, including one that is only a UTF-8 BOM, counts as
+missing and is created. A BOM in front of real JSON is kept.
+
+A symlinked config is updated at its target only when that resolved path
+stays inside the expected config directory or your home directory, and not
+under ~/.ssh. A link that points anywhere else is left untouched. --force
+does not bypass that check. The link stays in place, the summary prints the
+resolved path, and the path is resolved once while the lock is held.
+
+Detected agents get that entry in their global config: Claude Code
+(~/.claude.json), Cursor (~/.cursor/mcp.json), Codex (~/.codex/config.toml),
+OpenCode (~/.config/opencode/opencode.json, or $XDG_CONFIG_HOME/opencode
+when that variable is set), GitHub Copilot (~/.copilot/mcp-config.json),
+Factory Droid (~/.factory/mcp.json) and Antigravity
+(~/.gemini/config/mcp_config.json). Pi and the universal ~/.agents target
+receive skills only. Pi has no stable global MCP config that this command
+writes.
+
+CODEX_HOME, CLAUDE_CONFIG_DIR and COPILOT_HOME are honored when set. A
+relative value is made absolute and ".." is cleaned; a leading ~ is not
+expanded. OpenCode uses $XDG_CONFIG_HOME/opencode when XDG_CONFIG_HOME is
+set, and ~/.config/opencode otherwise, for both the MCP config and the
+skills directory. An existing opencode.jsonc is edited instead of creating
+opencode.json. The resolved path is printed for each agent. Cursor, Factory
+Droid, Antigravity and Pi have no confirmed override for the file this
+command writes.
+
+OpenCode configs that already use the v2 mcp.servers object get
+mcp.servers.fly. Other OpenCode configs get mcp.fly.
+
+If you are not signed in, an interactive terminal offers 'fly auth login'
+and 'fly auth signup' after the files are written. -y on a terminal runs
+login after the files are written. Embedded mode and a non-TTY stdin do not
+start the browser login. A failed login does not stop the skills or MCP
+setup; it is reported at the end. The first MCP call from an agent opens a
+browser to authorize https://mcp.fly.io.
+
+The command exits non-zero when skills could not be installed, when an
+agent named with --agent failed, or when nothing was installed or
+configured. An MCP entry that is already correct, or that was left unchanged
+because it points somewhere else, does not by itself fail the command. A
+failed login does not either.
+
+The installer script runs this command with the banner and the restart hint
+suppressed, one line per agent:
+
+  FLY_SETUP_EMBEDDED=1 fly setup agent -y
+
+Pass --json to print the same summary as JSON.
+
+## Usage
+```
+fly setup agent [flags]
+```
+## Options
+
+```
+      --agent strings   Act on exactly the named agent(s) instead of detecting them; include universal to write ~/.agents/skills. One of: universal, claude-code, codex, cursor, opencode, copilot, factory-droid, pi, antigravity. Can be repeated or comma-separated.
+      --force           Repair a fly MCP entry whose type, URL, tools, or enabled state does not match. Extra keys such as headers are kept
+  -h, --help            help for agent
+  -j, --json            JSON output
+      --skip-login      Do not prompt to log in or sign up
+      --skip-mcp        Do not write MCP configuration
+      --skip-skills     Do not install Fly agent skills
+  -y, --yes             Accept all confirmations (also --auto-confirm)
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly setup](/flyctl/cmd/fly_setup)	 - Prepare this machine to use Fly from a coding agent

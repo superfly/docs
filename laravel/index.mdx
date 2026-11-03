@@ -1,5 +1,6 @@
 ---
 title: Laravel on Fly.io
+description: "Deploy a Laravel app to Fly.io with fly launch, which detects Laravel, offers Postgres, Redis and Tigris, and generates a Dockerfile, fly.toml and .fly/."
 source_url: https://fly.io/docs/laravel/
 ---
 
@@ -59,7 +60,7 @@ Tigris:       <none>                                                     (not re
 ? Do you want to tweak these settings before proceeding? (y/N) 
 ```
 
-Extensions like [Postgres](/postgres/index) ( database ), [Redis](/upstash/redis) ( cache ), and [Tigris](/tigris#main-content-start) ( storage ) can also be added by default based on whether there's an existing, similar connection found for your Laravel project. 
+Extensions like [Postgres](/postgres/index) ( database ), [Redis](/upstash/redis) ( cache ), and [Tigris](/tigris) ( storage ) can also be added by default based on whether there's an existing, similar connection found for your Laravel project. 
 
 <Warning>
 **Please note** that these extension apps will also incur their own **usage costs**! You can select "y" in order to adjust the default settings and remove any extension you don't need.
@@ -72,7 +73,7 @@ Once you accept the configuration, this would proceed with **adding [default sec
 3. [Dockerfile](https://github.com/fly-apps/dockerfile-laravel/blob/main/resources/views/dockerfile.blade.php) -  Used to build a container image that is run in fly
 4. [.dockerignore](https://github.com/fly-apps/dockerfile-laravel/blob/main/resources/views/fly/dockerignore.blade.php) - Used to ensure certain files don’t make its way into your image
 
-With the configuration files and extenstion apps in place, an image is built for your app using your project and the Dockerfile generated for it. This image is then finally used to deploy your app.
+With the configuration files and extension apps in place, an image is built for your app using your project and the Dockerfile generated for it. This image is then finally used to deploy your app.
 
 #### Success!
 You should be able to visit `https://your-app-name.fly.dev` and see the Laravel demo home page.

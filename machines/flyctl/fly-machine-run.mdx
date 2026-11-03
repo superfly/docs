@@ -251,7 +251,7 @@ The default restart policy for a Machine created using `fly machine run` is `alw
 
 By default, when a Machine is `stopped`, its file system is reset using its config and Docker image, and it sits ready to be `started` again. Use the `--rm` flag to cause the Machine to instead be destroyed when it stops.
 
-The default [restart policy](#set-a-restart-policy-on-process-exit) for a Machine created with `fly machine run --rm` is `no`, to ensure that flyd doesn't ignore the exit code and restart the Machine.
+The default [restart policy](#stop-or-restart-the-machine-on-process-exit) for a Machine created with `fly machine run --rm` is `no`, to ensure that flyd doesn't ignore the exit code and restart the Machine.
 
 ## Mount a Fly Volume
 

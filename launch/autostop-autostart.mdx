@@ -85,7 +85,7 @@ In general, unless your app shuts itself down when idle, we recommend setting `a
 To keep one or more Machines running all the time in your primary region, set `min_machines_running` to `1` or higher. If `min_machines_running = 1` and there's no traffic to your app, then Fly Proxy will stop Machines until eventually there is only one Machine running in your primary region. `min_machines_running` has no effect unless you set `auto_stop_machines` to `"stop"` or `"suspend"`.
 
 <Note>
-**`min_machines_running`:** This setting only maintains the specified minimum number of running Machines in your app's primary region. It has no effect on other regions where your app is deployed. If you need to maintain minimum running Machines in multiple regions, you'll need to manage those separately through other means like [`fly scale count`](/flyctl/cmd/fly_scale_count#main-content-start).
+**`min_machines_running`:** This setting only maintains the specified minimum number of running Machines in your app's primary region. It has no effect on other regions where your app is deployed. If you need to maintain minimum running Machines in multiple regions, you'll need to manage those separately through other means like [`fly scale count`](/flyctl/cmd/fly_scale_count).
 </Note>
 
 ### Maximum number of Machines running

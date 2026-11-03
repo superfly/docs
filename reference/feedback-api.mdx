@@ -1,0 +1,77 @@
+---
+title: Feedback API
+description: "Report a bug, a documentation problem or a missing feature to Fly.io with POST /api/v1/feedback, using any access token and a request ID or URL."
+---
+
+The Feedback API lets you report a problem to Fly.io from a script, a CI job or a coding agent, without opening a support ticket or a forum thread. It takes a category, a note, and either the request ID of the call that went wrong or the URL of the page that was unclear.
+
+It's aimed at the cases where filing feedback by hand is the thing that stops you doing it: an agent that hits a confusing API response, or a deploy script that wants to flag a docs page that no longer matches reality.
+
+## Endpoint
+
+```
+POST https://api.fly.io/api/v1/feedback
+```
+
+Authenticate with a Fly.io access token in an `Authorization: Bearer <token>` header. Create a token with [`fly tokens create`](/flyctl/cmd/fly_tokens_create) or on the [Tokens](https://fly.io/tokens) page.
+
+The token needs read access to an organization. A token scoped to one organization files the report under it; otherwise the report goes to your personal organization. The organization is what reports are attributed to and what the rate limit counts against, so a token narrowed to something else, or an expired one, is rejected. Ownership always comes from the token, never from the request body.
+
+Legacy `fo1_` OAuth tokens aren't accepted. Use a macaroon token, which starts with `fm2_`. See [Access tokens](/security/tokens).
+
+## Request
+
+Send a JSON body with `Content-Type: application/json`.
+
+| Field | Required | Description |
+| --- | --- | --- |
+| `category` | Yes | One of `bug`, `documentation`, `feature_request` or `other`. |
+| `note` | Yes | What went wrong, in up to 4,000 characters. |
+| `request_id` | See below | The `fly-request-id` of the request you're reporting, up to 255 characters. |
+| `url` | See below | The page or endpoint you're reporting, up to 2,048 characters. |
+
+Include at least one of `request_id` or `url`, so the report points at something specific. You can send both.
+
+For an API problem, `request_id` is the most useful thing you can send: every Fly.io response carries a `fly-request-id` header, and it lets us find the exact request in our logs.
+
+<CodeGroup>
+```sh cmd
+curl -i -X POST https://api.fly.io/api/v1/feedback \
+  -H "Authorization: Bearer $FLY_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "category": "bug",
+    "note": "The response was missing a field.",
+    "request_id": "01MANUALTEST00000000000000-gru"
+  }'
+```
+```output output
+HTTP/1.1 201 Created
+content-type: application/json; charset=utf-8
+
+{"already_submitted":false,"feedback_id":"eodj0v3m964wg796"}
+```
+</CodeGroup>
+
+## Response
+
+| Status | Description |
+| --- | --- |
+| 201 | The report was filed. |
+| 200 | An identical report was already filed; `already_submitted` is `true`. |
+| 400 | A legacy `fo1_` OAuth token was used. Mint a `fm2_` token instead. |
+| 401 | The token was missing or invalid. |
+| 422 | No organization resolved from the token, or validation failed. Check the category value, and that a note and a request ID or URL are present. |
+| 429 | Rate limited. |
+
+A successful response carries the new report's ID:
+
+```json
+{"already_submitted":false,"feedback_id":"eodj0v3m964wg796"}
+```
+
+`already_submitted` lets a retry be safe: sending the same report twice gets a `200` and the original ID rather than filing a duplicate.
+
+## Rate limits
+
+Feedback is limited to 20 reports per minute per organization. Over that, requests get a `429`.

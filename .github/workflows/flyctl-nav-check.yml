@@ -1,0 +1,32 @@
+name: Check flyctl pages are in the nav
+
+on:
+  pull_request:
+    paths:
+      - "flyctl/cmd/**"
+      - "docs.json"
+
+jobs:
+  nav:
+    name: flyctl nav check
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out repo
+        uses: actions/checkout@v4
+
+      # The flyctl docs sync writes pages under flyctl/cmd/ but never touches
+      # docs.json, so a new command gets published with no sidebar entry.
+      # Fail the PR so whoever merges it adds the line. See docs-tracking#371.
+      # Only the navigation block is read, so a redirect that mentions a page
+      # can't stand in for its nav entry.
+      - name: find flyctl pages with no nav entry
+        run: |
+          missing=$(comm -23 \
+            <(ls flyctl/cmd/*.mdx | sed 's/\.mdx$//' | sort) \
+            <(jq '.navigation' docs.json | grep -oE '"flyctl/cmd/[^"]+"' | tr -d '"' | sort -u))
+          if [ -n "$missing" ]; then
+            echo "These pages have no docs.json nav entry:"
+            echo "$missing"
+            exit 1
+          fi
+          echo "Every flyctl/cmd page is in the nav."

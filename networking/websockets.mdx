@@ -1,0 +1,122 @@
+---
+title: WebSockets
+description: Run WebSocket apps on Fly.io. Fly Proxy keeps idle connections open, and closes them cleanly with code 1012 when it restarts or when autostop stops a Machine.
+---
+
+WebSockets work on Fly.io without extra configuration. An app with an [`[http_service]`](/reference/configuration#the-http_service-section) section accepts `ws://` and `wss://` connections, and Fly Proxy passes the upgraded connection through to your app.
+
+## Idle connections stay open
+
+Fly Proxy doesn't close idle WebSocket connections. A connection with no traffic stays open until your app or the client closes it.
+
+A connection can still close for reasons outside your app:
+
+- **Fly Proxy restarts.** When we deploy a new version of the proxy, it closes open WebSockets with a [close frame](#close-codes).
+- **Autostop stops the Machine.** See [WebSockets and autostop](#websockets-and-autostop).
+- **You deploy your app.** Each Machine restarts during a deploy, so its connections close.
+- **Something else on the network drops it.** Corporate proxies, load balancers and mobile networks often drop connections that have been idle for a while.
+
+So every WebSocket client should reconnect when its connection closes, and long-lived connections should send a heartbeat.
+
+## Close codes {#close-codes}
+
+When Fly Proxy closes a WebSocket because it's restarting or because the Machine is stopping, it waits for the current message to finish and then sends a close frame with the reason `restarting`:
+
+| Side | Close code |
+| - | - |
+| Client | `1012` (Service Restart) |
+| Your app | `1001` (Going Away) |
+
+Treat `1012` as a signal to reconnect. The new connection goes to a running Machine.
+
+## Send a heartbeat
+
+A heartbeat is a small message sent at a regular interval, usually a WebSocket ping that the other side answers with a pong. It keeps intermediate networks from treating the connection as idle, and it lets each side notice when the other has gone away without closing the connection. Send one every 30 seconds or so.
+
+Some libraries do this for you.
+
+**Phoenix Channels:** The `phoenix` JavaScript client sends a heartbeat every 30 seconds and reconnects with backoff when the connection drops. You don't need to change anything. To change the interval, set `heartbeatIntervalMs`:
+
+```js
+import { Socket } from "phoenix";
+
+const socket = new Socket("/socket", { heartbeatIntervalMs: 30000 });
+socket.connect();
+```
+
+**Socket.IO:** The server pings each client every 25 seconds (`pingInterval`) and drops clients that don't answer within 20 seconds (`pingTimeout`). The client reconnects automatically. These are the defaults:
+
+```js
+import { Server } from "socket.io";
+
+const io = new Server(httpServer, { pingInterval: 25000, pingTimeout: 20000 });
+```
+
+**`ws` for Node.js:** The [`ws`](https://github.com/websockets/ws) library has no built-in heartbeat. Ping each client on an interval and drop the ones that didn't answer the last ping:
+
+```js
+import { WebSocketServer } from "ws";
+
+const wss = new WebSocketServer({ port: 8080 });
+
+wss.on("connection", (ws) => {
+  ws.isAlive = true;
+  ws.on("pong", () => {
+    ws.isAlive = true;
+  });
+});
+
+const interval = setInterval(() => {
+  for (const ws of wss.clients) {
+    if (!ws.isAlive) {
+      ws.terminate();
+      continue;
+    }
+    ws.isAlive = false;
+    ws.ping();
+  }
+}, 30000);
+
+wss.on("close", () => clearInterval(interval));
+```
+
+Browsers answer pings automatically. In the browser, reconnect when the connection closes. Add a random delay so that clients don't all reconnect at once after a restart:
+
+```js
+function connect() {
+  const ws = new WebSocket("wss://my-app.fly.dev/socket");
+
+  ws.addEventListener("close", (event) => {
+    // 1012 means Fly Proxy is restarting or the Machine is stopping
+    const delay = event.code === 1012 ? Math.random() * 1000 : 1000 + Math.random() * 4000;
+    setTimeout(connect, delay);
+  });
+
+  return ws;
+}
+
+connect();
+```
+
+## WebSockets and autostop {#websockets-and-autostop}
+
+With [autostop](/launch/autostop-autostart), Fly Proxy stops a Machine when the app's other Machines can handle the current load. Open WebSockets count toward that load, but they don't keep a Machine running: the proxy spreads connections evenly across Machines, so the Machine it stops usually has some open. Before it stops a Machine, the proxy stops sending it new traffic and closes its open WebSockets with code `1012`. Clients that reconnect are routed to a Machine that's still running. Raw TCP services work the same way: autostop can close their open connections too.
+
+If you use autostop, make sure your clients reconnect. To keep one Machine running at all times in your primary region, set `min_machines_running`:
+
+```toml
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 1
+```
+
+If your connections must not be interrupted by autostop, turn it off with `auto_stop_machines = "off"`. Connections can still close during deploys and proxy restarts.
+
+## Related topics
+
+- [Autostop/autostart Machines](/launch/autostop-autostart)
+- [Guidelines for concurrency settings](/apps/concurrency)
+- [Fly Proxy autostop/autostart](/reference/fly-proxy-autostop-autostart)

@@ -1,0 +1,33 @@
+---
+title: fly mpg fork
+source_url: https://fly.io/docs/flyctl/mpg-fork/
+---
+
+Fork a Managed Postgres cluster into a new cluster from the source's current
+data, leaving the source cluster unchanged. The fork is provisioned
+asynchronously in the same organization and billed separately.
+
+The fork uses the source cluster's plan unless --plan picks a different one,
+including a smaller one.
+
+## Usage
+```
+fly mpg fork [CLUSTER_ID] [flags]
+```
+## Options
+
+```
+  -h, --help          help for fork
+  -n, --name string   The name of the forked cluster (defaults to <source-name>-fork)
+      --plan string   The plan for the forked cluster: Basic, Starter, Launch, Scale, Performance (defaults to the source cluster's plan)
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly mpg](/flyctl/cmd/fly_mpg)	 - Manage Managed Postgres clusters.

@@ -6509,20 +6509,24 @@
         "type": "object",
         "properties": {
           "enable_subdomains": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Request a wildcard TLS certificate for *.svc.<app-name>.fly.dev. Defaults to false. Certificate provisioning is asynchronous; this does not create services or configure their routing."
           },
           "idempotency_key": {
             "type": "string",
             "description": "When set, makes a retry of this exact request safe: a\nsecond create with the same key and the same name (or no name) returns\nthe app the first request created, instead of erroring on a false name\nconflict or creating a duplicate. A second create with the same key\nbut a *different* name is rejected outright; it won't silently\nhand back the first app."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Globally unique name for the app. Required."
           },
           "network": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the organization's private network to attach the app to. Creates the network if it does not exist. Omit, use an empty string, or use \"default\" to select the organization's default network."
           },
           "org_slug": {
-            "type": "string"
+            "type": "string",
+            "description": "Slug of the organization that will own the app, or \"personal\" for your personal organization. Required."
           }
         }
       },

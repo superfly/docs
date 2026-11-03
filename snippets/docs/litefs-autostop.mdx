@@ -1,0 +1,5 @@
+<Warning>
+**Don't use LiteFS with autostop/autostart on Fly Machines.**
+
+The Fly Proxy can stop and restart Machines without knowing which Machine holds the LiteFS lease or has the latest data. This can allow a Machine with stale data to acquire the lease, causing LiteFS to discard newer changes and LTX files. The result can be a database rollback and permanent data loss.
+</Warning>
