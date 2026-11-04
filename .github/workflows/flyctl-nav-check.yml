@@ -5,6 +5,7 @@ on:
     paths:
       - "flyctl/cmd/**"
       - "docs.json"
+      - ".github/workflows/flyctl-nav-check.yml"
 
 jobs:
   nav:
