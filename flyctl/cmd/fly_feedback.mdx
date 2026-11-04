@@ -1,0 +1,39 @@
+---
+title: fly feedback
+source_url: https://fly.io/docs/flyctl/feedback/
+---
+
+Send a bug report, documentation issue, or feature request to Fly.io.
+
+The note can be given as an argument, piped through stdin, or typed at the
+prompt when running in a terminal. Tell us what you are reporting with
+--request-id (the fly-request-id header of the API response in question) or
+--url (the page or endpoint). At least one of them is required.
+
+Reports are filed under the organization of the access token in use. A token
+scoped to one organization files under that organization; any other token
+files under your personal organization.
+
+## Usage
+```
+fly feedback [note] [flags]
+```
+## Options
+
+```
+      --category string     Type of feedback. One of: bug, documentation, feature_request, other.
+  -h, --help                help for feedback
+  -j, --json                JSON output
+      --request-id string   The fly-request-id of the request you are reporting (up to 255 characters).
+      --url string          The page or endpoint you are reporting (up to 2048 characters).
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly](/flyctl/cmd/fly_help)	 - The Fly.io command line interface
