@@ -1407,8 +1407,6 @@
                     "group": "Engineering Jobs",
                     "root": "hiring/index",
                     "pages": [
-                      "hiring/stack",
-                      "hiring/roles",
                       "hiring/hiring",
                       "hiring/questions",
                       "hiring/working",
@@ -1649,6 +1647,14 @@
     {
       "source": "/hiring/company-levels",
       "destination": "/hiring/levels"
+    },
+    {
+      "source": "/hiring/stack",
+      "destination": "/hiring"
+    },
+    {
+      "source": "/hiring/roles",
+      "destination": "https://fly.io/jobs/"
     },
     {
       "source": "/postgres/advanced-guides",
