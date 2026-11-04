@@ -242,7 +242,6 @@
                   "app-guides/grpc-and-grpc-web-services",
                   "app-guides/kong-api-gateway",
                   "app-guides/livebook",
-                  "app-guides/minio",
                   "app-guides/mqtt",
                   "app-guides/mysql-on-fly",
                   "app-guides/nats-cluster",
@@ -4147,6 +4146,10 @@
     {
       "source": "/app-guides/edgedb",
       "destination": "https://docs.geldata.com/reference/running/deployment/fly_io"
+    },
+    {
+      "source": "/app-guides/minio",
+      "destination": "/tigris"
     }
   ]
 }
