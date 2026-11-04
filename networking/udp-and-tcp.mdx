@@ -76,7 +76,7 @@ This is different from TCP. If a Machine reaches its load limit and can't accept
 
 ## QUIC isn't supported {#quic-isnt-supported}
 
-QUIC isn't explicitly supported through Fly.io UDP services right now. You can technically get it working, but with a lot of caveats: there's no per-flow load balancing, the MTU advice above applies, and you should expect breakage. The same goes for HTTP/3, which runs over QUIC: don't add a `udp` service on port 443 to try to serve it.
+QUIC isn't explicitly supported through Fly.io UDP services right now. You can technically get it working, but with a lot of caveats: there's no per-flow load balancing, the MTU advice above applies, and you should expect breakage. The same goes for HTTP/3, which runs over QUIC: serving it from a `udp` service on port 443 won't work the way you might expect.
 
 Proper QUIC support at our edge is on the roadmap, but we don't have a timeline for it yet.
 
