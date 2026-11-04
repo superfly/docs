@@ -1,49 +1,67 @@
 ---
 title: Fly.io Free Trial
-description: "Check what the Fly.io free trial includes, its VM hour, Machine, volume and memory limits, how to track usage, and what happens when the trial ends."
+description: "Check what the Fly.io free trial includes, the $1 credit and its limits, how to track your balance, and what happens when the credit runs out."
 source_url: https://fly.io/docs/about/free-trial/
 ---
 
   <img src="/images/free-trial.png" alt="Illustration by Annie Ruygt of a Frankie the hot air balloon showing a Free Trial banner to his developer friend who carries an app" />
 
-**Fly.io runs your apps close to your users. This page explains how our free trial works and what resources you can use before you need to add a payment method.**
+**Fly.io runs your apps close to your users. This page explains how our free trial works and what you can use before you add a payment method.**
 
 ## Free Trial overview
 
-A free trial on Fly.io includes 2 hours of machine runtime or 7 days of access, whichever comes first. That’s just enough to get a real app up and running before you decide if it’s a fit for you.
+New accounts get **\$1 of free credit**, with no credit card required. You can spend it on Machines, Sprites and Managed Postgres. The credit lasts for 7 days or until you use it up, whichever comes first.
 
-<Info>
-If you hit any of the limits below before your 7 days are up, **your trial is considered exhausted**, and your apps will stop until you add a payment method.
-</Info>
+That's enough to deploy a real app or try a few Sprites before you decide if Fly.io is a fit for you.
 
-Here’s what’s **included** during the trial:
+The credit applies to your personal organization, the one we create for you at signup.
 
-- **2 total VM hours** (Shared across any machines you launch) <br /> **Note: Trial Machines are set to automatically stop after running for 5 minutes**
-- **10 machines max**
-- **20GB of volume storage**
-- Up to **2 vCPUs per machine**
-- **4GB memory per machine**
+## Trial limits
 
-These are **not included** in the free trial:
+Until you add a credit card, the trial has these limits:
 
+- **Machines:** up to 10 at a time across your organization. Stopped Machines count toward the limit, so destroy any you don't need.
+- **Machine size:** up to `shared-cpu-2x`, with up to 4GB of memory
+- **Volumes:** up to 20GB in total
+- **Sprites:** up to 3 at a time
+
+Trial Machines stop automatically after running for 5 minutes. There's no limit on the number of apps.
+
+If you hit a trial limit, the error asks you to add a credit card, which lifts the limits.
+
+<Tip>
+`fly deploy` creates 2 Machines per app by default, so 10 Machines covers 5 apps. Use `fly deploy --ha=false` to run 1 Machine per app.
+</Tip>
+
+These aren't available during the trial:
+
+- Performance-optimized vCPUs
 - Dedicated IPv4 addresses
-- Access to performance-optimized vCPUs
+- Extensions such as Tigris, Supabase and Upstash Redis
+
+You can create a Managed Postgres cluster during the trial, but it uses up the \$1 credit quickly.
 
 <Info>
-You can add a credit card from the dashboard at any time during the trial. This lifts the resource limits and keeps your apps running without interruption. **Note: adding a card ends the free trial** and your usage starts counting toward your bill from that point on.
+You can add a credit card from the dashboard at any time. This lifts the trial limits. Any credit you have left still applies, and your usage counts toward your bill once it's used up.
 </Info>
 
-## Checking usage
+## Checking your balance
 
-You can see what you’ve used and what’s left under **“Trial Status”** in the Fly.io dashboard. Machines usage (including memory) is tracked per second, while Volumes and Machine count are tracked per hour.
+You can see how much credit you have left on the **Billing** page in the Fly.io dashboard. While your trial is active, the dashboard also shows a banner with your remaining balance.
 
-The free trial is meant for kicking the tires. Spin something up, poke around, deploy a real app or two. If Fly.io fits your use case, great! Add a credit card to keep going. If not, no hard feelings.
+## What happens when the credit runs out?
 
-## What happens when the free trial ends?
+When your credit is used up or expires, your Machines stay stopped, and you can't start them or create new resources until you add a credit card.
 
-If you don’t add a payment method by the end of your 7-day trial, or if you use up the included resources, your apps will stop running. You won’t be able to launch new machines, attach volumes, or deploy changes until billing is set up.
+We send you an email when your credit runs out. If you don't add a card, we may delete your trial resources:
 
-Whether you're testing the waters or gearing up to launch something real, the free trial gives you room to get started. If Fly.io feels like a fit, adding a payment method from the Dashboard is all it takes to keep going. No surprises, no downtime, no pressure.
+- Machines
+- Volumes
+- Sprites
+
+Your apps are kept, so you can deploy them again after you add a card.
+
+If Fly.io feels like a fit, adding a payment method from the dashboard is all it takes to keep going.
 
 ---
 
