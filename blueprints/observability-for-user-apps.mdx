@@ -81,7 +81,7 @@ In practice, to stream all logs for a given user's app, you'll subscribe to the 
 
 ### A Real-World Example
 
-[**NATstream**](https://natstream.fly.dev/) is a reference app that streams logs from your Fly apps right back to the browser. It connects to NATS and turns those events into a live feed at a simple HTTP `/logs` endpoint using Server-Sent Events (SSE). Developers could log in to your product and watch their app's logs flow in real time, without needing separate logging tools or the Fly CLI. The app keeps things high-level and lightweight—there's no deep framework complexity here, just a straightforward example of hooking into Fly's log pipeline and broadcasting events to the browser.
+[**NATstream**](https://github.com/fly-apps/natstream) is a reference app that streams logs from your Fly apps right back to the browser. It connects to NATS and turns those events into a live feed at a simple HTTP `/logs` endpoint using Server-Sent Events (SSE). Developers could log in to your product and watch their app's logs flow in real time, without needing separate logging tools or the Fly CLI. The app keeps things high-level and lightweight—there's no deep framework complexity here, just a straightforward example of hooking into Fly's log pipeline and broadcasting events to the browser.
 
   <img src="/images/natstream.webp" alt="Screenshot of the NATstream open source app UI" />
 
