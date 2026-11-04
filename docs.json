@@ -905,6 +905,7 @@
                               }
                             ]
                           },
+                          "flyctl/cmd/fly_feedback",
                           {
                             "group": "fly image",
                             "root": "flyctl/cmd/fly_image",
