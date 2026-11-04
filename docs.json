@@ -1404,7 +1404,7 @@
                   "about/free-trial",
                   "about/support",
                   {
-                    "group": "Engineering Jobs",
+                    "group": "Jobs",
                     "root": "hiring/index",
                     "pages": [
                       "hiring/hiring",
