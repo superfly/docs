@@ -1409,7 +1409,6 @@
                     "pages": [
                       "hiring/stack",
                       "hiring/roles",
-                      "hiring/company-levels",
                       "hiring/hiring",
                       "hiring/questions",
                       "hiring/working",
@@ -1647,6 +1646,10 @@
     ]
   },
   "redirects": [
+    {
+      "source": "/hiring/company-levels",
+      "destination": "/hiring/levels"
+    },
     {
       "source": "/postgres/advanced-guides",
       "destination": "/unmanaged-postgres/advanced-guides"
