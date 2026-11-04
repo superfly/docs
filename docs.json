@@ -236,7 +236,6 @@
                 "pages": [
                   "app-guides/6pndemochat",
                   "app-guides/edgedb",
-                  "app-guides/fauna",
                   "app-guides/git-gogs-server",
                   "app-guides/global-nginx-proxy",
                   "app-guides/graphql-edge-caching-apollo",
@@ -4141,6 +4140,10 @@
     {
       "source": "/containers",
       "destination": "/machines/guides-examples/multi-container-machines"
+    },
+    {
+      "source": "/app-guides/fauna",
+      "destination": "/postgres"
     }
   ]
 }
