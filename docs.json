@@ -235,8 +235,6 @@
                 "group": "App Guides",
                 "pages": [
                   "app-guides/6pndemochat",
-                  "app-guides/edgedb",
-                  "app-guides/fauna",
                   "app-guides/git-gogs-server",
                   "app-guides/global-nginx-proxy",
                   "app-guides/graphql-edge-caching-apollo",
@@ -244,7 +242,6 @@
                   "app-guides/grpc-and-grpc-web-services",
                   "app-guides/kong-api-gateway",
                   "app-guides/livebook",
-                  "app-guides/minio",
                   "app-guides/mqtt",
                   "app-guides/mysql-on-fly",
                   "app-guides/nats-cluster",
@@ -3216,7 +3213,7 @@
     },
     {
       "source": "/getting-started/edgedb/",
-      "destination": "/app-guides/edgedb"
+      "destination": "https://docs.geldata.com/reference/running/deployment/fly_io"
     },
     {
       "source": "/getting-started/elixir/",
@@ -4141,6 +4138,18 @@
     {
       "source": "/containers",
       "destination": "/machines/guides-examples/multi-container-machines"
+    },
+    {
+      "source": "/app-guides/fauna",
+      "destination": "/postgres"
+    },
+    {
+      "source": "/app-guides/edgedb",
+      "destination": "https://docs.geldata.com/reference/running/deployment/fly_io"
+    },
+    {
+      "source": "/app-guides/minio",
+      "destination": "/tigris"
     }
   ]
 }
