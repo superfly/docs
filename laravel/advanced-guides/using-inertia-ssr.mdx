@@ -115,7 +115,7 @@ The SSR server will be created as a separate VM from your web app. You'll have t
   SSR_URL="ssr.process.<yourAppNameHerePlease>.internal:13714"
   // other envs here
 ```
-Finally, pull the [inertia.php](https://github.com/inertiajs/inertia-laravel/blob/master/config/inertia.php) config file into your config directory, and  update it to use the `SSR_URL` env variable:
+Finally, pull the [inertia.php](https://github.com/inertiajs/inertia-laravel/blob/3.x/config/inertia.php) config file into your config directory, and  update it to use the `SSR_URL` env variable:
 ```php
 /* config/inertia.php */
 'ssr' => [

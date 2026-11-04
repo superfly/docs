@@ -4065,6 +4065,10 @@
       "destination": "/postgres"
     },
     {
+      "source": "/docs/reference/openid-connect",
+      "destination": "/security/openid-connect"
+    },
+    {
       "source": "/mpg/client-configuration",
       "destination": "/postgres/client-configuration"
     },
