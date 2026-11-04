@@ -91,7 +91,7 @@ Open the `fly.toml` file and modify the `[[services]]` portion:
     port = "10001"
 ```
 
-This will open two ports on your Fly deployment. The first handles standard SSL traffic and routes it to the Kong API Gateway, and the second handles traffic to port `10001`, which you'll use for the [Kong Admin API](https://docs.konghq.com/2.0.x/admin-api/).
+This will open two ports on your Fly deployment. The first handles standard SSL traffic and routes it to the Kong API Gateway, and the second handles traffic to port `10001`, which you'll use for the [Kong Admin API](https://developer.konghq.com/admin-api/).
 
 Because of the [filesystem permissions required for writing to the `/dev/std*` logs](https://github.com/moby/moby/issues/31243), you need to run the container as `root`. Open up the `Dockerfile` and replace it with the following:
 
@@ -103,7 +103,7 @@ USER root
 Your application configuration is now ready, but you still need to set up the database before you can run Kong.
 
 ### Preparing Your Database
-Before you can use your Kong API Gateway, you'll need run the [Kong database migrations](https://docs.konghq.com/install/docker/). You can do this using Docker:
+Before you can use your Kong API Gateway, you'll need run the [Kong database migrations](https://developer.konghq.com/gateway/install/docker/). You can do this using Docker:
 
 ```bash
 docker run --rm \
@@ -176,7 +176,7 @@ You can detach the terminal anytime without stopping the deployment
 You can visit your newly created Kong deployment at `https://<your-app-name>.fly.dev`, but all you'll see is the message, "no Route matched with those values." In the next section, you'll see how to set up Services, Routes, and Plugins using the Kong Admin API.
 
 ## Using Kong to Secure an API
-You have a working instance of Kong deployed to Fly, but it's not useful without any [Services or Routes](https://docs.konghq.com/2.0.x/getting-started/configuring-a-service/). In this section, you'll see how to add a Service and configure rate limiting and API key authentication. Finally, you'll secure the Kong Admin API to prevent unauthorized access to your Gateway's configuration.
+You have a working instance of Kong deployed to Fly, but it's not useful without any [Services or Routes](https://developer.konghq.com/gateway/entities/service/). In this section, you'll see how to add a Service and configure rate limiting and API key authentication. Finally, you'll secure the Kong Admin API to prevent unauthorized access to your Gateway's configuration.
 
 ### Adding a Backend Service
 Kong will proxy web requests it receives to any backend API you set up. To demonstrate this functionality, you'll create a new service that proxies requests to [JSON Placeholder](https://jsonplaceholder.typicode.com/). This free service returns a JSON payload similar to what you might find when connecting to a REST API.
@@ -196,7 +196,7 @@ curl -i -X POST https://<your-app-name>.fly.dev:10001/services/posts/routes \
   --data 'paths[]=/posts'
 ```
 
-Kong's Admin API gives you REST access to all the Kong resources saved in the database, so be sure to [check out the documentation](https://docs.konghq.com/2.0.x/admin-api/) to learn more.
+Kong's Admin API gives you REST access to all the Kong resources saved in the database, so be sure to [check out the documentation](https://developer.konghq.com/admin-api/) to learn more.
 
 Now that you have a Route connected to a Service, you can test it out on your deployment. Visit `https://<your-app-name>.fly.dev/posts` to see the `/posts` payload from JSON Placeholder:
 
@@ -214,7 +214,7 @@ Now that you have a Route connected to a Service, you can test it out on your de
 You can also retrieve the access logs using `flyctl logs`.
 
 ### Rate Limiting Access
-If you're exposing your API publicly, rate limiting your users is probably a good idea. You can use [Kong's Rate Limiting plugin](https://docs.konghq.com/getting-started-guide/ce-2.0.x_ke-1.5.x/protect-services/) to ensure that users can't abuse your API by repeatedly calling the same endpoint. This encourages users to cache responses and can save significant load on your servers.
+If you're exposing your API publicly, rate limiting your users is probably a good idea. You can use [Kong's Rate Limiting plugin](https://developer.konghq.com/plugins/rate-limiting/) to ensure that users can't abuse your API by repeatedly calling the same endpoint. This encourages users to cache responses and can save significant load on your servers.
 
 To add the Rate Limiting plugin, use the Kong Admin API again:
 
@@ -230,7 +230,7 @@ The policy above restricts users to 5 API calls per minute per node. You could a
 To test the rate limiting out, go to `https://<your-app-name>.fly.dev/posts` in your browser and hit refresh six times in a row. On the 6th refresh, you should see the message, "API rate limit exceeded."
 
 ### API Key Authentication
-If your API is only going to be used by trusted consumers, you should limit access using API Keys or [another form of authentication](https://docs.konghq.com/2.0.x/auth/). To add authentication to the `/posts` Route, you can use curl again to post to the Kong Admin API:
+If your API is only going to be used by trusted consumers, you should limit access using API Keys or [another form of authentication](https://developer.konghq.com/gateway/authentication/). To add authentication to the `/posts` Route, you can use curl again to post to the Kong Admin API:
 
 ```bash
 curl -i -X POST \
@@ -239,7 +239,7 @@ curl -i -X POST \
    --data 'config.hide_credentials=true'
 ```
 
-To test this out, you'll also need a [Consumer](https://docs.konghq.com/2.0.x/getting-started/adding-consumers/) with an API key. Create a user called `admin` using the Kong Admin API:
+To test this out, you'll also need a [Consumer](https://developer.konghq.com/gateway/entities/consumer/) with an API key. Create a user called `admin` using the Kong Admin API:
 
 ```bash
 curl -i -X POST \
@@ -264,7 +264,7 @@ Next, add your API Key as a querystring parameter called `apikey`. For example, 
 This time, you should see the list of posts returned in the previous steps. Kong is now protecting your posts Service, but your Admin API is still publicly exposed. This means anyone who knows your URL and port could create Consumers or redirect your Services to their backend.
 
 ### Securing the Kong Admin API
-Kong provides several methods for [securing the Admin API](https://docs.konghq.com/2.0.x/secure-admin-api/), but the simplest in a distributed hosting environment like this is to use a [loopback](https://docs.konghq.com/2.0.x/secure-admin-api/#kong-api-loopback). Because Kong can secure any service, you can use Kong to secure its own Admin API.
+Kong provides several methods for [securing the Admin API](https://developer.konghq.com/gateway/secure-the-admin-api/), but the simplest in a distributed hosting environment like this is to use a [loopback](https://developer.konghq.com/gateway/secure-the-admin-api/#api-loopback). Because Kong can secure any service, you can use Kong to secure its own Admin API.
 
 First, add a new service called `admin-api` which points to `localhost:8001`:
 
@@ -316,6 +316,6 @@ flyctl deploy
 Once your API Gateway is running again, you'll only be able to access the Admin API through `https://<your-app-name>.fly.dev/admin-api?apikey=<your-api-key>` with a valid API key.
 
 ## Conclusion
-In this post, you've seen how to use Kong API Gateway to add rate limiting and API key authentication to your backend services. You've deployed Kong to Fly's distributed hosting platform to take advantage of their global network and secured your Kong Admin Portal to limit access. If you're looking to add more functionality to your gateway, be sure to [check out the Kong Plugins directory](https://docs.konghq.com/hub/).
+In this post, you've seen how to use Kong API Gateway to add rate limiting and API key authentication to your backend services. You've deployed Kong to Fly's distributed hosting platform to take advantage of their global network and secured your Kong Admin Portal to limit access. If you're looking to add more functionality to your gateway, be sure to [check out the Kong Plugins directory](https://developer.konghq.com/plugins/).
 
 If you have any questions about using Kong with [Fly.io](https://fly.io/), be sure to reach out so we can help you get started.
