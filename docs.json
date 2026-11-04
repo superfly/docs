@@ -235,7 +235,6 @@
                 "group": "App Guides",
                 "pages": [
                   "app-guides/6pndemochat",
-                  "app-guides/edgedb",
                   "app-guides/git-gogs-server",
                   "app-guides/global-nginx-proxy",
                   "app-guides/graphql-edge-caching-apollo",
@@ -3215,7 +3214,7 @@
     },
     {
       "source": "/getting-started/edgedb/",
-      "destination": "/app-guides/edgedb"
+      "destination": "https://docs.geldata.com/reference/running/deployment/fly_io"
     },
     {
       "source": "/getting-started/elixir/",
@@ -4144,6 +4143,10 @@
     {
       "source": "/app-guides/fauna",
       "destination": "/postgres"
+    },
+    {
+      "source": "/app-guides/edgedb",
+      "destination": "https://docs.geldata.com/reference/running/deployment/fly_io"
     }
   ]
 }
