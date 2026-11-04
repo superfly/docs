@@ -15,7 +15,7 @@ The official [How to Deploy Django](https://docs.djangoproject.com/en/stable/how
 
 The third-party package [WhiteNoise](https://whitenoise.evans.io/en/stable/) is recommended for serving static files in production as this requires [additional configuration](https://docs.djangoproject.com/en/stable/howto/static-files/deployment/).
 
-A production web server must be installed, typically either [Gunicorn](https://docs.gunicorn.org/en/latest/install.html) or [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/). The database adapter [Psycopg](https://www.psycopg.org/psycopg3/docs/) is commonly used along with [dj-database-url](https://pypi.org/project/dj-database-url/) to establish a Django database connection via a `DATABASE_URL` environment variable.
+A production web server must be installed, typically either [Gunicorn](https://gunicorn.org/install/) or [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/). The database adapter [Psycopg](https://www.psycopg.org/psycopg3/docs/) is commonly used along with [dj-database-url](https://pypi.org/project/dj-database-url/) to establish a Django database connection via a `DATABASE_URL` environment variable.
 
 Be sure to have generated an up-to-date `requirements.txt` file for any new packages added for deployment.
 

@@ -60,8 +60,8 @@ If "no" turns out to be a viable answer: go with it.  Put all of the services ne
 as needed.  Eliminating the need for a network in producing a response to a request both increases throughput and reliability.
 
 There are a lot of [options for running multiple processes inside a Fly.io App](/app-guides/multiple-processes).
-I use a combination of [ENTRYPOINT](https://github.com/rubys/showcase/blob/main/bin/docker-entrypoint) running a
-[deploy](https://github.com/rubys/showcase/blob/main/bin/deploy) script and a [procfile](https://github.com/rubys/showcase/blob/main/Procfile.fly).
+I use a combination of [ENTRYPOINT](https://github.com/rubys/showcase/blob/a96f632803611375e2a1d37d5a4e886dbeed56b6/bin/docker-entrypoint) running a
+[deploy](https://github.com/rubys/showcase/blob/6bfdbb18029544c55bc9f1c91ece84ef809464ff/bin/deploy) script and a [procfile](https://github.com/rubys/showcase/blob/main/Procfile.fly).
 
 Given the load for each event is only for one customer, I only need 1 CPU per server. While CPU is not a concern, it still is important to size
 the amount of RAM needed.
@@ -214,7 +214,7 @@ To make that work, I
 With Passenger, I set [`passenger_min_instances`](https://www.phusionpassenger.com/library/config/nginx/reference/#passenger_max_pool_size) to zero, allowing
 each application to completely shutdown after five minutes of inactivity.  I define a
 [`detached_process`](https://www.phusionpassenger.com/library/indepth/hooks.html#detached_process) hook to run
-a [script](https://github.com/rubys/showcase/blob/main/bin/passenger-hook).
+a [script](https://github.com/rubys/showcase/blob/6bfdbb18029544c55bc9f1c91ece84ef809464ff/bin/passenger-hook).
 
 As that hook will be run after each process exits, what it does first is query the number of running processes.  If
 there are none (not counting websockets), it begins the backup to each Fly.io machine

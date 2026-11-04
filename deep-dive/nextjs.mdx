@@ -23,7 +23,7 @@ How the pieces are put together:
 * The [pg](https://www.npmjs.com/package/pg) module is used to access PostgreSQL.
   Access to the database is through the `DATABASE_URL` secret.  This module is low level
   which is sufficient for this demo, but most modern Node.js applications use
-  an [ORM](https://amplication.com/blog/top-6-orms-for-modern-nodejs-app-development).
+  an ORM.
 * The [AWS SDK for JavaScript](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/welcome.html)
   is used to access Tigris.  The following secrets are used to
   establish the connection: `AWS_ACCESS_KEY_ID`, `AWS_ENDPOINT_URL_S3`, `AWS_REGION`, `AWS_SECRET_ACCESS_KEY`, and `BUCKET_NAME`.

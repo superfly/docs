@@ -53,7 +53,7 @@ flag from the command line arguments.
 
 ## FUSE directory
 
-LiteFS uses a [FUSE](https://www.kernel.org/doc/html/latest/filesystems/fuse.html)
+LiteFS uses a [FUSE](https://docs.kernel.org/filesystems/fuse/fuse.html)
 directory mount to intercept Linux file system calls to track when SQLite
 transactions start and end so they can be replicated. The recommended path is
 `/litefs` and it is the directory your application should use when interacting
