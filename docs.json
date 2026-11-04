@@ -524,6 +524,7 @@
                         "pages": [
                           "js/frameworks/astro",
                           "js/frameworks/deno",
+                          "js/frameworks/farmjs",
                           "js/frameworks/meteor",
                           "js/frameworks/nextjs",
                           "js/frameworks/nuxtjs",
