@@ -5,6 +5,7 @@ on:
     paths:
       - "flyctl/cmd/**"
       - "docs.json"
+      - ".github/workflows/flyctl-nav-check.yml"
 
 jobs:
   nav:
@@ -19,11 +20,19 @@ jobs:
       # Fail the PR so whoever merges it adds the line. See docs-tracking#371.
       # Only the navigation block is read, so a redirect that mentions a page
       # can't stand in for its nav entry.
+      #
+      # The nav is read from current main as well as from this PR. A re-run
+      # reuses the PR's original merge commit, so without this a nav entry
+      # merged in a separate PR (the bot's branch can't take pushes) would
+      # never turn the check green on re-run.
       - name: find flyctl pages with no nav entry
         run: |
+          git fetch -q --depth=1 origin main
+          nav=$( { jq '.navigation' docs.json; git show FETCH_HEAD:docs.json | jq '.navigation'; } \
+            | grep -oE '"flyctl/cmd/[^"]+"' | tr -d '"' | sort -u)
           missing=$(comm -23 \
             <(ls flyctl/cmd/*.mdx | sed 's/\.mdx$//' | sort) \
-            <(jq '.navigation' docs.json | grep -oE '"flyctl/cmd/[^"]+"' | tr -d '"' | sort -u))
+            <(echo "$nav"))
           if [ -n "$missing" ]; then
             echo "These pages have no docs.json nav entry:"
             echo "$missing"
