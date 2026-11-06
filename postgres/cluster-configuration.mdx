@@ -79,7 +79,7 @@ This is the default role granted to the `fly-user` user when your cluster is cre
 - Create new schemas and manage database structure
 - Connect to any database in the cluster
 - Create temporary tables for session-specific operations
-- Grant other users access to the objects they own, with SQL
+- Grant other users access to the objects admin users create, with SQL
 
 **What Schema Admin users cannot do:**
 - Create new databases. This can be done from your Dashboard
@@ -118,7 +118,7 @@ The Reader role provides read-only access to all data in the cluster. This role 
 
 ### Custom
 
-The Custom role starts with no access to data. An admin user grants it what it needs with SQL. Use it when Writer or Reader would give a user too much, for example an app that should only reach its own database.
+Available on v2 clusters. The Custom role starts with no access to data. An admin user grants it what it needs with SQL. Use it when Writer or Reader would give a user too much, for example an app that should only reach its own database.
 
 **What Custom users can do:**
 - Whatever an admin user grants them with SQL
@@ -139,6 +139,8 @@ To create additional users via the dashboard:
 
 To create additional users via `flyctl`:
 1. Run `fly mpg users create` to create a new user for your MPG cluster
+
+Note: On v1 clusters created before July 2025, you'll need to opt in to the new Role system before you can add new users. This can be done on the Users tab of your dashboard.
 
 ### Connecting as another user
 
