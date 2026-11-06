@@ -1,0 +1,417 @@
+---
+title: Users, roles and database access
+description: "Give Managed Postgres users the Schema Admin, Writer, Reader or Custom role, limit Custom users to some databases, and grant them access with SQL."
+---
+
+  <img src="/images/Managed_Postgres.png" alt="Illustration by Annie Ruygt of a balloon doing a lot of tasks" />
+
+Every user in a Managed Postgres cluster has one built-in role. The role decides what the user can read and change, and which databases it can connect to. This page covers v2 clusters, marked **v2** next to the cluster name in the dashboard.
+
+<Info>
+Custom users, database limits, admin grants and the roles list reach clusters one at a time. See [Older clusters ↓](#older-clusters).
+</Info>
+
+## How access works
+
+| Role | Name in flyctl and the API | Data | Databases |
+|------|------|------|------|
+| Schema Admin | `schema_admin` | Reads and writes everything, and changes the structure | Every database, including new ones |
+| Writer | `writer` | Reads and writes every table | Every database, including new ones |
+| Reader | `reader` | Reads every table | Every database, including new ones |
+| Custom | `custom` | Nothing until an admin user grants it with SQL | Every database, or only the ones you pick |
+
+- Writers and readers read every table in every schema. Their roles hold Postgres's `pg_read_all_data`, and writers also hold `pg_write_all_data`. `REVOKE` can't take that away. To give a user less, make it a Custom user.
+- A Custom user starts with no access to data. In SQL, Custom users are members of the `_custom` role. In psql 16 and later, `\drg` lists role memberships.
+- Custom users can't connect to the `postgres` or `template1` databases, whether or not they're limited.
+- A cluster can also have group roles made with SQL. Their members get the role's privileges. You can't create them or change their members yourself yet: [support](#still-done-by-support) does it for now.
+- The default user, `fly-user`, is a Schema Admin. See [Users and Roles](/postgres/cluster-configuration#users-and-roles) for what each built-in role can and can't do.
+
+## Database access
+
+- Only Custom users can be limited to a list of databases.
+- "All databases" includes databases created later. A list doesn't, so add new databases to it yourself.
+- Removing a database from a user ends that user's sessions in it right away.
+- A limited user keeps its role. To change its role, give it every database first.
+- In any database a limited user can reach, Custom users can't read query statistics. See [What every user can still see ↓](#what-every-user-can-still-see).
+
+### What every user can still see
+
+Database limits keep a user out of other databases. They don't hide the cluster's layout:
+
+- Every user can see the names of all databases and roles.
+- Every user can see who is connected to which database. The text of other users' queries stays hidden.
+- Query statistics (`pg_stat_monitor`, and `pg_stat_statements` where it's installed) show other users' queries with their database and timings. `pg_stat_monitor` also shows their tables and application name. The query text stays hidden from other users, but admin users all run as `schema_admin`, so they see each other's.
+- In a database a limited user can reach, only admin users, writers, readers and users without a built-in role can read query statistics. Custom users can't, limited or not.
+
+To keep two groups of users fully apart, put them on separate clusters.
+
+## Manage users in the dashboard
+
+Open your cluster's **Users** tab.
+
+To create a Custom user:
+
+1. Under **Create a new user**, set **Role** to **Custom (only what admins grant)**.
+2. Enter a **Username**. Leave **Password** empty to generate one.
+3. Under **Databases**, pick **All databases (including new ones)** or **Only these databases**. For a list, search for each database and select it.
+4. Click **Create user**.
+
+To change a Custom user's databases:
+
+1. In the **User list**, click **Edit databases** on the user's row.
+2. Pick **All databases (including new ones)** or **Only these databases**, and choose the databases.
+3. Click **Save databases**.
+
+To change a role, pick it in the user's **Role** column. When you pick **Custom**, the dashboard asks you to confirm with **Make custom**, since the user loses all access until an admin user grants it some. For a limited user, the other roles stay disabled until you give it every database.
+
+The tab also has two cards:
+
+- **Roles** lists the roles made with SQL and how many members each has. Open a role to see its members.
+- **Access by database** shows which users can connect to which database.
+
+Users without a built-in role get their access from SQL grants, so the dashboard can't tell which databases they reach. The User list's **Databases** column shows **Unknown** for them, and the **Access by database** grid shows **?**.
+
+## Manage users with flyctl
+
+These commands need flyctl vX.Y.Z or later. Run `fly version upgrade` to update.
+
+The examples use `$CLUSTER_ID` for your cluster's ID. Find the ID in the dashboard or with `fly mpg list`, then set it:
+
+```bash
+export CLUSTER_ID="your-cluster-id"
+```
+
+Create a Custom user limited to the `analytics` database:
+
+```bash
+fly mpg users create $CLUSTER_ID -u reporting -r custom --database analytics
+```
+
+Repeat `--database` for more databases. Leave it out to give the user every database. In an interactive terminal, flyctl asks instead.
+
+Change which databases a Custom user can reach:
+
+```bash
+fly mpg users set-databases $CLUSTER_ID -u reporting --database analytics --database events
+```
+
+Use `--all-databases` instead to give the user every database again. Limiting a user asks for confirmation first, since it ends the user's sessions in the databases it loses. Pass `--yes` to skip the question.
+
+Change a user's role:
+
+```bash
+fly mpg users set-role $CLUSTER_ID -u analyst -r reader
+```
+
+List users:
+
+```bash
+fly mpg users list $CLUSTER_ID
+```
+
+The table has these columns:
+
+- **ROLE**: the built-in role, or `-` for a user without one.
+- **ROLES**: the roles made with SQL that the user is a direct member of, or `-` for none. It's blank on clusters that don't report roles yet, and flyctl adds this line on stderr: `This cluster doesn't report customer roles yet. It arrives with a scheduled update in the cluster's maintenance window.`
+- **DATABASES**: `all`, the user's list, `none`, or `unknown` for a user without a built-in role.
+
+Add `--json` for machine-readable output.
+
+List the roles made with SQL, and the members of one:
+
+```bash
+fly mpg roles list $CLUSTER_ID
+fly mpg roles members $CLUSTER_ID -r analytics_team
+```
+
+Connect as a limited user. Always pass a database the user can reach. Without `--database`, flyctl asks you to pick from every database, or uses the cluster's default one:
+
+```bash
+fly mpg connect $CLUSTER_ID -u reporting --database analytics
+```
+
+`fly mpg attach` doesn't offer the Custom role for new users, since a new Custom user can't read anything. When you attach with a limited user, it only accepts one of that user's databases.
+
+## Use the API
+
+The [Postgres Clusters API](/api/machines/postgres-clusters/list-users) has the same features. Each request needs an `Authorization: Bearer <token>` header.
+
+Set `CLUSTER_ID` as in the flyctl examples, and `FLY_API_TOKEN` to an organization token from [`fly tokens create org`](/flyctl/cmd/fly_tokens_create_org):
+
+```bash
+export FLY_API_TOKEN="your-org-token"
+```
+
+A read-only token from [`fly tokens create readonly`](/flyctl/cmd/fly_tokens_create_readonly) can list users and roles, but can't create or change them.
+
+Create a Custom user limited to `analytics`:
+
+```bash
+curl -X POST "https://api.machines.dev/v1/postgres/$CLUSTER_ID/users" \
+  -H "Authorization: Bearer $FLY_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"username": "reporting", "role": "custom", "databases": ["analytics"]}'
+```
+
+Only `custom` takes `databases`. Leave it out to give the user every database.
+
+Replace a Custom user's databases:
+
+```bash
+curl -X PUT "https://api.machines.dev/v1/postgres/$CLUSTER_ID/users/reporting/databases" \
+  -H "Authorization: Bearer $FLY_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"databases_limited": true, "databases": ["analytics", "events"]}'
+```
+
+Send `{"databases_limited": false}` to give the user every database. If it fails with a 500, send it again. Repeating it is safe.
+
+List the roles made with SQL, two at a time:
+
+```bash
+curl "https://api.machines.dev/v1/postgres/$CLUSTER_ID/roles?limit=2" \
+  -H "Authorization: Bearer $FLY_API_TOKEN"
+```
+
+```json
+{
+  "data": [
+    {"name": "Team B", "member_count": 1},
+    {"name": "analytics_team", "member_count": 3}
+  ],
+  "next_cursor": "<opaque cursor>"
+}
+```
+
+- Lists are sorted by name in byte order, so `Team B` comes before `analytics_team`.
+- To get the next page, pass `next_cursor` back as `cursor` exactly as you got it, URL-encoded, with any `limit` from 1 to 1000. The last page has no `next_cursor`.
+- Cursors expire 30 minutes after the first page.
+- Without `limit`, you get every role in one response.
+
+List a role's members. The role name goes in the query string:
+
+```bash
+curl -G "https://api.machines.dev/v1/postgres/$CLUSTER_ID/roles/members" \
+  --data-urlencode "role=Team B" \
+  -H "Authorization: Bearer $FLY_API_TOKEN"
+```
+
+The users list returns `roles`, `databases_limited` and `databases` for each user. `roles` is `null` on clusters that don't report roles yet.
+
+## Grant access with SQL
+
+Admin users (Schema Admin) grant access to Custom users with SQL. Admin users run as the `schema_admin` role, which owns what they create. In SQL they can:
+
+- `GRANT` and `REVOKE` on objects `schema_admin` owns.
+- Set default privileges for new objects with `ALTER DEFAULT PRIVILEGES`.
+- Add row-level security policies, and turn on `FORCE ROW LEVEL SECURITY`.
+- Take back `EXECUTE` on functions with `REVOKE EXECUTE ON FUNCTION ... FROM PUBLIC`.
+- Hand objects their own login owns to `schema_admin` with `ALTER ... OWNER TO schema_admin`. See [Ownership ↓](#ownership).
+
+Connect as an admin user to the database you want to change. For example:
+
+```bash
+fly mpg connect $CLUSTER_ID -u fly-user --database analytics
+```
+
+Grants only work on objects `schema_admin` owns. Before you start, check who owns your tables:
+
+```sql
+SELECT tablename, tableowner FROM pg_tables WHERE schemaname = 'public';
+```
+
+### Read-only access to one database
+
+A Custom user that reads every table in `public` in the `analytics` database, and nothing else.
+
+1. Create the user:
+
+    ```bash
+    fly mpg users create $CLUSTER_ID -u reporting -r custom --database analytics
+    ```
+
+2. As an admin user, in `analytics`:
+
+    ```sql
+    GRANT SELECT ON ALL TABLES IN SCHEMA public TO reporting;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO reporting;
+    ```
+
+The second line covers tables admin users create later. Every user can already use the `public` schema. For another schema, also run `GRANT USAGE ON SCHEMA <schema> TO reporting;`.
+
+If Postgres answers `WARNING: no privileges were granted for "<table>"`, that table belongs to another user, so `schema_admin` can't grant on it. See [Ownership ↓](#ownership) for the fix.
+
+### One app per database
+
+A Custom user for an app that reads and writes the `shop` database only.
+
+1. Create the user:
+
+    ```bash
+    fly mpg users create $CLUSTER_ID -u shop_app -r custom --database shop
+    ```
+
+2. As an admin user, in `shop`:
+
+    ```sql
+    GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO shop_app;
+    GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO shop_app;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public
+      GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO shop_app;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public
+      GRANT USAGE, SELECT ON SEQUENCES TO shop_app;
+    ```
+
+Run migrations as an admin user, so the tables belong to `schema_admin`. If the app runs its own migrations, give it a schema named after it. Postgres's default `search_path` starts with a schema named after the user, so the app's new tables go there:
+
+```sql
+CREATE SCHEMA shop_app;
+GRANT USAGE, CREATE ON SCHEMA shop_app TO shop_app;
+```
+
+Tables the app creates belong to `shop_app`. See [Ownership ↓](#ownership) before you choose this.
+
+- Admin users can't grant on those tables. To share them, run the grants as `shop_app`. For example, to let another user on `shop`, `shop_reports`, read them:
+
+    ```sql
+    -- as an admin user
+    GRANT USAGE ON SCHEMA shop_app TO shop_reports;
+    -- as shop_app
+    GRANT SELECT ON ALL TABLES IN SCHEMA shop_app TO shop_reports;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA shop_app GRANT SELECT ON TABLES TO shop_reports;
+    ```
+
+- Tools that pin the schema need it set to `shop_app`. Prisma, for example, uses `public` unless the connection string sets `schema`.
+
+### A user that sees one schema
+
+A Custom user, limited to one database, that only reads the `reports` schema in it.
+
+1. Create the user, limited to that database:
+
+    ```bash
+    fly mpg users create $CLUSTER_ID -u partner -r custom --database analytics
+    ```
+
+2. As an admin user, in `analytics`:
+
+    ```sql
+    CREATE SCHEMA IF NOT EXISTS reports;
+    GRANT USAGE ON SCHEMA reports TO partner;
+    GRANT SELECT ON ALL TABLES IN SCHEMA reports TO partner;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA reports GRANT SELECT ON TABLES TO partner;
+    ```
+
+`partner` can see the names of tables in other schemas, but can't read them.
+
+### Functions and views
+
+- Every user can run a new function, Custom users included, since Postgres grants `EXECUTE` to `PUBLIC` by default.
+- A `SECURITY DEFINER` function an admin user creates runs as `schema_admin`, which reads and writes everything. Anyone who can run it gets that access through it.
+- Stop new functions from being executable by everyone, then grant `EXECUTE` to the users who need it:
+
+    ```sql
+    ALTER DEFAULT PRIVILEGES REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;
+    ```
+
+- A view runs with its owner's privileges. Granting `SELECT` on a view an admin user created exposes everything the view reads.
+
+### What no user can do in SQL
+
+- Create login users or set passwords. Use the dashboard, flyctl or the API.
+- Change or drop the built-in and system roles, `_custom` included, add members to them, or grant them privileges.
+- Use `SUPERUSER`, `REPLICATION`, `BYPASSRLS` or `CREATEDB`.
+- Rename roles.
+
+These fail with errors such as:
+
+- `MPG system roles cannot be modified`
+- `role passwords can only be managed through flyctl or the fly dashboard`
+- `login users can only be created through flyctl or the fly dashboard`
+
+### Ownership
+
+- Objects admin users create belong to `schema_admin`. Every admin user can change them, and grant on them.
+- Tables can also belong to an admin user's own login, for example tables it created after `SET ROLE NONE`. Admin sessions start as `schema_admin`, which can't change objects the login owns. Switch to the login for one transaction and hand the objects over:
+
+    ```sql
+    BEGIN;
+    SET LOCAL ROLE NONE;
+    ALTER TABLE orders OWNER TO schema_admin;
+    COMMIT;
+    ```
+
+    `SET LOCAL` ends with the transaction, so it's safe through PgBouncer in transaction mode. `schema_admin` also needs `CREATE` on the table's schema. If the login created that schema, hand it over first, in the same transaction: `ALTER SCHEMA <schema> OWNER TO schema_admin;`.
+- Tables another user owns can't be handed over by an admin user. Run the grants as the user that owns them, or ask support to give them to `schema_admin`.
+- Admin users all run as `schema_admin`, so `current_user` is `schema_admin` for each of them. In row-level security policies, use `session_user` to tell users apart.
+- `schema_admin` owns your tables, so admin users skip row-level security on them unless you run `ALTER TABLE ... FORCE ROW LEVEL SECURITY`.
+- Custom users run as themselves. Objects a Custom user creates belong to that user.
+- You can't delete a user that owns objects. Deleting it fails with a message like `user "shop_app" owns objects in database "shop"; reassign or drop them before dropping the user`. Drop those objects first. An admin user can drop a schema `schema_admin` owns, with everything in it, using `DROP SCHEMA ... CASCADE`.
+
+## Connect with GUI tools
+
+GUI tools often connect to the `postgres` database by default, and Custom users can't connect to it:
+
+- DBeaver's default database is `postgres`.
+- pgAdmin's maintenance database is `postgres`.
+
+A Custom user then gets:
+
+```out
+FATAL: permission denied for database "postgres"
+DETAIL: User does not have CONNECT privilege.
+```
+
+Set the database to one the user can reach:
+
+- **DBeaver:** set **Database** in the connection settings. Leave **Show all databases** off, the default. When it's on, DBeaver lists every database, including ones the user can't reach, and opening one fails with `permission denied for database`.
+- **pgAdmin:** set **Maintenance database** in the server's connection settings.
+- **psql:** `psql` defaults the database to the user name, so always pass one. With flyctl, use `fly mpg connect $CLUSTER_ID -u <user> --database <database>`.
+
+To reach the cluster from a local tool, see [Connecting from a local machine using flyctl](/postgres/create-and-connect#connecting-from-a-local-machine-using-flyctl).
+
+## PgBouncer transaction mode
+
+In [transaction mode](/postgres/cluster-configuration#connection-pooling), clients logged in as the same user to the same database share server connections. PgBouncer doesn't reset a connection between clients. It only restores a few settings for each client, such as `TimeZone`, `client_encoding` and `application_name`. Any other `SET`, and any `SET ROLE`, run without `LOCAL` stays on the connection, and the next client to get that connection inherits it.
+
+Inside a transaction, use `SET LOCAL` and `SET LOCAL ROLE` instead. They end with the transaction:
+
+```sql
+BEGIN;
+SET LOCAL ROLE analytics_team;
+SELECT count(*) FROM orders;
+COMMIT;
+```
+
+## The SQL console
+
+The **Explore** tab's SQL console doesn't connect as one of your users. It runs as a built-in read-only role that can read every table in your databases. Database limits and SQL grants don't apply to it. Anyone in your organization who can open the cluster in the dashboard can use it.
+
+## Still done by support
+
+[Contact support](/about/support) for:
+
+- creating roles, for example a role to group users;
+- adding or removing members of those roles;
+- `BYPASSRLS` or `CREATEDB` on a user;
+- superuser access for a migration;
+- Postgres's predefined roles, such as `pg_read_all_stats`;
+- replication users.
+
+## Older clusters
+
+A cluster that hasn't had the update yet gives one of these messages:
+
+| Where | Message | What it means |
+|------|------|------|
+| Dashboard | Not available on this cluster yet. It arrives with a scheduled update in your maintenance window. | The cluster can't do this yet |
+| API (501) | `Custom users and database limits are not available on this cluster yet` | The same, for Custom users and database limits |
+| API (501) | `Customer roles are not available on this cluster yet` | The same, for the roles list |
+| flyctl | `It arrives with a scheduled update in the cluster's maintenance window.` | The same, from flyctl |
+| Dashboard, flyctl, API (400) | `this cluster needs a newer Postgres image` | The cluster's Postgres setup predates Custom users. [Contact support](/about/support) |
+
+For the "not available" messages, the update arrives in your cluster's [maintenance window](/postgres/maintenance-windows). To get it sooner, move the window earlier, or contact support.
+
+For `this cluster needs a newer Postgres image`, contact support. Some older clusters don't get it from a maintenance window.
+
+On clusters whose image predates admin grants, admin users' `GRANT`s on objects `schema_admin` owns fail with `MPG system roles cannot be modified`.
