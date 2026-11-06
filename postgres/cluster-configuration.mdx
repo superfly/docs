@@ -1,6 +1,6 @@
 ---
 title: Cluster configuration options
-description: "Set PgBouncer to Session or Transaction pool mode, change your MPG plan, and add databases and users with Schema Admin, Writer, or Reader roles."
+description: "Set PgBouncer to Session or Transaction pool mode, change your MPG plan, and add databases and users with Schema Admin, Writer, Reader, or Custom roles."
 source_url: https://fly.io/docs/mpg/cluster-configuration/
 ---
 
@@ -63,9 +63,9 @@ During the configuration update, your database nodes will restart. You may see a
 
 ## Users and Roles
 
-Your Managed Postgres Cluster is created with one admin user named `fly-user`. You can create additional database users and set their roles from your dashboard or through `flyctl`.
+Your Managed Postgres Cluster is created with one admin user named `fly-user`. You can create additional database users and set their roles from your dashboard, through `flyctl`, or through the API.
 
-Currently MPG supports the following roles for users:
+MPG supports the following roles for users. Schema Admin, Writer and Reader users reach every database. Custom users get only what an admin user grants them, and can be limited to some databases. For Custom users, database limits and SQL grants, see [Users, roles and database access](/postgres/users-and-permissions).
 
 ### Schema Admin
 
@@ -79,6 +79,7 @@ This is the default role granted to the `fly-user` user when your cluster is cre
 - Create new schemas and manage database structure
 - Connect to any database in the cluster
 - Create temporary tables for session-specific operations
+- Grant other users access to the objects they own, with SQL
 
 **What Schema Admin users cannot do:**
 - Create new databases. This can be done from your Dashboard
@@ -115,19 +116,31 @@ The Reader role provides read-only access to all data in the cluster. This role 
 - Create temporary tables
 - Modify database structure or permissions
 
+### Custom
+
+The Custom role starts with no access to data. An admin user grants it what it needs with SQL. Use it when Writer or Reader would give a user too much, for example an app that should only reach its own database.
+
+**What Custom users can do:**
+- Whatever an admin user grants them with SQL
+- Connect to every database, or only the databases you pick
+
+**What Custom users cannot do:**
+- Read or write data they haven't been granted
+- Connect to the `postgres` or `template1` databases
+
+See [Users, roles and database access](/postgres/users-and-permissions) for how to set up Custom users.
+
 ### Creating additional users
 
 To create additional users via the dashboard:
 1. Navigate to your MPG cluster's "Users" tab in the dashboard
-2. Enter a name for your new user
-3. Click "Create User" and wait for the user to be created.
+2. Pick a role and enter a name for your new user
+3. Click "Create user" and wait for the user to be created.
 
 To create additional users via `flyctl`:
 1. Run `fly mpg users create` to create a new user for your MPG cluster
 
-Note: If your cluster was created before July 2025, you'll need to opt in to the new Role system before you can add new users. This can be done on the Users tab of your dashboard. 
-
-### Authenticating with a custom user
+### Connecting as another user
 
 Once the user has been created, you can generate a connection string for them from the "Connect" tab of your dashboard. Select the user you'd like to authenticate as, and the connection string will be updated with their details. 
 
@@ -135,7 +148,7 @@ Once the user has been created, you can generate a connection string for them fr
 
 Your Managed Postgres cluster is created with the default `fly-db` database. You can create additional databases from the dashboard or through `flyctl`.
 
-These databases can be accessed by existing users in your cluster, based on their role.
+Admins, writers and readers reach every database. Custom users reach the databases you give them.
 
 ### Creating additional Databases
 
