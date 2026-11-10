@@ -539,6 +539,16 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -697,6 +707,36 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The app does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The address could not be allocated, for example because of billing restrictions or exhausted address pools.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-codegen-request-body-name": "request"
@@ -733,6 +773,16 @@
           "204": {
             "description": "No Content",
             "content": {}
+          },
+          "404": {
+            "description": "The app does not exist, or the address is not assigned to it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1197,7 +1247,7 @@
           "Machines"
         ],
         "summary": "Execute Command",
-        "description": "Execute a command on a specific Machine and return the raw command output bytes.\n",
+        "description": "Execute a command on a specific Machine and return a JSON response containing\nstdout, stderr, exit_code, and exit_signal.\n\nA completed command returns HTTP 200, including when the command exits\nunsuccessfully.\n\nHTTP 412 is returned when the Machine is not running. On Machines without\ncontainers, it can also indicate an error before or during command execution.\nFor example, the executable may be missing or lack execute permission. The\n`error` field describes the failure.\n\nHTTP 413 responses include a `status` field identifying the size limit that was\nexceeded:\n\n* `exec_request_too_large`: the Machine rejected the exec request as too large.\n  The error message is `exec request rejected: payload too large`. The limit\n  applies to the encoded request sent to the Machine, which can differ in size\n  from the public API request.\n* `exec_output_too_large`: the command ran, but its output could not be returned\n  because it exceeded the maximum allowed response size after JSON encoding.\n",
         "operationId": "Machines_exec",
         "parameters": [
           {
@@ -1232,16 +1282,11 @@
         },
         "responses": {
           "200": {
-            "description": "stdout, stderr, exit code, and exit signal are returned",
+            "description": "OK",
             "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "$ref": "#/components/schemas/flydv1.ExecResponse"
-                }
-              },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/flydv1.ExecResponse"
+                  "$ref": "#/components/schemas/ExecResponse"
                 }
               }
             }
@@ -1249,11 +1294,26 @@
           "400": {
             "description": "Bad Request",
             "content": {
-              "application/octet-stream": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
                 }
-              },
+              }
+            }
+          },
+          "412": {
+            "description": "An error occurred before or during command execution",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Size limit exceeded; status is exec_request_too_large or exec_output_too_large",
+            "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
@@ -1299,7 +1359,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Lease"
+                  "$ref": "#/components/schemas/LeaseResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The Machine has no lease.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeaseErrorResponse"
                 }
               }
             }
@@ -1339,6 +1409,14 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "ttl",
+            "in": "query",
+            "description": "How long the lease is valid, in seconds. Overridden by ttl in the request body.",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "requestBody": {
@@ -1358,7 +1436,27 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Lease"
+                  "$ref": "#/components/schemas/LeaseResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The nonce does not match the Machine's lease.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeaseErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Someone else holds a lease on the Machine.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeaseErrorResponse"
                 }
               }
             }
@@ -1405,7 +1503,33 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeaseOkResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The nonce does not match the Machine's lease.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeaseErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The Machine has no lease.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeaseErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1416,7 +1540,7 @@
           "Machines"
         ],
         "summary": "Get Machine Memory",
-        "description": "Get current memory limit and available capacity for a machine",
+        "description": "Get the current memory limit of a started Firecracker Machine, and how far it can be raised.",
         "operationId": "Machines_get_memory",
         "parameters": [
           {
@@ -1448,6 +1572,26 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "The Machine is not started, or does not run on Firecracker.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -1456,7 +1600,7 @@
           "Machines"
         ],
         "summary": "Set Machine Memory Limit",
-        "description": "Set the memory limit for a machine using the balloon device",
+        "description": "Set the memory limit of a started Firecracker Machine by resizing its memory balloon. The limit lasts until the Machine stops or is updated.\n+ Fails with 409 while the Machine has a lease, even when the lease nonce is passed.",
         "operationId": "Machines_set_memory_limit",
         "parameters": [
           {
@@ -1499,6 +1643,56 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "limit_mb is below 128 or above the Machine's memory.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The Machine has a lease.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "The Machine is not started, or does not run on Firecracker.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The host does not have enough free memory to raise the limit.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-codegen-request-body-name": "body"
@@ -1510,7 +1704,7 @@
           "Machines"
         ],
         "summary": "Reclaim Machine Memory",
-        "description": "Trigger the balloon device to reclaim memory from a machine",
+        "description": "Return unused memory of a started Firecracker Machine to the host. The memory balloon is inflated by `amount_mb` for a few seconds and then deflated again, so the Machine's memory limit does not change.\n+ Fails with 409 while the Machine has a lease, even when the lease nonce is passed.",
         "operationId": "Machines_reclaim_memory",
         "parameters": [
           {
@@ -1550,6 +1744,46 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/main.reclaimMemoryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "amount_mb is not positive, or exceeds the Machine's memory limit minus 128 MiB.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The Machine has a lease.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "The Machine is not started, or does not run on Firecracker.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1656,7 +1890,7 @@
             }
           },
           "412": {
-            "description": "Precondition Failed",
+            "description": "machine_version is no longer the Machine's current version, or another metadata update is in progress.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1723,7 +1957,7 @@
             }
           },
           "412": {
-            "description": "Precondition Failed",
+            "description": "machine_version is no longer the Machine's current version, or another metadata update is in progress.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1911,7 +2145,7 @@
           "Machines"
         ],
         "summary": "List Processes",
-        "description": "List all processes running on a specific Machine within an app, with optional sorting parameters.\n",
+        "description": "List all processes running on a specific Machine within an app, with optional sorting parameters. The Machine must be started.\n",
         "operationId": "Machines_list_processes",
         "parameters": [
           {
@@ -1935,17 +2169,27 @@
           {
             "name": "sort_by",
             "in": "query",
-            "description": "Sort by",
+            "description": "Field to sort processes by",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "cpu",
+                "pid",
+                "stime",
+                "rtime"
+              ]
             }
           },
           {
             "name": "order",
             "in": "query",
-            "description": "Order",
+            "description": "Sort order. Requires sort_by. Defaults to asc.",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
             }
           }
         ],
@@ -2406,7 +2650,7 @@
           {
             "name": "timeout",
             "in": "query",
-            "description": "wait timeout. default 60s",
+            "description": "Wait timeout in seconds. Defaults to 60.",
             "schema": {
               "type": "integer"
             }
@@ -2414,7 +2658,7 @@
           {
             "name": "state",
             "in": "query",
-            "description": "desired state(s), supports repeated or comma-separated values",
+            "description": "Desired state(s). Supports repeated or comma-separated values. settled matches any of started, stopped, suspended, failed, destroyed, or archived. Defaults to started.",
             "schema": {
               "type": "string",
               "enum": [
@@ -2423,6 +2667,7 @@
                 "suspended",
                 "destroyed",
                 "failed",
+                "archived",
                 "settled"
               ]
             }
@@ -2472,7 +2717,7 @@
           {
             "name": "min_version",
             "in": "query",
-            "description": "Minimum secrets version to return. Returned when setting a new secret",
+            "description": "Minimum secrets version to read, as returned by the endpoints that set or delete secrets. Use it to read your own writes.",
             "schema": {
               "type": "string"
             }
@@ -2480,7 +2725,7 @@
           {
             "name": "types",
             "in": "query",
-            "description": "Comma-seperated list of secret keys to list",
+            "description": "Comma-separated list of key types to list, such as hs256,es256. Defaults to all types.",
             "schema": {
               "type": "string"
             }
@@ -2529,7 +2774,7 @@
           {
             "name": "min_version",
             "in": "query",
-            "description": "Minimum secrets version to return. Returned when setting a new secret",
+            "description": "Minimum secrets version to read, as returned by the endpoints that set or delete secrets. Use it to read your own writes.",
             "schema": {
               "type": "string"
             }
@@ -2655,6 +2900,7 @@
           "Secrets"
         ],
         "summary": "Decrypt with a secret key",
+        "description": "The request must come from a Machine of the app; otherwise it fails with 403.",
         "operationId": "Secretkey_decrypt",
         "parameters": [
           {
@@ -2678,7 +2924,7 @@
           {
             "name": "min_version",
             "in": "query",
-            "description": "Minimum secrets version to return. Returned when setting a new secret",
+            "description": "Minimum secrets version to read, as returned by the endpoints that set or delete secrets. Use it to read your own writes.",
             "schema": {
               "type": "string"
             }
@@ -2715,6 +2961,16 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "The request does not come from a Machine of the app.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-codegen-request-body-name": "request"
@@ -2726,6 +2982,7 @@
           "Secrets"
         ],
         "summary": "Encrypt with a secret key",
+        "description": "The request must come from a Machine of the app; otherwise it fails with 403.",
         "operationId": "Secretkey_encrypt",
         "parameters": [
           {
@@ -2749,7 +3006,7 @@
           {
             "name": "min_version",
             "in": "query",
-            "description": "Minimum secrets version to return. Returned when setting a new secret",
+            "description": "Minimum secrets version to read, as returned by the endpoints that set or delete secrets. Use it to read your own writes.",
             "schema": {
               "type": "string"
             }
@@ -2779,6 +3036,16 @@
           },
           "400": {
             "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The request does not come from a Machine of the app.",
             "content": {
               "application/json": {
                 "schema": {
@@ -2860,6 +3127,7 @@
           "Secrets"
         ],
         "summary": "Sign with a secret key",
+        "description": "The request must come from a Machine of the app; otherwise it fails with 403.",
         "operationId": "Secretkey_sign",
         "parameters": [
           {
@@ -2883,7 +3151,7 @@
           {
             "name": "min_version",
             "in": "query",
-            "description": "Minimum secrets version to return. Returned when setting a new secret",
+            "description": "Minimum secrets version to read, as returned by the endpoints that set or delete secrets. Use it to read your own writes.",
             "schema": {
               "type": "string"
             }
@@ -2920,6 +3188,16 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "The request does not come from a Machine of the app.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-codegen-request-body-name": "request"
@@ -2931,6 +3209,7 @@
           "Secrets"
         ],
         "summary": "Verify with a secret key",
+        "description": "The request must come from a Machine of the app; otherwise it fails with 403. Responds with 204 if the signature is valid.",
         "operationId": "Secretkey_verify",
         "parameters": [
           {
@@ -2954,7 +3233,7 @@
           {
             "name": "min_version",
             "in": "query",
-            "description": "Minimum secrets version to return. Returned when setting a new secret",
+            "description": "Minimum secrets version to read, as returned by the endpoints that set or delete secrets. Use it to read your own writes.",
             "schema": {
               "type": "string"
             }
@@ -2978,6 +3257,16 @@
           },
           "400": {
             "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The request does not come from a Machine of the app.",
             "content": {
               "application/json": {
                 "schema": {
@@ -3010,7 +3299,7 @@
           {
             "name": "min_version",
             "in": "query",
-            "description": "Minimum secrets version to return. Returned when setting a new secret",
+            "description": "Minimum secrets version to read, as returned by the endpoints that set or delete secrets. Use it to read your own writes.",
             "schema": {
               "type": "string"
             }
@@ -3018,7 +3307,7 @@
           {
             "name": "show_secrets",
             "in": "query",
-            "description": "Show the secret values.",
+            "description": "Include secret values. Only allowed when the request comes from a Machine of the app; otherwise the request fails with 403.",
             "schema": {
               "type": "boolean"
             }
@@ -3031,6 +3320,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AppSecrets"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "show_secrets was requested from outside the app's Machines.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3120,7 +3419,7 @@
           {
             "name": "min_version",
             "in": "query",
-            "description": "Minimum secrets version to return. Returned when setting a new secret",
+            "description": "Minimum secrets version to read, as returned by the endpoints that set or delete secrets. Use it to read your own writes.",
             "schema": {
               "type": "string"
             }
@@ -3128,7 +3427,7 @@
           {
             "name": "show_secrets",
             "in": "query",
-            "description": "Show the secret value.",
+            "description": "Include the secret value. Only allowed when the request comes from a Machine of the app; otherwise the request fails with 403.",
             "schema": {
               "type": "boolean"
             }
@@ -3141,6 +3440,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AppSecret"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "show_secrets was requested from outside the app's Machines.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The secret does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3654,7 +3973,7 @@
           "Organizations"
         ],
         "summary": "List All Machines",
-        "description": "List all Machines associated with a specific organization. Machines are sorted by their `updated_at` timestamps, oldest to newest.\n\nThis API call represents \"a point in time\". Recent machine changes, including creations and destructions, may take time to propagate. When polling with `updated_after`, offset your timestamps to catch late-arriving events.\n",
+        "description": "List all Machines associated with a specific organization. Machines are returned region by region, and sorted by their `updated_at` timestamps, oldest to newest, within each region. The list as a whole is therefore not sorted by `updated_at`.\n\nThis API call represents \"a point in time\". Recent machine changes, including creations and destructions, may take time to propagate. When polling with `updated_after`, offset your timestamps to catch late-arriving events.\n",
         "operationId": "Machines_org_list",
         "parameters": [
           {
@@ -5007,6 +5326,120 @@
         }
       }
     },
+    "/v1/postgres/{postgres_cluster_id}/databases/{database_name}/query": {
+      "post": {
+        "tags": [
+          "Postgres Clusters"
+        ],
+        "summary": "Query Database",
+        "description": "Run read-only SQL against a database and return the final result set. The SQL runs as pg_read_all_data inside a read-only transaction with a statement timeout, so it can read every table but cannot change data or schema. Results over 1000 rows are rejected rather than truncated; add a LIMIT. System databases cannot be queried. Requires only read access to the organization.",
+        "operationId": "Postgres_databases_query",
+        "parameters": [
+          {
+            "name": "postgres_cluster_id",
+            "in": "path",
+            "description": "Managed Postgres Cluster ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "database_name",
+            "in": "path",
+            "description": "Database Name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/queryPostgresDatabaseRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/postgresQueryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "sql is missing, not a string, or too long",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "'Cluster not found' for the cluster; 'Database not found' for the database",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The query ran and failed; status is one of invalid_request, permission_denied, read_only_violation, statement_timeout, row_limit_exceeded, execution_failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unable to run the query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "pg-admin is unavailable; retry after the interval given by the Retry-After header",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "request"
+      }
+    },
     "/v1/postgres/{postgres_cluster_id}/fork": {
       "post": {
         "tags": [
@@ -6125,10 +6558,12 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the CNAME record to create, such as `_acme-challenge.example.com`."
           },
           "target": {
-            "type": "string"
+            "type": "string",
+            "description": "Value the CNAME record must point to."
           }
         }
       },
@@ -6136,31 +6571,50 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique ID of the app, as used by Fly.io's GraphQL API."
           },
           "internal_numeric_id": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Fly.io's internal numeric ID of the app."
           },
           "machine_count": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of the app's Machines that have not been destroyed."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Globally unique name of the app."
           },
           "network": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the private network the app is attached to: `default` for the organization's\ndefault network, or the name given when the app was created."
           },
           "network_cidr": {
-            "type": "string"
+            "type": "string",
+            "description": "The /48 IPv6 prefix of the private (6PN) network the app is attached to, such as\n`fdaa:0:1234::/48`. Apps on the same network share it."
           },
           "organization": {
-            "$ref": "#/components/schemas/AppOrganizationInfo"
+            "type": "object",
+            "description": "The organization that owns the app.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AppOrganizationInfo"
+              }
+            ]
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "State of the app. `pending` until one of its Machines changes state. After that, updated\nasynchronously whenever a Machine changes state: `deployed` if at least one Machine is\nstarted, and `suspended` otherwise.",
+            "enum": [
+              "pending",
+              "deployed",
+              "suspended"
+            ]
           },
           "volume_count": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of the app's volumes that have not been destroyed or scheduled for destruction."
           }
         }
       },
@@ -6168,13 +6622,16 @@
         "type": "object",
         "properties": {
           "internal_numeric_id": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Fly.io's internal numeric ID of the organization."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Display name of the organization."
           },
           "slug": {
-            "type": "string"
+            "type": "string",
+            "description": "Slug of the organization, used to refer to it in API requests such as `org_slug`."
           }
         }
       },
@@ -6182,19 +6639,24 @@
         "type": "object",
         "properties": {
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the secret was first set. Only returned when reading secrets."
           },
           "digest": {
-            "type": "string"
+            "type": "string",
+            "description": "Short fingerprint of the value, to tell whether it changed without revealing it. Omitted\nfor deleted secrets."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the secret."
           },
           "updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the secret's value last changed. Only returned when reading secrets."
           },
           "value": {
-            "type": "string"
+            "type": "string",
+            "description": "Value of the secret. Only returned with `show_secrets=true`, and when setting secrets."
           }
         }
       },
@@ -6203,6 +6665,7 @@
         "properties": {
           "secrets": {
             "type": "array",
+            "description": "The app's secrets.",
             "items": {
               "$ref": "#/components/schemas/AppSecret"
             }
@@ -6216,7 +6679,8 @@
             "type": "object",
             "additionalProperties": {
               "type": "string"
-            }
+            },
+            "description": "Secrets to change, keyed by name. A string value sets the secret; null deletes it. Names\nmay only contain letters, digits, and underscores. Secrets not listed are left alone."
           }
         }
       },
@@ -6225,10 +6689,11 @@
         "properties": {
           "Version": {
             "type": "integer",
-            "description": "DEPRECATED"
+            "description": "Same value as `version`.\n\nDeprecated: use `version`."
           },
           "secrets": {
             "type": "array",
+            "description": "The secrets from the request, with their new values and digests; deleted secrets only\nhave a name.",
             "items": {
               "$ref": "#/components/schemas/AppSecret"
             }
@@ -6243,17 +6708,20 @@
         "type": "object",
         "properties": {
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the address was assigned to the app, in RFC 3339 format."
           },
           "egress": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this is an egress address."
           },
           "ip": {
-            "type": "string"
+            "type": "string",
+            "description": "The allocated IP address. Null for `egress_pair`; see `ip_pair`."
           },
           "ip_pair": {
             "type": "object",
-            "description": "ip_pair is returned when \"egress-pair\" IP type is requested; in this case, ip is null.",
+            "description": "The allocated IPv4 and IPv6 addresses when the `egress_pair` type was requested; null\notherwise.",
             "allOf": [
               {
                 "$ref": "#/components/schemas/IPPair"
@@ -6264,13 +6732,16 @@
             "$ref": "#/components/schemas/IPAssignmentNetwork"
           },
           "region": {
-            "type": "string"
+            "type": "string",
+            "description": "Region the address is scoped to, or `global` for addresses announced in all regions."
           },
           "service_name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the service the address is scoped to, if any."
           },
           "shared": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this is the app's shared IPv4 address."
           }
         }
       },
@@ -6278,40 +6749,60 @@
         "type": "object",
         "properties": {
           "acme_requested": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether Fly.io-issued (ACME) certificates were requested for the hostname."
           },
           "certificates": {
             "type": "array",
+            "description": "The hostname's certificates: at most one custom entry and one Fly.io entry.",
             "items": {
               "$ref": "#/components/schemas/CertificateEntry"
             }
           },
           "configured": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether ownership of the hostname has been verified."
           },
           "dns_provider": {
-            "type": "string"
+            "type": "string",
+            "description": "DNS provider detected for the hostname, if known."
           },
           "dns_records": {
             "$ref": "#/components/schemas/DNSRecords"
           },
           "dns_requirements": {
-            "$ref": "#/components/schemas/DNSRequirements"
+            "type": "object",
+            "description": "DNS records to create to point the hostname at the app and validate it.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DNSRequirements"
+              }
+            ]
           },
           "hostname": {
-            "type": "string"
+            "type": "string",
+            "description": "The hostname the certificate is for. May start with `*.` for a wildcard certificate."
           },
           "rate_limited_until": {
-            "type": "string"
+            "type": "string",
+            "description": "If Let's Encrypt is rate-limiting certificate requests for the hostname, when that ends."
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable status: `Ready`, `Awaiting certificates`, `Awaiting configuration`, or a\nhint about what is misconfigured."
           },
           "validation": {
-            "$ref": "#/components/schemas/CertificateValidation"
+            "type": "object",
+            "description": "Which validation methods are currently possible.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CertificateValidation"
+              }
+            ]
           },
           "validation_errors": {
             "type": "array",
+            "description": "Problems found by the most recent validation.",
             "items": {
               "$ref": "#/components/schemas/CertificateValidationError"
             }
@@ -6322,37 +6813,57 @@
         "type": "object",
         "properties": {
           "acme_requested": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether Fly.io-issued (ACME) certificates were requested for the hostname."
           },
           "certificates": {
             "type": "array",
+            "description": "The hostname's certificates: at most one custom entry and one Fly.io entry.",
             "items": {
               "$ref": "#/components/schemas/CertificateEntry"
             }
           },
           "configured": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether ownership of the hostname has been verified."
           },
           "dns_provider": {
-            "type": "string"
+            "type": "string",
+            "description": "DNS provider detected for the hostname, if known."
           },
           "dns_requirements": {
-            "$ref": "#/components/schemas/DNSRequirements"
+            "type": "object",
+            "description": "DNS records to create to point the hostname at the app and validate it.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DNSRequirements"
+              }
+            ]
           },
           "hostname": {
-            "type": "string"
+            "type": "string",
+            "description": "The hostname the certificate is for. May start with `*.` for a wildcard certificate."
           },
           "rate_limited_until": {
-            "type": "string"
+            "type": "string",
+            "description": "If Let's Encrypt is rate-limiting certificate requests for the hostname, when that ends."
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable status: `Ready`, `Awaiting certificates`, `Awaiting configuration`, or a\nhint about what is misconfigured."
           },
           "validation": {
-            "$ref": "#/components/schemas/CertificateValidation"
+            "type": "object",
+            "description": "Which validation methods are currently possible.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CertificateValidation"
+              }
+            ]
           },
           "validation_errors": {
             "type": "array",
+            "description": "Problems found by the most recent validation.",
             "items": {
               "$ref": "#/components/schemas/CertificateValidationError"
             }
@@ -6363,22 +6874,27 @@
         "type": "object",
         "properties": {
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the certificate was added; for Fly.io-issued certificates, the earliest one."
           },
           "expires_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the certificate expires; for Fly.io-issued certificates, the latest one."
           },
           "issued": {
             "type": "array",
+            "description": "The individual Fly.io-issued certificates, newest first. Empty for custom certificates.",
             "items": {
               "$ref": "#/components/schemas/IssuedCertificate"
             }
           },
           "issuer": {
-            "type": "string"
+            "type": "string",
+            "description": "Issuer of a custom certificate. Omitted for Fly.io-issued certificates."
           },
           "source": {
             "type": "string",
+            "description": "`custom` for an uploaded certificate, `fly` for certificates issued by Fly.io.",
             "enum": [
               "custom",
               "fly"
@@ -6386,6 +6902,7 @@
           },
           "status": {
             "type": "string",
+            "description": "`active` once ownership of the hostname is verified. Until then, `pending_ownership` for\ncustom certificates and `pending_validation` for Fly.io-issued certificates.",
             "enum": [
               "active",
               "pending_ownership",
@@ -6398,43 +6915,56 @@
         "type": "object",
         "properties": {
           "acme_alpn_configured": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the hostname points at the app, allowing TLS-ALPN-01 validation."
           },
           "acme_dns_configured": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the `_acme-challenge` CNAME record is set up, allowing DNS-01 validation."
           },
           "acme_http_configured": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the hostname points at the app, allowing HTTP-01 validation."
           },
           "acme_requested": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether Fly.io-issued (ACME) certificates were requested for the hostname."
           },
           "configured": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether ownership of the hostname has been verified by any of the methods above."
           },
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the hostname was added to the app."
           },
           "dns_provider": {
-            "type": "string"
+            "type": "string",
+            "description": "DNS provider detected for the hostname, if known."
           },
           "has_custom_certificate": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether a custom certificate was uploaded for the hostname."
           },
           "has_fly_certificate": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether Fly.io has issued certificates for the hostname."
           },
           "hostname": {
-            "type": "string"
+            "type": "string",
+            "description": "The hostname the certificate is for. May start with `*.` for a wildcard certificate."
           },
           "ownership_txt_configured": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the `_fly-ownership` TXT record is set up."
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable status: `Ready`, `Awaiting certificates`, `Awaiting configuration`, or a\nhint about what is misconfigured."
           },
           "updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the hostname's certificate configuration last changed."
           }
         }
       },
@@ -6442,16 +6972,20 @@
         "type": "object",
         "properties": {
           "alpn_configured": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the hostname points at the app, allowing TLS-ALPN-01 validation."
           },
           "dns_configured": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the `_acme-challenge` CNAME record is set up, allowing DNS-01 validation."
           },
           "http_configured": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the hostname points at the app, allowing HTTP-01 validation."
           },
           "ownership_txt_configured": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the `_fly-ownership` TXT record is set up."
           }
         }
       },
@@ -6459,16 +6993,20 @@
         "type": "object",
         "properties": {
           "code": {
-            "type": "string"
+            "type": "string",
+            "description": "Machine-readable error code."
           },
           "message": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable description of the problem."
           },
           "remediation": {
-            "type": "string"
+            "type": "string",
+            "description": "How to fix the problem, if known."
           },
           "timestamp": {
-            "type": "string"
+            "type": "string",
+            "description": "When the problem was detected."
           }
         }
       },
@@ -6476,16 +7014,25 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the check: the key of a top-level check in `config.checks`, or\n`servicecheck-<index>-<type>-<internal_port>` for a check defined in a service."
           },
           "output": {
-            "type": "string"
+            "type": "string",
+            "description": "Output of the most recent check run, such as an error message."
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "Result of the check: `passing`, `warning`, or `critical`.",
+            "enum": [
+              "passing",
+              "warning",
+              "critical"
+            ]
           },
           "updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the check's status was last updated."
           }
         }
       },
@@ -6493,7 +7040,8 @@
         "type": "object",
         "properties": {
           "expiry": {
-            "type": "string"
+            "type": "string",
+            "description": "How long the token is valid, as a Go duration string such as `720h`. If omitted, the\ntoken is valid for as long as the token used to make this request."
           }
         }
       },
@@ -6501,7 +7049,8 @@
         "type": "object",
         "properties": {
           "token": {
-            "type": "string"
+            "type": "string",
+            "description": "The deploy token, including its `FlyV1 ` scheme prefix, ready to be used as an\n`Authorization` header value. It is derived from the token used to make this request\nand limited to the app, plus the organization's WireGuard and remote builder features."
           }
         }
       },
@@ -6534,10 +7083,12 @@
         "type": "object",
         "properties": {
           "created_at": {
-            "type": "integer"
+            "type": "integer",
+            "description": "When the app was created, in Unix milliseconds."
           },
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the new app. Despite the field's name, this is not the app's `id` as returned by\nGet App."
           }
         }
       },
@@ -6545,11 +7096,12 @@
         "type": "object",
         "properties": {
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "Description or reason for the lease, shown to others who look at it."
           },
           "ttl": {
             "type": "integer",
-            "description": "seconds lease will be valid"
+            "description": "How long the lease is valid, in seconds. Defaults to 60."
           }
         }
       },
@@ -6566,7 +7118,8 @@
             ]
           },
           "lease_ttl": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Acquire a lease on the new Machine that lasts this many seconds. The response's `nonce`\nfield holds the lease nonce."
           },
           "min_secrets_version": {
             "type": "integer",
@@ -6574,20 +7127,23 @@
           },
           "name": {
             "type": "string",
-            "description": "Unique name for this Machine. If omitted, one is generated for you"
+            "description": "Name for this Machine. If omitted, one is generated for you. Names are not required to be\nunique."
           },
           "region": {
             "type": "string",
-            "description": "The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you)."
+            "description": "The region to create the Machine in, such as `iad`. Also accepts a comma-separated list\nof regions and region groups (`any`, `us`, `na`, `sa`, `eu`, `apac`, `africa`,\n`asia_pacific`, `europe`, `north_america`, `south_america`), in which case Fly.io picks one\nwith capacity. If the Machine mounts a volume, defaults to the volume's region; the region\nmust include it. Otherwise defaults to the region of the API server handling the request,\nwhich is usually the one closest to you."
           },
           "skip_launch": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Create the Machine without starting it. It ends up `stopped`; start it with the Start\nMachine endpoint. Not allowed for spot Machines."
           },
           "skip_secrets": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Don't look up the app's current secrets version. The Machine still gets the app's\nsecrets, but may not see recent changes to them. Takes precedence over\n`min_secrets_version`."
           },
           "skip_service_registration": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Create the Machine cordoned, so Fly Proxy doesn't route requests to it until it is\nuncordoned. Its services are still registered."
           }
         }
       },
@@ -6596,10 +7152,12 @@
         "properties": {
           "aud": {
             "type": "string",
+            "description": "Value of the token's `aud` claim. Defaults to `https://fly.io/<org-slug>`.",
             "example": "https://fly.io/org-slug"
           },
           "aws_principal_tags": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Add AWS principal tag claims (`https://aws.amazon.com/tags/principal_tags/<tag>`) for use\nwith AWS IAM: FlyAppName, FlyOrgSlug, FlyOrgId, FlyMachineName and FlyRegion."
           }
         },
         "description": "Optional parameters"
@@ -6609,45 +7167,64 @@
         "properties": {
           "auto_backup_enabled": {
             "type": "boolean",
-            "description": "enable scheduled automatic snapshots. Defaults to `true`"
+            "description": "Take daily automatic snapshots of the volume. Defaults to `true`."
           },
           "compute": {
-            "$ref": "#/components/schemas/fly.MachineGuest"
+            "type": "object",
+            "description": "Requirements of the Machine that will use the volume, so that the volume is placed on a\nhost that can run it. Uses `cpus`, `memory_mb`, `cpu_kind`, `host_dedication_id`, and\n`required_host_features`.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.MachineGuest"
+              }
+            ]
           },
           "compute_image": {
-            "type": "string"
+            "type": "string",
+            "description": "Ignored."
           },
           "encrypted": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Encrypt the volume at rest. Defaults to true. When forking, the source volume's setting\nis used."
           },
           "fstype": {
-            "type": "string"
+            "type": "string",
+            "description": "Filesystem to format the volume with: `ext4`, or `raw` for an unformatted block device.",
+            "enum": [
+              "ext4",
+              "raw"
+            ]
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the volume: at most 30 lowercase letters, digits, and underscores. Required."
           },
           "region": {
-            "type": "string"
+            "type": "string",
+            "description": "Region to create the volume in. Accepts the same values as the `region` of Create\nMachine. When forking, defaults to the source volume's region; otherwise defaults to the\nregion of the API server handling the request."
           },
           "require_unique_zone": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Place the volume on a host that has no other volume of the app with the same name in the\nregion, so that Machines using these volumes don't share a host. Fails with 400 if no\nsuch host is available."
           },
           "size_gb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of the volume in GiB, from 1 to the organization's maximum (500 by default).\nRequired unless forking, in which case it must be omitted and the source volume's size\nis used."
           },
           "snapshot_id": {
             "type": "string",
-            "description": "restore from snapshot"
+            "description": "ID of a snapshot to restore into the new volume. Mutually exclusive with\n`source_volume_id`."
           },
           "snapshot_retention": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of days to keep snapshots of the volume, from 1 to 60. Defaults to 5."
           },
           "source_volume_id": {
             "type": "string",
-            "description": "fork from remote volume"
+            "description": "ID of a volume to fork: the new volume starts as a copy of it. The volume must belong to\nan app in the same organization."
           },
           "unique_zone_app_wide": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "With `require_unique_zone`, avoid hosts with any volume of the app in the region, not\njust volumes with the same name."
           }
         }
       },
@@ -6656,6 +7233,7 @@
         "properties": {
           "tokens": {
             "type": "array",
+            "description": "One entry per token in the Authorization header that could be verified, in no particular\norder; use `token_id` to tell them apart. Tokens that fail verification or are not scoped\nto an organization are left out.",
             "items": {
               "$ref": "#/components/schemas/main.tokenInfo"
             }
@@ -6667,36 +7245,43 @@
         "properties": {
           "a": {
             "type": "array",
+            "description": "A records found for the hostname.",
             "items": {
               "type": "string"
             }
           },
           "aaaa": {
             "type": "array",
+            "description": "AAAA records found for the hostname.",
             "items": {
               "type": "string"
             }
           },
           "acme_challenge_cname": {
-            "type": "string"
+            "type": "string",
+            "description": "Target of the `_acme-challenge` CNAME record, if found."
           },
           "cname": {
             "type": "array",
+            "description": "CNAME records found for the hostname.",
             "items": {
               "type": "string"
             }
           },
           "ownership_txt": {
-            "type": "string"
+            "type": "string",
+            "description": "Value of the `_fly-ownership` TXT record, if found."
           },
           "resolved_addresses": {
             "type": "array",
+            "description": "All addresses the hostname resolved to, after following CNAMEs.",
             "items": {
               "type": "string"
             }
           },
           "soa": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary name server from the SOA record of the hostname's zone."
           }
         }
       },
@@ -6705,24 +7290,39 @@
         "properties": {
           "a": {
             "type": "array",
+            "description": "IPv4 addresses the hostname's A records can point to: the app's global IPv4 addresses\nand its shared IPv4 address.",
             "items": {
               "type": "string"
             }
           },
           "aaaa": {
             "type": "array",
+            "description": "IPv6 addresses the hostname's AAAA records can point to: the app's global IPv6\naddresses.",
             "items": {
               "type": "string"
             }
           },
           "acme_challenge": {
-            "$ref": "#/components/schemas/AcmeChallenge"
+            "type": "object",
+            "description": "Record for DNS-01 validation.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AcmeChallenge"
+              }
+            ]
           },
           "cname": {
-            "type": "string"
+            "type": "string",
+            "description": "Target the hostname can CNAME to instead of using A and AAAA records."
           },
           "ownership": {
-            "$ref": "#/components/schemas/OwnershipVerification"
+            "type": "object",
+            "description": "Record for proving ownership of the hostname.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OwnershipVerification"
+              }
+            ]
           }
         }
       },
@@ -6730,16 +7330,16 @@
         "type": "object",
         "properties": {
           "associated_data": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Additional data passed when encrypting, base64-encoded.",
+            "format": "byte"
           },
           "ciphertext": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Data to decrypt, as returned by the encrypt endpoint, base64-encoded.",
+            "format": "byte"
           }
         }
       },
@@ -6747,10 +7347,10 @@
         "type": "object",
         "properties": {
           "plaintext": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Decrypted data, base64-encoded.",
+            "format": "byte"
           }
         }
       },
@@ -6759,7 +7359,7 @@
         "properties": {
           "Version": {
             "type": "integer",
-            "description": "DEPRECATED"
+            "description": "Same value as `version`.\n\nDeprecated: use `version`."
           },
           "version": {
             "type": "integer",
@@ -6772,10 +7372,11 @@
         "properties": {
           "Version": {
             "type": "integer",
-            "description": "DEPRECATED"
+            "description": "Same value as `version`.\n\nDeprecated: use `version`."
           },
           "version": {
-            "type": "integer"
+            "type": "integer",
+            "description": "The app's secrets version after this change."
           }
         }
       },
@@ -6783,16 +7384,16 @@
         "type": "object",
         "properties": {
           "associated_data": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Additional data to authenticate but not encrypt, base64-encoded. The same data must be\npassed when decrypting.",
+            "format": "byte"
           },
           "plaintext": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Data to encrypt, base64-encoded.",
+            "format": "byte"
           }
         }
       },
@@ -6800,10 +7401,10 @@
         "type": "object",
         "properties": {
           "ciphertext": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Encrypted data, base64-encoded.",
+            "format": "byte"
           }
         }
       },
@@ -6812,13 +7413,41 @@
         "properties": {
           "details": {
             "type": "object",
-            "description": "Deprecated"
+            "description": "Deprecated: details about some errors. Do not rely on its contents."
           },
           "error": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable description of the error. Its wording may change; use `status` to tell\nerrors apart."
           },
           "status": {
-            "$ref": "#/components/schemas/main.statusCode"
+            "type": "object",
+            "description": "Machine-readable error code, set for some errors, such as `insufficient_capacity`,\n`volume_placement_capacity`, `name_taken`, `exec_request_too_large`, or\n`exec_output_too_large`.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/main.statusCode"
+              }
+            ]
+          }
+        }
+      },
+      "ExecResponse": {
+        "type": "object",
+        "properties": {
+          "exit_code": {
+            "type": "integer",
+            "description": "The command's exit code."
+          },
+          "exit_signal": {
+            "type": "integer",
+            "description": "The signal that terminated the command, or 0 if it exited normally."
+          },
+          "stderr": {
+            "type": "string",
+            "description": "The command's standard error."
+          },
+          "stdout": {
+            "type": "string",
+            "description": "The command's standard output."
           }
         }
       },
@@ -6826,7 +7455,8 @@
         "type": "object",
         "properties": {
           "size_gb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "New size of the volume in GiB. Must be larger than the current size and at most the\norganization's maximum (500 by default)."
           }
         }
       },
@@ -6834,10 +7464,17 @@
         "type": "object",
         "properties": {
           "needs_restart": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the volume is attached to a running Machine that could not resize its filesystem\nwhile running. If true, restart the Machine for the filesystem to use the new size."
           },
           "volume": {
-            "$ref": "#/components/schemas/Volume"
+            "type": "object",
+            "description": "The extended volume.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Volume"
+              }
+            ]
           }
         }
       },
@@ -6845,25 +7482,31 @@
         "type": "object",
         "properties": {
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the address was assigned to the app, in RFC 3339 format. Null for the app's shared\nIPv4 address."
           },
           "egress": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this is an egress address, used for the app's outbound traffic rather than for\nreceiving requests."
           },
           "ip": {
-            "type": "string"
+            "type": "string",
+            "description": "The IP address."
           },
           "network": {
             "$ref": "#/components/schemas/IPAssignmentNetwork"
           },
           "region": {
-            "type": "string"
+            "type": "string",
+            "description": "Region the address is scoped to, or `global` for addresses announced in all regions.\nEmpty for the app's shared IPv4 address."
           },
           "service_name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the service the address is scoped to, if any."
           },
           "shared": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this is the app's shared IPv4 address, which other apps use too."
           }
         }
       },
@@ -6875,14 +7518,15 @@
             "description": "Network name; empty for the organization's default network."
           },
           "org_slug": {
-            "type": "string"
+            "type": "string",
+            "description": "Slug of the organization the network belongs to."
           }
         },
         "description": "The 6PN network a Flycast (private_v6) address belongs to. Null for all other IP types."
       },
       "IPAssignmentType": {
         "type": "string",
-        "description": "Type of IP address to allocate. \"egress-pair\" allocates both v4 and v6 egress IP addresses (recommended when using egress IPs).",
+        "description": "Type of IP address to allocate. \"egress_pair\" allocates both v4 and v6 egress IP addresses (recommended when using egress IPs).",
         "enum": [
           "v4",
           "v6",
@@ -6906,10 +7550,12 @@
         "type": "object",
         "properties": {
           "v4": {
-            "type": "string"
+            "type": "string",
+            "description": "The egress IPv4 address."
           },
           "v6": {
-            "type": "string"
+            "type": "string",
+            "description": "The egress IPv6 address."
           }
         }
       },
@@ -6917,22 +7563,27 @@
         "type": "object",
         "properties": {
           "digest": {
-            "type": "string"
+            "type": "string",
+            "description": "Content digest of the image (`sha256:...`)."
           },
           "labels": {
             "type": "object",
             "additionalProperties": {
               "type": "string"
-            }
+            },
+            "description": "The image's OCI labels."
           },
           "registry": {
-            "type": "string"
+            "type": "string",
+            "description": "Registry host of the image, such as `registry.fly.io`."
           },
           "repository": {
-            "type": "string"
+            "type": "string",
+            "description": "Repository of the image within the registry, such as `library/nginx`."
           },
           "tag": {
-            "type": "string"
+            "type": "string",
+            "description": "Tag the image was referenced by, if any."
           }
         }
       },
@@ -6940,13 +7591,16 @@
         "type": "object",
         "properties": {
           "certificate_authority": {
-            "type": "string"
+            "type": "string",
+            "description": "The certificate authority that issued the certificate."
           },
           "expires_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the certificate expires."
           },
           "type": {
             "type": "string",
+            "description": "Key type of the certificate.",
             "enum": [
               "rsa",
               "ecdsa"
@@ -6959,23 +7613,75 @@
         "properties": {
           "description": {
             "type": "string",
-            "description": "Description or reason for the Lease."
+            "description": "Description or reason for the lease."
           },
           "expires_at": {
             "type": "integer",
-            "description": "ExpiresAt is the unix timestamp in UTC to denote when the Lease will no longer be valid."
+            "description": "When the lease expires, in Unix seconds."
           },
           "nonce": {
             "type": "string",
-            "description": "Nonce is the unique ID autogenerated and associated with the Lease."
+            "description": "Unique ID generated for the lease. Pass it in the `fly-machine-lease-nonce` header to\nact on the leased Machine, refresh the lease, or release it."
           },
           "owner": {
             "type": "string",
-            "description": "Owner is the user identifier which acquired the Lease."
+            "description": "Email address of the user who acquired the lease."
           },
           "version": {
             "type": "string",
-            "description": "Machine version"
+            "description": "ID of the Machine's version at the time of the request."
+          }
+        }
+      },
+      "LeaseErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "What went wrong."
+          },
+          "status": {
+            "type": "string",
+            "description": "Always `error`.",
+            "enum": [
+              "error"
+            ]
+          }
+        }
+      },
+      "LeaseOkResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/OkResponse"
+          },
+          "status": {
+            "type": "string",
+            "description": "Always `success`.",
+            "enum": [
+              "success"
+            ]
+          }
+        }
+      },
+      "LeaseResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "description": "The lease.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Lease"
+              }
+            ]
+          },
+          "status": {
+            "type": "string",
+            "description": "Always `success`.",
+            "enum": [
+              "success"
+            ]
           }
         }
       },
@@ -6984,6 +7690,7 @@
         "properties": {
           "apps": {
             "type": "array",
+            "description": "The apps on this page, or all apps if `limit` was not provided.",
             "items": {
               "$ref": "#/components/schemas/App"
             }
@@ -7002,10 +7709,12 @@
         "type": "object",
         "properties": {
           "address": {
-            "type": "string"
+            "type": "string",
+            "description": "Local address and port the socket is bound to, such as `0.0.0.0:8080` or `[::]:8080`."
           },
           "proto": {
-            "type": "string"
+            "type": "string",
+            "description": "Protocol of the socket. Always `tcp`."
           }
         }
       },
@@ -7014,33 +7723,45 @@
         "properties": {
           "checks": {
             "type": "array",
+            "description": "Status of each health check: the Machine's top-level `checks` and its services'\nchecks.",
             "items": {
               "$ref": "#/components/schemas/CheckStatus"
             }
           },
           "config": {
-            "$ref": "#/components/schemas/fly.MachineConfig"
+            "type": "object",
+            "description": "The Machine's configuration, as provided when it was created or last updated, with\n`metadata` and `mounts` reflecting their current values. Null when the host is not\nreachable (`host_status` is not `ok`) or `summary=true` was requested; see\n`incomplete_config`.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.MachineConfig"
+              }
+            ]
           },
           "cordoned": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the Machine is cordoned, meaning Fly Proxy does not route requests to it. See\nthe Cordon Machine endpoint."
           },
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the Machine was created."
           },
           "events": {
             "type": "array",
+            "description": "Up to 5 of the most recent events of the current Machine version, newest first. Use\nthe List Events endpoint for more.",
             "items": {
               "$ref": "#/components/schemas/MachineEvent"
             }
           },
           "host_features": {
             "type": "array",
+            "description": "Features of the Machine's host, for comparison with `config.guest.required_host_features`.\nOnly returned when the request sets the `fly-include-host-features: true` header.",
             "items": {
               "type": "string"
             }
           },
           "host_status": {
             "type": "string",
+            "description": "Whether Fly.io could reach the Machine's host: `ok` if it could, `unreachable` if it\ncould not, in which case the response is built from last known state. `unknown` if the\nhost's status was not reported.",
             "enum": [
               "ok",
               "unknown",
@@ -7048,44 +7769,67 @@
             ]
           },
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique ID of the Machine."
           },
           "image_ref": {
-            "$ref": "#/components/schemas/ImageRef"
+            "type": "object",
+            "description": "The image the Machine runs, as resolved when it was last created or updated.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ImageRef"
+              }
+            ]
           },
           "incomplete_config": {
-            "$ref": "#/components/schemas/fly.MachineConfig"
+            "type": "object",
+            "description": "Last known configuration, returned in place of `config` when the host could not be\nreached (`host_status` is not `ok`) or when listing Machines with `summary=true`. It\ncomes from Fly.io's replicated state rather than the host, so it may be stale or lack\nfields.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.MachineConfig"
+              }
+            ]
           },
           "instance_id": {
             "type": "string",
-            "description": "InstanceID is the same value as `version`.\n\nDeprecated: use `version`."
+            "description": "Same value as `version`.\n\nDeprecated: use `version`."
           },
           "lease": {
-            "$ref": "#/components/schemas/StrippedLease"
+            "type": "object",
+            "description": "The lease currently held on the Machine. Only returned when `include_leases=true`\nwas requested and a lease is held.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StrippedLease"
+              }
+            ]
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the Machine. Generated when not provided at creation. Names are not required\nto be unique."
           },
           "nonce": {
             "type": "string",
-            "description": "Nonce is only every returned on machine creation if a lease_duration was provided."
+            "description": "Nonce of the lease acquired on the Machine at creation. Only returned when creating a\nMachine with `lease_ttl` set. Pass it in the `fly-machine-lease-nonce` header to act on\nthe Machine while the lease is held."
           },
           "private_ip": {
             "type": "string",
-            "description": "PrivateIP is the internal 6PN address of the machine."
+            "description": "The Machine's address on the organization's private (6PN) IPv6 network."
           },
           "region": {
-            "type": "string"
+            "type": "string",
+            "description": "Code of the region the Machine runs in, such as `iad`."
           },
           "state": {
-            "type": "string"
+            "type": "string",
+            "description": "Current state of the Machine, taken from the status of its most recent event. One of\n`created`, `starting`, `started`, `stopping`, `stopped`, `suspending`, `suspended`,\n`replacing`, `replaced`, `destroying`, `destroyed`, `failed`, `migrating`, `migrated`,\n`archived`, or `pending`. See https://fly.io/docs/machines/machine-states/."
           },
           "updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "Time of the Machine's most recent event, truncated to whole seconds. The zero time\n(0001-01-01T00:00:00Z) if the host could not be reached. With `summary=true`, the time\nFly.io last recorded a change to the Machine."
           },
           "version": {
             "type": "string",
-            "description": "Version is unique for each version of the machine. Pass it as\n`current_version` when updating the Machine to reject the update if the\nMachine has changed since this version."
+            "description": "Unique ID of this version of the Machine. Every update creates a new version. Pass it\nas `current_version` when updating the Machine to reject the update if the Machine has\nchanged since this version."
           }
         }
       },
@@ -7093,22 +7837,28 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique ID of the event (a ULID)."
           },
           "request": {
-            "type": "object"
+            "type": "object",
+            "description": "Details that depend on the event type. For example, `exit` events carry the exit\ncode and whether the process was killed for running out of memory, and `update`\nevents carry the new version."
           },
           "source": {
-            "type": "string"
+            "type": "string",
+            "description": "Who triggered the event: `user` for requests to this API, `flyd` for the host's\nMachine manager acting on its own (for example when a Machine exits or restarts), or\n`proxy` for Fly Proxy starting and stopping Machines."
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "The state the Machine moved to with this event, such as `created`, `started`, or\n`stopped`. The Machine's `state` is the status of its latest event."
           },
           "timestamp": {
-            "type": "integer"
+            "type": "integer",
+            "description": "When the event happened, in Unix milliseconds."
           },
           "type": {
-            "type": "string"
+            "type": "string",
+            "description": "What happened, such as `launch`, `start`, `stop`, `exit`, `restart`, `update`,\n`suspension`, `cancel_suspension`, `migration`, `metadata_update`, `archive`, or\n`destroy`."
           }
         }
       },
@@ -7117,26 +7867,30 @@
         "properties": {
           "cmd": {
             "type": "string",
-            "description": "Deprecated: use Command instead"
+            "description": "Command line to run, split into arguments like a shell would. Takes precedence over\n`command`.\n\nDeprecated: use `command`."
           },
           "command": {
             "type": "array",
+            "description": "Command to run, as the program followed by its arguments. It is run directly, not by a\nshell.",
             "items": {
               "type": "string"
             }
           },
           "container": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the container to run the command in, for Machines with containers."
           },
           "machine": {
             "type": "boolean",
-            "description": "Machine runs the command in the machine's own namespace instead of in a\ncontainer. It is mutually exclusive with Container."
+            "description": "Run the command in the Machine's own namespace instead of in a container. Mutually\nexclusive with `container`."
           },
           "stdin": {
-            "type": "string"
+            "type": "string",
+            "description": "Data to write to the command's standard input."
           },
           "timeout": {
-            "type": "integer"
+            "type": "integer",
+            "description": "How long to let the command run, in seconds. Defaults to 10; at most 600."
           }
         }
       },
@@ -7144,16 +7898,24 @@
         "type": "object",
         "properties": {
           "guest": {
-            "$ref": "#/components/schemas/fly.MachineGuest"
+            "type": "object",
+            "description": "The Machine's CPU, memory, and GPU configuration.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.MachineGuest"
+              }
+            ]
           },
           "image": {
-            "type": "string"
+            "type": "string",
+            "description": "The image reference the Machine was configured with."
           },
           "metadata": {
             "type": "object",
             "additionalProperties": {
               "type": "string"
-            }
+            },
+            "description": "The Machine's metadata key-value pairs."
           }
         }
       },
@@ -7161,10 +7923,17 @@
         "type": "object",
         "properties": {
           "user_config": {
-            "$ref": "#/components/schemas/fly.MachineConfig"
+            "type": "object",
+            "description": "The configuration of that version, as provided by the create or update request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.MachineConfig"
+              }
+            ]
           },
           "version": {
-            "type": "string"
+            "type": "string",
+            "description": "ID of the Machine version."
           }
         }
       },
@@ -7172,7 +7941,8 @@
         "type": "object",
         "properties": {
           "ok": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Always true."
           }
         }
       },
@@ -7180,34 +7950,49 @@
         "type": "object",
         "properties": {
           "app_name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the app the Machine belongs to."
           },
           "config": {
-            "$ref": "#/components/schemas/MachineOverviewConfig"
+            "type": "object",
+            "description": "Subset of the Machine's configuration. Omitted when `summary=true`.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MachineOverviewConfig"
+              }
+            ]
           },
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the Machine was created."
           },
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique ID of the Machine."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the Machine."
           },
           "private_ip": {
-            "type": "string"
+            "type": "string",
+            "description": "The Machine's address on the organization's private (6PN) IPv6 network."
           },
           "region": {
-            "type": "string"
+            "type": "string",
+            "description": "Code of the region the Machine runs in."
           },
           "state": {
-            "type": "string"
+            "type": "string",
+            "description": "Current state of the Machine; see the `state` field of Machine."
           },
           "updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When Fly.io last recorded a change to the Machine."
           },
           "version": {
-            "type": "string"
+            "type": "string",
+            "description": "ID of the Machine's current version."
           }
         }
       },
@@ -7216,24 +8001,29 @@
         "properties": {
           "error_regions": {
             "type": "array",
+            "description": "Regions that could not be queried. Their Machines are missing from the response.",
             "items": {
               "type": "string"
             }
           },
           "last_machine_id": {
-            "type": "string"
+            "type": "string",
+            "description": "ID of the last Machine on this page."
           },
           "last_updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "`updated_at` of the last Machine on this page."
           },
           "machines": {
             "type": "array",
+            "description": "The Machines on this page.",
             "items": {
               "$ref": "#/components/schemas/OrgMachine"
             }
           },
           "next_cursor": {
-            "type": "string"
+            "type": "string",
+            "description": "Pagination cursor for the next page. Absent when no more Machines remain. Cursors expire\n30 minutes after the first page was requested."
           }
         }
       },
@@ -7241,52 +8031,67 @@
         "type": "object",
         "properties": {
           "app_name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the app the volume belongs to."
           },
           "attached_alloc_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Always null.\n\nDeprecated: volumes are no longer attached to Nomad allocations."
           },
           "attached_machine_id": {
-            "type": "string"
+            "type": "string",
+            "description": "ID of the Machine the volume is attached to, or null if it is not attached."
           },
           "auto_backup_enabled": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether daily automatic snapshots are taken."
           },
           "block_size": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of a filesystem block, in bytes. See `blocks`."
           },
           "blocks": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of the volume's filesystem, in blocks of `block_size` bytes, as last reported by a\nMachine that mounted the volume. 0 if never reported, if the host could not be reached,\nor with `summary=true`."
           },
           "blocks_avail": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of filesystem blocks available to unprivileged users. See `blocks`."
           },
           "blocks_free": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of free filesystem blocks, including blocks reserved for the root user. See\n`blocks`."
           },
           "bytes_total": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of the volume, in bytes. 0 if the host could not be reached or with `summary=true`."
           },
           "bytes_used": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Bytes of storage the volume occupies on its host. Volumes are thinly provisioned, so this\ngrows as blocks are written and does not shrink when files are deleted. It is not the\nfilesystem's usage; use `blocks` and `blocks_free` for that. 0 if the host could not be\nreached or with `summary=true`."
           },
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the volume was created."
           },
           "encrypted": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the volume is encrypted at rest."
           },
           "fstype": {
-            "type": "string"
+            "type": "string",
+            "description": "Filesystem the volume was formatted with: `ext4`, or `raw` for an unformatted block\ndevice."
           },
           "host_features": {
             "type": "array",
+            "description": "Features of the volume's host. Only returned when the request sets the\n`fly-include-host-features: true` header.",
             "items": {
               "type": "string"
             }
           },
           "host_status": {
             "type": "string",
+            "description": "Whether Fly.io could reach the volume's host: `ok` if it could, `unreachable` or\n`unknown` if it could not, in which case host-reported fields are missing.",
             "enum": [
               "ok",
               "unknown",
@@ -7294,41 +8099,51 @@
             ]
           },
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique ID of the volume, such as `vol_1234567890abcdef`."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the volume. Several volumes of an app can share a name."
           },
           "region": {
-            "type": "string"
+            "type": "string",
+            "description": "Code of the region the volume is in."
           },
           "required_host_features": {
             "type": "array",
+            "description": "Host features the volume's host was required to have; see `compute.required_host_features`\nin the create request.",
             "items": {
               "type": "string"
             }
           },
           "size_gb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of the volume, in GiB."
           },
           "snapshot_retention": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of days snapshots of the volume are kept."
           },
           "state": {
-            "type": "string"
+            "type": "string",
+            "description": "State of the volume, such as `creating`, `created`, `extending`, `restoring`,\n`hydrating`, `scheduling_destroy`, `pending_destroy`, `destroying`, `destroyed`, or\n`failed`."
           },
           "type": {
             "type": "string",
+            "description": "Kind of volume: `local` for regular volumes, or `cache` for volumes that hold\ndisposable data and support neither snapshots nor restores.",
             "enum": [
               "local",
               "cache"
             ]
           },
           "updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When Fly.io last recorded a change to the volume."
           },
           "zone": {
-            "type": "string"
+            "type": "string",
+            "description": "Identifies the host the volume is on. Volumes with different zones are on different\nhosts."
           }
         }
       },
@@ -7336,16 +8151,20 @@
         "type": "object",
         "properties": {
           "last_updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "`updated_at` of the last volume on this page."
           },
           "last_volume_id": {
-            "type": "string"
+            "type": "string",
+            "description": "ID of the last volume on this page."
           },
           "next_cursor": {
-            "type": "string"
+            "type": "string",
+            "description": "Pagination cursor for the next page. Absent when no more volumes remain."
           },
           "volumes": {
             "type": "array",
+            "description": "The volumes on this page.",
             "items": {
               "$ref": "#/components/schemas/OrgVolume"
             }
@@ -7369,13 +8188,16 @@
         "type": "object",
         "properties": {
           "app_value": {
-            "type": "string"
+            "type": "string",
+            "description": "TXT record value that proves ownership for this app."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the TXT record to create, such as `_fly-ownership.example.com`."
           },
           "org_value": {
-            "type": "string"
+            "type": "string",
+            "description": "TXT record value that proves ownership for every app in the organization."
           }
         }
       },
@@ -7843,6 +8665,20 @@
           }
         }
       },
+      "PostgresQueryColumn": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Column name as returned by Postgres."
+          },
+          "type": {
+            "type": "string",
+            "description": "Postgres type name.",
+            "example": "int8"
+          }
+        }
+      },
       "PostgresSlowQuery": {
         "type": "object",
         "properties": {
@@ -7915,31 +8751,39 @@
         "type": "object",
         "properties": {
           "command": {
-            "type": "string"
+            "type": "string",
+            "description": "The process's command line, with arguments separated by spaces."
           },
           "cpu": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Average CPU usage over the process's lifetime, in percent of one CPU. May exceed 100\non Machines with more than one CPU."
           },
           "directory": {
-            "type": "string"
+            "type": "string",
+            "description": "The process's working directory."
           },
           "listen_sockets": {
             "type": "array",
+            "description": "TCP sockets the process is listening on.",
             "items": {
               "$ref": "#/components/schemas/ListenSocket"
             }
           },
           "pid": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Process ID inside the Machine."
           },
           "rss": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Resident set size: the physical memory the process uses, in bytes."
           },
           "rtime": {
-            "type": "integer"
+            "type": "integer",
+            "description": "How long the process has been running, in seconds."
           },
           "stime": {
-            "type": "integer"
+            "type": "integer",
+            "description": "When the process started, in seconds since the Machine booted."
           }
         }
       },
@@ -7947,22 +8791,26 @@
         "type": "object",
         "properties": {
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the key was first set."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the secret key."
           },
           "public_key": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Public key of asymmetric keys (`nacl_box`, `nacl_sign`, `es256`), base64-encoded.",
+            "format": "byte"
           },
           "type": {
-            "type": "string"
+            "type": "string",
+            "description": "Type of the key: `hs256`, `hs384`, `hs512`, `xaes256gcm`, `nacl_auth`, `nacl_box`, `nacl_secretbox`, `nacl_sign`, or `es256`."
           },
           "updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the key last changed."
           }
         }
       },
@@ -7971,6 +8819,7 @@
         "properties": {
           "secret_keys": {
             "type": "array",
+            "description": "The app's secret keys. Key material is never returned.",
             "items": {
               "$ref": "#/components/schemas/SecretKey"
             }
@@ -7981,7 +8830,8 @@
         "type": "object",
         "properties": {
           "value": {
-            "type": "string"
+            "type": "string",
+            "description": "New value of the secret."
           }
         }
       },
@@ -7990,22 +8840,27 @@
         "properties": {
           "Version": {
             "type": "integer",
-            "description": "DEPRECATED"
+            "description": "Same value as `version`.\n\nDeprecated: use `version`."
           },
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the secret was first set. Only returned when reading secrets."
           },
           "digest": {
-            "type": "string"
+            "type": "string",
+            "description": "Short fingerprint of the value, to tell whether it changed without revealing it. Omitted\nfor deleted secrets."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the secret."
           },
           "updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the secret's value last changed. Only returned when reading secrets."
           },
           "value": {
-            "type": "string"
+            "type": "string",
+            "description": "Value of the secret. Only returned with `show_secrets=true`, and when setting secrets."
           },
           "version": {
             "type": "integer",
@@ -8017,13 +8872,14 @@
         "type": "object",
         "properties": {
           "type": {
-            "type": "string"
+            "type": "string",
+            "description": "Type of the key: `hs256`, `hs384`, `hs512`, `xaes256gcm`, `nacl_auth`, `nacl_box`, `nacl_secretbox`, `nacl_sign`, or `es256`. Required."
           },
           "value": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Key material, base64-encoded. Ignored when generating a key.",
+            "format": "byte"
           }
         }
       },
@@ -8032,28 +8888,33 @@
         "properties": {
           "Version": {
             "type": "integer",
-            "description": "DEPRECATED"
+            "description": "Same value as `version`.\n\nDeprecated: use `version`."
           },
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the key was first set."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the secret key."
           },
           "public_key": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Public key of asymmetric keys (`nacl_box`, `nacl_sign`, `es256`), base64-encoded.",
+            "format": "byte"
           },
           "type": {
-            "type": "string"
+            "type": "string",
+            "description": "Type of the key: `hs256`, `hs384`, `hs512`, `xaes256gcm`, `nacl_auth`, `nacl_box`, `nacl_secretbox`, `nacl_sign`, or `es256`."
           },
           "updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the key last changed."
           },
           "version": {
-            "type": "integer"
+            "type": "integer",
+            "description": "The app's secrets version after this change. Pass it as `min_version` to read the change\nback."
           }
         }
       },
@@ -8061,10 +8922,10 @@
         "type": "object",
         "properties": {
           "plaintext": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Data to sign, base64-encoded.",
+            "format": "byte"
           }
         }
       },
@@ -8072,10 +8933,10 @@
         "type": "object",
         "properties": {
           "signature": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Signature or MAC of the data, base64-encoded.",
+            "format": "byte"
           }
         }
       },
@@ -8084,6 +8945,7 @@
         "properties": {
           "signal": {
             "type": "string",
+            "description": "Signal to send to the Machine's main process.",
             "enum": [
               "SIGABRT",
               "SIGALRM",
@@ -8125,6 +8987,7 @@
         "properties": {
           "signal": {
             "type": "string",
+            "description": "Signal to send to the Machine's main process. Defaults to `config.stop_config.signal`, or\nSIGINT.",
             "example": "SIGTERM",
             "enum": [
               "SIGHUP",
@@ -8138,6 +9001,7 @@
           },
           "timeout": {
             "type": "string",
+            "description": "How long to wait for the Machine to exit after sending `signal` before killing it, as a\nGo duration string. Defaults to `config.stop_config.timeout`, or 5s.",
             "example": "1s"
           }
         }
@@ -8146,13 +9010,16 @@
         "type": "object",
         "properties": {
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "Description given when the lease was acquired."
           },
           "expires_at": {
-            "type": "integer"
+            "type": "integer",
+            "description": "When the lease expires, in Unix seconds."
           },
           "owner": {
-            "type": "string"
+            "type": "string",
+            "description": "Email address of the user who acquired the lease."
           }
         }
       },
@@ -8161,7 +9028,7 @@
         "properties": {
           "config": {
             "type": "object",
-            "description": "An object defining the Machine configuration",
+            "description": "The new Machine configuration. It replaces the current one entirely.",
             "allOf": [
               {
                 "$ref": "#/components/schemas/fly.MachineConfig"
@@ -8170,10 +9037,11 @@
           },
           "current_version": {
             "type": "string",
-            "description": "CurrentVersion is an optional optimistic-concurrency guard: the Machine's\n`version`, as returned by create, get or a previous update. When set\nand it is no longer the Machine's current version, the update is rejected\nwith 409 Conflict and nothing changes. Omit it to update unconditionally."
+            "description": "Optional optimistic-concurrency guard: the Machine's `version`, as returned by create,\nget or a previous update. When set and it is no longer the Machine's current version,\nthe update is rejected with 409 Conflict and nothing changes. Omit it to update\nunconditionally."
           },
           "lease_ttl": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Ignored. Use the lease endpoints to lease an existing Machine."
           },
           "min_secrets_version": {
             "type": "integer",
@@ -8181,20 +9049,23 @@
           },
           "name": {
             "type": "string",
-            "description": "Unique name for this Machine. If omitted, one is generated for you"
+            "description": "Ignored."
           },
           "region": {
             "type": "string",
-            "description": "The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you)."
+            "description": "Not used to place the Machine: an update never moves it to another region or host."
           },
           "skip_launch": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Apply the update without starting the Machine. It ends up `stopped`; start it with the\nStart Machine endpoint. Not allowed for spot Machines."
           },
           "skip_secrets": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Don't look up the app's current secrets version. The Machine still gets the app's\nsecrets, but may not see recent changes to them. Takes precedence over\n`min_secrets_version`."
           },
           "skip_service_registration": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Ignored. Use the cordon and uncordon endpoints instead."
           }
         }
       },
@@ -8202,10 +9073,12 @@
         "type": "object",
         "properties": {
           "auto_backup_enabled": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Take daily automatic snapshots of the volume. Unchanged if omitted."
           },
           "snapshot_retention": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of days to keep snapshots of the volume, from 1 to 60. Unchanged if omitted."
           }
         }
       },
@@ -8213,16 +9086,16 @@
         "type": "object",
         "properties": {
           "plaintext": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Data that was signed, base64-encoded.",
+            "format": "byte"
           },
           "signature": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "type": "string",
+            "description": "Signature or MAC to check, base64-encoded.",
+            "format": "byte"
           }
         }
       },
@@ -8230,49 +9103,63 @@
         "type": "object",
         "properties": {
           "attached_alloc_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Always null.\n\nDeprecated: volumes are no longer attached to Nomad allocations."
           },
           "attached_machine_id": {
-            "type": "string"
+            "type": "string",
+            "description": "ID of the Machine the volume is attached to, or null if it is not attached."
           },
           "auto_backup_enabled": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether daily automatic snapshots are taken."
           },
           "block_size": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of a filesystem block, in bytes. See `blocks`."
           },
           "blocks": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of the volume's filesystem, in blocks of `block_size` bytes, as last reported by a\nMachine that mounted the volume. 0 if never reported, if the host could not be reached,\nor with `summary=true`."
           },
           "blocks_avail": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of filesystem blocks available to unprivileged users. See `blocks`."
           },
           "blocks_free": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of free filesystem blocks, including blocks reserved for the root user. See\n`blocks`."
           },
           "bytes_total": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of the volume, in bytes. 0 if the host could not be reached or with `summary=true`."
           },
           "bytes_used": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Bytes of storage the volume occupies on its host. Volumes are thinly provisioned, so this\ngrows as blocks are written and does not shrink when files are deleted. It is not the\nfilesystem's usage; use `blocks` and `blocks_free` for that. 0 if the host could not be\nreached or with `summary=true`."
           },
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the volume was created."
           },
           "encrypted": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the volume is encrypted at rest."
           },
           "fstype": {
-            "type": "string"
+            "type": "string",
+            "description": "Filesystem the volume was formatted with: `ext4`, or `raw` for an unformatted block\ndevice."
           },
           "host_features": {
             "type": "array",
+            "description": "Features of the volume's host. Only returned when the request sets the\n`fly-include-host-features: true` header.",
             "items": {
               "type": "string"
             }
           },
           "host_status": {
             "type": "string",
+            "description": "Whether Fly.io could reach the volume's host: `ok` if it could, `unreachable` or\n`unknown` if it could not, in which case host-reported fields are missing.",
             "enum": [
               "ok",
               "unknown",
@@ -8280,38 +9167,47 @@
             ]
           },
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique ID of the volume, such as `vol_1234567890abcdef`."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the volume. Several volumes of an app can share a name."
           },
           "region": {
-            "type": "string"
+            "type": "string",
+            "description": "Code of the region the volume is in."
           },
           "required_host_features": {
             "type": "array",
+            "description": "Host features the volume's host was required to have; see `compute.required_host_features`\nin the create request.",
             "items": {
               "type": "string"
             }
           },
           "size_gb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of the volume, in GiB."
           },
           "snapshot_retention": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of days snapshots of the volume are kept."
           },
           "state": {
-            "type": "string"
+            "type": "string",
+            "description": "State of the volume, such as `creating`, `created`, `extending`, `restoring`,\n`hydrating`, `scheduling_destroy`, `pending_destroy`, `destroying`, `destroyed`, or\n`failed`."
           },
           "type": {
             "type": "string",
+            "description": "Kind of volume: `local` for regular volumes, or `cache` for volumes that hold\ndisposable data and support neither snapshots nor restores.",
             "enum": [
               "local",
               "cache"
             ]
           },
           "zone": {
-            "type": "string"
+            "type": "string",
+            "description": "Identifies the host the volume is on. Volumes with different zones are on different\nhosts."
           }
         }
       },
@@ -8319,25 +9215,32 @@
         "type": "object",
         "properties": {
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "description": "When the snapshot finished, in RFC 3339 format. The zero time\n(0001-01-01T00:00:00Z) while the snapshot is in progress."
           },
           "digest": {
-            "type": "string"
+            "type": "string",
+            "description": "Content digest of the snapshot. Empty while the snapshot is in progress."
           },
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique ID of the snapshot. Pass it as `snapshot_id` when creating a volume to restore it."
           },
           "retention_days": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of days the snapshot is kept after it was created. Omitted while the snapshot is\nin progress."
           },
           "size": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of the stored snapshot, in bytes. 0 while the snapshot is in progress."
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "`created` for completed snapshots; other values while the snapshot is in progress."
           },
           "volume_size": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of the volume the snapshot was taken of, in bytes."
           }
         }
       },
@@ -8345,16 +9248,20 @@
         "type": "object",
         "properties": {
           "event_id": {
-            "type": "string"
+            "type": "string",
+            "description": "ID of the event that moved the Machine into `state`. Pass it as `from_event_id` to wait\nfor a later state change."
           },
           "ok": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Always true."
           },
           "state": {
-            "type": "string"
+            "type": "string",
+            "description": "The state the Machine reached, one of the requested states."
           },
           "version": {
-            "type": "string"
+            "type": "string",
+            "description": "ID of the Machine version that reached `state`."
           }
         }
       },
@@ -8362,19 +9269,29 @@
         "type": "object",
         "properties": {
           "network": {
-            "type": "string"
+            "type": "string",
+            "description": "Only for `private_v6`: name of the private network to allocate the Flycast address in.\nDefaults to the organization's default network."
           },
           "org_slug": {
-            "type": "string"
+            "type": "string",
+            "description": "Only for `private_v6`: slug of the organization whose private network the Flycast address\nis allocated in, to make the app reachable from that organization. Defaults to the app's\norganization."
           },
           "region": {
-            "type": "string"
+            "type": "string",
+            "description": "Region to scope the address to. Required for egress types. Optional for `v4` and `v6`,\nwhich default to `global` (announced in all regions). Must be empty or `global` for\n`shared_v4` and `private_v6`."
           },
           "service_name": {
-            "type": "string"
+            "type": "string",
+            "description": "Scope the address to a single service of the app. Not supported for egress types."
           },
           "type": {
-            "$ref": "#/components/schemas/IPAssignmentType"
+            "type": "object",
+            "description": "Type of IP address to allocate. Required.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IPAssignmentType"
+              }
+            ]
           }
         }
       },
@@ -8382,7 +9299,8 @@
         "type": "object",
         "properties": {
           "header": {
-            "type": "string"
+            "type": "string",
+            "description": "Value of the Authorization header to verify, e.g. `FlyV1 fm2_...`."
           }
         }
       },
@@ -8390,10 +9308,22 @@
         "type": "object",
         "properties": {
           "access": {
-            "$ref": "#/components/schemas/flyio.Access"
+            "type": "object",
+            "description": "The requested access, with names resolved to IDs.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/flyio.Access"
+              }
+            ]
           },
           "verified_token": {
-            "$ref": "#/components/schemas/root.VerifiedToken"
+            "type": "object",
+            "description": "The token that grants the requested access.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/root.VerifiedToken"
+              }
+            ]
           }
         }
       },
@@ -8401,10 +9331,17 @@
         "type": "object",
         "properties": {
           "access": {
-            "$ref": "#/components/schemas/main.TokenAccess"
+            "type": "object",
+            "description": "Access to check the token against.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/main.TokenAccess"
+              }
+            ]
           },
           "header": {
-            "type": "string"
+            "type": "string",
+            "description": "Value of the Authorization header to verify, e.g. `FlyV1 fm2_...`."
           }
         }
       },
@@ -8412,7 +9349,8 @@
         "type": "object",
         "properties": {
           "hostname": {
-            "type": "string"
+            "type": "string",
+            "description": "Hostname to request certificates for, such as `example.com` or `*.example.com`.\nRequired. Hostnames under `fly.dev` are not allowed."
           }
         }
       },
@@ -8420,13 +9358,16 @@
         "type": "object",
         "properties": {
           "fullchain": {
-            "type": "string"
+            "type": "string",
+            "description": "PEM-encoded certificate, followed by any intermediate certificates. Required."
           },
           "hostname": {
-            "type": "string"
+            "type": "string",
+            "description": "Hostname the certificate is for. Required. Hostnames under `fly.dev` are not allowed."
           },
           "private_key": {
-            "type": "string"
+            "type": "string",
+            "description": "PEM-encoded private key of the certificate. Required."
           }
         }
       },
@@ -8582,43 +9523,64 @@
         "type": "object",
         "properties": {
           "acme_requested": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether Fly.io-issued (ACME) certificates were requested for the hostname."
           },
           "certificates": {
             "type": "array",
+            "description": "The hostname's certificates: at most one custom entry and one Fly.io entry.",
             "items": {
               "$ref": "#/components/schemas/CertificateEntry"
             }
           },
           "configured": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether ownership of the hostname has been verified."
           },
           "dns_provider": {
-            "type": "string"
+            "type": "string",
+            "description": "DNS provider detected for the hostname, if known."
           },
           "dns_requirements": {
-            "$ref": "#/components/schemas/DNSRequirements"
+            "type": "object",
+            "description": "DNS records to create to point the hostname at the app and validate it.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DNSRequirements"
+              }
+            ]
           },
           "hostname": {
-            "type": "string"
+            "type": "string",
+            "description": "The hostname the certificate is for. May start with `*.` for a wildcard certificate."
           },
           "rate_limited_until": {
-            "type": "string"
+            "type": "string",
+            "description": "If Let's Encrypt is rate-limiting certificate requests for the hostname, when that ends."
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable status: `Ready`, `Awaiting certificates`, `Awaiting configuration`, or a\nhint about what is misconfigured."
           },
           "validation": {
-            "$ref": "#/components/schemas/CertificateValidation"
+            "type": "object",
+            "description": "Which validation methods are currently possible.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CertificateValidation"
+              }
+            ]
           },
           "validation_errors": {
             "type": "array",
+            "description": "Problems found by the most recent validation.",
             "items": {
               "$ref": "#/components/schemas/CertificateValidationError"
             }
           },
           "warning": {
-            "type": "string"
+            "type": "string",
+            "description": "Set when no ACME certificates are configured for the hostname either, so it no longer has\nany certificate."
           }
         }
       },
@@ -8746,6 +9708,7 @@
         "properties": {
           "condition": {
             "type": "object",
+            "description": "When the container can start: once the dependency has `started`, is `healthy`, or has\n`exited_successfully`",
             "allOf": [
               {
                 "$ref": "#/components/schemas/fly.ContainerDependencyCondition"
@@ -8753,7 +9716,8 @@
             ]
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the container this one depends on"
           }
         }
       },
@@ -8774,7 +9738,13 @@
         "type": "object",
         "properties": {
           "exec": {
-            "$ref": "#/components/schemas/fly.ExecHealthcheck"
+            "type": "object",
+            "description": "Check that a command run in the container exits with status 0",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.ExecHealthcheck"
+              }
+            ]
           },
           "failure_threshold": {
             "type": "integer",
@@ -8785,7 +9755,13 @@
             "description": "The time in seconds to wait after a container starts before checking its health."
           },
           "http": {
-            "$ref": "#/components/schemas/fly.HTTPHealthcheck"
+            "type": "object",
+            "description": "Check that an HTTP request succeeds",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.HTTPHealthcheck"
+              }
+            ]
           },
           "interval": {
             "type": "integer",
@@ -8809,7 +9785,13 @@
             "description": "The number of times the check must succeeed before considering the container healthy."
           },
           "tcp": {
-            "$ref": "#/components/schemas/fly.TCPHealthcheck"
+            "type": "object",
+            "description": "Check that a TCP connection can be opened",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.TCPHealthcheck"
+              }
+            ]
           },
           "timeout": {
             "type": "integer",
@@ -8853,36 +9835,43 @@
         "properties": {
           "dns_forward_rules": {
             "type": "array",
+            "description": "Forward DNS queries for some domains to other DNS servers",
             "items": {
               "$ref": "#/components/schemas/fly.dnsForwardRule"
             }
           },
           "hostname": {
-            "type": "string"
+            "type": "string",
+            "description": "Hostname of the Machine. Defaults to the Machine ID. Also added to /etc/hosts with the\nMachine's 6PN address"
           },
           "hostname_fqdn": {
-            "type": "string"
+            "type": "string",
+            "description": "Fully qualified domain name added to /etc/hosts for `hostname`"
           },
           "nameservers": {
             "type": "array",
+            "description": "Nameservers to use instead of the default, Fly.io's private DNS server `fdaa::3`",
             "items": {
               "type": "string"
             }
           },
           "options": {
             "type": "array",
+            "description": "Options for /etc/resolv.conf",
             "items": {
               "$ref": "#/components/schemas/fly.dnsOption"
             }
           },
           "searches": {
             "type": "array",
+            "description": "Search domains for /etc/resolv.conf",
             "items": {
               "type": "string"
             }
           },
           "skip_registration": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Currently has no effect"
           }
         }
       },
@@ -8991,25 +9980,36 @@
         "type": "object",
         "properties": {
           "compress": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Compress response bodies. Defaults to true"
           },
           "h2_backend": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Use HTTP/2 to talk to the Machine"
           },
           "headers_read_timeout": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Seconds Fly Proxy waits for a client to send request headers. Defaults to 5"
           },
           "idle_timeout": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Seconds a client connection can be idle between requests before it's closed. Defaults to 300"
           },
           "replay_cache": {
             "type": "array",
+            "description": "Cache `fly-replay` responses from the Machine: once a client is replayed, its further\nrequests are replayed directly, keyed on a cookie or header, without asking the Machine again",
             "items": {
               "$ref": "#/components/schemas/fly.ReplayCache"
             }
           },
           "response": {
-            "$ref": "#/components/schemas/fly.HTTPResponseOptions"
+            "type": "object",
+            "description": "Changes Fly Proxy makes to responses",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.HTTPResponseOptions"
+              }
+            ]
           }
         }
       },
@@ -9020,10 +10020,12 @@
             "type": "object",
             "additionalProperties": {
               "type": "object"
-            }
+            },
+            "description": "Response headers to set. A string sets the header, a list of strings sets it to multiple\nvalues, and false removes it"
           },
           "pristine": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Don't let Fly Proxy add or change any response headers"
           }
         }
       },
@@ -9031,7 +10033,8 @@
         "type": "object",
         "properties": {
           "size_mb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Beta: size of the cache drive in MiB. At most 51200; 0 uses the default"
           }
         }
       },
@@ -9045,6 +10048,7 @@
           },
           "headers": {
             "type": "array",
+            "description": "For http checks, headers to send with the request",
             "items": {
               "$ref": "#/components/schemas/fly.MachineHTTPHeader"
             }
@@ -9106,7 +10110,7 @@
           },
           "cache_drive": {
             "type": "object",
-            "description": "A cache drive attached to the Machine",
+            "description": "Beta: a cache drive attached to the Machine. This field may be removed in the future",
             "allOf": [
               {
                 "$ref": "#/components/schemas/fly.MachineCacheDrive"
@@ -9217,7 +10221,7 @@
           },
           "rootfs": {
             "type": "object",
-            "description": "The size of the Machine's root filesystem and whether it persists",
+            "description": "Beta: the size of the Machine's root filesystem and whether it persists. This field may be\nremoved in the future",
             "allOf": [
               {
                 "$ref": "#/components/schemas/fly.MachineRootfs"
@@ -9277,31 +10281,39 @@
         "type": "object",
         "properties": {
           "cpu_kind": {
-            "type": "string"
+            "type": "string",
+            "description": "Kind of CPU: shared or performance. Performance CPUs must be enabled for the organization.\nDefaults to shared when `guest` is omitted"
           },
           "cpus": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of CPUs: 1, 2, 4, 6, 8, 10, 12, 14, 16, 32, 64 or 128, up to 8 for shared and 16 for\nperformance CPUs unless the organization's limit is higher. Defaults to 1 when `guest` is\nomitted"
           },
           "gpu_kind": {
-            "type": "string"
+            "type": "string",
+            "description": "No longer supported. Requests that set it are rejected"
           },
           "gpus": {
-            "type": "integer"
+            "type": "integer",
+            "description": "No longer supported. Requests that set it are rejected"
           },
           "host_dedication_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Place the Machine on hosts dedicated to the organization under this ID. Only available to\norganizations with dedicated hosts"
           },
           "kernel_args": {
             "type": "array",
+            "description": "Extra arguments appended to the guest kernel command line",
             "items": {
               "type": "string"
             }
           },
           "max_memory_mb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Memory in MiB that the Machine's memory limit can later be raised to without a restart, using\nthe memory endpoints. Must be at least memory_mb and at most the per-CPU maximum. The Machine\nstarts with a limit of memory_mb"
           },
           "memory_mb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Memory in MiB. Must be a multiple of 256 for shared and 1024 for performance CPUs, and\nbetween 256 and 2048 (shared) or 2048 and 8192 (performance) per CPU. Defaults to 256 when\n`guest` is omitted"
           },
           "persist_rootfs": {
             "type": "string",
@@ -9314,6 +10326,7 @@
           },
           "required_host_features": {
             "type": "array",
+            "description": "Host features the Machine's host must have, such as `storage-tier-1`. At most 16, each made\nof lowercase letters, digits and dashes. Each feature must be enabled for the organization",
             "items": {
               "type": "string"
             }
@@ -9342,33 +10355,39 @@
         "properties": {
           "cmd": {
             "type": "array",
+            "description": "Replaces the image's CMD. It's appended to the entrypoint",
             "items": {
               "type": "string"
             }
           },
           "entrypoint": {
             "type": "array",
+            "description": "Replaces the image's ENTRYPOINT",
             "items": {
               "type": "string"
             }
           },
           "exec": {
             "type": "array",
+            "description": "Command to run instead of the image's ENTRYPOINT and CMD. Takes precedence over entrypoint\nand cmd",
             "items": {
               "type": "string"
             }
           },
           "kernel_args": {
             "type": "array",
+            "description": "Currently has no effect. Use `guest.kernel_args` instead",
             "items": {
               "type": "string"
             }
           },
           "swap_size_mb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size in MiB of a swap device to give the Machine. Machines with swap cannot be suspended"
           },
           "tty": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Currently has no effect"
           }
         }
       },
@@ -9376,13 +10395,16 @@
         "type": "object",
         "properties": {
           "https": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Scrape over HTTPS instead of HTTP"
           },
           "path": {
-            "type": "string"
+            "type": "string",
+            "description": "HTTP path to scrape. Defaults to `/`"
           },
           "port": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Port in the Machine to scrape metrics from"
           }
         }
       },
@@ -9390,36 +10412,44 @@
         "type": "object",
         "properties": {
           "add_size_gb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "With automatic extension, grow the volume by this many GB at a time. Between 1 and 100.\nMutually exclusive with add_size_percent"
           },
           "add_size_percent": {
             "type": "integer",
             "description": "AddSizePercent grows by a percentage of the current size, rounded up to GiB.\nIt is mutually exclusive with AddSizeGb."
           },
           "encrypted": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the volume is encrypted. Set by Fly.io; ignored in requests"
           },
           "extend_threshold_percent": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Enable automatic volume extension: grow the volume when its usage exceeds this percentage.\nBetween 50 and 99; 0 disables it"
           },
           "min_add_size_gb": {
             "type": "integer",
             "description": "MinAddSizeGb is the minimum proportional growth in GiB (default 1)."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the volume. Set by Fly.io; ignored in requests"
           },
           "path": {
-            "type": "string"
+            "type": "string",
+            "description": "Absolute path in the Machine to mount the volume at. Required"
           },
           "size_gb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of the volume in GB. Set by Fly.io; ignored in requests"
           },
           "size_gb_limit": {
-            "type": "integer"
+            "type": "integer",
+            "description": "With automatic extension, never grow the volume beyond this size in GB. At most the\norganization's maximum volume size"
           },
           "volume": {
-            "type": "string"
+            "type": "string",
+            "description": "ID (`vol_...`) or name of the volume to mount. Required. With a name, any unattached volume\nof the app with that name in the Machine's region is used"
           }
         }
       },
@@ -9427,31 +10457,54 @@
         "type": "object",
         "properties": {
           "end_port": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Last public port of a range"
           },
           "force_https": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Redirect plain HTTP requests to HTTPS"
           },
           "handlers": {
             "type": "array",
+            "description": "How Fly Proxy handles connections before forwarding them: `tls` terminates TLS, `pg_tls`\nterminates PostgreSQL TLS, `http` handles HTTP, `proxy_proto` adds a PROXY protocol header.\nWithout handlers, raw TCP is forwarded",
             "items": {
               "type": "string"
             }
           },
           "http_options": {
-            "$ref": "#/components/schemas/fly.HTTPOptions"
+            "type": "object",
+            "description": "Options for the `http` handler",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.HTTPOptions"
+              }
+            ]
           },
           "port": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Public port. Use either port, or start_port and end_port"
           },
           "proxy_proto_options": {
-            "$ref": "#/components/schemas/fly.ProxyProtoOptions"
+            "type": "object",
+            "description": "Options for the `proxy_proto` handler",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.ProxyProtoOptions"
+              }
+            ]
           },
           "start_port": {
-            "type": "integer"
+            "type": "integer",
+            "description": "First public port of a range"
           },
           "tls_options": {
-            "$ref": "#/components/schemas/fly.TLSOptions"
+            "type": "object",
+            "description": "Options for the `tls` handler",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.TLSOptions"
+              }
+            ]
           }
         }
       },
@@ -9460,12 +10513,14 @@
         "properties": {
           "cmd": {
             "type": "array",
+            "description": "Replaces the image's CMD for this process. It's appended to the entrypoint",
             "items": {
               "type": "string"
             }
           },
           "entrypoint": {
             "type": "array",
+            "description": "Replaces the image's ENTRYPOINT for this process",
             "items": {
               "type": "string"
             }
@@ -9474,7 +10529,8 @@
             "type": "object",
             "additionalProperties": {
               "type": "string"
-            }
+            },
+            "description": "Environment variables for this process, in addition to the Machine's `env`"
           },
           "env_from": {
             "type": "array",
@@ -9485,6 +10541,7 @@
           },
           "exec": {
             "type": "array",
+            "description": "Command to run instead of the image's ENTRYPOINT and CMD. Takes precedence over entrypoint\nand cmd",
             "items": {
               "type": "string"
             }
@@ -9501,7 +10558,8 @@
             }
           },
           "user": {
-            "type": "string"
+            "type": "string",
+            "description": "User to run the process as, instead of the image's USER"
           }
         }
       },
@@ -9529,6 +10587,7 @@
         "properties": {
           "persist": {
             "type": "string",
+            "description": "Whether changes to the root filesystem are kept. `never` (default): reset on every start.\n`restart`: kept across stops and restarts, reset when the Machine is updated. `always`: also\nkept across updates",
             "enum": [
               "never",
               "always",
@@ -9536,7 +10595,8 @@
             ]
           },
           "size_gb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of the root filesystem in GB. At most 50; 0 uses the default"
           }
         }
       },
@@ -9558,7 +10618,8 @@
         "type": "object",
         "properties": {
           "autostart": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether Fly Proxy starts stopped or suspended Machines when requests arrive. Defaults to true"
           },
           "autostop": {
             "type": "string",
@@ -9577,28 +10638,40 @@
             }
           },
           "concurrency": {
-            "$ref": "#/components/schemas/fly.MachineServiceConcurrency"
+            "type": "object",
+            "description": "Load limits Fly Proxy uses to balance traffic across Machines",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/fly.MachineServiceConcurrency"
+              }
+            ]
           },
           "force_instance_description": {
-            "type": "string"
+            "type": "string",
+            "description": "Currently has no effect"
           },
           "force_instance_key": {
-            "type": "string"
+            "type": "string",
+            "description": "Currently has no effect"
           },
           "internal_port": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Port in the Machine that Fly Proxy forwards traffic to. Defaults to 8080"
           },
           "min_machines_running": {
-            "type": "integer"
+            "type": "integer",
+            "description": "When autostop is on, the number of Machines Fly Proxy keeps running in the app's primary\nregion (`PRIMARY_REGION` env var). Machines in other regions can all be stopped"
           },
           "ports": {
             "type": "array",
+            "description": "Public ports that Fly Proxy accepts traffic on",
             "items": {
               "$ref": "#/components/schemas/fly.MachinePort"
             }
           },
           "protocol": {
-            "type": "string"
+            "type": "string",
+            "description": "Protocol: tcp or udp. Defaults to tcp"
           }
         }
       },
@@ -9612,6 +10685,7 @@
           },
           "headers": {
             "type": "array",
+            "description": "For http checks, headers to send with the request",
             "items": {
               "$ref": "#/components/schemas/fly.MachineHTTPHeader"
             }
@@ -9660,13 +10734,16 @@
         "type": "object",
         "properties": {
           "hard_limit": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Fly Proxy sends no more than this many connections or requests to a Machine at once. 0 means\nno hard limit"
           },
           "soft_limit": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Above this many connections or requests, Fly Proxy prefers other Machines. Defaults to 20,\nand is lowered to hard_limit if higher"
           },
           "type": {
-            "type": "string"
+            "type": "string",
+            "description": "What to count: `connections` (default) or `requests`"
           }
         }
       },
@@ -9683,10 +10760,12 @@
         "type": "object",
         "properties": {
           "fly_src": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "With version v2, add the Fly-Src header and its signature to the PROXY protocol header"
           },
           "version": {
-            "type": "string"
+            "type": "string",
+            "description": "PROXY protocol version: v1 (default) or v2"
           }
         }
       },
@@ -9694,17 +10773,20 @@
         "type": "object",
         "properties": {
           "allow_bypass": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Let clients skip the cache by sending the `fly-replay-cache-control: skip` header"
           },
           "name": {
             "type": "string",
             "description": "Name of the cookie or header to key the cache on"
           },
           "path_prefix": {
-            "type": "string"
+            "type": "string",
+            "description": "Requests whose path starts with this prefix use the rule. May start with a hostname, e.g.\n`example.com/api/*`"
           },
           "ttl_seconds": {
-            "type": "integer"
+            "type": "integer",
+            "description": "How long a cached replay is used, in seconds"
           },
           "type": {
             "type": "string",
@@ -9746,6 +10828,7 @@
         "properties": {
           "signal": {
             "type": "string",
+            "description": "Signal to send to the Machine's processes. Defaults to SIGINT",
             "enum": [
               "SIGHUP",
               "SIGINT",
@@ -9758,6 +10841,7 @@
           },
           "timeout": {
             "type": "string",
+            "description": "How long to wait for the Machine to exit after sending the signal, before killing it. At most\n5 minutes (1 minute for spot Machines). Defaults to 5s (60s for spot Machines)",
             "example": "10s"
           }
         }
@@ -9776,15 +10860,18 @@
         "properties": {
           "alpn": {
             "type": "array",
+            "description": "ALPN protocols to offer, e.g. `h2`, `http/1.1`. Defaults to `h2` and `http/1.1`",
             "items": {
               "type": "string"
             }
           },
           "default_self_signed": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Use a self-signed certificate when there is no certificate for the requested hostname"
           },
           "versions": {
             "type": "array",
+            "description": "TLS versions to accept: `TLSv1.2`, `TLSv1.3`. Defaults to both",
             "items": {
               "type": "string"
             }
@@ -9804,10 +10891,12 @@
         "type": "object",
         "properties": {
           "addr": {
-            "type": "string"
+            "type": "string",
+            "description": "Address and port of the DNS server to forward queries to over TCP, e.g. `10.0.0.1:53`"
           },
           "basename": {
-            "type": "string"
+            "type": "string",
+            "description": "Domain to forward queries for, including subdomains. Must end in a dot, e.g. `example.com.`"
           }
         }
       },
@@ -9815,27 +10904,12 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Option name, e.g. `ndots`"
           },
           "value": {
-            "type": "string"
-          }
-        }
-      },
-      "flydv1.ExecResponse": {
-        "type": "object",
-        "properties": {
-          "exit_code": {
-            "type": "integer"
-          },
-          "exit_signal": {
-            "type": "integer"
-          },
-          "stderr": {
-            "type": "string"
-          },
-          "stdout": {
-            "type": "string"
+            "type": "string",
+            "description": "Option value, e.g. `5`"
           }
         }
       },
@@ -9926,15 +11000,18 @@
         "properties": {
           "certificates": {
             "type": "array",
+            "description": "The certificates on this page, ordered by when they were added.",
             "items": {
               "$ref": "#/components/schemas/CertificateSummary"
             }
           },
           "next_cursor": {
-            "type": "string"
+            "type": "string",
+            "description": "Pagination cursor for the next page. Absent when no more certificates remain."
           },
           "total_count": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Number of certificates matching `filter` (and after `cursor`, if given), across all pages."
           }
         }
       },
@@ -9943,6 +11020,7 @@
         "properties": {
           "ips": {
             "type": "array",
+            "description": "The app's IP addresses, including its shared IPv4 address and egress addresses.",
             "items": {
               "$ref": "#/components/schemas/IPAssignment"
             }
@@ -10150,19 +11228,22 @@
           },
           "org_slug": {
             "type": "string",
+            "description": "Slug of the organization to place Machines for, or `personal`. Required.",
             "example": "personal"
           },
           "region": {
             "type": "string",
-            "description": "Region expression for placement as a comma-delimited set of regions or aliases.\nDefaults to \"[region],any\", to prefer the API endpoint's local region with any other region as fallback.",
+            "description": "Region expression for placement as a comma-delimited set of regions or aliases.\nDefaults to the API endpoint's local region. When `count` is greater than 0, `any` is\nadded as a fallback.",
             "example": "lhr,eu"
           },
           "volume_name": {
             "type": "string",
+            "description": "Currently unused.",
             "example": ""
           },
           "volume_size_bytes": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Size of a volume each Machine will need, in bytes. Only hosts with room for it are\nconsidered."
           },
           "weights": {
             "type": "object",
@@ -10182,8 +11263,9 @@
       "main.getPlacementsResponse": {
         "type": "object",
         "properties": {
-          "regions": {
+          "Regions": {
             "type": "array",
+            "description": "The regions Machines would be placed in. With `count` 0, every requested region with the\norganization's Machine limit in it.",
             "items": {
               "$ref": "#/components/schemas/placement.RegionPlacement"
             }
@@ -10194,10 +11276,12 @@
         "type": "object",
         "properties": {
           "available_mb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Highest limit, in MiB, that the Machine could currently be raised to: its configured\nmemory (`guest.max_memory_mb` if set, else `guest.memory_mb`), capped by the host's free\nmemory."
           },
           "limit_mb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Memory, in MiB, the guest can currently use."
           }
         }
       },
@@ -10205,7 +11289,8 @@
         "type": "object",
         "properties": {
           "amount_mb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Memory to reclaim, in MiB. Must be positive and at most the Machine's memory limit minus\n128 MiB."
           }
         }
       },
@@ -10213,21 +11298,24 @@
         "type": "object",
         "properties": {
           "actual_mb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Memory, in MiB, that the guest actually gave up. Can be less than requested."
           }
         }
       },
       "main.regionResponse": {
         "type": "object",
         "properties": {
-          "nearest": {
-            "type": "string"
-          },
-          "regions": {
+          "Regions": {
             "type": "array",
+            "description": "The regions available to the caller.",
             "items": {
               "$ref": "#/components/schemas/main.regionRow"
             }
+          },
+          "nearest": {
+            "type": "string",
+            "description": "Code of the region of the Fly.io edge that received the request, usually the one\nclosest to the caller."
           }
         }
       },
@@ -10235,31 +11323,47 @@
         "type": "object",
         "properties": {
           "code": {
-            "type": "string"
+            "type": "string",
+            "description": "Region code, such as `iad`, used to select the region in other requests."
           },
           "deprecated": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the region is deprecated. Avoid creating new resources in it."
           },
           "gateway_available": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the region has a WireGuard gateway that private network peers can connect to."
           },
           "geo_region": {
-            "type": "string"
+            "type": "string",
+            "description": "Geographic area the region belongs to.",
+            "enum": [
+              "africa",
+              "asia_pacific",
+              "europe",
+              "north_america",
+              "south_america"
+            ]
           },
           "latitude": {
-            "type": "number"
+            "type": "number",
+            "description": "Latitude of the region's location."
           },
           "longitude": {
-            "type": "number"
+            "type": "number",
+            "description": "Longitude of the region's location."
           },
           "mpg_available": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether Managed Postgres clusters can be created in the region."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable name of the region, such as `Ashburn, Virginia (US)`."
           },
           "requires_paid_plan": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether only organizations on a paid plan can use the region."
           }
         }
       },
@@ -10267,7 +11371,8 @@
         "type": "object",
         "properties": {
           "limit_mb": {
-            "type": "integer"
+            "type": "integer",
+            "description": "New limit in MiB. Must be at least 128 and at most the Machine's configured memory\n(`guest.max_memory_mb` if set, else `guest.memory_mb`)."
           }
         }
       },
@@ -10277,12 +11382,16 @@
           "unknown",
           "insufficient_capacity",
           "volume_placement_capacity",
+          "exec_request_too_large",
+          "exec_output_too_large",
           "name_taken"
         ],
         "x-enum-varnames": [
           "unknown",
           "capacityErr",
           "volumePlacementCapacityErr",
+          "execRequestTooLargeErr",
+          "execOutputTooLargeErr",
           "nameTakenErr"
         ]
       },
@@ -10291,30 +11400,34 @@
         "properties": {
           "apps": {
             "type": "array",
+            "description": "Names of the apps the token is restricted to. Omitted if the token is not restricted to\nspecific apps.",
             "items": {
               "type": "string"
             }
           },
           "org_slug": {
-            "type": "string"
+            "type": "string",
+            "description": "Slug of the organization the token is scoped to."
           },
           "organization": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the organization the token is scoped to."
           },
           "restricted_to_machine": {
             "type": "string",
-            "description": "Machine the token is restricted to (FromMachine caveat)"
+            "description": "ID of the Machine the token may only be used from. Omitted if the token is not restricted\nto a Machine."
           },
           "source_machine_id": {
             "type": "string",
-            "description": "Machine making the request"
+            "description": "Never set."
           },
           "token_id": {
-            "type": "string"
+            "type": "string",
+            "description": "ID of the token."
           },
           "user": {
             "type": "string",
-            "description": "User identifier if token is for a user"
+            "description": "Opaque identifier of the user the token belongs to: the first 7 hex characters of a hash of\nthe user's ID. Omitted for tokens that do not belong to a user."
           }
         }
       },
@@ -10322,21 +11435,25 @@
         "type": "object",
         "properties": {
           "value": {
-            "type": "string"
+            "type": "string",
+            "description": "Value of the metadata key."
           }
         }
       },
       "placement.RegionPlacement": {
         "type": "object",
         "properties": {
-          "concurrency": {
-            "type": "integer"
+          "Concurrency": {
+            "type": "integer",
+            "description": "Number of distinct hosts those Machines would be spread over. 0 when the request's count\nis 0."
           },
-          "count": {
-            "type": "integer"
+          "Count": {
+            "type": "integer",
+            "description": "Number of Machines that would be placed in the region. When the request's count is 0, the\norganization's Machine limit for the region instead."
           },
-          "region": {
-            "type": "string"
+          "Region": {
+            "type": "string",
+            "description": "Code of the region."
           }
         }
       },
@@ -10352,6 +11469,45 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/PostgresDatabase"
+          }
+        }
+      },
+      "postgresQueryResponse": {
+        "type": "object",
+        "properties": {
+          "columns": {
+            "type": "array",
+            "description": "Columns of the final result set, in order.",
+            "items": {
+              "$ref": "#/components/schemas/PostgresQueryColumn"
+            }
+          },
+          "row_count": {
+            "type": "integer",
+            "description": "Number of rows returned."
+          },
+          "rows": {
+            "type": "array",
+            "description": "Rows of the final result set; each row holds one JSON value per column, with NULL as null and json/jsonb as decoded JSON.",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "queryPostgresDatabaseRequest": {
+        "required": [
+          "sql"
+        ],
+        "type": "object",
+        "properties": {
+          "sql": {
+            "type": "string",
+            "description": "SQL to run, up to 102400 bytes. Multiple statements are allowed; only the last result set is returned.",
+            "example": "SELECT id, email FROM users LIMIT 10"
           }
         }
       },
@@ -10443,16 +11599,19 @@
         "type": "object",
         "properties": {
           "machine_version": {
-            "type": "string"
+            "type": "string",
+            "description": "Only apply the change if this is still the Machine's current version; otherwise fail\nwith 412. Defaults to the current version."
           },
           "metadata": {
             "type": "object",
             "additionalProperties": {
               "type": "string"
-            }
+            },
+            "description": "Keys to change. A string value sets the key; null, an empty string or whitespace removes\nit. Keys and values have surrounding whitespace trimmed. Keys not listed are left alone.\nMust contain at least one key."
           },
           "updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "Time to record for the change in the Machine's `metadata_update` event. Defaults to now."
           }
         }
       },
@@ -10478,10 +11637,12 @@
         "type": "object",
         "properties": {
           "updated_at": {
-            "type": "string"
+            "type": "string",
+            "description": "Time to record for the change in the Machine's `metadata_update` event. Defaults to now."
           },
           "value": {
-            "type": "string"
+            "type": "string",
+            "description": "Value to set. Must not be empty or whitespace only."
           }
         }
       }
