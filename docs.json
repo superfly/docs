@@ -3527,7 +3527,7 @@
     },
     {
       "source": "/machines/working-with-machines/",
-      "destination": "/machines/api"
+      "destination": "/machines/api/machines-resource"
     },
     {
       "source": "/metrics-and-logs/",
