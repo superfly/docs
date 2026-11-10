@@ -35,7 +35,10 @@ Aside from the extensions bundled with the default Postgres distribution, MPG cl
 
 - [pgvector](https://github.com/pgvector/pgvector) (`vector`), which you can enable from the Extensions page for your cluster.
 - [PostGIS](https://postgis.net) (`postgis` and its companion extensions), on clusters with PostGIS support.
+- [pg_repack](#pg_repack), on v2 clusters, for rebuilding bloated tables while your app keeps reading and writing.
 - [pg_stat_monitor](https://docs.percona.com/pg-stat-monitor/) and [pgaudit](https://github.com/pgaudit/pgaudit), which are always enabled.
+
+We rebuild the v2 cluster images every week with the latest releases of the extensions we ship, including security fixes, and roll new images out during your cluster's [maintenance window](/postgres/maintenance-windows). PostGIS and pg_repack are pinned and change only when we update them.
 
 To get PostGIS support, turn it on when you create the cluster:
 
@@ -79,6 +82,7 @@ The following table lists the extensions you can enable, and whether you can ena
 | `moddatetime` |  | ✓ | Provides a trigger function that stores the current time into a timestamp field. |
 | `old_snapshot` |  | ✓ (Postgres 16 only) | Allows inspection of the server state that is used to implement old_snapshot_threshold. |
 | `pg_prewarm` |  | ✓ | Provides a convenient way to load relation data into either the operating system buffer cache or the PostgreSQL buffer cache. This can be useful for reducing the time needed for a newly started database to reach its full performance potential by preloading frequently accessed data. |
+| `pg_repack` |  | ✓ | Rebuilds tables and indexes online to remove bloat. See [Rebuild bloated tables with pg_repack](#pg_repack). |
 | `pg_stat_monitor` | ✓ | ✓ | A more advanced version of pg_stat_statements for tracking planning and execution statistics of all SQL statements executed by a server. Includes all columns available in pg_stat_statements plus provides additional ones. Always enabled. |
 | `pg_stat_statements` |  | ✓ | A module for tracking planning and execution statistics of all SQL statements executed by a server. Consider using an advanced version of pg_stat_statements - pg_stat_monitor. |
 | `pg_trgm` | ✓ | ✓ | Provides functions and operators for determining the similarity of alphanumeric text based on trigram matching. A trigram is a contiguous sequence of three characters. The extension can be used for text search and pattern matching operations. |
@@ -104,3 +108,154 @@ The following table lists the extensions you can enable, and whether you can ena
 | `xml2` |  | ✓ | Provides XPath querying and XSLT processing. |
 
 ¹ Only on clusters with PostGIS support. See [Supported Third Party Extensions](#supported-third-party-extensions).
+
+## Rebuild bloated tables with pg_repack {#pg_repack}
+
+[pg_repack](https://reorg.github.io/pg_repack/) rebuilds a table and its indexes to give back the space that dead rows take up, while your app keeps reading and writing to the table. `VACUUM FULL` does the same job, but it holds an `ACCESS EXCLUSIVE` lock on the table for the whole run, which blocks every read and write. pg_repack only takes that lock briefly, at the start and at the end of the run. In between, it holds a `SHARE UPDATE EXCLUSIVE` lock: inserts, updates and deletes carry on as usual, but `VACUUM`, `ANALYZE`, `CREATE INDEX` (including `CONCURRENTLY`) and `ALTER TABLE` on that table wait until it finishes, and autovacuum skips the table.
+
+pg_repack is available on v2 clusters (marked **v2** next to the cluster name). We ship pg_repack 1.5.3 with a security fix from upstream that isn't in a pg_repack release yet.
+
+<Note>
+pg_repack rolls out to v2 clusters starting November 15, 2026. Until it reaches your cluster, it doesn't appear on your cluster's Extensions page and you can't enable it.
+</Note>
+
+### Enable pg_repack
+
+Enable pg_repack in each database whose tables you want to repack, either with the toggle on your cluster's Extensions page or with [`fly mpg databases extensions enable`](/flyctl/cmd/fly_mpg_databases_extensions_enable):
+
+```bash
+fly mpg databases extensions enable pg_repack --cluster <cluster-id> --database <database>
+```
+
+pg_repack doesn't accept `--schema`: it always creates its own `repack` schema. `fly mpg databases extensions list` shows `public` as pg_repack's schema anyway; that's expected.
+
+### Install the pg_repack client
+
+You run pg_repack from your own machine, and the client must be version **1.5.3** exactly: it refuses to work with any other version of the extension. Install it from the [PostgreSQL apt repository (PGDG)](https://wiki.postgresql.org/wiki/Apt) on Debian or Ubuntu, and hold it at 1.5.3 so `apt upgrade` doesn't move it. Use the package for your cluster's Postgres major version; this example is for Postgres 17:
+
+```bash
+# Add the PGDG repository.
+sudo apt update
+sudo apt install -y postgresql-common ca-certificates
+sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+
+# PGDG drops old versions when it publishes new ones. Its archive keeps them.
+. /etc/os-release
+echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt-archive.postgresql.org/pub/repos/apt ${VERSION_CODENAME}-pgdg-archive main" \
+  | sudo tee /etc/apt/sources.list.d/pgdg-archive.list
+
+# The package depends on the Postgres server package. Don't let it create
+# a local database cluster you won't use.
+sudo mkdir -p /etc/postgresql-common/createcluster.d
+echo 'create_main_cluster = false' \
+  | sudo tee /etc/postgresql-common/createcluster.d/no-main-cluster.conf
+
+sudo apt update
+sudo apt install -y 'postgresql-17-repack=1.5.3-*'
+sudo apt-mark hold postgresql-17-repack
+
+pg_repack --version
+```
+
+The last command should print `pg_repack 1.5.3`.
+
+#### On macOS, Windows or other Linux distributions
+
+Run the same steps in a Debian container, and connect to your cluster through `fly mpg proxy` running on your machine. In one terminal, start the proxy:
+
+```bash
+fly mpg proxy <cluster-id>
+```
+
+In another terminal, start the container. Inside a container, `localhost` is the container itself, and `fly mpg proxy` only listens on your machine's `localhost`. How you start the container, and how it reaches the proxy, depends on where it runs:
+
+- **macOS or Windows.** Start the container as usual and reach the proxy at `host.docker.internal`, which Docker Desktop forwards to your machine's `localhost`: for example `postgres://<user>:<password>@host.docker.internal:16380/<database>`. With Podman, use `host.containers.internal`.
+
+  ```bash
+  docker run --rm -it debian:trixie bash
+  ```
+
+- **Linux.** Start the container with `--network host`, so it shares your machine's network, and connect to `localhost:16380` as you would outside the container. `host.docker.internal` doesn't reach the proxy on Linux, even with `--add-host host.docker.internal:host-gateway`, because the proxy doesn't listen on that address.
+
+  ```bash
+  docker run --rm -it --network host debian:trixie bash
+  ```
+
+In the container, run the commands above, leaving out `sudo` (you're root in the container).
+
+### Before you repack
+
+- **Primary key.** The table needs a primary key, or a unique index on `NOT NULL` columns.
+- **Free disk space.** pg_repack builds a full copy of the table and its indexes before it drops the old one. Upstream recommends free space of about twice the size of the tables and indexes you're repacking. If the table, its indexes and the copy wouldn't fit under the [1 TB storage limit](/postgres#database-storage), don't repack it. On v2 clusters the volume grows automatically as it fills, so a large repack can grow it. A volume doesn't shrink afterwards, but v2 clusters are [billed](/postgres#pricing) for the storage your databases use, not for the volume's size: usage goes up while pg_repack runs and falls once it drops the old copy, usually below where it started.
+- **WAL and replicas.** Rewriting a table generates write-ahead log (WAL) in proportion to its size, so your replicas can lag behind the primary while pg_repack runs.
+- **Conflicting queries.** pg_repack needs a brief exclusive lock on the table at the start of the run and at the final swap. Long-running queries and sessions left idle in a transaction on the table hold it up. Before the swap, pg_repack also waits, with no timeout, for every transaction that started before it did, so a session left idle in a transaction anywhere in that database stalls it. Check for both before you start. See [If pg_repack can't get its lock](#if-pg_repack-cant-get-its-lock) for what happens when it's blocked.
+
+### Run pg_repack
+
+Only a table's owner can repack it. The tables you create belong to the `schema_admin` role, so connect as a user with the [Schema Admin role](/postgres/cluster-configuration#schema-admin), such as `fly-user`. Writer and Reader users can't repack tables. Since you aren't a superuser, pass `-k` (`--no-superuser-check`).
+
+Use your cluster's **direct** connection string, not the pooled one. In Transaction mode, PgBouncer can move you to a different server connection between transactions, and connecting directly means pg_repack's sessions are ordinary Postgres sessions that you can find and end if a run gets stuck. See [Create and connect](/postgres/create-and-connect#manually-connect-an-application-using-a-connection-string) for where to find the direct connection string, and [Setting up a Proxy Connection](/postgres/create-and-connect#setting-up-a-proxy-connection) to reach it from your machine with `fly mpg proxy`.
+
+The database in the connection string must be the one where you enabled pg_repack. The direct connection string points at `fly-db`, so change the database name at the end if your tables are in another database. Through `fly mpg proxy`, the connection string looks like `postgres://<user>:<password>@localhost:16380/<database>`.
+
+```bash
+pg_repack -k -D -d "<direct connection string>" -t public.<table>
+```
+
+Pass `-t` once for each table you want to repack. See the [pg_repack documentation](https://reorg.github.io/pg_repack/) for its other options.
+
+A run that repacks the table prints one line for it and exits with status 0:
+
+```output
+INFO: repacking table "public.<table>"
+```
+
+### If pg_repack can't get its lock {#if-pg_repack-cant-get-its-lock}
+
+pg_repack waits up to `--wait-timeout` seconds (60 by default) for each of its exclusive locks. When the wait runs out, it normally cancels the queries in its way, but your user can't cancel any other session, not even another session of your own user. What happens next depends on `-D` (`--no-kill-backend`):
+
+- **With `-D`.** pg_repack gives up on the table, leaves it as it was and normally cleans up after itself. It still exits with status 0, so check its output for these lines:
+
+  ```output
+  WARNING: timed out, do not cancel conflicting backends
+  INFO: Skipping repack public.<table> due to timeout
+  ```
+
+  If the lock is still blocked during cleanup, pg_repack exits with an error and leaves an [interrupted run](#if-a-run-is-interrupted) behind.
+
+- **Without `-D`.** The run fails with an error, which can leave an [interrupted run](#if-a-run-is-interrupted) behind.
+
+Once the conflicting queries and sessions are gone, run pg_repack again. Raise `--wait-timeout` if you'd rather it waited longer.
+
+### If a run is interrupted
+
+If pg_repack stops partway, because the client was killed, its connection dropped, or the cluster failed over, it leaves a trigger on the table and its log and work tables in the `repack` schema. Your table keeps working, but every write to it also goes to the log table, which keeps growing until you clean up.
+
+To clean up:
+
+1. If pg_repack's session is still open on the server, end it. Connect as the same user that ran pg_repack, for example with `fly mpg connect --username <user>`, and run:
+
+    ```sql
+    SET ROLE NONE;
+    SELECT pg_terminate_backend(pid) FROM pg_stat_activity
+      WHERE application_name = 'pg_repack' AND usename = session_user;
+    SET ROLE schema_admin;
+    ```
+
+    pg_repack names its sessions `pg_repack` (`application_name`), which is how this query finds them, so don't override `application_name` in the connection string or with `PGAPPNAME` when you run pg_repack. Your user acts as `schema_admin` by default, which can't end your user's own sessions. `SET ROLE NONE` switches back to your user for the `pg_terminate_backend` call. `RESET ROLE` doesn't help here: it returns to the default, `schema_admin`.
+
+2. Disable pg_repack with `--force`, using [`fly mpg databases extensions disable`](/flyctl/cmd/fly_mpg_databases_extensions_disable):
+
+    ```bash
+    fly mpg databases extensions disable pg_repack --cluster <cluster-id> --database <database> --force
+    ```
+
+    `--force` drops the extension together with everything that depends on it, which removes the leftover trigger and tables. Your table and its data stay as they are. It also removes the trigger and tables of any other pg_repack run in progress in that database, which breaks that run, so make sure none is running. The toggle on the Extensions page disables extensions without `--force`, so it fails while the leftovers are there.
+
+3. Enable pg_repack again:
+
+    ```bash
+    fly mpg databases extensions enable pg_repack --cluster <cluster-id> --database <database>
+    ```
+
+You can now repack the table again.
