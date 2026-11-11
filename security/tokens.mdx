@@ -32,6 +32,8 @@ Create and manage tokens using flyctl. `fly tokens create` commands have some us
 
 - **token expiry:** When you create a token, include the duration that the token is valid for with the `--expiry` option. You should specify the shortest possible duration for your use case so that you limit access by time as well as scope. Tokens are valid for 20 years (175200h0m0s) by default.
 
+Tokens created with `fly tokens create` look like `FlyV1 fm2_...`. The `FlyV1` prefix and the space after it are part of the token, so copy the entire string. If you're setting the token in a shell, wrap it in quotes to preserve the space.
+
 For all options and commands, refer to the [`fly tokens` command docs](/flyctl/cmd/fly_tokens).
 
 ### Create app-scoped tokens

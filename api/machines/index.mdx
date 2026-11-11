@@ -25,7 +25,9 @@ https://api.machines.dev
 Authenticate every request with a Fly.io access token using the
 `Authorization: Bearer <token>` header. Generate one with
 [`fly tokens create`](/flyctl/cmd/fly_tokens_create) or the
-[Tokens](https://fly.io/tokens) page on the dashboard.
+[Tokens](https://fly.io/tokens) page on the dashboard. These tokens include
+the `FlyV1 ` prefix. Send the entire token using the `Bearer` scheme, or
+use `FlyV1` directly as the authorization scheme: `Authorization: FlyV1 fm2_...`.
 
 ```bash
 curl https://api.machines.dev/v1/apps?org_slug=personal \
