@@ -610,7 +610,8 @@ A file that will be written to the Machine. One of RawValue or SecretName must b
 
 | Property | Type | Required | Description |
 | --- | --- | --- | --- |
-| `size_mb` | `integer` | No | Beta: size of the cache drive in MiB. At most 51200; 0 uses the default |
+| `path` | `string` | No | Optional absolute guest mount path. When set, the device is formatted as ext4. Without a path, the device retains legacy raw block behavior. Contents survive same-host restarts and path changes, but are discarded on size or mode changes, relocation, recovery on another host, and cloning. |
+| `size_mb` | `integer` | No | Fixed size of the Machine-owned cache drive in MiB. At most 51200. With a path, at least 16 MiB is required; without a path, 0 disables the device. |
 
 ## fly.MachineCheck
 
