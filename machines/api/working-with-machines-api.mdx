@@ -34,7 +34,7 @@ All requests must include an API token in the HTTP headers as follows:
 Authorization: Bearer <fly_api_token>
 ```
 
-Replace `<fly_api_token>` with a Fly.io authentication token.
+Replace `<fly_api_token>` with a Fly.io authentication token. Tokens from `fly tokens create` begin with `FlyV1 `; send them as `Authorization: FlyV1 fm2_...`, or paste the whole string after `Bearer`, which is also accepted.
 
 ## Environment setup
 
