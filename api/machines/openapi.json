@@ -10032,9 +10032,13 @@
       "fly.MachineCacheDrive": {
         "type": "object",
         "properties": {
+          "path": {
+            "type": "string",
+            "description": "Optional absolute guest mount path. When set, the device is formatted as ext4.\nWithout a path, the device retains legacy raw block behavior. Contents survive\nsame-host restarts and path changes, but are discarded on size or mode changes,\nrelocation, recovery on another host, and cloning."
+          },
           "size_mb": {
             "type": "integer",
-            "description": "Beta: size of the cache drive in MiB. At most 51200; 0 uses the default"
+            "description": "Fixed size of the Machine-owned cache drive in MiB. At most 51200.\nWith a path, at least 16 MiB is required; without a path, 0 disables the device."
           }
         }
       },
