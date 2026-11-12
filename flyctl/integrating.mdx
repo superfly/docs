@@ -64,6 +64,8 @@ fly tokens create readonly -o my-org -x 720h
 
 Scoped to the entire org (like `fly tokens create org`) but can't create, deploy, or modify anything. Good for monitoring scripts, status dashboards, or any workflow that only consumes data from the Fly API.
 
+**WireGuard token** For managing an organization's WireGuard peers. You can limit it to specific private networks with `--network`. See [Create an org-scoped WireGuard token](/security/tokens#create-an-org-scoped-wireguard-token).
+
 ### Token management
 
 List active tokens:
