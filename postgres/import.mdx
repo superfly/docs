@@ -25,7 +25,7 @@ Your MPG cluster runs within your Fly.io private network, so it isn't reachable 
     pg_dump --no-owner --no-acl -f dump.sql "$LEGACY_PG_CONNECTION_STRING"
     ```
 
-    Make sure `pg_dump` finishes without an error before you go on. A dump that failed partway leaves an incomplete file, and an incomplete file restores without complaint.
+    Make sure `pg_dump` finishes without an error before you go on. A dump that failed partway leaves an incomplete file, and an incomplete file can restore without complaint.
 
 3. If your `pg_dump` is version 17 or later and your cluster runs Postgres 16 (the `fly mpg create` default), remove one setting from the top of the dump. `pg_dump` 17 and later writes `SET transaction_timeout = 0;` there, and Postgres 16 doesn't know that setting. Check your version with `pg_dump --version`, then remove the line:
     ```bash
@@ -39,9 +39,9 @@ Your MPG cluster runs within your Fly.io private network, so it isn't reachable 
     fly mpg connect <CLUSTER_ID> -f dump.sql -- -q --single-transaction
     ```
 
-    `-q` keeps psql quiet, so errors stand out. `--single-transaction` wraps the restore in one transaction: if an error stops it, nothing is left behind and you can run it again. The restore goes into the default database as the default user. Add `--database` or `--username` to pick others.
+    `-q` keeps psql quiet, so errors stand out. `--single-transaction` wraps the restore in one transaction: if an error stops it, nothing is left behind and you can run it again. The exception is a dump that contains large objects, which carries its own transactions. The restore goes into the default database as the default user. Add `--database` or `--username` before the `--` to pick others.
 
-5. Check the result. A restore that worked prints no errors, only a few `set_config` and `setval` results, and exits with status `0`. One that failed prints psql's error and a line like `Error: exit status 3`, and exits with status `1`.
+5. Check the result. A restore that worked prints no errors, only a few query results such as `set_config` and `setval`, and exits with status `0`. One that failed prints psql's error and a line like `Error: exit status 3`, and exits with status `1`.
 
 ### Restore errors
 
@@ -51,7 +51,8 @@ Your MPG cluster runs within your Fly.io private network, so it isn't reachable 
     pg_dump --no-owner --no-acl --exclude-extension=pgaudit --exclude-extension=pg_stat_monitor -f dump.sql "$LEGACY_PG_CONNECTION_STRING"
     ```
 - **`server closed the connection unexpectedly` or `connection to server was lost`:** The connection to your cluster dropped. A restore needs the connection for the whole run, and a large one can take a while. With `--single-transaction`, a restore that was still running is rolled back. Check whether your tables are there before you run it again, in case the connection dropped just as the restore finished.
-- **`already exists`:** The database isn't empty. An earlier restore finished, ran without `--single-transaction`, or was piped from a `pg_dump` that failed partway. Restore into an empty database instead: create one with `fly mpg databases create <CLUSTER_ID> --name <database-name>`, then add `--database <database-name>` to the restore.
+- **`already exists`:** The database isn't empty. An earlier restore finished, ran without `--single-transaction`, or was piped from a `pg_dump` that failed partway. Restore into an empty database instead: create one with `fly mpg databases create <CLUSTER_ID> --name <database-name>`, then add `--database <database-name>` before the `--` in the restore command.
+- **`out of shared memory`, with a hint about `max_locks_per_transaction`:** The dump has more tables than one transaction can lock, so the restore was rolled back. Restore without `--single-transaction`, as in `fly mpg connect <CLUSTER_ID> -f dump.sql -- -q`. psql still stops at the first error, but what it restored before the error stays, so restore into an empty database.
 - **Another error you'd rather skip:** Replace `--single-transaction` with `-v ON_ERROR_STOP=0`, as in `fly mpg connect <CLUSTER_ID> -f dump.sql -- -q -v ON_ERROR_STOP=0`. psql then carries on past errors, and the exit status is `0` even when statements fail, so read every error it prints. Only do this into an empty database: over a partial import, tables that already loaded get their rows twice.
 
 ### Piping a small database
@@ -65,7 +66,7 @@ pg_dump --no-owner --no-acl "$LEGACY_PG_CONNECTION_STRING" | fly mpg connect <CL
 
 If step 3 applies to you, add its `sed` expression to the pipe, without the file names: `pg_dump ... | sed '1,20{/^SET transaction_timeout = 0;$/d;}' | fly mpg connect ...`.
 
-If `pg_dump` fails partway, psql has already committed what it received, so part of your data is imported even though the command fails. Restore into a new, empty database before you try again, as described under `already exists`. Prefer the file for anything large.
+If `pg_dump` fails partway, psql can commit what it received, which leaves part of your data imported even though the command fails. Restore into a new, empty database before you try again, as described under `already exists`. Prefer the file for anything large.
 
 ### Using another tool
 
