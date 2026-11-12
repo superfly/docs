@@ -57,11 +57,11 @@ Your MPG cluster runs within your Fly.io private network, so it isn't reachable 
 
 ### Piping a small database
 
-For a small database you can skip the file and pipe `pg_dump` straight in. Piped SQL keeps psql's defaults, so add the flags that `-f` sets for you. Set `pipefail` as well: without it, a `pg_dump` that fails looks like a restore that worked.
+For a small database you can skip the file and pipe `pg_dump` straight in. Pass `-f -` to read the dump from stdin. Set `pipefail` as well: without it, a `pg_dump` that fails looks like a restore that worked.
 
 ```bash
 set -o pipefail
-pg_dump --no-owner --no-acl "$LEGACY_PG_CONNECTION_STRING" | fly mpg connect <CLUSTER_ID> -- -X -q -v ON_ERROR_STOP=1 --single-transaction
+pg_dump --no-owner --no-acl "$LEGACY_PG_CONNECTION_STRING" | fly mpg connect <CLUSTER_ID> -f - -- -q --single-transaction
 ```
 
 If step 3 applies to you, add its `sed` expression to the pipe, without the file names: `pg_dump ... | sed '1,20{/^SET transaction_timeout = 0;$/d;}' | fly mpg connect ...`.

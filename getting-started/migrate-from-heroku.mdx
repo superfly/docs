@@ -163,7 +163,7 @@ fly mpg connect CLUSTER_ID -f heroku-dump.sql -- -q -v ON_ERROR_STOP=0
 
 Make sure `pg_dump` finishes without an error before you restore: a dump that failed partway can restore without complaint. The restore prints a few query results, such as `setval`, and carries on past errors. You'll see some errors about Heroku-specific extensions (pg_stat_statements, event triggers) - these are safe to ignore. If your `pg_dump` is version 17 or later and your cluster runs Postgres 16, you'll also see `unrecognized configuration parameter "transaction_timeout"`, which is safe to ignore too.
 
-Read any other error before you go on: it means a statement didn't run. If the output ends with `connection to server was lost` and `Error: exit status 2`, the connection dropped partway and the import isn't complete. Don't run the restore again on the same database, because tables that already loaded would get their rows twice. Create a new cluster with `fly mpg create` and restore into that one instead. See [Restore errors](/postgres/import#restore-errors).
+Read any other error before you go on: it means a statement didn't run. If the output ends with `connection to server was lost` and `Error: exit status 2`, the connection dropped partway and the import isn't complete. Don't run the restore again on the same database, because tables that already loaded would get their rows twice. Create an empty database with `fly mpg databases create CLUSTER_ID --name heroku_import`, then add `--database heroku_import` before the `--` in the restore command, and to `fly mpg attach` below. See [Restore errors](/postgres/import#restore-errors).
 
 Attach the database to your app:
 

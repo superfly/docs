@@ -128,11 +128,13 @@ count=$(fly mpg connect <CLUSTER_ID> -c 'select count(*) from orders' -- -At)
 
 psql writes query results to stdout. The `Proxying...` line that flyctl prints goes to stderr.
 
-You can also send SQL on stdin. SQL from stdin keeps psql's default behavior: it reads your psqlrc file and carries on after an error. To stop at the first error, add `-X` and `ON_ERROR_STOP`:
+To read SQL from stdin, pass `-f -`. It behaves like any other file:
 
 ```bash
-fly mpg connect <CLUSTER_ID> -- -X -v ON_ERROR_STOP=1 < queries.sql
+fly mpg connect <CLUSTER_ID> -f - < queries.sql
 ```
+
+SQL sent on stdin without `-c` or `-f` keeps psql's default behavior: it reads your psqlrc file and carries on after an error.
 
 `fly mpg connect` exits with status `0` when psql succeeds and `1` when psql fails, so a script can check it. On failure, psql's own error is followed by a line with psql's exit status:
 
