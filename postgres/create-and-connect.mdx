@@ -1,6 +1,6 @@
 ---
 title: Create and Connect to a Managed Postgres Cluster
-description: "Create a Managed Postgres cluster with fly mpg create or the dashboard, attach an app with fly mpg attach, and connect locally via mpg proxy or WireGuard."
+description: "Create a Managed Postgres cluster, attach an app with fly mpg attach, and connect or run SQL locally with fly mpg connect, mpg proxy, or WireGuard."
 source_url: https://fly.io/docs/mpg/create-and-connect/
 ---
 
@@ -126,15 +126,15 @@ Everything after `--` goes to psql unchanged. For example, to get a bare value i
 count=$(fly mpg connect <CLUSTER_ID> -c 'select count(*) from orders' -- -At)
 ```
 
-Only psql's output goes to stdout. The `Proxying...` line that flyctl prints goes to stderr.
+psql writes query results to stdout. The `Proxying...` line that flyctl prints goes to stderr.
 
-You can also pipe SQL in. Piped SQL keeps psql's default behavior: it reads your psqlrc file and carries on after an error. To stop at the first error, add `-X` and `ON_ERROR_STOP`:
+You can also send SQL on stdin. SQL from stdin keeps psql's default behavior: it reads your psqlrc file and carries on after an error. To stop at the first error, add `-X` and `ON_ERROR_STOP`:
 
 ```bash
-cat queries.sql | fly mpg connect <CLUSTER_ID> -- -X -v ON_ERROR_STOP=1
+fly mpg connect <CLUSTER_ID> -- -X -v ON_ERROR_STOP=1 < queries.sql
 ```
 
-`fly mpg connect` exits with status `0` when the SQL runs cleanly and `1` when psql fails, so a script can check it. On failure, psql's own error is followed by a line with psql's exit status:
+`fly mpg connect` exits with status `0` when psql succeeds and `1` when psql fails, so a script can check it. On failure, psql's own error is followed by a line with psql's exit status:
 
 ```out
 $ fly mpg connect <CLUSTER_ID> -f migrate.sql
@@ -145,9 +145,9 @@ LINE 1: select nope;
 Error: exit status 3
 ```
 
-psql uses `1` for a failed `-c` statement or an error of its own, such as a file it can't read, `2` for a connection that couldn't be made or was lost, and `3` for a script that stopped at an error. flyctl also exits with status `1` for its own errors, such as a cluster it can't find.
+psql uses `1` for a failed `-c` statement or an error of its own, such as a file it can't read. It uses `2` for a connection that couldn't be made or was lost, and `3` for a script that stopped at an error. flyctl also exits with status `1` for its own errors, such as a cluster it can't find.
 
-`fly mpg connect` listens on local port 16380, which is also the default port for `fly mpg proxy`. Run one at a time on your local machine, or give the proxy a different `--local-port`.
+`fly mpg connect` always listens on local port 16380, which is also the default port for `fly mpg proxy`. Run one `fly mpg connect` at a time on your local machine, and give a proxy you run alongside it a different `--local-port`.
 
 ### Setting up a Proxy Connection
 
