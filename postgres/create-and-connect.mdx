@@ -125,6 +125,8 @@ To use the local proxy connection you can modify the direct connection string fr
 Connection String: postgres://fly-user:<password>@localhost:16380/fly-db
 ```
 
+Database management tools such as DBeaver and pgAdmin often connect to the `postgres` database by default. [Custom users](/postgres/users-and-permissions) can't connect to it, so set the tool's database to one the user can reach. See [Connect with GUI tools](/postgres/users-and-permissions#connect-with-gui-tools).
+
 ## Alternative: Connect via WireGuard
 
 As an alternative to using flyctl proxy commands, you can connect to your MPG cluster directly through your organization's private network using WireGuard. 
