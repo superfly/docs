@@ -3,18 +3,33 @@ title: fly mpg connect
 source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_connect
 ---
 
-Connect to a MPG database using psql
+Connect to a MPG database using psql.
+
+With --command or --file, psql stops at the first SQL error and skips its
+startup file. See the examples for scripted usage.
 
 ## Usage
 ```
 fly mpg connect <CLUSTER ID> [flags]
 ```
+## Examples
+
+```
+  fly mpg connect <CLUSTER_ID> -c 'select count(*) from orders'
+  fly mpg connect <CLUSTER_ID> -f migrations.sql
+  fly mpg connect <CLUSTER_ID> -c 'select * from orders' -- --csv -t
+  # Piped SQL keeps psql defaults; enable ON_ERROR_STOP explicitly:
+  cat queries.sql | fly mpg connect <CLUSTER_ID> -- -v ON_ERROR_STOP=1
+  fly mpg connect <CLUSTER_ID> --database app --username reader -c 'select current_user'
+```
 ## Options
 
 ```
-  -d, --database string   The database to connect to
-  -h, --help              help for connect
-  -u, --username string   The username to connect as
+  -c, --command stringArray   The SQL command to run and exit (repeatable; mutually exclusive with --file)
+  -d, --database string       The database to connect to
+  -f, --file stringArray      The SQL file to run and exit (repeatable, - for stdin; mutually exclusive with --command)
+  -h, --help                  help for connect
+  -u, --username string       The username to connect as
 ```
 ## Global Options
 
