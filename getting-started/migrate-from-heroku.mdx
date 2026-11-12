@@ -37,9 +37,8 @@ fly launch --no-deploy
 fly mpg create --name your-db --region iad
 # ⚠️ Replace CLUSTER_ID below with the cluster ID from the output above.
 # If you missed it, run: fly mpg list
-fly mpg proxy CLUSTER_ID --local-port 15432 &
 pg_dump --no-owner --no-acl "$(heroku config:get DATABASE_URL -a YOUR_HEROKU_APP)" | \
-  PGPASSWORD=YOUR_FLY_DB_PASSWORD psql -h localhost -p 15432 -U fly-user -d fly-db
+  fly mpg connect CLUSTER_ID
 fly mpg attach CLUSTER_ID -a your-fly-app
 
 # 4. Import secrets
@@ -151,23 +150,18 @@ Connection string: postgresql://fly-user:PASSWORD@pgbouncer.CLUSTER_ID.flympg.ne
 
 Note the cluster ID (the `CLUSTER_ID` part) - you'll need it for the next few commands. If you lose it, you can always find it with `fly mpg list`.
 
-To import your data, use `fly mpg proxy` to create a local tunnel, then `pg_dump` and `psql`:
+To import your data, dump it from Heroku with `pg_dump`, then restore it with `fly mpg connect`, which opens a tunnel to your database and runs `psql` for you:
 
 ```bash
-# Terminal 1: Start a proxy to your Fly database (replace CLUSTER_ID with your cluster ID)
-fly mpg proxy CLUSTER_ID --local-port 15432
-
-# Terminal 2: Dump from Heroku and restore to Fly
+# Dump the Heroku database (plain SQL format)
 export HEROKU_DB=$(heroku config:get DATABASE_URL -a $HEROKU_APP)
-
-# Dump the database (plain SQL format)
 pg_dump --no-owner --no-acl "$HEROKU_DB" > heroku-dump.sql
 
-# Restore to Fly (via the proxy)
-PGPASSWORD=YOUR_PASSWORD psql -h localhost -p 15432 -U fly-user -d fly-db -f heroku-dump.sql
+# Restore to Fly (replace CLUSTER_ID with your cluster ID)
+fly mpg connect CLUSTER_ID < heroku-dump.sql
 ```
 
-You'll see some errors about Heroku-specific extensions (pg_stat_statements, event triggers) - these are safe to ignore. Your actual data will import successfully.
+You'll see some errors about Heroku-specific extensions (pg_stat_statements, event triggers) - these are safe to ignore. Your actual data will import successfully. If your `pg_dump` is version 17 or later, you'll also see `unrecognized configuration parameter "transaction_timeout"` on a Postgres 16 cluster, which is safe to ignore too.
 
 Attach the database to your app:
 

@@ -100,6 +100,50 @@ fly mpg connect [flags]
 
 This command will create a direct connection to your database and open a psql session. You'll need a compatible psql version installed locally.
 
+### Run SQL without a session
+
+To run SQL from a script, a CI job, or an agent, pass it to `fly mpg connect` with `-c` or `-f`. The command runs the SQL, prints the result, and exits. It doesn't prompt for a user or database, so pass the cluster ID.
+
+Run one statement:
+
+```bash
+fly mpg connect <CLUSTER_ID> -c 'select count(*) from orders'
+```
+
+Run a SQL file:
+
+```bash
+fly mpg connect <CLUSTER_ID> -f migrate.sql
+```
+
+Both flags stop at the first error and skip your `~/.psqlrc`. You can repeat either flag, but you can't combine `-c` and `-f` in one command. Use `--database` and `--username` to connect to something other than the defaults.
+
+Everything after `--` goes to psql unchanged. For example, to get a bare value into a shell variable, add psql's `-At` flags:
+
+```bash
+count=$(fly mpg connect <CLUSTER_ID> -c 'select count(*) from orders' -- -At)
+```
+
+Only psql's output goes to stdout. The `Proxying...` line that flyctl prints goes to stderr.
+
+You can also pipe SQL in. Piped SQL keeps psql's default behavior and carries on after an error, so add `ON_ERROR_STOP` if you want it to stop:
+
+```bash
+cat queries.sql | fly mpg connect <CLUSTER_ID> -- -v ON_ERROR_STOP=1
+```
+
+`fly mpg connect` exits with status `0` when the SQL runs cleanly and `1` when psql fails, so a script can check it. On failure, psql's own error is followed by a line with psql's exit status:
+
+```out
+$ fly mpg connect <CLUSTER_ID> -f migrate.sql
+psql:migrate.sql:2: ERROR:  column "nope" does not exist
+Error: exit status 3
+```
+
+psql uses `1` for a failed `-c` statement, `2` for a connection that couldn't be made or was lost, and `3` for a script that stopped at an error.
+
+`fly mpg connect` uses a fixed local port, so run one at a time on a given machine.
+
 ### Setting up a Proxy Connection
 
 You can create a proxy connection to your Managed Postgres database using the '[mpg proxy](/flyctl/cmd/fly_mpg_proxy)' command:

@@ -1,6 +1,6 @@
 ---
 title: Import data from another postgres cluster
-description: "Import data into Fly.io Managed Postgres from Fly Postgres or another provider using pg_dump and psql over fly mpg proxy, plus size limits and pgloader."
+description: "Import data into Fly.io Managed Postgres from Fly Postgres or another provider using pg_dump and fly mpg connect, plus size limits and pgloader."
 source_url: https://fly.io/docs/mpg/import/
 ---
 
@@ -12,13 +12,7 @@ If you're migrating to Fly Managed Postgres (MPG) from an unmanaged Fly Postgres
 
 There isn't currently an automated way to migrate an existing DB's data, but you can accomplish this with a standard Postgres dump and restore process after creating your MPG cluster.
 
-For simple databases, this can be as easy as running :
-
-```bash
- pg_dump "$LEGACY_PG_CONNECTION_STRING" | psql "$MPG_URI".
-```
-
-Because your MPG cluster runs within your Fly Private Network, you'll need to be connected to your organizations Wireguard network in order to restore into your MPG database. To run the import process from your local machine, you would take the following steps: 
+Your MPG cluster runs within your Fly.io private network, so it isn't reachable over the public internet. `fly mpg connect` opens the tunnel, looks up the credentials, and runs psql for you, so you can restore from your local machine without setting up a proxy or copying a password. You'll need `pg_dump` and `psql` installed locally.
 
 1. Create your Managed Postgres cluster from the Fly.io dashboard, or using `fly mpg create`
 
@@ -26,25 +20,46 @@ Because your MPG cluster runs within your Fly Private Network, you'll need to be
     **Warning:** Your new cluster must be created with a volume at least as large as the database you're importing, otherwise the import process will fail.
     </Warning> 
 
-2. Open a proxy connection to your MPG database with
-    ```out
-    $ fly mpg proxy    
-    ? Select Organization: My Organization (personal)
-    ? Select a Postgres cluster my-test-cluster (iad)
-    Proxying localhost:16380 to remote [fdaa:1:2345:0:0::67]:5432
-    ```
-
-3. Find your MPG cluster's connection string in the dashboard, and modify it to use the local proxy: 
-    ```out
-    Connection String: postgres://fly-user:<password>@localhost:16380/fly-db
-    ``` 
-
-4. Run the dump and restore command
+2. Dump your existing database to a file
     ```bash
-    pg_dump "$LEGACY_PG_CONNECTION_STRING" | psql postgres://fly-user:<password>@localhost:16380/fly-db
+    pg_dump --no-owner --no-acl "$LEGACY_PG_CONNECTION_STRING" > dump.sql
     ```
 
-5. If everything succeeds, all data from your legacy cluster will be imported into your new MPG cluster. 
+3. Restore the file into your MPG cluster. Find the cluster ID with `fly mpg list`
+    ```bash
+    fly mpg connect <CLUSTER_ID> -f dump.sql
+    ```
+
+    The restore goes into the default database as the default user. Add `--database` or `--username` to pick others.
+
+4. Check the exit status. `0` means every statement ran. With `-f`, the restore stops at the first error and `fly mpg connect` exits with status `1`, so a failed import can't pass for a finished one.
+
+To skip the intermediate file, pipe `pg_dump` straight in. Piped SQL doesn't stop on errors by default, so turn that on:
+
+```bash
+pg_dump --no-owner --no-acl "$LEGACY_PG_CONNECTION_STRING" | fly mpg connect <CLUSTER_ID> -- -v ON_ERROR_STOP=1
+```
+
+### If the restore stops
+
+- **`unrecognized configuration parameter "transaction_timeout"`**: `pg_dump` version 17 and later writes `SET transaction_timeout = 0;` at the top of every dump, and Postgres 16 doesn't know that setting.
+- **`must be owner of extension`**: the dump includes a `COMMENT ON EXTENSION` line for each extension, and the default user doesn't own the extensions that come preinstalled on MPG.
+
+    Neither statement affects your data. Remove those lines and run the restore again:
+    ```bash
+    grep -vE '^(SET transaction_timeout|COMMENT ON EXTENSION)' dump.sql > dump-clean.sql
+    fly mpg connect <CLUSTER_ID> -f dump-clean.sql
+    ```
+    In the piped form, put the same `grep -vE` between `pg_dump` and `fly mpg connect`.
+- **The connection drops partway**: the restore needs your network connection for the whole run, and a large dump can take a while. Statements that already ran stay in the database, so drop the partial tables before you retry. To make the restore all-or-nothing instead, add `-- --single-transaction`:
+    ```bash
+    fly mpg connect <CLUSTER_ID> -f dump.sql -- --single-transaction
+    ```
+- **Another error you expect and want to skip**: tell psql to carry on with `fly mpg connect <CLUSTER_ID> -f dump.sql -- -v ON_ERROR_STOP=0`, then read the output for anything else that failed. In this mode the exit status is `0` even when statements fail.
+
+### Use another tool
+
+Tools that make their own connection, like `pg_restore` with a custom-format dump, need an address to connect to. Run `fly mpg proxy <CLUSTER_ID>` and point the tool at the local port it prints, using the username and password from your cluster's connection string in the dashboard. See [Setting up a Proxy Connection](/postgres/create-and-connect#setting-up-a-proxy-connection).
 
 For larger or more complex databases, you may need to break the dump and restore process into multiple steps. You may also consider using dedicated PG migration tools like [pgloader](https://pgloader.io/) or [pgcopydb](https://github.com/dimitri/pgcopydb).
 
