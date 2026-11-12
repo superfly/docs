@@ -38,8 +38,6 @@ Aside from the extensions bundled with the default Postgres distribution, MPG cl
 - [pg_repack](#pg_repack), on v2 clusters, for rebuilding bloated tables while your app keeps reading and writing.
 - [pg_stat_monitor](https://docs.percona.com/pg-stat-monitor/) and [pgaudit](https://github.com/pgaudit/pgaudit), which are always enabled.
 
-We rebuild the v2 cluster images every week with the latest releases of the extensions we ship, including security fixes, and roll new images out during your cluster's [maintenance window](/postgres/maintenance-windows). PostGIS and pg_repack are pinned and change only when we update them.
-
 To get PostGIS support, turn it on when you create the cluster:
 
 - Via the dashboard, check "Enable PostGIS" under the "Extensions" section
@@ -52,6 +50,12 @@ flyctl mpg create --enable-postgis-support
 On a v2 cluster (marked **v2** next to the cluster name), you can also add PostGIS support later: click **Enable PostGIS support** on the Extensions page. The cluster does a rolling restart, and existing connections may break while the replicas restart. Once that's done, enable `postgis` in each database that needs it.
 
 We plan on supporting additional third party extensions based on user feedback. If there's an extension you rely on or commonly use, please let us know! 
+
+### How extensions are updated
+
+We rebuild v2 cluster images every week with the latest releases of the extensions we ship, including security fixes. A new image reaches your cluster during its [maintenance window](/postgres/maintenance-windows). PostGIS and pg_repack are pinned and change only when we update them.
+
+v1 clusters don't get these updates.
 
 ## Supported extensions
 
