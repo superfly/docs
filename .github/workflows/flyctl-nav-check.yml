@@ -39,3 +39,27 @@ jobs:
             exit 1
           fi
           echo "Every flyctl/cmd page is in the nav."
+
+      # The reverse case: the sync deletes the page of a command removed from
+      # flyctl, but its nav entry stays behind as a broken sidebar link.
+      #
+      # A re-run sees this PR's docs.json as of the original event, so a nav
+      # fix merged separately wouldn't show. When this PR doesn't change
+      # docs.json (the bot's never do), read the nav from current main instead.
+      - name: find nav entries with no flyctl page
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          git fetch -q --depth=1 origin main:refs/remotes/origin/main "$BASE_SHA"
+          src=HEAD
+          if git diff --quiet "$BASE_SHA" HEAD -- docs.json; then src=origin/main; fi
+          stale=$(comm -13 \
+            <(ls flyctl/cmd/*.mdx | sed 's/\.mdx$//' | sort) \
+            <(git show "$src:docs.json" | jq '.navigation' \
+              | grep -oE '"flyctl/cmd/[^"]+"' | tr -d '"' | sort -u))
+          if [ -n "$stale" ]; then
+            echo "These docs.json nav entries have no page under flyctl/cmd/:"
+            echo "$stale"
+            exit 1
+          fi
+          echo "Every flyctl/cmd nav entry has a page."
