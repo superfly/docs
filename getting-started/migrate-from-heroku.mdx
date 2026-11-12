@@ -37,8 +37,8 @@ fly launch --no-deploy
 fly mpg create --name your-db --region iad
 # ⚠️ Replace CLUSTER_ID below with the cluster ID from the output above.
 # If you missed it, run: fly mpg list
-pg_dump --no-owner --no-acl "$(heroku config:get DATABASE_URL -a YOUR_HEROKU_APP)" | \
-  fly mpg connect CLUSTER_ID
+pg_dump --no-owner --no-acl -f heroku-dump.sql "$(heroku config:get DATABASE_URL -a YOUR_HEROKU_APP)"
+fly mpg connect CLUSTER_ID -f heroku-dump.sql -- -q -v ON_ERROR_STOP=0
 fly mpg attach CLUSTER_ID -a your-fly-app
 
 # 4. Import secrets
@@ -155,13 +155,15 @@ To import your data, dump it from Heroku with `pg_dump`, then restore it with `f
 ```bash
 # Dump the Heroku database (plain SQL format)
 export HEROKU_DB=$(heroku config:get DATABASE_URL -a $HEROKU_APP)
-pg_dump --no-owner --no-acl "$HEROKU_DB" > heroku-dump.sql
+pg_dump --no-owner --no-acl -f heroku-dump.sql "$HEROKU_DB"
 
-# Restore to Fly (replace CLUSTER_ID with your cluster ID)
-fly mpg connect CLUSTER_ID < heroku-dump.sql
+# Restore to Managed Postgres (replace CLUSTER_ID with your cluster ID)
+fly mpg connect CLUSTER_ID -f heroku-dump.sql -- -q -v ON_ERROR_STOP=0
 ```
 
-You'll see some errors about Heroku-specific extensions (pg_stat_statements, event triggers) - these are safe to ignore. Your actual data will import successfully. If your `pg_dump` is version 17 or later, you'll also see `unrecognized configuration parameter "transaction_timeout"` on a Postgres 16 cluster, which is safe to ignore too.
+The restore prints little besides errors, and carries on past them. You'll see some errors about Heroku-specific extensions (pg_stat_statements, event triggers) - these are safe to ignore. If your `pg_dump` is version 17 or later and your cluster runs Postgres 16, you'll also see `unrecognized configuration parameter "transaction_timeout"`, which is safe to ignore too.
+
+Read any other error before you go on: it means a statement didn't run. If the output ends with `Error: exit status 2`, the connection dropped and the import isn't complete. See [Restore errors](/postgres/import#restore-errors).
 
 Attach the database to your app:
 

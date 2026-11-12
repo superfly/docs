@@ -72,7 +72,7 @@ From the "Connect" tab of your MPG Cluster page you can attach a specific app in
 
 To attach an application to your database using flyctl run:
 ```bash
-fly mpg attach <clusterID> -a <app-to-attach>
+fly mpg attach <CLUSTER_ID> -a <app-to-attach>
 ```
 This will also trigger a restart of the selected app in order to add the secret. You can find the cluster ID in your MPG dashboard or by using the `fly mpg list` command. 
 
@@ -100,9 +100,11 @@ fly mpg connect [flags]
 
 This command will create a direct connection to your database and open a psql session. You'll need a compatible psql version installed locally.
 
-### Run SQL without a session
+### Running SQL without a session
 
-To run SQL from a script, a CI job, or an agent, pass it to `fly mpg connect` with `-c` or `-f`. The command runs the SQL, prints the result, and exits. It doesn't prompt for a user or database, so pass the cluster ID.
+To run SQL from a script, a CI job, or an agent, pass it to [`fly mpg connect`](/flyctl/cmd/fly_mpg_connect) with `-c` or `-f`. The command runs the SQL, prints the result, and exits. Pass the cluster ID: with `-c` or `-f`, flyctl doesn't prompt for a cluster, user, or database.
+
+The `-c` and `-f` flags are available in flyctl v0.5.9 and later. If your `fly` does not have them, run `fly version upgrade` or [install flyctl](/flyctl/install).
 
 Run one statement:
 
@@ -116,7 +118,7 @@ Run a SQL file:
 fly mpg connect <CLUSTER_ID> -f migrate.sql
 ```
 
-Both flags stop at the first error and skip your `~/.psqlrc`. You can repeat either flag, but you can't combine `-c` and `-f` in one command. Use `--database` and `--username` to connect to something other than the defaults.
+Both flags stop at the first error and skip your psqlrc file. You can repeat either flag, but you can't combine `-c` and `-f` in one command. Use `--database` and `--username` to connect to something other than the defaults.
 
 Everything after `--` goes to psql unchanged. For example, to get a bare value into a shell variable, add psql's `-At` flags:
 
@@ -126,23 +128,26 @@ count=$(fly mpg connect <CLUSTER_ID> -c 'select count(*) from orders' -- -At)
 
 Only psql's output goes to stdout. The `Proxying...` line that flyctl prints goes to stderr.
 
-You can also pipe SQL in. Piped SQL keeps psql's default behavior and carries on after an error, so add `ON_ERROR_STOP` if you want it to stop:
+You can also pipe SQL in. Piped SQL keeps psql's default behavior: it reads your psqlrc file and carries on after an error. To stop at the first error, add `-X` and `ON_ERROR_STOP`:
 
 ```bash
-cat queries.sql | fly mpg connect <CLUSTER_ID> -- -v ON_ERROR_STOP=1
+cat queries.sql | fly mpg connect <CLUSTER_ID> -- -X -v ON_ERROR_STOP=1
 ```
 
 `fly mpg connect` exits with status `0` when the SQL runs cleanly and `1` when psql fails, so a script can check it. On failure, psql's own error is followed by a line with psql's exit status:
 
 ```out
 $ fly mpg connect <CLUSTER_ID> -f migrate.sql
+Proxying localhost:16380 to remote [direct.<CLUSTER_ID>.flympg.net]:5432
 psql:migrate.sql:2: ERROR:  column "nope" does not exist
+LINE 1: select nope;
+               ^
 Error: exit status 3
 ```
 
-psql uses `1` for a failed `-c` statement, `2` for a connection that couldn't be made or was lost, and `3` for a script that stopped at an error.
+psql uses `1` for a failed `-c` statement or an error of its own, such as a file it can't read, `2` for a connection that couldn't be made or was lost, and `3` for a script that stopped at an error. flyctl also exits with status `1` for its own errors, such as a cluster it can't find.
 
-`fly mpg connect` uses a fixed local port, so run one at a time on a given machine.
+`fly mpg connect` listens on local port 16380, which is also the default port for `fly mpg proxy`. Run one at a time on your local machine, or give the proxy a different `--local-port`.
 
 ### Setting up a Proxy Connection
 
