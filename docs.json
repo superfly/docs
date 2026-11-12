@@ -3823,6 +3823,22 @@
       "destination": "/unmanaged-postgres"
     },
     {
+      "source": "/reference/postgres-on-nomad",
+      "destination": "/unmanaged-postgres"
+    },
+    {
+      "source": "/postgres/storage",
+      "destination": "/postgres"
+    },
+    {
+      "source": "/flyctl/postgres-barman",
+      "destination": "/flyctl/cmd/fly_postgres"
+    },
+    {
+      "source": "/getting-started/working-with-fly-apps",
+      "destination": "/apps/overview"
+    },
+    {
       "source": "/rails/dockerfiles/",
       "destination": "/rails/getting-started/dockerfiles"
     },
