@@ -132,7 +132,7 @@ Create a WireGuard token with a custom name and expiry:
 fly tokens create wireguard -o <org name> --name <"my token name"> --expiry <duration>
 ```
 
-A WireGuard peer joins a private network and can reach every private service on that network. A token that can create peers on any network gives access to all of them. Use the `--network` option with the [network name](/networking/custom-private-networks#network-names-and-ids) to keep a token to the networks it needs:
+A WireGuard peer joins a private network and can reach every private service on that network. A token that can create peers on any network gives access to all of them. Use the `--network` option with the [network name](/networking/custom-private-networks#network-names-and-ids) to limit a token to the networks it needs:
 
 - The token can create and remove WireGuard peers only on the networks you name. A request that names any other network is refused, reads included.
 - Reads that name no network, like listing the org's WireGuard peers, aren't affected.
@@ -152,7 +152,9 @@ With a network-limited token, [`fly wireguard create`](/flyctl/cmd/fly_wireguard
 fly wireguard create my-org ord my-peer --network staging
 ```
 
-To create a peer on the default network, leave out `--network`. The request is refused unless the token allows the default network. On `fly wireguard create`, `--network default` names a custom network called `default`, not the default network.
+- Token allows the default network: `fly tokens create wireguard --network default`
+- Peer on the default network: `fly wireguard create <org> <region> <name>` (no `--network`)
+- `fly wireguard create --network default` means a custom network named `default`.
 
 For all options, refer to the [`fly tokens create wireguard` command docs](/flyctl/cmd/fly_tokens_create_wireguard).
 
