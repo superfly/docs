@@ -37,9 +37,8 @@ fly launch --no-deploy
 fly mpg create --name your-db --region iad
 # ⚠️ Replace CLUSTER_ID below with the cluster ID from the output above.
 # If you missed it, run: fly mpg list
-fly mpg proxy CLUSTER_ID --local-port 15432 &
-pg_dump --no-owner --no-acl "$(heroku config:get DATABASE_URL -a YOUR_HEROKU_APP)" | \
-  PGPASSWORD=YOUR_FLY_DB_PASSWORD psql -h localhost -p 15432 -U fly-user -d fly-db
+pg_dump --no-owner --no-acl -f heroku-dump.sql "$(heroku config:get DATABASE_URL -a YOUR_HEROKU_APP)" && \
+  fly mpg connect CLUSTER_ID -f heroku-dump.sql -- -q -v ON_ERROR_STOP=0
 fly mpg attach CLUSTER_ID -a your-fly-app
 
 # 4. Import secrets
@@ -151,23 +150,28 @@ Connection string: postgresql://fly-user:PASSWORD@pgbouncer.CLUSTER_ID.flympg.ne
 
 Note the cluster ID (the `CLUSTER_ID` part) - you'll need it for the next few commands. If you lose it, you can always find it with `fly mpg list`.
 
-To import your data, use `fly mpg proxy` to create a local tunnel, then `pg_dump` and `psql`:
+To import your data, dump it from Heroku with `pg_dump`, then restore it with `fly mpg connect`, which opens a tunnel to your database and runs `psql` for you:
 
 ```bash
-# Terminal 1: Start a proxy to your Fly database (replace CLUSTER_ID with your cluster ID)
-fly mpg proxy CLUSTER_ID --local-port 15432
-
-# Terminal 2: Dump from Heroku and restore to Fly
+# Dump the Heroku database (plain SQL format)
 export HEROKU_DB=$(heroku config:get DATABASE_URL -a $HEROKU_APP)
+pg_dump --no-owner --no-acl -f heroku-dump.sql "$HEROKU_DB"
 
-# Dump the database (plain SQL format)
-pg_dump --no-owner --no-acl "$HEROKU_DB" > heroku-dump.sql
-
-# Restore to Fly (via the proxy)
-PGPASSWORD=YOUR_PASSWORD psql -h localhost -p 15432 -U fly-user -d fly-db -f heroku-dump.sql
+# Restore to Managed Postgres (replace CLUSTER_ID with your cluster ID)
+fly mpg connect CLUSTER_ID -f heroku-dump.sql -- -q -v ON_ERROR_STOP=0
 ```
 
-You'll see some errors about Heroku-specific extensions (pg_stat_statements, event triggers) - these are safe to ignore. Your actual data will import successfully.
+Make sure `pg_dump` finishes without an error before you restore: a dump that failed partway can restore without complaint. The restore prints a few query results, such as `setval`, and carries on past errors. You'll see errors about the `pg_stat_statements` extension and about Heroku's own event triggers, like these:
+
+```out
+psql:heroku-dump.sql:68: ERROR:  permission denied to create extension "pg_stat_statements"
+psql:heroku-dump.sql:75: ERROR:  extension "pg_stat_statements" does not exist
+psql:heroku-dump.sql:25952: ERROR:  permission denied to create event trigger "00_validate_before_start"
+```
+
+These are safe to ignore. If your `pg_dump` is version 17 or later and your cluster runs Postgres 16, you'll also see `unrecognized configuration parameter "transaction_timeout"`, which is safe to ignore too.
+
+Read any other error before you go on: it means a statement didn't run. If the output ends with `connection to server was lost` and `Error: exit status 2`, the connection dropped partway and the import isn't complete. Don't run the restore again on the same database, because tables that already loaded would get their rows twice. Create an empty database with `fly mpg databases create CLUSTER_ID --name heroku_import`, then add `--database heroku_import` before the `--` in the restore command, and to `fly mpg attach` below. See [Restore errors](/postgres/import#restore-errors).
 
 Attach the database to your app:
 

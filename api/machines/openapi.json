@@ -6513,7 +6513,7 @@
           "Tokens"
         ],
         "summary": "Request an OIDC token",
-        "description": "Request an Open ID Connect token for your machine. Customize the audience claim with the `aud` parameter. This returns a JWT token. Learn more about [using OpenID Connect](/docs/reference/openid-connect/) on Fly.io.\n",
+        "description": "Request an Open ID Connect token for your machine. Customize the audience claim with the `aud` parameter. This returns a JWT token. Learn more about [using OpenID Connect](https://docs.fly.io/security/openid-connect) on Fly.io.\n",
         "operationId": "Tokens_request_OIDC",
         "requestBody": {
           "description": "Optional request body",
@@ -7701,7 +7701,7 @@
           },
           "total_apps": {
             "type": "integer",
-            "description": "The number of apps matching the request, across all pages. When\npaginating, it is counted once when the first page is requested and not\nupdated afterwards, so it may differ slightly from the number of apps\nreturned: it excludes apps created later and includes apps deleted while\npaginating. Apps created in the seconds before the first page may also be\ncounted but missing from the pages."
+            "description": "The number of matching apps across all pages. Organization-wide listings\nretain the first page's count; scoped listings recount using the current\ntoken's permissions. Snapshot bounds exclude newer apps, and replication\nlag or deletion during traversal can make totals differ from rows seen."
           }
         }
       },

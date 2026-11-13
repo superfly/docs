@@ -990,7 +990,7 @@ Enum: v4, v6, shared_v4, private_v6, egress_v4, egress_v6, egress_pair
 | --- | --- | --- | --- |
 | `apps` | `App[]` | No | The apps on this page, or all apps if `limit` was not provided. |
 | `next_cursor` | `string` | No | Pagination cursor for the next page. Absent when no more apps remain. Cursors expire 30 minutes after the first page was requested. |
-| `total_apps` | `integer` | No | The number of apps matching the request, across all pages. When paginating, it is counted once when the first page is requested and not updated afterwards, so it may differ slightly from the number of apps returned: it excludes apps created later and includes apps deleted while paginating. Apps created in the seconds before the first page may also be counted but missing from the pages. |
+| `total_apps` | `integer` | No | The number of matching apps across all pages. Organization-wide listings retain the first page's count; scoped listings recount using the current token's permissions. Snapshot bounds exclude newer apps, and replication lag or deletion during traversal can make totals differ from rows seen. |
 
 ## listCertificatesResponse
 
