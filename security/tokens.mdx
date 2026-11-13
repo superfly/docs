@@ -137,7 +137,7 @@ A WireGuard peer joins a private network and can reach every private service on 
 - The token can create and remove WireGuard peers only on the networks you name. A request that names any other network is refused, reads included.
 - Reads that name no network, like listing the org's WireGuard peers, aren't affected.
 - To allow several networks, repeat the option or separate the names with commas: `--network staging --network prod` or `--network staging,prod`.
-- `default` always means the org's default network. You can't use `--network` to name a custom network that's called `default`.
+- `default` means the org's default network. You can't use `--network` to name a custom network that's called `default`.
 - Network names aren't checked when you create the token. With `--network staging,prdo`, the token works on `staging` but not on `prod`, and you get no error.
 
 This example creates a WireGuard token for the `my-org` org that's limited to the `staging` network and valid for 24 hours:
@@ -152,7 +152,7 @@ With a network-limited token, [`fly wireguard create`](/flyctl/cmd/fly_wireguard
 fly wireguard create my-org ord my-peer --network staging
 ```
 
-Without `--network`, `fly wireguard create` targets the default network. The request is refused unless the token allows `default`.
+To create a peer on the default network, leave out `--network`. The request is refused unless the token allows `default`. On `fly wireguard create`, `--network default` names a custom network called `default`, not the default network.
 
 For all options, refer to the [`fly tokens create wireguard` command docs](/flyctl/cmd/fly_tokens_create_wireguard).
 
