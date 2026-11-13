@@ -89,7 +89,13 @@ As an administrator with a multi-tenant setup, you might need to troubleshoot cu
 - `fly ssh sftp` commands to work with files on an app Machine. See the [`fly ssh sftp` docs](/flyctl/cmd/fly_ssh_sftp).
 - `fly proxy <local:remote> [remote_host] --app <app name>` to create a WireGuard tunnel to an app Machine. See the [`fly proxy` docs](/flyctl/cmd/fly_proxy).
 
-You can limit a WireGuard token to one or more custom 6PNs. The token can then create and remove WireGuard peers only on those networks. See [Create an org-scoped WireGuard token](/security/tokens#create-an-org-scoped-wireguard-token).
+## Limit a WireGuard token to custom 6PNs
+
+A WireGuard token manages WireGuard peers for an organization and nothing else. You can limit the token to one or more custom 6PNs. The token can then create and remove WireGuard peers only on those networks.
+
+A WireGuard token can't run commands that name an app, like `fly ssh console --app` or `fly proxy --app`.
+
+See [Create an org-scoped WireGuard token](/security/tokens#create-an-org-scoped-wireguard-token).
 
 ## Check which network an app or Machine is on
 
