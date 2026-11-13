@@ -5545,6 +5545,162 @@
         "x-codegen-request-body-name": "request"
       }
     },
+    "/v1/postgres/{postgres_cluster_id}/maintenance_window": {
+      "get": {
+        "tags": [
+          "Postgres Clusters"
+        ],
+        "summary": "Get Maintenance Window",
+        "description": "Get the weekly window in which a cluster may undergo maintenance. A cluster that never set one returns its region's default. Requires only read access to the organization.",
+        "operationId": "Postgres_maintenance_window_show",
+        "parameters": [
+          {
+            "name": "postgres_cluster_id",
+            "in": "path",
+            "description": "Managed Postgres Cluster ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/showPostgresMaintenanceWindowResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cluster not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Postgres Clusters"
+        ],
+        "summary": "Update Maintenance Window",
+        "description": "Update a cluster's weekly maintenance window. Give at least one of `day`, `start_hour` and `duration_hours`; omitted fields keep their current value. `start_hour` is in the cluster's timezone, which is derived from its region and cannot be changed. Changes are accepted only while the cluster is ready and no maintenance is running.",
+        "operationId": "Postgres_maintenance_window_update",
+        "parameters": [
+          {
+            "name": "postgres_cluster_id",
+            "in": "path",
+            "description": "Managed Postgres Cluster ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Maintenance window fields to change",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updatePostgresMaintenanceWindowRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Updated maintenance window",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/showPostgresMaintenanceWindowResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cluster not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The cluster is not ready or a maintenance is running",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "'This cluster has been deleted' or 'This cluster is being deleted'",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "No fields given, or a value is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to update maintenance window",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostgresErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "request"
+      }
+    },
     "/v1/postgres/{postgres_cluster_id}/queries/active": {
       "get": {
         "tags": [
@@ -7701,7 +7857,7 @@
           },
           "total_apps": {
             "type": "integer",
-            "description": "The number of matching apps across all pages. Organization-wide listings\nretain the first page's count; scoped listings recount using the current\ntoken's permissions. Snapshot bounds exclude newer apps, and replication\nlag or deletion during traversal can make totals differ from rows seen."
+            "description": "The number of matching apps across all pages. With an organization-wide\ntoken, it is counted when the first page is requested and not updated\nafterwards, so it excludes apps created later and includes apps deleted\nwhile paginating. With an app-scoped token, such as a deploy token, it is\nrecounted on each page and includes only the apps the token can read.\nEither way, it may differ slightly from the number of apps returned."
           }
         }
       },
@@ -8598,6 +8754,44 @@
             "type": "string",
             "description": "Installed version.",
             "example": "1.0"
+          }
+        }
+      },
+      "PostgresMaintenanceWindow": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string",
+            "description": "Day of the week the window starts on.",
+            "example": "sunday",
+            "enum": [
+              "sunday",
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday",
+              "saturday"
+            ]
+          },
+          "duration_hours": {
+            "maximum": 8,
+            "minimum": 3,
+            "type": "integer",
+            "description": "Length of the window in hours.",
+            "example": 3
+          },
+          "start_hour": {
+            "maximum": 23,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Hour of the day the window starts, in the cluster's timezone.",
+            "example": 1
+          },
+          "timezone": {
+            "type": "string",
+            "description": "IANA timezone the window is expressed in, derived from the cluster's region.",
+            "example": "America/New_York"
           }
         }
       },
@@ -11599,6 +11793,14 @@
           }
         }
       },
+      "showPostgresMaintenanceWindowResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/PostgresMaintenanceWindow"
+          }
+        }
+      },
       "updateMetadataRequest": {
         "type": "object",
         "properties": {
@@ -11616,6 +11818,39 @@
           "updated_at": {
             "type": "string",
             "description": "Time to record for the change in the Machine's `metadata_update` event. Defaults to now."
+          }
+        }
+      },
+      "updatePostgresMaintenanceWindowRequest": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string",
+            "description": "Day of the week the window starts on.",
+            "example": "tuesday",
+            "enum": [
+              "sunday",
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday",
+              "saturday"
+            ]
+          },
+          "duration_hours": {
+            "maximum": 8,
+            "minimum": 3,
+            "type": "integer",
+            "description": "Length of the window in hours.",
+            "example": 3
+          },
+          "start_hour": {
+            "maximum": 23,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Hour of the day the window starts, in the cluster's timezone.",
+            "example": 4
           }
         }
       },
