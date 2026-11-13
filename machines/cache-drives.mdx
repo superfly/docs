@@ -1,0 +1,92 @@
+---
+title: Cache drives
+description: "Give a Fly Machine fast local scratch storage with a cache drive: what it keeps, when it's wiped, size limits, and how to add one with the Machines API."
+---
+
+<Warning>
+Cache drives are in beta. The `cache_drive` config field may change before general availability.
+</Warning>
+
+A cache drive is local disk space attached to a single Fly Machine, for data your app can rebuild if it's lost. Think build caches, downloaded model weights, package caches, or temporary files that are too large for the Machine's root file system.
+
+Fly.io makes a best effort to keep a cache drive's contents across Machine stops, restarts, and updates, but there's no guarantee. Your app should expect to start with an empty cache drive at any time. If you need the data back, store it on a [Fly Volume](/volumes/overview) or in [object storage](/tigris) instead.
+
+## Cache drives, volumes, and the root file system
+
+| | Root file system | Cache drive | Fly Volume |
+| --- | --- | --- | --- |
+| Survives stop and restart | No | Usually, not guaranteed | Yes |
+| Survives a move to another host | No | No | Volumes don't move between hosts |
+| Survives Machine destroy | No | No | Yes, until you delete the volume |
+| Snapshots and forks | No | No | Yes |
+| Created and managed | With the Machine | In the Machine config | Separately, with `fly volumes` |
+| Max size | Depends on image | 50 GiB | 500GB |
+
+{/* TODO: add a billing row once pricing is set. */}
+
+## What happens to the data
+
+A cache drive belongs to its Machine. It's created when you create or update a Machine with a `cache_drive` config, and it lives on the same host as the Machine.
+
+| Event | Cache drive contents |
+| --- | --- |
+| Machine stops, starts, or restarts on the same host | Usually kept |
+| Machine update that doesn't change the cache drive's size | Usually kept |
+| Cache drive `path` changed | Kept |
+| Cache drive `size_mb` changed | Wiped. The drive is destroyed and a new empty one is created |
+| Machine moved or recovered on another host | Wiped. A new empty drive is created on the new host |
+| Machine cloned | The clone starts with an empty drive |
+| `cache_drive` removed from the config | Drive destroyed |
+| Machine destroyed | Drive destroyed |
+
+## Limits
+
+- One cache drive per Machine.
+- Maximum size is 51200 MiB (50 GiB).
+- Minimum size is 16 MiB.
+- The mount path must be an absolute path other than `/`, and it can't overlap `/dev`, `/proc`, `/sys`, `/.fly`, or a volume mount path on the same Machine.
+
+## Add a cache drive with the Machines API
+
+Set `cache_drive` in the Machine config when you [create](/machines/api/machines-resource#create-a-machine) or [update](/machines/api/machines-resource#update-a-machine) a Machine:
+
+- `size_mb`: the drive size in MiB.
+- `path`: where to mount the drive in the Machine. The drive is formatted as ext4 and mounted at this path.
+
+```bash
+curl -i -X POST \
+  -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
+  "${FLY_API_HOSTNAME}/v1/apps/my-app-name/machines" \
+  -d '{
+    "config": {
+      "image": "registry-1.docker.io/library/ubuntu:latest",
+      "guest": {
+        "cpu_kind": "shared",
+        "cpus": 1,
+        "memory_mb": 256
+      },
+      "cache_drive": {
+        "size_mb": 10240,
+        "path": "/cache"
+      }
+    }
+  }'
+```
+
+This creates a Machine with a 10 GiB cache drive mounted at `/cache`.
+
+To resize the drive, update the Machine with a new `size_mb`. The old drive and its contents are discarded. To remove the drive, update the Machine config without `cache_drive`.
+
+See the [`fly.MachineCacheDrive`](/api/machines/models#fly-machinecachedrive) reference for the full schema.
+
+{/* TODO: flyctl section. `fly machine run/update --cachedrive-size` sets size only, with no path option or fly.toml support yet. */}
+
+## Pricing
+
+{/* TODO: pricing not decided yet. Add it here and in /about/pricing. */}
+
+## Related
+
+- [Fly Volumes overview](/volumes/overview)
+- [Databases & Storage](/database-storage-guides)
+- [Machine config reference](/api/machines/models#fly-machineconfig)
