@@ -152,8 +152,10 @@ With a network-limited token, [`fly wireguard create`](/flyctl/cmd/fly_wireguard
 fly wireguard create my-org ord my-peer --network staging
 ```
 
+For the default network, `--network` works differently on the two commands:
+
 - Token allows the default network: `fly tokens create wireguard --network default`
-- Peer on the default network: `fly wireguard create <org> <region> <name>` (no `--network`)
+- Peer on the default network: `fly wireguard create <org> <region> <name>` (no `--network`). This is refused unless the token allows the default network.
 - `fly wireguard create --network default` means a custom network named `default`.
 
 For all options, refer to the [`fly tokens create wireguard` command docs](/flyctl/cmd/fly_tokens_create_wireguard).
