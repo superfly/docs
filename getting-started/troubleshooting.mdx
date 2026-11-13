@@ -488,6 +488,7 @@ MPG clusters run on Fly's private network and aren't accessible over the public 
 **To connect from your local machine::**
 
 - Interactive psql: `fly mpg connect`
+- SQL without a session: `fly mpg connect <CLUSTER_ID> -c 'select 1'` or `fly mpg connect <CLUSTER_ID> -f script.sql`
 - Proxy to localhost: `fly mpg proxy` — forwards a local port to your database
 - WireGuard: connect to your org's private network, then use the `.flympg.net` connection string directly. Read more in this [reference guide](/blueprints/connect-private-network-wireguard).
 
