@@ -27,6 +27,7 @@ These states remain until you take action (or something fails).
 | `started` | Running and network-accessible |
 | `stopped` | Exited, either on its own or explicitly stopped |
 | `suspended` | Suspended to disk; will attempt to resume on next start |
+| `archived` | Released from its host; the next start rebuilds it, possibly elsewhere with a new private IP |
 | `failed` | Machine encountered an error and could not start successfully |
 
 ### Transient states

@@ -1402,6 +1402,7 @@
                   "about/billing",
                   "about/cost-management",
                   "about/free-trial",
+                  "about/free-waiver",
                   "about/support",
                   {
                     "group": "Jobs",
@@ -1560,6 +1561,7 @@
                   "GET /v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions",
                   "POST /v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions",
                   "DELETE /v1/postgres/{postgres_cluster_id}/databases/{database_name}/extensions/{extension_name}",
+                  "POST /v1/postgres/{postgres_cluster_id}/databases/{database_name}/query",
                   "POST /v1/postgres/{postgres_cluster_id}/fork",
                   "GET /v1/postgres/{postgres_cluster_id}/queries/active",
                   "GET /v1/postgres/{postgres_cluster_id}/queries/slow",
@@ -3526,7 +3528,7 @@
     },
     {
       "source": "/machines/working-with-machines/",
-      "destination": "/machines/api"
+      "destination": "/machines/api/machines-resource"
     },
     {
       "source": "/metrics-and-logs/",
@@ -3819,6 +3821,22 @@
     {
       "source": "/postgres/postgres-on-nomad/",
       "destination": "/unmanaged-postgres"
+    },
+    {
+      "source": "/reference/postgres-on-nomad",
+      "destination": "/unmanaged-postgres"
+    },
+    {
+      "source": "/postgres/storage",
+      "destination": "/postgres"
+    },
+    {
+      "source": "/flyctl/postgres-barman",
+      "destination": "/flyctl/cmd/fly_postgres"
+    },
+    {
+      "source": "/getting-started/working-with-fly-apps",
+      "destination": "/apps/overview"
     },
     {
       "source": "/rails/dockerfiles/",
