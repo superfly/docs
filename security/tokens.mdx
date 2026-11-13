@@ -1,6 +1,6 @@
 ---
 title: Access tokens
-description: "Create Fly.io access tokens scoped to one app or org, including SSH, machine-exec and read-only tokens, then set expiry, list and revoke them with fly tokens."
+description: "Create Fly.io access tokens scoped to one app or org, including SSH, machine-exec, read-only and WireGuard tokens, then set expiry, list and revoke them."
 source_url: https://fly.io/docs/security/tokens/
 ---
 
@@ -22,7 +22,7 @@ You can create a standard app-scoped deploy token, a token to SSH into an app's 
 
 Use an org-scoped token for access to manage all the apps within a single organization. An org-scoped token is the middle ground between the auth token and the more restricted app-scoped token, and is useful when you want to automate a single org.
 
-You can create a standard org-scoped token or a read-only org-scoped token.
+You can create a standard org-scoped token or a read-only org-scoped token. You can also create an org-scoped WireGuard token, which manages an org's WireGuard peers and can't act on apps.
 
 ## Create and manage tokens
 
@@ -82,7 +82,7 @@ fly tokens create machine-exec --command "<exact command and arguments to run>"
 
 ### Create org-scoped tokens
 
-Org-scoped tokens are limited to managing a single org and its resources, including apps.
+Org-scoped tokens are limited to a single org. A standard org-scoped token can manage the org and its resources, including apps.
 
 If you don't specify a name with the `--name` option, then the default name is `Org deploy token`.
 
@@ -115,6 +115,50 @@ Create a read-only token based on an existing token:
 ```
 fly tokens create readonly --name <"my token name"> --expiry <duration> --from-existing -t <existing token starting with fm2_>
 ```
+
+#### Create an org-scoped WireGuard token
+
+A WireGuard token is for managing the WireGuard peers of a single org:
+
+- The token can create and remove WireGuard peers. Without `--network`, it works on every private network in the org.
+- The token can do org-level reads, like listing the org's WireGuard peers.
+- The token can't act on apps or Machines, reads included. Any command that names an app is refused, for example `fly ssh console --app`, `fly proxy --app`, `fly status -a`, or `fly machines list -a`.
+
+If you don't specify a name with the `--name` option, then the default name is `WireGuard token`.
+
+Create a WireGuard token with a custom name and expiry:
+
+```
+fly tokens create wireguard -o <org name> --name <"my token name"> --expiry <duration>
+```
+
+A WireGuard peer joins a private network and can reach every private service on that network. A token that can create peers on any network gives access to all of them. Use the `--network` option with the [network name](/networking/custom-private-networks#network-names-and-ids) to limit a token to the networks it needs:
+
+- The token can create and remove WireGuard peers only on the networks you name. A request that names any other network is refused, reads included.
+- Reads that name no network, like listing the org's WireGuard peers, aren't affected.
+- To allow several networks, repeat the option or separate the names with commas: `--network staging --network prod` or `--network staging,prod`.
+- To allow the org's default network, use `--network default`. You can't use `--network` to name a custom network that's called `default`.
+- Network names aren't checked when you create the token. With `--network staging,prdo`, the token works on `staging` but not on `prod`, and you get no error.
+
+This example creates a WireGuard token for the `my-org` org that's limited to the `staging` network and valid for 24 hours:
+
+```
+fly tokens create wireguard -o my-org --network staging --expiry 24h
+```
+
+With a network-limited token, [`fly wireguard create`](/flyctl/cmd/fly_wireguard_create) must name an allowed network:
+
+```
+fly wireguard create my-org ord my-peer --network staging
+```
+
+For the default network, `--network` works differently on the two commands:
+
+- Token allows the default network: `fly tokens create wireguard --network default`
+- Peer on the default network: `fly wireguard create <org> <region> <name>` (no `--network`). This is refused unless the token allows the default network.
+- `fly wireguard create --network default` means a custom network named `default`.
+
+For all options, refer to the [`fly tokens create wireguard` command docs](/flyctl/cmd/fly_tokens_create_wireguard).
 
 ### List or view tokens
 
