@@ -27,7 +27,7 @@ Your MPG cluster runs within your Fly.io private network, so it isn't reachable 
 
     Make sure `pg_dump` finishes without an error before you go on. A dump that failed partway leaves an incomplete file, and an incomplete file can restore without complaint.
 
-3. If your `pg_dump` is version 17 or later and your cluster runs Postgres 16 (the `fly mpg create` default), remove one setting from the top of the dump. `pg_dump` 17 and later writes `SET transaction_timeout = 0;` there, and Postgres 16 doesn't know that setting. Check your version with `pg_dump --version`, then remove the line:
+3. If your `pg_dump` is version 17 or later and your cluster runs Postgres 16, remove one setting from the top of the dump. `pg_dump` 17 and later writes `SET transaction_timeout = 0;` there, and Postgres 16 doesn't know that setting. Check your version with `pg_dump --version`, then remove the line:
     ```bash
     sed '1,20{/^SET transaction_timeout = 0;$/d;}' dump.sql > dump-pg16.sql
     ```
