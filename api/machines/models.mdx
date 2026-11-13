@@ -990,7 +990,7 @@ Enum: v4, v6, shared_v4, private_v6, egress_v4, egress_v6, egress_pair
 | --- | --- | --- | --- |
 | `apps` | `App[]` | No | The apps on this page, or all apps if `limit` was not provided. |
 | `next_cursor` | `string` | No | Pagination cursor for the next page. Absent when no more apps remain. Cursors expire 30 minutes after the first page was requested. |
-| `total_apps` | `integer` | No | The number of matching apps across all pages. Organization-wide listings retain the first page's count; scoped listings recount using the current token's permissions. Snapshot bounds exclude newer apps, and replication lag or deletion during traversal can make totals differ from rows seen. |
+| `total_apps` | `integer` | No | The number of matching apps across all pages. With an organization-wide token, it is counted when the first page is requested and not updated afterwards, so it excludes apps created later and includes apps deleted while paginating. With an app-scoped token, such as a deploy token, it is recounted on each page and includes only the apps the token can read. Either way, it may differ slightly from the number of apps returned. |
 
 ## listCertificatesResponse
 
@@ -1464,6 +1464,15 @@ Type: `map<string, integer>`
 | `schema` | `string` | No | Schema the extension is installed into. |
 | `version` | `string` | No | Installed version. |
 
+## PostgresMaintenanceWindow
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `day` | `string` | No | Day of the week the window starts on. Enum: sunday, monday, tuesday, wednesday, thursday, friday, saturday |
+| `duration_hours` | `integer` | No | Length of the window in hours. |
+| `start_hour` | `integer` | No | Hour of the day the window starts, in the cluster's timezone. |
+| `timezone` | `string` | No | IANA timezone the window is expressed in, derived from the cluster's region. |
+
 ## PostgresNodeEndpoints
 
 | Property | Type | Required | Description |
@@ -1636,6 +1645,12 @@ Enum: 1, 2, 4, 8, 16, 31, 0
 | --- | --- | --- | --- |
 | `data` | `PostgresCluster` | No |  |
 
+## showPostgresMaintenanceWindowResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresMaintenanceWindow` | No |  |
+
 ## SignalRequest
 
 | Property | Type | Required | Description |
@@ -1698,6 +1713,14 @@ Enum: 1, 2, 4, 8, 16, 31, 0
 | `machine_version` | `string` | No | Only apply the change if this is still the Machine's current version; otherwise fail with 412. Defaults to the current version. |
 | `metadata` | `map<string, string>` | No | Keys to change. A string value sets the key; null, an empty string or whitespace removes it. Keys and values have surrounding whitespace trimmed. Keys not listed are left alone. Must contain at least one key. |
 | `updated_at` | `string` | No | Time to record for the change in the Machine's `metadata_update` event. Defaults to now. |
+
+## updatePostgresMaintenanceWindowRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `day` | `string` | No | Day of the week the window starts on. Enum: sunday, monday, tuesday, wednesday, thursday, friday, saturday |
+| `duration_hours` | `integer` | No | Length of the window in hours. |
+| `start_hour` | `integer` | No | Hour of the day the window starts, in the cluster's timezone. |
 
 ## updatePostgresUserRoleRequest
 
