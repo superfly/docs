@@ -123,8 +123,7 @@ round-trip min/avg/max/std-dev = 9.741/42.809/97.667/35.111 ms
 To test the connection with an instance of [Ollama](https://ollama.com), you can fire it up with the following commands in an empty folder (don't forget to delete it after!):
 
 ```
-fly launch --from https://github.com/fly-apps/ollama-demo --no-deploy
-fly ips allocate-v6 --private
+fly launch --from https://github.com/fly-apps/self-host-ollama --flycast --no-deploy
 fly deploy
 ```
 
