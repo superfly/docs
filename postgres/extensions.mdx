@@ -8,7 +8,9 @@ source_url: https://fly.io/docs/mpg/extensions/
 
 ## Overview
 
-Fly.io Managed Postgres (MPG) supports Postgres 16 and 17. Clusters include extensions for the Postgres version they run, including commonly used tools and utilities like `pgcrypto`, `pg_stat_monitor`, and `citext`. The PostgreSQL Extensions page allows you to enable or disable PostgreSQL extensions for your managed database cluster. Extensions add features to your database, such as new data types and functions.
+Fly.io Managed Postgres (MPG) supports Postgres 16 and 17. Clusters include extensions for the Postgres version they run, including commonly used tools and utilities like `pgcrypto`, `pg_stat_monitor`, and `citext`. The Postgres Extensions page lets you enable or disable Postgres extensions for your managed database cluster. Extensions add features to your database, such as new data types and functions.
+
+MPG has v1 and v2 clusters. In the dashboard, v2 clusters have a **v2** badge next to the cluster name.
 
 By default the `plpgsql`, `pg_stat_monitor`, and `pgaudit` extensions are enabled and cannot be disabled.
 
@@ -29,9 +31,9 @@ By default the `plpgsql`, `pg_stat_monitor`, and `pgaudit` extensions are enable
 
 - If your cluster is still initializing or otherwise degraded, you'll need to wait before managing extensions
 
-## Supported Third Party Extensions
+## Supported third-party extensions
 
-Aside from the extensions bundled with the default Postgres distribution, MPG clusters include these third party extensions:
+Aside from the extensions bundled with the default Postgres distribution, MPG clusters include these third-party extensions:
 
 - [pgvector](https://github.com/pgvector/pgvector) (`vector`), which you can enable from the Extensions page for your cluster.
 - [PostGIS](https://postgis.net) (`postgis` and its companion extensions), on clusters with PostGIS support.
@@ -47,19 +49,17 @@ To get PostGIS support, turn it on when you create the cluster:
 flyctl mpg create --enable-postgis-support
 ```
 
-On a v2 cluster (marked **v2** next to the cluster name), you can also add PostGIS support later: click **Enable PostGIS support** on the Extensions page. The cluster does a rolling restart, and existing connections may break while the replicas restart. Once that's done, enable `postgis` in each database that needs it.
+On a v2 cluster, you can also add PostGIS support later. Click **Enable PostGIS support** on the Extensions page. The cluster does a rolling restart, and existing connections might break while the replicas restart. After the restart finishes, enable `postgis` in each database that needs it.
 
-We plan on supporting additional third party extensions based on user feedback. If there's an extension you rely on or commonly use, please let us know! 
+We plan on supporting additional third-party extensions based on user feedback. If there's an extension you rely on or commonly use, please let us know! 
 
 ### How extensions are updated
 
-We rebuild v2 cluster images every week with the latest releases of the extensions we ship, including security fixes. A new image reaches your cluster during its [maintenance window](/postgres/maintenance-windows). PostGIS and pg_repack are pinned and change only when we update them.
-
-v1 clusters don't get these updates.
+We rebuild v2 cluster images every week with the latest releases of the extensions we ship, including security fixes. A new image reaches your cluster during its [maintenance window](/postgres/maintenance-windows). PostGIS and pg_repack are pinned and change only when we update them. v1 clusters don't get these updates.
 
 ## Supported extensions
 
-The following table lists the extensions you can enable, and whether you can enable them on v1 clusters, v2 clusters (marked **v2** next to the cluster name), or both. Check your cluster's Extensions page for the extensions and versions available to it.
+This table lists the extensions you can enable on v1 clusters, v2 clusters, or both. Check your cluster's Extensions page for the extensions and versions available to it.
 
 | Name | v1 clusters | v2 clusters | Description |
 | --- | --- | --- | --- |
@@ -70,12 +70,12 @@ The following table lists the extensions you can enable, and whether you can ena
 | `btree_gin` | ✓ | ✓ | Provides GIN index operator classes with B-tree-like behavior. This allows you to use GIN indexes, which are typically used for full-text search, in situations where you might otherwise use a B-tree index, such as with integer or text data. |
 | `btree_gist` | ✓ | ✓ | Provides GiST (Generalized Search Tree) index operator classes that implement B-tree-like behavior. This allows you to use GiST indexes, which are typically used for multidimensional and non-scalar data, in situations where you might otherwise use a B-tree index, such as with integer or text data. |
 | `citext` | ✓ | ✓ | Provides a case-insensitive character string type, citext. Essentially, it internally calls lower when comparing values. Otherwise, it behaves almost exactly like text. |
-| `cube` | ✓ | ✓ | Implements a data type cube for representing multidimensional cubes |
+| `cube` | ✓ | ✓ | Implements a data type cube for representing multidimensional cubes. |
 | `dblink` |  | ✓ | Provides functions to connect to other PostgreSQL databases from within a database session. This allows for queries to be run across multiple databases as if they were on the same server. |
 | `dict_int` | ✓ | ✓ | An example of an add-on dictionary template for full-text search. It's used to demonstrate how to create custom dictionaries in PostgreSQL. |
 | `dict_xsyn` |  | ✓ | Example synonym full-text search dictionary. This dictionary type replaces words with groups of their synonyms, and so makes it possible to search for a word using any of its synonyms. |
 | `earthdistance` |  | ✓ | This module provides two different approaches to calculating great circle distances on the surface of the Earth. The first one depends on the cube module. The second one is based on the built-in point data type, using longitude and latitude for the coordinates. |
-| `fuzzystrmatch` | ✓ | ✓ | Determine similarities and distance between strings |
+| `fuzzystrmatch` | ✓ | ✓ | Determines similarities and distance between strings. |
 | `hstore` | ✓ | ✓ | Implements the hstore data type for storing sets of key/value pairs within a single PostgreSQL value. |
 | `insert_username` |  | ✓ | Provides a trigger function that stores the current user's name into a text field. |
 | `intagg` |  | ✓ | Integer aggregator and enumerator. |
@@ -87,18 +87,18 @@ The following table lists the extensions you can enable, and whether you can ena
 | `old_snapshot` |  | ✓ (Postgres 16 only) | Allows inspection of the server state that is used to implement old_snapshot_threshold. |
 | `pg_prewarm` |  | ✓ | Provides a convenient way to load relation data into either the operating system buffer cache or the PostgreSQL buffer cache. This can be useful for reducing the time needed for a newly started database to reach its full performance potential by preloading frequently accessed data. |
 | `pg_repack` |  | ✓ | Rebuilds tables and indexes online to remove bloat. See [Rebuild bloated tables with pg_repack](#pg_repack). |
-| `pg_stat_monitor` | ✓ | ✓ | A more advanced version of pg_stat_statements for tracking planning and execution statistics of all SQL statements executed by a server. Includes all columns available in pg_stat_statements plus provides additional ones. Always enabled. |
-| `pg_stat_statements` |  | ✓ | A module for tracking planning and execution statistics of all SQL statements executed by a server. Consider using an advanced version of pg_stat_statements - pg_stat_monitor. |
+| `pg_stat_monitor` | ✓ | ✓ | A more advanced version of pg_stat_statements for tracking planning and execution statistics of all SQL statements executed by a server. Includes all columns available in pg_stat_statements, plus additional ones. Always enabled. |
+| `pg_stat_statements` |  | ✓ | A module for tracking planning and execution statistics of all SQL statements executed by a server. Consider pg_stat_monitor instead, which is always enabled. |
 | `pg_trgm` | ✓ | ✓ | Provides functions and operators for determining the similarity of alphanumeric text based on trigram matching. A trigram is a contiguous sequence of three characters. The extension can be used for text search and pattern matching operations. |
 | `pgaudit` | ✓ | ✓ | Provides detailed session and object audit logging. Always enabled. |
 | `pgcrypto` | ✓ | ✓ | Provides cryptographic functions for PostgreSQL. |
 | `pgrowlocks` |  | ✓ | Provides a function to show row locking information for a specified table. |
 | `plpgsql` | ✓ | ✓ | PL/pgSQL procedural language. Always enabled. |
-| `postgis` | ✓¹ | ✓¹ | Geographic information system extension for PostgreSQL |
-| `postgis_raster` | ✓¹ | ✓¹ | Raster data support for PostGIS |
-| `postgis_sfcgal` | ✓¹ | ✓¹ | SFCGAL support for PostGIS |
+| `postgis` | ✓¹ | ✓¹ | Geographic information system extension for Postgres. |
+| `postgis_raster` | ✓¹ | ✓¹ | Raster data support for PostGIS. |
+| `postgis_sfcgal` | ✓¹ | ✓¹ | SFCGAL support for PostGIS. |
 | `postgis_tiger_geocoder` |  | ✓¹ | Geocoder and reverse geocoder for US Census TIGER data. Part of PostGIS. |
-| `postgis_topology` | ✓¹ | ✓¹ | Topology data support for PostGIS |
+| `postgis_topology` | ✓¹ | ✓¹ | Topology data support for PostGIS. |
 | `refint` |  | ✓ | Provides trigger functions for implementing referential integrity. |
 | `seg` | ✓ | ✓ | Implements a data type seg for representing line segments, or floating point intervals. seg can represent uncertainty in the interval endpoints, making it especially useful for representing laboratory measurements. |
 | `sslinfo` |  | ✓ | Provides information about the SSL certificate that the current client provided when connecting to PostgreSQL. |
@@ -107,17 +107,17 @@ The following table lists the extensions you can enable, and whether you can ena
 | `tsm_system_rows` | ✓ | ✓ | Provides the table sampling method SYSTEM_ROWS, which can be used in the TABLESAMPLE clause of a SELECT command. |
 | `tsm_system_time` | ✓ | ✓ | Provides the table sampling method SYSTEM_TIME, which can be used in the TABLESAMPLE clause of a SELECT command. |
 | `unaccent` | ✓ | ✓ | A text search dictionary that removes accents (diacritic signs) from lexemes. It's a filtering dictionary, which means its output is always passed to the next dictionary (if any). This allows accent-insensitive processing for full text search. |
-| `uuid-ossp` | ✓ | ✓ | Provides functions to generate universally unique identifiers (UUIDs) using one of several standard algorithms |
-| `vector` | ✓ | ✓ | vector data type and ivfflat and hnsw access methods |
+| `uuid-ossp` | ✓ | ✓ | Provides functions to generate universally unique identifiers (UUIDs) using one of several standard algorithms. |
+| `vector` | ✓ | ✓ | Provides a vector data type and the ivfflat and hnsw access methods. |
 | `xml2` |  | ✓ | Provides XPath querying and XSLT processing. |
 
-¹ Only on clusters with PostGIS support. See [Supported Third Party Extensions](#supported-third-party-extensions).
+¹ Only on clusters with PostGIS support. See [Supported third-party extensions](#supported-third-party-extensions).
 
 ## Rebuild bloated tables with pg_repack {#pg_repack}
 
-[pg_repack](https://reorg.github.io/pg_repack/) rebuilds a table and its indexes to give back the space that dead rows take up, while your app keeps reading and writing to the table. `VACUUM FULL` does the same job, but it holds an `ACCESS EXCLUSIVE` lock on the table for the whole run, which blocks every read and write. pg_repack only takes that lock briefly, at the start and at the end of the run. In between, it holds a `SHARE UPDATE EXCLUSIVE` lock: inserts, updates and deletes carry on as usual, but `VACUUM`, `ANALYZE`, `CREATE INDEX` (including `CONCURRENTLY`) and `ALTER TABLE` on that table wait until it finishes, and autovacuum skips the table.
+[pg_repack](https://reorg.github.io/pg_repack/) rebuilds a table and its indexes to give back the space that dead rows take up, while your app keeps reading and writing to the table. `VACUUM FULL` does the same job, but it holds an `ACCESS EXCLUSIVE` lock on the table for the whole run, which blocks every read and write. pg_repack only takes that lock briefly, at the start and at the end of the run. In between, it holds a `SHARE UPDATE EXCLUSIVE` lock: inserts, updates, and deletes carry on as usual. `VACUUM`, `ANALYZE`, `CREATE INDEX` (including `CONCURRENTLY`), and `ALTER TABLE` on that table wait until it finishes, and autovacuum skips the table.
 
-pg_repack is available on v2 clusters (marked **v2** next to the cluster name). We ship pg_repack 1.5.3 with a security fix from upstream that isn't in a pg_repack release yet.
+pg_repack is available on v2 clusters. We ship pg_repack 1.5.3 with a security fix from upstream that isn't in a pg_repack release yet.
 
 <Note>
 pg_repack rolls out to v2 clusters starting November 15, 2026. Until it reaches your cluster, it doesn't appear on your cluster's Extensions page and you can't enable it.
@@ -131,11 +131,11 @@ Enable pg_repack in each database whose tables you want to repack, either with t
 fly mpg databases extensions enable pg_repack --cluster <cluster-id> --database <database>
 ```
 
-pg_repack doesn't accept `--schema`: it always creates its own `repack` schema. `fly mpg databases extensions list` shows `public` as pg_repack's schema anyway; that's expected.
+pg_repack doesn't accept `--schema`. It always creates its own `repack` schema. `fly mpg databases extensions list` shows `public` as pg_repack's schema anyway, and you can ignore it.
 
 ### Install the pg_repack client
 
-You run pg_repack from your own machine, and the client must be version **1.5.3** exactly: it refuses to work with any other version of the extension. Install it from the [PostgreSQL apt repository (PGDG)](https://wiki.postgresql.org/wiki/Apt) on Debian or Ubuntu, and hold it at 1.5.3 so `apt upgrade` doesn't move it. Use the package for your cluster's Postgres major version; this example is for Postgres 17:
+You run pg_repack from your own machine, and the client must be version **1.5.3** exactly. It refuses to work with any other version of the extension. Install it from the [PostgreSQL apt repository (PGDG)](https://wiki.postgresql.org/wiki/Apt) on Debian or Ubuntu, and hold it at 1.5.3 so `apt upgrade` doesn't move it. Use the package for your cluster's Postgres major version; this example is for Postgres 17:
 
 ```bash
 # Add the PGDG repository.
@@ -163,7 +163,7 @@ pg_repack --version
 
 The last command should print `pg_repack 1.5.3`.
 
-#### On macOS, Windows or other Linux distributions
+#### On macOS, Windows, or other Linux distributions
 
 Run the same steps in a Debian container, and connect to your cluster through `fly mpg proxy` running on your machine. In one terminal, start the proxy:
 
@@ -190,15 +190,16 @@ In the container, run the commands above, leaving out `sudo` (you're root in the
 ### Before you repack
 
 - **Primary key.** The table needs a primary key, or a unique index on `NOT NULL` columns.
-- **Free disk space.** pg_repack builds a full copy of the table and its indexes before it drops the old one. Upstream recommends free space of about twice the size of the tables and indexes you're repacking. If the table, its indexes and the copy wouldn't fit under the [1 TB storage limit](/postgres#database-storage), don't repack it. On v2 clusters the volume grows automatically as it fills, so a large repack can grow it. A volume doesn't shrink afterwards, but v2 clusters are [billed](/postgres#pricing) for the storage your databases use, not for the volume's size: usage goes up while pg_repack runs and falls once it drops the old copy, usually below where it started.
+- **Free disk space.** pg_repack builds a full copy of the table and its indexes before it drops the old one. Upstream recommends free space of about twice the size of the tables and indexes you're repacking. If the table, its indexes, and the copy wouldn't fit under the [1 TB storage limit](/postgres#database-storage), don't repack it.
+- **Storage billing.** On v2 clusters the volume grows automatically as it fills, so a large repack can grow it. A volume doesn't shrink afterward, but v2 clusters are [billed](/postgres#pricing) for the storage your databases use, not for the volume's size. Usage goes up while pg_repack runs and falls once it drops the old copy, usually below where it started.
 - **WAL and replicas.** Rewriting a table generates write-ahead log (WAL) in proportion to its size, so your replicas can lag behind the primary while pg_repack runs.
 - **Conflicting queries.** pg_repack needs a brief exclusive lock on the table at the start of the run and at the final swap. Long-running queries and sessions left idle in a transaction on the table hold it up. Before the swap, pg_repack also waits, with no timeout, for every transaction that started before it did, so a session left idle in a transaction anywhere in that database stalls it. Check for both before you start. See [If pg_repack can't get its lock](#if-pg_repack-cant-get-its-lock) for what happens when it's blocked.
 
 ### Run pg_repack
 
-Only a table's owner can repack it. The tables you create belong to the `schema_admin` role, so connect as a user with the [Schema Admin role](/postgres/cluster-configuration#schema-admin), such as `fly-user`. Writer and Reader users can't repack tables. Since you aren't a superuser, pass `-k` (`--no-superuser-check`).
+Only a table's owner can repack it. The tables you create belong to the `schema_admin` role, so connect as a user with the [Schema Admin role](/postgres/cluster-configuration#schema-admin), such as `fly-user`. Writer and Reader users can't repack tables. Because you aren't a superuser, pass `-k` (`--no-superuser-check`).
 
-Use your cluster's **direct** connection string, not the pooled one. In Transaction mode, PgBouncer can move you to a different server connection between transactions, and connecting directly means pg_repack's sessions are ordinary Postgres sessions that you can find and end if a run gets stuck. See [Create and connect](/postgres/create-and-connect#manually-connect-an-application-using-a-connection-string) for where to find the direct connection string, and [Setting up a Proxy Connection](/postgres/create-and-connect#setting-up-a-proxy-connection) to reach it from your machine with `fly mpg proxy`.
+Use your cluster's **direct** connection string, not the pooled one. In Transaction mode, PgBouncer can move you to a different server connection between transactions, which breaks pg_repack. A direct connection also makes pg_repack's sessions ordinary Postgres sessions that you can find and end if a run gets stuck. See [Create and connect](/postgres/create-and-connect#manually-connect-an-application-using-a-connection-string) for where to find the direct connection string, and [Setting up a Proxy Connection](/postgres/create-and-connect#setting-up-a-proxy-connection) to reach it from your machine with `fly mpg proxy`.
 
 The database in the connection string must be the one where you enabled pg_repack. The direct connection string points at `fly-db`, so change the database name at the end if your tables are in another database. Through `fly mpg proxy`, the connection string looks like `postgres://<user>:<password>@localhost:16380/<database>`.
 
@@ -206,9 +207,9 @@ The database in the connection string must be the one where you enabled pg_repac
 pg_repack -k -D -d "<direct connection string>" -t public.<table>
 ```
 
-Pass `-t` once for each table you want to repack. See the [pg_repack documentation](https://reorg.github.io/pg_repack/) for its other options.
+`-D` (`--no-kill-backend`) stops pg_repack from trying to cancel other sessions, which your user can't do anyway. See [If pg_repack can't get its lock](#if-pg_repack-cant-get-its-lock). Pass `-t` once for each table you want to repack. See the [pg_repack documentation](https://reorg.github.io/pg_repack/) for its other options.
 
-A run that repacks the table prints one line for it and exits with status 0:
+A successful run prints one line per table and exits with status 0:
 
 ```output
 INFO: repacking table "public.<table>"
@@ -216,7 +217,7 @@ INFO: repacking table "public.<table>"
 
 ### If pg_repack can't get its lock {#if-pg_repack-cant-get-its-lock}
 
-pg_repack waits up to `--wait-timeout` seconds (60 by default) for each of its exclusive locks. When the wait runs out, it normally cancels the queries in its way, but your user can't cancel any other session, not even another session of your own user. What happens next depends on `-D` (`--no-kill-backend`):
+pg_repack waits up to `--wait-timeout` seconds (60 by default) for each of its exclusive locks. When the wait runs out, it normally cancels the queries in its way, but your user can't cancel other sessions, including its own. What happens next depends on `-D` (`--no-kill-backend`):
 
 - **With `-D`.** pg_repack gives up on the table, leaves it as it was and normally cleans up after itself. It still exits with status 0, so check its output for these lines:
 
@@ -229,7 +230,7 @@ pg_repack waits up to `--wait-timeout` seconds (60 by default) for each of its e
 
 - **Without `-D`.** The run fails with an error, which can leave an [interrupted run](#if-a-run-is-interrupted) behind.
 
-Once the conflicting queries and sessions are gone, run pg_repack again. Raise `--wait-timeout` if you'd rather it waited longer.
+Once the conflicting queries and sessions are gone, run pg_repack again. To wait longer, raise `--wait-timeout`.
 
 ### If a run is interrupted
 
@@ -254,7 +255,11 @@ To clean up:
     fly mpg databases extensions disable pg_repack --cluster <cluster-id> --database <database> --force
     ```
 
-    `--force` drops the extension together with everything that depends on it, which removes the leftover trigger and tables. Your table and its data stay as they are. It also removes the trigger and tables of any other pg_repack run in progress in that database, which breaks that run, so make sure none is running. The toggle on the Extensions page disables extensions without `--force`, so it fails while the leftovers are there.
+    `--force` drops the extension along with everything that depends on it, which removes the leftover trigger and tables. Your table and its data stay as they are. The toggle on the Extensions page disables extensions without `--force`, so it fails while the leftovers are there.
+
+    <Warning>
+    `--force` also removes the trigger and tables of any other pg_repack run in progress in that database, which breaks that run. Make sure no other run is in progress.
+    </Warning>
 
 3. Enable pg_repack again:
 
