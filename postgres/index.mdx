@@ -31,7 +31,7 @@ You'll be able to access:
 
 ### Current limitations {#whats-not-there-yet}
 
-- **Major version upgrades:** You choose Postgres 16 or 17 when you create a cluster, and you can't upgrade a cluster in place. To move to a newer major version, create a new cluster and copy your data with `pg_dump` and psql. See [Import data](/postgres/import).
+- **Major version upgrades:** You choose Postgres 16, 17 or 18 when you create a cluster, and you can't upgrade a cluster in place. Postgres 18 is available on v2 clusters only. To move to a newer major version, create a new cluster and copy your data with `pg_dump` and psql. See [Import data](/postgres/import).
 - **Minor versions and security patches:** New Postgres images include the latest minor release. We roll out new images during your cluster's [maintenance window](/postgres/maintenance-windows). v1 clusters, which have no **v2** badge next to the cluster name in the dashboard, don't get new images. PgBouncer, PostGIS and pg_repack versions are pinned and change only when we update them.
 - **Third-party extensions:** `pgvector` and `PostGIS` are supported, and `pg_repack` on v2 clusters, along with the bundled Postgres extensions marked as available on the [Extensions page](/postgres/extensions). To request another extension, [contact support](/about/support).
 - **Alerting:** We email your organization when maintenance starts and finishes, but there are no alerts for metrics like CPU or storage. Use [metrics](/postgres/metrics) to watch your cluster.
