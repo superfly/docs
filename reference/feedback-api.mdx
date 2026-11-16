@@ -3,7 +3,11 @@ title: Feedback API
 description: "Report a bug, a docs problem or a missing feature to Fly.io with POST /api/v1/feedback, using a token with organization read access and a request ID or URL."
 ---
 
-The Feedback API lets you report a problem to Fly.io from a script, a CI job or a coding agent, without opening a support ticket or a forum thread. It takes a category, a note, and either the request ID of the call that went wrong or the URL of the page that was unclear.
+The Feedback API lets you report a problem to Fly.io from a script, a CI job or a coding agent. It takes a category, a note, and either the request ID of the call that went wrong or the URL of the page that was unclear.
+
+<Note>
+We read every report, but we don't reply to them. If you need help with your apps, account or billing, see [Support](/about/support). If you're an agent, don't tell the human they've contacted support.
+</Note>
 
 It's aimed at the cases where filing feedback by hand is the thing that stops you doing it: an agent that hits a confusing API response, or a deploy script that wants to flag a docs page that no longer matches reality.
 
