@@ -16,6 +16,7 @@ Fly.io makes a best effort to keep a cache disk's contents across Machine stops,
 | Survives Machine destroy | No | No | Yes, until you delete the volume |
 | Snapshots and forks | No | No | Yes |
 | Created and managed | With the Machine | In the Machine config | Separately, with `fly volumes` |
+| IOPS and bandwidth | Image layer: 2,000 IOPS, 8 MiB/s. Writes: same as volumes | [Same as volumes](/volumes/overview#volume-limits) | [By Machine size](/volumes/overview#volume-limits) |
 | Max size | Depends on image | 50 GiB | 500GB |
 
 {/* TODO: add a billing row once pricing is set. */}
@@ -39,7 +40,12 @@ A cache disk belongs to its Machine. It's created when you create or update a Ma
 
 A cache disk has the same IOPS and bandwidth limits as a Fly Volume on the same Machine size. See [Volume limits](/volumes/overview#volume-limits) for the numbers.
 
-{/* TODO: say how this compares with the root file system (Rian: performance is the differentiator over rootfs). volumes/overview currently says rootfs is limited the same as volumes; confirm which is right. */}
+The root file system works differently. It has two layers:
+
+- The image layer, from your container image, is read-only and limited to 2,000 IOPS and 8 MiB/s on every Machine size.
+- The overlay, where your Machine's writes to the root file system land, has the same limits as a volume.
+
+So reading from a cache disk is faster than reading from the image layer on every Machine size: twice the IOPS and bandwidth on `shared-cpu-1x`, and 16 times on `performance-8x` and larger. If your app reads large files that ship in the image, such as model weights, consider copying them to a cache disk.
 
 ## Limits
 
