@@ -631,7 +631,8 @@
                     "pages": [
                       "postgres/create-and-connect",
                       "postgres/client-configuration",
-                      "postgres/cluster-configuration"
+                      "postgres/cluster-configuration",
+                      "postgres/users-and-permissions"
                     ]
                   },
                   {
