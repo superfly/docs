@@ -610,8 +610,8 @@ A file that will be written to the Machine. One of RawValue or SecretName must b
 
 | Property | Type | Required | Description |
 | --- | --- | --- | --- |
-| `path` | `string` | No | Optional absolute guest mount path. When set, the device is formatted as ext4. Without a path, the device retains legacy raw block behavior. Contents survive same-host restarts and path changes, but are discarded on size or mode changes, relocation, recovery on another host, and cloning. |
-| `size_mb` | `integer` | No | Fixed size of the Machine-owned cache drive in MiB. At most 51200. With a path, at least 16 MiB is required; without a path, 0 disables the device. |
+| `path` | `string` | No | Absolute path in the Machine at which to mount the cache disk. |
+| `size_mb` | `integer` | No | Size of the cache disk in MiB. Between 16 and 51200. Changing the size discards the disk's contents. |
 
 ## fly.MachineCheck
 
@@ -623,7 +623,7 @@ A file that will be written to the Machine. One of RawValue or SecretName must b
 | `kind` | `string` | No | Kind of the check (informational, readiness) Enum: informational, readiness |
 | `method` | `string` | No | For http checks, the HTTP method to use to when making the request |
 | `path` | `string` | No | For http checks, the path to send the request to |
-| `port` | `integer` | No | The port to connect to, often the same as internal_port |
+| `port` | `integer` | No | The port to connect to. Required for top-level checks |
 | `protocol` | `string` | No | For http checks, whether to use http or https |
 | `timeout` | `string` | No | The maximum time a connection can take before being reported as failing its health check |
 | `tls_server_name` | `string` | No | If the protocol is https, the hostname to use for TLS certificate validation |
@@ -635,7 +635,7 @@ A file that will be written to the Machine. One of RawValue or SecretName must b
 | Property | Type | Required | Description |
 | --- | --- | --- | --- |
 | `auto_destroy` | `boolean` | No | Optional boolean telling the Machine to destroy itself once it’s complete (default false) |
-| `cache_drive` | `fly.MachineCacheDrive` | No | Beta: a cache drive attached to the Machine. This field may be removed in the future |
+| `cache_disk` | `fly.MachineCacheDrive` | No | Semi-durable cache disk attached to the Machine. Contents generally survive Machine stops, restarts, and updates, but durability is not guaranteed. Expect Machines to start with an empty cache disk at any time |
 | `checks` | `map<string, fly.MachineCheck>` | No | An optional object that defines one or more named top-level checks. The key for each check is the check name. |
 | `containers` | `fly.ContainerConfig[]` | No | Containers are a list of containers that will run in the machine, each from its own image. |
 | `disable_machine_autostart` | `boolean` | No | Deprecated: use Service.Autostart instead |
@@ -792,7 +792,7 @@ A Secret needing to be set in the environment of the Machine. env_var is require
 | `interval` | `string` | No | The time between connectivity checks |
 | `method` | `string` | No | For http checks, the HTTP method to use to when making the request |
 | `path` | `string` | No | For http checks, the path to send the request to |
-| `port` | `integer` | No | The port to connect to, often the same as internal_port |
+| `port` | `integer` | No | The port to connect to. Defaults to the service's internal_port |
 | `protocol` | `string` | No | For http checks, whether to use http or https |
 | `timeout` | `string` | No | The maximum time a connection can take before being reported as failing its health check |
 | `tls_server_name` | `string` | No | If the protocol is https, the hostname to use for TLS certificate validation |
@@ -990,7 +990,7 @@ Enum: v4, v6, shared_v4, private_v6, egress_v4, egress_v6, egress_pair
 | --- | --- | --- | --- |
 | `apps` | `App[]` | No | The apps on this page, or all apps if `limit` was not provided. |
 | `next_cursor` | `string` | No | Pagination cursor for the next page. Absent when no more apps remain. Cursors expire 30 minutes after the first page was requested. |
-| `total_apps` | `integer` | No | The number of matching apps across all pages. Organization-wide listings retain the first page's count; scoped listings recount using the current token's permissions. Snapshot bounds exclude newer apps, and replication lag or deletion during traversal can make totals differ from rows seen. |
+| `total_apps` | `integer` | No | The number of matching apps across all pages. With an organization-wide token, it is counted when the first page is requested and not updated afterwards, so it excludes apps created later and includes apps deleted while paginating. With an app-scoped token, such as a deploy token, it is recounted on each page and includes only the apps the token can read. Either way, it may differ slightly from the number of apps returned. |
 
 ## listCertificatesResponse
 
@@ -1464,6 +1464,15 @@ Type: `map<string, integer>`
 | `schema` | `string` | No | Schema the extension is installed into. |
 | `version` | `string` | No | Installed version. |
 
+## PostgresMaintenanceWindow
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `day` | `string` | No | Day of the week the window starts on. Enum: sunday, monday, tuesday, wednesday, thursday, friday, saturday |
+| `duration_hours` | `integer` | No | Length of the window in hours. |
+| `start_hour` | `integer` | No | Hour of the day the window starts, in the cluster's timezone. |
+| `timezone` | `string` | No | IANA timezone the window is expressed in, derived from the cluster's region. |
+
 ## PostgresNodeEndpoints
 
 | Property | Type | Required | Description |
@@ -1636,6 +1645,12 @@ Enum: 1, 2, 4, 8, 16, 31, 0
 | --- | --- | --- | --- |
 | `data` | `PostgresCluster` | No |  |
 
+## showPostgresMaintenanceWindowResponse
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `data` | `PostgresMaintenanceWindow` | No |  |
+
 ## SignalRequest
 
 | Property | Type | Required | Description |
@@ -1698,6 +1713,14 @@ Enum: 1, 2, 4, 8, 16, 31, 0
 | `machine_version` | `string` | No | Only apply the change if this is still the Machine's current version; otherwise fail with 412. Defaults to the current version. |
 | `metadata` | `map<string, string>` | No | Keys to change. A string value sets the key; null, an empty string or whitespace removes it. Keys and values have surrounding whitespace trimmed. Keys not listed are left alone. Must contain at least one key. |
 | `updated_at` | `string` | No | Time to record for the change in the Machine's `metadata_update` event. Defaults to now. |
+
+## updatePostgresMaintenanceWindowRequest
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `day` | `string` | No | Day of the week the window starts on. Enum: sunday, monday, tuesday, wednesday, thursday, friday, saturday |
+| `duration_hours` | `integer` | No | Length of the window in hours. |
+| `start_hour` | `integer` | No | Hour of the day the window starts, in the cluster's timezone. |
 
 ## updatePostgresUserRoleRequest
 
