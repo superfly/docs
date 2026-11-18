@@ -19,7 +19,8 @@ fly machine run <image> [command] [flags]
       --build-context-warn-size string   Warn when the Docker build context is larger than this. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 1gb). Set to 0 to disable. Also set with FLY_BUILD_CONTEXT_WARN_SIZE.
       --build-depot                      Build your image with depot.dev
       --build-nixpacks                   Build your image with nixpacks
-      --cachedrive-size string           Cache drive size in MB. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 10gb). Set to 0 to disable.
+      --cache-disk-path string           Absolute path in the Machine at which to mount the cache disk.
+      --cache-disk-size string           Cache disk size in MiB or a human-readable size (e.g. 512mb, 10gb). Set to 0 to disable. Changing the size discards the disk's contents.
       --command string                   Used with --shell. The command to run, if we're shelling into the Machine now (in case you don't have bash). (default "/bin/bash")
   -c, --config string                    Path to application configuration file
       --container string                 Container to update with the new image, files, etc; defaults to "app" or the first container in the config.
