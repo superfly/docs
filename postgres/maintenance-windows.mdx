@@ -44,6 +44,10 @@ The window follows daylight saving time, so it starts at the same local clock ti
 
 ## Change your maintenance window
 
+You can change the window from the dashboard or with `flyctl`.
+
+### From the dashboard
+
 1. Open your cluster's **Settings** tab in the dashboard.
 2. On the **Maintenance window** card, choose a day under **Repeat on**, a start time under **From**, and a length under **Duration**.
 3. Check the summary line. For example: "Sunday from 1:00 AM for 3 hours in America/New_York (UTC-04:00)".
@@ -55,7 +59,25 @@ The window follows daylight saving time, so it starts at the same local clock ti
 
 To go back to the default window, click **Reset to default**.
 
-The new window takes effect as soon as you save it. That includes maintenance that's already queued for your cluster.
+### With flyctl
+
+To see the current window, run:
+
+```bash
+fly mpg maintenance-window show <cluster-id>
+```
+
+To change it, pass any of `--day`, `--start-hour` and `--duration`:
+
+```bash
+fly mpg maintenance-window set <cluster-id> --day saturday --start-hour 2 --duration 4
+```
+
+Only the settings you pass change. The others keep their current values. `--start-hour` is in the cluster's local time, from `0` to `23`. If you leave out the cluster ID, `flyctl` asks you to pick a cluster. You need `flyctl` v0.5.11 or later.
+
+Either way, the new window takes effect right away. That includes maintenance that's already queued for your cluster.
+
+### Allowed values
 
 | Setting | Allowed values |
 |---------|----------------|
@@ -63,7 +85,7 @@ The new window takes effect as soon as you save it. That includes maintenance th
 | Start time | Any whole hour, 12:00 AM to 11:00 PM |
 | Duration | 3 to 8 hours, in whole hours |
 
-**Note**: You can only change the window from the dashboard. `flyctl` can't change it yet, and you can't set it when you create a cluster. New clusters always start with the default window, and you can change it after the cluster is created.
+**Note**: You can't set the window when you create a cluster. New clusters always start with the default window, and you can change it after the cluster is created.
 
 ## What happens during maintenance
 
