@@ -1032,6 +1032,14 @@
                               "flyctl/cmd/fly_mpg_detach",
                               "flyctl/cmd/fly_mpg_fork",
                               "flyctl/cmd/fly_mpg_list",
+                              {
+                                "group": "fly mpg maintenance-window",
+                                "root": "flyctl/cmd/fly_mpg_maintenance-window",
+                                "pages": [
+                                  "flyctl/cmd/fly_mpg_maintenance-window_set",
+                                  "flyctl/cmd/fly_mpg_maintenance-window_show"
+                                ]
+                              },
                               "flyctl/cmd/fly_mpg_proxy",
                               "flyctl/cmd/fly_mpg_restore",
                               "flyctl/cmd/fly_mpg_status",
