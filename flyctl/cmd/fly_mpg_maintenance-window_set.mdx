@@ -1,0 +1,33 @@
+---
+title: fly mpg maintenance-window set
+source_url: https://docs.fly.io/flyctl/cmd/fly_mpg_maintenance-window_set
+---
+
+Change the weekly maintenance window of a Managed Postgres cluster.
+Only the flags you pass are changed; the rest of the window keeps its current
+value. The start hour is in the cluster's regional timezone, shown by
+'fly mpg maintenance-window show'.
+
+## Usage
+```
+fly mpg maintenance-window set [CLUSTER_ID] [flags]
+```
+## Options
+
+```
+      --day string       Day of the week the window starts on, e.g. sunday
+      --duration int     Length of the window in hours, 3-8
+  -h, --help             help for set
+  -j, --json             JSON output
+      --start-hour int   Hour the window starts, 0-23, in the cluster's timezone
+```
+## Global Options
+
+```
+  -t, --access-token string   Fly API Access Token
+      --debug                 Print additional logs and traces
+      --verbose               Verbose output
+```
+## See Also
+
+* [fly mpg maintenance-window](/flyctl/cmd/fly_mpg_maintenance-window)	 - Show or change a cluster's weekly maintenance window

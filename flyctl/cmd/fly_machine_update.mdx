@@ -20,7 +20,8 @@ fly machine update [machine_id] [flags]
       --build-depot                      Build your image with depot.dev
       --build-nixpacks                   Build your image with nixpacks
       --buildkit                         Deploy using buildkit-based remote builder
-      --cachedrive-size string           Cache drive size in MB. Accepts a plain number (in MB) or a human-readable size (e.g. 512mb, 10gb). Set to 0 to disable.
+      --cache-disk-path string           Absolute path in the Machine at which to mount the cache disk.
+      --cache-disk-size string           Cache disk size in MiB or a human-readable size (e.g. 512mb, 10gb). Set to 0 to disable. Changing the size discards the disk's contents.
   -C, --command string                   Command to run
   -c, --config string                    Path to application configuration file
       --container string                 Container to update with the new image, files, etc; defaults to "app" or the first container in the config.
