@@ -32,7 +32,9 @@ Process group commands in a Fly App correspond to CMD in Docker; they don't repl
 
 ## Processes and services
  
-Chances are, you only want user requests to hit one of your processes. In the above example, that process is `web`. Add a `processes` key to the service so that only Machines in the `web` group receive requests. With an [`[http_service]` section](/reference/configuration#the-http_service-section), which is what `fly launch` generates, that looks like this:
+Chances are, you only want user requests to hit one of your processes. In the above example, that process is `web`. Each service's `processes` key lists the process groups whose Machines receive its requests.
+
+`fly launch` generates an [`[http_service]` section](/reference/configuration#the-http_service-section) with `processes = ['app']`. Once you add a `[processes]` section without an `app` group, change that value to the group that serves HTTP:
 
 ```toml
 [http_service]
@@ -44,7 +46,7 @@ Chances are, you only want user requests to hit one of your processes. In the ab
   processes = ["web"]
 ```
 
-The `processes` key works the same way in a [`[[services]]` section](/reference/configuration#the-services-sections):
+If you use the more verbose [`[[services]]` section](/reference/configuration#the-services-sections) instead of `[http_service]`, the `processes` key works the same way. This is an equivalent service for `web`; use one or the other, not both:
 
 ```toml
 [[services]]
@@ -61,7 +63,7 @@ The `processes` key works the same way in a [`[[services]]` section](/reference/
     handlers = ["tls", "http"]
 ```
 
-A service with no `processes` key applies to every process group, so leaving it out after you add a `[processes]` section sends requests to your `cron` Machines too.
+Once `fly.toml` has a `[processes]` section, every `[http_service]` and `[[services]]` section must set `processes`, and every name it lists must be defined in `[processes]`. Otherwise `fly deploy` fails config validation with an error like `Service has no processes set but app has 2 processes defined`.
 
 You can define distinct services for each process that needs to accept connections from Fly Proxy (whether [publicly](/networking/services) or via [Flycast](/networking/flycast)), by creating multiple `[[services]]` sections in `fly.toml`. 
 
@@ -85,9 +87,9 @@ Process groups often need different CPU and memory. Set them in `fly.toml` with 
   processes = ["cron"]
 ```
 
-A `[[vm]]` section without a `processes` key applies to every group that doesn't have its own `[[vm]]` section. Note the double brackets: `[[vm]]` is a list, so you can repeat it.
+A `[[vm]]` section without a `processes` key applies to every group that doesn't have its own `[[vm]]` section. The `[[vm]]` section that `fly launch` generates has no `processes` key, so it covers all groups until you add group-specific ones. Note the double brackets: `[[vm]]` is a list, so you can repeat it.
 
-Other `fly.toml` sections, such as [`[[mounts]]`](/reference/configuration#the-mounts-section), accept a `processes` key too.
+[`[[mounts]]`](/reference/configuration#the-mounts-section) sections accept a `processes` key too, but behave differently when it's missing: a `[[mounts]]` section without `processes` attaches the volume only to Machines in the default process group (`app` if it's defined, otherwise the first group name in alphabetical order), not to every group. Set `processes` explicitly on mounts in apps with more than one group.
 
 ## Deployment
 
@@ -162,7 +164,7 @@ fly scale memory 4096 --process-group web
 ```
 
 <Note>
-If `fly.toml` has a `[[vm]]` section for a process group, the next `fly deploy` resets that group's Machines to the size in the file. To keep a size you set with `fly scale`, update the matching `[[vm]]` section too. See [Set Machine size per process group](#set-machine-size-per-process-group).
+If any `[[vm]]` section in `fly.toml` applies to a process group, the next `fly deploy` resets that group's Machines to the size in the file. That includes a `[[vm]]` section without a `processes` key, like the one `fly launch` generates, which applies to every group. To keep a size you set with `fly scale`, update the matching `[[vm]]` section too. See [Set Machine size per process group](#set-machine-size-per-process-group).
 </Note>
 
 ## Move a Machine between process groups
