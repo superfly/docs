@@ -8,7 +8,7 @@ source_url: https://fly.io/docs/mpg/cluster-configuration/
 
 ## Connection Pooling
 
-All Managed Postgres clusters come with PGBouncer for connection pooling, which helps manage database connections efficiently. You can configure how PGBouncer assigns connections to clients by changing the pool mode.
+All Managed Postgres clusters except those on the [Developer plan](/postgres/developer-plan) come with PGBouncer for connection pooling, which helps manage database connections efficiently. You can configure how PGBouncer assigns connections to clients by changing the pool mode.
 
 For configuring your application's connection pool settings (lifetime, idle timeout, pool size, and language-specific examples), see [Connect Your Client](/postgres/client-configuration).
 
@@ -48,7 +48,7 @@ To change the pool mode for your cluster:
 
 ## Changing your MPG Plan
 
-Your Managed Postgres Plan determines the amount of resources your cluster has. All plans include a primary and replica, pg bouncers, and backups. You can change your cluster's plan at any time and the machines in the cluster will be updated to their new resources. 
+Your Managed Postgres Plan determines the amount of resources your cluster has. All plans include a primary and replica, and backups. All plans except Developer include PgBouncer. You can change your cluster's plan at any time and the machines in the cluster will be updated to their new resources. 
 
 In order to change your plan: 
 

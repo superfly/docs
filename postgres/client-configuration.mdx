@@ -54,7 +54,7 @@ The fix is straightforward: configure your connection pool to **proactively recy
 
 ## PgBouncer mode and your client
 
-All MPG clusters include PgBouncer for connection pooling. The pool mode you choose on the cluster side affects what your client can do. See [Cluster Configuration](/postgres/cluster-configuration) for how to change modes.
+All MPG clusters except those on the [Developer plan](/postgres/developer-plan) include PgBouncer for connection pooling. The pool mode you choose on the cluster side affects what your client can do. See [Cluster Configuration](/postgres/cluster-configuration) for how to change modes.
 
 **Session mode** (default): A PgBouncer connection is held for the entire client session. Full PostgreSQL feature compatibility — prepared statements, advisory locks, `LISTEN/NOTIFY`, and multi-statement transactions all work normally. Lower connection reuse.
 
