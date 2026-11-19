@@ -578,6 +578,7 @@
                 "root": "machines/index",
                 "pages": [
                   "machines/overview",
+                  "machines/cache-disks",
                   {
                     "group": "Machines API",
                     "root": "machines/api/index",
