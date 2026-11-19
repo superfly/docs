@@ -1,9 +1,9 @@
 ---
 title: fly tokens create readonly
-source_url: https://fly.io/docs/flyctl/tokens-create-readonly/
+source_url: https://docs.fly.io/flyctl/cmd/fly_tokens_create_readonly
 ---
 
-Create an API token limited to reading a single org and its resources. Tokens are valid for 20 years by default. We recommend using a shorter expiry if practical.
+Create an API token limited to reading a single org and its resources. Tokens are valid for 20 years by default. We recommend using a shorter expiry if practical. The token is printed with its authorization scheme, as in "FlyV1 fm2_...". The "FlyV1 " prefix and the space after it are part of the token: copy the whole string, and quote it when you set it in a shell or a secret.
 
 ## Usage
 ```

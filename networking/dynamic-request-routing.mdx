@@ -1,5 +1,6 @@
 ---
 title: Dynamic Request Routing with fly-replay
+description: "Route requests on Fly.io between regions, Machines, or apps with the fly-replay response header, including JSON replays, replay caching, and fly-force-region."
 source_url: https://fly.io/docs/networking/dynamic-request-routing/
 ---
 
@@ -310,7 +311,7 @@ If your app needs to know whether a request was served from the replay cache, it
 
 For large uploads that exceed the 1MB limit, consider:
 - Using direct-to-storage uploads where possible
-- Using the [fly-prefer-region](#the-fly-prefer-region-request-header) header instead
+- Using the [fly-prefer-region](#the-fly-prefer-region-header) header instead
 
 For `fly-replay-cache`, the following limitations apply:
 - The `state` field cannot be set in the `fly-replay` intended to be cached

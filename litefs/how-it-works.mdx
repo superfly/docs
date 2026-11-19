@@ -1,7 +1,12 @@
 ---
 title: How LiteFS Works
+description: "LiteFS intercepts SQLite journal and WAL writes over FUSE, packs page sets into LTX files, tracks TXID positions, and elects a primary with Consul leases."
 source_url: https://fly.io/docs/litefs/how-it-works/
 ---
+
+import LitefsUnsupportedSnippet from '/snippets/docs/litefs-unsupported.mdx';
+
+<LitefsUnsupportedSnippet />
 
 LiteFS is a distributed file system specifically built for replicating SQLite
 databases. This allows each application node to have a full, local copy of the
@@ -23,7 +28,7 @@ extensive consistency checking to ensure correctness.
 
 By applying these page sets in the LTX files in order, we can reconstruct the
 state of our SQLite database at any point in time. We can also copy them to
-another nodes in order to replicate the changes in real-time to our cluster.
+other nodes to replicate the changes in real time to our cluster.
 
 
 ### Rollback journal handling
@@ -81,7 +86,7 @@ rolling checksum.
 ## Cluster management using leases
 
 SQLite operates as a single-writer database which means only one transaction can
-write at a time. Because of this, we utilize a lease system whereby a single
+write at a time. Because of this, we use a lease system whereby a single
 node acts as the "primary" node at any given time. All writes should be directed
 to that node and it will propagate changes to the rest of the cluster.
 

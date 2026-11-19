@@ -1,5 +1,6 @@
 ---
 title: Public Network Services
+description: "Set up public networking for a Fly.io app: Anycast IPv6, shared and dedicated IPv4, HTTP, TLS and PROXY protocol handlers, HTTPS redirects and outbound IPs."
 source_url: https://fly.io/docs/networking/services/
 ---
 
@@ -78,7 +79,7 @@ fly ips release <ip address to release>
 The following steps should allow you to switch an app with a custom domain from a dedicated IPv4 address to a free shared IPv4 without downtime.
 
 1. Add a shared IPv4 address with `flyctl ips allocate-v4 --shared`.
-2. If you don't use a CNAME to `.fly.dev`, [add the shared IPv4 as an A record](/networking/custom-domain#set-the-a-record).
+2. If you don't use a CNAME to `.fly.dev`, [add the shared IPv4 as an A record](/networking/custom-domain#a-and-aaaa-records-recommended).
 3. Confirm your app works via shared IP: `curl -Iv http://<your-hostname> --resolve <your-hostname>:80:<new-shared-ipv4>`. You should receive a 301 redirect response.
 4. If you are using a custom domain and don't already have an SSL certificate for this app, [create one](/networking/custom-domain#add-your-domain-to-your-app). The cert is required for routing to your app via the custom domain, even for HTTP connections.
 5. Wait for DNS caches to clear. Five minutes is likely enough, but this varies wildly. This is determined by the larger of your DNS record’s TTL and that of our `<your-app>.fly.dev` record.
@@ -103,7 +104,7 @@ Valid handler strings:
 * [`"http"`:](#http-handler) Convert TCP connection to HTTP
 * [`"tls"`](#tls-handler): Convert TLS connection to unencrypted TCP
 * [`"pg_tls"`](#postgres-tls-handler): Handle TLS for PostgreSQL connections
-* [`"proxy_proto"`](#proxy-protocol): Wrap TCP connection in PROXY protocol
+* [`"proxy_proto"`](#proxy-protocol-handler): Wrap TCP connection in PROXY protocol
 
 You can also configure [TLS options](/reference/configuration#http_service-tls_options) for the `[http_service]` section, which has a TLS (and HTTP) handler by default on port 443.
 
@@ -112,6 +113,8 @@ You can also configure [TLS options](/reference/configuration#http_service-tls_o
 Many apps have limited HTTP support, the `http` handler normalizes HTTP connections and sends HTTP 1.1 requests to the application process. This is roughly how `nginx` and other reverse proxies work, and allows your app to globally accept modern HTTP protocols (like HTTP/2) without extra complexity.
 
 If your application needs HTTP/2 (like gRPC does), enable the `h2_backend` to talk directly over HTTP/2. Just make sure your app speaks `h2c` (that’s HTTP/2 without TLS), or it won’t work.
+
+There's currently no HTTP/3 or QUIC support. Adding it yourself with a `udp` service on port 443 won't work the way you might expect. If you really need QUIC right now, read the [caveats for running it over UDP services](/networking/udp-and-tcp#quic-isnt-supported) first.
 
 The HTTP handler adds a number of standard HTTP headers to requests, and a few Fly.io-specific headers for convenience:
 
@@ -233,9 +236,7 @@ Fly Machines have IPv6 addresses from which they make requests to the wider inte
 
 By default, we don’t offer static IPs or regional IP ranges, and we discourage the use of our outbound IPs to bypass firewalls. A Machine's outbound IP is liable to change without notice. This shouldn't be a daily occurrence, but it will happen if a Machine is moved for whatever reason, such as a load-balancing of Fly Machines between servers in one region.
 
-If you do need a static outbound IP, you can assign one on a per-machine basis. You can allocate one to a machine with `fly machine egress-ip allocate \<machine-id>. This will assign both an IPv4 and IPv6 address to the machine. Like dedicated IPv4 addresses, these are [billed](/about/pricing#static-egress-ips-for-machines) monthly.
-
-You can also use the `fly machine egress-ip list` command to see all the IPs assigned to your machines, and release IPs with `fly machine egress-ip release <egress-ip>`.
+If you do need a static outbound IP, allocate an app-scoped static egress IP with `fly ips allocate-egress`. This assigns an IPv4 and IPv6 pair to your app in one region, shared by the app's Machines in that region. Static egress IPs are [billed](/about/pricing#static-egress-ips) hourly. See [Egress IP addresses](/networking/egress-ips) for details and caveats.
 
 ### Find your Machine's outbound IP {#find-your-machines-outbound-ip}
 

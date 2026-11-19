@@ -1,11 +1,10 @@
 ---
-title: Run a Go App
+title: Deploy a Go App
+description: "Deploy a Go app to Fly.io. fly launch detects Go, generates a Dockerfile and fly.toml for your web server, and deploys it to a Fly Machine."
 source_url: https://fly.io/docs/languages-and-frameworks/golang/
 ---
 
   <img src="/images/golang.png" alt="Illustration by Annie Ruygt of a seated gopher dreaming" />
-
-Getting an application running on Fly.io is essentially working out how to package it as a deployable image. Once packaged, it can be deployed to the Fly.io platform.
 
 In this guide we’ll learn how to deploy a Go application on Fly.io.
 
@@ -227,7 +226,7 @@ Tigris provides CDN-like accessibility for your stored objects. Tigris has S3-AP
 	fly storage create
 	```
 
-2. **Retrieve AWS SDK modules**: Tigris has an S3 compatible API service, thus, we can easily use [AWS SDK Go](https://aws.github.io/aws-sdk-go-v2/docs/getting-started/#install-the-aws-sdk-for-go-v2) modules to connect with the Tigris Bucket we've just created.
+2. **Retrieve AWS SDK modules**: Tigris has an S3 compatible API service, thus, we can easily use [AWS SDK Go](https://docs.aws.amazon.com/sdk-for-go/v2/developer-guide/getting-started.html) modules to connect with the Tigris Bucket we've just created.
 	
 	```bash
 	go get github.com/aws/aws-sdk-go-v2
@@ -252,8 +251,8 @@ Tigris provides CDN-like accessibility for your stored objects. Tigris has S3-AP
 		}), nil
 	}
 	```
-	The `LoadDefaultConfig()` function will create an [aws.Config instance](https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/aws#Config) that can load [credentials from environment variables](https://aws.github.io/aws-sdk-go-v2/docs/configuring-sdk/#specifying-credentials).
-	Passing this instance to the `NewFromConfig()` [function](https://aws.github.io/aws-sdk-go-v2/docs/making-requests/#newfromconfig) creates an S3 service client we've configured to connect with the Tigris endpoint.
+	The `LoadDefaultConfig()` function will create an [aws.Config instance](https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/aws#Config) that can load [credentials from environment variables](https://docs.aws.amazon.com/sdk-for-go/v2/developer-guide/configure-gosdk.html#specifying-credentials).
+	Passing this instance to the `NewFromConfig()` [function](https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/service/s3#NewFromConfig) creates an S3 service client we've configured to connect with the Tigris endpoint.
 
 4. **Set up Tigris Credentials**. 
 	To successfully connect with our Tigris Bucket, we can set our Tigris credentials as AWS SDK environment variables. 

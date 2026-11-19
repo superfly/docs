@@ -33,7 +33,7 @@ fly launch -c fly.ollama.toml --flycast
 
 There are a couple of things to note here:
 - The `ollama` image is a GPU image, so you need to specify a GPU size in the `[[vm]]` section.
-- Not all regions have GPUs available, refer to [region GPU availability](/gpus#regions-with-gpus) for more info
+- Not all regions have GPUs available, refer to region GPU availability for more info
 - The `[[mounts]]` section is used to mount a volume to store the models. This is a good practice to keep the models separate from the app code.
 - The volume size in this config file is 10gb, that's enough for small models. Change this value if you need more.
 - The `--flycast` flag creates a private IPv6 address for the app.

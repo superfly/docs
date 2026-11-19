@@ -1,9 +1,10 @@
 ---
 title: Optimizing your build
+description: "Speed up Rails Docker builds on Fly.io: copy Gemfile before source, run bundle and yarn installs in parallel stages, and reuse gems with a RUN cache mount."
 source_url: https://fly.io/docs/rails/cookbooks/build/
 ---
 
-# Ordering steps
+## Ordering steps
 
 The initial cookbooks in this series seemed to automatically cache
 build steps and perform predictably - make a change to the Dockerfile
@@ -46,7 +47,7 @@ two specific files have changed.
 This can result in a dramatic reduction in build times for cases
 where the Gemfile did not change.
 
-# Multi-stage builds
+## Multi-stage builds
 
 Now consider `bundle install` and `yarn install`.  Both can be
 time consuming.  They can be run in either order.  If run sequentially,
@@ -88,7 +89,7 @@ Even better, if both changed, they will be run concurrently.
 In fact, on the first run they will be run concurrently with
 the installation of `postgresql-client`.
 
-# Caching
+## Caching
 
 We've seen how splitting COPY statements can reduce the number of
 steps, but it still remains the case that any change to the Gemfile
@@ -134,7 +135,7 @@ pick up the configuration as well as the gems.
 With this in place, adding a single gem to your Gemfile will
 result in only the installation of that one gem.
 
-## recap
+### Recap
 
 Starting from a simple sequence of two statements (potentially three
 if `yarn install` is added) we have explored a number of techniques

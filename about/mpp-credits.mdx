@@ -1,0 +1,95 @@
+---
+title: Buy Fly.io Credit with MPP
+sidebarTitle: Buy Credit with MPP
+description: "Let an AI agent add prepaid credit to your Fly.io organization with the Machine Payments Protocol (MPP) and Link, without opening the dashboard."
+---
+
+**An AI agent can add prepaid credit to your Fly.io organization by paying over HTTP with the [Machine Payments Protocol](https://mpp.dev) (MPP). You approve each payment in the Link app. This page explains how it works and how to set your agent up.**
+
+## How it works
+
+1. Your agent sends a request to the Fly.io credits endpoint with a Fly.io API token and the amount.
+1. Fly.io answers with an HTTP `402 Payment Required` challenge for that amount.
+1. The agent pays the challenge with [Link](https://link.com), Stripe's wallet, and you approve the payment in the Link app.
+1. Fly.io adds the credit to your organization.
+
+The credit works like credit you buy from the dashboard. Your usage is taken from the credit first, and anything above it goes on your monthly invoice as usual.
+
+## Before you start
+
+- **A Pay As You Go organization with a payment method on file.** The organization needs a credit card or Link as its payment method. Organizations billed through a [Billing Organization](/about/billing#unified-billing) can't buy credit this way.
+- **A Link account**, so you can approve payments.
+- **Link CLI** (`@stripe/link-cli`) where your agent runs. Link CLI pays the MPP challenge for the agent. Connect it to your Link account once with `link-cli auth login`.
+- **A Fly.io API token** for the organization. A short-lived organization token is best:
+
+  ```bash
+  fly tokens create org -o <org-slug> --expiry 1h
+  ```
+
+  See [Access tokens](/security/tokens) for more about tokens.
+
+
+## Buy credit
+
+Send a `POST` request to `https://fly.io/api/v1/mpp/credits` with a JSON body:
+
+- `org_slug`: the organization that gets the credit. Use `personal` for your personal organization, or another organization's slug as [`fly orgs list`](/flyctl/cmd/fly_orgs_list) shows it.
+- `amount`: the credit in US dollars, as a string. One of `"5"`, `"10"`, `"25"`, `"50"` or `"100"`. The default is `"10"`.
+
+Send your Fly.io token in the `Authorization` header with every request. Without a token, the `402` is only a price quote, and paying it fails.
+
+With Link CLI, the agent runs one command:
+
+```bash
+link-cli mpp pay https://fly.io/api/v1/mpp/credits \
+  --data '{"org_slug": "personal", "amount": "25"}' \
+  --header "Authorization: $FLY_API_TOKEN" \
+  --context "Add \$25 of prepaid credit to my Fly.io personal organization. One-time charge of 25 USD, requested by the user in this session."
+```
+
+`$FLY_API_TOKEN` holds the full token, including the `FlyV1 ` prefix. `--data` sends the request as a `POST` with a JSON body. The context must be at least 100 characters.
+
+Link CLI reads Fly.io's `402` challenge and creates a spend request for that amount. It returns `pending_approval`, an `approval_url`, and a `_next.pay_command` to run next.
+
+You approve the request in the Link app, within 30 minutes. The agent then runs the pay command, which sends the payment in the `Payment-Authorization` header and keeps your token in `Authorization`.
+
+A successful purchase returns `200`:
+
+```json
+{"credit": {"amount_cents": 2500, "currency": "usd", "payment_intent": "pi_...", "status": "added"}}
+```
+
+The `status` is `added` when the credit is on your balance. You can see it on the **Billing** page in the dashboard.
+
+## Check the result
+
+Link CLI exits with status `0` even when Fly.io doesn't return `200`, so check the HTTP status and `credit.status` in the response.
+
+| Response | What it means |
+| --- | --- |
+| `200` with `"status": "added"` | The credit is on your balance. |
+| `200` with `"status": "pending"` | The payment is still settling. Fly.io checks again after about 10 minutes, so the credit usually follows within 15 minutes. A bank payment through Link can take a few days. Don't pay again. |
+| `400` | `org_slug` is missing, or `amount` isn't one of the allowed amounts. |
+| `401` | The Fly.io token is missing or has expired. Send a valid token in `Authorization`. Short-lived tokens, such as one created with `--expiry 1h`, expire quickly. |
+| `402` | The payment challenge. Without a token, it's only a price quote. |
+| `403` | The organization can't buy credit this way. Add a payment method on its **Billing** page, then try again. |
+| `404` | No organization with that slug for this token. |
+| `429` | Too many requests. Wait for the number of seconds in `Retry-After`, then try again. Don't pay again. |
+| `500` | Fly.io couldn't confirm the payment. Don't pay again. |
+
+A declined payment uses up its spend request. To try again, run `link-cli mpp pay` again to create a new one.
+
+## Prompt for your agent
+
+You can give your agent a prompt like this one:
+
+> Add \$25 of Fly.io credit to my personal organization with my Link wallet. `POST https://fly.io/api/v1/mpp/credits` with `{"org_slug": "personal", "amount": "25"}`, and pay the 402 with `link-cli mpp pay`. Check that the response is a 200 and that `credit.status` is `added` or `pending`.
+
+The full API description is at [https://fly.io/api/v1/mpp/openapi.json](https://fly.io/api/v1/mpp/openapi.json).
+
+## Related reading
+
+- [How Billing Works](/about/billing)
+- [Fly.io Resource Pricing](/about/pricing)
+- [Access tokens](/security/tokens)
+- [Sprites connectors](https://docs.sprites.dev/concepts/connectors/), for agents in Sprites that call other services

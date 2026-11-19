@@ -1,6 +1,7 @@
 ---
-title: Existing Django Apps
-og:description: Learn how to run your existing Django applications on Fly.
+title: Deploy an Existing Django App
+sidebarTitle: Existing Django Apps
+description: "Move an existing Django app to Fly.io: configure settings, launch with fly launch, attach Postgres, and troubleshoot your first deploy."
 source_url: https://fly.io/docs/django/getting-started/existing/
 ---
 
@@ -14,7 +15,7 @@ The official [How to Deploy Django](https://docs.djangoproject.com/en/stable/how
 
 The third-party package [WhiteNoise](https://whitenoise.evans.io/en/stable/) is recommended for serving static files in production as this requires [additional configuration](https://docs.djangoproject.com/en/stable/howto/static-files/deployment/).
 
-A production web server must be installed, typically either [Gunicorn](https://docs.gunicorn.org/en/latest/install.html) or [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/). The database adapter [Psycopg](https://www.psycopg.org/psycopg3/docs/) is commonly used along with [dj-database-url](https://pypi.org/project/dj-database-url/) to establish a Django database connection via a `DATABASE_URL` environment variable.
+A production web server must be installed, typically either [Gunicorn](https://gunicorn.org/install/) or [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/). The database adapter [Psycopg](https://www.psycopg.org/psycopg3/docs/) is commonly used along with [dj-database-url](https://pypi.org/project/dj-database-url/) to establish a Django database connection via a `DATABASE_URL` environment variable.
 
 Be sure to have generated an up-to-date `requirements.txt` file for any new packages added for deployment.
 
@@ -173,13 +174,13 @@ This also means that `.gitignore` files are not ignored. If you have secrets or 
 
 ### Databases
 
-Fly.io has a [Postgres offering](/unmanaged-postgres) to automate provisioning, maintenance, and snapshot tasks for your Postgres database, but it does not manage it. If you run out of disk space, RAM, or other resources on your Fly Postgres instances, you'll have to scale those virtual machines from the Fly CLI. If you prefer, you can instead connect to an [external fully-managed Postgres database](/unmanaged-postgres#fully-managed-postgres).
+Fly.io has a [Postgres offering](/unmanaged-postgres) to automate provisioning, maintenance, and snapshot tasks for your Postgres database, but it does not manage it. If you run out of disk space, RAM, or other resources on your Fly Postgres instances, you'll have to scale those virtual machines from the Fly CLI. If you prefer, you can instead connect to an [external fully-managed Postgres database](/postgres).
 
 ### Custom Domain & SSL Certificates {#custom-domain-amp-ssl-certificates}
 
 After you finish deploying your application to Fly.io and have tested it extensively, [read through the Custom Domain docs](/networking/custom-domain) and point your domain at Fly.
 
-In addition to supporting [`CNAME` DNS records](/networking/custom-domain#option-i-cname-records), Fly.io also supports [`A` and `AAAA` records](/networking/custom-domain#option-ii-a-and-aaaa-records) for those who want to point `example.com` (without the `www.example.com`) directly at Fly.
+In addition to supporting [`CNAME` DNS records](/networking/custom-domain#cname-records), Fly.io also supports [`A` and `AAAA` records](/networking/custom-domain#a-and-aaaa-records-recommended) for those who want to point `example.com` (without the `www.example.com`) directly at Fly.
 
 ### flyctl Commands
 

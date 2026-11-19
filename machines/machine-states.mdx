@@ -1,5 +1,6 @@
 ---
 title: Machine states and lifecycle
+description: "Fly Machine lifecycle states, from created, started, and suspended to replaced and migrated, plus version behavior and how to spot stuck Machines."
 source_url: https://fly.io/docs/machines/machine-states/
 ---
 
@@ -26,6 +27,7 @@ These states remain until you take action (or something fails).
 | `started` | Running and network-accessible |
 | `stopped` | Exited, either on its own or explicitly stopped |
 | `suspended` | Suspended to disk; will attempt to resume on next start |
+| `archived` | Released from its host; the next start rebuilds it, possibly elsewhere with a new private IP |
 | `failed` | Machine encountered an error and could not start successfully |
 
 ### Transient states

@@ -1,5 +1,6 @@
 ---
-title: Session Affinity (a.k.a. Sticky Sessions)
+title: "Sticky sessions (session affinity)"
+description: "Send a user's requests to the same Fly Machine with the fly-force-instance-id request header from the client or the fly-replay response header from your server."
 source_url: https://fly.io/docs/blueprints/sticky-sessions/
 ---
 
@@ -62,7 +63,7 @@ This code will subscribe and unsubscribe from
 
 ## Fly-Replay
 
-This approach is implemented entirely on the server. Your application examines each request, determines which Machine should handle it, and returns a `fly-replay` response header to route the request accordingly. Initial requests will require an additional "hop" to route, and [requests are limited to payloads of 1 megabyte](/networking/dynamic-request-routing#limitations).
+This approach is implemented entirely on the server. Your application examines each request, determines which Machine should handle it, and returns a `fly-replay` response header to route the request accordingly. Initial requests will require an additional "hop" to route, and [requests are limited to payloads of 1 megabyte](/networking/dynamic-request-routing#requirements-and-limitations).
 
 The example below creates [Express Middleware](https://expressjs.com/en/guide/using-middleware.html) that routes requests based on a session cookie:
 

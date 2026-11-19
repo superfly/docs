@@ -1,5 +1,6 @@
 ---
 title: Access tokens
+description: "Create Fly.io access tokens scoped to one app or org, including SSH, machine-exec and read-only tokens, then set expiry, list and revoke them with fly tokens."
 source_url: https://fly.io/docs/security/tokens/
 ---
 
@@ -30,6 +31,8 @@ Create and manage tokens using flyctl. `fly tokens create` commands have some us
 - **token names:** If you're managing multiple tokens, then give the tokens custom names with the `--name` option to make them easier to find when you list them with flyctl or view them in your dashboard.
 
 - **token expiry:** When you create a token, include the duration that the token is valid for with the `--expiry` option. You should specify the shortest possible duration for your use case so that you limit access by time as well as scope. Tokens are valid for 20 years (175200h0m0s) by default.
+
+Tokens created with `fly tokens create` look like `FlyV1 fm2_...`. The `FlyV1` prefix and the space after it are part of the token, so copy the entire string. If you're setting the token in a shell, wrap it in quotes to preserve the space.
 
 For all options and commands, refer to the [`fly tokens` command docs](/flyctl/cmd/fly_tokens).
 

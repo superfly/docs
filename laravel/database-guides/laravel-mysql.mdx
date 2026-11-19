@@ -1,6 +1,6 @@
 ---
 title: Laravel and MySQL
-og:description: Notes and configurations on connecting with the relational database classic, [MySQL](https://www.mysql.com/)
+description: "Connect a Laravel app on Fly.io to MySQL running as a Fly app or on PlanetScale, using .internal addresses, secrets, and fly proxy for local access."
 source_url: https://fly.io/docs/laravel/database-guides/laravel-mysql/
 ---
 
@@ -14,7 +14,7 @@ To run MySQL as a [Fly App](/app-guides/mysql-on-fly), follow our guide [here](/
 
 ### _Connect from a Laravel Fly App_
 
-1.  Revise the `[env]` configuration in your Laravel application's `fly.toml` file to connect with your MySQL Fly App's [Fly .internal address](/networking/private-networking#fly-io-internal-addresses):
+1.  Revise the `[env]` configuration in your Laravel application's `fly.toml` file to connect with your MySQL Fly App's [Fly .internal address](/networking/private-networking#fly-io-internal-dns):
 
     ```toml
     [env]

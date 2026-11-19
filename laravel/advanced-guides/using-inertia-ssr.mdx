@@ -1,6 +1,6 @@
 ---
 title: Using Inertia SSR
-og:description: See how to run Inertia SSR Laravel Apps, with just a few tweaks to the Laravel configuration.
+description: "Deploy a Laravel Inertia app with server-side rendering on Fly.io by adding Node to the Dockerfile and running the SSR server as its own process group."
 source_url: https://fly.io/docs/laravel/advanced-guides/using-inertia-ssr/
 ---
 
@@ -109,13 +109,13 @@ Now that you have more than one process group for your Fly.io app, you'll have t
 
 
 ### Web and SSR Communication
-The SSR server will be created as a separate VM from your web app. You'll have to configure your Laravel web VM to [talk with it](https://community.fly.io/t/process-group-aware-internal-dns-route-between-processes-with-ease/13063/4). To do so, first revise the `fly.toml` file to include an `SSR_URL` that will contain the ssr process' [.internal address](/networking/private-networking#fly-io-internal-addresses) routed to SSR's applicable port ( in the case below, 13714):
+The SSR server will be created as a separate VM from your web app. You'll have to configure your Laravel web VM to [talk with it](https://community.fly.io/t/process-group-aware-internal-dns-route-between-processes-with-ease/13063/4). To do so, first revise the `fly.toml` file to include an `SSR_URL` that will contain the ssr process' [.internal address](/networking/private-networking#fly-io-internal-dns) routed to SSR's applicable port ( in the case below, 13714):
 ```.env
 [env]
   SSR_URL="ssr.process.<yourAppNameHerePlease>.internal:13714"
   // other envs here
 ```
-Finally, pull the [inertia.php](https://github.com/inertiajs/inertia-laravel/blob/master/config/inertia.php) config file into your config directory, and  update it to use the `SSR_URL` env variable:
+Finally, pull the [inertia.php](https://github.com/inertiajs/inertia-laravel/blob/3.x/config/inertia.php) config file into your config directory, and  update it to use the `SSR_URL` env variable:
 ```php
 /* config/inertia.php */
 'ssr' => [

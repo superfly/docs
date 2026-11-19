@@ -1,5 +1,6 @@
 ---
-title: Going to Production with Healthcare Apps
+title: "Run HIPAA-compliant healthcare apps"
+description: "Evaluate Fly.io for HIPAA: encryption in transit and at rest, network isolation, and access control. Then launch a pilot, sign a BAA, and deploy to production."
 source_url: https://fly.io/docs/blueprints/going-to-production-with-healthcare-apps/
 ---
 
@@ -54,7 +55,7 @@ Physical access to data centers where PHI is stored must be controlled:
 - **Data Centers**: Fly.io hosts services in secure data centers with restricted access, surveillance, and environmental controls, ensuring the physical security of the hardware that stores and processes PHI.
 - **Regional Data Control**: Fly.io allows users to control the [physical region](/reference/regions) where data is stored and processed using simple commands, facilitating compliance with data residency requirements of HIPAA by ensuring PHI is stored within designated secure regions, such as the United States.
 
-There's more detail at [https://fly.io/docs/about/healthcare](/about/healthcare) and [https://fly.io/security](https://fly.io/security). If you have additional questions about Fly.io's security infrastructure & practices, please [reach out](mailto:sales@fly.io).
+There's more detail in [Healthcare apps on Fly](/about/healthcare) and at [https://fly.io/security](https://fly.io/security). If you have additional questions about Fly.io's security infrastructure & practices, please [reach out](mailto:sales@fly.io).
 
 ## Launch pilot application
 
@@ -113,8 +114,8 @@ Once you've evaluated Fly.io and have a BAA, it's time to go to production. The 
 
 When you're ready to start deploying HIPAA apps, you'll need to do some paperwork (don't worry, we use digital signatures) to make sure everything is compliant.
 
-- [Choose the Compliance Package](https://fly.io/compliance) that includes HIPAA/BAA documents.
-- Sign in to the dashboard and request a signed BAA at [https://fly.io/dashboard/personal/compliance](https://fly.io/dashboard/personal/compliance) or [contact us](mailto:sales@fly.io) and we'll help.
+- The BAA is free on every plan. Only an organization admin can request and sign it.
+- Sign in to the dashboard and request a signed BAA from the Trust Center at [https://fly.io/dashboard/compliance](https://fly.io/dashboard/compliance) or [contact us](mailto:sales@fly.io) and we'll help.
 
 ### Provision an isolated production environment
 

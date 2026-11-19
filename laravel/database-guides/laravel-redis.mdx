@@ -1,6 +1,6 @@
 ---
 title: Laravel and Redis
-og:description: Notes and configurations on connecting with the "in-memory data store", [Redis](https://redis.io/)
+description: "Connect a Laravel app on Fly.io to Redis, either a self-hosted Redis Fly app with a volume and password or Upstash Redis, from production and locally."
 source_url: https://fly.io/docs/laravel/database-guides/laravel-redis/
 ---
 
@@ -90,7 +90,7 @@ If you would like to use [Redis' official docker image](https://hub.docker.com/_
 
 Now that you have your Redis Fly App running, the next step is to connect it with your Laravel Fly App! Follow the steps below:
 
-1. First, retrieve your Redis Fly App's [Fly .internal Address](/networking/private-networking#fly-io-internal-addresses). 
+1. First, retrieve your Redis Fly App's [Fly .internal Address](/networking/private-networking#fly-io-internal-dns). 
 
 2.  Next, make sure you move to your Laravel Fly App's directory for better navigation:
 

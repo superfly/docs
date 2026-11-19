@@ -1,6 +1,6 @@
 ---
 title: fly postgres create
-source_url: https://fly.io/docs/flyctl/postgres-create/
+source_url: https://docs.fly.io/flyctl/cmd/fly_postgres_create
 ---
 
 Create a new Postgres cluster
@@ -25,6 +25,7 @@ fly postgres create [flags]
       --image-ref string            Specify a non-default base image for the Postgres app
       --initial-cluster-size int    Initial cluster size
   -n, --name string                 The name of your Postgres app
+      --network string              Name of the custom private network to create the cluster on. A network that doesn't exist yet is created.
   -o, --org string                  The target Fly.io organization
   -p, --password string             The superuser password. The password will be generated for you if you leave this blank
   -r, --region string               The target region (see 'flyctl platform regions')

@@ -1,9 +1,9 @@
 ---
 title: fly tokens create machine-exec
-source_url: https://fly.io/docs/flyctl/tokens-create-machine-exec/
+source_url: https://docs.fly.io/flyctl/cmd/fly_tokens_create_machine-exec
 ---
 
-Create an API token that can execute a restricted set of commands on a machine. Commands can be specified on the command line or with the command and command-prefix flags. If no command is provided, all commands are allowed. Tokens are valid for 20 years by default. We recommend using a shorter expiry if practical.
+Create an API token that can execute a restricted set of commands on a machine. Commands can be specified on the command line or with the command and command-prefix flags. If no command is provided, all commands are allowed. Tokens are valid for 20 years by default. We recommend using a shorter expiry if practical. The token is printed with its authorization scheme, as in "FlyV1 fm2_...". The "FlyV1 " prefix and the space after it are part of the token: copy the whole string, and quote it when you set it in a shell or a secret.
 
 ## Usage
 ```
