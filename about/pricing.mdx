@@ -89,7 +89,7 @@ Suppose an app runs one 1GB Machine each in Ashburn (`iad`), Frankfurt (`fra`), 
 
 Machine prices vary by region, which accounts for the different compute costs above.
 
-Cross-region private network traffic is billed in both directions. The request is billed at the rate for the region it leaves, and the response at the rate for the region it leaves. So if a small request returns a large response, most of the cost is at the responding region's rate.
+Cross-region private network traffic between Machines is billed in both directions. The request is billed at the rate for the region it leaves, and the response at the rate for the region it leaves. So if a small request returns a large response, most of the cost is at the responding region's rate. Traffic between an edge server and a Machine in another region is the exception: both directions are billed at the rate for the edge server's region.
 
 This example uses granular data transfer pricing. Organizations created before July 18, 2024 that haven't switched to granular pricing pay the public internet rate for cross-region traffic instead. See [data transfer pricing](#data-transfer-pricing).
 
@@ -227,7 +227,8 @@ Every organization's first 10 single hostname certificates are free.
 We bill for data leaving your app destined for the public internet or for apps or Machines in other regions, including:
 
 * Data egress to the Internet, from Machine to edge server to Internet
-* Data transfer over private network between regions, from Machine to edge server and edge server to Machine
+* Data transfer over private network between Machines in different regions
+* Data transfer between an edge server and a Machine in a different region, in both directions. This happens when a user's request reaches an edge server outside the Machine's region.
 * Data transfer to some extensions like Upstash Redis
 
 The following types of traffic are free:
@@ -237,6 +238,8 @@ The following types of traffic are free:
 * Data transfer from apps without an assigned IP address (for organizations not using granular data transfer rates)
 
 Fly.io pricing is per region group for outbound data transfer. You'll see a more detailed breakdown of cost per region and per traffic type on your monthly invoice.
+
+Data transfer is billed at the rate for the region the data leaves, except for traffic between an edge server and a Machine in a different region. That traffic is billed at the rate for the edge server's region in both directions, including the Machine's response. For example, if a user near Singapore reaches your app through the edge server in Singapore (`sin`) and your only Machine is in Ashburn (`iad`), the request and the response between those regions are both billed at the Asia Pacific rate.
 
 <Info>
 **Important:** Organizations created after July 18 2024 are automatically opted-in to use the granular data transfer rates and are billed at a different rate for private network data transfer between regions, per the following table. Organizations not using granular data transfer rates are billed for all data transfer (excluding that listed as free above) at the "Egress to public internet" rate.
