@@ -1,0 +1,83 @@
+---
+title: Let an agent sign you up for Fly.io
+sidebarTitle: Agent sign-up
+description: "Let an AI agent create your Fly.io account, or connect to the one you have, and get its own 24-hour credentials. You confirm with one link and one code."
+---
+
+**An AI agent can sign you up for Fly.io, or connect to your existing account, and get its own credentials to deploy for you. Your part is to open one link and enter one code. This page explains what happens, what the agent can do, and how to disconnect it.**
+
+Fly.io follows the [auth.md](https://github.com/workos/auth.md) spec for agent registration. The steps for agents are at [https://fly.io/auth.md](https://fly.io/auth.md).
+
+## How it works
+
+1. You ask your agent to set up Fly.io for you. It asks which email address to use.
+1. The agent registers with that address and shows you a link and a 6-digit code.
+1. You open the link and confirm your email address with GitHub, Google or an emailed link. If you don't have an account yet, you name it and create it on the same page.
+1. You enter the code.
+1. The agent collects its credentials and can start working.
+
+The agent has 10 minutes after you enter the code to collect its credentials. If it doesn't, you can start again.
+
+## Try it
+
+Give your agent a prompt like this one:
+
+> Sign me up for Fly.io using https://fly.io/auth.md, then deploy this app.
+
+## What the agent can do
+
+The agent gets access to your personal Fly.io organization and your Sprites:
+
+- **Fly.io:** your apps, Machines, volumes, secrets and deploys. It can use [flyctl](/flyctl) and the [Machines API](/machines/api).
+- **Sprites:** create and manage your Sprites.
+
+It can't:
+
+- Invite or remove organization members.
+- Change billing.
+- Change how people sign in to your account.
+
+The agent's credentials last 24 hours, and the agent renews them as it works. It can keep renewing for 30 days. After that, it asks you to confirm again.
+
+## New accounts and the free trial
+
+If the agent creates a new account, it may start on the [free trial](/about/free-trial): \$1 of credit for 7 days, with no credit card. Confirming your email address on the claim page starts the trial.
+
+## Disconnect an agent
+
+To disconnect an agent, revoke any of its tokens. In the dashboard, open your organization's **Tokens** page or your personal tokens page. The agent appears as **Agent (auth.md)**.
+
+- Fly.io access stops right away.
+- Sprites access stops within 24 hours.
+
+An agent that's claimed but hasn't collected its credentials yet is listed too, with a **Disconnect** button.
+
+You can also revoke a token with [`fly tokens revoke`](/flyctl/cmd/fly_tokens_revoke).
+
+## For agent developers
+
+The full steps are in [https://fly.io/auth.md](https://fly.io/auth.md), under **Agentic registration**. In short:
+
+| Step | Request |
+| --- | --- |
+| Discover | `GET /.well-known/oauth-authorization-server`. Look for the `agent_auth` block. Without it, agent registration is off |
+| Register | `POST /agent/identity` with `{"type": "service_auth", "login_hint": "<email>"}` |
+| Claim | Show the user the `verification_uri` and `user_code`, then poll `POST /oauth2/token` with the claim grant |
+| Refresh | `POST /oauth2/token` with the JWT bearer grant and your `identity_assertion` |
+| Revoke | `POST /oauth2/revoke` with `token=<access_token>` |
+
+Fly.io supports the `service_auth` method only.
+
+The credentials include:
+
+- `access_token`: a `FlyV1 fm2_...` token. Use it as `FLY_API_TOKEN` for flyctl, or as `Authorization: Bearer <access_token>` with the Machines API.
+- `sprites_token` and `sprites_api`: for the [Sprites API](https://docs.sprites.dev).
+- `identity_assertion`: to refresh both.
+
+Store them in a file only your agent can read, outside any repository, and never print or log them.
+
+## Related reading
+
+- [Fly agent setup](/model-context-protocol/setup-agent), if you already have an account
+- [Access tokens](/security/tokens)
+- [Fly.io Free Trial](/about/free-trial)
