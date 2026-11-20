@@ -1,0 +1,127 @@
+---
+title: Fly.io Free Plan
+sidebarTitle: Free Plan
+description: "Learn how the Fly.io Free plan works: $1 of credit to start, $5 of usage every month once you add a card, its limits, what happens when credit runs out, and how to upgrade."
+---
+
+**Every new Fly.io account starts on the Free plan. You get \$1 of credit with no credit card, and \$5 of usage every month once you add a card. This page explains what it covers, its limits, and what happens when you use it up.**
+
+## How the Free plan works
+
+The Free plan is for your personal organization, the one we create when you sign up. It doesn't expire.
+
+- **Without a credit card:** you get **\$1 of credit** when you create your account. It's a one-time credit, and it expires after 7 days.
+- **With a credit card:** you get **\$5 of usage every month**.
+
+Adding a card doesn't move you to Pay As You Go. Your organization stays on the Free plan, with the same limits. Moving to Pay As You Go is a separate plan change that you choose. See [Upgrade to Pay As You Go](#upgrade-to-pay-as-you-go).
+
+## What the credit covers
+
+The \$1 credit and the monthly \$5 cover:
+
+- Machines
+- Volumes and volume snapshots
+- Data transfer
+- Sprites
+- One Managed Postgres cluster on the \$4 Developer plan
+
+With a card, you get the full \$5 in your first month, and a new \$5 on the 1st of every month. Any of your \$1 credit that's left is used first. New Free organizations with a card also get the \$30 Sprites credit, which is used before the \$5.
+
+Each card can be on only one organization's Free plan.
+
+## Free plan limits
+
+- **Members:** 1. You can't invite other members.
+- **Machines:** up to 3, with no performance Machines.
+- **Volumes:** up to 5GB each.
+- **Sprites:** up to 3.
+- **Managed Postgres:** 1 cluster, on the Developer plan.
+- **Support:** [community support](https://community.fly.io).
+
+These limits are the same with or without a card.
+
+<Tip>
+`fly deploy` creates 2 Machines per app by default. Use `fly deploy --ha=false` to run 1 Machine per app, so you can run up to 3 apps.
+</Tip>
+
+These aren't available on the Free plan:
+
+- Managed Postgres plans other than Developer
+- Extensions such as Tigris, Supabase and Upstash Redis
+- Dedicated IPv4 addresses and static egress IP addresses
+- [Linked organizations](/about/billing#unified-billing)
+
+To use any of these, [upgrade to Pay As You Go](#upgrade-to-pay-as-you-go).
+
+## Switch to the Free plan
+
+If your personal organization is already on Pay As You Go, you can switch to the Free plan from the **Billing** page in the dashboard. Your organization can't have anything the Free plan doesn't include, such as a Managed Postgres cluster on a plan other than Developer, a volume larger than 5GB, an extension, or other members. Remove them first, then switch.
+
+## When the \$1 credit runs out
+
+{/* TODO: what happens when the $1 credit runs out on an account without a card. */}
+
+To keep going, add a credit card to get \$5 of usage every month.
+
+## When the \$5 runs out
+
+When you add your card, you choose what happens when you use up the month's \$5:
+
+- **Stop:** your Machines and Sprites stop until the 1st.
+- **Auto-upgrade:** your organization moves to Pay As You Go, so nothing stops. Pay As You Go bills the whole month, from the first cent.
+
+We email you when you have \$1 or less of the month's \$5 left.
+
+If you chose **Stop**, we add a \$1 grace when the \$5 runs out, so nothing stops right away. When the grace is used up, or after 72 hours at the latest, your Machines and Sprites stop. Until the 1st you can't start or create Machines, volumes or Sprites. Your apps, volumes and data are kept.
+
+You get the grace once a month.
+
+## On the 1st of the month
+
+You get a new \$5. Sprites wake on their next request.
+
+Machines that were stopped when the \$5 ran out stay stopped. Start them from the dashboard, or with [`fly machine start`](/flyctl/cmd/fly_machine_start).
+
+## Upgrade to Pay As You Go
+
+You can upgrade to Pay As You Go at any time from the **Billing** page in the dashboard. The Free plan limits are lifted right away.
+
+When you upgrade, Pay As You Go bills the whole month from the first cent, including the usage the \$5 covered so far. For prices, see [Fly.io Resource Pricing](/about/pricing).
+
+## Check your usage
+
+You can see how much of the month's \$5 you've used on the **Billing** page in the dashboard.
+
+## FAQ
+
+### Does Fly.io have a free tier?
+
+Yes. Every new account starts on the Free plan, with \$1 of credit and no credit card needed. Add a card to get \$5 of usage every month.
+
+### Do I need a credit card for the Free plan?
+
+No. Without a card, you get a one-time \$1 of credit that lasts 7 days. With a card, you get \$5 of usage every month. Adding a card keeps you on the Free plan.
+
+### Can I put other organizations on the Free plan?
+
+No. Only your personal organization can be on the Free plan. Other organizations use Pay As You Go.
+
+### Can I use Managed Postgres on the Free plan?
+
+Yes. You can have one cluster on the Developer plan, which costs \$4 a month and counts toward your \$5. To move it to a larger plan, or to create more clusters, upgrade to Pay As You Go first.
+
+### Will I be charged on the Free plan?
+
+No. You aren't charged while your organization is on the Free plan, including for volume storage after your Machines stop. If you chose **Auto-upgrade** and the \$5 runs out, your organization moves to Pay As You Go, which bills the whole month.
+
+### Do Free plan organizations get the under-\$5 waiver?
+
+No. The Free plan replaces the [waiver](/about/free-waiver) for new organizations.
+
+---
+
+## Related Reading
+
+- [Fly.io Resource Pricing](/about/pricing)
+- [How Billing Works](/about/billing)
+- [Cost Management](/about/cost-management)
