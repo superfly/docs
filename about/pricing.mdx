@@ -142,10 +142,10 @@ Both kinds of reservation block:
 
 * Are backdated to the first day of the month you buy them in, so you get that month's full credit.
 * Give you a credit each month that's only valid for that month. Unused credit doesn't roll over.
-* Cover only Machine CPU and additional RAM charges. The credit doesn't cover GPUs, volumes, stopped Machines' root file systems, snapshots, data transfer, IP addresses, Managed Postgres, Sprites or other products.
+* Cover only Machine CPU and additional RAM charges.
 * Are non-refundable.
 
-If you have both kinds, regional blocks are used first for their region and CPU class. Your global credit then covers the remaining CPU and RAM usage, and usage beyond that is billed at the regular rates. Buying a global reservation doesn't change or replace any regional blocks you already have.
+Regional reservation credits are always applied before global reservation credits, when one or more credit of each kind is applicable to a given charge. Usage beyond that covered by reservation credits is billed at the regular rates. Buying a global reservation doesn't change or replace any regional blocks you already have.
 
 You buy reservation blocks on your organization's Billing page in the [dashboard](https://fly.io/dashboard). Payments are charged to your organization's payment method, and each month's credit is added once its payment succeeds. Your credits appear under **Active Credits** on the Billing page. Only organization admins can buy reservations. For [Linked Organizations](/about/billing#unified-billing), buy them on the Billing Organization.
 
@@ -179,24 +179,20 @@ To buy a regional block:
 
 #### Global {#global-cpuram-reservations}
 
-A global reservation gives you a monthly credit for Machine CPU and RAM usage in every region, for both `shared` and `performance` Machines. You commit to 12 months, and either pay upfront for a **20% discount** or pay monthly for a **10% discount**.
+A global reservation gives you a monthly credit for Machines in every region, both `shared` and `performance`. You commit to 12 months, and either pay upfront for a **20% discount** or pay monthly for a **10% discount**.
 
-You can choose any whole-dollar monthly credit from \$100 to \$50,000. For a larger reservation, email billing@fly.io. Some examples:
+You can choose any whole-dollar monthly credit from \$100 to \$50,000. For a larger reservation, email billing@fly.io, or your support email address if you have a support plan. Some examples:
 
-| Monthly CPU/RAM credit | Upfront payment (20% discount) | Monthly payment for 12 months (10% discount) |
-| --- | --- | --- |
-| \$100 | \$960 | \$90 |
-| \$500 | \$4,800 | \$450 |
-| \$1,000 | \$9,600 | \$900 |
-
-For example, a \$100/month reservation gives you \$1,200 of credit over 12 months. You pay either \$960 upfront, or \$90 a month for 12 months (\$1,080 in total).
+| Monthly CPU/RAM credit | Total value of credit | Upfront payment (20% discount) | Monthly payment for 12 months (10% discount) |
+| --- | --- | --- | --- |
+| \$100 | \$1,200 | \$960 | \$90 |
+| \$500 | \$6,000 | \$4,800 | \$450 |
+| \$1,000 | \$12,000 | \$9,600 | \$900 |
 
 How payment works:
 
 * **Pay upfront:** one payment for all 12 months, charged when you buy.
 * **Pay monthly:** the first month is charged when you buy, and each later month is billed on the 1st. All 12 monthly payments are due, even in a month where you use less than your credit.
-
-If your bank asks you to authenticate a payment, such as with 3-D Secure, select **Complete payment** on your organization's Billing page before that month ends (UTC). If a later monthly payment fails, that month's credit isn't added. Update your payment method if you need to, then select **Retry payment** before the month ends. A failed month doesn't cancel the rest of the reservation. If the first payment fails, select **Try again** to buy the same reservation again. Organization admins get an email when a payment fails or needs authentication.
 
 To buy a global reservation:
 
