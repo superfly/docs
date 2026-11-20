@@ -59,28 +59,17 @@ If your personal organization is already on Pay As You Go, you can switch to the
 
 ## When the \$1 credit runs out
 
-{/* TODO: what happens when the $1 credit runs out on an account without a card. */}
+When the \$1 is used up, or after 7 days, you can't create new resources, and we email you to let you know.
 
 To keep going, add a credit card to get \$5 of usage every month.
 
 ## When the \$5 runs out
 
-When you add your card, you choose what happens when you use up the month's \$5:
-
-- **Stop:** your Machines and Sprites stop until the 1st.
-- **Auto-upgrade:** your organization moves to Pay As You Go, so nothing stops. Pay As You Go bills the whole month, from the first cent.
-
 We email you when you have \$1 or less of the month's \$5 left.
 
-If you chose **Stop**, we add a \$1 grace when the \$5 runs out, so nothing stops right away. When the grace is used up, or after 72 hours at the latest, your Machines and Sprites stop. Until the 1st you can't start or create Machines, volumes or Sprites. Your apps, volumes and data are kept.
+When you use up the \$5, your organization moves to Pay As You Go automatically, so nothing stops. The month's \$5 is removed, and the whole month's usage is billed at standard rates from the first cent, not just the usage above \$5. The Free plan limits are lifted.
 
-You get the grace once a month.
-
-## On the 1st of the month
-
-You get a new \$5. Sprites wake on their next request.
-
-Machines that were stopped when the \$5 ran out stay stopped. Start them from the dashboard, or with [`fly machine start`](/flyctl/cmd/fly_machine_start).
+If you stay on the Free plan, you get a new \$5 on the 1st.
 
 ## Upgrade to Pay As You Go
 
@@ -112,7 +101,11 @@ Yes. You can have one cluster on the Developer plan, which costs \$4 a month and
 
 ### Will I be charged on the Free plan?
 
-No. You aren't charged while your organization is on the Free plan, including for volume storage after your Machines stop. If you chose **Auto-upgrade** and the \$5 runs out, your organization moves to Pay As You Go, which bills the whole month.
+Not while your organization stays within the \$5. If your usage goes over \$5, your organization moves to Pay As You Go, and the whole month is billed at standard rates.
+
+### Why is the whole month billed when I move to Pay As You Go?
+
+The \$5 is a free allowance for the Free plan, with its limits. Pay As You Go removes those limits and bills all usage at standard rates, without the \$5. When you move, the whole month is billed on Pay As You Go, whether you upgrade yourself or go over \$5. To keep costs down, watch your usage on the **Billing** page. See [Cost Management](/about/cost-management).
 
 ### Do Free plan organizations get the under-\$5 waiver?
 
