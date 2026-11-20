@@ -247,6 +247,7 @@
                   "app-guides/nats-cluster",
                   "app-guides/node-red",
                   "app-guides/openresty-nginx-plus-lua",
+                  "app-guides/pg-pinecone",
                   "app-guides/planetscale",
                   "app-guides/postgres",
                   "app-guides/puppeteer-js-renderer",
