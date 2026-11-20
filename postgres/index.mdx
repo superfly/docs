@@ -14,7 +14,7 @@ Fly.io's Managed Postgres is our fully-managed database service that handles all
 - High availability with automatic failover
 - Performance monitoring and metrics
 - Resource scaling (CPU, RAM, storage)
-- 24/7 support and incident response
+- 24/7 incident response, and support on every plan except [Developer](/postgres/developer-plan)
 - Automatic encryption of data at rest and in transit
 
 ### What's included {#whats-included}
@@ -24,7 +24,7 @@ You'll be able to access:
 - A highly-available Postgres cluster within your Fly.io organization's [private network](/networking/private-networking)
 - Multiple databases and schemas on that cluster
 - Programmatic access via the [Managed Postgres API](/machines/api), part of the Fly Machines API
-- Fly.io Support Portal to log tickets and get help
+- Fly.io Support Portal to log tickets and get help, on every plan except Developer
 - [Supported Postgres extensions](/postgres/extensions) for your cluster's Postgres version
 - The third party `pgvector` extension for vector similarity search
 - The third party `PostGIS` extension for adding geospatial data support, if enabled when provisioning your database
@@ -47,8 +47,8 @@ We'll be rolling out more regions as soon as we can. Choose a region close to yo
 
 Managed Postgres storage features:
 
-- Maximum storage limit: 1 TB
-- Initial storage size: Up to 500 GB at creation
+- Maximum storage limit: 1 TB (5GB on the [Developer plan](/postgres/developer-plan))
+- Initial storage size: Up to 500 GB at creation (1GB on the Developer plan)
 - Storage is replicated across all nodes in your cluster
 - Storage growth is monitored and managed automatically
 

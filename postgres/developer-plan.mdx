@@ -9,7 +9,7 @@ description: "Run a small, highly available Managed Postgres cluster for $4 a mo
 ## What the Developer plan includes
 
 - **High availability:** a primary and a replica, each on a `shared-cpu-1x` Machine with 256MB of memory, with automatic failover.
-- **Daily backups:** one full backup a day.
+- **Daily backups:** one full backup a day, kept for 1 day. See [Backups](#backups).
 - **Storage:** 1GB to start, growing automatically up to 5GB.
 - **Up to 20 connections**, straight to Postgres.
 - **Auto-pause:** the cluster pauses when nothing is connected and wakes on the next connection. See [Auto-pause](#auto-pause).
@@ -17,7 +17,7 @@ description: "Run a small, highly available Managed Postgres cluster for $4 a mo
 
 ## Pricing
 
-The Developer plan costs **\$4 a month**, including storage. You pay for the whole month, including the time the cluster is paused.
+The Developer plan costs **\$4 a month**, including storage. You're billed while the cluster exists, including the time it's paused.
 
 The Developer plan is included in the [Free plan](/about/free-plan). A Free plan organization can have one Developer plan cluster, and its cost counts toward the \$5 of monthly usage.
 
@@ -32,11 +32,17 @@ The Developer plan is smaller and simpler than the other [Managed Postgres plans
 | Connections | Up to 20 | Depends on plan |
 | Storage | Up to 5GB | Up to 1TB |
 | Storage cost | Included in the \$4 | \$0.28/GB a month |
+| Backups | One full backup a day, kept for 1 day | Kept for 10 days |
 | Restore | From a backup only | From a backup or a point in time |
-| Postgres settings | Fixed | Can be changed |
 | Maintenance | Any time | In a [weekly window](/postgres/maintenance-windows) you choose |
 | Auto-pause | Yes | No |
 | Support | No direct support contact. We still respond to alerts on your cluster | Direct support from Fly.io |
+
+## Backups
+
+We take one full backup of your cluster a day, and keep it for 1 day. That gives you about a day to restore from if something goes wrong, so keep your own copy of anything you can't lose, for example with `pg_dump`.
+
+You can restore from a backup, but not to a point in time. On-demand backups are full backups only. `fly mpg backup create --type incr` returns an error on the Developer plan.
 
 ## Maintenance
 
@@ -52,7 +58,9 @@ When a client connects, the cluster wakes. This usually takes about 15 seconds, 
 
 Your cluster starts with 1GB of storage and grows automatically, up to 5GB.
 
-When your databases get close to 5GB, we email you and schedule an upgrade to the Basic plan. You can cancel the upgrade. If you cancel it and your data reaches 5GB, Postgres runs out of space and stops accepting writes.
+The 5GB holds your data and Postgres's write-ahead log (WAL), so your data runs out of room before it reaches 5GB.
+
+When your cluster gets close to 5GB, we email you. Upgrade to Basic or a larger plan before it fills up. A full disk takes your database down: when Postgres can't write its WAL, it crashes and restarts.
 
 ## Create a Developer plan cluster
 
@@ -68,13 +76,17 @@ Your cluster gets a 1GB volume by default.
 
 ## Connect to your cluster
 
-Use the `DATABASE_URL` that [`fly mpg attach`](/postgres/create-and-connect) sets on your app. Its hostname starts with `pgbouncer`, like on other plans, but on the Developer plan it connects straight to Postgres. You don't need to change it if you upgrade to a plan with PgBouncer.
+Use the `DATABASE_URL` that [`fly mpg attach`](/postgres/create-and-connect) sets on your app. Its hostname starts with `pgbouncer`, like on other plans, but on the Developer plan it connects straight to Postgres. The hostname stays the same if you upgrade to a plan with PgBouncer.
 
 You don't need PgBouncer settings, such as disabling prepared statements for transaction mode. Keep your app's connection pool small, since all your clients share the 20 connections.
 
+<Warning>
+After an upgrade, the same URL goes through PgBouncer in transaction mode. If your app uses prepared statements, `SET`, advisory locks or `LISTEN/NOTIFY`, it can break when you upgrade. Before you upgrade, switch those apps to the cluster's `direct` URL, or change the pool mode to session. See [Connect your client](/postgres/client-configuration) and [Connection pooling](/postgres/cluster-configuration#connection-pooling).
+</Warning>
+
 ## Upgrade to a larger plan
 
-You can move a Developer plan cluster to Basic or a larger plan at any time from the dashboard. Your disk grows to the new plan's default size, 10GB on Basic. You can't move a cluster from another plan to the Developer plan.
+You can move a Developer plan cluster to Basic or a larger plan at any time from the dashboard. Your disk grows to the new plan's default size, 10GB on Basic. Check your app's connection settings first. See [Connect to your cluster](#connect-to-your-cluster). You can't move a cluster from another plan to the Developer plan.
 
 On the [Free plan](/about/free-plan), upgrade your organization to Pay As You Go before you move the cluster to a larger plan.
 
