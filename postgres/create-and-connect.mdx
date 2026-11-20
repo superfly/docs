@@ -79,7 +79,7 @@ fly mpg attach <CLUSTER_ID> -a <app-to-attach>
 ```
 This will also trigger a restart of the selected app in order to add the secret. You can find the cluster ID in your MPG dashboard or by using the `fly mpg list` command. 
 
-Both of the attachment options will use the pooled connection URL, which uses PGBouncer to help manage database connections efficiently. This is recommended for most apps. 
+Both of the attachment options will use the pooled connection URL, which uses PGBouncer to help manage database connections efficiently. This is recommended for most apps. On the [Developer plan](/postgres/developer-plan), which has no PgBouncer, they use the direct URL instead. 
 
 ### Manually connect an application using a connection string
 

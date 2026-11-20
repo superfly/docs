@@ -15,7 +15,7 @@ After [creating your MPG cluster](/postgres/create-and-connect) and attaching yo
 - **Pooled URL** (default): `postgresql://fly-user:YOUR_PASSWORD@pgbouncer.YOUR_CLUSTER.flympg.net/fly-db` — routes through PgBouncer. Use this for your application.
 - **Direct URL**: `postgresql://fly-user:YOUR_PASSWORD@direct.YOUR_CLUSTER.flympg.net/fly-db` — bypasses PgBouncer. Use this for migrations, advisory locks, or `LISTEN/NOTIFY`.
 
-On the [Developer plan](/postgres/developer-plan), there's no PgBouncer: the pooled URL connects straight to Postgres, like the direct URL.
+On the [Developer plan](/postgres/developer-plan), there's no PgBouncer. Use the direct URL, which `fly mpg attach` sets for you.
 
 SSL is enabled by default on all MPG connections. You do not need to set `sslmode` in your connection string.
 

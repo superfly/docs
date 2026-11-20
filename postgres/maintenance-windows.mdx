@@ -67,6 +67,8 @@ To see the current window, run:
 fly mpg maintenance-window show <cluster-id>
 ```
 
+On a [Developer plan](/postgres/developer-plan#maintenance) cluster, it reports that maintenance can run at any time, since Developer clusters don't have a window.
+
 To change it, pass any of `--day`, `--start-hour` and `--duration`:
 
 ```bash
