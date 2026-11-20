@@ -79,6 +79,7 @@
                 "group": "Getting Started",
                 "pages": [
                   "getting-started/sign-up-sign-in",
+                  "getting-started/agent-sign-up",
                   "getting-started/launch",
                   "getting-started/launch-demo",
                   {
