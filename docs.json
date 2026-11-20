@@ -79,6 +79,7 @@
                 "group": "Getting Started",
                 "pages": [
                   "getting-started/sign-up-sign-in",
+                  "getting-started/agent-sign-up",
                   "getting-started/launch",
                   "getting-started/launch-demo",
                   {
@@ -227,7 +228,6 @@
                   },
                   "model-context-protocol/flyctl-server",
                   "model-context-protocol/setup-agent",
-                  "model-context-protocol/agent-signup",
                   "model-context-protocol/agent-skills",
                   "model-context-protocol/examples"
                 ]
