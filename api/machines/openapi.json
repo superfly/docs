@@ -5551,7 +5551,7 @@
           "Postgres Clusters"
         ],
         "summary": "Get Maintenance Window",
-        "description": "Get the weekly window in which a cluster may undergo maintenance. A cluster that never set one returns its region's default. Requires only read access to the organization.",
+        "description": "Get the weekly window in which a cluster may undergo maintenance. A cluster that never set one returns its region's default. Some clusters have no window: their maintenance can run at any time, and `data` is null. Requires only read access to the organization.",
         "operationId": "Postgres_maintenance_window_show",
         "parameters": [
           {
@@ -5602,7 +5602,7 @@
           "Postgres Clusters"
         ],
         "summary": "Update Maintenance Window",
-        "description": "Update a cluster's weekly maintenance window. Give at least one of `day`, `start_hour` and `duration_hours`; omitted fields keep their current value. `start_hour` is in the cluster's timezone, which is derived from its region and cannot be changed. Changes are accepted only while the cluster is ready and no maintenance is running.",
+        "description": "Update a cluster's weekly maintenance window. Give at least one of `day`, `start_hour` and `duration_hours`; omitted fields keep their current value. `start_hour` is in the cluster's timezone, which is derived from its region and cannot be changed. Changes are accepted only while the cluster is ready and no maintenance is running. A cluster with no window, whose maintenance can run at any time, can't be given one: the request fails with 422. A successful update always returns a window in `data`.",
         "operationId": "Postgres_maintenance_window_update",
         "parameters": [
           {
@@ -5678,7 +5678,7 @@
             }
           },
           "422": {
-            "description": "No fields given, or a value is invalid",
+            "description": "No fields given, or a value is invalid; 'Maintenance can run at any time' for a cluster with no window",
             "content": {
               "application/json": {
                 "schema": {
@@ -11797,7 +11797,46 @@
         "type": "object",
         "properties": {
           "data": {
-            "$ref": "#/components/schemas/PostgresMaintenanceWindow"
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "day": {
+                "type": "string",
+                "description": "Day of the week the window starts on.",
+                "example": "sunday",
+                "enum": [
+                  "sunday",
+                  "monday",
+                  "tuesday",
+                  "wednesday",
+                  "thursday",
+                  "friday",
+                  "saturday"
+                ]
+              },
+              "duration_hours": {
+                "maximum": 8,
+                "minimum": 3,
+                "type": "integer",
+                "description": "Length of the window in hours.",
+                "example": 3
+              },
+              "start_hour": {
+                "maximum": 23,
+                "minimum": 0,
+                "type": "integer",
+                "description": "Hour of the day the window starts, in the cluster's timezone.",
+                "example": 1
+              },
+              "timezone": {
+                "type": "string",
+                "description": "IANA timezone the window is expressed in, derived from the cluster's region.",
+                "example": "America/New_York"
+              }
+            },
+            "description": "The cluster's maintenance window, or null when it has none and its maintenance can run at any time."
           }
         }
       },
