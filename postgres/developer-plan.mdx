@@ -17,7 +17,7 @@ description: "Run a small, highly available Managed Postgres cluster for $4 a mo
 
 ## Pricing
 
-The Developer plan costs **\$4 a month**, including storage. You're billed while the cluster exists, including the time it's paused.
+The Developer plan costs **\$4 a month**, including storage. It's billed by the second while the cluster exists, including the time it's paused, so a cluster you delete partway through the month costs less.
 
 The Developer plan is included in the [Free plan](/about/free-plan). A Free plan organization can have one Developer plan cluster, and its cost counts toward the \$5 of monthly usage.
 
@@ -76,17 +76,15 @@ Your cluster gets a 1GB volume by default.
 
 ## Connect to your cluster
 
-Use the `DATABASE_URL` that [`fly mpg attach`](/postgres/create-and-connect) sets on your app. Its hostname starts with `pgbouncer`, like on other plans, but on the Developer plan it connects straight to Postgres. The hostname stays the same if you upgrade to a plan with PgBouncer.
+Use the `DATABASE_URL` that [`fly mpg attach`](/postgres/create-and-connect) sets on your app. On the Developer plan, it's the cluster's direct URL, which connects straight to Postgres.
 
 You don't need PgBouncer settings, such as disabling prepared statements for transaction mode. Keep your app's connection pool small, since all your clients share the 20 connections.
 
-<Warning>
-After an upgrade, the same URL goes through PgBouncer in transaction mode. If your app uses prepared statements, `SET`, advisory locks or `LISTEN/NOTIFY`, it can break when you upgrade. Before you upgrade, switch those apps to the cluster's `direct` URL, or change the pool mode to session. See [Connect your client](/postgres/client-configuration) and [Connection pooling](/postgres/cluster-configuration#connection-pooling).
-</Warning>
+The direct URL keeps working if you upgrade to a larger plan. To use PgBouncer after an upgrade, switch your app to the pooled URL. See [Connect your client](/postgres/client-configuration).
 
 ## Upgrade to a larger plan
 
-You can move a Developer plan cluster to Basic or a larger plan at any time from the dashboard. Your disk grows to the new plan's default size, 10GB on Basic. Check your app's connection settings first. See [Connect to your cluster](#connect-to-your-cluster). You can't move a cluster from another plan to the Developer plan.
+You can move a Developer plan cluster to Basic or a larger plan at any time from the dashboard. Your disk grows to the new plan's default size, 10GB on Basic. Your app keeps using the direct URL. See [Connect to your cluster](#connect-to-your-cluster). You can't move a cluster from another plan to the Developer plan.
 
 On the [Free plan](/about/free-plan), upgrade your organization to Pay As You Go before you move the cluster to a larger plan.
 
