@@ -129,8 +129,29 @@ For stopped Machines we charge only for the root file system (rootfs) needed for
 
 ### Machine reservation blocks
 
-You'll get a 30% discount when you reserve a block of compute time, either for `performance` Machines or `shared` Machines, in a specific region.
-Reservations apply to any number of Machines of the specified CPU class, in the specified region, in any of your organization's apps.
+Reserve Machine CPU and RAM usage for 12 months to get a discount. There are two kinds of reservation block:
+
+| | [Regional](#regional-reservation-blocks) | [Global](#global-cpuram-reservations) |
+| --- | --- | --- |
+| Covers | One CPU class (`shared` or `performance`) in one region | Both CPU classes in every region |
+| Monthly credit | Fixed sizes, from \$5 to \$2,000 | Any whole-dollar amount from \$100 to \$50,000 |
+| Payment | Upfront | Upfront or monthly |
+| Discount | 30% | 20% upfront, 10% monthly |
+
+Both kinds of reservation block:
+
+* Are backdated to the first day of the month you buy them in, so you get that month's full credit.
+* Give you a credit each month that's only valid for that month. Unused credit doesn't roll over.
+* Cover only Machine CPU and additional RAM charges. The credit doesn't cover GPUs, volumes, stopped Machines' root file systems, snapshots, data transfer, IP addresses, Managed Postgres, Sprites or other products.
+* Are non-refundable.
+
+If you have both kinds, regional blocks are used first for their region and CPU class. Your global credit then covers the remaining CPU and RAM usage, and usage beyond that is billed at the regular rates. Buying a global reservation doesn't change or replace any regional blocks you already have.
+
+You buy reservation blocks on your organization's Billing page in the [dashboard](https://fly.io/dashboard). Payments are charged to your organization's payment method, and each month's credit is added once its payment succeeds. Your credits appear under **Active Credits** on the Billing page. Only organization admins can buy reservations. For [Linked Organizations](/about/billing#unified-billing), buy them on the Billing Organization.
+
+#### Regional {#regional-reservation-blocks}
+
+A regional reservation block applies to any number of Machines of one CPU class, in one region, in any of your organization's apps. You pay for 12 months upfront and get a **30% discount**. There's no limit on the number or combinations of blocks that can be purchased.
 
 The available reservation sizes are:
 
@@ -146,15 +167,17 @@ The available reservation sizes are:
 * \$420/year for \$50/month of usage
 * \$4,200/year for \$500/month of usage
 
-You pay the "per year" amount upfront, and each month receive a credit worth the "per month" amount. The credit does not rollover; it's only valid for the month in which it's granted. The credit applies only to CPU and additional RAM charges.
-
-There's no limit on the number or combinations of blocks that can be purchased. Reservations are backdated to the first day of the month in which they're purchased.
+You pay the "per year" amount upfront, and each month receive a credit worth the "per month" amount.
 
 For example, if you purchase a \$42/year `shared` Machines block in `cdg`, you'll pay \$42 upfront and receive \$5/month of credits applicable to `shared` Machines in `cdg` for 12 months, starting with the month of the purchase. Amortised over 12 months, the \$42 upfront cost is \$3.50/month, which is a 30% discount on the \$5/month of credits you receive.
 
-You can set up reservations via self-service in the billing section of your Fly.io [dashboard](https://fly.io/dashboard). They apply to usage starting on the 1st, so setting up reservations any time in the month will give you the credits the entire month.
+To buy a regional block:
 
-### Global CPU/RAM reservations {#global-cpuram-reservations}
+1. On your organization's Billing page, select **Buy Reservations** and choose **Regional**.
+2. Choose a Machine class, a region and a monthly CPU/RAM credit.
+3. Review the reservation, then confirm. The payment is charged straight away.
+
+#### Global {#global-cpuram-reservations}
 
 A global reservation gives you a monthly credit for Machine CPU and RAM usage in every region, for both `shared` and `performance` Machines. You commit to 12 months, and either pay upfront for a **20% discount** or pay monthly for a **10% discount**.
 
@@ -168,30 +191,18 @@ You can choose any whole-dollar monthly credit from \$100 to \$50,000. For a lar
 
 For example, a \$100/month reservation gives you \$1,200 of credit over 12 months. You pay either \$960 upfront, or \$90 a month for 12 months (\$1,080 in total).
 
-How the credit works:
-
-* Reservations are backdated to the first day of the month you buy them in, so you get that month's full credit.
-* Each month's credit is only valid for that month. Unused credit doesn't roll over.
-* The credit applies only to Machine CPU and additional RAM charges. It doesn't cover GPUs, volumes, stopped Machines' root file systems, snapshots, data transfer, IP addresses, Managed Postgres, Sprites or other products.
-* [Machine reservation blocks](#machine-reservation-blocks) for a specific region and CPU class are used first. Your global credit then covers the remaining CPU and RAM usage, and usage beyond that is billed at the regular rates.
-* Buying a global reservation doesn't change or replace any reservation blocks you already have.
-
 How payment works:
 
 * **Pay upfront:** one payment for all 12 months, charged when you buy.
 * **Pay monthly:** the first month is charged when you buy, and each later month is billed on the 1st. All 12 monthly payments are due, even in a month where you use less than your credit.
-* Payments are charged to your organization's payment method. Each month's credit is added once its payment succeeds.
-* Reservations are non-refundable.
 
 If your bank asks you to authenticate a payment, such as with 3-D Secure, select **Complete payment** on your organization's Billing page before that month ends (UTC). If a later monthly payment fails, that month's credit isn't added. Update your payment method if you need to, then select **Retry payment** before the month ends. A failed month doesn't cancel the rest of the reservation. If the first payment fails, select **Try again** to buy the same reservation again. Organization admins get an email when a payment fails or needs authentication.
 
 To buy a global reservation:
 
-1. Open your organization's Billing page in the [dashboard](https://fly.io/dashboard) and select **Buy Reservations**.
-2. Choose **Global**, choose **Pay upfront** or **Pay monthly**, and enter a monthly CPU/RAM credit.
+1. On your organization's Billing page, select **Buy Reservations** and choose **Global**.
+2. Choose **Pay upfront** or **Pay monthly**, and enter a monthly CPU/RAM credit.
 3. Review the 12-month commitment, then confirm.
-
-Your credit appears under **Active Credits** on the Billing page once the payment succeeds. Only organization admins can buy reservations. For [Linked Organizations](/about/billing#unified-billing), buy them on the Billing Organization.
 
 ## Managed Postgres
 
