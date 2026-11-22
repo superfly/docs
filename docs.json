@@ -1410,7 +1410,7 @@
                   "about/billing",
                   "about/mpp-credits",
                   "about/cost-management",
-                  "about/free-trial",
+                  "about/free-plan",
                   "about/free-waiver",
                   "about/support",
                   {
@@ -4192,6 +4192,10 @@
     {
       "source": "/app-guides/minio",
       "destination": "/tigris"
+    },
+    {
+      "source": "/about/free-trial",
+      "destination": "/about/free-plan"
     }
   ]
 }
