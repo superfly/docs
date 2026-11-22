@@ -30,6 +30,8 @@ underscores are allowed in names.
 Optionally, you may specify the size of the volume, in gigabytes, by adding a `--size int` argument.
 The default volume size is 3 gigabytes.
 
+Fly.io takes a snapshot of every volume daily and keeps each one for 5 days by default. See [Volume snapshots](/volumes/snapshots) to change the retention or restore one.
+
 Now set the following secret, again replacing the name with what you selected:
 
 ```bash
