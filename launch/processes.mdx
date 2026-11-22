@@ -32,22 +32,64 @@ Process group commands in a Fly App correspond to CMD in Docker; they don't repl
 
 ## Processes and services
  
-Chances are, you only want user requests to hit one of your processes; in the above example, that process is `web`, so you would specify the `web` process in the `http_service` or in the [`[[services]]` section](/reference/configuration#the-services-sections) for the app's HTTP service:
+Chances are, you only want user requests to hit one of your processes. In the above example, that process is `web`. Each service's `processes` key lists the process groups whose Machines receive its requests.
+
+`fly launch` generates an [`[http_service]` section](/reference/configuration#the-http_service-section) with `processes = ['app']`. Once you add a `[processes]` section without an `app` group, change that value to the group that serves HTTP:
 
 ```toml
-...
-[[services]]
-  http_checks = []
+[http_service]
   internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
   processes = ["web"]
-  ...
 ```
+
+If you use the more verbose [`[[services]]` section](/reference/configuration#the-services-sections) instead of `[http_service]`, the `processes` key works the same way. This is an equivalent service for `web`; use one or the other, not both:
+
+```toml
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+  processes = ["web"]
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+```
+
+Once `fly.toml` has a `[processes]` section, every `[http_service]` and `[[services]]` section must set `processes`, and every name it lists must be defined in `[processes]`. Otherwise `fly deploy` fails config validation with an error like `Service has no processes set but app has 2 processes defined`.
 
 You can define distinct services for each process that needs to accept connections from Fly Proxy (whether [publicly](/networking/services) or via [Flycast](/networking/flycast)), by creating multiple `[[services]]` sections in `fly.toml`. 
 
 <Note>
 **Important:** Make sure processes handle connections on different [external ports](/reference/configuration#services-ports). Fly Proxy doesn't know about process groups; it load-balances requests among all Machines with a service configured on the requested port.
 </Note>
+
+## Set Machine size per process group
+
+Process groups often need different CPU and memory. Set them in `fly.toml` with one [`[[vm]]` section](/reference/configuration#the-vm-section) per group, using the same `processes` key:
+
+```toml
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"
+  processes = ["web"]
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"
+  processes = ["cron"]
+```
+
+A `[[vm]]` section without a `processes` key applies to every group that doesn't have its own `[[vm]]` section. The `[[vm]]` section that `fly launch` generates has no `processes` key, so it covers all groups until you add group-specific ones. Note the double brackets: `[[vm]]` is a list, so you can repeat it.
+
+[`[[mounts]]`](/reference/configuration#the-mounts-section) sections accept a `processes` key too, but behave differently when it's missing: a `[[mounts]]` section without `processes` attaches the volume only to Machines in the default process group (`app` if it's defined, otherwise the first group name in alphabetical order), not to every group. Set `processes` explicitly on mounts in apps with more than one group.
 
 ## Deployment
 
@@ -120,6 +162,10 @@ This example changes only the RAM of Machines in the `web` process group:
 ```
 fly scale memory 4096 --process-group web
 ```
+
+<Note>
+If any `[[vm]]` section in `fly.toml` applies to a process group, the next `fly deploy` resets that group's Machines to the size in the file. That includes a `[[vm]]` section without a `processes` key, like the one `fly launch` generates, which applies to every group. To keep a size you set with `fly scale`, update the matching `[[vm]]` section too. See [Set Machine size per process group](#set-machine-size-per-process-group).
+</Note>
 
 ## Move a Machine between process groups
  
