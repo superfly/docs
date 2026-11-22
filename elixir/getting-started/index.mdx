@@ -47,6 +47,8 @@ cd hello_elixir
 fly launch --db=mpg
 ```
 
+If your organization is on the [Free plan](/about/free-plan), `fly launch --db=mpg` can't create the cluster: launch uses the Basic plan, and the Free plan includes only the Developer plan. Instead, run `fly launch --no-db --no-deploy`, create a Developer plan cluster with `fly mpg create`, [attach it](/postgres/create-and-connect) with `fly mpg attach <CLUSTER_ID>`, and then run `fly deploy`.
+
 You'll get a summary of the defaults chosen for your app, including a Managed Postgres cluster on the Basic plan, and the launcher asks whether you want to tweak these settings. Type `y` to open the Fly Launch page and change the app name or region, or `n` to accept the defaults.
 
 Once you confirm your settings, the launcher will:
@@ -63,8 +65,6 @@ The output ends with the URL of your deployed app:
 ...
 Visit your newly deployed app at https://hello_elixir.fly.dev/
 ```
-
-If your organization is on the [Free plan](/about/free-plan), `fly launch` can't create the cluster, because it uses the Basic plan. Create a Developer plan cluster with `fly mpg create`, then [attach it](/postgres/create-and-connect) to your app with `fly mpg attach`.
 
 That's it! Run `fly apps open` to see your deployed app in action.
 
