@@ -33,6 +33,36 @@ v41   2025-08-10T09:14Z   registry.fly.io/myapp:deployment-01HYYYYY
 
 Pick the one before things went sideways.
 
+#### Get releases as JSON
+
+For scripts, add `--json`:
+
+```bash
+fly releases --app myapp --json
+```
+
+flyctl prints an array of the app's last 25 releases, newest first. Each release has these fields:
+
+| Field | Contents |
+|---|---|
+| `ID` | Release ID |
+| `Version` | Release number as an integer, so `41` for `v41` |
+| `Status` | Release status, such as `complete` |
+| `Description` | Release description |
+| `Reason` | Release reason |
+| `Stable` | `true` or `false` |
+| `ImageRef` | The image the release ran; pass it to `fly deploy --image` |
+| `CreatedAt` | When the release was created, as an RFC 3339 timestamp |
+| `User` | Who made the release: `ID`, `Name` and `Email` |
+
+`InProgress`, `DeploymentStrategy`, `Metadata`, `EvaluationID` and `User.EnablePaidHobby` also appear, but `fly releases` doesn't fetch them, so they're always `false`, `""`, `null`, `""` and `false`.
+
+For example, this prints the image of the release before the latest one:
+
+```bash
+fly releases --app myapp --json | jq -r '.[1].ImageRef'
+```
+
 ---
 
 ### Step 2: Deploy that exact image
